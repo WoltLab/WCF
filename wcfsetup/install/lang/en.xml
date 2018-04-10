@@ -933,6 +933,11 @@
 		<item name="wcf.acp.menu.link.devtools.project.add"><![CDATA[Add Project]]></item>
 		<item name="wcf.acp.menu.link.devtools.project.list"><![CDATA[Projects]]></item>
 		<item name="wcf.acp.menu.link.devtools.notificationTest"><![CDATA[Notification Test]]></item>
+		<item name="wcf.acp.menu.link.reactionType"><![CDATA[Reaction]]></item>
+		<!-- @TODO maybe use "Reactions" instead of "Reaction Types", because its more comprehensible for users -->
+		<item name="wcf.acp.menu.link.reactionType.list"><![CDATA[Reaktion Types]]></item>
+		<item name="wcf.acp.menu.link.reactionType.add"><![CDATA[Add Reaction Type]]></item>
+		<item name="wcf.acp.menu.link.reactionType.edit"><![CDATA[Edit Reaction Type]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -1670,6 +1675,10 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[The Update-Server for “{$wcfMajorRelease}” does not exist in your installation. If you wish to install the packages below, you must <a href="{link controller='PackageUpdateServerAdd'}{/link}">add it</a>.<br>The server address is: “http://store.woltlab.com/{$wcfMajorRelease}/”]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[The Update-Server for “{$wcfMajorRelease}” has not been queried yet, please search for updates to fetch the package list.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Update-Server for “{$wcfMajorRelease}”]]></item>
+	</category>
+	
+	<category name="wcf.acp.reactionType">
+		<item name="wcf.acp.reactionType.delete.sure"><![CDATA[Do you really want to delete the reaction type <span class="confirmationObject">{$reactionType->getTitle()}</span>?]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">

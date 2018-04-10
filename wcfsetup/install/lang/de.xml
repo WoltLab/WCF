@@ -951,6 +951,11 @@
 		<item name="wcf.acp.menu.link.devtools.project.add"><![CDATA[Projekt hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.devtools.project.list"><![CDATA[Projekte]]></item>
 		<item name="wcf.acp.menu.link.devtools.notificationTest"><![CDATA[Benachrichtigungstest]]></item>
+		<item name="wcf.acp.menu.link.reactionType"><![CDATA[Reaktionen]]></item>
+		<!-- @TODO maybe use "Reaktion" instead of "Reaktions-Typ", because its more comprehensible for users -->
+		<item name="wcf.acp.menu.link.reactionType.list"><![CDATA[Reaktions-Typen]]></item>
+		<item name="wcf.acp.menu.link.reactionType.add"><![CDATA[Reaktions-Typ hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.reactionType.edit"><![CDATA[Reaktions-Typ bearbeiten]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -1730,6 +1735,10 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ ist bei {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} nicht eingetragen. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die unten stehenden Pakete installieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} diesen zuvor <a href="{link controller='PackageUpdateServerAdd'}{/link}">hinzufügen</a>.<br>Die Adresse des Servers lautet: „http://store.woltlab.com/{$wcfMajorRelease}/“]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ („http://store.woltlab.com/{$wcfMajorRelease}/“) wurde noch nicht abgefragt, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}lass{else}lassen Sie{/if} zuerst nach Updates suchen, um den Server abzufragen.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Paket-Server für „{$wcfMajorRelease}“]]></item>
+	</category>
+	
+	<category name="wcf.acp.reactionType">
+		<item name="wcf.acp.reactionType.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Reaktions-Typen <span class="confirmationObject">{$reactionType->getTitle()}</span> wirklich löschen?]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
