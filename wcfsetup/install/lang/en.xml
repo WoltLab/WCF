@@ -911,7 +911,7 @@
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[Use ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Library used for image processing, e.g. scaling uploaded images. “ImageMagick” is a lot faster, but is not available on every machine.]]></item>
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Store IP addresses]]></item>
-		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses for user-created content, e.g. sessions, profiles, or forum posts.]]></item>
+		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses indefinitely for user-created content, e.g. profiles or forum posts.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator’s Email]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[Enter the administrator’s email address here.]]></item>
 		<item name="wcf.acp.option.mail_from_address"><![CDATA[Sender’s Email]]></item>
