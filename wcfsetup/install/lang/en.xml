@@ -1678,7 +1678,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 	</category>
 	
 	<category name="wcf.acp.reactionType">
-		<item name="wcf.acp.reactionType.delete.sure"><![CDATA[Do you really want to delete the reaction type <span class="confirmationObject">{$reactionType->getTitle()}</span>?]]></item>
+		<item name="wcf.acp.reactionType.delete.confirmMessage"><![CDATA[Do you really want to delete the reaction type <span class="confirmationObject">{$reactionType->getTitle()}</span>?]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">

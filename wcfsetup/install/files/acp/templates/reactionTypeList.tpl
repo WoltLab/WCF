@@ -48,7 +48,7 @@
 							<span class="statusDisplay sortableButtonContainer">
 								<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
 								<a href="{link controller='ReactionTypeEdit' id=$reactionType->reactionTypeID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></span></a>
-								<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton pointer jsTooltip icon icon16 fa-times" data-object-id="{@$reactionType->reactionTypeID}" data-confirm-message-html="{lang __encode=true}wcf.acp.reactionType.delete.sure{/lang}"></span>
+								<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton pointer jsTooltip icon icon16 fa-times" data-object-id="{@$reactionType->reactionTypeID}" data-confirm-message-html="{lang __encode=true}wcf.acp.reactionType.delete.confirmMessage{/lang}"></span>
 								
 								{event name='itemButtons'}
 							</span>
