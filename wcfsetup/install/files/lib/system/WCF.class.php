@@ -255,6 +255,12 @@ class WCF {
 	 * @param	\Exception	$e
 	 */
 	public static final function handleException($e) {
+		// backwards compatibility
+		if ($e instanceof IPrintableException) {
+			$e->show();
+			exit;
+		}
+		
 		if (ob_get_level()) {
 			// discard any output generated before the exception occured, prevents exception
 			// being hidden inside HTML elements and therefore not visible in browser output
@@ -262,17 +268,33 @@ class WCF {
 			// ob_get_level() can return values > 1, if the PHP setting `output_buffering` is on
 			while (ob_get_level()) ob_end_clean();
 			
-			// `identity` is the default "encoding" and basically means that the client
-			// must treat the content as if the header did not appear in first place, this
-			// also overrules the gzip header if present
-			@header('Content-Encoding: identity');
-			HeaderUtil::exceptionDisableGzip();
-		}
-		
-		// backwards compatibility
-		if ($e instanceof IPrintableException) {
-			$e->show();
-			exit;
+			// Some webservers are broken and will apply gzip encoding at all cost, but they fail
+			// to set a proper `Content-Encoding` HTTP header and mess things up even more.
+			// Especially the `identity` value appears to be unrecognized by some of them, hence
+			// we'll just gzip the output of the exception to prevent them from tampering.
+			// This part is copied from `HeaderUtil` in order to isolate the exception handler!
+			if (HTTP_ENABLE_GZIP && !defined('HTTP_DISABLE_GZIP')) {
+				if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
+					if (strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip')) {
+						@header('Content-Encoding: x-gzip');
+					}
+					else {
+						@header('Content-Encoding: gzip');
+					}
+					
+					ob_start(function($output) {
+						$size = strlen($output);
+						$crc = crc32($output);
+						
+						$newOutput = "\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff";
+						$newOutput .= substr(gzcompress($output, 1), 2, -4);
+						$newOutput .= pack('V', $crc);
+						$newOutput .= pack('V', $size);
+						
+						return $newOutput;
+					});
+				}
+			}
 		}
 		
 		@header('HTTP/1.1 503 Service Unavailable');

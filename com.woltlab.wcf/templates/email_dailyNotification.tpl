@@ -12,7 +12,7 @@
 {assign var='event' value=$notification[event]}
 {assign var='notificationContent' value=$notification[notificationContent]}
 {assign var='notificationType' value=$notification[notificationType]}
-{if $notificationContent|is_array}{include file=$notificationContent[template] application=$notificationContent[application] variables=$notificationContent[variables]}{*
+{if $notificationContent|is_array}{if !$notificationContent[variables]|empty}{foreach from=$notificationContent[variables] key='__key' item='__item'}{assign var=$__key value=$__item}{/foreach}{/if}{include file=$notificationContent[template] application=$notificationContent[application] variables=$notificationContent[variables]}{*
 *}{else}{@$notificationContent}{/if}
 {/implode}
 
@@ -30,6 +30,12 @@
 	{assign var='notificationType' value=$notification[notificationType]}
 	<div class="largeMarginTop">
 		{if $notificationContent|is_array}
+			{if !$notificationContent[variables]|empty}
+				{foreach from=$notificationContent[variables] key='__key' item='__item'}
+					{assign var=$__key value=$__item}
+				{/foreach}
+			{/if}
+			
 			{include file=$notificationContent[template] application=$notificationContent[application] variables=$notificationContent[variables]}
 		{else}
 			{@$notificationContent}

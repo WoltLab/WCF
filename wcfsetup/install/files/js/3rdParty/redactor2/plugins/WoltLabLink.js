@@ -33,19 +33,26 @@ $.Redactor.prototype.WoltLabLink = function() {
 			
 			this.link.show = this.WoltLabLink.show.bind(this);
 			
-			var mpParse = this.link.parse;
 			this.link.parse = (function(link) {
-				var isHttps = false;
-				if (link.url.match(/^(https:)?\/\//)) {
-					isHttps = true;
+				// mailto
+				if (this.link.isMailto(link.url))
+				{
+					link.url = 'mailto:' + link.url.replace('mailto:', '');
+				}
+				// url
+				else if (link.url.search('#') !== 0)
+				{
+					if (this.opts.linkValidation)
+					{
+						var url = this.link.isUrl(link.url);
+						if (url === false) url = 'http://' + link.url;
+						
+						link.url = url;
+					}
 				}
 				
-				link = mpParse.call(this, link);
-				
-				// the link validation assumes http:// regardless of the previously set value
-				if (isHttps) link.url = link.url.replace(/^http:/, 'https:');
-				
-				return link;
+				// empty url or text or isn't url
+				return (this.link.isEmpty(link) || link.url === false) ? false : link;
 			}).bind(this);
 			
 			require(['WoltLabSuite/Core/Ui/Redactor/Link'], function(UiRedactorLink) {

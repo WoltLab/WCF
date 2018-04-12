@@ -94,8 +94,10 @@ WCF.Poll.Management = Class.extend({
 			this._createOption($option.optionValue, $option.optionID);
 		}
 		
-		// add empty option
-		this._createOption();
+		// add an empty option, unless it would exceed the limit
+		if (optionList.length < this._maxOptions) {
+			this._createOption();
+		}
 	},
 	
 	/**

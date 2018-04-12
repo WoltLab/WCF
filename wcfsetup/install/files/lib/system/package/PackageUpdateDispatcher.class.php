@@ -47,7 +47,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		$requirePurchasedVersions = false;
 		foreach ($tmp as $updateServer) {
 			if ($ignoreCache || $updateServer->lastUpdateTime < TIME_NOW - 600) {
-				if (preg_match('~^https?://(?:update|store)\.woltlab\.com~', $updateServer->serverURL)) {
+				if (preg_match('~^https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL)) {
 					$requirePurchasedVersions = true;
 					
 					// move a woltlab.com update server to the front of the queue to probe for SSL support
@@ -145,9 +145,12 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		$request = new HTTPRequest($updateServer->getListURL($forceHTTP), $settings);
 		
 		if ($updateServer->apiVersion == '2.1') {
-			$metaData = $updateServer->getMetaData();
-			if (isset($metaData['list']['etag'])) $request->addHeader('if-none-match', $metaData['list']['etag']);
-			if (isset($metaData['list']['lastModified'])) $request->addHeader('if-modified-since', $metaData['list']['lastModified']);
+			// skip etag check for WoltLab servers when an auth code is provided
+			if (!preg_match('~^https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL) || !PACKAGE_SERVER_AUTH_CODE) {
+				$metaData = $updateServer->getMetaData();
+				if (isset($metaData['list']['etag'])) $request->addHeader('if-none-match', $metaData['list']['etag']);
+				if (isset($metaData['list']['lastModified'])) $request->addHeader('if-modified-since', $metaData['list']['lastModified']);
+			}
 		}
 		
 		try {
@@ -163,7 +166,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			$statusCode = is_array($reply['statusCode']) ? reset($reply['statusCode']) : $reply['statusCode'];
 			// status code 0 is a connection timeout
 			if (!$statusCode && $secureConnection) {
-				if (preg_match('~https?://(?:update|store)\.woltlab\.com~', $updateServer->serverURL)) {
+				if (preg_match('~https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL)) {
 					// woltlab.com servers are most likely to be available, thus we assume that SSL connections are dropped
 					RemoteFile::disableSSL();
 				}

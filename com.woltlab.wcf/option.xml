@@ -297,7 +297,7 @@
 			<option name="log_ip_address">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			
 			<option name="enable_woltlab_news">
@@ -540,7 +540,7 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<categoryname>general.system.cookie</categoryname>
 				<optiontype>text</optiontype>
 				<defaultvalue>wsc30_</defaultvalue>
-				<validationpattern>.+</validationpattern>
+				<validationpattern>^[a-zA-Z0-9_]+$</validationpattern>
 			</option>
 			<!-- /general.system.cookie-->
 			
@@ -727,12 +727,9 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 			<!-- general.system.jquery -->
 			<option name="jquery_source">
 				<categoryname>general.system.jquery</categoryname>
-				<optiontype>radioButton</optiontype>
-				<defaultvalue>google</defaultvalue>
-				<selectoptions>local:wcf.acp.option.jquery_source.local
-google:wcf.acp.option.jquery_source.google
-microsoft:wcf.acp.option.jquery_source.microsoft
-cloudflare:wcf.acp.option.jquery_source.cloudflare</selectoptions>
+				<optiontype>text</optiontype>
+				<defaultvalue>local</defaultvalue>
+				<hidden>1</hidden>
 			</option>
 			<!-- /general.system.jquery -->
 			

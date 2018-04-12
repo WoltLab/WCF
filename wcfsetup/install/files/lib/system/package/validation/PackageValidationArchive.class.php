@@ -2,6 +2,7 @@
 namespace wcf\system\package\validation;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
+use wcf\data\package\PackageList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
@@ -373,7 +374,23 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 */
 	public function getPackage() {
 		if ($this->package === null) {
-			$this->package = PackageCache::getInstance()->getPackageByIdentifier($this->archive->getPackageInfo('name'));
+			static $packages;
+			if ($packages === null) {
+				$packages = [];
+				
+				// Do not rely on PackageCache here, it may be outdated if a previous installation of a package has failed
+				// and the user attempts to install it again in a secondary browser tab!
+				$packageList = new PackageList();
+				$packageList->readObjects();
+				foreach ($packageList as $package) {
+					$packages[$package->package] = $package;
+				}
+			}
+			
+			$identifier = $this->archive->getPackageInfo('name');
+			if (isset($packages[$identifier])) {
+				$this->package = $packages[$identifier];
+			}
 		}
 		
 		return $this->package;

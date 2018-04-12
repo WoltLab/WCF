@@ -146,7 +146,7 @@
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Medienanbieter]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Button im WYSIWYG-Editor anzeigen]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button-Grafik]]></item>
-		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[Die Grafik muss sich im Verzeichnis wcf/icon/ befinden, alternativ kann ein <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=http%3A%2F%2Ffontawesome.io%2Ficons%2F">FontAwesome</a>-Icon genutzt werden, z.B. „fa-caret-square-o-up“.]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[Die Grafik muss sich im Verzeichnis wcf/icon/ befinden, alternativ kann ein <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=http%3A%2F%2Ffontawesome.com%2Fv4.7.0%2Ficons%2F">FontAwesome</a>-Icon genutzt werden, z.B. „fa-caret-square-o-up“.]]></item>
 	</category>
 	
 	<category name="wcf.acp.box">
@@ -916,7 +916,7 @@
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Bibliothek für die Generierung von Grafiken, wird z.B. für die Skalierung von hochgeladenen Bildern verwendet. „ImageMagick“ ist in der Regel deutlich schneller, steht aber nicht auf jedem Server zur Verfügung.]]></item>
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Speicherung von IP-Adressen]]></item>
-		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Aktiviert die Speicherung von IP-Adressen der Benutzer in z.B. Sitzungen, Benutzerprofilen, Forenbeiträgen.]]></item>
+		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Aktiviert die dauerhafte Speicherung von IP-Adressen der Benutzer in z.B. Benutzerprofilen und Forenbeiträgen.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator-Adresse]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[E-Mail-Adresse des Administrators]]></item>
 		<item name="wcf.acp.option.mail_from_address"><![CDATA[Absender-Adresse]]></item>
@@ -971,11 +971,6 @@
 		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[Das Attribut „rel="nofollow"“ weist Suchmaschinen an, einen bestimmten Link auf einer Seite zu ignorieren.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Externe Links in neuem Fenster öffnen]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Setzt das Attribut „target="_blank"“ auf externe Links und weist den Browser dadurch an, einen aufgerufenen Link in einem neuen Browser-Fenster zu öffnen.]]></item>
-		<item name="wcf.acp.option.jquery_source"><![CDATA[jQuery-Quelle]]></item>
-		<item name="wcf.acp.option.jquery_source.local"><![CDATA[lokale Version]]></item>
-		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Google Hosted Libraries CDN]]></item>
-		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Microsoft Ajax CDN]]></item>
-		<item name="wcf.acp.option.jquery_source.cloudflare"><![CDATA[CloudFlare CDN]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Benchmark aktivieren]]></item>
 		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update-Server]]></item>
@@ -1468,6 +1463,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.disabled"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ („http://store.woltlab.com/{$wcfMajorRelease}/“) ist deaktiviert und steht weder für Neuinstallation noch Updates zur Verfügung.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ ist bei {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} nicht eingetragen. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die unten stehenden Pakete installieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} diesen zuvor <a href="{link controller='PackageUpdateServerAdd'}{/link}">hinzufügen</a>.<br>Die Adresse des Servers lautet: „http://store.woltlab.com/{$wcfMajorRelease}/“]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ („http://store.woltlab.com/{$wcfMajorRelease}/“) wurde noch nicht abgefragt, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}lass{else}lassen Sie{/if} zuerst nach Updates suchen, um den Server abzufragen.]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Paket-Server für „{$wcfMajorRelease}“]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
@@ -3484,7 +3480,7 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}Neue Benachrichtigung{else}{#$count} neue Benachrichtigungen{/if}]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.intro"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} derzeit insgesamt {#$notifications|count} ungelesene Benachrichtigungen, die älter als 24 Stunden sind:]]></item>
+{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} derzeit insgesamt {#$notifications|count} ungelesene Benachrichtigung{if $notifications|count != 1}en{/if}, die älter als 24 Stunden {if $notifications|count == 1}ist{else}sind{/if}:]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.outro"><![CDATA[{if $notifications|count > $maximum}{if LANGUAGE_USE_INFORMAL_VARIANT}Besuche deine{else}Besuchen Sie Ihre{/if} Benachrichtigungs-Übersicht [URL:{link controller='NotificationList' isEmail=true}{/link}], um auch die restlichen {#$remaining} Benachrichtigungen einzusehen.
 
 {/if}Diese E-Mail ist eine automatische Benachrichtigung. BITTE {if LANGUAGE_USE_INFORMAL_VARIANT}ANTWORTE{else}ANTWORTEN SIE{/if} NICHT AUF DIESE E-MAIL.
@@ -3495,7 +3491,7 @@ Benachrichtigungen auf {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] n
 Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} keine E-Mail-Benachrichtigungen mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt abbestellen: {link controller='NotificationDisable' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}.]]></item>
 		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h2>Hallo {@$mailbox->getUser()->username},</h2>
 
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} derzeit insgesamt {#$notifications|count} ungelesene Benachrichtigungen, die älter als 24 Stunden sind:</p>]]></item>
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} derzeit insgesamt {#$notifications|count} ungelesene Benachrichtigung{if $notifications|count != 1}en{/if}, die älter als 24 Stunden {if $notifications|count == 1}ist{else}sind{/if}:</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.html.outro"><![CDATA[{if $notifications|count > $maximum}<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Besuche{else}Besuchen Sie{/if} <a href="{link controller='NotificationList' isEmail=true}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Benachrichtigungs-Übersicht</a>, um auch die restlichen {#$remaining} Benachrichtigungen einzusehen.</p>{/if}
 
 <p>Diese E-Mail ist eine automatische Benachrichtigung. <b>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}antworte{else}antworten Sie{/if} nicht auf diese E-Mail</b>.</p>

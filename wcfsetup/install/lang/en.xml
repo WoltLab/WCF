@@ -142,7 +142,7 @@
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Media Providers]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Display button in WYSIWYG editor]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button Image]]></item>
-		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[The image must be placed inside the directory wcf/icon/ or use a <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=http%3A%2F%2Ffontawesome.io%2Ficons%2F">FontAwesome</a>-icon, e.g. “fa-caret-square-o-up”.]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[The image must be placed inside the directory wcf/icon/ or use a <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=http%3A%2F%2Ffontawesome.com%2Fv4.7.0%2Ficons%2F">FontAwesome</a>-icon, e.g. “fa-caret-square-o-up”.]]></item>
 	</category>
 	
 	<category name="wcf.acp.box">
@@ -911,7 +911,7 @@
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[Use ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Library used for image processing, e.g. scaling uploaded images. “ImageMagick” is a lot faster, but is not available on every machine.]]></item>
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Store IP addresses]]></item>
-		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses for user-created content, e.g. sessions, profiles, or forum posts.]]></item>
+		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses indefinitely for user-created content, e.g. profiles or forum posts.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator’s Email]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[Enter the administrator’s email address here.]]></item>
 		<item name="wcf.acp.option.mail_from_address"><![CDATA[Sender’s Email]]></item>
@@ -966,11 +966,6 @@
 		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[The attribute “rel="nofollow"” tells search engines to disregard external links.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Open external links in a new window]]></item>
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Appends the attribute “target="_blank"” to external links, causing the user’s browser to open the link in a new window.]]></item>
-		<item name="wcf.acp.option.jquery_source"><![CDATA[jQuery Source]]></item>
-		<item name="wcf.acp.option.jquery_source.local"><![CDATA[Use Local Version]]></item>
-		<item name="wcf.acp.option.jquery_source.google"><![CDATA[Use Google Hosted Libraries CDN]]></item>
-		<item name="wcf.acp.option.jquery_source.microsoft"><![CDATA[Use Microsoft Ajax CDN]]></item>
-		<item name="wcf.acp.option.jquery_source.cloudflare"><![CDATA[Use CloudFlare CDN]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Enable benchmark]]></item>
 		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[It is strongly recommended to disable this option in production environments.]]></item>
 		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update Server]]></item>
@@ -1430,6 +1425,7 @@
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.disabled"><![CDATA[The Update-Server for “{$wcfMajorRelease}” (“http://store.woltlab.com/{$wcfMajorRelease}/”) is disabled and cannot be used for new installs or updates.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[The Update-Server for “{$wcfMajorRelease}” does not exist in your installation. If you wish to install the packages below, you must <a href="{link controller='PackageUpdateServerAdd'}{/link}">add it</a>.<br>The server address is: “http://store.woltlab.com/{$wcfMajorRelease}/”]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[The Update-Server for “{$wcfMajorRelease}” has not been queried yet, please search for updates to fetch the package list.]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Update-Server for “{$wcfMajorRelease}”]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
@@ -3472,7 +3468,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}New Notification{else}{#$count} New Notifications{/if}]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.intro"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-You currently have got {#$notifications|count} unread notifications that are older than 24 hours:]]></item>
+You currently have got {#$notifications|count} unread notification{if $notifications|count != 1}s{/if} that {if $notifications|count == 1}is{else}are{/if} older than 24 hours:]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.outro"><![CDATA[{if $notifications|count > $maximum}Visit your notification list [URL:{link controller='NotificationList' isEmail=true}{/link}] to view the remaining {#$remaining} notifications.
 
 {/if}This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
@@ -3484,7 +3480,7 @@ If you wish to disable all email notifications you can do so by visiting:
 {link controller='NotificationDisable' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
 		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h2>Dear {@$mailbox->getUser()->username},</h2>
 
-<p>You currently have got {#$notifications|count} unread notifications that are older than 24 hours:</p>]]></item>
+<p>You currently have got {#$notifications|count} unread notification{if $notifications|count != 1}s{/if} that {if $notifications|count == 1}is{else}are{/if} older than 24 hours:</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.html.outro"><![CDATA[<p>{if $notifications|count > $maximum}Visit your <a href="{link controller='NotificationList' isEmail=true}{/link}">notification list</a> to view the remaining {#$remaining} notifications.</p>{/if}
 
 <p>This is an automatic notification, <b>please do not reply to this email</b>!</p>
