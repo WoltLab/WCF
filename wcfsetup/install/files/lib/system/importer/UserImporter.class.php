@@ -184,12 +184,14 @@ class UserImporter extends AbstractImporter {
 						(userID, groupID)
 			VALUES			(?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
+		WCF::getDB()->beginTransaction();
 		foreach ($groupIDs as $groupID) {
 			$statement->execute([
 				$user->userID,
 				$groupID
 			]);
 		}
+		WCF::getDB()->commitTransaction();
 		
 		// save languages
 		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_user_to_language
@@ -208,12 +210,14 @@ class UserImporter extends AbstractImporter {
 						(userID, eventID)
 			VALUES			(?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
+		WCF::getDB()->beginTransaction();
 		foreach ($this->eventIDs as $eventID) {
 			$statement->execute([
 				$user->userID,
 				$eventID
 			]);
 		}
+		WCF::getDB()->commitTransaction();
 		
 		// save mapping
 		ImportHandler::getInstance()->saveNewID('com.woltlab.wcf.user', $oldID, $user->userID);

@@ -154,7 +154,7 @@
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Media Providers]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Display button in WYSIWYG editor]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button Image]]></item>
-		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[The image must be placed inside the directory wcf/icon/ or use a <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=http%3A%2F%2Ffontawesome.io%2Ficons%2F">FontAwesome</a>-icon, e.g. “fa-caret-square-o-up”.]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[The image must be placed inside the directory wcf/icon/ or use a <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=http%3A%2F%2Ffontawesome.com%2Fv4.7.0%2Ficons%2F">FontAwesome</a>-icon, e.g. “fa-caret-square-o-up”.]]></item>
 	</category>
 	
 	<category name="wcf.acp.box">
@@ -1049,7 +1049,7 @@
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[Use ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Library used for image processing, e.g. scaling uploaded images. “ImageMagick” is a lot faster, but is not available on every machine.]]></item>
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Store IP addresses]]></item>
-		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses for user-created content, e.g. sessions, profiles, or forum posts.]]></item>
+		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Stores IP addresses indefinitely for user-created content, e.g. profiles or forum posts.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator’s Email]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[Enter the administrator’s email address here.]]></item>
 		<item name="wcf.acp.option.mail_from_address"><![CDATA[Sender’s Email]]></item>
@@ -2491,6 +2491,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.contact.sender"><![CDATA[Sender]]></item>
 		<item name="wcf.contact.sender.information"><![CDATA[Your Inquiry]]></item>
 		<item name="wcf.contact.success"><![CDATA[Message has been sent.]]></item>
+		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[I have read the <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">privacy policy</a> and expressly accept it. <span class="customOptionRequired">*</span>]]></item>
 	</category>
 	
 	<category name="wcf.acp.contact">
@@ -3804,6 +3805,7 @@ Open the link below to access the user profile:
 		<item name="wcf.acp.trophy.userTrophy.useCustomDescription"><![CDATA[Use custom trophy description]]></item>
 		<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"><![CDATA[Do you really want to delete the trophy <span class="confirmationObject">{$userTrophy->getTrophy()->getTitle()}</span> from <span class="confirmationObject">{$userTrophy->getUserProfile()->username}</span>?]]></item>
 		<item name="wcf.acp.trophy.error.noCategories"><![CDATA[Please <a href="{link controller='TrophyCategoryAdd'}{/link}">add a category</a> before creating trophies.]]></item>
+		<item name="wcf.acp.trophy.error.noSuitableTrophies"><![CDATA[Please <a href="{link controller='TrophyAdd'}{/link}">add a trophy</a> that is not automatically awarded before you award trophies.]]></item>
 	</category>
 	
 	<category name="wcf.user.usersOnline">
@@ -4005,7 +4007,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}New Notification{else}{#$count} New Notifications{/if}]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.intro"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-You currently have got {#$notifications|count} unread notifications that are older than 24 hours:]]></item>
+You currently have got {#$notifications|count} unread notification{if $notifications|count != 1}s{/if} that {if $notifications|count == 1}is{else}are{/if} older than 24 hours:]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.outro"><![CDATA[{if $notifications|count > $maximum}Visit your notification list [URL:{link controller='NotificationList' isEmail=true}{/link}] to view the remaining {#$remaining} notifications.
 
 {/if}This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
@@ -4017,7 +4019,7 @@ If you wish to disable all email notifications you can do so by visiting:
 {link controller='NotificationDisable' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
 		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h2>Dear {@$mailbox->getUser()->username},</h2>
 
-<p>You currently have got {#$notifications|count} unread notifications that are older than 24 hours:</p>]]></item>
+<p>You currently have got {#$notifications|count} unread notification{if $notifications|count != 1}s{/if} that {if $notifications|count == 1}is{else}are{/if} older than 24 hours:</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.html.outro"><![CDATA[<p>{if $notifications|count > $maximum}Visit your <a href="{link controller='NotificationList' isEmail=true}{/link}">notification list</a> to view the remaining {#$remaining} notifications.</p>{/if}
 
 <p>This is an automatic notification, <b>please do not reply to this email</b>!</p>

@@ -96,6 +96,7 @@ define(['Ajax', 'Core', 'Language', 'Ui/Dialog'], function(Ajax, Core, Language,
 						window.location = data.proceedURL;
 					}
 				}).bind(this));
+				button.focus();
 			}
 		},
 		
