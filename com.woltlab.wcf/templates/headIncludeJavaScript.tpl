@@ -12,29 +12,8 @@
 	var URL_LEGACY_MODE = {if URL_LEGACY_MODE}true{else}false{/if};
 	//]]>
 </script>
-{if JQUERY_SOURCE == 'google'}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-{elseif JQUERY_SOURCE == 'microsoft'}
-<script src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-2.1.3{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-<script src="//ajax.aspnetcdn.com/ajax/jquery.ui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-{elseif JQUERY_SOURCE == 'cloudflare'}
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.2/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-{else}
 <script src="{@$__wcf->getPath()}js/3rdParty/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
 <script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
-{/if}
-{if JQUERY_SOURCE != 'local'}
-<script>
-	//<![CDATA[
-	if (!window.jQuery) {
-		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery.min.js?v={@LAST_UPDATE_TIME}"><\/script>');
-		document.write('<script src="{@$__wcf->getPath()}js/3rdParty/jquery-ui.min.js?v={@LAST_UPDATE_TIME}"><\/script>');
-	}
-	//]]>
-</script>
-{/if}
 
 {if ENABLE_DEBUG_MODE}
 <script src="{@$__wcf->getPath()}js/3rdParty/jquery.ui.touch-punch{if !ENABLE_DEBUG_MODE}.min{/if}.js?v={@LAST_UPDATE_TIME}"></script>
