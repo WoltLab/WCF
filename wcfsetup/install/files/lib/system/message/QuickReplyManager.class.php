@@ -4,6 +4,7 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\IAttachmentMessageQuickReplyAction;
 use wcf\data\IMessage;
 use wcf\data\IMessageQuickReplyAction;
+use wcf\data\IMessageQuickReplyParametersAction;
 use wcf\system\bbcode\PreParser;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
@@ -153,6 +154,23 @@ class QuickReplyManager extends SingletonFactory {
 		if (isset($parameters['data']['tmpHash'])) {
 			$parameters['tmpHash'] = StringUtil::trim($parameters['data']['tmpHash']);
 			unset($parameters['data']['tmpHash']);
+		}
+		
+		$allowedDataParameters = array('message');
+		if ($object instanceof IMessageQuickReplyParametersAction) {
+			$allowedDataParameters = array_merge($allowedDataParameters, $object->getAllowedQuickReplyParameters());
+		}
+		$eventParameters = array(
+			'allowedDataParameters' => $allowedDataParameters,
+			'object' => $object
+		);
+		EventHandler::getInstance()->fireAction($this, 'allowedDataParameters', $eventParameters);
+		$allowedDataParameters = $eventParameters['allowedDataParameters'];
+		
+		foreach ($parameters['data'] as $key => $value) {
+			if (!in_array($key, $allowedDataParameters)) {
+				unset($parameters['data'][$key]);
+			}
 		}
 		
 		// message settings
