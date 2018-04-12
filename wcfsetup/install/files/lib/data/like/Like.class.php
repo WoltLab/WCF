@@ -19,6 +19,7 @@ use wcf\system\WCF;
  * @property-read	integer		$userID			id of the user who created the like
  * @property-read	integer		$time			timestamp at which the like has been created
  * @property-read	integer		$likeValue		value of the like (`+1` = like, `-1` = dislike, see `Like::LIKE` and `Like::Dislike`)
+ * @property-read	integer		$reactionTypeID		reactionTypeID of the reaction
  */
 class Like extends DatabaseObject {
 	/**
