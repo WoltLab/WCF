@@ -22,6 +22,7 @@ use wcf\system\WCF;
  * @property-read	integer		$dislikes		number of dislikes of the liked object
  * @property-read	integer		$cumulativeLikes	cumulative result of likes (counting +1) and dislikes (counting -1)
  * @property-read	string		$cachedUsers		serialized array with the ids and names of the three users who liked (+1) the object last
+ * @property-read	string		$cachedReactions	serialized array with the reactionTypeIDs and the count of the reactions
  */
 class LikeObject extends DatabaseObject {
 	/**
