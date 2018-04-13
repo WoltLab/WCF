@@ -25,6 +25,6 @@ class ReactionTypeEditor extends DatabaseObjectEditor implements IEditableCached
 	 * @inheritDoc
 	 */
 	public static function resetCache() {
-		// @TODO
+		ReactionTypeCache::getInstance()->clearCache();
 	}
 }
