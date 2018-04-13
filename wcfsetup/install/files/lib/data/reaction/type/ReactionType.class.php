@@ -69,7 +69,7 @@ class ReactionType extends DatabaseObject {
 	/**
 	 * Renders the reaction icon.
 	 * 
-	 * @return 	string
+	 * @return	string
 	 */
 	public function renderIcon(): string {
 		switch ($this->iconType) {
@@ -99,5 +99,32 @@ class ReactionType extends DatabaseObject {
 				throw new \LogicException("Unable to render the reaction type icon with the type '". $this->type ."'.");
 				break;
 		}
+	}
+	
+	/**
+	 * Returns true, if reaction is a positive reaction.
+	 * 
+	 * @return	bool
+	 */
+	public function isPositive() {
+		return $this->type == self::REACTION_TYPE_POSITIVE;
+	}
+	
+	/**
+	 * Returns true, if reaction is a negative reaction.
+	 *
+	 * @return	bool
+	 */
+	public function isNegative() {
+		return $this->type == self::REACTION_TYPE_NEGATIVE;
+	}
+	
+	/**
+	 * Returns true, if reaction is a neutral reaction.
+	 *
+	 * @return	bool
+	 */
+	public function isNeutral() {
+		return $this->type == self::REACTION_TYPE_NEUTRAL;
 	}
 }
