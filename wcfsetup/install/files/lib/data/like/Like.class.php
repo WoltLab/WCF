@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 namespace wcf\data\like;
-use wcf\data\DatabaseObject;
 use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeCache;
+use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
 /**
