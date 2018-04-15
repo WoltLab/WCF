@@ -85,6 +85,15 @@ trait TXmlGuiPackageInstallationPlugin {
 	}
 	
 	/**
+	 * Returns additional template code for the form to add and edit entries.
+	 * 
+	 * @return	string
+	 */
+	public function getAdditionalTemplateCode(): string {
+		return '';
+	}
+	
+	/**
 	 * Checks if the given string needs to be encapsuled by cdata and does so
 	 * if required.
 	 * 

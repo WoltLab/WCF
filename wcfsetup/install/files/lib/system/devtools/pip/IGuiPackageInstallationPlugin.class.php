@@ -42,6 +42,13 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
 	public function editEntry(IFormDocument $form, string $identifier): string;
 	
 	/**
+	 * Returns additional template code for the form to add and edit entries.
+	 * 
+	 * @return	string
+	 */
+	public function getAdditionalTemplateCode(): string;
+	
+	/**
 	 * Returns a list of all pip entries of this pip. 
 	 * 
 	 * @return	IDevtoolsPipEntryList
