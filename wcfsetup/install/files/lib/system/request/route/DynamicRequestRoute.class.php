@@ -64,8 +64,8 @@ class DynamicRequestRoute implements IRequestRoute {
 						(?:-[a-z][a-z0-9]+)*
 					)+
 				)
+				(?:/|$)
 				(?:
-					/
 					(?P<id>\d+)
 					(?:
 						-

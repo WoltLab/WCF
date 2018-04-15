@@ -6,6 +6,7 @@ use wcf\data\IAttachmentMessageQuickReplyAction;
 use wcf\data\IDatabaseObjectAction;
 use wcf\data\IMessage;
 use wcf\data\IMessageQuickReplyAction;
+use wcf\data\IMessageQuickReplyParametersAction;
 use wcf\data\IVisitableObjectAction;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\event\EventHandler;
@@ -157,6 +158,24 @@ class QuickReplyManager extends SingletonFactory {
 		if (isset($parameters['data']['tmpHash'])) {
 			$parameters['tmpHash'] = StringUtil::trim($parameters['data']['tmpHash']);
 			unset($parameters['data']['tmpHash']);
+		}
+		
+		$allowedDataParameters = ['message'];
+		if (!WCF::getUser()->userID) $allowedDataParameters[] = 'username';
+		if ($object instanceof IMessageQuickReplyParametersAction) {
+			$allowedDataParameters = array_merge($allowedDataParameters, $object->getAllowedQuickReplyParameters());
+		}
+		$eventParameters = [
+			'allowedDataParameters' => $allowedDataParameters,
+			'object' => $object
+		];
+		EventHandler::getInstance()->fireAction($this, 'allowedDataParameters', $eventParameters);
+		$allowedDataParameters = $eventParameters['allowedDataParameters'];
+		
+		foreach ($parameters['data'] as $key => $value) {
+			if (!in_array($key, $allowedDataParameters)) {
+				unset($parameters['data'][$key]);
+			}
 		}
 		
 		EventHandler::getInstance()->fireAction($this, 'validateParameters', $parameters);
