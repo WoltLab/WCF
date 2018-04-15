@@ -1739,7 +1739,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.sitemap.changeFreq.yearly"><![CDATA[Yearly]]></item>
 		<item name="wcf.acp.sitemap.changeFreq.never"><![CDATA[Never]]></item>
 		<item name="wcf.acp.sitemap.rebuildTime"><![CDATA[Rebuild Time]]></item>
-		<item name="wcf.acp.sitemap.rebuildTime.description"><![CDATA[The time after the sitemap have to be rebuilt.]]></item>
+		<item name="wcf.acp.sitemap.rebuildTime.description"><![CDATA[Time interval after which the sitemap has to be rebuilt.]]></item>
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Disable Sitemap]]></item>
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Edit Sitemap]]></item>
 		<item name="wcf.acp.sitemap.cliInfo"><![CDATA[You can rebuild the sitemap using CLI. For that, execute <kbd>worker wcf\system\worker\SitemapRebuildWorker</kbd> in a CLI session.]]></item>
