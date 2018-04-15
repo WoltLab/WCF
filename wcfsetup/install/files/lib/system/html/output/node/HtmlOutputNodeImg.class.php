@@ -126,7 +126,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 						$element->setAttribute('srcset', $srcset);
 					}
 				}
-				else if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !ApplicationHandler::getInstance()->isInternalURL($src)) {
+				else if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
 					$element->parentNode->insertBefore($element->ownerDocument->createTextNode('[IMG:'), $element);
 					
 					$link = $element->ownerDocument->createElement('a');
@@ -221,5 +221,20 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 		catch (CryptoException $e) {
 			return $link;
 		}
+	}
+	
+	protected function isAllowedOrigin($src) {
+		static $ownDomains;
+		if ($ownDomains === null) {
+			$ownDomains = array();
+			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+				if (!in_array($application->domainName, $ownDomains)) {
+					$ownDomains[] = $application->domainName;
+				}
+			}
+		}
+		
+		$host = @parse_url($src, PHP_URL_HOST);
+		return $host !== false && in_array($host, $ownDomains);
 	}
 }
