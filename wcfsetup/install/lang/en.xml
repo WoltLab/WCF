@@ -1082,6 +1082,8 @@
 		<item name="wcf.acp.option.category.general.payment.paidSubscription"><![CDATA[Paid Subscriptions]]></item>
 		<item name="wcf.acp.option.google_maps_api_key"><![CDATA[Browser API Key]]></item>
 		<item name="wcf.acp.option.google_maps_api_key.description"><![CDATA[Google provides a detailed description on how to get an API key <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://developers.google.com/maps/documentation/javascript/get-api-key'|rawurlencode}" class="externalURL">here</a>.]]></item>
+		<item name="wcf.acp.option.category.message.general.image"><![CDATA[Images]]></item>
+		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Allow images from external sites]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

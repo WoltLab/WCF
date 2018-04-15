@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\bbcode;
+use wcf\system\application\ApplicationHandler;
 use wcf\util\StringUtil;
 
 /**
@@ -23,6 +24,10 @@ class ImageBBCode extends AbstractBBCode {
 		}
 		
 		if ($parser->getOutputType() == 'text/html') {
+			if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !ApplicationHandler::getInstance()->isInternalURL($src)) {
+				return '[IMG:<a href="'.$src.'">'.$src.'</a>]';
+			}
+			
 			$float = '';
 			if (isset($openingTag['attributes'][1])) {
 				$float = $openingTag['attributes'][1];

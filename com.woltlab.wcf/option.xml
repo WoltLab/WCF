@@ -201,6 +201,9 @@
 					<category name="message.general.edit">
 						<parent>message.general</parent>
 					</category>
+					<category name="message.general.image">
+						<parent>message.general</parent>
+					</category>
 				
 				<category name="message.attachment">
 					<parent>message</parent>
@@ -961,6 +964,14 @@ memcached:cache_source_memcached_host]]></enableoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /message.general.share -->
+			
+			<!-- message.general.image -->
+			<option name="image_allow_external_source">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<!-- /message.general.image -->
 			
 			<!-- message.censorship -->
 			<option name="enable_censorship">
