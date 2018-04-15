@@ -5,6 +5,7 @@ use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\IEditableCachedObject;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\IFormNode;
 use wcf\system\WCF;
 use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
@@ -255,8 +256,17 @@ XML;
 		}
 		
 		$data = [];
+		/** @var \DOMNode $attribute */
+		foreach ($element->attributes as $attribute) {
+			$data[$attribute->nodeName] = $attribute->nodeValue;
+		}
 		foreach ($element->childNodes as $childNode) {
-			$data[$childNode->nodeName] = $childNode->nodeValue;
+			if ($childNode instanceof \DOMText) {
+				$data['__value'] = $childNode->nodeValue;
+			}
+			else {
+				$data[$childNode->nodeName] = $childNode->nodeValue;
+			}
 		}
 		
 		/** @var IFormNode $node */
