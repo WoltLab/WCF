@@ -22,6 +22,8 @@
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
 
+{@$pipObject->getPip()->getAdditionalTemplateCode()}
+
 {@$form->getHtml()}
 
 {include file='footer'}
