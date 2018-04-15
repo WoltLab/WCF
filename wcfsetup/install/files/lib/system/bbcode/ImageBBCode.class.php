@@ -24,7 +24,7 @@ class ImageBBCode extends AbstractBBCode {
 		}
 		
 		if ($parser->getOutputType() == 'text/html') {
-			if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !ApplicationHandler::getInstance()->isInternalURL($src)) {
+			if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
 				return '[IMG:<a href="'.$src.'">'.$src.'</a>]';
 			}
 			
@@ -56,5 +56,20 @@ class ImageBBCode extends AbstractBBCode {
 			
 			return '';
 		}
+	}
+	
+	protected function isAllowedOrigin($src) {
+		static $ownDomains;
+		if ($ownDomains === null) {
+			$ownDomains = array();
+			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+				if (!in_array($application->domainName, $ownDomains)) {
+					$ownDomains[] = $application->domainName;
+				}
+			}
+		}
+		
+		$host = @parse_url($src, PHP_URL_HOST);
+		return $host !== false && in_array($host, $ownDomains);
 	}
 }
