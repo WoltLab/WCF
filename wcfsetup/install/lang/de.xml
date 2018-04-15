@@ -1067,7 +1067,7 @@
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
 		<item name="wcf.acp.option.image_adapter_type.description"><![CDATA[Bibliothek für die Generierung von Grafiken, wird z.B. für die Skalierung von hochgeladenen Bildern verwendet. „ImageMagick“ ist in der Regel deutlich schneller, steht aber nicht auf jedem Server zur Verfügung.]]></item>
 		<item name="wcf.acp.option.log_ip_address"><![CDATA[Speicherung von IP-Adressen]]></item>
-		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Aktiviert die Speicherung von IP-Adressen der Benutzer in z.B. Sitzungen, Benutzerprofilen, Forenbeiträgen.]]></item>
+		<item name="wcf.acp.option.log_ip_address.description"><![CDATA[Aktiviert die dauerhafte Speicherung von IP-Adressen der Benutzer in z.B. Benutzerprofilen und Forenbeiträgen.]]></item>
 		<item name="wcf.acp.option.mail_admin_address"><![CDATA[Administrator-Adresse]]></item>
 		<item name="wcf.acp.option.mail_admin_address.description"><![CDATA[E-Mail-Adresse des Administrators]]></item>
 		<item name="wcf.acp.option.mail_from_address"><![CDATA[Absender-Adresse]]></item>
@@ -2557,6 +2557,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.contact.sender"><![CDATA[Absender]]></item>
 		<item name="wcf.contact.sender.information"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Angaben]]></item>
 		<item name="wcf.contact.success"><![CDATA[Ihre Nachricht wurde erfolgreich versandt.]]></item>
+		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[Ich habe die <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">Datenschutzerklärung</a> gelesen und stimme dieser zu. <span class="customOptionRequired">*</span>]]></item>
 	</category>
 	
 	<category name="wcf.date">
@@ -4013,7 +4014,7 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}Neue Benachrichtigung{else}{#$count} neue Benachrichtigungen{/if}]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.intro"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} derzeit insgesamt {#$notifications|count} ungelesene Benachrichtigungen, die älter als 24 Stunden sind:]]></item>
+{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} derzeit insgesamt {#$notifications|count} ungelesene Benachrichtigung{if $notifications|count != 1}en{/if}, die älter als 24 Stunden {if $notifications|count == 1}ist{else}sind{/if}:]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.outro"><![CDATA[{if $notifications|count > $maximum}{if LANGUAGE_USE_INFORMAL_VARIANT}Besuche deine{else}Besuchen Sie Ihre{/if} Benachrichtigungs-Übersicht [URL:{link controller='NotificationList' isEmail=true}{/link}], um auch die restlichen {#$remaining} Benachrichtigungen einzusehen.
 
 {/if}Diese E-Mail ist eine automatische Benachrichtigung. BITTE {if LANGUAGE_USE_INFORMAL_VARIANT}ANTWORTE{else}ANTWORTEN SIE{/if} NICHT AUF DIESE E-MAIL.
@@ -4024,7 +4025,7 @@ Benachrichtigungen auf {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] n
 Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} keine E-Mail-Benachrichtigungen mehr erhalten {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese direkt abbestellen: {link controller='NotificationDisable' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}.]]></item>
 		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h2>Hallo {@$mailbox->getUser()->username},</h2>
 
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} derzeit insgesamt {#$notifications|count} ungelesene Benachrichtigungen, die älter als 24 Stunden sind:</p>]]></item>
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} derzeit insgesamt {#$notifications|count} ungelesene Benachrichtigung{if $notifications|count != 1}en{/if}, die älter als 24 Stunden {if $notifications|count == 1}ist{else}sind{/if}:</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.html.outro"><![CDATA[{if $notifications|count > $maximum}<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Besuche{else}Besuchen Sie{/if} <a href="{link controller='NotificationList' isEmail=true}{/link}">{if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Benachrichtigungs-Übersicht</a>, um auch die restlichen {#$remaining} Benachrichtigungen einzusehen.</p>{/if}
 
 <p>Diese E-Mail ist eine automatische Benachrichtigung. <b>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}antworte{else}antworten Sie{/if} nicht auf diese E-Mail</b>.</p>
