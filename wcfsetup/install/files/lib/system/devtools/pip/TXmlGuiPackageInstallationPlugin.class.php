@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace wcf\system\devtools\pip;
 use wcf\data\devtools\project\DevtoolsProject;
+use wcf\data\IEditableCachedObject;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
@@ -204,6 +205,10 @@ XML;
 			$baseClass = call_user_func([$this->className, 'getBaseClass']);
 			$itemEditor = new $this->className(new $baseClass(null, $statement->fetchArray()));
 			$itemEditor->update($newElementData);
+		}
+		
+		if (is_subclass_of($this->className, IEditableCachedObject::class)) {
+			call_user_func([$this->className, 'resetCache']);
 		}
 	}
 	
