@@ -294,11 +294,7 @@ WCF.Comment.Handler = Class.extend({
 			}
 		}
 		else if (this._loadNextResponses[commentID] !== undefined) {
-			var $showAddResponse = this._loadNextResponses[commentID].next();
 			this._loadNextResponses[commentID].remove();
-			if ($showAddResponse.length) {
-				$showAddResponse.trigger('click');
-			}
 		}
 	},
 	
