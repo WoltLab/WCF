@@ -1234,6 +1234,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.article_sort_order"><![CDATA[Sortierungsreihenfolge]]></item>
 		<item name="wcf.acp.option.article_sort_order.description"><![CDATA[Standard-Reihenfolge für die Liste der Artikel.]]></item>
 		<item name="wcf.acp.option.use_page_title_on_landing_page"><![CDATA[Titel der Seite als Überschrift auf Startseite anzeigen]]></item>
+		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Bilder von externen Seiten erlauben]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

@@ -2,6 +2,7 @@
 namespace wcf\system\html\output\node;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\request\LinkHandler;
 use wcf\util\exception\CryptoException;
@@ -104,6 +105,18 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 						
 						$element->setAttribute('srcset', $srcset);
 					}
+				}
+				else if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !ApplicationHandler::getInstance()->isInternalURL($src)) {
+					$element->parentNode->insertBefore($element->ownerDocument->createTextNode('[IMG:'), $element);
+					
+					$link = $element->ownerDocument->createElement('a');
+					$link->setAttribute('href', $src);
+					$link->textContent = $src;
+					$element->parentNode->insertBefore($link, $element);
+					
+					$element->parentNode->insertBefore($element->ownerDocument->createTextNode(']'), $element);
+					
+					$element->parentNode->removeChild($element);
 				}
 			}
 		}

@@ -348,7 +348,7 @@
 			<option name="module_gravatar">
 				<categoryname>module.user</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="module_users_online">
 				<categoryname>module.user</categoryname>
@@ -1000,6 +1000,11 @@ Pinterest</defaultvalue>
 			<!-- /message.general.share -->
 			
 			<!-- message.general.image -->
+			<option name="image_allow_external_source">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
 			<option name="module_image_proxy">
 				<categoryname>message.general.image</categoryname>
 				<optiontype>boolean</optiontype>

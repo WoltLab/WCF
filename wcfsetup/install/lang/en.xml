@@ -1236,6 +1236,7 @@
 		<item name="wcf.acp.option.article_sort_order"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.option.article_sort_order.description"><![CDATA[Choose default sort order of articles.]]></item>
 		<item name="wcf.acp.option.use_page_title_on_landing_page"><![CDATA[Use page title on landing page]]></item>
+		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Allow images from external sites]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
