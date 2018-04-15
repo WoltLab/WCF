@@ -3,9 +3,9 @@ declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 
 /**
- * Implementation of a form field for integer values.
+ * Implementation of a form field for float values.
  * 
- * If a non-required integer field is left empty, its value is `0`.
+ * If a non-required float field is left empty, its value is `0.0`.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
@@ -13,9 +13,4 @@ namespace wcf\system\form\builder\field;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	3.2
  */
-class IntegerFormField extends AbstractNumericFormField {
-	/**
-	 * @inheritDoc
-	 */
-	protected $integerValues = true;
-}
+class FloatFormField extends AbstractNumericFormField {}

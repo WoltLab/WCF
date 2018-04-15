@@ -16,7 +16,7 @@ interface IMaximumFormField {
 	 * Returns the maximum of the values of this field or `null` if no maximum
 	 * has been set.
 	 * 
-	 * @return	null|int
+	 * @return	null|number
 	 */
 	public function getMaximum();
 	
@@ -24,10 +24,10 @@ interface IMaximumFormField {
 	 * Sets the maximum of the values of this field. If `null` is passed, the
 	 * maximum is removed.
 	 * 
-	 * @param	null|int	$maximum	maximum field value
+	 * @param	null|number	$maximum	maximum field value
 	 * @return	static				this field
 	 * 
-	 * @throws	\InvalidArgumentException	if the given maximum is no integer or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given maximum is no number or otherwise invalid
 	 */
-	public function maximum(int $maximum = null): IMaximumFormField;
+	public function maximum($maximum = null): IMaximumFormField;
 }
