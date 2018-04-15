@@ -7,7 +7,7 @@
  * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager
  * @since	3.2
  */
-define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Util'], function(Dictionary, DomChangeListener, EventHandler, List, DomUtil) {
+define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Util', 'ObjectMap'], function(Dictionary, DomChangeListener, EventHandler, List, DomUtil, ObjectMap) {
 	"use strict";
 	
 	/**
@@ -54,47 +54,13 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Util'],
 	var _nodeDependencies = new Dictionary();
 	
 	/**
-	 * list of required fields
-	 * @type	{List}
+	 * cache of validation-related properties of hidden form fields
+	 * @type	{ObjectMap}
 	 * @private
 	 */
-	var _validatedFields = new List();
+	var _validatedFieldProperties = new ObjectMap();
 	
 	return {
-		/**
-		 * Check if for an invalid form field if it has been hidden due to dependencies
-		 * and discards any validation error message if that is the case.
-		 * 
-		 * @param	{Event}		event	`invalid` form field event 
-		 * @protected
-		 */
-		_checkRequiredField: function(event) {
-			_dependencyHiddenNodes.forEach(function(hiddenNode) {
-				if (DomUtil.contains(hiddenNode, event.currentTarget)) {
-					event.preventDefault();
-					event.stopPropagation();
-				};
-			});
-		},
-		
-		/**
-		 * Registers the (new) required fields of all registered forms.
-		 * 
-		 * @protected
-		 */
-		_registerValidatedFields: function() {
-			_forms.forEach(function(form) {
-				// `minlength` does not trigger `invalid` events
-				elBySelAll('[max], [maxlength], [min], [required]', form, function(validatedField) {
-					if (!_validatedFields.has(validatedField)) {
-						_validatedFields.add(validatedField);
-						
-						validatedField.addEventListener('invalid', this._checkRequiredField.bind(this));
-					}
-				}.bind(this))
-			}.bind(this));
-		},
-		
 		/**
 		 * Hides the given node because of its own dependencies.
 		 * 
@@ -104,6 +70,35 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Util'],
 		_hide: function(node) {
 			elHide(node);
 			_dependencyHiddenNodes.add(node);
+			
+			elBySelAll('[max], [maxlength], [min], [required]', node, function(validatedField) {
+				var properties = new Dictionary();
+				
+				var max = elAttr(validatedField, 'max');
+				if (max) {
+					properties.set('max', max);
+					validatedField.removeAttribute('max');
+				}
+				
+				var maxlength = elAttr(validatedField, 'maxlength');
+				if (maxlength) {
+					properties.set('maxlength', maxlength);
+					validatedField.removeAttribute('maxlength');
+				}
+				
+				var min = elAttr(validatedField, 'min');
+				if (min) {
+					properties.set('min', min);
+					validatedField.removeAttribute('min');
+				}
+				
+				if (validatedField.required) {
+					properties.set('required', true);
+					validatedField.removeAttribute('required');
+				}
+				
+				_validatedFieldProperties.set(validatedField, properties);
+			}.bind(this));
 		},
 		
 		/**
@@ -115,6 +110,27 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Util'],
 		_show: function(node) {
 			elShow(node);
 			_dependencyHiddenNodes.delete(node);
+			
+			elBySelAll('input, select', node, function(validatedField) {
+				if (_validatedFieldProperties.has(validatedField)) {
+					var properties = _validatedFieldProperties.get(validatedField);
+					
+					if (properties.has('max')) {
+						elAttr(validatedField, 'max', properties.get('max'));
+					}
+					if (properties.has('maxlength')) {
+						elAttr(validatedField, 'maxlength', properties.get('maxlength'));
+					}
+					if (properties.has('min')) {
+						elAttr(validatedField, 'min', properties.get('min'));
+					}
+					if (properties.has('required')) {
+						elAttr(validatedField, 'required', '');
+					}
+					
+					_validatedFieldProperties.delete(validatedField);
+				}
+			}.bind(this));
 		},
 		
 		/**
@@ -255,10 +271,6 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Util'],
 			}
 			
 			_forms.add(form);
-			
-			this._registerValidatedFields();
-			
-			DomChangeListener.add('WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager', this._registerValidatedFields.bind(this));
 		}
 	};
 });
