@@ -1442,6 +1442,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.page_logo_link_to_app_default.description"><![CDATA[Deaktiviere{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} diese Option, damit das Logo stets auf die globale Startseite verlinkt. Die Deaktivierung entspricht dem Verhalten in früheren Versionen.]]></item>
 		<item name="wcf.acp.option.module_user_cover_photo"><![CDATA[Titelbilder aktivieren]]></item>
 		<item name="wcf.acp.option.module_user_cover_photo.description"><![CDATA[Aktiviert die Darstellung und die Verwaltung von Titelbildern.]]></item>
+		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Bilder von externen Seiten erlauben]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">
