@@ -2,6 +2,7 @@
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
+
 /**
  * @author	Alexander Ebert
  * @copyright	2001-2018 WoltLab GmbH
