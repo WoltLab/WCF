@@ -5,8 +5,8 @@
 		<packagedescription><![CDATA[Free web-framework, designed and developed for complex community applications.]]></packagedescription>
 		<packagedescription language="de"><![CDATA[Freies Web-Framework, das für komplexe Community-Anwendungen entworfen und entwickelt wurde.]]></packagedescription>
 		<isapplication>1</isapplication>
-		<version>2.1.20</version> <!-- codename: typhoon -->
-		<date>2018-03-14</date>
+		<version>2.1.21</version> <!-- codename: typhoon -->
+		<date>2018-04-16</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -136,10 +136,10 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="2.1.19">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		
-		<instruction type="language">language/*.xml</instruction>
+		<instruction type="language" run="standalone">language/*.xml</instruction>
+		<instruction type="option">option.xml</instruction>
 	</instructions>
 </package>
