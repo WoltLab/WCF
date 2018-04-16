@@ -655,9 +655,10 @@ class WCFSetup extends WCF {
 			if (isset($_POST['dbNumber'])) $dbNumber = max(0, intval($_POST['dbNumber']));
 			
 			// get port
+			$dbHostWithoutPort = $dbHost;
 			$dbPort = 0;
 			if (preg_match('/^(.+?):(\d+)$/', $dbHost, $match)) {
-				$dbHost = $match[1];
+				$dbHostWithoutPort = $match[1];
 				$dbPort = intval($match[2]);
 			}
 			
@@ -666,7 +667,7 @@ class WCFSetup extends WCF {
 				// check connection data
 				/** @var \wcf\system\database\Database $db */
 				try {
-					$db = new MySQLDatabase($dbHost, $dbUser, $dbPassword, $dbName, $dbPort, true, !!(self::$developerMode));
+					$db = new MySQLDatabase($dbHostWithoutPort, $dbUser, $dbPassword, $dbName, $dbPort, true, !!(self::$developerMode));
 				}
 				catch (DatabaseException $e) {
 					// work-around for older MySQL versions that don't know utf8mb4
@@ -737,7 +738,7 @@ class WCFSetup extends WCF {
 					// write configuration to config.inc.php
 					$file = new File(WCF_DIR.'config.inc.php');
 					$file->write("<?php\n");
-					$file->write("\$dbHost = '".str_replace("'", "\\'", $dbHost)."';\n");
+					$file->write("\$dbHost = '".str_replace("'", "\\'", $dbHostWithoutPort)."';\n");
 					$file->write("\$dbPort = ".$dbPort.";\n");
 					$file->write("\$dbUser = '".str_replace("'", "\\'", $dbUser)."';\n");
 					$file->write("\$dbPassword = '".str_replace("'", "\\'", $dbPassword)."';\n");
