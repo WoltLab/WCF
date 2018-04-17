@@ -96,7 +96,7 @@
 	</instructions>
 	
 	<!-- WARNING: Include the update script! `acp/update_com.woltlab.wcf_3.1.2.php` -->
-	<instructions type="update" fromversion="3.1.2">
+	<instructions type="update" fromversion="3.1.1">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
