@@ -74,8 +74,6 @@ class LikeObject extends DatabaseObject {
 				$this->reactions = $cachedReactions;
 			}
 		}
-		
-		
 	}
 	
 	/**
