@@ -43,6 +43,12 @@ class LikeObject extends DatabaseObject {
 	protected $users = [];
 	
 	/**
+	 * A list with all reaction counts. 
+	 * @var integer[] 
+	 */
+	protected $reactions = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected function handleData($data) {
@@ -59,12 +65,24 @@ class LikeObject extends DatabaseObject {
 				}
 			}
 		}
+		
+		// get user objects from cache
+		if (!empty($data['cachedReactions'])) {
+			$cachedReactions = @unserialize($data['cachedReactions']);
+			
+			if (is_array($cachedReactions)) {
+				$this->reactions = $cachedReactions;
+			}
+		}
+		
+		
 	}
 	
 	/**
 	 * Returns the first 3 users who liked this object.
 	 * 
 	 * @return	User[]
+	 * @deprecated  since 3.2, this value is no longer maintained
 	 */
 	public function getUsers() {
 		return $this->users;
@@ -81,6 +99,17 @@ class LikeObject extends DatabaseObject {
 		}
 		
 		return $this->likedObject;
+	}
+	
+	/**
+	 * Returns all reaction counts for this object. Reactions without any count won't be saved in the array. 
+	 * So this method returns an empty array, if this object has no reactions.
+	 * 
+	 * @return      integer[]
+	 * @since	3.2
+	 */
+	public function getReactions(): array {
+		return $this->reactions; 
 	}
 	
 	/**
