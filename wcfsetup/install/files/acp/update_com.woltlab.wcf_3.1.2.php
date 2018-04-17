@@ -137,12 +137,13 @@ foreach ($languages as $language) {
 $conditions = new PreparedStatementConditionBuilder();
 $conditions->add("languageID IN (?)", [$languageIDs]);
 $conditions->add("pageID = (SELECT pageID FROM wcf".WCF_N."_page WHERE identifier = ?)", ['com.woltlab.wcf.PrivacyPolicy']);
-$sql = "SELECT  pageContentID, languageID, content
-			FROM    wcf".WCF_N."_page_content
-			".$conditions;
+$sql = "SELECT  pageContentID, pageID, languageID, content
+	FROM    wcf".WCF_N."_page_content
+	".$conditions;
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute($conditions->getParameters());
 $data = [];
+$pageID = 0;
 while ($row = $statement->fetchArray()) {
 	// Process the content by extracting the text and stripping any
 	// whitespaces, eliminating any differences that can happen when
@@ -152,14 +153,15 @@ while ($row = $statement->fetchArray()) {
 	$content = $processor->getTextContent();
 	$content = preg_replace('~\s+~', '', $content);
 	
-	$languageID = $row['languageID'];
-	if (sha1($content) !== $hashes[$languageID]) {
+	$languageCode = LanguageFactory::getInstance()->getLanguage($row['languageID'])->languageCode;
+	if (sha1($content) !== $hashes[$languageCode]) {
 		// The content does not match, do not risk overwriting any
 		// user-made changes and skip this language.
 		continue;
 	}
 	
-	$data[$row['pageContentID']] = (LanguageFactory::getInstance()->getLanguage($languageID)->languageCode == 'de') ? $content_de : $content_en;
+	$data[$row['pageContentID']] = ($languageCode == 'de') ? $content_de : $content_en;
+	$pageID = $row['pageID'];
 }
 
 if (!empty($data)) {
@@ -169,8 +171,17 @@ if (!empty($data)) {
 	$statement = WCF::getDB()->prepareStatement($sql);
 	foreach ($data as $pageContentID => $content) {
 		$statement->execute([
-			$pageContentID,
-			$content
+			$content,
+			$pageContentID
 		]);
 	}
+	
+	$sql = "UPDATE  wcf".WCF_N."_page
+		SET     lastUpdateTime = ?
+		WHERE   pageID = ?";
+	$statement = WCF::getDB()->prepareStatement($sql);
+	$statement->execute([
+		TIME_NOW,
+		$pageID
+	]);
 }
