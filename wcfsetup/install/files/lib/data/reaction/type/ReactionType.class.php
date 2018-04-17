@@ -106,7 +106,7 @@ class ReactionType extends DatabaseObject {
 	 * 
 	 * @return	bool
 	 */
-	public function isPositive() {
+	public function isPositive(): bool {
 		return $this->type == self::REACTION_TYPE_POSITIVE;
 	}
 	
@@ -115,7 +115,7 @@ class ReactionType extends DatabaseObject {
 	 *
 	 * @return	bool
 	 */
-	public function isNegative() {
+	public function isNegative(): bool {
 		return $this->type == self::REACTION_TYPE_NEGATIVE;
 	}
 	
@@ -124,7 +124,7 @@ class ReactionType extends DatabaseObject {
 	 *
 	 * @return	bool
 	 */
-	public function isNeutral() {
+	public function isNeutral(): bool {
 		return $this->type == self::REACTION_TYPE_NEUTRAL;
 	}
 }
