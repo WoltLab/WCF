@@ -20,6 +20,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\IFormContainer;
+use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\data\GuiPackageInstallationPluginFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -257,34 +258,12 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					}
 				})),
 			
-			TextFormField::create('className')
+			ClassNameFormField::create('className')
 				->attribute('data-tag', 'classname')
 				->label('wcf.acp.pip.objectType.className')
 				->description('<!-- will be replaced by JavaScript -->')
 				->required()
-				->addValidator(new FormFieldValidator('noLeadingBackslash', function(TextFormField $formField) {
-					$definitionName = $formField->getDocument()->getNodeById('definitionName')->getValue();
-					if ($definitionName && substr($formField->getValue(), 0, 1) === '\\') {
-						$formField->addValidationError(
-							new FormFieldValidationError(
-								'leadingBackslash',
-								'wcf.acp.pip.objectType.className.error.leadingBackslash'
-							)
-						);
-					}
-				}))
-				->addValidator(new FormFieldValidator('classExists', function(TextFormField $formField) {
-					$definitionName = $formField->getDocument()->getNodeById('definitionName')->getValue();
-					if ($definitionName && !class_exists($formField->getValue())) {
-						$formField->addValidationError(
-							new FormFieldValidationError(
-								'nonExistent',
-								'wcf.acp.pip.objectType.className.error.nonExistent'
-							)
-						);
-					}
-				}))
-				->addValidator(new FormFieldValidator('classImplementsInterface', function(TextFormField $formField) {
+				->addValidator(new FormFieldValidator('implementsInterface', function(TextFormField $formField) {
 					$definitionName = $formField->getDocument()->getNodeById('definitionName')->getValue();
 					if ($definitionName) {
 						$definition = ObjectTypeCache::getInstance()->getDefinitionByName($definitionName);
@@ -293,8 +272,8 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 							$formField->addValidationError(
 								new FormFieldValidationError(
 									'interface',
-									'wcf.acp.pip.objectType.className.error.interface',
-									['interfaceName' => $definition->interfaceName]
+			 						'wcf.form.field.className.error.interface',
+									['interface' => $definition->interfaceName]
 								)
 							);
 						}
@@ -450,31 +429,12 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		// com.woltlab.wcf.clipboardItem
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.clipboardItem')
 			->appendChild(
-				TextFormField::create('clipboardItemListClassName')
+				ClassNameFormField::create('clipboardItemListClassName')
 					->attribute('data-tag', 'listclassname')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName.description')
 					->required()
-					->addValidator(new FormFieldValidator('classExists', function(TextFormField $formField) {
-						if ($formField->getValue()) {
-							if (!class_exists($formField->getValue())) {
-								$formField->addValidationError(
-									new FormFieldValidationError(
-										'nonExistent',
-										'wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName.error.nonExistent'
-									)
-								);
-							}
-							else if (!is_subclass_of($formField->getValue(), DatabaseObjectList::class)) {
-								$formField->addValidationError(
-									new FormFieldValidationError(
-										'parentClass',
-										'wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName.error.parentClass'
-									)
-								);
-							}
-						}
-					}))
+					->parentClass(DatabaseObjectList::class)
 			);
 		
 		// com.woltlab.wcf.condition.ad
