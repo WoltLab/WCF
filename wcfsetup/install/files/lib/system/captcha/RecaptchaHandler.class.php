@@ -49,6 +49,11 @@ class RecaptchaHandler implements ICaptchaHandler {
 	 * @inheritDoc
 	 */
 	public function isAvailable() {
+		if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
+			// OEM keys are no longer supported, disable reCAPTCHA
+			return false;
+		}
+		
 		return true;
 	}
 	
