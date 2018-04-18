@@ -39,7 +39,7 @@ class TextFormField extends AbstractFormField implements II18nFormField, IMaximu
 			}
 			else {
 				foreach ($value as $languageID => $languageValue) {
-					$this->validateText($languageValue, $languageID);
+					$this->validateText($languageValue, LanguageFactory::getInstance()->getLanguage($languageID));
 				}
 			}
 		}
@@ -59,14 +59,9 @@ class TextFormField extends AbstractFormField implements II18nFormField, IMaximu
 	 * Checks the length of the given text with the given language.
 	 * 
 	 * @param	string		$text		validated text
-	 * @param	null|int	$languageID	language id of validated text or `null` for monolingual text
+	 * @param	null|Language	$language	language of validated text or `null` for monolingual text
 	 */
-	protected function validateText(string $text, int $languageID = null) {
-		$language = null;
-		if ($languageID !== null) {
-			$language = LanguageFactory::getInstance()->getLanguage($languageID);
-		}
-		
+	protected function validateText(string $text, Language $language = null) {
 		$this->validateMinimumLength($text, $language);
 		$this->validateMaximumLength($text, $language);
 	}

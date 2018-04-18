@@ -3120,6 +3120,11 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 	</category>
 	
 	<category name="wcf.form">
+		<item name="wcf.form.field.className.error.interface"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} implementiert nicht das Interface <code>{$interface}</code>.]]></item>
+		<item name="wcf.form.field.className.error.isInstantiable"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} ist nicht instanziierbar.]]></item>
+		<item name="wcf.form.field.className.error.leadingBackslash"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} darf keinen führenden Backslash besitzen.]]></item>
+		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} existiert nicht.]]></item>
+		<item name="wcf.form.field.className.error.parentClass"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} erbt nicht von <code>{$parentClass}</code>.]]></item>
 		<item name="wcf.form.field.itemList.error.separator"><![CDATA[Die folgenden Elemente dürfen kein {if $separator === ','}Komma{else}Leerzeichen{/if} enthalten: {implode from=$invalidItems item=item}“{$item}”{/implode}.]]></item>
 	</category>
 	

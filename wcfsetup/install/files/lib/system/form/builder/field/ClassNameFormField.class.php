@@ -1,0 +1,204 @@
+<?php
+namespace wcf\system\form\builder\field;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+
+/**
+ * Implementation of a form field to enter the name of a PHP class.
+ * 
+ * @author	Matthias Schmidt
+ * @copyright	2001-2018 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	WoltLabSuite\Core\System\Form\Builder\Field
+ * @since	3.2
+ */
+class ClassNameFormField extends TextFormField {
+	/**
+	 * `true` if the entered class must exist
+	 * @var	bool
+	 */
+	protected $__classExists = true;
+	
+	/**
+	 * name of the interface the entered class must implement
+	 * @var	string
+	 */
+	protected $__implementedInterface = '';
+	
+	/**
+	 * `true` if the entered class must be instantiable
+	 * @var	bool
+	 */
+	protected $__isInstantiable = true;
+	
+	/**
+	 * name of the class the entered class must extend
+	 * @var	string
+	 */
+	protected $__parentClass = '';
+	
+	/**
+	 * Sets whether entered class must exist and returns this field.
+	 * 
+	 * @param	bool		$classExists	determines if entered class must exist
+	 * @return	static				this field
+	 */
+	public function classExists(bool $classExists = true): ClassNameFormField {
+		$this->__classExists = $classExists;
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns `true` if the entered class must exist. By default, `true` is
+	 * returned.
+	 * 
+	 * @return	bool
+	 */
+	public function getClassExists(): bool {
+		return $this->__classExists;
+	}
+	
+	/**
+	 * Returns class the entered class must extend or an empty string if the
+	 * entered class does not have to extend any specific class. By default,
+	 * an empty string is returned.
+	 * 
+	 * @return	string
+	 */
+	public function getImplementedInterface(): string {
+		return $this->__implementedInterface;
+	}
+	
+	/**
+	 * Returns `true` if the entered class must be instantiable. By default,
+	 * `true` is returned.
+	 *
+	 * @return	bool
+	 */
+	public function getIsInstantiable(): bool {
+		return $this->__isInstantiable;
+	}
+	
+	/**
+	 * Returns name of the interface the entered class must implement or an
+	 * empty string if the entered class does not have to implement any specific
+	 * interface. By default, an empty string is returned.
+	 *
+	 * @return	string
+	 */
+	public function getParentClass(): string {
+		return $this->__parentClass;
+	}
+	
+	/**
+	 * Returns the name of the interface the entered class must implement.
+	 * 
+	 * @param	string		$interface	name of the interface the entered class must implement
+	 * @return	static				this field
+	 * 
+	 * @throws	\InvalidArgumentException	if the entered interface does not exists
+	 */
+	public function implementedInterface(string $interface): ClassNameFormField {
+		if (!interface_exists($interface)) {
+			throw new \InvalidArgumentException("Interface '{$interface}' does not exist.");
+		}
+		
+		$this->__implementedInterface = $interface;
+		
+		return $this;
+	}
+	
+	/**
+	 * Sets whether entered class must be instantiable and returns this field.
+	 * 
+	 * @param	bool		$isInstantiable		determines if entered class must be instantiable
+	 * @return	static					this field
+	 */
+	public function isInstantiable(bool $isInstantiable = true): ClassNameFormField {
+		$this->__isInstantiable = $isInstantiable;
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns the name of the class the entered class must extend.
+	 * 
+	 * @param	string		$parentClass	name of the class the entered class must extend
+	 * @return	static				this field
+	 * 
+	 * @throws	\InvalidArgumentException	if the entered class does not exists
+	 */
+	public function parentClass(string $parentClass): ClassNameFormField {
+		if (!class_exists($parentClass)) {
+			throw new \InvalidArgumentException("Class '{$parentClass}' does not exist.");
+		}
+		
+		$this->__parentClass = $parentClass;
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function validateText(string $text, Language $language = null) {
+		parent::validateText($text, $language);
+		
+		if (empty($this->getValidationErrors())) {
+			if (substr($text, 0, 1) === '\\') {
+				$this->addValidationError(
+					new FormFieldValidationError(
+						'leadingBackslash',
+						'wcf.form.field.className.error.leadingBackslash',
+						['language' => $language]
+					)
+				);
+			}
+			else if ($this->getClassExists() && !class_exists($text)) {
+				$this->addValidationError(
+					new FormFieldValidationError(
+						'nonExistent',
+						'wcf.form.field.className.error.nonExistent',
+						['language' => $language]
+					)
+				);
+			}
+			else if ($this->getImplementedInterface() !== '' && !is_subclass_of($text, $this->getImplementedInterface())) {
+				$this->addValidationError(
+					new FormFieldValidationError(
+						'interface',
+						'wcf.form.field.className.error.interface',
+						[
+							'language' => $language,
+							'interface' => $this->getImplementedInterface()
+						]
+					)
+				);
+			}
+			else if ($this->getParentClass() !== '' && !is_subclass_of($text, $this->getParentClass())) {
+				$this->addValidationError(
+					new FormFieldValidationError(
+						'parentClass',
+						'wcf.form.field.className.error.parentClass',
+						[
+							'language' => $language,
+							'parentClass' => $this->getParentClass()
+						]
+					)
+				);
+			}
+			else if ($this->getIsInstantiable()) {
+				$reflection = new \ReflectionClass($text);
+				if (!$reflection->isInstantiable()) {
+					$this->addValidationError(
+						new FormFieldValidationError(
+							'isInstantiable',
+							'wcf.form.field.className.error.isInstantiable',
+							['language' => $language]
+						)
+					);
+				}
+			}
+		}
+	}
+}
