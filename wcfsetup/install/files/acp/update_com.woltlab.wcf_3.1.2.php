@@ -129,9 +129,9 @@ foreach ($languages as $language) {
 	if ($language->languageCode == 'de' || $language->languageCode == 'en') {
 		$languageIDs[] = $language->languageID;
 		
-		// the hash for `de` is `2d2e3feb80a5cfcc7995b04382c588ebd728505e`
-		// the hash for `en` is `229583ceac2141ccf48e765dd6a0a39b6e7e0565`
-		$hashes[$language->languageCode] = ($language->languageCode == 'de') ? '2d2e3feb80a5cfcc7995b04382c588ebd728505e' : '229583ceac2141ccf48e765dd6a0a39b6e7e0565';
+		// the hash for `de` is `75ee56f38ace5914116f144886eeaf1bc0c6ea05`
+		// the hash for `en` is `5cc3153040d5f618cf5e6e604a251264259fa606`
+		$hashes[$language->languageCode] = ($language->languageCode == 'de') ? '75ee56f38ace5914116f144886eeaf1bc0c6ea05' : '5cc3153040d5f618cf5e6e604a251264259fa606';
 	}
 }
 $conditions = new PreparedStatementConditionBuilder();
@@ -145,13 +145,14 @@ $statement->execute($conditions->getParameters());
 $data = [];
 $pageID = 0;
 while ($row = $statement->fetchArray()) {
-	// Process the content by extracting the text and stripping any
-	// whitespaces, eliminating any differences that can happen when
-	// reformatting the content without changing the actual content.
+	// Process the content by extracting the text and discarding anything
+	// that is not a-z and A-Z, which preserves almost the entire text, but
+	// strips anything that could be subject to minor changes without
+	// changing the meaning, such as whitespaces.
 	$processor = new \wcf\system\html\input\HtmlInputProcessor();
 	$processor->processIntermediate($row['content']);
 	$content = $processor->getTextContent();
-	$content = preg_replace('~\s+~', '', $content);
+	$content = preg_replace('~[^a-zA-Z]~', '', $content);
 	
 	$languageCode = LanguageFactory::getInstance()->getLanguage($row['languageID'])->languageCode;
 	if (sha1($content) !== $hashes[$languageCode]) {
