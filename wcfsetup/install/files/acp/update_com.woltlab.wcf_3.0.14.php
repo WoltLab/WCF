@@ -119,37 +119,39 @@ foreach ($languages as $language) {
 	if ($language->languageCode == 'de' || $language->languageCode == 'en') {
 		$languageIDs[] = $language->languageID;
 		
-		// the hash for `de` is `a3a1bf04f265862b591e509ff271cf3fea1c0d23`
-		// the hash for `en` is `229583ceac2141ccf48e765dd6a0a39b6e7e0565`
-		$hashes[$language->languageCode] = ($language->languageCode == 'de') ? 'a3a1bf04f265862b591e509ff271cf3fea1c0d23' : '229583ceac2141ccf48e765dd6a0a39b6e7e0565';
+		// the hash for `de` is `b0114d7c1b25d07b0e03e48020e6d51da26c7273`
+		// the hash for `en` is `5cc3153040d5f618cf5e6e604a251264259fa606`
+		$hashes[$language->languageCode] = ($language->languageCode == 'de') ? 'b0114d7c1b25d07b0e03e48020e6d51da26c7273' : '5cc3153040d5f618cf5e6e604a251264259fa606';
 	}
 }
 $conditions = new PreparedStatementConditionBuilder();
 $conditions->add("languageID IN (?)", [$languageIDs]);
 $conditions->add("pageID = (SELECT pageID FROM wcf".WCF_N."_page WHERE identifier = ?)", ['com.woltlab.wcf.PrivacyPolicy']);
-$sql = "SELECT  pageContentID, languageID, content
-			FROM    wcf".WCF_N."_page_content
-			".$conditions;
+$sql = "SELECT  pageContentID, pageID, languageID, content
+	FROM    wcf".WCF_N."_page_content
+	".$conditions;
 $statement = WCF::getDB()->prepareStatement($sql);
 $statement->execute($conditions->getParameters());
 $data = [];
 while ($row = $statement->fetchArray()) {
-	// Process the content by extracting the text and stripping any
-	// whitespaces, eliminating any differences that can happen when
-	// reformatting the content without changing the actual content.
+	// Process the content by extracting the text and discarding anything
+	// that is not a-z and A-Z, which preserves almost the entire text, but
+	// strips anything that could be subject to minor changes without
+	// changing the meaning, such as whitespaces.
 	$processor = new \wcf\system\html\input\HtmlInputProcessor();
 	$processor->processIntermediate($row['content']);
 	$content = $processor->getTextContent();
-	$content = preg_replace('~\s+~', '', $content);
+	$content = preg_replace('~[^a-zA-Z]~', '', $content);
 	
-	$languageID = $row['languageID'];
-	if (sha1($content) !== $hashes[$languageID]) {
+	$languageCode = LanguageFactory::getInstance()->getLanguage($row['languageID'])->languageCode;
+	if (sha1($content) !== $hashes[$languageCode]) {
 		// The content does not match, do not risk overwriting any
 		// user-made changes and skip this language.
 		continue;
 	}
 	
-	$data[$row['pageContentID']] = (LanguageFactory::getInstance()->getLanguage($languageID)->languageCode == 'de') ? $content_de : $content_en;
+	$data[$row['pageContentID']] = ($languageCode == 'de') ? $content_de : $content_en;
+	$pageID = $row['pageID'];
 }
 
 if (!empty($data)) {
@@ -159,8 +161,17 @@ if (!empty($data)) {
 	$statement = WCF::getDB()->prepareStatement($sql);
 	foreach ($data as $pageContentID => $content) {
 		$statement->execute([
-			$pageContentID,
-			$content
+			$content,
+			$pageContentID
 		]);
 	}
+	
+	$sql = "UPDATE  wcf".WCF_N."_page
+		SET     lastUpdateTime = ?
+		WHERE   pageID = ?";
+	$statement = WCF::getDB()->prepareStatement($sql);
+	$statement->execute([
+		TIME_NOW,
+		$pageID
+	]);
 }
