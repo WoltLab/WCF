@@ -76,6 +76,10 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		// would conflict with already existing entities when reverting them.
 		@$this->document->loadHTML('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body>' . $html . '</body></html>');
 		
+		// flush libxml's error buffer, after all we don't care for any errors caused
+		// by the `loadHTML()` call above anyway
+		libxml_clear_errors();
+		
 		// fix the `<pre>` linebreaks again
 		$pres = $this->document->getElementsByTagName('pre');
 		for ($i = 0, $length = $pres->length; $i < $length; $i++) {
