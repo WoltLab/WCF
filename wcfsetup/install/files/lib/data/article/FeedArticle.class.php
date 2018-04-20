@@ -41,7 +41,7 @@ class FeedArticle extends ViewableArticle implements IFeedEntryWithEnclosure {
 	 * @inheritDoc
 	 */
 	public function getFormattedMessage() {
-		return $this->getExcerpt();
+		return $this->getDecoratedObject()->getFormattedContent();
 	}
 	
 	/**
@@ -55,7 +55,7 @@ class FeedArticle extends ViewableArticle implements IFeedEntryWithEnclosure {
 	 * @inheritDoc
 	 */
 	public function getExcerpt($maxLength = 255) {
-		return StringUtil::encodeHTML($this->getDecoratedObject()->getTeaser());
+		return StringUtil::truncateHTML($this->getDecoratedObject()->getFormattedTeaser(), $maxLength);
 	}
 	
 	/**
