@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>3.0.14 pl 1</version> <!-- codename: vortex -->
-		<date>2018-04-20</date>
+		<version>3.0.14 pl 2</version> <!-- codename: vortex -->
+		<date>2018-04-21</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -92,23 +92,7 @@
 		<instruction type="script">acp/update_com.woltlab.wcf_3.0_post_sql.php</instruction>
 	</instructions>
 	
-	<!-- WARNING: Include the update script! `acp/update_com.woltlab.wcf_3.0.14.php` -->
-	<instructions type="update" fromversion="3.0.13">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+	<instructions type="update" fromversion="3.0.14 pl 1">
 		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
-		<instruction type="script">acp/update_com.woltlab.wcf_3.0.14.php</instruction>
-		
-		<instruction type="language" />
-		
-		<instruction type="option" />
-		<instruction type="page" />
-		<instruction type="userGroupOption" />
-	</instructions>
-	<instructions type="update" fromversion="3.0.14">
-		<instruction type="file">files_update.tar</instruction>
-		
-		<instruction type="script">acp/update_com.woltlab.wcf_3.0.14.php</instruction>
 	</instructions>
 </package>
