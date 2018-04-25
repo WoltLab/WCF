@@ -509,8 +509,13 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}
 		
 		// find users
+		$searchString = addcslashes($searchString, '_%');
+		$parameters = [
+			'searchString' => $searchString
+		];
+		EventHandler::getInstance()->fireAction($this, 'beforeFindUsers', $parameters);
 		$userProfileList = new UserProfileList();
-		$userProfileList->getConditionBuilder()->add("username LIKE ?", [addcslashes($searchString, '_%').'%']);
+		$userProfileList->getConditionBuilder()->add("username LIKE ?", [$parameters['searchString'].'%']);
 		if (!empty($excludedSearchValues)) {
 			$userProfileList->getConditionBuilder()->add("username NOT IN (?)", [$excludedSearchValues]);
 		}
