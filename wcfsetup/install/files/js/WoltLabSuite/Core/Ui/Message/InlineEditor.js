@@ -339,7 +339,20 @@ define(
 			event.preventDefault();
 			
 			//noinspection JSCheckFunctionSignatures
-			this._dropdownSelect(elData(event.currentTarget, 'item'));
+			var item = elData(event.currentTarget, 'item');
+			var data = {
+				cancel: false,
+				element: this._activeDropdownElement,
+				item: item
+			};
+			EventHandler.fire('com.woltlab.wcf.inlineEditor', 'dropdownItemClick_' + this._options.dropdownIdentifier, data);
+			
+			if (data.cancel === true) {
+				event.preventDefault();
+			}
+			else {
+				this._dropdownSelect(item);
+			}
 		},
 		
 		/**

@@ -1435,6 +1435,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.page_logo_link_to_app_default.description"><![CDATA[Disabling this option will cause the link to always point to the global landing page instead. This option enforces the behavior known from previous versions when disabled.]]></item>
 		<item name="wcf.acp.option.module_user_cover_photo"><![CDATA[Enable user cover photos]]></item>
 		<item name="wcf.acp.option.module_user_cover_photo.description"><![CDATA[Enables the display and upload of user profile cover photos.]]></item>
+		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Allow images from external sites]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">
