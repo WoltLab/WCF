@@ -49,7 +49,13 @@
 		
 		{if MODULE_GRAVATAR}
 			<dl class="avatarType{if $errorField == 'gravatar'} formError{/if}">
-				<dt><img src="https://secure.gravatar.com/avatar/{@$__wcf->user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage icon96"></dt>
+				<dt>
+					{if $avatarType == 'gravatar'}
+						<img src="https://secure.gravatar.com/avatar/{@$__wcf->user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage gravatarPreview icon96">
+					{else}
+						<img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage gravatarPreview icon96">
+					{/if}
+				</dt>
 				<dd>
 					<label><input type="radio" name="avatarType" value="gravatar"{if $avatarType == 'gravatar'} checked{/if}> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
 					{if $errorField == 'gravatar'}
@@ -57,7 +63,10 @@
 							{if $errorType == 'notFound'}{lang}wcf.user.avatar.type.gravatar.error.notFound{/lang}{/if}
 						</small>
 					{/if}
-					<small>{lang}wcf.user.avatar.type.gravatar.description{/lang}</small>
+					<small>
+						{lang}wcf.user.avatar.type.gravatar.description{/lang}
+						{if $avatarType != 'gravatar'}<br><span class="gravatarPreviewDownload pointer" data-src="https://secure.gravatar.com/avatar/{@$__wcf->user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" data-confirm-message-html="{lang}wcf.user.avatar.type.gravatar.download.message{/lang}"><span class="icon icon16 fa-download"></span> {lang}wcf.user.avatar.type.gravatar.download{/lang}</span>{/if}
+					</small>
 				</dd>
 			</dl>
 		{/if}
@@ -91,6 +100,12 @@
 				new WCF.User.Avatar.Upload();
 			{/if}
 		});
+
+		{if MODULE_GRAVATAR}
+			require(['WoltLabSuite/Core/Ui/User/Avatar/GravatarDownload'], function (GravatarDownload) {
+				GravatarDownload.init();
+			});
+		{/if}
 	</script>
 {/if}
 

@@ -3900,8 +3900,10 @@ Open the link below to access the user profile:
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Your Avatar]]></item>
 		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar with a maximum file size of {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize}. The minimum dimensions are 128×128 pixel.]]></item>
 		<item name="wcf.user.avatar.type.gravatar"><![CDATA[Use Gravatar]]></item>
-		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Gravatar (Global Recognized Avatar) provides a globally reusable avatar connected with your email address “{$__wcf->user->email}”. Visit <a href="https://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a> to set up or change your avatar.]]></item>
+		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Gravatar (Global Recognized Avatar) provides a globally reusable avatar connected with your email address “{$__wcf->user->email}”. Visit <a href="https://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a> to set up or change your avatar.<br>Your gravatar will be renewed periodically; in order to do this we submit your MD5-encoded email address.]]></item>
 		<item name="wcf.user.avatar.type.gravatar.error.notFound"><![CDATA[Your email address is not connected with a gravatar.]]></item>
+		<item name="wcf.user.avatar.type.gravatar.download"><![CDATA[Download Gravatar-Preview]]></item>
+		<item name="wcf.user.avatar.type.gravatar.download.message"><![CDATA[In order to download your Gravatar we need to send a request including your MD5-hashed email address to a server of the Gravatar-service via your computer. Gravatar will be able to read some personal information like your IP-Address, Hostname, UserAgent or other general information. By continuing this process you accept this.]]></item>
 		<item name="wcf.user.avatar.type.none"><![CDATA[Do Not Use Avatar]]></item>
 		<item name="wcf.user.avatar.type.none.description"><![CDATA[Your current avatar will be deleted.]]></item>
 		<item name="wcf.user.avatar.upload.error.badImage"><![CDATA[Your avatar is invalid.]]></item>
