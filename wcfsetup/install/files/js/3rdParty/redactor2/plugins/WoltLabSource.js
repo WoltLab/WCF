@@ -90,8 +90,14 @@ $.Redactor.prototype.WoltLabSource = function() {
 				// fix height
 				var height = this.$editor[0].offsetHeight;
 				
+				// the `code.show()` method trashes successive newlines
+				var code = this.code.get();
+				
 				mpShow.call(this);
 				
+				this.source.$textarea.val(code);
+				
+				// noinspection JSSuspiciousNameCombination
 				textarea.style.setProperty('height', Math.ceil(height) + 'px', '');
 				textarea.style.setProperty('display', 'block', '');
 				
