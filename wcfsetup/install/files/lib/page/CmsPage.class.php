@@ -51,6 +51,11 @@ class CmsPage extends AbstractPage {
 			$this->pageID = $metaData['cms']['pageID'];
 			
 			if (isset($metaData['cms']['languageID'])) $this->languageID = $metaData['cms']['languageID'];
+			
+			// check if the language has been disabled
+			if ($this->languageID && LanguageFactory::getInstance()->getLanguage($this->languageID) === null) {
+				throw new IllegalLinkException();
+			}
 		}
 		
 		if ($this->pageID) {
