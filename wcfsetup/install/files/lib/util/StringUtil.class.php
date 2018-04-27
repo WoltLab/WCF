@@ -198,7 +198,7 @@ final class StringUtil {
 	 */
 	public static function formatDouble($double, $maxDecimals = 0) {
 		// round
-		$double = round($double, ($maxDecimals > 2 ? $maxDecimals : 2));
+		$double = round($double, ($maxDecimals > 0 ? $maxDecimals : 2));
 		
 		// consider as integer, if no decimal places found
 		if (!$maxDecimals && preg_match('~^(-?\d+)(?:\.(?:0*|00[0-4]\d*))?$~', $double, $match)) {
