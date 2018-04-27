@@ -76,6 +76,12 @@ abstract class AbstractArticlePage extends AbstractPage {
 		if ($this->articleContent === null) {
 			throw new IllegalLinkException();
 		}
+		
+		// check if the language has been disabled
+		if ($this->articleContent->languageID && LanguageFactory::getInstance()->getLanguage($this->articleContent->languageID) === null) {
+			throw new IllegalLinkException();
+		}
+		
 		$this->article = ViewableArticle::getArticle($this->articleContent->articleID, false);
 		$this->category = $this->article->getCategory();
 		
