@@ -127,11 +127,11 @@
 			
 			var config = {
 				buttons: buttons,
-				clipboardImageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
+				clipboardImageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('attach')}true{else}false{/if},
 				direction: '{lang}wcf.global.pageDirection{/lang}',
 				formatting: ['p', 'h2', 'h3', 'h4'],
 				imageCaption: false,
-				imageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
+				imageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('attach')}true{else}false{/if},
 				lang: 'wsc', // fake language to offload phrases
 				langs: {
 					wsc: {
