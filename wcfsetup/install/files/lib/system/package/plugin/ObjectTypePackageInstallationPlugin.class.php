@@ -20,12 +20,12 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\IFormContainer;
-use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\data\GuiPackageInstallationPluginFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\FloatFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\ItemListFormField;
@@ -272,7 +272,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 							$formField->addValidationError(
 								new FormFieldValidationError(
 									'interface',
-			 						'wcf.form.field.className.error.interface',
+									'wcf.form.field.className.error.interface',
 									['interface' => $definition->interfaceName]
 								)
 							);
