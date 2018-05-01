@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\SingletonFactory;
 
 /**
  * Implementation of a form field to enter the name of a PHP class.
@@ -189,7 +190,7 @@ class ClassNameFormField extends TextFormField {
 			}
 			else if ($this->getIsInstantiable()) {
 				$reflection = new \ReflectionClass($text);
-				if (!$reflection->isInstantiable()) {
+				if (!$reflection->isInstantiable() && !is_subclass_of($text, SingletonFactory::class) && !$reflection->isAbstract()) {
 					$this->addValidationError(
 						new FormFieldValidationError(
 							'isInstantiable',

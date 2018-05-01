@@ -57,10 +57,10 @@ class ItemListFormField extends AbstractFormField {
 				return '';
 			
 			case self::SAVE_VALUE_TYPE_CSV:
-				return implode(',', $this->getValue());
+				return implode(',', $this->getValue() ?: []);
 			
 			case self::SAVE_VALUE_TYPE_SSV:
-				return implode(' ', $this->getValue());
+				return implode(' ', $this->getValue() ?: []);
 			
 			default:
 				throw new \LogicException("Unreachable");
