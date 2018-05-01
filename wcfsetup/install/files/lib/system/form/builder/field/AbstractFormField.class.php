@@ -219,6 +219,7 @@ abstract class AbstractFormField implements IFormField {
 	
 	/**
 	 * @inheritDoc
+	 * @return	static
 	 */
 	public function required(bool $required = true): IFormField {
 		$this->__required = $required;
