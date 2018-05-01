@@ -671,6 +671,7 @@ class WCF {
 	 * Returns the invoked application.
 	 * 
 	 * @return      Application
+	 * @since	3.1
 	 */
 	public static function getActiveApplication() {
 		return ApplicationHandler::getInstance()->getActiveApplication();
