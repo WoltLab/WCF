@@ -2,9 +2,11 @@
 declare(strict_types=1);
 namespace wcf\data\like\object;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\User;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
+use wcf\util\JSON;
 
 /**
  * Represents a liked object.
@@ -71,7 +73,20 @@ class LikeObject extends DatabaseObject {
 			$cachedReactions = @unserialize($data['cachedReactions']);
 			
 			if (is_array($cachedReactions)) {
-				$this->reactions = $cachedReactions;
+				foreach ($cachedReactions as $reactionTypeID => $reactionCount) {
+					$reaction = ReactionTypeCache::getInstance()->getReactionTypeByID($reactionTypeID);
+					
+					// prevent outdated reactions
+					if ($reaction !== null) {
+						$this->reactions[$reactionTypeID] = [
+							'reactionCount' => $reactionCount,
+							'renderedReactionIcon' => $reaction->renderIcon(),
+							'renderedReactionIconEncoded' => JSON::encode($reaction->renderIcon()),
+							'reactionTitle' => $reaction->getTitle(),
+							'reactionType' => $reaction->type
+						];
+					}
+				}
 			}
 		}
 	}
