@@ -52,7 +52,7 @@ class StyleCompiler extends SingletonFactory {
 		// read stylesheets in dependency order
 		$sql = "SELECT		filename, application
 			FROM		wcf".WCF_N."_package_installation_file_log
-			WHERE           filename REGEXP ?
+			WHERE           CONVERT(filename using utf8) REGEXP ?
 					AND packageID <> ?
 			ORDER BY	packageID";
 		$statement = WCF::getDB()->prepareStatement($sql);
