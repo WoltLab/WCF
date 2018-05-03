@@ -149,6 +149,89 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			return ['count' => 0, 'pageCount' => 0, 'searchID' => 0, 'template' => WCF::getTPL()->fetch('packageSearchResultList')];
 		}
 		
+		// remove duplicates by picking either the lowest available version of a package
+		// or the version exposed by trusted package servers
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("packageUpdateID IN (?)", [array_keys($packageUpdates)]);
+		$sql = "SELECT  packageUpdateID, packageUpdateServerID, package
+			FROM    wcf".WCF_N."_package_update
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		$possiblePackages = [];
+		while ($row = $statement->fetchArray()) {
+			$possiblePackages[$row['package']][$row['packageUpdateID']] = $row['packageUpdateServerID'];
+		}
+		
+		$trustedServerIDs = [];
+		foreach (PackageUpdateServer::getActiveUpdateServers() as $packageUpdateServer) {
+			if ($packageUpdateServer->isTrustedServer() || $packageUpdateServer->isWoltLabStoreServer()) {
+				$trustedServerIDs[] = $packageUpdateServer->packageUpdateServerID;
+			}
+		}
+		
+		// remove duplicates when there are both versions from trusted and untrusted servers
+		foreach ($possiblePackages as $identifier => $packageSources) {
+			$hasTrustedSource = false;
+			foreach ($packageSources as $packageUpdateID => $packageUpdateServerID) {
+				if (in_array($packageUpdateServerID, $trustedServerIDs)) {
+					$hasTrustedSource = true;
+					break;
+				}
+			}
+			
+			if ($hasTrustedSource) {
+				$possiblePackages[$identifier] = array_filter($packageSources, function($packageUpdateServerID) use ($trustedServerIDs) {
+					return in_array($packageUpdateServerID, $trustedServerIDs);
+				});
+			}
+		}
+		
+		// sort by the lowest version and return all other sources for the same package
+		$validPackageUpdateIDs = [];
+		foreach ($possiblePackages as $identifier => $packageSources) {
+			if (count($packageSources) > 1) {
+				$packageUpdateVersionIDs = [];
+				foreach (array_keys($packageSources) as $packageUpdateID) {
+					$packageUpdateVersionIDs[] = $packageUpdates[$packageUpdateID]['accessible'];
+				}
+				
+				$conditions = new PreparedStatementConditionBuilder();
+				$conditions->add("packageUpdateVersionID IN (?)", [$packageUpdateVersionIDs]);
+				
+				$sql = "SELECT  packageUpdateVersionID, packageUpdateID, packageVersion
+					FROM    wcf".WCF_N."_package_update_version
+					".$conditions;
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute($conditions->getParameters());
+				$packageVersions = [];
+				while ($row = $statement->fetchArray()) {
+					$packageVersions[$row['packageUpdateVersionID']] = [
+						'packageUpdateID' => $row['packageUpdateID'],
+						'packageVersion' => $row['packageVersion']
+					];
+				}
+				
+				uasort($packageVersions, function($a, $b) {
+					return Package::compareVersion($a['packageVersion'], $b['packageVersion']);
+				});
+				
+				reset($packageVersions);
+				$validPackageUpdateIDs[] = current($packageVersions)['packageUpdateID'];
+			}
+			else {
+				reset($packageSources);
+				$validPackageUpdateIDs[] = key($packageSources);
+			}
+		}
+		
+		// filter by package update version ids
+		foreach ($packageUpdates as $packageUpdateID => $packageData) {
+			if (!in_array($packageUpdateID, $validPackageUpdateIDs)) {
+				unset($packageUpdates[$packageUpdateID]);
+			}
+		}
+		
 		$search = SearchEditor::create([
 			'userID' => WCF::getUser()->userID,
 			'searchData' => serialize($packageUpdates),
