@@ -273,7 +273,7 @@ class WCF {
 			// Especially the `identity` value appears to be unrecognized by some of them, hence
 			// we'll just gzip the output of the exception to prevent them from tampering.
 			// This part is copied from `HeaderUtil` in order to isolate the exception handler!
-			if (HTTP_ENABLE_GZIP && !defined('HTTP_DISABLE_GZIP')) {
+			if (defined('HTTP_ENABLE_GZIP') && HTTP_ENABLE_GZIP && !defined('HTTP_DISABLE_GZIP')) {
 				if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
 					if (strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip')) {
 						@header('Content-Encoding: x-gzip');
