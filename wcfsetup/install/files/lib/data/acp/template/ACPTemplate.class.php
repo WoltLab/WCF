@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace wcf\data\acp\template;
 use wcf\data\DatabaseObject;
+use wcf\data\package\PackageCache;
 
 /**
  * Represents an ACP template.
@@ -21,4 +22,24 @@ class ACPTemplate extends DatabaseObject {
 	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'templateID';
+	
+	/**
+	 * Returns the path to this template.
+	 * 
+	 * @return	string
+	 * @since	3.2
+	 */
+	public function getPath() {
+		return PackageCache::getInstance()->getPackage($this->packageID)->getAbsolutePackageDir() . 'acp/templates/' . $this->templateName . '.tpl';
+	}
+	
+	/**
+	 * Returns the source of this template.
+	 * 
+	 * @return	string
+	 * @since	3.2
+	 */
+	public function getSource() {
+		return @file_get_contents($this->getPath());
+	}
 }

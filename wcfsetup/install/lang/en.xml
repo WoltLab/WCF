@@ -1882,6 +1882,18 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.userNotificationEvent.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions in order to see the event in their notification settings.]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.presetMailNotificationType"><![CDATA[Default Mail Notification Type]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.presetMailNotificationType.description"><![CDATA[If a notification type is selected, users’ mail setting for this event will have the selected value by default.]]></item>
+		<item name="wcf.acp.pip.templateListener.environment"><![CDATA[Environment]]></item>
+		<item name="wcf.acp.pip.templateListener.environment.description"><![CDATA[The environment determines whether the template listener is executed in the frontend (<code>user</code>) or the ACP (<code>admin</code>).]]></item>
+		<item name="wcf.acp.pip.templateListener.eventName"><![CDATA[Event]]></item>
+		<item name="wcf.acp.pip.templateListener.eventName.description"><![CDATA[The selected event determines at which location in the template the template listeners’ code is inserted.]]></item>
+		<item name="wcf.acp.pip.templateListener.eventName.error.nonExistent"><![CDATA[The is no event with the given name in the selected template.]]></item>
+		<item name="wcf.acp.pip.templateListener.name"><![CDATA[Template Listener Name]]></item>
+		<item name="wcf.acp.pip.templateListener.name.description"><![CDATA[The name of the event may only contain letters and must begin with a lowercase letter.]]></item>
+		<item name="wcf.acp.pip.templateListener.name.error.format"><![CDATA[The entered name is invalid.]]></item>
+		<item name="wcf.acp.pip.templateListener.templateCode"><![CDATA[Template Code]]></item>
+		<item name="wcf.acp.pip.templateListener.templateCode.description"><![CDATA[The entered template code is inserted at the location of the specified template event.]]></item>
+		<item name="wcf.acp.pip.templateListener.templateName"><![CDATA[Template]]></item>
+		<item name="wcf.acp.pip.templateListener.templateName.description"><![CDATA[The template listeners’ code will be inserted into the selected template.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">

@@ -30,6 +30,13 @@ use wcf\util\FileUtil;
  */
 class Package extends DatabaseObject {
 	/**
+	 * recursive list of packages that were given as required packages during installation
+	 * @var		Package[]
+	 * @since	3.2
+	 */
+	protected $allRequiredPackages;
+	
+	/**
 	 * list of packages that this package requires
 	 * @var	Package[]
 	 */
@@ -136,6 +143,32 @@ class Package extends DatabaseObject {
 		}
 		
 		return $this->requiredPackages;
+	}
+	
+	/**
+	 * Returns the recursive list of packages which are required by this package.
+	 * The returned packages are the packages given in the <requiredpackages> tag
+	 * in the package.xml of this package and recursively repeats that for all of
+	 * those required packages.
+	 *
+	 * @return	Package[]
+	 * @since	3.2
+	 */
+	public function getAllRequiredPackages() {
+		if ($this->allRequiredPackages === null) {
+			$this->allRequiredPackages = $this->getRequiredPackages();
+			$packagesToCheck = $this->allRequiredPackages;
+			
+			/** @var Package $checkedPackage */
+			while (($checkedPackage = array_pop($packagesToCheck))) {
+				$newRequiredPackages = array_diff($checkedPackage->getRequiredPackages(), $this->allRequiredPackages);
+				
+				$this->allRequiredPackages += $newRequiredPackages;
+				$packagesToCheck = array_merge($packagesToCheck, $newRequiredPackages);
+			}
+		}
+		
+		return $this->allRequiredPackages;
 	}
 	
 	/**
