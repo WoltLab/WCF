@@ -150,8 +150,10 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Util', 
 			var fields = dependency.getFields();
 			for (var i = 0, length = fields.length; i < length; i++) {
 				var field = fields[i];
-				if (!_fields.has(field.id)) {
-					_fields.set(field.id, field);
+				var id = DomUtil.identify(field);
+				
+				if (!_fields.has(id)) {
+					_fields.set(id, field);
 					
 					if (field.tagName === 'INPUT' && (field.type === 'checkbox' || field.type === 'radio')) {
 						field.addEventListener('change', this.checkDependencies.bind(this));
@@ -186,7 +188,7 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Util', 
 					}
 				}
 				
-				// no node dependencies is met
+				// no node dependency is met
 				this._hide(dependentNode);
 			}.bind(this));
 			
@@ -247,7 +249,18 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Util', 
 		 * @return	{boolean}
 		 */
 		isHiddenByDependencies: function(node) {
-			return _dependencyHiddenNodes.has(node);
+			if (_dependencyHiddenNodes.has(node)) {
+				return true;
+			}
+			
+			var returnValue = false;
+			_dependencyHiddenNodes.forEach(function(hiddenNode) {
+				if (DomUtil.contains(hiddenNode, node)) {
+					returnValue = true;
+				}
+			});
+			
+			return returnValue;
 		},
 		
 		/**
