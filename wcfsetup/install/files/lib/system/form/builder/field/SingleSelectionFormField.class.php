@@ -16,7 +16,40 @@ class SingleSelectionFormField extends AbstractFormField implements INullableFor
 	use TSelectionFormField;
 	
 	/**
+	 * `true` if this field's options are filterable by the user
+	 * @var	bool
+	 */
+	protected $__filterable = false;
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected $templateName = '__singleSelectionFormField';
+	
+	/**
+	 * Sets if the selection options can be filtered by the user so that they
+	 * are able to quickly find the desired option out of a larger list of
+	 * available options.
+	 * 
+	 * @param	bool	$filterable	determines if field's options are filterable by user
+	 * @return	static			this node
+	 */
+	public function filterable($filterable = true): SingleSelectionFormField {
+		$this->__filterable = $filterable;
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns `true` if the selection options can be filtered by the user so
+	 * that they are able to quickly find the desired option out of a larger
+	 * list of available options and returns `false` otherwise.
+	 * 
+	 * Per default, fields are not filterable.
+	 *
+	 * @return	bool
+	 */
+	public function isFilterable(): bool {
+		return $this->__filterable;
+	}
 }
