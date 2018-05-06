@@ -276,6 +276,15 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 					
 					$listenerList->getConditionBuilder()->add('eventName = ?', [$eventName]);
 					$listenerList->getConditionBuilder()->add('environment = ?', [$formField->getSaveValue()]);
+					
+					if ($listenerList->countObjects() > 0) {
+						$formField->getDocument()->getNodeById('name')->addValidationError(
+							new FormFieldValidationError(
+								'notUnique',
+								'wcf.acp.pip.templateListener.name.error.notUnique'
+							)
+						);
+					}
 				})),
 			
 			// TODO: use field with code support

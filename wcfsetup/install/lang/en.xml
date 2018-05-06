@@ -1890,6 +1890,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.templateListener.name"><![CDATA[Template Listener Name]]></item>
 		<item name="wcf.acp.pip.templateListener.name.description"><![CDATA[The name of the event may only contain letters and must begin with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.templateListener.name.error.format"><![CDATA[The entered name is invalid.]]></item>
+		<item name="wcf.acp.pip.templateListener.name.error.notUnique"><![CDATA[The entered name is already used by another template listener for the same event.]]></item>
 		<item name="wcf.acp.pip.templateListener.templateCode"><![CDATA[Template Code]]></item>
 		<item name="wcf.acp.pip.templateListener.templateCode.description"><![CDATA[The entered template code is inserted at the location of the specified template event.]]></item>
 		<item name="wcf.acp.pip.templateListener.templateName"><![CDATA[Template]]></item>
