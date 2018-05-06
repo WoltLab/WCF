@@ -70,19 +70,27 @@ define(['./Manager'], function(DependencyManager) {
 			
 			this._field = elById(fieldId);
 			if (this._field === null) {
-				throw new Error("Unknown field with id '" + fieldId + "'.");
-			}
-			
-			this._fields = [this._field];
-			
-			// handle special case of boolean form fields that have to form fields
-			if (this._field.tagName === 'INPUT' && this._field.type === 'radio' && elData(this._field, 'no-input-id') !== '') {
-				this._noField = elById(elData(this._field, 'no-input-id'));
-				if (this._noField === null) {
-					throw new Error("Cannot find 'no' input field for input field '" + fieldId + "'");
-				}
+				this._fields = [];
+				elBySelAll('input[type=radio][name=' + fieldId + ']', undefined, function(field) {
+					this._fields.push(field);
+				}.bind(this));
 				
-				this._fields.push(this._noField);
+				if (!this._fields.length) {
+					throw new Error("Unknown field with id '" + fieldId + "'.");
+				}
+			}
+			else {
+				this._fields = [this._field];
+				
+				// handle special case of boolean form fields that have to form fields
+				if (this._field.tagName === 'INPUT' && this._field.type === 'radio' && elData(this._field, 'no-input-id') !== '') {
+					this._noField = elById(elData(this._field, 'no-input-id'));
+					if (this._noField === null) {
+						throw new Error("Cannot find 'no' input field for input field '" + fieldId + "'");
+					}
+					
+					this._fields.push(this._noField);
+				}
 			}
 			
 			DependencyManager.addDependency(this);

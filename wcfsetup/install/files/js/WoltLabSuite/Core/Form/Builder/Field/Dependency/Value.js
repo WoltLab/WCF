@@ -8,7 +8,7 @@
  * @see 	module:WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
  * @since	3.2
  */
-define(['./Abstract', 'Core'], function(Abstract, Core) {
+define(['./Abstract', 'Core', './Manager'], function(Abstract, Core, Manager) {
 	"use strict";
 	
 	/**
@@ -26,9 +26,33 @@ define(['./Abstract', 'Core'], function(Abstract, Core) {
 				throw new Error("Values have not been set.");
 			}
 			
+			var value;
+			if (this._field) {
+				if (Manager.isHiddenByDependencies(this._field)) {
+					return false;
+				}
+				
+				value = this._field.value;
+			}
+			else {
+				for (var i = 0, length = this._fields.length, field; i < length; i++) {
+					field = this._fields[i];
+					
+					if (field.checked) {
+						if (Manager.isHiddenByDependencies(field)) {
+							return false;
+						}
+						
+						value = field.value;
+						
+						break;
+					}
+				}
+			}
+			
 			// do not use `Array.prototype.indexOf()` as we use a weak comparision
 			for (var i = 0, length = this._values.length; i < length; i++) {
-				if (this._values[i] == this._field.value) {
+				if (this._values[i] == value) {
 					return true;
 				}
 			}
