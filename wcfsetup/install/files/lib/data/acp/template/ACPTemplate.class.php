@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 namespace wcf\data\acp\template;
-use wcf\data\DatabaseObject;
 use wcf\data\package\PackageCache;
+use wcf\data\DatabaseObject;
 
 /**
  * Represents an ACP template.
