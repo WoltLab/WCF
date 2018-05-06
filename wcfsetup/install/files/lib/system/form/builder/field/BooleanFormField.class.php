@@ -59,7 +59,13 @@ class BooleanFormField extends AbstractFormField {
 	 * @return	static		this field
 	 */
 	public function value($value): IFormField {
-		if (!is_bool($value)) {
+		if (is_string($value) && in_array($value, ['0', '1', 'true', 'false'])) {
+			$value = ($value === '1' || $value === 'true');
+		}
+		if (is_int($value) && ($value === 0 || $value === 1)) {
+			$value = ($value === 1);
+		}
+		else if (!is_bool($value)) {
 			throw new \InvalidArgumentException("Given value is no bool, " . gettype($value) . " given.");
 		}
 		
