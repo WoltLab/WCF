@@ -27,7 +27,7 @@ final class ImageUtil {
 		$content = str_replace('description', '', $content);
 		
 		// search for javascript
-		if (strstr($content, 'script') || strstr($content, 'javascript') || strstr($content, 'expression(')) return false;
+		if (strpos($content, 'script') !== false || strpos($content, 'javascript') !== false || strpos($content, 'expression(') !== false) return false;
 		
 		return true;
 	}

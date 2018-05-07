@@ -115,6 +115,14 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 				block.parentNode.removeChild(block);
 			}
 			
+			// avoid adjacent blocks that are not paragraphs
+			var sibling = quote.previousElementSibling;
+			if (sibling && sibling.nodeName !== 'P') {
+				sibling = elCreate('p');
+				sibling.textContent = '\u200B';
+				quote.parentNode.insertBefore(sibling, quote);
+			}
+			
 			this._editor.WoltLabCaret.paragraphAfterBlock(quote);
 			
 			this._editor.buffer.set();
