@@ -190,7 +190,7 @@ class ClassNameFormField extends TextFormField {
 			}
 			else if ($this->getIsInstantiable()) {
 				$reflection = new \ReflectionClass($text);
-				if (!$reflection->isInstantiable() && !is_subclass_of($text, SingletonFactory::class) && !$reflection->isAbstract()) {
+				if (!$reflection->isInstantiable() || (is_subclass_of($text, SingletonFactory::class) && $reflection->isAbstract())) {
 					$this->addValidationError(
 						new FormFieldValidationError(
 							'isInstantiable',
