@@ -8,6 +8,7 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\TextFormField;
@@ -134,52 +135,12 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 					}
 				})),
 			
-			TextFormField::create('className')
+			ClassNameFormField::create('className')
 				->attribute('data-tag', '__value')
 				->label('wcf.acp.pip.pip.className')
 				->description('wcf.acp.pip.pip.className.description')
 				->required()
-				->addValidator(new FormFieldValidator('noLeadingBackslash', function(TextFormField $formField) {
-					if (substr($formField->getValue(), 0, 1) === '\\') {
-						$formField->addValidationError(
-							new FormFieldValidationError(
-								'leadingBackslash',
-								'wcf.acp.pip.pip.className.error.leadingBackslash'
-							)
-						);
-					}
-				}))
-				->addValidator(new FormFieldValidator('classExists', function(TextFormField $formField) {
-					if (!class_exists($formField->getValue())) {
-						$formField->addValidationError(
-							new FormFieldValidationError(
-								'nonExistent',
-								'wcf.acp.pip.pip.className.error.nonExistent'
-							)
-						);
-					}
-				}))
-				->addValidator(new FormFieldValidator('implementsInterface', function(TextFormField $formField) {
-					if (!is_subclass_of($formField->getValue(), IPackageInstallationPlugin::class)) {
-						$formField->addValidationError(
-							new FormFieldValidationError(
-								'interface',
-								'wcf.acp.pip.pip.className.error.interface'
-							)
-						);
-					}
-				}))
-				->addValidator(new FormFieldValidator('isInstantiable', function(TextFormField $formField) {
-					$reflection = new \ReflectionClass($formField->getValue());
-					if (!$reflection->isInstantiable()) {
-						$formField->addValidationError(
-							new FormFieldValidationError(
-								'interface',
-								'wcf.acp.pip.pip.className.error.isInstantiable'
-							)
-						);
-					}
-				}))
+				->implementedInterface(IPackageInstallationPlugin::class)
 		]);
 	}
 	
