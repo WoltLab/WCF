@@ -25,7 +25,7 @@
 	<rule ref="Generic.PHP.LowerCaseConstant" />
 	<rule ref="Generic.PHP.LowerCaseKeyword" />
 	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent" />
-	<rule ref="Squiz.Asrrays.ArrayBracketSpacing" />
+	<rule ref="Squiz.Arrays.ArrayBracketSpacing" />
 	<rule ref="Squiz.Classes.LowercaseClassKeywords" />
 	<rule ref="Squiz.Classes.SelfMemberReference" />
 	<rule ref="Squiz.Classes.ValidClassName" />
