@@ -906,11 +906,44 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					}
 				}
 				
+				var isInsidePre = false;
+				if (e.which === this.keyCode.BACKSPACE && this.selection.isCollapsed() && this.detect.isWebkit()) {
+					var block = this.selection.block();
+					if (block !== false && block.nodeName === 'PRE') {
+						isInsidePre = true;
+					}
+				}
+				
 				// remove style tag
 				setTimeout($.proxy(function()
 				{
+					var current;
+					
 					if (firefoxKnownCustomElements.length > 0) {
 						firefoxDetectSplitCustomElements();
+					}
+					
+					// The caret was previously inside a `<pre>`, check if we have backspaced out
+					// of the code and are now left inside a `<span>` with a metric ton of styles. 
+					if (isInsidePre) {
+						var block = this.selection.block();
+						if (block === false || block.nodeName !== 'PRE') {
+							current = this.selection.current();
+							// If the keystroke caused the `<pre>` to vanish, then the caret has moved into the
+							// adjacent element, but the `current`'s next sibling is the newly added `<span>`.
+							if (current.nodeType === Node.TEXT_NODE && current.nextSibling && current.nextSibling.nodeName === 'SPAN') {
+								var sibling = current.nextSibling;
+								
+								// check for typical styles that are a remains of the `<pre>`'s styles
+								if (sibling.style.getPropertyValue('font-family').indexOf('monospace') !== -1 && sibling.style.getPropertyValue('white-space') === 'pre-wrap') {
+									// the sibling is a rogue `<span>`, remove it
+									while (sibling.childNodes.length) {
+										sibling.parentNode.insertBefore(sibling.childNodes[0], sibling);
+									}
+									elRemove(sibling);
+								}
+							}
+						}
 					}
 					
 					this.code.syncFire = false;
@@ -928,7 +961,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					this.keydown.formatEmpty(e);
 					
 					// strip empty <kbd>
-					var current = this.selection.current();
+					current = this.selection.current();
 					if (current.nodeName === 'KBD' && current.innerHTML.length === 0) {
 						elRemove(current);
 					}

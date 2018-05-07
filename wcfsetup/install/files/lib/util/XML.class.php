@@ -59,6 +59,10 @@ class XML {
 			throw new SystemException("Could not read xml document located at '".$this->path."'.");
 		}
 		
+		// flush the error buffer in case someone used global xml functions
+		// without polling / clearing the buffer after use
+		libxml_clear_errors();
+		
 		// load xml document
 		$this->document->load($path);
 		
@@ -77,6 +81,10 @@ class XML {
 	 */
 	public function loadXML($path, $xml) {
 		$this->path = $path;
+		
+		// flush the error buffer in case someone used global xml functions
+		// without polling / clearing the buffer after use
+		libxml_clear_errors();
 		
 		// load xml document
 		$this->document->loadXML($xml);

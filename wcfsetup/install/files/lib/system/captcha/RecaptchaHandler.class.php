@@ -27,6 +27,12 @@ class RecaptchaHandler implements ICaptchaHandler {
 	public $response = '';
 	
 	/**
+	 * ACP option override
+	 * @var boolean
+	 */
+	public static $forceIsAvailable = false;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function getFormElement() {
@@ -50,6 +56,16 @@ class RecaptchaHandler implements ICaptchaHandler {
 	 * @inheritDoc
 	 */
 	public function isAvailable() {
+		if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
+			// OEM keys are no longer supported, disable reCAPTCHA
+			if (self::$forceIsAvailable) {
+				// work-around for the ACP option selection
+				return true;
+			}
+			
+			return false;
+		}
+		
 		return true;
 	}
 	

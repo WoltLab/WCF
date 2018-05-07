@@ -25,7 +25,7 @@
 	<rule ref="Generic.PHP.LowerCaseConstant" />
 	<rule ref="Generic.PHP.LowerCaseKeyword" />
 	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent" />
-	<rule ref="Squiz.Arrays.ArrayBracketSpacing" />
+	<rule ref="Squiz.Asrrays.ArrayBracketSpacing" />
 	<rule ref="Squiz.Classes.LowercaseClassKeywords" />
 	<rule ref="Squiz.Classes.SelfMemberReference" />
 	<rule ref="Squiz.Classes.ValidClassName" />
@@ -46,11 +46,9 @@
 	<!--TODO:<rule ref="WCF.Functions.OpeningFunctionBraceKernighanRitchie" />-->
 	<rule ref="WCF.Methods.MethodDeclaration" />
 	<rule ref="WCF.Namespaces.ClassMustBeImported" />
-	<rule ref="WCF.Namespaces.SortedUseDeclaration" />
 	<rule ref="WCF.Namespaces.UseDeclaration" />
 	<rule ref="WCF.WhiteSpace.SuperfluousWhitespace" />
 	<rule ref="Zend.Files.ClosingTag" />
-	
 	
 	<!-- Use Unix newlines -->
 	<rule ref="Generic.Files.LineEndings">
