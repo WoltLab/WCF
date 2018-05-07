@@ -1,0 +1,106 @@
+<?php
+namespace wcf\system\form\builder\field;
+use wcf\data\package\PackageCache;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\IFormNode;
+use wcf\system\WCF;
+
+/**
+ * Implementation of a form field for options.
+ * 
+ * This field uses the `wcf.form.field.options` language item as the default
+ * form field label and uses `options` as the default node id.
+ * 
+ * @author	Matthias Schmidt
+ * @copyright	2001-2018 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	WoltLabSuite\Core\System\Form\Builder\Field
+ * @since	3.2
+ */
+class OptionFormField extends ItemListFormField {
+	/**
+	 * ids of the packages whose options will be considered
+	 * @var	int[]
+	 */
+	protected $__packageIDs = [];
+	
+	/**
+	 * Creates a new instance of `OptionsFormField`.
+	 */
+	public function __construct() {
+		$this->label('wcf.form.field.options');
+	}
+	
+	/**
+	 * Returns the ids of the packages whose options will be considered. An
+	 * empty array is returned if all packages are considered.
+	 * 
+	 * @return	int[]
+	 */
+	public function getPackageIDs(): array {
+		return $this->__packageIDs;
+	}
+	
+	/**
+	 * Sets the ids of the packages whose options will be considered. If an
+	 * empty array is given, all packages will be considered.
+	 * 
+	 * @param	int[]		$packageIDs
+	 * @return	OptionFormField
+	 * 
+	 * @throws	\InvalidArgumentException	if the given package ids are invalid
+	 */
+	public function packageIDs(array $packageIDs): OptionFormField {
+		foreach ($packageIDs as $packageID) {
+			if (PackageCache::getInstance()->getPackage($packageID) === null) {
+				throw new \InvalidArgumentException("Unknown package with id '{$packageID}'.");
+			}
+		}
+		
+		$this->__packageIDs = $packageIDs;
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validate() {
+		parent::validate();
+		
+		if (empty($this->getValidationErrors()) && is_array($this->getValue()) && !empty($this->getValue())) {
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('optionName IN (?)', [$this->getValue()]);
+			if (!empty($this->getPackageIDs())) {
+				$conditionBuilder->add('packageID IN (?)', [$this->getPackageIDs()]);
+			}
+			
+			$sql = "SELECT	optionName
+				FROM	wcf" . WCF_N . "_option
+				" . $conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			$availableOptions = $statement->fetchAll(\PDO::FETCH_COLUMN);
+			
+			$unknownOptions = array_diff($this->getValue(), $availableOptions);
+			
+			if (!empty($unknownOptions)) {
+				$this->addValidationError(
+					new FormFieldValidationError(
+						'nonExistent',
+						'wcf.form.field.options.error.nonExistent',
+						['options' => $unknownOptions]
+					)
+				);
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function create(string $id = 'options'): IFormNode {
+		return parent::create($id);
+	}
+}

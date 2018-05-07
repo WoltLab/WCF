@@ -2,7 +2,6 @@
 declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\option\Option;
 use wcf\data\user\group\option\UserGroupOptionList;
 use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\event\UserNotificationEventEditor;
@@ -12,6 +11,7 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
+use wcf\system\form\builder\field\OptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -248,29 +248,12 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 				->label('wcf.acp.pip.userNotificationEvent.preset')
 				->description('wcf.acp.pip.userNotificationEvent.preset.description'),
 			
-			ItemListFormField::create('options')
-				->label('wcf.acp.pip.general.options')
+			OptionFormField::create()
 				->description('wcf.acp.pip.userNotificationEvent.options.description')
-				->addValidator(new FormFieldValidator('optionsExist', function(ItemListFormField $formField) {
-					$options = $formField->getValue();
-					if (is_array($options)) {
-						$definedOptions = Option::getOptions();
-						
-						$options = array_filter($options, function(string $option) use ($definedOptions) {
-							return !isset($definedOptions[strtoupper($option)]);
-						});
-						
-						if (!empty($options)) {
-							$formField->addValidationError(
-								new FormFieldValidationError(
-									'nonExistent',
-									'wcf.acp.pip.general.options.error.nonExistent',
-									['options' => $options]
-								)
-							);
-						}
-					}
-				})),
+				->packageIDs(array_merge(
+					[$this->installation->getPackage()->packageID],
+					array_keys($this->installation->getPackage()->getAllRequiredPackages())
+				)),
 			
 			ItemListFormField::create('permissions')
 				->label('wcf.acp.pip.general.permissions')

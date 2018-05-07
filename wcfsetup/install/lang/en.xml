@@ -1686,8 +1686,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 	</category>
 	
 	<category name="wcf.acp.pip">
-		<item name="wcf.acp.pip.general.options"><![CDATA[Options]]></item>
-		<item name="wcf.acp.pip.general.options.error.nonExistent"><![CDATA[The following options do not exist: {implode from=$options item=option}<code>{$option}</code>{/implode}. You can create a new option <a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip='option'}{/link}">here</a>.]]></item>
 		<item name="wcf.acp.pip.general.permissions"><![CDATA[Permissions]]></item>
 		<item name="wcf.acp.pip.general.permissions.error.nonExistent"><![CDATA[The following permissions do not exist: {implode from=$permissions item=permission}<code>{$permission}</code>{/implode}. You can create a new permission <a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip='userGroupOption'}{/link}">here</a>.]]></item>
 		<item name="wcf.acp.pip.objectType.className"><![CDATA[PHP Class]]></item>
@@ -1707,7 +1705,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.action"><![CDATA[Action]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.action.description"><![CDATA[Unique textual identifier of the user bulk processing action that may only contain letters and must start with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.action.error.format"><![CDATA[The entered action is invalid.]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.options.description"><![CDATA[At least one of the entered options has to be enabled for the user bulk processing action to be available.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.options.description"><![CDATA[At least one of the entered options has to be enabled for the user bulk processing action to be available. Options of a non-required package will be reported as non-existing.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions in order to execute the action.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.condition.data.title"><![CDATA[User Bulk Processing Condition Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.category.data.title"><![CDATA[Category Type Data]]></item>
@@ -1749,7 +1747,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.isDefault"><![CDATA[Default Daily Statistics Handler]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.isDefault.description"><![CDATA[Default daily statistics handler are pre-selected when loading the stats page.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.tagging.taggableObject.data.title"><![CDATA[Taggable Object Data]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.tagging.taggableObject.options.description"><![CDATA[At least one of the entered options has to be enabled the list of all objects of this type with a specific tag to be available.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.tagging.taggableObject.options.description"><![CDATA[At least one of the entered options has to be enabled the list of all objects of this type with a specific tag to be available. Options of a non-required package will be reported as non-existing.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.tagging.taggableObject.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions in order to see the list of all objects of this type with a specific tag.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.activityPointEvent.data.title"><![CDATA[User Activity Event Points Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.activityPointEvent.points"><![CDATA[Points]]></item>
@@ -1860,7 +1858,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.userProfileMenu.className.description"><![CDATA[The entered class (without leading backslash) must implement the interface <code>wcf\system\menu\user\profile\content\IUserProfileMenuContent</code>.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.showOrder.description"><![CDATA[The entered value determines in which order the user profile menu items are shown.]]></item>
-		<item name="wcf.acp.pip.userProfileMenu.options.description"><![CDATA[At least one of the entered options has to be enabled for the menu item to be available.]]></item>
+		<item name="wcf.acp.pip.userProfileMenu.options.description"><![CDATA[At least one of the entered options has to be enabled for the menu item to be available. Options of a non-required package will be reported as non-existing.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions in order to see the menu item.]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.name"><![CDATA[Event Name]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.name.description"><![CDATA[The name of the event may only contain letters and must begin with a lowercase letter.]]></item>
@@ -1872,7 +1870,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.userNotificationEvent.className.description"><![CDATA[The entered class (without leading backslash) must implement the interface <code>wcf\system\user\notification\event\IUserNotificationEvent</code>.]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.preset"><![CDATA[Enable By Default]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.preset.description"><![CDATA[If selected, users will automatically receive notifications for this event by default. If they do not want to receive such notifications, they have to explicitly disable them in their notification settings.]]></item>
-		<item name="wcf.acp.pip.userNotificationEvent.options.description"><![CDATA[At least one of the entered options has to be enabled for the event to be visible in users’ notification settings.]]></item>
+		<item name="wcf.acp.pip.userNotificationEvent.options.description"><![CDATA[At least one of the entered options has to be enabled for the event to be visible in users’ notification settings. Options of a non-required package will be reported as non-existing.]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions in order to see the event in their notification settings.]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.presetMailNotificationType"><![CDATA[Default Mail Notification Type]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.presetMailNotificationType.description"><![CDATA[If a notification type is selected, users’ mail setting for this event will have the selected value by default.]]></item>
@@ -3189,6 +3187,8 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not exist.]]></item>
 		<item name="wcf.form.field.className.error.parentClass"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not extend <code>{$parentClass}</code>.]]></item>
 		<item name="wcf.form.field.itemList.error.separator"><![CDATA[The following items may contain no {if $separator === ','}comma{else}space{/if}: {implode from=$invalidItems item=item}“{$item}”{/implode}.]]></item>
+		<item name="wcf.form.field.options"><![CDATA[Options]]></item>
+		<item name="wcf.form.field.options.error.nonExistent"><![CDATA[The following options do not exist: {implode from=$options item=option}<code>{$option}</code>{/implode}.]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">

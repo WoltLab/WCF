@@ -1744,10 +1744,9 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[Der Paket-Server für „{$wcfMajorRelease}“ („http://store.woltlab.com/{$wcfMajorRelease}/“) wurde noch nicht abgefragt, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}lass{else}lassen Sie{/if} zuerst nach Updates suchen, um den Server abzufragen.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Paket-Server für „{$wcfMajorRelease}“]]></item>
 	</category>
-
+	
 	<category name="wcf.acp.pip">
 		<item name="wcf.acp.pip.general.options"><![CDATA[Einstellungen]]></item>
-		<item name="wcf.acp.pip.general.options.error.nonExistent"><![CDATA[Die folgenden Einstellungen existieren nicht: {implode from=$options item=option}<code>{$option}</code>{/implode}. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} <a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip='option'}{/link}">hier</a> eine neue Einstellung erstellen.]]></item>
 		<item name="wcf.acp.pip.general.permissions"><![CDATA[Berechtigungen]]></item>
 		<item name="wcf.acp.pip.general.permissions.error.nonExistent"><![CDATA[Die folgenden Berechtigungen existieren nicht: {implode from=$options item=option}<code>{$option}</code>{/implode}. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} <a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip='userGroupOption'}{/link}">hier</a> eine neue Berechtigung erstellen.]]></item>
 		<item name="wcf.acp.pip.objectType.className"><![CDATA[Klasse]]></item>
@@ -3127,6 +3126,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} existiert nicht.]]></item>
 		<item name="wcf.form.field.className.error.parentClass"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} erbt nicht von <code>{$parentClass}</code>.]]></item>
 		<item name="wcf.form.field.itemList.error.separator"><![CDATA[Die folgenden Elemente dürfen kein {if $separator === ','}Komma{else}Leerzeichen{/if} enthalten: {implode from=$invalidItems item=item}“{$item}”{/implode}.]]></item>
+		<item name="wcf.form.field.options.error.nonExistent"><![CDATA[Die folgenden Einstellungen existieren nicht: {implode from=$options item=option}<code>{$option}</code>{/implode}.]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">

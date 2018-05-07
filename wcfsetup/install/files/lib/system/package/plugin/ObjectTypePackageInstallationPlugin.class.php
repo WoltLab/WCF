@@ -4,7 +4,6 @@ namespace wcf\system\package\plugin;
 use wcf\data\object\type\definition\ObjectTypeDefinitionList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\object\type\ObjectTypeEditor;
-use wcf\data\option\Option;
 use wcf\data\user\group\option\UserGroupOptionList;
 use wcf\data\DatabaseObjectList;
 use wcf\system\application\ApplicationHandler;
@@ -22,6 +21,7 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\data\GuiPackageInstallationPluginFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\OptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -294,27 +294,6 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		// add object type-specific fields
 		
 		// reusable validators
-		$optionValidator = new FormFieldValidator('optionsExist', function(ItemListFormField $formField) {
-			$options = $formField->getValue();
-			if (is_array($options)) {
-				$definedOptions = Option::getOptions();
-				
-				$options = array_filter($options, function(string $option) use ($definedOptions) {
-					return !isset($definedOptions[strtoupper($option)]);
-				});
-				
-				if (!empty($options)) {
-					$formField->addValidationError(
-						new FormFieldValidationError(
-							'nonExistent',
-							'wcf.acp.pip.general.options.error.nonExistent',
-							['options' => $options]
-						)
-					);
-				}
-			}
-		});
-		
 		$permissionValidator = new FormFieldValidator('permissionsExist', function(ItemListFormField $formField) {
 			$permissions = $formField->getValue();
 			if (is_array($permissions)) {
@@ -400,11 +379,13 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 						}
 					})),
 				
-				ItemListFormField::create('bulkProcessingUserOptions')
+				OptionFormField::create('bulkProcessingUserOptions')
 					->attribute('data-tag', 'options')
-					->label('wcf.acp.pip.general.options')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.options.description')
-					->addValidator($optionValidator),
+					->packageIDs(array_merge(
+						[$this->installation->getPackage()->packageID],
+						array_keys($this->installation->getPackage()->getAllRequiredPackages())
+					)),
 				
 				ItemListFormField::create('bulkProcessingUserPermissions')
 					->attribute('data-tag', 'permissions')
@@ -565,11 +546,13 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		// com.woltlab.wcf.tagging.taggableObject
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.tagging.taggableObject')
 			->appendChildren([
-				ItemListFormField::create('taggingTaggableObjectOptions')
+				OptionFormField::create('taggingTaggableObjectOptions')
 					->attribute('data-tag', 'options')
-					->label('wcf.acp.pip.general.options')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.tagging.taggableObject.options.description')
-					->addValidator($optionValidator),
+					->packageIDs(array_merge(
+						[$this->installation->getPackage()->packageID],
+						array_keys($this->installation->getPackage()->getAllRequiredPackages())
+					)),
 				
 				ItemListFormField::create('taggingTaggableObjectPermissions')
 					->attribute('data-tag', 'permissions')
