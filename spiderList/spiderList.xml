@@ -631,7 +631,6 @@
 	</spider>
 	<spider ident="itchBot">
 		<name>itch</name>
-		<url>http://www.itch.com/infoforwebmasters.html</url>
 	</spider>
 	<spider ident="JavaBee">
 		<name>JavaBee</name>

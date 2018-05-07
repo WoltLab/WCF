@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\captcha\CaptchaHandler;
+use wcf\system\captcha\RecaptchaHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -19,6 +20,7 @@ class CaptchaSelectOptionType extends AbstractOptionType {
 	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
+		RecaptchaHandler::$forceIsAvailable = true;
 		$selectOptions = CaptchaHandler::getInstance()->getCaptchaSelection();
 		/** @noinspection PhpUndefinedFieldInspection */
 		if ($option->allowemptyvalue) {
@@ -80,6 +82,7 @@ class CaptchaSelectOptionType extends AbstractOptionType {
 	public function validate(Option $option, $newValue) {
 		if (!$newValue) return;
 		
+		RecaptchaHandler::$forceIsAvailable = true;
 		$selection = CaptchaHandler::getInstance()->getCaptchaSelection();
 		if (!isset($selection[$newValue])) {
 			throw new UserInputException($option->optionName);

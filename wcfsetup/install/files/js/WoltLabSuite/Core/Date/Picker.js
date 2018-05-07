@@ -48,12 +48,6 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				element.readOnly = true;
 				
 				var isDateTime = (elAttr(element, 'type') === 'datetime');
-				var isImplicitDateTime = false;
-				if (elDataBool(element, 'is-date-time')) {
-					isDateTime = true;
-					isImplicitDateTime = true;
-				}
-				
 				var isTimeOnly = (isDateTime && elDataBool(element, 'time-only'));
 				var disableClear = elDataBool(element, 'disable-clear');
 				var ignoreTimezone = isDateTime && elDataBool(element, 'ignore-timezone');
@@ -64,6 +58,10 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				
 				// convert value
 				var date = null, value = elAttr(element, 'value');
+				
+				// ignore the timezone, if the value is only a date (YYYY-MM-DD)
+				var isDateOnly = /^\d+-\d+-\d+$/.test(value);
+				
 				if (elAttr(element, 'value')) {
 					if (isTimeOnly) {
 						date = new Date();
@@ -71,7 +69,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 						date.setHours(tmp[0], tmp[1]);
 					}
 					else {
-						if (ignoreTimezone || isBirthday) {
+						if (ignoreTimezone || isBirthday || isDateOnly) {
 							var timezoneOffset = new Date(value).getTimezoneOffset();
 							var timezone = (timezoneOffset > 0) ? '-' : '+'; // -120 equals GMT+0200
 							timezoneOffset = Math.abs(timezoneOffset);
@@ -81,7 +79,7 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 							timezone += ':';
 							timezone += (minutes.length === 2) ? minutes : '0' + minutes;
 							
-							if (isBirthday || isImplicitDateTime) {
+							if (isBirthday || isDateOnly) {
 								value += 'T00:00:00' + timezone;
 							}
 							else {

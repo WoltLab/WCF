@@ -362,18 +362,7 @@ class RegisterForm extends UserAddForm {
 							list($month, $day, $year) = explode('/', $facebookData['birthday']);
 							$saveOptions[User::getUserOptionID('birthday')] = $year.'-'.$month.'-'.$day;
 						}
-						if (isset($facebookData['about']) && User::getUserOptionID('aboutMe') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $facebookData['about'];
 						if (isset($facebookData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $facebookData['location']['name'];
-						if (isset($facebookData['website']) && User::getUserOptionID('website') !== null) {
-							$urls = preg_split('/[\s,;]/', $facebookData['website'], -1, PREG_SPLIT_NO_EMPTY);
-							if (!empty($urls)) {
-								if (!Regex::compile('^https?://')->match($urls[0])) {
-									$urls[0] = 'http://' . $urls[0];
-								}
-								
-								$saveOptions[User::getUserOptionID('homepage')] = $urls[0];
-							}
-						}
 						
 						// avatar
 						if (isset($facebookData['picture']) && !$facebookData['picture']['data']['is_silhouette']) {

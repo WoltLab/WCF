@@ -127,6 +127,18 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 						$element->setAttribute('srcset', $srcset);
 					}
 				}
+				else if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
+					$element->parentNode->insertBefore($element->ownerDocument->createTextNode('[IMG:'), $element);
+					
+					$link = $element->ownerDocument->createElement('a');
+					$link->setAttribute('href', $src);
+					$link->textContent = $src;
+					$element->parentNode->insertBefore($link, $element);
+					
+					$element->parentNode->insertBefore($element->ownerDocument->createTextNode(']'), $element);
+					
+					$element->parentNode->removeChild($element);
+				}
 				else if (MESSAGE_FORCE_SECURE_IMAGES && Url::parse($src)['scheme'] === 'http') {
 					// rewrite protocol to `https`
 					$element->setAttribute('src', preg_replace('~^http~', 'https', $src));
@@ -210,5 +222,20 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 		catch (CryptoException $e) {
 			return $link;
 		}
+	}
+	
+	protected function isAllowedOrigin($src) {
+		static $ownDomains;
+		if ($ownDomains === null) {
+			$ownDomains = array();
+			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+				if (!in_array($application->domainName, $ownDomains)) {
+					$ownDomains[] = $application->domainName;
+				}
+			}
+		}
+		
+		$host = Url::parse($src)['host'];
+		return in_array($host, $ownDomains);
 	}
 }
