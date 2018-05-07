@@ -294,6 +294,16 @@ trait TFormParentNode {
 				}
 				
 				$child->validate();
+				
+				if ($child instanceof IFormField && empty($child->getValidationErrors())) {
+					foreach ($child->getValidators() as $validator) {
+						$validator($child);
+						
+						if (!empty($child->getValidationErrors())) {
+							break;
+						}
+					}
+				}
 			}
 		}
 	}

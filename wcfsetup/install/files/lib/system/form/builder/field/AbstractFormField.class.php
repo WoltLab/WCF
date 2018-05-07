@@ -240,14 +240,6 @@ abstract class AbstractFormField implements IFormField {
 	 * @inheritDoc
 	 */
 	public function validate() {
-		if (empty($this->getValidationErrors())) {
-			foreach ($this->getValidators() as $validator) {
-				$validator($this);
-				
-				if (!empty($this->getValidationErrors())) {
-					break;
-				}
-			}
-		}
+		// does nothing
 	}
 }
