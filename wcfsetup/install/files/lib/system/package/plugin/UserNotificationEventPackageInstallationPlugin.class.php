@@ -2,7 +2,6 @@
 declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\group\option\UserGroupOptionList;
 use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\event\UserNotificationEventEditor;
 use wcf\data\user\notification\event\UserNotificationEventList;
@@ -12,6 +11,7 @@ use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\field\OptionFormField;
+use wcf\system\form\builder\field\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -255,31 +255,12 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 					array_keys($this->installation->getPackage()->getAllRequiredPackages())
 				)),
 			
-			ItemListFormField::create('permissions')
-				->label('wcf.acp.pip.general.permissions')
+			UserGroupOptionFormField::create()
 				->description('wcf.acp.pip.userNotificationEvent.permissions.description')
-				->addValidator(new FormFieldValidator('permissionsExist', function(ItemListFormField $formField) {
-					$permissions = $formField->getValue();
-					if (is_array($permissions)) {
-						$userGroupOptionList = new UserGroupOptionList();
-						$userGroupOptionList->getConditionBuilder()->add('optionName IN (?)', [$permissions]);
-						$userGroupOptionList->readObjects();
-						
-						if (count($userGroupOptionList) !== count($permissions)) {
-							foreach ($userGroupOptionList as $userGroupOption) {
-								unset($permissions[array_search($userGroupOption->optionName, $permissions)]);
-							}
-							
-							$formField->addValidationError(
-								new FormFieldValidationError(
-									'nonExistent',
-									'wcf.acp.pip.general.permissions.error.nonExistent',
-									['permissions' => $permissions]
-								)
-							);
-						}
-					}
-				})),
+				->packageIDs(array_merge(
+					[$this->installation->getPackage()->packageID],
+					array_keys($this->installation->getPackage()->getAllRequiredPackages())
+				)),
 			
 			SingleSelectionFormField::create('presetMailNotificationType')
 				->attribute('data-tag', 'presetmailnotificationtype')

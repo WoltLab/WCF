@@ -4,7 +4,6 @@ namespace wcf\system\package\plugin;
 use wcf\data\object\type\definition\ObjectTypeDefinitionList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\object\type\ObjectTypeEditor;
-use wcf\data\user\group\option\UserGroupOptionList;
 use wcf\data\DatabaseObjectList;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\condition\AbstractIntegerCondition;
@@ -22,6 +21,7 @@ use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\data\GuiPackageInstallationPluginFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\OptionFormField;
+use wcf\system\form\builder\field\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -293,30 +293,6 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		
 		// add object type-specific fields
 		
-		// reusable validators
-		$permissionValidator = new FormFieldValidator('permissionsExist', function(ItemListFormField $formField) {
-			$permissions = $formField->getValue();
-			if (is_array($permissions)) {
-				$userGroupOptionList = new UserGroupOptionList();
-				$userGroupOptionList->getConditionBuilder()->add('optionName IN (?)', [$permissions]);
-				$userGroupOptionList->readObjects();
-				
-				if (count($userGroupOptionList) !== count($permissions)) {
-					foreach ($userGroupOptionList as $userGroupOption) {
-						unset($permissions[array_search($userGroupOption->optionName, $permissions)]);
-					}
-					
-					$formField->addValidationError(
-						new FormFieldValidationError(
-							'nonExistent',
-							'wcf.acp.pip.general.permissions.error.nonExistent',
-							['permissions' => $permissions]
-						)
-					);
-				}
-			}
-		});
-		
 		// com.woltlab.wcf.adLocation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.adLocation')
 			->appendChildren([
@@ -387,11 +363,13 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 						array_keys($this->installation->getPackage()->getAllRequiredPackages())
 					)),
 				
-				ItemListFormField::create('bulkProcessingUserPermissions')
+				UserGroupOptionFormField::create('bulkProcessingUserPermissions')
 					->attribute('data-tag', 'permissions')
-					->label('wcf.acp.pip.general.permissions')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.permissions.description')
-					->addValidator($permissionValidator)
+					->packageIDs(array_merge(
+						[$this->installation->getPackage()->packageID],
+						array_keys($this->installation->getPackage()->getAllRequiredPackages())
+					))
 			]);
 		
 		// com.woltlab.wcf.bulkProcessing.user.condition
@@ -554,11 +532,13 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 						array_keys($this->installation->getPackage()->getAllRequiredPackages())
 					)),
 				
-				ItemListFormField::create('taggingTaggableObjectPermissions')
+				UserGroupOptionFormField::create('taggingTaggableObjectPermissions')
 					->attribute('data-tag', 'permissions')
-					->label('wcf.acp.pip.general.permissions')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.tagging.taggableObject.permissions.description')
-					->addValidator($permissionValidator)
+					->packageIDs(array_merge(
+						[$this->installation->getPackage()->packageID],
+						array_keys($this->installation->getPackage()->getAllRequiredPackages())
+					))
 			]);
 		
 		// com.woltlab.wcf.user.activityPointEvent
