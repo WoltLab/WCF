@@ -1711,8 +1711,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.data.title"><![CDATA[Clipboard Item Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName"><![CDATA[Database Object List Class Name]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName.description"><![CDATA[The entered class must extend <code>wcf\data\DatabaseObjectList</code> and is used for fetching the selected objects on which a clipboard action will be executed.]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName.error.nonExistent"><![CDATA[The entered class does not exist.]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName.error.parentClass"><![CDATA[The entered class does not extend <code>wcf\data\DatabaseObjectList</code>.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.condition.ad.data.title"><![CDATA[Ad Condition Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.condition.notice.data.title"><![CDATA[Notice Condition Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.condition.trophy.data.title"><![CDATA[Trophy Condition Data]]></item>
