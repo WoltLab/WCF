@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\IFormNode;
 use wcf\system\SingletonFactory;
 
 /**
@@ -204,4 +205,13 @@ class ClassNameFormField extends TextFormField {
 			}
 		}
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	// @codingStandardsIgnoreStart
+	public static function create(string $id = 'className'): IFormNode {
+		return parent::create($id);
+	}
+	// @codingStandardsIgnoreEnd
 }
