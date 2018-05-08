@@ -145,7 +145,6 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 			
 			ClassNameFormField::create()
 				->attribute('data-tag', 'classname')
-				->label('wcf.acp.pip.userProfileMenu.className')
 				->description('wcf.acp.pip.userProfileMenu.className.description')
 				->required()
 				->implementedInterface(IUserProfileMenuContent::class),

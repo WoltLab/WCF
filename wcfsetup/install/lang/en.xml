@@ -1686,7 +1686,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 	</category>
 	
 	<category name="wcf.acp.pip">
-		<item name="wcf.acp.pip.objectType.className"><![CDATA[PHP Class]]></item>
 		<item name="wcf.acp.pip.objectType.className.description"><![CDATA[The entered class (without leading backslash) must implement the interface <code>{$interfaceName}</code>.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.data.title"><![CDATA[Ad Location Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName"><![CDATA[Category]]></item>
@@ -1846,13 +1845,11 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.pip.pluginName.description"><![CDATA[The name of the package installation plugin is used as the value of the <code>type</code> attribute of an <code>instruction</code> element in a <code>package.xml</code> file. The name may only consist of letters and must begin with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.pip.pluginName.error.format"><![CDATA[The entered name is invalid.]]></item>
 		<item name="wcf.acp.pip.pip.pluginName.error.notUnique"><![CDATA[The entered name is already used by another package installation plugin.]]></item>
-		<item name="wcf.acp.pip.pip.className"><![CDATA[Class Name]]></item>
 		<item name="wcf.acp.pip.pip.className.description"><![CDATA[The entered class (without leading backslash) must implement the interface <code>wcf\system\package\plugin\IPackageInstallationPlugin</code>.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.name"><![CDATA[Menu Item Name]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.name.description"><![CDATA[The name of the user profile may only contain letters and must begin with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.name.error.format"><![CDATA[The entered name is invalid.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.name.error.notUnique"><![CDATA[The entered name is already used by another user profile menu item.]]></item>
-		<item name="wcf.acp.pip.userProfileMenu.className"><![CDATA[Class Name]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.className.description"><![CDATA[The entered class (without leading backslash) must implement the interface <code>wcf\system\menu\user\profile\content\IUserProfileMenuContent</code>.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.showOrder.description"><![CDATA[The entered value determines in which order the user profile menu items are shown.]]></item>
@@ -1864,7 +1861,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.userNotificationEvent.name.error.notUnique"><![CDATA[The entered name is already used by another event for the same event object type.]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.objectType"><![CDATA[Event Object Type]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.objectType.description"><![CDATA[Determines the type of object the notification event belongs to.]]></item>
-		<item name="wcf.acp.pip.userNotificationEvent.className"><![CDATA[Class Name]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.className.description"><![CDATA[The entered class (without leading backslash) must implement the interface <code>wcf\system\user\notification\event\IUserNotificationEvent</code>.]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.preset"><![CDATA[Enable By Default]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.preset.description"><![CDATA[If selected, users will automatically receive notifications for this event by default. If they do not want to receive such notifications, they have to explicitly disable them in their notification settings.]]></item>

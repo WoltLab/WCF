@@ -1746,7 +1746,6 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 	</category>
 	
 	<category name="wcf.acp.pip">
-		<item name="wcf.acp.pip.objectType.className"><![CDATA[Klasse]]></item>
 		<item name="wcf.acp.pip.objectType.className.description"><![CDATA[Die angegebene Klasse (ohne Backslash als erstes Zeichen) muss das Interface <code>{$interfaceName}</code> implementieren.]]></item>
 		<item name="wcf.acp.pip.objectType.className.error.leadingBackslash"><![CDATA[Der angegebene Klassenname hat ein Backslash als erstes Zeichen.]]></item>
 		<item name="wcf.acp.pip.objectType.className.error.nonExistent"><![CDATA[Die angebene Klasse existiert nicht.]]></item>

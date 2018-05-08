@@ -260,7 +260,6 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 			
 			ClassNameFormField::create()
 				->attribute('data-tag', 'classname')
-				->label('wcf.acp.pip.objectType.className')
 				->description('<!-- will be replaced by JavaScript -->')
 				->required()
 				->addValidator(new FormFieldValidator('implementsInterface', function(TextFormField $formField) {
