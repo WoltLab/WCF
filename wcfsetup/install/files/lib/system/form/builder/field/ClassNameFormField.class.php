@@ -103,7 +103,11 @@ class ClassNameFormField extends TextFormField {
 	}
 	
 	/**
-	 * Returns the name of the interface the entered class must implement.
+	 * Sets the name of the interface the entered class must implement and returns
+	 * this field.
+	 * 
+	 * If no description has been set yet, `wcf.form.field.className.description.interface`
+	 * is automatically used for the description.
 	 * 
 	 * @param	string		$interface	name of the interface the entered class must implement
 	 * @return	static				this field
@@ -116,6 +120,13 @@ class ClassNameFormField extends TextFormField {
 		}
 		
 		$this->__implementedInterface = $interface;
+		
+		if ($this->getDescription() === null) {
+			$this->description(
+				'wcf.form.field.className.description.interface',
+				['interface' => $this->__implementedInterface]
+			);
+		}
 		
 		return $this;
 	}
