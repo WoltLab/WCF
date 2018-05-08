@@ -100,7 +100,9 @@ class UserGroupOptionFormField extends ItemListFormField {
 	/**
 	 * @inheritDoc
 	 */
+	// @codingStandardsIgnoreStart
 	public static function create(string $id = 'permissions'): IFormNode {
 		return parent::create($id);
 	}
+	// @codingStandardsIgnoreEnd
 }

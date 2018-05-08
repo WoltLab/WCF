@@ -100,7 +100,9 @@ class OptionFormField extends ItemListFormField {
 	/**
 	 * @inheritDoc
 	 */
+	// @codingStandardsIgnoreStart
 	public static function create(string $id = 'options'): IFormNode {
 		return parent::create($id);
 	}
+	// @codingStandardsIgnoreEnd
 }
