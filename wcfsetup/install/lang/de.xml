@@ -3017,6 +3017,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 	</category>
 	
 	<category name="wcf.form">
+		<item name="wcf.form.field.className"><![CDATA[Klasse]]></item>
 		<item name="wcf.form.field.className.error.interface"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} implementiert nicht das Interface <code>{$interface}</code>.]]></item>
 		<item name="wcf.form.field.className.error.isInstantiable"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} ist nicht instanziierbar.]]></item>
 		<item name="wcf.form.field.className.error.leadingBackslash"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} darf keinen führenden Backslash besitzen.]]></item>
