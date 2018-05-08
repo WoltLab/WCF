@@ -7,6 +7,9 @@ use wcf\system\SingletonFactory;
 /**
  * Implementation of a form field to enter the name of a PHP class.
  * 
+ * This field uses the `wcf.form.field.className` language item as the default
+ * form field label and uses `className` as the default node id.
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -37,6 +40,13 @@ class ClassNameFormField extends TextFormField {
 	 * @var	string
 	 */
 	protected $__parentClass = '';
+	
+	/**
+	 * Creates a new instance of `ClassNameFormField`.
+	 */
+	public function __construct() {
+		$this->label('wcf.form.field.className');
+	}
 	
 	/**
 	 * Sets whether entered class must exist and returns this field.
