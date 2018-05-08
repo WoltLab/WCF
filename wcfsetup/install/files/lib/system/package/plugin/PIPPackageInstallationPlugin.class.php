@@ -137,7 +137,6 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			
 			ClassNameFormField::create()
 				->attribute('data-tag', '__value')
-				->description('wcf.acp.pip.pip.className.description')
 				->required()
 				->implementedInterface(IPackageInstallationPlugin::class)
 		]);

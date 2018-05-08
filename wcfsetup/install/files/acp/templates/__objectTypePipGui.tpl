@@ -1,7 +1,7 @@
 <script data-relocate="true">
 	require(['Language'], function(Language) {
 		Language.addObject({
-			'wcf.acp.pip.objectType.className.description': '{lang __literal=true}wcf.acp.pip.objectType.className.description{/lang}',
+			'wcf.form.field.className.description.interface': '{lang __literal=true}wcf.form.field.className.description.interface{/lang}',
 			{implode from=$definitionNames item=definitionName}
 				'wcf.acp.pip.objectType.definitionName.{@$definitionName}.description': '{lang __literal=true __optional=true}wcf.acp.pip.objectType.definitionName.{@$definitionName}.description{/lang}'
 			{/implode}
@@ -23,8 +23,8 @@
 			
 			// update description of `className` field with new interface
 			if (definitionNamesWithInterface[definitionName.value]) {
-				classNameDescription.innerHTML = Language.get('wcf.acp.pip.objectType.className.description', {
-					interfaceName: definitionNamesWithInterface[definitionName.value]
+				classNameDescription.innerHTML = Language.get('wcf.form.field.className.description.interface', {
+					interface: definitionNamesWithInterface[definitionName.value]
 				});
 			}
 		}
