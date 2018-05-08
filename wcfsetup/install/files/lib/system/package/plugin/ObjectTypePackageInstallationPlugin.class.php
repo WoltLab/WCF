@@ -258,7 +258,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					}
 				})),
 			
-			ClassNameFormField::create('className')
+			ClassNameFormField::create()
 				->attribute('data-tag', 'classname')
 				->label('wcf.acp.pip.objectType.className')
 				->description('<!-- will be replaced by JavaScript -->')

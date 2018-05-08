@@ -237,7 +237,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 					}
 				})),
 			
-			ClassNameFormField::create('className')
+			ClassNameFormField::create()
 				->attribute('data-tag', 'classname')
 				->label('wcf.acp.pip.userNotificationEvent.className')
 				->description('wcf.acp.pip.userNotificationEvent.className.description')
