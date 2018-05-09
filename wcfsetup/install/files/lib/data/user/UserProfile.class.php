@@ -50,6 +50,12 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	protected $ignoredUserIDs;
 	
 	/**
+	 * list of user ids that are ignoring this user
+	 * @var integer[]
+	 */
+	protected $ignoredByUserIDs;
+	
+	/**
 	 * list of follower user ids
 	 * @var	integer[]
 	 */
@@ -215,6 +221,40 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	}
 	
 	/**
+	 * Returns a list of user ids that are ignoring this user.
+	 * 
+	 * @return	integer[]
+	 */
+	public function getIgnoredByUsers() {
+		if ($this->ignoredByUserIDs === null) {
+			$this->ignoredByUserIDs = [];
+			
+			if ($this->userID) {
+				// get ids
+				$data = UserStorageHandler::getInstance()->getField('ignoredByUserIDs', $this->userID);
+				
+				// cache does not exist or is outdated
+				if ($data === null) {
+					$sql = "SELECT	userID
+						FROM	wcf".WCF_N."_user_ignore
+						WHERE	ignoreUserID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute([$this->userID]);
+					$this->ignoredByUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+					
+					// update storage data
+					UserStorageHandler::getInstance()->update($this->userID, 'ignoredByUserIDs', serialize($this->ignoredByUserIDs));
+				}
+				else {
+					$this->ignoredByUserIDs = unserialize($data);
+				}
+			}
+		}
+		
+		return $this->ignoredByUserIDs;
+	}
+	
+	/**
 	 * Returns true if current user is following given user id.
 	 * 
 	 * @param	integer		$userID
@@ -236,12 +276,22 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	
 	/**
 	 * Returns true if given user is ignored.
-	 * 
+	 *
 	 * @param	integer		$userID
 	 * @return	boolean
 	 */
 	public function isIgnoredUser($userID) {
 		return in_array($userID, $this->getIgnoredUsers());
+	}
+	
+	/**
+	 * Returns true if the given user ignores the current user.
+	 * 
+	 * @param	integer		$userID
+	 * @return	boolean
+	 */
+	public function isIgnoredByUser($userID) {
+		return in_array($userID, $this->getIgnoredByUsers());
 	}
 	
 	/**
