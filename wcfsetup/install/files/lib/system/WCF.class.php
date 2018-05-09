@@ -358,7 +358,7 @@ class WCF {
 		if (!file_exists($filename) || filemtime($filename) <= 1) {
 			OptionEditor::rebuild();
 		}
-		require_once($filename);
+		require($filename);
 		
 		// check if option file is complete and writable
 		if (PACKAGE_ID) {
@@ -374,7 +374,7 @@ class WCF {
 			if (!defined('WCF_OPTION_INC_PHP_SUCCESS')) {
 				OptionEditor::rebuild();
 				
-				require_once($filename);
+				require($filename);
 			}
 		}
 	}
