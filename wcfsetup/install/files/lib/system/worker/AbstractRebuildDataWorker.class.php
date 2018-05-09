@@ -9,6 +9,7 @@ use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchIndexManager;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -175,5 +176,6 @@ abstract class AbstractRebuildDataWorker extends AbstractWorker implements IRebu
 	 */
 	public function finalize() {
 		SearchIndexManager::getInstance()->commitBulkOperation();
+		UserStorageHandler::getInstance()->shutdown();
 	}
 }
