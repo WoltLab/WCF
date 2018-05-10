@@ -90,14 +90,16 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 			$this->removeObjects($messageObjectType, [$messageID]);
 		}
 		
-		// prepare statement
-		$sql = "INSERT INTO	wcf".WCF_N."_message_embedded_object
-					(messageObjectTypeID, messageID, embeddedObjectTypeID, embeddedObjectID)
-			VALUES		(?, ?, ?, ?)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
-		// call embedded object handlers
-		if (!$isBulk) WCF::getDB()->beginTransaction();
+		$statement = null;
+		if (!$isBulk) {
+			// prepare statement
+			$sql = "INSERT INTO	wcf".WCF_N."_message_embedded_object
+						(messageObjectTypeID, messageID, embeddedObjectTypeID, embeddedObjectID)
+				VALUES		(?, ?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			WCF::getDB()->beginTransaction();
+		}
 		
 		$embeddedData = $htmlInputProcessor->getEmbeddedContent();
 		$returnValue = false;
@@ -120,7 +122,10 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 				$returnValue = true;
 			}
 		}
-		if (!$isBulk) WCF::getDB()->commitTransaction();
+		
+		if (!$isBulk) {
+			WCF::getDB()->commitTransaction();
+		}
 		
 		return $returnValue;
 	}
