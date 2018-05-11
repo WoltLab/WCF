@@ -256,6 +256,17 @@ $.Redactor.prototype.WoltLabClean = function() {
 					br.parentNode.insertBefore(document.createTextNode('@@@WOLTLAB-BR-MARKER@@@'), br.nextSibling);
 				});
 				
+				// convert `<kbd>…</kbd>` to `[tt]…[/tt]`
+				elBySelAll('kbd', div, function(kbd) {
+					kbd.insertBefore(document.createTextNode('[tt]'), kbd.firstChild);
+					kbd.appendChild(document.createTextNode('[/tt]'));
+					
+					while (kbd.childNodes.length) {
+						kbd.parentNode.insertBefore(kbd.childNodes[0], kbd);
+					}
+					elRemove(kbd);
+				});
+				
 				html = mpOnPaste.call(this, div.innerHTML, data, insert);
 				
 				html = html.replace(/\n*@@@WOLTLAB-BR-MARKER@@@\n*/g, '<woltlab-br-marker></woltlab-br-marker>');
