@@ -362,7 +362,7 @@ WCF.ACP.Style.LogoUploadMobile = WCF.Upload.extend({
 		
 		this._button = $('#uploadLogoMobile');
 		this._image = $('#styleLogoMobile');
-		this._imagePath = $('#imagePathMobile');
+		this._imagePath = $('#imagePath');
 		this._pageLogo = $('#pageLogoMobile');
 		
 		this._super(this._button, undefined, 'wcf\\data\\style\\StyleAction', { action: 'uploadLogoMobile' });
