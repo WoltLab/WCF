@@ -57,21 +57,14 @@ class LoginForm extends AbstractCaptchaForm {
 	public $useCaptcha = false;
 	
 	/**
-	 * Creates a new LoginForm object.
-	 */
-	public function __run() {
-		if (WCF::getUser()->userID) {
-			throw new PermissionDeniedException();
-		}
-		
-		parent::__run();
-	}
-	
-	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
+		
+		if (WCF::getUser()->userID) {
+			throw new PermissionDeniedException();
+		}
 		
 		if (!empty($_REQUEST['url'])) {
 			$this->url = StringUtil::trim($_REQUEST['url']);
