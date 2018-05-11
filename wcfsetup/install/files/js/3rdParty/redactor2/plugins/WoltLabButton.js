@@ -166,7 +166,9 @@ $.Redactor.prototype.WoltLabButton = function() {
 			if (data.cancel !== true) {
 				this.buffer.set();
 				
-				var html = '[' + bbcode + ']' + this.selection.html() + (this.selection.is() ? '' : this.marker.html()) + '[/' + bbcode + ']';
+				var marker = this.marker.get();
+				marker.classList.add('woltlab-bbcode-marker');
+				var html = '[' + bbcode + ']' + this.selection.html() + marker.outerHTML + '[/' + bbcode + ']';
 				this.insert.html(html);
 				this.selection.restore();
 			}

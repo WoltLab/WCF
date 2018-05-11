@@ -223,6 +223,8 @@ $.Redactor.prototype.WoltLabClean = function() {
 				}
 				
 				elBySelAll('span', div, function (span) {
+					if (span.classList.contains('redactor-selection-marker')) return;
+					
 					if (!span.hasAttribute('style') || !span.style.length) {
 						while (span.childNodes.length) {
 							span.parentNode.insertBefore(span.childNodes[0], span);
