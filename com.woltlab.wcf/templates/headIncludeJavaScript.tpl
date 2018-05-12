@@ -16,6 +16,8 @@
 	var ENABLE_DEVELOPER_TOOLS = {if ENABLE_DEVELOPER_TOOLS}true{else}false{/if};
 	var WSC_API_VERSION = {@WSC_API_VERSION};
 	
+	var REACTION_TYPES = {@$__wcf->getReactionHandler()->getReactionsJSVariable()};
+	
 	{if ENABLE_DEBUG_MODE}
 		{* This constant is a compiler option, it does not exist in production. *}
 		var COMPILER_TARGET_DEFAULT = {if !VISITOR_USE_TINY_BUILD || $__wcf->user->userID}true{else}false{/if};
@@ -130,7 +132,8 @@ requirejs.config({
 			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if}
 		});
 		
-		User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}', {if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if});
+User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}', {if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}';
+		{else}'';{/if})
 	});
 	
 	// prevent jQuery and other libraries from utilizing define()
