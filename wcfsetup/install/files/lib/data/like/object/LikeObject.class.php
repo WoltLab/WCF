@@ -74,16 +74,16 @@ class LikeObject extends DatabaseObject {
 			
 			if (is_array($cachedReactions)) {
 				foreach ($cachedReactions as $reactionTypeID => $reactionCount) {
-					$reaction = ReactionTypeCache::getInstance()->getReactionTypeByID($reactionTypeID);
+					$reactionType = ReactionTypeCache::getInstance()->getReactionTypeByID($reactionTypeID);
 					
 					// prevent outdated reactions
-					if ($reaction !== null) {
+					if ($reactionType !== null) {
 						$this->reactions[$reactionTypeID] = [
 							'reactionCount' => $reactionCount,
-							'renderedReactionIcon' => $reaction->renderIcon(),
-							'renderedReactionIconEncoded' => JSON::encode($reaction->renderIcon()),
-							'reactionTitle' => $reaction->getTitle(),
-							'reactionType' => $reaction->type
+							'renderedReactionIcon' => $reactionType->renderIcon(),
+							'renderedReactionIconEncoded' => JSON::encode($reactionType->renderIcon()),
+							'reactionTitle' => $reactionType->getTitle(),
+							'reactionType' => $reactionType->type
 						];
 					}
 				}
