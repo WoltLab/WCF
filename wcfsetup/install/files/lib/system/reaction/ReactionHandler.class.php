@@ -184,7 +184,7 @@ class ReactionHandler extends SingletonFactory {
 		
 		if (WCF::getUser()->userID) {
 			$sql = "SELECT		like_object.*,
-						CASE WHEN like_table.reactionTypeID IS NOT NULL THEN like_table.reactionTypeID ELSE 0 END AS reactionTypeID
+						COALESCE(like_table.reactionTypeID, 0) AS reactionTypeID
 				FROM		wcf".WCF_N."_like_object like_object
 				LEFT JOIN	wcf".WCF_N."_like like_table
 				ON		(like_table.objectTypeID = like_object.objectTypeID
@@ -560,7 +560,7 @@ class ReactionHandler extends SingletonFactory {
 	 */
 	protected function loadLikeStatus(LikeObject $likeObject, User $user) {
 		$sql = "SELECT		like_object.likes, like_object.dislikes, like_object.cumulativeLikes,
-					CASE WHEN like_table.likeValue IS NOT NULL THEN like_table.reactionTypeID ELSE 0 END AS reactionTypeID
+					COALESCE(like_table.reactionTypeID, 0) AS reactionTypeID
 			FROM		wcf".WCF_N."_like_object like_object
 			LEFT JOIN	wcf".WCF_N."_like like_table
 			ON		(like_table.objectTypeID = ?
