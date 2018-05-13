@@ -189,7 +189,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 						
 						//noinspection JSUnresolvedVariable
 						if (this.opts.woltlab.allowedInlineStyles.indexOf(property) === -1) {
-							if (property === 'font-weight') {
+							if (property === 'font-weight' && element.nodeName !== 'STRONG') {
 								styleValue = element.style.getPropertyValue(property);
 								if (styleValue === 'bold' || styleValue === 'bolder') {
 									styleValue = 600;

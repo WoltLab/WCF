@@ -65,10 +65,10 @@ final class HeaderUtil {
 		}
 		
 		if (HTTP_ENABLE_GZIP && !defined('HTTP_DISABLE_GZIP')) {
-			if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
+			if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
 				self::$enableGzipCompression = true;
 				
-				if (strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip')) {
+				if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== false) {
 					@header('Content-Encoding: x-gzip');
 				}
 				else {

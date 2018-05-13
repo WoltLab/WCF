@@ -122,7 +122,7 @@ if (COMPILER_TARGET_DEFAULT) {
 					var attachmentId = data.attributes[0] || 0;
 					if (images.hasOwnProperty(attachmentId)) {
 						var thumbnail = data.attributes[2];
-						thumbnail = (thumbnail === true || thumbnail === 'true');
+						thumbnail = (thumbnail === true || thumbnail === 'true' || ~~thumbnail > 0);
 						
 						var image = elCreate('img');
 						image.className = 'woltlabAttachment';

@@ -67,6 +67,10 @@ $.Redactor.prototype.WoltLabCaret = function() {
 						useCustomRange = true;
 					}
 				}
+				else if (node.nodeName === 'P' && node.childNodes.length === 0) {
+					node.innerHTML = '\u200B';
+					useCustomRange = true;
+				}
 				
 				if (useCustomRange) {
 					var selection = window.getSelection();
@@ -334,7 +338,10 @@ $.Redactor.prototype.WoltLabCaret = function() {
 					if (!node) return;
 				}
 				
+				// the scroll position is discarded when focusing the editor
+				var scroll = { x: editor.scrollLeft, y: editor.scrollTop };
 				editor.focus();
+				editor.scrollTo(scroll.x, scroll.y);
 				
 				selection.removeAllRanges();
 				selection.addRange(internalRange);

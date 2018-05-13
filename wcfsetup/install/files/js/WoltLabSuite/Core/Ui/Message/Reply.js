@@ -267,8 +267,17 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		 * @protected
 		 */
 		_handleError: function(data) {
-			//noinspection JSUnresolvedVariable
-			this.throwError(this._textarea, data.returnValues.realErrorMessage);
+			var parameters = {
+				api: this,
+				cancel: false,
+				returnValues: data.returnValues
+			};
+			EventHandler.fire('com.woltlab.wcf.redactor2', 'handleError_text', parameters);
+			
+			if (parameters.cancel !== true) {
+				//noinspection JSUnresolvedVariable
+				this.throwError(this._textarea, data.returnValues.realErrorMessage);
+			}
 		},
 		
 		/**

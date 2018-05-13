@@ -49,7 +49,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-define('WCF_VERSION', '3.1.1');
+define('WCF_VERSION', '3.1.2 pl 2');
 
 // define current API version
 define('WSC_API_VERSION', 2018);
@@ -267,6 +267,12 @@ class WCF {
 	 * @param	\Exception	$e
 	 */
 	public static final function handleException($e) {
+		// backwards compatibility
+		if ($e instanceof IPrintableException) {
+			$e->show();
+			exit;
+		}
+		
 		if (ob_get_level()) {
 			// discard any output generated before the exception occurred, prevents exception
 			// being hidden inside HTML elements and therefore not visible in browser output
@@ -279,9 +285,9 @@ class WCF {
 			// Especially the `identity` value appears to be unrecognized by some of them, hence
 			// we'll just gzip the output of the exception to prevent them from tampering.
 			// This part is copied from `HeaderUtil` in order to isolate the exception handler!
-			if (HTTP_ENABLE_GZIP && !defined('HTTP_DISABLE_GZIP')) {
-				if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
-					if (strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip')) {
+			if (defined('HTTP_ENABLE_GZIP') && HTTP_ENABLE_GZIP && !defined('HTTP_DISABLE_GZIP')) {
+				if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
+					if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== false) {
 						@header('Content-Encoding: x-gzip');
 					}
 					else {
@@ -301,12 +307,6 @@ class WCF {
 					});
 				}
 			}
-		}
-		
-		// backwards compatibility
-		if ($e instanceof IPrintableException) {
-			$e->show();
-			exit;
 		}
 		
 		@header('HTTP/1.1 503 Service Unavailable');
@@ -664,6 +664,7 @@ class WCF {
 	 * Returns the invoked application.
 	 * 
 	 * @return      Application
+	 * @since	3.1
 	 */
 	public static function getActiveApplication() {
 		return ApplicationHandler::getInstance()->getActiveApplication();
