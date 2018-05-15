@@ -2749,7 +2749,7 @@ Sie können Ihr Kennwort unter folgender Adresse jederzeit ändern:
 		<item name="wcf.user.quit"><![CDATA[Benutzerkonto kündigen]]></item>
 		<item name="wcf.user.quit.sure"><![CDATA[Wollen Sie Ihr Benutzerkonto mitsamt Ihrer persönlichen Daten dauerhaft löschen?]]></item>
 		<item name="wcf.user.quit.cancel"><![CDATA[Ihr Benutzerkonto wird am {$quitStarted+7*86400|date} gelöscht. Bitte aktivieren Sie diese Option, wenn Sie die Löschung abbrechen möchten.]]></item>
-		<item name="wcf.user.quit.description"><![CDATA[Hinweis: Beiträge, Anhänge und ähnliches werden nicht gelöscht.]]></item>
+		<item name="wcf.user.quit.description"><![CDATA[Hinweis: Beiträge, Anhänge und Ähnliches werden nicht gelöscht.]]></item>
 		<item name="wcf.user.quit.success"><![CDATA[Ihr Benutzerkonto wird am {TIME_NOW+7*86400|date} gelöscht. Bis dahin können Sie die Löschung auf dieser Seite abbrechen.]]></item>
 		<item name="wcf.user.quit.cancel.success"><![CDATA[Die Löschung Ihres Benutzerkontos wurde erfolgreich abgebrochen.]]></item>
 		<item name="wcf.user.emailActivation"><![CDATA[Neue E-Mail-Adresse aktivieren]]></item>
