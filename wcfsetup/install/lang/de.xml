@@ -3560,7 +3560,7 @@ dann wird diese Anfrage am {$mailbox->getUser()->lastLostPasswordRequestTime+864
 		<item name="wcf.user.quit"><![CDATA[Benutzerkonto kündigen]]></item>
 		<item name="wcf.user.quit.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du dein{else}Wollen Sie Ihr{/if} Benutzerkonto mitsamt {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} persönlichen Daten dauerhaft löschen?]]></item>
 		<item name="wcf.user.quit.cancel"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wird am {$quitStarted+7*86400|date} gelöscht. {if LANGUAGE_USE_INFORMAL_VARIANT}Bitte aktiviere diese Option, wenn du die Löschung abbrechen möchtest.{else}Bitte aktivieren Sie diese Option, wenn Sie die Löschung abbrechen möchten.{/if}]]></item>
-		<item name="wcf.user.quit.description"><![CDATA[Hinweis: Beiträge, Anhänge und ähnliches werden nicht gelöscht.]]></item>
+		<item name="wcf.user.quit.description"><![CDATA[Hinweis: Beiträge, Anhänge und Ähnliches werden nicht gelöscht.]]></item>
 		<item name="wcf.user.quit.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wird am {TIME_NOW+7*86400|date} gelöscht. Bis dahin {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die Löschung auf dieser Seite abbrechen.]]></item>
 		<item name="wcf.user.quit.cancel.success"><![CDATA[Die Löschung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos wurde erfolgreich abgebrochen.]]></item>
 		<item name="wcf.user.emailActivation"><![CDATA[Neue E-Mail-Adresse aktivieren]]></item>
