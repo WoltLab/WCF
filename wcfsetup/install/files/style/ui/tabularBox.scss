@@ -260,7 +260,7 @@
 	
 	tr {
 		&:hover > td {
-			background-color: rgb(242, 242, 242);
+			background-color: $wcfTabularBoxBackgroundActive;
 		}
 		
 		&:not(:last-child) > td {
