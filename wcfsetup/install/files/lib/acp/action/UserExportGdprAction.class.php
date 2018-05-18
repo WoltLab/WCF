@@ -1,5 +1,4 @@
 <?php
-
 namespace wcf\acp\action;
 use wcf\action\AbstractAction;
 use wcf\data\package\PackageCache;
