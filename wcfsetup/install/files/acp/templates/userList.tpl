@@ -114,6 +114,11 @@
 							{else}
 								<span class="icon icon16 icon-{if !$user->activationCode}check{else}check-empty{/if} disabled" title="{lang}wcf.acp.user.{if !$user->activationCode}disable{else}enable{/if}{/lang}"></span>
 							{/if}
+							{if $user->editable}
+								<a href="{link controller='UserExportGdpr' id=$user->userID}{/link}" title="{lang}wcf.acp.user.exportGdpr{/lang}" class="jsTooltip"><span class="icon icon16 icon-download-alt"></span></a>
+							{else}
+								<span class="icon icon16 icon-download-alt disabled" title="{lang}wcf.acp.user.exportGdpr{/lang}"></span>
+							{/if}
 							
 							{event name='rowButtons'}
 						</td>

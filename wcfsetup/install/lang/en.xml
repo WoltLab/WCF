@@ -1739,6 +1739,7 @@ You can now fully access the website.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[You can set the default notification settings for new users, any changes made here will not affect existing users. Users can customize their settings at any time.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Apply changes for existing users too]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers.description"><![CDATA[Any changes to default notification settings will be applied to existing users. This will override any settings changed by the users themselves.]]></item>
+		<item name="wcf.acp.user.exportGdpr"><![CDATA[Export Personal Data (GDPR)]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
