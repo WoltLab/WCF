@@ -2280,7 +2280,6 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} auf dieser Seite die Standardeinstellungen für neue Benutzer festlegen, dies wirkt sich nicht auf bestehende Benutzer aus. Benutzer können abweichende Einstellungen festlegen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers.description"><![CDATA[Die hier eingestellten Änderungen der Vorgabewerte für Benachrichtigungen werden auch in bestehende Benutzerkonten übernommen. Die entsprechenden Einstellungen der Benutzer werden dabei überschrieben.]]></item>
-		
 		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Aktion]]></item>
 		<item name="wcf.acp.user.bulkProcessing.assignToUserGroups"><![CDATA[Benutzergruppen zuweisen]]></item>
@@ -2295,6 +2294,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.action.sendMail"><![CDATA[E-Mail senden]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Neues Passwort zusenden]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesem Benutzer wirklich ein neues Kennwort zusenden?]]></item>
+		<item name="wcf.acp.user.exportGdpr"><![CDATA[Persönliche Daten exportieren (DSGVO)]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
