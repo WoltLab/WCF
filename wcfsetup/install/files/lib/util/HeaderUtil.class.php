@@ -49,7 +49,12 @@ final class HeaderUtil {
 			$cookieDomain = explode(':', $cookieDomain, 2)[0];
 		}
 		
-		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT; max-age='.($expire - TIME_NOW) : '').'; path=/'.($addDomain ? '; domain='.$cookieDomain : '').(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly', false);
+		$sameSitePolicy = '';
+		if (COOKIE_SAME_SITE_ATTRIBUTE != 'none') {
+			$sameSitePolicy = '; SameSite='.COOKIE_SAME_SITE_ATTRIBUTE;
+		}
+		
+		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT; max-age='.($expire - TIME_NOW) : '').'; path=/'.($addDomain ? '; domain='.$cookieDomain : '').(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly'.$sameSitePolicy, false);
 	}
 	
 	/**
@@ -160,7 +165,7 @@ final class HeaderUtil {
 	 * 
 	 * @param	string		$location
 	 * @param	boolean		$sendStatusCode
-	 * @param	boolean		$temporaryRedirect 
+	 * @param	boolean		$temporaryRedirect
 	 */
 	public static function redirect($location, $sendStatusCode = false, $temporaryRedirect = true) {
 		// https://github.com/WoltLab/WCF/issues/2568

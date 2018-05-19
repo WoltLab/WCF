@@ -613,6 +613,13 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<defaultvalue>wsc31_</defaultvalue>
 				<validationpattern>^[a-zA-Z0-9_]+$</validationpattern>
 			</option>
+			<option name="cookie_same_site_attribute">
+				<categoryname>general.system.cookie</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue>none</defaultvalue>
+				<selectoptions>none:wcf.acp.option.cookie_same_site_attribute.none
+lax:wcf.acp.option.cookie_same_site_attribute.lax</selectoptions>
+			</option>
 			<!-- /general.system.cookie-->
 			
 			<!-- general.system.http -->
