@@ -144,7 +144,7 @@ trait TSelectionFormField {
 	 */
 	public function validate() {
 		if (!in_array($this->getValue(), $this->possibleValues)) {
-			$this->addValidationError(new FormFieldValidationError('invalidValue', 'wcf.global.form.selection.error.invalidValue'));
+			$this->addValidationError(new FormFieldValidationError('invalidValue', 'wcf.global.form.error.noValidSelection'));
 		}
 		
 		parent::validate();

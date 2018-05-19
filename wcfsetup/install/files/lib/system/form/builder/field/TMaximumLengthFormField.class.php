@@ -70,11 +70,15 @@ trait TMaximumLengthFormField {
 	 */
 	public function validateMaximumLength(string $text, Language $language = null) {
 		if ($this->getMaximumLength() !== null && mb_strlen($text) > $this->getMaximumLength()) {
-			$this->addValidationError(new FormFieldValidationError('maximumLength', 'wcf.global.form.text.error.maximumLength', [
-				'language' => $language,
-				'length' => mb_strlen($text),
-				'maximumLength' => $this->getMaximumLength()
-			]));
+			$this->addValidationError(new FormFieldValidationError(
+				'maximumLength',
+				'wcf.form.field.text.error.maximumLength',
+				[
+					'language' => $language,
+					'length' => mb_strlen($text),
+					'maximumLength' => $this->getMaximumLength()
+				]
+			));
 		}
 	}
 }
