@@ -2,6 +2,7 @@
 namespace wcf\acp\action;
 use wcf\action\AbstractAction;
 use wcf\data\package\PackageCache;
+use wcf\data\user\avatar\DefaultAvatar;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
 use wcf\system\event\EventHandler;
@@ -91,6 +92,7 @@ class UserExportGdprAction extends AbstractAction {
 	 * @inheritDoc
 	 */
 	public function execute() {
+		// you MUST NOT use the `execute` event to provide data, use `export` (see below) instead!
 		parent::execute();
 		
 		$this->ipAddresses = array(
@@ -110,12 +112,16 @@ class UserExportGdprAction extends AbstractAction {
 			)
 		);
 		
+		EventHandler::getInstance()->fireAction($this, 'export');
+		
 		foreach ($this->ipAddresses as $package => $tableNames) {
 			if (PackageCache::getInstance()->getPackageByIdentifier($package) === null) {
 				continue;
 			}
 			
-			$this->data[$package] = array();
+			if (!isset($this->data[$package])) {
+				$this->data[$package] = array();
+			}
 			
 			$ipAddresses = array();
 			foreach ($tableNames as $tableName) {
@@ -127,8 +133,6 @@ class UserExportGdprAction extends AbstractAction {
 			
 			$this->data[$package]['ipAddresses'] = $ipAddresses;
 		}
-		
-		EventHandler::getInstance()->fireAction($this, 'export');
 		
 		$this->data['@@generator'] = array(
 			'software' => 'WoltLab Community Framework',
@@ -161,9 +165,14 @@ class UserExportGdprAction extends AbstractAction {
 	 * @return      array
 	 */
 	public function exportIpAddresses($databaseTable, $ipAddressColumn, $timeColumn, $userIDColumn) {
+		if (!LOG_IP_ADDRESS) {
+			return array();
+		}
+		
 		$sql = "SELECT  ${ipAddressColumn}, ${timeColumn}
 			FROM    ${databaseTable}
-			WHERE   ${userIDColumn} = ?";
+			WHERE   ${userIDColumn} = ?
+				AND {$ipAddressColumn} <> ''";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array($this->user->userID));
 		
@@ -188,6 +197,10 @@ class UserExportGdprAction extends AbstractAction {
 		
 		foreach ($this->exportUserPropertiesIfNotEmpty as $property) {
 			if ($this->user->{$property}) $data[$property] = $this->user->{$property};
+		}
+		
+		if ($this->user->avatarID || (MODULE_GRAVATAR && $this->user->enableGravatar)) {
+			$data['avatarURL'] = $this->user->getAvatar()->getURL();
 		}
 		
 		return $data;
