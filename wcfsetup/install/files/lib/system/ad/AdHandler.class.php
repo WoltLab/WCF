@@ -51,11 +51,7 @@ class AdHandler extends SingletonFactory {
 			$ads[] = $ad;
 		}
 		
-		if (ENABLE_AD_ROTATION && count($ads) > 1) {
-			$ads = [
-				$ads[mt_rand(0, count($ads) - 1)]
-			];
-		}
+		if (ENABLE_AD_ROTATION) shuffle($ads);
 		
 		$output = '';
 		foreach ($ads as $ad) {
@@ -67,6 +63,7 @@ class AdHandler extends SingletonFactory {
 			}
 			
 			$output .= '<div>' . $ad->ad . '</div>';
+			if (ENABLE_AD_ROTATION) break;
 		}
 		
 		if (!empty($output)) {
