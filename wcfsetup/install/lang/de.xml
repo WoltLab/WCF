@@ -3027,6 +3027,8 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.form.field.itemList.error.separator"><![CDATA[Die folgenden Elemente dürfen kein {if $separator === ','}Komma{else}Leerzeichen{/if} enthalten: {implode from=$invalidItems item=item}„{$item}“{/implode}.]]></item>
 		<item name="wcf.form.field.numeric.error.maximum"><![CDATA[Der angegebene Wert darf nicht kleiner als {#$maximum} sein.]]></item>
 		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[Der angegebene Wert darf nicht größer als {#$minimum} sein.]]></item>
+		<item name="wcf.form.field.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.form.field.showOrder.firstPosition"><![CDATA[(an erster Stelle)]]></item>
 		<item name="wcf.form.field.text.error.maximumLength"><![CDATA[Der angegebene Text{if $language} für die Sprache „{$language}“{/if} umfasst {#$length} Zeichen, er darf aber nicht länger als {#$maximumLength} Zeichen sein.]]></item>
 		<item name="wcf.form.field.text.error.minimumLength"><![CDATA[Der angegebene Text{if $language} für die Sprache „{$language}“{/if} umfasst {#$length} Zeichen, er darf aber nicht kürzer als {#$minimumLength} Zeichen sein.]]></item>
 		<item name="wcf.form.field.user.error.maxmimumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} zumindest {#$maximumCount} Benutzer angeben, es wurde{if $count != 1}n{else} aber nur {#$count} Benutzer angegeben.]]></item>
