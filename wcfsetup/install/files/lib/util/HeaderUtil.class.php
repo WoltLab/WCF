@@ -3,6 +3,7 @@ namespace wcf\util;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\request\RouteHandler;
+use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
 /**
@@ -145,6 +146,11 @@ final class HeaderUtil {
 	 * @param	boolean		$sendStatusCode
 	 */
 	public static function redirect($location, $sendStatusCode = false) {
+		// https://github.com/WoltLab/WCF/issues/2568
+		if (SessionHandler::getInstance()->isFirstVisit()) {
+			SessionHandler::getInstance()->register('__wcfIsFirstVisit', true);
+		}
+		
 		//if ($sendStatusCode) @header('HTTP/1.0 301 Moved Permanently');
 		if ($sendStatusCode) @header('HTTP/1.1 307 Temporary Redirect');
 		header('Location: '.$location);
