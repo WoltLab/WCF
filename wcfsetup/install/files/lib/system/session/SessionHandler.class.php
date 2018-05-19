@@ -263,6 +263,12 @@ class SessionHandler extends SingletonFactory {
 		
 		// init environment variables
 		$this->initEnvironment();
+		
+		// https://github.com/WoltLab/WCF/issues/2568
+		if ($this->getVar('__wcfIsFirstVisit') === true) {
+			$this->firstVisit = true;
+			$this->unregister('__wcfIsFirstVisit');
+		}
 	}
 	
 	/**
