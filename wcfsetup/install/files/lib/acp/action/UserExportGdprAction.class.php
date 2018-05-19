@@ -2,6 +2,7 @@
 namespace wcf\acp\action;
 use wcf\action\AbstractAction;
 use wcf\data\package\PackageCache;
+use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
 use wcf\system\event\EventHandler;
@@ -211,6 +212,13 @@ class UserExportGdprAction extends AbstractAction {
 		
 		if ($this->user->avatarID || (MODULE_GRAVATAR && $this->user->enableGravatar)) {
 			$data['avatarURL'] = $this->user->getAvatar()->getURL();
+		}
+		
+		if (MODULE_USER_COVER_PHOTO) {
+			$coverPhoto = $this->user->getCoverPhoto(true);
+			if (!($coverPhoto instanceof DefaultUserCoverPhoto)) {
+				$data['coverPhotoURL'] = $coverPhoto->getURL();
+			}
 		}
 		
 		return $data;
