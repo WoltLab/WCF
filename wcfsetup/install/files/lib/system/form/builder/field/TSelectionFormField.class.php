@@ -149,4 +149,15 @@ trait TSelectionFormField {
 		
 		parent::validate();
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function value($value): IFormField {
+		if (!in_array($value, $this->possibleValues)) {
+			throw new \InvalidArgumentException("Unknown value '{$value}'");
+		}
+		
+		return parent::value($value);
+	}
 }
