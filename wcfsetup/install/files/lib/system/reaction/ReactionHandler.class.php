@@ -73,6 +73,16 @@ class ReactionHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns a reaction type by id. 
+	 * 
+	 * @param       integer                 $reactionID
+	 * @return      ReactionType|null
+	 */
+	public function getReactionTypeByID($reactionID) {
+		return ReactionTypeCache::getInstance()->getReactionTypeByID($reactionID);
+	}
+	
+	/**
 	 * Builds the data attributes for the object container. 
 	 * 
 	 * @param       string          $objectName
@@ -122,8 +132,8 @@ class ReactionHandler extends SingletonFactory {
 	/**
 	 * Returns an object type from cache.
 	 *
-	 * @param	string		$objectName
-	 * @return	ObjectType
+	 * @param	string		        $objectName
+	 * @return	ObjectType|null
 	 */
 	public function getObjectType($objectName) {
 		if (isset($this->cache[$objectName])) {
