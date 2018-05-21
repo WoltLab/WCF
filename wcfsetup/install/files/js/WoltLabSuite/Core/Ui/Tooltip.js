@@ -33,8 +33,9 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 				if (!_tooltip.classList.contains('active')) {
 					// reset back to the upper left corner, prevent it from staying outside
 					// the viewport if the body overflow was previously hidden
-					_tooltip.style.removeProperty('top');
-					_tooltip.style.removeProperty('left');
+					['bottom', 'left', 'right', 'top'].forEach(function(property) {
+						_tooltip.style.removeProperty(property);
+					});
 				}
 			});
 			
