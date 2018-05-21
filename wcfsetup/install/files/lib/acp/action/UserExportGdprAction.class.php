@@ -263,15 +263,13 @@ class UserExportGdprAction extends AbstractAction {
 			if ($this->user->{$property}) $data[$property] = $this->user->{$property};
 		}
 		
-		if ($this->user->avatarID || (MODULE_GRAVATAR && $this->user->enableGravatar)) {
+		if ($this->user->avatarID || $this->user->enableGravatar) {
 			$data['avatarURL'] = $this->user->getAvatar()->getURL();
 		}
 		
-		if (MODULE_USER_COVER_PHOTO) {
-			$coverPhoto = $this->user->getCoverPhoto(true);
-			if (!($coverPhoto instanceof DefaultUserCoverPhoto)) {
-				$data['coverPhotoURL'] = $coverPhoto->getURL();
-			}
+		$coverPhoto = $this->user->getCoverPhoto(true);
+		if (!($coverPhoto instanceof DefaultUserCoverPhoto)) {
+			$data['coverPhotoURL'] = $coverPhoto->getURL();
 		}
 		
 		return $data;
