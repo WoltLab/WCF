@@ -5,6 +5,7 @@ use wcf\data\package\PackageCache;
 use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserProfile;
+use wcf\system\database\statement\PreparedStatement;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -110,12 +111,14 @@ class UserExportGdprAction extends AbstractAction {
 		$this->ipAddresses = [
 			'com.woltlab.blog' => ['blog'.WCF_N.'_entry '],
 			'com.woltlab.calendar' => ['calendar'.WCF_N.'_event'],
+			// do not include filebaseN_file_version here, it lacks a userID column and therefore we cannot
+			// reliably determine if that ip address belongs to the file author, or if it was somebody else,
+			// e. g. moderators or other authors
 			'com.woltlab.filebase' => [
 				'filebase'.WCF_N.'_file',
-				'filebase'.WCF_N.'_file_download',
-				'filebase'.WCF_N.'_file_version'
+				'filebase'.WCF_N.'_file_download'
 			],
-			'com.woltlab.gallery' => ['gallery'.WCF_N.'_image'],
+			'com.woltlab.gallery' => [], // intentionally left empty, the image table is queried manually
 			'com.woltlab.wbb' => ['wbb'.WCF_N.'_post'],
 			'com.woltlab.wcf.conversation' => ['wcf'.WCF_N.'_conversation_message'],
 		];
@@ -124,7 +127,8 @@ class UserExportGdprAction extends AbstractAction {
 		$this->data = [
 			'com.woltlab.wcf' => [
 				'user' => $this->exportUser(),
-				'userOptions' => $this->exportUserOptions()
+				'userOptions' => $this->exportUserOptions(),
+				'ipAddresses' => $this->exportSessionIpAddresses(),
 			]
 		];
 		
@@ -142,6 +146,13 @@ class UserExportGdprAction extends AbstractAction {
 			$ipAddresses = [];
 			foreach ($tableNames as $tableName) {
 				$ipAddresses = array_merge($ipAddresses, $this->exportIpAddresses($tableName, 'ipAddress', 'time', 'userID'));
+			}
+			
+			if ($package === 'com.woltlab.gallery') {
+				$ipAddresses = array_merge(
+					$ipAddresses,
+					$this->exportIpAddresses('gallery'.WCF_N.'_image', 'ipAddress', 'uploadTime', 'userID')
+				);
 			}
 			
 			$this->data[$package]['ipAddresses'] = $ipAddresses;
@@ -178,10 +189,6 @@ class UserExportGdprAction extends AbstractAction {
 	 * @return      array
 	 */
 	public function exportIpAddresses($databaseTable, $ipAddressColumn, $timeColumn, $userIDColumn) {
-		if (!LOG_IP_ADDRESS) {
-			return [];
-		}
-		
 		$sql = "SELECT  ${ipAddressColumn}, ${timeColumn}
 			FROM    ${databaseTable}
 			WHERE   ${userIDColumn} = ?
@@ -189,7 +196,12 @@ class UserExportGdprAction extends AbstractAction {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$this->user->userID]);
 		
+		return $this->fetchIpAddresses($statement, $ipAddressColumn, $timeColumn);
+	}
+	
+	protected function fetchIpAddresses(PreparedStatement $statement, $ipAddressColumn, $timeColumn) {
 		$ipAddresses = [];
+		
 		while ($row = $statement->fetchArray()) {
 			if (!$row[$ipAddressColumn]) continue;
 			
@@ -198,6 +210,47 @@ class UserExportGdprAction extends AbstractAction {
 				'time' => $row[$timeColumn]
 			];
 		}
+		
+		return $ipAddresses;
+	}
+	
+	protected function exportSessionIpAddresses() {
+		$exportFromVirtual = function($sessionTable, $sessionVirtualTable) {
+			$sql = "SELECT  sv.ipAddress, sv.lastActivityTime
+				FROM    ${sessionVirtualTable} sv
+				WHERE   sv.sessionID IN (
+						SELECT  sessionID
+						FROM    ${sessionTable}
+						WHERE   userID = ?
+					)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$this->user->userID]);
+			
+			return $this->fetchIpAddresses($statement, 'ipAddress', 'lastActivityTime');
+		};
+		
+		if (SESSION_ENABLE_VIRTUALIZATION) {
+			// we can safely ignore the wcfN_session table in this case, because its data is
+			// just mirrored from the virtual session table, except that it shows the data
+			// from the last client only
+			$ipAddresses = $exportFromVirtual('wcf'.WCF_N.'_session', 'wcf'.WCF_N.'_session_virtual');
+		}
+		else {
+			$ipAddresses = $this->exportIpAddresses('wcf'.WCF_N.'_session', 'ipAddress', 'lastActivityTime', 'userID');
+		}
+		
+		// ACP sessions always support virtualization
+		$ipAddresses = array_merge(
+			$ipAddresses,
+			$exportFromVirtual('wcf'.WCF_N.'_acp_session', 'wcf'.WCF_N.'_acp_session_virtual')
+		);
+		
+		// we can ignore the wcfN_acp_session_access_log table because it is directly related
+		// to the wcfN_acp_session_log table and ACP sessions are bound to the ip address 
+		$ipAddresses = array_merge(
+			$ipAddresses,
+			$this->exportIpAddresses('wcf'.WCF_N.'_acp_session_log', 'ipAddress', 'lastActivityTime', 'userID')
+		);
 		
 		return $ipAddresses;
 	}
