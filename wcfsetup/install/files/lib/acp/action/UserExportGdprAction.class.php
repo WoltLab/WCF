@@ -43,6 +43,13 @@ class UserExportGdprAction extends AbstractAction {
 	public $exportUserPropertiesIfNotEmpty = array('username', 'email', 'registrationDate', 'oldUsername', 'lastUsernameChange', 'signature', 'lastActivityTime', 'userTitle');
 	
 	/**
+	 * list of user options that are associated with a settings.* category, but should be included
+	 * in the export regardless
+	 * @var string[]
+	 */
+	public $exportUserOptionSettingsIfNotEmpty = array('timezone');
+	
+	/**
 	 * list of database tables that hold ip addresses, the identifier is used to check if the
 	 * package is installed and on success exports the data from all listed table names
 	 * @var string[][]
@@ -285,6 +292,13 @@ class UserExportGdprAction extends AbstractAction {
 					continue;
 				}
 				
+				// ignore settings unless they are explicitly white-listed
+				if (strpos($option->categoryName, 'settings.') === 0) {
+					if (!in_array($option->optionName, $this->exportUserOptionSettingsIfNotEmpty)) {
+						continue;
+					}
+				}
+				
 				$optionValue = $this->user->getUserOption($option->optionName);
 				if ($option->optionType === 'boolean') {
 					$optionValue = ($optionValue == 1);
@@ -292,6 +306,11 @@ class UserExportGdprAction extends AbstractAction {
 				else if ($option->optionType === 'select' || $option->optionType === 'timezone') {
 					$formattedValue = $this->user->getFormattedUserOption($option->optionName);
 					if ($formattedValue) $optionValue = $formattedValue;
+				}
+				
+				// skip empty string values (but not values that resolve to `false` or `0`
+				if ($optionValue === '') {
+					continue;
 				}
 				
 				$data[$option->optionName] = $optionValue;
