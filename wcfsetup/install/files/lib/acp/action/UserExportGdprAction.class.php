@@ -164,7 +164,7 @@ class UserExportGdprAction extends AbstractAction {
 		}
 		
 		$this->data['@@generator'] = [
-			'software' => 'WoltLab Community Framework',
+			'software' => 'WoltLab Suite',
 			'version' => WCF_VERSION,
 			'generatedAt' => TIME_NOW
 		];
