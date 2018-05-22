@@ -53,7 +53,7 @@ class UserExportGdprAction extends AbstractAction {
 	 * in the export regardless
 	 * @var string[]
 	 */
-	public $exportUserOptionSettingsIfNotEmpty = array('timezone');
+	public $exportUserOptionSettingsIfNotEmpty = ['timezone'];
 	
 	/**
 	 * list of database tables that hold ip addresses, the identifier is used to check if the
@@ -145,10 +145,6 @@ class UserExportGdprAction extends AbstractAction {
 				continue;
 			}
 			
-			if (!isset($this->data[$package])) {
-				$this->data[$package] = [];
-			}
-			
 			$ipAddresses = [];
 			foreach ($tableNames as $tableName) {
 				$ipAddresses = array_merge($ipAddresses, $this->exportIpAddresses($tableName, 'ipAddress', 'time', 'userID'));
@@ -161,7 +157,10 @@ class UserExportGdprAction extends AbstractAction {
 				);
 			}
 			
-			$this->data[$package]['ipAddresses'] = $ipAddresses;
+			if (!empty($ipAddresses)) {
+				if (!isset($this->data[$package])) $this->data[$package] = [];
+				$this->data[$package]['ipAddresses'] = $ipAddresses;
+			}
 		}
 		
 		$this->data['@@generator'] = [
@@ -325,6 +324,10 @@ class UserExportGdprAction extends AbstractAction {
 				
 				// skip empty string values (but not values that resolve to `false` or `0`
 				if ($optionValue === '') {
+					continue;
+				}
+				else if ($option->optionName === 'gender' && $optionValue === '0') {
+					// exclude the gender if there has been no selection
 					continue;
 				}
 				
