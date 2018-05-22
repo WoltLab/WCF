@@ -2868,7 +2868,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		
 		<item name="wcf.editor.quote.author"><![CDATA[Quelle]]></item>
 		<item name="wcf.editor.quote.edit"><![CDATA[Zitat bearbeiten]]></item>
-		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Zitat von {$author}{else}Zitat{/if}]]></item>
+		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Zitat von {@$author}{else}Zitat{/if}]]></item>
 		<item name="wcf.editor.quote.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.quote.url.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} einen Link zu der Quelle an.]]></item>
 		<item name="wcf.editor.quote.url.error.invalid"><![CDATA[Der eingegebene Link ist ungültig.]]></item>
