@@ -227,7 +227,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 				->label('wcf.acp.pip.objectType.objectType')
 				->description('wcf.acp.pip.objectType.objectType.description')
 				->required()
-				->addValidator($this->getObjectTypeAlikeValueValidator('objectType'))
+				->addValidator(self::getObjectTypeAlikeValueValidator('wcf.acp.pip.objectType.objectType'))
 				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
 					$definitionName = $formField->getDocument()->getNodeById('definitionName')->getValue();
 					if ($definitionName) {
@@ -295,7 +295,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->objectProperty('categoryname')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName.description')
-					->addValidator($this->getObjectTypeAlikeValueValidator('com.woltlab.wcf.adLocation.categoryName')),
+					->addValidator(self::getObjectTypeAlikeValueValidator('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName')),
 				ItemListFormField::create('adLocationCssClassName')
 					->objectProperty('cssclassname')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.cssClassName')
@@ -508,7 +508,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->objectProperty('categoryname')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName.description')
-					->addValidator($this->getObjectTypeAlikeValueValidator('com.woltlab.wcf.statDailyHandler.categoryName')),
+					->addValidator(self::getObjectTypeAlikeValueValidator('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName')),
 				
 				BooleanFormField::create('statDailyHandlerIsDefault')
 					->objectProperty('default')
@@ -604,48 +604,6 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 						}
 					})),
 			]);
-	}
-	
-	/**
-	 * Returns a form field validator to validate a string value that has a
-	 * object type-alike structure.
-	 * 
-	 * @param	string		$languageItemSegment	used for error language items: `wcf.acp.pip.objectType.{$languageItemSegment}.error.{errorType}`
-	 * @return	FormFieldValidator
-	 */
-	protected function getObjectTypeAlikeValueValidator($languageItemSegment): FormFieldValidator {
-		return new FormFieldValidator('format', function(TextFormField $formField) use ($languageItemSegment) {
-			if ($formField->getValue()) {
-				$segments = explode('.', $formField->getValue());
-				if (count($segments) < 4) {
-					$formField->addValidationError(
-						new FormFieldValidationError(
-							'tooFewSegments',
-							'wcf.acp.pip.objectType.' . $languageItemSegment . '.error.tooFewSegments',
-							['segmentCount' => count($segments)]
-						)
-					);
-				}
-				else {
-					$invalidSegments = [];
-					foreach ($segments as $key => $segment) {
-						if (!preg_match('~^[A-z0-9\-\_]+$~', $segment)) {
-							$invalidSegments[$key] = $segment;
-						}
-					}
-					
-					if (!empty($invalidSegments)) {
-						$formField->addValidationError(
-							new FormFieldValidationError(
-								'invalidSegments',
-								'wcf.acp.pip.objectType.' . $languageItemSegment . '.error.invalidSegments',
-								['invalidSegments' => $invalidSegments]
-							)
-						);
-					}
-				}
-			}
-		});
 	}
 	
 	/**
@@ -822,7 +780,7 @@ XML;
 					->label('wcf.acp.pip.objectType.condition.conditionObject')
 					->description('wcf.acp.pip.objectType.condition.conditionObject.description')
 					->required()
-					->addValidator($this->getObjectTypeAlikeValueValidator('condition.conditionObject'))
+					->addValidator(self::getObjectTypeAlikeValueValidator('wcf.acp.pip.objectType.condition.conditionObject'))
 			);
 		}
 		
@@ -981,5 +939,47 @@ XML;
 		
 		$parameters = ['dataContainer' => $dataContainer];
 		EventHandler::getInstance()->fireAction($this, 'addConditionFields', $parameters);
+	}
+	
+	/**
+	 * Returns a form field validator to validate a string value that has a
+	 * object type-alike structure.
+	 * 
+	 * @param	string		$languageItemPrefix	used for error language items: `{$languageItemPrefix}.error.{errorType}`
+	 * @return	FormFieldValidator
+	 */
+	public static function getObjectTypeAlikeValueValidator($languageItemPrefix): FormFieldValidator {
+		return new FormFieldValidator('format', function(TextFormField $formField) use ($languageItemPrefix) {
+			if ($formField->getValue()) {
+				$segments = explode('.', $formField->getValue());
+				if (count($segments) < 4) {
+					$formField->addValidationError(
+						new FormFieldValidationError(
+							'tooFewSegments',
+							$languageItemPrefix . '.error.tooFewSegments',
+							['segmentCount' => count($segments)]
+						)
+					);
+				}
+				else {
+					$invalidSegments = [];
+					foreach ($segments as $key => $segment) {
+						if (!preg_match('~^[A-z0-9\-\_]+$~', $segment)) {
+							$invalidSegments[$key] = $segment;
+						}
+					}
+					
+					if (!empty($invalidSegments)) {
+						$formField->addValidationError(
+							new FormFieldValidationError(
+								'invalidSegments',
+								$languageItemPrefix . '.error.invalidSegments',
+								['invalidSegments' => $invalidSegments]
+							)
+						);
+					}
+				}
+			}
+		});
 	}
 }

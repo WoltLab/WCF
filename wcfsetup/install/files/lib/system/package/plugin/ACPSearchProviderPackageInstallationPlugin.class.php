@@ -2,8 +2,20 @@
 declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\acp\search\provider\ACPSearchProviderEditor;
+use wcf\data\acp\search\provider\ACPSearchProviderList;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
-use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\system\devtools\pip\DevtoolsPipEntryList;
+use wcf\system\devtools\pip\IDevtoolsPipEntryList;
+use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
+use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\field\ClassNameFormField;
+use wcf\system\form\builder\field\IntegerFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\IFormDocument;
+use wcf\system\search\acp\IACPSearchResultProvider;
 use wcf\system\WCF;
 
 /**
@@ -14,7 +26,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
+class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
+	use TXmlGuiPackageInstallationPlugin;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -90,8 +104,161 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.1
 	 */
 	public static function getSyncDependencies() {
 		return [];
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getElementData(\DOMElement $element): array {
+		$data = [
+			'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,
+			'packageID' => $this->installation->getPackage()->packageID,
+			'providerName' => $element->getAttribute('name')
+		];
+		
+		$showOrder = $element->getElementsByTagName('showorder')->item(0);
+		if ($showOrder) {
+			$data['showOrder'] = $showOrder->nodeValue;
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getElementIdentifier(\DOMElement $element): string {
+		return $element->getAttribute('name');
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function addFormFields(IFormDocument $form) {
+		/** @var FormContainer $dataContainer */
+		$dataContainer = $form->getNodeById('data');
+		
+		$dataContainer->appendChildren([
+			TextFormField::create('providerName')
+				->objectProperty('name')
+				->label('wcf.acp.pip.acpSearchProvider.providerName')
+				->description('wcf.acp.pip.acpSearchProvider.providerName.description', ['project' => $this->installation->getProject()])
+				->required()
+				->addValidator(ObjectTypePackageInstallationPlugin::getObjectTypeAlikeValueValidator('wcf.acp.pip.acpSearchProvider.providerName'))
+				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
+					if (
+						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
+						$this->editedEntry->getAttribute('name') !== $formField->getValue()
+					) {
+						$providerList = new ACPSearchProviderList();
+						$providerList->getConditionBuilder()->add('providerName <> ?', [$formField->getValue()]);
+						
+						if ($providerList->countObjects() > 0) {
+							$formField->addValidationError(
+								new FormFieldValidationError(
+									'notUnique',
+									'wcf.acp.pip.acpSearchProvider.providerName.error.notUnique'
+								)
+							);
+						}
+					}
+				})),
+			
+			ClassNameFormField::create('className')
+				->objectProperty('classname')
+				->required()
+				->implementedInterface(IACPSearchResultProvider::class),
+			
+			IntegerFormField::create('showOrder')
+				->objectProperty('showorder')
+				->label('wcf.acp.pip.acpSearchProvider.showOrder')
+				->description('wcf.acp.pip.acpSearchProvider.showOrder.description')
+				->nullable()
+				->minimum(1),
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getEntryList(): IDevtoolsPipEntryList {
+		$xml = $this->getProjectXml();
+		$xpath = $xml->xpath();
+		
+		$entryList = new DevtoolsPipEntryList();
+		$entryList->setKeys([
+			'providerName' => 'wcf.acp.pip.acpSearchProvider.providerName',
+			'className' => 'wcf.form.field.className'
+		]);
+		
+		/** @var \DOMElement $languageItem */
+		foreach ($this->getImportElements($xpath) as $element) {
+			$entryList->addEntry($this->getElementIdentifier($element), array_intersect_key($this->getElementData($element), $entryList->getKeys()));
+		}
+		
+		return $entryList;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function sortDocument(\DOMDocument $document) {
+		$this->sortImportDelete($document);
+		
+		$this->sortChildNodes($document->getElementsByTagName('import'), function(\DOMElement $element1, \DOMElement $element2) {
+			$showOrder1 = PHP_INT_MAX;
+			if ($element1->getElementsByTagName('showorder')->length === 1) {
+				$showOrder1 = $element1->getElementsByTagName('showorder')->item(0)->nodeValue;
+			}
+			
+			$showOrder2 = PHP_INT_MAX;
+			if ($element2->getElementsByTagName('showorder')->length === 1) {
+				$showOrder2 = $element2->getElementsByTagName('showorder')->item(0)->nodeValue;
+			}
+			
+			if ($showOrder1 !== $showOrder2) {
+				return $showOrder1 > $showOrder2;
+			}
+			
+			return strcmp(
+				$element1->getAttribute('name'),
+				$element2->getAttribute('name')
+			);
+		});
+		$this->sortChildNodes($document->getElementsByTagName('delete'), function(\DOMElement $element1, \DOMElement $element2) {
+			return strcmp(
+				$element1->getAttribute('name'),
+				$element2->getAttribute('name')
+			);
+		});
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+		$acpSearchProvider = $document->createElement('acpsearchprovider');
+		$acpSearchProvider->setAttribute('name', $form->getNodeById('providerName')->getSaveValue());
+		$acpSearchProvider->appendChild($document->createElement('classname', $form->getNodeById('className')->getSaveValue()));
+		
+		/** @var IntegerFormField $showOrder */
+		$showOrder = $form->getNodeById('showOrder');
+		if ($showOrder->getSaveValue()) {
+			$acpSearchProvider->appendChild($document->createElement('showorder', (string) $showOrder->getSaveValue()));
+		}
+		
+		$document->getElementsByTagName('import')->item(0)->appendChild($acpSearchProvider);
+		
+		return $acpSearchProvider;
 	}
 }
