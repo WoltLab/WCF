@@ -18,7 +18,6 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\IFormContainer;
-use wcf\system\form\builder\field\data\GuiPackageInstallationPluginFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\OptionFormField;
 use wcf\system\form\builder\field\UserGroupOptionFormField;
@@ -201,9 +200,6 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @since	3.2
 	 */
 	public function addFormFields(IFormDocument $form) {
-		// add custom data processor
-		$form->getDataHandler()->add(new GuiPackageInstallationPluginFormFieldDataProcessor());
-		
 		// read available object type definitions
 		$list = new ObjectTypeDefinitionList();
 		$list->sqlOrderBy = 'definitionName';
@@ -220,14 +216,14 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		// add default form fields
 		$form->getNodeById('data')->appendChildren([
 			SingleSelectionFormField::create('definitionName')
-				->attribute('data-tag', 'definitionname')
+				->objectProperty('definitionname')
 				->label('wcf.acp.pip.objectType.definitionName')
 				->description('<!-- will be replaced by JavaScript -->')
 				->options($this->definitionNames)
 				->required(),
 			
 			TextFormField::create('objectType')
-				->attribute('data-tag', 'name')
+				->objectProperty('name')
 				->label('wcf.acp.pip.objectType.objectType')
 				->description('wcf.acp.pip.objectType.objectType.description')
 				->required()
@@ -259,7 +255,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 				})),
 			
 			ClassNameFormField::create()
-				->attribute('data-tag', 'classname')
+				->objectProperty('classname')
 				->description('<!-- will be replaced by JavaScript -->')
 				->required()
 				->addValidator(new FormFieldValidator('implementsInterface', function(TextFormField $formField) {
@@ -296,12 +292,12 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.adLocation')
 			->appendChildren([
 				TextFormField::create('adLocationCategoryName')
-					->attribute('data-tag', 'categoryname')
+					->objectProperty('categoryname')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName.description')
 					->addValidator($this->getObjectTypeAlikeValueValidator('com.woltlab.wcf.adLocation.categoryName')),
 				ItemListFormField::create('adLocationCssClassName')
-					->attribute('data-tag', 'cssclassname')
+					->objectProperty('cssclassname')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.cssClassName')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.cssClassName.description')
 					->saveValueType(ItemListFormField::SAVE_VALUE_TYPE_SSV)
@@ -331,7 +327,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.attachment.objectType')
 			->appendChild(
 				BooleanFormField::create('attachmentPrivate')
-					->attribute('data-tag', 'private')
+					->objectProperty('private')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.attachment.objectType.private')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.attachment.objectType.private.description')
 			);
@@ -340,7 +336,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.bulkProcessing.user.action')
 			->appendChildren([
 				TextFormField::create('bulkProcessingUserAction')
-					->attribute('data-tag', 'action')
+					->objectProperty('action')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.action')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.action.description')
 					->addValidator(new FormFieldValidator('format', function(TextFormField $formField) {
@@ -355,7 +351,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					})),
 				
 				OptionFormField::create('bulkProcessingUserOptions')
-					->attribute('data-tag', 'options')
+					->objectProperty('options')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.options.description')
 					->packageIDs(array_merge(
 						[$this->installation->getPackage()->packageID],
@@ -363,7 +359,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					)),
 				
 				UserGroupOptionFormField::create('bulkProcessingUserPermissions')
-					->attribute('data-tag', 'permissions')
+					->objectProperty('permissions')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.permissions.description')
 					->packageIDs(array_merge(
 						[$this->installation->getPackage()->packageID],
@@ -379,7 +375,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.category')
 			->appendChild(
 				BooleanFormField::create('categoryDefaultPermission')
-					->attribute('data-tag', 'defaultpermission')
+					->objectProperty('defaultpermission')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.category.defaultPermission')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.category.defaultPermission.description')
 			);
@@ -388,7 +384,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.clipboardItem')
 			->appendChild(
 				ClassNameFormField::create('clipboardItemListClassName')
-					->attribute('data-tag', 'listclassname')
+					->objectProperty('listclassname')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName.description')
 					->required()
@@ -419,7 +415,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.notification.objectType')
 			->appendChild(
 				TextFormField::create('notificationObjectTypeCategory')
-					->attribute('data-tag', 'category')
+					->objectProperty('category')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.description')
 					// TODO: validator
@@ -429,7 +425,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.rebuildData')
 			->appendChild(
 				IntegerFormField::create('rebuildDataNiceValue')
-					->attribute('data-tag', 'nicevalue')
+					->objectProperty('nicevalue')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.niceValue')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.niceValue.description')
 					->nullable()
@@ -439,7 +435,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.searchableObjectType')
 			->appendChild(
 				TextFormField::create('searchableObjectTypeSearchIndex')
-					->attribute('data-tag', 'searchindex')
+					->objectProperty('searchindex')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex.description')
 					->required()
@@ -472,7 +468,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.sitemap.object')
 			->appendChildren([
 				FloatFormField::create('sitemapObjectPriority')
-					->attribute('data-tag', 'priority')
+					->objectProperty('priority')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.priority')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.priority.description')
 					->required()
@@ -482,7 +478,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->value(0.5),
 				
 				SingleSelectionFormField::create('sitemapObjectchangeFreq')
-					->attribute('data-tag', 'changeFreq')
+					->objectProperty('changeFreq')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq.description')
 					->options([
@@ -497,7 +493,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->required(),
 				
 				IntegerFormField::create('sitemapObjectRebuildTime')
-					->attribute('data-tag', 'rebuildTime')
+					->objectProperty('rebuildTime')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime.description')
 					->suffix('wcf.acp.option.suffix.seconds')
@@ -509,13 +505,13 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.statDailyHandler')
 			->appendChildren([
 				TextFormField::create('statDailyHandlerCategoryName')
-					->attribute('data-tag', 'categoryname')
+					->objectProperty('categoryname')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName.description')
 					->addValidator($this->getObjectTypeAlikeValueValidator('com.woltlab.wcf.statDailyHandler.categoryName')),
 				
 				BooleanFormField::create('statDailyHandlerIsDefault')
-					->attribute('data-tag', 'default')
+					->objectProperty('default')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.isDefault')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.isDefault.description')
 			]);
@@ -524,7 +520,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.tagging.taggableObject')
 			->appendChildren([
 				OptionFormField::create('taggingTaggableObjectOptions')
-					->attribute('data-tag', 'options')
+					->objectProperty('options')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.tagging.taggableObject.options.description')
 					->packageIDs(array_merge(
 						[$this->installation->getPackage()->packageID],
@@ -532,7 +528,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					)),
 				
 				UserGroupOptionFormField::create('taggingTaggableObjectPermissions')
-					->attribute('data-tag', 'permissions')
+					->objectProperty('permissions')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.tagging.taggableObject.permissions.description')
 					->packageIDs(array_merge(
 						[$this->installation->getPackage()->packageID],
@@ -544,7 +540,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.user.activityPointEvent')
 			->appendChild(
 				IntegerFormField::create('userActivityPointEventPoints')
-					->attribute('data-tag', 'points')
+					->objectProperty('points')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.user.activityPointEvent.points')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.user.activityPointEvent.points.description')
 					->minimum(0)
@@ -555,7 +551,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.versionTracker.objectType')
 			->appendChildren([
 				TextFormField::create('versionTrackerObjectTypeTableName')
-					->attribute('data-tag', 'tableName')
+					->objectProperty('tableName')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tableName')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tableName.description')
 					->required()
@@ -574,7 +570,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					})),
 				
 				TextFormField::create('versionTrackerObjectTypeTablePrimaryKey')
-					->attribute('data-tag', 'tablePrimaryKey')
+					->objectProperty('tablePrimaryKey')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tablePrimaryKey')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tablePrimaryKey.description')
 					->required()
@@ -822,7 +818,7 @@ XML;
 		if ($addConditionObject) {
 			$dataContainer->appendChild(
 				TextFormField::create($prefix . 'ConditionObject')
-					->attribute('data-tag', 'conditionobject')
+					->objectProperty('conditionobject')
 					->label('wcf.acp.pip.objectType.condition.conditionObject')
 					->description('wcf.acp.pip.objectType.condition.conditionObject.description')
 					->required()
@@ -833,7 +829,7 @@ XML;
 		if ($addConditionGroup) {
 			$dataContainer->appendChild(
 				TextFormField::create($prefix . 'ConditionGroup')
-					->attribute('data-tag', 'conditiongroup')
+					->objectProperty('conditiongroup')
 					->label('wcf.acp.pip.objectType.condition.conditionGroup')
 					->description('wcf.acp.pip.objectType.condition.conditionGroup.description')
 					->addValidator(new FormFieldValidator('format', function(TextFormField $formField) {
@@ -883,7 +879,7 @@ XML;
 		
 		$dataContainer->appendChildren([
 			IntegerFormField::create($prefix . 'IntegerMinValue')
-				->attribute('data-tag', 'minvalue')
+				->objectProperty('minvalue')
 				->label('wcf.acp.pip.objectType.condition.integer.minValue')
 				->description('wcf.acp.pip.objectType.condition.integer.minValue.description')
 				->addDependency(
@@ -892,7 +888,7 @@ XML;
 						->values($integerConditions)
 				),
 			IntegerFormField::create($prefix . 'IntegerMaxValue')
-				->attribute('data-tag', 'maxvalue')
+				->objectProperty('maxvalue')
 				->label('wcf.acp.pip.objectType.condition.integer.maxValue')
 				->description('wcf.acp.pip.objectType.condition.integer.maxValue.description')
 				->addDependency(
@@ -905,7 +901,7 @@ XML;
 		// `UserGroupCondition`
 		$dataContainer->appendChild(
 			BooleanFormField::create($prefix . 'UserGroupIncludeGuests')
-				->attribute('data-tag', 'includeguests')
+				->objectProperty('includeguests')
 				->label('wcf.acp.pip.objectType.condition.userGroup.includeGuests')
 				->description('wcf.acp.pip.objectType.condition.userGroup.includeGuests.description')
 				->addDependency(
@@ -918,7 +914,7 @@ XML;
 		// `UserIntegerPropertyCondition`
 		$dataContainer->appendChild(
 			TextFormField::create($prefix . 'UserIntegerPropertyName')
-				->attribute('data-tag', 'propertyname')
+				->objectProperty('propertyname')
 				->label('wcf.acp.pip.objectType.condition.userIntegerProperty.propertyName')
 				->description('wcf.acp.pip.objectType.condition.userIntegerProperty.propertyName.description')
 				->addDependency(
@@ -952,7 +948,7 @@ XML;
 		// `UserTimestampPropertyCondition`
 		$dataContainer->appendChild(
 			TextFormField::create($prefix . 'UserTimestampPropertyName')
-				->attribute('data-tag', 'propertyname')
+				->objectProperty('propertyname')
 				->label('wcf.acp.pip.objectType.condition.userTimestampProperty.propertyName')
 				->description('wcf.acp.pip.objectType.condition.userTimestampProperty.propertyName.description')
 				->addDependency(

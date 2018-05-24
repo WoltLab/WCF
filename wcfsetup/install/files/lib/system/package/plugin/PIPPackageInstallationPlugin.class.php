@@ -107,7 +107,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		
 		$dataContainer->appendChildren([
 			TextFormField::create('pluginName')
-				->attribute('data-tag', 'name')
+				->objectProperty('name')
 				->label('wcf.acp.pip.pip.pluginName')
 				->description('wcf.acp.pip.pip.pluginName.description')
 				->required()
@@ -136,7 +136,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				})),
 			
 			ClassNameFormField::create()
-				->attribute('data-tag', '__value')
+				->objectProperty('__value')
 				->required()
 				->implementedInterface(IPackageInstallationPlugin::class)
 		]);

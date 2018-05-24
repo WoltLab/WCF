@@ -196,7 +196,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 				})),
 			
 			SingleSelectionFormField::create('templateName')
-				->attribute('data-tag', 'templatename')
+				->objectProperty('templatename')
 				->label('wcf.acp.pip.templateListener.templateName')
 				->description('wcf.acp.pip.templateListener.templateName.description')
 				->required()
@@ -204,7 +204,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 				->filterable(),
 			
 			SingleSelectionFormField::create('acpTemplateName')
-				->attribute('data-tag', 'templatename')
+				->objectProperty('templatename')
 				->label('wcf.acp.pip.templateListener.templateName')
 				->description('wcf.acp.pip.templateListener.templateName.description')
 				->required()
@@ -215,7 +215,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		foreach ($templateEvents as $templateName => $events) {
 			$form->getNodeById('data')->appendChild(
 				SingleSelectionFormField::create($templateName . '_eventName')
-					->attribute('data-tag', 'eventname')
+					->objectProperty('eventname')
 					->label('wcf.acp.pip.templateListener.eventName')
 					->description('wcf.acp.pip.templateListener.eventName.description')
 					->required()
@@ -231,7 +231,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		foreach ($acpTemplateEvents as $templateName => $events) {
 			$form->getNodeById('data')->appendChild(
 				SingleSelectionFormField::create('acp_' . $templateName . '_eventName')
-					->attribute('data-tag', 'eventname')
+					->objectProperty('eventname')
 					->label('wcf.acp.pip.templateListener.eventName')
 					->description('wcf.acp.pip.templateListener.eventName.description')
 					->required()
@@ -287,7 +287,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 			
 			// TODO: use field with code support
 			MultilineTextFormField::create('templateCode')
-				->attribute('data-tag', 'templatecode')
+				->objectProperty('templatecode')
 				->label('wcf.acp.pip.templateListener.templateCode')
 				->description('wcf.acp.pip.templateListener.templateCode.description')
 				->required()

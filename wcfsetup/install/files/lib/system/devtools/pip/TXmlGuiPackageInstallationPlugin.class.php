@@ -271,11 +271,14 @@ XML;
 		
 		/** @var IFormNode $node */
 		foreach ($document->getIterator() as $node) {
-			// `data-tag` is used to map the field id to the xml element tag
-			$key = $node->hasAttribute('data-tag') ? $node->getAttribute('data-tag') : $node->getId();
 			
-			if ($node instanceof IFormField && $node->isAvailable() && isset($data[$key])) {
-				$node->value($data[$key]);
+			
+			if ($node instanceof IFormField && $node->isAvailable()) {
+				$key = $node->getObjectProperty();
+				
+				if (isset($data[$key])) {
+					$node->value($data[$key]);
+				}
 			}
 		}
 		

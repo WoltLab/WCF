@@ -144,12 +144,12 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 				})),
 			
 			ClassNameFormField::create()
-				->attribute('data-tag', 'classname')
+				->objectProperty('classname')
 				->required()
 				->implementedInterface(IUserProfileMenuContent::class),
 			
 			IntegerFormField::create('showOrder')
-				->attribute('data-tag', 'showorder')
+				->objectProperty('showorder')
 				->label('wcf.acp.pip.userProfileMenu.showOrder')
 				->description('wcf.acp.pip.userProfileMenu.showOrder.description')
 				->nullable()

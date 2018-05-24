@@ -149,7 +149,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 				})),
 			
 			TextFormField::create('interfaceName')
-				->attribute('data-tag', 'interfacename')
+				->objectProperty('interfacename')
 				->label('wcf.acp.pip.objectTypeDefinition.interfaceName')
 				->description('wcf.acp.pip.objectTypeDefinition.interfaceName.description')
 				->addValidator(new FormFieldValidator('interfaceExists', function(TextFormField $formField) {

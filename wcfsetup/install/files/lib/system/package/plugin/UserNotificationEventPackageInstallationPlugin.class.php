@@ -199,7 +199,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 				})),
 			
 			SingleSelectionFormField::create('objectType')
-				->attribute('data-tag', 'objecttype')
+				->objectProperty('objecttype')
 				->label('wcf.acp.pip.userNotificationEvent.objectType')
 				->description('wcf.acp.pip.userNotificationEvent.objectType.description')
 				->required()
@@ -238,7 +238,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 				})),
 			
 			ClassNameFormField::create()
-				->attribute('data-tag', 'classname')
+				->objectProperty('classname')
 				->required()
 				->implementedInterface(IUserNotificationEvent::class),
 			
@@ -261,7 +261,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 				)),
 			
 			SingleSelectionFormField::create('presetMailNotificationType')
-				->attribute('data-tag', 'presetmailnotificationtype')
+				->objectProperty('presetmailnotificationtype')
 				->label('wcf.acp.pip.userNotificationEvent.presetMailNotificationType')
 				->description('wcf.acp.pip.userNotificationEvent.presetMailNotificationType.description')
 				->nullable()
