@@ -80,7 +80,7 @@ class ShowOrderFormField extends SingleSelectionFormField {
 		// when editing an objects, the value has to be reduced by one to determine the
 		// relevant sibling as the edited object is shown after its previous sibling 
 		if ($this->getDocument()->getFormMode() === IFormDocument::FORM_MODE_UPDATE) {
-			$value -= 1;
+			$value--;
 		}
 		
 		if (count($keys) <= $value) {
@@ -94,7 +94,9 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	 * @inheritDoc
 	 * @return	static
 	 */
+	// @codingStandardsIgnoreStart
 	public static function create(string $id = 'showOrder'): IFormNode {
 		return parent::create($id);
 	}
+	// @codingStandardsIgnoreEnd
 }
