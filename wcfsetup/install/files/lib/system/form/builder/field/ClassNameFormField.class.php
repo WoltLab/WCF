@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\builder\field;
+use wcf\data\language\Language;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormNode;
 use wcf\system\SingletonFactory;
