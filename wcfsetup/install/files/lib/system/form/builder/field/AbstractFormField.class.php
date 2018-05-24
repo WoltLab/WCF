@@ -35,6 +35,12 @@ abstract class AbstractFormField implements IFormField {
 	protected $__immutable = false;
 	
 	/**
+	 * name of the object property this field represents
+	 * @var	null|string
+	 */
+	protected $__objectProperty;
+	
+	/**
 	 * `true` if this field has to be filled out and returns `false` otherwise
 	 * @var	bool
 	 */
@@ -122,6 +128,17 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
+	public function getObjectProperty(): string {
+		if ($this->__objectProperty !== null) {
+			return $this->__objectProperty;
+		}
+		
+		return $this->getId();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getSaveValue() {
 		return $this->getValue();
 	}
@@ -197,8 +214,25 @@ abstract class AbstractFormField implements IFormField {
 	 * @inheritDoc
 	 */
 	public function loadValueFromObject(IStorableObject $object): IFormField {
-		if (isset($object->{$this->getId()})) {
-			$this->value($object->{$this->getId()});
+		if (isset($object->{$this->getObjectProperty()})) {
+			$this->value($object->{$this->getObjectProperty()});
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @return	static
+	 */
+	public function objectProperty(string $objectProperty): IFormField {
+		if ($objectProperty === '') {
+			$this->__objectProperty = null;
+		}
+		else {
+			static::validateId($objectProperty);
+			
+			$this->__objectProperty = $objectProperty;
 		}
 		
 		return $this;

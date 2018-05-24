@@ -227,7 +227,19 @@ class FormDocument implements IFormDocument {
 		/** @var IFormNode $node */
 		foreach ($this->getIterator() as $node) {
 			if ($node instanceof IFormField && $node->isAvailable()) {
-				$node->loadValueFromObject($object);
+				if ($node->getObjectProperty() !== $node->getId()) {
+					try {
+						$node->loadValueFromObject($object);
+					}
+					catch (\InvalidArgumentException $e) {
+						// if an object property is explicitly set,
+						// ignore invalid values as this might not be
+						// the appropriate field
+					}
+				}
+				else {
+					$node->loadValueFromObject($object);
+				}
 			}
 		}
 		
