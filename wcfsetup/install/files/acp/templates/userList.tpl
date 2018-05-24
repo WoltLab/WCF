@@ -120,9 +120,9 @@
 								<span class="icon icon16 fa-{if !$user->activationCode}check-square-o{else}square-o{/if} disabled" title="{lang}wcf.acp.user.{if !$user->activationCode}disable{else}enable{/if}{/lang}"></span>
 							{/if}
 							{if $user->editable}
-								<a href="{link controller='UserExportGdpr' id=$user->userID}{/link}" title="{lang}wcf.acp.user.exportGdpr{/lang}" class="jsTooltip"><span class="icon icon16 icon-download-alt"></span></a>
+								<a href="{link controller='UserExportGdpr' id=$user->userID}{/link}" title="{lang}wcf.acp.user.exportGdpr{/lang}" class="jsTooltip"><span class="icon icon16 fa-download"></span></a>
 							{else}
-								<span class="icon icon16 icon-download-alt disabled" title="{lang}wcf.acp.user.exportGdpr{/lang}"></span>
+								<span class="icon icon16 fa-download disabled" title="{lang}wcf.acp.user.exportGdpr{/lang}"></span>
 							{/if}
 							
 							{event name='rowButtons'}
