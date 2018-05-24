@@ -77,6 +77,26 @@ $.Redactor.prototype.WoltLabInsert = function() {
 				
 				this.selection.saveInstant();
 			}).bind(this);
+			
+			this.insert.placeHtml = (function(html) {
+				var hasBbcodeMarker = false;
+				html.forEach(function(fragment) {
+					if (fragment instanceof Element && fragment.classList.contains('woltlab-bbcode-marker')) {
+						hasBbcodeMarker = true;
+					}
+				});
+				
+				var marker = document.createElement('span');
+				marker.id = 'redactor-insert-marker';
+				marker = this.insert.node(marker);
+				
+				$(marker).before(html);
+				if (!hasBbcodeMarker) {
+					this.selection.restore();
+					this.caret.after(marker);
+				}
+				$(marker).remove();
+			}).bind(this);
 		}
 	};
 };

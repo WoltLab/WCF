@@ -337,7 +337,7 @@ class UserProfileAction extends UserAction {
 			$this->readObjects();
 		}
 		
-		$resetUserIDs = [];
+		$resetUserIDs = $userToRank = [];
 		foreach ($this->getObjects() as $user) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();
 			$conditionBuilder->add('user_rank.groupID IN (?)', [$user->getGroupIDs()]);
@@ -356,16 +356,32 @@ class UserProfileAction extends UserAction {
 			$row = $statement->fetchArray();
 			if ($row === false) {
 				if ($user->rankID) {
-					$user->update(['rankID' => null]);
+					$userToRank[$user->userID] = null;
 					$resetUserIDs[] = $user->userID;
 				}
 			}
 			else {
 				if ($row['rankID'] != $user->rankID) {
-					$user->update(['rankID' => $row['rankID']]);
+					$userToRank[$user->userID] = $row['rankID'];
 					$resetUserIDs[] = $user->userID;
 				}
 			}
+		}
+		
+		if (!empty($userToRank)) {
+			$sql = "UPDATE	wcf".WCF_N."_user
+				SET	rankID = ?
+				WHERE	userID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			WCF::getDB()->beginTransaction();
+			foreach ($userToRank as $userID => $rankID) {
+				$statement->execute([
+					$rankID,
+					$userID
+				]);
+			}
+			WCF::getDB()->commitTransaction();
 		}
 		
 		if (!empty($resetUserIDs)) {
