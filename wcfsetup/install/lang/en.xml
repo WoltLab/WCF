@@ -1875,6 +1875,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.templateListener.templateCode.description"><![CDATA[The entered template code is inserted at the location of the specified template event.]]></item>
 		<item name="wcf.acp.pip.templateListener.templateName"><![CDATA[Template]]></item>
 		<item name="wcf.acp.pip.templateListener.templateName.description"><![CDATA[The template listeners’ code will be inserted into the selected template.]]></item>
+		<item name="wcf.acp.pip.coreObject.objectName.error.notUnique"><![CDATA[The entered class is already registered as a core object.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
