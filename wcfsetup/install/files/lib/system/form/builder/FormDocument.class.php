@@ -220,7 +220,9 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function loadValuesFromObject(IStorableObject $object): IFormDocument {
-		$this->formMode(self::FORM_MODE_UPDATE);
+		if ($this->__formMode === null) {
+			$this->formMode(self::FORM_MODE_UPDATE);
+		}
 		
 		/** @var IFormNode $node */
 		foreach ($this->getIterator() as $node) {

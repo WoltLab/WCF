@@ -83,6 +83,10 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 		$controller = preg_replace('~Form$~', '', end($classNamePieces));
 		
 		$this->form = FormDocument::create(lcfirst($controller));
+		
+		if ($this->formObject !== null) {
+			$this->form->formMode(IFormDocument::FORM_MODE_UPDATE);
+		}
 	}
 	
 	/**
