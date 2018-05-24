@@ -223,6 +223,8 @@ $.Redactor.prototype.WoltLabClean = function() {
 				}
 				
 				elBySelAll('span', div, function (span) {
+					if (span.classList.contains('redactor-selection-marker')) return;
+					
 					if (!span.hasAttribute('style') || !span.style.length) {
 						while (span.childNodes.length) {
 							span.parentNode.insertBefore(span.childNodes[0], span);
@@ -254,6 +256,17 @@ $.Redactor.prototype.WoltLabClean = function() {
 				
 				elBySelAll('br', div, function (br) {
 					br.parentNode.insertBefore(document.createTextNode('@@@WOLTLAB-BR-MARKER@@@'), br.nextSibling);
+				});
+				
+				// convert `<kbd>…</kbd>` to `[tt]…[/tt]`
+				elBySelAll('kbd', div, function(kbd) {
+					kbd.insertBefore(document.createTextNode('[tt]'), kbd.firstChild);
+					kbd.appendChild(document.createTextNode('[/tt]'));
+					
+					while (kbd.childNodes.length) {
+						kbd.parentNode.insertBefore(kbd.childNodes[0], kbd);
+					}
+					elRemove(kbd);
 				});
 				
 				html = mpOnPaste.call(this, div.innerHTML, data, insert);

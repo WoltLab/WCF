@@ -160,7 +160,10 @@ class CronjobScheduler extends SingletonFactory {
 			$committed = true;
 		}
 		finally {
-			if (!$committed) WCF::getDB()->rollBackTransaction();
+			if (!$committed) {
+				WCF::getDB()->rollBackTransaction();
+				$this->cronjobEditors = [];
+			}
 		}
 	}
 	

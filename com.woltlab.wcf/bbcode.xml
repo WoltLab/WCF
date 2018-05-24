@@ -73,7 +73,7 @@
 			<htmlclose>div</htmlclose>
 			<attributes>
 				<attribute name="0">
-					<html>style="text-align: %s"</html>
+					<html>class="text-%s"</html>
 					<validationpattern>^(left|right|center|justify)$</validationpattern>
 					<required>1</required>
 				</attribute>

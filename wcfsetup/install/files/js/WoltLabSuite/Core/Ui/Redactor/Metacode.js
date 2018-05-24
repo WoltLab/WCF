@@ -72,6 +72,17 @@ define(['EventHandler', 'Dom/Util'], function(EventHandler, DomUtil) {
 				DomUtil.unwrapChildNodes(metacode);
 			}
 			
+			// convert `<kbd>…</kbd>` to `[tt]…[/tt]`
+			var inlineCode, inlineCodes = elByTag('kbd', div);
+			while (inlineCodes.length) {
+				inlineCode = inlineCodes[0];
+				
+				inlineCode.insertBefore(document.createTextNode('[tt]'), inlineCode.firstChild);
+				inlineCode.appendChild(document.createTextNode('[/tt]'));
+				
+				DomUtil.unwrapChildNodes(inlineCode);
+			}
+			
 			return div.innerHTML;
 		},
 		

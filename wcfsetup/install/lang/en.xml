@@ -2435,6 +2435,7 @@ full extend.]]></item>
 		<item name="wcf.acp.user.action.sendMail"><![CDATA[Send Email]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Send New Password]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to this user?]]></item>
+		<item name="wcf.acp.user.exportGdpr"><![CDATA[Export Personal Data (GDPR)]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
@@ -3019,7 +3020,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		
 		<item name="wcf.editor.quote.author"><![CDATA[Source]]></item>
 		<item name="wcf.editor.quote.edit"><![CDATA[Edit Quote]]></item>
-		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Quote from {$author}{else}Quote{/if}]]></item>
+		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Quote from {@$author}{else}Quote{/if}]]></item>
 		<item name="wcf.editor.quote.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.quote.url.description"><![CDATA[Optional: Specify the link to the source.]]></item>
 		<item name="wcf.editor.quote.url.error.invalid"><![CDATA[You have entered an invalid link.]]></item>

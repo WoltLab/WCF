@@ -2377,7 +2377,6 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} auf dieser Seite die Standardeinstellungen für neue Benutzer festlegen, dies wirkt sich nicht auf bestehende Benutzer aus. Benutzer können abweichende Einstellungen festlegen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers.description"><![CDATA[Die hier eingestellten Änderungen der Vorgabewerte für Benachrichtigungen werden auch in bestehende Benutzerkonten übernommen. Die entsprechenden Einstellungen der Benutzer werden dabei überschrieben.]]></item>
-		
 		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Aktion]]></item>
 		<item name="wcf.acp.user.bulkProcessing.assignToUserGroups"><![CDATA[Benutzergruppen zuweisen]]></item>
@@ -2392,6 +2391,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.action.sendMail"><![CDATA[E-Mail senden]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Neues Passwort zusenden]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesem Benutzer wirklich ein neues Kennwort zusenden?]]></item>
+		<item name="wcf.acp.user.exportGdpr"><![CDATA[Persönliche Daten exportieren (DSGVO)]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
@@ -2965,7 +2965,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		
 		<item name="wcf.editor.quote.author"><![CDATA[Quelle]]></item>
 		<item name="wcf.editor.quote.edit"><![CDATA[Zitat bearbeiten]]></item>
-		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Zitat von {$author}{else}Zitat{/if}]]></item>
+		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Zitat von {@$author}{else}Zitat{/if}]]></item>
 		<item name="wcf.editor.quote.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.quote.url.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} einen Link zu der Quelle an.]]></item>
 		<item name="wcf.editor.quote.url.error.invalid"><![CDATA[Der eingegebene Link ist ungültig.]]></item>
@@ -3686,7 +3686,7 @@ dann wird diese Anfrage am {$mailbox->getUser()->lastLostPasswordRequestTime+864
 		<item name="wcf.user.quit"><![CDATA[Benutzerkonto kündigen]]></item>
 		<item name="wcf.user.quit.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du dein{else}Wollen Sie Ihr{/if} Benutzerkonto mitsamt {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} persönlichen Daten dauerhaft löschen?]]></item>
 		<item name="wcf.user.quit.cancel"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wird am {$quitStarted+7*86400|date} gelöscht. {if LANGUAGE_USE_INFORMAL_VARIANT}Bitte aktiviere diese Option, wenn du die Löschung abbrechen möchtest.{else}Bitte aktivieren Sie diese Option, wenn Sie die Löschung abbrechen möchten.{/if}]]></item>
-		<item name="wcf.user.quit.description"><![CDATA[Hinweis: Beiträge, Anhänge und ähnliches werden nicht gelöscht.]]></item>
+		<item name="wcf.user.quit.description"><![CDATA[Hinweis: Beiträge, Anhänge und Ähnliches werden nicht gelöscht.]]></item>
 		<item name="wcf.user.quit.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wird am {TIME_NOW+7*86400|date} gelöscht. Bis dahin {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die Löschung auf dieser Seite abbrechen.]]></item>
 		<item name="wcf.user.quit.cancel.success"><![CDATA[Die Löschung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos wurde erfolgreich abgebrochen.]]></item>
 		<item name="wcf.user.emailActivation"><![CDATA[Neue E-Mail-Adresse aktivieren]]></item>
@@ -3984,7 +3984,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.recentActivity.condition.excludedObjectType"><![CDATA[Ausgeschlossene Aktivitäten]]></item>
 		<item name="wcf.user.recentActivity.scope.all"><![CDATA[Aktivitäten aller Benutzer]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Aktivitäten von Benutzern, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}]]></item>
-		<item name="wcf.user.recentActivity.scope.followedUsers.noResults"><![CDATA[Es gibt aktuell keine Aktivitäten von Benutzeren, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}. Es werden alle Aktivitäten angezeigt.]]></item>
+		<item name="wcf.user.recentActivity.scope.followedUsers.noResults"><![CDATA[Es gibt aktuell keine Aktivitäten von Benutzern, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}. Es werden alle Aktivitäten angezeigt.]]></item>
 	</category>
 	
 	<category name="wcf.user.3rdparty">
