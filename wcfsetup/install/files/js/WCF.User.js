@@ -1061,6 +1061,27 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * Saves input values.
 		 */
 		_save: function () {
+			// check if there is an editor and if it is in WYSIWYG mode
+			var scrollToEditor = null;
+			elBySelAll('.redactor-layer', this._tab[0], function(redactorLayer) {
+				var data = {
+					api: {
+						throwError: elInnerError
+					},
+					valid: true
+				};
+				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'validate_' + elData(redactorLayer, 'element-id'), data);
+				
+				if (!data.valid && scrollToEditor === null) {
+					scrollToEditor = redactorLayer.parentNode;
+				}
+			});
+			
+			if (scrollToEditor) {
+				scrollToEditor.scrollIntoView({ behavior: 'smooth' });
+				return;
+			}
+			
 			this._actionName = 'save';
 			
 			// collect values

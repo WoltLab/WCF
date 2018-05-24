@@ -15,7 +15,7 @@
 				{/if}
 				
 				{if $__wcf->user->userID && $user->userID != $__wcf->user->userID}
-					{if !$user->isIgnoredUser($__wcf->user->userID)}
+					{if !$__wcf->getUserProfileHandler()->isIgnoredByUser($user->userID)}
 						{if $__wcf->getUserProfileHandler()->isFollowing($user->userID)}
 							<li class="jsOnly"><a href="#" data-following="1" data-object-id="{@$user->userID}" class="jsFollowButton jsTooltip" title="{lang}wcf.user.button.unfollow{/lang}"><span class="icon icon16 fa-minus"></span> <span class="invisible">{lang}wcf.user.button.unfollow{/lang}</span></a></li>
 						{else}

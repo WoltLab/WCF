@@ -57,6 +57,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 			]);
 			
 			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'ignoredUserIDs');
+			UserStorageHandler::getInstance()->reset([$this->parameters['data']['userID']], 'ignoredByUserIDs');
 			
 			// check if target user is following the current user
 			$sql = "SELECT	*

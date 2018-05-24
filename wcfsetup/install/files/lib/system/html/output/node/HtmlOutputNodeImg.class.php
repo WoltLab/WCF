@@ -133,6 +133,8 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 					$link = $element->ownerDocument->createElement('a');
 					$link->setAttribute('href', $src);
 					$link->textContent = $src;
+					HtmlOutputNodeA::markLinkAsExternal($link);
+					
 					$element->parentNode->insertBefore($link, $element);
 					
 					$element->parentNode->insertBefore($element->ownerDocument->createTextNode(']'), $element);

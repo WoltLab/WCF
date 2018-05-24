@@ -33,24 +33,7 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode {
 				$element->setAttribute('href', preg_replace('~^https?://~', RouteHandler::getProtocol(), $href));
 			}
 			else {
-				$element->setAttribute('class', 'externalURL');
-				
-				$rel = '';
-				if (EXTERNAL_LINK_REL_NOFOLLOW) {
-					$rel = 'nofollow';
-				}
-				
-				if (EXTERNAL_LINK_TARGET_BLANK) {
-					if (!empty($rel)) $rel .= ' ';
-					
-					$rel .= 'noopener noreferrer';
-					
-					$element->setAttribute('target', '_blank');
-				}
-				
-				if (!empty($rel)) {
-					$element->setAttribute('rel', $rel);
-				}
+				self::markLinkAsExternal($element);
 			}
 			
 			$value = StringUtil::trim($element->textContent);
@@ -78,6 +61,32 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode {
 
 				$htmlNodeProcessor->replaceElementWithText($element, $text, false);
 			}
+		}
+	}
+	
+	/**
+	 * Marks an element as external.
+	 * 
+	 * @param       \DOMElement     $element
+	 */
+	public static function markLinkAsExternal(\DOMElement $element) {
+		$element->setAttribute('class', 'externalURL');
+		
+		$rel = '';
+		if (EXTERNAL_LINK_REL_NOFOLLOW) {
+			$rel = 'nofollow';
+		}
+		
+		if (EXTERNAL_LINK_TARGET_BLANK) {
+			if (!empty($rel)) $rel .= ' ';
+			
+			$rel .= 'noopener noreferrer';
+			
+			$element->setAttribute('target', '_blank');
+		}
+		
+		if (!empty($rel)) {
+			$element->setAttribute('rel', $rel);
 		}
 	}
 }

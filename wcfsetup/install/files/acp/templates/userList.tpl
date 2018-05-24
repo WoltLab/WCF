@@ -123,6 +123,10 @@
 										{/if}
 									{/if}
 									
+									{if $user->editable}
+										<li><a href="{link controller='UserExportGdpr' id=$user->userID}{/link}">{lang}wcf.acp.user.exportGdpr{/lang}</a></li>
+									{/if}
+									
 									{if $user->deletable}
 										<li class="dropdownDivider"></li>
 										<li><a href="#" class="jsDispatchDelete">{lang}wcf.global.button.delete{/lang}</a></li>
