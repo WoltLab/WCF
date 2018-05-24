@@ -38,13 +38,39 @@ class UserExportGdprAction extends AbstractAction {
 	/**
 	 * list of column names of the user table, the columns `languageID` and `registrationIpAddress`
 	 * are not listed here, but included in the final output due to special handling
+	 * 
+	 * these properties are always exported, even if PHP considers them to be empty
+	 * 
 	 * @var string[]
 	 */
-	public $exportUserPropertiesIfNotEmpty = array('username', 'email', 'registrationDate', 'oldUsername', 'lastUsernameChange', 'signature', 'lastActivityTime', 'userTitle');
+	public $exportUserProperties = array('username', 'email');
+	
+	/**
+	 * list of column names of the user table, the columns `languageID` and `registrationIpAddress`
+	 * are not listed here, but included in the final output due to special handling
+	 * 
+	 * these properties are only exported if PHP does not consider them to be empty
+	 * 
+	 * @var string[]
+	 */
+	public $exportUserPropertiesIfNotEmpty = array('registrationDate', 'oldUsername', 'lastUsernameChange', 'signature', 'lastActivityTime', 'userTitle');
 	
 	/**
 	 * list of user options that are associated with a settings.* category, but should be included
 	 * in the export regardless
+	 * 
+	 * these settings are always exported, even if PHP considers them to be empty
+	 * 
+	 * @var string[]
+	 */
+	public $exportUserOptionSettings = array();
+	
+	/**
+	 * list of user options that are associated with a settings.* category, but should be included
+	 * in the export regardless
+	 *
+	 * these settings are only exported if PHP does not consider them to be empty
+	 * 
 	 * @var string[]
 	 */
 	public $exportUserOptionSettingsIfNotEmpty = array('timezone');
@@ -66,7 +92,7 @@ class UserExportGdprAction extends AbstractAction {
 	 * `can*` or `admin*` are excluded by default, as well as any option that ends with `*perPage`
 	 * @var string[]
 	 */
-	public $skipUserOptions = array('showSignature', 'watchThreadOnReply');
+	public $skipUserOptions = array('birthdayShowYear', 'showSignature', 'watchThreadOnReply');
 	
 	/**
 	 * @var UserProfile
@@ -118,13 +144,18 @@ class UserExportGdprAction extends AbstractAction {
 		// content
 		$this->data = array(
 			'com.woltlab.wcf' => array(
-				'user' => $this->exportUser(),
-				'userOptions' => $this->exportUserOptions(),
-				'ipAddresses' => $this->exportSessionIpAddresses(),
+				'user' => array(),
+				'userOptions' => array(),
+				'ipAddresses' => array(),
+				'paidSubscriptionTransactionLog' => $this->dumpTable('wcf'.WCF_N.'_paid_subscription_transaction_log', 'userID')
 			)
 		);
 		
 		EventHandler::getInstance()->fireAction($this, 'export');
+		
+		$this->data['com.woltlab.wcf']['user'] = array_merge($this->data['com.woltlab.wcf']['user'], $this->exportUser());
+		$this->data['com.woltlab.wcf']['userOptions'] = array_merge($this->data['com.woltlab.wcf']['userOptions'], $this->exportUserOptions());
+		$this->data['com.woltlab.wcf']['ipAddresses'] = array_merge($this->data['com.woltlab.wcf']['ipAddresses'], $this->exportSessionIpAddresses());
 		
 		foreach ($this->ipAddresses as $package => $tableNames) {
 			if (PackageCache::getInstance()->getPackageByIdentifier($package) === null) {
@@ -152,11 +183,12 @@ class UserExportGdprAction extends AbstractAction {
 			}
 		}
 		
-		$this->data['@@generator'] = array(
-			'software' => 'WoltLab Community Framework',
-			'version' => WCF_VERSION,
-			'generatedAt' => TIME_NOW
-		);
+		if (PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.filebase') !== null) {
+			if (!isset($this->data['com.woltlab.filebase'])) $this->data['com.woltlab.filebase'] = array();
+			$this->data['com.woltlab.filebase']['filePaymentLog'] = $this->dumpTable('filebase'.WCF_N.'_file_payment_log', 'userID');
+		}
+		
+		$this->data['@@generatedAt'] = TIME_NOW;
 		
 		// header
 		@header('Content-type: application/json');
@@ -193,6 +225,21 @@ class UserExportGdprAction extends AbstractAction {
 		return $this->fetchIpAddresses($statement, $ipAddressColumn, $timeColumn);
 	}
 	
+	protected function dumpTable($tableName, $userIDColumn) {
+		$sql = "SELECT  *
+			FROM    ${tableName}
+			WHERE   ${userIDColumn} = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array($this->user->userID));
+		
+		$data = array();
+		while ($row = $statement->fetchArray()) {
+			$data[] = $row;
+		}
+		
+		return $data;
+	}
+	
 	protected function fetchIpAddresses(PreparedStatement $statement, $ipAddressColumn, $timeColumn) {
 		$ipAddresses = array();
 		while ($row = $statement->fetchArray()) {
@@ -222,29 +269,29 @@ class UserExportGdprAction extends AbstractAction {
 			return $this->fetchIpAddresses($statement, 'ipAddress', 'lastActivityTime');
 		};
 		
+		$data = array(
+			'session' => array(),
+			'acpSession' => array(),
+			'acpSessionLog' => array()
+		);
+		
 		if (SESSION_ENABLE_VIRTUALIZATION) {
 			// we can safely ignore the wcfN_session table in this case, because its data is
 			// just mirrored from the virtual session table, except that it shows the data
 			// from the last client only
-			$ipAddresses = $exportFromVirtual('wcf'.WCF_N.'_session', 'wcf'.WCF_N.'_session_virtual');
+			$data['session'] = $exportFromVirtual('wcf'.WCF_N.'_session', 'wcf'.WCF_N.'_session_virtual');
 		}
 		else {
-			$ipAddresses = $this->exportIpAddresses('wcf'.WCF_N.'_session', 'ipAddress', 'lastActivityTime', 'userID');
+			$data['session'] = $this->exportIpAddresses('wcf'.WCF_N.'_session', 'ipAddress', 'lastActivityTime', 'userID');
 		}
 		
-		$ipAddresses = array_merge(
-			$ipAddresses,
-			$this->exportIpAddresses('wcf'.WCF_N.'_acp_session', 'ipAddress', 'lastActivityTime', 'userID')
-		);
+		$data['acpSession'] = $this->exportIpAddresses('wcf'.WCF_N.'_acp_session', 'ipAddress', 'lastActivityTime', 'userID');
 		
 		// we can ignore the wcfN_acp_session_access_log table because it is directly related
 		// to the wcfN_acp_session_log table and ACP sessions are bound to the ip address 
-		$ipAddresses = array_merge(
-			$ipAddresses,
-			$this->exportIpAddresses('wcf'.WCF_N.'_acp_session_log', 'ipAddress', 'lastActivityTime', 'userID')
-		);
+		$data['acpSessionLog'] = $this->exportIpAddresses('wcf'.WCF_N.'_acp_session_log', 'ipAddress', 'lastActivityTime', 'userID');
 		
-		return $ipAddresses;
+		return $data;
 	}
 	
 	protected function exportUser() {
@@ -253,11 +300,14 @@ class UserExportGdprAction extends AbstractAction {
 		);
 		if ($this->user->registrationIpAddress) $data['registrationIpAddress'] = UserUtil::convertIPv6To4($this->user->registrationIpAddress);
 		
+		foreach ($this->exportUserProperties as $property) {
+			$data[$property] = $this->user->{$property};
+		}
 		foreach ($this->exportUserPropertiesIfNotEmpty as $property) {
 			if ($this->user->{$property}) $data[$property] = $this->user->{$property};
 		}
 		
-		if ($this->user->avatarID || (MODULE_GRAVATAR && $this->user->enableGravatar)) {
+		if ($this->user->avatarID || $this->user->enableGravatar) {
 			$data['avatarURL'] = $this->user->getAvatar()->getURL();
 		}
 		
@@ -291,8 +341,10 @@ class UserExportGdprAction extends AbstractAction {
 					continue;
 				}
 				
+				$forceExport = in_array($option->optionName, $this->exportUserOptionSettings);
+				
 				// ignore settings unless they are explicitly white-listed
-				if (strpos($option->categoryName, 'settings.') === 0) {
+				if (!$forceExport && strpos($option->categoryName, 'settings.') === 0) {
 					if (!in_array($option->optionName, $this->exportUserOptionSettingsIfNotEmpty)) {
 						continue;
 					}
@@ -308,12 +360,16 @@ class UserExportGdprAction extends AbstractAction {
 				}
 				
 				// skip empty string values (but not values that resolve to `false` or `0`
-				if ($optionValue === '') {
-					continue;
-				}
-				else if ($option->optionName === 'gender' && $optionValue === '0') {
-					// exclude the gender if there has been no selection
-					continue;
+				if (!$forceExport) {
+					if ($optionValue === '') {
+						continue;
+					}
+					else {
+						if ($option->optionName === 'gender' && $optionValue === '0') {
+							// exclude the gender if there has been no selection
+							continue;
+						}
+					}
 				}
 				
 				$data[$option->optionName] = $optionValue;
