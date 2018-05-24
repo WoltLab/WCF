@@ -48,15 +48,6 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public function __run() {
-		$this->buildForm();
-		
-		parent::__run();
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
@@ -168,6 +159,15 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 		}
 		
 		$this->form->action(LinkHandler::getInstance()->getLink($controller, $parameters));
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function show() {
+		$this->buildForm();
+		
+		return parent::show();
 	}
 	
 	/**
