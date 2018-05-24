@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\builder\field;
+use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
 use wcf\system\WCF;
 
@@ -13,6 +14,14 @@ use wcf\system\WCF;
  *
  * This field uses the `wcf.form.field.showOrder` language item as the default form
  * field label uses `showOrder` as the default node id.
+ * 
+ * While the options of the field work with the ids of the appropriate sibling objects
+ * as keys, the value of the field is the actual position of the relevant object (from
+ * `1` to `count($siblings)`.
+ * 
+ * If an object is edited, thus `$this->getDocument()->getFormMode() === IFormDocument::FORM_MODE_UPDATE`,
+ * it is expected that the edited objects itself is not part of the sibling list provided
+ * for the field options.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
@@ -32,7 +41,7 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	 * @inheritDoc
 	 */
 	public function getSaveValue() {
-		if ($this->__value) {
+		if ($this->__value !== null) {
 			$index = array_search($this->__value, array_keys($this->getOptions()));
 			
 			if ($index !== false) {
@@ -56,10 +65,8 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	public function options($options): ISelectionFormField {
 		parent::options($options);
 		
-		$this->__options = array_merge(
-			[0 => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition')],
-			$this->__options
-		);
+		$this->__options = [0 => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition')] + $this->__options;
+		$this->possibleValues[] = 0;
 		
 		return $this;
 	}
@@ -70,7 +77,13 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	public function value($value): IFormField {
 		$keys = array_keys($this->getOptions());
 		
-		if (count($keys) < $value) {
+		// when editing an objects, the value has to be reduced by one to determine the
+		// relevant sibling as the edited object is shown after its previous sibling 
+		if ($this->getDocument()->getFormMode() === IFormDocument::FORM_MODE_UPDATE) {
+			$value -= 1;
+		}
+		
+		if (count($keys) <= $value) {
 			throw new \InvalidArgumentException("Unknown value '{$value}' as only " . count($keys) . " values are available.");
 		}
 		
