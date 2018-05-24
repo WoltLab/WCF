@@ -271,8 +271,6 @@ XML;
 		
 		/** @var IFormNode $node */
 		foreach ($document->getIterator() as $node) {
-			
-			
 			if ($node instanceof IFormField && $node->isAvailable()) {
 				$key = $node->getObjectProperty();
 				
