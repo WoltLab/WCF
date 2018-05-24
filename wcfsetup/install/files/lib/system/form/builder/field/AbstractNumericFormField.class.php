@@ -139,14 +139,18 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IMa
 		}
 		else {
 			if ($this->getMinimum() !== null && $this->getValue() < $this->getMinimum()) {
-				$this->addValidationError(new FormFieldValidationError('minimum', 'wcf.global.form.error.minimum', [
-					'minimum' => $this->getMinimum()
-				]));
+				$this->addValidationError(new FormFieldValidationError(
+					'minimum',
+					'wcf.form.field.numeric.error.minimum',
+					['minimum' => $this->getMinimum()]
+				));
 			}
 			else if ($this->getMaximum() !== null && $this->getValue() > $this->getMaximum()) {
-				$this->addValidationError(new FormFieldValidationError('maximum', 'wcf.global.form.error.maximum', [
-					'maximum' => $this->getMaximum()
-				]));
+				$this->addValidationError(new FormFieldValidationError(
+					'maximum',
+					'wcf.form.field.numeric.error.maximum',
+					['maximum' => $this->getMaximum()]
+				));
 			}
 		}
 		

@@ -49,37 +49,50 @@ class UserFormField extends AbstractFormField implements IMultipleFormField, INu
 		else if (!$this->isRequired()) {
 			if ($this->allowsMultiple()) {
 				if ($this->getMinimumMultiples() > 0 && count($this->getValue()) < $this->getMinimumMultiples()) {
-					$this->addValidationError(new FormFieldValidationError('minimumMultiples', 'wcf.form.field.user.error.minimumMultiples', [
-						'minimumCount' => $this->getMinimumMultiples(),
-						'userCount' => count($this->getValue())
-					]));
+					$this->addValidationError(new FormFieldValidationError(
+						'minimumMultiples',
+						'wcf.form.field.user.error.minimumMultiples',
+						[
+							'minimumCount' => $this->getMinimumMultiples(),
+							'count' => count($this->getValue())
+						]
+					));
 				}
 				else if ($this->getMaximumMultiples() !== IMultipleFormField::NO_MAXIMUM_MULTIPLES && count($this->getValue()) > $this->getMaximumMultiples()) {
-					$this->addValidationError(new FormFieldValidationError('maximumMultiples', 'wcf.form.field.user.error.maximumMultiples', [
-						'maximumCount' => $this->getMaximumMultiples(),
-						'userCount' => count($this->getValue())
-					]));
+					$this->addValidationError(new FormFieldValidationError(
+						'maximumMultiples',
+						'wcf.form.field.user.error.maximumMultiples',
+						[
+							'maximumCount' => $this->getMaximumMultiples(),
+							'count' => count($this->getValue())
+						]
+					));
 				}
 				else {
 					// validate users
 					$users = UserProfile::getUserProfilesByUsername($this->getValue());
 					
-					$invalidUsernames = [];
+					$nonExistentUsernames = [];
 					foreach ($this->getValue() as $username) {
 						if (!isset($users[$username])) {
-							$invalidUsernames[] = $username;
+							$nonExistentUsernames[] = $username;
 						}
 					}
 					
-					if (!empty($invalidUsernames)) {
-						$this->addValidationError(new FormFieldValidationError('invalid', 'wcf.form.field.user.error.invalid', [
-							'invalidUsernames' => $invalidUsernames
-						]));
+					if (!empty($nonExistentUsernames)) {
+						$this->addValidationError(new FormFieldValidationError(
+							'nonExistent',
+							'wcf.form.field.user.error.nonExistent',
+							['nonExistentUsernames' => $nonExistentUsernames]
+						));
 					}
 				}
 			}
 			else if ($this->getValue() !== '' && UserProfile::getUserProfileByUsername($this->getValue()) === null) {
-				$this->addValidationError(new FormFieldValidationError('invalid', 'wcf.form.field.user.error.invalid'));
+				$this->addValidationError(new FormFieldValidationError(
+					'nonExistent',
+					'wcf.form.field.user.error.invalid'
+				));
 			}
 		}
 		

@@ -3177,10 +3177,21 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not exist.]]></item>
 		<item name="wcf.form.field.className.error.parentClass"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not extend <code>{$parentClass}</code>.]]></item>
 		<item name="wcf.form.field.itemList.error.separator"><![CDATA[The following items may contain no {if $separator === ','}comma{else}space{/if}: {implode from=$invalidItems item=item}“{$item}”{/implode}.]]></item>
+		<item name="wcf.form.field.numeric.error.maximum"><![CDATA[The entered value may not be less than {#$maximum}.]]></item>
+		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[The entered value may not be greater than {#$minimum}.]]></item>
 		<item name="wcf.form.field.option"><![CDATA[Options]]></item>
 		<item name="wcf.form.field.option.error.nonExistent"><![CDATA[The following options do not exist: {implode from=$options item=option}<code>{$option}</code>{/implode}.]]></item>
+		<item name="wcf.form.field.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.form.field.showOrder.firstPosition"><![CDATA[(first position)]]></item>
+		<item name="wcf.form.field.text.error.maximumLength"><![CDATA[The entered text{if $language} for language “{$language}”{/if} contains {#$length} characters but it may not be longer than {#$maximumLength} characters.]]></item>
+		<item name="wcf.form.field.text.error.minimumLength"><![CDATA[The entered text{if $language} for language “{$language}”{/if} only contains {#$length} characters but it may not be shorter than {#$minimumLength} characters.]]></item>
+		<item name="wcf.form.field.user.error.maxmimumMultiples"><![CDATA[You may not enter more than {#$maximumCount} users but {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
+		<item name="wcf.form.field.user.error.minimumMultiples"><![CDATA[You have to entered at least {#$minimumCount} users but only {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
+		<item name="wcf.form.field.user.error.nonExistent"><![CDATA[{if $nonExistentUsernames|isset}The following users do not exist: {implode from=$nonExistentUsernames item=nonExistentUsername}“{$nonExistentUsername}”{/implode}.{else}The entered user does not exists.{/if}]]></item>
 		<item name="wcf.form.field.userGroupOption"><![CDATA[Permissions]]></item>
 		<item name="wcf.form.field.userGroupOption.error.nonExistent"><![CDATA[The following permissions do not exist: {implode from=$options item=option}<code>{$option}</code>{/implode}.]]></item>
+		<item name="wcf.form.field.username.error.invalid"><![CDATA[The entered username is invalid.]]></item>
+		<item name="wcf.form.field.username.error.notUnique"><![CDATA[The entered username is already in use.]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">

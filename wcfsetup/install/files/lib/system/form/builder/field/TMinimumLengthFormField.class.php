@@ -70,11 +70,15 @@ trait TMinimumLengthFormField {
 	 */
 	public function validateMinimumLength(string $text, Language $language = null) {
 		if ($this->getMinimumLength() !== null && mb_strlen($text) < $this->getMinimumLength()) {
-			$this->addValidationError(new FormFieldValidationError('minimumLength', 'wcf.global.form.text.error.minimumLength', [
-				'language' => $language,
-				'length' => mb_strlen($text),
-				'minimumLength' => $this->getMinimumLength()
-			]));
+			$this->addValidationError(new FormFieldValidationError(
+				'minimumLength',
+				'wcf.form.field.text.error.minimumLength',
+				[
+					'language' => $language,
+					'length' => mb_strlen($text),
+					'minimumLength' => $this->getMinimumLength()
+				]
+			));
 		}
 	}
 }

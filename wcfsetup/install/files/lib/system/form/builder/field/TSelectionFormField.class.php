@@ -144,9 +144,20 @@ trait TSelectionFormField {
 	 */
 	public function validate() {
 		if (!in_array($this->getValue(), $this->possibleValues)) {
-			$this->addValidationError(new FormFieldValidationError('invalidValue', 'wcf.global.form.selection.error.invalidValue'));
+			$this->addValidationError(new FormFieldValidationError('invalidValue', 'wcf.global.form.error.noValidSelection'));
 		}
 		
 		parent::validate();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function value($value): IFormField {
+		if (!in_array($value, $this->possibleValues)) {
+			throw new \InvalidArgumentException("Unknown value '{$value}'");
+		}
+		
+		return parent::value($value);
 	}
 }

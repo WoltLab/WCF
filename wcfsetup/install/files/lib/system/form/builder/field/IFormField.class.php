@@ -42,6 +42,15 @@ interface IFormField extends IFormChildNode, IFormElement {
 	public function addValidator(IFormFieldValidator $validator): IFormField;
 	
 	/**
+	 * Returns the name of the object property this field represents.
+	 * 
+	 * If no object property has been explicitly set, the field's id is returned.
+	 * 
+	 * @return	string
+	 */
+	public function getObjectProperty(): string;
+	
+	/**
 	 * Returns the field value saved in the database.
 	 * 
 	 * This method is useful if the actual returned by `getValue()`
@@ -138,6 +147,23 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * @return	static					this field
 	 */
 	public function loadValueFromObject(IStorableObject $object): IFormField;
+	
+	/**
+	 * Sets the name of the object property this field represents. If an empty
+	 * string is passed, the object property is unset.
+	 * 
+	 * The object property allows having different fields (requiring different ids)
+	 * that represent the same object property which is handy when available options
+	 * of the field's value depend on another field. Having object property allows
+	 * to define different fields for each value of the other field and to use form
+	 * field dependencies to only show the appropriate field.
+	 * 
+	 * @param	string		$objectProperty		object property this field represents
+	 * @return	IFormField
+	 * 
+	 * @throws	\InvalidArgumentException	if the passed object property is no valid id 
+	 */
+	public function objectProperty(string $objectProperty): IFormField;
 	
 	/**
 	 * Reads the value of this field from request data and return this field.

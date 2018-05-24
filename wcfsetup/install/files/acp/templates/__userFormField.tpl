@@ -6,7 +6,6 @@
 	*}value="{if $field->allowsMultiple()}{if $field->getValue()|is_array}{implode from=$field->getValue() item=username}{$username}{/implode}{/if}{else}{$field->getValue()}{/if}" {*
 	*}class="long"{*
 	*}{if $field->isAutofocused()} autofocus{/if}{*
-	*}{if $field->isRequired()} required{/if}{*
 	*}{if $field->isImmutable()} disabled{/if}{*
 *}>
 

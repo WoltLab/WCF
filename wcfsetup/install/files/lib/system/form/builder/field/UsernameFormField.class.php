@@ -70,10 +70,16 @@ class UsernameFormField extends AbstractFormField implements IMaximumLengthFormF
 			
 			if (empty($this->getValidationErrors())) {
 				if (!UserUtil::isValidUsername($this->getValue())) {
-					$this->addValidationError(new FormFieldValidationError('invalid', 'wcf.form.field.username.error.invalid'));
+					$this->addValidationError(new FormFieldValidationError(
+						'invalid',
+						'wcf.form.field.username.error.invalid'
+					));
 				}
 				else if (!UserUtil::isAvailableUsername($this->getValue())) {
-					$this->addValidationError(new FormFieldValidationError('notUnique', 'wcf.form.field.username.error.notUnique'));
+					$this->addValidationError(new FormFieldValidationError(
+						'notUnique',
+						'wcf.form.field.username.error.notUnique'
+					));
 				}
 			}
 		}
