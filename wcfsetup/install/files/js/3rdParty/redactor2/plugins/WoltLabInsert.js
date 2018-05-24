@@ -78,7 +78,7 @@ $.Redactor.prototype.WoltLabInsert = function() {
 				this.selection.saveInstant();
 			}).bind(this);
 			
-			this.placeHtml = (function(html) {
+			this.insert.placeHtml = (function(html) {
 				var hasBbcodeMarker = false;
 				html.forEach(function(fragment) {
 					if (fragment instanceof Element && fragment.classList.contains('woltlab-bbcode-marker')) {
@@ -91,8 +91,10 @@ $.Redactor.prototype.WoltLabInsert = function() {
 				marker = this.insert.node(marker);
 				
 				$(marker).before(html);
-				this.selection.restore();
-				if (!hasBbcodeMarker) this.caret.after(marker);
+				if (!hasBbcodeMarker) {
+					this.selection.restore();
+					this.caret.after(marker);
+				}
 				$(marker).remove();
 			}).bind(this);
 		}
