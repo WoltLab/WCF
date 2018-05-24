@@ -172,7 +172,13 @@ define(
 						elData(reactionTypeItem, 'title', reactionType.title);
 						reactionTypeItem.title = reactionType.title;
 						
+						var reactionTypeItemSpan = elCreate('span');
+						reactionTypeItemSpan.classList = 'reactionTypeButtonTitle';
+						reactionTypeItemSpan.innerHTML = reactionType.title;
+						
 						reactionTypeItem.innerHTML = reactionType.renderedIcon;
+						
+						reactionTypeItem.appendChild(reactionTypeItemSpan);
 						
 						reactionTypeItem.addEventListener(WCF_CLICK_EVENT, this._react.bind(this, key));
 						

@@ -39,16 +39,6 @@
 		}
 	}
 	
-	> ul > li.reactionTypeButton {
-		display: inline;
-		cursor: pointer;
-		margin-left: 10px;
-	}
-	
-	> ul > li.reactionTypeButton:first-child {
-		margin-left: 0px;
-	}
-	
 	> ul > li.reactionTypeButton > img:hover {
 		transform: scale(1.2);
 	}
@@ -59,6 +49,35 @@
 	
 	> ul > li.reactionTypeButton > span.icon {
 		cursor: pointer;
+	}
+	
+	@include screen-md-down {
+		> ul > li.reactionTypeButton {
+			margin: 0px;
+			display: block;
+			padding: 5px 10px;
+		}
+		
+		> ul > li.reactionTypeButton > .reactionTypeButtonTitle {
+			vertical-align: middle;
+			padding-left: 5px;
+		}
+	}
+	
+	@include screen-lg {
+		> ul > li.reactionTypeButton > .reactionTypeButtonTitle {
+			display: none;
+		}
+		
+		> ul > li.reactionTypeButton {
+			display: inline;
+			cursor: pointer;
+			margin-left: 10px;
+		}
+		
+		> ul > li.reactionTypeButton:first-child {
+			margin-left: 0px;
+		}
 	}
 }
 
