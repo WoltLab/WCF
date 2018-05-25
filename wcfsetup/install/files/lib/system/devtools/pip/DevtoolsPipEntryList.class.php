@@ -44,6 +44,12 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList {
 			}
 		}
 		
+		foreach ($this->keys as $key => $label) {
+			if (!isset($entry[$key])) {
+				$entry[$key] = '';
+			}
+		}
+		
 		$this->entries[$id] = $entry;
 	}
 	
