@@ -324,25 +324,11 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getEntryList(): IDevtoolsPipEntryList {
-		$xml = $this->getProjectXml();
-		$xpath = $xml->xpath();
-		
-		$entryList = new DevtoolsPipEntryList();
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
 			'name' => 'wcf.acp.pip.userNotificationEvent.name',
 			'className' => 'wcf.acp.pip.userNotificationEvent.className'
 		]);
-		
-		/** @var \DOMElement $element */
-		foreach ($this->getImportElements($xpath) as $element) {
-			$entryList->addEntry($this->getElementIdentifier($element), [
-				'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,
-				'name' => $element->getElementsByTagName('name')->item(0)->nodeValue,
-			]);
-		}
-		
-		return $entryList;
 	}
 	
 	/**

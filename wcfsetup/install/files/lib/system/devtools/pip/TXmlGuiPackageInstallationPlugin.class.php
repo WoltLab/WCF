@@ -162,6 +162,29 @@ XML;
 	}
 	
 	/**
+	 * Returns a list of all pip entries of this pip.
+	 * 
+	 * @return	IDevtoolsPipEntryList
+	 */
+	public function getEntryList(): IDevtoolsPipEntryList {
+		$xml = $this->getProjectXml();
+		$xpath = $xml->xpath();
+		
+		$entryList = new DevtoolsPipEntryList();
+		$this->setEntryListKeys($entryList);
+		
+		/** @var \DOMElement $element */
+		foreach ($this->getImportElements($xpath) as $element) {
+			$entryList->addEntry(
+				$this->getElementIdentifier($element),
+				array_intersect_key($this->getElementData($element), $entryList->getKeys())
+			);
+		}
+		
+		return $entryList;
+	}
+	
+	/**
 	 * Returns the xml object for this pip.
 	 * 
 	 * @return	XML
@@ -282,6 +305,13 @@ XML;
 		
 		return true;
 	}
+	
+	/**
+	 * Sets the keys of the given (empty) entry list.
+	 *
+	 * @param	IDevtoolsPipEntryList	$entryList
+	 */
+	abstract protected function setEntryListKeys(IDevtoolsPipEntryList $entryList);
 	
 	/**
 	 * Sorts the entries of this pip that are represented by the given dom

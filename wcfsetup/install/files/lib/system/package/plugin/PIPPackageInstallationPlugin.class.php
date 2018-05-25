@@ -166,25 +166,11 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getEntryList(): IDevtoolsPipEntryList {
-		$xml = $this->getProjectXml();
-		$xpath = $xml->xpath();
-		
-		$entryList = new DevtoolsPipEntryList();
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
 			'pluginName' => 'wcf.acp.pip.pip.pluginName',
 			'className' => 'wcf.acp.pip.pip.className'
 		]);
-		
-		/** @var \DOMElement $languageItem */
-		foreach ($this->getImportElements($xpath) as $element) {
-			$entryList->addEntry($this->getElementIdentifier($element), [
-				'className' => $element->nodeValue,
-				'pluginName' => $element->getAttribute('name')
-			]);
-		}
-		
-		return $entryList;
 	}
 	
 	/**

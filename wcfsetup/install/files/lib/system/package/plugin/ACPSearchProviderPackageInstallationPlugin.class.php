@@ -189,22 +189,11 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getEntryList(): IDevtoolsPipEntryList {
-		$xml = $this->getProjectXml();
-		$xpath = $xml->xpath();
-		
-		$entryList = new DevtoolsPipEntryList();
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
 			'providerName' => 'wcf.acp.pip.acpSearchProvider.providerName',
 			'className' => 'wcf.form.field.className'
 		]);
-		
-		/** @var \DOMElement $languageItem */
-		foreach ($this->getImportElements($xpath) as $element) {
-			$entryList->addEntry($this->getElementIdentifier($element), array_intersect_key($this->getElementData($element), $entryList->getKeys()));
-		}
-		
-		return $entryList;
 	}
 	
 	/**

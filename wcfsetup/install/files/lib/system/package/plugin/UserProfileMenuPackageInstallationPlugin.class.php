@@ -215,25 +215,11 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getEntryList(): IDevtoolsPipEntryList {
-		$xml = $this->getProjectXml();
-		$xpath = $xml->xpath();
-		
-		$entryList = new DevtoolsPipEntryList();
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
 			'name' => 'wcf.acp.pip.userProfileMenu.name',
 			'className' => 'wcf.acp.pip.userProfileMenu.className'
 		]);
-		
-		/** @var \DOMElement $element */
-		foreach ($this->getImportElements($xpath) as $element) {
-			$entryList->addEntry($this->getElementIdentifier($element), [
-				'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,
-				'name' => $element->getAttribute('name'),
-			]);
-		}
-		
-		return $entryList;
 	}
 	
 	/**

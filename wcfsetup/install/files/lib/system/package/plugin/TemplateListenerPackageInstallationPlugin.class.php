@@ -337,24 +337,13 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getEntryList(): IDevtoolsPipEntryList {
-		$xml = $this->getProjectXml();
-		$xpath = $xml->xpath();
-		
-		$entryList = new DevtoolsPipEntryList();
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
 			'name' => 'wcf.acp.pip.templateListener.name',
 			'templateName' => 'wcf.acp.pip.templateListener.templateName',
 			'eventName' => 'wcf.acp.pip.templateListener.eventName',
 			'environment' => 'wcf.acp.pip.templateListener.environment'
 		]);
-		
-		/** @var \DOMElement $element */
-		foreach ($this->getImportElements($xpath) as $element) {
-			$entryList->addEntry($this->getElementIdentifier($element), array_intersect_key($this->getElementData($element), $entryList->getKeys()));
-		}
-		
-		return $entryList;
 	}
 	
 	/**

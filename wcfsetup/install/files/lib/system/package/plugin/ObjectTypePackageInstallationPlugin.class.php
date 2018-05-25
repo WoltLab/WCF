@@ -639,10 +639,7 @@ XML;
 		$xpath = $xml->xpath();
 		
 		$entryList = new DevtoolsPipEntryList();
-		$entryList->setKeys([
-			'name' => 'wcf.acp.pip.objectType.objectType',
-			'definitionName' => 'wcf.acp.pip.objectType.definitionName'
-		]);
+		$this->setEntryListKeys($entryList);
 		
 		/** @var \DOMElement $element */
 		foreach ($this->getImportElements($xpath) as $element) {
@@ -653,6 +650,17 @@ XML;
 		}
 		
 		return $entryList;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
+		$entryList->setKeys([
+			'name' => 'wcf.acp.pip.objectType.objectType',
+			'definitionName' => 'wcf.acp.pip.objectType.definitionName'
+		]);
 	}
 	
 	/**

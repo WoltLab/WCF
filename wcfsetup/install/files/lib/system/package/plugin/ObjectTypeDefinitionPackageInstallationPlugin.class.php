@@ -195,27 +195,11 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getEntryList(): IDevtoolsPipEntryList {
-		$xml = $this->getProjectXml();
-		$xpath = $xml->xpath();
-		
-		$entryList = new DevtoolsPipEntryList();
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
-			'name' => 'wcf.acp.pip.objectTypeDefinition.definitionName',
+			'definitionName' => 'wcf.acp.pip.objectTypeDefinition.definitionName',
 			'interfaceName' => 'wcf.acp.pip.objectTypeDefinition.interfaceName'
 		]);
-		
-		/** @var \DOMElement $element */
-		foreach ($this->getImportElements($xpath) as $element) {
-			$interfaceName = $element->getElementsByTagName('interfacename')->item(0);
-			
-			$entryList->addEntry($this->getElementIdentifier($element), [
-				'name' => $element->getElementsByTagName('name')->item(0)->nodeValue,
-				'interfaceName' => $interfaceName ? $interfaceName->nodeValue : ''
-			]);
-		}
-		
-		return $entryList;
 	}
 	
 	/**

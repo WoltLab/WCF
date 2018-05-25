@@ -147,21 +147,10 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getEntryList(): IDevtoolsPipEntryList {
-		$xml = $this->getProjectXml();
-		$xpath = $xml->xpath();
-		
-		$entryList = new DevtoolsPipEntryList();
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
 			'objectName' => 'wcf.form.field.className'
 		]);
-		
-		/** @var \DOMElement $element */
-		foreach ($this->getImportElements($xpath) as $element) {
-			$entryList->addEntry($this->getElementIdentifier($element), array_intersect_key($this->getElementData($element), $entryList->getKeys()));
-		}
-		
-		return $entryList;
 	}
 	
 	/**
