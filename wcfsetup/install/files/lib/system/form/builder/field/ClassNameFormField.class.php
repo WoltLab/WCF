@@ -169,7 +169,10 @@ class ClassNameFormField extends TextFormField {
 		parent::validateText($text, $language);
 		
 		if (empty($this->getValidationErrors())) {
-			if (substr($text, 0, 1) === '\\') {
+			if ($text === '' && !$this->isRequired()) {
+				return;
+			}
+			else if (substr($text, 0, 1) === '\\') {
 				$this->addValidationError(
 					new FormFieldValidationError(
 						'leadingBackslash',
@@ -230,6 +233,7 @@ class ClassNameFormField extends TextFormField {
 	
 	/**
 	 * @inheritDoc
+	 * @return	static
 	 */
 	// @codingStandardsIgnoreStart
 	public static function create(string $id = 'className'): IFormNode {
