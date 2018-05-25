@@ -233,6 +233,7 @@ class ClassNameFormField extends TextFormField {
 	
 	/**
 	 * @inheritDoc
+	 * @return	static
 	 */
 	// @codingStandardsIgnoreStart
 	public static function create(string $id = 'className'): IFormNode {

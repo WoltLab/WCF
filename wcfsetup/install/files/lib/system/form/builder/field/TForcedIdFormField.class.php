@@ -16,6 +16,7 @@ use wcf\system\form\builder\IFormNode;
 trait TForcedIdFormField {
 	/**
 	 * @inheritDoc
+	 * @return	static
 	 */
 	public static function create(string $id = null): IFormNode {
 		if ($id !== null) {
