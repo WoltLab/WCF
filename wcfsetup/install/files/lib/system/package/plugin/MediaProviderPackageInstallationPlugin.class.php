@@ -2,20 +2,35 @@
 declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\bbcode\media\provider\BBCodeMediaProviderEditor;
+use wcf\system\bbcode\media\provider\IBBCodeMediaProvider;
 use wcf\system\cache\builder\BBCodeMediaProviderCacheBuilder;
-use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\system\devtools\pip\DevtoolsPipEntryList;
+use wcf\system\devtools\pip\IDevtoolsPipEntryList;
+use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
+use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
+use wcf\system\form\builder\field\ClassNameFormField;
+use wcf\system\form\builder\field\MultilineTextFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\TitleFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\IFormDocument;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes media providers.
- *
+ * 
  * @author	Marcel Werk
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\System\Package\Plugin
+ * @package	WoltLabSuite\Core\System\Package\
+ * @since	3.1
  */
-class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
+class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
+	use TXmlGuiPackageInstallationPlugin;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -87,5 +102,179 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 */
 	public static function getSyncDependencies() {
 		return [];
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function addFormFields(IFormDocument $form) {
+		$form->getNodeById('data')->appendChildren([
+			TextFormField::create('name')
+				->label('wcf.acp.pip.mediaProvider.name')
+				->description('wcf.acp.pip.mediaProvider.name.description')
+				->addValidator(new FormFieldValidator('format', function(TextFormField $formField) {
+					if (!preg_match('~^[a-z][A-z]+$~', $formField->getSaveValue())) {
+						$formField->addValidationError(
+							new FormFieldValidationError(
+								'format',
+								'wcf.acp.pip.mediaProvider.name.error.format'
+							)
+						);
+					}
+				})),
+			
+			TitleFormField::create()
+				->description('wcf.acp.pip.mediaProvider.title.description')
+				->required(),
+			
+			MultilineTextFormField::create('regex')
+				->label('wcf.acp.pip.mediaProvider.regex')
+				->description('wcf.acp.pip.mediaProvider.regex.description')
+				->required()
+				->addValidator(new FormFieldValidator('format', function(MultilineTextFormField $formField) {
+					$value = explode("\n", StringUtil::unifyNewlines($formField->getValue()));
+					
+					$invalidRegex = [];
+					foreach ($value as $regex) {
+						if (!Regex::compile($regex)->isValid()) {
+							$invalidRegex[] = $regex;
+						}
+					}
+					
+					if (!empty($invalidRegex)) {
+						$formField->addValidationError(
+							new FormFieldValidationError(
+								'format',
+								'wcf.acp.pip.mediaProvider.regex.error.format',
+								['invalidRegex' => $invalidRegex]
+							)
+						);
+					}
+				})),
+			
+			ClassNameFormField::create()
+				->implementedInterface(IBBCodeMediaProvider::class),
+			
+			MultilineTextFormField::create('html')
+				->label('wcf.acp.pip.mediaProvider.html')
+				->description('wcf.acp.pip.mediaProvider.html.description')
+				->addValidator(new FormFieldValidator('noClassName', function(MultilineTextFormField $formField) {
+					if ($formField->getSaveValue() && $formField->getDocument()->getNodeById('className')->getSaveValue()) {
+						$formField->addValidationError(
+							new FormFieldValidationError(
+								'className',
+								'wcf.acp.pip.mediaProvider.html.error.className'
+							)
+						);
+					}
+				}))
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getElementData(\DOMElement $element): array {
+		$data = [
+			'name' => $element->getAttribute('name'),
+			'packageID' => $this->installation->getPackage()->packageID,
+			'title' => $element->getElementsByTagName('title')->item(0)->nodeValue,
+			'regex' => $element->getElementsByTagName('regex')->item(0)->nodeValue
+		];
+		
+		$html = $element->getElementsByTagName('html')->item(0);
+		if ($html !== null) {
+			$data['html'] = $html->nodeValue;
+		}
+		
+		$className = $element->getElementsByTagName('classname')->item(0);
+		if ($className !== null) {
+			$data['className'] = $className->nodeValue;
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getElementIdentifier(\DOMElement $element): string {
+		return $element->getAttribute('name');
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getEntryList(): IDevtoolsPipEntryList {
+		$xml = $this->getProjectXml();
+		$xpath = $xml->xpath();
+		
+		$entryList = new DevtoolsPipEntryList();
+		$entryList->setKeys([
+			'name' => 'wcf.acp.pip.mediaProvider.name',
+			'title' => 'wcf.global.title'
+		]);
+		
+		/** @var \DOMElement $element */
+		foreach ($this->getImportElements($xpath) as $element) {
+			$entryList->addEntry($this->getElementIdentifier($element), array_intersect_key($this->getElementData($element), $entryList->getKeys()));
+		}
+		
+		return $entryList;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function sortDocument(\DOMDocument $document) {
+		$this->sortImportDelete($document);
+		
+		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
+			return strcmp(
+				$element1->getAttribute('name'),
+				$element2->getAttribute('name')
+			);
+		};
+		
+		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+		$provider = $document->createElement($this->tagName);
+		$provider->setAttribute('name', $form->getNodeById('name')->getSaveValue());
+		
+		$provider->appendChild($document->createElement('title', $form->getNodeById('title')->getSaveValue()));
+		
+		$regex = $document->createElement('regex');
+		$regex->appendChild($document->createCDATASection(
+			StringUtil::escapeCDATA(StringUtil::unifyNewlines($form->getNodeById('regex')->getSaveValue()))
+		));
+		$provider->appendChild($regex);
+		
+		$html = $form->getNodeById('html')->getSaveValue();
+		if ($html) {
+			$htmlElement = $document->createElement('regex');
+			$htmlElement->appendChild($document->createCDATASection(StringUtil::escapeCDATA($html)));
+			$provider->appendChild($htmlElement);
+		}
+		
+		$className = $form->getNodeById('className')->getSaveValue();
+		if ($className) {
+			$provider->appendChild($document->createElement('className', $className));
+		}
+		
+		$document->getElementsByTagName('import')->item(0)->appendChild($provider);
+		
+		return $provider;
 	}
 }

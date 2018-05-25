@@ -1883,6 +1883,14 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.tooFewSegments"><![CDATA[The entered provider name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.showOrder.description"><![CDATA[The entered value determines in which order the different types of search results are shown.]]></item>
+		<item name="wcf.acp.pip.mediaProvider.name"><![CDATA[Provider Name]]></item>
+		<item name="wcf.acp.pip.mediaProvider.name.description"><![CDATA[The name of the media provider may only contain letters and must begin with a lowercase letter.]]></item>
+		<item name="wcf.acp.pip.mediaProvider.name.error.format"><![CDATA[The entered name is invalid.]]></item>
+		<item name="wcf.acp.pip.mediaProvider.regex"><![CDATA[Regular Expressions]]></item>
+		<item name="wcf.acp.pip.mediaProvider.regex.description"><![CDATA[The entered regular expressions (without delimiters) are used to check if this media provider is responsible for a given link. Each line is treated as its own regular expression.]]></item>
+		<item name="wcf.acp.pip.mediaProvider.html"><![CDATA[HTML Code]]></item>
+		<item name="wcf.acp.pip.mediaProvider.html.description"><![CDATA[The html code is used to produce the rendered output of the linked media content. Every named group of the regular expression is accessible as <code>{literal}{$name}{/literal}</code> where <code>name</code> is the name of the group.]]></item>
+		<item name="wcf.acp.pip.mediaProvider.html.error.className"><![CDATA[You cannot enter HTML code if you are already using a class that handles the output.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
