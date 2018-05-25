@@ -236,7 +236,12 @@ class XML {
 	 */
 	protected function writeElement(XMLWriter $writer, \DOMElement $element, $cdata) {
 		if ($element->childNodes->length === 1 && $element->firstChild instanceof \DOMText) {
-			$writer->writeElement($element->nodeName, $element->firstChild->nodeValue, $this->getAttributes($element), $cdata);
+			$writer->writeElement(
+				$element->nodeName,
+				$element->firstChild->nodeValue,
+				$this->getAttributes($element),
+				$cdata || $element->firstChild instanceof \DOMCdataSection
+			);
 		}
 		else {
 			$writer->startElement($element->nodeName, $this->getAttributes($element));
