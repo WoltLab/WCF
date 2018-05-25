@@ -169,7 +169,10 @@ class ClassNameFormField extends TextFormField {
 		parent::validateText($text, $language);
 		
 		if (empty($this->getValidationErrors())) {
-			if (substr($text, 0, 1) === '\\') {
+			if ($text === '' && !$this->isRequired()) {
+				return;
+			}
+			else if (substr($text, 0, 1) === '\\') {
 				$this->addValidationError(
 					new FormFieldValidationError(
 						'leadingBackslash',
