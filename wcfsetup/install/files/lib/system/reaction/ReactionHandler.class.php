@@ -413,50 +413,27 @@ class ReactionHandler extends SingletonFactory {
 	 */
 	private function updateUsersLikeCounter(ILikeObject $likeable, LikeObject $likeObject, Like $like, ReactionType $reactionType = null) {
 		if ($likeable->getUserID()) {
-			if ($reactionType === null) {
-				if ($like->likeID) {
-					if ($like->getReactionType()->isPositive()) {
-						$userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
-						$userEditor->updateCounters([
-							'likesReceived' => -1, 
-							'positiveReactionsReceived' => -1
-						]);
-					}
-					else if ($like->getReactionType()->isNegative()) {
-						$userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
-						$userEditor->updateCounters([
-							'negativeReactionsReceived' => -1
-						]);
-					}
-					else if ($like->getReactionType()->isNeutral()) {
-						$userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
-						$userEditor->updateCounters([
-							'neutralReactionsReceived' => -1
-						]);
-					}
+			$counters = [
+				'likesReceived' => 0,
+				'positiveReactionsReceived' => 0,
+				'negativeReactionsReceived' => 0,
+				'neutralReactionsReceived' => 0
+			];
+			
+			if ($like->likeID) {
+				if ($like->getReactionType()->isPositive()) {
+					$counters['likesReceived']--;
+					$counters['positiveReactionsReceived']--;
 				}
-			} 
-			else {
-				$counters = [
-					'likesReceived' => 0,
-					'positiveReactionsReceived' => 0,
-					'negativeReactionsReceived' => 0,
-					'neutralReactionsReceived' => 0
-				];
-				
-				if ($like->likeID) {
-					if ($like->getReactionType()->isPositive()) {
-						$counters['likesReceived']--;
-						$counters['positiveReactionsReceived']--;
-					}
-					else if ($like->getReactionType()->isNegative()) {
-						$counters['negativeReactionsReceived']--;
-					}
-					else if ($like->getReactionType()->isNeutral()) {
-						$counters['neutralReactionsReceived']--;
-					}
+				else if ($like->getReactionType()->isNegative()) {
+					$counters['negativeReactionsReceived']--;
 				}
-				
+				else if ($like->getReactionType()->isNeutral()) {
+					$counters['neutralReactionsReceived']--;
+				}
+			}
+			
+			if ($reactionType !== null) {
 				if ($reactionType->isPositive()) {
 					$counters['likesReceived']++;
 					$counters['positiveReactionsReceived']++;
@@ -467,10 +444,10 @@ class ReactionHandler extends SingletonFactory {
 				else if ($reactionType->isNeutral()) {
 					$counters['neutralReactionsReceived']++;
 				}
-				
-				$userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
-				$userEditor->updateCounters($counters);
 			}
+			
+			$userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
+			$userEditor->updateCounters($counters);
 		}
 	}
 	
