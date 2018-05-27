@@ -418,36 +418,59 @@ class ReactionHandler extends SingletonFactory {
 					if ($like->getReactionType()->isPositive()) {
 						$userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
 						$userEditor->updateCounters([
-							'likesReceived' => -1
+							'likesReceived' => -1, 
+							'positiveReactionsReceived' => -1
+						]);
+					}
+					else if ($like->getReactionType()->isNegative()) {
+						$userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
+						$userEditor->updateCounters([
+							'negativeReactionsReceived' => -1
+						]);
+					}
+					else if ($like->getReactionType()->isNeutral()) {
+						$userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
+						$userEditor->updateCounters([
+							'neutralReactionsReceived' => -1
 						]);
 					}
 				}
 			} 
 			else {
+				$counters = [
+					'likesReceived' => 0,
+					'positiveReactionsReceived' => 0,
+					'negativeReactionsReceived' => 0,
+					'neutralReactionsReceived' => 0
+				];
+				
 				if ($like->likeID) {
-					if ($like->getReactionType()->isPositive() && !$reactionType->isPositive()) {
-						$userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
-						$userEditor->updateCounters([
-							'likesReceived' => -1
-						]);
+					if ($like->getReactionType()->isPositive()) {
+						$counters['likesReceived']--;
+						$counters['positiveReactionsReceived']--;
 					}
-					else if (!$like->getReactionType()->isPositive() && $reactionType->isPositive()) {
-						$userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
-						$userEditor->updateCounters([
-							'likesReceived' => 1
-						]);
+					else if ($like->getReactionType()->isNegative()) {
+						$counters['negativeReactionsReceived']--;
+					}
+					else if ($like->getReactionType()->isNeutral()) {
+						$counters['neutralReactionsReceived']--;
 					}
 				}
-				else if ($reactionType->isPositive()) {
-					// update new
-					$userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
-					$userEditor->updateCounters([
-						'likesReceived' => 1
-					]);
+				
+				if ($reactionType->isPositive()) {
+					$counters['likesReceived']++;
+					$counters['positiveReactionsReceived']++;
 				}
+				else if ($reactionType->isNegative()) {
+					$counters['negativeReactionsReceived']++;
+				}
+				else if ($reactionType->isNeutral()) {
+					$counters['neutralReactionsReceived']++;
+				}
+				
+				$userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
+				$userEditor->updateCounters($counters);
 			}
-			
-			// @TODO update new user values positiveReactionsReceived, negativeReactionsReceived, neutralReactionsReceived
 		}
 	}
 	
