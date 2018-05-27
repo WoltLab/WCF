@@ -18,6 +18,7 @@ use wcf\system\database\exception\DatabaseQueryException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;
+use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -291,10 +292,20 @@ class ReactionHandler extends SingletonFactory {
 				}
 			}
 			
-			// @TODO set akt
-			
 			// update object's like counter
 			$likeable->updateLikeCounter($likeObjectData['cumulativeLikes']);
+			
+			
+			// update recent activity
+			if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType.'.recentActivityEvent')) {
+				if ($like->likeID) {
+					UserActivityEventHandler::getInstance()->removeEvent($likeable->getObjectType()->objectType.'.recentActivityEvent', $likeable->getObjectID(), $user->userID);
+				}
+				
+				UserActivityEventHandler::getInstance()->fireEvent($likeable->getObjectType()->objectType.'.recentActivityEvent', $likeable->getObjectID(), $likeable->getLanguageID(), $user->userID, TIME_NOW, [
+					'reactionType' => $reaction
+				]);
+			}
 			
 			WCF::getDB()->commitTransaction();
 			
@@ -476,12 +487,17 @@ class ReactionHandler extends SingletonFactory {
 			$likeEditor = new LikeEditor($like);
 			$likeEditor->delete();
 			
-			if ($likeable->getUserID()) {
+			if ($likeable->getUserID() && $like->getReactionType()->isPositive()) {
 				UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$likeable->getUserID() => 1]);
 			}
 			
 			// update object's like counter
 			$likeable->updateLikeCounter($likeObjectData['cumulativeLikes']);
+			
+			// delete recent activity
+			if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType.'.recentActivityEvent')) {
+				UserActivityEventHandler::getInstance()->removeEvent($likeable->getObjectType()->objectType.'.recentActivityEvent', $likeable->getObjectID(), $user->userID);
+			}
 			
 			WCF::getDB()->commitTransaction();
 			
