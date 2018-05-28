@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 
 /**
@@ -28,7 +29,7 @@ interface IPlaceholderFormField {
 	 * @param	array		$variables	additional variables used when resolving the language item
 	 * @return	static				this field
 	 * 
-	 * @throws	\InvalidArgumentException	if the given value is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given value is invalid
 	 */
-	public function placeholder($languageItem = null, array $variables = []);
+	public function placeholder(string $languageItem = null, array $variables = []): IPlaceholderFormField;
 }

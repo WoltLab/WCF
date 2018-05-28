@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder\field\validation;
 use wcf\system\form\builder\field\IFormField;
 
@@ -27,7 +28,7 @@ class FormFieldValidator implements IFormFieldValidator {
 	/**
 	 * @inheritDoc
 	 */
-	public function __construct($id, callable $validator) {
+	public function __construct(string $id, callable $validator) {
 		static::validateId($id);
 		
 		$this->id = $id;
@@ -38,7 +39,7 @@ class FormFieldValidator implements IFormFieldValidator {
 			throw new \InvalidArgumentException("The validation function must expect one parameter, instead " . count($parameters) . " parameters are expected.");
 		}
 		$parameterClass = $parameters[0]->getClass();
-		if ($parameterClass === null || !is_subclass_of($parameterClass->getName(), IFormField::class)) {
+		if ($parameterClass === null || ($parameterClass->getName() !== IFormField::class && !is_subclass_of($parameterClass->getName(), IFormField::class))) {
 			throw new \InvalidArgumentException(
 				"The validation function's parameter must be an instance of '" . IFormField::class . "', instead " .
 				($parameterClass === null ? 'any' : "'" . $parameterClass->getName() . "'") . " parameter is expected."
@@ -58,18 +59,14 @@ class FormFieldValidator implements IFormFieldValidator {
 	/**
 	 * @inheritDoc
 	 */
-	public function getId() {
+	public function getId(): string {
 		return $this->id;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public static function validateId($id) {
-		if (!is_string($id)) {
-			throw new \InvalidArgumentException("Given id is no string, " . gettype($id) . " given.");
-		}
-		
+	public static function validateId(string $id) {
 		if (preg_match('~^[a-z][A-z0-9-]*$~', $id) !== 1) {
 			throw new \InvalidArgumentException("Invalid id '{$id}' given.");
 		}

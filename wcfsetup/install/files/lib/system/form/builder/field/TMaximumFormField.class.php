@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 
 /**
@@ -13,7 +14,7 @@ namespace wcf\system\form\builder\field;
 trait TMaximumFormField {
 	/**
 	 * maximum of the field value
-	 * @var	null|int
+	 * @var	null|number
 	 */
 	protected $__maximum;
 	
@@ -21,7 +22,7 @@ trait TMaximumFormField {
 	 * Returns the maximum of the values of this field or `null` if no maximum
 	 * has been set.
 	 * 
-	 * @return	null|int
+	 * @return	null|number
 	 */
 	public function getMaximum() {
 		return $this->__maximum;
@@ -31,14 +32,14 @@ trait TMaximumFormField {
 	 * Sets the maximum of the values of this field. If `null` is passed, the
 	 * maximum is removed.
 	 * 
-	 * @param	null|int	$maximum	maximum field value
+	 * @param	null|number	$maximum	maximum field value
 	 * @return	static				this field
 	 * 
-	 * @throws	\InvalidArgumentException	if the given maximum is no integer or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given maximum is no number or otherwise invalid
 	 */
-	public function maximum($maximum = null) {
+	public function maximum($maximum = null): IMaximumFormField {
 		if ($maximum !== null) {
-			if (!is_int($maximum)) {
+			if (!is_numeric($maximum)) {
 				throw new \InvalidArgumentException("Given maximum is no int, '" . gettype($maximum) . "' given.");
 			}
 			

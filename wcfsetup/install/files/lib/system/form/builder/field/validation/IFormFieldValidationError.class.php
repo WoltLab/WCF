@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder\field\validation;
 
 /**
@@ -20,35 +21,35 @@ interface IFormFieldValidationError {
 	 * @param	null|string	$languageItem	language item containing the error message
 	 * @param	array		$information	additional error information, also used to resolve error message from language item
 	 * 
-	 * @throws	\InvalidArgumentException	if the given error type is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given error type is invalid
 	 */
-	public function __construct($type, $languageItem = null, array $information = []);
+	public function __construct(string $type, string $languageItem = null, array $information = []);
 	
 	/**
 	 * Returns the HTML element representing the error.
 	 * 
 	 * @return	string
 	 */
-	public function getHtml();
+	public function getHtml(): string;
 	
 	/**
 	 * Returns additional information about the error.
 	 * 
 	 * @return	array		additional error information
 	 */
-	public function getInformation();
+	public function getInformation(): array;
 	
 	/**
 	 * Returns the message describing the validation error.
 	 * 
 	 * @return	string		error message
 	 */
-	public function getMessage();
+	public function getMessage(): string;
 	
 	/**
 	 * Returns the type of the validation error.
 	 * 
 	 * @return	string		error type
 	 */
-	public function getType();
+	public function getType(): string;
 }

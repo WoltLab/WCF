@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder;
 
 /**
@@ -24,7 +25,7 @@ trait TFormChildNode {
 	 * 
 	 * @throws	\BadMethodCallException		if form document is inaccessible for this node
 	 */
-	public function getDocument() {
+	public function getDocument(): IFormDocument {
 		$element = $this;
 		while ($element instanceof IFormChildNode) {
 			$element = $element->getParent();
@@ -44,7 +45,7 @@ trait TFormChildNode {
 	 * 
 	 * @throws	\BadMethodCallException		if the parent node has not been set previously
 	 */
-	public function getParent() {
+	public function getParent(): IFormParentNode {
 		if ($this->__parent === null) {
 			throw new \BadMethodCallException("Before getting the parent node of '{$this->getId()}', it must be set.");
 		}
@@ -58,7 +59,7 @@ trait TFormChildNode {
 	 * @param	IFormParentNode		$parentNode	new parent node of this node
 	 * @return	static					this node
 	 */
-	public function parent(IFormParentNode $parentNode) {
+	public function parent(IFormParentNode $parentNode): IFormChildNode {
 		if ($this->__parent !== null) {
 			throw new \BadMethodCallException("The parent node of '{$this->getId()}' has already been set.");
 		}

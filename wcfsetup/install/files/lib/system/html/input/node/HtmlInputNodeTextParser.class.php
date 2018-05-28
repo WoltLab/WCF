@@ -388,27 +388,20 @@ class HtmlInputNodeTextParser {
 		return preg_replace_callback($urlPattern, function($matches) use ($text, $allowURL, $allowMedia) {
 			$link = $matches[0];
 			
-			if (BBCodeMediaProvider::isMediaURL($link)) {
-				if ($allowMedia) {
-					$element = $this->htmlInputNodeProcessor->createMetacodeElement($text, 'media', []);
-					$element->appendChild($element->ownerDocument->createTextNode($link));
-				}
-				else {
-					return $matches[0];
-				}
+			if ($allowMedia && BBCodeMediaProvider::isMediaURL($link)) {
+				$element = $this->htmlInputNodeProcessor->createMetacodeElement($text, 'media', []);
+				$element->appendChild($element->ownerDocument->createTextNode($link));
+			}
+			else if ($allowURL) {
+				// add protocol if necessary
+				if (!preg_match('/[a-z]:\/\//si', $link)) $link = 'http://'.$link;
+				
+				$element = $text->ownerDocument->createElement('a');
+				$element->setAttribute('href', $link);
+				$element->appendChild($element->ownerDocument->createTextNode($link));
 			}
 			else {
-				if ($allowURL) {
-					// add protocol if necessary
-					if (!preg_match('/[a-z]:\/\//si', $link)) $link = 'http://'.$link;
-					
-					$element = $text->ownerDocument->createElement('a');
-					$element->setAttribute('href', $link);
-					$element->appendChild($element->ownerDocument->createTextNode($link));
-				}
-				else {
-					return $matches[0];
-				}
+				return $matches[0];
 			}
 			
 			return $this->addReplacement($text, $element);

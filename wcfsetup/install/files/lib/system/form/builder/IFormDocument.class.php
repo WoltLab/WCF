@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder;
 use wcf\data\IStorableObject;
 
@@ -13,27 +14,50 @@ use wcf\data\IStorableObject;
  */
 interface IFormDocument extends IFormParentNode {
 	/**
+	 * represents the form mode for creating a new object
+	 * @var	string
+	 */
+	const FORM_MODE_CREATE = 'create';
+	
+	/**
+	 * represents the form mode for updating a new object
+	 * @var	string
+	 */
+	const FORM_MODE_UPDATE = 'update';
+	
+	/**
 	 * Sets the `action` property of the HTML `form` element and returns this document. 
 	 * 
 	 * @param	string		$action		form action
 	 * @return	static				this document
 	 * 
-	 * @throws	\InvalidArgumentException	if the given action is no string or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given action is invalid
 	 */
-	public function action($action);
+	public function action(string $action): IFormDocument;
 	
 	/**
 	 * Is called once after all nodes have been added to this document.
 	 * 
-	 * This method is intended to trigger `TODO` to allow nodes to perform actions that
-	 * require the whole document having finished constructing itself and every parent-
-	 * -child relationship being established.
+	 * This method is intended to trigger `IFormNode::populate()` to allow nodes to
+	 * perform actions that require the whole document having finished constructing
+	 * itself and every parent-child relationship being established.
 	 * 
 	 * @return	static				this document
 	 * 
 	 * @throws	\BadMethodCallException		if this document has already been built
 	 */
-	public function build();
+	public function build(): IFormDocument;
+	
+	/**
+	 * Sets the form mode (see `self::FORM_MODE_*` constants).
+	 * 
+	 * @param	string		$formMode	form mode
+	 * @return	static				this document
+	 * 
+	 * @throws	\BadMethodCallException		if the form mode has already been set
+	 * @throws	\InvalidArgumentException	if the given form mode is invalid
+	 */
+	public function formMode(string $formMode): IFormDocument;
 	
 	/**
 	 * Returns the `action` property of the HTML `form` element.
@@ -42,7 +66,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @throws	\BadMethodCallException		if no action has been set
 	 */
-	public function getAction();
+	public function getAction(): string;
 	
 	/**
 	 * Returns the array passed as the `$parameters` argument of the constructor
@@ -50,7 +74,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @return	array		data passed to database object action
 	 */
-	public function getData();
+	public function getData(): array;
 	
 	/**
 	 * Returns the data handler for this document that is used to process the
@@ -62,7 +86,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @return	IFormDataHandler	form data handler
 	 */
-	public function getDataHandler();
+	public function getDataHandler(): IFormDataHandler;
 	
 	/**
 	 * Returns the encoding type of this form. If the form contains any
@@ -74,12 +98,23 @@ interface IFormDocument extends IFormParentNode {
 	public function getEnctype();
 	
 	/**
+	 * Returns the form mode (see `self::FORM_MODE_*` constants).
+	 *
+	 * The form mode can help validators to determine whether a new object
+	 * is added or an existing object is edited. If no form mode has been
+	 * explicitly set, `self::FORM_MODE_CREATE` is set and returned.
+	 * 
+	 * @return	string		form mode
+	 */
+	public function getFormMode(): string;
+	
+	/**
 	 * Returns the `method` property of the HTML `form` element. If no method
 	 * has been set, `post` is returned.
 	 * 
 	 * @return	string		form method
 	 */
-	public function getMethod();
+	public function getMethod(): string;
 	
 	/**
 	 * Returns the global form prefix that is prepended to form elements' names and ids to
@@ -89,17 +124,18 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @return	string		global form element prefix
 	 */
-	public function getPrefix();
+	public function getPrefix(): string;
 	
 	/**
 	 * Loads the field values from the given object and returns this document.
 	 * 
 	 * Per default, for each field, `IFormField::loadValueFromObject()` is called.
+	 * This method automatically sets the form mode to `self::FORM_MODE_UPDATE`.
 	 * 
 	 * @param	IStorableObject		$object		object used to load field values
 	 * @return	static					this document
 	 */
-	public function loadValuesFromObject(IStorableObject $object);
+	public function loadValuesFromObject(IStorableObject $object): IFormDocument;
 	
 	/**
 	 * Sets the `method` property of the HTML `form` element and returns this document.
@@ -107,9 +143,9 @@ interface IFormDocument extends IFormParentNode {
 	 * @param	string		$method		form method
 	 * @return	static				this document
 	 * 
-	 * @throws	\InvalidArgumentException	if the given method is no string or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given method is invalid
 	 */
-	public function method($method);
+	public function method(string $method): IFormDocument;
 	
 	/**
 	 * Sets the global form prefix that is prepended to form elements' names and ids to
@@ -121,7 +157,7 @@ interface IFormDocument extends IFormParentNode {
 	 * @param	string		$prefix		global form prefix
 	 * @return	static				this document
 	 * 
-	 * @throws	\InvalidArgumentException	if the given prefix is no string or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given prefix is invalid
 	 */
-	public function prefix($prefix);
+	public function prefix(string $prefix): IFormDocument;
 }

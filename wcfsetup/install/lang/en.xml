@@ -2240,6 +2240,7 @@ full extend.]]></item>
 		<item name="wcf.acp.user.action.sendMail"><![CDATA[Send Email]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Send New Password]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to this user?]]></item>
+		<item name="wcf.acp.user.exportGdpr"><![CDATA[Export Personal Data (GDPR)]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
@@ -2824,7 +2825,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		
 		<item name="wcf.editor.quote.author"><![CDATA[Source]]></item>
 		<item name="wcf.editor.quote.edit"><![CDATA[Edit Quote]]></item>
-		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Quote from {$author}{else}Quote{/if}]]></item>
+		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Quote from {@$author}{else}Quote{/if}]]></item>
 		<item name="wcf.editor.quote.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.quote.url.description"><![CDATA[Optional: Specify the link to the source.]]></item>
 		<item name="wcf.editor.quote.url.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
@@ -2970,6 +2971,28 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}The entered value has to be greater than {#$greaterThan}.{/literal}]]></item>
 		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}The entered value has to be less than {#$lessThan}.{/literal}]]></item>
 		<!-- /deprecated since 2.1 -->
+	</category>
+	
+	<category name="wcf.form">
+		<item name="wcf.form.field.className"><![CDATA[Class]]></item>
+		<item name="wcf.form.field.className.description.interface"><![CDATA[The entered class (without leading backslash) must implement the interface <code>{$interface}</code>.]]></item>
+		<item name="wcf.form.field.className.error.interface"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not implement the interface <code>{$interface}</code>.]]></item>
+		<item name="wcf.form.field.className.error.isInstantiable"><![CDATA[The entered class{if $language|isset} ({$language}){/if} is not instantiable.]]></item>
+		<item name="wcf.form.field.className.error.leadingBackslash"><![CDATA[The entered class name{if $language|isset} ({$language}){/if} must not have a leading backslash.]]></item>
+		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not exist.]]></item>
+		<item name="wcf.form.field.className.error.parentClass"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not extend <code>{$parentClass}</code>.]]></item>
+		<item name="wcf.form.field.itemList.error.separator"><![CDATA[The following items may contain no {if $separator === ','}comma{else}space{/if}: {implode from=$invalidItems item=item}“{$item}”{/implode}.]]></item>
+		<item name="wcf.form.field.numeric.error.maximum"><![CDATA[The entered value may not be less than {#$maximum}.]]></item>
+		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[The entered value may not be greater than {#$minimum}.]]></item>
+		<item name="wcf.form.field.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.form.field.showOrder.firstPosition"><![CDATA[(first position)]]></item>
+		<item name="wcf.form.field.text.error.maximumLength"><![CDATA[The entered text{if $language} for language “{$language}”{/if} contains {#$length} characters but it may not be longer than {#$maximumLength} characters.]]></item>
+		<item name="wcf.form.field.text.error.minimumLength"><![CDATA[The entered text{if $language} for language “{$language}”{/if} only contains {#$length} characters but it may not be shorter than {#$minimumLength} characters.]]></item>
+		<item name="wcf.form.field.user.error.maxmimumMultiples"><![CDATA[You may not enter more than {#$maximumCount} users but {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
+		<item name="wcf.form.field.user.error.minimumMultiples"><![CDATA[You have to entered at least {#$minimumCount} users but only {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
+		<item name="wcf.form.field.user.error.nonExistent"><![CDATA[{if $nonExistentUsernames|isset}The following users do not exist: {implode from=$nonExistentUsernames item=nonExistentUsername}“{$nonExistentUsername}”{/implode}.{else}The entered user does not exists.{/if}]]></item>
+		<item name="wcf.form.field.username.error.invalid"><![CDATA[The entered username is invalid.]]></item>
+		<item name="wcf.form.field.username.error.notUnique"><![CDATA[The entered username is already in use.]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">

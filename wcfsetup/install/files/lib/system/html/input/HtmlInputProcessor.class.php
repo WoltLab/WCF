@@ -36,6 +36,12 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	protected $htmlInputNodeProcessor;
 	
 	/**
+	 * skip the HTML filter during message reprocessing
+	 * @var boolean
+	 */
+	protected $skipFilter = false;
+	
+	/**
 	 * Processes the input html string.
 	 *
 	 * @param       string          $html                   html string
@@ -60,7 +66,9 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 		$html = HtmlBBCodeParser::getInstance()->parse($html);
 		
 		// filter HTML
-		$html = $this->getHtmlInputFilter()->apply($html);
+		if (!$this->skipFilter) {
+			$html = $this->getHtmlInputFilter()->apply($html);
+		}
 		
 		// pre-parse HTML
 		$this->getHtmlInputNodeProcessor()->load($this, $html);
@@ -121,7 +129,13 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 			DOMUtil::removeNode($metacode, true);
 		}
 		
-		$this->process($this->getHtml(), $objectType, $objectID, false);
+		try {
+			$this->skipFilter = true;
+			$this->process($this->getHtml(), $objectType, $objectID, false);
+		}
+		finally {
+			$this->skipFilter = false;
+		}
 	}
 	
 	/**

@@ -1,5 +1,7 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder\field;
+use wcf\data\language\Language;
 
 /**
  * Represents a form field that supports setting the minimum length of the field value.
@@ -28,5 +30,13 @@ interface IMinimumLengthFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given minimum length is no integer or otherwise invalid
 	 */
-	public function minimumLength($minimumLength = null);
+	public function minimumLength(int $minimumLength = null): IMinimumLengthFormField;
+	
+	/**
+	 * Validates the minimum length of the given text.
+	 * 
+	 * @param	string		$text		validated text
+	 * @param	null|Language	$language	language of the validated text
+	 */
+	public function validateMinimumLength(string $text, Language $language = null);
 }

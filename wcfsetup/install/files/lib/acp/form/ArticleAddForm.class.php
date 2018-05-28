@@ -255,7 +255,7 @@ class ArticleAddForm extends AbstractForm {
 			$this->readImages();
 		}
 		
-		if ($this->publicationStatus === Article::PUBLISHED && $this->timeObj->getTimestamp() == $_POST['timeNowReference']) {
+		if ($this->publicationStatus === Article::PUBLISHED && $this->timeObj && $this->timeObj->getTimestamp() == $_POST['timeNowReference']) {
 			// supplied timestamp matches the time at which the form was initially requested,
 			// use the current time instead as publication timestamp, otherwise the article
 			// would be published in the past rather than "now"

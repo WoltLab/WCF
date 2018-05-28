@@ -1,10 +1,11 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder\field\dependency;
 use wcf\system\form\builder\field\IFormField;
-use wcf\system\form\builder\IFormElement;
+use wcf\system\form\builder\IFormNode;
 
 /**
- * Represents a dependency of one field on (the value of) another field.
+ * Represents a dependency of one node on (the value of) a field.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
@@ -19,59 +20,63 @@ interface IFormFieldDependency {
 	 * 
 	 * @return	bool
 	 */
-	public function checkDependency();
+	public function checkDependency(): bool;
 	
 	/**
-	 * Sets the element whose availability depends on the value of a field.
+	 * Sets the node whose availability depends on the value of a field.
 	 * 
-	 * @param	IFormElement	$element	depending element
+	 * @param	IFormNode	$node		dependent node
 	 * @return	static				this dependency
+	 * 
+	 * @throws	\BadMethodCallException		if no dependent node has been set
 	 */
-	public function dependentElement(IFormElement $element);
+	public function dependentNode(IFormNode $node): IFormFieldDependency;
 	
 	/**
-	 * Sets the field the availability of the element dependents on.
+	 * Sets the field the availability of the node dependents on.
 	 * 
-	 * @param	IFormField	$field		dependent field
+	 * @param	IFormField	$field		field
 	 * @return	static				this dependency
-	 */
-	public function field(IFormField $field);
-	
-	/**
-	 * Returns the JavaScript code required to ensure this dependency in the template.
-	 *
-	 * @return	string		dependency JavaScript code
-	 */
-	public function getHtml();
-	
-	/**
-	 * Returns the id of the dependency.
 	 * 
-	 * @return	string		id of the dependency 
+	 * @throws	\BadMethodCallException		if no field has been set
 	 */
-	public function getId();
+	public function field(IFormField $field): IFormFieldDependency;
 	
 	/**
-	 * Returns the element whose availability depends on the value of a field.
+	 * Returns the node whose availability depends on the value of a field.
 	 * 
-	 * @return	IFormElement	depending element
+	 * @return	IFormNode	dependent node
 	 */
-	public function getDependentElement();
+	public function getDependentNode(): IFormNode;
 	
 	/**
 	 * Returns the field the availability of the element dependents on.
 	 * 
-	 * @return	IFormField	dependent field
+	 * @return	IFormField	field controlling element availability
 	 */
-	public function getField();
+	public function getField(): IFormField;
+	
+	/**
+	 * Returns the JavaScript code required to ensure this dependency in the template.
+	 * 
+	 * @return	string		dependency JavaScript code
+	 */
+	public function getHtml(): string;
+	
+	/**
+	 * Returns the id of this dependency.
+	 * 
+	 * @return	string		id of the dependency 
+	 */
+	public function getId(): string;
 	
 	/**
 	 * Creates a new dependency with the given id.
 	 * 
-	 * @param	string		$id
-	 * @return	static		newly created dependency
+	 * @param	string		$id		id of the created dependency
+	 * @return	static				newly created dependency
 	 * 
-	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public static function create($id);
+	public static function create(string $id): IFormFieldDependency;
 }

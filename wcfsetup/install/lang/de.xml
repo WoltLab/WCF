@@ -2290,7 +2290,6 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} auf dieser Seite die Standardeinstellungen für neue Benutzer festlegen, dies wirkt sich nicht auf bestehende Benutzer aus. Benutzer können abweichende Einstellungen festlegen.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers.description"><![CDATA[Die hier eingestellten Änderungen der Vorgabewerte für Benachrichtigungen werden auch in bestehende Benutzerkonten übernommen. Die entsprechenden Einstellungen der Benutzer werden dabei überschrieben.]]></item>
-		
 		<item name="wcf.acp.user.bulkProcessing"><![CDATA[Benutzer-Massenbearbeitung]]></item>
 		<item name="wcf.acp.user.bulkProcessing.action"><![CDATA[Aktion]]></item>
 		<item name="wcf.acp.user.bulkProcessing.assignToUserGroups"><![CDATA[Benutzergruppen zuweisen]]></item>
@@ -2305,6 +2304,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.action.sendMail"><![CDATA[E-Mail senden]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Neues Passwort zusenden]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesem Benutzer wirklich ein neues Kennwort zusenden?]]></item>
+		<item name="wcf.acp.user.exportGdpr"><![CDATA[Persönliche Daten exportieren (DSGVO)]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
@@ -2878,7 +2878,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		
 		<item name="wcf.editor.quote.author"><![CDATA[Quelle]]></item>
 		<item name="wcf.editor.quote.edit"><![CDATA[Zitat bearbeiten]]></item>
-		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Zitat von {$author}{else}Zitat{/if}]]></item>
+		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Zitat von {@$author}{else}Zitat{/if}]]></item>
 		<item name="wcf.editor.quote.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.quote.url.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} einen Link zu der Quelle an.]]></item>
 		<item name="wcf.editor.quote.url.error.invalid"><![CDATA[Der eingegebene Link ist ungültig.]]></item>
@@ -3024,6 +3024,28 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss kleiner sein als {#$lessThan}.{/literal}]]></item>
 		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss größer sein als {#$greaterThan}.{/literal}]]></item>
 		<!-- /deprecated since 2.1 -->
+	</category>
+	
+	<category name="wcf.form">
+		<item name="wcf.form.field.className"><![CDATA[Klasse]]></item>
+		<item name="wcf.form.field.className.description.interface"><![CDATA[Die angegebene Klasse (ohne Backslash als erstes Zeichen) muss das Interface <code>{$interface}</code> implementieren.]]></item>
+		<item name="wcf.form.field.className.error.interface"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} implementiert nicht das Interface <code>{$interface}</code>.]]></item>
+		<item name="wcf.form.field.className.error.isInstantiable"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} ist nicht instanziierbar.]]></item>
+		<item name="wcf.form.field.className.error.leadingBackslash"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} darf keinen führenden Backslash besitzen.]]></item>
+		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} existiert nicht.]]></item>
+		<item name="wcf.form.field.className.error.parentClass"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} erbt nicht von <code>{$parentClass}</code>.]]></item>
+		<item name="wcf.form.field.itemList.error.separator"><![CDATA[Die folgenden Elemente dürfen kein {if $separator === ','}Komma{else}Leerzeichen{/if} enthalten: {implode from=$invalidItems item=item}„{$item}“{/implode}.]]></item>
+		<item name="wcf.form.field.numeric.error.maximum"><![CDATA[Der angegebene Wert darf nicht kleiner als {#$maximum} sein.]]></item>
+		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[Der angegebene Wert darf nicht größer als {#$minimum} sein.]]></item>
+		<item name="wcf.form.field.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.form.field.showOrder.firstPosition"><![CDATA[(an erster Stelle)]]></item>
+		<item name="wcf.form.field.text.error.maximumLength"><![CDATA[Der angegebene Text{if $language} für die Sprache „{$language}“{/if} umfasst {#$length} Zeichen, er darf aber nicht länger als {#$maximumLength} Zeichen sein.]]></item>
+		<item name="wcf.form.field.text.error.minimumLength"><![CDATA[Der angegebene Text{if $language} für die Sprache „{$language}“{/if} umfasst {#$length} Zeichen, er darf aber nicht kürzer als {#$minimumLength} Zeichen sein.]]></item>
+		<item name="wcf.form.field.user.error.maxmimumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} zumindest {#$maximumCount} Benutzer angeben, es wurde{if $count != 1}n{else} aber nur {#$count} Benutzer angegeben.]]></item>
+		<item name="wcf.form.field.user.error.minimumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du darfst{else}Sie dürfen{/if} nicht mehr als {#$minimumCount} Benutzer angeben, es wurde{if $count != 1}n{else} aber {#$count} Benutzer angegeben.]]></item>
+		<item name="wcf.form.field.user.error.nonExistent"><![CDATA[{if $nonExistentUsernames|isset}Die folgenden Benutzer existieren nicht: {implode from=$nonExistentUsernames item=nonExistentUsername}„{$nonExistentUsername}“{/implode}.{else}Der angegebene Benutzer existiert nicht.{/if}]]></item>
+		<item name="wcf.form.field.username.error.invalid"><![CDATA[Der angegebene Benutzername ist ungültig.]]></item>
+		<item name="wcf.form.field.username.error.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">
@@ -3572,7 +3594,7 @@ dann wird diese Anfrage am {$mailbox->getUser()->lastLostPasswordRequestTime+864
 		<item name="wcf.user.quit"><![CDATA[Benutzerkonto kündigen]]></item>
 		<item name="wcf.user.quit.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du dein{else}Wollen Sie Ihr{/if} Benutzerkonto mitsamt {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} persönlichen Daten dauerhaft löschen?]]></item>
 		<item name="wcf.user.quit.cancel"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wird am {$quitStarted+7*86400|date} gelöscht. {if LANGUAGE_USE_INFORMAL_VARIANT}Bitte aktiviere diese Option, wenn du die Löschung abbrechen möchtest.{else}Bitte aktivieren Sie diese Option, wenn Sie die Löschung abbrechen möchten.{/if}]]></item>
-		<item name="wcf.user.quit.description"><![CDATA[Hinweis: Beiträge, Anhänge und ähnliches werden nicht gelöscht.]]></item>
+		<item name="wcf.user.quit.description"><![CDATA[Hinweis: Beiträge, Anhänge und Ähnliches werden nicht gelöscht.]]></item>
 		<item name="wcf.user.quit.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wird am {TIME_NOW+7*86400|date} gelöscht. Bis dahin {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die Löschung auf dieser Seite abbrechen.]]></item>
 		<item name="wcf.user.quit.cancel.success"><![CDATA[Die Löschung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos wurde erfolgreich abgebrochen.]]></item>
 		<item name="wcf.user.emailActivation"><![CDATA[Neue E-Mail-Adresse aktivieren]]></item>
@@ -3870,7 +3892,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.recentActivity.condition.excludedObjectType"><![CDATA[Ausgeschlossene Aktivitäten]]></item>
 		<item name="wcf.user.recentActivity.scope.all"><![CDATA[Aktivitäten aller Benutzer]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Aktivitäten von Benutzern, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}]]></item>
-		<item name="wcf.user.recentActivity.scope.followedUsers.noResults"><![CDATA[Es gibt aktuell keine Aktivitäten von Benutzeren, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}. Es werden alle Aktivitäten angezeigt.]]></item>
+		<item name="wcf.user.recentActivity.scope.followedUsers.noResults"><![CDATA[Es gibt aktuell keine Aktivitäten von Benutzern, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}. Es werden alle Aktivitäten angezeigt.]]></item>
 	</category>
 	
 	<category name="wcf.user.3rdparty">

@@ -146,7 +146,7 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 					
 					if (preselect === true) {
 						this._tabs.forEach(function(tab) {
-							if (!selectTab && !tab.previousElementSibling) {
+							if (!selectTab && !elIsHidden(tab) && (!tab.previousElementSibling || elIsHidden(tab.previousElementSibling))) {
 								selectTab = tab;
 							}
 						});
@@ -294,6 +294,30 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 				//noinspection JSUnresolvedFunction
 				UiTabMenu.scrollToTab(tab);
 			});
+		},
+		
+		/**
+		 * Selects the first visible tab of the tab menu and return `true`. If there is no
+		 * visible tab, `false` is returned.
+		 * 
+		 * The visibility of a tab is determined by calling `elIsHidden` with the tab menu
+		 * item as the parameter.
+		 *
+		 * @return	{boolean}
+		 */
+		selectFirstVisible: function() {
+			var selectTab;
+			this._tabs.forEach(function(tab) {
+				if (!selectTab && !elIsHidden(tab)) {
+					selectTab = tab;
+				}
+			}.bind(this));
+			
+			if (selectTab) {
+				this.select(undefined, selectTab, false);
+			}
+			
+			return !!selectTab;
 		},
 		
 		/**

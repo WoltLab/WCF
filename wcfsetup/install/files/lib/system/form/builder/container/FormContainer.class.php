@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder\container;
 use wcf\system\form\builder\IFormChildNode;
 use wcf\system\form\builder\IFormDocument;
@@ -32,7 +33,7 @@ class FormContainer implements IFormContainer {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml() {
+	public function getHtml(): string {
 		return WCF::getTPL()->fetch($this->templateName, 'wcf', array_merge($this->getHtmlVariables(), [
 			'container' => $this
 		]), true);
@@ -50,7 +51,7 @@ class FormContainer implements IFormContainer {
 			}
 			
 			if ($child instanceof ITabMenuFormContainer) {
-				if ($this->parent() instanceof ITabMenuFormContainer) {
+				if ($this->getParent() instanceof ITabMenuFormContainer) {
 					throw new \InvalidArgumentException("Tab menus can only be nested once.");
 				}
 			}

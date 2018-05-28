@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\system\WCF;
 
@@ -37,7 +38,7 @@ trait TSuffixedFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given language item is no string or otherwise invalid
 	 */
-	public function suffix($languageItem = null, array $variables = []) {
+	public function suffix(string $languageItem = null, array $variables = []): ISuffixedFormField {
 		if ($languageItem === null) {
 			if (!empty($variables)) {
 				throw new \InvalidArgumentException("Cannot use variables when unsetting suffix of field '{$this->getId()}'");

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder;
 
 /**
@@ -18,7 +19,7 @@ interface IFormChildNode extends IFormNode {
 	 * 
 	 * @throws	\BadMethodCallException		if the parent node has not been set previously
 	 */
-	public function getParent();
+	public function getParent(): IFormParentNode;
 	
 	/**
 	 * Sets the parent node of this node and returns this node.
@@ -28,5 +29,5 @@ interface IFormChildNode extends IFormNode {
 	 *
 	 * @throws	\BadMethodCallException			if the parent node has already been set
 	 */
-	public function parent(IFormParentNode $parentNode);
+	public function parent(IFormParentNode $parentNode): IFormChildNode;
 }

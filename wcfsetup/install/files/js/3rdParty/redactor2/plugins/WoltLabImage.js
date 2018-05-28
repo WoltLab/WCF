@@ -157,8 +157,10 @@ $.Redactor.prototype.WoltLabImage = function() {
 			}
 			
 			var html = '<img src="' + WCF.String.escapeHTML(source) + '"' + (className ? ' class="' + className + '"' : '') + '>';
+			var linkUuid;
 			if (link) {
-				html = '<a href="' + WCF.String.escapeHTML(link) + '">' + html + '</a>';
+				linkUuid = WCF.getUUID();
+				html = '<a href="' + WCF.String.escapeHTML(link) + '" data-uuid="' + linkUuid + '">' + html + '</a>';
 			}
 			
 			this.modal.close();
@@ -166,6 +168,16 @@ $.Redactor.prototype.WoltLabImage = function() {
 			this.buffer.set();
 			
 			this.insert.html(html);
+			
+			if (linkUuid) {
+				window.setTimeout((function() {
+					var link = elBySel('a[data-uuid="' + linkUuid + '"]', this.core.editor()[0]);
+					if (link) {
+						link.removeAttribute('data-uuid');
+						this.caret.after(link);
+					}
+				}).bind(this), 1);
+			}
 		}
 	};
 };

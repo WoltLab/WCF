@@ -1,3 +1,5 @@
 {foreach from=$container item='child'}
-	{@$child->getHtml()}
+	{if $child->isAvailable()}
+		{@$child->getHtml()}
+	{/if}
 {/foreach}

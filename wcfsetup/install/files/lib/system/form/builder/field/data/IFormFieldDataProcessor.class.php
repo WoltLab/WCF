@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder\field\data;
 use wcf\system\form\builder\IFormDocument;
 
@@ -20,5 +21,5 @@ interface IFormFieldDataProcessor {
 	 * @param	array		$parameters	parameters before processing
 	 * @return	array				parameters after processing
 	 */
-	public function __invoke(IFormDocument $document, array $parameters);
+	public function __invoke(IFormDocument $document, array $parameters): array;
 }

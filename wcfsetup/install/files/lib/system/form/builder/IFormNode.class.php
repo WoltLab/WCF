@@ -1,5 +1,7 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder;
+use wcf\system\form\builder\field\dependency\IFormFieldDependency;
 
 /**
  * Represents a general form node providing common methods of all nodes.
@@ -17,9 +19,22 @@ interface IFormNode {
 	 * @param	string		$class		added CSS class name
 	 * @return	static				this node
 	 * 
-	 * @throws	\InvalidArgumentException	if the given class is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given class is invalid
 	 */
-	public function addClass($class);
+	public function addClass(string $class): IFormNode;
+	
+	/**
+	 * Adds a dependency on the value of a `IFormField` so that this node is
+	 * only available if the field satisfies the given dependency and returns
+	 * this element.
+	 * 
+	 * This method is expected to set the dependent node of the given dependency
+	 * to this element.
+	 * 
+	 * @param	IFormFieldDependency	$dependency	added node dependency
+	 * @return	static					this node
+	 */
+	public function addDependency(IFormFieldDependency $dependency): IFormNode;
 	
 	/**
 	 * Adds an additional attribute to this node and returns this node.
@@ -32,7 +47,36 @@ interface IFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if an invalid name or value is given (some attribute names are invalid as there are specific methods for setting that attribute)
 	 */
-	public function attribute($name, $value = null);
+	public function attribute(string $name, string $value = null): IFormNode;
+	
+	/**
+	 * Sets if this node is available and returns this node.
+	 * 
+	 * By default, every node is available. This methods makes it easier to create forms
+	 * that contains node that are only avaiable if certain options have specific values
+	 * or the active user has specific permissions, for example. Furthermore, fields
+	 * themselves are also able to mark themselves as unavailable, for example, a selection
+	 * field without any options. A `IFormContainer` is automatically unavailable if it
+	 * contains no available children.
+	 * 
+	 * Unavailable fields produce no output, their value is not read, they are not validated
+	 * and they are not checked for save values.
+	 * 
+	 * Note: Form field dependencies manage dynamic availability of form nodes based on
+	 * form field values while this method manages static availability that is independent
+	 * of form field values and only depends on external factors.
+	 * 
+	 * @param	bool		$available	determines if node is available
+	 * @return	static				this node
+	 */
+	public function available(bool $available = true): IFormNode;
+	
+	/**
+	 * Returns `true` if the node's dependencies are met and returns `false` otherwise.
+	 *
+	 * @return	bool
+	 */
+	public function checkDependencies(): bool;
 	
 	/**
 	 * Returns the value of the additional attribute of this node with the given name.
@@ -42,21 +86,28 @@ interface IFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given name is invalid or no such attribute exists
 	 */
-	public function getAttribute($name);
+	public function getAttribute(string $name);
 	
 	/**
 	 * Returns additional attributes of this node.
 	 * 
 	 * @return	array		additional node attributes
 	 */
-	public function getAttributes();
+	public function getAttributes(): array;
 	
 	/**
 	 * Returns all CSS classes of this node.
 	 * 
 	 * @return	string[]	CSS classes of node
 	 */
-	public function getClasses();
+	public function getClasses(): array;
+	
+	/**
+	 * Returns all of the node's dependencies.
+	 * 
+	 * @return	IFormFieldDependency[]		node's dependencies
+	 */
+	public function getDependencies(): array;
 	
 	/**
 	 * Returns the form document this node belongs to.
@@ -65,14 +116,14 @@ interface IFormNode {
 	 * 
 	 * @throws	\BadMethodCallException		if form document is inaccessible for this node
 	 */
-	public function getDocument();
+	public function getDocument(): IFormDocument;
 	
 	/**
 	 * Returns the html representation of this node.
 	 *
 	 * @return	string		html representation of node
 	 */
-	public function getHtml();
+	public function getHtml(): string;
 	
 	/**
 	 * Returns additional template variables used to generate the html representation
@@ -80,7 +131,7 @@ interface IFormNode {
 	 * 
 	 * @return	array		additional template variables
 	 */
-	public function getHtmlVariables();
+	public function getHtmlVariables(): array;
 	
 	/**
 	 * Returns the id of the form node.
@@ -89,7 +140,7 @@ interface IFormNode {
 	 * 
 	 * @throws	\BadMethodCallException		if no id has been set
 	 */
-	public function getId();
+	public function getId(): string;
 	
 	/**
 	 * Returns the prefixed id of this node that means a combination of the form
@@ -102,7 +153,7 @@ interface IFormNode {
 	 * 
 	 * @throws	\BadMethodCallException		if no id has been set or if form document is inaccessible for this node
 	 */
-	public function getPrefixedId();
+	public function getPrefixedId(): string;
 	
 	/**
 	 * Returns `true` if an additional attribute with the given name exists and returns
@@ -111,9 +162,9 @@ interface IFormNode {
 	 * @param	string		$name		attribute name
 	 * @return	bool
 	 * 
-	 * @throws	\InvalidArgumentException	if the given attribute name is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given attribute name is invalid
 	 */
-	public function hasAttribute($name);
+	public function hasAttribute(string $name): bool;
 	
 	/**
 	 * Returns `true` if a CSS class with the given name exists and returns `false` otherwise.
@@ -121,9 +172,20 @@ interface IFormNode {
 	 * @param	string		$class		checked CSS class
 	 * @return	bool
 	 * 
-	 * @throws	\InvalidArgumentException	if the given class is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given class is invalid
 	 */
-	public function hasClass($class);
+	public function hasClass(string $class): bool;
+	
+	/**
+	 * Returns `true` if this node has a dependency with the given id and
+	 * returns `false` otherwise.
+	 * 
+	 * @param	string		$dependencyId	id of the checked dependency
+	 * @return	bool
+	 * 
+	 * @throws	\InvalidArgumentException	if the given id is invalid
+	 */
+	public function hasDependency(string $dependencyId): bool;
 	
 	/**
 	 * Sets the id of the node.
@@ -132,9 +194,20 @@ interface IFormNode {
 	 * @return	static				this node
 	 * 
 	 * @throws	\BadMethodCallException		if id has already been set
-	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public function id($id);
+	public function id(string $id): IFormNode;
+	
+	/**
+	 * Returns `true` if this node is available and returns `false` otherwise.
+	 * 
+	 * If the node's availability has not been explicitly set, `true` is returned.
+	 * 
+	 * @return	bool
+	 * 
+	 * @see		IFormNode::available()
+	 */
+	public function isAvailable(): bool;
 	
 	/**
 	 * Is called once after all nodes have been added to the document this node belongs to.
@@ -146,7 +219,7 @@ interface IFormNode {
 	 * 
 	 * @throws	\BadMethodCallException		if this node has already been populated
 	 */
-	public function populate();
+	public function populate(): IFormNode;
 	
 	/**
 	 * Removes the given CSS class and returns this node.
@@ -157,9 +230,19 @@ interface IFormNode {
 	 * @param	string		$class		removed CSS class
 	 * @return	static				this node
 	 * 
-	 * @throws	\InvalidArgumentException	if the given class is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given class is invalid
 	 */
-	public function removeClass($class);
+	public function removeClass(string $class): IFormNode;
+	
+	/**
+	 * Removes the dependency with the given id and returns this node.
+	 * 
+	 * @param	string		$dependencyId	id of the removed dependency
+	 * @return	static				this node
+	 * 
+	 * @throws	\InvalidArgumentException	if the given id is invalid or no such dependency exists
+	 */
+	public function removeDependency(string $dependencyId): IFormNode;
 	
 	/**
 	 * Validates the node.
@@ -173,36 +256,36 @@ interface IFormNode {
 	 * Creates a new element with the given id.
 	 * 
 	 * @param	string		$id	node id
-	 * @return	static
+	 * @return	static			this node
 	 * 
-	 * @throws	\InvalidArgumentException	if the given id is no string, already used by another element, or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given id is already used by another element or otherwise is invalid
 	 */
-	public static function create($id);
+	public static function create(string $id): IFormNode;
 	
 	/**
 	 * Checks if the given attribute name class a string and a valid attribute name.
 	 * 
-	 * @param	mixed		$name		checked argument name
+	 * @param	string		$name		checked argument name
 	 * 
-	 * @throws	\InvalidArgumentException	if the given attribute name is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given attribute name is invalid
 	 */
-	public static function validateAttribute($name);
+	public static function validateAttribute(string $name);
 	
 	/**
 	 * Checks if the given parameter class a string and a valid node class.
 	 * 
-	 * @param	mixed		$class		checked class
+	 * @param	string		$class		checked class
 	 * 
-	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public static function validateClass($class);
+	public static function validateClass(string $class);
 	
 	/**
 	 * Checks if the given parameter is a string and a valid node id.
 	 * 
-	 * @param	mixed		$id		checked id
+	 * @param	string		$id		checked id
 	 * 
-	 * @throws	\InvalidArgumentException	if the given id is no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public static function validateId($id);
+	public static function validateId(string $id);
 }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 
@@ -27,10 +28,19 @@ class BooleanFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue() {
+	public function readValue(): IFormField {
 		if (isset($_POST[$this->getPrefixedId()])) {
 			$this->__value = $_POST[$this->getPrefixedId()] === '1';
 		}
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function requiresLabel(): bool {
+		return true;
 	}
 	
 	/**
@@ -46,9 +56,16 @@ class BooleanFormField extends AbstractFormField {
 	
 	/**
 	 * @inheritDoc
+	 * @return	static		this field
 	 */
-	public function value($value) {
-		if (!is_bool($value)) {
+	public function value($value): IFormField {
+		if (is_string($value) && in_array($value, ['0', '1', 'true', 'false'])) {
+			$value = ($value === '1' || $value === 'true');
+		}
+		if (is_int($value) && ($value === 0 || $value === 1)) {
+			$value = ($value === 1);
+		}
+		else if (!is_bool($value)) {
 			throw new \InvalidArgumentException("Given value is no bool, " . gettype($value) . " given.");
 		}
 		
