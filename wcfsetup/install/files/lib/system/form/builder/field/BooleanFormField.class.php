@@ -29,8 +29,8 @@ class BooleanFormField extends AbstractFormField {
 	 * @inheritDoc
 	 */
 	public function readValue(): IFormField {
-		if (isset($_POST[$this->getPrefixedId()])) {
-			$this->__value = $_POST[$this->getPrefixedId()] === '1';
+		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
+			$this->__value = $this->getDocument()->getRequestData($this->getPrefixedId()) === '1';
 		}
 		
 		return $this;

@@ -289,8 +289,12 @@ trait TI18nFormField {
 		if ($this->isI18n()) {
 			I18nHandler::getInstance()->readValues();
 		}
-		else if (isset($_POST[$this->getPrefixedId()]) && is_string($_POST[$this->getPrefixedId()])) {
-			$this->__value = StringUtil::trim($_POST[$this->getPrefixedId()]);
+		else if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
+			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			
+			if (is_string($value)) {
+				$this->__value = StringUtil::trim($value);
+			}
 		}
 		
 		return $this;

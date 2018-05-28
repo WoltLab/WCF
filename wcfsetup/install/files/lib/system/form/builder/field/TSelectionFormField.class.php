@@ -100,7 +100,12 @@ trait TSelectionFormField {
 		$validateOptions = function(array &$array) use (&$validateOptions) {
 			foreach ($array as $key => $value) {
 				if (is_array($value)) {
-					$validateOptions($value);
+					if (static::supportsNestedOptions()) {
+						$validateOptions($value);
+					}
+					else {
+						throw new \InvalidArgumentException("Option '{$key}' must not be an array.");
+					}
 				}
 				else {
 					if (!is_string($value) && !is_numeric($value)) {
@@ -132,8 +137,12 @@ trait TSelectionFormField {
 	 * @inheritDoc
 	 */
 	public function readValue(): IFormField {
-		if (isset($_POST[$this->getPrefixedId()]) && is_string($_POST[$this->getPrefixedId()])) {
-			$this->__value = $_POST[$this->getPrefixedId()];
+		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
+			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			
+			if (is_string($value)) {
+				$this->__value = $value;
+			}
 		}
 		
 		return $this;
@@ -154,10 +163,25 @@ trait TSelectionFormField {
 	 * @inheritDoc
 	 */
 	public function value($value): IFormField {
+		// ignore `null` as value which can be passed either for nullable
+		// fields or as value if no options are available
+		if ($value === null) {
+			return $this;
+		}
+		
 		if (!in_array($value, $this->possibleValues)) {
 			throw new \InvalidArgumentException("Unknown value '{$value}'");
 		}
 		
 		return parent::value($value);
+	}
+	
+	/**
+	 * Returns `true` if the field class supports nested options and `false` otherwise.
+	 * 
+	 * @return	bool
+	 */
+	protected static function supportsNestedOptions(): bool {
+		return true;
 	}
 }

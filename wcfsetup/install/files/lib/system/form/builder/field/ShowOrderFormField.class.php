@@ -30,6 +30,8 @@ use wcf\system\WCF;
  * @since	3.2
  */
 class ShowOrderFormField extends SingleSelectionFormField {
+	use TDefaultIdFormField;
+	
 	/**
 	 * Creates a new instance of `ShowOrderFormField`.
 	 */
@@ -92,11 +94,8 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	
 	/**
 	 * @inheritDoc
-	 * @return	static
 	 */
-	// @codingStandardsIgnoreStart
-	public static function create(string $id = 'showOrder'): IFormNode {
-		return parent::create($id);
+	protected static function getDefaultId(): string {
+		return 'showOrder';
 	}
-	// @codingStandardsIgnoreEnd
 }

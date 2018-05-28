@@ -34,6 +34,8 @@ trait TFormParentNode {
 	 * @throws	\InvalidArgumentException		if the given child node cannot be appended
 	 */
 	public function appendChild(IFormChildNode $child): IFormParentNode {
+		$this->validateChild($child);
+		
 		$this->__children[] = $child;
 		
 		$child->parent($this);
@@ -316,8 +318,19 @@ trait TFormParentNode {
 	 * @throws	\InvalidArgumentException			if given node cannot be added as a child
 	 */
 	public function validateChild(IFormChildNode $child) {
-		if ($this->getDocument()->contains($child->getId())) {
-			throw new \InvalidArgumentException("Cannot append node '{$child->getId()}' to node '{$this->getId()}' because a node with id '{$child->getId()}' already exists in the form.");
+		// check if a node with same id as the given node already exists
+		if ($this->contains($child->getId())) {
+			throw new \InvalidArgumentException("Cannot append node '{$child->getId()}' to node '{$this->getId()}' because a node with id '{$child->getId()}' already exists.");
+		}
+		
+		// check all child nodes of the given node for duplicate node ids
+		if ($child instanceof IFormParentNode) {
+			/** @var IFormNode $thisChild */
+			foreach ($child->getIterator() as $grandChild) {
+				if ($grandChild instanceof IFormParentNode && $this->contains($grandChild->getId())) {
+					throw new \InvalidArgumentException("Cannot append node '{$child->getId()}' to node '{$this->getId()}' because '{$child->getId()}' contains a node with id '{$grandChild->getId()}' that is already used by another node.");
+				}
+			}
 		}
 	}
 }

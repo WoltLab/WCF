@@ -45,7 +45,7 @@ class FormContainer implements IFormContainer {
 	public function validateChild(IFormChildNode $child) {
 		$this->defaultValidateChild($child);
 		
-		if ($this instanceof ITabFormMenuContainer) {
+		if ($this instanceof ITabMenuFormContainer) {
 			if (!($child instanceof ITabFormContainer)) {
 				throw new \InvalidArgumentException("Cannot append non-tab container ".get_class($child)."('{$child->getId()}') to tab menu container '{$this->getId()}'");
 			}

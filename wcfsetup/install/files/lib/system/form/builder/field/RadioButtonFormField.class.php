@@ -2,7 +2,7 @@
 namespace wcf\system\form\builder\field;
 
 /**
- * Implementation of a form field for an object title.
+ * Implementation of a radio buttons form field for selecting a single value.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
@@ -10,20 +10,18 @@ namespace wcf\system\form\builder\field;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	3.2
  */
-class TitleFormField extends TextFormField {
-	use TDefaultIdFormField;
-	
-	/**
-	 * Creates a new instance of `TitleFormField`.
-	 */
-	public function __construct() {
-		$this->label('wcf.global.title');
-	}
+class RadioButtonFormField extends AbstractFormField implements ISelectionFormField {
+	use TSelectionFormField;
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected static function getDefaultId(): string {
-		return 'title';
+	protected $templateName = '__radioButtonFormField';
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected static function supportsNestedOptions(): bool {
+		return false;
 	}
 }
