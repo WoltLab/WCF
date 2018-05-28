@@ -127,6 +127,29 @@ interface IFormDocument extends IFormParentNode {
 	public function getPrefix(): string;
 	
 	/**
+	 * Returns the request data of the form's fields.
+	 * 
+	 * If no request data is set, `$_POST` will be set as the request data.
+	 * 
+	 * @param	null|string	$index		array index of the returned data
+	 * @return	array|mixed			request data of the form's fields or specific index data if index is given
+	 * 
+	 * @throws	\InvalidArgumentException	if invalid index is given
+	 */
+	public function getRequestData(string $index = null);
+	
+	/**
+	 * Returns `true` if there is any request data or, if a parameter is given, if
+	 * there is request data with a specific index.
+	 * 
+	 * If no request data is set, `$_POST` will be set as the request data.
+	 * 
+	 * @param	null|string	$index		array index of the returned data
+	 * @return	bool				`tu
+	 */
+	public function hasRequestData(string $index = null): bool;
+	
+	/**
 	 * Loads the field values from the given object and returns this document.
 	 * 
 	 * Per default, for each field, `IFormField::loadValueFromObject()` is called.
@@ -160,4 +183,14 @@ interface IFormDocument extends IFormParentNode {
 	 * @throws	\InvalidArgumentException	if the given prefix is invalid
 	 */
 	public function prefix(string $prefix): IFormDocument;
+	
+	/**
+	 * Sets the request data of the form's fields.
+	 * 
+	 * @param	array		$requestData	request data of the form's fields
+	 * @return	static				this field
+	 * 
+	 * @throws	\BadMethodCallException		if request data has already been set
+	 */
+	public function requestData(array $requestData): IFormDocument;
 }

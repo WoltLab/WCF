@@ -27,12 +27,16 @@ class UserFormField extends AbstractFormField implements IMultipleFormField, INu
 	 * @inheritDoc
 	 */
 	public function readValue(): IFormField {
-		if (isset($_POST[$this->getPrefixedId()]) && is_string($_POST[$this->getPrefixedId()])) {
-			if ($this->allowsMultiple()) {
-				$this->__value = ArrayUtil::trim(explode(',', $_POST[$this->getPrefixedId()]));
-			}
-			else {
-				$this->__value = StringUtil::trim($_POST[$this->getPrefixedId()]);
+		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
+			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			
+			if (is_string($value)) {
+				if ($this->allowsMultiple()) {
+					$this->__value = ArrayUtil::trim(explode(',', $value));
+				}
+				else {
+					$this->__value = StringUtil::trim($value);
+				}
 			}
 		}
 		

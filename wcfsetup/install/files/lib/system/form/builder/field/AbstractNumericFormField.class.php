@@ -86,12 +86,16 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IMa
 	 * @inheritDoc
 	 */
 	public function readValue(): IFormField {
-		if (isset($_POST[$this->getPrefixedId()]) && $_POST[$this->getPrefixedId()] !== '') {
-			if ($this->integerValues) {
-				$this->__value = intval($_POST[$this->getPrefixedId()]);
-			}
-			else {
-				$this->__value = floatval($_POST[$this->getPrefixedId()]);
+		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
+			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			
+			if ($value !== '') {
+				if ($this->integerValues) {
+					$this->__value = intval($value);
+				}
+				else {
+					$this->__value = floatval($value);
+				}
 			}
 		}
 		

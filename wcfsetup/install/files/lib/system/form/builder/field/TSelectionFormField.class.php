@@ -137,8 +137,12 @@ trait TSelectionFormField {
 	 * @inheritDoc
 	 */
 	public function readValue(): IFormField {
-		if (isset($_POST[$this->getPrefixedId()]) && is_string($_POST[$this->getPrefixedId()])) {
-			$this->__value = $_POST[$this->getPrefixedId()];
+		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
+			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			
+			if (is_string($value)) {
+				$this->__value = $value;
+			}
 		}
 		
 		return $this;
