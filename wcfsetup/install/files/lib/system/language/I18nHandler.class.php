@@ -77,6 +77,22 @@ class I18nHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Unregisters the element with the given id.
+	 * 
+	 * Does nothing if no such element exists.
+	 * 
+	 * @param	string		$elementID
+	 */
+	public function unregister($elementID) {
+		$index = array_search($elementID, $this->elementIDs);
+		if ($index === false) {
+			unset($this->elementIDs[$index]);
+		}
+		
+		unset($this->plainValues[$elementID], $this->i18nValues[$elementID]);
+	}
+	
+	/**
 	 * Reads plain and i18n values from request data.
 	 */
 	public function readValues() {

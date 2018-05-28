@@ -2954,6 +2954,8 @@ Email: {@$emailAddress} {* this line ends with a space *}
 	</category>
 	
 	<category name="wcf.global.form">
+		<item name="wcf.global.form.boolean.no"><![CDATA[No]]></item>
+		<item name="wcf.global.form.boolean.yes"><![CDATA[Yes]]></item>
 		<item name="wcf.global.form.data"><![CDATA[General Information]]></item>
 		<item name="wcf.global.form.error"><![CDATA[Please correct the erroneous fields marked below.]]></item>
 		<item name="wcf.global.form.error.empty"><![CDATA[Please fill in this field.]]></item>
