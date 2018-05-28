@@ -154,6 +154,12 @@ trait TSelectionFormField {
 	 * @inheritDoc
 	 */
 	public function value($value): IFormField {
+		// ignore `null` as value which can be passed either for nullable
+		// fields or as value if no options are available
+		if ($value === null) {
+			return $this;
+		}
+		
 		if (!in_array($value, $this->possibleValues)) {
 			throw new \InvalidArgumentException("Unknown value '{$value}'");
 		}
