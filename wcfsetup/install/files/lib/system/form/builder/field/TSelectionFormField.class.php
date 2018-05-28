@@ -100,7 +100,12 @@ trait TSelectionFormField {
 		$validateOptions = function(array &$array) use (&$validateOptions) {
 			foreach ($array as $key => $value) {
 				if (is_array($value)) {
-					$validateOptions($value);
+					if (static::supportsNestedOptions()) {
+						$validateOptions($value);
+					}
+					else {
+						throw new \InvalidArgumentException("Option '{$key}' must not be an array.");
+					}
 				}
 				else {
 					if (!is_string($value) && !is_numeric($value)) {
@@ -165,5 +170,14 @@ trait TSelectionFormField {
 		}
 		
 		return parent::value($value);
+	}
+	
+	/**
+	 * Returns `true` if the field class supports nested options and `false` otherwise.
+	 * 
+	 * @return	bool
+	 */
+	protected static function supportsNestedOptions(): bool {
+		return true;
 	}
 }
