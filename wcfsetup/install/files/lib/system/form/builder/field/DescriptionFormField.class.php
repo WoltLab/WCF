@@ -11,7 +11,7 @@ namespace wcf\system\form\builder\field;
  * @since	3.2
  */
 class DescriptionFormField extends MultilineTextFormField {
-	use TForcedIdFormField;
+	use TDefaultIdFormField;
 	
 	/**
 	 * Creates a new instance of `DescriptionFormField`.
@@ -23,7 +23,7 @@ class DescriptionFormField extends MultilineTextFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected static function getForcedId(): string {
+	protected static function getDefaultId(): string {
 		return 'description';
 	}
 }

@@ -11,12 +11,12 @@ namespace wcf\system\form\builder\field;
  * @since	3.2
  */
 class IsDisabledFormField extends BooleanFormField {
-	use TForcedIdFormField;
+	use TDefaultIdFormField;
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected static function getForcedId(): string {
+	protected static function getDefaultId(): string {
 		return 'isDisabled';
 	}
 }

@@ -11,7 +11,7 @@ namespace wcf\system\form\builder\field;
  * @since	3.2
  */
 class TitleFormField extends TextFormField {
-	use TForcedIdFormField;
+	use TDefaultIdFormField;
 	
 	/**
 	 * Creates a new instance of `TitleFormField`.
@@ -23,7 +23,7 @@ class TitleFormField extends TextFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected static function getForcedId(): string {
+	protected static function getDefaultId(): string {
 		return 'title';
 	}
 }
