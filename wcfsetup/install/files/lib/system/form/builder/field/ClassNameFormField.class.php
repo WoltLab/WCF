@@ -18,6 +18,8 @@ use wcf\system\SingletonFactory;
  * @since	3.2
  */
 class ClassNameFormField extends TextFormField {
+	use TDefaultIdFormField;
+	
 	/**
 	 * `true` if the entered class must exist
 	 * @var	bool
@@ -233,11 +235,8 @@ class ClassNameFormField extends TextFormField {
 	
 	/**
 	 * @inheritDoc
-	 * @return	static
 	 */
-	// @codingStandardsIgnoreStart
-	public static function create(string $id = 'className'): IFormNode {
-		return parent::create($id);
+	protected static function getDefaultId(): string {
+		return 'className';
 	}
-	// @codingStandardsIgnoreEnd
 }

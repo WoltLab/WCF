@@ -122,8 +122,12 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * @inheritDoc
 	 */
 	public function readValue(): IFormField {
-		if (isset($_POST[$this->getPrefixedId()])) {
-			$this->__value = StringUtil::trim($_POST[$this->getPrefixedId()]);
+		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
+			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			
+			if (is_string($value)) {
+				$this->__value = StringUtil::trim($value);
+			}
 		}
 		
 		return $this;

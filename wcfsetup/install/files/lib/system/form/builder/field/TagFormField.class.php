@@ -101,8 +101,12 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 	 * @inheritDoc
 	 */
 	public function readValue(): IFormField {
-		if (isset($_POST[$this->getPrefixedId()]) && is_array($_POST[$this->getPrefixedId()])) {
-			$this->__value = ArrayUtil::trim($_POST[$this->getPrefixedId()]);
+		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
+			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			
+			if (is_array($value)) {
+				$this->__value = ArrayUtil::trim($value);
+			}
 		}
 		
 		return $this;

@@ -18,7 +18,9 @@ use wcf\system\WCF;
  */
 class FormDocument implements IFormDocument {
 	use TFormNode;
-	use TFormParentNode;
+	use TFormParentNode {
+		readValues as protected defaultReadValues;
+	}
 	
 	/**
 	 * `action` property of the HTML `form` element
@@ -44,6 +46,12 @@ class FormDocument implements IFormDocument {
 	 * @var	string
 	 */
 	protected $__prefix;
+	
+	/**
+	 * request data of the form's field
+	 * @var	null|array
+	 */
+	protected $__requestData;
 	
 	/**
 	 * data handler for this document
@@ -193,9 +201,11 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function getHtml(): string {
-		return WCF::getTPL()->fetch('__form', 'wcf', array_merge($this->getHtmlVariables(), [
-			'form' => $this
-		]));
+		return WCF::getTPL()->fetch(
+			'__form',
+			'wcf',
+			array_merge($this->getHtmlVariables(), ['form' => $this])
+		);
 	}
 	
 	/**
@@ -214,6 +224,38 @@ class FormDocument implements IFormDocument {
 		}
 		
 		return $this->__prefix . '_';
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getRequestData(string $index = null) {
+		if ($this->__requestData === null) {
+			$this->__requestData = $_POST;
+		}
+		
+		if ($index !== null) {
+			if (!isset($this->__requestData[$index])) {
+				throw new \InvalidArgumentException("Unknown request data with index '" . $index . "'.");
+			}
+			
+			return $this->__requestData[$index];
+		}
+		
+		return $this->__requestData;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function hasRequestData(string $index = null): bool {
+		$requestData = $this->getRequestData();
+		
+		if ($index !== null) {
+			return isset($requestData[$index]);
+		}
+		
+		return !empty($requestData);
 	}
 	
 	/**
@@ -266,6 +308,30 @@ class FormDocument implements IFormDocument {
 		static::validateId($prefix);
 		
 		$this->__prefix = $prefix;
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function readValues(): IFormParentNode {
+		if ($this->__requestData === null) {
+			$this->__requestData = $_POST;
+		}
+		
+		return $this->defaultReadValues();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function requestData(array $requestData): IFormDocument {
+		if ($this->__requestData !== null) {
+			throw new \BadMethodCallException('Request data has already been set.');
+		}
+		
+		$this->__requestData = $requestData;
 		
 		return $this;
 	}

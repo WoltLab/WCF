@@ -181,10 +181,12 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 					TabFormContainer::create('tab2')
 						->label('Tab 2')
 						->appendChildren([
-							SimpleAclFormField::create('objectAccess')
-								->label('Object can be accessed'),
-							UsernameFormField::create('newUsername')
-								->label('A new username')
+							FormContainer::create('tab2Contents')->appendChildren([
+								SimpleAclFormField::create('objectAccess')
+									->label('Object can be accessed'),
+								UsernameFormField::create('newUsername')
+									->label('A new username')
+							])
 						])
 				])
 		]);

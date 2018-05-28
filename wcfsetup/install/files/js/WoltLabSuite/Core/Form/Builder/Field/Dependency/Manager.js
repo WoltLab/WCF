@@ -7,7 +7,7 @@
  * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager
  * @since	3.2
  */
-define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Util', 'ObjectMap'], function(Dictionary, DomChangeListener, EventHandler, List, DomUtil, ObjectMap) {
+define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Traverse', 'Dom/Util', 'ObjectMap'], function(Dictionary, DomChangeListener, EventHandler, List, DomTraverse, DomUtil, ObjectMap) {
 	"use strict";
 	
 	/**
@@ -276,7 +276,11 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Util', 
 				throw new Error("Unknown element with id '" + formId + "'");
 			}
 			if (form.tagName !== 'FORM') {
-				throw new Error("Element with id '" + formId + "' is no form.");
+				var dialogContent = DomTraverse.parentByClass(form, 'dialogContent');
+				
+				if (dialogContent === null) {
+					throw new Error("Element with id '" + formId + "' is no form.");
+				}
 			}
 			
 			if (_forms.has(form)) {
