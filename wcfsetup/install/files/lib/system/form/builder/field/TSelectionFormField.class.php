@@ -1,8 +1,11 @@
 <?php
 declare(strict_types=1);
 namespace wcf\system\form\builder\field;
+use wcf\data\DatabaseObjectList;
+use wcf\data\ITitledObject;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\WCF;
+use wcf\util\ClassUtil;
 
 /**
  * Provides default implementations of `ISelectionFormField` methods.
@@ -84,16 +87,38 @@ trait TSelectionFormField {
 	 * @throws	\UnexpectedValueException		if callable does not return an array
 	 */
 	public function options($options): ISelectionFormField {
-		if (!is_array($options) && !is_callable($options)) {
+		if (!is_array($options) && !is_callable($options) && !($options instanceof DatabaseObjectList)) {
 			throw new \InvalidArgumentException("Given options are neither an array nor a callable, " . gettype($options) . " given.");
 		}
 		
 		if (is_callable($options)) {
 			$options = $options();
 			
-			if (!is_array($options)) {
-				throw new \UnexpectedValueException("The options callable is expected to return an array, " . gettype($options) . " returned.");
+			if (!is_array($options) && !($options instanceof DatabaseObjectList)) {
+				throw new \UnexpectedValueException("The options callable is expected to return an array or database object list, " . gettype($options) . " returned.");
 			}
+			
+			return $this->options($options);
+		}
+		else if ($options instanceof DatabaseObjectList) {
+			// automatically read objects
+			if ($options->objectIDs === null) {
+				$options->readObjects();
+			}
+			
+			$dboOptions = [];
+			foreach ($options as $object) {
+				if (!ClassUtil::isDecoratedInstanceOf($object, ITitledObject::class)) {
+					throw new \InvalidArgumentException("The database objects in the passed list must implement '" . ITitledObject::class . "'.");
+				}
+				if (!$object::getDatabaseTableIndexIsIdentity()) {
+					throw new \InvalidArgumentException("The database objects in the passed list must must have an index that identifies the objects.");
+				}
+				
+				$dboOptions[$object->getObjectID()] = $object->getTitle();
+			}
+			
+			$options = $dboOptions;
 		}
 		
 		// validate options and read possible values
