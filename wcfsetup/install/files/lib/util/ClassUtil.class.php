@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace wcf\util;
+use wcf\data\DatabaseObjectDecorator;
 use wcf\system\exception\SystemException;
 
 /**
@@ -50,6 +51,39 @@ final class ClassUtil {
 		}
 		
 		return is_subclass_of($className, $targetClass);
+	}
+	
+	/**
+	 * Returns `true` if the given class extends or implements the target class
+	 * or interface or if the given class is database object decorator and the
+	 * decorated class extends or implements the target class.
+	 * 
+	 * This method also supports decorated decorators.
+	 * 
+	 * @param	string		$className		checked class
+	 * @param	string		$targetClass		target class or interface
+	 * @return	bool
+	 */
+	public static function isDecoratedInstanceOf($className, $targetClass) {
+		if (is_subclass_of($className, $targetClass)) {
+			return true;
+		}
+		
+		$parentClass = new \ReflectionClass($className);
+		do {
+			$className = $parentClass->name;
+			
+			if (!is_subclass_of($className, DatabaseObjectDecorator::class)) {
+				return false;
+			}
+			
+			if (is_subclass_of($className::getBaseClass(), $targetClass)) {
+				return true;
+			}
+		}
+		while (($parentClass = $parentClass->getParentClass()));
+		
+		return false;
 	}
 	
 	/**
