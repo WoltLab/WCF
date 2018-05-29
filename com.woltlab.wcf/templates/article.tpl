@@ -344,8 +344,8 @@
 
 {if MODULE_LIKE && ARTICLE_ENABLE_LIKE}
 	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/Reaction/Handler'], function(UiLikeHandler) {
-			new UiLikeHandler('com.woltlab.wcf.likeableArticle', {
+		require(['WoltLabSuite/Core/Ui/Reaction/Handler'], function(UiReactionHandler) {
+			new UiReactionHandler('com.woltlab.wcf.likeableArticle', {
 				// permissions
 				canReact: {if $__wcf->getUser()->userID}true{else}false{/if},
 				canReactToOwnContent: {if LIKE_ALLOW_FOR_OWN_CONTENT}true{else}false{/if},
