@@ -135,7 +135,7 @@ define(
 					else if (REACTION_TYPES[key] !== undefined) {
 						// create element 
 						var createdElement = elCreate('li');
-						createdElement.className = 'button small reactCountButton';
+						createdElement.className = 'reactCountButton';
 						createdElement.innerHTML = REACTION_TYPES[key].renderedIcon +' '; 
 						elData(createdElement, 'reaction-type-id', key);
 						

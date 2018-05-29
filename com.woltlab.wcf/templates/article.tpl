@@ -132,15 +132,7 @@
 	
 	{event name='beforeArticleContent'}
 	
-	<div class="section articleContent"
-	         data-object-id="{@$article->articleID}"
-	         data-object-type="com.woltlab.wcf.likeableArticle"
-	         data-like-liked="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->liked}{/if}"
-	         data-like-likes="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->likes}{else}0{/if}"
-	         data-like-dislikes="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->dislikes}{else}0{/if}"
-	         data-like-users='{ {if $articleLikeData[$article->articleID]|isset}{implode from=$articleLikeData[$article->articleID]->getUsers() item=likeUser}"{@$likeUser->userID}": "{$likeUser->username|encodeJSON}"{/implode}{/if} }'
-	         data-user-id="{@$article->userID}"
-	>
+	<div class="section articleContent" {@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.likeableArticle', $article->articleID)}>
 		<div class="htmlContent">
 			{if $articleContent->teaser}
 				<p class="articleTeaser">{@$articleContent->getFormattedTeaser()}</p>
@@ -161,10 +153,14 @@
 		
 		<div class="row articleLikeSection">
 			<div class="col-xs-12 col-md-6">
-				<div class="articleLikesSummery"></div>
+				<div class="articleLikesSummery">
+					{include file="reactionSummaryList" reactionData=$articleLikeData objectType="com.woltlab.wcf.likeableArticle" objectID=$article->articleID}
+				</div>
 			</div>
 			<div class="col-xs-12 col-md-6">
-				<ul class="articleLikeButtons buttonGroup"></ul>
+				<ul class="articleLikeButtons buttonGroup">
+					<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}">{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{@$__wcf->getReactionHandler()->getReactionTypeByID($articleLikeData[$article->articleID]->reactionTypeID)->renderIcon()}{else}<img src="{$__wcf->getPath()}/images/reaction/reactionIcon.svg" style="width:24px;height:24px;" alt="">{/if}</span></li>
+				</ul>
 			</div>
 		</div>
 	</div>
@@ -348,20 +344,14 @@
 
 {if MODULE_LIKE && ARTICLE_ENABLE_LIKE}
 	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/Like/Handler'], function(UiLikeHandler) {
+		require(['WoltLabSuite/Core/Ui/Reaction/Handler'], function(UiLikeHandler) {
 			new UiLikeHandler('com.woltlab.wcf.likeableArticle', {
-				// settings
-				isSingleItem: true,
-				
 				// permissions
-				canDislike: {if LIKE_ENABLE_DISLIKE}true{else}false{/if},
-				canLike: {if $__wcf->getUser()->userID}true{else}false{/if},
-				canLikeOwnContent: {if LIKE_ALLOW_FOR_OWN_CONTENT}true{else}false{/if},
-				canViewSummary: {if LIKE_SHOW_SUMMARY}true{else}false{/if},
+				canReact: {if $__wcf->getUser()->userID}true{else}false{/if},
+				canReactToOwnContent: {if LIKE_ALLOW_FOR_OWN_CONTENT}true{else}false{/if},
+				canViewReactions: {if LIKE_SHOW_SUMMARY}true{else}false{/if},
 				
 				// selectors
-				badgeContainerSelector: '.articleLikesBadge',
-				buttonAppendToSelector: '.articleLikeButtons',
 				containerSelector: '.articleContent',
 				summarySelector: '.articleLikesSummery'
 			});
