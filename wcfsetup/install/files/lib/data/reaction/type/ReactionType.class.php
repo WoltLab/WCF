@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace wcf\data\reaction\type;
 use wcf\data\DatabaseObject;
+use wcf\data\ITitledObject;
 use wcf\system\WCF;
 
 /**
@@ -14,7 +15,7 @@ use wcf\system\WCF;
  * @since       3.2
  *
  * @property-read	integer		$reactionTypeID		unique id of the reaction type
- * @property-read	string		$reactionTitle
+ * @property-read	string		$title
  * @property-read	integer		$type   		type of the reaction (1 is positive, 0 is neutral and -1 is negative)
  * @property-read	integer		$showOrder		position of the reaction type in relation to the other reaction types
  * @property-read	integer		$iconType		the icon type of the reaction
@@ -23,7 +24,7 @@ use wcf\system\WCF;
  * @property-read	string		$iconColor		the icon color
  * @property-read       integer		$isDisabled		is `1` if the reaction type is disabled and thus not shown, otherwise `0`
  */
-class ReactionType extends DatabaseObject {
+class ReactionType extends DatabaseObject implements ITitledObject {
 	/**
 	 * The type value, if this reaction type is a positive reaction.
 	 * @var	integer
@@ -63,7 +64,7 @@ class ReactionType extends DatabaseObject {
 	 * @inheritDoc
 	 */
 	public function getTitle(): string {
-		return WCF::getLanguage()->get($this->reactionTitle);
+		return WCF::getLanguage()->get($this->title);
 	}
 	
 	/**
