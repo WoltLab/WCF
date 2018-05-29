@@ -295,7 +295,6 @@ class ReactionHandler extends SingletonFactory {
 			// update object's like counter
 			$likeable->updateLikeCounter($likeObjectData['cumulativeLikes']);
 			
-			
 			// update recent activity
 			if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType.'.recentActivityEvent')) {
 				if ($like->likeID) {
