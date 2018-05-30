@@ -54,6 +54,9 @@
 		<!-- version guard -->
 		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_3.1_preUpdate.php</instruction>
 		
+		<!-- prevent issues caused by early flushes of the `options.inc.php` -->
+		<instruction type="option" />
+		
 		<instruction type="acpTemplate" />
 		<instruction type="template" />
 		
@@ -75,7 +78,6 @@
 		<instruction type="eventListener" />
 		<instruction type="objectTypeDefinition" />
 		<instruction type="objectType" />
-		<instruction type="option" />
 		<instruction type="userGroupOption" />
 		<instruction type="userNotificationEvent" />
 		<instruction type="userOption" />
