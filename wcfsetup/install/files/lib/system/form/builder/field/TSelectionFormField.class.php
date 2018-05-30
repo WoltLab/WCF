@@ -88,14 +88,14 @@ trait TSelectionFormField {
 	 */
 	public function options($options): ISelectionFormField {
 		if (!is_array($options) && !is_callable($options) && !($options instanceof DatabaseObjectList)) {
-			throw new \InvalidArgumentException("Given options are neither an array nor a callable, " . gettype($options) . " given.");
+			throw new \InvalidArgumentException("The given options are neither an array, a callable nor an instance of '" . DatabaseObjectList::class . "', " . gettype($options) . " given.");
 		}
 		
 		if (is_callable($options)) {
 			$options = $options();
 			
 			if (!is_array($options) && !($options instanceof DatabaseObjectList)) {
-				throw new \UnexpectedValueException("The options callable is expected to return an array or database object list, " . gettype($options) . " returned.");
+				throw new \UnexpectedValueException("The options callable is expected to return an array or an instance of '" . DatabaseObjectList::class . "', " . gettype($options) . " returned.");
 			}
 			
 			return $this->options($options);
