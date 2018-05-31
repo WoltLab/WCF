@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace wcf\acp\form;
+use wcf\data\user\UserList;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\form\builder\container\FormContainer;
@@ -90,13 +91,15 @@ class DevtoolsFormBuilderTestForm extends AbstractForm {
 				->description('wcf.global.description')
 				->addClass('someSection')
 				->appendChildren([
+					SingleSelectionFormField::create('dboTest')
+						->label('Users')
+						->options(new UserList()),
 					ShowOrderFormField::create()
 						->options([
 							2 => 'Object with id 2',
 							5 => 'Object with id 5',
 							4 => 'Object with id 4'
-						])
-						->value(2),
+						]),
 					TextFormField::create('name')
 						->label('wcf.global.name'),
 					TitleFormField::create()
