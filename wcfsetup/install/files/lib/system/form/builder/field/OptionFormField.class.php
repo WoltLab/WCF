@@ -19,6 +19,8 @@ use wcf\system\WCF;
  * @since	3.2
  */
 class OptionFormField extends ItemListFormField {
+	use TDefaultIdFormField;
+	
 	/**
 	 * ids of the packages whose options will be considered
 	 * @var	int[]
@@ -100,9 +102,7 @@ class OptionFormField extends ItemListFormField {
 	/**
 	 * @inheritDoc
 	 */
-	// @codingStandardsIgnoreStart
-	public static function create(string $id = 'options'): IFormNode {
-		return parent::create($id);
+	protected static function getDefaultId(): string {
+		return 'options';
 	}
-	// @codingStandardsIgnoreEnd
 }

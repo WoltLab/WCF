@@ -19,6 +19,8 @@ use wcf\system\WCF;
  * @since	3.2
  */
 class UserGroupOptionFormField extends ItemListFormField {
+	use TDefaultIdFormField;
+	
 	/**
 	 * ids of the packages whose user group options will be considered
 	 * @var	int[]
@@ -100,9 +102,7 @@ class UserGroupOptionFormField extends ItemListFormField {
 	/**
 	 * @inheritDoc
 	 */
-	// @codingStandardsIgnoreStart
-	public static function create(string $id = 'permissions'): IFormNode {
-		return parent::create($id);
+	protected static function getDefaultId(): string {
+		return 'permissions';
 	}
-	// @codingStandardsIgnoreEnd
 }
