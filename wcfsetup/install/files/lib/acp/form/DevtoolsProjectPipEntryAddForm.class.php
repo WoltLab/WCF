@@ -5,6 +5,7 @@ use wcf\data\devtools\project\DevtoolsProject;
 use wcf\form\AbstractForm;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\devtools\pip\DevtoolsPip;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\request\LinkHandler;
@@ -58,7 +59,7 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm {
 	 * devtools pip object for the requested pip
 	 * @var	DevtoolsPip
 	 */
-	protected $pipObject;
+	public $pipObject;
 	
 	/**
 	 * @inheritDoc
@@ -112,6 +113,8 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm {
 		);
 		
 		$this->pipObject->getPip()->addFormFields($this->form);
+		
+		EventHandler::getInstance()->fireAction($this, 'addPipFormFields');
 	}
 	
 	/**
