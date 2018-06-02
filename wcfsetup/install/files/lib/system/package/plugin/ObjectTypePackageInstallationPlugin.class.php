@@ -333,43 +333,11 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 			);
 		
 		// com.woltlab.wcf.bulkProcessing.user.action
-		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.bulkProcessing.user.action')
-			->appendChildren([
-				TextFormField::create('bulkProcessingUserAction')
-					->objectProperty('action')
-					->label('wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.action')
-					->description('wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.action.description')
-					->addValidator(new FormFieldValidator('format', function(TextFormField $formField) {
-						if (!preg_match('~^[a-z][A-z]+$~', $formField->getValue())) {
-							$formField->addValidationError(
-								new FormFieldValidationError(
-									'format',
-									'wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.action.error.format'
-								)
-							);
-						}
-					})),
-				
-				OptionFormField::create('bulkProcessingUserOptions')
-					->objectProperty('options')
-					->description('wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.options.description')
-					->packageIDs(array_merge(
-						[$this->installation->getPackage()->packageID],
-						array_keys($this->installation->getPackage()->getAllRequiredPackages())
-					)),
-				
-				UserGroupOptionFormField::create('bulkProcessingUserPermissions')
-					->objectProperty('permissions')
-					->description('wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.permissions.description')
-					->packageIDs(array_merge(
-						[$this->installation->getPackage()->packageID],
-						array_keys($this->installation->getPackage()->getAllRequiredPackages())
-					))
-			]);
+		$this->addBulkProcessingActionFields($form, 'com.woltlab.wcf.bulkProcessing.user.action');
 		
 		// com.woltlab.wcf.bulkProcessing.user.condition
 		$bulkProcessingUserConditionContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.bulkProcessing.user.condition');
-		$this->addConditionFields($bulkProcessingUserConditionContainer, true, true);
+		$this->addConditionFields($bulkProcessingUserConditionContainer);
 		
 		// com.woltlab.wcf.category
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.category')
@@ -676,7 +644,7 @@ XML;
 	 * @return	FormContainer
 	 * @since	3.2
 	 */
-	protected function getObjectTypeDefinitionDataContainer(IFormDocument $form, string $definitionName): FormContainer {
+	public function getObjectTypeDefinitionDataContainer(IFormDocument $form, string $definitionName): FormContainer {
 		/** @var SingleSelectionFormField $definitionNameField */
 		$definitionNameField = $form->getNodeById('definitionName');
 		
@@ -771,6 +739,52 @@ XML;
 	}
 	
 	/**
+	 * Adds bulk processing action-related fields to the given form for the given bulk
+	 * processing action object type definition. 
+	 * 
+	 * @param	IFormDocument	$form
+	 * @param	string		$objectTypeDefinition
+	 */
+	public function addBulkProcessingActionFields(IFormDocument $form, string $objectTypeDefinition) {
+		$definitionPieces = explode('.', $objectTypeDefinition);
+		$definitionIdString = implode('', array_map('ucfirst', $definitionPieces));
+		
+		$this->getObjectTypeDefinitionDataContainer($form, $objectTypeDefinition)
+			->appendChildren([
+				TextFormField::create('bulkProcessing' . $definitionIdString . 'Action')
+					->objectProperty('action')
+					->label('wcf.acp.pip.objectType.bulkProcessing.action')
+					->description('wcf.acp.pip.objectType.bulkProcessing.action.description')
+					->addValidator(new FormFieldValidator('format', function(TextFormField $formField) {
+						if (!preg_match('~^[a-z][A-z]+$~', $formField->getValue())) {
+							$formField->addValidationError(
+								new FormFieldValidationError(
+									'format',
+									'wcf.acp.pip.objectType.bulkProcessing.action.error.format'
+								)
+							);
+						}
+					})),
+				
+				OptionFormField::create('bulkProcessing' . $definitionIdString . 'Options')
+					->objectProperty('options')
+					->description('wcf.acp.pip.objectType.bulkProcessing.action.options.description')
+					->packageIDs(array_merge(
+						[$this->installation->getPackage()->packageID],
+						array_keys($this->installation->getPackage()->getAllRequiredPackages())
+					)),
+				
+				UserGroupOptionFormField::create('bulkProcessing' . $definitionIdString . 'Permissions')
+					->objectProperty('permissions')
+					->description('wcf.acp.pip.objectType.bulkProcessing.action.permissions.description')
+					->packageIDs(array_merge(
+						[$this->installation->getPackage()->packageID],
+						array_keys($this->installation->getPackage()->getAllRequiredPackages())
+					))
+			]);
+	}
+	
+	/**
 	 * Adds all condition specific fields to the given form container.
 	 * 
 	 * @param	IFormContainer		$dataContainer
@@ -778,7 +792,7 @@ XML;
 	 * @param	bool			$addConditionGroup
 	 * @since	3.2
 	 */
-	protected function addConditionFields(IFormContainer $dataContainer, bool $addConditionObject = true, bool $addConditionGroup = true) {
+	public function addConditionFields(IFormContainer $dataContainer, bool $addConditionObject = true, bool $addConditionGroup = true) {
 		$prefix = preg_replace('~Fields$~', '', $dataContainer->getId());
 		
 		if ($addConditionObject) {
@@ -843,6 +857,48 @@ XML;
 		/** @var TextFormField $className */
 		$className = $dataContainer->getDocument()->getNodeById('className');
 		
+		// `UserGroupCondition`
+		$dataContainer->appendChild(
+			BooleanFormField::create($prefix . 'UserGroupIncludeGuests')
+				->objectProperty('includeguests')
+				->label('wcf.acp.pip.objectType.condition.userGroup.includeGuests')
+				->description('wcf.acp.pip.objectType.condition.userGroup.includeGuests.description')
+				->addDependency(
+					ValueFormFieldDependency::create('className')
+						->field($className)
+						->values([UserGroupCondition::class])
+				)
+		);
+		
+		// `UserIntegerPropertyCondition`
+		$dataContainer->appendChild(
+			$this->getIntegerConditionPropertyNameField(
+				$className,
+				UserIntegerPropertyCondition::class,
+				$prefix . 'UserIntegerPropertyName',
+				'wcf.acp.pip.objectType.condition.userIntegerProperty',
+				'wcf' . WCF_N . '_user'
+			)->required()
+		);
+		
+		// `UserTimestampPropertyCondition`
+		$dataContainer->appendChild(
+			$this->getIntegerConditionPropertyNameField(
+				$className,
+				UserTimestampPropertyCondition::class,
+				$prefix . 'UserTimestampPropertyName',
+				'wcf.acp.pip.objectType.condition.userIntegerProperty',
+				'wcf' . WCF_N . '_user'
+			)->required()
+		);
+		
+		$parameters = [
+			'dataContainer' => $dataContainer,
+			'prefix' => $prefix
+		];
+		EventHandler::getInstance()->fireAction($this, 'addConditionFields', $parameters);
+		
+		// integer property fields should be shown last
 		$dataContainer->appendChildren([
 			IntegerFormField::create($prefix . 'IntegerMinValue')
 				->objectProperty('minvalue')
@@ -863,40 +919,46 @@ XML;
 						->values($integerConditions)
 				)
 		]);
-		
-		// `UserGroupCondition`
-		$dataContainer->appendChild(
-			BooleanFormField::create($prefix . 'UserGroupIncludeGuests')
-				->objectProperty('includeguests')
-				->label('wcf.acp.pip.objectType.condition.userGroup.includeGuests')
-				->description('wcf.acp.pip.objectType.condition.userGroup.includeGuests.description')
-				->addDependency(
-					ValueFormFieldDependency::create('className')
-						->field($className)
-						->values([UserGroupCondition::class])
-				)
-		);
-		
-		// `UserIntegerPropertyCondition`
-		$dataContainer->appendChild(
-			TextFormField::create($prefix . 'UserIntegerPropertyName')
-				->objectProperty('propertyname')
-				->label('wcf.acp.pip.objectType.condition.userIntegerProperty.propertyName')
-				->description('wcf.acp.pip.objectType.condition.userIntegerProperty.propertyName.description')
-				->addDependency(
-					ValueFormFieldDependency::create('className')
-						->field($className)
-						->values([UserIntegerPropertyCondition::class])
-				)
-				->addValidator(new FormFieldValidator('userTableIntegerColumn', function(TextFormField $formField) {
-					$columns = WCF::getDB()->getEditor()->getColumns('wcf' . WCF_N . '_user');
+	}
+	
+	/**
+	 * Returns a form field to enter the name of an integer property for an
+	 * integer condition.
+	 * 
+	 * TODO: Can be use generic language items instead?
+	 * The following language items must exist:
+	 * 	- `{$languageItemPrefix}.propertyName`,
+	 * 	- `{$languageItemPrefix}.propertyName.description`,
+	 * 	- `{$languageItemPrefix}.propertyName.error.noIntegerColumn`,
+	 * 	- `{$languageItemPrefix}.propertyName.error.nonExistent`.
+	 * 
+	 * @param	TextFormField	$classNameField		class name field on which the visibility of the created field depends
+	 * @param	string		$conditionClass		name of the PHP class the field is created for
+	 * @param	string		$id			id of the created field
+	 * @param	string		$languageItemPrefix	language item prefix used for label, description, and error language items
+	 * @param	string		$databaseTableName	name of the database table that stores the conditioned objects
+	 * @return	TextFormField
+	 */
+	public function getIntegerConditionPropertyNameField(TextFormField $classNameField, string $conditionClass, string $id, string $languageItemPrefix, string $databaseTableName): TextFormField {
+		return TextFormField::create($id)
+			->objectProperty('propertyname')
+			->label($languageItemPrefix . '.propertyName')
+			->description($languageItemPrefix . '.propertyName.description')
+			->addDependency(
+				ValueFormFieldDependency::create('className')
+					->field($classNameField)
+					->values([$conditionClass])
+			)
+			->addValidator(new FormFieldValidator('userTableIntegerColumn', function(TextFormField $formField) use ($databaseTableName, $languageItemPrefix) {
+				if ($formField->getSaveValue()) {
+					$columns = WCF::getDB()->getEditor()->getColumns($databaseTableName);
 					
 					foreach ($columns as $column) {
 						if ($column['name'] === $formField->getValue()) {
 							if ($column['data']['type'] !== 'int') {
 								$formField->addValidationError(new FormFieldValidationError(
 									'noIntegerColumn',
-									'wcf.acp.pip.objectType.condition.userIntegerProperty.propertyName.error.noIntegerColumn'
+									$languageItemPrefix . '.propertyName.error.noIntegerColumn'
 								));
 							}
 							
@@ -906,47 +968,10 @@ XML;
 					
 					$formField->addValidationError(new FormFieldValidationError(
 						'nonExistent',
-						'wcf.acp.pip.objectType.condition.userIntegerProperty.propertyName.error.nonExistent'
+						$languageItemPrefix . '.propertyName.error.nonExistent'
 					));
-				}))
-		);
-		
-		// `UserTimestampPropertyCondition`
-		$dataContainer->appendChild(
-			TextFormField::create($prefix . 'UserTimestampPropertyName')
-				->objectProperty('propertyname')
-				->label('wcf.acp.pip.objectType.condition.userTimestampProperty.propertyName')
-				->description('wcf.acp.pip.objectType.condition.userTimestampProperty.propertyName.description')
-				->addDependency(
-					ValueFormFieldDependency::create('className')
-						->field($className)
-						->values([UserTimestampPropertyCondition::class])
-				)
-				->addValidator(new FormFieldValidator('userTableIntegerColumn', function(TextFormField $formField) {
-					$columns = WCF::getDB()->getEditor()->getColumns('wcf' . WCF_N . '_user');
-					
-					foreach ($columns as $column) {
-						if ($column['name'] === $formField->getValue()) {
-							if ($column['data']['type'] !== 'int') {
-								$formField->addValidationError(new FormFieldValidationError(
-									'noIntegerColumn',
-									'wcf.acp.pip.objectType.condition.userTimestampProperty.propertyName.error.noIntegerColumn'
-								));
-							}
-							
-							return;
-						}
-					}
-					
-					$formField->addValidationError(new FormFieldValidationError(
-						'nonExistent',
-						'wcf.acp.pip.objectType.condition.userTimestampProperty.propertyName.error.nonExistent'
-					));
-				}))
-		);
-		
-		$parameters = ['dataContainer' => $dataContainer];
-		EventHandler::getInstance()->fireAction($this, 'addConditionFields', $parameters);
+				}
+			}));
 	}
 	
 	/**

@@ -1698,11 +1698,11 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.attachment.objectType.private"><![CDATA[Attachments are Private]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.attachment.objectType.private.description"><![CDATA[Private attachments are ignored by the attachment management in the ACP.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.data.title"><![CDATA[User Bulk Processing Action Data]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.action"><![CDATA[Action]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.action.description"><![CDATA[Unique textual identifier of the user bulk processing action that may only contain letters and must start with a lowercase letter.]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.action.error.format"><![CDATA[The entered action is invalid.]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.options.description"><![CDATA[At least one of the entered options has to be enabled for the user bulk processing action to be available. Options of non-required packages will be reported as non-existing.]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions in order to execute the action. Permissions of non-required packages will be reported as non-existing.]]></item>
+		<item name="wcf.acp.pip.objectType.bulkProcessing.action"><![CDATA[Action]]></item>
+		<item name="wcf.acp.pip.objectType.bulkProcessing.action.description"><![CDATA[Unique textual identifier of the bulk processing action that may only contain letters and must start with a lowercase letter.]]></item>
+		<item name="wcf.acp.pip.objectType.bulkProcessing.action.error.format"><![CDATA[The entered action is invalid.]]></item>
+		<item name="wcf.acp.pip.objectType.bulkProcessing.action.options.description"><![CDATA[At least one of the entered options has to be enabled for the bulk processing action to be available. Options of non-required packages will be reported as non-existing.]]></item>
+		<item name="wcf.acp.pip.objectType.bulkProcessing.action.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions in order to execute the action. Permissions of non-required packages will be reported as non-existing.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.condition.data.title"><![CDATA[User Bulk Processing Condition Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.category.data.title"><![CDATA[Category Type Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.category.defaultPermission"><![CDATA[Category Default Permission]]></item>
@@ -1771,10 +1771,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.objectType.condition.userIntegerProperty.propertyName.description"><![CDATA[Name of the user property/user database table column used for the condition.]]></item>
 		<item name="wcf.acp.pip.objectType.condition.userIntegerProperty.propertyName.error.noIntegerColumn"><![CDATA[The entered column name of the <code>wcf{WCF_N}_user</code> database table is no <code>INT</code> column.]]></item>
 		<item name="wcf.acp.pip.objectType.condition.userIntegerProperty.propertyName.error.nonExistent"><![CDATA[The entered column does not exist in the <code>wcf{WCF_N}_user</code> database table.]]></item>
-		<item name="wcf.acp.pip.objectType.condition.userTimestampProperty.propertyName"><![CDATA[User Property Name]]></item>
-		<item name="wcf.acp.pip.objectType.condition.userTimestampProperty.propertyName.description"><![CDATA[Name of the user property/user database table column used for the condition.]]></item>
-		<item name="wcf.acp.pip.objectType.condition.userTimestampProperty.propertyName.error.noIntegerColumn"><![CDATA[The entered column name of the <code>wcf{WCF_N}_user</code> database table is no <code>INT</code> column.]]></item>
-		<item name="wcf.acp.pip.objectType.condition.userTimestampProperty.propertyName.error.nonExistent"><![CDATA[The entered column does not exist in the <code>wcf{WCF_N}_user</code> database table.]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName"><![CDATA[Object Type Definition]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.acl.description"><![CDATA[This object type definition is used to register types of objects for which ACL is available. ACL (Access control list) is used to set up (multiple) user and user group permissions for a specific object.]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.acl.simple.description"><![CDATA[This object type definition is used to register types of objects for which simple ACL is available. Simple ACL (Access control list) is used to set up <strong>one</strong> yes/no permission user and user group permissions for a specific object.]]></item>
