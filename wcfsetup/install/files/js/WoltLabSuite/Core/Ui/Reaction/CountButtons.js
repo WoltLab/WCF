@@ -168,9 +168,11 @@ define(
 			_initReactionCountButtons: function(element, elementData) {
 				var summaryList = elBySel(this._options.summaryListSelector, element);
 				
-				var elements = elBySelAll('li', summaryList);
-				for (var i = 0, length = elements.length; i < length; i++) {
-					this._initReactionCountButton(elements[i], elementData.objectId);
+				if (summaryList !== null) {
+					var elements = elBySelAll('li', summaryList);
+					for (var i = 0, length = elements.length; i < length; i++) {
+						this._initReactionCountButton(elements[i], elementData.objectId);
+					}
 				}
 			},
 			
