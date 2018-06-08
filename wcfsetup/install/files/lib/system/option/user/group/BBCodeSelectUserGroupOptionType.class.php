@@ -125,7 +125,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 				return 0;
 			}
 			
-			return -1;
+			return 1;
 		}
 		else if (empty($value2)) {
 			return 1;
@@ -137,13 +137,13 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 		// check if value1 disallows more BBCodes than value2
 		$diff = array_diff($value1, $value2);
 		if (!empty($diff)) {
-			return 1;
+			return -1;
 		}
 		
 		// check if value1 disallows less BBCodes than value2
 		$diff = array_diff($value2, $value1);
 		if (!empty($diff)) {
-			return -1;
+			return 1;
 		}
 		
 		// both lists of BBCodes are equal
