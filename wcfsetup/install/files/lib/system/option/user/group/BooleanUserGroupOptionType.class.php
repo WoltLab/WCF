@@ -57,4 +57,19 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
 		
 		return $groupValue;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function compare($value1, $value2) {
+		if ($value1 == $value2) {
+			return 0;
+		}
+		else if ($value1 == -1) {
+			// this is the `never` permission
+			return -1;
+		}
+		
+		return $value1 ? 1 : -1;
+	}
 }
