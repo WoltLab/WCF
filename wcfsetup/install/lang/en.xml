@@ -1887,6 +1887,19 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.mediaProvider.html"><![CDATA[HTML Code]]></item>
 		<item name="wcf.acp.pip.mediaProvider.html.description"><![CDATA[The html code is used to produce the rendered output of the linked media content. Every named group of the regular expression is accessible as <code>{literal}{$name}{/literal}</code> where <code>name</code> is the name of the group.]]></item>
 		<item name="wcf.acp.pip.mediaProvider.html.error.className"><![CDATA[You cannot enter HTML code if you are already using a class that handles the output.]]></item>
+		<item name="wcf.acp.pip.aclOption.categories.name"><![CDATA[Category Name]]></item>
+		<item name="wcf.acp.pip.aclOption.categories.name.description"><![CDATA[The name of an ACL option category consists of least two segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes.]]></item>
+		<item name="wcf.acp.pip.aclOption.categories.name.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
+		<item name="wcf.acp.pip.aclOption.categories.name.error.tooFewSegments"><![CDATA[The entered provider name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.pip.aclOption.options.categoryName"><![CDATA[Category]]></item>
+		<item name="wcf.acp.pip.aclOption.options.categoryName.description"><![CDATA[The ACL option is listed in the selected category.]]></item>
+		<item name="wcf.acp.pip.aclOption.options.name"><![CDATA[Option Name]]></item>
+		<item name="wcf.acp.pip.aclOption.options.name.description"><![CDATA[The name of the ACL option may only contain letters and must begin with a lowercase letter.]]></item>
+		<item name="wcf.acp.pip.aclOption.objectType"><![CDATA[ACL Object Type]]></item>
+		<item name="wcf.acp.pip.aclOption.objectType.categories.description"><![CDATA[The ACL object type determines to which type of objects the category belongs to. Note that only ACL object types of the package itself or its required packages are available.]]></item>
+		<item name="wcf.acp.pip.aclOption.objectType.categories.error.notUnique"><![CDATA[The entered name is already used by another ACL option category for the same ACL object type.]]></item>
+		<item name="wcf.acp.pip.aclOption.objectType.options.description"><![CDATA[The ACL object type determines to which type of objects the option belongs to. Note that only ACL object types of the package itself or its required packages are available.]]></item>
+		<item name="wcf.acp.pip.aclOption.objectType.options.error.notUnique"><![CDATA[The entered name is already used by another ACL option for the same ACL object type.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">

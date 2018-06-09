@@ -979,13 +979,14 @@ XML;
 	 * object type-alike structure.
 	 * 
 	 * @param	string		$languageItemPrefix	used for error language items: `{$languageItemPrefix}.error.{errorType}`
+	 * @param	int		$minimumSegmentCount	minimum number of dot-separated segments
 	 * @return	FormFieldValidator
 	 */
-	public static function getObjectTypeAlikeValueValidator($languageItemPrefix): FormFieldValidator {
-		return new FormFieldValidator('format', function(TextFormField $formField) use ($languageItemPrefix) {
+	public static function getObjectTypeAlikeValueValidator(string $languageItemPrefix, int $minimumSegmentCount = 4): FormFieldValidator {
+		return new FormFieldValidator('format', function(TextFormField $formField) use ($languageItemPrefix, $minimumSegmentCount) {
 			if ($formField->getValue()) {
 				$segments = explode('.', $formField->getValue());
-				if (count($segments) < 4) {
+				if (count($segments) < $minimumSegmentCount) {
 					$formField->addValidationError(
 						new FormFieldValidationError(
 							'tooFewSegments',

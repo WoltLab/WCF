@@ -1,9 +1,23 @@
 <?php
 declare(strict_types=1);
 namespace wcf\system\package\plugin;
+use wcf\data\acl\option\ACLOption;
 use wcf\data\acl\option\ACLOptionEditor;
-use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\data\acl\option\ACLOptionList;
+use wcf\data\acl\option\category\ACLOptionCategory;
+use wcf\data\acl\option\category\ACLOptionCategoryEditor;
+use wcf\data\acl\option\category\ACLOptionCategoryList;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\devtools\pip\IDevtoolsPipEntryList;
+use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
+use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
 
 /**
@@ -14,7 +28,9 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
+class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
+	use TXmlGuiPackageInstallationPlugin;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -293,8 +309,388 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.1
 	 */
 	public static function getSyncDependencies() {
 		return ['objectType'];
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function addFormFields(IFormDocument $form) {
+		$objectTypes = [];
+		
+		$requiredPackageIDs = array_merge(
+			[$this->installation->getPackageID()],
+			array_keys($this->installation->getPackage()->getAllRequiredPackages())
+		);
+		
+		foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.acl') as $objectType) {
+			if (in_array($objectType->packageID, $requiredPackageIDs)) {
+				$objectTypes[$objectType->objectType] = $objectType->objectType;
+			}
+		}
+		
+		asort($objectTypes);
+		
+		switch ($this->entryType) {
+			case 'categories';
+				$nameFormField = TextFormField::create('name')
+					->label('wcf.acp.pip.aclOption.categories.name')
+					->description('wcf.acp.pip.aclOption.categories.name.description')
+					->required()
+					->addValidator(ObjectTypePackageInstallationPlugin::getObjectTypeAlikeValueValidator('wcf.acp.pip.aclOption.categories.name', 2));
+				break;
+			
+			case 'options':
+				$nameFormField = TextFormField::create('name')
+					->label('wcf.acp.pip.aclOption.options.name')
+					->description('wcf.acp.pip.aclOption.options.name.description')
+					->required()
+					->addValidator(new FormFieldValidator('format', function(TextFormField $formField) {
+						if (!preg_match('~[a-z][A-z]+~', $formField->getValue())) {
+							$formField->addValidationError(
+								new FormFieldValidationError(
+									'format',
+									'wcf.acp.pip.aclOption.options.name.error.format'
+								)
+							);
+						}
+					}));
+				break;
+				
+			default:
+				throw new \LogicException('Unreachable');
+		}
+		
+		$entryType = $this->entryType;
+		$objectTypeFormField = SingleSelectionFormField::create('objectType')
+			->objectProperty('objecttype')
+			->label('wcf.acp.pip.aclOption.objectType')
+			->description('wcf.acp.pip.aclOption.objectType.' . $this->entryType . '.description')
+			->options($objectTypes)
+			->required()
+			->addValidator(new FormFieldValidator('nameUniqueness', function(SingleSelectionFormField $formField) use($entryType) {
+				/** @var TextFormField $nameField */
+				$nameField = $formField->getDocument()->getNodeById('name');
+				
+				if (
+					$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
+					$this->editedEntry->getAttribute('name') !== $nameField->getValue()
+				) {
+					switch ($entryType) {
+						case 'categories':
+							$categoryList = new ACLOptionCategoryList();
+							$categoryList->getConditionBuilder()->add('categoryName = ?', [
+								$nameField->getValue()
+							]);
+							$categoryList->getConditionBuilder()->add('objectTypeID = ?', [
+								ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.acl', $formField->getValue())->objectTypeID
+							]);
+							
+							if ($categoryList->countObjects() > 0) {
+								$nameField->addValidationError(
+									new FormFieldValidationError(
+										'notUnique',
+										'wcf.acp.pip.aclOption.objectType.' . $entryType . '.error.notUnique'
+									)
+								);
+							}
+							break;
+							
+						case 'options':
+							$optionList = new ACLOptionList();
+							$optionList->getConditionBuilder()->add('optionName = ?', [
+								$nameField->getValue()
+							]);
+							$optionList->getConditionBuilder()->add('objectTypeID = ?', [
+								ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.acl', $formField->getValue())->objectTypeID
+							]);
+							
+							if ($optionList->countObjects() > 0) {
+								$nameField->addValidationError(
+									new FormFieldValidationError(
+										'notUnique',
+										'wcf.acp.pip.aclOption.objectType.' . $entryType . '.error.notUnique'
+									)
+								);
+							}
+							break;
+					}
+				}
+			}));
+		
+		$form->getNodeById('data')->appendChildren([$nameFormField, $objectTypeFormField]);
+		
+		if ($this->entryType === 'options') {
+			$categoryList = new ACLOptionCategoryList();
+			$categoryList->getConditionBuilder()->add('packageID IN (?)', [$requiredPackageIDs]);
+			$categoryList->sqlOrderBy = 'categoryName ASC';
+			$categoryList->readObjects();
+			
+			$categories = [];
+			foreach ($categoryList as $category) {
+				if (!isset($categories[$category->objectTypeID])) {
+					$categories[$category->objectTypeID] = [];
+				}
+				
+				$categories[$category->objectTypeID][$category->categoryName] = $category->categoryName;
+			}
+			
+			foreach ($objectTypes as $objectType) {
+				$objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl', $objectType);
+				
+				if (isset($categories[$objectTypeID])) {
+					$categoryNameField = SingleSelectionFormField::create('categoryName_' . $objectTypeID)
+						->objectProperty('categoryname')
+						->label('wcf.acp.pip.aclOption.options.categoryName')
+						->description('wcf.acp.pip.aclOption.options.categoryName.description')
+						->options(['' => 'wcf.global.noSelection'] + $categories[$objectTypeID]);
+					
+					$categoryNameField->addDependency(
+						ValueFormFieldDependency::create('objectType')
+							->field($objectTypeFormField)
+							->values([$objectType])
+					);
+					
+					$form->getNodeById('data')->appendChild($categoryNameField);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getEntryTypes(): array {
+		return ['options', 'categories'];
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getElementData(\DOMElement $element): array {
+		$data = [
+			'name' => $element->getAttribute('name'),
+			'packageID' => $this->installation->getPackage()->packageID,
+			'objectType' => $element->getElementsByTagName('objecttype')->item(0)->nodeValue
+		];
+		
+		if ($this->entryType === 'options') {
+			$categoryName = $element->getElementsByTagName('categoryname')->item(0);
+			if ($categoryName !== null) {
+				$data['categoryName'] = $categoryName->nodeValue;
+			}
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getElementIdentifier(\DOMElement $element): string {
+		$elementData = $this->getElementData($element);
+		
+		return sha1($elementData['objectType'] . '/' . $elementData['name']);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
+		$entryList->setKeys([
+			'name' => 'wcf.acp.pip.aclOption.' . $this->entryType . '.name',
+			'objectType' => 'wcf.acp.pip.aclOption.objectType'
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function saveObject(\DOMElement $newElement, \DOMElement $oldElement = null) {
+		if ($oldElement === null) {
+			$xpath = $this->getProjectXml()->xpath();
+			
+			switch ($this->entryType) {
+				case 'categories':
+					$this->importCategories($xpath);
+					break;
+				
+				case 'options':
+					$this->importOptions($xpath);
+					break;
+					
+				default:
+					throw new \LogicException('Unreachable');
+			}
+		}
+		else {
+			$oldData = $this->getElementData($oldElement);
+			$newData = $this->getElementData($newElement);
+			
+			switch ($this->entryType) {
+				case 'categories':
+					$sql = "SELECT	*
+						FROM	wcf" . WCF_N . "_acl_option_category
+						WHERE	categoryName = ?
+							AND objectTypeID = ?
+							AND packageID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute([
+						$oldData['name'],
+						ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl', $oldData['objectType']),
+						$oldData['packageID']
+					]);
+					(new ACLOptionCategoryEditor($statement->fetchObject(ACLOptionCategory::class)))->update([
+						'categoryNameName' => $newData['name'],
+						'objectTypeID' => ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl', $newData['objectType'])
+					]);
+					
+					break;
+				
+				case 'options':
+					$sql = "SELECT	*
+						FROM	wcf" . WCF_N . "_acl_option
+						WHERE	optionName = ?
+							AND objectTypeID = ?
+							AND packageID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute([
+						$oldData['name'],
+						ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl', $oldData['objectType']),
+						$oldData['packageID']
+					]);
+					(new ACLOptionEditor($statement->fetchObject(ACLOption::class)))->update([
+						'objectTypeID' => ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl', $newData['objectType']),
+						'optionName' => $newData['name'],
+						'categoryName' => $newData['categoryname'] ?? ''
+					]);
+					
+					break;
+				
+				default:
+					throw new \LogicException('Unreachable');
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function sortDocument(\DOMDocument $document) {
+		$this->sortImportDelete($document);
+		
+		// `<categories>` before `<options>`
+		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
+			if ($element1->nodeName === 'categories') {
+				return -1;
+			}
+			else if ($element2->nodeName === 'categories') {
+				return 1;
+			}
+			
+			return 0;
+		};
+		
+		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
+		
+		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
+			$objectType1 = $element1->getElementsByTagName('objecttype')->item(0)->nodeValue;
+			$objectType2 = $element2->getElementsByTagName('objecttype')->item(0)->nodeValue;
+			
+			if ($objectType1 !== $objectType2) {
+				return strcmp($objectType1, $objectType2);
+			}
+			
+			if ($element1->nodeName === 'option') {
+				$categoryName1 = $element1->getElementsByTagName('categoryname')->item(0);
+				$categoryName2 = $element2->getElementsByTagName('categoryname')->item(0);
+				
+				if ($categoryName1 !== null) {
+					// both categories specified
+					if ($categoryName2 !== null) {
+						if ($categoryName1->nodeValue !== $categoryName2->nodeValue) {
+							return strcmp($categoryName1->nodeValue, $categoryName2->nodeValue);
+						}
+					}
+					// only first category specified
+					else {
+						return 1;
+					}
+				}
+				// only second category specified
+				else if ($categoryName2 !== null) {
+					return -1;
+				}
+			}
+			
+			return strcmp(
+				$element1->getAttribute('name'),
+				$element2->getAttribute('name')
+			);
+		};
+		
+		$this->sortChildNodes($document->getElementsByTagName('categories'), $compareFunction);
+		$this->sortChildNodes($document->getElementsByTagName('options'), $compareFunction);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+		$formData = $form->getData()['data'];
+		
+		switch ($this->entryType) {
+			case 'categories':
+				$category = $document->createElement('category');
+				$category->setAttribute('name', $formData['name']);
+				
+				$category->appendChild($document->createElement('objecttype', $formData['objecttype']));
+				
+				$import = $document->getElementsByTagName('import')->item(0);
+				$categories = $import->getElementsByTagName('categories')->item(0);
+				if ($categories === null) {
+					$categories = $document->createElement('categories');
+					$import->appendChild($categories);
+				}
+				
+				$categories->appendChild($category);
+				
+				return $category;
+				
+			case 'options':
+				$option = $document->createElement('option');
+				$option->setAttribute('name', $formData['name']);
+				
+				$option->appendChild($document->createElement('objecttype', $formData['objecttype']));
+				
+				if (isset($formData['categoryname'])) {
+					$option->appendChild($document->createElement('categoryname', $formData['categoryname']));
+				}
+				
+				$import = $document->getElementsByTagName('import')->item(0);
+				$options = $import->getElementsByTagName('options')->item(0);
+				if ($options === null) {
+					$options = $document->createElement('options');
+					$import->appendChild($options);
+				}
+				
+				$options->appendChild($option);
+				
+				return $option;
+		}
+		
+		throw new \LogicException('Unreachable');
 	}
 }
