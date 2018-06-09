@@ -95,12 +95,10 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm {
 	/**
 	 * @inheritDoc
 	 */
-	public function readData() {
-		// we have to do it here so that the pip object is available to
-		// add the pip-specific form fields
-		$this->addPipFormFields();
+	public function createForm() {
+		parent::createForm();
 		
-		parent::readData();
+		$this->addPipFormFields();
 	}
 	
 	/**
@@ -130,7 +128,6 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm {
 		// re-build form after having created a new object
 		if ($this->formAction === 'create') {
 			$this->buildForm();
-			$this->addPipFormFields();
 		}
 		
 		WCF::getTPL()->assign('success', true);
