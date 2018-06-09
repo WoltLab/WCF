@@ -184,6 +184,7 @@ class VersionTrackerListPage extends AbstractPage {
 				foreach ($properties as $property) {
 					$a = explode("\n", StringUtil::unifyNewlines($this->old->getPayload($property, $languageID)));
 					$b = explode("\n", StringUtil::unifyNewlines($this->new->getPayload($property, $languageID)));
+					if ($a == $b) continue;
 					
 					$diff = new Diff($a, $b);
 					$rawDiff = $diff->getRawDiff();

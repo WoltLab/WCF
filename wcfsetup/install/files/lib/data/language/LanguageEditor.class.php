@@ -333,6 +333,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 			if ($updateExistingItems) {
 				$conditions = new PreparedStatementConditionBuilder();
 				$conditions->add("languageItem IN (?)", [array_keys($languageItemValues)]);
+				$conditions->add("languageID = ?", [$this->languageID]);
 				if ($packageID > 0) $conditions->add("packageID = ?", [$packageID]);
 				$conditions->add("languageUseCustomValue = ?", [1]);
 				$conditions->add("languageItemOriginIsSystem = ?", [1]);
