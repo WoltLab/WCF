@@ -4,10 +4,8 @@ namespace wcf\acp\page;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\page\AbstractPage;
 use wcf\system\devtools\pip\DevtoolsPip;
-use wcf\system\devtools\pip\DevtoolsPipEntryList;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\package\plugin\BoxPackageInstallationPlugin;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -25,6 +23,12 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.devtools.project.list';
+	
+	/**
+	 * type of the listed pip entries
+	 * @var	string
+	 */
+	public $entryType;
 	
 	/**
 	 * @inheritDoc
@@ -89,6 +93,20 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 		if (!$this->pipObject->supportsGui()) {
 			throw new IllegalLinkException();
 		}
+		
+		if (isset($_REQUEST['entryType'])) {
+			$this->entryType = StringUtil::trim($_REQUEST['entryType']);
+			
+			try {
+				$this->pipObject->getPip()->setEntryType($this->entryType);
+			}
+			catch (\InvalidArgumentException $e) {
+				throw new IllegalLinkException();
+			}
+		}
+		else if (!empty($this->pipObject->getPip()->getEntryTypes())) {
+			throw new IllegalLinkException();
+		}
 	}
 	
 	/**
@@ -109,6 +127,7 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 		
 		WCF::getTPL()->assign([
 			'entryList' => $this->entryList,
+			'entryType' => $this->entryType,
 			'pip' => $this->pip,
 			'project' => $this->project
 		]);

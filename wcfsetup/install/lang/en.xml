@@ -414,12 +414,12 @@
 		<item name="wcf.acp.devtools.notificationTest.link.exception"><![CDATA[Link Error Message]]></item>
 		<item name="wcf.acp.devtools.notificationTest.links"><![CDATA[Links]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.add"><![CDATA[Add {$pip} Entry]]></item>
-		<item name="wcf.acp.devtools.project.pip.entry.add.pageTitle"><![CDATA[Add {$pip} Entry - {$project->name}]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.add.pageTitle"><![CDATA[Add {$pip}{if $entryType !== null} ({$entryType}){/if} Entry - {$project->name}]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.button.add"><![CDATA[Add Entry]]></item>
-		<item name="wcf.acp.devtools.project.pip.entry.list"><![CDATA[{$pip} Entries]]></item>
-		<item name="wcf.acp.devtools.project.pip.entry.list.pageTitle"><![CDATA[{$pip} Entries - {$project->name}]]></item>
-		<item name="wcf.acp.devtools.project.pip.entry.edit"><![CDATA[Edit {$pip} Entry]]></item>
-		<item name="wcf.acp.devtools.project.pip.entry.edit.pageTitle"><![CDATA[Edit {$pip} Entry - {$project->name}]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.list"><![CDATA[{$pip}{if $entryType !== null} ({$entryType}){/if} Entries]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.list.pageTitle"><![CDATA[{$pip}{if $entryType !== null} ({$entryType}){/if} Entries - {$project->name}]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.edit"><![CDATA[Edit {$pip}{if $entryType !== null} ({$entryType}){/if} Entry]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.edit.pageTitle"><![CDATA[Edit {$pip}{if $entryType !== null} ({$entryType}){/if} Entry - {$project->name}]]></item>
 		<item name="wcf.acp.devtools.project.pip.list"><![CDATA[Package Installation Plugins]]></item>
 		<item name="wcf.acp.devtools.project.pip.list.pageTitle"><![CDATA[Package Installation Plugins - {$project->name}]]></item>
 		<item name="wcf.acp.devtools.project.pips"><![CDATA[PIPs]]></item>

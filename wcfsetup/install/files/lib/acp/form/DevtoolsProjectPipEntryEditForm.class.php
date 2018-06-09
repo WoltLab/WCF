@@ -67,6 +67,7 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm {
 	 */
 	public function setFormAction() {
 		$this->form->action(LinkHandler::getInstance()->getLink('DevtoolsProjectPipEntryEdit', [
+			'entryType' => $this->entryType,
 			'id' => $this->project->projectID,
 			'pip' => $this->pip,
 			'identifier' => $this->identifier
@@ -89,6 +90,7 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm {
 			WCF::getSession()->register($this->project->projectID . '-' . $this->pip . '-success', 1);
 			
 			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('DevtoolsProjectPipEntryEdit', [
+				'entryType' => $this->entryType,
 				'id' => $this->project->projectID,
 				'pip' => $this->pip,
 				'identifier' => $newIdentifier

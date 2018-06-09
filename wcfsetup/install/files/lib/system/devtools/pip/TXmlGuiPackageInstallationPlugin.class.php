@@ -30,6 +30,12 @@ trait TXmlGuiPackageInstallationPlugin {
 	protected $editedEntry;
 	
 	/**
+	 * type of the currently handled pip entries
+	 * @var	null|string
+	 */
+	protected $entryType;
+	
+	/**
 	 * Adds a new entry of this pip based on the data provided by the given
 	 * form.
 	 *
@@ -117,7 +123,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @return	\DOMElement|null
 	 */
 	protected function getElementByIdentifier(XML $xml, string $identifier) {
-		foreach ($xml->xpath()->query('/ns:data/ns:import/ns:' . $this->tagName) as $element) {
+		foreach ($this->getImportElements($xml->xpath()) as $element) {
 			if ($this->getElementIdentifier($element) === $identifier) {
 				return $element;
 			}
@@ -182,6 +188,37 @@ XML;
 		}
 		
 		return $entryList;
+	}
+	
+	/**
+	 * Returns the list of available entry types. If only one entry type is
+	 * available, this method returns an empty array.
+	 * 
+	 * For package installation plugins that support entries and categories
+	 * for these entries, `['entries', 'categories']` should be returned.
+	 * 
+	 * @return	string[]
+	 */
+	public function getEntryTypes(): array {
+		return [];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function getImportElements(\DOMXPath $xpath) {
+		if ($this->entryType !== null) {
+			if (substr($this->entryType, -3) === 'ies') {
+				$objectTag = substr($this->entryType, 0, -3) . 'y';
+			}
+			else {
+				$objectTag = substr($this->entryType, 0, -1);
+			}
+			
+			return $xpath->query('/ns:data/ns:import/ns:' . $this->entryType . '/ns:' . $objectTag);
+		}
+		
+		return parent::getImportElements($xpath);
 	}
 	
 	/**
@@ -312,6 +349,21 @@ XML;
 	 * @param	IDevtoolsPipEntryList	$entryList
 	 */
 	abstract protected function setEntryListKeys(IDevtoolsPipEntryList $entryList);
+	
+	/**
+	 * Sets the type of the currently handled pip entries.
+	 * 
+	 * @param	string		$entryType	currently handled pip entry type
+	 * 
+	 * @throws	\InvalidArgumentException	if the given entry type is invalid (see `getEntryTypes()` method)
+	 */
+	public function setEntryType(string $entryType) {
+		if (!in_array($entryType, $this->getEntryTypes())) {
+			throw new \InvalidArgumentException("Unknown entry type '{$entryType}'.");
+		}
+		
+		$this->entryType = $entryType;
+	}
 	
 	/**
 	 * Sorts the entries of this pip that are represented by the given dom

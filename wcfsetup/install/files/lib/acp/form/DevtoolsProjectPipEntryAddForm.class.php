@@ -28,6 +28,12 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.devtools.project.list';
 	
 	/**
+	 * type of the added/edited pip entry
+	 * @var	string
+	 */
+	public $entryType;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public $neededModules = ['ENABLE_DEVELOPER_TOOLS'];
@@ -90,6 +96,20 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm {
 		if (!$this->pipObject->supportsGui()) {
 			throw new IllegalLinkException();
 		}
+		
+		if (isset($_REQUEST['entryType'])) {
+			$this->entryType = StringUtil::trim($_REQUEST['entryType']);
+			
+			try {
+				$this->pipObject->getPip()->setEntryType($this->entryType);
+			}
+			catch (\InvalidArgumentException $e) {
+				throw new IllegalLinkException();
+			}
+		}
+		else if (!empty($this->pipObject->getPip()->getEntryTypes())) {
+			throw new IllegalLinkException();
+		}
 	}
 	
 	/**
@@ -138,6 +158,7 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm {
 	 */
 	public function setFormAction() {
 		$this->form->action(LinkHandler::getInstance()->getLink('DevtoolsProjectPipEntryAdd', [
+			'entryType' => $this->entryType,
 			'id' => $this->project->projectID,
 			'pip' => $this->pip
 		]));
@@ -151,6 +172,7 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm {
 		
 		WCF::getTPL()->assign([
 			'action' => 'add',
+			'entryType' => $this->entryType,
 			'pip' => $this->pip,
 			'pipObject' => $this->pipObject,
 			'project' => $this->project

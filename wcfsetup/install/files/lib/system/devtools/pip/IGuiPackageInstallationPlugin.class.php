@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 namespace wcf\system\devtools\pip;
-use wcf\data\devtools\project\DevtoolsProject;
 use wcf\system\form\builder\IFormDocument;
 
 /**
@@ -75,4 +74,24 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
 	 * @return	bool
 	 */
 	public function setEntryData(string $identifier, IFormDocument $document): bool;
+	
+	/**
+	 * Returns the list of available entry types. If only one entry type is
+	 * available, this method returns an empty array.
+	 *
+	 * For package installation plugins that support entries and categories
+	 * for these entries, `['entries', 'categories']` should be returned.
+	 * 
+	 * @return	string[]
+	 */
+	public function getEntryTypes(): array;
+	
+	/**
+	 * Sets the type of the currently handled pip entries.
+	 * 
+	 * @param	string		$entryType	currently handled pip entry type
+	 *
+	 * @throws	\InvalidArgumentException	if the given entry type is invalid (see `getEntryTypes()` method) 
+	 */
+	public function setEntryType(string $entryType);
 }

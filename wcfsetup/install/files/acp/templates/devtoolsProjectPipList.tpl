@@ -44,35 +44,50 @@
 			
 			<tbody>
 				{foreach from=$project->getPips() item=pip}
-					<tr data-plugin-name="{$pip->pluginName}" data-is-supported="{if $pip->supportsGui()}true{else}false{/if}" data-is-used="{if !$pip->getTargets($project)|empty}true{else}false{/if}">
-						<td class="columnIcon">
-							{if $pip->supportsGui()}
-								<a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip=$pip->pluginName}{/link}" title="{lang}wcf.global.button.add{/lang}" class="jsTooltip"><span class="icon icon16 fa-plus"></span></a>
-								<a href="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip->pluginName}{/link}" title="{lang}wcf.global.button.list{/lang}" class="jsTooltip"><span class="icon icon16 fa-list"></span></a>
-							{else}
-								<span class="icon icon16 fa-plus disabled" title="{lang}wcf.global.button.add{/lang}"></span>
-								<span class="icon icon16 fa-list disabled" title="{lang}wcf.global.button.list{/lang}"></span>
-							{/if}
-						</td>
-						<td class="columnText">
-							{if $pip->supportsGui()}
-								<a href="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip->pluginName}{/link}">{$pip->pluginName}</a>
-							{else}
-								{$pip->pluginName}
-							{/if}
-						</td>
-						{if $pip->supportsGui()}
-							<td class="columnText pipDefaultFilename"><small>{$pip->getEffectiveDefaultFilename()}</small></td>
-						{else}
-							<td class="columnText" colspan="3">
-								{if !$pip->isSupported()}
-									{$pip->getFirstError()}
-								{elseif !$pip->supportsGui()}
-									{lang}wcf.acp.devtools.pip.error.noGuiSupport{/lang}
+					{if !$pip->supportsGui() || $pip->getPip()->getEntryTypes()|empty}
+						<tr data-plugin-name="{$pip->pluginName}" data-is-supported="{if $pip->supportsGui()}true{else}false{/if}" data-is-used="{if !$pip->getTargets($project)|empty}true{else}false{/if}">
+							<td class="columnIcon">
+								{if $pip->supportsGui()}
+									<a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip=$pip->pluginName}{/link}" title="{lang}wcf.global.button.add{/lang}" class="jsTooltip"><span class="icon icon16 fa-plus"></span></a>
+									<a href="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip->pluginName}{/link}" title="{lang}wcf.global.button.list{/lang}" class="jsTooltip"><span class="icon icon16 fa-list"></span></a>
+								{else}
+									<span class="icon icon16 fa-plus disabled" title="{lang}wcf.global.button.add{/lang}"></span>
+									<span class="icon icon16 fa-list disabled" title="{lang}wcf.global.button.list{/lang}"></span>
 								{/if}
 							</td>
-						{/if}
-					</tr>
+							<td class="columnText">
+								{if $pip->supportsGui()}
+									<a href="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip->pluginName}{/link}">{$pip->pluginName}</a>
+								{else}
+									{$pip->pluginName}
+								{/if}
+							</td>
+							{if $pip->supportsGui()}
+								<td class="columnText pipDefaultFilename"><small>{$pip->getEffectiveDefaultFilename()}</small></td>
+							{else}
+								<td class="columnText" colspan="3">
+									{if !$pip->isSupported()}
+										{$pip->getFirstError()}
+									{elseif !$pip->supportsGui()}
+										{lang}wcf.acp.devtools.pip.error.noGuiSupport{/lang}
+									{/if}
+								</td>
+							{/if}
+						</tr>
+					{else}
+						{foreach from=$pip->getPip()->getEntryTypes() item=entryType}
+							<tr data-plugin-name="{$pip->pluginName}" data-is-supported="true" data-is-used="{if !$pip->getTargets($project)|empty}true{else}false{/if}">
+								<td class="columnIcon">
+									<a href="{link controller='DevtoolsProjectPipEntryAdd' id=$project->projectID pip=$pip->pluginName entryType=$entryType}{/link}" title="{lang}wcf.global.button.add{/lang}" class="jsTooltip"><span class="icon icon16 fa-plus"></span></a>
+									<a href="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip->pluginName entryType=$entryType}{/link}" title="{lang}wcf.global.button.list{/lang}" class="jsTooltip"><span class="icon icon16 fa-list"></span></a>
+								</td>
+								<td class="columnText">
+									<a href="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip->pluginName entryType=$entryType}{/link}">{$pip->pluginName} ({$entryType})</a>
+								</td>
+								<td class="columnText pipDefaultFilename"><small>{$pip->getEffectiveDefaultFilename()}</small></td>
+							</tr>
+						{/foreach}
+					{/if}
 				{/foreach}
 			</tbody>
 		</table>
