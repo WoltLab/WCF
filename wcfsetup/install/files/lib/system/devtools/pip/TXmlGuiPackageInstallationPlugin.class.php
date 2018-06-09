@@ -156,8 +156,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @return	string
 	 */
 	protected function getEmptyXml(): string {
-		$classNamePieces = explode('\\', get_class($this));
-		$xsdFilename = lcfirst(str_replace('PackageInstallationPlugin', '', array_pop($classNamePieces)));
+		$xsdFilename = $this->getXsdFilename();
 		
 		return <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
@@ -165,6 +164,18 @@ trait TXmlGuiPackageInstallationPlugin {
 	<import></import>
 </data>
 XML;
+	}
+	
+	/**
+	 * Returns the name of the xsd file for this package installation plugin
+	 * (without the file extension).
+	 * 
+	 * @return	string
+	 */
+	protected function getXsdFilename(): string {
+		$classNamePieces = explode('\\', get_class($this));
+		
+		return lcfirst(str_replace('PackageInstallationPlugin', '', array_pop($classNamePieces)));
 	}
 	
 	/**

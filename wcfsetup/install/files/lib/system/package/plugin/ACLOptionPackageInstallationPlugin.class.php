@@ -504,6 +504,14 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * @inheritDoc
 	 * @since	3.2
 	 */
+	protected function getXsdFilename(): string {
+		return 'aclOption';
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
 			'name' => 'wcf.acp.pip.aclOption.' . $this->entryType . '.name',
