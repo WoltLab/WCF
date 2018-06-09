@@ -138,6 +138,26 @@ $.Redactor.prototype.WoltLabBlock = function() {
 				
 				return returned;
 			}).bind(this);
+			
+			this.block.getBlocks = (function(block) {
+				block = (typeof block === 'undefined') ? this.selection.blocks() : block;
+				
+				// Firefox may add the editor itself to the selection
+				if ($(block).hasClass('redactor-box') || $(block).hasClass('redactor-layer')) {
+					var blocks = [];
+					var nodes = this.core.editor().children();
+					$.each(nodes, $.proxy(function (i, node) {
+						if (this.utils.isBlock(node)) {
+							blocks.push(node);
+						}
+						
+					}, this));
+					
+					return blocks;
+				}
+				
+				return block
+			}).bind(this);
 		},
 		
 		register: function(tag, arrowKeySupport) {

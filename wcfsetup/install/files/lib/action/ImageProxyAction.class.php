@@ -23,6 +23,11 @@ use wcf\util\StringUtil;
  */
 class ImageProxyAction extends AbstractAction {
 	/**
+	 * @inheritDoc
+	 */
+	public $neededModules = ['MODULE_IMAGE_PROXY'];
+	
+	/**
 	 * The image key created by CryptoUtil::createSignedString()
 	 * @var	string
 	 */
