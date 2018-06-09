@@ -1874,7 +1874,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.coreObject.objectName.error.notUnique"><![CDATA[The entered class is already registered as a core object.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName"><![CDATA[Provider Name]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.description"><![CDATA[The name of an ACP search result provider consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the definition name matches the package identifier. Example: <code>{$project->getPackage()->package}.searchedObject</code>]]></item>
-		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.notUnique"><![CDATA[The entered names is already used by another acp search result provider.]]></item>
+		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.notUnique"><![CDATA[The entered name is already used by another acp search result provider.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.tooFewSegments"><![CDATA[The entered provider name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.showOrder"><![CDATA[Position]]></item>
