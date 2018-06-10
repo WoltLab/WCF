@@ -1900,6 +1900,19 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.aclOption.objectType.categories.error.notUnique"><![CDATA[The entered name is already used by another ACL option category for the same ACL object type.]]></item>
 		<item name="wcf.acp.pip.aclOption.objectType.options.description"><![CDATA[The ACL object type determines to which type of objects the option belongs to. Note that only ACL object types of the package itself or its required packages are available.]]></item>
 		<item name="wcf.acp.pip.aclOption.objectType.options.error.notUnique"><![CDATA[The entered name is already used by another ACL option for the same ACL object type.]]></item>
+		<item name="wcf.acp.pip.abstractMenu.menuItem"><![CDATA[Menu Item Identifier]]></item>
+		<item name="wcf.acp.pip.abstractMenu.menuItem.error.notUnique"><![CDATA[The entered identifier is already used by another menu item.]]></item>
+		<item name="wcf.acp.pip.abstractForm.parentMenuItem"><![CDATA[Parent Menu Item]]></item>
+		<item name="wcf.acp.pip.abstractForm.menuItemController"><![CDATA[Menu Item Controller]]></item>
+		<item name="wcf.acp.pip.abstractMenu.menuItemLink"><![CDATA[Menu Item Link]]></item>
+		<item name="wcf.acp.pip.abstractMenu.menuItemLink.description"><![CDATA[If no menu item controller is used, the entered link will be used. If, however, a menu item controller is used, the entered link will be appended to the link to the controller.]]></item>
+		<item name="wcf.acp.pip.abstractMenu.menuItemLink.error.isLink"><![CDATA[The entered value is a valid link. If you entered a menu item controller, the menu item link is appended to the link to the controller.]]></item>
+		<item name="wcf.acp.pip.abstractMenu.menuItemLink.error.noLink"><![CDATA[The entered value is no valid link.]]></item>
+		<item name="wcf.acp.pip.abstractMenu.menuItemLink.error.noLinkSpecified"><![CDATA[You either have to enter a menu item controller or a menu item link.]]></item>
+		<item name="wcf.acp.pip.abstractMenu.options.description"><![CDATA[At least one of the entered options has to be enabled for the menu item to be visible. Options of non-required packages will be reported as non-existing.]]></item>
+		<item name="wcf.acp.pip.abstractMenu.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions in order to see the menu item. Permissions of non-required packages will be reported as non-existing.]]></item>
+		<item name="wcf.acp.pip.abstractMenu.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.acp.pip.abstractMenu.showOrder.description"><![CDATA[The entered value determines in which order the menu items with the same parent are shown.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
