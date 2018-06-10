@@ -36,7 +36,6 @@
 	<rule ref="Squiz.ControlStructures.LowercaseDeclaration" />
 	<rule ref="Squiz.Operators.IncrementDecrementUsage" />
 	<rule ref="Squiz.Operators.ValidLogicalOperators" />
-	<rule ref="Squiz.PHP.ForbiddenFunctions" />
 	<rule ref="Squiz.Scope.MethodScope" />
 	<rule ref="Squiz.Strings.EchoedStrings" />
 	<rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace" />

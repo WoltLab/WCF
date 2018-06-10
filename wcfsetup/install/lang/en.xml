@@ -766,7 +766,7 @@
 		<item name="wcf.acp.language.name.description"><![CDATA[Language Name]]></item>
 		<item name="wcf.acp.language.add.source.description"><![CDATA[The selected language will be used as origin, all phrases will be copied into the new language.]]></item>
 		<item name="wcf.acp.language.item.oldValue"><![CDATA[Original Content]]></item>
-		<item name="wcf.acp.language.item.oldValue.description"><![CDATA[Your custom value was based on the original content that has changed on {$item->languageCustomItemDisableTime|date}.]]></item>
+		<item name="wcf.acp.language.item.oldValue.description"><![CDATA[Your custom value was based on the original content that has changed{if $item->languageCustomItemDisableTime} on {$item->languageCustomItemDisableTime|date}{/if}.]]></item>
 		<item name="wcf.acp.language.item.recentlyDisabledCustomValues"><![CDATA[Recently disabled customized values (past 7 days)]]></item>
 		<item name="wcf.acp.language.item.hasRecentlyDisabledCustomValues"><![CDATA[{if $recentlyDisabledCustomValues == 1}One{else}{#$recentlyDisabledCustomValues}{/if} customized {if $recentlyDisabledCustomValues == 1}phrase has been{else}phrases have been{/if} <a href="{link controller='LanguageItemList' hasRecentlyDisabledCustomValue=1}{/link}">automatically disabled</a> recently.]]></item>
 	</category>

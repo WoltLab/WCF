@@ -68,16 +68,17 @@
 				color: #000;
 			}
 		}
-		
-		> input[type="radio"]:disabled + label {
-			background-color: rgb(242, 242, 242) !important;
-			color: rgb(125, 130, 100) !important;
-			cursor: default;
-			
-			> .icon {
-				color: rgb(125, 130, 100) !important;
-				cursor: default !important;
-			}
-		}
+	}
+}
+
+.disabled .flexibleButtonGroup > li > input[type="radio"]:checked + label,
+.flexibleButtonGroup > li > input[type="radio"]:disabled + label {
+	background-color: rgb(242, 242, 242) !important;
+	color: rgb(125, 130, 100) !important;
+	cursor: default;
+	
+	> .icon {
+		color: rgb(125, 130, 100) !important;
+		cursor: default !important;
 	}
 }
