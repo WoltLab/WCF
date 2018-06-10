@@ -339,7 +339,14 @@ class ReactionHandler extends SingletonFactory {
 			$likes = $likeObject->likes;
 			$dislikes = $likeObject->dislikes;
 			$cumulativeLikes = $likeObject->cumulativeLikes;
-			$cachedReactions = @unserialize($likeObject->cachedReactions);
+			
+			if ($likeObject->cachedReactions !== null) {
+				$cachedReactions = @unserialize($likeObject->cachedReactions);
+			}
+			else {
+				$cachedReactions = [];
+			}
+			
 			if (!is_array($cachedReactions)) {
 				$cachedReactions = [];
 			}
