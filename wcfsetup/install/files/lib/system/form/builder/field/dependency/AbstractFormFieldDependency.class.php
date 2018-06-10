@@ -119,6 +119,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	
 	/**
 	 * @inheritDoc
+	 * @return	static
 	 */
 	public static function create(string $id): IFormFieldDependency {
 		return (new static)->id($id);

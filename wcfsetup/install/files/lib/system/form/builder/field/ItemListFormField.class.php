@@ -129,7 +129,7 @@ class ItemListFormField extends AbstractFormField {
 	 * Sets the type of the returned save value (see `SAVE_VALUE_TYPE_*` constants).
 	 * 
 	 * @param	string			$saveValueType	type of the returned save value
-	 * @return	ItemListFormField			this field
+	 * @return	static			this field
 	 * @throws	\BadMethodCallException			if save value type has already been set
 	 * @throws	\InvalidArgumentException		if given save value type is invalid
 	 */
