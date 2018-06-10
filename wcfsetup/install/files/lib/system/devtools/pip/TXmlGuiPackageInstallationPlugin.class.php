@@ -46,6 +46,9 @@ trait TXmlGuiPackageInstallationPlugin {
 		$document = $xml->getDocument();
 		
 		$newElement = $this->writeEntry($document, $form);
+		
+		$this->saveObject($newElement);
+	
 		$this->sortDocument($document);
 		
 		/** @var DevtoolsProject $project */
@@ -54,8 +57,6 @@ trait TXmlGuiPackageInstallationPlugin {
 		// TODO: while creating/testing the gui, write into a temporary file
 		// $xml->write($this->getXmlFileLocation($project));
 		$xml->write($project->path . ($project->getPackage()->package === 'com.woltlab.wcf' ? 'com.woltlab.wcf/' : '') . 'tmp_' . static::getDefaultFilename());
-		
-		$this->saveObject($newElement);
 	}
 	
 	/**
@@ -77,6 +78,9 @@ trait TXmlGuiPackageInstallationPlugin {
 		
 		// add updated element
 		$newEntry = $this->writeEntry($document, $form);
+		
+		$this->saveObject($newEntry, $element);
+		
 		$this->sortDocument($document);
 		
 		/** @var DevtoolsProject $project */
@@ -85,8 +89,6 @@ trait TXmlGuiPackageInstallationPlugin {
 		// TODO: while creating/testing the gui, write into a temporary file
 		// $xml->write($this->getXmlFileLocation($project));
 		$xml->write($project->path . ($project->getPackage()->package === 'com.woltlab.wcf' ? 'com.woltlab.wcf/' : '') . 'tmp_' . static::getDefaultFilename());
-		
-		$this->saveObject($newEntry, $element);
 		
 		return $this->getElementIdentifier($newEntry);
 	}
@@ -296,7 +298,7 @@ XML;
 	/**
 	 * Informs the pip of the identifier of the edited entry if the form to
 	 * edit that entry has been submitted.
-	 *
+	 * 
 	 * @param	string		$identifier
 	 * 
 	 * @throws	\InvalidArgumentException	if no such entry exists

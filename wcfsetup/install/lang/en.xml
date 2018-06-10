@@ -1902,8 +1902,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.aclOption.objectType.options.error.notUnique"><![CDATA[The entered name is already used by another ACL option for the same ACL object type.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItem"><![CDATA[Menu Item Identifier]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItem.error.notUnique"><![CDATA[The entered identifier is already used by another menu item.]]></item>
-		<item name="wcf.acp.pip.abstractForm.parentMenuItem"><![CDATA[Parent Menu Item]]></item>
-		<item name="wcf.acp.pip.abstractForm.menuItemController"><![CDATA[Menu Item Controller]]></item>
+		<item name="wcf.acp.pip.abstractMenu.parentMenuItem"><![CDATA[Parent Menu Item]]></item>
+		<item name="wcf.acp.pip.abstractMenu.menuItemController"><![CDATA[Menu Item Controller]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItemLink"><![CDATA[Menu Item Link]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItemLink.description"><![CDATA[If no menu item controller is used, the entered link will be used. If, however, a menu item controller is used, the entered link will be appended to the link to the controller.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItemLink.error.isLink"><![CDATA[The entered value is a valid link. If you entered a menu item controller, the menu item link is appended to the link to the controller.]]></item>
@@ -1918,6 +1918,10 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.acpMenu.menuItem.description"><![CDATA[The menu item identifier must have the format <code>{literal}{app}.acp.menu.link.{additionalIdentifiers}{/literal}</code> where <code>{literal}{app}{/literal}</code> and <code>{literal}{additionalIdentifiers}{/literal}</code> have to be replaced with the appropriate values. <code>{literal}{additionalIdentifiers}{/literal}</code> may only contain letters, numbers, ands dots.]]></item>
 		<item name="wcf.acp.pip.acpMenu.menuItem.error.format"><![CDATA[The entered identifier is invalid.]]></item>
 		<item name="wcf.acp.pip.acpMenu.menuItemController.error.noAcpController"><![CDATA[The entered controller is no ACP controller. An ACP controller begins with <code>{literal}{app}{/literal}\acp\</code> where <code>{literal}{app}{/literal}</code> is the abbreviation of the relevant app.]]></item>
+		<item name="wcf.acp.pip.userMenu.iconClassName"><![CDATA[Menu Item Icon]]></item>
+		<item name="wcf.acp.pip.userMenu.iconClassName.description"><![CDATA[The menu item icon is only available for menu items on the first level.]]></item>
+		<item name="wcf.acp.pip.userMenu.menuItem.description"><![CDATA[The menu item identifier must have the format <code>{literal}{app}.user.menu.{additionalIdentifiers}{/literal}</code> where <code>{literal}{app}{/literal}</code> and <code>{literal}{additionalIdentifiers}{/literal}</code> have to be replaced with the appropriate values. <code>{literal}{additionalIdentifiers}{/literal}</code> may only contain letters, numbers, ands dots.]]></item>
+		<item name="wcf.acp.pip.userMenu.menuItem.error.format"><![CDATA[The entered identifier is invalid.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">

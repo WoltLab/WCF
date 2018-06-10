@@ -1,6 +1,8 @@
 <?php
 declare(strict_types=1);
 namespace wcf\system\package\plugin;
+use wcf\data\acp\menu\item\ACPMenuItem;
+use wcf\data\DatabaseObjectList;
 use wcf\page\IPage;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
@@ -23,7 +25,7 @@ use wcf\util\Url;
 /**
  * Abstract implementation of a package installation plugin for menu items.
  * 
- * @author	Alexander Ebert
+ * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
@@ -129,12 +131,61 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 		$dataContainer->appendChildren([
 			TextFormField::create('menuItem')
 				->objectProperty('name')
-				->label('wcf.acp.pip.abstractMenu.menuItem'),
+				->label('wcf.acp.pip.abstractMenu.menuItem')
+				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
+					if (
+						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
+						$this->editedEntry->getAttribute('name') !== $formField->getValue()
+					) {
+						// replace `Editor` with `List`
+						$listClassName = substr($this->className, 0, -6) . 'List';
+						
+						/** @var DatabaseObjectList $menuItemList */
+						$menuItemList = new $listClassName();
+						$menuItemList->getConditionBuilder()->add('menuItem = ?', [$formField->getValue()]);
+						
+						if ($menuItemList->countObjects() > 0) {
+							$formField->addValidationError(
+								new FormFieldValidationError(
+									'notUnique',
+									'wcf.acp.pip.abstractMenu.menuItem.error.notUnique'
+								)
+							);
+						}
+					}
+				})),
 			
 			SingleSelectionFormField::create('parentMenuItem')
 				->objectProperty('parent')
-				->label('wcf.acp.pip.abstractForm.parentMenuItem')
-				->filterable(),
+				->label('wcf.acp.pip.abstractMenu.parentMenuItem')
+				->filterable()
+				->options(function(): array {
+					$acpMenuStructureData = $this->getMenuStructureData();
+					$acpMenuStructure = $acpMenuStructureData['structure'];
+					$menuItemLevels = ['' => 0] + $acpMenuStructureData['levels'];
+					
+					// only consider menu items until the third level (thus only parent
+					// menu items until the second level) as potential parent menu items
+					$acpMenuStructure = array_filter($acpMenuStructure, function(string $parentMenuItem) use ($menuItemLevels): bool {
+						return $menuItemLevels[$parentMenuItem] <= 2;
+					}, ARRAY_FILTER_USE_KEY);
+					
+					$buildOptions = function(string $parent = '', int $level = 0) use ($acpMenuStructure, &$buildOptions): array {
+						$options = [];
+						foreach ($acpMenuStructure[$parent] as $menuItem) {
+							$options[$menuItem->menuItem] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $level) . WCF::getLanguage()->get($menuItem->menuItem);
+							
+							if (isset($acpMenuStructure[$menuItem->menuItem])) {
+								$options += $buildOptions($menuItem->menuItem, $level + 1);
+							}
+						}
+						
+						return $options;
+					};
+					
+					return ['' => 'wcf.global.noSelection'] + $buildOptions();
+				})
+				->value(''),
 			
 			ClassNameFormField::create('menuItemController')
 				->objectProperty('controller')
@@ -261,6 +312,59 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	}
 	
 	/**
+	 * Returns data on the structure of the menu.
+	 * 
+	 * @return	array
+	 */
+	protected function getMenuStructureData(): array {
+		// replace `Editor` with `List`
+		$listClassName = substr($this->className, 0, -6) . 'List';
+		
+		/** @var DatabaseObjectList $menuItemList */
+		$menuItemList = new $listClassName();
+		$menuItemList->getConditionBuilder()->add('packageID IN (?)', [array_merge(
+			[$this->installation->getPackage()->packageID],
+			array_keys($this->installation->getPackage()->getAllRequiredPackages())
+		)]);
+		$menuItemList->sqlOrderBy = 'parentMenuItem ASC, showOrder ASC';
+		$menuItemList->readObjects();
+		
+		// for better IDE auto-completion, we use `ACPMenuItem`, but the
+		// menu items can also belong to other menus
+		/** @var ACPMenuItem[] $menuItems */
+		$menuItems = [];
+		/** @var ACPMenuItem[][] $menuStructure */
+		$menuStructure = [];
+		foreach ($menuItemList as $menuItem) {
+			if (!isset($menuStructure[$menuItem->parentMenuItem])) {
+				$menuStructure[$menuItem->parentMenuItem] = [];
+			}
+			
+			$menuStructure[$menuItem->parentMenuItem][$menuItem->menuItem] = $menuItem;
+			$menuItems[$menuItem->menuItem] = $menuItem;
+		}
+		
+		$menuItemLevels = [];
+		foreach ($menuStructure as $parentMenuItemName => $childMenuItems) {
+			$menuItemsLevel = 1;
+			
+			while (($parentMenuItem = $menuItems[$parentMenuItemName] ?? null)) {
+				$menuItemsLevel++;
+				$parentMenuItemName = $parentMenuItem->parentMenuItem;
+			}
+			
+			foreach ($childMenuItems as $menuItem) {
+				$menuItemLevels[$menuItem->menuItem] = $menuItemsLevel;
+			}
+		}
+		
+		return [
+			'levels' => $menuItemLevels,
+			'structure' => $menuStructure
+		];
+	}
+	
+	/**
 	 * @inheritDoc
 	 * @since	3.2
 	 */
@@ -276,13 +380,37 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @since	3.2
 	 */
 	protected function sortDocument(\DOMDocument $document) {
+		$menuStructureData = $this->getMenuStructureData();
+		/** @var ACPMenuItem[][] $menuItemStructure */
+		$menuItemStructure = $menuStructureData['structure'];
+		
 		$this->sortImportDelete($document);
 		
-		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
-			return strcmp(
-				$element1->getAttribute('name'),
-				$element2->getAttribute('name')
-			);
+		// build array containing the ACP menu items saved in the database
+		// in the order as they would be displayed in the ACP
+		$buildPositions = function(string $parent = '') use ($menuItemStructure, &$buildPositions): array {
+			$positions = [];
+			foreach ($menuItemStructure[$parent] as $menuItem) {
+				// only consider menu items of the current package for positions
+				if ($menuItem->packageID === $this->installation->getPackageID()) {
+					$positions[] = $menuItem->menuItem;
+				}
+				
+				if (isset($menuItemStructure[$menuItem->menuItem])) {
+					$positions = array_merge($positions, $buildPositions($menuItem->menuItem));
+				}
+			}
+			
+			return $positions;
+		};
+		
+		// flip positions array so that the keys are the menu item names
+		// and the values become the positions so that the array values
+		// can be used in the sort function
+		$positions = array_flip($buildPositions());
+		
+		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) use ($positions) {
+			return $positions[$element1->getAttribute('name')] <=> $positions[$element2->getAttribute('name')];
 		};
 		
 		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
