@@ -1913,6 +1913,11 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.pip.abstractMenu.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions in order to see the menu item. Permissions of non-required packages will be reported as non-existing.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.abstractMenu.showOrder.description"><![CDATA[The entered value determines in which order the menu items with the same parent are shown.]]></item>
+		<item name="wcf.acp.pip.acpMenu.icon"><![CDATA[Menu Item Icon]]></item>
+		<item name="wcf.acp.pip.acpMenu.icon.description"><![CDATA[The menu item icon is only available for menu items on the first level (without any parent) and for menu items on the fourth level. For first level menu items, the icon is shown in addition to the menu item title while for fourth level menu items, only the icon is shown and the menu item title becomes a tooltip.]]></item>
+		<item name="wcf.acp.pip.acpMenu.menuItem.description"><![CDATA[The menu item identifier must have the format <code>{literal}{app}.acp.menu.link.{additionalIdentifiers}{/literal}</code> where <code>{literal}{app}{/literal}</code> and <code>{literal}{additionalIdentifiers}{/literal}</code> have to be replaced with the appropriate values. <code>{literal}{additionalIdentifiers}{/literal}</code> may only contain letters, numbers, ands dots.]]></item>
+		<item name="wcf.acp.pip.acpMenu.menuItem.error.format"><![CDATA[The entered identifier is invalid.]]></item>
+		<item name="wcf.acp.pip.acpMenu.menuItemController.error.noAcpController"><![CDATA[The entered controller is no ACP controller. An ACP controller begins with <code>{literal}{app}{/literal}\acp\</code> where <code>{literal}{app}{/literal}</code> is the abbreviation of the relevant app.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
