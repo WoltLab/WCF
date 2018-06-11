@@ -4,6 +4,7 @@ use wcf\data\DatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -107,7 +108,7 @@ class Option extends DatabaseObject {
 		$disableOptions = $enableOptions = '';
 		
 		if (!empty($optionData)) {
-			$options = explode(',', $optionData);
+			$options = ArrayUtil::trim(explode(',', $optionData));
 			
 			foreach ($options as $item) {
 				if ($item{0} == '!') {
