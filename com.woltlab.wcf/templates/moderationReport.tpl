@@ -78,8 +78,8 @@
 		<div>
 			<div class="containerHeadline">
 				<h3>
-					{if $queue->userID}
-						<a href="{link controller='User' id=$queue->userID}{/link}" class="userLink" data-user-id="{@$queue->userID}">{$queue->username}</a>
+					{if $reportUser->userID}
+						<a href="{link controller='User' object=$reportUser}{/link}" class="userLink" data-user-id="{@$reportUser->userID}">{$reportUser->username}</a>
 					{else}
 						{lang}wcf.user.guest{/lang}
 					{/if}
