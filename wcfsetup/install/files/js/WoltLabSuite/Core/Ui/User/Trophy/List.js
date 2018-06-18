@@ -29,8 +29,6 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'Ui/Dialog', 'WoltLabSuite/Cor
 			this._rebuild();
 			
 			DomChangeListener.add('WoltLabSuite/Core/Ui/User/Trophy/List', this._rebuild.bind(this));
-			
-			
 		},
 		
 		/**
