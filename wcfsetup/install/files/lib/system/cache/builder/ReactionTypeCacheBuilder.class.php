@@ -23,7 +23,9 @@ class ReactionTypeCacheBuilder extends AbstractCacheBuilder {
 			$reactionTypeList->getConditionBuilder()->add('isDisabled = ?', [0]);
 		}
 		
+		$reactionTypeList->sqlOrderBy = 'showOrder ASC';
 		$reactionTypeList->readObjects();
+		
 		return $reactionTypeList->getObjects();
 	}
 }

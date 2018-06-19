@@ -16,12 +16,12 @@
 		
 		new {if $commentHandlerClass|isset}{@$commentHandlerClass}{else}WCF.Comment.Handler{/if}('{$commentContainerID}');
 		{if MODULE_LIKE && $commentList->getCommentManager()->supportsLike() && $__wcf->getSession()->getPermission('user.like.canViewLike')}
-			require(['WoltLabSuite/Core/Ui/Like/Handler'], function(UiLikeHandler) {
+			require(['WoltLabSuite/Core/Ui/Reaction/Handler'], function(UiReactionHandler) {
 				var canDislike = {if LIKE_ENABLE_DISLIKE}true{else}false{/if};
 				var canLike = {if $__wcf->getUser()->userID && $__wcf->getSession()->getPermission('user.like.canLike')}true{else}false{/if};
 				var canLikeOwnContent = {if LIKE_ALLOW_FOR_OWN_CONTENT}true{else}false{/if};
 				
-				new UiLikeHandler('com.woltlab.wcf.comment', {
+				new UiReactionHandler('com.woltlab.wcf.comment', {
 					// settings
 					badgeClassNames: 'separatorLeft',
 					markListItemAsActive: true,
@@ -34,13 +34,13 @@
 					canViewSummary: false,
 					
 					// selectors
-					badgeContainerSelector: '.commentContent:not(.commentResponseContent) > .containerHeadline > h3',
-					buttonAppendToSelector: '.commentContent .buttonList',
-					containerSelector: '.comment',
-					summarySelector: ''
+					containerSelector: 'li.comment',
+					summaryListSelector: '.reactionSummaryList',
+					isButtonGroupNavigation: true
 				});
 				
-				new UiLikeHandler('com.woltlab.wcf.comment.response', {
+				
+				new UiReactionHandler('com.woltlab.wcf.comment.response', {
 					// settings
 					badgeClassNames: 'separatorLeft',
 					markListItemAsActive: true,
@@ -53,10 +53,9 @@
 					canViewSummary: false,
 					
 					// selectors
-					badgeContainerSelector: '.commentResponseContent > .containerHeadline > h3',
-					buttonAppendToSelector: '.commentContent .buttonList',
 					containerSelector: '.commentResponse',
-					summarySelector: ''
+					summaryListSelector: '.reactionSummaryList',
+					isButtonGroupNavigation: true
 				});
 			});
 		{/if}
