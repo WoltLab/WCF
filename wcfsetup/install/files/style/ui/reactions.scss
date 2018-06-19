@@ -30,13 +30,6 @@ img.reactionType {
 	height: 24px;
 }
 
-span.icon.reactionType {
-	font-size: 18px;
-	height: 24px;
-	line-height: 24px;
-	width: 24px;
-}
-
 .reactionPopoverContent {
 	background-color: $wcfContentBackground;
 	border-radius: 3px;
@@ -53,17 +46,6 @@ span.icon.reactionType {
 	
 	> ul > li.reactionTypeButton > img:hover {
 		transform: scale(1.2);
-	}
-	
-	> ul > li.reactionTypeButton > span.icon:hover {
-		font-size: 22px;
-		height: 24px;
-		line-height: 24px;
-		width: 24px;
-	}
-	
-	> ul > li.reactionTypeButton > span.icon {
-		cursor: pointer;
 	}
 	
 	@include screen-md-down {
@@ -117,14 +99,6 @@ li.reactCountButton:hover {
 		height: 16px;
 	}
 	
-	li.reactCountButton > span.icon.reactionType {
-		font-size: 14px;
-		height: 16px;
-		line-height: 16px;
-		width: 16px;
-		cursor: pointer;
-	}
-	
 	span.reactionCount {
 		@include wcfFontSmall;
 	}
@@ -139,12 +113,5 @@ ul.buttonList.iconList {
 	img.reactionType {
 		width: 16px;
 		height: 16px;
-	}
-	
-	span.icon.reactionType {
-		font-size: 14px;
-		height: 16px;
-		line-height: 16px;
-		width: 16px;
 	}
 }

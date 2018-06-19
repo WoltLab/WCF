@@ -255,13 +255,15 @@ define(
 					this._containers.get(data.returnValues.objectID).reactButton.classList.add('active');
 					
 					// update icon 
-					this._containers.get(data.returnValues.objectID).reactButton.innerHTML = REACTION_TYPES[data.returnValues.reactionTypeID].renderedIcon;
+					elBySel('img', this._containers.get(data.returnValues.objectID).reactButton).src = REACTION_TYPES[data.returnValues.reactionTypeID].iconPath;
+					elData(elBySel('img', this._containers.get(data.returnValues.objectID).reactButton), 'reaction-type-id', data.returnValues.reactionTypeID);
 				}
 				else {
 					this._containers.get(data.returnValues.objectID).reactButton.classList.remove('active');
 					
 					// update icon
-					this._containers.get(data.returnValues.objectID).reactButton.innerHTML = '<img src="'+WCF_PATH+'images/reaction/reactionIcon.svg" style="width:24px;height:24px;">';
+					elBySel('img', this._containers.get(data.returnValues.objectID).reactButton).src = WCF_PATH+'images/reaction/reactionIcon.svg';
+					elData(elBySel('img', this._containers.get(data.returnValues.objectID).reactButton), 'reaction-type-id', 0);
 				}
 			},
 				

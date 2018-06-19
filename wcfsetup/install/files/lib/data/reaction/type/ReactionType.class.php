@@ -18,10 +18,7 @@ use wcf\system\WCF;
  * @property-read	string		$title
  * @property-read	integer		$type   		type of the reaction (1 is positive, 0 is neutral and -1 is negative)
  * @property-read	integer		$showOrder		position of the reaction type in relation to the other reaction types
- * @property-read	integer		$iconType		the icon type of the reaction
  * @property-read	string		$iconFile		the file location of the icon
- * @property-read	string		$iconName		the icon name
- * @property-read	string		$iconColor		the icon color
  * @property-read       integer		$isDisabled		is `1` if the reaction type is disabled and thus not shown, otherwise `0`
  */
 class ReactionType extends DatabaseObject implements ITitledObject {
@@ -44,18 +41,6 @@ class ReactionType extends DatabaseObject implements ITitledObject {
 	const REACTION_TYPE_NEGATIVE = -1;
 	
 	/**
-	 * The iconType value, if this reaction type is an image.
-	 * @var	integer
-	 */
-	const ICON_TYPE_IMAGE = 1;
-	
-	/**
-	 * The iconType value, if this reaction type is a font icon.
-	 * @var	integer
-	 */
-	const ICON_TYPE_ICON = 2;
-	
-	/**
 	 * @inheritDoc
 	 */
 	protected static $databaseTableIndexName = 'reactionTypeID';
@@ -73,33 +58,18 @@ class ReactionType extends DatabaseObject implements ITitledObject {
 	 * @return	string
 	 */
 	public function renderIcon(): string {
-		switch ($this->iconType) {
-			case self::ICON_TYPE_ICON:
-				return WCF::getTPL()->fetch('reactionTypeIcon', 'wcf', [
-					'reactionType' => $this
-				], true);
-				break;
-			
-			case self::ICON_TYPE_IMAGE:
-				return WCF::getTPL()->fetch('reactionTypeImage', 'wcf', [
-					'reactionType' => $this
-				], true);
-				break;
-			
-			default:
-				$parameters = [
-					'renderedTemplate' => null
-				];
-				
-				EventHandler::getInstance()->fireAction($this, 'renderIcon', $parameters);
-				
-				if ($parameters['renderedTemplate']) {
-					return $parameters['renderedTemplate'];
-				}
-				
-				throw new \LogicException("Unable to render the reaction type icon with the type '". $this->type ."'.");
-				break;
-		}
+		return WCF::getTPL()->fetch('reactionTypeImage', 'wcf', [
+			'reactionType' => $this
+		], true);
+	}
+	
+	/**
+	 * Returns the url to the icon for this reaction. 
+	 * 
+	 * @return string
+	 */
+	public function getIconPath(): string {
+		return WCF::getPath() . 'images/reaction/'. $this->iconFile;
 	}
 	
 	/**

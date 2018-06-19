@@ -1163,10 +1163,7 @@ CREATE TABLE wcf1_reaction_type(
 	title VARCHAR(255), 
 	type TINYINT(1),
 	showOrder INT(10) NOT NULL DEFAULT 0,
-	iconType TINYINT(1) DEFAULT 1,
-	iconFile MEDIUMTEXT, 
-	iconName VARCHAR(255),
-	iconColor VARCHAR(255),
+	iconFile MEDIUMTEXT,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0
 );
 
