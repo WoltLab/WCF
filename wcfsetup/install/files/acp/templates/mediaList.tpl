@@ -94,6 +94,7 @@
 			{assign var='linkParameters' value=''}
 			{if $username}{capture append=linkParameters}&username={@$username|rawurlencode}{/capture}{/if}
 			{if $q}{capture append=linkParameters}&q={@$q|rawurlencode}{/capture}{/if}
+			{if $categoryID}{capture append=linkParameters}&categoryID={@$categoryID}{/capture}{/if}
 			
 			{pages print=true assign=pagesLinks controller="MediaList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 		{/content}

@@ -76,7 +76,7 @@ class CodeMetacodeConverter extends AbstractMetacodeConverter {
 		$xpath = new \DOMXPath($element->ownerDocument);
 		$replaceNodes = [];
 		/** @var \DOMText $textNode */
-		foreach ($xpath->query('//text()', $element) as $textNode) {
+		foreach ($xpath->query('.//text()', $element) as $textNode) {
 			if (mb_strpos($textNode->textContent, "\n") !== false) {
 				$replaceNodes[] = $textNode;
 			}

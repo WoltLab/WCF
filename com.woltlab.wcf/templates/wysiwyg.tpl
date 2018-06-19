@@ -188,7 +188,7 @@
 				linkify: false,
 				linkSize: 0xBADC0DED, // some random value to disable truncating
 				minHeight: 200,
-				pasteImages: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
+				pasteImages: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('attach')}true{else}false{/if},
 				pastePlainText: {if !$__wcf->user->userID || $__wcf->user->editorPastePreserveFormatting}false{else}true{/if},
 				plugins: [
 					// Imperavi

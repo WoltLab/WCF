@@ -6,7 +6,6 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyList;
 use wcf\data\user\trophy\UserTrophyAction;
-use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\SingletonFactory;
 
@@ -71,13 +70,13 @@ class TrophyConditionHandler extends SingletonFactory {
 		
 		$i = 0;
 		foreach ($trophyList as $trophy) {
-			$users = $this->getUsers($trophy);
+			$userIDs = $this->getUserIDs($trophy);
 			
-			foreach ($users as $user) {
+			foreach ($userIDs as $userID) {
 				(new UserTrophyAction([], 'create', [
 					'data' => [
 						'trophyID' => $trophy->trophyID,
-						'userID' => $user->userID,
+						'userID' => $userID,
 						'time' => TIME_NOW
 					]
 				]))->executeAction();
@@ -91,9 +90,9 @@ class TrophyConditionHandler extends SingletonFactory {
 	 * Returns the users who fulfill all conditions of the given trophy.
 	 *
 	 * @param	Trophy		$trophy
-	 * @return	User[]
+	 * @return	integer[]
 	 */
-	private function getUsers(Trophy $trophy) {
+	private function getUserIDs(Trophy $trophy) {
 		$userList = new UserList();
 		
 		$conditions = $trophy->getConditions();
@@ -103,8 +102,8 @@ class TrophyConditionHandler extends SingletonFactory {
 		
 		// prevent multiple awards from a trophy for a user 
 		$userList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?))', [$trophy->trophyID]);
-		$userList->readObjects();
+		$userList->readObjectIDs();
 		
-		return $userList->getObjects();
+		return $userList->getObjectIDs();
 	}
 }

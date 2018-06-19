@@ -233,7 +233,7 @@
 			<classname>wcf\system\cronjob\AssignTrophiesCronjob</classname>
 			<description>Assign trophies based on rules</description>
 			<description language="de">Ordnet Trophäen aufgrund der Regeln zu</description>
-			<startminute>*/15</startminute>
+			<startminute>*/5</startminute>
 			<starthour>*</starthour>
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>

@@ -20,6 +20,8 @@ class AssignTrophiesCronjob extends AbstractCronjob {
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
 		
-		TrophyConditionHandler::getInstance()->assignTrophies(50);
+		if (MODULE_TROPHY) {
+			TrophyConditionHandler::getInstance()->assignTrophies(100);
+		}
 	}
 }

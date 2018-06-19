@@ -143,6 +143,7 @@ class MediaListPage extends SortablePage {
 		if ($this->sortOrder) $parameters['sortOrder'] = $this->sortOrder;
 		if ($this->query) $parameters['q'] = $this->query;
 		if ($this->username) $parameters['username'] = $this->username;
+		if ($this->categoryID) $parameters['categoryID'] = $this->categoryID;
 		
 		$this->canonicalURL = LinkHandler::getInstance()->getLink('MediaList', $parameters);
 	}
