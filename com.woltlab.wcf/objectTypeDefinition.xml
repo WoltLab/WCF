@@ -46,11 +46,6 @@
 		</definition>
 		
 		<definition>
-			<name>com.woltlab.wcf.notification.notificationType</name>
-			<interfacename>wcf\system\user\notification\type\IUserNotificationType</interfacename>
-		</definition>
-		
-		<definition>
 			<name>com.woltlab.wcf.notification.objectType</name>
 			<interfacename>wcf\system\user\notification\object\type\IUserNotificationObjectType</interfacename>
 		</definition>
@@ -244,9 +239,6 @@
 	</import>
 	
 	<delete>
-		<definition name="com.woltlab.wcf.versionableObject" />
-		<definition name="com.woltlab.wcf.user.dashboardContainer" />
-		<definition name="com.woltlab.wcf.page" />
-		<definition name="com.woltlab.wcf.user.online.location" />
+		<definition name="com.woltlab.wcf.notification.notificationType" />
 	</delete>
 </data>
