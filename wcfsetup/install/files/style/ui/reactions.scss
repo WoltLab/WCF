@@ -108,3 +108,43 @@ li.reactCountButton:hover {
 	background-color: darken($wcfSidebarBackground, 5);
 	color: $wcfContentText;
 }
+
+.reactionSummaryListTiny {
+	display: inline;
+	
+	li.reactCountButton > img {
+		width: 16px;
+		height: 16px;
+	}
+	
+	li.reactCountButton > span.icon.reactionType {
+		font-size: 14px;
+		height: 16px;
+		line-height: 16px;
+		width: 16px;
+		cursor: pointer;
+	}
+	
+	span.reactionCount {
+		@include wcfFontSmall;
+	}
+	
+	li.reactCountButton {
+		background-color: transparent;
+		padding: 0px;
+	}
+}
+
+ul.buttonList.iconList {
+	img.reactionType {
+		width: 16px;
+		height: 16px;
+	}
+	
+	span.icon.reactionType {
+		font-size: 14px;
+		height: 16px;
+		line-height: 16px;
+		width: 16px;
+	}
+}
