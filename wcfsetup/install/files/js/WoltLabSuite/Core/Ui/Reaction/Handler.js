@@ -55,6 +55,7 @@ define(
 					// selectors
 					buttonSelector: '.reactButton', 
 					containerSelector: '',
+					isButtonGroupNavigation: false,
 					
 					// other stuff
 					parameters: {
@@ -105,7 +106,7 @@ define(
 			_initReactButton: function(element, elementData) {
 				elementData.reactButton = elBySel(this._options.buttonSelector, element);
 				
-				if (elementData.reactButton.length === 0) {
+				if (elementData.reactButton === null || elementData.reactButton.length === 0) {
 					throw new Error("[WoltLabSuite/Core/Ui/Reaction/Handler] Unable to find reactButton.");
 				}
 				
@@ -118,12 +119,14 @@ define(
 			 * @param       {int}           objectId
 			 * @param       {Element}       element
 			 */
-			_toggleReactPopover: function(objectId, element) {
+			_toggleReactPopover: function(objectId, element, event) {
+				event.preventDefault();
+				
 				if (this._popoverCurrentObjectId === 0 || this._popoverCurrentObjectId !== objectId) {
 					this._openReactPopover(objectId, element);
 				}
 				else {
-					this._closePopover();
+					this._closePopover(objectId, element);
 				}
 			},
 			
@@ -134,13 +137,24 @@ define(
 			 * @param       {Element}	element 		container element
 			 */
 			_openReactPopover: function(objectId, element) {
+				// first close old popover, if exists 
+				if (this._popoverCurrentObjectId !== 0) {
+					this._closePopover(this._popoverCurrentObjectId, this._containers.get(this._popoverCurrentObjectId).reactButton);
+				}
+				
 				UiAlignment.set(this._getPopover(), element, {
 					pointer: true,
-					horizontal: 'center',
+					horizontal: (this._options.isButtonGroupNavigation) ? 'left' :'center',
 					vertical: 'top'
 				});
 				
 				this._popoverCurrentObjectId = objectId;
+				
+				if (this._options.isButtonGroupNavigation) {
+					// find nav element
+					var nav = element.closest('nav');
+					nav.style.opacity = "1";
+				}
 				
 				this._getPopover().classList.remove('forceHide');
 				this._getPopover().classList.add('active');
@@ -204,9 +218,15 @@ define(
 			/**
 			 * Closes the react popover. 
 			 */
-			_closePopover: function() {
+			_closePopover: function(objectId, element) {
 				this._popoverCurrentObjectId = 0;
 				this._getPopover().classList.remove('active');
+				
+				if (this._options.isButtonGroupNavigation) {
+					// find nav element
+					var nav = element.closest('nav');
+					nav.style.cssText = "";
+				}
 			},
 			
 			/**
@@ -224,7 +244,7 @@ define(
 					parameters: this._options.parameters
 				});
 				
-				this._closePopover();
+				this._closePopover(this._popoverCurrentObjectId, this._containers.get(this._popoverCurrentObjectId).reactButton);
 			},
 			
 			_ajaxSuccess: function(data) {
