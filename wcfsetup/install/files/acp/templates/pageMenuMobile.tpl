@@ -64,10 +64,10 @@
 					<span class="menuOverlayItemTitle">WoltLab&reg;</span>
 				</a>
 				<ol class="menuOverlayItemList">
-					<li class="menuOverlayItem"><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://www.woltlab.com"|rawurlencode}" class="menuOverlayItemLink"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.website{/lang}</a></li>
-					<li class="menuOverlayItem"><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://community.woltlab.com"|rawurlencode}" class="menuOverlayItemLink"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.forums{/lang}</a></li>
-					<li class="menuOverlayItem"><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://www.woltlab.com/ticket-add/"|rawurlencode}" class="menuOverlayItemLink"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.tickets{/lang}</a></li>
-					<li class="menuOverlayItem"><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://pluginstore.woltlab.com"|rawurlencode}" class="menuOverlayItemLink"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.pluginStore{/lang}</a></li>
+					<li class="menuOverlayItem"><a href="https://www.woltlab.com/{if $__wcf->getLanguage()->getFixedLanguageCode() === 'de'}de/{/if}" class="menuOverlayItemLink"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.website{/lang}</a></li>
+					<li class="menuOverlayItem"><a href="https://community.woltlab.com" class="menuOverlayItemLink"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.forums{/lang}</a></li>
+					<li class="menuOverlayItem"><a href="https://www.woltlab.com/ticket-add/" class="menuOverlayItemLink"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.tickets{/lang}</a></li>
+					<li class="menuOverlayItem"><a href="https://pluginstore.woltlab.com" class="menuOverlayItemLink"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>{lang}wcf.acp.index.woltlab.pluginStore{/lang}</a></li>
 				</ol>
 			</li>
 			<li class="menuOverlayTitle">{$__wcf->user->username}</li>
