@@ -25,6 +25,18 @@
 	}
 }
 
+img.reactionType {
+	width: 24px;
+	height: 24px;
+}
+
+span.icon.reactionType {
+	font-size: 18px;
+	height: 24px;
+	line-height: 24px;
+	width: 24px;
+}
+
 .reactionPopoverContent {
 	background-color: $wcfContentBackground;
 	border-radius: 3px;
@@ -45,6 +57,9 @@
 	
 	> ul > li.reactionTypeButton > span.icon:hover {
 		font-size: 22px;
+		height: 24px;
+		line-height: 24px;
+		width: 24px;
 	}
 	
 	> ul > li.reactionTypeButton > span.icon {

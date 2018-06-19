@@ -159,7 +159,7 @@
 			</div>
 			<div class="col-xs-12 col-md-6">
 				<ul class="articleLikeButtons buttonGroup">
-					<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}">{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{@$__wcf->getReactionHandler()->getReactionTypeByID($articleLikeData[$article->articleID]->reactionTypeID)->renderIcon()}{else}<img src="{$__wcf->getPath()}/images/reaction/reactionIcon.svg" style="width:24px;height:24px;" alt="">{/if}</span></li>
+					<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}">{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{@$__wcf->getReactionHandler()->getReactionTypeByID($articleLikeData[$article->articleID]->reactionTypeID)->renderIcon()}{else}<img src="{$__wcf->getPath()}/images/reaction/reactionIcon.svg" class="reactionType" alt="">{/if}</span></li>
 				</ul>
 			</div>
 		</div>
