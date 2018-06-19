@@ -1607,6 +1607,14 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.package.validation.errorCode.14"><![CDATA[This package was created for {if $isOlderVersion}an older{else}a newer{/if} version of WoltLab Suite and is not compatible.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[This package does not contain any data on API compatibility, the installation is prevented while the developer tools are enabled.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[The package cannot be installed, please review the validation results below.]]></item>
+		<item name="wcf.acp.package.evaluation.expired"><![CDATA[The evaluation period of <strong>{$packageName}</strong> has expired. For a legal use of this software, please update to the latest available version.{if $pluginStoreFileID || $isWoltLab}<br>The latest version can be purchased quickly and securely <strong>{if $pluginStoreFileID}<a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/">in the WoltLab Plugin-Store</a>{else}<a href="https://www.woltlab.com/purchase/">on WoltLab.com</a>{/if}</strong>.{/if}]]></item>
+		<item name="wcf.acp.package.evaluation.pending"><![CDATA[The evaluation period of the apps listed below will expire on <strong>{$evaluationEndDate|plainTime}</strong> ({@$evaluationEndDate|dateDiff:TIME_NOW:true}). The apps will automatically disable themselves after this date and become unusable, you'll need to install the latest versions of the apps to active them again.
+<ul class="nativeList">
+	{foreach from=$pendingApps item=pendingApp}
+		<li>{$pendingApp}</li>
+	{/foreach}
+</ul>
+If you have <strong>already bought the licenses for the listed apps</strong>, then it is enough to install all upcoming updates. <strong>The evaluation copy will automatically be upgraded to the full version.</strong>]]></item>
 	</category>
 	
 	<category name="wcf.acp.paidSubscription">
