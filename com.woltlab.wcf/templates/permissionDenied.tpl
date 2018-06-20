@@ -4,11 +4,13 @@
 {include file='header' __disableAds=true}
 
 <div class="section">
-	{if $message|isset}
-		<p>{@$message}</p>
-	{else}
-		<p>{lang}wcf.page.error.permissionDenied{/lang}</p>
-	{/if}
+	<p id="errorMessage" class="fullPageErrorMessage" data-exception-class-name="{$exceptionClassName}">
+		{if $message|isset}
+			{@$message}
+		{else}
+			{lang}wcf.page.error.permissionDenied{/lang}
+		{/if}
+	</p>
 </div>
 
 {event name='content'}
