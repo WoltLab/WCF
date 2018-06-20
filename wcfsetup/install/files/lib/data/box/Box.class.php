@@ -118,6 +118,12 @@ class Box extends DatabaseObject {
 	public $virtualShowOrder = -1;
 	
 	/**
+	 * list of positions that support the edit button
+	 * @var string[]
+	 */
+	public $editButtonPositions = ['headerBoxes', 'sidebarLeft', 'contentTop', 'sidebarRight', 'contentBottom', 'footerBoxes', 'footer'];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function __get($name) {
@@ -505,6 +511,20 @@ class Box extends DatabaseObject {
 	 */
 	public function setVirtualShowOrder($virtualShowOrder) {
 		$this->virtualShowOrder = $virtualShowOrder;
+	}
+	
+	/**
+	 * Returns true if an edit button should be displayed for this box.
+	 * 
+	 * @return      boolean
+	 * @since       3.2
+	 */
+	public function showEditButton() {
+		if (WCF::getSession()->getPermission('admin.content.cms.canManageBox') && in_array($this->position, $this->editButtonPositions)) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**
