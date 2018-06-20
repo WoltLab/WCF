@@ -429,9 +429,7 @@ class StyleAddForm extends AbstractForm {
 		}
 		
 		if (empty($_POST)) {
-			$this->authorName = WCF::getUser()->username;
-			$this->styleDate = gmdate('Y-m-d', TIME_NOW);
-			$this->styleVersion = '1.0.0';
+			$this->setDefaultValues();
 		}
 	}
 	
@@ -566,7 +564,7 @@ class StyleAddForm extends AbstractForm {
 		// reset variables
 		$this->authorName = $this->authorURL = $this->copyright = $this->packageName = '';
 		$this->license = $this->styleDate = $this->styleDescription = $this->styleName = $this->styleVersion = '';
-		
+		$this->setDefaultValues();
 		$this->imagePath = 'images/';
 		$this->isTainted = true;
 		$this->templateGroupID = 0;
@@ -609,5 +607,11 @@ class StyleAddForm extends AbstractForm {
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
 		]);
+	}
+	
+	protected function setDefaultValues() {
+		$this->authorName = WCF::getUser()->username;
+		$this->styleDate = gmdate('Y-m-d', TIME_NOW);
+		$this->styleVersion = '1.0.0';
 	}
 }
