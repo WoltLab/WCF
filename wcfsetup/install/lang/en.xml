@@ -3120,6 +3120,9 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.message.error.tooLong"><![CDATA[The message is too long, must be under {#$maxTextLength} characters.]]></item>
 		<item name="wcf.message.status.deleted"><![CDATA[Deleted]]></item>
 		<item name="wcf.message.status.disabled"><![CDATA[Disabled]]></item>
+		<item name="wcf.message.toc"><![CDATA[Contents]]></item>
+		<item name="wcf.message.toc.hide"><![CDATA[hide]]></item>
+		<item name="wcf.message.toc.show"><![CDATA[show]]></item>
 	</category>
 	
 	<category name="wcf.menu">

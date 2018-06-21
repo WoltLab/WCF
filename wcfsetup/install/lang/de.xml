@@ -3174,6 +3174,9 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.message.error.tooLong"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht ist zu lang. Es stehen maximal {#$maxTextLength} Zeichen zur Verfügung.]]></item>
 		<item name="wcf.message.status.deleted"><![CDATA[Gelöscht]]></item>
 		<item name="wcf.message.status.disabled"><![CDATA[Deaktiviert]]></item>
+		<item name="wcf.message.toc"><![CDATA[Inhaltsverzeichnis]]></item>
+		<item name="wcf.message.toc.hide"><![CDATA[Verbergen]]></item>
+		<item name="wcf.message.toc.show"><![CDATA[Anzeigen]]></item>
 	</category>
 	
 	<category name="wcf.menu">
