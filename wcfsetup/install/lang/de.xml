@@ -1444,6 +1444,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.module_user_cover_photo"><![CDATA[Titelbilder aktivieren]]></item>
 		<item name="wcf.acp.option.module_user_cover_photo.description"><![CDATA[Aktiviert die Darstellung und die Verwaltung von Titelbildern.]]></item>
 		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Bilder von externen Seiten erlauben]]></item>
+		<item name="wcf.acp.option.message_enable_toc"><![CDATA[Inhaltsverzeichnisse aktivieren]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">

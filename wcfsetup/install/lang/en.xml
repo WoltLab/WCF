@@ -1437,6 +1437,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.module_user_cover_photo"><![CDATA[Enable user cover photos]]></item>
 		<item name="wcf.acp.option.module_user_cover_photo.description"><![CDATA[Enables the display and upload of user profile cover photos.]]></item>
 		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Allow images from external sites]]></item>
+		<item name="wcf.acp.option.message_enable_toc"><![CDATA[Enable the table of contents]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">

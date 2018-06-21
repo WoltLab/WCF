@@ -1500,6 +1500,12 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<minvalue>0</minvalue>
 				<maxvalue>255</maxvalue>
 			</option>
+			
+			<option name="message_enable_toc">
+				<categoryname>message.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<!-- /message.general -->
 			
 			<option name="search_results_per_page">

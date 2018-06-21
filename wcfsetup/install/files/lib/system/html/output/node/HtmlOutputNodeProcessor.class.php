@@ -179,7 +179,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 */
 	public function getHtml() {
 		$toc = '';
-		if ($this->getHtmlProcessor()->enableToc && $this->outputType === 'text/html') {
+		if (MESSAGE_ENABLE_TOC && $this->getHtmlProcessor()->enableToc && $this->outputType === 'text/html') {
 			$context = $this->getHtmlProcessor()->getContext();
 			$idPrefix = substr(sha1($context['objectType'] . '-' . $context['objectID']), 0, 8);
 			
