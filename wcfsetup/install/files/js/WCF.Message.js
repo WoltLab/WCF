@@ -1086,6 +1086,16 @@ if (COMPILER_TARGET_DEFAULT) {
 		_quoteManager: null,
 		
 		/**
+		 * @var {?int}
+		 */
+		_selectionChangeTimer: null,
+		
+		/**
+		 * @var {boolean}
+		 */
+		_isMouseDown: false,
+		
+		/**
 		 * Initializes the quote handler for given object type.
 		 *
 		 * @param        {WCF.Message.Quote.Manager}        quoteManager
@@ -1116,6 +1126,8 @@ if (COMPILER_TARGET_DEFAULT) {
 			this._proxy = new WCF.Action.Proxy({
 				success: $.proxy(this._success, this)
 			});
+			this._selectionChangeTimer = null;
+			this._isMouseDown = false;
 			
 			this._initContainers();
 			
@@ -1123,6 +1135,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			this._initCopyQuote(supportDirectInsert);
 			
 			$(document).mouseup($.proxy(this._mouseUp, this));
+			document.addEventListener('selectionchange', this._selectionchange.bind(this));
 			
 			// register with quote manager
 			this._quoteManager = quoteManager;
@@ -1152,11 +1165,40 @@ if (COMPILER_TARGET_DEFAULT) {
 					}
 					
 					$container.mousedown($.proxy(self._mouseDown, self));
+					$container[0].classList.add('jsQuoteMessageContainer');
 					
 					// bind event to quote whole message
 					self._containers[$containerID].find('.jsQuoteMessage').click($.proxy(self._saveFullQuote, self));
 				}
 			});
+		},
+		
+		_selectionchange: function () {
+			if (this._isMouseDown) {
+				return;
+			}
+			
+			if (this._activeContainerID === '') {
+				// check if the selection is non-empty and is entirely contained
+				// inside a single message container that is registered for quoting
+				var selection = window.getSelection();
+				if (selection.rangeCount !== 1 || selection.isCollapsed) {
+					return;
+				}
+				
+				var range = selection.getRangeAt(0);
+				var startContainer = elClosest(range.startContainer, '.jsQuoteMessageContainer');
+				var endContainer = elClosest(range.endContainer, '.jsQuoteMessageContainer');
+				if (startContainer && startContainer === endContainer && !startContainer.classList.contains('jsInvalidQuoteTarget')) {
+					this._activeContainerID = startContainer.id;
+				}
+			}
+			
+			if (this._selectionChangeTimer !== null) {
+				window.clearTimeout(this._selectionChangeTimer);
+			}
+			
+			this._selectionChangeTimer = window.setTimeout(this._mouseUp.bind(this), 100);
 		},
 		
 		/**
@@ -1169,6 +1211,13 @@ if (COMPILER_TARGET_DEFAULT) {
 			this._copyQuote.removeClass('active');
 			
 			this._activeContainerID = (event.currentTarget.classList.contains('jsInvalidQuoteTarget')) ? '' : event.currentTarget.id;
+			
+			if (this._selectionChangeTimer !== null) {
+				window.clearTimeout(this._selectionChangeTimer);
+				this._selectionChangeTimer = null;
+			}
+			
+			this._isMouseDown = true;
 		},
 		
 		/**
@@ -1265,8 +1314,20 @@ if (COMPILER_TARGET_DEFAULT) {
 		
 		/**
 		 * Handles the mouse up event.
+		 * 
+		 * @param       {?$.Event}      event
 		 */
-		_mouseUp: function () {
+		_mouseUp: function (event) {
+			if (event && event.originalEvent instanceof Event) {
+				if (this._selectionChangeTimer !== null) {
+					// prevent collisions of the `selectionchange` and the `mouseup` event
+					window.clearTimeout(this._selectionChangeTimer);
+					this._selectionChangeTimer = null;
+				}
+				
+				this._isMouseDown = false;
+			}
+			
 			// ignore event
 			if (this._activeContainerID === '') {
 				this._copyQuote.removeClass('active');
@@ -1300,7 +1361,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			
 			var $selection = this._getSelectedText();
 			var $text = $.trim($selection);
-			if ($text == '') {
+			if ($text === '') {
 				this._copyQuote.removeClass('active');
 				
 				return;
@@ -1330,19 +1391,25 @@ if (COMPILER_TARGET_DEFAULT) {
 			var $left = ($coordinates.right - $coordinates.left) / 2 - ($dimensions.width / 2) + $coordinates.left;
 			
 			this._copyQuote.css({
-				top: $coordinates.top - $dimensions.height - 7 + 'px',
+				top: $coordinates.bottom + 7 + 'px',
 				left: $left + 'px'
 			});
 			this._copyQuote.removeClass('active');
 			
-			// reset containerID
-			this._activeContainerID = '';
+			if (this._selectionChangeTimer === null) {
+				// reset containerID
+				this._activeContainerID = '';
+			}
+			else {
+				window.clearTimeout(this._selectionChangeTimer);
+				this._selectionChangeTimer = null;
+			}
 			
 			// show element after a delay, to prevent display if text was unmarked again (clicking into marked text)
 			var self = this;
 			window.setTimeout(function () {
 				var $text = $.trim(self._getSelectedText());
-				if ($text != '') {
+				if ($text !== '') {
 					self._copyQuote.addClass('active');
 					self._message = $text;
 					self._objectID = $objectID;
@@ -1372,10 +1439,12 @@ if (COMPILER_TARGET_DEFAULT) {
 				// the coordinates returned by getBoundingClientRect() are relative to the viewport, not the document!
 				var $rect = selection.getRangeAt(0).getBoundingClientRect();
 				
+				var scrollTop = $(document).scrollTop();
 				$coordinates = {
+					bottom: $rect.bottom + scrollTop,
 					left: $rect.left,
 					right: $rect.right,
-					top: $rect.top + $(document).scrollTop()
+					top: $rect.top + scrollTop
 				};
 			}
 			
