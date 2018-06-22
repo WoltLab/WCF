@@ -3,14 +3,22 @@
 		{foreach from=$objects item=message}
 			<li>
 				<div class="box48">
-					{if $message->getUserProfile()}
-						{if $message->getUserProfile()->userID}
-							<a href="{link controller='User' object=$message->getUserProfile()}{/link}" title="{$message->getUserProfile()->username}">{@$message->getUserProfile()->getAvatar()->getImageTag(48)}</a>
+					{assign var=_messageObjectHash value=$message|spl_object_hash}
+					{assign var=_messageCustomIcon value=$customIcons[$_messageObjectHash]}
+					{if $_messageCustomIcon === ''}
+						{if $message->getUserProfile()}
+							{if $message->getUserProfile()->userID}
+								<a href="{link controller='User' object=$message->getUserProfile()}{/link}" title="{$message->getUserProfile()->username}">{@$message->getUserProfile()->getAvatar()->getImageTag(48)}</a>
+							{else}
+								<p>{@$message->getUserProfile()->getAvatar()->getImageTag(48)}</p>
+							{/if}
 						{else}
-							<p>{@$message->getUserProfile()->getAvatar()->getImageTag(48)}</p>
+							<p><span class="icon icon48 fa-file-o"></span></p>
 						{/if}
+					{elseif $_messageCustomIcon|strpos:'fa-' === 0}
+						<p><span class="icon icon48 {$_messageCustomIcon}"></span></p>
 					{else}
-						<p><span class="icon icon48 fa-file-o"></span></p>
+						<p><img src="{$_messageCustomIcon}" style="width: 48px; height: 48px" alt=""></p>
 					{/if}
 					
 					<div>
