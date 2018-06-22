@@ -107,7 +107,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator {
 		$element = $this;
 		$i = 0;
 		
-		while ($element->getParent()->getParent() != null && $element->isLastSibling()) {
+		while ($element->getParent()->getParent() !== null && $element->isLastSibling()) {
 			$i++;
 			$element = $element->getParent();
 		}

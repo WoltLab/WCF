@@ -2,7 +2,7 @@
 	<div class="tableOfContentsContainer open mobileForceHide" id="tocContainer-{$idPrefix}">
 		<div class="tableOfContentsHeader">
 			<span class="tableOfContentsTitle">{lang}wcf.message.toc{/lang}</span>
-			[<a href="#" class="jsOnly jsTableOfContentsHide">{lang}wcf.message.toc.hide{/lang}</a><a href="#" class="jsOnly jsTableOfContentsShow">{lang}wcf.message.toc.show{/lang}</a>]
+			<span class="jsOnly">[<a href="#" class="jsTableOfContentsHide">{lang}wcf.message.toc.hide{/lang}</a><a href="#" class="jsTableOfContentsShow">{lang}wcf.message.toc.show{/lang}</a>]</span>
 		</div>
 		<ol class="tableOfContents tocLevel1">
 			{foreach from=$items item=item}
