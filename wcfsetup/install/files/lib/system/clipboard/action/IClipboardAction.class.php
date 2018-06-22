@@ -45,4 +45,13 @@ interface IClipboardAction {
 	 * @return	string
 	 */
 	public function getEditorLabel(array $objects);
+	
+	/**
+	 * Returns the list of action names that should trigger a page reload once they
+	 * have been executed.
+	 * 
+	 * @return      string[]
+	 * @since       3.2
+	 */
+	public function getReloadPageOnSuccess();
 }
