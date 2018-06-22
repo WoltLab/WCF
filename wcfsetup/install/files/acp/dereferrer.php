@@ -1,28 +1,6 @@
 <?php
-/**
- * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core
- */
-// @codingStandardsIgnoreFile
-// get url
-$url = '';
-if (isset($_GET['url'])) $url = htmlspecialchars(str_replace(';', '%3B', trim($_GET['url'])));
-if (empty($url)) exit;
-// check url
-$testURL = preg_replace('/[^a-z0-9:\/]+/', '', strtolower($url));
-if (strpos($testURL, 'script:') !== false || !preg_match('~^https?://~', $testURL)) {
-	exit;
-}
+header("HTTP/1.0 410 Gone");
 ?>
-<!DOCTYPE html>
-<html dir="ltr" lang="en">
-<head>
-	<title>Dereferrer</title>
-	<meta http-equiv="refresh" content="0;URL=<?php echo $url; ?>">
-</head>
-<body>
-	<p><a href="<?php echo $url; ?>"><?php echo $url; ?></a></p>
-</body>
-</html>
+The <kbd>dereferrer.php</kbd> service is no longer available. Please adjust your links to redirect to the target destination directly.<br>
+<br>
+You can learn more about this change at <a href="https://github.com/WoltLab/WCF/issues/2557">https://github.com/WoltLab/WCF/issues/2557</a>.

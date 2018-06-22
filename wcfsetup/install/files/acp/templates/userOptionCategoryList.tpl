@@ -46,7 +46,11 @@
 					<tr class="jsCategoryRow">
 						<td class="columnIcon">
 							<a href="{link controller='UserOptionCategoryEdit' id=$category->categoryID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$category->categoryID}" data-confirm-message-html="{lang __encode="true"}wcf.acp.user.option.category.delete.sure{/lang}"></span>
+							{if $category->userOptions > 0}
+								<span class="icon icon16 fa-times disabled"></span>
+							{else}
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$category->categoryID}" data-confirm-message-html="{lang __encode="true"}wcf.acp.user.option.category.delete.sure{/lang}"></span>
+							{/if}
 							
 							{event name='rowButtons'}
 						</td>

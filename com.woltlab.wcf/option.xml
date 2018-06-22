@@ -328,12 +328,6 @@
 				<defaultvalue>1</defaultvalue>
 			</option>
 			
-			<option name="module_attachment">
-				<categoryname>module.content</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			
 			<option name="module_smiley">
 				<categoryname>module.customization</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1506,6 +1500,12 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<minvalue>0</minvalue>
 				<maxvalue>255</maxvalue>
 			</option>
+			
+			<option name="message_enable_toc">
+				<categoryname>message.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<!-- /message.general -->
 			
 			<option name="search_results_per_page">
@@ -1673,34 +1673,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 	</import>
 	
 	<delete>
-		<option name="cache_source_memcached_use_pconnect" />
-		<option name="http_enable_no_cache_headers" />
-		<option name="http_gzip_level" />
-		<option name="enable_pluginstore_widget" />
-		<option name="mail_use_formatted_address" />
-		<option name="mail_debug_logfile_path" />
-		<option name="recent_activity_items" />
-		<option name="recent_activity_sidebar_items" />
-		<option name="enable_bbcodes_default_value" />
-		<option name="enable_html_default_value" />
-		<option name="enable_smilies_default_value" />
-		<option name="pre_parse_default_value" />
-		<option name="show_signature_default_value" />
-		<option name="module_dashboard_page" />
-		<option name="module_privacy_policy_page" />
-		<option name="show_clock" />
-		<option name="url_controller_replacement" />
-		<option name="share_buttons_show_count" />
-		<option name="max_avatar_width" />
-		<option name="max_avatar_height" />
-		<option name="message_sidebar_enable_rank" /> 
-		<option name="message_sidebar_enable_avatar" />
-		<option name="message_sidebar_enable_message_group_starter_icon" />
-		<option name="jquery_source" />
-		
-		<optioncategory name="dashboard.content.recentActivities" />
-		<optioncategory name="dashboard.sidebar.recentActivities" />
-		<optioncategory name="module.display" />
-		<optioncategory name="general.system.jquery" />
+		<option name="module_attachment" />
 	</delete>
 </data>

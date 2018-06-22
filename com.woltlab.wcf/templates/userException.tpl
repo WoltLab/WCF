@@ -9,7 +9,7 @@
 {include file='header' __disableAds=true}
 
 <div class="section">
-	<p id="errorMessage">
+	<p id="errorMessage" class="fullPageErrorMessage" data-exception-class-name="{$exceptionClassName}">
 		{@$message}
 	</p>
 </div>

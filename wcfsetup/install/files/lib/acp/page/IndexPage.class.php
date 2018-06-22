@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace wcf\acp\page;
 use wcf\page\AbstractPage;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\request\LinkHandler;
@@ -76,11 +77,45 @@ class IndexPage extends AbstractPage {
 			);
 		}
 		
+		$evaluationExpired = $evaluationPending = [];
+		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			if ($application->getPackage()->package === 'com.woltlab.wcf') {
+				continue;
+			}
+			
+			$app = WCF::getApplicationObject($application);
+			$endDate = $app->getEvaluationEndDate();
+			if ($endDate) {
+				if ($endDate < TIME_NOW) {
+					$pluginStoreFileID = $app->getEvaluationPluginStoreID();
+					$isWoltLab = false;
+					if ($pluginStoreFileID === 0 && strpos($application->getPackage()->package, 'com.woltlab.') === 0) {
+						$isWoltLab = true;
+					}
+					
+					$evaluationExpired[] = [
+						'packageName' => $application->getPackage()->getName(),
+						'isWoltLab' => $isWoltLab,
+						'pluginStoreFileID' => $pluginStoreFileID
+					];
+				}
+				else {
+					if (!isset($evaluationPending[$endDate])) {
+						$evaluationPending[$endDate] = [];
+					}
+					
+					$evaluationPending[$endDate][] = $application->getPackage()->getName();
+				}
+			}
+		}
+		
 		WCF::getTPL()->assign([
 			'recaptchaWithoutKey' => $recaptchaWithoutKey,
 			'recaptchaKeyLink' => $recaptchaKeyLink,
 			'server' => $this->server,
-			'usersAwaitingApproval' => $usersAwaitingApproval
+			'usersAwaitingApproval' => $usersAwaitingApproval,
+			'evaluationExpired' => $evaluationExpired,
+			'evaluationPending' => $evaluationPending
 		]);
 	}
 	

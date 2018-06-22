@@ -950,3 +950,28 @@
 		}
 	}
 }
+
+.boxWithEditButton {
+	position: relative;
+	
+	&:hover .boxEditButton {
+		opacity: 1;
+	}
+	
+	.boxEditButton {
+		color: inherit;
+		opacity: 0;
+		position: absolute;
+		top: 4px;
+		transition: opacity .12s ease-in-out;
+		right: 4px;
+		
+		&:hover {
+			color: inherit;
+		}
+		
+		> .icon {
+			color: inherit;
+		}
+	}
+}

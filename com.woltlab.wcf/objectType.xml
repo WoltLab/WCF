@@ -69,6 +69,7 @@
 		<type>
 			<name>com.woltlab.wcf.article.content</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
+			<enableToc>1</enableToc>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.article</name>

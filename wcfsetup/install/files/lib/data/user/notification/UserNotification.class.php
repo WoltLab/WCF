@@ -48,7 +48,7 @@ class UserNotification extends DatabaseObject {
 	protected function handleData($data) {
 		parent::handleData($data);
 		
-		$this->data['additionalData'] = @unserialize($this->data['additionalData']);
+		$this->data['additionalData'] = @unserialize($this->data['additionalData'] ?: '');
 		if (!is_array($this->data['additionalData'])) {
 			$this->data['additionalData'] = [];
 		}

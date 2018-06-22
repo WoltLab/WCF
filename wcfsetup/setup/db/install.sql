@@ -396,7 +396,7 @@ CREATE TABLE wcf1_comment (
 	time INT(10) NOT NULL DEFAULT '0',
 	userID INT(10),
 	username VARCHAR(255) NOT NULL,
-	message TEXT NOT NULL,
+	message MEDIUMTEXT NOT NULL,
 	responses MEDIUMINT(7) NOT NULL DEFAULT '0',
 	responseIDs VARCHAR(255) NOT NULL DEFAULT '',
 	unfilteredResponses MEDIUMINT(7) NOT NULL DEFAULT '0',
@@ -415,7 +415,7 @@ CREATE TABLE wcf1_comment_response (
 	time INT(10) NOT NULL DEFAULT '0',
 	userID INT(10),
 	username VARCHAR(255) NOT NULL,
-	message TEXT NOT NULL,
+	message MEDIUMTEXT NOT NULL,
 	enableHtml TINYINT(1) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	

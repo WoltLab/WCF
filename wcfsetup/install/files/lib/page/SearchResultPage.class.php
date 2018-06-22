@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace wcf\page;
+use wcf\data\search\ICustomIconSearchResultObject;
 use wcf\data\search\ISearchResultObject;
 use wcf\data\search\Search;
 use wcf\system\application\ApplicationHandler;
@@ -20,6 +21,12 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Page
  */
 class SearchResultPage extends MultipleLinkPage {
+	/**
+	 * list of custom icons per message
+	 * @var string[]
+	 */
+	public $customIcons = [];
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -144,7 +151,13 @@ class SearchResultPage extends MultipleLinkPage {
 					throw new ImplementationException(get_class($message), ISearchResultObject::class);
 				}
 				
+				$customIcon = '';
+				if ($message instanceof ICustomIconSearchResultObject) {
+					$customIcon = $message->getCustomSearchResultIcon();
+				}
+				
 				$this->messages[] = $message;
+				$this->customIcons[spl_object_hash($message)] = $customIcon;
 			}
 		}
 	}
@@ -171,7 +184,8 @@ class SearchResultPage extends MultipleLinkPage {
 			'resultListTemplateName' => $this->resultListTemplateName,
 			'resultListApplication' => $this->resultListApplication,
 			'application' => ApplicationHandler::getInstance()->getAbbreviation(ApplicationHandler::getInstance()->getActiveApplication()->packageID),
-			'searchPreselectObjectType' => $searchPreselectObjectType
+			'searchPreselectObjectType' => $searchPreselectObjectType,
+			'customIcons' => $this->customIcons
 		]);
 	}
 	

@@ -113,13 +113,13 @@ class WCF {
 	 * database object
 	 * @var	MySQLDatabase
 	 */
-	protected static $dbObj = null;
+	protected static $dbObj;
 	
 	/**
 	 * language object
 	 * @var	\wcf\data\language\Language
 	 */
-	protected static $languageObj = null;
+	protected static $languageObj;
 	
 	/**
 	 * overrides disabled debug mode
@@ -131,19 +131,19 @@ class WCF {
 	 * session object
 	 * @var	SessionHandler
 	 */
-	protected static $sessionObj = null;
+	protected static $sessionObj;
 	
 	/**
 	 * template object
 	 * @var	TemplateEngine
 	 */
-	protected static $tplObj = null;
+	protected static $tplObj;
 	
 	/**
 	 * true if Zend Opcache is loaded and enabled
 	 * @var	boolean
 	 */
-	protected static $zendOpcacheEnabled = null;
+	protected static $zendOpcacheEnabled;
 	
 	/**
 	 * force logout during destructor call
@@ -356,6 +356,10 @@ class WCF {
 	 * Loads the options file, automatically created if not exists.
 	 */
 	protected function loadOptions() {
+		// the attachment module is always enabled since 3.2
+		// https://github.com/WoltLab/WCF/issues/2531
+		define('MODULE_ATTACHMENT', 1);
+		
 		$filename = WCF_DIR.'options.inc.php';
 		
 		// create options file if doesn't exist

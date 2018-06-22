@@ -6,6 +6,8 @@ use wcf\system\bbcode\KeywordHighlighter;
 use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\html\node\IHtmlNode;
+use wcf\system\html\output\HtmlOutputProcessor;
+use wcf\system\html\toc\HtmlToc;
 use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
 
@@ -17,6 +19,7 @@ use wcf\util\StringUtil;
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
+ * @method      HtmlOutputProcessor     getHtmlProcessor()
  */
 class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	/**
@@ -175,7 +178,15 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * @inheritDoc
 	 */
 	public function getHtml() {
-		$html = parent::getHtml();
+		$toc = '';
+		if (MESSAGE_ENABLE_TOC && $this->getHtmlProcessor()->enableToc && $this->outputType === 'text/html') {
+			$context = $this->getHtmlProcessor()->getContext();
+			$idPrefix = substr(sha1($context['objectType'] . '-' . $context['objectID']), 0, 8);
+			
+			$toc = HtmlToc::forMessage($this->getDocument(), $idPrefix);
+		}
+		
+		$html = $toc . parent::getHtml();
 		
 		if ($this->outputType === 'text/plain') {
 			$html = StringUtil::trim($html);

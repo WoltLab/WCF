@@ -52,7 +52,7 @@
 						</dl>
 						<dl class="plain inlineDataList">
 							<dt>{lang}wcf.acp.style.authorName{/lang}</dt>
-							<dd>{if $style->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$style->authorURL}">{$style->authorName}</a>{else}{$style->authorName}{/if}</dd>
+							<dd>{if $style->authorURL}<a href="{$style->authorURL}">{$style->authorName}</a>{else}{$style->authorName}{/if}</dd>
 						</dl>
 						<nav class="jsMobileNavigation buttonGroupNavigation">
 							<ul class="buttonList iconList" data-style-id="{@$style->styleID}">
