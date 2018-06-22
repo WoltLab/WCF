@@ -201,7 +201,15 @@ define(['Dictionary', 'EventHandler', 'Language'], function (Dictionary, EventHa
 		 */
 		_globalDrop: function (event) {
 			if (event.target.closest('.redactor-layer') === null) {
-				event.preventDefault();
+				var eventData = { cancelDrop: true, event: event };
+				_dragArea.forEach(function(data) {
+					//noinspection JSUnresolvedVariable
+					EventHandler.fire('com.woltlab.wcf.redactor2', 'dragAndDrop_globalDrop_' + data.editor.$element[0].id, eventData);
+				});
+				
+				if (eventData.cancelDrop) {
+					event.preventDefault();
+				}
 			}
 			
 			this._dragLeave(event);
