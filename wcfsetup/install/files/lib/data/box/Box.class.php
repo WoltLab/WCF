@@ -144,7 +144,7 @@ class Box extends DatabaseObject {
 		
 		// handle condition data
 		if ($data['additionalData'] !== null) {
-			$this->data['additionalData'] = @unserialize($data['additionalData']);
+			$this->data['additionalData'] = @unserialize($data['additionalData'] ?: '');
 		}
 		if (!is_array($this->data['additionalData'])) {
 			$this->data['additionalData'] = [];
