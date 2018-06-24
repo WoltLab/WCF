@@ -136,7 +136,6 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				})),
 			
 			ClassNameFormField::create()
-				->objectProperty('__value')
 				->required()
 				->implementedInterface(IPackageInstallationPlugin::class)
 		]);

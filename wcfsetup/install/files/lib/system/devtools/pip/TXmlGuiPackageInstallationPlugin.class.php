@@ -315,7 +315,7 @@ XML;
 	 * Adds the data of the pip entry with the given identifier into the
 	 * given form and returns `true`. If no entry with the given identifier
 	 * exists, `false` is returned.
-	 *
+	 * 
 	 * @param	string			$identifier
 	 * @param	IFormDocument		$document
 	 * @return	bool
@@ -328,27 +328,22 @@ XML;
 			return false;
 		}
 		
-		$data = [];
-		/** @var \DOMNode $attribute */
-		foreach ($element->attributes as $attribute) {
-			$data[$attribute->nodeName] = $attribute->nodeValue;
-		}
-		foreach ($element->childNodes as $childNode) {
-			if ($childNode instanceof \DOMText) {
-				$data['__value'] = $childNode->nodeValue;
-			}
-			else {
-				$data[$childNode->nodeName] = $childNode->nodeValue;
-			}
-		}
+		$data = $this->getElementData($element);
 		
 		/** @var IFormNode $node */
 		foreach ($document->getIterator() as $node) {
 			if ($node instanceof IFormField && $node->isAvailable()) {
-				$key = $node->getObjectProperty();
+				$key = $node->getId();
 				
 				if (isset($data[$key])) {
 					$node->value($data[$key]);
+				}
+				else if ($node->getObjectProperty() !== $node->getId()) {
+					$key = $node->getObjectProperty();
+					
+					if (isset($data[$key])) {
+						$node->value($data[$key]);
+					}
 				}
 			}
 		}

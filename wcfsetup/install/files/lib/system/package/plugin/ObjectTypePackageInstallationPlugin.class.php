@@ -178,7 +178,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		
 		$className = $element->getElementsByTagName('classname')->item(0);
 		if ($className) {
-			$data['classname'] = $className->nodeValue;
+			$data['className'] = $className->nodeValue;
 		}
 		
 		$additionalData = [];
@@ -206,17 +206,16 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$list->readObjects();
 		
 		foreach ($list as $definition) {
-			$this->definitionNames[$definition->definitionName] = $definition->definitionName;
+			$this->definitionNames[$definition->definitionID] = $definition->definitionName;
 			
 			if ($definition->interfaceName) {
-				$this->definitionNamesWithInterface[$definition->definitionName] = $definition->interfaceName;
+				$this->definitionNamesWithInterface[$definition->definitionID] = $definition->interfaceName;
 			}
 		}
 		
 		// add default form fields
 		$form->getNodeById('data')->appendChildren([
-			SingleSelectionFormField::create('definitionName')
-				->objectProperty('definitionname')
+			SingleSelectionFormField::create('definitionID')
 				->label('wcf.acp.pip.objectType.definitionName')
 				->description('<!-- will be replaced by JavaScript -->')
 				->options($this->definitionNames)
@@ -229,10 +228,12 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 				->required()
 				->addValidator(self::getObjectTypeAlikeValueValidator('wcf.acp.pip.objectType.objectType'))
 				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
-					$definitionName = $formField->getDocument()->getNodeById('definitionName')->getValue();
-					if ($definitionName) {
+					$definitionID = $formField->getDocument()->getNodeById('definitionID')->getValue();
+					if ($definitionID) {
+						$definition = ObjectTypeCache::getInstance()->getDefinition($definitionID);
+						
 						$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName(
-							ObjectTypeCache::getInstance()->getDefinitionByName($definitionName)->definitionName,
+							$definition->definitionName,
 							$formField->getValue()
 						);
 						
@@ -242,7 +243,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 						if ($objectType !== null && (
 								$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
 								$this->editedEntry->getElementsByTagName('name')->item(0)->nodeValue !== $formField->getValue() ||
-								$this->editedEntry->getElementsByTagName('definitionname')->item(0)->nodeValue !== $definitionName
+								$this->editedEntry->getElementsByTagName('definitionname')->item(0)->nodeValue !== $definition->definitionName
 							)) {
 							$formField->addValidationError(
 								new FormFieldValidationError(
@@ -259,9 +260,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 				->description('<!-- will be replaced by JavaScript -->')
 				->required()
 				->addValidator(new FormFieldValidator('implementsInterface', function(TextFormField $formField) {
-					$definitionName = $formField->getDocument()->getNodeById('definitionName')->getValue();
-					if ($definitionName) {
-						$definition = ObjectTypeCache::getInstance()->getDefinitionByName($definitionName);
+					$definitionID = $formField->getDocument()->getNodeById('definitionID')->getValue();
+					if ($definitionID) {
+						$definition = ObjectTypeCache::getInstance()->getDefinition($definitionID);
 						
 						if (!is_subclass_of($formField->getValue(), $definition->interfaceName)) {
 							$formField->addValidationError(
@@ -277,12 +278,12 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		]);
 		
 		/** @var SingleSelectionFormField $definitionName */
-		$definitionName = $form->getNodeById('definitionName');
+		$definitionID = $form->getNodeById('definitionID');
 		
 		// add general field dependencies
 		$form->getNodeById('className')->addDependency(
-			ValueFormFieldDependency::create('definitionName')
-				->field($definitionName)
+			ValueFormFieldDependency::create('definitionID')
+				->field($definitionID)
 				->values(array_keys($this->definitionNamesWithInterface))
 		);
 		
@@ -646,15 +647,15 @@ XML;
 	 */
 	public function getObjectTypeDefinitionDataContainer(IFormDocument $form, string $definitionName): FormContainer {
 		/** @var SingleSelectionFormField $definitionNameField */
-		$definitionNameField = $form->getNodeById('definitionName');
+		$definitionIDField = $form->getNodeById('definitionID');
 		
 		$definitionPieces = explode('.', $definitionName);
 		
 		$formContainer = FormContainer::create(lcfirst(implode('', array_map('ucfirst', $definitionPieces))) . 'Fields')
 			->label('wcf.acp.pip.objectType.' . $definitionName . '.data.title')
 			->addDependency(
-				ValueFormFieldDependency::create('definitionName')
-					->field($definitionNameField)
+				ValueFormFieldDependency::create('definitionID')
+					->field($definitionIDField)
 					->values([$definitionName])
 			);
 		
@@ -723,6 +724,11 @@ XML;
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
 		$type = $document->createElement('type');
 		foreach ($form->getData()['data'] as $key => $value) {
+			if ($key === 'definitionID') {
+				$key = 'definitionname';
+				$value = ObjectTypeCache::getInstance()->getDefinition($value)->definitionName;
+			}
+			
 			if ($value !== '') {
 				if (is_string($value)) {
 					$type->appendChild($document->createElement($key, $this->getAutoCdataValue($value)));
