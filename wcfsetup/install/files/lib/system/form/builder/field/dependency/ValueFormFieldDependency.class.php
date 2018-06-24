@@ -13,6 +13,13 @@ namespace wcf\system\form\builder\field\dependency;
  */
 class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	/**
+	 * is `true` if the field value may not have any of the set values and otherwise
+	 * `false`
+	 * @var	bool
+	 */
+	protected $__isNegated = false;
+	
+	/**
 	 * possible values the field may have for the dependency to be met
 	 * @var	null|array
 	 */
@@ -27,7 +34,13 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	 * @inheritDoc
 	 */
 	public function checkDependency(): bool {
-		return in_array($this->getField()->getValue(), $this->getValues());
+		$inArray = in_array($this->getField()->getValue(), $this->getValues());
+		
+		if ($this->isNegated()) {
+			return !$inArray;
+		}
+		
+		return $inArray;
 	}
 	
 	/**
@@ -43,6 +56,28 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 		}
 		
 		return $this->__values;
+	}
+	
+	/**
+	 * Returns `true` if the field value may not have any of the set values and
+	 * otherwise `false`.
+	 * 
+	 * @return	bool
+	 */
+	public function isNegated(): bool {
+		return $this->__isNegated;
+	}
+	
+	/**
+	 * Sets if the field value may not have any of the set values.
+	 * 
+	 * @param	bool		$negate
+	 * @return	static		$this		this dependency
+	 */
+	public function negate(bool $negate = true): ValueFormFieldDependency {
+		$this->__isNegated = $negate;
+		
+		return $this;
 	}
 	
 	/**
