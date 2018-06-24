@@ -59,16 +59,18 @@
 	}
 }
 
-.specialTrophyContainer > ul {
-	display: flex;
-	margin-top: 5px;
-	justify-content: center;
+.specialTrophyContainer {
+	margin-top: 10px;
 	
-	> li:not(:last-child) {
-		margin-right: 5px;
+	> ul {
+		display: flex;
+		justify-content: center;
+		
+		> li:not(:last-child) {
+			margin-right: 5px;
+		}
 	}
 }
-
 
 @include screen-sm-down {
 	.specialTrophyContainer {
