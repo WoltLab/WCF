@@ -14,8 +14,10 @@ define(['./Abstract', 'Core', './Manager'], function(Abstract, Core, Manager) {
 	/**
 	 * @constructor
 	 */
-	function Value(dependentElementId, fieldId) {
+	function Value(dependentElementId, fieldId, isNegated) {
 		this.init(dependentElementId, fieldId);
+		
+		this._isNegated = false;
 	};
 	Core.inherit(Value, Abstract, {
 		/**
@@ -53,20 +55,43 @@ define(['./Abstract', 'Core', './Manager'], function(Abstract, Core, Manager) {
 			// do not use `Array.prototype.indexOf()` as we use a weak comparision
 			for (var i = 0, length = this._values.length; i < length; i++) {
 				if (this._values[i] == value) {
+					if (this._isNegated) {
+						return false;
+					}
+					
 					return true;
 				}
+			}
+			
+			if (this._isNegated) {
+				return true;
 			}
 			
 			return false;
 		},
 		
 		/**
+		 * Sets if the field value may not have any of the set values.
+		 * 
+		 * @param	{bool}		negate
+		 * @return	{WoltLabSuite/Core/Form/Builder/Field/Dependency/Value}
+		 */
+		negate: function(negate) {
+			this._isNegated = negate;
+			
+			return this;
+		},
+		
+		/**
 		 * Sets the possible values the field may have for the dependency to be met.
 		 * 
 		 * @param	{array}		values
+		 * @return	{WoltLabSuite/Core/Form/Builder/Field/Dependency/Value}
 		 */
 		values: function(values) {
 			this._values = values;
+			
+			return this;
 		}
 	});
 	
