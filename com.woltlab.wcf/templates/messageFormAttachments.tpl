@@ -10,7 +10,7 @@
 				
 				<div>
 					<div>
-						<p><a href="{link controller='Attachment' object=$attachment}{/link}"{if $attachment->isImage} title="{$attachment->filename}" class="jsImageViewer"{/if}>{$attachment->filename}</a></p>
+						<p><a href="{link controller='Attachment' object=$attachment}{/link}" target="_blank"{if $attachment->isImage} title="{$attachment->filename}" class="jsImageViewer"{/if}>{$attachment->filename}</a></p>
 						<small>{@$attachment->filesize|filesize}</small>
 					</div>
 					

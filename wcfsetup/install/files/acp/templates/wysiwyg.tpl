@@ -26,7 +26,7 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabHtml.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabImage.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabIndent.js?v={@LAST_UPDATE_TIME}',
-			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInlineCode.js?v={@LAST_UPDATE_TIME}',
+			//'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInlineCode.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabInsert.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabKeydown.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabKeyup.js?v={@LAST_UPDATE_TIME}',
@@ -135,11 +135,11 @@
 			
 			var config = {
 				buttons: buttons,
-				clipboardImageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
+				clipboardImageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('attach')}true{else}false{/if},
 				direction: '{lang}wcf.global.pageDirection{/lang}',
 				formatting: ['p', 'h2', 'h3', 'h4'],
 				imageCaption: false,
-				imageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
+				imageUpload: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('attach')}true{else}false{/if},
 				lang: 'wsc', // fake language to offload phrases
 				langs: {
 					wsc: {
@@ -188,7 +188,7 @@
 				linkify: false,
 				linkSize: 0xBADC0DED, // some random value to disable truncating
 				minHeight: 200,
-				pasteImages: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
+				pasteImages: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('attach')}true{else}false{/if},
 				pastePlainText: {if !$__wcf->user->userID || $__wcf->user->editorPastePreserveFormatting}false{else}true{/if},
 				plugins: [
 					// Imperavi
@@ -215,7 +215,7 @@
 					{if $__wcf->getBBCodeHandler()->isAvailableBBCode('html')}'WoltLabHtml',{/if}
 					'WoltLabImage',
 					'WoltLabIndent',
-					'WoltLabInlineCode',
+					//'WoltLabInlineCode',
 					'WoltLabInsert',
 					'WoltLabKeyup',
 					'WoltLabLine',

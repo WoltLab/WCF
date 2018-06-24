@@ -24,14 +24,18 @@ class NamedUserException extends UserException {
 		}
 		SessionHandler::getInstance()->disableTracking();
 		
+		$name = get_class($this);
+		$exceptionClassName = mb_substr($name, mb_strrpos($name, '\\') + 1);
+		
 		WCF::getTPL()->assign([
-			'name' => get_class($this),
+			'name' => $name,
 			'file' => $this->getFile(),
 			'line' => $this->getLine(),
 			'message' => $this->getMessage(),
 			'stacktrace' => $this->getTraceAsString(),
 			'templateName' => 'userException',
-			'templateNameApplication' => 'wcf'
+			'templateNameApplication' => 'wcf',
+			'exceptionClassName' => $exceptionClassName
 		]);
 		WCF::getTPL()->display('userException');
 	}

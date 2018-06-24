@@ -90,9 +90,17 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 						date = new Date(value);
 					}
 					
-					elData(element, 'value', date.getTime());
-					var format = (isTimeOnly) ? 'formatTime' : ('formatDate' + (isDateTime ? 'Time' : ''));
-					value = DateUtil[format](date);
+					var time = date.getTime();
+					
+					// check for invalid dates
+					if (isNaN(time)) {
+						value = '';
+					}
+					else {
+						elData(element, 'value', time);
+						var format = (isTimeOnly) ? 'formatTime' : ('formatDate' + (isDateTime ? 'Time' : ''));
+						value = DateUtil[format](date);
+					}
 				}
 				
 				var isEmpty = (value.length === 0);

@@ -23,12 +23,10 @@
 						{/if}
 					{/if}
 					
-					{if !$user->getPermission('user.profile.cannotBeIgnored')}
-						{if $__wcf->getUserProfileHandler()->isIgnoredUser($user->userID)}
-							<li class="jsOnly"><a href="#" data-ignored="1" data-object-id="{@$user->userID}" class="jsIgnoreButton jsTooltip" title="{lang}wcf.user.button.unignore{/lang}"><span class="icon icon16 fa-circle-o"></span> <span class="invisible">{lang}wcf.user.button.unignore{/lang}</span></a></li>
-						{else}
-							<li class="jsOnly"><a href="#" data-ignored="0" data-object-id="{@$user->userID}" class="jsIgnoreButton jsTooltip" title="{lang}wcf.user.button.ignore{/lang}"><span class="icon icon16 fa-ban"></span> <span class="invisible">{lang}wcf.user.button.ignore{/lang}</span></a></li>
-						{/if}
+					{if $__wcf->getUserProfileHandler()->isIgnoredUser($user->userID)}
+						<li class="jsOnly"><a href="#" data-ignored="1" data-object-id="{@$user->userID}" class="jsIgnoreButton jsTooltip" title="{lang}wcf.user.button.unignore{/lang}"><span class="icon icon16 fa-circle-o"></span> <span class="invisible">{lang}wcf.user.button.unignore{/lang}</span></a></li>
+					{else}
+						<li class="jsOnly"><a href="#" data-ignored="0" data-object-id="{@$user->userID}" class="jsIgnoreButton jsTooltip" title="{lang}wcf.user.button.ignore{/lang}"><span class="icon icon16 fa-ban"></span> <span class="invisible">{lang}wcf.user.button.ignore{/lang}</span></a></li>
 					{/if}
 				{/if}
 				

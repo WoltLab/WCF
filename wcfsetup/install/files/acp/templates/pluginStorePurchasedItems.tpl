@@ -59,8 +59,8 @@
 									<span class="icon icon16 fa-ban red jsTooltip" title="{lang}wcf.acp.pluginStore.purchasedItems.status.unavailable{/lang}"></span>
 								{/if}
 							</td>
-							<td class="columnText"><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$product[pluginStoreURL]|rawurlencode}" class="externalURL">{$product[packageName]}</a></td>
-							<td class="columnText">{if $product[authorURL]}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$product[authorURL]|rawurlencode}" class="externalURL">{$product[author]}</a>{else}{$product[author]}{/if}</td>
+							<td class="columnText"><a href="{$product[pluginStoreURL]}" class="externalURL">{$product[packageName]}</a></td>
+							<td class="columnText">{if $product[authorURL]}<a href="{$product[authorURL]}" class="externalURL">{$product[author]}</a>{else}{$product[author]}{/if}</td>
 							<td class="columnText">{$product[version][available]}</td>
 							<td class="columnText">{if $product[version][installed]}{$product[version][installed]}{else}-{/if}</td>
 						</tr>

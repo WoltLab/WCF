@@ -24,6 +24,22 @@ interface IApplication {
 	public function isActiveApplication();
 	
 	/**
+	 * Returns the timestamp at which the evaluation period ends for this application. The
+	 * special value `0` indicates that there is no active evaluation period at this time.
+	 * 
+	 * @return      integer
+	 */
+	public function getEvaluationEndDate();
+	
+	/**
+	 * Returns the id of the WoltLab Plugin-Store file where this app is for purchase. The
+	 * special value `0` indicates that there is no such file or it is a WoltLab app.
+	 * 
+	 * @return      integer
+	 */
+	public function getEvaluationPluginStoreID();
+	
+	/**
 	 * Returns the qualified name of this application's primary controller.
 	 * 
 	 * @return	string

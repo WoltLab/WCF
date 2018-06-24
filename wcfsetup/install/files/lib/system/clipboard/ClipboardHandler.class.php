@@ -371,7 +371,8 @@ class ClipboardHandler extends SingletonFactory {
 			if (!isset($editorData[$typeName])) {
 				$editorData[$typeName] = [
 					'label' => $clipboardAction->getEditorLabel($this->markedItems[$typeName]),
-					'items' => []
+					'items' => [],
+					'reloadPageOnSuccess' => $clipboardAction->getReloadPageOnSuccess()
 				];
 			}
 			

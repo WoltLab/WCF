@@ -52,13 +52,13 @@
 	{if $archive->getPackageInfo('packageURL') != ''}
 		<dl>
 			<dt>{lang}wcf.acp.package.url{/lang}</dt>
-			<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getPackageInfo('packageURL')|rawurlencode}" class="externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
+			<dd><a href="{$archive->getPackageInfo('packageURL')}" class="externalURL">{$archive->getPackageInfo('packageURL')}</a></dd>
 		</dl>
 	{/if}
 	
 	<dl>
 		<dt>{lang}wcf.acp.package.author{/lang}</dt>
-		<dd>{if $archive->getAuthorInfo('authorURL')}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$archive->getAuthorInfo('authorURL')|rawurlencode}" class="externalURL">{$archive->getAuthorInfo('author')}</a>{else}{$archive->getAuthorInfo('author')}{/if}</dd>
+		<dd>{if $archive->getAuthorInfo('authorURL')}<a href="{$archive->getAuthorInfo('authorURL')}" class="externalURL">{$archive->getAuthorInfo('author')}</a>{else}{$archive->getAuthorInfo('author')}{/if}</dd>
 	</dl>
 	
 	{event name='propertyFields'}

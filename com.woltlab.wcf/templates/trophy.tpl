@@ -46,7 +46,7 @@
 
 				<div class="sidebarItemTitle">
 					<h3>{@$userTrophy->getUserProfile()->getAnchorTag()}</h3>
-					<small>{if !$userTrophy->getDescription()|empty}{$userTrophy->getDescription()} – {/if}{@$userTrophy->time|time}</small>
+					<small>{if !$userTrophy->getDescription()|empty}<span class="separatorRight">{$userTrophy->getDescription()}</span> {/if}{@$userTrophy->time|time}</small>
 				</div>
 			</li>
 		{/foreach}
