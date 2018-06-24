@@ -128,7 +128,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
 		return [
 			'objectName' => $element->getElementsByTagName('objectname')->item(0)->nodeValue,
 			'packageID' => $this->installation->getPackage()->packageID

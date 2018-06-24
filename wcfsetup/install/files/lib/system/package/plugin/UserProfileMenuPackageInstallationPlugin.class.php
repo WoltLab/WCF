@@ -175,7 +175,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
 		$data = [
 			'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,
 			'menuItem' => $element->getAttribute('name'),

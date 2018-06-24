@@ -145,7 +145,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
 		return [
 			'className' => $element->nodeValue,
 			'pluginName' => $element->getAttribute('name'),

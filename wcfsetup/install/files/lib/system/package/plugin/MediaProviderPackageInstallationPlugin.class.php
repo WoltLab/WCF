@@ -175,7 +175,7 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
 		$data = [
 			'name' => $element->getAttribute('name'),
 			'packageID' => $this->installation->getPackage()->packageID,

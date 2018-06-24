@@ -7,29 +7,29 @@
 			{/implode}
 		});
 		
-		var definitionNamesWithInterface = {
-			{implode from=$definitionNamesWithInterface key=definitionName item=interfaceName}
-				'{@$definitionName}': '{@$interfaceName|encodeJS}'
+		var definitionInterfaces = {
+			{implode from=$definitionInterfaces key=definitionID item=interfaceName}
+				{@$definitionID}: '{@$interfaceName|encodeJS}'
 			{/implode}
 		};
 		
 		var classNameDescription = elById('className').nextElementSibling;
-		var definitionName = elById('definitionName');
-		var definitionNameDescription = definitionName.nextElementSibling;
+		var definitionID = elById('definitionID');
+		var definitionIDDescription = definitionID.nextElementSibling;
 		
 		function update() {
 			// update description of `definitionName` field
-			definitionNameDescription.innerHTML = Language.get('wcf.acp.pip.objectType.definitionName.' + definitionName.value + '.description');
+			definitionIDDescription.innerHTML = Language.get('wcf.acp.pip.objectType.definitionName.' + definitionID.options.item(definitionID.selectedIndex).textContent + '.description');
 			
 			// update description of `className` field with new interface
-			if (definitionNamesWithInterface[definitionName.value]) {
+			if (definitionInterfaces[definitionID.value]) {
 				classNameDescription.innerHTML = Language.get('wcf.form.field.className.description.interface', {
-					interface: definitionNamesWithInterface[definitionName.value]
+					interface: definitionInterfaces[definitionID.value]
 				});
 			}
 		}
 		
-		definitionName.addEventListener('change', update);
+		definitionID.addEventListener('change', update);
 		
 		update();
 	});

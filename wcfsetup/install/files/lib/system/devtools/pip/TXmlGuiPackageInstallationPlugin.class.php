@@ -137,10 +137,11 @@ trait TXmlGuiPackageInstallationPlugin {
 	/**
 	 * Extracts the PIP object data from the given XML element.
 	 *
-	 * @param	\DOMElement	$element
+	 * @param	\DOMElement	$element	element whose data is returned
+	 * @param	bool		$saveData	is `true` if data is intended to be saved and otherwise `false`
 	 * @return	array
 	 */
-	abstract protected function getElementData(\DOMElement $element): array;
+	abstract protected function getElementData(\DOMElement $element, bool $saveData = false): array;
 	
 	/**
 	 * Returns the identifier of the given `import` element.
@@ -274,13 +275,13 @@ XML;
 	 * @param	\DOMElement|null	$oldElement	XML element with old data
 	 */
 	protected function saveObject(\DOMElement $newElement, \DOMElement $oldElement = null) {
-		$newElementData = $this->getElementData($newElement);
+		$newElementData = $this->getElementData($newElement, true);
 		
 		if ($oldElement === null) {
 			call_user_func([$this->className, 'create'], $newElementData);
 		}
 		else {
-			$sqlData = $this->findExistingItem($this->getElementData($oldElement));
+			$sqlData = $this->findExistingItem($this->getElementData($oldElement, true));
 			
 			$statement = WCF::getDB()->prepareStatement($sqlData['sql']);
 			$statement->execute($sqlData['parameters']);

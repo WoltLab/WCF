@@ -70,7 +70,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	/**
 	 * @var	string[]
 	 */
-	public $definitionNamesWithInterface = [];
+	public $definitionInterfaces = [];
 	
 	/**
 	 * Returns the id of the object type definition with the given name.
@@ -161,7 +161,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	public function getAdditionalTemplateCode(): string {
 		return WCF::getTPL()->fetch('__objectTypePipGui', 'wcf', [
 			'definitionNames' => $this->definitionNames,
-			'definitionNamesWithInterface' => $this->definitionNamesWithInterface
+			'definitionInterfaces' => $this->definitionInterfaces
 		], true);
 	}
 	
@@ -169,7 +169,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
 		$data = [
 			'definitionID' => $this->getDefinitionID($element->getElementsByTagName('definitionname')->item(0)->nodeValue),
 			'objectType' => $element->getElementsByTagName('name')->item(0)->nodeValue,
@@ -190,7 +190,12 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 			}
 		}
 		
-		$data['additionalData'] = serialize($additionalData);
+		if ($saveData) {
+			$data['additionalData'] = serialize($additionalData);
+		}
+		else {
+			$data = array_merge($additionalData, $data);
+		}
 		
 		return $data;
 	}
@@ -209,7 +214,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 			$this->definitionNames[$definition->definitionID] = $definition->definitionName;
 			
 			if ($definition->interfaceName) {
-				$this->definitionNamesWithInterface[$definition->definitionID] = $definition->interfaceName;
+				$this->definitionInterfaces[$definition->definitionID] = $definition->interfaceName;
 			}
 		}
 		
@@ -284,7 +289,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$form->getNodeById('className')->addDependency(
 			ValueFormFieldDependency::create('definitionID')
 				->field($definitionID)
-				->values(array_keys($this->definitionNamesWithInterface))
+				->values(array_keys($this->definitionInterfaces))
 		);
 		
 		// add object type-specific fields
@@ -656,7 +661,7 @@ XML;
 			->addDependency(
 				ValueFormFieldDependency::create('definitionID')
 					->field($definitionIDField)
-					->values([$definitionName])
+					->values([ObjectTypeCache::getInstance()->getDefinitionByName($definitionName)->definitionID])
 			);
 		
 		$form->appendChild($formContainer);
