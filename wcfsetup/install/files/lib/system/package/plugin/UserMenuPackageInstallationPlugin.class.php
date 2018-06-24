@@ -6,12 +6,12 @@ use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\IconFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\menu\user\IUserMenuItemProvider;
-use wcf\system\style\StyleHandler;
 
 /**
  * Installs, updates and deletes user menu items.
@@ -77,20 +77,11 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 		/** @var SingleSelectionFormField $parentMenuItemFormField */
 		$parentMenuItemFormField = $form->getNodeById('parentMenuItem');
 		
-		// TODO: if an `IconFormField` class should be added, use that class instead 
-		$dataContainer->appendChild(SingleSelectionFormField::create('iconClassName')
+		$dataContainer->appendChild(IconFormField::create('iconClassName')
 			->objectProperty('iconclassname')
 			->label('wcf.acp.pip.userMenu.iconClassName')
 			->description('wcf.acp.pip.userMenu.iconClassName.description')
-			->filterable()
 			->required()
-			->options(function(): array {
-				$icons = array_map(function(string $icon): string {
-					return 'fa-' . $icon;
-				}, StyleHandler::getInstance()->getIcons());
-				
-				return array_combine($icons, $icons);
-			})
 			->addDependency(
 				// only first level menu items support icons
 				ValueFormFieldDependency::create('parentMenuItem')

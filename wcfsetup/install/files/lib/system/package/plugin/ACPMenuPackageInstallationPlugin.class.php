@@ -5,6 +5,7 @@ use wcf\data\acp\menu\item\ACPMenuItemEditor;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\IconFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -12,7 +13,6 @@ use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
 use wcf\system\form\builder\field\validation\RegularExpressionFormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
-use wcf\system\style\StyleHandler;
 
 /**
  * Installs, updates and deletes ACP menu items.
@@ -71,19 +71,10 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 			return $value === 0 || $value == 3;
 		}));
 		
-		// TODO: if an `IconFormField` class should be added, use that class instead 
-		$dataContainer->appendChild(SingleSelectionFormField::create('icon')
+		$dataContainer->appendChild(IconFormField::create('icon')
 			->label('wcf.acp.pip.acpMenu.icon')
 			->description('wcf.acp.pip.acpMenu.icon.description')
-			->filterable()
 			->required()
-			->options(function(): array {
-				$icons = array_map(function(string $icon): string {
-					return 'fa-' . $icon;
-				}, StyleHandler::getInstance()->getIcons());
-				
-				return array_combine($icons, $icons);
-			})
 			->addDependency(
 				ValueFormFieldDependency::create('parentMenuItem')
 					->field($parentMenuItemFormField)
