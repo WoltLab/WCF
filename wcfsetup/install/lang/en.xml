@@ -1932,6 +1932,21 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.userMenu.iconClassName.description"><![CDATA[The menu item icon is only available for menu items on the first level.]]></item>
 		<item name="wcf.acp.pip.userMenu.menuItem.description"><![CDATA[The menu item identifier must have the format <code>{literal}{app}.user.menu.{additionalIdentifiers}{/literal}</code> where <code>{literal}{app}{/literal}</code> and <code>{literal}{additionalIdentifiers}{/literal}</code> have to be replaced with the appropriate values. <code>{literal}{additionalIdentifiers}{/literal}</code> may only contain letters, numbers, ands dots.]]></item>
 		<item name="wcf.acp.pip.userMenu.menuItem.error.format"><![CDATA[The entered identifier is invalid.]]></item>
+		<item name="wcf.acp.pip.cronjob.cronjobName"><![CDATA[Cronjob Identifier]]></item>
+		<item name="wcf.acp.pip.cronjob.cronjobName.description"><![CDATA[The cronjob identifier generally consists of the package identifier and the unqualified class name beginning with a lowercase letter and without the “Cronjob” suffix (example: <code>com.woltlab.wcf.example.doStuff</code> is the identifier for the cronjob <code>wcf\system\cronjob\DoStuffCronjob</code> from the <code>com.woltlab.wcf.example</code> package).]]></item>
+		<item name="wcf.acp.pip.cronjob.description.description"><![CDATA[The description explains the functionality of the cronjob.]]></item>
+		<item name="wcf.acp.pip.cronjob.options.description"><![CDATA[At least one of the entered options has to be enabled for the cronjob to be executed. Options of non-required packages will be reported as non-existing.]]></item>
+		<item name="wcf.acp.pip.cronjob.isDisabled"><![CDATA[Disable Cronjob]]></item>
+		<item name="wcf.acp.pip.cronjob.isDisabled.description"><![CDATA[If the cronjob is disabled by default, users have to manually enable it after installing the package.]]></item>
+		<item name="wcf.acp.pip.cronjob.canBeEdited"><![CDATA[Cronjob Can Be Edited]]></item>
+		<item name="wcf.acp.pip.cronjob.canBeEdited.description"><![CDATA[Users are able to edit the cronjob to, for example, change the execution times.]]></item>
+		<item name="wcf.acp.pip.cronjob.canBeDisabled"><![CDATA[Cronjob Can Be Disabled]]></item>
+		<item name="wcf.acp.pip.cronjob.canBeDisabled.description"><![CDATA[Users are able to disable the cronjob so that it will not be executed.]]></item>
+		<item name="wcf.acp.pip.cronjob.startDom.error.format"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.pip.cronjob.startDow.error.format"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.pip.cronjob.startHour.error.format"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.pip.cronjob.startMinute.error.format"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.pip.cronjob.startMonth.error.format"><![CDATA[TODO]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">

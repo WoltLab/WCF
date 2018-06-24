@@ -546,7 +546,7 @@ final class CronjobUtil {
 	 * @param	string		$value
 	 * @throws	SystemException
 	 */
-	protected static function validateAttribute($name, $value) {
+	public static function validateAttribute($name, $value) {
 		if ($value === '') {
 			throw new SystemException("invalid value '".$value."' given for cronjob attribute '".$name."'");
 		}

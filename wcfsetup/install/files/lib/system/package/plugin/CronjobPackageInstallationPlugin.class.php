@@ -3,7 +3,20 @@ declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
-use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\system\cronjob\ICronjob;
+use wcf\system\devtools\pip\IDevtoolsPipEntryList;
+use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
+use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
+use wcf\system\exception\SystemException;
+use wcf\system\form\builder\container\IFormContainer;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\ClassNameFormField;
+use wcf\system\form\builder\field\OptionFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\IFormDocument;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\CronjobUtil;
 use wcf\util\StringUtil;
@@ -11,12 +24,14 @@ use wcf\util\StringUtil;
 /**
  * Installs, updates and deletes cronjobs.
  * 
- * @author	Alexander Ebert
+ * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */
-class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
+class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
+	use TXmlGuiPackageInstallationPlugin;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -153,8 +168,262 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.1
 	 */
 	public static function getSyncDependencies() {
 		return [];
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function addFormFields(IFormDocument $form) {
+		/** @var IFormContainer $dataContainer */
+		$dataContainer = $form->getNodeById('data');
+		
+		$dataContainer->appendChildren([
+			TextFormField::create('cronjobName')
+				->objectProperty('name')
+				->label('wcf.acp.pip.cronjob.cronjobName')
+				->description('wcf.acp.pip.cronjob.cronjobName.description')
+				->required(),
+			
+			TextFormField::create('description')
+				->label('wcf.global.description')
+				->description('wcf.acp.pip.cronjob.description.description')
+				->i18n()
+				->languageItemPattern('__NONE__'),
+			
+			ClassNameFormField::create()
+				->objectProperty('classname')
+				->implementedInterface(ICronjob::class)
+				->required(),
+			
+			OptionFormField::create()
+				->description('wcf.acp.pip.cronjob.options.description'),
+			
+			BooleanFormField::create('isDisabled')
+				->objectProperty('isdisabled')
+				->label('wcf.acp.pip.cronjob.isDisabled')
+				->description('wcf.acp.pip.cronjob.isDisabled.description'),
+			
+			BooleanFormField::create('canBeEdited')
+				->objectProperty('canbeedited')
+				->label('wcf.acp.pip.cronjob.canBeEdited')
+				->description('wcf.acp.pip.cronjob.canBeEdited.description')
+				->value(true),
+			
+			BooleanFormField::create('canBeDisabled')
+				->objectProperty('canbedisabled')
+				->label('wcf.acp.pip.cronjob.canBeDisabled')
+				->description('wcf.acp.pip.cronjob.canBeDisabled.description')
+				->value(true)
+		]);
+		
+		foreach (['startDom', 'startDow', 'startHour', 'startMinute', 'startMonth'] as $timeProperty) {
+			$dataContainer->insertBefore(
+				TextFormField::create($timeProperty)
+					->objectProperty(strtolower($timeProperty))
+					->label('wcf.acp.cronjob.' . $timeProperty)
+					->description("wcf.acp.cronjob.{$timeProperty}.description")
+					->required()
+					->addValidator(new FormFieldValidator('format', function(TextFormField $formField) use ($timeProperty) {
+						try {
+							CronjobUtil::validateAttribute($timeProperty, $formField->getSaveValue());
+						}
+						catch (SystemException $e) {
+							$formField->addValidationError(
+								new FormFieldValidationError(
+									'format',
+									"wcf.acp.pip.cronjob.{$timeProperty}.error.format"
+								)
+							);
+						}
+					})),
+				'options'
+			);
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getElementData(\DOMElement $element): array {
+		$data = [
+			'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,
+			'cronjobName' => $element->getAttribute('name'),
+			'description' => [],
+			'packageID' => $this->installation->getPackage()->packageID,
+			'startDom' => $element->getElementsByTagName('startdom')->item(0)->nodeValue,
+			'startDow' => $element->getElementsByTagName('startdow')->item(0)->nodeValue,
+			'startHour' => $element->getElementsByTagName('starthour')->item(0)->nodeValue,
+			'startMinute' => $element->getElementsByTagName('startminute')->item(0)->nodeValue,
+			'startMonth' => $element->getElementsByTagName('startmonth')->item(0)->nodeValue
+		];
+		
+		$canBeDisabled = $element->getElementsByTagName('canbedisabled')->item(0);
+		if ($canBeDisabled !== null) {
+			$data['canBeDisabled'] = $canBeDisabled->nodeValue;
+		}
+		
+		$descriptionElements = $element->getElementsByTagName('description');
+		$descriptions = [];
+		
+		/** @var \DOMElement $description */
+		foreach ($descriptionElements as $description) {
+			$descriptions[$description->getAttribute('language')] = $description->nodeValue;
+		}
+		
+		foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+			if (!empty($descriptions)) {
+				if (isset($descriptions[$language->languageCode])) {
+					$data['description'][$language->languageID] = $descriptions[$language->languageCode];
+				}
+				else if (isset($descriptions[''])) {
+					$data['description'][$language->languageID] = $descriptions[''];
+				}
+				else if (isset($descriptions['en'])) {
+					$data['description'][$language->languageID] = $descriptions['en'];
+				}
+				else if (isset($descriptions[WCF::getLanguage()->getFixedLanguageCode()])) {
+					$data['description'][$language->languageID] = $descriptions[WCF::getLanguage()->getFixedLanguageCode()];
+				}
+				else {
+					$data['description'][$language->languageID] = reset($descriptions);
+				}
+			}
+			else {
+				$data['description'][$language->languageID] = '';
+			}
+		}
+		
+		$canBeEdited = $element->getElementsByTagName('canbeedited')->item(0);
+		if ($canBeEdited !== null) {
+			$data['canBeDisabled'] = $canBeEdited->nodeValue;
+		}
+		
+		$isDisabled = $element->getElementsByTagName('isdisabled')->item(0);
+		if ($isDisabled !== null) {
+			$data['canBeDisabled'] = $isDisabled->nodeValue;
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getElementIdentifier(\DOMElement $element): string {
+		return $element->getAttribute('name');
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
+		$entryList->setKeys([
+			'cronjobName' => 'wcf.acp.pip.cronjob.cronjobName',
+			'className' => 'wcf.form.field.className'
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function sortDocument(\DOMDocument $document) {
+		$this->sortImportDelete($document);
+		
+		$sortFunction = function(\DOMElement $element1, \DOMElement $element2) {
+			$name1 = $element1->getAttribute('name');
+			$name2 = $element2->getAttribute('name');
+			
+			if ($name1 !== '') {
+				$compare = strcmp($name1, $name2);
+				
+				if ($compare !== 0) {
+					return $compare;
+				}
+			}
+			else if ($name2 !== '') {
+				return -1;
+			}
+			
+			return strcmp(
+				$element1->getElementsByTagName('classname')->item(0)->nodeValue,
+				$element2->getElementsByTagName('classname')->item(0)->nodeValue
+			);
+		};
+		
+		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+		$data = $form->getData();
+		$formData = $form->getData()['data'];
+		
+		$cronjob = $document->createElement('cronjob');
+		$cronjob->setAttribute('name', $formData['name']);
+		
+		$className = $document->createElement('classname', $formData['classname']);
+		$cronjob->appendChild($className);
+		
+		if (isset($formData['description'])) {
+			if ($formData['description'] !== '') {
+				$cronjob->appendChild($document->createElement('description', $formData['description']));
+			}
+		}
+		else if (isset($data['description_i18n'])) {
+			/** @var \DOMElement $firstDescription */
+			$firstDescription = null;
+			foreach ($data['description_i18n'] as $languageItem => $description) {
+				if ($description !== '') {
+					$descriptionElement = $document->createElement('description', $description);
+					$languageCode = LanguageFactory::getInstance()->getLanguage($languageItem)->languageCode;
+					if ($languageCode !== 'en') {
+						$descriptionElement->setAttribute('language', $languageCode);
+						$cronjob->appendChild($descriptionElement);
+					}
+					else if ($firstDescription === null) {
+						$cronjob->appendChild($descriptionElement);
+					}
+					else {
+						// default description should be shown first
+						$cronjob->insertBefore($descriptionElement, $firstDescription);
+					}
+					
+					if ($firstDescription === null) {
+						$firstDescription = $descriptionElement;
+					}
+				}
+			}
+		}
+		
+		foreach (['startdom', 'startdow', 'starthour', 'startminute', 'startmonth'] as $timeProperty) {
+			$cronjob->appendChild($document->createElement($timeProperty, $formData[$timeProperty]));
+		}
+		
+		if (isset($formData['options']) && $formData['options'] !== '') {
+			$cronjob->appendChild($document->createElement('options', $formData['options']));
+		}
+		
+		foreach (['canbeedited' => 1, 'canbedisabled' => 1, 'isdisabled' => 0] as $booleanProperty => $defaultValue) {
+			if ($formData[$booleanProperty] !== $defaultValue) {
+				$cronjob->appendChild($document->createElement($booleanProperty, (string) $formData[$booleanProperty]));
+			}
+		}
+		
+		$document->getElementsByTagName('import')->item(0)->appendChild($cronjob);
+		
+		return $cronjob;
 	}
 }
