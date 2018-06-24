@@ -22,6 +22,18 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	protected $abbreviation = '';
 	
 	/**
+	 * evaluation end date, `0` to disable
+	 * @var integer
+	 */
+	protected $evaluationEndDate = 0;
+	
+	/**
+	 * WoltLab Plugin-Store file id
+	 * @var integer
+	 */
+	protected $evaluationPluginStoreID = 0;
+	
+	/**
 	 * true, if current application is active (directly invoked, not dependent)
 	 * @var	boolean
 	 */
@@ -76,6 +88,20 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	 */
 	public function isActiveApplication() {
 		return $this->isActiveApplication;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getEvaluationEndDate() {
+		return $this->evaluationEndDate;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getEvaluationPluginStoreID() {
+		return $this->evaluationPluginStoreID;
 	}
 	
 	/**

@@ -4,6 +4,17 @@
 	<h1 class="contentTitle">{lang}wcf.global.acp{/lang}</h1>
 </header>
 
+{if !$evaluationExpired|empty}
+	{foreach from=$evaluationExpired item=$expiredApp}
+		<p class="error">{lang packageName=$expiredApp[packageName] isWoltLab=$expiredApp[isWoltLab] pluginStoreFileID=$expiredApp[pluginStoreFileID]}wcf.acp.package.evaluation.expired{/lang}</p>
+	{/foreach}
+{/if}
+{if !$evaluationPending|empty}
+	{foreach from=$evaluationPending key=$evaluationEndDate item=$pendingApps}
+		<div class="warning">{lang evaluationEndDate=$evaluationEndDate}wcf.acp.package.evaluation.pending{/lang}</div>
+	{/foreach}
+{/if}
+
 {if TMP_DIR !== WCF_DIR|concat:'tmp/'}
 	<p class="error">{lang}wcf.acp.index.tmpBroken{/lang}</p>
 {/if}
@@ -128,7 +139,7 @@
 		<section class="section">
 			<dl>
 				<dt>{lang}wcf.acp.index.credits.developedBy{/lang}</dt>
-				<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"http://www.woltlab.com"|rawurlencode}" class="externalURL">WoltLab&reg; GmbH</a></dd>
+				<dd><a href="https://www.woltlab.com/{if $__wcf->getLanguage()->getFixedLanguageCode() === 'de'}de/{/if}" class="externalURL">WoltLab&reg; GmbH</a></dd>
 			</dl>
 			
 			<dl>
@@ -170,7 +181,7 @@
 						<li>Andrea Berg</li>
 						<li>Thorsten Buitkamp</li>
 						<li>
-							<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={"https://github.com/WoltLab/WCF/contributors"|rawurlencode}" class="externalURL">{lang}wcf.acp.index.credits.contributor.more{/lang}</a>
+							<a href="https://github.com/WoltLab/WCF/contributors" class="externalURL">{lang}wcf.acp.index.credits.contributor.more{/lang}</a>
 						</li>
 					</ul>
 				</dd>

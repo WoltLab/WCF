@@ -396,6 +396,7 @@ if (COMPILER_TARGET_DEFAULT) {
 					// update attachment link
 					var $link = $('<a href=""></a>');
 					$link.text($filename).attr('href', attachmentData.url);
+					$link[0].target = '_blank';
 					
 					if (attachmentData.isImage != 0) {
 						$link.addClass('jsImageViewer').attr('title', $filename);

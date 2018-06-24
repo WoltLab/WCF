@@ -213,12 +213,21 @@
 		&.doubleColumned > li {
 			flex: 0 0 50%;
 			max-width: 50%;
+			
+			&:nth-child(2n+1):nth-last-child(-n+2) {
+				border-bottom: none;
+			}
 		}
 		
 		&.tripleColumned > li {
 			flex: 0 0 calc(100% / 3);
 			/* work-around for IE10 */
 			width: calc(100% / 3);
+			
+			&:nth-child(3n+1):nth-last-child(-n+3),
+			&:nth-child(3n+1):nth-last-child(-n+3) ~ li {
+				border-bottom: none;
+			}
 		}
 	}
 }

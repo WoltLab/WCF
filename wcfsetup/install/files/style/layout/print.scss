@@ -110,7 +110,8 @@
 	}
 	
 	/* see https://bugzilla.mozilla.org/show_bug.cgi?id=939897 */
-	.pageContainer {
-		display: block;
+	.pageContainer,
+	.main > div {
+		display: block !important;
 	}
 }

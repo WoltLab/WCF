@@ -50,6 +50,7 @@ define(
 	var _itemData = new ObjectMap();
 	var _knownCheckboxes = new List();
 	var _options = {};
+	var _reloadPageOnSuccess = new Dictionary();
 	
 	var _callbackCheckbox = null;
 	var _callbackItem = null;
@@ -406,6 +407,11 @@ define(
 						listItem: listItem,
 						responseData: responseData
 					});
+					
+					if (_reloadPageOnSuccess.has(type) && _reloadPageOnSuccess.get(type).indexOf(responseData.actionName) !== -1) {
+						window.location.reload();
+						return;
+					}
 				}
 				
 				this._loadMarkedItems();
@@ -449,7 +455,6 @@ define(
 		_ajaxSuccess: function(data) {
 			if (data.actionName === 'unmarkAll') {
 				_containers.forEach((function(containerData) {
-					//noinspection JSUnresolvedVariable
 					if (elData(containerData.element, 'type') === data.returnValues.objectType) {
 						var clipboardObjects = elByClass('jsMarked', containerData.element);
 						while (clipboardObjects.length) {
@@ -463,7 +468,6 @@ define(
 							containerData.checkboxes[i].checked = false;
 						}
 						
-						//noinspection JSUnresolvedVariable
 						UiPageAction.remove('wcfClipboard-' + data.returnValues.objectType);
 					}
 				}).bind(this));
@@ -472,6 +476,7 @@ define(
 			}
 			
 			_itemData = new ObjectMap();
+			_reloadPageOnSuccess = new Dictionary();
 			
 			// rebuild markings
 			_containers.forEach((function(containerData) {
@@ -483,11 +488,8 @@ define(
 			}).bind(this));
 			
 			var keepEditors = [], typeName;
-			//noinspection JSUnresolvedVariable
 			if (data.returnValues && data.returnValues.items) {
-				//noinspection JSUnresolvedVariable
 				for (typeName in data.returnValues.items) {
-					//noinspection JSUnresolvedVariable
 					if (data.returnValues.items.hasOwnProperty(typeName)) {
 						keepEditors.push(typeName);
 					}
@@ -504,7 +506,6 @@ define(
 			});
 			
 			// no items
-			//noinspection JSUnresolvedVariable
 			if (!data.returnValues || !data.returnValues.items) {
 				return;
 			}
@@ -512,15 +513,14 @@ define(
 			// rebuild editors
 			var actionName, created, dropdown, editor, typeData;
 			var divider, item, itemData, itemIndex, label, unmarkAll;
-			//noinspection JSUnresolvedVariable
 			for (typeName in data.returnValues.items) {
-				//noinspection JSUnresolvedVariable
 				if (!data.returnValues.items.hasOwnProperty(typeName)) {
 					continue;
 				}
 				
-				//noinspection JSUnresolvedVariable
 				typeData = data.returnValues.items[typeName];
+				//noinspection JSUnresolvedVariable
+				_reloadPageOnSuccess.set(typeName, typeData.reloadPageOnSuccess);
 				created = false;
 				
 				editor = _editors.get(typeName);

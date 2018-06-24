@@ -185,6 +185,28 @@ class RequestHandler extends SingletonFactory {
 			
 			$this->activeRequest = new Request($classData['className'], $classData['controller'], $classData['pageType'], $metaData);
 			
+			// check if the controller matches an app that has an expired evaluation date
+			$abbreviation = mb_substr($classData['className'], 0, mb_strpos($classData['className'], '\\'));
+			if ($abbreviation !== 'wcf') {
+				$applicationObject = ApplicationHandler::getInstance()->getApplication($abbreviation);
+				$endDate = WCF::getApplicationObject($applicationObject)->getEvaluationEndDate();
+				if ($endDate && $endDate < TIME_NOW) {
+					$package = $applicationObject->getPackage();
+					
+					$pluginStoreFileID = WCF::getApplicationObject($applicationObject)->getEvaluationPluginStoreID();
+					$isWoltLab = false;
+					if ($pluginStoreFileID === 0 && strpos($package->package, 'com.woltlab.') === 0) {
+						$isWoltLab = true;
+					}
+					
+					throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.evaluation.expired', [
+						'packageName' => $package->getName(),
+						'pluginStoreFileID' => $pluginStoreFileID,
+						'isWoltLab' => $isWoltLab
+					]));
+				}
+			}
+			
 			if (!$this->isACPRequest()) {
 				// determine if current request matches the landing page
 				if (ControllerMap::getInstance()->isLandingPage($classData, $metaData)) {

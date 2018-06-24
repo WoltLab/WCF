@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 namespace wcf\system\html\output;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\html\output\node\HtmlOutputNodeProcessor;
 use wcf\system\html\AbstractHtmlProcessor;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
@@ -15,6 +16,13 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
  * @since       3.0
  */
 class HtmlOutputProcessor extends AbstractHtmlProcessor {
+	/**
+	 * generate the table of contents
+	 * @var bool
+	 * @since 3.2
+	 */
+	public $enableToc = false;
+	
 	/**
 	 * output node processor instance
 	 * @var	HtmlOutputNodeProcessor
@@ -81,6 +89,8 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 		parent::setContext($objectType, $objectID);
 		
 		MessageEmbeddedObjectManager::getInstance()->setActiveMessage($objectType, $objectID, $this->languageID);
+		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.message', $objectType);
+		$this->enableToc = (!empty($objectType->additionalData['enableToc']));
 	}
 	
 	/**

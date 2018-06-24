@@ -57,6 +57,14 @@
 			</xs:element>
 			<xs:element name="inherit" type="woltlab_boolean" minOccurs="0" />
 			<xs:element name="environment" type="woltlab_environment" minOccurs="0" />
+			<xs:element name="nice" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:integer">
+						<xs:minInclusive value="-128" />
+						<xs:maxInclusive value="127" />
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
 			<xs:element name="options" type="xs:string" minOccurs="0" />
 			<xs:element name="permissions" type="xs:string" minOccurs="0" />
 		</xs:all>

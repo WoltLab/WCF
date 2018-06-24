@@ -422,7 +422,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * @return	string
 	 */
 	public function __toString() {
-		return $this->username;
+		return ($this->username ?: '');
 	}
 	
 	/**

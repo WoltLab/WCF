@@ -2,6 +2,9 @@
 declare(strict_types=1);
 namespace wcf\data\user\option\category;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
 
 /**
  * Executes user option category-related actions.
@@ -40,4 +43,28 @@ class UserOptionCategoryAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	protected $requireACP = ['create', 'delete', 'update'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateDelete() {
+		parent::validateDelete();
+		
+		$categoryNames = [];
+		foreach ($this->getObjects() as $categoryEditor) {
+			$categoryNames[] = $categoryEditor->categoryName;
+		}
+		
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("categoryName IN (?)", [$categoryNames]);
+		$sql = "SELECT  COUNT(*) AS count
+			FROM    wcf".WCF_N."_user_option
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		$count = $statement->fetchSingleColumn();
+		if ($count > 0) {
+			throw new UserInputException('objectIDs');
+		}
+	}
 }

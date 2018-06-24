@@ -68,18 +68,17 @@
 			{if $package->packageURL != ''}
 				<dl>
 					<dt>{lang}wcf.acp.package.url{/lang}</dt>
-					<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->packageURL|rawurlencode}" class="externalURL">{$package->packageURL}</a></dd>
+					<dd><a href="{$package->packageURL}" class="externalURL">{$package->packageURL}</a></dd>
 				</dl>
 			{/if}
 			<dl>
 				<dt>{lang}wcf.acp.package.author{/lang}</dt>
-				<dd>{if $package->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$package->authorURL|rawurlencode}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</dd>
+				<dd>{if $package->authorURL}<a href="{$package->authorURL}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</dd>
 			</dl>
 			{if $pluginStoreFileID}
-				{capture assign=_storeUrl}https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/{/capture}
 				<dl>
 					<dt>{lang}wcf.acp.pluginStore.file{/lang}</dt>
-					<dd><a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$_storeUrl|rawurlencode}" class="externalURL">{lang}wcf.acp.pluginStore.file.link{/lang}</a></dd>
+					<dd><a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/" class="externalURL">{lang}wcf.acp.pluginStore.file.link{/lang}</a></dd>
 				</dl>
 			{/if}
 			{if $package->packageID != 1}
@@ -144,7 +143,7 @@
 										</td>
 										<td class="columnID">{@$requiredPackage->packageID}</td>
 										<td class="columnTitle" title="{$requiredPackage->packageDescription|language}"><a href="{link controller='Package' id=$requiredPackage->packageID}{/link}">{$requiredPackage}</a></td>
-										<td class="columnText">{if $requiredPackage->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$requiredPackage->authorURL|rawurlencode}" class="externalURL">{$requiredPackage->author}</a>{else}{$requiredPackage->author}{/if}</td>
+										<td class="columnText">{if $requiredPackage->authorURL}<a href="{$requiredPackage->authorURL}" class="externalURL">{$requiredPackage->author}</a>{else}{$requiredPackage->author}{/if}</td>
 										<td class="columnText">{$requiredPackage->packageVersion}</td>
 										<td class="columnDate">{@$requiredPackage->packageDate|date}</td>
 										
@@ -185,7 +184,7 @@
 										</td>
 										<td class="columnID">{@$dependentPackage->packageID}</td>
 										<td class="columnTitle" title="{$dependentPackage->packageDescription|language}"><a href="{link controller='Package' id=$dependentPackage->packageID}{/link}">{$dependentPackage}</a></td>
-										<td class="columnText">{if $dependentPackage->authorURL}<a href="{@$__wcf->getPath()}acp/dereferrer.php?url={$dependentPackage->authorURL|rawurlencode}" class="externalURL">{$dependentPackage->author}</a>{else}{$dependentPackage->author}{/if}</td>
+										<td class="columnText">{if $dependentPackage->authorURL}<a href="{$dependentPackage->authorURL}" class="externalURL">{$dependentPackage->author}</a>{else}{$dependentPackage->author}{/if}</td>
 										<td class="columnText">{$dependentPackage->packageVersion}</td>
 										<td class="columnDate">{@$dependentPackage->packageDate|date}</td>
 										

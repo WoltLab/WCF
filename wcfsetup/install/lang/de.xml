@@ -147,7 +147,7 @@
 		<code>{$ID}</code> wird durch die beispielhaften Medium-IDs der Erklärung oberhalb ersetzt.{/literal}]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.list"><![CDATA[Medienanbieter]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.regex"><![CDATA[Regulärer Ausdruck]]></item>
-		<item name="wcf.acp.bbcode.mediaProvider.regex.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier das Linkformat als <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=http%3A%2F%2Fde.wikipedia.org%2Fwiki%2FRegul%25C3%25A4rer_Ausdruck">regulären Ausdruck</a> an.<br>
+		<item name="wcf.acp.bbcode.mediaProvider.regex.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier das Linkformat als <a href="https://de.wikipedia.org/wiki/Regul%C3%A4rer_Ausdruck">regulären Ausdruck</a> an.<br>
 		Mehrere Ausdrücke können zeilenweise angegeben werden.<br>
 		Beispiele für die Medium-ID Erkennungen:
 		<ul>
@@ -158,7 +158,7 @@
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Medienanbieter]]></item>
 		<item name="wcf.acp.bbcode.showButton"><![CDATA[Button im WYSIWYG-Editor anzeigen]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button-Grafik]]></item>
-		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[Die Grafik muss sich im Verzeichnis wcf/icon/ befinden, alternativ kann ein <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=http%3A%2F%2Ffontawesome.com%2Fv4.7.0%2Ficons%2F">FontAwesome</a>-Icon genutzt werden, z.B. „fa-caret-square-o-up“.]]></item>
+		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[Die Grafik muss sich im Verzeichnis wcf/icon/ befinden, alternativ kann ein <a href="https://fontawesome.com/v4.7.0/icons/">FontAwesome</a>-Icon genutzt werden, z.B. „fa-caret-square-o-up“.]]></item>
 	</category>
 	
 	<category name="wcf.acp.box">
@@ -304,7 +304,7 @@
 		<item name="wcf.acp.cronjob.edit"><![CDATA[Cronjob bearbeiten]]></item>
 		<item name="wcf.acp.cronjob.className"><![CDATA[PHP-Klassenname]]></item>
 		<item name="wcf.acp.cronjob.timing"><![CDATA[Zeitsteuerung]]></item>
-		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von Cronjobs (zeitgesteuerten Aufgaben) erfordert eine genaue Kenntnis der Crontab-Syntax auf Unix-ähnlichen Systemen. Weiterführende Informationen dazu {if LANGUAGE_USE_INFORMAL_VARIANT}erhälst du{else}erhalten Sie{/if} auf dieser Website: <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url={"http://www.unixgeeks.org/security/newbie/unix/cron-1.html"|rawurlencode}" class="externalURL">Newbie: Intro to cron</a>]]></item>
+		<item name="wcf.acp.cronjob.intro"><![CDATA[Das Anlegen von Cronjobs (zeitgesteuerten Aufgaben) erfordert eine genaue Kenntnis der Crontab-Syntax auf Unix-ähnlichen Systemen. Weiterführende Informationen dazu {if LANGUAGE_USE_INFORMAL_VARIANT}erhälst du{else}erhalten Sie{/if} auf dieser Website: <a href="http://www.unixgeeks.org/security/newbie/unix/cron-1.html" class="externalURL">Newbie: Intro to cron</a>]]></item>
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Cronjob jetzt ausführen]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegebenen Namen existiert nicht.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.invalid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
@@ -379,7 +379,7 @@
 		<item name="wcf.acp.devtools.project.add"><![CDATA[Projekt hinzufügen]]></item>
 		<item name="wcf.acp.devtools.project.edit"><![CDATA[Projekt bearbeiten]]></item>
 		<item name="wcf.acp.devtools.project.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Projekt <span class="confirmationObject">{$object->name}</span> wirklich löschen?]]></item>
-		<item name="wcf.acp.devtools.project.introduction"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} die <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://docs.woltlab.com/getting-started_quick-start.html#developer-tools'|rawurlencode}" class="externalURL">Hinweise zur Benutzung</a> in der Entwickler-Dokumentation.]]></item>
+		<item name="wcf.acp.devtools.project.introduction"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} die <a href="https://docs.woltlab.com/getting-started_quick-start.html#developer-tools" class="externalURL">Hinweise zur Benutzung</a> in der Entwickler-Dokumentation.]]></item>
 		<item name="wcf.acp.devtools.project.list"><![CDATA[Projekte]]></item>
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.devtools.project.name.error.notUnique"><![CDATA[Der Name wird bereits von einem anderen Projekt verwendet.]]></item>
@@ -1061,7 +1061,7 @@
 		<item name="wcf.acp.option.http_enable_gzip"><![CDATA[Gzip-Komprimierung aktivieren]]></item>
 		<item name="wcf.acp.option.http_enable_gzip.description"><![CDATA[Aktiviert die Komprimierung der Inhalte bei der Übertragung vom Server an den Client. Dies reduziert den Traffic und kann den Ladevorgang erheblich beschleunigen.]]></item>
 		<item name="wcf.acp.option.http_send_x_frame_options"><![CDATA[Einbindung in einem Frame verhindern]]></item>
-		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sendet den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://de.wikipedia.org/wiki/Clickjacking'|rawurlencode}" class="externalURL">„X-Frame-Options“</a> Header, um die Einbettung dieser Seite in einem Frame zu verhindern (sendet „SAMEORIGIN“).]]></item>
+		<item name="wcf.acp.option.http_send_x_frame_options.description"><![CDATA[Sendet den <a href="https://de.wikipedia.org/wiki/Clickjacking" class="externalURL">„X-Frame-Options“</a> Header, um die Einbettung dieser Seite in einem Frame zu verhindern (sendet „SAMEORIGIN“).]]></item>
 		<item name="wcf.acp.option.image_adapter_type"><![CDATA[Grafik-Bibliothek]]></item>
 		<item name="wcf.acp.option.image_adapter_type.gd"><![CDATA[GD Graphics Library (Standard)]]></item>
 		<item name="wcf.acp.option.image_adapter_type.imagick"><![CDATA[ImageMagick]]></item>
@@ -1162,16 +1162,16 @@
 		<item name="wcf.acp.option.edit_history_expiration"><![CDATA[Speicherzeit]]></item>
 		<item name="wcf.acp.option.edit_history_expiration.description"><![CDATA[Zeitraum, nachdem alte Einträge aus dem Bearbeitungsverlauf entfernt werden [0, um die Entfernung gänzlich zu deaktivieren]]]></item>
 		<item name="wcf.acp.option.github_public_key"><![CDATA[GitHub Client ID]]></item>
-		<item name="wcf.acp.option.github_public_key.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst deine{else}Sie können Ihre{/if} Client ID und {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Client Secret bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://github.com/settings/developers'|rawurlencode}" class="externalURL">GitHub</a> anfordern. Die Callback URL ist: {link controller="GithubAuth" forceFrontend=true}{/link}]]></item>
+		<item name="wcf.acp.option.github_public_key.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst deine{else}Sie können Ihre{/if} Client ID und {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Client Secret bei <a href="https://github.com/settings/developers" class="externalURL">GitHub</a> anfordern. Die Callback URL ist: {link controller="GithubAuth" forceFrontend=true}{/link}]]></item>
 		<item name="wcf.acp.option.github_private_key"><![CDATA[GitHub Client Secret]]></item>
 		<item name="wcf.acp.option.twitter_public_key"><![CDATA[Twitter API key]]></item>
-		<item name="wcf.acp.option.twitter_public_key.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst deinen{else}Sie können Ihren{/if} API key und {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} API secret bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://dev.twitter.com/apps'|rawurlencode}" class="externalURL">Twitter</a> anfordern. Die Callback URL ist: {link controller="TwitterAuth" forceFrontend=true}{/link}]]></item>
+		<item name="wcf.acp.option.twitter_public_key.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst deinen{else}Sie können Ihren{/if} API key und {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} API secret bei <a href="https://dev.twitter.com/apps" class="externalURL">Twitter</a> anfordern. Die Callback URL ist: {link controller="TwitterAuth" forceFrontend=true}{/link}]]></item>
 		<item name="wcf.acp.option.twitter_private_key"><![CDATA[Twitter API secret]]></item>
 		<item name="wcf.acp.option.facebook_public_key"><![CDATA[Facebook APP-ID]]></item>
-		<item name="wcf.acp.option.facebook_public_key.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst deine{else}Sie können Ihre{/if} APP-ID und {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Anwendungs-Geheimcode bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://developers.facebook.com/apps'|rawurlencode}" class="externalURL">Facebook</a> anfordern. Die OAuth redirect URI ist: {link controller="FacebookAuth" forceFrontend=true}{/link}]]></item>
+		<item name="wcf.acp.option.facebook_public_key.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst deine{else}Sie können Ihre{/if} APP-ID und {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Anwendungs-Geheimcode bei <a href="https://developers.facebook.com/apps" class="externalURL">Facebook</a> anfordern. Die OAuth redirect URI ist: {link controller="FacebookAuth" forceFrontend=true}{/link}]]></item>
 		<item name="wcf.acp.option.facebook_private_key"><![CDATA[Facebook Anwendungs-Geheimcode]]></item>
 		<item name="wcf.acp.option.google_public_key"><![CDATA[Google Client ID]]></item>
-		<item name="wcf.acp.option.google_public_key.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst deine{else}Sie können Ihre{/if} Client ID und {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Client Secret bei <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://code.google.com/apis/console/'|rawurlencode}" class="externalURL">Google</a> anfordern. Die Redirect-URI ist: {link controller="GoogleAuth" forceFrontend=true}{/link}]]></item>
+		<item name="wcf.acp.option.google_public_key.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst deine{else}Sie können Ihre{/if} Client ID und {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Client Secret bei <a href="https://code.google.com/apis/console/" class="externalURL">Google</a> anfordern. Die Redirect-URI ist: {link controller="GoogleAuth" forceFrontend=true}{/link}]]></item>
 		<item name="wcf.acp.option.google_private_key"><![CDATA[Google Client Secret]]></item>
 		<item name="wcf.acp.option.category.dashboard"><![CDATA[Dashboard]]></item>
 		<item name="wcf.acp.option.category.dashboard.content"><![CDATA[Inhaltsbereich]]></item>
@@ -1311,11 +1311,11 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Hinweis bei neuen Updates für Pakete im Frontend anzeigen]]></item>
 		<item name="wcf.acp.option.url_omit_index_php"><![CDATA[Link-Umschreibungen aktivieren]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.button.runTestAgain"><![CDATA[Test erneut durchführen]]></item>
-		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Wandelt Links in eine vereinfachte Form um, aus „https://example.com/index.php?thread/1-dies-ist-ein-test/“ wird „http://example.com/thread/1-dies-ist-ein-test/“ und vergleichbar. Achtung: Die Aktivierung der Link-Umschreibungen erfordert Rewrite-Unterstützung in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Webserver sowie eine entsprechende Konfiguration. Fehlerhafte Einstellungen können hier dazu führen, dass Links nicht mehr aufrufbar sind.<br>Eine Anleitung zur Einrichtung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Webservers {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in diesem Artikel: <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F24-konfiguration-von-benutzerfreundlichen-urls-seo-urls%2F" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a>]]></item>
+		<item name="wcf.acp.option.url_omit_index_php.description"><![CDATA[Wandelt Links in eine vereinfachte Form um, aus „https://example.com/index.php?thread/1-dies-ist-ein-test/“ wird „http://example.com/thread/1-dies-ist-ein-test/“ und vergleichbar. Achtung: Die Aktivierung der Link-Umschreibungen erfordert Rewrite-Unterstützung in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Webserver sowie eine entsprechende Konfiguration. Fehlerhafte Einstellungen können hier dazu führen, dass Links nicht mehr aufrufbar sind.<br>Eine Anleitung zur Einrichtung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Webservers {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in diesem Artikel: <a href="https://www.woltlab.com/article/24-konfiguration-von-benutzerfreundlichen-urls-seo-urls/" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a>]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.failure"><![CDATA[Test fehlgeschlagen]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.failure.description"><![CDATA[Die Rewrite-Unterstützung des Webservers fehlt oder wurde nicht korrekt konfiguriert.<br>
 <br>
-Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anleitung zur <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F24-konfiguration-von-benutzerfreundlichen-urls-seo-urls%2F" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a> oder {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich an deinen{else}wenden Sie sich an Ihren{/if} Anbieter um Unterstütznung bei der Einrichtung zu erhalten.]]></item>
+Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anleitung zur <a href="https://www.woltlab.com/article/24-konfiguration-von-benutzerfreundlichen-urls-seo-urls/" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a> oder {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich an deinen{else}wenden Sie sich an Ihren{/if} Anbieter um Unterstütznung bei der Einrichtung zu erhalten.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.running"><![CDATA[Test läuft &hellip;]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.status"><![CDATA[Testergebnis]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.status.failure"><![CDATA[Fehlgeschlagen]]></item>
@@ -1344,7 +1344,7 @@ Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anlei
 		<item name="wcf.acp.option.signature_secret"><![CDATA[Geheimer Schlüssel]]></item>
 		<item name="wcf.acp.option.signature_secret.description"><![CDATA[Ein geheimer Schlüssel, welcher zur Überprüfung von übertragenen Daten bestimmter Funktionen dient. Dieser Schlüssel ist vertraulich zu behandeln! Der Schlüssel wurde bei der Installation zufällig generiert und sollte nur in Ausnahmefällen geändert werden. Achtung: Dieser Schlüssel muss mindestens 15 Zeichen lang sein.]]></item>
 		<item name="wcf.acp.option.gravatar_default_type"><![CDATA[Standard Gravatar-Typ]]></item>
-		<item name="wcf.acp.option.gravatar_default_type.description"><![CDATA[Der <a class="externalURL" href="{@$__wcf->getPath()}acp/dereferrer.php?url=https://de.gravatar.com/site/implement/images/#default-image">Standard-Gravatar-Typ</a>, wenn einer E-Mail kein Gravatar zugeordnet werden kann.]]></item>
+		<item name="wcf.acp.option.gravatar_default_type.description"><![CDATA[Der <a class="externalURL" href="https://de.gravatar.com/site/implement/images/#default-image">Standard-Gravatar-Typ</a>, wenn einer E-Mail kein Gravatar zugeordnet werden kann.]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.404"><![CDATA[Kein Standard-Gravatar]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.identicon"><![CDATA[Identicon]]></item>
 		<item name="wcf.acp.option.gravatar_default_type.wavatar"><![CDATA[Wavatar]]></item>
@@ -1365,9 +1365,10 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.paid_subscription_tos_url"><![CDATA[URL zu Nutzungsbedingungen]]></item>
 		<item name="wcf.acp.option.category.general.payment.paidSubscription"><![CDATA[Bezahlte Mitgliedschaften]]></item>
 		<item name="wcf.acp.option.google_maps_api_key"><![CDATA[Browser-API-Schlüssel]]></item>
-		<item name="wcf.acp.option.google_maps_api_key.description"><![CDATA[Google stellt <a href="{@$__wcf->getPath()}acp/dereferrer.php?url={'https://developers.google.com/maps/documentation/javascript/get-api-key'|rawurlencode}" class="externalURL">hier</a> eine ausführliche Anleitung bereit, wie {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einen API-Schlüssel erstellen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}.]]></item>
+		<item name="wcf.acp.option.google_maps_api_key.description"><![CDATA[Google stellt <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" class="externalURL">hier</a> eine ausführliche Anleitung bereit, wie {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einen API-Schlüssel erstellen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}.]]></item>
 		<item name="wcf.acp.option.suffix.chars"><![CDATA[Zeichen]]></item>
 		<item name="wcf.acp.option.suffix.days"><![CDATA[Tage]]></item>
+		<item name="wcf.acp.option.suffix.hours"><![CDATA[Stunden]]></item>
 		<item name="wcf.acp.option.suffix.minutes"><![CDATA[Minuten]]></item>
 		<item name="wcf.acp.option.suffix.percent"><![CDATA[%]]></item>
 		<item name="wcf.acp.option.suffix.pixel"><![CDATA[Pixel]]></item>
@@ -1422,7 +1423,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.visitor_use_tiny_build"><![CDATA[Seitenbeschleunigung für Gäste aktivieren (Experimentell)]]></item>
 		<item name="wcf.acp.option.visitor_use_tiny_build.description"><![CDATA[Aktiviert einen besonderen Modus in dem Gästen und Suchmaschinen stark reduzierte JavaScript-Dateien ausgeliefert werden, um das Laden als auch den Seitenaufbau zu beschleunigen.<br><strong>Warnung:</strong> Dieser Modus arbeitet sehr restriktiv und untersagt unter anderem jeglichen Schreibzugriff, bitte überprüfe{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if}, ob alle installierten Plugins mit diesem Modus kompatibel sind.]]></item>
 		<item name="wcf.acp.option.fb_share_app_id"><![CDATA[Facebook App ID]]></item>
-		<item name="wcf.acp.option.fb_share_app_id.description"><![CDATA[Die App ID kann direkt über das <a href="{@$__wcf->getPath('wcf')}acp/dereferrer.php?url=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fapps%2Fregister%3Flocale%3Dde_DE">App-Dashboard angefordert werden</a>, und wird für die Open Graph-Tags zum Teilen verwendet.]]></item>
+		<item name="wcf.acp.option.fb_share_app_id.description"><![CDATA[Die App ID kann direkt über das <a href="https://developers.facebook.com/docs/apps/register?locale=de_DE" class="externalURL">App-Dashboard angefordert werden</a>, und wird für die Open Graph-Tags zum Teilen verwendet.]]></item>
 		<item name="wcf.acp.option.enable_polling"><![CDATA[Hintergrund-Aktualisierung von Benachrichtigungen aktivieren]]></item>
 		<item name="wcf.acp.option.enable_polling.description"><![CDATA[Neue Benachrichtigungen werden in periodischen Abständen automatisch abgerufen. Der Aktualisierungs-Intervall beträgt 5 Minuten und wird bei Inaktivität schrittweise auf 15 Minuten reduziert.]]></item>
 		<item name="wcf.acp.option.enable_desktop_notifications"><![CDATA[Desktop-Benachrichtigungen verwenden]]></item>
@@ -1443,6 +1444,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.module_user_cover_photo"><![CDATA[Titelbilder aktivieren]]></item>
 		<item name="wcf.acp.option.module_user_cover_photo.description"><![CDATA[Aktiviert die Darstellung und die Verwaltung von Titelbildern.]]></item>
 		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Bilder von externen Seiten erlauben]]></item>
+		<item name="wcf.acp.option.message_enable_toc"><![CDATA[Inhaltsverzeichnisse aktivieren]]></item>
 	</category>
 	
 	<category name="wcf.acp.customOption">
@@ -1613,6 +1615,14 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.package.validation.errorCode.14"><![CDATA[Das Paket wurde für eine {if $isOlderVersion}ältere{else}neuere{/if} Version von WoltLab Suite entwickelt und ist nicht kompatibel.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[Das Paket verfügt über keine Angaben zur API-Kompatibilität, eine Installation  mit aktivierten Entwickler-Werkzeugen ist daher nicht möglich.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[Das hochgeladene Paket kann nicht installiert werden, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} das unten stehende Prüfungsergebnis.]]></item>
+		<item name="wcf.acp.package.evaluation.expired"><![CDATA[Die Testphase von <strong>{$packageName}</strong> ist abgelaufen. Bitte aktualisiere{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} auf die aktuellste Version um diese Software weiterhin legal betreiben zu können.{if $pluginStoreFileID || $isWoltLab}<br>{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die aktuelle Version sicher und bequem <strong>{if $pluginStoreFileID}<a href="https://pluginstore.woltlab.com/file/{$pluginStoreFileID}/">im WoltLab Plugin-Store</a>{else}<a href="https://www.woltlab.com/purchase/">auf WoltLab.com</a>{/if}</strong> erwerben.{/if}]]></item>
+		<item name="wcf.acp.package.evaluation.pending"><![CDATA[Bei den folgenden installierten Apps handelt es sich um Testversionen, die am <strong>{$evaluationEndDate|plainTime}</strong> ({@$evaluationEndDate|dateDiff:TIME_NOW:true}) abläuft. Mit Ablauf der Frist deaktiviert sich die App automatisch, es ist dann notwendig diese auf die endgültige Version zu aktualisieren, um den legalen Betrieb fortzusetzen.
+<ul class="nativeList">
+	{foreach from=$pendingApps item=pendingApp}
+		<li>{$pendingApp}</li>
+	{/foreach}
+</ul>
+{if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du{else}Sollten Sie{/if} die <strong>Lizenz für die jeweilige App bereits erworben</strong> haben, so reicht es aus, alle kommenden Updates zu installieren. <strong>Die Testversion wird in diesem Fall automatisch in die Vollversion umgewandelt.</strong>]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">
@@ -1956,7 +1966,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.style.exportTemplates"><![CDATA[Templates exportieren]]></item>
 		<item name="wcf.acp.style.exportStyle"><![CDATA[Stil exportieren]]></item>
 		<item name="wcf.acp.style.exportStyle.asPackage"><![CDATA[Export als Paket]]></item>
-		<item name="wcf.acp.style.exportStyle.asPackage.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier aus, ob {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} den Stil „{$style->styleName}“ als Paket exportieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}. Pakete können über die Paketverwaltung installiert oder in den <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https://pluginstore.woltlab.com">WoltLab® Plugin-Store</a> hochgeladen werden.]]></item>
+		<item name="wcf.acp.style.exportStyle.asPackage.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier aus, ob {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} den Stil „{$style->styleName}“ als Paket exportieren {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}. Pakete können über die Paketverwaltung installiert oder in den <a href="https://pluginstore.woltlab.com">WoltLab® Plugin-Store</a> hochgeladen werden.]]></item>
 		<item name="wcf.acp.style.exportStyle.components"><![CDATA[Optionen]]></item>
 		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier aus, welche Bestandteile des Stils „{$style->styleName}“ mit exportiert werden sollen.]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Daten]]></item>
@@ -3189,6 +3199,9 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.message.error.tooLong"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht ist zu lang. Es stehen maximal {#$maxTextLength} Zeichen zur Verfügung.]]></item>
 		<item name="wcf.message.status.deleted"><![CDATA[Gelöscht]]></item>
 		<item name="wcf.message.status.disabled"><![CDATA[Deaktiviert]]></item>
+		<item name="wcf.message.toc"><![CDATA[Inhaltsverzeichnis]]></item>
+		<item name="wcf.message.toc.hide"><![CDATA[Verbergen]]></item>
+		<item name="wcf.message.toc.show"><![CDATA[Anzeigen]]></item>
 	</category>
 	
 	<category name="wcf.menu">

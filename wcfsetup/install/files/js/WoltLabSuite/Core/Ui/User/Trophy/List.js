@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/User/Trophy/List
  */
-define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'Ui/Dialog', 'WoltLabSuite/Core/Ui/Pagination'], function(Ajax, Core, Dictionary, DomUtil, UiDialog, UiPagination) {
+define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'Ui/Dialog', 'WoltLabSuite/Core/Ui/Pagination', 'Dom/ChangeListener', 'List'], function(Ajax, Core, Dictionary, DomUtil, UiDialog, UiPagination, DomChangeListener, List) {
 	"use strict";
 	
 	/**
@@ -19,14 +19,28 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'Ui/Dialog', 'WoltLabSuite/Cor
 		 */
 		init: function() {
 			this._cache = new Dictionary();
+			this._knownElements = new List();
 			
 			this._options = {
 				className: 'wcf\\data\\user\\trophy\\UserTrophyAction',
 				parameters: {}
 			};
 			
+			this._rebuild();
+			
+			DomChangeListener.add('WoltLabSuite/Core/Ui/User/Trophy/List', this._rebuild.bind(this));
+		},
+		
+		/**
+		 * Adds event userTrophyOverlayList elements.
+		 */
+		_rebuild: function() {
 			elBySelAll('.userTrophyOverlayList', undefined, (function (element) {
-				element.addEventListener(WCF_CLICK_EVENT, this._open.bind(this, elData(element, 'user-id')));
+				if (!this._knownElements.has(element)) {
+					element.addEventListener(WCF_CLICK_EVENT, this._open.bind(this, elData(element, 'user-id')));
+					
+					this._knownElements.add(element);
+				}
 			}).bind(this));
 		},
 		
@@ -39,7 +53,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'Ui/Dialog', 'WoltLabSuite/Cor
 		_open: function(userId, event) {
 			event.preventDefault();
 			
-			this._currentPageNo = 1; 
+			this._currentPageNo = 1;
 			this._currentUser = userId;
 			this._showPage();
 		},

@@ -1,0 +1,66 @@
+.tableOfContentsContainer {
+	border: 1px solid $wcfContentBorderInner;
+	padding: 10px;
+	
+	&.open .jsTableOfContentsShow {
+		display: none;
+	}
+	
+	&:not(.open) {
+		.jsTableOfContentsHide,
+		.tableOfContents {
+			display: none;
+		}
+	}
+}
+
+@include screen-md-up {
+	.tableOfContentsWrapper {
+		float: right;
+		margin: 0 0 10px 10px;
+	}
+}
+
+@include screen-sm-down {
+	.tableOfContentsWrapper {
+		margin-bottom: 10px;
+	}
+	
+	.tableOfContentsContainer {
+		display: inline-block;
+		
+		&.mobileForceHide {
+			.jsTableOfContentsShow {
+				display: initial !important;
+			}
+			
+			.jsTableOfContentsHide,
+			.tableOfContents {
+				display: none;
+			}
+		}
+	}
+}
+
+.tableOfContentsHeader {
+	text-align: center;
+}
+
+.tableOfContentsTitle {
+	@include wcfFontBold;
+}
+
+.htmlContent,
+.messageBody > .messageText {
+	.tableOfContents {
+		margin-left: 15px;
+		
+		&.tocLevel2 {
+			list-style-type: lower-alpha;
+		}
+		
+		&.tocLevel3 {
+			list-style-type: lower-roman;
+		}
+	}
+}

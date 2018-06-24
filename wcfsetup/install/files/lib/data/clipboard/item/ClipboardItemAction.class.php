@@ -152,7 +152,8 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 		foreach ($data as $typeName => $itemData) {
 			$items = [
 				'label' => $itemData['label'],
-				'items' => []
+				'items' => [],
+				'reloadPageOnSuccess' => $itemData['reloadPageOnSuccess']
 			];
 			
 			/** @var ClipboardEditorItem $item */
