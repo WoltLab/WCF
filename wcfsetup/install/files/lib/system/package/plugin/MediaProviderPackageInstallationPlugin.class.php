@@ -4,7 +4,6 @@ namespace wcf\system\package\plugin;
 use wcf\data\bbcode\media\provider\BBCodeMediaProviderEditor;
 use wcf\system\bbcode\media\provider\IBBCodeMediaProvider;
 use wcf\system\cache\builder\BBCodeMediaProviderCacheBuilder;
-use wcf\system\devtools\pip\DevtoolsPipEntryList;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
@@ -189,7 +188,7 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 			$data['html'] = $html->nodeValue;
 		}
 		
-		$className = $element->getElementsByTagName('classname')->item(0);
+		$className = $element->getElementsByTagName('className')->item(0);
 		if ($className !== null) {
 			$data['className'] = $className->nodeValue;
 		}
