@@ -109,7 +109,9 @@ requirejs.config({
 			'wcf.user.panel.markAllAsRead': '{lang}wcf.user.panel.markAllAsRead{/lang}',
 			'wcf.user.panel.markAsRead': '{lang}wcf.user.panel.markAsRead{/lang}',
 			'wcf.user.panel.settings': '{lang}wcf.user.panel.settings{/lang}',
-			'wcf.user.panel.showAll': '{lang}wcf.user.panel.showAll{/lang}'
+			'wcf.user.panel.showAll': '{lang}wcf.user.panel.showAll{/lang}',
+			'wcf.menu.page': '{lang}wcf.menu.page{/lang}',
+			'wcf.menu.user': '{lang}wcf.menu.user{/lang}'
 			{if MODULE_LIKE}
 				,'wcf.like.button.like': '{lang}wcf.like.button.like{/lang}',
 				'wcf.like.button.dislike': '{lang}wcf.like.button.dislike{/lang}',

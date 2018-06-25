@@ -122,7 +122,9 @@
 				'wcf.global.success.add': '{lang}wcf.global.success.add{/lang}',
 				'wcf.global.success.edit': '{lang}wcf.global.success.edit{/lang}',
 				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
-				'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}'
+				'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}',
+				'wcf.menu.page': '{lang}wcf.menu.page{/lang}',
+				'wcf.menu.user': '{lang}wcf.menu.user{/lang}'
 				{event name='javascriptLanguageImport'}
 			});
 			
