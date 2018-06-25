@@ -1315,7 +1315,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.failure"><![CDATA[Test fehlgeschlagen]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.failure.description"><![CDATA[Die Rewrite-Unterstützung des Webservers fehlt oder wurde nicht korrekt konfiguriert.<br>
 <br>
-Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anleitung zur <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F24-konfiguration-von-benutzerfreundlichen-urls-seo-urls%2F" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a> oder {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich an deinen{else}wenden Sie sich an Ihren{/if} Anbieter um Unterstütznung bei der Einrichtung zu erhalten.]]></item>
+Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anleitung zur <a href="{@$__wcf->getPath()}acp/dereferrer.php?url=https%3A%2F%2Fwww.woltlab.com%2Farticle%2F24-konfiguration-von-benutzerfreundlichen-urls-seo-urls%2F" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a> oder {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich an deinen{else}wenden Sie sich an Ihren{/if} Anbieter um Unterstützung bei der Einrichtung zu erhalten.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.running"><![CDATA[Test läuft &hellip;]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.status"><![CDATA[Testergebnis]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.status.failure"><![CDATA[Fehlgeschlagen]]></item>
