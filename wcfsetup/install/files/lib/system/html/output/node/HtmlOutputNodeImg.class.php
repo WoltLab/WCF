@@ -49,7 +49,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 					// enforce database values for src, srcset and style
 					$element->setAttribute('src', $smiley->getURL());
 					
-					if ($smiley->getHeight()) $element->setAttribute('height', $smiley->getHeight());
+					if ($smiley->getHeight()) $element->setAttribute('height', (string)$smiley->getHeight());
 					else $element->removeAttribute('height');
 					
 					if ($smiley->smileyPath2x) $element->setAttribute('srcset', $smiley->getURL2x() . ' 2x');
