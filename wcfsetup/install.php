@@ -158,7 +158,7 @@ class SystemException extends \Exception implements IPrintableException {
 /**
  * Loads the required classes automatically.
  */
-function __autoload($className) {
+spl_autoload_register(function($className) {
 	$namespaces = explode('\\', $className);
 	if (count($namespaces) > 1) {
 		// remove 'wcf' component
@@ -170,7 +170,7 @@ function __autoload($className) {
 			require_once($classPath);
 		}
 	}
-}
+});
 
 /**
  * Escapes strings for execution in sql queries.
