@@ -290,7 +290,7 @@ class ReactionHandler extends SingletonFactory {
 			
 			// This interface should help to determine whether the plugin has been adapted to the API 3.2.
 			// If a LikeableObject does not implement this interface, no notification will be sent, because
-			// we assume, that the plugin is adapted to the new API. 
+			// we assume, that the plugin has not been adapted to the new API. 
 			if ($likeable instanceof IReactionObject) {
 				$likeable->sendNotification($like);
 			}
