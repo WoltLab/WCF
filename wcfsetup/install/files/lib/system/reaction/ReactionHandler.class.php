@@ -9,6 +9,7 @@ use wcf\data\like\Like;
 use wcf\data\like\LikeEditor;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\reaction\object\IReactionObject;
 use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\User;
@@ -267,9 +268,6 @@ class ReactionHandler extends SingletonFactory {
 				
 				if ($reaction->isPositive() && $likeable->getUserID()) {
 					UserActivityPointHandler::getInstance()->fireEvent('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $like->likeID, $likeable->getUserID());
-					
-					// @TODO send notification
-					//$likeable->sendNotification($like);
 				}
 			}
 			else {
@@ -286,11 +284,15 @@ class ReactionHandler extends SingletonFactory {
 					}
 					else if (!$like->getReactionType()->isPositive() && $reaction->isPositive()) {
 						UserActivityPointHandler::getInstance()->fireEvent('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $like->likeID, $likeable->getUserID());
-						
-						// @TODO send notification
-						//$likeable->sendNotification($like);
 					}
 				}
+			}
+			
+			// This interface should help to determine whether the plugin has been adapted to the API 3.2.
+			// If a LikeableObject does not implement this interface, no notification will be sent, because
+			// we assume, that the plugin is adapted to the new API. 
+			if ($likeable instanceof IReactionObject) {
+				$likeable->sendNotification($like);
 			}
 			
 			// update object's like counter
