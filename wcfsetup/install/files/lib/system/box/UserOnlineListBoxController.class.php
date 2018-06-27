@@ -30,6 +30,12 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
 	public $showRecord = true;
 	
 	/**
+	 * phrase that is used for the box title
+	 * @var string|null
+	 */
+	public $title;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function getLink() {
@@ -84,5 +90,12 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
 	 */
 	public function hasLink() {
 		return true;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		return $this->title;
 	}
 }
