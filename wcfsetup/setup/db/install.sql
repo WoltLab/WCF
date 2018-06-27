@@ -1432,6 +1432,7 @@ CREATE TABLE wcf1_user (
 	disableCoverPhoto TINYINT(1) NOT NULL DEFAULT 0,
 	disableCoverPhotoReason TEXT,
 	disableCoverPhotoExpires INT(10) NOT NULL DEFAULT 0,
+	articles INT(10) NOT NULL DEFAULT 0,
 	
 	KEY username (username),
 	KEY email (email),

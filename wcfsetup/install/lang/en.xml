@@ -2277,6 +2277,7 @@ full extend.]]></item>
 		<item name="wcf.article.sortField.time"><![CDATA[Date]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Views]]></item>
 		<item name="wcf.article.markAllAsRead"><![CDATA[Mark All Articles as Read]]></item>
+		<item name="wcf.article.showArticlesWritten"><![CDATA[Articles by {$user->username}]]></item>
 	</category>
 	
 	<category name="wcf.attachment">
@@ -3686,6 +3687,7 @@ not register with us.]]></item>
 		<item name="wcf.user.sortField.registrationDate"><![CDATA[Registration Date]]></item>
 		<item name="wcf.user.sortField.username"><![CDATA[Username]]></item>
 		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Last Activity]]></item>
+		<item name="wcf.user.articles"><![CDATA[Articles]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">

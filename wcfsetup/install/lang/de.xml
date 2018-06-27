@@ -2341,6 +2341,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.article.sortField.time"><![CDATA[Datum]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Zugriffe]]></item>
 		<item name="wcf.article.markAllAsRead"><![CDATA[Alle Artikel als gelesen markieren]]></item>
+		<item name="wcf.article.showArticlesWritten"><![CDATA[Artikel von {$user->username}]]></item>
 	</category>
 	
 	<category name="wcf.attachment">
@@ -3692,6 +3693,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.sortField.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.user.sortField.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
+		<item name="wcf.user.articles"><![CDATA[Artikel]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
