@@ -160,7 +160,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			
 			$data['name'] = $element->getAttribute('name');
 			
-			if (!preg_match("/^[\w-\.]+$/", $data['name'])) {
+			if (!preg_match("/^[\w\-\.]+$/", $data['name'])) {
 				$matches = array();
 				preg_match_all("/(\W)/", $data['name'], $matches);
 				throw new SystemException("The option '".$data['name']."' has at least one non-alphanumeric character (underscore is permitted): (".implode("), ( ", $matches[1]).").");
