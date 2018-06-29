@@ -286,7 +286,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @inheritDoc
 	 */
 	protected function validateOption(array $data) {
-		if (!preg_match("/^[\w-\.]+$/", $data['name'])) {
+		if (!preg_match("/^[\w\-\.]+$/", $data['name'])) {
 			$matches = [];
 			preg_match_all("/(\W)/", $data['name'], $matches);
 			throw new SystemException("The option '".$data['name']."' has at least one non-alphanumeric character (underscore is permitted): (".implode("), ( ", $matches[1]).").");
