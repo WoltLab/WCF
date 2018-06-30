@@ -151,7 +151,7 @@
 	{hascontent}
 	<span style="font-size: 0;">-- <br></span>
 	{content}
-	{@MAIL_SIGNATURE|language|nl2br}
+	{@MAIL_SIGNATURE|language|newlineToBreak}
 	{/content}
 	{/hascontent}
 	{/capture}
