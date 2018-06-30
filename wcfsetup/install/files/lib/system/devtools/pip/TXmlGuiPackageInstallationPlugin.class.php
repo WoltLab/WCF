@@ -291,6 +291,8 @@ XML;
 			$itemEditor->update($newElementData);
 		}
 		
+		$this->postImport();
+		
 		if (is_subclass_of($this->className, IEditableCachedObject::class)) {
 			call_user_func([$this->className, 'resetCache']);
 		}
