@@ -1947,6 +1947,23 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.cronjob.startHour.error.format"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.pip.cronjob.startMinute.error.format"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.pip.cronjob.startMonth.error.format"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.pip.menu.identifier"><![CDATA[Menu Identifier]]></item>
+		<item name="wcf.acp.pip.menu.identifier.description"><![CDATA[The menu identifier is used to update menus and for menu-related language item names. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier. Example: <code>com.foo.bar.menu</code>]]></item>
+		<item name="wcf.acp.pip.menu.identifier.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
+		<item name="wcf.acp.pip.menu.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another menu.]]></item>
+		<item name="wcf.acp.pip.menu.identifier.error.tooFewSegments"><![CDATA[The entered menu identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.pip.menu.title.description"><![CDATA[]]></item>
+		<item name="wcf.acp.pip.menu.createBox"><![CDATA[Automatically Create Box for Menu]]></item>
+		<item name="wcf.acp.pip.menu.createBox.description"><![CDATA[If this option is selected, after creating the menu, a box for the menu will also be created.]]></item>
+		<item name="wcf.acp.pip.menu.boxPosition"><![CDATA[Box Position]]></item>
+		<item name="wcf.acp.pip.menu.boxPosition.description"><![CDATA[Determines the position at which the box containing the menu will be shown.]]></item>
+		<item name="wcf.acp.pip.menu.boxShowHeader"><![CDATA[Show Box Header]]></item>
+		<item name="wcf.acp.pip.menu.boxShowHeader.description"><![CDATA[The title in the box header is the title of the menu.]]></item>
+		<item name="wcf.acp.pip.menu.boxVisibleEverywhere"><![CDATA[Box Visible Everywhere]]></item>
+		<item name="wcf.acp.pip.menu.boxVisibilityExceptions.hiddenEverywhere"><![CDATA[Pages on Which the Box Will be Explicitly <strong>Visible</strong>]]></item>
+		<item name="wcf.acp.pip.menu.boxVisibilityExceptions.visibleEverywhere"><![CDATA[Pages on Which the Box Will be Explicitly <strong>Hidden</strong>]]></item>
+		<item name="wcf.acp.pip.menu.boxCssClassName"><![CDATA[Box CSS Classes]]></item>
+		<item name="wcf.acp.pip.menu.boxCssClassName.description"><![CDATA[The entered comma-separated CSS classes are assigned to the box containing the menu.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">

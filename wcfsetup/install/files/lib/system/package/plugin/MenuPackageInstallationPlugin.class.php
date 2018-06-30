@@ -6,9 +6,25 @@ use wcf\data\box\BoxEditor;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuEditor;
 use wcf\data\menu\MenuList;
+use wcf\data\page\PageNode;
+use wcf\data\page\PageNodeTree;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\system\devtools\pip\IDevtoolsPipEntryList;
+use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
+use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\ItemListFormField;
+use wcf\system\form\builder\field\MultipleSelectionFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\TitleFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\IFormDocument;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 /**
@@ -20,7 +36,9 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
  */
-class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
+class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
+	use TXmlGuiPackageInstallationPlugin;
+	
 	/**
 	 * box meta data per menu
 	 * @var	array
@@ -269,8 +287,296 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.1
 	 */
 	public static function getSyncDependencies() {
 		return ['language'];
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getAdditionalTemplateCode(): string {
+		return WCF::getTPL()->fetch('__menuPipGui');
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function addFormFields(IFormDocument $form) {
+		$form->getNodeById('data')->appendChildren([
+			TextFormField::create('identifier')
+				->label('wcf.acp.pip.menu.identifier')
+				->description('wcf.acp.pip.menu.identifier.description')
+				->required()
+				->addValidator(ObjectTypePackageInstallationPlugin::getObjectTypeAlikeValueValidator(
+					'wcf.acp.pip.menu.identifier', 
+					4
+				))
+				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
+					if (
+						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
+						$this->editedEntry->getAttribute('identifier') !== $formField->getValue()
+					) {
+						$menuList = new MenuList();
+						$menuList->getConditionBuilder()->add('identifier = ?', [$formField->getValue()]);
+						
+						if ($menuList->countObjects() > 0) {
+							$formField->addValidationError(
+								new FormFieldValidationError(
+									'notUnique',
+									'wcf.acp.pip.menu.identifier.error.notUnique'
+								)
+							);
+						}
+					}
+				})),
+			
+			TitleFormField::create()
+				->description('wcf.acp.pip.menu.title.description')
+				->required()
+				->i18n()
+				->i18nRequired()
+				->languageItemPattern('__NONE__'),
+			
+			BooleanFormField::create('createBox')
+				->label('wcf.acp.pip.menu.createBox')
+				->description('wcf.acp.pip.menu.createBox.description'),
+			
+			SingleSelectionFormField::create('boxPosition')
+				->label('wcf.acp.pip.menu.boxPosition')
+				->description('wcf.acp.pip.menu.boxPosition.description')
+				->options(array_combine(Box::$availablePositions, Box::$availablePositions)),
+			
+			BooleanFormField::create('boxShowHeader')
+				->label('wcf.acp.pip.menu.boxShowHeader')
+				->description('wcf.acp.pip.menu.boxShowHeader.description'),
+			
+			BooleanFormField::create('boxVisibleEverywhere')
+				->label('wcf.acp.pip.menu.boxVisibleEverywhere'),
+			
+			MultipleSelectionFormField::create('boxVisibilityExceptions')
+				->label('wcf.acp.pip.menu.boxVisibilityExceptions.hiddenEverywhere')
+				->filterable()
+				->options(function(): array {
+					$pageNodeList = (new PageNodeTree())->getNodeList();
+					
+					$nestedOptions = [];
+					/** @var PageNode $pageNode */
+					foreach ($pageNodeList as $pageNode) {
+						$nestedOptions[] = [
+							'depth' => $pageNode->getDepth() - 1,
+							'label' => $pageNode->name,
+							'value' => $pageNode->identifier
+						];
+					}
+					
+					return $nestedOptions;
+				}, true),
+			
+			ItemListFormField::create('boxCssClassName')
+				->label('wcf.acp.pip.menu.boxCssClassName')
+				->description('wcf.acp.pip.menu.boxCssClassName.description')
+				->saveValueType(ItemListFormField::SAVE_VALUE_TYPE_SSV)
+		]);
+		
+		/** @var BooleanFormField $createBox */
+		$createBox = $form->getNodeById('createBox');
+		foreach (['boxPosition', 'boxShowHeader', 'boxVisibleEverywhere', 'boxVisibilityExceptions', 'boxCssClassName'] as $boxField) {
+			$form->getNodeById($boxField)->addDependency(
+				NonEmptyFormFieldDependency::create('createBox')
+					->field($createBox)
+			);
+		}
+		
+		$form->getNodeById('boxPosition')->addDependency(
+			ValueFormFieldDependency::create('identifier')
+				->field($form->getNodeById('identifier'))
+				->values(['com.woltlab.wcf.MainMenu'])
+				->negate()
+		);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+		$data = [
+			'identifier' => $element->getAttribute('identifier'),
+			'packageID' => $this->installation->getPackageID(),
+			'title' => []
+		];
+		
+		/** @var \DOMElement $title */
+		foreach ($element->getElementsByTagName('title') as $title) {
+			$data['title'][LanguageFactory::getInstance()->getLanguageByCode($title->getAttribute('language'))->languageID] = $title->nodeValue;
+		}
+		
+		$box = $element->getElementsByTagName('box')->item(0);
+		$boxData = [];
+		if ($box !== null) {
+			$boxData['position'] = $box->getElementsByTagName('position')->item(0)->nodeValue;
+			
+			// work-around for unofficial position `mainMenu`
+			if ($data['identifier'] === 'com.woltlab.wcf.MainMenu' && !$saveData) {
+				unset($boxData['position']);
+			}
+			
+			$showHeader = $element->getElementsByTagName('showHeader')->item(0);
+			if ($showHeader !== null) {
+				$boxData['showHeader'] = $showHeader->nodeValue;
+			}
+			
+			$visibleEverywhere = $element->getElementsByTagName('visibleEverywhere')->item(0);
+			if ($visibleEverywhere !== null) {
+				$boxData['visibleEverywhere'] = $visibleEverywhere->nodeValue;
+			}
+			
+			$cssClassName = $element->getElementsByTagName('cssClassName')->item(0);
+			if ($cssClassName !== null) {
+				$boxData['cssClassName'] = $cssClassName->nodeValue;
+			}
+			
+			$visibilityExceptions = $element->getElementsByTagName('visibilityExceptions');
+			if ($visibilityExceptions->length > 0) {
+				$boxData['visibilityExceptions'] = [];
+				
+				/** @var \DOMElement $visibilityException */
+				foreach ($visibilityExceptions as $visibilityException) {
+					$boxData['visibilityExceptions'] = $visibilityException->nodeValue;
+				}
+			}
+		}
+		
+		if ($saveData) {
+			if (!empty($boxData)) {
+				$this->boxData[$data['identifier']] = [
+					'identifier' => $data['identifier'],
+					'name' => $this->getI18nValues($data['title'], true),
+					'boxType' => 'menu',
+					'position' => $boxData['position'],
+					'showHeader' => $boxData['showHeader'] ?? 0,
+					'visibleEverywhere' => $boxData['visibleEverywhere'] ?? 0,
+					'cssClassName' => $boxData['cssClassName'] ?? '',
+					'originIsSystem' => 1,
+					'packageID' => $this->installation->getPackageID()
+				];
+				
+				if (!empty($boxData['visibilityExceptions'])) {
+					$this->visibilityExceptions[$data['identifier']] = $boxData['visibilityExceptions'];
+				}
+			}
+			
+			// update menus is not supported thus handling the title
+			// array causes issues
+			if ($this->editedEntry !== null) {
+				unset($data['title']);
+			}
+			else {
+				$titles = [];
+				foreach ($data['title'] as $languageID => $title) {
+					$titles[LanguageFactory::getInstance()->getLanguage($languageID)->languageCode] = $title;
+				}
+				
+				$data['title'] = $titles;
+			}
+		}
+		else {
+			$data['createBox'] = $box !== null;
+			
+			foreach ($boxData as $key => $value) {
+				$data['box' . ucfirst($key)] = $value;
+			}
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getElementIdentifier(\DOMElement $element): string {
+		return $element->getAttribute('identifier');
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
+		$entryList->setKeys([
+			'identifier' => 'wcf.acp.pip.menu.identifier'
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function sortDocument(\DOMDocument $document) {
+		$this->sortImportDelete($document);
+		
+		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
+			return strcmp(
+				$element1->getAttribute('identifier'),
+				$element2->getAttribute('identifier')
+			);
+		};
+		
+		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+		$formData = $form->getData();
+		
+		if ($formData['data']['identifier'] === 'com.woltlab.wcf.MainMenu') {
+			$formData['data']['boxPosition'] = 'mainMenu';
+		}
+		
+		$menu = $document->createElement($this->tagName);
+		$menu->setAttribute('identifier', $formData['data']['identifier']);
+		
+		foreach ($formData['title_i18n'] as $languageID => $title) {
+			$title = $document->createElement('title', $this->getAutoCdataValue($title));
+			$title->setAttribute('language', LanguageFactory::getInstance()->getLanguage($languageID)->languageCode);
+			
+			$menu->appendChild($title);
+		}
+		
+		if ($formData['data']['createBox']) {
+			$box = $document->createElement('box');
+			
+			$box->appendChild($document->createElement('position', $formData['data']['boxPosition']));
+			
+			foreach (['showHeader' => 0, 'visibleEverywhere' => 0, 'cssClassName' => ''] as $boxProperty => $defaultValue) {
+				$index = 'box' . ucfirst($boxProperty);
+				if (isset($formData['data'][$index]) && $formData['data'][$index] !== $defaultValue) {
+					$box->appendChild($document->createElement($boxProperty, (string)$formData['data'][$index]));
+				}
+			}
+			
+			if (!empty($formData['data']['boxVisibilityExceptions'])) {
+				$visibilityExceptions = $box->appendChild($document->createElement('visibilityExceptions'));
+				
+				foreach ($formData['data']['boxVisibilityExceptions'] as $pageIdentifier) {
+					$visibilityExceptions->appendChild($document->createElement('page', $pageIdentifier));
+				}
+			}
+			
+			$menu->appendChild($box);
+		}
+		
+		$document->getElementsByTagName('import')->item(0)->appendChild($menu);
+		
+		return $menu;
 	}
 }
