@@ -160,31 +160,39 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 				->label('wcf.acp.pip.abstractMenu.parentMenuItem')
 				->filterable()
 				->options(function(): array {
-					$acpMenuStructureData = $this->getMenuStructureData();
-					$acpMenuStructure = $acpMenuStructureData['structure'];
-					$menuItemLevels = ['' => 0] + $acpMenuStructureData['levels'];
+					$menuStructure = $this->getMenuStructureData()['structure'];
 					
-					// only consider menu items until the third level (thus only parent
-					// menu items until the second level) as potential parent menu items
-					$acpMenuStructure = array_filter($acpMenuStructure, function(string $parentMenuItem) use ($menuItemLevels): bool {
-						return $menuItemLevels[$parentMenuItem] <= 2;
-					}, ARRAY_FILTER_USE_KEY);
+					$options = [[
+						'depth' => 0,
+						'label' => 'wcf.global.noSelection',
+						'value' => ''
+					]];
 					
-					$buildOptions = function(string $parent = '', int $level = 0) use ($acpMenuStructure, &$buildOptions): array {
+					$buildOptions = function(string $parent = '', int $depth = 0) use ($menuStructure, &$buildOptions): array {
+						// only consider menu items until the third level (thus only parent
+						// menu items until the second level) as potential parent menu items
+						if ($depth > 2) {
+							return [];
+						}
+						
 						$options = [];
-						foreach ($acpMenuStructure[$parent] as $menuItem) {
-							$options[$menuItem->menuItem] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $level) . WCF::getLanguage()->get($menuItem->menuItem);
+						foreach ($menuStructure[$parent] as $menuItem) {
+							$options[] = [
+								'depth' => $depth,
+								'label' => $menuItem->menuItem,
+								'value' => $menuItem->menuItem
+							];
 							
-							if (isset($acpMenuStructure[$menuItem->menuItem])) {
-								$options += $buildOptions($menuItem->menuItem, $level + 1);
+							if (isset($menuStructure[$menuItem->menuItem])) {
+								$options = array_merge($options, $buildOptions($menuItem->menuItem, $depth + 1));
 							}
 						}
 						
 						return $options;
 					};
 					
-					return ['' => 'wcf.global.noSelection'] + $buildOptions();
-				})
+					return array_merge($options, $buildOptions());
+				}, true)
 				->value(''),
 			
 			ClassNameFormField::create('menuItemController')
