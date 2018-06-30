@@ -111,6 +111,13 @@ abstract class AbstractBoxController implements IBoxController {
 	}
 	
 	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		return null;
+	}
+	
+	/**
 	 * Returns the additional data of the box.
 	 * 
 	 * @return	array

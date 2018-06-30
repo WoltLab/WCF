@@ -71,6 +71,16 @@ interface IBoxController {
 	public function saveAdditionalData();
 	
 	/**
+	 * Returns the title of this box, the special value `null` can be returned to
+	 * apply the default behavior as seen in previous versions. Only supported for
+	 * system-type boxes.
+	 * 
+	 * @return      string|null
+	 * @since       3.2
+	 */
+	public function getTitle();
+	
+	/**
 	 * Returns a list of supported box positions.
 	 * 
 	 * @return	string[]

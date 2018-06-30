@@ -202,7 +202,11 @@ class Box extends DatabaseObject {
 	 */
 	public function getBoxContentTitle() {
 		$this->getBoxContents();
-		if ($this->isMultilingual || $this->boxType == 'system') {
+		if ($this->isMultilingual || $this->boxType === 'system') {
+			if ($this->boxType === 'system' && $this->getController()->getTitle()) {
+				return $this->getController()->getTitle();
+			}
+			
 			if (isset($this->boxContents[WCF::getLanguage()->languageID])) {
 				return $this->boxContents[WCF::getLanguage()->languageID]->title;
 			}

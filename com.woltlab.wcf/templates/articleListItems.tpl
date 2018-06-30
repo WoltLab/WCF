@@ -27,10 +27,10 @@
 									{@$article->time|time}
 								</li>
 								
-								{if $article->enableComments}
+								{if $article->getDiscussionProvider()->getDiscussionCountPhrase()}
 									<li>
 										<span class="icon icon16 fa-comments"></span>
-										{lang}wcf.article.articleComments{/lang}
+										{$article->getDiscussionProvider()->getDiscussionCountPhrase()}
 									</li>
 								{/if}
 								

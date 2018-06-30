@@ -1476,6 +1476,11 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<defaultvalue>1</defaultvalue>
 				<options>module_trophy</options>
 			</option>
+			<option name="message_sidebar_enable_articles">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<option name="message_sidebar_user_options">
 				<categoryname>message.sidebar</categoryname>
 				<optiontype>useroptions</optiontype>
