@@ -20,7 +20,7 @@
 	<ul class="scrollableCheckboxList" id="{@$field->getPrefixedId()}_list">
 		{foreach from=$field->getNestedOptions() item=__fieldNestedOption}
 			<li{if $__fieldNestedOption[depth] > 0} style="padding-left: {$__fieldNestedOption[depth]*20}px"{/if}>
-				<label><input type="radio" name="{@$field->getPrefixedId()}" value="{$__fieldNestedOption[value]}"{if $field->getValue() === $__fieldNestedOption[value]} checked{/if}> {@$__fieldNestedOption[label]}</label>
+				<label><input type="checkbox" name="{@$field->getPrefixedId()}[]" value="{$__fieldNestedOption[value]}"{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue()} checked{/if}> {@$__fieldNestedOption[label]}</label>
 			</li>
 		{/foreach}
 	</ul>
