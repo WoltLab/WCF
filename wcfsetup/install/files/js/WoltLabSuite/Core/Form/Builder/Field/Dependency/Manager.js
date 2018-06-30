@@ -181,15 +181,15 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 				}
 				
 				for (var i = 0, length = nodeDependencies.length; i < length; i++) {
-					// if any dependency is met, the element is visible
-					if (nodeDependencies[i].checkDependency()) {
-						this._show(dependentNode);
+					// if any dependency is not met, hide the element
+					if (!nodeDependencies[i].checkDependency()) {
+						this._hide(dependentNode);
 						return;
 					}
 				}
 				
-				// no node dependency is met
-				this._hide(dependentNode);
+				// all node dependency is met
+				this._show(dependentNode);
 			}.bind(this));
 			
 			// delete dependencies for removed elements

@@ -148,15 +148,10 @@ trait TFormNode {
 	 */
 	public function checkDependencies(): bool {
 		if (!empty($this->dependencies)) {
-			$hasMetDependency = false;
 			foreach ($this->dependencies as $dependency) {
-				if ($dependency->checkDependency()) {
-					$hasMetDependency = true;
+				if (!$dependency->checkDependency()) {
+					return false;
 				}
-			}
-			
-			if (!$hasMetDependency) {
-				return false;
 			}
 		}
 		
