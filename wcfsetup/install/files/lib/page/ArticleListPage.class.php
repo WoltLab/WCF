@@ -5,6 +5,8 @@ use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\AccessibleArticleList;
 use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\User;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\label\LabelHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -70,6 +72,12 @@ class ArticleListPage extends MultipleLinkPage {
 	public $controllerParameters = ['application' => 'wcf'];
 	
 	/**
+	 * @var User
+	 * @since 3.2
+	 */
+	public $user;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -96,6 +104,15 @@ class ArticleListPage extends MultipleLinkPage {
 			}
 		}
 		
+		if (!empty($_GET['userID'])) {
+			$this->user = new User(intval($_GET['userID']));
+			if (!$this->user->userID) {
+				throw new IllegalLinkException();
+			}
+			
+			$this->controllerParameters['userID'] = $this->user->userID;
+		}
+		
 		if (!empty($_POST)) {
 			$labelParameters = '';
 			if (!empty($this->labelIDs)) {
@@ -108,7 +125,7 @@ class ArticleListPage extends MultipleLinkPage {
 			exit;
 		}
 		
-		$this->canonicalURL = LinkHandler::getInstance()->getLink('ArticleList', [], ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('ArticleList', $this->controllerParameters, ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
 	}
 	
 	/**
@@ -121,6 +138,10 @@ class ArticleListPage extends MultipleLinkPage {
 	}
 	
 	protected function applyFilters() {
+		if ($this->user) {
+			$this->objectList->getConditionBuilder()->add("article.userID = ?", [$this->user->userID]);
+		}
+		
 		// filter by label
 		if (!empty($this->labelIDs)) {
 			$objectTypeID = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.label.object', 'com.woltlab.wcf.article')->objectTypeID;
@@ -156,7 +177,8 @@ class ArticleListPage extends MultipleLinkPage {
 			'labelGroups' => $this->labelGroups,
 			'labelIDs' => $this->labelIDs,
 			'controllerName' => $this->controllerName,
-			'controllerObject' => null
+			'controllerObject' => null,
+			'user' => $this->user
 		]);
 	}
 }

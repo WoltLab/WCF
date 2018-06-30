@@ -81,7 +81,12 @@ class ViewableArticleList extends ArticleList {
 			$contentList->getConditionBuilder()->add('(article_content.languageID IS NULL OR article_content.languageID = ?)', [WCF::getLanguage()->languageID]);
 			$contentList->readObjects();
 			foreach ($contentList as $articleContent) {
-				$this->objects[$articleContent->articleID]->setArticleContent($articleContent);
+				$article = $this->objects[$articleContent->articleID];
+				$article->setArticleContent($articleContent);
+				
+				// Some providers do pre-populate internal caches in order to retrieve the data
+				// for many objects in a single step.
+				$article->getDiscussionProvider();
 			}
 		}
 		

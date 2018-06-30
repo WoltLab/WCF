@@ -96,6 +96,11 @@
 								<dd>{#$userProfile->trophyPoints}</dd>
 							{/if}
 							
+							{if MESSAGE_SIDEBAR_ENABLE_ARTICLES && $userProfile->articles}
+								<dt><a href="{link controller='ArticleList' userID=$userProfile->userID}{/link}" class="jsTooltip" title="{lang user=$userProfile}wcf.article.showArticlesWritten{/lang}">{lang}wcf.user.articles{/lang}</a></dt>
+								<dd>{#$userProfile->articles}</dd>
+							{/if}
+							
 							{event name='userCredits'}
 							
 							{if MESSAGE_SIDEBAR_USER_OPTIONS && $userProfile->isAccessible('canViewProfile')}

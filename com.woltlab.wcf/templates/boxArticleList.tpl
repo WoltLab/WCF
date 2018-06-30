@@ -13,7 +13,7 @@
 							{elseif $boxSortField == 'views'}
 								{lang article=$boxArticle}wcf.article.articleViews{/lang}
 							{elseif $boxSortField == 'comments'}
-								{lang article=$boxArticle}wcf.article.articleComments{/lang}
+								{$boxArticle->getDiscussionProvider()->getDiscussionCountPhrase()}
 							{elseif $boxSortField == 'cumulativeLikes'}
 								{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && ($boxArticle->likes || $boxArticle->dislikes)}
 									<span class="wcfLikeCounter{if $boxArticle->cumulativeLikes > 0} likeCounterLiked{elseif $boxArticle->cumulativeLikes < 0}likeCounterDisliked{/if}">
@@ -45,7 +45,7 @@
 						
 						<li>
 							<span class="icon icon16 fa-comments"></span>
-							{lang article=$boxArticle}wcf.article.articleComments{/lang}
+							{$boxArticle->getDiscussionProvider()->getDiscussionCountPhrase()}
 						</li>
 					</ul>
 				</a>
