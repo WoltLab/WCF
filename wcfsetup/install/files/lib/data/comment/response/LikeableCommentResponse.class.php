@@ -4,6 +4,7 @@ namespace wcf\data\comment\response;
 use wcf\data\comment\Comment;
 use wcf\data\like\object\AbstractLikeObject;
 use wcf\data\like\Like;
+use wcf\data\reaction\object\IReactionObject;
 use wcf\system\comment\CommentHandler;
 use wcf\system\user\notification\object\LikeUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
@@ -20,7 +21,7 @@ use wcf\system\WCF;
  * @method	CommentResponse		getDecoratedObject()
  * @mixin	CommentResponse
  */
-class LikeableCommentResponse extends AbstractLikeObject {
+class LikeableCommentResponse extends AbstractLikeObject implements IReactionObject {
 	/**
 	 * @inheritDoc
 	 */
@@ -53,7 +54,7 @@ class LikeableCommentResponse extends AbstractLikeObject {
 	public function sendNotification(Like $like) {
 		$comment = new Comment($this->getDecoratedObject()->commentID);
 		$objectType = CommentHandler::getInstance()->getObjectType($comment->objectTypeID);
-		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.like.notification')) {
+		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.like.notification') && UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.response.like.notification')->supportReactions) {
 			if ($this->userID != WCF::getUser()->userID) {
 				$notificationObject = new LikeUserNotificationObject($like);
 				UserNotificationHandler::getInstance()->fireEvent(
