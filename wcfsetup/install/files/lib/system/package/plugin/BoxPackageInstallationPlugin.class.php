@@ -342,7 +342,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 					
 					if ($languageID === null) {
 						$statement->execute([$boxID]);
-						if ($statement->fetchColumn()) continue;
+						if ($statement->fetchSingleColumn()) continue;
 					}
 					
 					$boxContent = isset($content['content']) ? $content['content'] : '';
