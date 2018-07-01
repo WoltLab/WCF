@@ -199,7 +199,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	 */
 	public static function isAccessibleGroup(array $groupIDs = []) {
 		if (self::$accessibleGroups === null) {
-			self::$accessibleGroups = explode(',', WCF::getSession()->getPermission('admin.user.accessibleGroups'));
+			self::$accessibleGroups = explode(',', WCF::getSession()->getPermission('admin.user.accessibleGroups') ?: '');
 		}
 		
 		if (empty($groupIDs)) return false;
