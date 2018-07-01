@@ -36,7 +36,7 @@
 								
 								<small class="separatorLeft">{@$comment->time|time}</small>
 								
-								{include file="reactionSummaryList" isTiny=true reactionData=$likeData[comment] objectType="com.woltlab.wcf.comment" objectID=$comment->commentID}
+								{if $likeData|isset}{include file="reactionSummaryList" isTiny=true reactionData=$likeData[comment] objectType="com.woltlab.wcf.comment" objectID=$comment->commentID}{/if}
 								
 								{if $comment->isDisabled}
 									<span class="badge label green jsIconDisabled">{lang}wcf.message.status.disabled{/lang}</span>
