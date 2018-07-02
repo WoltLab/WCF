@@ -1285,6 +1285,14 @@ RedactorPlugins.wbbcode = function() {
 							continue;
 						}
 					}
+					else if ($line.indexOf('<td') !== 0) {
+						// check if the line is inside a <td>
+						if ($line.lastIndexOf('<td') > $line.lastIndexOf('</td>')) {
+							data += $line + '<br>';
+							
+							continue;
+						}
+					}
 					
 					data += '<p>' + $line + '</p>';
 				}
