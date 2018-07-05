@@ -261,6 +261,7 @@ class Box extends DatabaseObject {
 	 * @return	string
 	 */
 	public function render() {
+		$data = [];
 		EventHandler::getInstance()->fireAction($this, 'beforeRender', $data);
 		
 		// an event decided to return something
