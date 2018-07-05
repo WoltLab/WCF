@@ -93,6 +93,7 @@ class TrophyConditionHandler extends SingletonFactory {
 	 */
 	private function getUserIDs(Trophy $trophy) {
 		$userList = new UserList();
+		$userList->sqlConditionJoins .= " LEFT JOIN wcf".WCF_N."_user_option_value user_option_value ON (user_option_value.userID = user_table.userID)";
 		
 		$conditions = $trophy->getConditions();
 		foreach ($conditions as $condition) {
