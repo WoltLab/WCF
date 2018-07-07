@@ -1964,6 +1964,24 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.menu.boxVisibilityExceptions.visibleEverywhere"><![CDATA[Pages on Which the Box Will be Explicitly <strong>Hidden</strong>]]></item>
 		<item name="wcf.acp.pip.menu.boxCssClassName"><![CDATA[Box CSS Classes]]></item>
 		<item name="wcf.acp.pip.menu.boxCssClassName.description"><![CDATA[The entered comma-separated CSS classes are assigned to the box containing the menu.]]></item>
+		<item name="wcf.acp.pip.menuItem.identifier"><![CDATA[Menu Item Identifier]]></item>
+		<item name="wcf.acp.pip.menuItem.identifier.description"><![CDATA[The menu item identifier is used to update menu items and for menu item-related language item names. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier. Example: <code>com.foo.bar.menu</code>]]></item>
+		<item name="wcf.acp.pip.menuItem.identifier.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
+		<item name="wcf.acp.pip.menuItem.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another menu.]]></item>
+		<item name="wcf.acp.pip.menuItem.identifier.error.tooFewSegments"><![CDATA[The identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.pip.menuItem.menu"><![CDATA[Menu]]></item>
+		<item name="wcf.acp.pip.menuItem.menu.description"><![CDATA[The menu item will belong to the selected menu.]]></item>
+		<item name="wcf.acp.pip.menuItem.linkType"><![CDATA[Menu Item Link Type]]></item>
+		<item name="wcf.acp.pip.menuItem.linkType.internal"><![CDATA[Internal Link]]></item>
+		<item name="wcf.acp.pip.menuItem.linkType.external"><![CDATA[External Link]]></item>
+		<item name="wcf.acp.pip.menuItem.linkType"><![CDATA[Menu Item Link Type]]></item>
+		<item name="wcf.acp.pip.menuItem.page"><![CDATA[Page]]></item>
+		<item name="wcf.acp.pip.menuItem.page.description"><![CDATA[The menu item will link to the selected page.]]></item>
+		<item name="wcf.acp.pip.menuItem.parentMenuItem"><![CDATA[Parent Menu Item]]></item>
+		<item name="wcf.acp.pip.menuItem.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.acp.pip.menuItem.showOrder.description"><![CDATA[The entered value determines in which order the menu items with the same parent are shown.]]></item>
+		<item name="wcf.acp.pip.menuItem.externalURL"><![CDATA[External URL]]></item>
+		<item name="wcf.acp.pip.menuItem.externalURL.description"><![CDATA[When clicking on the menu item, the user is redirected to the entered website.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
