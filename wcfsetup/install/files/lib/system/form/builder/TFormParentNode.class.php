@@ -291,7 +291,7 @@ trait TFormParentNode {
 			foreach ($this->children() as $child) {
 				// call `checkDependencies()` on form fields here so that their validate
 				// method does not have to do it
-				if ($child instanceof IFormField && $child->isAvailable() && !$child->checkDependencies()) {
+				if ($child instanceof IFormField && (!$child->isAvailable() || !$child->checkDependencies())) {
 					continue;
 				}
 				
