@@ -244,6 +244,11 @@ trait TSelectionFormField {
 			}
 		}
 		
+		if ($this->__options === null) {
+			$this->__options = [];
+			$this->__nestedOptions = [];
+		}
+		
 		return $this;
 	}
 	

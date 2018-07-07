@@ -71,7 +71,7 @@ class SingleSelectionFormField extends AbstractFormField implements INullableFor
 			return $this;
 		}
 		
-		if (!isset($this->getOptions()[$this->getValue()])) {
+		if (!isset($this->getOptions()[$value])) {
 			throw new \InvalidArgumentException("Unknown value '{$value}'");
 		}
 		
