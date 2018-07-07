@@ -344,8 +344,16 @@ XML;
 				else if ($node->getObjectProperty() !== $node->getId()) {
 					$key = $node->getObjectProperty();
 					
-					if (isset($data[$key])) {
-						$node->value($data[$key]);
+					try {
+						if (isset($data[$key])) {
+							$node->value($data[$key]);
+						}
+					}
+					catch (\InvalidArgumentException $e) {
+						// ignore invalid argument exceptions for fields with object property
+						// as there might be multiple fields with the same object property but
+						// different possible values (for example when using single selection
+						// form fields to set the parent element)
 					}
 				}
 			}
