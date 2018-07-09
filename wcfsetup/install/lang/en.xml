@@ -2278,6 +2278,7 @@ full extend.]]></item>
 		<item name="wcf.article.commentResponse"><![CDATA[Reply to Article Comment]]></item>
 		<item name="wcf.article.sortField.comments"><![CDATA[Comments]]></item>
 		<item name="wcf.article.sortField.cumulativeLikes"><![CDATA[Likes]]></item>
+		<item name="wcf.article.sortField.random"><![CDATA[Random]]></item>
 		<item name="wcf.article.sortField.time"><![CDATA[Date]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Views]]></item>
 		<item name="wcf.article.markAllAsRead"><![CDATA[Mark All Articles as Read]]></item>

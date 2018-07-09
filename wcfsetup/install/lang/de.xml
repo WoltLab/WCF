@@ -2342,6 +2342,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.article.commentResponse"><![CDATA[Antwort auf Artikel-Kommentar]]></item>
 		<item name="wcf.article.sortField.comments"><![CDATA[Kommentare]]></item>
 		<item name="wcf.article.sortField.cumulativeLikes"><![CDATA[Likes]]></item>
+		<item name="wcf.article.sortField.random"><![CDATA[Zufällig]]></item>
 		<item name="wcf.article.sortField.time"><![CDATA[Datum]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Zugriffe]]></item>
 		<item name="wcf.article.markAllAsRead"><![CDATA[Alle Artikel als gelesen markieren]]></item>
