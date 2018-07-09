@@ -76,6 +76,9 @@
 		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Mehrsprachigkeit]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Vorschau anzeigen]]></item>
 		<item name="wcf.acp.article.category"><![CDATA[Kategorie]]></item>
+		<item name="wcf.acp.article.category.sortField"><![CDATA[Sortierung]]></item>
+		<item name="wcf.acp.article.category.sortField.publicationDate"><![CDATA[Veröffentlichungsdatum]]></item>
+		<item name="wcf.acp.article.category.sortField.title"><![CDATA[Titel]]></item>
 		<item name="wcf.acp.article.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.article.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if $isArticleEdit|empty}den Artikel <span class="confirmationObject">{$article->getTitle()}</span>{else}diesen Artikel{/if} wirklich löschen?]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Kommentare aktivieren]]></item>

@@ -76,6 +76,9 @@
 		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Internationalization]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Show Preview]]></item>
 		<item name="wcf.acp.article.category"><![CDATA[Category]]></item>
+		<item name="wcf.acp.article.category.sortField"><![CDATA[Show Order]]></item>
+		<item name="wcf.acp.article.category.sortField.publicationDate"><![CDATA[Publication Date]]></item>
+		<item name="wcf.acp.article.category.sortField.title"><![CDATA[Title]]></item>
 		<item name="wcf.acp.article.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.article.delete.confirmMessage"><![CDATA[Do you really want to delete {if $isArticleEdit|empty}the article <span class="confirmationObject">{$article->getTitle()}</span>{else}this article{/if}?]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Enable comments]]></item>
