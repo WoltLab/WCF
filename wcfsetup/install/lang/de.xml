@@ -217,6 +217,7 @@
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.followingsOnline"><![CDATA[Benutzer online, denen der aktive Nutzer folgt]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.pageCommentList"><![CDATA[Seiten-Kommentare]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.paidSubscriptions"><![CDATA[Bezahlte Mitgliedschaften]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.profileCommentList"><![CDATA[Profil-Kommentare]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.recentActivityList"><![CDATA[Letzte Aktivitäten]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.registerButton"><![CDATA[Registrierungs-Button]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.signedInAs"><![CDATA[Angemeldet als]]></item>
@@ -4126,6 +4127,7 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.profile.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.user.profile.management"><![CDATA[Verwaltung]]></item>
 		<item name="wcf.user.profile.customization"><![CDATA[Anpassung]]></item>
+		<item name="wcf.user.profile.title"><![CDATA[Benutzerprofil von {$user->username}]]></item>
 	</category>
 	
 	<category name="wcf.user.objectWatch">

@@ -213,6 +213,7 @@
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.followingsOnline"><![CDATA[Users Online Followed by Active User]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.pageCommentList"><![CDATA[Page Comments]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.paidSubscriptions"><![CDATA[Paid Subscriptions]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.profileCommentList"><![CDATA[Profile Comments]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.recentActivityList"><![CDATA[Recent Activity]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.registerButton"><![CDATA[Register Button]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.signedInAs"><![CDATA[Signed In As]]></item>
@@ -4121,6 +4122,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.profile.user"><![CDATA[User]]></item>
 		<item name="wcf.user.profile.management"><![CDATA[Management]]></item>
 		<item name="wcf.user.profile.customization"><![CDATA[Customization]]></item>
+		<item name="wcf.user.profile.title"><![CDATA[User profile of {$user->username}]]></item>
 	</category>
 	
 	<category name="wcf.user.objectWatch">

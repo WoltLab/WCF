@@ -1393,6 +1393,11 @@
 			<definitionname>com.woltlab.wcf.boxController</definitionname>
 			<classname>wcf\system\box\UserTrophyListBoxController</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.profileCommentList</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\ProfileCommentListBoxController</classname>
+		</type>
 		<!-- /box controllers -->
 		
 		<!-- simple acl -->
