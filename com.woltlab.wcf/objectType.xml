@@ -1231,6 +1231,12 @@
 		
 		<!-- user search conditions -->
 		<type>
+			<name>com.woltlab.wcf.userID</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname>wcf\system\condition\UserUserIDCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.username</name>
 			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
 			<classname>wcf\system\condition\UserUsernameCondition</classname>
