@@ -1389,8 +1389,9 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.message_force_secure_images"><![CDATA[Allow secure images only]]></item>
 		<item name="wcf.acp.option.message_force_secure_images.description"><![CDATA[Images may only be embedded using the encrypted “https”-protocol. Images in already existing messages will be force-rewritten to use the secure protocol.]]></item>
 		<item name="wcf.acp.option.module_image_proxy"><![CDATA[Enable image proxy]]></item>
-		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Storage Time Period]]></item>
+		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Maximum Storage Time Period]]></item>
 		<item name="wcf.acp.option.image_proxy_insecure_only"><![CDATA[Store images from insecure sources only]]></item>
+		<item name="wcf.acp.option.image_proxy_enable_prune"><![CDATA[Remove Cached Images Regularly]]></item>
 		<item name="wcf.acp.option.image_proxy_host_whitelist"><![CDATA[Image proxy whitelist]]></item>
 		<item name="wcf.acp.option.image_proxy_host_whitelist.description"><![CDATA[The listed domains will not be handled by the image proxy, the current domain is implicitly added. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.<br>Enter one domain per line only.]]></item>
 		<item name="wcf.acp.option.share_buttons_providers"><![CDATA[Share Button Providers]]></item>
