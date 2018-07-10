@@ -1681,6 +1681,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.page.addPageToMainMenu"><![CDATA[Seite automatisch in das Hauptmenü aufnehmen]]></item>
 		<item name="wcf.acp.page.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.page' objectID=$page->pageID}{/link}">vorherige Versionen</a> dieser Seite, die letzte Änderung erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 		<item name="wcf.acp.page.originIsNotSystem"><![CDATA[Eigene Seiten]]></item>
+		<item name="wcf.acp.page.enableShareButtons"><![CDATA[Teilen-Buttons für diese Seite aktivieren]]></item>
 	</category>
 	
 	<category name="wcf.acp.paidSubscription">

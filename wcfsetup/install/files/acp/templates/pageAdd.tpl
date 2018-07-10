@@ -244,7 +244,7 @@
 					</dd>
 				</dl>
 				
-				{if $action == 'add'}
+				{if $action === 'add'}
 					<dl>
 						<dt></dt>
 						<dd>
@@ -282,6 +282,15 @@
 									{/if}
 								</small>
 							{/if}
+						</dd>
+					</dl>
+				{/if}
+				
+				{if $pageType !== 'system'}
+					<dl>
+						<dt></dt>
+						<dd>
+							<label><input type="checkbox" id="enableShareButtons" name="enableShareButtons" value="1"{if $enableShareButtons} checked{/if}> {lang}wcf.acp.page.enableShareButtons{/lang}</label>
 						</dd>
 					</dl>
 				{/if}

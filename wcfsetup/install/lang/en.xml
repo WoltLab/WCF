@@ -3349,6 +3349,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.acp.page.addPageToMainMenu"><![CDATA[Add page to main menu]]></item>
 		<item name="wcf.acp.page.lastVersion"><![CDATA[There are <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.page' objectID=$page->pageID}{/link}">previous versions</a> of this page, the last change was by <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 		<item name="wcf.acp.page.originIsNotSystem"><![CDATA[Custom pages only]]></item>
+		<item name="wcf.acp.page.enableShareButtons"><![CDATA[Enable the share buttons for this page]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">
