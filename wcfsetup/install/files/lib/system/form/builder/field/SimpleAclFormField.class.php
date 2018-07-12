@@ -49,8 +49,8 @@ class SimpleAclFormField extends AbstractFormField {
 		parent::populate();
 		
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('i18n', function(IFormDocument $document, array $parameters) {
-			if (is_array($this->getValue()) && !empty($this->getValue())) {
-				$parameters[$this->getId()] = $this->getValue();
+			if ($this->checkDependencies() && is_array($this->getValue()) && !empty($this->getValue())) {
+				$parameters[$this->getObjectProperty()] = $this->getValue();
 			}
 			
 			return $parameters;

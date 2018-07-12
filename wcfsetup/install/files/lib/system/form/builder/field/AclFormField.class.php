@@ -132,7 +132,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 		parent::populate();
 		
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('acl', function(IFormDocument $document, array $parameters) {
-			$parameters[$this->getId() . '_aclObjectTypeID'] = $this->getObjectType()->objectTypeID;
+			$parameters[$this->getObjectProperty() . '_aclObjectTypeID'] = $this->getObjectType()->objectTypeID;
 			
 			return $parameters;
 		}));
