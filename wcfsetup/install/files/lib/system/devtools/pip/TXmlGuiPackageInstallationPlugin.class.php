@@ -277,19 +277,17 @@ XML;
 	protected function saveObject(\DOMElement $newElement, \DOMElement $oldElement = null) {
 		$newElementData = $this->getElementData($newElement, true);
 		
-		if ($oldElement === null) {
-			call_user_func([$this->className, 'create'], $newElementData);
-		}
-		else {
+		$existingRow = [];
+		if ($oldElement !== null) {
 			$sqlData = $this->findExistingItem($this->getElementData($oldElement, true));
 			
 			$statement = WCF::getDB()->prepareStatement($sqlData['sql']);
 			$statement->execute($sqlData['parameters']);
 			
-			$baseClass = call_user_func([$this->className, 'getBaseClass']);
-			$itemEditor = new $this->className(new $baseClass(null, $statement->fetchArray()));
-			$itemEditor->update($newElementData);
+			$existingRow = $statement->fetchArray();
 		}
+		
+		$this->import($existingRow, $newElementData);
 		
 		$this->postImport();
 		
