@@ -9,6 +9,7 @@ use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
 use wcf\system\language\I18nHandler;
 use wcf\system\Regex;
+use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -340,7 +341,9 @@ trait TI18nFormField {
 				$this->setStringValue($value);
 			}
 			else if (is_array($value)) {
-				I18nHandler::getInstance()->setValues($this->getPrefixedId(), $value);
+				if (!empty($value)) {
+					I18nHandler::getInstance()->setValues($this->getPrefixedId(), $value);
+				}
 			}
 			else {
 				throw new \InvalidArgumentException("Given value is neither a string nor an array, " . gettype($value) . " given.");
@@ -364,12 +367,16 @@ trait TI18nFormField {
 	 * nodes are valid. A `IFormField` object is valid if its value is valid.
 	 */
 	public function validate() {
-		if (!I18nHandler::getInstance()->validateValue($this->getPrefixedId(), $this->isI18nRequired(), !$this->isRequired())) {
-			if ($this->hasPlainValue()) {
-				$this->addValidationError(new FormFieldValidationError('empty'));
-			}
-			else {
-				$this->addValidationError(new FormFieldValidationError('multilingual'));
+		// if i18n is required for a non-required field and the field is
+		// empty, that is no error
+		if ($this->isI18n() && (!empty(ArrayUtil::trim($this->getValue()))) || $this->isRequired()) {
+			if (!I18nHandler::getInstance()->validateValue($this->getPrefixedId(), $this->isI18nRequired(), !$this->isRequired())) {
+				if ($this->hasPlainValue()) {
+					$this->addValidationError(new FormFieldValidationError('empty'));
+				}
+				else {
+					$this->addValidationError(new FormFieldValidationError('multilingual'));
+				}
 			}
 		}
 	}
