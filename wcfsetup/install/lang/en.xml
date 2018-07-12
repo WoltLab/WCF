@@ -1982,6 +1982,37 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.menuItem.showOrder.description"><![CDATA[The entered value determines in which order the menu items with the same parent are shown.]]></item>
 		<item name="wcf.acp.pip.menuItem.externalURL"><![CDATA[External URL]]></item>
 		<item name="wcf.acp.pip.menuItem.externalURL.description"><![CDATA[When clicking on the menu item, the user is redirected to the entered website.]]></item>
+		<item name="wcf.acp.pip.page.identifier"><![CDATA[Page Identifier]]></item>
+		<item name="wcf.acp.pip.page.identifier.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.pip.page.identifier.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
+		<item name="wcf.acp.pip.page.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another menu.]]></item>
+		<item name="wcf.acp.pip.page.identifier.error.tooFewSegments"><![CDATA[The identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.pip.page.pageType"><![CDATA[Page Type]]></item>
+		<item name="wcf.acp.pip.page.pageType.description"><![CDATA[The content of “text” pages can be edited by administrators using the built-in WYSIWYG editor. “html” pages addditionally allow HTML code and “tpl” pages also template scripting. The content of “system” pages cannot be edited by administrators as their content is provided by the pages' controller.]]></item>
+		<item name="wcf.acp.pip.page.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.pip.page.name.description"><![CDATA[The page name is displayed in the ACP on the page list.]]></item>
+		<item name="wcf.acp.pip.page.controller"><![CDATA[Page Controller]]></item>
+		<item name="wcf.acp.pip.page.handler"><![CDATA[Page Handler]]></item>
+		<item name="wcf.acp.pip.page.controllerCustomURL"><![CDATA[Custom Page URL]]></item>
+		<item name="wcf.acp.pip.page.controllerCustomURL.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.pip.page.requireObjectID"><![CDATA[Requires Object ID]]></item>
+		<item name="wcf.acp.pip.page.requireObjectID.description"><![CDATA[The page requires an object id to be displayed.]]></item>
+		<item name="wcf.acp.pip.page.hasFixedParent"><![CDATA[Has Fixed Parent]]></item>
+		<item name="wcf.acp.pip.page.hasFixedParent.description"><![CDATA[Users are unable to change the page's parent page.]]></item>
+		<item name="wcf.acp.pip.page.parent"><![CDATA[Parent Page]]></item>
+		<item name="wcf.acp.pip.page.parent.error.selfParent"><![CDATA[You have selected the page itself as its parent page.]]></item>
+		<item name="wcf.acp.pip.page.options.description"><![CDATA[At least one of the entered options has to be enabled for <strong>menu items</strong> linking to this page to be visible. This option does control the accessibility of the page itself. Options of non-required packages will be reported as non-existing.]]></item>
+		<item name="wcf.acp.pip.page.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions in order to see <strong>menu items</strong> linking to this page. This option does control the accessibility of the page itself. Permissions of non-required packages will be reported as non-existing.]]></item>
+		<item name="wcf.acp.pip.page.cssClassName"><![CDATA[CSS Classes]]></item>
+		<item name="wcf.acp.pip.page.cssClassName.description"><![CDATA[The entered comma-separated CSS classes are assigned to the <code>body</code> element.]]></item>
+		<item name="wcf.acp.pip.page.allowSpidersToIndex"><![CDATA[Allow search spiders to index this page]]></item>
+		<item name="wcf.acp.pip.page.excludeFromLandingPage"><![CDATA[Page cannot be set as landing page]]></item>
+		<item name="wcf.acp.pip.page.availableDuringOfflineMode"><![CDATA[Page is available during maintenance mode]]></item>
+		<item name="wcf.acp.pip.page.contentTitle"><![CDATA[Title]]></item>
+		<item name="wcf.acp.pip.page.contentContent"><![CDATA[Content]]></item>
+		<item name="wcf.acp.pip.page.contentCustomURL"><![CDATA[Custom URL]]></item>
+		<item name="wcf.acp.pip.page.contentMetaDescription"><![CDATA[Meta Description]]></item>
+		<item name="wcf.acp.pip.page.contentMetaKeywords"><![CDATA[Meta Keywords]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">

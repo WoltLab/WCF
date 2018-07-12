@@ -5,9 +5,33 @@ use wcf\data\package\PackageCache;
 use wcf\data\page\Page;
 use wcf\data\page\PageAction;
 use wcf\data\page\PageEditor;
-use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\data\page\PageList;
+use wcf\data\page\PageNode;
+use wcf\data\page\PageNodeTree;
+use wcf\page\IPage;
+use wcf\system\devtools\pip\IDevtoolsPipEntryList;
+use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
+use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\container\TabFormContainer;
+use wcf\system\form\builder\container\TabMenuFormContainer;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\ClassNameFormField;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\ItemListFormField;
+use wcf\system\form\builder\field\MultilineTextFormField;
+use wcf\system\form\builder\field\OptionFormField;
+use wcf\system\form\builder\field\RadioButtonFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\TitleFormField;
+use wcf\system\form\builder\field\UserGroupOptionFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\IFormDocument;
 use wcf\system\language\LanguageFactory;
+use wcf\system\page\handler\IMenuPageHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
@@ -16,13 +40,15 @@ use wcf\util\StringUtil;
 /**
  * Installs, updates and deletes CMS pages.
  * 
- * @author	Alexander Ebert
+ * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
  */
-class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
+class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
+	use TXmlGuiPackageInstallationPlugin;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -271,7 +297,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			// allow update of `controller`, `handler` and `excludeFromLandingPage`
 			// only, prevents user modifications form being overwritten
 			if (!empty($data['controller'])) {
-				$allowSpidersToIndex = $row['allowSpidersToIndex'];
+				$allowSpidersToIndex = $row['allowSpidersToIndex'] ?? 0;
 				if ($allowSpidersToIndex == 2) {
 					// The value `2` resolves to be true-ish, eventually resulting in the same behavior
 					// when setting it to `1`. This value is special to the 3.0 -> 3.1 upgrade, because
@@ -283,10 +309,10 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				
 				$page = parent::import($row, [
 					'controller' => $data['controller'],
-					'handler' => $data['handler'],
-					'options' => $data['options'],
-					'permissions' => $data['permissions'],
-					'excludeFromLandingPage' => $data['excludeFromLandingPage'],
+					'handler' => $data['handler'] ?? '',
+					'options' => $data['options'] ?? '',
+					'permissions' => $data['permissions'] ?? '',
+					'excludeFromLandingPage' => $data['excludeFromLandingPage'] ?? 0,
 					'allowSpidersToIndex' => $allowSpidersToIndex
 				]);
 			}
@@ -383,8 +409,429 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.1
 	 */
 	public static function getSyncDependencies() {
 		return ['language'];
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function addFormFields(IFormDocument $form) {
+		$tabContainter = TabMenuFormContainer::create('tabMenu');
+		$form->appendChild($tabContainter);
+		
+		$dataTab = TabFormContainer::create('dataTab')
+			->label('wcf.global.form.data');
+		$tabContainter->appendChild($dataTab);
+		$dataContainer = FormContainer::create('dataTabData');
+		$dataTab->appendChild($dataContainer);
+		
+		$contentTab = TabFormContainer::create('contentTab')
+			->label('TODO Content');
+		$tabContainter->appendChild($contentTab);
+		$contentContainer = FormContainer::create('contentTabContent');
+		$contentTab->appendChild($contentContainer);
+		
+		$dataContainer->appendChildren([
+			TextFormField::create('identifier')
+				->label('wcf.acp.pip.page.identifier')
+				->description('wcf.acp.pip.page.identifier.description')
+				->required()
+				->addValidator(ObjectTypePackageInstallationPlugin::getObjectTypeAlikeValueValidator(
+					'wcf.acp.pip.page.identifier',
+					4
+				))
+				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
+					if (
+						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
+						$this->editedEntry->getAttribute('identifier') !== $formField->getValue()
+					) {
+						$pageList = new PageList();
+						$pageList->getConditionBuilder()->add('identifier = ?', [$formField->getValue()]);
+						
+						if ($pageList->countObjects() > 0) {
+							$formField->addValidationError(
+								new FormFieldValidationError(
+									'notUnique',
+									'wcf.acp.pip.page.identifier.error.notUnique'
+								)
+							);
+						}
+					}
+				})),
+			
+			RadioButtonFormField::create('pageType')
+				->label('wcf.acp.pip.page.pageType')
+				->description('wcf.acp.pip.page.pageType.description')
+				->options(array_combine(Page::$availablePageTypes, Page::$availablePageTypes))
+				->addClass('floated'),
+			
+			TextFormField::create('name')
+				->label('wcf.acp.pip.page.name')
+				->description('wcf.acp.pip.page.name.description')
+				->required()
+				->i18n()
+				->i18nRequired()
+				->languageItemPattern('__NONE__'),
+			
+			ClassNameFormField::create('controller')
+				->label('wcf.acp.pip.page.controller')
+				->implementedInterface(IPage::class)
+				->required(),
+			
+			ClassNameFormField::create('handler')
+				->label('wcf.acp.pip.page.handler')
+				->implementedInterface(IMenuPageHandler::class),
+			
+			TextFormField::create('controllerCustomURL')
+				->label('wcf.acp.pip.page.controllerCustomURL')
+				->description('wcf.acp.pip.page.controllerCustomURL.description'),
+			
+			BooleanFormField::create('requireObjectID')
+				->label('wcf.acp.pip.page.requireObjectID')
+				->description('wcf.acp.pip.page.requireObjectID.description'),
+			
+			SingleSelectionFormField::create('parent')
+				->label('wcf.acp.pip.page.parent')
+				->required()
+				->filterable()
+				->options(function(): array {
+					$pageNodeList = (new PageNodeTree())->getNodeList();
+					
+					$nestedOptions = [[
+						'depth' => 0,
+						'label' => 'wcf.global.noSelection',
+						'value' => ''
+					]];
+					
+					$packageIDs = array_merge(
+						[$this->installation->getPackage()->packageID],
+						array_keys($this->installation->getPackage()->getAllRequiredPackages())
+					);
+					
+					/** @var PageNode $pageNode */
+					foreach ($pageNodeList as $pageNode) {
+						if (in_array($pageNode->packageID, $packageIDs)) {
+							$nestedOptions[] = [
+								'depth' => $pageNode->getDepth() - 1,
+								'label' => $pageNode->name,
+								'value' => $pageNode->identifier
+							];
+						}
+					}
+					
+					return $nestedOptions;
+				}, true)
+				->addValidator(new FormFieldValidator('selfParent', function(SingleSelectionFormField $formField) {
+					if ($formField->getDocument()->getNodeById('identifier')->getValue() === $formField->getValue()) {
+						$formField->addValidationError(
+							new FormFieldValidationError(
+								'selfParent',
+								'wcf.acp.pip.page.parent.error.selfParent'
+							)
+						);
+					}
+				})),
+			
+			BooleanFormField::create('hasFixedParent')
+				->label('wcf.acp.pip.page.hasFixedParent')
+				->description('wcf.acp.pip.page.hasFixedParent.description'),
+			
+			OptionFormField::create()
+				->description('wcf.acp.pip.page.options.description')
+				->packageIDs(array_merge(
+					[$this->installation->getPackage()->packageID],
+					array_keys($this->installation->getPackage()->getAllRequiredPackages())
+				)),
+			
+			UserGroupOptionFormField::create()
+				->description('wcf.acp.pip.page.permissions.description')
+				->packageIDs(array_merge(
+					[$this->installation->getPackage()->packageID],
+					array_keys($this->installation->getPackage()->getAllRequiredPackages())
+				)),
+			
+			ItemListFormField::create('cssClassName')
+				->label('wcf.acp.pip.page.cssClassName')
+				->description('wcf.acp.pip.page.cssClassName.description'),
+			
+			BooleanFormField::create('allowSpidersToIndex')
+				->label('wcf.acp.pip.page.allowSpidersToIndex'),
+			
+			BooleanFormField::create('excludeFromLandingPage')
+				->label('wcf.acp.pip.page.excludeFromLandingPage'),
+			
+			BooleanFormField::create('availableDuringOfflineMode')
+				->label('wcf.acp.pip.page.availableDuringOfflineMode')
+		]);
+		
+		$contentContainer->appendChildren([
+			TitleFormField::create('contentTitle')
+				->objectProperty('title')
+				->label('wcf.acp.pip.page.contentTitle')
+				->required()
+				->i18n()
+				->i18nRequired()
+				->languageItemPattern('__NONE__'),
+			
+			MultilineTextFormField::create('contentContent')
+				->objectProperty('content')
+				->label('wcf.acp.pip.page.contentContent')
+				->required()
+				->i18n()
+				->i18nRequired()
+				->languageItemPattern('__NONE__'),
+			
+			TextFormField::create('contentCustomURL')
+				->objectProperty('customURL')
+				->label('wcf.acp.pip.page.contentCustomURL')
+				->i18n()
+				->i18nRequired()
+				->languageItemPattern('__NONE__'),
+			
+			TextFormField::create('contentMetaDescription')
+				->objectProperty('metaDescription')
+				->label('wcf.acp.pip.page.contentMetaDescription')
+				->i18n()
+				->i18nRequired()
+				->languageItemPattern('__NONE__'),
+			
+			TextFormField::create('contentMetaKeywords')
+				->objectProperty('metaKeywords')
+				->label('wcf.acp.pip.page.contentMetaKeywords')
+				->i18n()
+				->i18nRequired()
+				->languageItemPattern('__NONE__'),
+		]);
+		
+		// dependencies
+		
+		/** @var RadioButtonFormField $pageType */
+		$pageType = $form->getNodeById('pageType');
+		foreach (['controller', 'handler', 'requireObjectID'] as $systemElement) {
+			$form->getNodeById($systemElement)->addDependency(
+				ValueFormFieldDependency::create('pageType')
+					->field($pageType)
+					->values(['system'])
+			);
+		}
+		
+		foreach (['contentContent', 'contentCustomURL', 'contentMetaDescription', 'contentMetaKeywords'] as $nonSystemElement) {
+			$form->getNodeById($nonSystemElement)->addDependency(
+				ValueFormFieldDependency::create('pageType')
+					->field($pageType)
+					->values(['system'])
+					->negate()
+			);
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+		$data = [
+			'identifier' => $element->getAttribute('identifier'),
+			'originIsSystem' => 1,
+			'packageID' => $this->installation->getPackageID(),
+			'pageType' => $element->getElementsByTagName('pageType')->item(0)->nodeValue,
+			'name' => [],
+			'title' => [],
+			'content' => [],
+			'customURL' => [],
+			'metaDescription' => [],
+			'metaKeywords' => []
+		];
+		
+		/** @var \DOMElement $title */
+		foreach ($element->getElementsByTagName('name') as $name) {
+			$data['name'][LanguageFactory::getInstance()->getLanguageByCode($name->getAttribute('language'))->languageID] = $name->nodeValue;
+		}
+		
+		$optionalElements = [
+			'controller', 'handler', 'controllerCustomURL', 'hasFixedParent',
+			'parent', 'options', 'permissions', 'cssClassName', 'allowSpidersToIndex',
+			'excludeFromLandingPage', 'availableDuringOfflineMode', 'requireObjectID'
+		];
+		
+		foreach ($optionalElements as $optionalElementName) {
+			$optionalElement = $element->getElementsByTagName($optionalElementName)->item(0);
+			if ($optionalElement !== null) {
+				$data[$optionalElementName] = $optionalElement->nodeValue;
+			}
+		}
+		
+		$readData = function(int $languageID, \DOMElement $content) use (&$data) {
+			foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $contentElementName) {
+				$contentElement = $content->getElementsByTagName($contentElementName)->item(0);
+				if ($contentElement) {
+					if (!isset($data[$contentElementName])) {
+						$data[$contentElementName] = [];
+					}
+					
+					$data[$contentElementName][$languageID] = $contentElement->nodeValue;
+				}
+			}
+		};
+		
+		/** @var \DOMElement $content */
+		foreach ($element->getElementsByTagName('content') as $content) {
+			$languageCode = $content->getAttribute('language');
+			if ($languageCode === '') {
+				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+					$readData($language->languageID, $content);
+				}
+			}
+			else {
+				$readData(
+					LanguageFactory::getInstance()->getLanguageByCode($languageCode)->languageID,
+					$content
+				);
+			}
+		}
+		
+		if ($saveData) {
+			if ($this->editedEntry !== null) {
+				unset($data['name']);
+			}
+			else {
+				$titles = [];
+				foreach ($data['name'] as $languageID => $title) {
+					$titles[LanguageFactory::getInstance()->getLanguage($languageID)->languageCode] = $title;
+				}
+				
+				$data['name'] = $titles;
+			}
+			
+			$content = [];
+			
+			foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $contentProperty) {
+				if (!empty($data[$contentProperty])) {
+					$content[$contentProperty] = $data[$contentProperty];
+				}
+				
+				unset($data[$contentProperty]);
+			}
+			
+			if (!empty($content)) {
+				$data['content'] = $content;
+			}
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getElementIdentifier(\DOMElement $element): string {
+		return $element->getAttribute('identifier');
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
+		$entryList->setKeys([
+			'identifier' => 'wcf.acp.pip.page.identifier',
+			'pageType' => 'wcf.acp.pip.page.pageType'
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function sortDocument(\DOMDocument $document) {
+		$this->sortImportDelete($document);
+		
+		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
+			return strcmp(
+				$element1->getAttribute('identifier'),
+				$element2->getAttribute('identifier')
+			);
+		};
+		
+		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+		$formData = $form->getData();
+		$data = $formData['data'];
+		
+		$page = $document->createElement('page');
+		$page->setAttribute('identifier', $data['identifier']);
+		
+		$page->appendChild($document->createElement('pageType', $data['pageType']));
+		
+		foreach ($formData['name_i18n'] as $languageID => $name) {
+			$name = $document->createElement('name', $this->getAutoCdataValue($name));
+			$name->setAttribute('language', LanguageFactory::getInstance()->getLanguage($languageID)->languageCode);
+			
+			$page->appendChild($name);
+		}
+		
+		$optionalElements = [
+			'controller', 'handler', 'controllerCustomURL', 'hasFixedParent',
+			'parent', 'options', 'permissions', 'cssClassName', 'allowSpidersToIndex',
+			'excludeFromLandingPage', 'availableDuringOfflineMode', 'requireObjectID'
+		];
+		
+		foreach ($optionalElements as $property) {
+			if (!empty($data[$property])) {
+				$page->appendChild($document->createElement($property, (string)$data[$property]));
+			}
+		}
+		
+		foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+			$content = null;
+			
+			foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $property) {
+				if (!empty($formData[$property . '_i18n'][$language->languageID])) {
+					if ($content === null) {
+						$content = $document->createElement('content');
+						$content->setAttribute('language', $language->languageCode);
+						
+						$page->appendChild($content);
+					}
+					
+					if ($property === 'content') {
+						$contentContent = $document->createElement('content');
+						$contentContent->appendChild(
+							$document->createCDATASection(
+								StringUtil::escapeCDATA(StringUtil::unifyNewlines(
+									$formData[$property . '_i18n'][$language->languageID]
+								))
+							)
+						);
+						
+						$content->appendChild($contentContent);
+					}
+					else {
+						$content->appendChild(
+							$document->createElement(
+								$property,
+								$formData[$property . '_i18n'][$language->languageID]
+							)
+						);
+					}
+				}
+			}
+		}
+		
+		$document->getElementsByTagName('import')->item(0)->appendChild($page);
+		
+		return $page;
 	}
 }
