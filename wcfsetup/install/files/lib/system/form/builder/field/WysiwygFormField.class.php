@@ -110,7 +110,9 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 		parent::populate();
 		
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('wysiwyg', function(IFormDocument $document, array $parameters) {
-			$parameters[$this->getId() . 'HtmlInputProcessor'] = $this->htmlInputProcessor;
+			if ($this->checkDependencies()) {
+				$parameters[$this->getObjectProperty() . 'HtmlInputProcessor'] = $this->htmlInputProcessor;
+			}
 			
 			return $parameters;
 		}));

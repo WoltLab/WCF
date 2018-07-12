@@ -156,8 +156,8 @@ trait TMultipleFormField {
 		
 		if ($this->allowsMultiple()) {
 			$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('multiple', function(IFormDocument $document, array $parameters) {
-				if (!empty($this->getValue())) {
-					$parameters[$this->getId()] = $this->getValue();
+				if ($this->checkDependencies() && !empty($this->getValue())) {
+					$parameters[$this->getObjectProperty()] = $this->getValue();
 				}
 				
 				return $parameters;

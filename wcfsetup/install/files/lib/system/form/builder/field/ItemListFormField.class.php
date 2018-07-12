@@ -99,8 +99,8 @@ class ItemListFormField extends AbstractFormField {
 		// an array should be passed as a parameter outside of the `data` array
 		if ($this->getSaveValueType() === self::SAVE_VALUE_TYPE_ARRAY) {
 			$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('itemList', function(IFormDocument $document, array $parameters) {
-				if (is_array($this->getValue())) {
-					$parameters[$this->getId()] = $this->getValue();
+				if ($this->checkDependencies() && is_array($this->getValue())) {
+					$parameters[$this->getObjectProperty()] = $this->getValue();
 				}
 				
 				return $parameters;

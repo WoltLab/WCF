@@ -269,8 +269,8 @@ trait TI18nFormField {
 			/** @var IFormDocument $document */
 			$document = $this->getDocument();
 			$document->getDataHandler()->add(new CustomFormFieldDataProcessor('i18n', function(IFormDocument $document, array $parameters) {
-				if ($this->hasI18nValues()) {
-					$parameters[$this->getId() . '_i18n'] = $this->getValue();
+				if ($this->checkDependencies() && $this->hasI18nValues()) {
+					$parameters[$this->getObjectProperty() . '_i18n'] = $this->getValue();
 				}
 				
 				return $parameters;
