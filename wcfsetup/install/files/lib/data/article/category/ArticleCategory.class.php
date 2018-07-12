@@ -28,6 +28,8 @@ use wcf\system\WCF;
  * @method		ArticleCategory		getParentCategory()
  * @method		ArticleCategory[]	getParentCategories()
  * @method static	ArticleCategory|null	getCategory($categoryID)
+ * @property-read       string                  $sortField
+ * @property-read       string                  $sortOrder
  */
 class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleObject, ITitledLinkObject {
 	/**

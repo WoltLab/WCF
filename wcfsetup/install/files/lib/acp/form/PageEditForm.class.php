@@ -157,7 +157,8 @@ class PageEditForm extends PageAddForm {
 			'parentPageID' => $this->parentPageID ?: null,
 			'applicationPackageID' => $this->applicationPackageID,
 			'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
-			'allowSpidersToIndex' => $this->allowSpidersToIndex
+			'allowSpidersToIndex' => $this->allowSpidersToIndex,
+			'enableShareButtons' => $this->enableShareButtons
 		];
 		
 		if ($this->pageType == 'system') {
@@ -247,6 +248,7 @@ class PageEditForm extends PageAddForm {
 			if ($this->page->availableDuringOfflineMode) $this->availableDuringOfflineMode = 1;
 			if ($this->page->allowSpidersToIndex) $this->allowSpidersToIndex = 1;
 			else $this->allowSpidersToIndex = 0;
+			$this->enableShareButtons = $this->page->enableShareButtons;
 			
 			foreach ($this->page->getPageContents() as $languageID => $content) {
 				$this->title[$languageID] = $content->title;

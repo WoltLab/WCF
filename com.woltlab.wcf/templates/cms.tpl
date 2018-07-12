@@ -62,4 +62,16 @@
 	{/hascontent}
 </footer>
 
+{if $page->showShareButtons()}
+	{capture assign='footerBoxes'}
+		<section class="box boxFullWidth jsOnly">
+			<h2 class="boxTitle">{lang}wcf.message.share{/lang}</h2>
+			
+			<div class="boxContent">
+				{include file='shareButtons'}
+			</div>
+		</section>
+	{/capture}
+{/if}
+
 {include file='footer'}

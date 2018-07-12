@@ -29,7 +29,7 @@ https?://vimeo\.com/groups/[^/]+/videos/(?P<ID>\d+)]]></regex>
 		<provider name="dailymotion">
 			<title>Dailymotion</title>
 			<regex><![CDATA[https?://(?:www\.)?dailymotion\.com/video/(?P<ID>[a-zA-Z0-9_-]+)]]></regex>
-			<html><![CDATA[<iframe width="480" height="270" src="//www.dailymotion.com/embed/video/{$ID}"></iframe>]]></html>
+			<html><![CDATA[<div class="videoContainer"><iframe src="//www.dailymotion.com/embed/video/{$ID}"></iframe></div>]]></html>
 		</provider>
 		
 		<provider name="github-gist">

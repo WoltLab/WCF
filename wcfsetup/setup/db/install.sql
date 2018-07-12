@@ -1050,6 +1050,7 @@ CREATE TABLE wcf1_page (
 	availableDuringOfflineMode TINYINT(1) NOT NULL DEFAULT 0,
 	allowSpidersToIndex TINYINT(1) NOT NULL DEFAULT 0,
 	excludeFromLandingPage TINYINT(1) NOT NULL DEFAULT 0,
+	enableShareButtons TINYINT(1) NOT NULL DEFAULT 0,
 	permissions TEXT NULL,
 	options TEXT NULL
 );

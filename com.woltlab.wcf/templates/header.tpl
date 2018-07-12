@@ -122,7 +122,7 @@
 						{if !$contentTitle|empty}
 							<header class="contentHeader">
 								<div class="contentHeaderTitle">
-									<h1 class="contentTitle">{@$contentTitle}</h1>
+									<h1 class="contentTitle">{@$contentTitle}{if !$contentTitleBadge|empty} {@$contentTitleBadge}{/if}</h1>
 									{if !$contentDescription|empty}<p class="contentHeaderDescription">{@$contentDescription}</p>{/if}
 								</div>
 								

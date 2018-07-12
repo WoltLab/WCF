@@ -820,6 +820,12 @@
 				<permissions>admin.management.canViewLog</permissions>
 				<options>enable_user_authentication_failure</options>
 			</acpmenuitem>
+		
+			<acpmenuitem name="wcf.acp.menu.link.log.modification">
+				<controller>wcf\acp\page\ModificationLogListPage</controller>
+				<parent>wcf.acp.menu.link.log</parent>
+				<permissions>admin.management.canViewLog</permissions>
+			</acpmenuitem>
 			<!-- /log -->
 		
 		<!-- /management -->
