@@ -285,12 +285,28 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util', 'Ui/Si
 			
 			elBySelAll('li', this._element, function(li) {
 				var checkbox = elBySel('input[type="checkbox"]', li);
-				if (checkbox.checked) li.classList.add('active');
-				
-				checkbox.addEventListener('change', function() {
-					li.classList[(checkbox.checked ? 'add' : 'remove')]('active');
-				});
-			});
+				if (checkbox) {
+					if (checkbox.checked) li.classList.add('active');
+					
+					checkbox.addEventListener('change', function() {
+						li.classList[(checkbox.checked ? 'add' : 'remove')]('active');
+					});
+				}
+				else {
+					var radioButton = elBySel('input[type="radio"]', li);
+					if (radioButton) {
+						if (radioButton.checked) li.classList.add('active');
+						
+						radioButton.addEventListener('change', function() {
+							elBySelAll('li', this._element, function(everyLi) {
+								everyLi.classList.remove('active');
+							});
+							
+							li.classList[(radioButton.checked ? 'add' : 'remove')]('active');
+						}.bind(this));
+					}
+				}
+			}.bind(this));
 			
 			// re-insert the modified DOM
 			parent.insertBefore(this._element, nextSibling);
