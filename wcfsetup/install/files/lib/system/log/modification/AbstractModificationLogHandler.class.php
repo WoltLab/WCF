@@ -24,7 +24,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory {
 	 * modifiable content object type
 	 * @var	ObjectType
 	 */
-	protected $objectType = null;
+	protected $objectType;
 	
 	/**
 	 * name of the modifiable content object type
