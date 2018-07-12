@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>3.1.3 pl 1</version> <!-- codename: tornado -->
-		<date>2018-05-24</date>
+		<version>3.1.4</version> <!-- codename: tornado -->
+		<date>2018-07-02</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -98,6 +98,23 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="3.1.3">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language" />
+		
+		<instruction type="cronjob" />
+		<instruction type="page" />
+	</instructions>
+	<instructions type="update" fromversion="3.1.3 pl 1">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language" />
+		
+		<instruction type="cronjob" />
+		<instruction type="page" />
 	</instructions>
 </package>

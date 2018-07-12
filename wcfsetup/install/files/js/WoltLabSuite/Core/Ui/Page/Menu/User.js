@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Menu/User
  */
-define(['Core', 'EventHandler', './Abstract'], function(Core, EventHandler, UiPageMenuAbstract) {
+define(['Core', 'EventHandler', 'Language', './Abstract'], function(Core, EventHandler, Language, UiPageMenuAbstract) {
 	"use strict";
 	
 	/**
@@ -53,6 +53,9 @@ define(['Core', 'EventHandler', './Abstract'], function(Core, EventHandler, UiPa
 					}
 				}).bind(this));
 			}).bind(this));
+			
+			elAttr(this._button, 'aria-label', Language.get('wcf.menu.user'));
+			elAttr(this._button, 'role', 'button');
 		},
 		
 		close: function (event) {

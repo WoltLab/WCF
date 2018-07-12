@@ -76,6 +76,9 @@
 		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Mehrsprachigkeit]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Vorschau anzeigen]]></item>
 		<item name="wcf.acp.article.category"><![CDATA[Kategorie]]></item>
+		<item name="wcf.acp.article.category.sortField"><![CDATA[Sortierung]]></item>
+		<item name="wcf.acp.article.category.sortField.publicationDate"><![CDATA[Veröffentlichungsdatum]]></item>
+		<item name="wcf.acp.article.category.sortField.title"><![CDATA[Titel]]></item>
 		<item name="wcf.acp.article.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.article.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if $isArticleEdit|empty}den Artikel <span class="confirmationObject">{$article->getTitle()}</span>{else}diesen Artikel{/if} wirklich löschen?]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Kommentare aktivieren]]></item>
@@ -217,6 +220,7 @@
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.followingsOnline"><![CDATA[Benutzer online, denen der aktive Nutzer folgt]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.pageCommentList"><![CDATA[Seiten-Kommentare]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.paidSubscriptions"><![CDATA[Bezahlte Mitgliedschaften]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.profileCommentList"><![CDATA[Profil-Kommentare]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.recentActivityList"><![CDATA[Letzte Aktivitäten]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.registerButton"><![CDATA[Registrierungs-Button]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.signedInAs"><![CDATA[Angemeldet als]]></item>
@@ -950,6 +954,20 @@
 		<item name="wcf.acp.menu.link.devtools.project.add"><![CDATA[Projekt hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.devtools.project.list"><![CDATA[Projekte]]></item>
 		<item name="wcf.acp.menu.link.devtools.notificationTest"><![CDATA[Benachrichtigungstest]]></item>
+		<item name="wcf.acp.menu.link.log.modification"><![CDATA[Globales Veränderungsprotokoll]]></item>
+	</category>
+	
+	<category name="wcf.acp.modificationLog">
+		<item name="wcf.acp.modificationLog.list"><![CDATA[Globales Veränderungsprotokoll]]></item>
+		<item name="wcf.acp.modificationLog.action"><![CDATA[Aktion]]></item>
+		<item name="wcf.acp.modificationLog.action.all"><![CDATA[Alle Aktion]]></item>
+		<item name="wcf.acp.modificationLog.affectedObject"><![CDATA[Betroffenes Objekt]]></item>
+		<item name="wcf.acp.modificationLog.affectedObject.id"><![CDATA[ID: {@$modificationLog->objectID}]]></item>
+		<item name="wcf.acp.modificationLog.affectedObject.unknown"><![CDATA[(Existiert nicht mehr)]]></item>
+		<item name="wcf.acp.modificationLog.package.all"><![CDATA[Alle Quellen]]></item>
+		<item name="wcf.acp.modificationLog.time.afterDate"><![CDATA[Ab dem Zeitpunkt]]></item>
+		<item name="wcf.acp.modificationLog.time.beforeDate"><![CDATA[Vor dem Zeitpunkt]]></item>
+		<item name="wcf.acp.modificationLog.unsupportedObjectTypes"><![CDATA[Einige Typen werden aktuell nicht unterstützt und müssen zuvor vom Hersteller angepasst werden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -1315,7 +1333,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.failure"><![CDATA[Test fehlgeschlagen]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.failure.description"><![CDATA[Die Rewrite-Unterstützung des Webservers fehlt oder wurde nicht korrekt konfiguriert.<br>
 <br>
-Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anleitung zur <a href="https://www.woltlab.com/article/24-konfiguration-von-benutzerfreundlichen-urls-seo-urls/" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a> oder {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich an deinen{else}wenden Sie sich an Ihren{/if} Anbieter um Unterstütznung bei der Einrichtung zu erhalten.]]></item>
+Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anleitung zur <a href="https://www.woltlab.com/article/24-konfiguration-von-benutzerfreundlichen-urls-seo-urls/" class="externalURL">Konfiguration von benutzerfreundlichen URLs (SEO-URLs)</a> oder {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich an deinen{else}wenden Sie sich an Ihren{/if} Anbieter um Unterstützung bei der Einrichtung zu erhalten.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.running"><![CDATA[Test läuft &hellip;]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.status"><![CDATA[Testergebnis]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.status.failure"><![CDATA[Fehlgeschlagen]]></item>
@@ -1392,8 +1410,9 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.message_force_secure_images"><![CDATA[Nur sichere Bilder in Nachrichten erlauben]]></item>
 		<item name="wcf.acp.option.message_force_secure_images.description"><![CDATA[Bilder dürfen nur über das verschlüsselte „https“-Protokoll eingebunden werden. Bereits in bestehenden Nachrichten hinterlegte Bilder werden zwangsweise auf dieses Protokoll umgeschrieben.]]></item>
 		<item name="wcf.acp.option.module_image_proxy"><![CDATA[Zwischenspeicherung von externen Bilder aktivieren]]></item>
-		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Speicherzeit]]></item>
+		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Maximale Speicherzeit]]></item>
 		<item name="wcf.acp.option.image_proxy_insecure_only"><![CDATA[Nur Bilder aus unverschlüsselten Quellen zwischenspeichern]]></item>
+		<item name="wcf.acp.option.image_proxy_enable_prune"><![CDATA[Zwischengespeicherte Bilder regelmäßig löschen]]></item>
 		<item name="wcf.acp.option.image_proxy_host_whitelist"><![CDATA[Ausnahmen von der Zwischenspeicherung]]></item>
 		<item name="wcf.acp.option.image_proxy_host_whitelist.description"><![CDATA[Die aufgeführten Domains werden von der Zwischenspeicherung ausgenommen, die eigene Domain ist implizit enthalten. Der Abgleich erfolgt auf Basis der strikten Übereinstimmung, optional können Subdomains mit einem Platzhalter berücksichtigt werden: <kbd>*.example.com</kbd> umfasst sowohl <kbd>example.com</kbd> als auch Subdomains wie <kbd>foo.example.com</kbd> oder <kbd>www.example.com</kbd>.<br>Bitte nur eine Domain pro Zeile eingeben.]]></item>
 		<item name="wcf.acp.option.share_buttons_providers"><![CDATA[Anbieter zum Teilen von Inhalten]]></item>
@@ -1676,6 +1695,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.page.addPageToMainMenu"><![CDATA[Seite automatisch in das Hauptmenü aufnehmen]]></item>
 		<item name="wcf.acp.page.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.page' objectID=$page->pageID}{/link}">vorherige Versionen</a> dieser Seite, die letzte Änderung erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 		<item name="wcf.acp.page.originIsNotSystem"><![CDATA[Eigene Seiten]]></item>
+		<item name="wcf.acp.page.enableShareButtons"><![CDATA[Teilen-Buttons für diese Seite aktivieren]]></item>
 	</category>
 	
 	<category name="wcf.acp.paidSubscription">
@@ -2338,6 +2358,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.article.commentResponse"><![CDATA[Antwort auf Artikel-Kommentar]]></item>
 		<item name="wcf.article.sortField.comments"><![CDATA[Kommentare]]></item>
 		<item name="wcf.article.sortField.cumulativeLikes"><![CDATA[Likes]]></item>
+		<item name="wcf.article.sortField.random"><![CDATA[Zufällig]]></item>
 		<item name="wcf.article.sortField.time"><![CDATA[Datum]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Zugriffe]]></item>
 		<item name="wcf.article.markAllAsRead"><![CDATA[Alle Artikel als gelesen markieren]]></item>
@@ -4150,6 +4171,7 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.profile.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.user.profile.management"><![CDATA[Verwaltung]]></item>
 		<item name="wcf.user.profile.customization"><![CDATA[Anpassung]]></item>
+		<item name="wcf.user.profile.title"><![CDATA[Benutzerprofil von {$user->username}]]></item>
 	</category>
 	
 	<category name="wcf.user.objectWatch">

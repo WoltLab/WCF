@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Menu/Main
  */
-define(['Core', 'Dom/Traverse', './Abstract'], function(Core, DomTraverse, UiPageMenuAbstract) {
+define(['Core', 'Language', 'Dom/Traverse', './Abstract'], function(Core, Language, DomTraverse, UiPageMenuAbstract) {
 	"use strict";
 	
 	var _container = null, _hasItems = null, _list = null, _navigationList = null, _spacer = null;
@@ -43,6 +43,9 @@ define(['Core', 'Dom/Traverse', './Abstract'], function(Core, DomTraverse, UiPag
 					}
 				}).bind(this));
 			}
+			
+			elAttr(this._button, 'aria-label', Language.get('wcf.menu.page'));
+			elAttr(this._button, 'role', 'button');
 		},
 		
 		open: function (event) {

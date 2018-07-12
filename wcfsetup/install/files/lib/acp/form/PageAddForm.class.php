@@ -184,13 +184,19 @@ class PageAddForm extends AbstractForm {
 	 * parent menu item id
 	 * @var integer
 	 */
-	public $parentMenuItemID = null;
+	public $parentMenuItemID;
 	
 	/**
 	 * menu item node tree
 	 * @var	MenuItemNodeTree
 	 */
-	public $menuItems = null;
+	public $menuItems;
+	
+	/**
+	 * @var bool
+	 * @since 3.2
+	 */
+	public $enableShareButtons = 0;
 	
 	/**
 	 * @inheritDoc
@@ -255,6 +261,7 @@ class PageAddForm extends AbstractForm {
 		if (isset($_POST['addPageToMainMenu'])) $this->addPageToMainMenu = 1;
 		if (isset($_POST['applicationPackageID'])) $this->applicationPackageID = intval($_POST['applicationPackageID']);
 		if (!empty($_POST['parentMenuItemID'])) $this->parentMenuItemID = intval($_POST['parentMenuItemID']);
+		if (isset($_POST['enableShareButtons'])) $this->enableShareButtons = 1;
 		
 		if (isset($_POST['customURL']) && is_array($_POST['customURL'])) $this->customURL = array_map('mb_strtolower', ArrayUtil::trim($_POST['customURL']));
 		if (isset($_POST['title']) && is_array($_POST['title'])) $this->title = ArrayUtil::trim($_POST['title']);
@@ -290,7 +297,7 @@ class PageAddForm extends AbstractForm {
 		
 		$this->validateBoxIDs();
 		
-		if ($this->pageType == 'text') {
+		if ($this->pageType === 'text') {
 			if ($this->isMultilingual) {
 				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 					$this->htmlInputProcessors[$language->languageID] = new HtmlInputProcessor();
@@ -530,6 +537,7 @@ class PageAddForm extends AbstractForm {
 			'isLandingPage' => 0,
 			'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
 			'allowSpidersToIndex' => $this->allowSpidersToIndex,
+			'enableShareButtons' => $this->enableShareButtons,
 			'applicationPackageID' => $this->applicationPackageID,
 			'lastUpdateTime' => TIME_NOW,
 			'isMultilingual' => $this->isMultilingual,
@@ -587,7 +595,7 @@ class PageAddForm extends AbstractForm {
 		WCF::getTPL()->assign('success', true);
 		
 		// reset variables
-		$this->parentPageID = $this->isDisabled = $this->isLandingPage = $this->availableDuringOfflineMode = 0;
+		$this->parentPageID = $this->isDisabled = $this->isLandingPage = $this->availableDuringOfflineMode = $this->enableShareButtons = 0;
 		$this->applicationPackageID = 1;
 		$this->cssClassName = $this->name = '';
 		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = $this->aclValues = [];
@@ -652,7 +660,8 @@ class PageAddForm extends AbstractForm {
 			'aclValues' => SimpleAclHandler::getInstance()->getOutputValues($this->aclValues),
 			'addPageToMainMenu' => $this->addPageToMainMenu,
 			'parentMenuItemID' => $this->parentMenuItemID,
-			'menuItemNodeList' => $this->menuItems->getNodeList()
+			'menuItemNodeList' => $this->menuItems->getNodeList(),
+			'enableShareButtons' => $this->enableShareButtons
 		]);
 	}
 }

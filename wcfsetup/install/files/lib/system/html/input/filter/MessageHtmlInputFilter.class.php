@@ -43,6 +43,7 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 	 */
 	protected function getPurifier() {
 		if (self::$purifier === null) {
+			require_once(WCF_DIR . 'lib/system/html/input/filter/HTMLPurifier_URIScheme_steam.php');
 			require_once(WCF_DIR . 'lib/system/html/input/filter/HTMLPurifier_URIScheme_ts3server.php');
 			
 			$config = \HTMLPurifier_Config::createDefault();
@@ -55,6 +56,7 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 			$config->set('HTML.ForbiddenAttributes', ['*@lang', '*@xml:lang']);
 			
 			$allowedSchemes = $config->get('URI.AllowedSchemes');
+			$allowedSchemes['steam'] = true;
 			$allowedSchemes['ts3server'] = true;
 			$config->set('URI.AllowedSchemes', $allowedSchemes);
 			
