@@ -238,6 +238,6 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 		}
 		
 		$host = Url::parse($src)['host'];
-		return in_array($host, $ownDomains);
+		return !$host || in_array($host, $ownDomains);
 	}
 }

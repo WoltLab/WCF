@@ -209,6 +209,19 @@
 			top: 35px !important;
 		}
 		
+		.userProfileUsername + .userRankImage {
+			position: absolute;
+			top: 32px;
+		}
+		
+		.userProfileUsername + .badge + .userRankImage {
+			position: relative;
+			
+			> img {
+				transform: translateY(32px);
+			}
+		}
+		
 		.contentHeaderDescription {
 			margin-left: -58px;
 		}
