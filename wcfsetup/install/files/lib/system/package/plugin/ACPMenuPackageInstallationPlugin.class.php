@@ -11,7 +11,6 @@ use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
-use wcf\system\form\builder\field\validation\RegularExpressionFormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
 
 /**
