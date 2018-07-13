@@ -2032,6 +2032,23 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.page.contentCustomURL"><![CDATA[Custom URL]]></item>
 		<item name="wcf.acp.pip.page.contentMetaDescription"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.pip.page.contentMetaKeywords"><![CDATA[Meta Keywords]]></item>
+		<item name="wcf.acp.pip.eventListener.listenerName"><![CDATA[Event Listener Identifier]]></item>
+		<item name="wcf.acp.pip.eventListener.listenerName.description"><![CDATA[Unique textual identifier of the event listener that may only contain letters and must start with a lowercase letter.]]></item>
+		<item name="wcf.acp.pip.eventListener.listenerName.error.format"><![CDATA[The entered identifier is invalid.]]></item>
+		<item name="wcf.acp.pip.eventListener.listenerName.error.notUnique"><![CDATA[The entered identifier is already used by another event listener.]]></item>
+		<item name="wcf.acp.pip.eventListener.eventClassName"><![CDATA[PHP Event Class]]></item>
+		<item name="wcf.acp.pip.eventListener.eventClassName.description"><![CDATA[The entered class (without leading backslash) fires the event. Alternatively, the entered class inherits from the the class firing the event.]]></item>
+		<item name="wcf.acp.pip.eventListener.eventName"><![CDATA[Event Name]]></item>
+		<item name="wcf.acp.pip.eventListener.eventName.description"><![CDATA[Name of the event of the relevant class the event listener is listening to.]]></item>
+		<item name="wcf.acp.pip.eventListener.listenerClassName"><![CDATA[PHP Event Listener Class]]></item>
+		<item name="wcf.acp.pip.eventListener.environment"><![CDATA[Environment]]></item>
+		<item name="wcf.acp.pip.eventListener.environment.description"><![CDATA[The environment determines whether the event listener is executed in the frontend (<code>user</code>) or the ACP (<code>admin</code>).]]></item>
+		<item name="wcf.acp.pip.eventListener.inherit"><![CDATA[Inherit Event Listener]]></item>
+		<item name="wcf.acp.pip.eventListener.inherit.description"><![CDATA[If an event listener is inherited, it is not only triggered if the event is fired by the class entered above, but it is also fired by classes inheriting from the entered class.]]></item>
+		<item name="wcf.acp.pip.eventListener.niceValue"><![CDATA[Nice Value]]></item>
+		<item name="wcf.acp.pip.eventListener.niceValue.description"><![CDATA[The nice value is used to determine the order in which event listeners for the same event are executed. Event listeners with lower nice value are executed first.]]></item>
+		<item name="wcf.acp.pip.eventListener.options.description"><![CDATA[At least one of the entered options has to be enabled for the event listener to be executed. Options of non-required packages will be reported as non-existing.]]></item>
+		<item name="wcf.acp.pip.eventListener.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions for the event listener to be executed. Permissions of non-required packages will be reported as non-existing.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
