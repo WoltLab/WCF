@@ -3,7 +3,6 @@ declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\user\profile\menu\item\UserProfileMenuItemEditor;
 use wcf\data\user\profile\menu\item\UserProfileMenuItemList;
-use wcf\system\devtools\pip\DevtoolsPipEntryList;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;

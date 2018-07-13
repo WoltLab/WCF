@@ -3,7 +3,6 @@ declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\object\type\definition\ObjectTypeDefinitionEditor;
 use wcf\data\object\type\ObjectTypeCache;
-use wcf\system\devtools\pip\DevtoolsPipEntryList;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;

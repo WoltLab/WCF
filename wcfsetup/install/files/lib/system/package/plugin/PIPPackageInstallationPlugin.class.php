@@ -3,7 +3,6 @@ declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\package\installation\plugin\PackageInstallationPluginEditor;
 use wcf\data\package\installation\plugin\PackageInstallationPluginList;
-use wcf\system\devtools\pip\DevtoolsPipEntryList;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;

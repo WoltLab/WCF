@@ -4,7 +4,6 @@ namespace wcf\system\package\plugin;
 use wcf\data\acp\search\provider\ACPSearchProviderEditor;
 use wcf\data\acp\search\provider\ACPSearchProviderList;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
-use wcf\system\devtools\pip\DevtoolsPipEntryList;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;

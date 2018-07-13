@@ -8,7 +8,6 @@ use wcf\data\template\listener\TemplateListenerList;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateList;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
-use wcf\system\devtools\pip\DevtoolsPipEntryList;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;

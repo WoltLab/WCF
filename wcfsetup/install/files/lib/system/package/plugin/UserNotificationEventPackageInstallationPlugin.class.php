@@ -5,7 +5,6 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\event\UserNotificationEventEditor;
 use wcf\data\user\notification\event\UserNotificationEventList;
-use wcf\system\devtools\pip\DevtoolsPipEntryList;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
