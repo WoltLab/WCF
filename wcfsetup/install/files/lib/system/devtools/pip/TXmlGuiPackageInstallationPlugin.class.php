@@ -21,6 +21,8 @@ use wcf\util\XML;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Devtools\Pip
  * @since	3.2
+ * 
+ * @property	PackageInstallationDispatcher|DevtoolsPackageInstallationDispatcher	$installation
  */
 trait TXmlGuiPackageInstallationPlugin {
 	/**

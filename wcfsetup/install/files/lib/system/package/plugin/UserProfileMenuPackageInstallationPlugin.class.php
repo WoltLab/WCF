@@ -6,6 +6,7 @@ use wcf\data\user\profile\menu\item\UserProfileMenuItemList;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
+use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\OptionFormField;
 use wcf\system\form\builder\field\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -111,7 +112,10 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @since	3.2
 	 */
 	public function addFormFields(IFormDocument $form) {
-		$form->getNodeById('data')->appendChildren([
+		/** @var FormContainer $dataContainer */
+		$dataContainer = $form->getNodeById('data');
+		
+		$dataContainer->appendChildren([
 			TextFormField::create('name')
 				->label('wcf.acp.pip.userProfileMenu.name')
 				->description('wcf.acp.pip.userProfileMenu.name.description')
@@ -258,26 +262,21 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @since	3.2
 	 */
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+		$data = $form->getData()['data'];
+		
 		$userProfileMenuItem = $document->createElement('userprofilemenuitem');
-		$userProfileMenuItem->setAttribute('name', $form->getNodeById('name')->getSaveValue());
-		$userProfileMenuItem->appendChild($document->createElement('classname', $form->getNodeById('className')->getSaveValue()));
+		$userProfileMenuItem->setAttribute('name', $data['name']);
+		$userProfileMenuItem->appendChild($document->createElement('classname', $data['className']));
 		
-		/** @var ItemListFormField $options */
-		$options = $form->getNodeById('options');
-		if ($options->getSaveValue()) {
-			$userProfileMenuItem->appendChild($document->createElement('options', $options->getSaveValue()));
-		}
-		
-		/** @var ItemListFormField $permissions */
-		$permissions = $form->getNodeById('permissions');
-		if ($permissions->getSaveValue()) {
-			$userProfileMenuItem->appendChild($document->createElement('permissions', $permissions->getSaveValue()));
-		}
-		
-		/** @var IntegerFormField $showOrder */
-		$showOrder = $form->getNodeById('showOrder');
-		if ($showOrder->getSaveValue()) {
-			$userProfileMenuItem->appendChild($document->createElement('showorder', (string) $showOrder->getSaveValue()));
+		foreach (['options', 'permissions', 'showorder'] as $optionalElement) {
+			if (!empty($data[$optionalElement])) {
+				$userProfileMenuItem->appendChild(
+					$document->createElement(
+						$optionalElement,
+						(string)$data[$optionalElement]
+					)
+				);
+			}
 		}
 		
 		$import = $document->getElementsByTagName('import')->item(0);

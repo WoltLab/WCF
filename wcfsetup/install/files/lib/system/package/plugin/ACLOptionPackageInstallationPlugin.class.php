@@ -12,6 +12,7 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
+use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
@@ -422,7 +423,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 				}
 			}));
 		
-		$form->getNodeById('data')->appendChildren([$nameFormField, $objectTypeFormField]);
+		/** @var FormContainer $dataContainer */
+		$dataContainer = $form->getNodeById('data');
+		
+		$dataContainer->appendChildren([$nameFormField, $objectTypeFormField]);
 		
 		if ($this->entryType === 'options') {
 			$categoryList = new ACLOptionCategoryList();
@@ -455,7 +459,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 							->values([$objectType])
 					);
 					
-					$form->getNodeById('data')->appendChild($categoryNameField);
+					$dataContainer->appendChild($categoryNameField);
 				}
 			}
 		}

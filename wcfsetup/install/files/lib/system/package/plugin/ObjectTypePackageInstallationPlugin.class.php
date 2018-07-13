@@ -219,7 +219,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		}
 		
 		// add default form fields
-		$form->getNodeById('data')->appendChildren([
+		/** @var FormContainer $dataContainer */
+		$dataContainer = $form->getNodeById('data');
+		
+		$dataContainer->appendChildren([
 			SingleSelectionFormField::create('definitionID')
 				->label('wcf.acp.pip.objectType.definitionName')
 				->description('<!-- will be replaced by JavaScript -->')
@@ -233,7 +236,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 				->required()
 				->addValidator(self::getObjectTypeAlikeValueValidator('wcf.acp.pip.objectType.objectType'))
 				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
-					$definitionID = $formField->getDocument()->getNodeById('definitionID')->getValue();
+					/** @var SingleSelectionFormField $definitionIDField */
+					$definitionIDField = $formField->getDocument()->getNodeById('definitionID');
+					
+					$definitionID = $definitionIDField->getSaveValue();
 					if ($definitionID) {
 						$definition = ObjectTypeCache::getInstance()->getDefinition($definitionID);
 						
@@ -265,7 +271,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 				->description('<!-- will be replaced by JavaScript -->')
 				->required()
 				->addValidator(new FormFieldValidator('implementsInterface', function(TextFormField $formField) {
-					$definitionID = $formField->getDocument()->getNodeById('definitionID')->getValue();
+					/** @var SingleSelectionFormField $definitionIDField */
+					$definitionIDField = $formField->getDocument()->getNodeById('definitionID');
+					
+					$definitionID = $definitionIDField->getSaveValue();
 					if ($definitionID) {
 						$definition = ObjectTypeCache::getInstance()->getDefinition($definitionID);
 						

@@ -13,6 +13,7 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
+use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
@@ -306,7 +307,10 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @since	3.2
 	 */
 	public function addFormFields(IFormDocument $form) {
-		$form->getNodeById('data')->appendChildren([
+		/** @var FormContainer $dataContainer */
+		$dataContainer = $form->getNodeById('data');
+		
+		$dataContainer->appendChildren([
 			TextFormField::create('identifier')
 				->label('wcf.acp.pip.menu.identifier')
 				->description('wcf.acp.pip.menu.identifier.description')

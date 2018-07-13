@@ -526,7 +526,10 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					return $nestedOptions;
 				}, true)
 				->addValidator(new FormFieldValidator('selfParent', function(SingleSelectionFormField $formField) {
-					if ($formField->getDocument()->getNodeById('identifier')->getValue() === $formField->getValue()) {
+					/** @var TextFormField $identifier */
+					$identifier = $formField->getDocument()->getNodeById('identifier');
+					
+					if ($identifier->getSaveValue() === $formField->getValue()) {
 						$formField->addValidationError(
 							new FormFieldValidationError(
 								'selfParent',
@@ -647,7 +650,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			'metaKeywords' => []
 		];
 		
-		/** @var \DOMElement $title */
+		/** @var \DOMElement $name */
 		foreach ($element->getElementsByTagName('name') as $name) {
 			$data['name'][LanguageFactory::getInstance()->getLanguageByCode($name->getAttribute('language'))->languageID] = $name->nodeValue;
 		}

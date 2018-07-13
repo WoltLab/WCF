@@ -7,6 +7,7 @@ use wcf\system\cache\builder\BBCodeMediaProviderCacheBuilder;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
+use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\TextFormField;
@@ -108,7 +109,10 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @since	3.2
 	 */
 	public function addFormFields(IFormDocument $form) {
-		$form->getNodeById('data')->appendChildren([
+		/** @var FormContainer $dataContainer */
+		$dataContainer = $form->getNodeById('data');
+		
+		$dataContainer->appendChildren([
 			TextFormField::create('name')
 				->label('wcf.acp.pip.mediaProvider.name')
 				->description('wcf.acp.pip.mediaProvider.name.description')
@@ -159,7 +163,10 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 				->label('wcf.acp.pip.mediaProvider.html')
 				->description('wcf.acp.pip.mediaProvider.html.description')
 				->addValidator(new FormFieldValidator('noClassName', function(MultilineTextFormField $formField) {
-					if ($formField->getSaveValue() && $formField->getDocument()->getNodeById('className')->getSaveValue()) {
+					/** @var ClassNameFormField $className */
+					$className = $formField->getDocument()->getNodeById('className');
+					
+					if ($formField->getSaveValue() && $className->getSaveValue()) {
 						$formField->addValidationError(
 							new FormFieldValidationError(
 								'className',
@@ -238,27 +245,27 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @since	3.2
 	 */
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
-		$provider = $document->createElement($this->tagName);
-		$provider->setAttribute('name', $form->getNodeById('name')->getSaveValue());
+		$data = $form->getData()['data'];
 		
-		$provider->appendChild($document->createElement('title', $form->getNodeById('title')->getSaveValue()));
+		$provider = $document->createElement($this->tagName);
+		$provider->setAttribute('name', $data['name']);
+		
+		$provider->appendChild($document->createElement('title', $data['title']));
 		
 		$regex = $document->createElement('regex');
 		$regex->appendChild($document->createCDATASection(
-			StringUtil::escapeCDATA(StringUtil::unifyNewlines($form->getNodeById('regex')->getSaveValue()))
+			StringUtil::escapeCDATA(StringUtil::unifyNewlines($data['regex']))
 		));
 		$provider->appendChild($regex);
 		
-		$html = $form->getNodeById('html')->getSaveValue();
-		if ($html) {
-			$htmlElement = $document->createElement('regex');
-			$htmlElement->appendChild($document->createCDATASection(StringUtil::escapeCDATA($html)));
+		if (!empty($data['html'])) {
+			$htmlElement = $document->createElement('html');
+			$htmlElement->appendChild($document->createCDATASection(StringUtil::escapeCDATA($data['html'])));
 			$provider->appendChild($htmlElement);
 		}
 		
-		$className = $form->getNodeById('className')->getSaveValue();
-		if ($className) {
-			$provider->appendChild($document->createElement('className', $className));
+		if (!empty($data['className'])) {
+			$provider->appendChild($document->createElement('className', $data['className']));
 		}
 		
 		$document->getElementsByTagName('import')->item(0)->appendChild($provider);

@@ -165,9 +165,11 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @since	3.2
 	 */
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+		$data = $form->getData()['data'];
+		
 		$coreObject = $document->createElement($this->tagName);
 		
-		$coreObject->appendChild($document->createElement('objectname', $form->getNodeById('objectName')->getSaveValue()));
+		$coreObject->appendChild($document->createElement('objectname', $data['objectname']));
 		
 		$document->getElementsByTagName('import')->item(0)->appendChild($coreObject);
 		

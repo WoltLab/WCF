@@ -6,6 +6,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
+use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\TextFormField;
@@ -88,7 +89,10 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	 * @since	3.2
 	 */
 	public function addFormFields(IFormDocument $form) {
-		$form->getNodeById('data')->appendChildren([
+		/** @var FormContainer $dataContainer */
+		$dataContainer = $form->getNodeById('data');
+		
+		$dataContainer->appendChildren([
 			TextFormField::create('name')
 				->label('wcf.acp.pip.objectTypeDefinition.definitionName')
 				->description('wcf.acp.pip.objectTypeDefinition.definitionName.description', ['project' => $this->installation->getProject()])
@@ -228,13 +232,13 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	 * @since	3.2
 	 */
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
-		$definition = $document->createElement('definition');
-		$definition->appendChild($document->createElement('name', $form->getNodeById('name')->getSaveValue()));
+		$data = $form->getData()['data'];
 		
-		/** @var TextFormField $interfaceName */
-		$interfaceName = $form->getNodeById('interfaceName');
-		if ($interfaceName->getSaveValue()) {
-			$definition->appendChild($document->createElement('interfacename', $interfaceName->getSaveValue()));
+		$definition = $document->createElement('definition');
+		$definition->appendChild($document->createElement('name', $data['name']));
+		
+		if (!empty($data['interfacename'])) {
+			$definition->appendChild($document->createElement('interfacename', $data['interfacename']));
 		}
 		
 		$import = $document->getElementsByTagName('import')->item(0);

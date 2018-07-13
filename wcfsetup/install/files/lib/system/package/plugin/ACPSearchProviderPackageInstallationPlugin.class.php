@@ -235,14 +235,15 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	 * @since	3.2
 	 */
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+		$data = $form->getData()['data'];
+		
 		$acpSearchProvider = $document->createElement('acpsearchprovider');
-		$acpSearchProvider->setAttribute('name', $form->getNodeById('providerName')->getSaveValue());
-		$acpSearchProvider->appendChild($document->createElement('classname', $form->getNodeById('className')->getSaveValue()));
+		$acpSearchProvider->setAttribute('name', $data['providerName']);
+		$acpSearchProvider->appendChild($document->createElement('classname', $data['classname']));
 		
 		/** @var IntegerFormField $showOrder */
-		$showOrder = $form->getNodeById('showOrder');
-		if ($showOrder->getSaveValue()) {
-			$acpSearchProvider->appendChild($document->createElement('showorder', (string) $showOrder->getSaveValue()));
+		if (!empty($data['showOrder'])) {
+			$acpSearchProvider->appendChild($document->createElement('showorder', (string) $data['showorder']));
 		}
 		
 		$document->getElementsByTagName('import')->item(0)->appendChild($acpSearchProvider);

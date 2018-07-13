@@ -9,6 +9,7 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
+use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\OptionFormField;
 use wcf\system\form\builder\field\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -181,7 +182,10 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @since	3.2
 	 */
 	public function addFormFields(IFormDocument $form) {
-		$form->getNodeById('data')->appendChildren([
+		/** @var FormContainer $dataContainer */
+		$dataContainer = $form->getNodeById('data');
+		
+		$dataContainer->appendChildren([
 			TextFormField::create('name')
 				->label('wcf.acp.pip.userNotificationEvent.name')
 				->description('wcf.acp.pip.userNotificationEvent.name.description')
@@ -360,34 +364,28 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @since	3.2
 	 */
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+		$data = $form->getData()['data'];
+		
 		$event = $document->createElement($this->tagName);
 		
-		$event->appendChild($document->createElement('name', $form->getNodeById('name')->getSaveValue()));
-		$event->appendChild($document->createElement('objecttype', $form->getNodeById('objectType')->getSaveValue()));
-		$event->appendChild($document->createElement('classname', $form->getNodeById('className')->getSaveValue()));
-		
-		/** @var ItemListFormField $options */
-		$options = $form->getNodeById('options');
-		if ($options->getSaveValue()) {
-			$event->appendChild($document->createElement('options', $options->getSaveValue()));
+		foreach (['name', 'objecttype', 'classname'] as $element) {
+			$event->appendChild(
+				$document->createElement(
+					$element,
+					(string)$data[$element]
+				)
+			);
 		}
 		
-		/** @var ItemListFormField $permissions */
-		$permissions = $form->getNodeById('permissions');
-		if ($permissions->getSaveValue()) {
-			$event->appendChild($document->createElement('permissions', $permissions->getSaveValue()));
-		}
-		
-		/** @var BooleanFormField $permissions */
-		$preset = $form->getNodeById('preset');
-		if ($preset->getSaveValue()) {
-			$event->appendChild($document->createElement('preset', '1'));
-		}
-		
-		/** @var BooleanFormField $permissions */
-		$presetMailNotificationType = $form->getNodeById('presetMailNotificationType');
-		if ($presetMailNotificationType->getSaveValue()) {
-			$event->appendChild($document->createElement('presetmailnotificationtype', $presetMailNotificationType->getSaveValue()));
+		foreach (['options', 'permissions', 'preset', 'presetmailnotificationtype'] as $optionalElement) {
+			if (!empty($data[$optionalElement])) {
+				$event->appendChild(
+					$document->createElement(
+						$optionalElement,
+						(string)$data[$optionalElement]
+					)
+				);
+			}
 		}
 		
 		$document->getElementsByTagName('import')->item(0)->appendChild($event);
