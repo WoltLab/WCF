@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
@@ -93,7 +94,7 @@ trait TMultipleFormField {
 	public function maximumMultiples(int $maximum): IMultipleFormField {
 		if ($maximum !== IMultipleFormField::NO_MAXIMUM_MULTIPLES) {
 			if ($maximum <= 0) {
-				throw new \InvalidArgumentException("The maximum number of values has to be positive, '{$minimum}' given.");
+				throw new \InvalidArgumentException("The maximum number of values has to be positive, '{$maximum}' given.");
 			}
 			
 			if ($this->getMinimumMultiples() !== 0 && $maximum < $this->getMinimumMultiples()) {

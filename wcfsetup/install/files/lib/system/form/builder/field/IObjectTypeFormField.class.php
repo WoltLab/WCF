@@ -2,6 +2,7 @@
 declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\data\object\type\ObjectType;
+use wcf\system\exception\InvalidObjectTypeException;
 
 /**
  * Represents a form field that relies on a specific object type.

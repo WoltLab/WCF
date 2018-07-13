@@ -23,6 +23,7 @@ trait TSelectionFormField {
 	protected $__filterable = false;
 	
 	/**
+	 * structured options array used to generate the form field output
 	 * @var	null|array
 	 */
 	protected $__nestedOptions;
@@ -47,6 +48,14 @@ trait TSelectionFormField {
 		return $this;
 	}
 	
+	/**
+	 * Returns a structured array that can be used to generate the form field output.
+	 * 
+	 * Array elements are `value`, `label`, and `depth`.
+	 * 
+	 * @return	array
+	 * @throws	\BadMethodCallException		if nested options are not supported
+	 */
 	public function getNestedOptions(): array {
 		if (!$this->supportsNestedOptions()) {
 			throw new \BadMethodCallException("Nested options are not supported.");

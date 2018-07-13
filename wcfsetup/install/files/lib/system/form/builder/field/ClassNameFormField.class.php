@@ -1,8 +1,8 @@
 <?php
+declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\data\language\Language;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
-use wcf\system\form\builder\IFormNode;
 use wcf\system\SingletonFactory;
 
 /**
@@ -36,7 +36,7 @@ class ClassNameFormField extends TextFormField {
 	 * `true` if the entered class must be instantiable
 	 * @var	bool
 	 */
-	protected $__isInstantiable = true;
+	protected $__instantiable = true;
 	
 	/**
 	 * name of the class the entered class must extend
@@ -85,16 +85,6 @@ class ClassNameFormField extends TextFormField {
 	}
 	
 	/**
-	 * Returns `true` if the entered class must be instantiable. By default,
-	 * `true` is returned.
-	 *
-	 * @return	bool
-	 */
-	public function getIsInstantiable(): bool {
-		return $this->__isInstantiable;
-	}
-	
-	/**
 	 * Returns name of the interface the entered class must implement or an
 	 * empty string if the entered class does not have to implement any specific
 	 * interface. By default, an empty string is returned.
@@ -137,13 +127,23 @@ class ClassNameFormField extends TextFormField {
 	/**
 	 * Sets whether entered class must be instantiable and returns this field.
 	 * 
-	 * @param	bool		$isInstantiable		determines if entered class must be instantiable
-	 * @return	static					this field
+	 * @param	bool		$instantiable	determines if entered class must be instantiable
+	 * @return	static				this field
 	 */
-	public function isInstantiable(bool $isInstantiable = true): ClassNameFormField {
-		$this->__isInstantiable = $isInstantiable;
+	public function instantiable(bool $instantiable = true): ClassNameFormField {
+		$this->__instantiable = $instantiable;
 		
 		return $this;
+	}
+	
+	/**
+	 * Returns `true` if the entered class must be instantiable. By default,
+	 * `true` is returned.
+	 *
+	 * @return	bool
+	 */
+	public function isInstantiable(): bool {
+		return $this->__instantiable;
 	}
 	
 	/**
@@ -216,7 +216,7 @@ class ClassNameFormField extends TextFormField {
 					)
 				);
 			}
-			else if ($this->getIsInstantiable()) {
+			else if ($this->isInstantiable()) {
 				$reflection = new \ReflectionClass($text);
 				$isSingleton = is_subclass_of($text, SingletonFactory::class);
 				

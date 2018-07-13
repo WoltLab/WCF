@@ -1,11 +1,8 @@
 <?php
 declare(strict_types=1);
 namespace wcf\system\form\builder\field;
-use wcf\data\object\type\ObjectType;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\IStorableObject;
 use wcf\system\acl\ACLHandler;
-use wcf\system\exception\SystemException;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
