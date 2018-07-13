@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\IFormDocument;
-use wcf\system\form\builder\IFormNode;
 use wcf\system\WCF;
 
 /**
