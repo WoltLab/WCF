@@ -197,6 +197,10 @@ class ItemListFormField extends AbstractFormField {
 			$invalidItems = [];
 			foreach ($this->getValue() as $item) {
 				switch ($this->getSaveValueType()) {
+					case self::SAVE_VALUE_TYPE_ARRAY:
+						// nothing
+						break;
+					
 					case self::SAVE_VALUE_TYPE_CSV:
 						if (strpos($item, ',') !== false) {
 							$invalidItems[] = $item;
@@ -226,6 +230,9 @@ class ItemListFormField extends AbstractFormField {
 					]
 				));
 			}
+		}
+		else if ($this->isRequired()) {
+			$this->addValidationError(new FormFieldValidationError('empty'));
 		}
 		
 		parent::validate();

@@ -1,6 +1,6 @@
 {include file='__formFieldHeader'}
 
-<input type="text" id="{@$field->getPrefixedId()}" name="{@$field->getPrefixedId()}" value="{$field->getValue()}" class="long"{if $field->isAutofocused()} autofocus{/if}{if $field->isRequired()} required{/if}{if $field->isImmutable()} disabled{/if}>
+<input type="text" id="{@$field->getPrefixedId()}" name="{@$field->getPrefixedId()}" value="{$field->getValue()}" class="long"{if $field->isAutofocused()} autofocus{/if}{if $field->isImmutable()} disabled{/if}>
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/ItemList/Static'], function(UiItemListStatic) {
