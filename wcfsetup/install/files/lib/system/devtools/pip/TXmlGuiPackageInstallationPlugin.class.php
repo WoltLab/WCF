@@ -6,6 +6,7 @@ use wcf\data\IEditableCachedObject;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
+use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\WCF;
 use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
@@ -403,6 +404,7 @@ XML;
 	 * @param	callable	$sortFunction
 	 */
 	protected function sortChildNodes(\DOMNodeList $nodeList, callable $sortFunction) {
+		/** @var \DOMElement $node */
 		foreach ($nodeList as $node) {
 			$childNodes = array_filter(iterator_to_array($node->childNodes), function($element) {
 				return $element instanceof \DOMElement;

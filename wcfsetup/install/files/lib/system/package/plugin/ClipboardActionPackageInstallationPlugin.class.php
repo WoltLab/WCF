@@ -3,18 +3,32 @@ declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\clipboard\action\ClipboardAction;
 use wcf\data\clipboard\action\ClipboardActionEditor;
-use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\data\clipboard\action\ClipboardActionList;
+use wcf\system\clipboard\action\IClipboardAction;
+use wcf\system\devtools\pip\IDevtoolsPipEntryList;
+use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
+use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\ClassNameFormField;
+use wcf\system\form\builder\field\IntegerFormField;
+use wcf\system\form\builder\field\ItemListFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
 
 /**
  * Installs, updates and deletes clipboard actions.
  * 
- * @author	Alexander Ebert
+ * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */
-class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
+class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
+	use TXmlGuiPackageInstallationPlugin;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -151,8 +165,206 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.1
 	 */
 	public static function getSyncDependencies() {
 		return [];
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function addFormFields(IFormDocument $form) {
+		/** @var FormContainer $dataContainer */
+		$dataContainer = $form->getNodeById('data');
+		
+		$dataContainer->appendChildren([
+			TextFormField::create('actionName')
+				->objectProperty('name')
+				->label('wcf.acp.pip.clipboardAction.actionName')
+				->description('wcf.acp.pip.clipboardAction.actionName.description')
+				->required()
+				->addValidator(new FormFieldValidator('format', function(TextFormField $formField) {
+					if (!preg_match('~^[a-z][A-z]+$~', $formField->getValue())) {
+						$formField->addValidationError(
+							new FormFieldValidationError(
+								'format',
+								'wcf.acp.pip.clipboardAction.actionName.error.format'
+							)
+						);
+					}
+				})),
+			
+			ClassNameFormField::create('actionClassName')
+				->label('wcf.acp.pip.clipboardAction.actionClassName')
+				->objectProperty('actionclassname')
+				->required()
+				->implementedInterface(IClipboardAction::class)
+				->addValidator(new FormFieldValidator('uniqueness', function(ClassNameFormField $formField) {
+					/** @var TextFormField $actionNameFormField */
+					$actionNameFormField = $formField->getDocument()->getNodeById('actionName');
+					
+					if (
+						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
+						(
+							$this->editedEntry->getAttribute('name') !== $actionNameFormField->getSaveValue() ||
+							$this->editedEntry->getElementsByTagName('actionclassname')->item(0)->nodeValue !== $formField->getSaveValue()
+						)
+					) {
+						$clipboardActionList = new ClipboardActionList();
+						$clipboardActionList->getConditionBuilder()->add('actionName = ?', [$actionNameFormField->getSaveValue()]);
+						$clipboardActionList->getConditionBuilder()->add('actionClassName = ?', [$formField->getSaveValue()]);
+						
+						if ($clipboardActionList->countObjects() > 0) {
+							$actionNameFormField->addValidationError(
+								new FormFieldValidationError(
+									'notUnique',
+									'wcf.acp.pip.clipboardAction.actionClassName.error.notUnique'
+								)
+							);
+						}
+					}
+				})),
+			
+			IntegerFormField::create('showOrder')
+				->objectProperty('showorder')
+				->label('wcf.acp.pip.clipboardAction.showOrder')
+				->description('wcf.acp.pip.clipboardAction.showOrder.description')
+				->nullable(),
+			
+			ItemListFormField::create('pages')
+				->label('wcf.acp.pip.clipboardAction.pages')
+				->description('wcf.acp.pip.clipboardAction.pages.description')
+				->saveValueType(ItemListFormField::SAVE_VALUE_TYPE_ARRAY)
+				->required()
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+		$data = [
+			'actionClassName' => $element->getElementsByTagName('actionclassname')->item(0)->nodeValue,
+			'actionName' => $element->getAttribute('name'),
+			'packageID' => $this->installation->getPackage()->packageID,
+			'pages' => []
+		];
+		
+		$showOrder = $element->getElementsByTagName('showorder')->item(0);
+		if ($showOrder !== null) {
+			$data['showOrder'] = $showOrder->nodeValue;
+		}
+		
+		/** @var \DOMElement $page */
+		foreach ($element->getElementsByTagName('pages')->item(0)->childNodes as $page) {
+			if ($page->nodeName === 'page') {
+				$data['pages'][] = $page->nodeValue;
+			}
+		}
+		
+		if (!$saveData) {
+			$data['pages'] = implode(',', $data['pages']);
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getElementIdentifier(\DOMElement $element): string {
+		return sha1(
+			$element->getElementsByTagName('actionclassname')->item(0)->nodeValue . '/' .
+			$element->getAttribute('name')
+		);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
+		$entryList->setKeys([
+			'actionName' => 'wcf.acp.pip.clipboardAction.actionName',
+			'actionClassName' => 'wcf.acp.pip.clipboardAction.actionClassName'
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function sortDocument(\DOMDocument $document) {
+		$this->sortImportDelete($document);
+		
+		$sortFunction = function(\DOMElement $element1, \DOMElement $element2) {
+			$className1 = $element1->getElementsByTagName('actionclassname')->item(0)->nodeValue;
+			$className2 = $element2->getElementsByTagName('actionclassname')->item(0)->nodeValue;
+			
+			$compare = strcmp($className1, $className2);
+			
+			if ($compare !== 0) {
+				return $compare;
+			}
+			
+			$showOrder1 = $element1->getElementsByTagName('showorder')->item(0);
+			$showOrder2 = $element2->getElementsByTagName('showorder')->item(0);
+			
+			if ($showOrder1 !== null) {
+				if ($showOrder2 !== null) {
+					$compare = $showOrder1->nodeValue <=> $showOrder2->nodeValue;
+					
+					if ($compare !== 0) {
+						return $compare;
+					}
+				}
+				
+				return -1;
+			}
+			else if ($showOrder2 !== null) {
+				return 1;
+			}
+			
+			return strcmp(
+				$element1->getAttribute('name'),
+				$element2->getAttribute('name')
+			);
+		};
+		
+		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+		$formData = $form->getData();
+		$data = $formData['data'];
+		
+		$clipboardAction = $document->createElement($this->tagName);
+		$clipboardAction->setAttribute('name', $data['name']);
+		
+		$clipboardAction->appendChild($document->createElement('actionclassname', $data['actionclassname']));
+		
+		if (!empty($data['showorder'])) {
+			$clipboardAction->appendChild($document->createElement('showorder', (string)$data['showorder']));
+		}
+		
+		$pages = $document->createElement('pages');
+		$clipboardAction->appendChild($pages);
+		
+		foreach ($formData['pages'] as $page) {
+			$pages->appendChild($document->createElement('page', $page));
+		}
+		
+		$document->getElementsByTagName('import')->item(0)->appendChild($clipboardAction);
+		
+		return $clipboardAction;
 	}
 }

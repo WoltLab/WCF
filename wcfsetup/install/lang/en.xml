@@ -2049,6 +2049,15 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.eventListener.niceValue.description"><![CDATA[The nice value is used to determine the order in which event listeners for the same event are executed. Event listeners with lower nice value are executed first.]]></item>
 		<item name="wcf.acp.pip.eventListener.options.description"><![CDATA[At least one of the entered options has to be enabled for the event listener to be executed. Options of non-required packages will be reported as non-existing.]]></item>
 		<item name="wcf.acp.pip.eventListener.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions for the event listener to be executed. Permissions of non-required packages will be reported as non-existing.]]></item>
+		<item name="wcf.acp.pip.clipboardAction.actionName"><![CDATA[Clipboard Action Name]]></item>
+		<item name="wcf.acp.pip.clipboardAction.actionName.description"><![CDATA[Unique textual identifier (per clipboard action class name) of the clipboard action that may only contain letters and must start with a lowercase letter.]]></item>
+		<item name="wcf.acp.pip.clipboardAction.actionName.error.format"><![CDATA[The entered name is invalid.]]></item>
+		<item name="wcf.acp.pip.clipboardAction.actionClassName"><![CDATA[Clipboard Action Class Name]]></item>
+		<item name="wcf.acp.pip.clipboardAction.actionClassName.error.notUnique"><![CDATA[There is already a clipboard action for the entered action class with this action name.]]></item>
+		<item name="wcf.acp.pip.clipboardAction.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.acp.pip.clipboardAction.showOrder.description"><![CDATA[The entered value determines in which order the clipboard actions for the same clipboard action class are shown.]]></item>
+		<item name="wcf.acp.pip.clipboardAction.pages"><![CDATA[Pages]]></item>
+		<item name="wcf.acp.pip.clipboardAction.pages.description"><![CDATA[The clipboard action is available on the entered pages.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
