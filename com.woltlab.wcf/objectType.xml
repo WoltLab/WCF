@@ -253,6 +253,7 @@
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
 			<classname>wcf\system\user\notification\object\type\LikeUserNotificationObjectType</classname>
 			<category>com.woltlab.wcf.user</category>
+			<supportReactions>1</supportReactions>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.profileComment.response.like.notification</name>
