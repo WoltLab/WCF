@@ -2,11 +2,13 @@
 declare(strict_types=1);
 namespace wcf\system\reaction;
 use wcf\data\like\ILikeObjectTypeProvider;
+use wcf\data\like\LikeList;
 use wcf\data\like\object\ILikeObject;
 use wcf\data\like\object\LikeObject;
 use wcf\data\like\object\LikeObjectEditor;
 use wcf\data\like\Like;
 use wcf\data\like\LikeEditor;
+use wcf\data\like\object\LikeObjectList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\object\IReactionObject;
@@ -22,6 +24,7 @@ use wcf\system\exception\ImplementationException;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\SingletonFactory;
+use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\JSON;
 
@@ -582,8 +585,115 @@ class ReactionHandler extends SingletonFactory {
 		];
 	}
 	
+	/**
+	 * Removes all reactions for given objects.
+	 *
+	 * @param	string		$objectType
+	 * @param	integer[]	$objectIDs
+	 * @param	string[]	$notificationObjectTypes
+	 */
 	public function removeReacts($objectType, array $objectIDs, array $notificationObjectTypes = []) {
-		// @TODO
+		$objectTypeObj = $this->getObjectType($objectType);
+		
+		if ($objectTypeObj === null) {
+			throw new \InvalidArgumentException('Given objectType is invalid.');
+		}
+		
+		// get like objects
+		$likeObjectList = new LikeObjectList();
+		$likeObjectList->getConditionBuilder()->add('like_object.objectTypeID = ?', [$objectTypeObj->objectTypeID]);
+		$likeObjectList->getConditionBuilder()->add('like_object.objectID IN (?)', [$objectIDs]);
+		$likeObjectList->readObjects();
+		$likeObjects = $likeObjectList->getObjects();
+		$likeObjectIDs = $likeObjectList->getObjectIDs();
+		
+		// reduce count of received users
+		$users = [];
+		foreach ($likeObjects as $likeObject) {
+			if ($likeObject->likes) {
+				if (!isset($users[$likeObject->objectUserID])) {
+					$users[$likeObject->objectUserID] = [
+						'positiveReactions' => 0,
+						'negativeReactions' => 0,
+						'neutralReactions' => 0
+					];
+				}
+				
+				foreach ($likeObject->getReactions() as $reactionTypeID => $data) {
+					switch (ReactionTypeCache::getInstance()->getReactionTypeByID($reactionTypeID)->type) {
+						case ReactionType::REACTION_TYPE_POSITIVE:
+							$users[$likeObject->objectUserID]['positiveReactions'] += $data['reactionCount'];
+							break;
+						
+						case ReactionType::REACTION_TYPE_NEUTRAL:
+							$users[$likeObject->objectUserID]['neutralReactions'] += $data['reactionCount'];
+							break;
+						
+						case ReactionType::REACTION_TYPE_NEGATIVE:
+							$users[$likeObject->objectUserID]['negativeReactions'] += $data['reactionCount'];
+							break;
+						
+						default:
+							throw new \LogicException('Unreachable');
+					}
+				}
+			}
+		}
+		
+		foreach ($users as $userID => $reactionData) {
+			$userEditor = new UserEditor(new User(null, ['userID' => $userID]));
+			$userEditor->updateCounters([
+				'positiveReactionsReceived' => $users[$userID]['positiveReactions'] *-1,
+				'negativeReactionsReceived' => $users[$userID]['negativeReactions'] *-1,
+				'neutralReactionsReceived' => $users[$userID]['neutralReactions'] *-1,
+				
+				// maintain deprecated value for legacy reasons
+				'likesReceived' => $users[$userID]['positiveReactions'] *-1
+			]);
+		}
+		
+		// get like ids
+		$likeList = new LikeList();
+		$likeList->getConditionBuilder()->add('like_table.objectTypeID = ?', [$objectTypeObj->objectTypeID]);
+		$likeList->getConditionBuilder()->add('like_table.objectID IN (?)', [$objectIDs]);
+		$likeList->readObjects();
+		
+		if (count($likeList)) {
+			$likeData = $positiveLikeData = [];
+			foreach ($likeList as $like) {
+				$likeData[$like->likeID] = $like->userID;
+				
+				if ($like->getReactionType()->isPositive()) {
+					$positiveLikeData[$like->likeID] = $like->userID;
+				}
+			}
+			
+			// delete like notifications
+			if (!empty($notificationObjectTypes)) {
+				foreach ($notificationObjectTypes as $notificationObjectType) {
+					UserNotificationHandler::getInstance()->removeNotifications($notificationObjectType, $likeList->getObjectIDs());
+				}
+			}
+			else if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType.'.notification')) {
+				UserNotificationHandler::getInstance()->removeNotifications($objectType.'.notification', $likeList->getObjectIDs());
+			}
+			
+			// revoke activity points
+			UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $positiveLikeData);
+			
+			// delete likes
+			LikeEditor::deleteAll(array_keys($likeData));
+		}
+		
+		// delete like objects
+		if (!empty($likeObjectIDs)) {
+			LikeObjectEditor::deleteAll($likeObjectIDs);
+		}
+		
+		// delete activity events
+		if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType.'.recentActivityEvent')) {
+			UserActivityEventHandler::getInstance()->removeEvents($objectTypeObj->objectType.'.recentActivityEvent', $objectIDs);
+		}
 	}
 	
 	/**
