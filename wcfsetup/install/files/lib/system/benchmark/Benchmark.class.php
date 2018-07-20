@@ -20,7 +20,7 @@ class Benchmark extends SingletonFactory {
 	 * general benchmark start time
 	 * @var	float
 	 */
-	protected $startTime = 0;
+	protected $startTime = $_SERVER['REQUEST_TIME_FLOAT'];
 	
 	/**
 	 * benchmark items
@@ -39,13 +39,6 @@ class Benchmark extends SingletonFactory {
 	 * @var	float
 	 */
 	protected $queryTime = 0;
-	
-	/**
-	 * Creates a new Benchmark object.
-	 */
-	protected function init() {
-		$this->startTime = self::getMicrotime();
-	}
 	
 	/**
 	 * Starts a benchmark.
