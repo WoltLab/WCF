@@ -161,7 +161,10 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		$templateList = new TemplateList();
 		$templateList->getConditionBuilder()->add(
 			'template.packageID IN (?)',
-			[array_keys($this->installation->getPackage()->getAllRequiredPackages())]
+			[array_merge(
+				[$this->installation->getPackage()->packageID],
+				array_keys($this->installation->getPackage()->getAllRequiredPackages())
+			)]
 		);
 		$templateList->getConditionBuilder()->add('template.templateGroupID IS NULL');
 		$templateList->sqlOrderBy = 'template.templateName ASC';
@@ -172,7 +175,10 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		$acpTemplateList = new ACPTemplateList();
 		$acpTemplateList->getConditionBuilder()->add(
 			'acp_template.packageID IN (?)',
-			[array_keys($this->installation->getPackage()->getAllRequiredPackages())]
+			[array_merge(
+				[$this->installation->getPackage()->packageID],
+				array_keys($this->installation->getPackage()->getAllRequiredPackages())
+			)]
 		);
 		$acpTemplateList->sqlOrderBy = 'acp_template.templateName ASC';
 		$acpTemplateList->readObjects();
