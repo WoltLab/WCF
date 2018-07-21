@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 namespace wcf\system\form\builder\field;
-use wcf\system\form\builder\IFormNode;
 
 /**
  * Allows form fields to have a default id so that when creating form fields the
@@ -21,7 +20,7 @@ trait TDefaultIdFormField {
 	 * @inheritDoc
 	 * @return	static
 	 */
-	public static function create(string $id = null): IFormNode {
+	public static function create(string $id = null) {
 		if ($id === null) {
 			$id = static::getDefaultId();
 		}
@@ -34,5 +33,5 @@ trait TDefaultIdFormField {
 	 * 
 	 * @return	string		default id of form fields using this trait
 	 */
-	abstract protected static function getDefaultId(): string;
+	abstract protected static function getDefaultId();
 }

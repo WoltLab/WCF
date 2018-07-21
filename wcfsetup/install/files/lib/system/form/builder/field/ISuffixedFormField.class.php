@@ -29,5 +29,5 @@ interface ISuffixedFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given language item is invalid
 	 */
-	public function suffix(string $languageItem = null, array $variables = []): ISuffixedFormField;
+	public function suffix(string $languageItem = null, array $variables = []);
 }

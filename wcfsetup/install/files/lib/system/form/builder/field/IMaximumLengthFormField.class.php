@@ -30,7 +30,7 @@ interface IMaximumLengthFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given maximum length is no integer or otherwise invalid
 	 */
-	public function maximumLength(int $maximumLength = null): IMaximumLengthFormField;
+	public function maximumLength(int $maximumLength = null);
 	
 	/**
 	 * Validates the maximum length of the given text.

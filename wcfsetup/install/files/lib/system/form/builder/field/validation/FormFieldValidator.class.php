@@ -59,7 +59,7 @@ class FormFieldValidator implements IFormFieldValidator {
 	/**
 	 * @inheritDoc
 	 */
-	public function getId(): string {
+	public function getId() {
 		return $this->id;
 	}
 	

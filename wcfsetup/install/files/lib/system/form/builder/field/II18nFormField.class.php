@@ -19,7 +19,7 @@ interface II18nFormField extends IFormField {
 	 * 
 	 * @throws	\BadMethodCallException		if i18n is disabled for this field or no language item has been set
 	 */
-	public function getLanguageItemPattern(): string;
+	public function getLanguageItemPattern();
 	
 	/**
 	 * Returns `true` if the current field value is a i18n value and returns `false`
@@ -27,7 +27,7 @@ interface II18nFormField extends IFormField {
 	 * 
 	 * @return	bool
 	 */
-	public function hasI18nValues(): bool;
+	public function hasI18nValues();
 	
 	/**
 	 * Returns `true` if the current field value is a plain value and returns `false`
@@ -35,7 +35,7 @@ interface II18nFormField extends IFormField {
 	 *
 	 * @return	bool
 	 */
-	public function hasPlainValue(): bool;
+	public function hasPlainValue();
 	
 	/**
 	 * Sets whether this field is supports i18n input and returns this field.
@@ -43,7 +43,7 @@ interface II18nFormField extends IFormField {
 	 * @param	bool		$i18n		determines if field is supports i18n input
 	 * @return	static				this field
 	 */
-	public function i18n(bool $i18n = true): II18nFormField;
+	public function i18n(bool $i18n = true);
 	
 	/**
 	 * Sets whether this field's value must be i18n input and returns this field.
@@ -54,7 +54,7 @@ interface II18nFormField extends IFormField {
 	 * @param	bool		$i18nRequired		determines if field value must be i18n input
 	 * @return	static					this field
 	 */
-	public function i18nRequired(bool $i18nRequired = true): II18nFormField;
+	public function i18nRequired(bool $i18nRequired = true);
 	
 	/**
 	 * Returns `true` if this field supports i18n input and returns `false` otherwise.
@@ -62,7 +62,7 @@ interface II18nFormField extends IFormField {
 	 * 
 	 * @return	bool
 	 */
-	public function isI18n(): bool;
+	public function isI18n();
 	
 	/**
 	 * Returns `true` if this field's value must be i18n input and returns `false` otherwise.
@@ -70,7 +70,7 @@ interface II18nFormField extends IFormField {
 	 * 
 	 * @return	bool
 	 */
-	public function isI18nRequired(): bool;
+	public function isI18nRequired();
 	
 	/**
 	 * Sets the pattern for the language item used to save the i18n values
@@ -82,5 +82,5 @@ interface II18nFormField extends IFormField {
 	 * @throws	\BadMethodCallException		if i18n is disabled for this field
 	 * @throws	\InvalidArgumentException	if the given pattern is invalid
 	 */
-	public function languageItemPattern(string $pattern): II18nFormField;
+	public function languageItemPattern(string $pattern);
 }

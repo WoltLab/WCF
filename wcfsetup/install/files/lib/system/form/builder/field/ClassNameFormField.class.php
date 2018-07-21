@@ -57,7 +57,7 @@ class ClassNameFormField extends TextFormField {
 	 * @param	bool		$classExists	determines if entered class must exist
 	 * @return	static				this field
 	 */
-	public function classExists(bool $classExists = true): ClassNameFormField {
+	public function classExists(bool $classExists = true) {
 		$this->__classExists = $classExists;
 		
 		return $this;
@@ -69,7 +69,7 @@ class ClassNameFormField extends TextFormField {
 	 * 
 	 * @return	bool
 	 */
-	public function getClassExists(): bool {
+	public function getClassExists() {
 		return $this->__classExists;
 	}
 	
@@ -80,7 +80,7 @@ class ClassNameFormField extends TextFormField {
 	 * 
 	 * @return	string
 	 */
-	public function getImplementedInterface(): string {
+	public function getImplementedInterface() {
 		return $this->__implementedInterface;
 	}
 	
@@ -91,7 +91,7 @@ class ClassNameFormField extends TextFormField {
 	 *
 	 * @return	string
 	 */
-	public function getParentClass(): string {
+	public function getParentClass() {
 		return $this->__parentClass;
 	}
 	
@@ -107,7 +107,7 @@ class ClassNameFormField extends TextFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the entered interface does not exists
 	 */
-	public function implementedInterface(string $interface): ClassNameFormField {
+	public function implementedInterface(string $interface) {
 		if (!interface_exists($interface)) {
 			throw new \InvalidArgumentException("Interface '{$interface}' does not exist.");
 		}
@@ -130,7 +130,7 @@ class ClassNameFormField extends TextFormField {
 	 * @param	bool		$instantiable	determines if entered class must be instantiable
 	 * @return	static				this field
 	 */
-	public function instantiable(bool $instantiable = true): ClassNameFormField {
+	public function instantiable(bool $instantiable = true) {
 		$this->__instantiable = $instantiable;
 		
 		return $this;
@@ -142,7 +142,7 @@ class ClassNameFormField extends TextFormField {
 	 *
 	 * @return	bool
 	 */
-	public function isInstantiable(): bool {
+	public function isInstantiable() {
 		return $this->__instantiable;
 	}
 	
@@ -154,7 +154,7 @@ class ClassNameFormField extends TextFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the entered class does not exists
 	 */
-	public function parentClass(string $parentClass): ClassNameFormField {
+	public function parentClass(string $parentClass) {
 		if (!class_exists($parentClass)) {
 			throw new \InvalidArgumentException("Class '{$parentClass}' does not exist.");
 		}
@@ -236,7 +236,7 @@ class ClassNameFormField extends TextFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected static function getDefaultId(): string {
+	protected static function getDefaultId() {
 		return 'className';
 	}
 }

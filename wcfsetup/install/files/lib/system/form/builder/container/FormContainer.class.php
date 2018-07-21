@@ -33,7 +33,7 @@ class FormContainer implements IFormContainer {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml(): string {
+	public function getHtml() {
 		return WCF::getTPL()->fetch($this->templateName, 'wcf', array_merge($this->getHtmlVariables(), [
 			'container' => $this
 		]), true);

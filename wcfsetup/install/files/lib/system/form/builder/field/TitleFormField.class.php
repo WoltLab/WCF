@@ -24,7 +24,7 @@ class TitleFormField extends TextFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected static function getDefaultId(): string {
+	protected static function getDefaultId() {
 		return 'title';
 	}
 }

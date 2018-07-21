@@ -30,26 +30,26 @@ interface IFormFieldValidationError {
 	 * 
 	 * @return	string
 	 */
-	public function getHtml(): string;
+	public function getHtml();
 	
 	/**
 	 * Returns additional information about the error.
 	 * 
 	 * @return	array		additional error information
 	 */
-	public function getInformation(): array;
+	public function getInformation();
 	
 	/**
 	 * Returns the message describing the validation error.
 	 * 
 	 * @return	string		error message
 	 */
-	public function getMessage(): string;
+	public function getMessage();
 	
 	/**
 	 * Returns the type of the validation error.
 	 * 
 	 * @return	string		error type
 	 */
-	public function getType(): string;
+	public function getType();
 }

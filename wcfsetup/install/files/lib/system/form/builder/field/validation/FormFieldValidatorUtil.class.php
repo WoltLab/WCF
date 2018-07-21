@@ -24,7 +24,7 @@ abstract class FormFieldValidatorUtil {
 	 * 
 	 * @throws	\InvalidArgumentException		if regular expression is invalid
 	 */
-	public static function getRegularExpressionValidator(string $regularExpression, string $languageItemPrefix): IFormFieldValidator {
+	public static function getRegularExpressionValidator(string $regularExpression, string $languageItemPrefix) {
 		$regex = Regex::compile($regularExpression);
 		if (!$regex->isValid()) {
 			throw new \InvalidArgumentException("Invalid regular expression '{$regularExpression}' given.");

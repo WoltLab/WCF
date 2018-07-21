@@ -23,7 +23,7 @@ interface IFormElement extends IFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given description is invalid
 	 */
-	public function description(string $languageItem = null, array $variables = []): IFormElement;
+	public function description(string $languageItem = null, array $variables = []);
 	
 	/**
 	 * Returns the description of this element or `null` if no description has been set.
@@ -50,12 +50,12 @@ interface IFormElement extends IFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given label is invalid
 	 */
-	public function label(string $languageItem = null, array $variables = []): IFormElement;
+	public function label(string $languageItem = null, array $variables = []);
 	
 	/**
 	 * Returns `true` if this element requires a label to be set.
 	 * 
 	 * @return	bool
 	 */
-	public function requiresLabel(): bool;
+	public function requiresLabel();
 }

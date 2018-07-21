@@ -65,7 +65,7 @@ class CustomFormFieldDataProcessor implements IFormFieldDataProcessor {
 	/**
 	 * @inheritDoc
 	 */
-	public function __invoke(IFormDocument $document, array $parameters): array {
+	public function __invoke(IFormDocument $document, array $parameters) {
 		$parameters = call_user_func($this->processor, $document, $parameters);
 		
 		if (!is_array($parameters)) {

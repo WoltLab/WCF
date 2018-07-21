@@ -35,7 +35,7 @@ interface IFormFieldValidator {
 	 * 
 	 * @return	string		id of the dependency
 	 */
-	public function getId(): string;
+	public function getId();
 	
 	/**
 	 * Checks if the given parameter is a string and a valid validator id.

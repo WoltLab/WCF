@@ -17,7 +17,7 @@ class IsDisabledFormField extends BooleanFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected static function getDefaultId(): string {
+	protected static function getDefaultId() {
 		return 'isDisabled';
 	}
 }

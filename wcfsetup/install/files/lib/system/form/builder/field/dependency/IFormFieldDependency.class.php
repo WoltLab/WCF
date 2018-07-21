@@ -20,7 +20,7 @@ interface IFormFieldDependency {
 	 * 
 	 * @return	bool
 	 */
-	public function checkDependency(): bool;
+	public function checkDependency();
 	
 	/**
 	 * Sets the node whose availability depends on the value of a field.
@@ -30,7 +30,7 @@ interface IFormFieldDependency {
 	 * 
 	 * @throws	\BadMethodCallException		if no dependent node has been set
 	 */
-	public function dependentNode(IFormNode $node): IFormFieldDependency;
+	public function dependentNode(IFormNode $node);
 	
 	/**
 	 * Sets the field the availability of the node dependents on.
@@ -40,35 +40,35 @@ interface IFormFieldDependency {
 	 * 
 	 * @throws	\BadMethodCallException		if no field has been set
 	 */
-	public function field(IFormField $field): IFormFieldDependency;
+	public function field(IFormField $field);
 	
 	/**
 	 * Returns the node whose availability depends on the value of a field.
 	 * 
 	 * @return	IFormNode	dependent node
 	 */
-	public function getDependentNode(): IFormNode;
+	public function getDependentNode();
 	
 	/**
 	 * Returns the field the availability of the element dependents on.
 	 * 
 	 * @return	IFormField	field controlling element availability
 	 */
-	public function getField(): IFormField;
+	public function getField();
 	
 	/**
 	 * Returns the JavaScript code required to ensure this dependency in the template.
 	 * 
 	 * @return	string		dependency JavaScript code
 	 */
-	public function getHtml(): string;
+	public function getHtml();
 	
 	/**
 	 * Returns the id of this dependency.
 	 * 
 	 * @return	string		id of the dependency 
 	 */
-	public function getId(): string;
+	public function getId();
 	
 	/**
 	 * Creates a new dependency with the given id.
@@ -78,5 +78,5 @@ interface IFormFieldDependency {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public static function create(string $id): IFormFieldDependency;
+	public static function create(string $id);
 }

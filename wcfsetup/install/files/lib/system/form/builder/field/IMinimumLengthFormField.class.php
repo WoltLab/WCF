@@ -30,7 +30,7 @@ interface IMinimumLengthFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given minimum length is no integer or otherwise invalid
 	 */
-	public function minimumLength(int $minimumLength = null): IMinimumLengthFormField;
+	public function minimumLength(int $minimumLength = null);
 	
 	/**
 	 * Validates the minimum length of the given text.

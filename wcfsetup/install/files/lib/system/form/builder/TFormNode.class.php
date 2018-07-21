@@ -63,7 +63,7 @@ trait TFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given class is invalid
 	 */
-	public function addClass(string $class): IFormNode {
+	public function addClass(string $class) {
 		static::validateClass($class);
 		
 		if (!in_array($class, $this->__classes)) {
@@ -82,9 +82,9 @@ trait TFormNode {
 	 * to this node.
 	 * 
 	 * @param	IFormFieldDependency		$dependency	added node dependency
-	 * @return	static					this node
+	 * @return	static						this node
 	 */
-	public function addDependency(IFormFieldDependency $dependency): IFormNode {
+	public function addDependency(IFormFieldDependency $dependency) {
 		$this->dependencies[] = $dependency;
 		
 		$dependency->dependentNode($this);
@@ -103,7 +103,7 @@ trait TFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if an invalid name or value is given (some attribute names are invalid as there are specific methods for setting that attribute)
 	 */
-	public function attribute(string $name, string $value = null): IFormNode {
+	public function attribute(string $name, string $value = null) {
 		static::validateAttribute($name);
 		
 		if ($value !== null && !is_bool($value) && !is_numeric($value) && !is_string($value)) {
@@ -135,7 +135,7 @@ trait TFormNode {
 	 * @param	bool		$available	determines if node is available
 	 * @return	static				this node
 	 */
-	public function available(bool $available = true): IFormNode {
+	public function available(bool $available = true) {
 		$this->__available = $available;
 		
 		return $this;
@@ -146,7 +146,7 @@ trait TFormNode {
 	 * 
 	 * @return	bool
 	 */
-	public function checkDependencies(): bool {
+	public function checkDependencies() {
 		if (!empty($this->dependencies)) {
 			foreach ($this->dependencies as $dependency) {
 				if (!$dependency->checkDependency()) {
@@ -195,7 +195,7 @@ trait TFormNode {
 	 * 
 	 * @return	array		additional node attributes
 	 */
-	public function getAttributes(): array {
+	public function getAttributes() {
 		return $this->__attributes;
 	}
 	
@@ -204,7 +204,7 @@ trait TFormNode {
 	 * 
 	 * @return	string[]	CSS classes of node
 	 */
-	public function getClasses(): array {
+	public function getClasses() {
 		return $this->__classes;
 	}
 	
@@ -213,7 +213,7 @@ trait TFormNode {
 	 * 
 	 * @return	IFormFieldDependency[]		node's dependencies
 	 */
-	public function getDependencies(): array {
+	public function getDependencies() {
 		return $this->dependencies;
 	}
 	
@@ -224,7 +224,7 @@ trait TFormNode {
 	 *
 	 * @throws	\BadMethodCallException		if form document is inaccessible for this node
 	 */
-	abstract public function getDocument(): IFormDocument;
+	abstract public function getDocument();
 	
 	/**
 	 * Returns additional template variables used to generate the html representation
@@ -232,7 +232,7 @@ trait TFormNode {
 	 *
 	 * @return	array		additional template variables
 	 */
-	public function getHtmlVariables(): array {
+	public function getHtmlVariables() {
 		return [];
 	}
 	
@@ -243,7 +243,7 @@ trait TFormNode {
 	 *
 	 * @throws	\BadMethodCallException		if no id has been set
 	 */
-	public function getId(): string {
+	public function getId() {
 		if ($this->__id === null) {
 			throw new \BadMethodCallException("Id has not been set.");
 		}
@@ -262,7 +262,7 @@ trait TFormNode {
 	 *
 	 * @throws	\BadMethodCallException		if no id has been set or if form document is inaccessible for this node
 	 */
-	public function getPrefixedId(): string {
+	public function getPrefixedId() {
 		return $this->getDocument()->getPrefix() . $this->getId();
 	}
 	
@@ -275,7 +275,7 @@ trait TFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given attribute name is invalid
 	 */
-	public function hasAttribute(string $name): bool {
+	public function hasAttribute(string $name) {
 		static::validateAttribute($name);
 		
 		return isset($this->__attributes[$name]);
@@ -289,7 +289,7 @@ trait TFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given class is invalid
 	 */
-	public function hasClass(string $class): bool {
+	public function hasClass(string $class) {
 		static::validateClass($class);
 		
 		return array_search($class, $this->__classes) !== false;
@@ -304,7 +304,7 @@ trait TFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public function hasDependency(string $dependencyId): bool {
+	public function hasDependency(string $dependencyId) {
 		foreach ($this->dependencies as $dependency) {
 			if ($dependency->getId() === $dependencyId) {
 				return true;
@@ -323,7 +323,7 @@ trait TFormNode {
 	 * @throws	\BadMethodCallException		if id has already been set
 	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public function id(string $id): IFormNode {
+	public function id(string $id) {
 		static::validateId($id);
 		
 		if ($this->__id !== null) {
@@ -344,7 +344,7 @@ trait TFormNode {
 	 * 
 	 * @see		IFormNode::available()
 	 */
-	public function isAvailable(): bool {
+	public function isAvailable() {
 		if ($this->__available && $this instanceof IFormParentNode) {
 			/** @var IFormChildNode $child */
 			foreach ($this as $child) {
@@ -369,7 +369,7 @@ trait TFormNode {
 	 * 
 	 * @throws	\BadMethodCallException		if this node has already been populated
 	 */
-	public function populate(): IFormNode {
+	public function populate() {
 		if ($this->isPopulated) {
 			throw new \BadMethodCallException('Node has already been populated');
 		}
@@ -391,7 +391,7 @@ trait TFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given class is invalid
 	 */
-	public function removeClass(string $class): IFormNode {
+	public function removeClass(string $class) {
 		static::validateClass($class);
 		
 		$index = array_search($class, $this->__classes);
@@ -410,7 +410,7 @@ trait TFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid or no such dependency exists
 	 */
-	public function removeDependency(string $dependencyId): IFormNode {
+	public function removeDependency(string $dependencyId) {
 		foreach ($this->dependencies as $key => $dependency) {
 			if ($dependency->getId() === $dependencyId) {
 				unset($this->dependencies[$key]);
@@ -430,7 +430,7 @@ trait TFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is already used by another node, or otherwise is invalid
 	 */
-	public static function create(string $id): IFormNode {
+	public static function create(string $id) {
 		return (new static)->id($id);
 	}
 	

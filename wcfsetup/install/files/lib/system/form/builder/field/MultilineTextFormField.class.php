@@ -29,7 +29,7 @@ class MultilineTextFormField extends TextFormField {
 	 * 
 	 * @return	int	number of textarea rows
 	 */
-	public function getRows(): int {
+	public function getRows() {
 		return $this->__rows;
 	}
 	
@@ -41,7 +41,7 @@ class MultilineTextFormField extends TextFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if given number of rows is invalid
 	 */
-	public function rows(int $rows): MultilineTextFormField {
+	public function rows(int $rows) {
 		if ($rows <= 0) {
 			throw new \InvalidArgumentException("Given number of rows is not positive.");
 		}  

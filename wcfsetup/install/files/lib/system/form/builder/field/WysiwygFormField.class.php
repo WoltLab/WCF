@@ -4,7 +4,6 @@ namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
-use wcf\system\form\builder\IFormNode;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\util\StringUtil;
 
@@ -51,7 +50,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * @param	string		$autosaveId	identifier used to autosave field value
 	 * @return	WysiwygFormField		this field
 	 */
-	public function autosaveId(string $autosaveId): WysiwygFormField {
+	public function autosaveId(string $autosaveId) {
 		$this->__autosaveId = $autosaveId;
 		
 		return $this;
@@ -63,14 +62,14 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * 
 	 * @return	string
 	 */
-	public function getAutosaveId(): string {
+	public function getAutosaveId() {
 		return $this->__autosaveId;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getObjectTypeDefinition(): string {
+	public function getObjectTypeDefinition() {
 		return 'com.woltlab.wcf.message';
 	}
 	
@@ -80,14 +79,14 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * 
 	 * @return	int
 	 */
-	public function getLastEditTime(): int {
+	public function getLastEditTime() {
 		return $this->__lastEditTime;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function hasSaveValue(): bool {
+	public function hasSaveValue() {
 		return false;
 	}
 	
@@ -97,7 +96,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * @param	int	$lastEditTime	last time field has been edited
 	 * @return	WysiwygFormField	this field
 	 */
-	public function lastEditTime(int $lastEditTime): WysiwygFormField {
+	public function lastEditTime(int $lastEditTime) {
 		$this->__lastEditTime = $lastEditTime;
 		
 		return $this;
@@ -106,7 +105,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	/**
 	 * @inheritDoc
 	 */
-	public function populate(): IFormNode {
+	public function populate() {
 		parent::populate();
 		
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('wysiwyg', function(IFormDocument $document, array $parameters) {
@@ -123,7 +122,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue(): IFormField {
+	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			

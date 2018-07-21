@@ -21,5 +21,5 @@ interface IFormFieldDataProcessor {
 	 * @param	array		$parameters	parameters before processing
 	 * @return	array				parameters after processing
 	 */
-	public function __invoke(IFormDocument $document, array $parameters): array;
+	public function __invoke(IFormDocument $document, array $parameters);
 }

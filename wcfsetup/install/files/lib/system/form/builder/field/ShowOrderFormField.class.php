@@ -64,7 +64,7 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	 * and using the language item `wcf.form.field.showOrder.firstPosition`
 	 * as value to mark adding it at the first position.
 	 */
-	public function options($options, bool $nestedOptions = false): ISelectionFormField {
+	public function options($options, bool $nestedOptions = false) {
 		parent::options($options, $nestedOptions);
 		
 		$this->__options = [0 => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition')] + $this->__options;
@@ -82,7 +82,7 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function value($value): IFormField {
+	public function value($value) {
 		$keys = array_keys($this->getOptions());
 		
 		// when editing an objects, the value has to be reduced by one to determine the
@@ -101,7 +101,7 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected static function getDefaultId(): string {
+	protected static function getDefaultId() {
 		return 'showOrder';
 	}
 }

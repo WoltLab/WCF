@@ -24,7 +24,7 @@ class MultipleSelectionFormField extends AbstractFormField implements INullableF
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue(): IFormField {
+	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
@@ -56,7 +56,7 @@ class MultipleSelectionFormField extends AbstractFormField implements INullableF
 	/**
 	 * @inheritDoc
 	 */
-	public function value($value): IFormField {
+	public function value($value) {
 		// ignore `null` as value which can be passed either for nullable
 		// fields or as value if no options are available
 		if ($value === null) {

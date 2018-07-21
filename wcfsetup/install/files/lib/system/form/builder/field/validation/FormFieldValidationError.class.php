@@ -50,7 +50,7 @@ class FormFieldValidationError implements IFormFieldValidationError {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml(): string {
+	public function getHtml() {
 		return WCF::getTPL()->fetch('__formFieldError', 'wcf', [
 			'error' => $this
 		]);
@@ -59,21 +59,21 @@ class FormFieldValidationError implements IFormFieldValidationError {
 	/**
 	 * @inheritDoc
 	 */
-	public function getInformation(): array {
+	public function getInformation() {
 		return $this->information;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getMessage(): string {
+	public function getMessage() {
 		return WCF::getLanguage()->getDynamicVariable($this->languageItem, $this->information);
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getType(): string {
+	public function getType() {
 		return $this->type;
 	}
 }

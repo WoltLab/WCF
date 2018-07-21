@@ -22,7 +22,7 @@ class RadioButtonFormField extends AbstractFormField implements ISelectionFormFi
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue(): IFormField {
+	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
@@ -37,7 +37,7 @@ class RadioButtonFormField extends AbstractFormField implements ISelectionFormFi
 	/**
 	 * @inheritDoc
 	 */
-	public function supportsNestedOptions(): bool {
+	public function supportsNestedOptions() {
 		return false;
 	}
 }

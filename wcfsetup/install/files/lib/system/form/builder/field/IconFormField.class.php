@@ -29,7 +29,7 @@ class IconFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtmlVariables(): array {
+	public function getHtmlVariables() {
 		$value = static::$includeJavaScript;
 		if (static::$includeJavaScript) {
 			static::$includeJavaScript = false;
@@ -54,7 +54,7 @@ class IconFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue(): IFormField {
+	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
 			$this->__value = $this->getDocument()->getRequestData($this->getPrefixedId());
 		}
@@ -84,7 +84,7 @@ class IconFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function value($value): IFormField {
+	public function value($value) {
 		$value = preg_replace('~^fa-~', '', $value);
 		
 		return parent::value($value);
