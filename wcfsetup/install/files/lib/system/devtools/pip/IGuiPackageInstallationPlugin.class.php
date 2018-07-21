@@ -38,21 +38,21 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
 	 * @param	string			$identifier
 	 * @return	string			new identifier
 	 */
-	public function editEntry(IFormDocument $form, string $identifier): string;
+	public function editEntry(IFormDocument $form, $identifier);
 	
 	/**
 	 * Returns additional template code for the form to add and edit entries.
 	 * 
 	 * @return	string
 	 */
-	public function getAdditionalTemplateCode(): string;
+	public function getAdditionalTemplateCode();
 	
 	/**
 	 * Returns a list of all pip entries of this pip. 
 	 * 
 	 * @return	IDevtoolsPipEntryList
 	 */
-	public function getEntryList(): IDevtoolsPipEntryList;
+	public function getEntryList();
 	
 	/**
 	 * Informs the pip of the identifier of the edited entry if the form to
@@ -62,7 +62,7 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
 	 * 
 	 * @throws	\InvalidArgumentException	if no such entry exists
 	 */
-	public function setEditedEntryIdentifier(string $identifier);
+	public function setEditedEntryIdentifier($identifier);
 	
 	/**
 	 * Adds the data of the pip entry with the given identifier into the
@@ -73,7 +73,7 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
 	 * @param	IFormDocument		$document
 	 * @return	bool
 	 */
-	public function setEntryData(string $identifier, IFormDocument $document): bool;
+	public function setEntryData($identifier, IFormDocument $document);
 	
 	/**
 	 * Returns the list of available entry types. If only one entry type is
@@ -84,7 +84,7 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
 	 * 
 	 * @return	string[]
 	 */
-	public function getEntryTypes(): array;
+	public function getEntryTypes();
 	
 	/**
 	 * Sets the type of the currently handled pip entries.
@@ -93,5 +93,5 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
 	 *
 	 * @throws	\InvalidArgumentException	if the given entry type is invalid (see `getEntryTypes()` method) 
 	 */
-	public function setEntryType(string $entryType);
+	public function setEntryType($entryType);
 }

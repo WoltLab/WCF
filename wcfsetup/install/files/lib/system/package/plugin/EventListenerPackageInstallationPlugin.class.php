@@ -286,7 +286,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false) {
+	protected function getElementData(\DOMElement $element, $saveData = false) {
 		$data = [
 			'eventClassName' => $element->getElementsByTagName('eventclassname')->item(0)->nodeValue,
 			'eventName' => StringUtil::normalizeCsv($element->getElementsByTagName('eventname')->item(0)->nodeValue),

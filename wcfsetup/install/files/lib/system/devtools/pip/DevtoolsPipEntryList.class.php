@@ -29,7 +29,7 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList {
 	/**
 	 * @inheritDoc
 	 */
-	public function addEntry(string $id, array $entry) {
+	public function addEntry($id, array $entry) {
 		if ($this->keys === null) {
 			throw new \BadMethodCallException("No keys have been set.");
 		}

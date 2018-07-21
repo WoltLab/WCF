@@ -66,7 +66,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 		// icons are only available for menu items on the first or fourth level
 		// thus the parent menu item must be on zeroth level (no parent menu item)
 		// or on the third level
-		$iconParentMenuItems = array_keys(array_filter($menuItemLevels, function(int $value) {
+		$iconParentMenuItems = array_keys(array_filter($menuItemLevels, function($value) {
 			return $value === 0 || $value == 3;
 		}));
 		
@@ -110,7 +110,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 		// menu items on the first and second level do not support links,
 		// thus the parent menu item must be at least on the second level
 		// for the menu item to support links
-		$menuItemsSupportingLinks = array_keys(array_filter($menuItemLevels, function(int $menuItemLevel) {
+		$menuItemsSupportingLinks = array_keys(array_filter($menuItemLevels, function($menuItemLevel) {
 			return $menuItemLevel >= 2;
 		}));
 		
@@ -129,7 +129,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false) {
+	protected function getElementData(\DOMElement $element, $saveData = false) {
 		$data = parent::getElementData($element);
 		
 		$icon = $element->getElementsByTagName('icon')->item(0);

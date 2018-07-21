@@ -166,7 +166,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @param	string	$identifier
 	 * @return	null|int
 	 */
-	protected function getMenuID(string $identifier) {
+	protected function getMenuID($identifier) {
 		$sql = "SELECT	menuID
 			FROM	wcf" . WCF_N . "_menu
 			WHERE	identifier = ?";
@@ -183,7 +183,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @param	string	$identifier
 	 * @return	null|int
 	 */
-	protected function getPageID(string $identifier) {
+	protected function getPageID($identifier) {
 		$sql = "SELECT	pageID
 			FROM	wcf" . WCF_N . "_page
 			WHERE	identifier = ?";
@@ -439,7 +439,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false) {
+	protected function getElementData(\DOMElement $element, $saveData = false) {
 		$data = [
 			'identifier' => $element->getAttribute('identifier'),
 			'packageID' => $this->installation->getPackageID(),

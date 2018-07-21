@@ -172,7 +172,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false) {
+	protected function getElementData(\DOMElement $element, $saveData = false) {
 		$data = [
 			'definitionName' => $element->getElementsByTagName('name')->item(0)->nodeValue,
 			'packageID' => $this->installation->getPackage()->packageID

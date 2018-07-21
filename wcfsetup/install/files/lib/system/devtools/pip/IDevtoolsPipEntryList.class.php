@@ -17,11 +17,11 @@ interface IDevtoolsPipEntryList {
 	 * 
 	 * Before adding entries, the keys must be set.
 	 * 
-	 * @param	string		$identifier	unique entry ident
+	 * @param	string		$id		unique entry identifier
 	 * @param	array		$entry		entry data
 	 * @throws	\BadMethodCallException		if no keys have been set
 	 */
-	public function addEntry(string $id, array $entry);
+	public function addEntry($id, array $entry);
 	
 	/**
 	 * Returns all entries in the list.

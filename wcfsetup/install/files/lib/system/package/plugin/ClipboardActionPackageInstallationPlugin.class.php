@@ -245,7 +245,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false) {
+	protected function getElementData(\DOMElement $element, $saveData = false) {
 		$data = [
 			'actionClassName' => $element->getElementsByTagName('actionclassname')->item(0)->nodeValue,
 			'actionName' => $element->getAttribute('name'),

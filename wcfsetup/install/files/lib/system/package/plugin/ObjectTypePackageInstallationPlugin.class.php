@@ -169,7 +169,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false) {
+	protected function getElementData(\DOMElement $element, $saveData = false) {
 		$data = [
 			'definitionID' => $this->getDefinitionID($element->getElementsByTagName('definitionname')->item(0)->nodeValue),
 			'objectType' => $element->getElementsByTagName('name')->item(0)->nodeValue,
@@ -659,7 +659,7 @@ XML;
 	 * @return	FormContainer
 	 * @since	3.2
 	 */
-	public function getObjectTypeDefinitionDataContainer(IFormDocument $form, string $definitionName) {
+	public function getObjectTypeDefinitionDataContainer(IFormDocument $form, $definitionName) {
 		/** @var SingleSelectionFormField $definitionNameField */
 		$definitionIDField = $form->getNodeById('definitionID');
 		
@@ -765,7 +765,7 @@ XML;
 	 * @param	IFormDocument	$form
 	 * @param	string		$objectTypeDefinition
 	 */
-	public function addBulkProcessingActionFields(IFormDocument $form, string $objectTypeDefinition) {
+	public function addBulkProcessingActionFields(IFormDocument $form, $objectTypeDefinition) {
 		$definitionPieces = explode('.', $objectTypeDefinition);
 		$definitionIdString = implode('', array_map('ucfirst', $definitionPieces));
 		
@@ -812,7 +812,7 @@ XML;
 	 * @param	bool			$addConditionGroup
 	 * @since	3.2
 	 */
-	public function addConditionFields(IFormContainer $dataContainer, bool $addConditionObject = true, bool $addConditionGroup = true) {
+	public function addConditionFields(IFormContainer $dataContainer, $addConditionObject = true, $addConditionGroup = true) {
 		$prefix = preg_replace('~Fields$~', '', $dataContainer->getId());
 		
 		if ($addConditionObject) {
@@ -959,7 +959,7 @@ XML;
 	 * @param	string		$databaseTableName	name of the database table that stores the conditioned objects
 	 * @return	TextFormField
 	 */
-	public function getIntegerConditionPropertyNameField(TextFormField $classNameField, string $conditionClass, string $id, string $languageItemPrefix, string $databaseTableName) {
+	public function getIntegerConditionPropertyNameField(TextFormField $classNameField, $conditionClass, $id, $languageItemPrefix, $databaseTableName) {
 		return TextFormField::create($id)
 			->objectProperty('propertyname')
 			->label($languageItemPrefix . '.propertyName')
@@ -1002,7 +1002,7 @@ XML;
 	 * @param	int		$minimumSegmentCount	minimum number of dot-separated segments
 	 * @return	FormFieldValidator
 	 */
-	public static function getObjectTypeAlikeValueValidator(string $languageItemPrefix, int $minimumSegmentCount = 4) {
+	public static function getObjectTypeAlikeValueValidator($languageItemPrefix, $minimumSegmentCount = 4) {
 		return new FormFieldValidator('format', function(TextFormField $formField) use ($languageItemPrefix, $minimumSegmentCount) {
 			if ($formField->getValue()) {
 				$segments = explode('.', $formField->getValue());

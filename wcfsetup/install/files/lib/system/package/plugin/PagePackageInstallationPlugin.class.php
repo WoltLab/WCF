@@ -636,7 +636,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false) {
+	protected function getElementData(\DOMElement $element, $saveData = false) {
 		$data = [
 			'identifier' => $element->getAttribute('identifier'),
 			'originIsSystem' => 1,
@@ -668,7 +668,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			}
 		}
 		
-		$readData = function(int $languageID, \DOMElement $content) use (&$data) {
+		$readData = function($languageID, \DOMElement $content) use (&$data) {
 			foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $contentElementName) {
 				$contentElement = $content->getElementsByTagName($contentElementName)->item(0);
 				if ($contentElement) {

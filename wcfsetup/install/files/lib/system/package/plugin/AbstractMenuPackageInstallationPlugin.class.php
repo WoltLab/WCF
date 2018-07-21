@@ -168,7 +168,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 						'value' => ''
 					]];
 					
-					$buildOptions = function(string $parent = '', int $depth = 0) use ($menuStructure, &$buildOptions) {
+					$buildOptions = function($parent = '', $depth = 0) use ($menuStructure, &$buildOptions) {
 						// only consider menu items until the third level (thus only parent
 						// menu items until the second level) as potential parent menu items
 						if ($depth > 2) {
@@ -272,7 +272,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false) {
+	protected function getElementData(\DOMElement $element, $saveData = false) {
 		$data = [
 			'menuItem' => $element->getAttribute('name'),
 			'packageID' => $this->installation->getPackage()->packageID
@@ -396,7 +396,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 		
 		// build array containing the ACP menu items saved in the database
 		// in the order as they would be displayed in the ACP
-		$buildPositions = function(string $parent = '') use ($menuItemStructure, &$buildPositions) {
+		$buildPositions = function($parent = '') use ($menuItemStructure, &$buildPositions) {
 			$positions = [];
 			foreach ($menuItemStructure[$parent] as $menuItem) {
 				// only consider menu items of the current package for positions

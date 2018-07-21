@@ -71,7 +71,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @param	string			$identifier
 	 * @return	string			new identifier
 	 */
-	public function editEntry(IFormDocument $form, string $identifier) {
+	public function editEntry(IFormDocument $form, $identifier) {
 		$xml = $this->getProjectXml();
 		$document = $xml->getDocument();
 		
@@ -112,7 +112,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @param	string		$value
 	 * @return	string
 	 */
-	protected function getAutoCdataValue(string $value) {
+	protected function getAutoCdataValue($value) {
 		if (strpos('<', $value) !== false || strpos('>', $value) !== false || strpos('&', $value) !== false) {
 			$value = '<![CDATA[' . StringUtil::escapeCDATA($value) . ']]>';
 		}
@@ -127,7 +127,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @param	string	$identifier
 	 * @return	\DOMElement|null
 	 */
-	protected function getElementByIdentifier(XML $xml, string $identifier) {
+	protected function getElementByIdentifier(XML $xml, $identifier) {
 		foreach ($this->getImportElements($xml->xpath()) as $element) {
 			if ($this->getElementIdentifier($element) === $identifier) {
 				return $element;
@@ -144,7 +144,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @param	bool		$saveData	is `true` if data is intended to be saved and otherwise `false`
 	 * @return	array
 	 */
-	abstract protected function getElementData(\DOMElement $element, bool $saveData = false);
+	abstract protected function getElementData(\DOMElement $element, $saveData = false);
 	
 	/**
 	 * Returns the identifier of the given `import` element.
@@ -307,7 +307,7 @@ XML;
 	 * 
 	 * @throws	\InvalidArgumentException	if no such entry exists
 	 */
-	public function setEditedEntryIdentifier(string $identifier) {
+	public function setEditedEntryIdentifier($identifier) {
 		$this->editedEntry = $this->getElementByIdentifier($this->getProjectXml(), $identifier);
 		
 		if ($this->editedEntry === null) {
@@ -324,7 +324,7 @@ XML;
 	 * @param	IFormDocument		$document
 	 * @return	bool
 	 */
-	public function setEntryData(string $identifier, IFormDocument $document) {
+	public function setEntryData($identifier, IFormDocument $document) {
 		$xml = $this->getProjectXml();
 		
 		$element = $this->getElementByIdentifier($xml, $identifier);
@@ -377,7 +377,7 @@ XML;
 	 * 
 	 * @throws	\InvalidArgumentException	if the given entry type is invalid (see `getEntryTypes()` method)
 	 */
-	public function setEntryType(string $entryType) {
+	public function setEntryType($entryType) {
 		if (!in_array($entryType, $this->getEntryTypes())) {
 			throw new \InvalidArgumentException("Unknown entry type '{$entryType}'.");
 		}
