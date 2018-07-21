@@ -56,7 +56,7 @@ class ClassNameFormField extends TextFormField {
 	 * @param	bool		$classExists	determines if entered class must exist
 	 * @return	static				this field
 	 */
-	public function classExists(bool $classExists = true) {
+	public function classExists($classExists = true) {
 		$this->__classExists = $classExists;
 		
 		return $this;
@@ -73,9 +73,9 @@ class ClassNameFormField extends TextFormField {
 	}
 	
 	/**
-	 * Returns class the entered class must extend or an empty string if the
+	 * Returns class the entered class must extend or an empty if the
 	 * entered class does not have to extend any specific class. By default,
-	 * an empty string is returned.
+	 * an empty is returned.
 	 * 
 	 * @return	string
 	 */
@@ -85,8 +85,8 @@ class ClassNameFormField extends TextFormField {
 	
 	/**
 	 * Returns name of the interface the entered class must implement or an
-	 * empty string if the entered class does not have to implement any specific
-	 * interface. By default, an empty string is returned.
+	 * empty if the entered class does not have to implement any specific
+	 * interface. By default, an empty is returned.
 	 *
 	 * @return	string
 	 */
@@ -106,7 +106,7 @@ class ClassNameFormField extends TextFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the entered interface does not exists
 	 */
-	public function implementedInterface(string $interface) {
+	public function implementedInterface($interface) {
 		if (!interface_exists($interface)) {
 			throw new \InvalidArgumentException("Interface '{$interface}' does not exist.");
 		}
@@ -129,7 +129,7 @@ class ClassNameFormField extends TextFormField {
 	 * @param	bool		$instantiable	determines if entered class must be instantiable
 	 * @return	static				this field
 	 */
-	public function instantiable(bool $instantiable = true) {
+	public function instantiable($instantiable = true) {
 		$this->__instantiable = $instantiable;
 		
 		return $this;
@@ -153,7 +153,7 @@ class ClassNameFormField extends TextFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the entered class does not exists
 	 */
-	public function parentClass(string $parentClass) {
+	public function parentClass($parentClass) {
 		if (!class_exists($parentClass)) {
 			throw new \InvalidArgumentException("Class '{$parentClass}' does not exist.");
 		}
@@ -166,7 +166,7 @@ class ClassNameFormField extends TextFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected function validateText(string $text, Language $language = null) {
+	protected function validateText($text, Language $language = null) {
 		parent::validateText($text, $language);
 		
 		if (empty($this->getValidationErrors())) {

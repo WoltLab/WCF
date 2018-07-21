@@ -119,7 +119,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IMa
 			}
 			else {
 				if (is_string($step) && $step !== 'any') {
-					throw new \InvalidArgumentException("The only valid string step value is 'any', '" . $step . "' given.");
+					throw new \InvalidArgumentException("The only valid step value is 'any', '" . $step . "' given.");
 				}
 				else if (!is_numeric($step)) {
 					throw new \InvalidArgumentException("Given step is no number, '" . gettype($step) . "' given.");

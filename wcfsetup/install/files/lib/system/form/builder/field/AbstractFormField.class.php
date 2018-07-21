@@ -23,7 +23,7 @@ abstract class AbstractFormField implements IFormField {
 	
 	/**
 	 * `true` if this field is auto-focused and `false` otherwise
-	 * @var	bool 
+	 * @var	bool
 	 */
 	protected $__autoFocus = false;
 	
@@ -53,7 +53,7 @@ abstract class AbstractFormField implements IFormField {
 	
 	/**
 	 * name of the template used to output this field
-	 * @var	string 
+	 * @var	string
 	 */
 	protected $templateName;
 	
@@ -98,7 +98,7 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function autoFocus(bool $autoFocus = true) {
+	public function autoFocus($autoFocus = true) {
 		$this->__autoFocus = $autoFocus;
 		
 		return $this;
@@ -166,7 +166,7 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function hasValidator(string $validatorId) {
+	public function hasValidator($validatorId) {
 		FormFieldValidator::validateId($validatorId);
 		
 		return isset($this->validators[$validatorId]);
@@ -182,7 +182,7 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function immutable(bool $immutable = true) {
+	public function immutable($immutable = true) {
 		$this->__immutable = $immutable;
 		
 		return $this;
@@ -224,7 +224,7 @@ abstract class AbstractFormField implements IFormField {
 	 * @inheritDoc
 	 * @return	static
 	 */
-	public function objectProperty(string $objectProperty) {
+	public function objectProperty($objectProperty) {
 		if ($objectProperty === '') {
 			$this->__objectProperty = null;
 		}
@@ -240,7 +240,7 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function removeValidator(string $validatorId) {
+	public function removeValidator($validatorId) {
 		if (!$this->hasValidator($validatorId)) {
 			throw new \InvalidArgumentException("Unknown validator with id '{$validatorId}'");
 		}
@@ -254,7 +254,7 @@ abstract class AbstractFormField implements IFormField {
 	 * @inheritDoc
 	 * @return	static
 	 */
-	public function required(bool $required = true) {
+	public function required($required = true) {
 		$this->__required = $required;
 		
 		return $this;

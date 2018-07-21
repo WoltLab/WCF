@@ -32,7 +32,7 @@ class CustomFormFieldDataProcessor implements IFormFieldDataProcessor {
 	 * 
 	 * @throws	\InvalidArgumentException	if either id or processor callable are invalid
 	 */
-	public function __construct(string $id, callable $processor) {
+	public function __construct($id, callable $processor) {
 		if (preg_match('~^[a-z][A-z0-9-]*$~', $id) !== 1) {
 			throw new \InvalidArgumentException("Invalid id '{$id}' given.");
 		}

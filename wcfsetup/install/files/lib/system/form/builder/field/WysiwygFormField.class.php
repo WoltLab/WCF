@@ -49,7 +49,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * @param	string		$autosaveId	identifier used to autosave field value
 	 * @return	WysiwygFormField		this field
 	 */
-	public function autosaveId(string $autosaveId) {
+	public function autosaveId($autosaveId) {
 		$this->__autosaveId = $autosaveId;
 		
 		return $this;
@@ -57,7 +57,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	
 	/**
 	 * Returns the identifier used to autosave the field value. If autosave is disabled,
-	 * an empty string is returned.
+	 * an empty is returned.
 	 * 
 	 * @return	string
 	 */
@@ -95,7 +95,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * @param	int	$lastEditTime	last time field has been edited
 	 * @return	WysiwygFormField	this field
 	 */
-	public function lastEditTime(int $lastEditTime) {
+	public function lastEditTime($lastEditTime) {
 		$this->__lastEditTime = $lastEditTime;
 		
 		return $this;

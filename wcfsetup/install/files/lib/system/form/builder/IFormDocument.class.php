@@ -32,7 +32,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given action is invalid
 	 */
-	public function action(string $action);
+	public function action($action);
 	
 	/**
 	 * Is called once after all nodes have been added to this document.
@@ -56,7 +56,7 @@ interface IFormDocument extends IFormParentNode {
 	 * @throws	\BadMethodCallException		if the form mode has already been set
 	 * @throws	\InvalidArgumentException	if the given form mode is invalid
 	 */
-	public function formMode(string $formMode);
+	public function formMode($formMode);
 	
 	/**
 	 * Returns the `action` property of the HTML `form` element.
@@ -117,7 +117,7 @@ interface IFormDocument extends IFormParentNode {
 	
 	/**
 	 * Returns the global form prefix that is prepended to form elements' names and ids to
-	 * avoid conflicts with other forms. If no prefix has been set, an empty string is returned.
+	 * avoid conflicts with other forms. If no prefix has been set, an empty is returned.
 	 * 
 	 * Note: If a prefix `foo` has been set, this method returns `foo_`. 
 	 * 
@@ -135,7 +135,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if invalid index is given
 	 */
-	public function getRequestData(string $index = null);
+	public function getRequestData($index = null);
 	
 	/**
 	 * Returns `true` if there is any request data or, if a parameter is given, if
@@ -146,7 +146,7 @@ interface IFormDocument extends IFormParentNode {
 	 * @param	null|string	$index		array index of the returned data
 	 * @return	bool				`tu
 	 */
-	public function hasRequestData(string $index = null);
+	public function hasRequestData($index = null);
 	
 	/**
 	 * Loads the field values from the given object and returns this document.
@@ -167,7 +167,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given method is invalid
 	 */
-	public function method(string $method);
+	public function method($method);
 	
 	/**
 	 * Sets the global form prefix that is prepended to form elements' names and ids to
@@ -181,7 +181,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given prefix is invalid
 	 */
-	public function prefix(string $prefix);
+	public function prefix($prefix);
 	
 	/**
 	 * Sets the request data of the form's fields.

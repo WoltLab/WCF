@@ -19,7 +19,7 @@ trait TDefaultIdFormField {
 	 * @inheritDoc
 	 * @return	static
 	 */
-	public static function create(string $id = null) {
+	public static function create($id = null) {
 		if ($id === null) {
 			$id = static::getDefaultId();
 		}

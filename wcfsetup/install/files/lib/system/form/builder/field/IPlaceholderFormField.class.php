@@ -30,5 +30,5 @@ interface IPlaceholderFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given value is invalid
 	 */
-	public function placeholder(string $languageItem = null, array $variables = []);
+	public function placeholder($languageItem = null, array $variables = []);
 }

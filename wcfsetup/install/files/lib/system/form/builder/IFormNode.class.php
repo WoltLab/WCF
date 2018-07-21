@@ -20,7 +20,7 @@ interface IFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given class is invalid
 	 */
-	public function addClass(string $class);
+	public function addClass($class);
 	
 	/**
 	 * Adds a dependency on the value of a `IFormField` so that this node is
@@ -46,7 +46,7 @@ interface IFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if an invalid name or value is given (some attribute names are invalid as there are specific methods for setting that attribute)
 	 */
-	public function attribute(string $name, string $value = null);
+	public function attribute($name, $value = null);
 	
 	/**
 	 * Sets if this node is available and returns this node.
@@ -68,7 +68,7 @@ interface IFormNode {
 	 * @param	bool		$available	determines if node is available
 	 * @return	static				this node
 	 */
-	public function available(bool $available = true);
+	public function available($available = true);
 	
 	/**
 	 * Returns `true` if the node's dependencies are met and returns `false` otherwise.
@@ -85,7 +85,7 @@ interface IFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given name is invalid or no such attribute exists
 	 */
-	public function getAttribute(string $name);
+	public function getAttribute($name);
 	
 	/**
 	 * Returns additional attributes of this node.
@@ -163,7 +163,7 @@ interface IFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given attribute name is invalid
 	 */
-	public function hasAttribute(string $name);
+	public function hasAttribute($name);
 	
 	/**
 	 * Returns `true` if a CSS class with the given name exists and returns `false` otherwise.
@@ -173,7 +173,7 @@ interface IFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given class is invalid
 	 */
-	public function hasClass(string $class);
+	public function hasClass($class);
 	
 	/**
 	 * Returns `true` if this node has a dependency with the given id and
@@ -184,7 +184,7 @@ interface IFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public function hasDependency(string $dependencyId);
+	public function hasDependency($dependencyId);
 	
 	/**
 	 * Sets the id of the node.
@@ -195,7 +195,7 @@ interface IFormNode {
 	 * @throws	\BadMethodCallException		if id has already been set
 	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public function id(string $id);
+	public function id($id);
 	
 	/**
 	 * Returns `true` if this node is available and returns `false` otherwise.
@@ -231,7 +231,7 @@ interface IFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given class is invalid
 	 */
-	public function removeClass(string $class);
+	public function removeClass($class);
 	
 	/**
 	 * Removes the dependency with the given id and returns this node.
@@ -241,7 +241,7 @@ interface IFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid or no such dependency exists
 	 */
-	public function removeDependency(string $dependencyId);
+	public function removeDependency($dependencyId);
 	
 	/**
 	 * Validates the node.
@@ -259,32 +259,32 @@ interface IFormNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is already used by another element or otherwise is invalid
 	 */
-	public static function create(string $id);
+	public static function create($id);
 	
 	/**
-	 * Checks if the given attribute name class a string and a valid attribute name.
+	 * Checks if the given attribute name class a and a valid attribute name.
 	 * 
 	 * @param	string		$name		checked argument name
 	 * 
 	 * @throws	\InvalidArgumentException	if the given attribute name is invalid
 	 */
-	public static function validateAttribute(string $name);
+	public static function validateAttribute($name);
 	
 	/**
-	 * Checks if the given parameter class a string and a valid node class.
+	 * Checks if the given parameter class a and a valid node class.
 	 * 
 	 * @param	string		$class		checked class
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public static function validateClass(string $class);
+	public static function validateClass($class);
 	
 	/**
-	 * Checks if the given parameter is a string and a valid node id.
+	 * Checks if the given parameter is a and a valid node id.
 	 * 
 	 * @param	string		$id		checked id
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public static function validateId(string $id);
+	public static function validateId($id);
 }

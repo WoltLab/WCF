@@ -73,7 +73,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	 * @param	bool		$negate
 	 * @return	static		$this		this dependency
 	 */
-	public function negate(bool $negate = true) {
+	public function negate($negate = true) {
 		$this->__isNegated = $negate;
 		
 		return $this;

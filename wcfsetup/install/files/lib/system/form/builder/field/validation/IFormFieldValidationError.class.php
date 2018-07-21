@@ -22,7 +22,7 @@ interface IFormFieldValidationError {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given error type is invalid
 	 */
-	public function __construct(string $type, string $languageItem = null, array $information = []);
+	public function __construct($type, $languageItem = null, array $information = []);
 	
 	/**
 	 * Returns the HTML element representing the error.

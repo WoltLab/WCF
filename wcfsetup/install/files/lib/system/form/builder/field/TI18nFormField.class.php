@@ -162,7 +162,7 @@ trait TI18nFormField {
 	 * @param	bool		$i18n		determines if field supports i18n input
 	 * @return	II18nFormField			this field
 	 */
-	public function i18n(bool $i18n = true) {
+	public function i18n($i18n = true) {
 		$this->__i18n = $i18n;
 		
 		return $this;
@@ -177,7 +177,7 @@ trait TI18nFormField {
 	 * @param	bool		$i18nRequired		determines if field value must be i18n input
 	 * @return	static					this field
 	 */
-	public function i18nRequired(bool $i18nRequired = true) {
+	public function i18nRequired($i18nRequired = true) {
 		$this->__i18nRequired = $i18nRequired;
 		$this->i18n();
 		
@@ -214,7 +214,7 @@ trait TI18nFormField {
 	 * @throws	\BadMethodCallException		if i18n is disabled for this field
 	 * @throws	\InvalidArgumentException	if the given pattern is invalid
 	 */
-	public function languageItemPattern(string $pattern) {
+	public function languageItemPattern($pattern) {
 		if (!$this->isI18n()) {
 			throw new \BadMethodCallException("The language item pattern can only be set for fields with i18n enabled.");
 		}
@@ -301,14 +301,14 @@ trait TI18nFormField {
 	}
 	
 	/**
-	 * Sets the value of this form field based on the given string value.
+	 * Sets the value of this form field based on the given value.
 	 * If the value is a language item matching the language item pattern,
 	 * the relevant language items are loaded and their values are used as
 	 * field values.
 	 * 
 	 * @param	string		$value		set value
 	 */
-	protected function setStringValue(string $value) {
+	protected function setStringValue($value) {
 		if (Regex::compile('^' . $this->getLanguageItemPattern() . '$')->match($value)) {
 			$languageItemList = new LanguageItemList();
 			$languageItemList->getConditionBuilder()->add('languageItem = ?', [$value]);
@@ -345,7 +345,7 @@ trait TI18nFormField {
 				}
 			}
 			else {
-				throw new \InvalidArgumentException("Given value is neither a string nor an array, " . gettype($value) . " given.");
+				throw new \InvalidArgumentException("Given value is neither a nor an array, " . gettype($value) . " given.");
 			}
 		}
 		else {

@@ -35,7 +35,7 @@ trait TNullableFormField {
 	 * @param	bool	$nullable		determines if field supports `null` as its value
 	 * @return	static				this node
 	 */
-	public function nullable(bool $nullable = true) {
+	public function nullable($nullable = true) {
 		$this->__nullable = $nullable;
 		
 		return $this;

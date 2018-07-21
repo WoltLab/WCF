@@ -65,7 +65,7 @@ trait TFormParentNode {
 	 * @param	string		$nodeId		id of searched node
 	 * @return	bool
 	 */
-	public function contains(string $nodeId) {
+	public function contains($nodeId) {
 		static::validateId($nodeId);
 		
 		foreach ($this->children() as $child) {
@@ -145,7 +145,7 @@ trait TFormParentNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public function getNodeById(string $nodeId) {
+	public function getNodeById($nodeId) {
 		static::validateId($nodeId);
 		
 		foreach ($this->children() as $child) {
@@ -205,7 +205,7 @@ trait TFormParentNode {
 	 *
 	 * @throws	\InvalidArgumentException			if given node cannot be inserted or reference node id is invalid
 	 */
-	public function insertBefore(IFormChildNode $child, string $referenceNodeId) {
+	public function insertBefore(IFormChildNode $child, $referenceNodeId) {
 		$didInsertNode = false;
 		foreach ($this->children() as $index => $existingChild) {
 			if ($existingChild->getId() === $referenceNodeId) {

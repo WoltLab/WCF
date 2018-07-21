@@ -104,9 +104,9 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	 * @param	string		$id		id of the dependency
 	 * @return	static		$this		this dependency
 	 * 
-	 * @throws	\InvalidArgumentException	if given id no string or otherwise invalid
+	 * @throws	\InvalidArgumentException	if given id no or otherwise invalid
 	 */
-	protected function id(string $id) {
+	protected function id($id) {
 		if (preg_match('~^[a-z][A-z0-9-]*$~', $id) !== 1) {
 			throw new \InvalidArgumentException("Invalid id '{$id}' given.");
 		}
@@ -120,7 +120,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	 * @inheritDoc
 	 * @return	static
 	 */
-	public static function create(string $id) {
+	public static function create($id) {
 		return (new static)->id($id);
 	}
 }

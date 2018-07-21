@@ -50,7 +50,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if given category name is invalid
 	 */
-	public function categoryName(string $categoryName) {
+	public function categoryName($categoryName) {
 		// TODO: validation
 		
 		$this->__categoryName = $categoryName;

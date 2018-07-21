@@ -32,7 +32,7 @@ interface IObjectTypeFormField {
 	 * @throws	\UnexpectedValueException	if object type definition returned by `getObjectTypeDefinition()` is unknown
 	 * @throws	InvalidObjectTypeException	if given object type name is invalid
 	 */
-	public function objectType(string $objectType);
+	public function objectType($objectType);
 	
 	/**
 	 * Returns the name of the object type definition the set object type must be of.

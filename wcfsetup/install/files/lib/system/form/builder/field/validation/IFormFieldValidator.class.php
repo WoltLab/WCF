@@ -20,7 +20,7 @@ interface IFormFieldValidator {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public function __construct(string $id, callable $validator);
+	public function __construct($id, callable $validator);
 	
 	/**
 	 * Validates the value of the given field.
@@ -37,11 +37,11 @@ interface IFormFieldValidator {
 	public function getId();
 	
 	/**
-	 * Checks if the given parameter is a string and a valid validator id.
+	 * Checks if the given parameter is a and a valid validator id.
 	 * 
 	 * @param	mixed		$id		checked id
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public static function validateId(string $id);
+	public static function validateId($id);
 }

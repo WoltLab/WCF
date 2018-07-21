@@ -33,7 +33,7 @@ class FormFieldValidationError implements IFormFieldValidationError {
 	/**
 	 * @inheritDoc
 	 */
-	public function __construct(string $type, string $languageItem = null, array $information = []) {
+	public function __construct($type, $languageItem = null, array $information = []) {
 		if ($languageItem === null) {
 			$languageItem = 'wcf.global.form.error.' . $type;
 		}

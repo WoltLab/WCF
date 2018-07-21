@@ -131,7 +131,7 @@ class ItemListFormField extends AbstractFormField {
 	 * @throws	\BadMethodCallException			if save value type has already been set
 	 * @throws	\InvalidArgumentException		if given save value type is invalid
 	 */
-	public function saveValueType(string $saveValueType) {
+	public function saveValueType($saveValueType) {
 		if ($this->saveValueType !== null) {
 			throw new \BadMethodCallException("Save value type has already been set.");
 		}

@@ -38,7 +38,7 @@ trait TMaximumLengthFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given maximum length is no integer or otherwise invalid
 	 */
-	public function maximumLength(int $maximumLength = null) {
+	public function maximumLength($maximumLength = null) {
 		if ($maximumLength !== null) {
 			if (!is_int($maximumLength)) {
 				throw new \InvalidArgumentException("Given maximum length is no int, '" . gettype($maximumLength) . "' given.");
@@ -67,7 +67,7 @@ trait TMaximumLengthFormField {
 	 * @param	string		$text		validated text
 	 * @param	null|Language	$language	language of the validated text
 	 */
-	public function validateMaximumLength(string $text, Language $language = null) {
+	public function validateMaximumLength($text, Language $language = null) {
 		if ($this->getMaximumLength() !== null && mb_strlen($text) > $this->getMaximumLength()) {
 			$this->addValidationError(new FormFieldValidationError(
 				'maximumLength',

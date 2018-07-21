@@ -30,7 +30,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * @param	bool		$autoFocus	determines if field is auto-focused
 	 * @return	static				this field
 	 */
-	public function autoFocus(bool $autoFocus = true);
+	public function autoFocus($autoFocus = true);
 	
 	/**
 	 * Adds the given validation error to this field and returns this field.
@@ -92,7 +92,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public function hasValidator(string $validatorId);
+	public function hasValidator($validatorId);
 	
 	/**
 	 * Returns `true` if this field provides a value that can simply be stored
@@ -113,7 +113,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * @param	bool		$immutable	determines if field value is immutable
 	 * @return	static				this field
 	 */
-	public function immutable(bool $immutable = true);
+	public function immutable($immutable = true);
 	
 	/**
 	 * Returns `true` if this field is auto-focused and returns `false` otherwise.
@@ -149,7 +149,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	
 	/**
 	 * Sets the name of the object property this field represents. If an empty
-	 * string is passed, the object property is unset.
+	 * is passed, the object property is unset.
 	 * 
 	 * The object property allows having different fields (requiring different ids)
 	 * that represent the same object property which is handy when available options
@@ -162,7 +162,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * 
 	 * @throws	\InvalidArgumentException	if the passed object property is no valid id 
 	 */
-	public function objectProperty(string $objectProperty);
+	public function objectProperty($objectProperty);
 	
 	/**
 	 * Reads the value of this field from request data and return this field.
@@ -179,7 +179,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid or no such validator exists
 	 */
-	public function removeValidator(string $validatorId);
+	public function removeValidator($validatorId);
 	
 	/**
 	 * Sets whether it is required to fill out this field and returns this field.
@@ -187,7 +187,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * @param	bool		$required	determines if field has to be filled out
 	 * @return	static				this field
 	 */
-	public function required(bool $required = true);
+	public function required($required = true);
 	
 	/**
 	 * Sets the value of this field and returns this field.

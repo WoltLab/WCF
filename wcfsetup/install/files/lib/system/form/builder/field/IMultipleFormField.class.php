@@ -54,7 +54,7 @@ interface IMultipleFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given maximum number of values is invalid
 	 */
-	public function maximumMultiples(int $maximum);
+	public function maximumMultiples($maximum);
 	
 	/**
 	 * Sets the minimum number of values that can be selected or set and returns
@@ -65,7 +65,7 @@ interface IMultipleFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given minimum number of values is invalid
 	 */
-	public function minimumMultiples(int $minimum);
+	public function minimumMultiples($minimum);
 	
 	/**
 	 * Sets whether multiple values can be selected or set and returns this field.
@@ -73,5 +73,5 @@ interface IMultipleFormField {
 	 * @param	bool		$multiple	determines if multiple values can be selected/set
 	 * @return	static				this field
 	 */
-	public function multiple(bool $multiple = true);
+	public function multiple($multiple = true);
 }

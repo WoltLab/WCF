@@ -89,7 +89,7 @@ trait TMultipleFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given maximum number of values is invalid
 	 */
-	public function maximumMultiples(int $maximum) {
+	public function maximumMultiples($maximum) {
 		if ($maximum !== IMultipleFormField::NO_MAXIMUM_MULTIPLES) {
 			if ($maximum <= 0) {
 				throw new \InvalidArgumentException("The maximum number of values has to be positive, '{$maximum}' given.");
@@ -114,7 +114,7 @@ trait TMultipleFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given minimum number of values is invalid
 	 */
-	public function minimumMultiples(int $minimum) {
+	public function minimumMultiples($minimum) {
 		if ($minimum < 0) {
 			throw new \InvalidArgumentException("The minimum number of values has to be non-negative, '{$minimum}' given.");
 		}
@@ -134,7 +134,7 @@ trait TMultipleFormField {
 	 * @param	bool		$multiple	determines if multiple values can be selected/set
 	 * @return	static		this field
 	 */
-	public function multiple(bool $multiple = true) {
+	public function multiple($multiple = true) {
 		$this->__multiple = $multiple;
 		
 		return $this;

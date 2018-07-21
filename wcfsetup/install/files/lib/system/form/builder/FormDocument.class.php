@@ -60,7 +60,7 @@ class FormDocument implements IFormDocument {
 	
 	/**
 	 * encoding type of this form
-	 * @var	null|string 
+	 * @var	null|
 	 */
 	protected $enctype = '';
 	
@@ -73,7 +73,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function action(string $action) {
+	public function action($action) {
 		$this->__action = $action;
 		
 		return $this;
@@ -114,7 +114,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function formMode(string $formMode) {
+	public function formMode($formMode) {
 		if ($this->__formMode !== null) {
 			throw new \BadMethodCallException("Form mode has already been set");
 		}
@@ -228,7 +228,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getRequestData(string $index = null) {
+	public function getRequestData($index = null) {
 		if ($this->__requestData === null) {
 			$this->__requestData = $_POST;
 		}
@@ -247,7 +247,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function hasRequestData(string $index = null) {
+	public function hasRequestData($index = null) {
 		$requestData = $this->getRequestData();
 		
 		if ($index !== null) {
@@ -290,7 +290,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function method(string $method) {
+	public function method($method) {
 		if ($method !== 'get' && $method !== 'post') {
 			throw new \InvalidArgumentException("Invalid method '{$method}' given.");
 		}
@@ -303,7 +303,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function prefix(string $prefix) {
+	public function prefix($prefix) {
 		static::validateId($prefix);
 		
 		$this->__prefix = $prefix;

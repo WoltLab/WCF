@@ -115,7 +115,7 @@ trait TSelectionFormField {
 	 * @throws	\InvalidArgumentException		if given options are no array or callable or otherwise invalid
 	 * @throws	\UnexpectedValueException		if callable does not return an array
 	 */
-	public function options($options, bool $nestedOptions = false) {
+	public function options($options, $nestedOptions = false) {
 		if ($nestedOptions) {
 			if (!is_array($options) && !is_callable($options)) {
 				throw new \InvalidArgumentException("The given nested options are neither an array nor a callable, " . gettype($options) . " given.");

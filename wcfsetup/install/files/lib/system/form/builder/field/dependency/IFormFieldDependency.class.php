@@ -77,5 +77,5 @@ interface IFormFieldDependency {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public static function create(string $id);
+	public static function create($id);
 }

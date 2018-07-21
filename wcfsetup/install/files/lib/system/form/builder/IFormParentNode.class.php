@@ -45,7 +45,7 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator {
 	 * @param	string		$nodeId		id of searched node
 	 * @return	bool
 	 */
-	public function contains(string $nodeId);
+	public function contains($nodeId);
 	
 	/**
 	 * Returns a recursive iterator for this node.
@@ -67,7 +67,7 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public function getNodeById(string $nodeId);
+	public function getNodeById($nodeId);
 	
 	/**
 	 * Returns `true` if this node or any of its children has a validation error and
@@ -86,7 +86,7 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator {
 	 * 
 	 * @throws	\InvalidArgumentException			if given node cannot be inserted or reference node id is invalid
 	 */
-	public function insertBefore(IFormChildNode $child, string $referenceNodeId);
+	public function insertBefore(IFormChildNode $child, $referenceNodeId);
 	
 	/**
 	 * Reads the value of this node and its children from request data and
