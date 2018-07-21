@@ -286,7 +286,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		$data = [
 			'eventClassName' => $element->getElementsByTagName('eventclassname')->item(0)->nodeValue,
 			'eventName' => StringUtil::normalizeCsv($element->getElementsByTagName('eventname')->item(0)->nodeValue),
@@ -309,7 +309,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getElementIdentifier(\DOMElement $element): string {
+	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
 	}
 	
@@ -347,7 +347,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$eventListener = $document->createElement($this->tagName);

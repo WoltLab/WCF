@@ -158,7 +158,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getAdditionalTemplateCode(): string {
+	public function getAdditionalTemplateCode() {
 		return WCF::getTPL()->fetch('__objectTypePipGui', 'wcf', [
 			'definitionNames' => $this->definitionNames,
 			'definitionInterfaces' => $this->definitionInterfaces
@@ -169,7 +169,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		$data = [
 			'definitionID' => $this->getDefinitionID($element->getElementsByTagName('definitionname')->item(0)->nodeValue),
 			'objectType' => $element->getElementsByTagName('name')->item(0)->nodeValue,
@@ -593,7 +593,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getElementIdentifier(\DOMElement $element): string {
+	public function getElementIdentifier(\DOMElement $element) {
 		return sha1(
 			$element->getElementsByTagName('name')->item(0)->nodeValue . '/' .
 			$element->getElementsByTagName('definitionname')->item(0)->nodeValue
@@ -604,7 +604,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getEmptyXml(): string {
+	protected function getEmptyXml() {
 		return <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/objectType.xsd">
@@ -617,7 +617,7 @@ XML;
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getEntryList(): IDevtoolsPipEntryList {
+	public function getEntryList() {
 		$xml = $this->getProjectXml();
 		$xpath = $xml->xpath();
 		
@@ -659,7 +659,7 @@ XML;
 	 * @return	FormContainer
 	 * @since	3.2
 	 */
-	public function getObjectTypeDefinitionDataContainer(IFormDocument $form, string $definitionName): FormContainer {
+	public function getObjectTypeDefinitionDataContainer(IFormDocument $form, string $definitionName) {
 		/** @var SingleSelectionFormField $definitionNameField */
 		$definitionIDField = $form->getNodeById('definitionID');
 		
@@ -735,7 +735,7 @@ XML;
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$type = $document->createElement('type');
 		foreach ($form->getData()['data'] as $key => $value) {
 			if ($key === 'definitionID') {
@@ -959,7 +959,7 @@ XML;
 	 * @param	string		$databaseTableName	name of the database table that stores the conditioned objects
 	 * @return	TextFormField
 	 */
-	public function getIntegerConditionPropertyNameField(TextFormField $classNameField, string $conditionClass, string $id, string $languageItemPrefix, string $databaseTableName): TextFormField {
+	public function getIntegerConditionPropertyNameField(TextFormField $classNameField, string $conditionClass, string $id, string $languageItemPrefix, string $databaseTableName) {
 		return TextFormField::create($id)
 			->objectProperty('propertyname')
 			->label($languageItemPrefix . '.propertyName')
@@ -1002,7 +1002,7 @@ XML;
 	 * @param	int		$minimumSegmentCount	minimum number of dot-separated segments
 	 * @return	FormFieldValidator
 	 */
-	public static function getObjectTypeAlikeValueValidator(string $languageItemPrefix, int $minimumSegmentCount = 4): FormFieldValidator {
+	public static function getObjectTypeAlikeValueValidator(string $languageItemPrefix, int $minimumSegmentCount = 4) {
 		return new FormFieldValidator('format', function(TextFormField $formField) use ($languageItemPrefix, $minimumSegmentCount) {
 			if ($formField->getValue()) {
 				$segments = explode('.', $formField->getValue());

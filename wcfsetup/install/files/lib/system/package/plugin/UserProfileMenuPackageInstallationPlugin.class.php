@@ -178,7 +178,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		$data = [
 			'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,
 			'menuItem' => $element->getAttribute('name'),
@@ -210,7 +210,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getElementIdentifier(\DOMElement $element): string {
+	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
 	}
 	
@@ -261,7 +261,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$userProfileMenuItem = $document->createElement('userprofilemenuitem');

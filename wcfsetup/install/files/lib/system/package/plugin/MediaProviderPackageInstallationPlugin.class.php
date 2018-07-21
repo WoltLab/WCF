@@ -182,7 +182,7 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		$data = [
 			'name' => $element->getAttribute('name'),
 			'packageID' => $this->installation->getPackage()->packageID,
@@ -207,7 +207,7 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getElementIdentifier(\DOMElement $element): string {
+	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
 	}
 	
@@ -244,7 +244,7 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$provider = $document->createElement($this->tagName);

@@ -206,7 +206,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 				->label('wcf.acp.pip.userNotificationEvent.objectType')
 				->description('wcf.acp.pip.userNotificationEvent.objectType.description')
 				->required()
-				->options(function(): array {
+				->options(function() {
 					$options = [];
 					foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.notification.objectType') as $objectType) {
 						$options[$objectType->objectType] = $objectType->objectType;
@@ -280,7 +280,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		$data = [
 			'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,
 			'objectTypeID' => $this->getObjectTypeID($element->getElementsByTagName('objecttype')->item(0)->nodeValue),
@@ -316,7 +316,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getElementIdentifier(\DOMElement $element): string {
+	public function getElementIdentifier(\DOMElement $element) {
 		return sha1(
 			$element->getElementsByTagName('name')->item(0)->nodeValue . '/' .
 			$element->getElementsByTagName('objecttype')->item(0)->nodeValue
@@ -363,7 +363,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$event = $document->createElement($this->tagName);

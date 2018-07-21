@@ -250,7 +250,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		$data = [
 			'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,
 			'cronjobName' => $element->getAttribute('name'),
@@ -316,7 +316,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getElementIdentifier(\DOMElement $element): string {
+	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
 	}
 	
@@ -367,7 +367,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData();
 		$formData = $form->getData()['data'];
 		

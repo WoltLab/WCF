@@ -324,7 +324,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		return [
 			'environment' => $element->getElementsByTagName('environment')->item(0)->nodeValue,
 			'eventName' => $element->getElementsByTagName('eventname')->item(0)->nodeValue,
@@ -339,7 +339,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getElementIdentifier(\DOMElement $element): string {
+	public function getElementIdentifier(\DOMElement $element) {
 		return sha1(
 			$element->getElementsByTagName('templatename')->item(0)->nodeValue . '/' .
 			$element->getElementsByTagName('eventname')->item(0)->nodeValue . '/' .
@@ -397,7 +397,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$listener = $document->createElement($this->tagName);

@@ -113,7 +113,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		$data = [
 			'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,
 			'packageID' => $this->installation->getPackage()->packageID,
@@ -132,7 +132,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getElementIdentifier(\DOMElement $element): string {
+	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
 	}
 	
@@ -234,7 +234,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$acpSearchProvider = $document->createElement('acpsearchprovider');

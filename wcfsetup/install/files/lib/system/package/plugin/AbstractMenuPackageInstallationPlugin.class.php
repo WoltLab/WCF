@@ -159,7 +159,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 				->objectProperty('parent')
 				->label('wcf.acp.pip.abstractMenu.parentMenuItem')
 				->filterable()
-				->options(function(): array {
+				->options(function() {
 					$menuStructure = $this->getMenuStructureData()['structure'];
 					
 					$options = [[
@@ -168,7 +168,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 						'value' => ''
 					]];
 					
-					$buildOptions = function(string $parent = '', int $depth = 0) use ($menuStructure, &$buildOptions): array {
+					$buildOptions = function(string $parent = '', int $depth = 0) use ($menuStructure, &$buildOptions) {
 						// only consider menu items until the third level (thus only parent
 						// menu items until the second level) as potential parent menu items
 						if ($depth > 2) {
@@ -272,7 +272,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		$data = [
 			'menuItem' => $element->getAttribute('name'),
 			'packageID' => $this->installation->getPackage()->packageID
@@ -315,7 +315,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getElementIdentifier(\DOMElement $element): string {
+	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
 	}
 	
@@ -324,7 +324,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	 * 
 	 * @return	array
 	 */
-	protected function getMenuStructureData(): array {
+	protected function getMenuStructureData() {
 		// replace `Editor` with `List`
 		$listClassName = substr($this->className, 0, -6) . 'List';
 		
@@ -396,7 +396,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 		
 		// build array containing the ACP menu items saved in the database
 		// in the order as they would be displayed in the ACP
-		$buildPositions = function(string $parent = '') use ($menuItemStructure, &$buildPositions): array {
+		$buildPositions = function(string $parent = '') use ($menuItemStructure, &$buildPositions) {
 			$positions = [];
 			foreach ($menuItemStructure[$parent] as $menuItem) {
 				// only consider menu items of the current package for positions
@@ -429,7 +429,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData()['data'];
 		
 		$menuItem = $document->createElement($this->tagName);

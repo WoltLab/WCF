@@ -127,7 +127,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		return [
 			'objectName' => $element->getElementsByTagName('objectname')->item(0)->nodeValue,
 			'packageID' => $this->installation->getPackage()->packageID
@@ -138,7 +138,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getElementIdentifier(\DOMElement $element): string {
+	public function getElementIdentifier(\DOMElement $element) {
 		return sha1($element->getElementsByTagName('objectname')->item(0)->nodeValue);
 	}
 	
@@ -164,7 +164,7 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$coreObject = $document->createElement($this->tagName);

@@ -71,7 +71,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @param	string			$identifier
 	 * @return	string			new identifier
 	 */
-	public function editEntry(IFormDocument $form, string $identifier): string {
+	public function editEntry(IFormDocument $form, string $identifier) {
 		$xml = $this->getProjectXml();
 		$document = $xml->getDocument();
 		
@@ -101,7 +101,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * 
 	 * @return	string
 	 */
-	public function getAdditionalTemplateCode(): string {
+	public function getAdditionalTemplateCode() {
 		return '';
 	}
 	
@@ -112,7 +112,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @param	string		$value
 	 * @return	string
 	 */
-	protected function getAutoCdataValue(string $value): string {
+	protected function getAutoCdataValue(string $value) {
 		if (strpos('<', $value) !== false || strpos('>', $value) !== false || strpos('&', $value) !== false) {
 			$value = '<![CDATA[' . StringUtil::escapeCDATA($value) . ']]>';
 		}
@@ -144,7 +144,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @param	bool		$saveData	is `true` if data is intended to be saved and otherwise `false`
 	 * @return	array
 	 */
-	abstract protected function getElementData(\DOMElement $element, bool $saveData = false): array;
+	abstract protected function getElementData(\DOMElement $element, bool $saveData = false);
 	
 	/**
 	 * Returns the identifier of the given `import` element.
@@ -152,7 +152,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @param	\DOMElement	$element
 	 * @return	string
 	 */
-	abstract protected function getElementIdentifier(\DOMElement $element): string;
+	abstract protected function getElementIdentifier(\DOMElement $element);
 	
 	/**
 	 * Returns the xml code of an empty xml file with the appropriate structure
@@ -161,7 +161,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * 
 	 * @return	string
 	 */
-	protected function getEmptyXml(): string {
+	protected function getEmptyXml() {
 		$xsdFilename = $this->getXsdFilename();
 		
 		return <<<XML
@@ -178,7 +178,7 @@ XML;
 	 * 
 	 * @return	string
 	 */
-	protected function getXsdFilename(): string {
+	protected function getXsdFilename() {
 		$classNamePieces = explode('\\', get_class($this));
 		
 		return lcfirst(str_replace('PackageInstallationPlugin', '', array_pop($classNamePieces)));
@@ -189,7 +189,7 @@ XML;
 	 * 
 	 * @return	IDevtoolsPipEntryList
 	 */
-	public function getEntryList(): IDevtoolsPipEntryList {
+	public function getEntryList() {
 		$xml = $this->getProjectXml();
 		$xpath = $xml->xpath();
 		
@@ -216,7 +216,7 @@ XML;
 	 * 
 	 * @return	string[]
 	 */
-	public function getEntryTypes(): array {
+	public function getEntryTypes() {
 		return [];
 	}
 	
@@ -243,7 +243,7 @@ XML;
 	 * 
 	 * @return	XML
 	 */
-	protected function getProjectXml(): XML {
+	protected function getProjectXml() {
 		$fileLocation = $this->getXmlFileLocation();
 		
 		$xml = new XML();
@@ -262,7 +262,7 @@ XML;
 	 * 
 	 * @return	string
 	 */
-	protected function getXmlFileLocation(): string {
+	protected function getXmlFileLocation() {
 		/** @var DevtoolsProject $project */
 		$project = $this->installation->getProject();
 		
@@ -324,7 +324,7 @@ XML;
 	 * @param	IFormDocument		$document
 	 * @return	bool
 	 */
-	public function setEntryData(string $identifier, IFormDocument $document): bool {
+	public function setEntryData(string $identifier, IFormDocument $document) {
 		$xml = $this->getProjectXml();
 		
 		$element = $this->getElementByIdentifier($xml, $identifier);
@@ -471,5 +471,5 @@ XML;
 	 * @param	IFormDocument		$form
 	 * @return	\DOMElement
 	 */
-	abstract protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement; 
+	abstract protected function writeEntry(\DOMDocument $document, IFormDocument $form); 
 }

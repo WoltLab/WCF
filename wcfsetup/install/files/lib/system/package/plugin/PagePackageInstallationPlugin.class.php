@@ -498,7 +498,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				->label('wcf.acp.pip.page.parent')
 				->required()
 				->filterable()
-				->options(function(): array {
+				->options(function() {
 					$pageNodeList = (new PageNodeTree())->getNodeList();
 					
 					$nestedOptions = [[
@@ -636,7 +636,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		$data = [
 			'identifier' => $element->getAttribute('identifier'),
 			'originIsSystem' => 1,
@@ -732,7 +732,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getElementIdentifier(\DOMElement $element): string {
+	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('identifier');
 	}
 	
@@ -769,7 +769,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
 		$data = $formData['data'];
 		

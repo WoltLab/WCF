@@ -298,7 +298,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getAdditionalTemplateCode(): string {
+	public function getAdditionalTemplateCode() {
 		return WCF::getTPL()->fetch('__menuPipGui');
 	}
 	
@@ -364,7 +364,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			MultipleSelectionFormField::create('boxVisibilityExceptions')
 				->label('wcf.acp.pip.menu.boxVisibilityExceptions.hiddenEverywhere')
 				->filterable()
-				->options(function(): array {
+				->options(function() {
 					$pageNodeList = (new PageNodeTree())->getNodeList();
 					
 					$nestedOptions = [];
@@ -407,7 +407,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		$data = [
 			'identifier' => $element->getAttribute('identifier'),
 			'packageID' => $this->installation->getPackageID(),
@@ -503,7 +503,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getElementIdentifier(\DOMElement $element): string {
+	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('identifier');
 	}
 	
@@ -539,7 +539,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
 		
 		if ($formData['data']['identifier'] === 'com.woltlab.wcf.MainMenu') {

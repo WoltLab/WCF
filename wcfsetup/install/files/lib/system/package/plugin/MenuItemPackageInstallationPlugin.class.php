@@ -304,7 +304,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				->label('wcf.acp.pip.menuItem.menu')
 				->description('wcf.acp.pip.menuItem.menu.description')
 				->required()
-				->options(function() use ($menuList): array {
+				->options(function() use ($menuList) {
 					$options = [];
 					foreach ($menuList as $menu) {
 						$options[$menu->identifier] = $menu->identifier;
@@ -330,7 +330,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				->description('wcf.acp.pip.menuItem.page.description')
 				->required()
 				->filterable()
-				->options(function(): array {
+				->options(function() {
 					$pageNodeList = (new PageNodeTree())->getNodeList();
 					
 					$nestedOptions = [[
@@ -380,7 +380,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				SingleSelectionFormField::create('parentMenuItem' . $menu->menuID)
 					->objectProperty('parent')
 					->label('wcf.acp.pip.menuItem.parentMenuItem')
-					->options(function() use($menu): array {
+					->options(function() use($menu) {
 						$options = [[
 							'depth' => 0,
 							'label' => 'wcf.global.noSelection',
@@ -439,7 +439,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		$data = [
 			'identifier' => $element->getAttribute('identifier'),
 			'packageID' => $this->installation->getPackageID(),
@@ -512,7 +512,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getElementIdentifier(\DOMElement $element): string {
+	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('identifier');
 	}
 	
@@ -575,7 +575,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
 		$data = $formData['data'];
 		

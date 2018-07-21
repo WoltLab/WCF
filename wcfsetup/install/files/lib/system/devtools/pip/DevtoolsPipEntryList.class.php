@@ -56,14 +56,14 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList {
 	/**
 	 * @inheritDoc
 	 */
-	public function getEntries(): array {
+	public function getEntries() {
 		return $this->entries;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getKeys(): array {
+	public function getKeys() {
 		if ($this->keys === null) {
 			throw new \BadMethodCallException("No keys have been set.");
 		}

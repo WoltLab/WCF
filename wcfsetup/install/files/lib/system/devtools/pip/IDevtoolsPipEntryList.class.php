@@ -28,7 +28,7 @@ interface IDevtoolsPipEntryList {
 	 * 
 	 * @return	array
 	 */
-	public function getEntries(): array;
+	public function getEntries();
 	
 	/**
 	 * Returns the expected keys of the entries that can be used to display the
@@ -40,7 +40,7 @@ interface IDevtoolsPipEntryList {
 	 * @return	array
 	 * @throws	\BadMethodCallException		if no keys have been set
 	 */
-	public function getKeys(): array;
+	public function getKeys();
 	
 	/**
 	 * Sets the keys of the entries that can be used to display the entry list

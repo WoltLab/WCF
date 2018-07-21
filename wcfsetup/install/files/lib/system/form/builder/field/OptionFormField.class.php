@@ -40,7 +40,7 @@ class OptionFormField extends ItemListFormField {
 	 * 
 	 * @return	int[]
 	 */
-	public function getPackageIDs(): array {
+	public function getPackageIDs() {
 		return $this->__packageIDs;
 	}
 	
@@ -53,7 +53,7 @@ class OptionFormField extends ItemListFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given package ids are invalid
 	 */
-	public function packageIDs(array $packageIDs): OptionFormField {
+	public function packageIDs(array $packageIDs) {
 		foreach ($packageIDs as $packageID) {
 			if (PackageCache::getInstance()->getPackage($packageID) === null) {
 				throw new \InvalidArgumentException("Unknown package with id '{$packageID}'.");
@@ -102,7 +102,7 @@ class OptionFormField extends ItemListFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected static function getDefaultId(): string {
+	protected static function getDefaultId() {
 		return 'options';
 	}
 }

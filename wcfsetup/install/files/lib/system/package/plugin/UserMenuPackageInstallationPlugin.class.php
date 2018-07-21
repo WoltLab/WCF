@@ -107,7 +107,7 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 		// menu items on the first and second level do not support links,
 		// thus the parent menu item must be at least on the second level
 		// for the menu item to support links
-		$menuItemsSupportingLinks = array_keys(array_filter($menuItemLevels, function(int $menuItemLevel): bool {
+		$menuItemsSupportingLinks = array_keys(array_filter($menuItemLevels, function(int $menuItemLevel) {
 			return $menuItemLevel >= 2;
 		}));
 		
@@ -126,7 +126,7 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		$data = parent::getElementData($element);
 		
 		$className = $element->getElementsByTagName('classname')->item(0);
@@ -146,7 +146,7 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData()['data'];
 		
 		$menuItem = parent::writeEntry($document, $form);

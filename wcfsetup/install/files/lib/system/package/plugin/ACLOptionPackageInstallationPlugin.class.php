@@ -469,7 +469,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getEntryTypes(): array {
+	public function getEntryTypes() {
 		return ['options', 'categories'];
 	}
 	
@@ -477,7 +477,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, bool $saveData = false): array {
+	protected function getElementData(\DOMElement $element, bool $saveData = false) {
 		$data = [
 			'name' => $element->getAttribute('name'),
 			'packageID' => $this->installation->getPackage()->packageID,
@@ -498,7 +498,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function getElementIdentifier(\DOMElement $element): string {
+	public function getElementIdentifier(\DOMElement $element) {
 		$elementData = $this->getElementData($element);
 		
 		return sha1($elementData['objectType'] . '/' . $elementData['name']);
@@ -508,7 +508,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getXsdFilename(): string {
+	protected function getXsdFilename() {
 		return 'aclOption';
 	}
 	
@@ -660,7 +660,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form): \DOMElement {
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData()['data'];
 		
 		switch ($this->entryType) {
