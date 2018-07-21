@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder;
 use wcf\data\IStorableObject;
 use wcf\system\form\builder\field\data\DefaultFormFieldDataProcessor;

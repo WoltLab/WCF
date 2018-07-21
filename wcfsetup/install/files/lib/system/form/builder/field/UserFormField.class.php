@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\data\user\UserProfile;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
