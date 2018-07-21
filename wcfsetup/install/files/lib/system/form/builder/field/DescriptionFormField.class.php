@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 
 /**
@@ -24,7 +23,7 @@ class DescriptionFormField extends MultilineTextFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected static function getDefaultId(): string {
+	protected static function getDefaultId() {
 		return 'description';
 	}
 }

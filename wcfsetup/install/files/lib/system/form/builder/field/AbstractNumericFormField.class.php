@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 
@@ -86,7 +85,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IMa
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue(): IFormField {
+	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
@@ -111,7 +110,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IMa
 	 * 
 	 * @throws	\InvalidArgumentException	if the given step value is invalid
 	 */
-	public function step($step = null): AbstractNumericFormField {
+	public function step($step = null) {
 		if ($step !== null) {
 			if ($this->integerValues) {
 				if (!is_int($step)) {
@@ -120,7 +119,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IMa
 			}
 			else {
 				if (is_string($step) && $step !== 'any') {
-					throw new \InvalidArgumentException("The only valid string step value is 'any', '" . $step . "' given.");
+					throw new \InvalidArgumentException("The only valid step value is 'any', '" . $step . "' given.");
 				}
 				else if (!is_numeric($step)) {
 					throw new \InvalidArgumentException("Given step is no number, '" . gettype($step) . "' given.");
@@ -164,9 +163,8 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IMa
 	
 	/**
 	 * @inheritDoc
-	 * @return	static		this field
 	 */
-	public function value($value): IFormField {
+	public function value($value) {
 		if ($value !== null) {
 			if (is_string($value) && is_numeric($value)) {
 				if (preg_match('~^\d+$~', $value)) {

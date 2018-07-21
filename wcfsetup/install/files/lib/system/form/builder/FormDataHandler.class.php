@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder;
 use wcf\system\form\builder\field\data\IFormFieldDataProcessor;
 
@@ -23,7 +22,7 @@ class FormDataHandler implements IFormDataHandler {
 	/**
 	 * @inheritDoc
 	 */
-	public function add(IFormFieldDataProcessor $processor): IFormDataHandler {
+	public function add(IFormFieldDataProcessor $processor) {
 		$this->processors[] = $processor;
 		
 		return $this;
@@ -32,7 +31,7 @@ class FormDataHandler implements IFormDataHandler {
 	/**
 	 * @inheritDoc
 	 */
-	public function getData(IFormDocument $document): array {
+	public function getData(IFormDocument $document) {
 		$parameters = [];
 		foreach ($this->processors as $processor) {
 			$parameters = $processor($document, $parameters);

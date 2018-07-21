@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder;
 use wcf\data\IStorableObject;
 use wcf\system\form\builder\field\data\DefaultFormFieldDataProcessor;
@@ -61,7 +60,7 @@ class FormDocument implements IFormDocument {
 	
 	/**
 	 * encoding type of this form
-	 * @var	null|string 
+	 * @var	null|
 	 */
 	protected $enctype = '';
 	
@@ -74,7 +73,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function action(string $action): IFormDocument {
+	public function action($action) {
 		$this->__action = $action;
 		
 		return $this;
@@ -83,7 +82,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function build(): IFormDocument {
+	public function build() {
 		if ($this->isBuilt) {
 			throw new \BadMethodCallException("Form document has already been built.");
 		}
@@ -115,7 +114,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function formMode(string $formMode): IFormDocument {
+	public function formMode($formMode) {
 		if ($this->__formMode !== null) {
 			throw new \BadMethodCallException("Form mode has already been set");
 		}
@@ -132,7 +131,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAction(): string {
+	public function getAction() {
 		if ($this->__action === null) {
 			throw new \BadMethodCallException("Action has not been set.");
 		}
@@ -143,14 +142,14 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getData(): array {
+	public function getData() {
 		return $this->getDataHandler()->getData($this);
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getDataHandler(): IFormDataHandler {
+	public function getDataHandler() {
 		if ($this->dataHandler === null) {
 			$this->dataHandler = new FormDataHandler();
 			$this->dataHandler->add(new DefaultFormFieldDataProcessor());
@@ -162,7 +161,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getDocument(): IFormDocument {
+	public function getDocument() {
 		return $this;
 	}
 	
@@ -189,7 +188,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getFormMode(): string {
+	public function getFormMode() {
 		if ($this->__formMode === null) {
 			$this->__formMode = self::FORM_MODE_CREATE;
 		}
@@ -200,7 +199,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml(): string {
+	public function getHtml() {
 		return WCF::getTPL()->fetch(
 			'__form',
 			'wcf',
@@ -211,14 +210,14 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getMethod(): string {
+	public function getMethod() {
 		return $this->__method;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getPrefix(): string {
+	public function getPrefix() {
 		if ($this->__prefix === null) {
 			return '';
 		}
@@ -229,7 +228,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getRequestData(string $index = null) {
+	public function getRequestData($index = null) {
 		if ($this->__requestData === null) {
 			$this->__requestData = $_POST;
 		}
@@ -248,7 +247,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function hasRequestData(string $index = null): bool {
+	public function hasRequestData($index = null) {
 		$requestData = $this->getRequestData();
 		
 		if ($index !== null) {
@@ -261,7 +260,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValuesFromObject(IStorableObject $object): IFormDocument {
+	public function loadValuesFromObject(IStorableObject $object) {
 		if ($this->__formMode === null) {
 			$this->formMode(self::FORM_MODE_UPDATE);
 		}
@@ -291,7 +290,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function method(string $method): IFormDocument {
+	public function method($method) {
 		if ($method !== 'get' && $method !== 'post') {
 			throw new \InvalidArgumentException("Invalid method '{$method}' given.");
 		}
@@ -304,7 +303,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function prefix(string $prefix): IFormDocument {
+	public function prefix($prefix) {
 		static::validateId($prefix);
 		
 		$this->__prefix = $prefix;
@@ -315,7 +314,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function readValues(): IFormParentNode {
+	public function readValues() {
 		if ($this->__requestData === null) {
 			$this->__requestData = $_POST;
 		}
@@ -326,7 +325,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function requestData(array $requestData): IFormDocument {
+	public function requestData(array $requestData) {
 		if ($this->__requestData !== null) {
 			throw new \BadMethodCallException('Request data has already been set.');
 		}

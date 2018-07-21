@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\data\language\Language;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -62,7 +61,7 @@ class TextFormField extends AbstractFormField implements II18nFormField, IMaximu
 	 * @param	string		$text		validated text
 	 * @param	null|Language	$language	language of validated text or `null` for monolingual text
 	 */
-	protected function validateText(string $text, Language $language = null) {
+	protected function validateText($text, Language $language = null) {
 		$this->validateMinimumLength($text, $language);
 		$this->validateMaximumLength($text, $language);
 	}

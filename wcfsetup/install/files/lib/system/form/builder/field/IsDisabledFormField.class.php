@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 
 /**
@@ -17,7 +16,7 @@ class IsDisabledFormField extends BooleanFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected static function getDefaultId(): string {
+	protected static function getDefaultId() {
 		return 'isDisabled';
 	}
 }

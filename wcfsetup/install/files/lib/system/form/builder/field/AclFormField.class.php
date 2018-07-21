@@ -1,11 +1,9 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\data\IStorableObject;
 use wcf\system\acl\ACLHandler;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
-use wcf\system\form\builder\IFormNode;
 
 /**
  * Implementation of a form field for setting acl option values.
@@ -52,7 +50,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if given category name is invalid
 	 */
-	public function categoryName(string $categoryName): AclFormField {
+	public function categoryName($categoryName) {
 		// TODO: validation
 		
 		$this->__categoryName = $categoryName;
@@ -73,7 +71,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtmlVariables(): array {
+	public function getHtmlVariables() {
 		ACLHandler::getInstance()->assignVariables($this->getObjectType()->objectTypeID);
 		
 		$includeAclJavaScript = !static::$includedAclJavaScript;
@@ -98,21 +96,21 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function getObjectTypeDefinition(): string {
+	public function getObjectTypeDefinition() {
 		return 'com.woltlab.wcf.acl';
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function hasSaveValue(): bool {
+	public function hasSaveValue() {
 		return false;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValueFromObject(IStorableObject $object): IFormField {
+	public function loadValueFromObject(IStorableObject $object) {
 		$this->objectID = $object->{$object::getDatabaseTableIndexName()};
 		
 		if ($this->objectID === null) {
@@ -125,7 +123,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function populate(): IFormNode {
+	public function populate() {
 		parent::populate();
 		
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('acl', function(IFormDocument $document, array $parameters) {
@@ -140,7 +138,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue(): IFormField {
+	public function readValue() {
 		ACLHandler::getInstance()->readValues($this->getObjectType()->objectTypeID);
 		
 		return $this;

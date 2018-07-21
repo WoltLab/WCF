@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\data\DatabaseObjectList;
 use wcf\data\ITitledObject;
@@ -42,7 +41,7 @@ trait TSelectionFormField {
 	 * @param	bool	$filterable	determines if field's options are filterable by user
 	 * @return	static			this node
 	 */
-	public function filterable($filterable = true): ISelectionFormField {
+	public function filterable($filterable = true) {
 		$this->__filterable = $filterable;
 		
 		return $this;
@@ -56,7 +55,7 @@ trait TSelectionFormField {
 	 * @return	array
 	 * @throws	\BadMethodCallException		if nested options are not supported
 	 */
-	public function getNestedOptions(): array {
+	public function getNestedOptions() {
 		if (!$this->supportsNestedOptions()) {
 			throw new \BadMethodCallException("Nested options are not supported.");
 		}
@@ -71,7 +70,7 @@ trait TSelectionFormField {
 	 * 
 	 * @throws	\BadMethodCallException		if no options have been set
 	 */
-	public function getOptions(): array {
+	public function getOptions() {
 		return $this->__options;
 	}
 	
@@ -84,7 +83,7 @@ trait TSelectionFormField {
 	 * 
 	 * @see		IFormNode::available()
 	 */
-	public function isAvailable(): bool {
+	public function isAvailable() {
 		// selections without any possible values are not available
 		return !empty($this->__options) && parent::isAvailable();
 	}
@@ -98,7 +97,7 @@ trait TSelectionFormField {
 	 * 
 	 * @return	bool
 	 */
-	public function isFilterable(): bool {
+	public function isFilterable() {
 		return $this->__filterable;
 	}
 	
@@ -116,7 +115,7 @@ trait TSelectionFormField {
 	 * @throws	\InvalidArgumentException		if given options are no array or callable or otherwise invalid
 	 * @throws	\UnexpectedValueException		if callable does not return an array
 	 */
-	public function options($options, bool $nestedOptions = false): ISelectionFormField {
+	public function options($options, $nestedOptions = false) {
 		if ($nestedOptions) {
 			if (!is_array($options) && !is_callable($options)) {
 				throw new \InvalidArgumentException("The given nested options are neither an array nor a callable, " . gettype($options) . " given.");
@@ -266,7 +265,7 @@ trait TSelectionFormField {
 	 *
 	 * @return	bool
 	 */
-	public function supportsNestedOptions(): bool {
+	public function supportsNestedOptions() {
 		return true;
 	}
 }

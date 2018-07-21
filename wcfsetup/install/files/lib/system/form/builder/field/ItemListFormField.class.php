@@ -1,10 +1,8 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
-use wcf\system\form\builder\IFormNode;
 use wcf\util\ArrayUtil;
 
 /**
@@ -74,7 +72,7 @@ class ItemListFormField extends AbstractFormField {
 	 * 
 	 * @return	string
 	 */
-	public function getSaveValueType(): string {
+	public function getSaveValueType() {
 		if ($this->saveValueType === null) {
 			$this->saveValueType = self::SAVE_VALUE_TYPE_CSV;
 		}
@@ -85,7 +83,7 @@ class ItemListFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function hasSaveValue(): bool {
+	public function hasSaveValue() {
 		// arrays cannot be returned as a simple save value
 		return $this->getSaveValueType() !== self::SAVE_VALUE_TYPE_ARRAY;
 	}
@@ -93,7 +91,7 @@ class ItemListFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function populate(): IFormNode {
+	public function populate() {
 		parent::populate();
 		
 		// an array should be passed as a parameter outside of the `data` array
@@ -113,7 +111,7 @@ class ItemListFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue(): IFormField {
+	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
@@ -133,7 +131,7 @@ class ItemListFormField extends AbstractFormField {
 	 * @throws	\BadMethodCallException			if save value type has already been set
 	 * @throws	\InvalidArgumentException		if given save value type is invalid
 	 */
-	public function saveValueType(string $saveValueType): ItemListFormField {
+	public function saveValueType($saveValueType) {
 		if ($this->saveValueType !== null) {
 			throw new \BadMethodCallException("Save value type has already been set.");
 		}
@@ -150,7 +148,7 @@ class ItemListFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function value($value): IFormField {
+	public function value($value) {
 		switch ($this->getSaveValueType()) {
 			case self::SAVE_VALUE_TYPE_ARRAY:
 				if (is_array($value)) {

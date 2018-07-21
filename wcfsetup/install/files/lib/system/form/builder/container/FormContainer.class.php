@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\container;
 use wcf\system\form\builder\IFormChildNode;
 use wcf\system\form\builder\IFormDocument;
@@ -33,7 +32,7 @@ class FormContainer implements IFormContainer {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml(): string {
+	public function getHtml() {
 		return WCF::getTPL()->fetch($this->templateName, 'wcf', array_merge($this->getHtmlVariables(), [
 			'container' => $this
 		]), true);

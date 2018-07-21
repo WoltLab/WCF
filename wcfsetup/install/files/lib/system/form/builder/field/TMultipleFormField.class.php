@@ -1,9 +1,7 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
-use wcf\system\form\builder\IFormNode;
 
 /**
  * Provides default implementations of `IMultipleFormField` methods.
@@ -41,7 +39,7 @@ trait TMultipleFormField {
 	 *
 	 * @return	bool
 	 */
-	public function allowsMultiple(): bool {
+	public function allowsMultiple() {
 		return $this->__multiple;
 	}
 	
@@ -52,7 +50,7 @@ trait TMultipleFormField {
 	 *
 	 * @return	int	maximum number of values
 	 */
-	public function getMaximumMultiples(): int {
+	public function getMaximumMultiples() {
 		return $this->__maximumMultiples;
 	}
 	
@@ -63,7 +61,7 @@ trait TMultipleFormField {
 	 *
 	 * @return	int	minimum number of values
 	 */
-	public function getMinimumMultiples(): int {
+	public function getMinimumMultiples() {
 		return $this->__minimumMultiples;
 	}
 	
@@ -78,7 +76,7 @@ trait TMultipleFormField {
 	 * 
 	 * @return	bool
 	 */
-	public function hasSaveValue(): bool {
+	public function hasSaveValue() {
 		return !$this->allowsMultiple();
 	}
 	
@@ -91,7 +89,7 @@ trait TMultipleFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given maximum number of values is invalid
 	 */
-	public function maximumMultiples(int $maximum): IMultipleFormField {
+	public function maximumMultiples($maximum) {
 		if ($maximum !== IMultipleFormField::NO_MAXIMUM_MULTIPLES) {
 			if ($maximum <= 0) {
 				throw new \InvalidArgumentException("The maximum number of values has to be positive, '{$maximum}' given.");
@@ -116,7 +114,7 @@ trait TMultipleFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given minimum number of values is invalid
 	 */
-	public function minimumMultiples(int $minimum): IMultipleFormField {
+	public function minimumMultiples($minimum) {
 		if ($minimum < 0) {
 			throw new \InvalidArgumentException("The minimum number of values has to be non-negative, '{$minimum}' given.");
 		}
@@ -136,7 +134,7 @@ trait TMultipleFormField {
 	 * @param	bool		$multiple	determines if multiple values can be selected/set
 	 * @return	static		this field
 	 */
-	public function multiple(bool $multiple = true): IMultipleFormField {
+	public function multiple($multiple = true) {
 		$this->__multiple = $multiple;
 		
 		return $this;
@@ -152,7 +150,7 @@ trait TMultipleFormField {
 	 * 
 	 * @throws	\BadMethodCallException		if this node has already been populated
 	 */
-	public function populate(): IFormNode {
+	public function populate() {
 		parent::populate();
 		
 		if ($this->allowsMultiple()) {
@@ -176,7 +174,7 @@ trait TMultipleFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given value is of an invalid type or otherwise is invalid
 	 */
-	public function value($value): IFormField {
+	public function value($value) {
 		// ensure array value for form fields that actually support multiple values;
 		// allows enabling support for multiple values for existing fields
 		if ($this->allowsMultiple() && !is_array($value)) {

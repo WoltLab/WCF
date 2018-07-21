@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\data\DatabaseObjectList;
 
@@ -21,7 +20,7 @@ interface ISelectionFormField {
 	 * @return	array
 	 * @throws	\BadMethodCallException		if nested options are not supported
 	 */
-	public function getNestedOptions(): array;
+	public function getNestedOptions();
 	
 	/**
 	 * Returns the possible options of this field.
@@ -30,7 +29,7 @@ interface ISelectionFormField {
 	 * 
 	 * @throws	\BadMethodCallException		if no options have been set
 	 */
-	public function getOptions(): array;
+	public function getOptions();
 	
 	/**
 	 * Sets the possible options of this field and returns this field.
@@ -58,12 +57,12 @@ interface ISelectionFormField {
 	 * @throws	\InvalidArgumentException		if given options are no array or callable or otherwise invalid
 	 * @throws	\UnexpectedValueException		if callable does not return an array
 	 */
-	public function options($options, bool $nestedOptions = false): ISelectionFormField;
+	public function options($options, $nestedOptions = false);
 	
 	/**
 	 * Returns `true` if the field class supports nested options and `false` otherwise.
 	 * 
 	 * @return	bool
 	 */
-	public function supportsNestedOptions(): bool;
+	public function supportsNestedOptions();
 }

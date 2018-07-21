@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 
 /**
@@ -20,7 +19,7 @@ interface INullableFormField {
 	 * 
 	 * @return	bool
 	 */
-	public function isNullable(): bool;
+	public function isNullable();
 	
 	/**
 	 * Sets whether this field supports `null` as its value and returns this field.
@@ -28,5 +27,5 @@ interface INullableFormField {
 	 * @param	bool	$nullable		determines if field supports `null` as its value
 	 * @return	static				this node
 	 */
-	public function nullable(bool $nullable = true): INullableFormField;
+	public function nullable($nullable = true);
 }

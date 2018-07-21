@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field\validation;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\Regex;
@@ -24,7 +23,7 @@ abstract class FormFieldValidatorUtil {
 	 * 
 	 * @throws	\InvalidArgumentException		if regular expression is invalid
 	 */
-	public static function getRegularExpressionValidator(string $regularExpression, string $languageItemPrefix): IFormFieldValidator {
+	public static function getRegularExpressionValidator($regularExpression, $languageItemPrefix) {
 		$regex = Regex::compile($regularExpression);
 		if (!$regex->isValid()) {
 			throw new \InvalidArgumentException("Invalid regular expression '{$regularExpression}' given.");
