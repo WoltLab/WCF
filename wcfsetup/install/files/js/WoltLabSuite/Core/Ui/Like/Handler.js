@@ -75,7 +75,7 @@ define(
 				
 				// selectors
 				containerSelector: this._options.containerSelector,
-				summaryListSelector: this._options.summarySelector
+				summaryListSelector: '.reactionSummaryList'
 			});
 		},
 		
