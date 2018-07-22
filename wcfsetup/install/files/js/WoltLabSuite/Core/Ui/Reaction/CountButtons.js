@@ -166,7 +166,12 @@ define(
 			 * @param       {object}        elementData
 			 */
 			_initReactionCountButtons: function(element, elementData) {
-				var summaryList = elBySel(this._options.summaryListSelector, element);
+				if (this._options.isSingleItem) {
+					var summaryList = elBySel(this._options.summaryListSelector);
+				}
+				else {
+					var summaryList = elBySel(this._options.summaryListSelector, element);
+				}
 				
 				if (summaryList !== null) {
 					var elements = elBySelAll('li', summaryList);
