@@ -11,13 +11,14 @@ define(
 	[
 		'Ajax',      'Core',                     'Dictionary',         'Language',
 		'ObjectMap', 'StringUtil',               'Dom/ChangeListener', 'Dom/Util',
-		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List', 'User', 'WoltLabSuite/Core/Ui/Reaction/CountButtons', 'Ui/Alignment'
+		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List', 'User', 'WoltLabSuite/Core/Ui/Reaction/CountButtons', 
+		'Ui/Alignment', 'Ui/CloseOverlay'
 	],
 	function(
 		Ajax,        Core,              Dictionary,           Language,
 		ObjectMap,   StringUtil,        DomChangeListener,    DomUtil,
 		UiDialog,    UiUserList,        User,                 CountButtons, 
-		UiAlignment
+		UiAlignment, UiCloseOverlay
 	)
 	{
 		"use strict";
@@ -68,6 +69,7 @@ define(
 				this.countButtons = new CountButtons(this._objectType, this._options); 
 				
 				DomChangeListener.add('WoltLabSuite/Core/Ui/Reaction/Handler-' + objectType, this.initReactButtons.bind(this));
+				UiCloseOverlay.add('WoltLabSuite/Core/Ui/Reaction/Handler', this._closePopover.bind(this));
 			},
 			
 			/**
@@ -120,7 +122,10 @@ define(
 			 * @param       {Element}       element
 			 */
 			_toggleReactPopover: function(objectId, element, event) {
-				event.preventDefault();
+				if (event !== null) {
+					event.preventDefault();
+					event.stopPropagation();
+				}
 				
 				if (this._popoverCurrentObjectId === 0 || this._popoverCurrentObjectId !== objectId) {
 					this._openReactPopover(objectId, element);
@@ -219,13 +224,16 @@ define(
 			 * Closes the react popover. 
 			 */
 			_closePopover: function(objectId, element) {
-				this._popoverCurrentObjectId = 0;
-				this._getPopover().classList.remove('active');
-				
-				if (this._options.isButtonGroupNavigation) {
-					// find nav element
-					var nav = element.closest('nav');
-					nav.style.cssText = "";
+				if (this._popoverCurrentObjectId !== 0) {
+					this._getPopover().classList.remove('active');
+					
+					if (this._options.isButtonGroupNavigation) {
+						// find nav element
+						var nav = this._containers.get(this._popoverCurrentObjectId).reactButton.closest('nav');
+						nav.style.cssText = "";
+					}
+					
+					this._popoverCurrentObjectId = 0;
 				}
 			},
 			
