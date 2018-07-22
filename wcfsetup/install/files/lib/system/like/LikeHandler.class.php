@@ -119,7 +119,6 @@ class LikeHandler extends SingletonFactory {
 			];
 		}
 		
-		
 		$reactData = ReactionHandler::getInstance()->react($likeable, $user, $reactionTypeID, $time);
 		if ($reactData['reactionTypeID'] === null) {
 			$newValue = 0; 
