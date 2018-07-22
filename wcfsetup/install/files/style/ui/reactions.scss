@@ -26,8 +26,8 @@
 }
 
 img.reactionType {
-	width: 24px;
-	height: 24px;
+	width: 16px;
+	height: 16px;
 }
 
 .reactionPopoverContent {
@@ -42,6 +42,11 @@ img.reactionType {
 		&:hover {
 			color: $wcfContentLinkActive;
 		}
+	}
+	
+	> ul > li.reactionTypeButton > img {
+		width: 24px;
+		height: 24px;
 	}
 	
 	> ul > li.reactionTypeButton > img:hover {
@@ -106,19 +111,5 @@ li.reactCountButton:hover {
 	li.reactCountButton {
 		background-color: transparent;
 		padding: 0px;
-	}
-}
-
-ul.buttonList.iconList {
-	img.reactionType {
-		width: 16px;
-		height: 16px;
-	}
-}
-
-li.notificationItem {
-	img.reactionType {
-		width: 16px;
-		height: 16px;
 	}
 }

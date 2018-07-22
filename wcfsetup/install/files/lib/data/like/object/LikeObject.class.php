@@ -92,13 +92,32 @@ class LikeObject extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns the first 3 users who liked this object.
+	 * Since version 3.2, this method returns all reactionCounts for the different reactionTypes, 
+	 * instead of the user (as the method name suggests). This behavior is intentional and helps 
+	 * to establish backward compatibility.
 	 * 
-	 * @return	User[]
-	 * @deprecated  since 3.2, this value is no longer maintained
+	 * @return	mixed[]
+	 * @deprecated  since 3.2
 	 */
 	public function getUsers() {
-		return $this->users;
+		$returnValues = [];
+		
+		foreach ($this->getReactions() as $reactionID => $reaction) {
+			$returnValues[] = (object) [
+				'userID' => $reactionID,
+				'username' => $reaction['reactionCount'],
+			];
+		}
+		
+		// this value is only set, if the object was loaded over the ReactionHandler::loadLikeObjects()
+		if ($this->reactionTypeID) {
+			$returnValues[] = (object) [
+				'userID' => 'reactionTypeID',
+				'username' => $this->reactionTypeID,
+			];
+		}
+		
+		return $returnValues;
 	}
 	
 	/**

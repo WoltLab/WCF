@@ -200,7 +200,8 @@ class ReactionHandler extends SingletonFactory {
 		
 		if (WCF::getUser()->userID) {
 			$sql = "SELECT		like_object.*,
-						COALESCE(like_table.reactionTypeID, 0) AS reactionTypeID
+						COALESCE(like_table.reactionTypeID, 0) AS reactionTypeID, 
+						COALESCE(like_table.likeValue, 0) AS liked
 				FROM		wcf".WCF_N."_like_object like_object
 				LEFT JOIN	wcf".WCF_N."_like like_table
 				ON		(like_table.objectTypeID = like_object.objectTypeID
@@ -316,7 +317,8 @@ class ReactionHandler extends SingletonFactory {
 			
 			return [
 				'cachedReactions' => $likeObjectData['cachedReactions'], 
-				'reactionTypeID' => $reactionTypeID
+				'reactionTypeID' => $reactionTypeID, 
+				'likeObject' => $likeObjectData['likeObject']
 			];
 		}
 		catch (DatabaseQueryException $e) {
@@ -326,7 +328,6 @@ class ReactionHandler extends SingletonFactory {
 		// @TODO return some dummy values
 		return [
 			'cachedReactions' => [], 
-			'reactionTypeID' => null
 		]; 
 	}
 	
@@ -409,7 +410,7 @@ class ReactionHandler extends SingletonFactory {
 			];
 			
 			// create cache
-			LikeObjectEditor::create([
+			$likeObject = LikeObjectEditor::create([
 				'objectTypeID' => $likeable->getObjectType()->objectTypeID,
 				'objectID' => $likeable->getObjectID(),
 				'objectUserID' => $likeable->getUserID() ?: null,
@@ -422,7 +423,8 @@ class ReactionHandler extends SingletonFactory {
 		
 		return [
 			'cumulativeLikes' => $cumulativeLikes, 
-			'cachedReactions' => $cachedReactions
+			'cachedReactions' => $cachedReactions, 
+			'likeObject' => $likeObject
 		]; 
 	}
 	
@@ -515,7 +517,8 @@ class ReactionHandler extends SingletonFactory {
 			
 			return [
 				'cachedReactions' => $likeObjectData['cachedReactions'],
-				'reactionTypeID' => null
+				'reactionTypeID' => null,
+				'likeObject' => $likeObjectData['likeObject']
 			];
 		}
 		catch (DatabaseQueryException $e) {
@@ -525,7 +528,8 @@ class ReactionHandler extends SingletonFactory {
 		// @TODO return some dummy values
 		return [
 			'cachedReactions' => [],
-			'reactionTypeID' => null
+			'reactionTypeID' => null,
+			'likeObject' => []
 		];
 	}
 	
@@ -581,7 +585,8 @@ class ReactionHandler extends SingletonFactory {
 		
 		return [
 			'cumulativeLikes' => $cumulativeLikes,
-			'cachedReactions' => $cachedReactions
+			'cachedReactions' => $cachedReactions, 
+			'likeObject' => $likeObject
 		];
 	}
 	
@@ -705,7 +710,8 @@ class ReactionHandler extends SingletonFactory {
 	 */
 	protected function loadLikeStatus(LikeObject $likeObject, User $user) {
 		$sql = "SELECT		like_object.likes, like_object.dislikes, like_object.cumulativeLikes,
-					COALESCE(like_table.reactionTypeID, 0) AS reactionTypeID
+					COALESCE(like_table.reactionTypeID, 0) AS reactionTypeID,
+					COALESCE(like_table.likeValue, 0) AS liked
 			FROM		wcf".WCF_N."_like_object like_object
 			LEFT JOIN	wcf".WCF_N."_like like_table
 			ON		(like_table.objectTypeID = ?
@@ -720,5 +726,29 @@ class ReactionHandler extends SingletonFactory {
 		]);
 		
 		return $statement->fetchArray();
+	}
+	
+	/**
+	 * Returns the legacy reactionTypeID for a specific type. The given type must be
+	 * ReactionType::REACTION_TYPE_POSITIVE for a like 
+	 * or ReactionType::REACTION_TYPE_NEGATIVE for a dislike 
+	 * other values are not allowed and will resulted in a LogicException.
+	 * If there are no legacy reaction type, the method returns null.
+	 * 
+	 * @param       integer         $type
+	 * @return      integer|null
+	 */
+	public function getLegacyReactionTypeID($type) {
+		// @TODO determine real values
+		switch ($type) {
+			case ReactionType::REACTION_TYPE_POSITIVE: 
+				return 2; 
+				
+			case ReactionType::REACTION_TYPE_NEGATIVE:
+				return 1;
+				
+			default: 
+				throw new \LogicException('Invalid type given.');
+		}
 	}
 }
