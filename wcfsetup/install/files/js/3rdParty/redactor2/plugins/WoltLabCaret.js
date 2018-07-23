@@ -299,9 +299,11 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				}
 				
 				// the scroll position is discarded when focusing the editor
-				var scroll = { x: editor.scrollLeft, y: editor.scrollTop };
+				var scrollLeft = editor.scrollLeft;
+				var scrollTop = editor.scrollTop;
 				editor.focus();
-				editor.scrollTo(scroll.x, scroll.y);
+				editor.scrollLeft = scrollLeft;
+				editor.scrollTop = scrollTop;
 				
 				selection.removeAllRanges();
 				selection.addRange(internalRange);
