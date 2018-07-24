@@ -226,3 +226,4 @@ requirejs.config({
 </script>
 
 {include file='imageViewer'}
+{include file='headIncludeJsonLd'}
