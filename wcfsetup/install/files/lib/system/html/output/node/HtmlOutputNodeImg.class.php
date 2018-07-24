@@ -84,6 +84,10 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 					
 					if (IMAGE_PROXY_INSECURE_ONLY && $urlComponents['scheme'] === 'https') {
 						// proxy is enabled for insecure connections only
+						if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
+							$this->replaceExternalSource($element, $src);
+						}
+						
 						continue;
 					}
 					
@@ -127,18 +131,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 					}
 				}
 				else if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
-					$element->parentNode->insertBefore($element->ownerDocument->createTextNode('[IMG:'), $element);
-					
-					$link = $element->ownerDocument->createElement('a');
-					$link->setAttribute('href', $src);
-					$link->textContent = $src;
-					HtmlOutputNodeA::markLinkAsExternal($link);
-					
-					$element->parentNode->insertBefore($link, $element);
-					
-					$element->parentNode->insertBefore($element->ownerDocument->createTextNode(']'), $element);
-					
-					$element->parentNode->removeChild($element);
+					$this->replaceExternalSource($element, $src);
 				}
 				else if (MESSAGE_FORCE_SECURE_IMAGES && Url::parse($src)['scheme'] === 'http') {
 					// rewrite protocol to `https`
@@ -146,6 +139,27 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * Replaces images embedded from external sources that are not handled by the image proxy.
+	 * 
+	 * @param       \DOMElement     $element
+	 * @param       string          $src
+	 */
+	protected function replaceExternalSource(\DOMElement $element, $src) {
+		$element->parentNode->insertBefore($element->ownerDocument->createTextNode('[IMG:'), $element);
+		
+		$link = $element->ownerDocument->createElement('a');
+		$link->setAttribute('href', $src);
+		$link->textContent = $src;
+		HtmlOutputNodeA::markLinkAsExternal($link);
+		
+		$element->parentNode->insertBefore($link, $element);
+		
+		$element->parentNode->insertBefore($element->ownerDocument->createTextNode(']'), $element);
+		
+		$element->parentNode->removeChild($element);
 	}
 	
 	/**
