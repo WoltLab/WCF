@@ -34,7 +34,7 @@
 		<dl>
 			<dt><label for="parentID">{lang}wcf.acp.template.diff.compareWith{/lang}</label></dt>
 			<dd>
-				<select name="parentID" id="{lang}wcf.acp.template.group.default{/lang}ID">
+				<select name="parentID" id="parentID">
 					<option value="0"></option>
 					{assign var=depth value=0}
 					{foreach from=$templateGroupHierarchy item='templateGroup' key='templateGroupID'}
