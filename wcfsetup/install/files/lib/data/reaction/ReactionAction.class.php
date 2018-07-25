@@ -190,8 +190,8 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	* Validates parameters to load reactions.
-	*/
+	 * Validates parameters to load reactions.
+	 */
 	public function validateLoad() {
 		$this->readInteger('lastLikeTime', true);
 		$this->readInteger('userID');
