@@ -49,6 +49,7 @@
 			<name>com.woltlab.wcf.likeableArticle.recentActivityEvent</name>
 			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
 			<classname>wcf\system\user\activity\event\LikeableArticleUserActivityEvent</classname>
+			<supportReactions>1</supportReactions>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.articleComment.recentActivityEvent</name>

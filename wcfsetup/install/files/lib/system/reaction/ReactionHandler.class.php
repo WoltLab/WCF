@@ -304,13 +304,15 @@ class ReactionHandler extends SingletonFactory {
 			
 			// update recent activity
 			if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType.'.recentActivityEvent')) {
-				if ($like->likeID) {
-					UserActivityEventHandler::getInstance()->removeEvent($likeable->getObjectType()->objectType.'.recentActivityEvent', $likeable->getObjectID(), $user->userID);
-				}
+				$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.recentActivityEvent', $likeable->getObjectType()->objectType.'.recentActivityEvent');
 				
-				UserActivityEventHandler::getInstance()->fireEvent($likeable->getObjectType()->objectType.'.recentActivityEvent', $likeable->getObjectID(), $likeable->getLanguageID(), $user->userID, TIME_NOW, [
-					'reactionType' => $reaction
-				]);
+				if ($objectType->supportReactions) {
+					if ($like->likeID) {
+						UserActivityEventHandler::getInstance()->removeEvent($likeable->getObjectType()->objectType . '.recentActivityEvent', $likeable->getObjectID(), $user->userID);
+					}
+					
+					UserActivityEventHandler::getInstance()->fireEvent($likeable->getObjectType()->objectType . '.recentActivityEvent', $likeable->getObjectID(), $likeable->getLanguageID(), $user->userID, TIME_NOW, ['reactionType' => $reaction]);
+				}
 			}
 			
 			WCF::getDB()->commitTransaction();
