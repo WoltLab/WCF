@@ -79,6 +79,15 @@ class ReactionHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns all enabled reaction types. 
+	 * 
+	 * @return      ReactionType[]
+	 */
+	public function getReactionTypes() {
+		return ReactionTypeCache::getInstance()->getEnabledReactionTypes();
+	}
+	
+	/**
 	 * Returns a reaction type by id. 
 	 * 
 	 * @param       integer                 $reactionID

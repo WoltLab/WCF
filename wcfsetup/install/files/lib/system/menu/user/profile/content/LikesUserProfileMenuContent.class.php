@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 namespace wcf\system\menu\user\profile\content;
-use wcf\data\like\Like;
 use wcf\data\like\ViewableLikeList;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -19,15 +19,19 @@ class LikesUserProfileMenuContent extends SingletonFactory implements IUserProfi
 	 * @inheritDoc
 	 */
 	public function getContent($userID) {
+		$reactionTypes = ReactionHandler::getInstance()->getReactionTypes();
+		$firstReactionType = reset($reactionTypes);
+		
 		$likeList = new ViewableLikeList();
 		$likeList->getConditionBuilder()->add("like_table.objectUserID = ?", [$userID]);
-		$likeList->getConditionBuilder()->add("like_table.likeValue = ?", [Like::LIKE]);
+		$likeList->getConditionBuilder()->add("like_table.reactionTypeID = ?", [$firstReactionType->reactionTypeID]);
 		$likeList->readObjects();
 		
 		WCF::getTPL()->assign([
 			'likeList' => $likeList,
 			'userID' => $userID,
-			'lastLikeTime' => $likeList->getLastLikeTime()
+			'lastLikeTime' => $likeList->getLastLikeTime(), 
+			'firstReactionTypeID' => $firstReactionType->reactionTypeID
 		]);
 		
 		return WCF::getTPL()->fetch('userProfileLikes');

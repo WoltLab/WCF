@@ -188,4 +188,48 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 			}
 		}
 	}
+	
+	/**
+	* Validates parameters to load reactions.
+	*/
+	public function validateLoad() {
+		$this->readInteger('lastLikeTime', true);
+		$this->readInteger('userID');
+		$this->readInteger('reactionTypeID');
+		$this->readString('targetType');
+	}
+	
+	/**
+	 * Loads a list of reactions.
+	 *
+	 * @return	array
+	 */
+	public function load() {
+		$likeList = new ViewableLikeList();
+		if ($this->parameters['lastLikeTime']) {
+			$likeList->getConditionBuilder()->add("like_table.time < ?", [$this->parameters['lastLikeTime']]);
+		}
+		if ($this->parameters['targetType'] == 'received') {
+			$likeList->getConditionBuilder()->add("like_table.objectUserID = ?", [$this->parameters['userID']]);
+		}
+		else {
+			$likeList->getConditionBuilder()->add("like_table.userID = ?", [$this->parameters['userID']]);
+		}
+		$likeList->getConditionBuilder()->add("like_table.reactionTypeID = ?", [$this->parameters['reactionTypeID']]);
+		$likeList->readObjects();
+		
+		if (!count($likeList)) {
+			return [];
+		}
+		
+		// parse template
+		WCF::getTPL()->assign([
+			'likeList' => $likeList
+		]);
+		
+		return [
+			'lastLikeTime' => $likeList->getLastLikeTime(),
+			'template' => WCF::getTPL()->fetch('userProfileLikeItem')
+		];
+	}
 }
