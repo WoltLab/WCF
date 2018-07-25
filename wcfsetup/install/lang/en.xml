@@ -4149,7 +4149,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.profile.content.wall.commentResponse"><![CDATA[Reply to wall comment]]></item>
 		<item name="wcf.user.profile.content.wall.noEntries"><![CDATA[There are not any comments at the moment.]]></item>
 		<item name="wcf.user.profile.menu.wall"><![CDATA[Wall]]></item>
-		<item name="wcf.user.profile.menu.likes"><![CDATA[Likes]]></item>
+		<item name="wcf.user.profile.menu.likes"><![CDATA[Reactions]]></item>
 		<item name="wcf.user.profile.recentActivity.profileComment"><![CDATA[Wrote a comment on <a href="{link controller='User' object=$user}{/link}#wall/comment{@$commentID}">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.user.profile.recentActivity.profileCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on <a href="{link controller='User' object=$user}{/link}#wall/comment{@$commentID}/response{@$responseID}">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.user.profile.report"><![CDATA[Report User Profile]]></item>
