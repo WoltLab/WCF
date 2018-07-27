@@ -290,7 +290,7 @@ class Article extends DatabaseObject implements ILinkableObject {
 	 * @return      string[]
 	 * @since       3.2
 	 */
-	public static function getAllDiscussionProviders(): array {
+	public static function getAllDiscussionProviders() {
 		/** @var string[] $discussionProviders */
 		static $discussionProviders;
 		

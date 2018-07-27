@@ -19,7 +19,7 @@ interface IExtendedModificationLogHandler {
 	 *
 	 * @return string[]
 	 */
-	public function getAvailableActions(): array;
+	public function getAvailableActions();
 	
 	/**
 	 * Processes a list of items by converting them into IViewableModificationLog
@@ -28,5 +28,5 @@ interface IExtendedModificationLogHandler {
 	 * @param ModificationLog[] $items
 	 * @return IViewableModificationLog[]
 	 */
-	public function processItems(array $items): array;
+	public function processItems(array $items);
 }
