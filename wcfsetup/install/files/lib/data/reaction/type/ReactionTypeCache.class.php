@@ -53,7 +53,7 @@ class ReactionTypeCache extends SingletonFactory {
 	 * @param 	integer[]	$reactionTypeIDs
 	 * @return	ReactionType[]
 	 */
-	public function getReactionTypesByID(array $reactionTypeIDs): array {
+	public function getReactionTypesByID(array $reactionTypeIDs) {
 		$returnValues = [];
 		
 		foreach ($reactionTypeIDs as $reactionType) {
@@ -68,7 +68,7 @@ class ReactionTypeCache extends SingletonFactory {
 	 *
 	 * @return	ReactionType[]
 	 */
-	public function getReactionTypes(): array {
+	public function getReactionTypes() {
 		return $this->reactionTypes;
 	}
 	
@@ -77,7 +77,7 @@ class ReactionTypeCache extends SingletonFactory {
 	 *
 	 * @return	ReactionType[]
 	 */
-	public function getEnabledReactionTypes(): array {
+	public function getEnabledReactionTypes() {
 		return $this->enabledReactionTypes;
 	}
 	

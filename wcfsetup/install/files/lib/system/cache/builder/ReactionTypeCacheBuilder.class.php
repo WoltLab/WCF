@@ -15,7 +15,7 @@ class ReactionTypeCacheBuilder extends AbstractCacheBuilder {
 	/**
 	 * @inheritDoc
 	 */
-	public function rebuild(array $parameters): array {
+	public function rebuild(array $parameters) {
 		$reactionTypeList = new ReactionTypeList();
 		
 		if (isset($parameters['onlyEnabled']) && $parameters['onlyEnabled']) {

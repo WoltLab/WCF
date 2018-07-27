@@ -47,7 +47,7 @@ class ReactionType extends DatabaseObject implements ITitledObject {
 	/**
 	 * @inheritDoc
 	 */
-	public function getTitle(): string {
+	public function getTitle() {
 		return WCF::getLanguage()->get($this->title);
 	}
 	
@@ -56,7 +56,7 @@ class ReactionType extends DatabaseObject implements ITitledObject {
 	 * 
 	 * @return	string
 	 */
-	public function renderIcon(): string {
+	public function renderIcon() {
 		return WCF::getTPL()->fetch('reactionTypeImage', 'wcf', [
 			'reactionType' => $this
 		], true);
@@ -67,7 +67,7 @@ class ReactionType extends DatabaseObject implements ITitledObject {
 	 * 
 	 * @return string
 	 */
-	public function getIconPath(): string {
+	public function getIconPath() {
 		return WCF::getPath() . 'images/reaction/'. $this->iconFile;
 	}
 	
@@ -76,7 +76,7 @@ class ReactionType extends DatabaseObject implements ITitledObject {
 	 * 
 	 * @return	bool
 	 */
-	public function isPositive(): bool {
+	public function isPositive() {
 		return $this->type == self::REACTION_TYPE_POSITIVE;
 	}
 	
@@ -85,7 +85,7 @@ class ReactionType extends DatabaseObject implements ITitledObject {
 	 *
 	 * @return	bool
 	 */
-	public function isNegative(): bool {
+	public function isNegative() {
 		return $this->type == self::REACTION_TYPE_NEGATIVE;
 	}
 	
@@ -94,7 +94,7 @@ class ReactionType extends DatabaseObject implements ITitledObject {
 	 *
 	 * @return	bool
 	 */
-	public function isNeutral(): bool {
+	public function isNeutral() {
 		return $this->type == self::REACTION_TYPE_NEUTRAL;
 	}
 }

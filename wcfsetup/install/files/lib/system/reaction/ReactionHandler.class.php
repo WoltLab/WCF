@@ -61,7 +61,7 @@ class ReactionHandler extends SingletonFactory {
 	 * 
 	 * @return string
 	 */
-	public function getReactionsJSVariable(): string {
+	public function getReactionsJSVariable() {
 		$reactions = ReactionTypeCache::getInstance()->getEnabledReactionTypes();
 		
 		$returnValues = []; 
@@ -103,7 +103,7 @@ class ReactionHandler extends SingletonFactory {
 	 * @param       integer         $objectID
 	 * @return      string
 	 */
-	public function getDataAttributes($objectName, $objectID): string {
+	public function getDataAttributes($objectName, $objectID) {
 		$objectType = $this->getObjectType($objectName);
 		if ($objectType === null) {
 			throw new \InvalidArgumentException("ObjectName '{$objectName}' is unknown for definition 'com.woltlab.wcf.like.likeableObject'.");
@@ -178,7 +178,7 @@ class ReactionHandler extends SingletonFactory {
 	 * @param	ObjectType	$objectType
 	 * @return	LikeObject[]
 	 */
-	public function getLikeObjects(ObjectType $objectType): array {
+	public function getLikeObjects(ObjectType $objectType) {
 		if (isset($this->likeObjectCache[$objectType->objectTypeID])) {
 			return $this->likeObjectCache[$objectType->objectTypeID];
 		}
@@ -194,7 +194,7 @@ class ReactionHandler extends SingletonFactory {
 	 * @param	array		$objectIDs
 	 * @return	integer
 	 */
-	public function loadLikeObjects(ObjectType $objectType, array $objectIDs): int {
+	public function loadLikeObjects(ObjectType $objectType, array $objectIDs) {
 		if (empty($objectIDs)) {
 			return 0;
 		}
@@ -244,7 +244,7 @@ class ReactionHandler extends SingletonFactory {
 	 * @param 	integer		$time
 	 * @return	array
 	 */
-	public function react(ILikeObject $likeable, User $user, $reactionTypeID, $time = TIME_NOW): array {
+	public function react(ILikeObject $likeable, User $user, $reactionTypeID, $time = TIME_NOW) {
 		// verify if object is already liked by user
 		$like = Like::getLike($likeable->getObjectType()->objectTypeID, $likeable->getObjectID(), $user->userID);
 		
@@ -350,7 +350,7 @@ class ReactionHandler extends SingletonFactory {
 	 * @param	ReactionType	$reactionType
 	 * @return	array
 	 */
-	private function updateLikeObject(ILikeObject $likeable, LikeObject $likeObject, Like $like, ReactionType $reactionType): array {
+	private function updateLikeObject(ILikeObject $likeable, LikeObject $likeObject, Like $like, ReactionType $reactionType) {
 		// update existing object
 		if ($likeObject->likeObjectID) {
 			$likes = $likeObject->likes;
@@ -495,7 +495,7 @@ class ReactionHandler extends SingletonFactory {
 	 * @param	User		$user
 	 * @return	array
 	 */
-	public function revertReact(Like $like, ILikeObject $likeable, LikeObject $likeObject, User $user): array {
+	public function revertReact(Like $like, ILikeObject $likeable, LikeObject $likeObject, User $user) {
 		if (!$like->likeID) {
 			throw new \InvalidArgumentException('The given parameter $like is invalid.');
 		}
@@ -550,7 +550,7 @@ class ReactionHandler extends SingletonFactory {
 	 * @param	Like		$like
 	 * @return	array
 	 */
-	private function revertLikeObject(LikeObject $likeObject, Like $like): array {
+	private function revertLikeObject(LikeObject $likeObject, Like $like) {
 		if (!$likeObject->likeObjectID) {
 			throw new \InvalidArgumentException('The given parameter $likeObject is invalid.');
 		}

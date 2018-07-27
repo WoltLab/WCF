@@ -139,7 +139,7 @@ class LikeObject extends DatabaseObject {
 	 * @return      integer[]
 	 * @since	3.2
 	 */
-	public function getReactions(): array {
+	public function getReactions() {
 		return $this->reactions; 
 	}
 	

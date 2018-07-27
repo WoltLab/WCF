@@ -98,7 +98,7 @@ class Like extends DatabaseObject {
 	 * @return	ReactionType
 	 * @since	3.2
 	 */
-	public function getReactionType(): ReactionType {
+	public function getReactionType() {
 		return ReactionTypeCache::getInstance()->getReactionTypeByID($this->reactionTypeID);
 	}
 }

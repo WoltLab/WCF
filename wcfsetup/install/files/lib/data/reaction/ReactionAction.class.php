@@ -81,7 +81,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 	 *
 	 * @return	string[]
 	 */
-	public function getReactionDetails(): array {
+	public function getReactionDetails() {
 		$likeList = new ViewableLikeList();
 		$likeList->getConditionBuilder()->add('objectID = ?', [$this->parameters['data']['objectID']]);
 		$likeList->getConditionBuilder()->add('objectTypeID = ?', [$this->objectType->objectTypeID]);
@@ -142,7 +142,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 	 * 
 	 * @return array
 	 */
-	public function react(): array {
+	public function react() {
 		$reactionData = ReactionHandler::getInstance()->react($this->likeableObject, WCF::getUser(), $this->reactionType->reactionTypeID);
 		
 		// get stats
