@@ -2032,6 +2032,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.page.contentCustomURL"><![CDATA[Custom URL]]></item>
 		<item name="wcf.acp.pip.page.contentMetaDescription"><![CDATA[Meta Description]]></item>
 		<item name="wcf.acp.pip.page.contentMetaKeywords"><![CDATA[Meta Keywords]]></item>
+		<item name="wcf.acp.pip.page.content"><![CDATA[Page Contents]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName"><![CDATA[Event Listener Identifier]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName.description"><![CDATA[Unique textual identifier of the event listener that may only contain letters and must start with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerName.error.format"><![CDATA[The entered identifier is invalid.]]></item>

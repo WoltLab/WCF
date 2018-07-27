@@ -430,7 +430,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		$dataTab->appendChild($dataContainer);
 		
 		$contentTab = TabFormContainer::create('contentTab')
-			->label('TODO Content');
+			->label('wcf.acp.pip.page.content');
 		$tabContainter->appendChild($contentTab);
 		$contentContainer = FormContainer::create('contentTabContent');
 		$contentTab->appendChild($contentContainer);
