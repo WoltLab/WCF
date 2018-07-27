@@ -18,7 +18,7 @@ interface IArticleDiscussionProvider {
 	 * 
 	 * @return      int
 	 */
-	public function getDiscussionCount(): int;
+	public function getDiscussionCount();
 	
 	/**
 	 * Returns the simple phrase "X <discussions>" that is used for both the statistics
@@ -26,14 +26,14 @@ interface IArticleDiscussionProvider {
 	 * 
 	 * @return      string
 	 */
-	public function getDiscussionCountPhrase(): string;
+	public function getDiscussionCountPhrase();
 	
 	/**
 	 * Renders the input and display section of the associated discussion.
 	 * 
 	 * @return      string
 	 */
-	public function renderDiscussions(): string;
+	public function renderDiscussions();
 	
 	/**
 	 * Sets the content object required for the separate discussions per article language.
@@ -49,5 +49,5 @@ interface IArticleDiscussionProvider {
 	 * @param       Article         $article
 	 * @return      bool
 	 */
-	public static function isResponsible(Article $article): bool;
+	public static function isResponsible(Article $article);
 }

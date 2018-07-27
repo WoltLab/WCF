@@ -16,28 +16,28 @@ class VoidArticleDiscussionProvider extends AbstractArticleDiscussionProvider {
 	/**
 	 * @inheritDoc
 	 */
-	public function getDiscussionCount(): int {
+	public function getDiscussionCount() {
 		return 0;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getDiscussionCountPhrase(): string {
+	public function getDiscussionCountPhrase() {
 		return '';
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function renderDiscussions(): string {
+	public function renderDiscussions() {
 		return '';
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public static function isResponsible(Article $article): bool {
+	public static function isResponsible(Article $article) {
 		return true;
 	}
 }

@@ -122,7 +122,7 @@ class ObjectType extends ProcessibleDatabaseObject {
 	 * @return      Package
 	 * @since       3.2
 	 */
-	public function getPackage(): Package {
+	public function getPackage() {
 		return PackageCache::getInstance()->getPackage($this->packageID);
 	}
 }

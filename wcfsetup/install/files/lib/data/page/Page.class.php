@@ -359,7 +359,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * @return      bool
 	 * @since       3.2
 	 */
-	public function showShareButtons(): bool {
+	public function showShareButtons() {
 		return $this->enableShareButtons && $this->pageType !== 'system';
 	}
 	
