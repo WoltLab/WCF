@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field\validation;
 use wcf\system\form\builder\field\IFormField;
 
@@ -15,7 +14,7 @@ use wcf\system\form\builder\field\IFormField;
 class FormFieldValidator implements IFormFieldValidator {
 	/**
 	 * id of the validator that has to be unique for each field
-	 * @var	string 
+	 * @var	
 	 */
 	protected $id;
 	
@@ -28,7 +27,7 @@ class FormFieldValidator implements IFormFieldValidator {
 	/**
 	 * @inheritDoc
 	 */
-	public function __construct(string $id, callable $validator) {
+	public function __construct($id, callable $validator) {
 		static::validateId($id);
 		
 		$this->id = $id;
@@ -59,14 +58,14 @@ class FormFieldValidator implements IFormFieldValidator {
 	/**
 	 * @inheritDoc
 	 */
-	public function getId(): string {
+	public function getId() {
 		return $this->id;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public static function validateId(string $id) {
+	public static function validateId($id) {
 		if (preg_match('~^[a-z][A-z0-9-]*$~', $id) !== 1) {
 			throw new \InvalidArgumentException("Invalid id '{$id}' given.");
 		}

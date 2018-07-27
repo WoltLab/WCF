@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field\dependency;
 
 /**
@@ -12,6 +11,13 @@ namespace wcf\system\form\builder\field\dependency;
  * @since	3.2
  */
 class ValueFormFieldDependency extends AbstractFormFieldDependency {
+	/**
+	 * is `true` if the field value may not have any of the set values and otherwise
+	 * `false`
+	 * @var	bool
+	 */
+	protected $__isNegated = false;
+	
 	/**
 	 * possible values the field may have for the dependency to be met
 	 * @var	null|array
@@ -26,8 +32,14 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	/**
 	 * @inheritDoc
 	 */
-	public function checkDependency(): bool {
-		return in_array($this->getField()->getValue(), $this->getValues());
+	public function checkDependency() {
+		$inArray = in_array($this->getField()->getValue(), $this->getValues());
+		
+		if ($this->isNegated()) {
+			return !$inArray;
+		}
+		
+		return $inArray;
 	}
 	
 	/**
@@ -37,12 +49,34 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	 * 
 	 * @throws	\BadMethodCallException		if no values have been set
 	 */
-	public function getValues(): array {
+	public function getValues() {
 		if ($this->__values === null) {
 			throw new \BadMethodCallException("Values have not been set for dependency '{$this->getId()}' on node '{$this->getDependentNode()->getId()}'.");
 		}
 		
 		return $this->__values;
+	}
+	
+	/**
+	 * Returns `true` if the field value may not have any of the set values and
+	 * otherwise `false`.
+	 * 
+	 * @return	bool
+	 */
+	public function isNegated() {
+		return $this->__isNegated;
+	}
+	
+	/**
+	 * Sets if the field value may not have any of the set values.
+	 * 
+	 * @param	bool		$negate
+	 * @return	static		$this		this dependency
+	 */
+	public function negate($negate = true) {
+		$this->__isNegated = $negate;
+		
+		return $this;
 	}
 	
 	/**
@@ -53,7 +87,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	 * 
 	 * @throws	\InvalidArgumentException	if given values are invalid
 	 */
-	public function values(array $values): ValueFormFieldDependency {
+	public function values(array $values) {
 		if (empty($values)) {
 			throw new \InvalidArgumentException("Given values are empty.");
 		}

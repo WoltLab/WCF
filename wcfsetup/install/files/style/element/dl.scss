@@ -70,6 +70,32 @@ dl {
 		}
 	}
 	
+	&.floated > dd {
+		display: flex;
+		flex-wrap: wrap;
+		
+		> label {
+			flex: 0 0 auto;
+			margin: 0 10px 5px 0;
+			
+			&:last-child {
+				margin-right: 0;
+			}
+			
+			&:not(:first-child) {
+				margin-top: 0;
+			}
+			
+			+ small:not(.innerError) {
+				margin-left: 0;
+			}
+		}
+		
+		small {
+			flex: 1 1 100%;
+		}
+	}
+	
 	&.dataList {
 		overflow: hidden;
 		

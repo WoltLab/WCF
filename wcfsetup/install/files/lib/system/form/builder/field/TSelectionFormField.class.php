@@ -1,9 +1,7 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\data\DatabaseObjectList;
 use wcf\data\ITitledObject;
-use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
 
@@ -18,16 +16,52 @@ use wcf\util\ClassUtil;
  */
 trait TSelectionFormField {
 	/**
+	 * `true` if this field's options are filterable by the user
+	 * @var	bool
+	 */
+	protected $__filterable = false;
+	
+	/**
+	 * structured options array used to generate the form field output
+	 * @var	null|array
+	 */
+	protected $__nestedOptions;
+	
+	/**
 	 * possible options to select
 	 * @var	null|array
 	 */
 	protected $__options;
 	
 	/**
-	 * possible values of the selection
-	 * @var	array 
+	 * Sets if the selection options can be filtered by the user so that they
+	 * are able to quickly find the desired option out of a larger list of
+	 * available options.
+	 * 
+	 * @param	bool	$filterable	determines if field's options are filterable by user
+	 * @return	static			this node
 	 */
-	protected $possibleValues = [];
+	public function filterable($filterable = true) {
+		$this->__filterable = $filterable;
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns a structured array that can be used to generate the form field output.
+	 * 
+	 * Array elements are `value`, `label`, and `depth`.
+	 * 
+	 * @return	array
+	 * @throws	\BadMethodCallException		if nested options are not supported
+	 */
+	public function getNestedOptions() {
+		if (!$this->supportsNestedOptions()) {
+			throw new \BadMethodCallException("Nested options are not supported.");
+		}
+		
+		return $this->__nestedOptions;
+	}
 	
 	/**
 	 * Returns the possible options of this field.
@@ -36,27 +70,8 @@ trait TSelectionFormField {
 	 * 
 	 * @throws	\BadMethodCallException		if no options have been set
 	 */
-	public function getOptions(): array {
+	public function getOptions() {
 		return $this->__options;
-	}
-	
-	/**
-	 * Returns the field value saved in the database.
-	 * 
-	 * This method is useful if the actual returned by `getValue()`
-	 * cannot be stored in the database as-is. If the return value of
-	 * `getValue()` is, however, the actual value that should be stored
-	 * in the database, this method is expected to call `getValue()`
-	 * internally.
-	 * 
-	 * @return	mixed
-	 */
-	public function getSaveValue() {
-		if (empty($this->getValue()) && array_search($this->getValue(), $this->possibleValues) === 0 && $this instanceof INullableFormField && $this->isNullable()) {
-			return null;
-		}
-		
-		return parent::getSaveValue();
 	}
 	
 	/**
@@ -68,9 +83,22 @@ trait TSelectionFormField {
 	 * 
 	 * @see		IFormNode::available()
 	 */
-	public function isAvailable(): bool {
+	public function isAvailable() {
 		// selections without any possible values are not available
-		return !empty($this->possibleValues) && parent::isAvailable();
+		return !empty($this->__options) && parent::isAvailable();
+	}
+	
+	/**
+	 * Returns `true` if the selection options can be filtered by the user so
+	 * that they are able to quickly find the desired option out of a larger
+	 * list of available options and returns `false` otherwise.
+	 * 
+	 * Per default, fields are not filterable.
+	 * 
+	 * @return	bool
+	 */
+	public function isFilterable() {
+		return $this->__filterable;
 	}
 	
 	/**
@@ -81,24 +109,35 @@ trait TSelectionFormField {
 	 * instead of the given empty value.
 	 * 
 	 * @param	array|callable		$options	selectable options or callable returning the options
+	 * @param	bool			$nestedOptions
 	 * @return	static					this field
 	 * 
 	 * @throws	\InvalidArgumentException		if given options are no array or callable or otherwise invalid
 	 * @throws	\UnexpectedValueException		if callable does not return an array
 	 */
-	public function options($options): ISelectionFormField {
-		if (!is_array($options) && !is_callable($options) && !($options instanceof DatabaseObjectList)) {
-			throw new \InvalidArgumentException("Given options are neither an array nor a callable, " . gettype($options) . " given.");
+	public function options($options, $nestedOptions = false) {
+		if ($nestedOptions) {
+			if (!is_array($options) && !is_callable($options)) {
+				throw new \InvalidArgumentException("The given nested options are neither an array nor a callable, " . gettype($options) . " given.");
+			}
+		}
+		else if (!is_array($options) && !is_callable($options) && !($options instanceof DatabaseObjectList)) {
+			throw new \InvalidArgumentException("The given options are neither an array, a callable nor an instance of '" . DatabaseObjectList::class . "', " . gettype($options) . " given.");
 		}
 		
 		if (is_callable($options)) {
 			$options = $options();
 			
-			if (!is_array($options) && !($options instanceof DatabaseObjectList)) {
-				throw new \UnexpectedValueException("The options callable is expected to return an array or database object list, " . gettype($options) . " returned.");
+			if ($nestedOptions) {
+				if (!is_array($options) && !($options instanceof DatabaseObjectList)) {
+					throw new \UnexpectedValueException("The nested options callable is expected to return an array, " . gettype($options) . " returned.");
+				}
+			}
+			else if (!is_array($options) && !($options instanceof DatabaseObjectList)) {
+				throw new \UnexpectedValueException("The options callable is expected to return an array or an instance of '" . DatabaseObjectList::class . "', " . gettype($options) . " returned.");
 			}
 			
-			return $this->options($options);
+			return $this->options($options, $nestedOptions);
 		}
 		else if ($options instanceof DatabaseObjectList) {
 			// automatically read objects
@@ -121,92 +160,112 @@ trait TSelectionFormField {
 			$options = $dboOptions;
 		}
 		
-		// validate options and read possible values
-		$validateOptions = function(array &$array) use (&$validateOptions) {
-			foreach ($array as $key => $value) {
-				if (is_array($value)) {
-					if (static::supportsNestedOptions()) {
-						$validateOptions($value);
-					}
-					else {
-						throw new \InvalidArgumentException("Option '{$key}' must not be an array.");
+		if ($nestedOptions) {
+			foreach ($options as $key => &$option) {
+				if (!is_array($option)) {
+					throw new \InvalidArgumentException("Nested option with key '{$key}' has is no array.");
+				}
+				if (count($option) !== 3) {
+					throw new \InvalidArgumentException("Nested option with key '{$key}' does not contain three elements.");
+				}
+				
+				// check if all required elements exist
+				foreach (['label', 'value', 'depth'] as $entry) {
+					if (!isset($option[$entry])) {
+						throw new \InvalidArgumentException("Nested option with key '{$key}' has no {$entry} entry.");
 					}
 				}
-				else {
-					if (!is_string($value) && !is_numeric($value)) {
-						throw new \InvalidArgumentException("Options contain invalid label of type " . gettype($value) . ".");
-					}
-					
-					if (in_array($key, $this->possibleValues)) {
-						throw new \InvalidArgumentException("Options values must be unique, but '" . $key . "' appears at least twice as value.");
-					}
-					
-					$this->possibleValues[] = $key;
-					
-					// fetch language item value
-					if (preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', (string) $value)) {
-						$array[$key] = WCF::getLanguage()->getDynamicVariable($value);
-					}
+				
+				// validate label
+				if (is_object($option['label']) && method_exists($option['label'], '__toString')) {
+					$option['label'] = (string) $option['label'];
+				}
+				else if (!is_string($option['label']) && !is_numeric($option['label'])) {
+					throw new \InvalidArgumentException("Nested option with key '{$key}' contain invalid label of type " . gettype($option['label']) . ".");
+				}
+				
+				// resolve language item for label
+				if (preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', (string) $option['label'])) {
+					$option['label'] = WCF::getLanguage()->getDynamicVariable($option['label']);
+				}
+				
+				// validate value
+				if (!is_string($option['value']) && !is_numeric($option['value'])) {
+					throw new \InvalidArgumentException("Nested option with key '{$key}' contain invalid value of type " . gettype($option['label']) . ".");
+				}
+				else if (isset($this->__options[$option['value']])) {
+					throw new \InvalidArgumentException("Options values must be unique, but '{$option['value']}' appears at least twice as value.");
+				}
+				
+				// save value
+				$this->__options[$option['value']] = $option['label'];
+				
+				// validate depth
+				if (!is_int($option['depth'])) {
+					throw new \InvalidArgumentException("Depth of nested option with key '{$key}' is no integer, " . gettype($options) . " given.");
+				}
+				if ($option['depth'] < 0) {
+					throw new \InvalidArgumentException("Depth of nested option with key '{$key}' is negative.");
 				}
 			}
-		};
-		
-		$validateOptions($options);
-		
-		$this->__options = $options;
-		
-		return $this;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function readValue(): IFormField {
-		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
-			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			unset($option);
 			
-			if (is_string($value)) {
-				$this->__value = $value;
+			$this->__nestedOptions = $options;
+		}
+		else {
+			foreach ($options as $value => $label) {
+				if (is_array($label)) {
+					throw new \InvalidArgumentException("Non-nested options must not contain any array. Array given for value '{$value}'.");
+				}
+				
+				if (is_object($label) && method_exists($label, '__toString')) {
+					$label = (string) $label;
+				}
+				else if (!is_string($label) && !is_numeric($label)) {
+					throw new \InvalidArgumentException("Options contain invalid label of type " . gettype($label) . ".");
+				}
+				
+				if (isset($this->__options[$value])) {
+					throw new \InvalidArgumentException("Options values must be unique, but '{$value}' appears at least twice as value.");
+				}
+				
+				// resolve language item for label
+				if (preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', (string) $label)) {
+					$label = WCF::getLanguage()->getDynamicVariable($label);
+				}
+				
+				$this->__options[$value] = $label;
+			}
+			
+			// ensure that `$this->__nestedOptions` is always populated
+			// for form field that support nested options
+			if ($this->supportsNestedOptions()) {
+				$this->__nestedOptions = [];
+				
+				foreach ($this->__options as $value => $label) {
+					$this->__nestedOptions[] = [
+						'depth' => 0,
+						'label' => $label,
+						'value' => $value
+					];
+				}
 			}
 		}
 		
+		if ($this->__options === null) {
+			$this->__options = [];
+			$this->__nestedOptions = [];
+		}
+		
 		return $this;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function validate() {
-		if (!in_array($this->getValue(), $this->possibleValues)) {
-			$this->addValidationError(new FormFieldValidationError('invalidValue', 'wcf.global.form.error.noValidSelection'));
-		}
-		
-		parent::validate();
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function value($value): IFormField {
-		// ignore `null` as value which can be passed either for nullable
-		// fields or as value if no options are available
-		if ($value === null) {
-			return $this;
-		}
-		
-		if (!in_array($value, $this->possibleValues)) {
-			throw new \InvalidArgumentException("Unknown value '{$value}'");
-		}
-		
-		return parent::value($value);
 	}
 	
 	/**
 	 * Returns `true` if the field class supports nested options and `false` otherwise.
-	 * 
+	 *
 	 * @return	bool
 	 */
-	protected static function supportsNestedOptions(): bool {
+	public function supportsNestedOptions() {
 		return true;
 	}
 }

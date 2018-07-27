@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 
 /**
@@ -29,5 +28,5 @@ interface ISuffixedFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given language item is invalid
 	 */
-	public function suffix(string $languageItem = null, array $variables = []): ISuffixedFormField;
+	public function suffix($languageItem = null, array $variables = []);
 }

@@ -1,7 +1,7 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\data\object\type\ObjectType;
+use wcf\system\exception\InvalidObjectTypeException;
 
 /**
  * Represents a form field that relies on a specific object type.
@@ -20,7 +20,7 @@ interface IObjectTypeFormField {
 	 *
 	 * @throws	\BadMethodCallException		if object type has not been set
 	 */
-	public function getObjectType(): ObjectType;
+	public function getObjectType();
 	
 	/**
 	 * Sets the name of the object type and returns this field.
@@ -32,12 +32,12 @@ interface IObjectTypeFormField {
 	 * @throws	\UnexpectedValueException	if object type definition returned by `getObjectTypeDefinition()` is unknown
 	 * @throws	InvalidObjectTypeException	if given object type name is invalid
 	 */
-	public function objectType(string $objectType): IObjectTypeFormField;
+	public function objectType($objectType);
 	
 	/**
 	 * Returns the name of the object type definition the set object type must be of.
 	 * 
 	 * @return	string		name of object type's definition
 	 */
-	public function getObjectTypeDefinition(): string;
+	public function getObjectTypeDefinition();
 }

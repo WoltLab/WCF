@@ -24,7 +24,7 @@ class DialogFormDocument extends FormDocument {
 	 * @param	bool	$cancelable	determines if dialog from can be canceled
 	 * @return	static			this document
 	 */
-	public function cancelable(bool $cancelable = true): DialogFormDocument {
+	public function cancelable($cancelable = true) {
 		$this->__isCancelable = $cancelable;
 		
 		return $this;
@@ -33,7 +33,7 @@ class DialogFormDocument extends FormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAction(): string {
+	public function getAction() {
 		// do not throw exception if no action has been set as a dialog
 		// form does not require an action to be set
 		if ($this->__action === null) {
@@ -46,7 +46,7 @@ class DialogFormDocument extends FormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml(): string {
+	public function getHtml() {
 		return WCF::getTPL()->fetch(
 			'__dialogForm',
 			'wcf',
@@ -62,7 +62,7 @@ class DialogFormDocument extends FormDocument {
 	 * 
 	 * @return	bool
 	 */
-	public function isCancelable(): bool {
+	public function isCancelable() {
 		return $this->__isCancelable;
 	}
 }

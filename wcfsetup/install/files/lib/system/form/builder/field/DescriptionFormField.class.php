@@ -23,7 +23,7 @@ class DescriptionFormField extends MultilineTextFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected static function getDefaultId(): string {
+	protected static function getDefaultId() {
 		return 'description';
 	}
 }

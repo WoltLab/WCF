@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field\data;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormDocument;
@@ -21,7 +20,7 @@ class DefaultFormFieldDataProcessor implements IFormFieldDataProcessor {
 	/**
 	 * @inheritDoc
 	 */
-	public function __invoke(IFormDocument $document, array $parameters): array {
+	public function __invoke(IFormDocument $document, array $parameters) {
 		$parameters['data'] = [];
 		
 		$this->getData($document, $parameters['data']);

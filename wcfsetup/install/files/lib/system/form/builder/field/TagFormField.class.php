@@ -1,11 +1,9 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\data\tag\Tag;
 use wcf\data\IStorableObject;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
-use wcf\system\form\builder\IFormNode;
 use wcf\system\tagging\TagEngine;
 use wcf\util\ArrayUtil;
 
@@ -40,21 +38,21 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function getObjectTypeDefinition(): string {
+	public function getObjectTypeDefinition() {
 		return 'com.woltlab.wcf.tagging.taggableObject';
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function hasSaveValue(): bool {
+	public function hasSaveValue() {
 		return false;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValueFromObject(IStorableObject $object): IFormField {
+	public function loadValueFromObject(IStorableObject $object) {
 		$objectID = $object->{$object::getDatabaseTableIndexName()};
 		
 		if ($objectID === null) {
@@ -83,12 +81,12 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function populate(): IFormNode {
+	public function populate() {
 		parent::populate();
 		
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('acl', function(IFormDocument $document, array $parameters) {
-			if ($this->getValue() !== null && !empty($this->getValue())) {
-				$parameters[$this->getId()] = $this->getValue();
+			if ($this->checkDependencies() && $this->getValue() !== null && !empty($this->getValue())) {
+				$parameters[$this->getObjectProperty()] = $this->getValue();
 			}
 			
 			return $parameters;
@@ -100,7 +98,7 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue(): IFormField {
+	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
@@ -114,9 +112,8 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 	
 	/**
 	 * @inheritDoc
-	 * @return	static		this field
 	 */
-	public function value($value): IFormField {
+	public function value($value) {
 		if (!is_array($value)) {
 			throw new \InvalidArgumentException("Given value is no array, " . gettype($value) . " given.");
 		}

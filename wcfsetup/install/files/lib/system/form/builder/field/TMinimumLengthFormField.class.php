@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\data\language\Language;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -39,7 +38,7 @@ trait TMinimumLengthFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given minimum length is no integer or otherwise invalid
 	 */
-	public function minimumLength(int $minimumLength = null): IMinimumLengthFormField {
+	public function minimumLength($minimumLength = null) {
 		if ($minimumLength !== null) {
 			if (!is_int($minimumLength)) {
 				throw new \InvalidArgumentException("Given minimum length is no int, '" . gettype($minimumLength) . "' given.");
@@ -68,7 +67,7 @@ trait TMinimumLengthFormField {
 	 * @param	string		$text		validated text
 	 * @param	null|Language	$language	language of the validated text
 	 */
-	public function validateMinimumLength(string $text, Language $language = null) {
+	public function validateMinimumLength($text, Language $language = null) {
 		if ($this->getMinimumLength() !== null && mb_strlen($text) < $this->getMinimumLength()) {
 			$this->addValidationError(new FormFieldValidationError(
 				'minimumLength',

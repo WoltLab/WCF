@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder;
 use wcf\system\form\builder\field\IFormField;
 
@@ -33,7 +32,7 @@ trait TFormParentNode {
 	 * 
 	 * @throws	\InvalidArgumentException		if the given child node cannot be appended
 	 */
-	public function appendChild(IFormChildNode $child): IFormParentNode {
+	public function appendChild(IFormChildNode $child) {
 		$this->validateChild($child);
 		
 		$this->__children[] = $child;
@@ -51,7 +50,7 @@ trait TFormParentNode {
 	 * 
 	 * @throws	\InvalidArgumentException		if any of the given child nodes is invalid or cannot be appended
 	 */
-	public function appendChildren(array $children): IFormParentNode {
+	public function appendChildren(array $children) {
 		foreach ($children as $child) {
 			$this->appendChild($child);
 		}
@@ -66,7 +65,7 @@ trait TFormParentNode {
 	 * @param	string		$nodeId		id of searched node
 	 * @return	bool
 	 */
-	public function contains(string $nodeId): bool {
+	public function contains($nodeId) {
 		static::validateId($nodeId);
 		
 		foreach ($this->children() as $child) {
@@ -87,7 +86,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	IFormChildNode[]	children of this node
 	 */
-	public function children(): array {
+	public function children() {
 		return $this->__children;
 	}
 	
@@ -96,7 +95,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	int	number of children
 	 */
-	public function count(): int {
+	public function count() {
 		return count($this->__children);
 	}
 	
@@ -105,7 +104,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	IFormChildNode		current child node
 	 */
-	public function current(): IFormChildNode {
+	public function current() {
 		return $this->__children[$this->index];
 	}
 	
@@ -131,7 +130,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	\RecursiveIteratorIterator	recursive iterator for this node
 	 */
-	public function getIterator(): \RecursiveIteratorIterator {
+	public function getIterator() {
 		return new \RecursiveIteratorIterator($this, \RecursiveIteratorIterator::SELF_FIRST, \RecursiveIteratorIterator::CATCH_GET_CHILD);
 	}
 	
@@ -146,7 +145,7 @@ trait TFormParentNode {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given id is invalid
 	 */
-	public function getNodeById(string $nodeId) {
+	public function getNodeById($nodeId) {
 		static::validateId($nodeId);
 		
 		foreach ($this->children() as $child) {
@@ -170,7 +169,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	bool
 	 */
-	public function hasChildren(): bool {
+	public function hasChildren() {
 		return !empty($this->__children);
 	}
 	
@@ -180,7 +179,7 @@ trait TFormParentNode {
 	 *
 	 * @return	bool
 	 */
-	public function hasValidationErrors(): bool {
+	public function hasValidationErrors() {
 		foreach ($this->children() as $child) {
 			if ($child instanceof IFormField) {
 				if (!empty($child->getValidationErrors())) {
@@ -206,7 +205,7 @@ trait TFormParentNode {
 	 *
 	 * @throws	\InvalidArgumentException			if given node cannot be inserted or reference node id is invalid
 	 */
-	public function insertBefore(IFormChildNode $child, string $referenceNodeId): IFormParentNode {
+	public function insertBefore(IFormChildNode $child, $referenceNodeId) {
 		$didInsertNode = false;
 		foreach ($this->children() as $index => $existingChild) {
 			if ($existingChild->getId() === $referenceNodeId) {
@@ -231,7 +230,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	int	element key during the iteration
 	 */
-	public function key(): int {
+	public function key() {
 		return $this->index;
 	}
 	
@@ -248,7 +247,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	IFormParentNode		this node
 	 */
-	public function readValues(): IFormParentNode {
+	public function readValues() {
 		if ($this->isAvailable()) {
 			foreach ($this->children() as $child) {
 				if ($child instanceof IFormParentNode) {
@@ -276,7 +275,7 @@ trait TFormParentNode {
 	 * 
 	 * @return	bool
 	 */
-	public function valid(): bool {
+	public function valid() {
 		return isset($this->__children[$this->index]);
 	}
 	
@@ -291,7 +290,7 @@ trait TFormParentNode {
 			foreach ($this->children() as $child) {
 				// call `checkDependencies()` on form fields here so that their validate
 				// method does not have to do it
-				if ($child instanceof IFormField && $child->isAvailable() && !$child->checkDependencies()) {
+				if ($child instanceof IFormField && (!$child->isAvailable() || !$child->checkDependencies())) {
 					continue;
 				}
 				

@@ -47,7 +47,7 @@ class UsernameFormField extends AbstractFormField implements IMaximumLengthFormF
 	/**
 	 * @inheritDoc
 	 */
-	public function readValue(): IFormField {
+	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			

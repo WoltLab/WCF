@@ -30,7 +30,7 @@ class SortOrderFormField extends SingleSelectionFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected static function getDefaultId(): string {
+	protected static function getDefaultId() {
 		return 'sortOrder';
 	}
 }

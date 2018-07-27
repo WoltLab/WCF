@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\data\language\Language;
 
@@ -30,7 +29,7 @@ interface IMaximumLengthFormField {
 	 * 
 	 * @throws	\InvalidArgumentException	if the given maximum length is no integer or otherwise invalid
 	 */
-	public function maximumLength(int $maximumLength = null): IMaximumLengthFormField;
+	public function maximumLength($maximumLength = null);
 	
 	/**
 	 * Validates the maximum length of the given text.
@@ -38,5 +37,5 @@ interface IMaximumLengthFormField {
 	 * @param	string		$text		validated text
 	 * @param	null|Language	$language	language of the validated text
 	 */
-	public function validateMaximumLength(string $text, Language $language = null);
+	public function validateMaximumLength($text, Language $language = null);
 }

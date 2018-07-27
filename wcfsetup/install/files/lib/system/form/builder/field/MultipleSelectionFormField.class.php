@@ -3,7 +3,7 @@ namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 
 /**
- * Implementation of a form field for selecting a single value.
+ * Implementation of a form field for selecting multiple values.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
@@ -11,25 +11,14 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	3.2
  */
-class SingleSelectionFormField extends AbstractFormField implements INullableFormField, ISelectionFormField {
+class MultipleSelectionFormField extends AbstractFormField implements INullableFormField, ISelectionFormField {
 	use TNullableFormField;
 	use TSelectionFormField;
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected $templateName = '__singleSelectionFormField';
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getSaveValue() {
-		if (empty($this->getValue()) && isset($this->getOptions()[$this->getValue()]) && $this instanceof INullableFormField && $this->isNullable()) {
-			return null;
-		}
-		
-		return parent::getSaveValue();
-	}
+	protected $templateName = '__multipleSelectionFormField';
 	
 	/**
 	 * @inheritDoc
@@ -38,8 +27,11 @@ class SingleSelectionFormField extends AbstractFormField implements INullableFor
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
-			if (is_string($value)) {
+			if (is_array($value)) {
 				$this->__value = $value;
+			}
+			else if (!$this->isNullable()) {
+				$this->__value = [];
 			}
 		}
 		
@@ -50,7 +42,7 @@ class SingleSelectionFormField extends AbstractFormField implements INullableFor
 	 * @inheritDoc
 	 */
 	public function validate() {
-		if (!isset($this->getOptions()[$this->getValue()])) {
+		if ($this->getValue() !== null && !empty(array_diff($this->getValue(), array_keys($this->getOptions())))) {
 			$this->addValidationError(new FormFieldValidationError(
 				'invalidValue',
 				'wcf.global.form.error.noValidSelection'
@@ -70,8 +62,13 @@ class SingleSelectionFormField extends AbstractFormField implements INullableFor
 			return $this;
 		}
 		
-		if (!isset($this->getOptions()[$value])) {
-			throw new \InvalidArgumentException("Unknown value '{$value}'");
+		if (!is_array($value)) {
+			throw new \InvalidArgumentException("Given value is no array, " . gettype($value) . " given.");
+		}
+		
+		$unknownValues = array_diff($this->getValue(), array_keys($this->getOptions()));
+		if (!empty($unknownValues)) {
+			throw new \InvalidArgumentException("Unknown values '" . implode("', '", $unknownValues) . '"');
 		}
 		
 		return parent::value($value);

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\builder\field;
 use wcf\data\IStorableObject;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
@@ -24,7 +23,7 @@ abstract class AbstractFormField implements IFormField {
 	
 	/**
 	 * `true` if this field is auto-focused and `false` otherwise
-	 * @var	bool 
+	 * @var	bool
 	 */
 	protected $__autoFocus = false;
 	
@@ -54,7 +53,7 @@ abstract class AbstractFormField implements IFormField {
 	
 	/**
 	 * name of the template used to output this field
-	 * @var	string 
+	 * @var	string
 	 */
 	protected $templateName;
 	
@@ -73,7 +72,7 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function addValidationError(IFormFieldValidationError $error): IFormField {
+	public function addValidationError(IFormFieldValidationError $error) {
 		if (empty($this->validationErrors)) {
 			$this->addClass('formError');
 		}
@@ -86,7 +85,7 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function addValidator(IFormFieldValidator $validator): IFormField {
+	public function addValidator(IFormFieldValidator $validator) {
 		if ($this->hasValidator($validator->getId())) {
 			throw new \InvalidArgumentException("Validator with id '{$validator->getId()}' already exists.");
 		}
@@ -99,7 +98,7 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function autoFocus(bool $autoFocus = true): IFormField {
+	public function autoFocus($autoFocus = true) {
 		$this->__autoFocus = $autoFocus;
 		
 		return $this;
@@ -108,7 +107,7 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml(): string {
+	public function getHtml() {
 		if ($this->templateName === null) {
 			throw new \LogicException("\$templateName property has not been set.");
 		}
@@ -128,7 +127,7 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function getObjectProperty(): string {
+	public function getObjectProperty() {
 		if ($this->__objectProperty !== null) {
 			return $this->__objectProperty;
 		}
@@ -146,14 +145,14 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function getValidationErrors(): array {
+	public function getValidationErrors() {
 		return $this->validationErrors;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getValidators(): array {
+	public function getValidators() {
 		return $this->validators;
 	}
 	
@@ -167,7 +166,7 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function hasValidator(string $validatorId): bool {
+	public function hasValidator($validatorId) {
 		FormFieldValidator::validateId($validatorId);
 		
 		return isset($this->validators[$validatorId]);
@@ -176,14 +175,14 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function hasSaveValue(): bool {
+	public function hasSaveValue() {
 		return true;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function immutable(bool $immutable = true): IFormField {
+	public function immutable($immutable = true) {
 		$this->__immutable = $immutable;
 		
 		return $this;
@@ -192,28 +191,28 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function isAutoFocused(): bool {
+	public function isAutoFocused() {
 		return $this->__autoFocus;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function isImmutable(): bool {
+	public function isImmutable() {
 		return $this->__immutable;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function isRequired(): bool {
+	public function isRequired() {
 		return $this->__required;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValueFromObject(IStorableObject $object): IFormField {
+	public function loadValueFromObject(IStorableObject $object) {
 		if (isset($object->{$this->getObjectProperty()})) {
 			$this->value($object->{$this->getObjectProperty()});
 		}
@@ -225,7 +224,7 @@ abstract class AbstractFormField implements IFormField {
 	 * @inheritDoc
 	 * @return	static
 	 */
-	public function objectProperty(string $objectProperty): IFormField {
+	public function objectProperty($objectProperty) {
 		if ($objectProperty === '') {
 			$this->__objectProperty = null;
 		}
@@ -241,7 +240,7 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function removeValidator(string $validatorId): IFormField {
+	public function removeValidator($validatorId) {
 		if (!$this->hasValidator($validatorId)) {
 			throw new \InvalidArgumentException("Unknown validator with id '{$validatorId}'");
 		}
@@ -255,7 +254,7 @@ abstract class AbstractFormField implements IFormField {
 	 * @inheritDoc
 	 * @return	static
 	 */
-	public function required(bool $required = true): IFormField {
+	public function required($required = true) {
 		$this->__required = $required;
 		
 		return $this;
@@ -264,7 +263,7 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function value($value): IFormField {
+	public function value($value) {
 		$this->__value = $value;
 		
 		return $this;
