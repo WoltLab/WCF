@@ -26,7 +26,9 @@
 	</ul>
 {else}
 	<select id="{@$field->getPrefixedId()}" name="{@$field->getPrefixedId()}">
-		{htmlOptions options=$field->getOptions() selected=$field->getValue() disableEncoding=true}
+		{foreach from=$field->getNestedOptions() item=__fieldNestedOption}
+			<option name="{@$field->getPrefixedId()}" value="{$__fieldNestedOption[value]}"{if $field->getValue() === $__fieldNestedOption[value]} selected{/if}>{@'&nbsp;'|str_repeat:$__fieldNestedOption[depth] * 4}{@$__fieldNestedOption[label]}</option>
+		{/foreach}
 	</select>
 {/if}
 
