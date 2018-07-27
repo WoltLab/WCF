@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\box;
 use wcf\system\comment\CommentHandler;
 use wcf\system\request\RequestHandler;

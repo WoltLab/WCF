@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\trophy\category;
 use wcf\system\cache\builder\CategoryCacheBuilder;
 use wcf\system\SingletonFactory;

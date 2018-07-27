@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\condition\user\activity\event;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\activity\event\UserActivityEventList;

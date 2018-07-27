@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\user\follow;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\PermissionDeniedException;

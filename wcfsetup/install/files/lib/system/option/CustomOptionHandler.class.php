@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\option;
 use wcf\data\custom\option\CustomOption;
 use wcf\data\option\Option;

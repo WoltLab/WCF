@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\menu\item;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\RequestHandler;

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\style;
 use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\UserAction;

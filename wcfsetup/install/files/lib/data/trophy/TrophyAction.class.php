@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\trophy;
 use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\trophy\UserTrophyList;

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\page;
 use wcf\data\page\PageCache;
 use wcf\data\ITitledLinkObject;

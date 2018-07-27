@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system;
 use phpline\console\ConsoleReader;
 use phpline\internal\Log;

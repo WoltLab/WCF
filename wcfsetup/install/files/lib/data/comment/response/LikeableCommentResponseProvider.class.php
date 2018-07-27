@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\comment\response;
 use wcf\data\comment\Comment;
 use wcf\data\like\object\ILikeObject;

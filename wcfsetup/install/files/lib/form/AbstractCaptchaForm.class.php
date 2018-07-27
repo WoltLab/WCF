@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\form;
 use wcf\system\captcha\CaptchaHandler;
 use wcf\system\exception\SystemException;

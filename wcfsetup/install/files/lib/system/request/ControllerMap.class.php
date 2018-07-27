@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\request;
 use wcf\page\CmsPage;
 use wcf\system\cache\builder\RoutingCacheBuilder;

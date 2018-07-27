@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\menu\user\profile;
 use wcf\data\user\profile\menu\item\UserProfileMenuItem;
 use wcf\system\cache\builder\UserProfileMenuCacheBuilder;

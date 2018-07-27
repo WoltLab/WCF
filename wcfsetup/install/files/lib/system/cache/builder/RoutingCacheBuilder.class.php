@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\cache\builder;
 use wcf\acp\page\ArticleListPage;
 use wcf\data\application\Application;

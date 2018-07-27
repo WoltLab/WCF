@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\search\acp;
 use wcf\data\article\content\ArticleContentList;
 use wcf\system\request\LinkHandler;

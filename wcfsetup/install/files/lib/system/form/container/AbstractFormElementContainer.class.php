@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\form\container;
 use wcf\system\form\element\AbstractNamedFormElement;
 use wcf\system\form\IFormElement;

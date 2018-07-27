@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\style\variable;
 use wcf\data\DatabaseObject;
 

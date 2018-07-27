@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\exporter;
 use wcf\system\database\MySQLDatabase;
 use wcf\system\exception\SystemException;

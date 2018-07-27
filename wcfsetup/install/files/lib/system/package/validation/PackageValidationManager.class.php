@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\package\validation;
 use wcf\data\package\installation\plugin\PackageInstallationPluginList;
 use wcf\data\package\Package;

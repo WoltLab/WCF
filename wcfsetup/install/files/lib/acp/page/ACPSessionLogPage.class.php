@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\acp\page;
 use wcf\data\acp\session\access\log\ACPSessionAccessLogList;
 use wcf\data\acp\session\log\ACPSessionLog;

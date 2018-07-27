@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\log\modification;
 use wcf\data\modification\log\ModificationLog;
 use wcf\data\modification\log\ModificationLogAction;

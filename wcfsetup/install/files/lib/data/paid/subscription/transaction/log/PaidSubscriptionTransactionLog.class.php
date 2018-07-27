@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\paid\subscription\transaction\log;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\paid\subscription\PaidSubscription;

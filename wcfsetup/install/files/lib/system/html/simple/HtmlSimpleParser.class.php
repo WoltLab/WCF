@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\html\simple;
 use wcf\system\message\embedded\object\ISimpleMessageEmbeddedObjectHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;

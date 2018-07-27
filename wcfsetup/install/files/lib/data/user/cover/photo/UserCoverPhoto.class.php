@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\user\cover\photo;
 use wcf\system\WCF;
 

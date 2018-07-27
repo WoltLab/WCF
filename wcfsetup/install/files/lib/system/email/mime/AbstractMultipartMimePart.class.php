@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\email\mime;
 use wcf\system\email\Mailbox;
 use wcf\util\StringUtil;

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\user\activity\event;
 use wcf\data\comment\CommentList;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;

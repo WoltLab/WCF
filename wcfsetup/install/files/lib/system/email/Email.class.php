@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\email;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\background\job\AbstractBackgroundJob;

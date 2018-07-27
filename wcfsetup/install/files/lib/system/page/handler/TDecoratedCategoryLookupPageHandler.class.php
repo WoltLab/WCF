@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\page\handler;
 use wcf\data\category\AbstractDecoratedCategory;
 use wcf\data\object\type\ObjectTypeCache;

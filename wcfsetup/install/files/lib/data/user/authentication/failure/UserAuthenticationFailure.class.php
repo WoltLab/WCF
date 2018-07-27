@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\user\authentication\failure;
 use wcf\data\DatabaseObject;
 use wcf\util\UserUtil;

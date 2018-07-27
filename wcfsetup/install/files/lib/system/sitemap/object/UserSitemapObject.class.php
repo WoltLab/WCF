@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\sitemap\object;
 use wcf\data\user\User;
 use wcf\system\WCF;

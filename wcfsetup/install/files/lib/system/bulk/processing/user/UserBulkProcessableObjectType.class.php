@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\bulk\processing\user;
 use wcf\system\bulk\processing\AbstractBulkProcessableObjectType;
 

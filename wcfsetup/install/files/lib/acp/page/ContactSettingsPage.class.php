@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\acp\page;
 use wcf\data\contact\option\ContactOptionList;
 use wcf\data\contact\recipient\ContactRecipientList;

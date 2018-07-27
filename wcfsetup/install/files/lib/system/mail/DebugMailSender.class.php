@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\mail;
 use wcf\system\io\File;
 

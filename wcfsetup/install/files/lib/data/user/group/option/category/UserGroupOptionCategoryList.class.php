@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\user\group\option\category;
 use wcf\data\DatabaseObjectList;
 

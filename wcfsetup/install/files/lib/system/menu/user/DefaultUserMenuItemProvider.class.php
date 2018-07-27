@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\menu\user;
 use wcf\data\user\menu\item\UserMenuItem;
 use wcf\data\DatabaseObjectDecorator;
