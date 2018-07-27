@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\action;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;

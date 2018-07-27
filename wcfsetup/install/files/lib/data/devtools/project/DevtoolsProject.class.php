@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\devtools\project;
 use wcf\data\package\installation\plugin\PackageInstallationPluginList;
 use wcf\data\package\Package;

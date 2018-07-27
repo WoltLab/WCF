@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\like;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;

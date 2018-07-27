@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\bulk\processing\user;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\UserEditor;

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\user\option;
 use wcf\data\user\User;
 use wcf\data\DatabaseObjectDecorator;

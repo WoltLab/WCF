@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\media;
 use wcf\data\DatabaseObjectList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;

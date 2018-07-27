@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\acl\option\ACLOption;
 use wcf\data\acl\option\ACLOptionEditor;

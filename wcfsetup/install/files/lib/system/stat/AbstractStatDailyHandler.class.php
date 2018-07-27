@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\stat;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;

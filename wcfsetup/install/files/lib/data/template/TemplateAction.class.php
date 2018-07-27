@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\template;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\language\LanguageFactory;

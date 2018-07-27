@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\acp\session;
 use wcf\data\DatabaseObjectEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\acp\menu\item\ACPMenuItemEditor;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;

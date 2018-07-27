@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\custom\option;
 use wcf\data\language\Language;
 use wcf\data\option\Option;

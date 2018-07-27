@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\package\installation\queue;
 use wcf\data\package\Package;
 use wcf\data\AbstractDatabaseObjectAction;

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\application;
 use wcf\data\package\PackageCache;
 use wcf\system\exception\SystemException;

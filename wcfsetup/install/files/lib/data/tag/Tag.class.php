@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\tag;
 use wcf\data\DatabaseObject;
 use wcf\system\request\IRouteController;

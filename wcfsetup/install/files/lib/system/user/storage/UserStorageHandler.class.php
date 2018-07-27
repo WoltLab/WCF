@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\user\storage;
 use wcf\system\cache\source\RedisCacheSource;
 use wcf\system\cache\CacheHandler;

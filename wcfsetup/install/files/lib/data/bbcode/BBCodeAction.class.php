@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\bbcode;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupEditor;

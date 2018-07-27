@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\form;
 use wcf\data\IStorableObject;
 use wcf\system\event\EventHandler;

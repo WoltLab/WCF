@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\acp\form;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\OptionAction;

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\util;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\exception\SystemException;

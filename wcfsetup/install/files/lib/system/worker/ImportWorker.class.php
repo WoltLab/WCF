@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\worker;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\SystemException;

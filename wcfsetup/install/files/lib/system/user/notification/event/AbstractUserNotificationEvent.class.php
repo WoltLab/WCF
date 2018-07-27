@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\user\notification\event;
 use wcf\data\language\Language;
 use wcf\data\user\notification\event\UserNotificationEvent;

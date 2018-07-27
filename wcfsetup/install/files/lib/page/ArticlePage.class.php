@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\page;
 use wcf\data\article\CategoryArticleList;
 use wcf\data\article\ViewableArticle;

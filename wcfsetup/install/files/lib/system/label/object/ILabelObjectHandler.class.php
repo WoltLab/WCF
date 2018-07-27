@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\label\object;
 use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\label\Label;

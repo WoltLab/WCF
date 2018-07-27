@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\session\virtual;
 use wcf\data\acp\session\virtual\ACPSessionVirtualEditor;
 

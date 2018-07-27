@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\user\online;
 use wcf\data\option\OptionAction;
 use wcf\data\session\SessionList;

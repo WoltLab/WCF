@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\search;
 use wcf\data\search\keyword\SearchKeyword;
 use wcf\data\search\keyword\SearchKeywordAction;

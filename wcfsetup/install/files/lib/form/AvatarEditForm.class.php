@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\form;
 use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\UserAvatarAction;

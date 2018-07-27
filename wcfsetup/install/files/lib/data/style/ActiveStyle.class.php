@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\style;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\request\RouteHandler;

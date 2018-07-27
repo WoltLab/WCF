@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\form;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\moderation\queue\activation\IModerationQueueActivationHandler;

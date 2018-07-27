@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\menu\user\profile\content;
 use wcf\data\like\Like;
 use wcf\data\like\ViewableLikeList;

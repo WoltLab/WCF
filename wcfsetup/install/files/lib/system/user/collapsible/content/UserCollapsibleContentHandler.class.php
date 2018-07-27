@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\user\collapsible\content;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;

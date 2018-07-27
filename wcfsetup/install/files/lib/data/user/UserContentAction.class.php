@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\user;
 use wcf\system\edit\EditHistoryManager;
 use wcf\system\WCF;

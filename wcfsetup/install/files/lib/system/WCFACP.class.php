@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system;
 use wcf\acp\form\MasterPasswordForm;
 use wcf\acp\form\MasterPasswordInitForm;

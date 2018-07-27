@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\object\type;
 use wcf\data\object\type\definition\ObjectTypeDefinition;
 use wcf\data\package\Package;

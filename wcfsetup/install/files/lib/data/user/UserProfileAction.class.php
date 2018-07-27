@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\user;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\cover\photo\UserCoverPhoto;

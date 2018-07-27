@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\acp\form;
 use wcf\data\paid\subscription\PaidSubscription;
 use wcf\data\paid\subscription\PaidSubscriptionAction;

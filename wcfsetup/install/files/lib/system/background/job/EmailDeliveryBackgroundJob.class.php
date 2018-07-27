@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\background\job;
 use wcf\system\email\transport\exception\PermanentFailure;
 use wcf\system\email\Email;

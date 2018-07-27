@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\event;
 use wcf\data\event\listener\EventListener;
 use wcf\system\cache\builder\EventListenerCacheBuilder;

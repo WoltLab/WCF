@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\image;
 use wcf\system\exception\SystemException;
 use wcf\system\image\adapter\GDImageAdapter;
