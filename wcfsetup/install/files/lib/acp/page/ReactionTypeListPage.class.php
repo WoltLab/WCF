@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\acp\page;
 use wcf\data\reaction\type\ReactionTypeList;
 use wcf\page\MultipleLinkPage;

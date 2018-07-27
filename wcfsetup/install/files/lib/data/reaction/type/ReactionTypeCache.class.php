@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\reaction\type;
 use wcf\system\cache\builder\ReactionTypeCacheBuilder;
 use wcf\system\SingletonFactory;

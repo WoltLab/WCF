@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\reaction;
 use wcf\data\like\IRestrictedLikeObjectTypeProvider;
 use wcf\data\like\LikeEditor;
