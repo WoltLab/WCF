@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\html\output;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\html\output\node\HtmlOutputNodeProcessor;

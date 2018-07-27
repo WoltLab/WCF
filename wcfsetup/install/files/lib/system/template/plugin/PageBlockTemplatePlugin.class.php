@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\template\plugin;
 use wcf\data\page\Page;
 use wcf\system\exception\SystemException;

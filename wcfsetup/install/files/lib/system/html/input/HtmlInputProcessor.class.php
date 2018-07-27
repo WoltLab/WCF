@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\html\input;
 use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\input\filter\IHtmlInputFilter;

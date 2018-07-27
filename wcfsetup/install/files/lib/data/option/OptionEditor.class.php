@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\option;
 use wcf\data\user\group\UserGroupEditor;
 use wcf\data\DatabaseObjectEditor;

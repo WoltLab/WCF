@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\email\mime;
 use Pelago\Emogrifier;
 use wcf\data\style\ActiveStyle;

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\user\group\assignment;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;

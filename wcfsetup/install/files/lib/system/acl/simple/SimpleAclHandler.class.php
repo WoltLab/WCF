@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\acl\simple;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;

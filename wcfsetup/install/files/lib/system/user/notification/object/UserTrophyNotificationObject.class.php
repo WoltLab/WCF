@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\user\notification\object;
 use wcf\data\user\trophy\UserTrophy;
 use wcf\data\DatabaseObjectDecorator;

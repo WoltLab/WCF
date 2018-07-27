@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\condition\article;
 use wcf\data\article\ArticleList;
 use wcf\data\DatabaseObjectList;

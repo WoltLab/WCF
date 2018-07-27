@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\box;
 use wcf\data\article\category\ArticleCategoryNodeTree;
 use wcf\page\ArticlePage;

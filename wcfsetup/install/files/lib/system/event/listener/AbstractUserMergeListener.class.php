@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\event\listener;
 use wcf\acp\form\UserMergeForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;

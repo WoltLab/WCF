@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\search\mysql;
 use wcf\data\object\type\ObjectType;
 use wcf\system\search\AbstractSearchIndexManager;

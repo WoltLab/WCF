@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\email\transport;
 use wcf\system\email\Email;
 use wcf\system\email\Mailbox;

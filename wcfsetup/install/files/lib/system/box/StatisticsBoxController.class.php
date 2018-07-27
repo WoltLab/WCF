@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\box;
 use wcf\system\cache\builder\UserStatsCacheBuilder;
 use wcf\system\WCF;

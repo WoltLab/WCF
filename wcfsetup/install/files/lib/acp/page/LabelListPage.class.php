@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\acp\page;
 use wcf\data\label\group\LabelGroup;
 use wcf\data\label\group\LabelGroupList;

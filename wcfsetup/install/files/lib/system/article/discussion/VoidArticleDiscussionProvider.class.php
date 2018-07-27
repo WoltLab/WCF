@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\article\discussion;
 use wcf\data\article\Article;
 

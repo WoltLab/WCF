@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\worker;
 use wcf\data\page\content\PageContentEditor;
 use wcf\data\page\content\PageContentList;

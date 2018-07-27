@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\ad;
 use wcf\data\condition\Condition;
 use wcf\data\object\type\ObjectTypeCache;

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data;
 use wcf\system\WCF;
 use wcf\util\StringUtil;

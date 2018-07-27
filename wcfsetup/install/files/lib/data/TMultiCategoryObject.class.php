@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data;
 use wcf\data\category\AbstractDecoratedCategory;
 use wcf\system\exception\ParentClassException;

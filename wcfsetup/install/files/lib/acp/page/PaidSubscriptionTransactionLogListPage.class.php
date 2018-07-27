@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\acp\page;
 use wcf\data\paid\subscription\transaction\log\PaidSubscriptionTransactionLogList;
 use wcf\page\SortablePage;

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\notice;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;

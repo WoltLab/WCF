@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\acp\search\provider;
 use wcf\data\DatabaseObject;
 

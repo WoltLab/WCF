@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\form;
 use wcf\acp\form\UserAddForm;
 use wcf\data\object\type\ObjectType;

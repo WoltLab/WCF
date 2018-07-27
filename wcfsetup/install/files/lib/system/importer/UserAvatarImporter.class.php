@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\importer;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\avatar\UserAvatarEditor;
