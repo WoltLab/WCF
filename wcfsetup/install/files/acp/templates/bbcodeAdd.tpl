@@ -189,7 +189,10 @@
 			<dl class="jsButtonSetting{if $errorField == 'wysiwygIcon'} formError{/if}">
 				<dt><label for="wysiwygIcon">{lang}wcf.acp.bbcode.wysiwygIcon{/lang}</label></dt>
 				<dd>
-					<input type="text" id="wysiwygIcon" name="wysiwygIcon" value="{$wysiwygIcon}" class="long">
+					<div class="inputAddon">
+						<input type="text" id="wysiwygIcon" name="wysiwygIcon" value="{$wysiwygIcon}" class="medium">
+						<a href="#" class="inputSuffix button jsButtonSearchWysiwygIcon"><span class="icon icon16 fa-search"></span></a>
+					</div>
 					{if $errorField == 'wysiwygIcon'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -260,5 +263,18 @@
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
+
+{include file='fontAwesomeJavaScript'}
+<script data-relocate="true">
+	require(['WoltLabSuite/Core/Ui/Style/FontAwesome'], function (UiStyleFontAwesome) {
+		elBySel('.jsButtonSearchWysiwygIcon').addEventListener(WCF_CLICK_EVENT, function(event) {
+			event.preventDefault();
+			
+			UiStyleFontAwesome.open(function(iconName) {
+				elById('wysiwygIcon').value = 'fa-' + iconName;
+			});
+		});
+	});
+</script>
 
 {include file='footer'}

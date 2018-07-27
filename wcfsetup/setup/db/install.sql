@@ -1052,6 +1052,7 @@ CREATE TABLE wcf1_page (
 	availableDuringOfflineMode TINYINT(1) NOT NULL DEFAULT 0,
 	allowSpidersToIndex TINYINT(1) NOT NULL DEFAULT 0,
 	excludeFromLandingPage TINYINT(1) NOT NULL DEFAULT 0,
+	enableShareButtons TINYINT(1) NOT NULL DEFAULT 0,
 	permissions TEXT NULL,
 	options TEXT NULL
 );
@@ -1444,6 +1445,7 @@ CREATE TABLE wcf1_user (
 	disableCoverPhoto TINYINT(1) NOT NULL DEFAULT 0,
 	disableCoverPhotoReason TEXT,
 	disableCoverPhotoExpires INT(10) NOT NULL DEFAULT 0,
+	articles INT(10) NOT NULL DEFAULT 0,
 	positiveReactionsReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
 	negativeReactionsReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
 	neutralReactionsReceived MEDIUMINT(7) NOT NULL DEFAULT 0,

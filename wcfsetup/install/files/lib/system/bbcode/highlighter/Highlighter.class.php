@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\bbcode\highlighter;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;

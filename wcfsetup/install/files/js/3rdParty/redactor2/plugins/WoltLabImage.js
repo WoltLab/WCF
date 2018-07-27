@@ -142,6 +142,9 @@ $.Redactor.prototype.WoltLabImage = function() {
 			else if (!source.match(this.opts.regexps.url)) {
 				return showError(sourceInput, WCF.Language.get('wcf.editor.image.source.error.invalid'));
 			}
+			else if (this.opts.woltlab.forceSecureImages && source.indexOf('http://') === 0) {
+				return showError(sourceInput, WCF.Language.get('wcf.editor.image.source.error.insecure'));
+			}
 			
 			// check if link is valid
 			var linkInput = elById('redactor-image-link');

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\acp\form;
 use wcf\data\notice\Notice;
 use wcf\data\notice\NoticeAction;

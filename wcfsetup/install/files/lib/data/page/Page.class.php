@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\page;
 use wcf\data\page\content\PageContent;
 use wcf\data\DatabaseObject;
@@ -46,6 +45,7 @@ use wcf\system\WCF;
  * @property-read	string		$availableDuringOfflineMode     is `1` if the page is available during offline mode, otherwise `0`
  * @property-read	string		$allowSpidersToIndex            is `1` if the page is accessible for search spiders, otherwise `0`
  * @property-read	string		$excludeFromLandingPage         is `1` if the page can never be set as landing page, otherwise `0`
+ * @property-read	string		$enableShareButtons             is `1` if the page should display share buttons, otherwise `0`
  * @property-read	string		$permissions		        comma separated list of user group permissions of which the active user needs to have at least one to access the page
  * @property-read	string		$options		        comma separated list of options of which at least one needs to be enabled for the page to be accessible
  */
@@ -351,6 +351,16 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 		}
 		
 		return $pageLanguages;
+	}
+	
+	/**
+	 * Returns true if the share buttons are enabled and this is not a system-type page.
+	 * 
+	 * @return      bool
+	 * @since       3.2
+	 */
+	public function showShareButtons(): bool {
+		return $this->enableShareButtons && $this->pageType !== 'system';
 	}
 	
 	/**

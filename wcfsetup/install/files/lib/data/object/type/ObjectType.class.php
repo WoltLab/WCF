@@ -1,7 +1,8 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\object\type;
 use wcf\data\object\type\definition\ObjectTypeDefinition;
+use wcf\data\package\Package;
+use wcf\data\package\PackageCache;
 use wcf\data\ProcessibleDatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
@@ -113,5 +114,15 @@ class ObjectType extends ProcessibleDatabaseObject {
 	 */
 	public function getDefinition() {
 		return ObjectTypeCache::getInstance()->getDefinition($this->definitionID);
+	}
+	
+	/**
+	 * Returns the package that this object type belongs to.
+	 * 
+	 * @return      Package
+	 * @since       3.2
+	 */
+	public function getPackage(): Package {
+		return PackageCache::getInstance()->getPackage($this->packageID);
 	}
 }

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\smiley\category;
 use wcf\data\category\Category;
 use wcf\data\category\CategoryEditor;

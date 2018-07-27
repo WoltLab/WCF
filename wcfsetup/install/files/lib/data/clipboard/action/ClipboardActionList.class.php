@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\clipboard\action;
 use wcf\data\DatabaseObjectList;
 

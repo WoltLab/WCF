@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\html\node;
 use wcf\system\exception\SystemException;
 use wcf\system\html\IHtmlProcessor;
@@ -133,6 +132,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		// work-around for a libxml bug that causes a single space between
 		// some inline elements to be dropped
 		$html = str_replace('&nbsp;', ' ', $html);
+		$html = preg_replace('~>\x{00A0}<~u', '> <', $html);
 		
 		return $html;
 	}

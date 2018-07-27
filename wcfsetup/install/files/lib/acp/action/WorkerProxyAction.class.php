@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\acp\action;
 use wcf\action\AbstractSecureAction;
 use wcf\action\AJAXInvokeAction;

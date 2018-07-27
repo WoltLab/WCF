@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\log\modification;
 use wcf\data\modification\log\ModificationLog;
 use wcf\data\modification\log\ModificationLogAction;
@@ -24,7 +23,7 @@ abstract class AbstractModificationLogHandler extends SingletonFactory {
 	 * modifiable content object type
 	 * @var	ObjectType
 	 */
-	protected $objectType = null;
+	protected $objectType;
 	
 	/**
 	 * name of the modifiable content object type

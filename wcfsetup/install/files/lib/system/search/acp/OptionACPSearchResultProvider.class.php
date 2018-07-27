@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\search\acp;
 use wcf\data\option\category\OptionCategoryList;
 use wcf\data\option\Option;

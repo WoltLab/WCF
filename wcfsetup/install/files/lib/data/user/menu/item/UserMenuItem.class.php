@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\user\menu\item;
 use wcf\data\ProcessibleDatabaseObject;
 use wcf\system\menu\user\DefaultUserMenuItemProvider;

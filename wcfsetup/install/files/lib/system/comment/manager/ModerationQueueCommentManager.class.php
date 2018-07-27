@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\comment\manager;
 use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ModerationQueueEditor;

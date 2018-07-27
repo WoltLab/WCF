@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\html\metacode\converter;
 use wcf\util\StringUtil;
 
@@ -14,6 +13,12 @@ use wcf\util\StringUtil;
  */
 class UrlMetacodeConverter extends AbstractMetacodeConverter {
 	/**
+	 * list of allowed schemas as defined by HTMLPurifier
+	 * @var string[] 
+	 */
+	public static $allowedSchemes = ['http', 'https', 'mailto', 'ftp', 'nntp', 'news', 'tel', 'steam', 'ts3server'];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function convert(\DOMDocumentFragment $fragment, array $attributes) {
@@ -25,6 +30,20 @@ class UrlMetacodeConverter extends AbstractMetacodeConverter {
 		}
 		
 		$href = StringUtil::decodeHTML($href);
+		if (mb_strpos($href, '//') === 0) {
+			// dynamic protocol, treat as https
+			$href = "https:{$href}";
+		}
+		else if (preg_match('~^(?P<schema>[a-z0-9]+)://~', $href, $match)) {
+			if (!in_array($match['schema'], self::$allowedSchemes)) {
+				// invalid schema, replace it with `http`
+				$href = 'http' . mb_substr($href, strlen($match['schema']));
+			}
+		}
+		else if (mb_strpos($href, 'index.php') === false) {
+			// unless it's a relative `index.php` link, assume it is missing the protocol
+			$href = "http://{$href}";
+		}
 		
 		// check if the link is empty, use the href value instead
 		$useHrefAsValue = false;

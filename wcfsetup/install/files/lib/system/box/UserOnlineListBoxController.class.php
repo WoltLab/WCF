@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\box;
 use wcf\data\user\online\UsersOnlineList;
 use wcf\system\event\EventHandler;
@@ -28,6 +27,12 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
 	 * @var boolean
 	 */
 	public $showRecord = true;
+	
+	/**
+	 * phrase that is used for the box title
+	 * @var string|null
+	 */
+	public $title;
 	
 	/**
 	 * @inheritDoc
@@ -84,5 +89,12 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
 	 */
 	public function hasLink() {
 		return true;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		return $this->title;
 	}
 }

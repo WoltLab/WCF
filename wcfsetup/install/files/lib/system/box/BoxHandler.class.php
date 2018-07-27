@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\box;
 use wcf\data\box\Box;
 use wcf\data\box\BoxList;
@@ -224,8 +223,27 @@ class BoxHandler extends SingletonFactory {
 	public static function loadBoxes($pageID, $forDisplay) {
 		// load box layout for active page
 		$boxList = new BoxList();
-		if ($pageID) $boxList->getConditionBuilder()->add('(box.visibleEverywhere = ? AND boxID NOT IN (SELECT boxID FROM wcf'.WCF_N.'_box_to_page WHERE pageID = ? AND visible = ?)) OR boxID IN (SELECT boxID FROM wcf'.WCF_N.'_box_to_page WHERE pageID = ? AND visible = ?)', [1, $pageID, 0, $pageID, 1]);
-		else $boxList->getConditionBuilder()->add('box.visibleEverywhere = ?', [1]);
+		if ($pageID) {
+			$boxList->getConditionBuilder()->add('
+				(box.visibleEverywhere = ?
+				AND boxID NOT IN (
+					SELECT	boxID
+					FROM	wcf'.WCF_N.'_box_to_page
+					WHERE	pageID = ?
+						AND visible = ?
+				)) OR
+				boxID IN (
+					SELECT	boxID
+					FROM	wcf'.WCF_N.'_box_to_page
+					WHERE	pageID = ?
+						AND visible = ?
+				)',
+				[1, $pageID, 0, $pageID, 1]
+			);
+		}
+		else {
+			$boxList->getConditionBuilder()->add('box.visibleEverywhere = ?', [1]);
+		}
 		
 		if ($forDisplay) $boxList->enableContentLoading();
 		

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\clipboard\action;
 use wcf\data\clipboard\action\ClipboardAction;
 use wcf\data\DatabaseObject;
@@ -27,6 +26,13 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 	 * @var	DatabaseObject[]
 	 */
 	protected $objects = [];
+	
+	/**
+	 * list of action names that should trigger a page reload once they have been executed
+	 * @var string[]
+	 * @since 3.2
+	 */
+	protected $reloadPageOnSuccess = [];
 	
 	/**
 	 * list of the supported clipboard actions
@@ -74,5 +80,12 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 		return WCF::getLanguage()->getDynamicVariable('wcf.clipboard.label.'.$this->getTypeName().'.marked', [
 			'count' => count($objects)
 		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getReloadPageOnSuccess() {
+		return $this->reloadPageOnSuccess;
 	}
 }

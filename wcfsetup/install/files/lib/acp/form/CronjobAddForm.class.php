@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\acp\form;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobAction;

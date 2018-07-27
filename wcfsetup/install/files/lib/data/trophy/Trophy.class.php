@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\trophy;
 use wcf\data\condition\Condition;
 use wcf\data\trophy\category\TrophyCategory;

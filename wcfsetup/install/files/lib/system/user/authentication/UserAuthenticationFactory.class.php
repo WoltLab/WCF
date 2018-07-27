@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\user\authentication;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;

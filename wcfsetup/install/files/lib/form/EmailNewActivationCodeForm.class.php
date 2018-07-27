@@ -1,8 +1,8 @@
 <?php
-declare(strict_types=1);
 namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
+use wcf\data\user\UserList;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
@@ -68,8 +68,13 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm {
 		]);
 		$this->objectAction->executeAction();
 		
-		// reload user object
-		$this->user = new User($this->user->userID);
+		// use user list to allow overriding of the fields without duplicating logic
+		$userList = new UserList();
+		$userList->useQualifiedShorthand = false;
+		$userList->sqlSelects .= ", user_table.*, newEmail AS email";
+		$userList->getConditionBuilder()->add('user_table.userID = ?', [$this->user->userID]);
+		$userList->readObjects();
+		$this->user = $userList->getObjects()[$this->user->userID];
 		
 		// send activation mail
 		$email = new Email();

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\user\notification\event;
 use wcf\data\comment\response\LikeableCommentResponse;
 use wcf\data\user\UserProfile;

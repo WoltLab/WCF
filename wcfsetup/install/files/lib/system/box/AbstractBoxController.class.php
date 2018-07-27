@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\box;
 use wcf\data\box\Box;
 use wcf\data\box\BoxAction;
@@ -108,6 +107,13 @@ abstract class AbstractBoxController implements IBoxController {
 		(new BoxAction([$this->box], 'update', [
 			'data' => ['additionalData' => serialize($this->getAdditionalData())]
 		]))->executeAction();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		return null;
 	}
 	
 	/**

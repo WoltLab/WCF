@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\user;
 use wcf\data\language\Language;
 use wcf\data\user\group\UserGroup;
@@ -70,6 +69,7 @@ use wcf\util\UserUtil;
  * @property-read       integer         $disableCoverPhoto              is `1` if the user's cover photo has been disabled, otherwise `0`
  * @property-read	string		$disableCoverPhotoReason	reason why the user's cover photo is disabled
  * @property-read	integer		$disableCoverPhotoExpires	timestamp at which the user's cover photo will automatically be enabled again
+ * @property-read	integer		$articles			number of articles written by the user
  */
 final class User extends DatabaseObject implements IRouteController, IUserContent {
 	/**

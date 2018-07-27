@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\version;
 use wcf\data\object\type\IObjectTypeProvider;
 use wcf\data\IVersionTrackerObject;

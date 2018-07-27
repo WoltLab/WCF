@@ -1,5 +1,7 @@
 {include file='userMenuSidebar'}
 
+{capture assign='contentTitleBadge'}<span class="badge">{#$items}</span>{/capture}
+
 {include file='header' __sidebarLeftHasMenu=true}
 
 {hascontent}

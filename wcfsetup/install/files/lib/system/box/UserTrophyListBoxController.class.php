@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\box;
 use wcf\data\user\trophy\UserTrophyList;
 use wcf\system\cache\builder\UserOptionCacheBuilder;

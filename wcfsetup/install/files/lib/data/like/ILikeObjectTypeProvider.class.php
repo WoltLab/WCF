@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\like;
 use wcf\data\like\object\ILikeObject;
 use wcf\data\object\type\IObjectTypeProvider;

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\box;
 use wcf\data\box\content\BoxContent;
 use wcf\data\condition\Condition;
@@ -202,7 +201,11 @@ class Box extends DatabaseObject {
 	 */
 	public function getBoxContentTitle() {
 		$this->getBoxContents();
-		if ($this->isMultilingual || $this->boxType == 'system') {
+		if ($this->isMultilingual || $this->boxType === 'system') {
+			if ($this->boxType === 'system' && $this->getController()->getTitle()) {
+				return $this->getController()->getTitle();
+			}
+			
 			if (isset($this->boxContents[WCF::getLanguage()->languageID])) {
 				return $this->boxContents[WCF::getLanguage()->languageID]->title;
 			}

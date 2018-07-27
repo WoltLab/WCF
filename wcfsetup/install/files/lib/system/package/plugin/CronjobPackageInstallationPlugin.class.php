@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;

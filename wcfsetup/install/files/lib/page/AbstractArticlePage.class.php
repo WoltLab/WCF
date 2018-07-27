@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\page;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ViewableArticleContent;
@@ -85,6 +84,7 @@ abstract class AbstractArticlePage extends AbstractPage {
 		}
 		
 		$this->article = ViewableArticle::getArticle($this->articleContent->articleID, false);
+		$this->article->getDiscussionProvider()->setArticleContent($this->articleContent->getDecoratedObject());
 		$this->category = $this->article->getCategory();
 		
 		// update interface language

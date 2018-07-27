@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data;
 use wcf\data\object\type\ObjectType;
 use wcf\system\captcha\CaptchaHandler;

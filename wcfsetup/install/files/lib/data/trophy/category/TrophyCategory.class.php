@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\trophy\category;
 use wcf\data\category\AbstractDecoratedCategory;
 use wcf\data\trophy\Trophy;

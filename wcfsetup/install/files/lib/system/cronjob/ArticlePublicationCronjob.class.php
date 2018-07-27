@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\cronjob;
 use wcf\data\article\Article;
 use wcf\data\article\ArticleAction;

@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\moderation\queue;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;

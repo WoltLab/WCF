@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\cronjob\log;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\WCF;

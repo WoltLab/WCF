@@ -76,6 +76,9 @@
 		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Internationalization]]></item>
 		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Show Preview]]></item>
 		<item name="wcf.acp.article.category"><![CDATA[Category]]></item>
+		<item name="wcf.acp.article.category.sortField"><![CDATA[Show Order]]></item>
+		<item name="wcf.acp.article.category.sortField.publicationDate"><![CDATA[Publication Date]]></item>
+		<item name="wcf.acp.article.category.sortField.title"><![CDATA[Title]]></item>
 		<item name="wcf.acp.article.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.article.delete.confirmMessage"><![CDATA[Do you really want to delete {if $isArticleEdit|empty}the article <span class="confirmationObject">{$article->getTitle()}</span>{else}this article{/if}?]]></item>
 		<item name="wcf.acp.article.enableComments"><![CDATA[Enable comments]]></item>
@@ -213,6 +216,7 @@
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.followingsOnline"><![CDATA[Users Online Followed by Active User]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.pageCommentList"><![CDATA[Page Comments]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.paidSubscriptions"><![CDATA[Paid Subscriptions]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.profileCommentList"><![CDATA[Profile Comments]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.recentActivityList"><![CDATA[Recent Activity]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.registerButton"><![CDATA[Register Button]]></item>
 		<item name="wcf.acp.box.boxController.com.woltlab.wcf.signedInAs"><![CDATA[Signed In As]]></item>
@@ -933,11 +937,25 @@
 		<item name="wcf.acp.menu.link.devtools.project.add"><![CDATA[Add Project]]></item>
 		<item name="wcf.acp.menu.link.devtools.project.list"><![CDATA[Projects]]></item>
 		<item name="wcf.acp.menu.link.devtools.notificationTest"><![CDATA[Notification Test]]></item>
+		<item name="wcf.acp.menu.link.log.modification"><![CDATA[Global Modification Log]]></item>
 		<item name="wcf.acp.menu.link.reactionType"><![CDATA[Reaction]]></item>
 		<!-- @TODO maybe use "Reactions" instead of "Reaction Types", because its more comprehensible for users -->
 		<item name="wcf.acp.menu.link.reactionType.list"><![CDATA[Reaktion Types]]></item>
 		<item name="wcf.acp.menu.link.reactionType.add"><![CDATA[Add Reaction Type]]></item>
 		<item name="wcf.acp.menu.link.reactionType.edit"><![CDATA[Edit Reaction Type]]></item>
+	</category>
+	
+	<category name="wcf.acp.modificationLog">
+		<item name="wcf.acp.modificationLog.list"><![CDATA[Global Modification Log]]></item>
+		<item name="wcf.acp.modificationLog.action"><![CDATA[Action]]></item>
+		<item name="wcf.acp.modificationLog.action.all"><![CDATA[All Actions]]></item>
+		<item name="wcf.acp.modificationLog.affectedObject"><![CDATA[Affected Object]]></item>
+		<item name="wcf.acp.modificationLog.affectedObject.id"><![CDATA[ID: {@$modificationLog->objectID}]]></item>
+		<item name="wcf.acp.modificationLog.affectedObject.unknown"><![CDATA[(Does not exist anymore)]]></item>
+		<item name="wcf.acp.modificationLog.package.all"><![CDATA[All Sources]]></item>
+		<item name="wcf.acp.modificationLog.time.afterDate"><![CDATA[After the date]]></item>
+		<item name="wcf.acp.modificationLog.time.beforeDate"><![CDATA[Before the date]]></item>
+		<item name="wcf.acp.modificationLog.unsupportedObjectTypes"><![CDATA[Some types are currently not supported and require changes to be made by the vendor.]]></item>
 	</category>
 	
 	<category name="wcf.acp.notice">
@@ -1391,8 +1409,9 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.message_force_secure_images"><![CDATA[Allow secure images only]]></item>
 		<item name="wcf.acp.option.message_force_secure_images.description"><![CDATA[Images may only be embedded using the encrypted “https”-protocol. Images in already existing messages will be force-rewritten to use the secure protocol.]]></item>
 		<item name="wcf.acp.option.module_image_proxy"><![CDATA[Enable image proxy]]></item>
-		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Storage Time Period]]></item>
+		<item name="wcf.acp.option.image_proxy_expiration"><![CDATA[Maximum Storage Time Period]]></item>
 		<item name="wcf.acp.option.image_proxy_insecure_only"><![CDATA[Store images from insecure sources only]]></item>
+		<item name="wcf.acp.option.image_proxy_enable_prune"><![CDATA[Remove Cached Images Regularly]]></item>
 		<item name="wcf.acp.option.image_proxy_host_whitelist"><![CDATA[Image proxy whitelist]]></item>
 		<item name="wcf.acp.option.image_proxy_host_whitelist.description"><![CDATA[The listed domains will not be handled by the image proxy, the current domain is implicitly added. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.<br>Enter one domain per line only.]]></item>
 		<item name="wcf.acp.option.share_buttons_providers"><![CDATA[Share Button Providers]]></item>
@@ -2284,9 +2303,11 @@ full extend.]]></item>
 		<item name="wcf.article.commentResponse"><![CDATA[Reply to Article Comment]]></item>
 		<item name="wcf.article.sortField.comments"><![CDATA[Comments]]></item>
 		<item name="wcf.article.sortField.cumulativeLikes"><![CDATA[Likes]]></item>
+		<item name="wcf.article.sortField.random"><![CDATA[Random]]></item>
 		<item name="wcf.article.sortField.time"><![CDATA[Date]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Views]]></item>
 		<item name="wcf.article.markAllAsRead"><![CDATA[Mark All Articles as Read]]></item>
+		<item name="wcf.article.showArticlesWritten"><![CDATA[Articles by {$user->username}]]></item>
 	</category>
 	
 	<category name="wcf.attachment">
@@ -3380,6 +3401,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.acp.page.addPageToMainMenu"><![CDATA[Add page to main menu]]></item>
 		<item name="wcf.acp.page.lastVersion"><![CDATA[There are <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.page' objectID=$page->pageID}{/link}">previous versions</a> of this page, the last change was by <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 		<item name="wcf.acp.page.originIsNotSystem"><![CDATA[Custom pages only]]></item>
+		<item name="wcf.acp.page.enableShareButtons"><![CDATA[Enable the share buttons for this page]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">
@@ -3724,6 +3746,7 @@ not register with us.]]></item>
 		<item name="wcf.user.sortField.registrationDate"><![CDATA[Registration Date]]></item>
 		<item name="wcf.user.sortField.username"><![CDATA[Username]]></item>
 		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Last Activity]]></item>
+		<item name="wcf.user.articles"><![CDATA[Articles]]></item>
 	</category>
 	
 	<category name="wcf.user.menu">
@@ -4157,6 +4180,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.profile.user"><![CDATA[User]]></item>
 		<item name="wcf.user.profile.management"><![CDATA[Management]]></item>
 		<item name="wcf.user.profile.customization"><![CDATA[Customization]]></item>
+		<item name="wcf.user.profile.title"><![CDATA[User profile of {$user->username}]]></item>
 	</category>
 	
 	<category name="wcf.user.objectWatch">

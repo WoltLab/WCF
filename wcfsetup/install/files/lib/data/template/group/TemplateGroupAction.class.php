@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\template\group;
 use wcf\data\template\Template;
 use wcf\data\template\TemplateAction;

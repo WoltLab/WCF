@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\html\input\node;
 use wcf\data\bbcode\media\provider\BBCodeMediaProvider;
 use wcf\data\smiley\Smiley;
@@ -328,7 +327,7 @@ class HtmlInputNodeTextParser {
 				// username not found, maybe it is quoted
 				if ($pos === false) {
 					$needle = "@'" . str_ireplace("'", "''", $username) . "'";
-					$pos = mb_stripos($value, $needle);
+					$pos = mb_stripos($value, $needle, $offset);
 				}
 				
 				if ($pos !== false) {
@@ -342,9 +341,9 @@ class HtmlInputNodeTextParser {
 					// we use preg_replace() because the username could appear multiple times
 					// and we need to replace them one by one, also avoiding only replacing
 					// the non-quoted username even though both variants are present
-					$value = preg_replace('~' . preg_quote($needle, '~') . '~i', $marker, $value, 1);
+					$value = preg_replace('~' . preg_quote($needle, '~') . '~iu', $marker, $value, 1);
 					
-					$offset = $pos + 1;
+					$offset = $pos + mb_strlen($marker);
 				}
 			}
 			while ($pos);
@@ -549,7 +548,7 @@ class HtmlInputNodeTextParser {
 				$element->setAttribute('src', $smiley->getURL());
 				$element->setAttribute('class', 'smiley');
 				$element->setAttribute('alt', $smileyCode);
-				$element->setAttribute('height', $smiley->getHeight());
+				$element->setAttribute('height', (string)$smiley->getHeight());
 				if ($smiley->getURL2x()) {
 					$element->setAttribute('srcset', $smiley->getURL2x() . ' 2x');
 				}

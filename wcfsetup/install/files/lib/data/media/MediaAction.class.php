@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\media;
 use wcf\data\category\CategoryNodeTree;
 use wcf\data\AbstractDatabaseObjectAction;

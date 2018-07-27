@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\article;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
@@ -138,6 +137,10 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			UserStorageHandler::getInstance()->resetAll('unreadArticles');
 		}
 		
+		if ($article->publicationStatus == Article::PUBLISHED) {
+			ArticleEditor::updateArticleCounter([$article->userID => 1]);
+		}
+		
 		return $article;
 	}
 	
@@ -240,6 +243,28 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		// reset storage
 		if (ARTICLE_ENABLE_VISIT_TRACKING) {
 			UserStorageHandler::getInstance()->resetAll('unreadArticles');
+		}
+		
+		$publicationStatus = (isset($this->parameters['data']['publicationStatus'])) ? $this->parameters['data']['publicationStatus'] : null;
+		if ($publicationStatus !== null) {
+			$usersToArticles = [];
+			/** @var ArticleEditor $articleEditor */
+			foreach ($this->objects as $articleEditor) {
+				if ($publicationStatus != $articleEditor->publicationStatus) {
+					// The article was published before or was now published.
+					if ($publicationStatus == Article::PUBLISHED || $articleEditor->publicationStatus == Article::PUBLISHED) {
+						if (!isset($usersToArticles[$articleEditor->userID])) {
+							$usersToArticles[$articleEditor->userID] = 0;
+						}
+						
+						$usersToArticles[$articleEditor->userID] += ($publicationStatus == Article::PUBLISHED) ? 1 : -1;
+					}
+				}
+			}
+			
+			if (!empty($usersToArticles)) {
+				ArticleEditor::updateArticleCounter($usersToArticles);
+			}
 		}
 	}
 	
@@ -552,13 +577,22 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * Publishes articles.
 	 */
 	public function publish() {
+		$usersToArticles = [];
 		foreach ($this->getObjects() as $articleEditor) {
 			$articleEditor->update([
 				'time' => TIME_NOW,
 				'publicationStatus' => Article::PUBLISHED,
 				'publicationDate' => 0
 			]);
+			
+			if (!isset($usersToArticles[$articleEditor->userID])) {
+				$usersToArticles[$articleEditor->userID] = 0;
+			}
+			
+			$usersToArticles[$articleEditor->userID]++;
 		}
+		
+		ArticleEditor::updateArticleCounter($usersToArticles);
 		
 		$this->unmarkItems();
 	}
@@ -590,9 +624,18 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * Unpublishes articles.
 	 */
 	public function unpublish() {
+		$usersToArticles = [];
 		foreach ($this->getObjects() as $articleEditor) {
 			$articleEditor->update(['publicationStatus' => Article::UNPUBLISHED]);
+			
+			if (!isset($usersToArticles[$articleEditor->userID])) {
+				$usersToArticles[$articleEditor->userID] = 0;
+			}
+			
+			$usersToArticles[$articleEditor->userID]--;
 		}
+		
+		ArticleEditor::updateArticleCounter($usersToArticles);
 		
 		$this->unmarkItems();
 	}

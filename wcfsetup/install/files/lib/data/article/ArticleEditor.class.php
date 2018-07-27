@@ -1,7 +1,7 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\article;
 use wcf\data\DatabaseObjectEditor;
+use wcf\system\WCF;
 
 /**
  * Provides functions to edit cms articles.
@@ -21,4 +21,20 @@ class ArticleEditor extends DatabaseObjectEditor {
 	 * @inheritDoc
 	 */
 	protected static $baseClass = Article::class;
+	
+	/**
+	 * Updates the article counter of the given user ids.
+	 * 
+	 * @param       int[]   $users  user id => article counter increase/decrease
+	 * @since       3.2
+	 */
+	public static function updateArticleCounter(array $users) {
+		$sql = "UPDATE	wcf".WCF_N."_user
+			SET	articles = articles + ?
+			WHERE	userID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		foreach ($users as $userID => $articles) {
+			$statement->execute([$articles, $userID]);
+		}
+	}
 }

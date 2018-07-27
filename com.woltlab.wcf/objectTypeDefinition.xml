@@ -24,6 +24,7 @@
 		
 		<definition>
 			<name>com.woltlab.wcf.modifiableContent</name>
+			<interfacename>wcf\system\log\modification\IExtendedModificationLogHandler</interfacename>
 		</definition>
 		
 		<definition>
@@ -235,6 +236,11 @@
 		<definition>
 			<name>com.woltlab.wcf.sitemap.object</name>
 			<interfacename>wcf\system\sitemap\object\ISitemapObjectObjectType</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.article.discussionProvider</name>
+			<interfacename>wcf\system\article\discussion\IArticleDiscussionProvider</interfacename>
 		</definition>
 	</import>
 	

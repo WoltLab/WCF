@@ -1082,12 +1082,18 @@ Pinterest</defaultvalue>
 				<categoryname>message.general.image</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<enableoptions>image_proxy_insecure_only,image_proxy_expiration,image_proxy_host_whitelist</enableoptions>
+				<enableoptions>image_proxy_insecure_only,image_proxy_enable_prune,image_proxy_expiration,image_proxy_host_whitelist</enableoptions>
 			</option>
 			<option name="image_proxy_insecure_only">
 				<categoryname>message.general.image</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="image_proxy_enable_prune">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions>image_proxy_expiration</enableoptions>
 			</option>
 			<option name="image_proxy_expiration">
 				<categoryname>message.general.image</categoryname>
@@ -1475,6 +1481,11 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 				<options>module_trophy</options>
+			</option>
+			<option name="message_sidebar_enable_articles">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<option name="message_sidebar_user_options">
 				<categoryname>message.sidebar</categoryname>

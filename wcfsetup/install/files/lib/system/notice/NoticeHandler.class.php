@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\notice;
 use wcf\data\notice\Notice;
 use wcf\system\cache\builder\NoticeCacheBuilder;

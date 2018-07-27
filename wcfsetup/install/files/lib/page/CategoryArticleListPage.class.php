@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\page;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\CategoryArticleList;
@@ -51,6 +50,17 @@ class CategoryArticleListPage extends ArticleListPage {
 		$this->canonicalURL = LinkHandler::getInstance()->getLink('CategoryArticleList', [
 			'object' => $this->category
 		], ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
+		
+		if ($this->category->sortField) {
+			if ($this->category->sortField === 'title') {
+				$this->sortField = 'article_content.title';
+				$this->sortOrder = $this->category->sortOrder;
+			}
+			else {
+				$this->sortField = $this->category->sortField;
+				$this->sortOrder = $this->category->sortOrder;
+			}
+		}
 	}
 	
 	/**
@@ -70,6 +80,12 @@ class CategoryArticleListPage extends ArticleListPage {
 	 */
 	protected function initObjectList() {
 		$this->objectList = new CategoryArticleList($this->categoryID, true);
+		if ($this->category->sortField === 'title') {
+			$this->objectList->sqlJoins .= ' LEFT JOIN wcf' . WCF_N . '_article_content article_content ON (article_content.articleID = article.articleID AND (
+				article_content.languageID IS NULL
+				OR article_content.languageID = ' . WCF::getLanguage()->languageID . '
+			))';
+		}
 		
 		$this->applyFilters();
 	}

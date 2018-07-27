@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\message\embedded\object;
 use wcf\data\media\Media;
 use wcf\data\media\MediaList;

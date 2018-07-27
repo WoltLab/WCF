@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\comment\manager;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\article\content\ArticleContentList;

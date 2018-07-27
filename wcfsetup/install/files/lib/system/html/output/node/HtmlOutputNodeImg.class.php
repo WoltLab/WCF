@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\html\output\node;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
@@ -49,7 +48,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 					// enforce database values for src, srcset and style
 					$element->setAttribute('src', $smiley->getURL());
 					
-					if ($smiley->getHeight()) $element->setAttribute('height', $smiley->getHeight());
+					if ($smiley->getHeight()) $element->setAttribute('height', (string)$smiley->getHeight());
 					else $element->removeAttribute('height');
 					
 					if ($smiley->smileyPath2x) $element->setAttribute('srcset', $smiley->getURL2x() . ' 2x');
@@ -238,6 +237,6 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 		}
 		
 		$host = Url::parse($src)['host'];
-		return in_array($host, $ownDomains);
+		return !$host || in_array($host, $ownDomains);
 	}
 }

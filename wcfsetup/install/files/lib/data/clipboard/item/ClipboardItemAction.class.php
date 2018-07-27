@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\clipboard\item;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\clipboard\ClipboardEditorItem;
@@ -152,7 +151,8 @@ class ClipboardItemAction extends AbstractDatabaseObjectAction {
 		foreach ($data as $typeName => $itemData) {
 			$items = [
 				'label' => $itemData['label'],
-				'items' => []
+				'items' => [],
+				'reloadPageOnSuccess' => $itemData['reloadPageOnSuccess']
 			];
 			
 			/** @var ClipboardEditorItem $item */

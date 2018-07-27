@@ -1,10 +1,13 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\article;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\article\discussion\CommentArticleDiscussionProvider;
+use wcf\system\article\discussion\IArticleDiscussionProvider;
+use wcf\system\article\discussion\VoidArticleDiscussionProvider;
 use wcf\system\WCF;
 
 /**
@@ -64,6 +67,12 @@ class Article extends DatabaseObject implements ILinkableObject {
 	 * @var ArticleCategory
 	 */
 	protected $category;
+	
+	/**
+	 * @var IArticleDiscussionProvider
+	 * @since 3.2
+	 */
+	protected $discussionProvider;
 	
 	/**
 	 * Returns true if the active user can delete this article.
@@ -240,5 +249,70 @@ class Article extends DatabaseObject implements ILinkableObject {
 		}
 		
 		return $this->category;
+	}
+	
+	/**
+	 * Sets the discussion provider for this article.
+	 * 
+	 * @param       IArticleDiscussionProvider      $discussionProvider
+	 * @since       3.2
+	 */
+	public function setDiscussionProvider(IArticleDiscussionProvider $discussionProvider) {
+		$this->discussionProvider = $discussionProvider;
+	}
+	
+	/**
+	 * Returns the responsible discussion provider for this article.
+	 * 
+	 * @return      IArticleDiscussionProvider
+	 * @since       3.2
+	 */
+	public function getDiscussionProvider() {
+		if ($this->discussionProvider === null) {
+			foreach (self::getAllDiscussionProviders() as $discussionProvider) {
+				if (call_user_func([$discussionProvider, 'isResponsible'], $this)) {
+					$this->setDiscussionProvider(new $discussionProvider($this));
+					break;
+				}
+			}
+			
+			if ($this->discussionProvider === null) {
+				throw new \RuntimeException('No discussion provider has claimed to be responsible for the article #' . $this->articleID);
+			}
+		}
+		
+		return $this->discussionProvider;
+	}
+	
+	/**
+	 * Returns the list of the available discussion providers.
+	 * 
+	 * @return      string[]
+	 * @since       3.2
+	 */
+	public static function getAllDiscussionProviders(): array {
+		/** @var string[] $discussionProviders */
+		static $discussionProviders;
+		
+		if ($discussionProviders === null) {
+			$discussionProviders = [];
+			
+			$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.article.discussionProvider');
+			$commentProvider = '';
+			foreach ($objectTypes as $objectType) {
+				// the comment and the "void" provider should always be the last in the list
+				if ($objectType->className === CommentArticleDiscussionProvider::class) {
+					$commentProvider = $objectType->className;
+					continue;
+				}
+				
+				$discussionProviders[] = $objectType->className;
+			}
+			
+			$discussionProviders[] = $commentProvider;
+			$discussionProviders[] = VoidArticleDiscussionProvider::class;
+		}
+		
+		return $discussionProviders;
 	}
 }

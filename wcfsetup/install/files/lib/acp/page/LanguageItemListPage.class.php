@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\acp\page;
 use wcf\data\language\category\LanguageCategoryList;
 use wcf\data\language\item\LanguageItemList;

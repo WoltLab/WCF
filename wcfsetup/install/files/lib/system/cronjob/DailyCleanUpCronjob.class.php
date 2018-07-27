@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\object\type\ObjectTypeCache;
@@ -177,7 +176,7 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 		}
 		
 		// clean up proxy images
-		if (MODULE_IMAGE_PROXY) {
+		if (MODULE_IMAGE_PROXY && IMAGE_PROXY_ENABLE_PRUNE) {
 			$it = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(WCF_DIR.'images/proxy/', \FilesystemIterator::SKIP_DOTS), \RecursiveIteratorIterator::CHILD_FIRST);
 			foreach ($it as $file) {
 				if ($file->getPathname() === WCF_DIR.'images/proxy/.htaccess') continue;

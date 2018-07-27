@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\user;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyCache;
@@ -599,7 +598,17 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 			break;
 			
 			case self::ACCESS_FOLLOWING:
-				$data['result'] = ($this->isFollowing(WCF::getUser()->userID) ? true : false);
+				$result = false;
+				if (WCF::getUser()->userID) {
+					if (WCF::getUser()->userID == $this->userID) {
+						$result = true;
+					}
+					else if ($this->isFollowing(WCF::getUser()->userID)) {
+						$result = true;
+					}
+				}
+				
+				$data['result'] = $result;
 			break;
 			
 			case self::ACCESS_NOBODY:

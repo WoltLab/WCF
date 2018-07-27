@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\user\online\location;
 use wcf\data\user\online\UserOnline;
 use wcf\system\SingletonFactory;

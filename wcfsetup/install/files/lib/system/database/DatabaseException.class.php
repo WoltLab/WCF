@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\database;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\exception\SystemException;

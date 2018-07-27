@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\user\notification\object;
 use wcf\data\user\follow\UserFollow;
 use wcf\data\DatabaseObjectDecorator;

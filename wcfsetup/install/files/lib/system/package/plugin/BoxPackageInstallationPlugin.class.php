@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\package\plugin;
 use wcf\data\box\Box;
 use wcf\data\box\BoxEditor;
@@ -343,7 +342,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 					
 					if ($languageID === null) {
 						$statement->execute([$boxID]);
-						if ($statement->fetchColumn()) continue;
+						if ($statement->fetchSingleColumn()) continue;
 					}
 					
 					$boxContent = isset($content['content']) ? $content['content'] : '';

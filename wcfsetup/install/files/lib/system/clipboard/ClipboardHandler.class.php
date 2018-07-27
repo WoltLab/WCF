@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\clipboard;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
@@ -371,7 +370,8 @@ class ClipboardHandler extends SingletonFactory {
 			if (!isset($editorData[$typeName])) {
 				$editorData[$typeName] = [
 					'label' => $clipboardAction->getEditorLabel($this->markedItems[$typeName]),
-					'items' => []
+					'items' => [],
+					'reloadPageOnSuccess' => $clipboardAction->getReloadPageOnSuccess()
 				];
 			}
 			

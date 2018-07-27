@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\article\category;
 use wcf\data\category\AbstractDecoratedCategory;
 use wcf\data\label\group\ViewableLabelGroup;
@@ -28,6 +27,8 @@ use wcf\system\WCF;
  * @method		ArticleCategory		getParentCategory()
  * @method		ArticleCategory[]	getParentCategories()
  * @method static	ArticleCategory|null	getCategory($categoryID)
+ * @property-read       string                  $sortField
+ * @property-read       string                  $sortOrder
  */
 class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleObject, ITitledLinkObject {
 	/**

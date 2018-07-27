@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\box;
 use wcf\data\box\content\BoxContent;
 use wcf\data\DatabaseObjectDecorator;

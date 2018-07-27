@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\importer;
 use wcf\data\poll\option\PollOption;
 use wcf\data\poll\option\PollOptionEditor;

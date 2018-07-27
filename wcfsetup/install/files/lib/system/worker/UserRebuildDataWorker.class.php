@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\worker;
 use wcf\data\like\Like;
 use wcf\data\user\avatar\UserAvatar;
@@ -71,10 +70,21 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 			// update activity points
 			UserActivityPointHandler::getInstance()->updateUsers($userIDs);
 			
+			// update article counter
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('user_table.userID IN (?)', [$userIDs]);
+			$sql = "UPDATE  wcf".WCF_N."_user user_table
+				SET     articles = (
+						SELECT  COUNT(*)
+						FROM    wcf".WCF_N."_article
+						WHERE   userID = user_table.userID
+					)
+				".$conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			
 			// update like counter
 			if (MODULE_LIKE) {
-				$conditionBuilder = new PreparedStatementConditionBuilder();
-				$conditionBuilder->add('user_table.userID IN (?)', [$userIDs]);
 				$sql = "UPDATE	wcf".WCF_N."_user user_table
 					SET	likesReceived = (
 							SELECT	COUNT(*)
@@ -89,8 +99,6 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 			
 			// update trophy points
 			if (MODULE_TROPHY) {
-				$conditionBuilder = new PreparedStatementConditionBuilder();
-				$conditionBuilder->add('user_table.userID IN (?)', [$userIDs]);
 				$sql = "UPDATE	wcf".WCF_N."_user user_table
 					SET	trophyPoints = (
 							SELECT		COUNT(*)

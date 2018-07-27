@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\box;
 use wcf\data\box\Box;
 use wcf\data\media\ViewableMedia;
@@ -69,6 +68,16 @@ interface IBoxController {
 	 * Saves additional box data for box set via `setBox()`.
 	 */
 	public function saveAdditionalData();
+	
+	/**
+	 * Returns the title of this box, the special value `null` can be returned to
+	 * apply the default behavior as seen in previous versions. Only supported for
+	 * system-type boxes.
+	 * 
+	 * @return      string|null
+	 * @since       3.2
+	 */
+	public function getTitle();
 	
 	/**
 	 * Returns a list of supported box positions.

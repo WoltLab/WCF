@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\user;
 use wcf\system\cache\builder\UserBirthdayCacheBuilder;
 use wcf\system\event\EventHandler;

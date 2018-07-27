@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\contact\option;
 use wcf\data\custom\option\CustomOptionEditor;
 use wcf\data\IEditableCachedObject;

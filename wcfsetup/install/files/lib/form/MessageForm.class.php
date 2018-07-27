@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\form;
 use wcf\data\language\Language;
 use wcf\data\smiley\category\SmileyCategory;

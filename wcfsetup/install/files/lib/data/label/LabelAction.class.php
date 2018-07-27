@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\label;
 use wcf\data\language\item\LanguageItemAction;
 use wcf\data\AbstractDatabaseObjectAction;

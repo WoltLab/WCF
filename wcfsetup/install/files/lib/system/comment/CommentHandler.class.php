@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\comment;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\CommentEditor;

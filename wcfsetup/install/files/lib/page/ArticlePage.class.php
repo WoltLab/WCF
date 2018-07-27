@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\page;
 use wcf\data\article\CategoryArticleList;
 use wcf\data\article\ViewableArticle;
@@ -139,12 +138,14 @@ class ArticlePage extends AbstractArticlePage {
 		WCF::getTPL()->assign([
 			'previousArticle' => $this->previousArticle,
 			'nextArticle' => $this->nextArticle,
-			'commentCanAdd' => WCF::getSession()->getPermission('user.article.canAddComment'),
-			'commentList' => $this->commentList,
-			'commentObjectTypeID' => $this->commentObjectTypeID,
-			'lastCommentTime' => $this->commentList ? $this->commentList->getMinCommentTime() : 0,
-			'likeData' => (MODULE_LIKE && $this->commentList) ? $this->commentList->getLikeData() : [],
-			'articleLikeData' => $this->articleLikeData
+			'articleLikeData' => $this->articleLikeData,
+			
+			// nullified values for backwards-compatibility
+			'commentCanAdd' => 0,
+			'commentList' => null,
+			'commentObjectTypeID' => 0,
+			'lastCommentTime' => 0,
+			'likeData' => [],
 		]);
 	}
 }

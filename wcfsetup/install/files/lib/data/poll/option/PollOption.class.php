@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\poll\option;
 use wcf\data\poll\Poll;
 use wcf\data\DatabaseObject;

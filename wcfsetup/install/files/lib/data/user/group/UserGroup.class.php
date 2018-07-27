@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\data\user\group;
 use wcf\data\user\User;
 use wcf\data\DatabaseObject;
@@ -199,7 +198,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	 */
 	public static function isAccessibleGroup(array $groupIDs = []) {
 		if (self::$accessibleGroups === null) {
-			self::$accessibleGroups = explode(',', WCF::getSession()->getPermission('admin.user.accessibleGroups'));
+			self::$accessibleGroups = explode(',', WCF::getSession()->getPermission('admin.user.accessibleGroups') ?: '');
 		}
 		
 		if (empty($groupIDs)) return false;

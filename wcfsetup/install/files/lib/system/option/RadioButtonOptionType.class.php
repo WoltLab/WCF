@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\data\user\User;
@@ -17,7 +16,7 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
-class RadioButtonOptionType extends AbstractOptionType implements ISearchableConditionUserOption {
+class RadioButtonOptionType extends AbstractOptionType implements ISearchableConditionUserOption, ISelectOptionOptionType {
 	/**
 	 * name of the template that contains the form element of this option type
 	 * @var	string
