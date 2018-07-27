@@ -19,5 +19,5 @@ interface ICustomIconSearchResultObject extends ISearchResultObject {
 	 * 
 	 * @return      string
 	 */
-	public function getCustomSearchResultIcon(): string;
+	public function getCustomSearchResultIcon();
 }

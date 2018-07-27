@@ -37,15 +37,15 @@ class HtmlTocItem implements \Countable, \RecursiveIterator {
 		$this->title = $title;
 	}
 	
-	public function getID(): string {
+	public function getID() {
 		return $this->id;
 	}
 	
-	public function getLevel(): int {
+	public function getLevel() {
 		return $this->level;
 	}
 	
-	public function getTitle(): string {
+	public function getTitle() {
 		return $this->title;
 	}
 	
@@ -69,7 +69,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator {
 		$this->depth = $depth;
 	}
 	
-	public function getDepth(): int {
+	public function getDepth() {
 		return $this->depth;
 	}
 	
@@ -78,7 +78,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator {
 	 *
 	 * @return        integer
 	 */
-	public function count(): int {
+	public function count() {
 		return count($this->children);
 	}
 	
@@ -87,7 +87,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator {
 	 *
 	 * @return        bool
 	 */
-	public function isLastSibling(): bool {
+	public function isLastSibling() {
 		foreach ($this->getParent() as $key => $child) {
 			if ($child === $this) {
 				return ($key === count($this->getParent()) - 1);
@@ -102,7 +102,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator {
 	 *
 	 * @return        int
 	 */
-	public function getOpenParentNodes(): int {
+	public function getOpenParentNodes() {
 		$element = $this;
 		$i = 0;
 		
@@ -124,7 +124,7 @@ class HtmlTocItem implements \Countable, \RecursiveIterator {
 	/**
 	 * @inheritDoc
 	 */
-	public function valid(): bool {
+	public function valid() {
 		return isset($this->children[$this->position]);
 	}
 	
@@ -138,32 +138,32 @@ class HtmlTocItem implements \Countable, \RecursiveIterator {
 	/**
 	 * @inheritDoc
 	 */
-	public function current(): HtmlTocItem {
+	public function current() {
 		return $this->children[$this->position];
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function key(): int {
+	public function key() {
 		return $this->position;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getChildren(): HtmlTocItem {
+	public function getChildren() {
 		return $this->children[$this->position];
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function hasChildren(): bool {
+	public function hasChildren() {
 		return count($this->children) > 0;
 	}
 	
-	public function getIterator(): \RecursiveIteratorIterator {
+	public function getIterator() {
 		return new \RecursiveIteratorIterator($this, \RecursiveIteratorIterator::SELF_FIRST);
 	}
 }

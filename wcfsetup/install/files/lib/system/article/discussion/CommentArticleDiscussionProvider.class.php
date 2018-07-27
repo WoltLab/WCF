@@ -17,21 +17,21 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
 	/**
 	 * @inheritDoc
 	 */
-	public function getDiscussionCount(): int {
+	public function getDiscussionCount() {
 		return $this->article->comments;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function getDiscussionCountPhrase(): string {
+	public function getDiscussionCountPhrase() {
 		return WCF::getLanguage()->getDynamicVariable('wcf.article.articleComments', ['article' => $this->article]);
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function renderDiscussions(): string {
+	public function renderDiscussions() {
 		$commentCanAdd = WCF::getSession()->getPermission('user.article.canAddComment');
 		$commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.articleComment');
 		$commentManager = CommentHandler::getInstance()->getObjectType($commentObjectTypeID)->getProcessor();
@@ -51,7 +51,7 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
 	/**
 	 * @inheritDoc
 	 */
-	public static function isResponsible(Article $article): bool {
+	public static function isResponsible(Article $article) {
 		return !!$article->enableComments;
 	}
 }
