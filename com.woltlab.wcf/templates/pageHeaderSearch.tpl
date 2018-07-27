@@ -20,14 +20,8 @@
 
 {event name='settings'}
 
-<div id="pageHeaderSearch" class="pageHeaderSearch" itemscope itemtype="http://schema.org/WebSite" itemid="{link}{/link}">
-	<meta itemprop="url" content="{link}{/link}">
-	<meta itemprop="name" content="{PAGE_TITLE|language}">
-	<meta itemprop="description" content="{PAGE_DESCRIPTION|language}">
-	
-	<form method="post" action="{@$__searchLink}" itemprop="potentialAction" itemscope itemtype="http://schema.org/SearchAction">
-		<meta itemprop="target" content="{link controller='Search'}q={/link}{literal}{q}{/literal}">
-		
+<div id="pageHeaderSearch" class="pageHeaderSearch">
+	<form method="post" action="{@$__searchLink}">
 		<div id="pageHeaderSearchInputContainer" class="pageHeaderSearchInputContainer">
 			<div class="pageHeaderSearchType dropdown">
 				<a href="#" class="button dropdownToggle">{@$__searchTypeLabel}</a>
@@ -54,7 +48,7 @@
 				</ul>
 			</div>
 			
-			<input itemprop="query-input" type="search" name="q" id="pageHeaderSearchInput" class="pageHeaderSearchInput" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" value="{if $query|isset}{$query}{/if}" required>
+			<input type="search" name="q" id="pageHeaderSearchInput" class="pageHeaderSearchInput" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" value="{if $query|isset}{$query}{/if}" required>
 			
 			<button class="pageHeaderSearchInputButton button" type="submit">
 				<span class="icon icon16 fa-search pointer" title="{lang}wcf.global.search{/lang}"></span>
