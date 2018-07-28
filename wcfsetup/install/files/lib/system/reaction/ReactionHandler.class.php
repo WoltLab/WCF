@@ -70,7 +70,9 @@ class ReactionHandler extends SingletonFactory {
 			$returnValues[$reaction->reactionTypeID] = [
 				'title' => $reaction->getTitle(), 
 				'renderedIcon' => $reaction->renderIcon(), 
-				'iconPath' => $reaction->getIconPath()
+				'iconPath' => $reaction->getIconPath(), 
+				'showOrder' => $reaction->showOrder, 
+				'reactionTypeID' => $reaction->reactionTypeID
 			];
 		}
 		

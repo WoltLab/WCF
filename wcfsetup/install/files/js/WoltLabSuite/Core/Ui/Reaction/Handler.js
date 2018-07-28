@@ -180,14 +180,16 @@ define(
 					
 					var popoverContentHTML = elCreate('ul');
 					
-					for (var key in REACTION_TYPES) {
-						if (!REACTION_TYPES.hasOwnProperty(key)) continue;
+					var sortedReactionTypes = this._getSortedReactionTypes();
+					
+					for (var key in sortedReactionTypes) {
+						if (!sortedReactionTypes.hasOwnProperty(key)) continue;
 						
-						var reactionType = REACTION_TYPES[key];
+						var reactionType = sortedReactionTypes[key];
 						
 						var reactionTypeItem = elCreate('li');
 						reactionTypeItem.className = 'reactionTypeButton jsTooltip';
-						elData(reactionTypeItem, 'reaction-type-id', key);
+						elData(reactionTypeItem, 'reaction-type-id', reactionType.reactionTypeID);
 						elData(reactionTypeItem, 'title', reactionType.title);
 						reactionTypeItem.title = reactionType.title;
 						
@@ -221,9 +223,27 @@ define(
 			},
 			
 			/**
+			 * Sort the reaction types by the showOrder field. 
+			 * 
+			 * @returns     {Array}         the reaction types sorted by showOrder
+			 */
+			_getSortedReactionTypes: function() {
+				var sortedReactionTypes = [];
+				
+				for (var key in REACTION_TYPES) {
+					if (!REACTION_TYPES.hasOwnProperty(key)) continue;
+					var reactionType = REACTION_TYPES[key];
+					
+					sortedReactionTypes[reactionType.showOrder] = reactionType;
+				}
+				
+				return sortedReactionTypes;
+			},
+			
+			/**
 			 * Closes the react popover. 
 			 */
-			_closePopover: function(objectId, element) {
+			_closePopover: function() {
 				if (this._popoverCurrentObjectId !== 0) {
 					this._getPopover().classList.remove('active');
 					
