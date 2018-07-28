@@ -201,7 +201,7 @@ define(
 						
 						reactionTypeItem.appendChild(reactionTypeItemSpan);
 						
-						reactionTypeItem.addEventListener(WCF_CLICK_EVENT, this._react.bind(this, key));
+						reactionTypeItem.addEventListener(WCF_CLICK_EVENT, this._react.bind(this, reactionType.reactionTypeID));
 						
 						popoverContentHTML.appendChild(reactionTypeItem);
 					}
