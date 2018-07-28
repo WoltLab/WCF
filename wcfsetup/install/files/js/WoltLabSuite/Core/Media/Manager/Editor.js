@@ -358,9 +358,11 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 			var buttons = elBySel('nav.buttonGroupNavigation > ul', mediaElement);
 			
 			var listItem = elCreate('li');
+			listItem.className = 'jsMediaInsertButton';
+			elData(listItem, 'object-id', media.mediaID);
 			buttons.appendChild(listItem);
 			
-			listItem.innerHTML = '<a><span class="icon icon16 fa-plus jsTooltip jsMediaInsertButton" data-object-id="' + media.mediaID + '" title="' + Language.get('wcf.media.button.insert') + '"></span> <span class="invisible">' + Language.get('wcf.media.button.insert') + '</span></a>';
+			listItem.innerHTML = '<a><span class="icon icon16 fa-plus jsTooltip" title="' + Language.get('wcf.media.button.insert') + '"></span> <span class="invisible">' + Language.get('wcf.media.button.insert') + '</span></a>';
 		}
 	});
 	
