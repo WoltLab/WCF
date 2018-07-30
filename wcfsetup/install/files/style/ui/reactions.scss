@@ -113,3 +113,71 @@ li.reactCountButton:hover {
 		padding: 0px;
 	}
 }
+
+.reactionStatusContainer {
+	margin-top: 10px;
+	
+	.positiveReactionCount {
+		color: $wcfStatusSuccessText;
+		
+		.fa {
+			color: $wcfStatusSuccessText;
+		}
+	}
+	
+	.negativeReactionCount {
+		color: $wcfStatusErrorText;
+		
+		.fa {
+			color: $wcfStatusErrorText;
+		}
+	}
+	
+	.neutralReactionCount {
+		color: $wcfStatusSuccessText;
+		
+		.fa {
+			color: $wcfStatusSuccessText;
+		}
+	}
+}
+
+.box.reactionReputationBox {
+	&.positiveReactionReputationBox {
+		background-color: $wcfStatusSuccessBackground;
+		color: $wcfStatusSuccessText;
+		
+		.fa {
+			color: $wcfStatusSuccessText;
+		}
+		
+		.boxTitle > a {
+			color: $wcfStatusSuccessText;
+		}
+	}
+	
+	&.negativeReactionReputationBox {
+		background-color: $wcfStatusErrorBackground;
+		color: $wcfStatusErrorText;
+		
+		.fa {
+			color: $wcfStatusErrorText;
+		}
+		
+		.boxTitle > a {
+			color: $wcfStatusErrorText;
+		}
+	}
+	
+	.boxContent {
+		@include wcfFontHeadline;
+		
+		text-align: center;
+	}
+}
+
+@include screen-sm-down {
+	.reactionStatusContainer {
+		display: none;
+	}
+}

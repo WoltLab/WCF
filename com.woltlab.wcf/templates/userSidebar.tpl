@@ -1,4 +1,22 @@
 {if !$user->isProtected()}
+	{if MODULE_LIKE}
+		{assign var=reactionReputation value=$user->positiveReactionsReceived - $user->negativeReactionsReceived}
+		<section class="box reactionReputationBox {if $reactionReputation >= 0}positiveReactionReputationBox{else}negativeReactionReputationBox{/if}" data-static-box-identifier="com.woltlab.wcf.ReactionReputation">
+			<h2 class="boxTitle"><a href="{link controller='User' object=$user}{/link}#likes">Reputation</a></h2>
+			
+			<div class="boxContent">
+				{if $reactionReputation > 0}
+					<span class="positiveReactionCount"><span class="fa fa-plus-circle icon32"></span> {#$reactionReputation}</span>
+				{elseif $reactionReputation < 0}
+					{assign var=reactionReputation value=$reactionReputation*-1}
+					<span class="negativeReactionCount"><span class="fa fa-minus-circle icon32"></span> {#$reactionReputation}</span>
+				{else}
+					<span class="neutralReactionCount"><span class="fa fa-plus-circle icon32"></span> {#$reactionReputation}</span>
+				{/if}
+			</div>
+		</section>
+	{/if}
+	
 	{if $followingCount}
 		<section class="box" data-static-box-identifier="com.woltlab.wcf.UserProfileFollowing">
 			<h2 class="boxTitle">{lang}wcf.user.profile.following{/lang} <span class="badge">{#$followingCount}</span></h2>

@@ -3055,7 +3055,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.like.button.like"><![CDATA[Like]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Dislike]]></item>
 		<item name="wcf.like.likesReceived"><![CDATA[Likes Received]]></item>
-		<item name="wcf.like.showLikesReceived"><![CDATA[Likes Received by {$user->username}]]></item>
+		<item name="wcf.like.showLikesReceived"><![CDATA[Reactions Received by {$user->username}]]></item>
 		<item name="wcf.like.likesGiven"><![CDATA[Likes Given]]></item>
 		<item name="wcf.like.dislikesReceived"><![CDATA[Dislikes Received]]></item>
 		<item name="wcf.like.dislikesGiven"><![CDATA[Dislikes Given]]></item>
@@ -3081,6 +3081,8 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.like.reaction.more"><![CDATA[More Reactions]]></item>
 		<item name="wcf.like.reactionsReceived"><![CDATA[Reactions Received]]></item>
 		<item name="wcf.like.reactionsGiven"><![CDATA[Reactions Given]]></item>
+		<item name="wcf.like.reactionReputation"><![CDATA[Reputation from Reactions]]></item>
+		<item name="wcf.like.reputation"><![CDATA[Reputation]]></item>
 	</category>
 	
 	<category name="wcf.map">

@@ -3110,7 +3110,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.like.button.like"><![CDATA[Gefällt mir]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Gefällt mir nicht]]></item>
 		<item name="wcf.like.likesReceived"><![CDATA[Erhaltene Likes]]></item>
-		<item name="wcf.like.showLikesReceived"><![CDATA[Erhaltene Likes von {$user->username}]]></item>
+		<item name="wcf.like.showLikesReceived"><![CDATA[Erhaltene Reaktionen von {$user->username}]]></item>
 		<item name="wcf.like.likesGiven"><![CDATA[Vergebene Likes]]></item>
 		<item name="wcf.like.dislikesReceived"><![CDATA[Erhaltene Dislikes]]></item>
 		<item name="wcf.like.dislikesGiven"><![CDATA[Vergebene Dislikes]]></item>
@@ -3136,6 +3136,8 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.like.reaction.more"><![CDATA[Weitere Reaktionen]]></item>
 		<item name="wcf.like.reactionsReceived"><![CDATA[Erhaltene Reaktionen]]></item>
 		<item name="wcf.like.reactionsGiven"><![CDATA[Vergebene Reaktionen]]></item>
+		<item name="wcf.like.reactionReputation"><![CDATA[Reputation aus Raktionen]]></item>
+		<item name="wcf.like.reputation"><![CDATA[Reputation]]></item>
 	</category>
 	
 	<category name="wcf.map">
