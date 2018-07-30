@@ -46,6 +46,8 @@ class CronjobScheduler extends SingletonFactory {
 			return;
 		}
 		
+		$this->resetFailedCronjobs();
+		
 		// get outstanding cronjobs
 		$this->loadCronjobs();
 		
