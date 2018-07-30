@@ -13,6 +13,7 @@ use wcf\system\condition\ConditionHandler;
 use wcf\data\page\Page;
 use wcf\data\page\PageCache;
 use wcf\data\DatabaseObject;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\page\handler\ILookupPageHandler;
 use wcf\system\page\handler\IMenuPageHandler;
@@ -260,6 +261,12 @@ class Box extends DatabaseObject {
 	 * @return	string
 	 */
 	public function render() {
+		$data = [];
+		EventHandler::getInstance()->fireAction($this, 'beforeRender', $data);
+		
+		// an event decided to return something
+		if ($data['box']) return $data['box'];
+		
 		if (!$this->hasContent()) return '';
 		
 		WCF::getTPL()->assign([
