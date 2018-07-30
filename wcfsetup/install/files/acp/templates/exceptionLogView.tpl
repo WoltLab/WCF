@@ -96,7 +96,7 @@
 				</dl>
 				<dl>
 					<dt>{lang}wcf.acp.exceptionLog.exception.memory{/lang}</dt>
-					<dd>{$exception[peakMemory]|filesizeBinary} / {$exception[maxMemory]|filesizeBinary}</dd>
+					<dd>{$exception[peakMemory]|filesizeBinary} / {if $exception[maxMemory] == -1}&infin;{else}{$exception[maxMemory]|filesizeBinary}{/if}</dd>
 				</dl>
 				{foreach from=$exception[chain] item=chain}
 				<dl>

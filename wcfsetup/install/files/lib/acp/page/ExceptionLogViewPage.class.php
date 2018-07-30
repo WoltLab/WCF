@@ -139,7 +139,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 "Request URI: (?P<requestURI>.*?)\s*\n".
 "Referrer: (?P<referrer>.*?)\s*\n".
 "User Agent: (?P<userAgent>.*?)\s*\n".
-"Peak Memory Usage: (?<peakMemory>\d+)/(?<maxMemory>\d+)\s*\n".
+"Peak Memory Usage: (?<peakMemory>\d+)/(?<maxMemory>(?:\d+|-1))\s*\n".
 "(?<chain>======\n".
 ".*)", Regex::DOT_ALL);
 		$chainRegex = new Regex("======\n".
