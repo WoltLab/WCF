@@ -43,7 +43,7 @@ class Benchmark extends SingletonFactory {
 	 * Creates a new Benchmark object.
 	 */
 	protected function init() {
-		$this->startTime = self::getMicrotime();
+		$this->startTime = $_SERVER['REQUEST_TIME_FLOAT'];
 	}
 	
 	/**
