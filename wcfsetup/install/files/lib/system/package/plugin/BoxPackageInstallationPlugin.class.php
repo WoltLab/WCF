@@ -2,22 +2,49 @@
 namespace wcf\system\package\plugin;
 use wcf\data\box\Box;
 use wcf\data\box\BoxEditor;
+use wcf\data\box\BoxList;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\page\PageNode;
+use wcf\data\page\PageNodeTree;
+use wcf\system\box\AbstractDatabaseObjectListBoxController;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\system\devtools\pip\IDevtoolsPipEntryList;
+use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
+use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\container\TabFormContainer;
+use wcf\system\form\builder\container\TabMenuFormContainer;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\ItemListFormField;
+use wcf\system\form\builder\field\MultilineTextFormField;
+use wcf\system\form\builder\field\MultipleSelectionFormField;
+use wcf\system\form\builder\field\RadioButtonFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\TitleFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\IFormDocument;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes boxes.
  * 
- * @author	Alexander Ebert
+ * TODO: Finalize GUI implementation
+ * 
+ * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
  */
-class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
+class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
+	use TXmlGuiPackageInstallationPlugin;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -408,8 +435,312 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.1
 	 */
 	public static function getSyncDependencies() {
 		return ['language', 'objectType'];
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getAdditionalTemplateCode() {
+		return WCF::getTPL()->fetch('__boxPipGui');
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function addFormFields(IFormDocument $form) {
+		$tabContainter = TabMenuFormContainer::create('tabMenu');
+		$form->appendChild($tabContainter);
+		
+		$dataTab = TabFormContainer::create('dataTab')
+			->label('wcf.global.form.data');
+		$tabContainter->appendChild($dataTab);
+		$dataContainer = FormContainer::create('dataTabData');
+		$dataTab->appendChild($dataContainer);
+		
+		$contentTab = TabFormContainer::create('contentTab')
+			->label('wcf.acp.pip.box.content');
+		$tabContainter->appendChild($contentTab);
+		$contentContainer = FormContainer::create('contentTabContent');
+		$contentTab->appendChild($contentContainer);
+		
+		$dataContainer->appendChildren([
+			TextFormField::create('identifier')
+				->label('wcf.acp.pip.box.identifier')
+				->description('wcf.acp.pip.box.identifier.description')
+				->required()
+				->addValidator(ObjectTypePackageInstallationPlugin::getObjectTypeAlikeValueValidator(
+					'wcf.acp.pip.box.identifier',
+					4
+				))
+				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
+					if (
+						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
+						$this->editedEntry->getAttribute('identifier') !== $formField->getValue()
+					) {
+						$pageList = new BoxList();
+						$pageList->getConditionBuilder()->add('identifier = ?', [$formField->getValue()]);
+						
+						if ($pageList->countObjects() > 0) {
+							$formField->addValidationError(
+								new FormFieldValidationError(
+									'notUnique',
+									'wcf.acp.pip.box.identifier.error.notUnique'
+								)
+							);
+						}
+					}
+				})),
+			
+			TextFormField::create('name')
+				->label('wcf.acp.pip.box.name')
+				->description('wcf.acp.pip.box.name.description')
+				->required()
+				->i18n()
+				->i18nRequired()
+				->languageItemPattern('__NONE__'),
+			
+			RadioButtonFormField::create('boxType')
+				->label('wcf.acp.pip.box.boxType')
+				->description('wcf.acp.pip.box.boxType.description')
+				->options(array_combine(Box::$availableBoxTypes, Box::$availableBoxTypes)),
+			
+			SingleSelectionFormField::create('objectType')
+				->label('wcf.acp.pip.box.objectType')
+				->description('wcf.acp.pip.box.objectType.description')
+				->required()
+				->options(function() {
+					$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.boxController');
+					
+					$options = [];
+					foreach ($objectTypes as $objectType) {
+						$options[$objectType->objectType] = $objectType->objectType;
+					}
+					
+					asort($options);
+					
+					return $options;
+				}),
+			
+			SingleSelectionFormField::create('position')
+				->label('wcf.acp.pip.box.position')
+				->options(array_combine(Box::$availablePositions, Box::$availablePositions)),
+			
+			BooleanFormField::create('showHeader')
+				->label('wcf.acp.pip.box.showHeader'),
+			
+			BooleanFormField::create('visibleEverywhere')
+				->label('wcf.acp.pip.box.visibleEverywhere'),
+			
+			MultipleSelectionFormField::create('visibilityExceptions')
+				->label('wcf.acp.pip.box.visibilityExceptions.hiddenEverywhere')
+				->filterable()
+				->options(function() {
+					$pageNodeList = (new PageNodeTree())->getNodeList();
+					
+					$nestedOptions = [];
+					/** @var PageNode $pageNode */
+					foreach ($pageNodeList as $pageNode) {
+						$nestedOptions[] = [
+							'depth' => $pageNode->getDepth() - 1,
+							'label' => $pageNode->name,
+							'value' => $pageNode->identifier
+						];
+					}
+					
+					return $nestedOptions;
+				}, true),
+			
+			ItemListFormField::create('cssClassName')
+				->label('wcf.acp.pip.box.cssClassName')
+				->description('wcf.acp.pip.box.cssClassName.description')
+				->saveValueType(ItemListFormField::SAVE_VALUE_TYPE_SSV)
+		]);
+		
+		$contentContainer->appendChildren([
+			TitleFormField::create('title')
+				->label('wcf.acp.pip.box.content.title')
+				->required()
+				->i18n()
+				->i18nRequired()
+				->languageItemPattern('__NONE__'),
+			
+			MultilineTextFormField::create('contentContent')
+				->objectProperty('content')
+				->label('wcf.acp.pip.box.content.content')
+				->required()
+				->i18n()
+				->i18nRequired()
+				->languageItemPattern('__NONE__')
+		]);
+		
+		// add box controller-specific form fields 
+		foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.boxController') as $objectType) {
+			if (is_subclass_of($objectType->className, AbstractDatabaseObjectListBoxController::class)) {
+				/** @var AbstractDatabaseObjectListBoxController $boxController */
+				$boxController = new $objectType->className;
+				
+				$boxController->addPipGuiFormFields($form, $objectType->objectType);
+			}
+		}
+		
+		// add dependencies
+		
+		/** @var SingleSelectionFormField $boxType */
+		$boxType = $dataContainer->getNodeById('boxType');
+		
+		$dataContainer->getNodeById('objectType')->addDependency(
+			ValueFormFieldDependency::create('boxType')
+				->field($boxType)
+				->values(['system'])
+		);
+		
+		$contentContainer->getNodeById('contentContent')->addDependency(
+			ValueFormFieldDependency::create('pageType')
+				->field($boxType)
+				->values(['system'])
+				->negate()
+		);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getElementData(\DOMElement $element, $saveData = false) {
+		$data = [
+			'boxType' => $element->getElementsByTagName('boxType')->item(0)->nodeValue,
+			'content' => [],
+			'identifier' => $element->getAttribute('identifier'),
+			'name' => [],
+			'originIsSystem' => 1,
+			'packageID' => $this->installation->getPackageID(),
+			'position' => $element->getElementsByTagName('position')->item(0)->nodeValue,
+			'title' => []
+		];
+		
+		/** @var \DOMElement $name */
+		foreach ($element->getElementsByTagName('name') as $name) {
+			$data['name'][LanguageFactory::getInstance()->getLanguageByCode($name->getAttribute('language'))->languageID] = $name->nodeValue;
+		}
+		
+		foreach (['objectType'] as $optionalElementName) {
+			$optionalElement = $element->getElementsByTagName($optionalElementName)->item(0);
+			if ($optionalElement !== null) {
+				$data[$optionalElementName] = $optionalElement->nodeValue;
+			}
+		}
+		
+		// TODO: rest
+		
+		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getElementIdentifier(\DOMElement $element) {
+		return $element->getAttribute('identifier');
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
+		$entryList->setKeys([
+			'identifier' => 'wcf.acp.pip.box.identifier',
+			'boxType' => 'wcf.acp.pip.box.boxType'
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function sortDocument(\DOMDocument $document) {
+		$this->sortImportDelete($document);
+		
+		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
+			return strcmp(
+				$element1->getAttribute('identifier'),
+				$element2->getAttribute('identifier')
+			);
+		};
+		
+		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+		$formData = $form->getData();
+		
+		if ($formData['data']['identifier'] === 'com.woltlab.wcf.MainMenu') {
+			$formData['data']['boxPosition'] = 'mainMenu';
+		}
+		
+		$box = $document->createElement($this->tagName);
+		$box->setAttribute('identifier', $formData['data']['identifier']);
+		
+		foreach ($formData['name_i18n'] as $languageID => $name) {
+			$nameElement = $document->createElement('name', $this->getAutoCdataValue($name));
+			$nameElement->setAttribute('language', LanguageFactory::getInstance()->getLanguage($languageID)->languageCode);
+			
+			$box->appendChild($nameElement);
+		}
+		
+		$box->appendChild($document->createElement('boxType', $formData['data']['boxType']));
+		
+		foreach ($formData['data'] as $property => $value) {
+			if (!in_array($property, self::$reservedTags) && $value !== null) {
+				$box->appendChild($document->createElement($property, (string)$value));
+			}
+		}
+		
+		foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+			$content = null;
+			
+			foreach (['title', 'content'] as $property) {
+				if (!empty($formData[$property . '_i18n'][$language->languageID])) {
+					if ($content === null) {
+						$content = $document->createElement('content');
+						$content->setAttribute('language', $language->languageCode);
+						
+						$box->appendChild($content);
+					}
+					
+					if ($property === 'content') {
+						$contentContent = $document->createElement('content');
+						$contentContent->appendChild(
+							$document->createCDATASection(
+								StringUtil::escapeCDATA(StringUtil::unifyNewlines(
+									$formData[$property . '_i18n'][$language->languageID]
+								))
+							)
+						);
+						
+						$content->appendChild($contentContent);
+					}
+					else {
+						$content->appendChild(
+							$document->createElement(
+								$property,
+								$formData[$property . '_i18n'][$language->languageID]
+							)
+						);
+					}
+				}
+			}
+		}
 	}
 }

@@ -2059,6 +2059,27 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.clipboardAction.showOrder.description"><![CDATA[The entered value determines in which order the clipboard actions for the same clipboard action class are shown.]]></item>
 		<item name="wcf.acp.pip.clipboardAction.pages"><![CDATA[Pages]]></item>
 		<item name="wcf.acp.pip.clipboardAction.pages.description"><![CDATA[The clipboard action is available on the entered pages.]]></item>
+		<item name="wcf.acp.pip.box.position"><![CDATA[Position]]></item>
+		<item name="wcf.acp.pip.box.boxType"><![CDATA[Box Type]]></item>
+		<item name="wcf.acp.pip.box.boxType.description"><![CDATA[The content of “text” boxes can be edited by administrators using the built-in WYSIWYG editor. “html” boxes addditionally allow HTML code and “tpl” boxes also template scripting. The content of “system” boxes cannot be edited by administrators as their content is provided by the boxes' controller.]]></item>
+		<item name="wcf.acp.pip.box.objectType"><![CDATA[Box Controller]]></item>
+		<item name="wcf.acp.pip.box.objectType.description"><![CDATA[The box controller provides the content of the box.]]></item>
+		<item name="wcf.acp.pip.box.identifier"><![CDATA[Box Identifier]]></item>
+		<item name="wcf.acp.pip.box.identifier.description"><![CDATA[The box identifier is used to update boxes. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier. Example: <code>com.foo.bar.Box</code>]]></item>
+		<item name="wcf.acp.pip.box.identifier.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
+		<item name="wcf.acp.pip.box.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another box.]]></item>
+		<item name="wcf.acp.pip.box.identifier.error.tooFewSegments"><![CDATA[The identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.pip.box.name"><![CDATA[Name]]></item>
+		<item name="wcf.acp.pip.box.name.description"><![CDATA[The box name is displayed in the ACP on the box list.]]></item>
+		<item name="wcf.acp.pip.box.showHeader"><![CDATA[Show Header]]></item>
+		<item name="wcf.acp.pip.box.visibleEverywhere"><![CDATA[Box Visible Everywhere]]></item>
+		<item name="wcf.acp.pip.box.visibilityExceptions.hiddenEverywhere"><![CDATA[Pages on Which the Box Will be Explicitly <strong>Visible</strong>]]></item>
+		<item name="wcf.acp.pip.box.visibilityExceptions.visibleEverywhere"><![CDATA[Pages on Which the Box Will be Explicitly <strong>Hidden</strong>]]></item>
+		<item name="wcf.acp.pip.box.cssClassName"><![CDATA[Box CSS Classes]]></item>
+		<item name="wcf.acp.pip.box.cssClassName.description"><![CDATA[The entered comma-separated CSS classes are assigned to the box element.]]></item>
+		<item name="wcf.acp.pip.box.content"><![CDATA[Box Contents]]></item>
+		<item name="wcf.acp.pip.box.content.title"><![CDATA[Box Title]]></item>
+		<item name="wcf.acp.pip.box.content.content"><![CDATA[Box Content]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
