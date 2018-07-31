@@ -470,5 +470,64 @@ XML;
 	 * @param	IFormDocument		$form
 	 * @return	\DOMElement
 	 */
-	abstract protected function writeEntry(\DOMDocument $document, IFormDocument $form); 
+	abstract protected function writeEntry(\DOMDocument $document, IFormDocument $form);
+	
+	/**
+	 * Returns a sort function for DOM elements using the list of attributes
+	 * and child elements by whose values the DOM elements are sorted.
+	 * 
+	 * @param	array	$sortParameters
+	 * @return	\Closure
+	 */
+	public static function getSortFunction(array $sortParameters) {
+		return function(\DOMElement $element1, \DOMElement $element2) use ($sortParameters) {
+			foreach ($sortParameters as $sortParameter) {
+				if (is_array($sortParameter)) {
+					$isAttribute = !empty($sortParameter['isAttribute']);
+					$name = $sortParameter['name'];
+					$missingLast = !empty($sortParameter['missingLast']);
+				}
+				else {
+					$isAttribute = false;
+					$name = $sortParameter;
+					$missingLast = true;
+				}
+				
+				$value1 = $value2 = null;
+				if ($isAttribute) {
+					$value1 = $element1->getAttribute($name);
+					$value2 = $element2->getAttribute($name);
+				}
+				else {
+					$value1Node = $element1->getElementsByTagName($name)->item(0);
+					if ($value1Node !== null) {
+						$value1 = $value1Node->nodeValue;
+					}
+					
+					$value2Node = $element2->getElementsByTagName($name)->item(0);
+					if ($value2Node !== null) {
+						$value2 = $value2Node->nodeValue;
+					}
+				}
+				
+				if ($value1 !== null) {
+					if ($value2 !== null) {
+						$compare = $value1 <=> $value2;
+						
+						if ($compare !== 0) {
+							return $compare;
+						}
+					}
+					else {
+						return $missingLast ? -1 : 1;
+					}
+				}
+				else if ($value2 !== null) {
+					return $missingLast ? 1 : -1;
+				}
+			}
+			
+			return -1;
+		};
+	}
 }
