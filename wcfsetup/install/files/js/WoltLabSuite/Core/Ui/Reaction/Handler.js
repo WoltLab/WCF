@@ -109,7 +109,8 @@ define(
 				elementData.reactButton = elBySel(this._options.buttonSelector, element);
 				
 				if (elementData.reactButton === null || elementData.reactButton.length === 0) {
-					throw new Error("[WoltLabSuite/Core/Ui/Reaction/Handler] Unable to find reactButton.");
+					// the element may have no react button 
+					return; 
 				}
 				
 				elementData.reactButton.addEventListener(WCF_CLICK_EVENT, this._toggleReactPopover.bind(this, elementData.objectId, elementData.reactButton));

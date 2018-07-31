@@ -66,6 +66,10 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 	public function validateGetReactionDetails() {
 		$this->validateObjectParameters();
 		
+		if (!WCF::getSession()->getPermission('user.like.canViewLike')) {
+			throw new PermissionDeniedException();
+		}
+		
 		$this->readInteger('reactionTypeID');
 		$this->readInteger('pageNo');
 		

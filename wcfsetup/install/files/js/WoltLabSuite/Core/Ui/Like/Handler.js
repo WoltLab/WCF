@@ -129,7 +129,7 @@ define(
 				isSummaryPosition = false;
 			}
 			
-			if (badgeContainer !== null) {
+			if (badgeContainer !== null && this._options.canViewSummary) {
 				summaryList = elCreate('ul');
 				summaryList.className = 'reactionSummaryList' + (isSummaryPosition ? ' likesSummary' : ' reactionSummaryListTiny') + ((isSummaryPosition && this._options.badgeClassNames) ? ' ' + this._options.badgeClassNames : '');
 				

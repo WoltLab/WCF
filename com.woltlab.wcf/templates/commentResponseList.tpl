@@ -48,7 +48,7 @@
 								<li class="jsReportCommentResponse jsOnly" data-object-id="{@$response->responseID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
 							{/if}
 							
-							<li class="jsOnly"><a href="#" class="reactButton jsTooltip" title="{lang}wcf.reactions.react{/lang}">{if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID}{@$__wcf->getReactionHandler()->getReactionTypeByID($likeData[response][$response->responseID]->reactionTypeID)->renderIcon()}{else}<img src="{$__wcf->getPath()}/images/reaction/reactionIcon.svg" class="reactionType">{/if} <span class="invisible">{lang}wcf.reactions.react{/lang}</span></a></li>
+							{if MODULE_LIKE && $__wcf->session->getPermission('user.like.canLike') && (LIKE_ALLOW_FOR_OWN_CONTENT || $response->userID != $__wcf->user->userID)}<li class="jsOnly"><a href="#" class="reactButton jsTooltip" title="{lang}wcf.reactions.react{/lang}">{if $likeData[response][$response->responseID]|isset && $likeData[response][$response->responseID]->reactionTypeID}{@$__wcf->getReactionHandler()->getReactionTypeByID($likeData[response][$response->responseID]->reactionTypeID)->renderIcon()}{else}<img src="{$__wcf->getPath()}/images/reaction/reactionIcon.svg" class="reactionType">{/if} <span class="invisible">{lang}wcf.reactions.react{/lang}</span></a></li>{/if}
 							
 							{event name='commentOptions'}
 						</ul>

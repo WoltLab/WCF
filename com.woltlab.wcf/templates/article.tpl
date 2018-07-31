@@ -151,18 +151,25 @@
 			</ul>
 		{/if}
 		
-		<div class="row articleLikeSection">
-			<div class="col-xs-12 col-md-6">
-				<div class="articleLikesSummery">
-					{include file="reactionSummaryList" reactionData=$articleLikeData objectType="com.woltlab.wcf.likeableArticle" objectID=$article->articleID}
-				</div>
+		{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && ($__wcf->session->getPermission('user.like.canLike') || $__wcf->session->getPermission('user.like.canViewLike'))}
+			<div class="row articleLikeSection">
+				{if $__wcf->session->getPermission('user.like.canViewLike')}
+					<div class="col-xs-12 col-md-6">
+						<div class="articleLikesSummery">
+							{include file="reactionSummaryList" reactionData=$articleLikeData objectType="com.woltlab.wcf.likeableArticle" objectID=$article->articleID}
+						</div>
+					</div>
+				{/if}
+				
+				{if MODULE_LIKE && $__wcf->session->getPermission('user.like.canLike') && (LIKE_ALLOW_FOR_OWN_CONTENT || $article->userID != $__wcf->user->userID)}
+					<div class="col-xs-12 col-md-6">
+						<ul class="articleLikeButtons buttonGroup">
+							<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}">{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{@$__wcf->getReactionHandler()->getReactionTypeByID($articleLikeData[$article->articleID]->reactionTypeID)->renderIcon()}{else}<img src="{$__wcf->getPath()}/images/reaction/reactionIcon.svg" class="reactionType" alt="">{/if}</span></li>
+						</ul>
+					</div>
+				{/if}
 			</div>
-			<div class="col-xs-12 col-md-6">
-				<ul class="articleLikeButtons buttonGroup">
-					<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}">{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{@$__wcf->getReactionHandler()->getReactionTypeByID($articleLikeData[$article->articleID]->reactionTypeID)->renderIcon()}{else}<img src="{$__wcf->getPath()}/images/reaction/reactionIcon.svg" class="reactionType" alt="">{/if}</span></li>
-				</ul>
-			</div>
-		</div>
+		{/if}
 	</div>
 	
 	{event name='afterArticleContent'}
