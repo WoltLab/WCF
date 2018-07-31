@@ -160,6 +160,7 @@ trait TSelectionFormField {
 			$options = $dboOptions;
 		}
 		
+		$this->__options = [];
 		if ($nestedOptions) {
 			foreach ($options as $key => &$option) {
 				if (!is_array($option)) {
@@ -252,8 +253,7 @@ trait TSelectionFormField {
 			}
 		}
 		
-		if ($this->__options === null) {
-			$this->__options = [];
+		if ($this->__nestedOptions === null) {
 			$this->__nestedOptions = [];
 		}
 		
