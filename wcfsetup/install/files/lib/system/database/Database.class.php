@@ -240,7 +240,22 @@ abstract class Database {
 		$statement = $this->handleLimitParameter($statement, $limit, $offset);
 		
 		try {
-			$pdoStatement = $this->pdo->prepare($statement);
+			// Append routing information of the current request as a comment.
+			// This allows the system administrator to find offending requests
+			// in MySQL's slow query log and / or MySQL's process list.
+			// Note: This is meant to be run unconditionally in production to be
+			//       useful. Thus the code to retrieve the request information
+			//       must be absolutely lightweight.
+			$requestInformation = '';
+			if (isset($_SERVER['REQUEST_URI'])) {
+				$requestInformation = substr($_SERVER['REQUEST_URI'], 0, 90);
+				if (isset($_REQUEST['className']) && isset($_REQUEST['actionName'])) {
+					$requestInformation .= ' ('.$_REQUEST['className'].':'.$_REQUEST['actionName'].')';
+				}
+			}
+			$requestInformation = substr($requestInformation, 0, 180);
+			
+			$pdoStatement = $this->pdo->prepare($statement." -- ".$this->pdo->quote($requestInformation));
 			
 			return new $this->preparedStatementClassName($this, $pdoStatement, $statement);
 		}
