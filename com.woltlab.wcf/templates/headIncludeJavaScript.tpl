@@ -135,8 +135,7 @@ requirejs.config({
 			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if}
 		});
 		
-User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}', {if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}';
-		{else}'';{/if})
+		User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}', {if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if});
 	});
 	
 	// prevent jQuery and other libraries from utilizing define()
