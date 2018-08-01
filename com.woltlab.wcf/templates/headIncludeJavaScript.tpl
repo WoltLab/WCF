@@ -119,7 +119,8 @@ requirejs.config({
 				'wcf.like.button.dislike': '{lang}wcf.like.button.dislike{/lang}',
 				'wcf.like.tooltip': '{lang}wcf.like.jsTooltip{/lang}',
 				'wcf.like.summary': '{lang}wcf.like.summary{/lang}',
-				'wcf.like.details': '{lang}wcf.like.details{/lang}'
+				'wcf.like.details': '{lang}wcf.like.details{/lang}',
+				'wcf.reactions.react': '{lang}wcf.reactions.react{/lang}'
 			{/if}
 			
 			{event name='javascriptLanguageImport'}
@@ -134,7 +135,8 @@ requirejs.config({
 			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if}
 		});
 		
-		User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}', {if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if});
+User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}', {if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}';
+		{else}'';{/if})
 	});
 	
 	// prevent jQuery and other libraries from utilizing define()
