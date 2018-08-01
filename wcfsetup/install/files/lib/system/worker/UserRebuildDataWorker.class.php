@@ -107,7 +107,6 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 					}
 				}
 				
-				
 				$sql = "UPDATE	wcf".WCF_N."_user user_table SET";
 					
 				if (!empty($positiveReactionTypes)) {
