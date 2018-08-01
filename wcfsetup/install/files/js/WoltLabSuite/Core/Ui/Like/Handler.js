@@ -202,8 +202,15 @@ define(
 			var listItem = elCreate('li');
 			listItem.className = 'wcfReactButton';
 			
+			if (insertBefore) {
+				var jsMobileNavigation = insertBefore.parentElement.contains('jsMobileNavigation');
+			}
+			else {
+				var jsMobileNavigation = appendTo.classList.contains('jsMobileNavigation');
+			}
+			
 			var button = elCreate('a');
-			button.className = 'jsTooltip reactButton' + (this._options.renderAsButton ? ' button' : '');
+			button.className = 'jsTooltip reactButton' + (this._options.renderAsButton ? ' button' + (jsMobileNavigation ? ' ignoreMobileNavigation' : '') : '');
 			button.href = '#';
 			button.title = title;
 			
@@ -227,7 +234,7 @@ define(
 			invisibleText.className = "invisible";
 			invisibleText.innerHTML = title;
 			
-			button.appendChild(document.createTextNode (" "));
+			button.appendChild(document.createTextNode(" "));
 			button.appendChild(invisibleText);
 			
 			listItem.appendChild(button);
