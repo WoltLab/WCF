@@ -1770,6 +1770,13 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 	
 	<category name="wcf.acp.reactionType">
 		<item name="wcf.acp.reactionType.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Reaktions-Typen <span class="confirmationObject">{$reactionType->getTitle()}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.reactionType.type"><![CDATA[Reaktions-Typ]]></item>
+		<item name="wcf.acp.reactionType.type.positive"><![CDATA[Positiv]]></item>
+		<item name="wcf.acp.reactionType.type.negative"><![CDATA[Negativ]]></item>
+		<item name="wcf.acp.reactionType.type.neutral"><![CDATA[Neutral]]></item>
+		<item name="wcf.acp.reactionType.isDisabled"><![CDATA[Reaktion deaktivieren]]></item>
+		<item name="wcf.acp.reactionType.image"><![CDATA[Reaktions-Datei]]></item>
+		<item name="wcf.acp.reactionType.image.description"><![CDATA[Der Pfad wird relativ zu „{$__wcf->getPath()}/images/reaction/“ interpretiert.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
