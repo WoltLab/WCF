@@ -12,13 +12,13 @@ define(
 		'Ajax',      'Core',                     'Dictionary',         'Language',
 		'ObjectMap', 'StringUtil',               'Dom/ChangeListener', 'Dom/Util',
 		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List', 'User', 'WoltLabSuite/Core/Ui/Reaction/CountButtons', 
-		'Ui/Alignment', 'Ui/CloseOverlay'
+		'Ui/Alignment', 'Ui/CloseOverlay',       'Ui/Screen'
 	],
 	function(
 		Ajax,        Core,              Dictionary,           Language,
 		ObjectMap,   StringUtil,        DomChangeListener,    DomUtil,
 		UiDialog,    UiUserList,        User,                 CountButtons, 
-		UiAlignment, UiCloseOverlay
+		UiAlignment, UiCloseOverlay,    UiScreen
 	)
 	{
 		"use strict";
@@ -113,7 +113,89 @@ define(
 					return; 
 				}
 				
+				if (elementData.reactButton.parentElement.parentElement.classList.contains('jsMobileNavigation')) {
+					UiScreen.on('screen-sm-down', {
+						match: this._enableMobileView.bind(this, elementData.reactButton, elementData.objectId),
+						unmatch: this._disableMobileView.bind(this, elementData.reactButton, elementData.objectId),
+						setup: this._setupMobileView.bind(this, elementData.reactButton, elementData.objectId)
+					});
+				}
+				
 				elementData.reactButton.addEventListener(WCF_CLICK_EVENT, this._toggleReactPopover.bind(this, elementData.objectId, elementData.reactButton));
+			},
+			
+			/**
+			 * Enables the mobile view for the reaction button.
+			 * 
+			 * @param       {Element}       element
+			 */
+			_enableMobileView: function(element) {
+				var messageFooterGroup = element.parentElement.parentElement.parentElement;
+				
+				var mobileReaction = elBySel('.mobileReactButton', messageFooterGroup);
+				
+				mobileReaction.style.display = '';
+			},
+			
+			/**
+			 * Disables the mobile view for the reaction button.
+			 *
+			 * @param       {Element}       element
+			 */
+			_disableMobileView: function(element) {
+				var messageFooterGroup = element.parentElement.parentElement.parentElement;
+				
+				var mobileReaction = elBySel('.mobileReactButton', messageFooterGroup);
+				
+				mobileReaction.style.display = 'none';
+			},
+			
+			/**
+			 * Setup the mobile view for the reaction button.
+			 *
+			 * @param       {Element}       element
+			 * @param       {int}           objectID
+			 */
+			_setupMobileView: function(element, objectID) {
+				var messageFooterGroup = element.parentElement.parentElement.parentElement;
+				
+				var button = elCreate('button');
+				button.classList = 'mobileReactButton';
+				button.innerHTML = element.innerHTML;
+				
+				button.addEventListener(WCF_CLICK_EVENT, this._toggleReactPopover.bind(this, objectID, button));
+				
+				messageFooterGroup.appendChild(button);
+			},
+			
+			_rebuildMobileView: function(objectID) {
+				if (this._containers.get(objectID).reactButton.parentElement.parentElement.classList.contains('jsMobileNavigation')) {
+					var messageFooterGroup = this._containers.get(objectID).reactButton.parentElement.parentElement.parentElement;
+					var button = elBySel('.mobileReactButton', messageFooterGroup);
+					
+					if (button !== null) {
+						button.innerHTML = this._containers.get(objectID).reactButton.innerHTML;
+					}
+				}
+			},
+			
+			_updateReactButton: function(objectID, reactionTypeID) {
+				if (reactionTypeID) {
+					this._containers.get(objectID).reactButton.classList.add('active');
+					
+					// update icon 
+					elBySel('img', this._containers.get(objectID).reactButton).src = REACTION_TYPES[reactionTypeID].iconPath;
+					elData(elBySel('img', this._containers.get(objectID).reactButton), 'reaction-type-id', reactionTypeID);
+				}
+				else {
+					this._containers.get(objectID).reactButton.classList.remove('active');
+					
+					// update icon
+					elBySel('img', this._containers.get(objectID).reactButton).src = WCF_PATH+'images/reaction/reactionIcon.svg';
+					elData(elBySel('img', this._containers.get(objectID).reactButton), 'reaction-type-id', 0);
+				}
+				
+				this._rebuildMobileView(objectID);
 			},
 			
 			/**
@@ -280,20 +362,7 @@ define(
 				this.countButtons.updateCountButtons(data.returnValues.objectID, data.returnValues.reactions);
 				
 				// update react button status
-				if (data.returnValues.reactionTypeID) {
-					this._containers.get(data.returnValues.objectID).reactButton.classList.add('active');
-					
-					// update icon 
-					elBySel('img', this._containers.get(data.returnValues.objectID).reactButton).src = REACTION_TYPES[data.returnValues.reactionTypeID].iconPath;
-					elData(elBySel('img', this._containers.get(data.returnValues.objectID).reactButton), 'reaction-type-id', data.returnValues.reactionTypeID);
-				}
-				else {
-					this._containers.get(data.returnValues.objectID).reactButton.classList.remove('active');
-					
-					// update icon
-					elBySel('img', this._containers.get(data.returnValues.objectID).reactButton).src = WCF_PATH+'images/reaction/reactionIcon.svg';
-					elData(elBySel('img', this._containers.get(data.returnValues.objectID).reactButton), 'reaction-type-id', 0);
-				}
+				this._updateReactButton(data.returnValues.objectID, data.returnValues.reactionTypeID);
 			},
 				
 			_ajaxSetup: function() {
