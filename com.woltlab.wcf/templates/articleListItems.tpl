@@ -34,14 +34,6 @@
 									</li>
 								{/if}
 								
-								{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike')}
-									<li class="wcfLikeCounter{if $article->cumulativeLikes > 0} likeCounterLiked{elseif $article->cumulativeLikes < 0}likeCounterDisliked{/if}">
-										{if $article->likes || $article->dislikes}
-											<span class="icon icon16 fa-thumbs-o-{if $article->cumulativeLikes < 0}down{else}up{/if} jsTooltip" title="{lang likes=$article->likes dislikes=$article->dislikes}wcf.like.tooltip{/lang}"></span>{if $article->cumulativeLikes > 0}+{elseif $article->cumulativeLikes == 0}&plusmn;{/if}{#$article->cumulativeLikes}
-										{/if}
-									</li>
-								{/if}
-								
 								{if ARTICLE_ENABLE_VISIT_TRACKING && $article->isNew()}<li><span class="badge label newMessageBadge">{lang}wcf.message.new{/lang}</span></li>{/if}
 
 								{if $article->isDeleted}<li><span class="badge label red">{lang}wcf.message.status.deleted{/lang}</span></li>{/if}
