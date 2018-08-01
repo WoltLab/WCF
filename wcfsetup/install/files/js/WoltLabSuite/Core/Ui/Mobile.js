@@ -367,7 +367,7 @@ define(
 		},
 		
 		_rebuildMobileNavigation: function (navigation) {
-			elBySelAll('.button', navigation, function (button) {
+			elBySelAll('.button:not(.ignoreMobileNavigation)', navigation, function (button) {
 				var item = elCreate('li');
 				if (button.classList.contains('active')) item.className = 'active';
 				item.innerHTML = '<a href="#">' + elBySel('span:not(.icon)', button).textContent + '</a>';
