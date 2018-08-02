@@ -1,5 +1,7 @@
 <?php
+use wcf\data\like\Like;
 use wcf\data\option\OptionEditor;
+use wcf\system\WCF;
 
 // !!!!!!!!!
 // HEADS UP!    The columns for wcf1_like, wcf1_like_object and the wcf1_reaction_type table must already exists, before calling this script.
@@ -20,37 +22,37 @@ OptionEditor::import([
 ]);
 
 try {
-	\wcf\system\WCF::getDB()->beginTransaction();
+	WCF::getDB()->beginTransaction();
 	
 	// add reaction columns 
-	$statement = \wcf\system\WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', 'INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES (\'wcf.reactionType.title1\', 1, 1, \'like.svg\'), (\'wcf.reactionType.title2\', 1, 2, \'haha.svg\'), (\'wcf.reactionType.title3\', -1, 3, \'sad.svg\'), (\'wcf.reactionType.title4\', 0, 4, \'confused.svg\'), (\'wcf.reactionType.title5\', 1, 5, \'thanks.svg\')'));
+	$statement = WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', 'INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES (\'wcf.reactionType.title1\', 1, 1, \'like.svg\'), (\'wcf.reactionType.title2\', 1, 2, \'haha.svg\'), (\'wcf.reactionType.title3\', -1, 3, \'sad.svg\'), (\'wcf.reactionType.title4\', 0, 4, \'confused.svg\'), (\'wcf.reactionType.title5\', 1, 5, \'thanks.svg\')'));
 	$statement->execute();
 	
 	// update current likes 
 	$sql = "UPDATE wcf1_like SET reactionTypeID = ? WHERE likeValue = ?";
-	$statement = \wcf\system\WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', $sql));
+	$statement = WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', $sql));
 	
 	$statement->execute([
-		\wcf\data\like\Like::LIKE,
+		Like::LIKE,
 		1
 	]);
 	$statement->execute([
-		\wcf\data\like\Like::DISLIKE,
+		Like::DISLIKE,
 		3
 	]);
 	
 	// delete outdated likes, which aren't likes nor dislikes (normally none should exist)
 	$sql = "DELETE wcf1_like WHERE reactionTypeID = 0";
-	$statement = \wcf\system\WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', $sql));
+	$statement = WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', $sql));
 	
 	// add foreign key  
-	$statement = \wcf\system\WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', 'ALTER TABLE wcf1_like ADD FOREIGN KEY (reactionTypeID) REFERENCES wcf1_reaction_type (reactionTypeID) ON DELETE CASCADE'));
+	$statement = WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', 'ALTER TABLE wcf1_like ADD FOREIGN KEY (reactionTypeID) REFERENCES wcf1_reaction_type (reactionTypeID) ON DELETE CASCADE'));
 	$statement->execute();
 	
-	\wcf\system\WCF::getDB()->commitTransaction();
+	WCF::getDB()->commitTransaction();
 }
 catch (Exception $e) {
-	\wcf\system\WCF::getDB()->rollBackTransaction();
+	WCF::getDB()->rollBackTransaction();
 	
 	throw $e;
 }
