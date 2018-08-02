@@ -1715,7 +1715,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.reactionType.type.neutral"><![CDATA[Neutral]]></item>
 		<item name="wcf.acp.reactionType.isDisabled"><![CDATA[Disable Reaction]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaction File]]></item>
-		<item name="wcf.acp.reactionType.image.description"><![CDATA[The smiley path is relative to “{$__wcf->getPath()}/images/reaction/”.]]></item>
+		<item name="wcf.acp.reactionType.image.description"><![CDATA[The path is relative to “{$__wcf->getPath()}images/reaction/”.]]></item>
 	</category>
 	
 	<category name="wcf.acp.rebuildData">
