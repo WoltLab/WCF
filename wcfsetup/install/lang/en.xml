@@ -1259,7 +1259,7 @@
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Profile visitors will be removed after the following days.]]></item>
 		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Likes System]]></item>
 		<item name="wcf.acp.option.module_like"><![CDATA[Likes system]]></item>
-		<item name="wcf.acp.option.like_allow_for_own_content"><![CDATA[Users can like their content]]></item>
+		<item name="wcf.acp.option.like_allow_for_own_content"><![CDATA[Users can react to their own content]]></item>
 		<item name="wcf.acp.option.like_enable_dislike"><![CDATA[Users can dislike content]]></item>
 		<item name="wcf.acp.option.like_show_summary"><![CDATA[Display likes summary]]></item>
 		<item name="wcf.acp.option.module_user_profile_wall"><![CDATA[User profile wall]]></item>
