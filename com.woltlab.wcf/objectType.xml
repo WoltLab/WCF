@@ -446,12 +446,6 @@
 			<nicevalue>-100</nicevalue>
 		</type>
 		<type>
-			<name>com.woltlab.wcf.like.user</name>
-			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\LikeUserRebuildDataWorker</classname>
-			<nicevalue>-90</nicevalue>
-		</type>
-		<type>
 			<name>com.woltlab.wcf.article</name>
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 			<classname>wcf\system\worker\ArticleRebuildDataWorker</classname>
@@ -1677,6 +1671,9 @@
 		<!-- /deprecated -->
 	</import>
 	<delete>
+		<type name="com.woltlab.wcf.like.user">
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+		</type>
 		<type name="com.woltlab.wcf.collapsibleSidebar">
 			<definitionname>com.woltlab.wcf.collapsibleContent</definitionname>
 		</type>
