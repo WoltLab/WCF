@@ -751,14 +751,27 @@ class ReactionHandler extends SingletonFactory {
 	 * @return      integer|null
 	 */
 	public function getLegacyReactionTypeID($type) {
-		// @TODO determine real values
+		$reactionTypes = ReactionTypeCache::getInstance()->getEnabledReactionTypes();
+		ReactionType::sort($reactionTypes, 'showOrder');
 		switch ($type) {
 			case ReactionType::REACTION_TYPE_POSITIVE: 
-				return 2; 
+				foreach ($reactionTypes as $reactionType) {
+					if ($reactionType->isPositive()) {
+						return $reactionType->reactionTypeID;
+					}
+				}
+				
+				return null; 
 				
 			case ReactionType::REACTION_TYPE_NEGATIVE:
-				return 1;
+				foreach ($reactionTypes as $reactionType) {
+					if ($reactionType->isNegative()) {
+						return $reactionType->reactionTypeID;
+					}
+				}
 				
+				return null;
+			
 			default: 
 				throw new \LogicException('Invalid type given.');
 		}
