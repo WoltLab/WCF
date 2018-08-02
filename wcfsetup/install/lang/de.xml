@@ -45,7 +45,7 @@
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.top"><![CDATA[Sidebar (oben)]]></item>
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.bottom"><![CDATA[Sidebar (unten)]]></item>
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.footer.bottom"><![CDATA[Seitenende]]></item>
-		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Werbung angezeigt werden.]]></item>
+		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Werbungen angezeigt werden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.application">
@@ -88,8 +88,8 @@
 		<item name="wcf.acp.article.i18n.i18n"><![CDATA[Mehrsprachiger Artikel]]></item>
 		<item name="wcf.acp.article.i18n.i18n.description"><![CDATA[Inhalt wird individuell pro Sprache festgelegt.]]></item>
 		<item name="wcf.acp.article.i18n.source"><![CDATA[Inhalt übernehmen]]></item>
-		<item name="wcf.acp.article.i18n.toI18n.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Artikel wirklich in einen mehrsprachigen Artikel umwandeln? Der aktuelle Inhalt wird für alle Sprachen übernommen, und die Bearbeitungshistorie für diesen Artikel wird gelöscht.<br><br>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speichere{else}speichern Sie{/if} alle Änderungen, bevor Sie fortfahren.]]></item>
-		<item name="wcf.acp.article.i18n.fromI18n.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Artikel wirklich in einen einsprachigen Artikel umwandeln? Die ausgewählte Sprache wird dabei als zukünftigen Inhalt übernommen. Die Angaben in anderen Sprachen, sowie die Bearbeitungshistorie dieses Artikels, werden bei diesem Vorgang verworfen.<br><br>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speichere{else}speichern Sie{/if} alle Änderungen, bevor Sie fortfahren.]]></item>
+		<item name="wcf.acp.article.i18n.toI18n.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Artikel wirklich in einen mehrsprachigen Artikel umwandeln? Der aktuelle Inhalt wird für alle Sprachen übernommen, und die Bearbeitungshistorie für diesen Artikel wird gelöscht.<br><br>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speichere{else}speichern Sie{/if} alle Änderungen, bevor {if LANGUAGE_USE_INFORMAL_VARIANT}Du fortfährst{else}Sie fortfahren{/if}.]]></item>
+		<item name="wcf.acp.article.i18n.fromI18n.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Artikel wirklich in einen einsprachigen Artikel umwandeln? Die ausgewählte Sprache wird dabei als zukünftigen Inhalt übernommen. Die Angaben in anderen Sprachen, sowie die Bearbeitungshistorie dieses Artikels, werden bei diesem Vorgang verworfen.<br><br>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speichere{else}speichern Sie{/if} alle Änderungen, bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du fortfährst{else}Sie fortfahren{/if}.]]></item>
 		<item name="wcf.acp.article.image"><![CDATA[Artikel-Bild]]></item>
 		<item name="wcf.acp.article.teaserImage"><![CDATA[Teaser-Bild]]></item>
 		<item name="wcf.acp.article.publicationDate"><![CDATA[Veröffentlichungsdatum]]></item>
@@ -1492,7 +1492,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.customOption.defaultValue.description"><![CDATA[Wert, der beim erstmaligen Ausfüllen als Standard vorgegeben ist.]]></item>
 		<item name="wcf.acp.customOption.typeData"><![CDATA[Eigenschaften]]></item>
 		<item name="wcf.acp.customOption.selectOptions"><![CDATA[Auswahloptionen]]></item>
-		<item name="wcf.acp.customOption.selectOptions.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} pro Zeile Auswahloptionen eintragen, beispielsweise bei einer Select-Box. {if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass bei der Verwendung des Doppelpunktes der linke Teil der Zeile als interner Bezeichner verwendet wird. Dieser erlaubt es den Text zu ändern, ohne, dass die Auswahl von Benutzern verloren geht.]]></item>
+		<item name="wcf.acp.customOption.selectOptions.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} pro Zeile Auswahloptionen eintragen, beispielsweise bei einer Select-Box. {if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass bei der Verwendung des Doppelpunktes der linke Teil der Zeile als interner Bezeichner verwendet wird. Dieser erlaubt es den Text zu ändern, ohne dass die Auswahl von Benutzern verloren geht.]]></item>
 		<item name="wcf.acp.customOption.validationPattern"><![CDATA[Regulärer Ausdruck zur Validierung]]></item>
 		<item name="wcf.acp.customOption.validationPattern.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Trage{else}Tragen Sie{/if} hier den regulären Ausdruck ein, um die Eingabe der Benutzer zu validieren.]]></item>
 		<item name="wcf.acp.customOption.required"><![CDATA[Das Feld muss zwingend ausgefüllt werden.]]></item>
@@ -2198,7 +2198,7 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.option.required"><![CDATA[Das Feld muss zwingend durch den Eigentümer ausgefüllt werden.]]></item>
 		<item name="wcf.acp.user.option.searchable"><![CDATA[Das Feld kann über die Mitgliedersuche durchsucht werden.]]></item>
 		<item name="wcf.acp.user.option.selectOptions"><![CDATA[Auswahloptionen]]></item>
-		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} pro Zeile Auswahloptionen eintragen, beispielsweise bei einer Select-Box. {if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass bei der Verwendung des Doppelpunktes der linke Teil der Zeile als interner Bezeichner verwendet wird. Dieser erlaubt es den Text zu ändern, ohne, dass die Auswahl von Benutzern verloren geht.]]></item>
+		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} pro Zeile Auswahloptionen eintragen, beispielsweise bei einer Select-Box. {if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass bei der Verwendung des Doppelpunktes der linke Teil der Zeile als interner Bezeichner verwendet wird. Dieser erlaubt es den Text zu ändern, ohne dass die Auswahl von Benutzern verloren geht.]]></item>
 		<item name="wcf.acp.user.option.setDefaults"><![CDATA[Benutzerprofil-Einstellungen verwalten]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers"><![CDATA[Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[Die hier eingestellten Änderungen der Vorgabewerte für Benutzerprofil-Einstellungen werden auch in bestehende Benutzerkonten übernommen. Die entsprechenden Einstellungen der Benutzer werden dabei überschrieben.<br><br>Hinweis: Es werden nur die Einstellungen überschrieben, die mit dem Absenden des Formulars geändert werden. Unveränderte Voreinstellungen werden nicht berücksichtigt.]]></item>

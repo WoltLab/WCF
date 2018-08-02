@@ -129,6 +129,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				// is flawed when the previous element is a list. Their current implementation
 				// inserts the content straight into the list element, rather than appending it
 				// to the last possible location inside a <li>.
+				var br = null;
 				if (e.which === this.keyCode.BACKSPACE && this.detect.isFirefox()) {
 					var block = this.selection.block();
 					if (block && block.tagName === 'P' && this.utils.isStartOfElement(block)) {
@@ -147,6 +148,13 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 							
 							e.preventDefault();
 							return;
+						}
+						else if (previousBlock && previousBlock.nodeName === 'P') {
+							// Firefox moves the <br> of a previous <p><br></p> into the current container instead of removing the <br> along with the <p>.
+							br = previousBlock.lastElementChild;
+							if (br !== null && br.nodeName !== 'BR') {
+								br = null;
+							}
 						}
 					}
 				}
@@ -196,6 +204,12 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 						if (isAtTheVeryEnd) {
 							parent.parentNode.insertBefore(document.createTextNode('\u200B'), parent.nextSibling);
 						}
+					}
+				}
+				else if (br !== null && this.detect.isFirefox()) {
+					var range = selection.getRangeAt(0);
+					if (range.startOffset === 1 && range.startContainer.firstElementChild === br) {
+						elRemove(br);
 					}
 				}
 			}).bind(this);
