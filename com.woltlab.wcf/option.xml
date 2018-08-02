@@ -1450,8 +1450,9 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 			<option name="like_show_summary">
 				<categoryname>message.general.likes</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 				<options>module_like</options>
+				<hidden>1</hidden>
 			</option>
 			
 			<option name="message_sidebar_enable_online_status">
