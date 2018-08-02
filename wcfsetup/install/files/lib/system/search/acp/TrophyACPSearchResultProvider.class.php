@@ -1,0 +1,67 @@
+<?php
+namespace wcf\system\search\acp;
+use wcf\data\trophy\Trophy;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
+
+/**
+ * ACP search result provider implementation for trophies.
+ * 
+ * @author	Joshua Ruesweg
+ * @copyright	2001-2018 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	WoltLabSuite\Core\System\Search\Acp
+ */
+class TrophyACPSearchResultProvider implements IACPSearchResultProvider {
+	/**
+	 * @inheritDoc
+	 */
+	public function search($query) {
+		if (!MODULE_TROPHY || !WCF::getSession()->getPermission('admin.trophy.canManageTrophy')) {
+			return [];
+		}
+		
+		$results = [];
+		
+		// search by language item
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("languageID = ?", [WCF::getLanguage()->languageID]);
+		$conditions->add("languageItem LIKE ?", ['wcf.user.trophy.title%']);
+		$conditions->add("languageItemValue LIKE ?", ['%'.$query.'%']);
+		
+		$sql = "SELECT		languageItem
+			FROM		wcf".WCF_N."_language_item
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		
+		$trophyIDs = [];
+		while ($row = $statement->fetchArray()) {
+			$trophyIDs[] = str_replace('wcf.user.trophy.title', '', $row['languageItem']);
+		}
+		
+		$conditions = new PreparedStatementConditionBuilder(false);
+		if (!empty($trophyIDs)) {
+			$conditions->add("trophyID IN (?)", [$trophyIDs]);
+		}
+		
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_trophy
+			WHERE	title LIKE ?
+				".(!empty($conditions->getParameters()) ? "OR ".$conditions : "");
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array_merge([
+			'%'.$query.'%'
+		], $conditions->getParameters()));
+		
+		/** @var Trophy $trophy */
+		while ($trophy = $statement->fetchObject(Trophy::class)) {
+			$results[] = new ACPSearchResult($trophy->getTitle(), LinkHandler::getInstance()->getLink('TrophyEdit', [
+				'id' => $trophy->trophyID
+			]));
+		}
+		
+		return $results;
+	}
+}

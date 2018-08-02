@@ -1752,6 +1752,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.page"><![CDATA[Pages]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.box"><![CDATA[Boxes]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.trophy"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.search.result.subtitle"><![CDATA[{implode from=$pieces item=piece glue=' » '}{$piece|language}{/implode}]]></item>
 	</category>
 	
