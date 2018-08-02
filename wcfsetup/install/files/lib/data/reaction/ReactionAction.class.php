@@ -226,7 +226,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		$likeList->getConditionBuilder()->add("like_table.reactionTypeID = ?", [$this->parameters['reactionTypeID']]);
 		$likeList->readObjects();
 		
-		if (!count($likeList)) {
+		if (empty($likeList)) {
 			return [];
 		}
 		

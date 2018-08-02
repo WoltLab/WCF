@@ -28,7 +28,7 @@ class ReactionTypeCache extends SingletonFactory {
 	/**
 	 * @inheritDoc
 	 */
-	public function init() {
+	protected function init() {
 		$this->reactionTypes = ReactionTypeCacheBuilder::getInstance()->getData();
 		$this->enabledReactionTypes = ReactionTypeCacheBuilder::getInstance()->getData(['onlyEnabled' => 1]);
 	}
@@ -36,12 +36,12 @@ class ReactionTypeCache extends SingletonFactory {
 	/**
 	 * Returns the reaction type with the given reactionTypeID.
 	 *
-	 * @param 	integer		$trophyID
+	 * @param 	integer		$reactionTypeID
 	 * @return	ReactionType
 	 */
-	public function getReactionTypeByID($trophyID) {
-		if (isset($this->reactionTypes[$trophyID])) {
-			return $this->reactionTypes[$trophyID];
+	public function getReactionTypeByID($reactionTypeID) {
+		if (isset($this->reactionTypes[$reactionTypeID])) {
+			return $this->reactionTypes[$reactionTypeID];
 		}
 		
 		return null;
