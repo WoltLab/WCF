@@ -9,6 +9,6 @@ use wcf\data\option\OptionEditor;
  */
 
 OptionEditor::import([
-	'like_show_summary' => 0,
+	'like_show_summary' => 1,
 	'like_enable_dislike' => 0
 ]);
