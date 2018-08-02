@@ -3460,6 +3460,21 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.poll.endTimeInfo"><![CDATA[Poll ends on {@$poll->endTime|plainTime}]]></item>
 	</category>
 	
+	<category name="wcf.reactions">
+		<item name="wcf.reactions.summary.title"><![CDATA[Reactions]]></item>
+		<item name="wcf.reactions.summary.noReactions"><![CDATA[There are not any reactions at the moment.]]></item>
+		<item name="wcf.reactions.summary.listReactions"><![CDATA[List Reactions]]></item>
+		<item name="wcf.reactions.react"><![CDATA[React]]></item>
+	</category>
+	
+	<category name="wcf.reactionType">
+		<item name="wcf.reactionType.title1"><![CDATA[Like]]></item>
+		<item name="wcf.reactionType.title2"><![CDATA[Haha]]></item>
+		<item name="wcf.reactionType.title3"><![CDATA[Sad]]></item>
+		<item name="wcf.reactionType.title4"><![CDATA[Confused]]></item>
+		<item name="wcf.reactionType.title5"><![CDATA[Thanks!]]></item>
+	</category>
+	
 	<category name="wcf.recaptcha">
 		<item name="wcf.recaptcha.title"><![CDATA[Verification (“reCAPTCHA”)]]></item>
 		<item name="wcf.recaptcha.description"><![CDATA[Please enter the letters that are displayed in the picture below (letters are not case-sensitive). If you cannot identify the captcha even after reloading it, please contact the administrator.]]></item>

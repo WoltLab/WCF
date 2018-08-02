@@ -3466,6 +3466,14 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.reactions.react"><![CDATA[Reagieren]]></item>
 	</category>
 	
+	<category name="wcf.reactionType">
+		<item name="wcf.reactionType.title1"><![CDATA[Gefällt mir!]]></item>
+		<item name="wcf.reactionType.title2"><![CDATA[Haha]]></item>
+		<item name="wcf.reactionType.title3"><![CDATA[Traurig]]></item>
+		<item name="wcf.reactionType.title4"><![CDATA[Verwirrend]]></item>
+		<item name="wcf.reactionType.title5"><![CDATA[Danke!]]></item>
+	</category>
+	
 	<category name="wcf.recaptcha">
 		<item name="wcf.recaptcha.title"><![CDATA[Sicherheitsabfrage („reCAPTCHA“)]]></item>
 		<item name="wcf.recaptcha.description"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}gib{else}geben Sie{/if} die untenstehenden Zeichen in das leere Feld ein. Groß- und Kleinschreibung müssen nicht beachtet werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Solltest du{else}Sollten Sie{/if} das Bild trotz Neuladen nicht identifizieren können, {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} an den Administrator.]]></item>

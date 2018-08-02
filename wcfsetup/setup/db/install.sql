@@ -2375,3 +2375,10 @@ INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optio
 
 -- default recipient: site administrator
 INSERT INTO wcf1_contact_recipient (recipientID, name, email, isAdministrator, originIsSystem) VALUES (1, 'wcf.contact.recipient.name1', '', 1, 1);
+
+-- default reaction type
+INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title1', 1, 1, 'like.svg');
+INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title2', 1, 2, 'haha.svg');
+INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title3', -1, 3, 'sad.svg');
+INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title4', 0, 4, 'confused.svg');
+INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title5', 1, 5, 'thanks.svg');
