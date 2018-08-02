@@ -1445,6 +1445,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<options>module_like</options>
+				<hidden>1</hidden>
 			</option>
 			
 			<option name="like_show_summary">

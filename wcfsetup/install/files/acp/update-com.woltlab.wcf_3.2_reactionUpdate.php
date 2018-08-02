@@ -8,7 +8,7 @@ use wcf\data\option\OptionEditor;
  * @package	WoltLabSuite\Core
  */
 
-// disable the deprecated option `like_show_summary`
 OptionEditor::import([
-	'like_show_summary' => 0
+	'like_show_summary' => 0,
+	'like_enable_dislike' => 0
 ]);
