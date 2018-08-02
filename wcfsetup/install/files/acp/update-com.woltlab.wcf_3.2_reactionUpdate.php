@@ -42,7 +42,7 @@ try {
 	]);
 	
 	// delete outdated likes, which aren't likes nor dislikes (normally none should exist)
-	$sql = "DELETE wcf1_like WHERE reactionTypeID = 0";
+	$sql = "DELETE FROM wcf1_like WHERE reactionTypeID = 0";
 	$statement = WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', $sql));
 	
 	// add foreign key  
