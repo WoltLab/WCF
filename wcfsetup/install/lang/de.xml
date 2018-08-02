@@ -1813,6 +1813,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.page"><![CDATA[Seiten]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.box"><![CDATA[Boxen]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.search.result.subtitle"><![CDATA[{implode from=$pieces item=piece glue=' » '}{$piece|language}{/implode}]]></item>
 	</category>
 	
