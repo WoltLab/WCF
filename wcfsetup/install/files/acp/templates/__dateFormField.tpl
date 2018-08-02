@@ -1,7 +1,7 @@
 {include file='__formFieldHeader'}
 
 <input {*
-	*}type="{if $field->supportsTime()}datetime{else}date{/if}"{*
+	*}type="{if $field->supportsTime()}datetime{else}date{/if}" {*
 	*}id="{@$field->getPrefixedId()}" {*
 	*}name="{@$field->getPrefixedId()}" {*
 	*}value="{$field->getValue()}" {*
