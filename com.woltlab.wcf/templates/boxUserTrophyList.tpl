@@ -24,7 +24,7 @@
 
 				<div class="sidebarItemTitle">
 					<h3><a href="{$boxUserTrophy->getTrophy()->getLink()}">{$boxUserTrophy->getTrophy()->getTitle()}</a></h3>
-					<small>{if !$boxUserTrophy->getDescription()|empty}<p>{$boxUserTrophy->getDescription()}</p>{/if}<p>{@$boxUserTrophy->getUserProfile()->getAnchorTag()} <span class="separatorLeft">{@$boxUserTrophy->time|time}</span></p></small>
+					<small>{if !$boxUserTrophy->getDescription()|empty}<p>{@$boxUserTrophy->getDescription()}</p>{/if}<p>{@$boxUserTrophy->getUserProfile()->getAnchorTag()} <span class="separatorLeft">{@$boxUserTrophy->time|time}</span></p></small>
 				</div>
 			</li>
 		{/foreach}

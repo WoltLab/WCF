@@ -18,7 +18,7 @@
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">{$trophy->getTitle()}</h1>
 			<ul class="inlineList contentHeaderMetaData">
-				{if !$trophy->getDescription()|empty}<li>{$trophy->getDescription()}</li>{/if}
+				{if !$trophy->getDescription()|empty}<li>{@$trophy->getDescription()}</li>{/if}
 				<li>
 					<span class="icon icon16 fa-users"></span>
 					<span>{lang}wcf.user.trophy.trophyAwarded{/lang}</span>
@@ -46,7 +46,7 @@
 
 				<div class="sidebarItemTitle">
 					<h3>{@$userTrophy->getUserProfile()->getAnchorTag()}</h3>
-					<small>{if !$userTrophy->getDescription()|empty}<span class="separatorRight">{$userTrophy->getDescription()}</span> {/if}{@$userTrophy->time|time}</small>
+					<small>{if !$userTrophy->getDescription()|empty}<span class="separatorRight">{@$userTrophy->getDescription()}</span> {/if}{@$userTrophy->time|time}</small>
 				</div>
 			</li>
 		{/foreach}

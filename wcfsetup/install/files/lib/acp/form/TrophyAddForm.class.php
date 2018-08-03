@@ -112,11 +112,18 @@ class TrophyAddForm extends AbstractAcpForm {
 	 * @var int
 	 */
 	public $isDisabled = 0;
+	
 	/**
 	 * `1` if the trophy has conditions to reward automatically trophies. 
 	 * @var int
 	 */
 	public $awardAutomatically = 0;
+	
+	/**
+	 * `1` if the trophy contains html in the description
+	 * @var int
+	 */
+	public $trophyUseHtml = 0;
 	
 	/**
 	 * list of grouped user group assignment condition object types
@@ -170,6 +177,7 @@ class TrophyAddForm extends AbstractAcpForm {
 		if (isset($_POST['iconColor'])) $this->iconColor = $_POST['iconColor'];
 		if (isset($_POST['badgeColor'])) $this->badgeColor = $_POST['badgeColor'];
 		if (isset($_POST['awardAutomatically'])) $this->awardAutomatically = 1;
+		if (isset($_POST['trophyUseHtml'])) $this->trophyUseHtml = 1;
 		
 		// read file upload 
 		$fileExtension = WCF::getSession()->getVar('trophyImage-'.$this->tmpHash);
@@ -279,7 +287,8 @@ class TrophyAddForm extends AbstractAcpForm {
 				'categoryID' => $this->categoryID,
 				'type' => $this->type,
 				'isDisabled' => $this->isDisabled,
-				'awardAutomatically' => $this->awardAutomatically
+				'awardAutomatically' => $this->awardAutomatically,
+				'trophyUseHtml' => $this->trophyUseHtml
 			]),
 			'tmpHash' => $this->tmpHash
 		]);
@@ -311,7 +320,7 @@ class TrophyAddForm extends AbstractAcpForm {
 	public function reset() {
 		parent::reset();
 		
-		$this->isDisabled = $this->awardAutomatically = $this->categoryID = 0;
+		$this->isDisabled = $this->awardAutomatically = $this->categoryID = $this->trophyUseHtml = 0;
 		$this->type = Trophy::TYPE_BADGE;
 		$this->iconName = $this->uploadedImageURL = '';
 		$this->iconColor = 'rgba(255, 255, 255, 1)';
@@ -344,7 +353,8 @@ class TrophyAddForm extends AbstractAcpForm {
 			'awardAutomatically' => $this->awardAutomatically,
 			'availableTypes' => $this->availableTypes, 
 			'tmpHash' => $this->tmpHash,
-			'uploadedImageURL' => $this->uploadedImageURL
+			'uploadedImageURL' => $this->uploadedImageURL,
+			'trophyUseHtml' => $this->trophyUseHtml
 		]);
 	}
 }

@@ -50,7 +50,7 @@
 
 						<div class="sidebarItemTitle">
 							<h3><a href="{$trophy->getLink()}">{@$trophy->getTitle()}</a></h3>
-							{if !$trophy->getDescription()|empty}<small>{$trophy->getDescription()}</small>{/if}
+							{if !$trophy->getDescription()|empty}<small>{@$trophy->getDescription()}</small>{/if}
 						</div>
 					</li>
 				{/foreach}

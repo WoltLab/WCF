@@ -94,6 +94,13 @@
 			</dl>
 			{include file='multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}
 			
+			<dl id="trophyUseHtmlDL">
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" name="trophyUseHtml" value="1"{if $trophyUseHtml} checked{/if}> {lang}wcf.acp.trophy.trophyUseHtml{/lang}</label>
+				</dd>
+			</dl>
+			
 			<dl{if $errorField == 'categoryID'} class="formError"{/if}>
 				<dt><label for="categoryID">{lang}wcf.acp.trophy.category{/lang}</label></dt>
 				<dd>

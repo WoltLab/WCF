@@ -3854,6 +3854,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Trophäe <span class="confirmationObject">{$userTrophy->getTrophy()->getTitle()}</span> von <span class="confirmationObject">{$userTrophy->getUserProfile()->username}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.trophy.error.noCategories"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} eine Trophäe hinzufügen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst, musst du{else}können, müssen Sie{/if} eine <a href="{link controller='TrophyCategoryAdd'}{/link}">Kategorie hinzufügen</a>.]]></item>
 		<item name="wcf.acp.trophy.error.noSuitableTrophies"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} eine Trophäe vergeben {if LANGUAGE_USE_INFORMAL_VARIANT}kannst, musst du{else}können, müssen Sie{/if} eine <a href="{link controller='TrophyAdd'}{/link}">Trophäe hinzufügen</a>, welche nicht automatisch durch das System vergeben wird.]]></item>
+		<item name="wcf.acp.trophy.trophyUseHtml"><![CDATA[HTML in der Beschreibung verwenden]]></item>
 	</category>
 	
 	<category name="wcf.user.usersOnline">
