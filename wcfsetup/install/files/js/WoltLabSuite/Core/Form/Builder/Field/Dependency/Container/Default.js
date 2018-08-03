@@ -41,6 +41,7 @@ define(['./Abstract', 'Core', '../Manager'], function(Abstract, Core, Dependency
 			for (var i = start, length = children.length; i < length; i++) {
 				if (!elIsHidden(children.item(i))) {
 					containerShouldBeVisible = true;
+					break;
 				}
 			}
 			
