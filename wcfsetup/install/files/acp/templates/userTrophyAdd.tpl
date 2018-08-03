@@ -10,12 +10,12 @@
 		
 		elBySel('input[name=useCustomDescription]').addEventListener('click', function () {
 			if (elBySel('input[name=useCustomDescription]').checked) {
-				elById('userTrophyDescriptionDL').style.display = 'block';
-				elById('trophyUseHtmlDL').style.display = 'block';
+				elShow(elById('userTrophyDescriptionDL'));
+				elShow(elById('trophyUseHtmlDL'));
 			}
 			else {
-				elById('userTrophyDescriptionDL').style.display = 'none';
-				elById('trophyUseHtmlDL').style.display = 'none';
+				elHide(elById('userTrophyDescriptionDL'));
+				elHide(elById('trophyUseHtmlDL'));
 			}
 		});
 	});
