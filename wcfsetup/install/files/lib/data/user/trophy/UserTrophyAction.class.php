@@ -2,6 +2,7 @@
 namespace wcf\data\user\trophy;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\user\UserProfileAction;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
@@ -49,6 +50,26 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 				]
 			]); 
 			$userAction->executeAction(); 
+			
+			// checks if the user still has space to add special trophies
+			if (count($userTrophy->getUserProfile()->getSpecialTrophies()) < $userTrophy->getUserProfile()->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
+				$hasTrophy = false;
+				foreach (UserTrophyList::getUserTrophies([WCF::getUser()->userID])[WCF::getUser()->userID] as $trophy) {
+					if ($trophy->trophyID == $userTrophy->trophyID && $trophy->userTrophyID !== $userTrophy->userTrophyID) {
+						$hasTrophy = true; 
+						break; 
+					}
+				}
+				
+				if (!$hasTrophy) {
+					$userProfileAction = new UserProfileAction([$userTrophy->getUserProfile()->getDecoratedObject()], 'updateSpecialTrophies', [
+						'trophyIDs' => array_merge(array_map(function($trophy) {
+							return $trophy->trophyID;
+						}, $userTrophy->getUserProfile()->getSpecialTrophies()), [$userTrophy->trophyID])
+					]);
+					$userProfileAction->executeAction();
+				}
+			}
 		}
 		
 		UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.userTrophy.recentActivityEvent.trophyReceived', $userTrophy->getObjectID(), null, $userTrophy->userID);
