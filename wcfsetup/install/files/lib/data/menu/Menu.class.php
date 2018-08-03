@@ -79,7 +79,10 @@ class Menu extends DatabaseObject {
 	 * @return	string
 	 */
 	public function getContent() {
-		WCF::getTPL()->assign(['menuItemNodeList' => $this->getMenuItemNodeList()]);
+		WCF::getTPL()->assign([
+			'menuItemNodeList' => $this->getMenuItemNodeList(),
+			'menuTitle' => $this->getTitle()
+		]);
 		return WCF::getTPL()->fetch('__menu');
 	}
 	
