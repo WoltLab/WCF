@@ -132,9 +132,7 @@ define(
 			_enableMobileView: function(element) {
 				var messageFooterGroup = element.parentElement.parentElement.parentElement;
 				
-				var mobileReaction = elBySel('.mobileReactButton', messageFooterGroup);
-				
-				mobileReaction.style.display = '';
+				elShow(elBySel('.mobileReactButton', messageFooterGroup));
 			},
 			
 			/**
@@ -145,9 +143,7 @@ define(
 			_disableMobileView: function(element) {
 				var messageFooterGroup = element.parentElement.parentElement.parentElement;
 				
-				var mobileReaction = elBySel('.mobileReactButton', messageFooterGroup);
-				
-				mobileReaction.style.display = 'none';
+				elHide(elBySel('.mobileReactButton', messageFooterGroup));
 			},
 			
 			/**
