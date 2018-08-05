@@ -2442,6 +2442,7 @@ Errors are:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} file{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.insert"><![CDATA[Insert ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.media.setCategory"><![CDATA[Edit Category ({#$count})]]></item>
 		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} tag{if $count != 1}s{/if}?]]></item>
@@ -3099,6 +3100,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.media.uploadTime"><![CDATA[Upload Date]]></item>
 		<item name="wcf.media.search.noResults"><![CDATA[The search returned no results.]]></item>
 		<item name="wcf.media.search.info.searchStringThreshold"><![CDATA[The search term must contain at least {#$minSearchLength} character{if $minSearchLength > 1}s{/if}.]]></item>
+		<item name="wcf.media.setCategory"><![CDATA[Edit Category]]></item>
 	</category>
 	
 	<category name="wcf.message">

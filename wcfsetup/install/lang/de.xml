@@ -2508,7 +2508,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete"><![CDATA[Löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete.confirmMessage"><![CDATA[{if $count == 1}Eine Datei{else}{#$count} Dateien{/if} löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.insert"><![CDATA[Einfügen ({#$count})]]></item>
-		
+		<item name="wcf.clipboard.item.com.woltlab.wcf.media.setCategory"><![CDATA[Kategorie bearbeiten ({#$count})]]></item>
+
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete"><![CDATA[Löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete.confirmMessage"><![CDATA[{if $count == 1}Einen Tag{else}{#$count} Tag{/if} löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.setAsSynonyms"><![CDATA[Als Synonyme verwenden ({#$count})]]></item>
@@ -3154,6 +3155,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.media.uploadTime"><![CDATA[Datum hochgeladen]]></item>
 		<item name="wcf.media.search.noResults"><![CDATA[Es wurden keine Ergebnisse gefunden.]]></item>
 		<item name="wcf.media.search.info.searchStringThreshold"><![CDATA[Der Suchbegriff muss mindestens {#$minSearchLength} Zeichen lang sein.]]></item>
+		<item name="wcf.media.setCategory"><![CDATA[Kategorie bearbeiten]]></item>
 	</category>
 	
 	<category name="wcf.message">

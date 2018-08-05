@@ -12,14 +12,16 @@ define(
 		'Dom/Util',                 'EventHandler',             'Language',                        'List',
 		'Permission',               'Ui/Dialog',                'Ui/Notification',                 'WoltLabSuite/Core/Controller/Clipboard',
 		'WoltLabSuite/Core/Media/Editor', 'WoltLabSuite/Core/Media/Upload', 'WoltLabSuite/Core/Media/Manager/Search', 'StringUtil',
-		'WoltLabSuite/Core/Ui/Pagination'
+		'WoltLabSuite/Core/Ui/Pagination',
+		'WoltLabSuite/Core/Media/Clipboard'
 	],
 	function(
 		Core,                        Dictionary,                 DomChangeListener,                 DomTraverse,
 		DomUtil,                     EventHandler,               Language,                          List,
 		Permission,                  UiDialog,                   UiNotification,                    Clipboard,
 		MediaEditor,                 MediaUpload,                MediaManagerSearch,                StringUtil,
-		UiPagination
+		UiPagination,
+		MediaClipboard
 	)
 {
 	"use strict";
@@ -29,7 +31,6 @@ define(
 		Fake.prototype = {
 			_addButtonEventListeners: function() {},
 			_click: function() {},
-			_clipboardAction: function() {},
 			_dialogClose: function() {},
 			_dialogInit: function() {},
 			_dialogSetup: function() {},
@@ -40,6 +41,7 @@ define(
 			_removeClipboardCheckboxes: function() {},
 			_setMedia: function() {},
 			addMedia: function() {},
+			clipboardDeleteMedia: function() {},
 			getDialog: function() {},
 			getMode: function() {},
 			getOption: function() {},
@@ -116,23 +118,6 @@ define(
 			event.preventDefault();
 			
 			UiDialog.open(this);
-		},
-		
-		/**
-		 * Reacts to executed clipboard actions.
-		 * 
-		 * @param	{object<string, *>}	actionData	data of the executed clipboard action
-		 */
-		_clipboardAction: function(actionData) {
-			// only consider events if the action has been executed
-			if (actionData.data.actionName === 'com.woltlab.wcf.media.delete' && actionData.responseData !== null) {
-				var mediaIds = actionData.responseData.objectIDs;
-				for (var i = 0, length = mediaIds.length; i < length; i++) {
-					this.removeMedia(~~mediaIds[i], true);
-				}
-				
-				UiNotification.show();
-			}
 		},
 		
 		/**
@@ -227,12 +212,11 @@ define(
 				}
 				
 				if (Permission.get('admin.content.cms.canManageMedia') || this._forceClipboard) {
-					EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
-					
-					Clipboard.setup({
-						hasMarkedItems: this._hadInitiallyMarkedItems ? true : false,
-						pageClassName: 'menuManagerDialog-' + this.getMode()
-					});
+					MediaClipboard.init(
+						'menuManagerDialog-' + this.getMode(),
+						this._hadInitiallyMarkedItems ? true : false,
+						this
+					);
 				}
 				else {
 					this._removeClipboardCheckboxes();
@@ -412,6 +396,19 @@ define(
 			if (this._listItems.size === 1) {
 				this._search.showSearch();
 			}
+		},
+		
+		/**
+		 * Is called after the media files with the given ids have been deleted via clipboard.
+		 * 
+		 * @param	{int[]}		mediaIds	ids of deleted media files
+		 */
+		clipboardDeleteMedia: function(mediaIds) {
+			for (var i = 0, length = mediaIds.length; i < length; i++) {
+				this.removeMedia(~~mediaIds[i], true);
+			}
+			
+			UiNotification.show();
 		},
 		
 		/**

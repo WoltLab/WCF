@@ -10,6 +10,7 @@ define([
 		'Dom/ChangeListener',
 		'EventHandler',
 		'WoltLabSuite/Core/Controller/Clipboard',
+		'WoltLabSuite/Core/Media/Clipboard',
 		'WoltLabSuite/Core/Media/Editor',
 		'WoltLabSuite/Core/Media/List/Upload'
 	],
@@ -17,6 +18,7 @@ define([
 		DomChangeListener,
 		EventHandler,
 		Clipboard,
+		MediaClipboard,
 		MediaEditor,
 		MediaListUpload
 	) {
@@ -26,7 +28,9 @@ define([
 		var Fake = function() {};
 		Fake.prototype = {
 			init: function() {},
-			_clipboardAction: function() {},
+			_addButtonEventListeners: function() {},
+			_deleteCallback: function() {},
+			_deleteMedia: function(mediaIds) {},
 			_edit: function() {}
 		};
 		return Fake;
@@ -34,6 +38,7 @@ define([
 	
 	var _mediaEditor;
 	var _tableBody = elById('mediaListTableBody');
+	var _clipboardObjectIds = [];
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Controller/Media/List
@@ -46,12 +51,12 @@ define([
 				multiple: true
 			});
 			
-			Clipboard.setup({
-				hasMarkedItems: options.hasMarkedItems || false,
-				pageClassName: 'wcf\\acp\\page\\MediaListPage'
-			});
+			MediaClipboard.init(
+				'wcf\\acp\\page\\MediaListPage',
+				options.hasMarkedItems || false,
+				this
+			);
 			
-			EventHandler.add('com.woltlab.wcf.clipboard', 'com.woltlab.wcf.media', this._clipboardAction.bind(this));
 			EventHandler.add('com.woltlab.wcf.media.upload', 'removedErroneousUploadRow', this._deleteCallback.bind(this));
 			
 			var deleteAction = new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.jsMediaRow');
@@ -107,43 +112,34 @@ define([
 		},
 		
 		/**
-		 * Handles successful clipboard actions.
-		 * 
-		 * @param	{object}	actionData
-		 */
-		_clipboardAction: function(actionData) {
-			// only consider events if the action has been executed
-			if (actionData.responseData === null) {
-				return;
-			}
-			
-			if (actionData.data.actionName === 'com.woltlab.wcf.media.delete') {
-				var mediaIds = actionData.responseData.objectIDs;
-				
-				var mediaRows = elByClass('jsMediaRow');
-				for (var i = 0; i < mediaRows.length; i++) {
-					var media = mediaRows[i];
-					var mediaID = ~~elData(elByClass('jsClipboardItem', media)[0], 'object-id');
-					
-					if (mediaIds.indexOf(mediaID) !== -1) {
-						elRemove(media);
-						i--;
-					}
-				}
-				
-				if (!mediaRows.length) {
-					window.location.reload();
-				}
-			}
-		},
-		
-		/**
 		 * Is called when a media edit icon is clicked.
 		 * 
 		 * @param	{Event}		event
 		 */
 		_edit: function(event) {
 			_mediaEditor.edit(elData(event.currentTarget, 'object-id'));
+		},
+		
+		/**
+		 * Is called after the media files with the given ids have been deleted via clipboard.
+		 * 
+		 * @param	{int[]}		mediaIds	ids of deleted media files
+		 */
+		clipboardDeleteMedia: function(mediaIds) {
+			var mediaRows = elByClass('jsMediaRow');
+			for (var i = 0; i < mediaRows.length; i++) {
+				var media = mediaRows[i];
+				var mediaID = ~~elData(elByClass('jsClipboardItem', media)[0], 'object-id');
+				
+				if (mediaIds.indexOf(mediaID) !== -1) {
+					elRemove(media);
+					i--;
+				}
+			}
+			
+			if (!mediaRows.length) {
+				window.location.reload();
+			}
 		}
 	}
 });

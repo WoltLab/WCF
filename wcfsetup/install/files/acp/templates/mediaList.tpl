@@ -4,7 +4,11 @@
 	{include file='mediaJavaScript'}
 	
 	require(['Language', 'WoltLabSuite/Core/Controller/Media/List'], function (Language, ControllerMediaList) {
-		Language.add('wcf.media.delete.confirmMessage', '{lang __literal=true}wcf.media.delete.confirmMessage{/lang}')
+		Language.addObject({
+			'wcf.media.delete.confirmMessage': '{lang __literal=true}wcf.media.delete.confirmMessage{/lang}',
+			'wcf.media.setCategory': '{lang}wcf.media.setCategory{/lang}'
+		});
+		
 		ControllerMediaList.init({
 			{if $categoryID}
 				categoryId: {@$categoryID},

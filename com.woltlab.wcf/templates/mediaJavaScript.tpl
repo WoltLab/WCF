@@ -17,7 +17,8 @@
 			'wcf.media.search.noResults': '{lang}wcf.media.search.noResults{/lang}',
 			'wcf.media.upload.error.noImage': '{lang}wcf.media.upload.error.noImage{/lang}',
 			'wcf.media.upload.error.uploadFailed': '{lang}wcf.media.upload.error.uploadFailed{/lang}',
-			'wcf.media.upload.success': '{lang}wcf.media.upload.success{/lang}'
+			'wcf.media.upload.success': '{lang}wcf.media.upload.success{/lang}',
+			'wcf.media.setCategory': '{lang}wcf.media.setCategory{/lang}'
 		});
 		
 		Permission.add('admin.content.cms.canManageMedia', {if $__wcf->session->getPermission('admin.content.cms.canManageMedia')}true{else}false{/if});
