@@ -42,6 +42,14 @@ class ACLHandler extends SingletonFactory {
 	protected $categories = [];
 	
 	/**
+	 * explicitly read acl values grouped by object type id
+	 * @var		array
+	 * @see		ACLHandler::readValues()
+	 * @since	3.2
+	 */
+	protected $__readValues = [];
+	
+	/**
 	 * Assigns the acl values to the template.
 	 * 
 	 * @param	integer		$objectTypeID
@@ -51,9 +59,15 @@ class ACLHandler extends SingletonFactory {
 			WCF::getTPL()->assign('aclValues', []);
 		}
 		
-		if (!$this->assignVariablesDisabled && isset($_POST['aclValues'])) {
+		$values = null;
+		if (array_key_exists($objectTypeID, $this->__readValues)) {
+			$values = $this->__readValues[$objectTypeID];
+		}
+		else if (isset($_POST['aclValues'])) {
 			$values = $_POST['aclValues'];
-			
+		}
+		
+		if (!$this->assignVariablesDisabled && $values !== null) {
 			$data = $this->getPermissions($objectTypeID, [], null, true);
 			
 			$users = [];
@@ -110,6 +124,52 @@ class ACLHandler extends SingletonFactory {
 	 */
 	public function enableAssignVariables() {
 		$this->assignVariablesDisabled = false;
+	}
+	
+	/**
+	 * Reads the values for the given object type id.
+	 * 
+	 * Note: This method primarily only exists for form builder. If you are not
+	 * using form builder, you do not need this method.
+	 * 
+	 * @param	integer		$objectTypeID
+	 * @since	3.2
+	 */
+	public function readValues($objectTypeID) {
+		$this->__readValues[$objectTypeID] = [];
+		
+		if (isset($_POST['aclValues'])) {
+			$options = ACLOption::getOptions($objectTypeID)->getObjects();
+			
+			foreach (['group', 'user'] as $type) {
+				if (isset($_POST['aclValues'][$type])) {
+					$this->__readValues[$objectTypeID][$type] = [];
+					
+					foreach ($_POST['aclValues'][$type] as $typeID => $optionData) {
+						$this->__readValues[$objectTypeID][$type][$typeID] = [];
+						
+						foreach ($optionData as $optionID => $optionValue) {
+							if (isset($options[$optionID])) {
+								$this->__readValues[$objectTypeID][$type][$typeID][$optionID] = $optionValue;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Resets the acl values read by `readValues()` for the given object type id.
+	 * 
+	 * Note: This method primarily only exists for form builder. If you are not
+	 * using form builder, you do not need this method.
+	 * 
+	 * @param	integer		$objectTypeID
+	 * @since	3.2
+	 */
+	public function resetValues($objectTypeID) {
+		$this->__readValues[$objectTypeID] = null;
 	}
 	
 	/**

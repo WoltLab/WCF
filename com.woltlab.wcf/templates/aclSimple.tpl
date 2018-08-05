@@ -1,4 +1,5 @@
 {if !$__aclSimplePrefix|isset}{assign var='__aclSimplePrefix' value=''}{/if}
+{if !$__aclInputName|isset}{assign var='__aclInputName' value='aclValues'}{/if}
 
 <div class="section">
 	<dl>
@@ -6,11 +7,11 @@
 		<dd>
 			<ol class="flexibleButtonGroup">
 				<li>
-					<input type="radio" id="{@$__aclSimplePrefix}aclAllowAll" name="aclValues[allowAll]" value="1"{if $aclValues[allowAll]} checked{/if}>
+					<input type="radio" id="{@$__aclSimplePrefix}aclAllowAll" name="{@$__aclInputName}[allowAll]" value="1"{if $aclValues[allowAll]} checked{/if}>
 					<label for="{@$__aclSimplePrefix}aclAllowAll" class="green"><span class="icon icon16 fa-check"></span> {lang}wcf.acp.option.type.boolean.yes{/lang}</label>
 				</li>
 				<li>
-					<input type="radio" id="{@$__aclSimplePrefix}aclAllowAll_no" name="aclValues[allowAll]" value="0"{if !$aclValues[allowAll]} checked{/if}>
+					<input type="radio" id="{@$__aclSimplePrefix}aclAllowAll_no" name="{@$__aclInputName}[allowAll]" value="0"{if !$aclValues[allowAll]} checked{/if}>
 					<label for="{@$__aclSimplePrefix}aclAllowAll_no" class="red"><span class="icon icon16 fa-times"></span> {lang}wcf.acp.option.type.boolean.no{/lang}</label>
 				</li>
 			</ol>
@@ -36,7 +37,7 @@
 						<span class="icon icon16 fa-users"></span>
 						<span class="aclLabel">{$aclGroup}</span>
 						<span class="icon icon16 fa-times pointer jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span>
-						<input type="hidden" name="aclValues[group][]" value="{@$aclGroup->groupID}">
+						<input type="hidden" name="{@$__aclInputName}[group][]" value="{@$aclGroup->groupID}">
 					</li>
 				{/foreach}
 				{foreach from=$aclValues[user] item=aclUser}
@@ -44,7 +45,7 @@
 						<span class="icon icon16 fa-user"></span>
 						<span class="aclLabel">{$aclUser}</span>
 						<span class="icon icon16 fa-times pointer jsTooltip" title="{lang}wcf.global.button.delete{/lang}"></span>
-						<input type="hidden" name="aclValues[user][]" value="{@$aclUser->userID}">
+						<input type="hidden" name="{@$__aclInputName}[user][]" value="{@$aclUser->userID}">
 					</li>
 				{/foreach}
 			</ul>
@@ -54,6 +55,6 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/Acl/Simple'], function(UiAclSimple) {
-		new UiAclSimple('{@$__aclSimplePrefix}');
+		new UiAclSimple('{@$__aclSimplePrefix}', '{@$__aclInputName}');
 	});
 </script>

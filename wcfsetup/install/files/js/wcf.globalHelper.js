@@ -174,6 +174,17 @@
 	};
 	
 	/**
+	 * Shorthand function to check if given element is hidden by setting its 'display'
+	 * value to 'none'.
+	 *
+	 * @param	{Element}	element		DOM element
+	 * @return	{boolean}
+	 */
+	window.elIsHidden = function(element) {
+		return element.style.getPropertyValue('display') === 'none';
+	}
+	
+	/**
 	 * Displays or removes an error message below the provided element.
 	 * 
 	 * @param       {Element}       element         DOM element

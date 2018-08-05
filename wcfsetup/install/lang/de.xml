@@ -3034,6 +3034,8 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 	</category>
 	
 	<category name="wcf.global.form">
+		<item name="wcf.global.form.boolean.no"><![CDATA[Nein]]></item>
+		<item name="wcf.global.form.boolean.yes"><![CDATA[Ja]]></item>
 		<item name="wcf.global.form.data"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.global.form.error"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Angaben sind ungültig. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}überprüfe{else}überprüfen Sie{/if} die markierten Eingabefelder.]]></item>
 		<item name="wcf.global.form.error.empty"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}fülle{else}füllen Sie{/if} dieses Eingabefeld aus.]]></item>
@@ -3048,6 +3050,28 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss kleiner sein als {#$lessThan}.{/literal}]]></item>
 		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss größer sein als {#$greaterThan}.{/literal}]]></item>
 		<!-- /deprecated since 2.1 -->
+	</category>
+	
+	<category name="wcf.form">
+		<item name="wcf.form.field.className"><![CDATA[Klasse]]></item>
+		<item name="wcf.form.field.className.description.interface"><![CDATA[Die angegebene Klasse (ohne Backslash als erstes Zeichen) muss das Interface <code>{$interface}</code> implementieren.]]></item>
+		<item name="wcf.form.field.className.error.interface"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} implementiert nicht das Interface <code>{$interface}</code>.]]></item>
+		<item name="wcf.form.field.className.error.isInstantiable"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} ist nicht instanziierbar.]]></item>
+		<item name="wcf.form.field.className.error.leadingBackslash"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} darf keinen führenden Backslash besitzen.]]></item>
+		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} existiert nicht.]]></item>
+		<item name="wcf.form.field.className.error.parentClass"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} erbt nicht von <code>{$parentClass}</code>.]]></item>
+		<item name="wcf.form.field.itemList.error.separator"><![CDATA[Die folgenden Elemente dürfen kein {if $separator === ','}Komma{else}Leerzeichen{/if} enthalten: {implode from=$invalidItems item=item}„{$item}“{/implode}.]]></item>
+		<item name="wcf.form.field.numeric.error.maximum"><![CDATA[Der angegebene Wert darf nicht kleiner als {#$maximum} sein.]]></item>
+		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[Der angegebene Wert darf nicht größer als {#$minimum} sein.]]></item>
+		<item name="wcf.form.field.showOrder"><![CDATA[Position]]></item>
+		<item name="wcf.form.field.showOrder.firstPosition"><![CDATA[(an erster Stelle)]]></item>
+		<item name="wcf.form.field.text.error.maximumLength"><![CDATA[Der angegebene Text{if $language} für die Sprache „{$language}“{/if} umfasst {#$length} Zeichen, er darf aber nicht länger als {#$maximumLength} Zeichen sein.]]></item>
+		<item name="wcf.form.field.text.error.minimumLength"><![CDATA[Der angegebene Text{if $language} für die Sprache „{$language}“{/if} umfasst {#$length} Zeichen, er darf aber nicht kürzer als {#$minimumLength} Zeichen sein.]]></item>
+		<item name="wcf.form.field.user.error.maxmimumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} zumindest {#$maximumCount} Benutzer angeben, es wurde{if $count != 1}n{else} aber nur {#$count} Benutzer angegeben.]]></item>
+		<item name="wcf.form.field.user.error.minimumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du darfst{else}Sie dürfen{/if} nicht mehr als {#$minimumCount} Benutzer angeben, es wurde{if $count != 1}n{else} aber {#$count} Benutzer angegeben.]]></item>
+		<item name="wcf.form.field.user.error.nonExistent"><![CDATA[{if $nonExistentUsernames|isset}Die folgenden Benutzer existieren nicht: {implode from=$nonExistentUsernames item=nonExistentUsername}„{$nonExistentUsername}“{/implode}.{else}Der angegebene Benutzer existiert nicht.{/if}]]></item>
+		<item name="wcf.form.field.username.error.invalid"><![CDATA[Der angegebene Benutzername ist ungültig.]]></item>
+		<item name="wcf.form.field.username.error.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
 	</category>
 	
 	<category name="wcf.imageViewer">

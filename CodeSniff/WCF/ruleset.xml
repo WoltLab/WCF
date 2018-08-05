@@ -39,7 +39,7 @@
 	<rule ref="Squiz.Scope.MethodScope" />
 	<rule ref="Squiz.Strings.EchoedStrings" />
 	<rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace" />
-	<rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing" />
+	<!--<rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing" />-->
 	<rule ref="WCF.Classes.ClassFileName" />
 	<rule ref="WCF.ControlStructures.ControlSignature" />
 	<!--TODO:<rule ref="WCF.Functions.OpeningFunctionBraceKernighanRitchie" />-->
