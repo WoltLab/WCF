@@ -17,36 +17,14 @@
 		new {if $commentHandlerClass|isset}{@$commentHandlerClass}{else}WCF.Comment.Handler{/if}('{$commentContainerID}');
 		{if MODULE_LIKE && $commentList->getCommentManager()->supportsLike() && $__wcf->getSession()->getPermission('user.like.canViewLike') || $__wcf->getSession()->getPermission('user.like.canLike')}
 			require(['WoltLabSuite/Core/Ui/Reaction/Handler'], function(UiReactionHandler) {
-				var canLike = {if $__wcf->getUser()->userID && $__wcf->getSession()->getPermission('user.like.canLike')}true{else}false{/if};
-				var canLikeOwnContent = {if LIKE_ALLOW_FOR_OWN_CONTENT}true{else}false{/if};
-				
 				new UiReactionHandler('com.woltlab.wcf.comment', {
-					// settings
-					badgeClassNames: 'separatorLeft',
-					markListItemAsActive: true,
-					renderAsButton: false,
-					
-					// permissions
-					canLike: canLike,
-					canLikeOwnContent: canLikeOwnContent,
-					
 					// selectors
 					containerSelector: 'li.comment',
 					summaryListSelector: '.reactionSummaryList',
 					isButtonGroupNavigation: true
 				});
 				
-				
 				new UiReactionHandler('com.woltlab.wcf.comment.response', {
-					// settings
-					badgeClassNames: 'separatorLeft',
-					markListItemAsActive: true,
-					renderAsButton: false,
-					
-					// permissions
-					canLike: canLike,
-					canLikeOwnContent: canLikeOwnContent,
-					
 					// selectors
 					containerSelector: '.commentResponse',
 					summaryListSelector: '.reactionSummaryList',
