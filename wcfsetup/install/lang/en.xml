@@ -939,7 +939,6 @@
 		<item name="wcf.acp.menu.link.devtools.notificationTest"><![CDATA[Notification Test]]></item>
 		<item name="wcf.acp.menu.link.log.modification"><![CDATA[Global Modification Log]]></item>
 		<item name="wcf.acp.menu.link.reactionType"><![CDATA[Reaction]]></item>
-		<!-- @TODO maybe use "Reactions" instead of "Reaction Types", because its more comprehensible for users -->
 		<item name="wcf.acp.menu.link.reactionType.list"><![CDATA[Reaction Types]]></item>
 		<item name="wcf.acp.menu.link.reactionType.add"><![CDATA[Add Reaction Type]]></item>
 		<item name="wcf.acp.menu.link.reactionType.edit"><![CDATA[Edit Reaction Type]]></item>

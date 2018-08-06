@@ -337,7 +337,6 @@ class ReactionHandler extends SingletonFactory {
 			WCF::getDB()->rollBackTransaction();
 		}
 		
-		// @TODO return some dummy values
 		return [
 			'cachedReactions' => [], 
 		]; 
@@ -537,7 +536,6 @@ class ReactionHandler extends SingletonFactory {
 			WCF::getDB()->rollBackTransaction();
 		}
 		
-		// @TODO return some dummy values
 		return [
 			'cachedReactions' => [],
 			'reactionTypeID' => null,
