@@ -26,6 +26,7 @@ use wcf\system\SingletonFactory;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\JSON;
+use wcf\util\StringUtil;
 
 /**
  * Handles the reactions of objects.
@@ -135,11 +136,15 @@ class ReactionHandler extends SingletonFactory {
 		$returnDataAttributes = '';
 		
 		foreach ($dataAttributes as $key => $value) {
+			if (!preg_match('/^[a-z0-9-]+$/', $key)) {
+				throw new \RuntimeException("Invalid key '". $key ."' for data attribute.");
+			}
+			
 			if (!empty($returnDataAttributes)) {
 				$returnDataAttributes .= ' ';
 			}
 			
-			$returnDataAttributes .= 'data-'. $key .'="'. $value .'"';
+			$returnDataAttributes .= 'data-'. $key .'="'. StringUtil::encodeHTML($value) .'"';
 		}
 		
 		return $returnDataAttributes;
@@ -316,7 +321,7 @@ class ReactionHandler extends SingletonFactory {
 			if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType.'.recentActivityEvent')) {
 				$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.user.recentActivityEvent', $likeable->getObjectType()->objectType.'.recentActivityEvent');
 				
-				if ($objectType->supportReactions) {
+				if ($objectType->supportsReactions) {
 					if ($like->likeID) {
 						UserActivityEventHandler::getInstance()->removeEvent($likeable->getObjectType()->objectType . '.recentActivityEvent', $likeable->getObjectID(), $user->userID);
 					}
