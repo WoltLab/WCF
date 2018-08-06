@@ -1159,7 +1159,7 @@ CREATE TABLE wcf1_poll_option_vote (
 );
 
 DROP TABLE IF EXISTS wcf1_reaction_type; 
-CREATE TABLE wcf1_reaction_type(
+CREATE TABLE wcf1_reaction_type (
 	reactionTypeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
 	title VARCHAR(255), 
 	type TINYINT(1),

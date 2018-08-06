@@ -130,7 +130,7 @@ define(
 						// create element 
 						var createdElement = elCreate('li');
 						createdElement.className = 'reactCountButton';
-						createdElement.innerHTML = REACTION_TYPES[key].renderedIcon +' '; 
+						createdElement.innerHTML = REACTION_TYPES[key].renderedIcon + ' '; 
 						elData(createdElement, 'reaction-type-id', key);
 						
 						var countSpan = elCreate('span');
@@ -226,7 +226,7 @@ define(
 				
 				if (this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).has(this._currentPageNo)) {
 					var dialog = UiDialog.open(this, this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).get(this._currentPageNo));
-					UiDialog.setTitle('userReactionOverlay-'+ this._objectType, this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).get('title'));
+					UiDialog.setTitle('userReactionOverlay-' + this._objectType, this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).get('title'));
 					
 					if (this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).get('pageCount') > 1) {
 						var element = elBySel('.jsPagination', dialog.content);
@@ -280,7 +280,7 @@ define(
 			
 			_dialogSetup: function() {
 				return {
-					id: 'userReactionOverlay-'+ this._objectType,
+					id: 'userReactionOverlay-' + this._objectType,
 					options: {
 						title: ""
 					},

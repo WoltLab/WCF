@@ -183,7 +183,7 @@ define(
 					this._containers.get(objectID).reactButton.classList.remove('active');
 					
 					// update icon
-					elBySel('img', this._containers.get(objectID).reactButton).src = WCF_PATH+'images/reaction/reactionIcon.svg';
+					elBySel('img', this._containers.get(objectID).reactButton).src = WCF_PATH + 'images/reaction/reactionIcon.svg';
 					elData(elBySel('img', this._containers.get(objectID).reactButton), 'reaction-type-id', 0);
 				}
 				
