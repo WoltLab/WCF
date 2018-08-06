@@ -4080,7 +4080,7 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Jemandem gefällt {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kommentar]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Jemandem gefällt {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.paidSubscription.user.expiring"><![CDATA[Eine {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Mitgliedschaft läuft bald ab]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.paidSubscription.user.expiring"><![CDATA[Eine {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Mitgliedschaften läuft bald ab]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.userTrophy.notification.received"><![CDATA[Trophäe erhalten]]></item>
 		<item name="wcf.user.notification.trophy.received.title"><![CDATA[Trophäe erhalten]]></item>
 		<item name="wcf.user.notification.trophy.received.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} die Trophäe <a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a> erhalten.]]></item>
