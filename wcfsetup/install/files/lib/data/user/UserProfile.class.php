@@ -465,8 +465,10 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 			
 			UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', serialize($specialTrophies));
 		}
+		$trophies = TrophyCache::getInstance()->getTrophiesByID($specialTrophies);
+		Trophy::sort($trophies, 'showOrder'); 
 		
-		return TrophyCache::getInstance()->getTrophiesByID($specialTrophies); 
+		return $trophies;
 	}
 	
 	/**

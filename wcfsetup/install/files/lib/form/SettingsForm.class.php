@@ -127,6 +127,8 @@ class SettingsForm extends AbstractForm {
 			}, UserTrophyList::getUserTrophies([WCF::getUser()->userID])[WCF::getUser()->userID]));
 			
 			$this->availableTrophies = TrophyCache::getInstance()->getTrophiesByID($trophyIDs);
+			
+			Trophy::sort($this->availableTrophies, 'showOrder');
 		}
 	}
 	

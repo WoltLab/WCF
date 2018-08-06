@@ -4,6 +4,7 @@ use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\trophy\UserTrophyList;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
 use wcf\data\IUploadAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -27,11 +28,16 @@ use wcf\system\WCF;
  * @method	TrophyEditor[]		getObjects()
  * @method	TrophyEditor		getSingleObject()
  */
-class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction, IUploadAction {
+class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction, IUploadAction, ISortableAction {
 	/**
 	 * @inheritDoc
 	 */
 	protected $permissionsDelete = ['admin.trophy.canManageTrophy'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $permissionsUpdate = ['admin.trophy.canManageTrophy'];
 	
 	/**
 	 * @inheritDoc
@@ -43,6 +49,12 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 	 * @return	Trophy
 	 */
 	public function create() {
+		$showOrder = 0;
+		if (isset($this->parameters['data']['showOrder'])) {
+			$showOrder = $this->parameters['data']['showOrder'];
+			unset($this->parameters['data']['showOrder']);
+		}
+		
 		/** @var Trophy $trophy */
 		$trophy = parent::create();
 		
@@ -50,7 +62,10 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 			$this->updateTrophyImage($trophy);
 		}
 		
-		return $trophy;
+		$trophyEditor = new TrophyEditor($trophy);
+		$trophyEditor->setShowOrder($showOrder);
+		
+		return new Trophy($trophy->trophyID);
 	}
 	
 	/**
@@ -90,6 +105,10 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 					$this->updateTrophyImage($trophy);
 				}
 			}
+		}
+		
+		if (count($this->objects) == 1 && isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] != reset($this->objects)->showOrder) {
+			reset($this->objects)->setShowOrder($this->parameters['data']['showOrder']);
 		}
 	}
 	
@@ -279,5 +298,44 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 				}
 			}
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateUpdatePosition() {
+		WCF::getSession()->checkPermissions($this->permissionsUpdate);
+		
+		if (!isset($this->parameters['data']['structure']) || !is_array($this->parameters['data']['structure'])) {
+			throw new UserInputException('structure');
+		}
+		
+		$adList = new TrophyList();
+		$adList->setObjectIDs($this->parameters['data']['structure'][0]);
+		if ($adList->countObjects() != count($this->parameters['data']['structure'][0])) {
+			throw new UserInputException('structure');
+		}
+		
+		$this->readInteger('offset', true, 'data');
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function updatePosition() {
+		$sql = "UPDATE	wcf".WCF_N."_trophy
+			SET	showOrder = ?
+			WHERE	trophyID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		$showOrder = $this->parameters['data']['offset'];
+		WCF::getDB()->beginTransaction();
+		foreach ($this->parameters['data']['structure'][0] as $trophyID) {
+			$statement->execute([
+				$showOrder++,
+				$trophyID
+			]);
+		}
+		WCF::getDB()->commitTransaction();
 	}
 }

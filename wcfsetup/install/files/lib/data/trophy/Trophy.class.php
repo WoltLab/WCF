@@ -33,6 +33,7 @@ use wcf\util\StringUtil;
  * @property-read	integer		$isDisabled			`1` if the trophy is disabled
  * @property-read	integer		$awardAutomatically		`1` if the trophy is awarded automatically
  * @property-read	integer		$trophyUseHtml		        `1`, if the trophy use a html description
+ * @property-read	integer		$showOrder		        position of the trophy in relation to the other trophies at the same location
  */
 class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteController {
 	/**
