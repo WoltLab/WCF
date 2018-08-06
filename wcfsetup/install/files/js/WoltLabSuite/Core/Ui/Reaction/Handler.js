@@ -109,7 +109,7 @@ define(
 					return; 
 				}
 				
-				if (elementData.reactButton.parentElement.parentElement.classList.contains('jsMobileNavigation')) {
+				if (elementData.reactButton.closest('.messageFooterGroup > .jsMobileNavigation')) {
 					UiScreen.on('screen-sm-down', {
 						match: this._enableMobileView.bind(this, elementData.reactButton, elementData.objectId),
 						unmatch: this._disableMobileView.bind(this, elementData.reactButton, elementData.objectId),
@@ -161,7 +161,7 @@ define(
 			},
 			
 			_rebuildMobileView: function(objectID) {
-				if (this._containers.get(objectID).reactButton.parentElement.parentElement.classList.contains('jsMobileNavigation')) {
+				if (this._containers.get(objectID).reactButton.closest('.messageFooterGroup > .jsMobileNavigation')) {
 					var messageFooterGroup = this._containers.get(objectID).reactButton.parentElement.parentElement.parentElement;
 					var button = elBySel('.mobileReactButton', messageFooterGroup);
 					
