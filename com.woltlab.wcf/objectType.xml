@@ -49,7 +49,7 @@
 			<name>com.woltlab.wcf.likeableArticle.recentActivityEvent</name>
 			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
 			<classname>wcf\system\user\activity\event\LikeableArticleUserActivityEvent</classname>
-			<supportReactions>1</supportReactions>
+			<supportsReactions>1</supportsReactions>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.articleComment.recentActivityEvent</name>
@@ -259,14 +259,14 @@
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
 			<classname>wcf\system\user\notification\object\type\LikeUserNotificationObjectType</classname>
 			<category>com.woltlab.wcf.user</category>
-			<supportReactions>1</supportReactions>
+			<supportsReactions>1</supportsReactions>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.profileComment.response.like.notification</name>
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
 			<classname>wcf\system\user\notification\object\type\LikeUserNotificationObjectType</classname>
 			<category>com.woltlab.wcf.user</category>
-			<supportReactions>1</supportReactions>
+			<supportsReactions>1</supportsReactions>
 		</type>
 		
 		<type>

@@ -51,7 +51,7 @@ class LikeableComment extends AbstractLikeObject implements IReactionObject {
 	 */
 	public function sendNotification(Like $like) {
 		$objectType = CommentHandler::getInstance()->getObjectType($this->getDecoratedObject()->objectTypeID);
-		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.like.notification') && UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.like.notification')->supportReactions) {
+		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.like.notification') && UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.like.notification')->supportsReactions) {
 			if ($this->userID != WCF::getUser()->userID) {
 				$notificationObject = new LikeUserNotificationObject($like);
 				UserNotificationHandler::getInstance()->fireEvent(
