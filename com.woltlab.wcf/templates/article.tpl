@@ -306,14 +306,6 @@
 											{lang article=$relatedArticle}wcf.article.articleComments{/lang}
 										</li>
 									{/if}
-									
-									{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike')}
-										<li class="wcfLikeCounter{if $relatedArticle->cumulativeLikes > 0} likeCounterLiked{elseif $relatedArticle->cumulativeLikes < 0}likeCounterDisliked{/if}">
-											{if $relatedArticle->likes || $relatedArticle->dislikes}
-												<span class="icon icon16 fa-thumbs-o-{if $relatedArticle->cumulativeLikes < 0}down{else}up{/if} jsTooltip" title="{lang likes=$relatedArticle->likes dislikes=$relatedArticle->dislikes}wcf.like.tooltip{/lang}"></span>{if $relatedArticle->cumulativeLikes > 0}+{elseif $relatedArticle->cumulativeLikes == 0}&plusmn;{/if}{#$relatedArticle->cumulativeLikes}
-											{/if}
-										</li>
-									{/if}
 								</ul>
 							</div>
 							
