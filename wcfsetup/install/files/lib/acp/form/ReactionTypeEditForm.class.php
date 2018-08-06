@@ -16,7 +16,7 @@ class ReactionTypeEditForm extends ReactionTypeAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $formAction = 'update';
+	public $formAction = 'edit';
 	
 	/**
 	 * @inheritDoc
