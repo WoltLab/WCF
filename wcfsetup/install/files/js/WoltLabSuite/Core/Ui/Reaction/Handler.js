@@ -49,10 +49,6 @@ define(
 				this._popover = null; 
 				
 				this._options = Core.extend({
-					// permissions
-					canReact: false,
-					canReactToOwnContent: false,
-					
 					// selectors
 					buttonSelector: '.reactButton', 
 					containerSelector: '',
