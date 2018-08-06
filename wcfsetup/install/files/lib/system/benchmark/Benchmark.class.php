@@ -6,7 +6,7 @@ use wcf\util\FileUtil;
 /**
  * Provides functions to do a benchmark.
  * 
- * @author	Marcel Werk
+ * @author	Jens Hausdorf, Marcel Werk
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Benchmark
@@ -20,6 +20,13 @@ class Benchmark extends SingletonFactory {
 	 * @var	float
 	 */
 	protected $startTime = 0;
+	
+	/**
+	* time when the webserver received this request
+	* @var float
+	* @since 3.2
+	*/
+	protected $requestStartTime = 0;
 	
 	/**
 	 * benchmark items
@@ -44,6 +51,7 @@ class Benchmark extends SingletonFactory {
 	 */
 	protected function init() {
 		$this->startTime = self::getMicrotime();
+		$this->requestStartTime = $_SERVER['REQUEST_TIME_FLOAT'];
 	}
 	
 	/**
@@ -55,8 +63,8 @@ class Benchmark extends SingletonFactory {
 	 */
 	public function start($text, $type = self::TYPE_OTHER) {
 		$newIndex = count($this->items);
-		$this->items[$newIndex]['text']	= $text;
-		$this->items[$newIndex]['type']	= $type;
+		$this->items[$newIndex]['text'] = $text;
+		$this->items[$newIndex]['type'] = $type;
 		$this->items[$newIndex]['before'] = self::getMicrotime();
 		$this->items[$newIndex]['start'] = self::compareMicrotimes($this->startTime, $this->items[$newIndex]['before']);
 		$this->items[$newIndex]['trace'] = defined('DEBUG_BACKTRACE_IGNORE_ARGS') ? debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) : debug_backtrace();
@@ -90,6 +98,28 @@ class Benchmark extends SingletonFactory {
 	 */
 	public function getExecutionTime() {
 		return self::compareMicrotimes($this->startTime, self::getMicrotime());
+	}
+	
+	/**
+	 * Returns the execution time since the webserver
+	 * received this request.
+	 * 
+	 * @return float
+	 * @since 3.2
+	 */
+	public function getRequestExecutionTime() {
+		return self::compareMicrotimes($this->requestStartTime, self::getMicrotime());
+	}
+	
+	/**
+	 * Returns the difference between the webserver received this request and
+	 * the timestamp when our PHP code is being executed.
+	 * 
+	 * @return float
+	 * @since 3.2
+	 */
+	public function getOffsetToRequestTime() {
+		return self::compareMicrotimes($this->requestStartTime, $this->startTime);
 	}
 	
 	/**
