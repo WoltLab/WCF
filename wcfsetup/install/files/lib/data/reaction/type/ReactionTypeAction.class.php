@@ -4,6 +4,7 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
 /**
@@ -33,6 +34,57 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 	 * @inheritDoc
 	 */
 	protected $requireACP = ['delete', 'update', 'updatePosition'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function create() {
+		/** @var ReactionType $reactionType */
+		$reactionType = parent::create();
+		$reactionTypeEditor = new ReactionTypeEditor($reactionType);
+		
+		// i18n
+		$updateData = [];
+		if (isset($this->parameters['title_i18n'])) {
+			I18nHandler::getInstance()->save(
+				$this->parameters['title_i18n'],
+				'wcf.reactionType.title' . $reactionType->reactionTypeID,
+				'wcf.reactionType',
+				1
+			);
+			
+			$updateData['title'] = 'wcf.reactionType.title' . $reactionType->reactionTypeID;
+		}
+		
+		if (!empty($updateData)) {
+			$reactionTypeEditor->update($updateData);
+		}
+		
+		return $reactionType;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function update() {
+		parent::update();
+		
+		// i18n
+		foreach ($this->getObjects() as $object) {
+			if (isset($this->parameters['title_i18n'])) {
+				I18nHandler::getInstance()->save(
+					$this->parameters['title_i18n'],
+					'wcf.reactionType.title' . $object->reactionTypeID,
+					'wcf.reactionType',
+					1
+				);
+				
+				$object->update([
+					'title' => 'wcf.reactionType.title' . $object->reactionTypeID
+				]);
+			}
+		}
+	}
 	
 	/**
 	 * @inheritDoc
