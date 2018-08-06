@@ -29,7 +29,7 @@
 							
 							<small class="separatorLeft">{@$response->time|time}</small>
 							
-							{if $likeData|isset}{include file="reactionSummaryList" isTiny=true reactionData=$likeData[response] objectType="com.woltlab.wcf.comment.response" objectID=$response->responseID}{/if}
+							{if MODULE_LIKE && $likeData|isset}{include file="reactionSummaryList" isTiny=true reactionData=$likeData[response] objectType="com.woltlab.wcf.comment.response" objectID=$response->responseID}{/if}
 							
 							{if $response->isDisabled}
 								<span class="badge label green jsIconDisabled">{lang}wcf.message.status.disabled{/lang}</span>
