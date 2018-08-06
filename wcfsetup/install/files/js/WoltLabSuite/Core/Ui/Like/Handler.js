@@ -125,7 +125,13 @@ define(
 			
 			if (badgeContainer !== null) {
 				summaryList = elCreate('ul');
-				summaryList.className = 'reactionSummaryList' + (isSummaryPosition ? ' likesSummary' : ' reactionSummaryListTiny') + ((isSummaryPosition && this._options.badgeClassNames) ? ' ' + this._options.badgeClassNames : '');
+				summaryList.classList.add('reactionSummaryList');
+				if (isSummaryPosition) {
+					summaryList.classList.add('likesSummary');
+				}
+				else {
+					summaryList.classList.add('reactionSummaryListTiny');
+				}
 				
 				for (var key in elementData.users) {
 					if (key === "reactionTypeID") continue;
