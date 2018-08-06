@@ -96,9 +96,7 @@ define(
 			 * @param       {int}   objectId
 			 */
 			invalidateCache: function(objectId) {
-				if (this._cache.has(objectId)) {
-					this._cache.delete(objectId);
-				}
+				this._cache.delete(objectId);
 			},
 			
 			/**
