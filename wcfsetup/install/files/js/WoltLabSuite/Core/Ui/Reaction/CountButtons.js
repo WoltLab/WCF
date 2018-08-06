@@ -43,14 +43,10 @@ define(
 				this._cache = new Dictionary();
 				
 				this._options = Core.extend({
-					// permissions
-					canReact: false,
-					canReactToOwnContent: false,
-					canViewReactions: false,
-					
 					// selectors
 					summaryListSelector: '.reactionSummaryList',
 					containerSelector: '',
+					isSingleItem: false,
 					
 					// optional parameters
 					parameters: {
