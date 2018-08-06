@@ -305,12 +305,21 @@ define(
 			_getSortedReactionTypes: function() {
 				var sortedReactionTypes = [];
 				
+				// convert our reaction type object to an array
 				for (var key in REACTION_TYPES) {
 					if (!REACTION_TYPES.hasOwnProperty(key)) continue;
-					var reactionType = REACTION_TYPES[key];
-					
-					sortedReactionTypes[reactionType.showOrder] = reactionType;
+					sortedReactionTypes.push(REACTION_TYPES[key]);
 				}
+				
+				// sort the array
+				sortedReactionTypes.sort(function (a, b) { 
+					if (a.showOrder > b.showOrder) {
+						return 1;
+					}
+					else {
+						return -1;
+					}
+				});
 				
 				return sortedReactionTypes;
 			},
