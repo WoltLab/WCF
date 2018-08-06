@@ -210,7 +210,15 @@ define(
 			}
 			
 			var button = elCreate('a');
-			button.className = 'jsTooltip reactButton' + (this._options.renderAsButton ? ' button' + (jsMobileNavigation ? ' ignoreMobileNavigation' : '') : '');
+			button.className = 'jsTooltip reactButton';
+			if (this._options.renderAsButton) {
+				button.classList.add('button');
+				
+				if (jsMobileNavigation) {
+					button.classList.add('ignoreMobileNavigation');
+				}
+			}
+			
 			button.href = '#';
 			button.title = title;
 			
