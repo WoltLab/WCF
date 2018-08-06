@@ -27,7 +27,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	
 	/**
 	 * action performed by the form
-	 * by default `create` and `update` is supported
+	 * by default `create` and `edit` is supported
 	 * @var	string
 	 */
 	public $formAction = 'create';
