@@ -16,7 +16,6 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'EventHandler', 'Language', 'Permi
 				_addButtonEventListeners: function() {},
 				_buildInsertDialog: function() {},
 				_click: function() {},
-				_clipboardAction: function() {},
 				_getInsertDialogId: function() {},
 				_getThumbnailSizes: function() {},
 				_insertMedia: function() {},
@@ -36,6 +35,7 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'EventHandler', 'Language', 'Permi
 				_removeClipboardCheckboxes: function() {},
 				_setMedia: function() {},
 				addMedia: function() {},
+				clipboardInsertMedia: function() {},
 				getDialog: function() {},
 				getOption: function() {},
 				removeMedia: function() {},
@@ -177,17 +177,6 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'EventHandler', 'Language', 'Permi
 			this._activeButton = event.currentTarget;
 			
 			MediaManagerEditor._super.prototype._click.call(this, event);
-		},
-		
-		/**
-		 * @see	WoltLabSuite/Core/Media/Manager/Base#_clipboardAction
-		 */
-		_clipboardAction: function(actionData) {
-			MediaManagerEditor._super.prototype._clipboardAction.call(this, actionData);
-			
-			if (actionData.data.actionName === 'com.woltlab.wcf.media.insert') {
-				this.insertMedia(actionData.data.parameters.objectIDs, true);
-			}
 		},
 		
 		/**
@@ -402,6 +391,15 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'EventHandler', 'Language', 'Permi
 		},
 		
 		/**
+		 * Is called to insert the media files with the given ids into an editor.
+		 * 
+		 * @param	{int[]}		mediaIds
+		 */
+		clipboardInsertMedia: function(mediaIds) {
+			this.insertMedia(mediaIds, true);
+		},
+		
+		/**
 		 * Prepares insertion of the media files with the given ids.
 		 * 
 		 * @param	{array<int>}	mediaIds		ids of the media files to be inserted
@@ -460,9 +458,11 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'EventHandler', 'Language', 'Permi
 			var buttons = elBySel('nav.buttonGroupNavigation > ul', mediaElement);
 			
 			var listItem = elCreate('li');
+			listItem.className = 'jsMediaInsertButton';
+			elData(listItem, 'object-id', media.mediaID);
 			buttons.appendChild(listItem);
 			
-			listItem.innerHTML = '<a><span class="icon icon16 fa-plus jsTooltip jsMediaInsertButton" data-object-id="' + media.mediaID + '" title="' + Language.get('wcf.media.button.insert') + '"></span> <span class="invisible">' + Language.get('wcf.media.button.insert') + '</span></a>';
+			listItem.innerHTML = '<a><span class="icon icon16 fa-plus jsTooltip" title="' + Language.get('wcf.media.button.insert') + '"></span> <span class="invisible">' + Language.get('wcf.media.button.insert') + '</span></a>';
 		}
 	});
 	

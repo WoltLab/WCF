@@ -63,6 +63,12 @@ class UserTrophyAddForm extends AbstractAcpForm {
 	public $description;
 	
 	/**
+	 * `1` if the trophy contains html in the description
+	 * @var int
+	 */
+	public $trophyUseHtml = 0;
+	
+	/**
 	 * @var integer
 	 */
 	public $trophyID = 0;
@@ -94,6 +100,7 @@ class UserTrophyAddForm extends AbstractAcpForm {
 		if (isset($_POST['user'])) $this->user = StringUtil::trim($_POST['user']);
 		if (isset($_POST['trophyID'])) $this->trophyID = intval($_POST['trophyID']);
 		if (isset($_POST['useCustomDescription'])) $this->useCustomDescription = 1;
+		if (isset($_POST['trophyUseHtml'])) $this->trophyUseHtml = 1;
 		
 		$this->trophy = new Trophy($this->trophyID);
 	}
@@ -168,7 +175,8 @@ class UserTrophyAddForm extends AbstractAcpForm {
 					'userID' => $user,
 					'description' => $this->useCustomDescription ? $this->description : '',
 					'time' => TIME_NOW,
-					'useCustomDescription' => $this->useCustomDescription
+					'useCustomDescription' => $this->useCustomDescription,
+					'trophyUseHtml' => $this->trophyUseHtml
 				])
 			]))->executeAction();
 			
@@ -186,7 +194,7 @@ class UserTrophyAddForm extends AbstractAcpForm {
 		
 		$this->user = $this->userIDs = [];
 		$this->trophyID = '';
-		$this->useCustomDescription = 0;
+		$this->useCustomDescription = $this->trophyUseHtml = 0;
 	}
 	
 	/**
@@ -200,7 +208,8 @@ class UserTrophyAddForm extends AbstractAcpForm {
 			'user' => $this->user,
 			'trophyCategories' => TrophyCategoryCache::getInstance()->getCategories(),
 			'useCustomDescription' => $this->useCustomDescription, 
-			'hasSuitableTrophy' => $this->hasSuitableTrophy()
+			'hasSuitableTrophy' => $this->hasSuitableTrophy(),
+			'trophyUseHtml' => $this->trophyUseHtml
 		]);
 	}
 	

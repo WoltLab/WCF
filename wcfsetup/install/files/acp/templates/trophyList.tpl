@@ -1,12 +1,18 @@
 {include file='header' pageTitle='wcf.acp.menu.link.trophy.list'}
 
 <script data-relocate="true">
-	//<![CDATA[
+	require(['WoltLabSuite/Core/Ui/Sortable/List'], function (UiSortableList) {
+		new UiSortableList({
+			containerId: 'trophyList',
+			className: 'wcf\\data\\trophy\\TrophyAction',
+			offset: {@$startIndex}
+		});
+	});
+	
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\trophy\\TrophyAction', '.trophyRow');
 		new WCF.Action.Toggle('wcf\\data\\trophy\\TrophyAction', '.trophyRow');
 	});
-	//]]>
 </script>
 
 <header class="contentHeader">
@@ -25,44 +31,35 @@
 {hascontent}
 	<div class="paginationTop">
 		{content}
-			{pages print=true assign=pagesLinks controller='TrophyList' link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}
+			{pages print=true assign=pagesLinks controller='TrophyList' link="pageNo=%d"}
 		{/content}
 	</div>
 {/hascontent}
 
 {if $objects|count}
-	<div class="section tabularBox">
-
-		<table class="table">
-			<thead>
-			<tr>
-				<th class="columnID columnTrophyID{if $sortField == 'trophyID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='TrophyList'}pageNo={@$pageNo}&sortField=trophyID&sortOrder={if $sortField == 'trophyID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-				<th class="columnTitle{if $sortField == 'title'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='TrophyList'}pageNo={@$pageNo}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.title{/lang}</a></th>
-				<th class="columnText columnCategory{if $sortField == 'categoryID'} active {@$sortOrder}{/if}"><a href="{link controller='TrophyList'}pageNo={@$pageNo}&sortField=categoryID&sortOrder={if $sortField == 'categoryID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.trophy.category{/lang}</a></th>
-
-				{event name='columnHeads'}
-			</tr>
-			</thead>
-
-			<tbody>
-			{foreach from=$objects item=trophy}
-				<tr class="trophyRow">
-					<td class="columnIcon">
-						<span class="icon icon16 fa-{if !$trophy->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$trophy->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$trophy->getObjectID()}"></span>
-						<a href="{link controller='TrophyEdit' id=$trophy->getObjectID()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-						<span class="icon icon16 fa-times pointer jsDeleteButton jsTooltip" data-confirm-message-html="{lang __encode=true}wcf.acp.trophy.delete.confirmMessage{/lang}" data-object-id="{@$trophy->getObjectID()}" title="{lang}wcf.global.button.delete{/lang}"></span>
-					</td>
-					<td class="columnID columnTrophyID">{@$trophy->trophyID}</td>
-					<td class="columnIcon">{@$trophy->renderTrophy(32)}</td>
-					<td class="columnTitle columnTrophyTitle"><a href="{link controller='TrophyEdit' id=$trophy->getObjectID()}{/link}" title="{lang}wcf.global.button.edit{/lang}">{$trophy->getTitle()}</a></td>
-					<td class="columnText columnCategory">{$trophy->getCategory()->getTitle()}</td>
-					
-					{event name='columns'}
-				</tr>
+	<div class="section sortableListContainer" id="trophyList">
+		<ol class="sortableList" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
+			{foreach from=$objects item='trophy'}
+				<li class="sortableNode sortableNoNesting trophyRow" data-object-id="{@$trophy->trophyID}">
+					<span class="sortableNodeLabel">
+						<a href="{link controller='TrophyEdit' object=$trophy}{/link}">{$trophy->getTitle()}</a>
+						
+						<span class="statusDisplay sortableButtonContainer">
+							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
+							<span class="icon icon16 fa-{if !$trophy->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $trophy->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$trophy->trophyID}"></span>
+							<a href="{link controller='TrophyEdit' object=$trophy}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<span class="icon icon16 fa-times pointer jsDeleteButton jsTooltip" data-confirm-message-html="{lang __encode=true}wcf.acp.trophy.delete.confirmMessage{/lang}" data-object-id="{@$trophy->getObjectID()}" title="{lang}wcf.global.button.delete{/lang}"></span>
+							
+							{event name='itemButtons'}
+						</span>
+					</span>
+				</li>
 			{/foreach}
-			</tbody>
-		</table>
-
+		</ol>
+		
+		<div class="formSubmit">
+			<button class="button" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
+		</div>
 	</div>
 	
 	<footer class="contentFooter">

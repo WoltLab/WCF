@@ -8,6 +8,7 @@ use wcf\data\DatabaseObject;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\event\EventHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a user trophy.
@@ -24,6 +25,7 @@ use wcf\system\WCF;
  * @property-read	integer		$time				the time when the trophy was rewarded
  * @property-read	string		$description			the custom trophy description
  * @property-read	string		$useCustomDescription		`1`, if the trophy use a custom description
+ * @property-read	integer		$trophyUseHtml		        `1`, if the trophy use a html description
  */
 class UserTrophy extends DatabaseObject {
 	/**
@@ -63,6 +65,10 @@ class UserTrophy extends DatabaseObject {
 	public function getDescription() {
 		if (!$this->useCustomDescription) {
 			return $this->getTrophy()->getDescription();
+		}
+		
+		if (!$this->trophyUseHtml) {
+			return nl2br(StringUtil::encodeHTML(strtr(WCF::getLanguage()->get($this->description), $this->getReplacements())), false);
 		}
 		
 		return strtr(WCF::getLanguage()->get($this->description), $this->getReplacements());

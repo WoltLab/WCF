@@ -23,7 +23,7 @@ define(['./Manager'], function(DependencyManager) {
 		 * @abstract
 		 */
 		checkDependency: function() {
-			throw new Error("Implement me!")
+			throw new Error("Missing implementation of WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract.checkDependency!");
 		},
 		
 		/**

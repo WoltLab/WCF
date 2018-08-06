@@ -45,7 +45,7 @@
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.top"><![CDATA[Sidebar (oben)]]></item>
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.bottom"><![CDATA[Sidebar (unten)]]></item>
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.footer.bottom"><![CDATA[Seitenende]]></item>
-		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Werbung angezeigt werden.]]></item>
+		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Werbungen angezeigt werden.]]></item>
 	</category>
 	
 	<category name="wcf.acp.application">
@@ -88,8 +88,8 @@
 		<item name="wcf.acp.article.i18n.i18n"><![CDATA[Mehrsprachiger Artikel]]></item>
 		<item name="wcf.acp.article.i18n.i18n.description"><![CDATA[Inhalt wird individuell pro Sprache festgelegt.]]></item>
 		<item name="wcf.acp.article.i18n.source"><![CDATA[Inhalt übernehmen]]></item>
-		<item name="wcf.acp.article.i18n.toI18n.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Artikel wirklich in einen mehrsprachigen Artikel umwandeln? Der aktuelle Inhalt wird für alle Sprachen übernommen, und die Bearbeitungshistorie für diesen Artikel wird gelöscht.<br><br>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speichere{else}speichern Sie{/if} alle Änderungen, bevor Sie fortfahren.]]></item>
-		<item name="wcf.acp.article.i18n.fromI18n.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Artikel wirklich in einen einsprachigen Artikel umwandeln? Die ausgewählte Sprache wird dabei als zukünftigen Inhalt übernommen. Die Angaben in anderen Sprachen, sowie die Bearbeitungshistorie dieses Artikels, werden bei diesem Vorgang verworfen.<br><br>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speichere{else}speichern Sie{/if} alle Änderungen, bevor Sie fortfahren.]]></item>
+		<item name="wcf.acp.article.i18n.toI18n.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Artikel wirklich in einen mehrsprachigen Artikel umwandeln? Der aktuelle Inhalt wird für alle Sprachen übernommen, und die Bearbeitungshistorie für diesen Artikel wird gelöscht.<br><br>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speichere{else}speichern Sie{/if} alle Änderungen, bevor {if LANGUAGE_USE_INFORMAL_VARIANT}Du fortfährst{else}Sie fortfahren{/if}.]]></item>
+		<item name="wcf.acp.article.i18n.fromI18n.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesen Artikel wirklich in einen einsprachigen Artikel umwandeln? Die ausgewählte Sprache wird dabei als zukünftigen Inhalt übernommen. Die Angaben in anderen Sprachen, sowie die Bearbeitungshistorie dieses Artikels, werden bei diesem Vorgang verworfen.<br><br>Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speichere{else}speichern Sie{/if} alle Änderungen, bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du fortfährst{else}Sie fortfahren{/if}.]]></item>
 		<item name="wcf.acp.article.image"><![CDATA[Artikel-Bild]]></item>
 		<item name="wcf.acp.article.teaserImage"><![CDATA[Teaser-Bild]]></item>
 		<item name="wcf.acp.article.publicationDate"><![CDATA[Veröffentlichungsdatum]]></item>
@@ -1497,7 +1497,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.customOption.defaultValue.description"><![CDATA[Wert, der beim erstmaligen Ausfüllen als Standard vorgegeben ist.]]></item>
 		<item name="wcf.acp.customOption.typeData"><![CDATA[Eigenschaften]]></item>
 		<item name="wcf.acp.customOption.selectOptions"><![CDATA[Auswahloptionen]]></item>
-		<item name="wcf.acp.customOption.selectOptions.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} pro Zeile Auswahloptionen eintragen, beispielsweise bei einer Select-Box. {if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass bei der Verwendung des Doppelpunktes der linke Teil der Zeile als interner Bezeichner verwendet wird. Dieser erlaubt es den Text zu ändern, ohne, dass die Auswahl von Benutzern verloren geht.]]></item>
+		<item name="wcf.acp.customOption.selectOptions.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} pro Zeile Auswahloptionen eintragen, beispielsweise bei einer Select-Box. {if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass bei der Verwendung des Doppelpunktes der linke Teil der Zeile als interner Bezeichner verwendet wird. Dieser erlaubt es den Text zu ändern, ohne dass die Auswahl von Benutzern verloren geht.]]></item>
 		<item name="wcf.acp.customOption.validationPattern"><![CDATA[Regulärer Ausdruck zur Validierung]]></item>
 		<item name="wcf.acp.customOption.validationPattern.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Trage{else}Tragen Sie{/if} hier den regulären Ausdruck ein, um die Eingabe der Benutzer zu validieren.]]></item>
 		<item name="wcf.acp.customOption.required"><![CDATA[Das Feld muss zwingend ausgefüllt werden.]]></item>
@@ -1827,6 +1827,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.page"><![CDATA[Seiten]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.box"><![CDATA[Boxen]]></item>
+		<item name="wcf.acp.search.provider.com.woltlab.wcf.trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.search.result.subtitle"><![CDATA[{implode from=$pieces item=piece glue=' » '}{$piece|language}{/implode}]]></item>
 	</category>
 	
@@ -2211,7 +2212,7 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.option.required"><![CDATA[Das Feld muss zwingend durch den Eigentümer ausgefüllt werden.]]></item>
 		<item name="wcf.acp.user.option.searchable"><![CDATA[Das Feld kann über die Mitgliedersuche durchsucht werden.]]></item>
 		<item name="wcf.acp.user.option.selectOptions"><![CDATA[Auswahloptionen]]></item>
-		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} pro Zeile Auswahloptionen eintragen, beispielsweise bei einer Select-Box. {if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass bei der Verwendung des Doppelpunktes der linke Teil der Zeile als interner Bezeichner verwendet wird. Dieser erlaubt es den Text zu ändern, ohne, dass die Auswahl von Benutzern verloren geht.]]></item>
+		<item name="wcf.acp.user.option.selectOptions.description"><![CDATA[Hier {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} pro Zeile Auswahloptionen eintragen, beispielsweise bei einer Select-Box. {if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass bei der Verwendung des Doppelpunktes der linke Teil der Zeile als interner Bezeichner verwendet wird. Dieser erlaubt es den Text zu ändern, ohne dass die Auswahl von Benutzern verloren geht.]]></item>
 		<item name="wcf.acp.user.option.setDefaults"><![CDATA[Benutzerprofil-Einstellungen verwalten]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers"><![CDATA[Änderungen auch auf bestehende Benutzerkonten anwenden]]></item>
 		<item name="wcf.acp.user.option.setDefaults.applyChangesToExistingUsers.description"><![CDATA[Die hier eingestellten Änderungen der Vorgabewerte für Benutzerprofil-Einstellungen werden auch in bestehende Benutzerkonten übernommen. Die entsprechenden Einstellungen der Benutzer werden dabei überschrieben.<br><br>Hinweis: Es werden nur die Einstellungen überschrieben, die mit dem Absenden des Formulars geändert werden. Unveränderte Voreinstellungen werden nicht berücksichtigt.]]></item>
@@ -2521,7 +2522,8 @@ Fehler sind beispielsweise:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete"><![CDATA[Löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete.confirmMessage"><![CDATA[{if $count == 1}Eine Datei{else}{#$count} Dateien{/if} löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.insert"><![CDATA[Einfügen ({#$count})]]></item>
-		
+		<item name="wcf.clipboard.item.com.woltlab.wcf.media.setCategory"><![CDATA[Kategorie bearbeiten ({#$count})]]></item>
+
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete"><![CDATA[Löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete.confirmMessage"><![CDATA[{if $count == 1}Einen Tag{else}{#$count} Tag{/if} löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.setAsSynonyms"><![CDATA[Als Synonyme verwenden ({#$count})]]></item>
@@ -3041,6 +3043,8 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.global.button.showNavigation"><![CDATA[Navigation anzeigen]]></item>
 		<item name="wcf.global.button.hideSidebar"><![CDATA[Sidebar verbergen]]></item>
 		<item name="wcf.global.button.showSidebar"><![CDATA[Sidebar anzeigen]]></item>
+		<item name="wcf.global.button.showMenu"><![CDATA[Menü anzeigen]]></item>
+		<item name="wcf.global.button.hideMenu"><![CDATA[Menü verbergen]]></item>
 	</category>
 	
 	<category name="wcf.global.form">
@@ -3195,6 +3199,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.media.uploadTime"><![CDATA[Datum hochgeladen]]></item>
 		<item name="wcf.media.search.noResults"><![CDATA[Es wurden keine Ergebnisse gefunden.]]></item>
 		<item name="wcf.media.search.info.searchStringThreshold"><![CDATA[Der Suchbegriff muss mindestens {#$minSearchLength} Zeichen lang sein.]]></item>
+		<item name="wcf.media.setCategory"><![CDATA[Kategorie bearbeiten]]></item>
 	</category>
 	
 	<category name="wcf.message">
@@ -3910,6 +3915,8 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Trophäe <span class="confirmationObject">{$userTrophy->getTrophy()->getTitle()}</span> von <span class="confirmationObject">{$userTrophy->getUserProfile()->username}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.trophy.error.noCategories"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} eine Trophäe hinzufügen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst, musst du{else}können, müssen Sie{/if} eine <a href="{link controller='TrophyCategoryAdd'}{/link}">Kategorie hinzufügen</a>.]]></item>
 		<item name="wcf.acp.trophy.error.noSuitableTrophies"><![CDATA[Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} eine Trophäe vergeben {if LANGUAGE_USE_INFORMAL_VARIANT}kannst, musst du{else}können, müssen Sie{/if} eine <a href="{link controller='TrophyAdd'}{/link}">Trophäe hinzufügen</a>, welche nicht automatisch durch das System vergeben wird.]]></item>
+		<item name="wcf.acp.trophy.trophyUseHtml"><![CDATA[HTML in der Beschreibung verwenden]]></item>
+		<item name="wcf.acp.trophy.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Trophäen angezeigt werden.]]></item>
 	</category>
 	
 	<category name="wcf.user.usersOnline">

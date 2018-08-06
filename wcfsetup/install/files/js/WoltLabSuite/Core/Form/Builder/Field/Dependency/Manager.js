@@ -98,7 +98,7 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 				}
 				
 				_validatedFieldProperties.set(validatedField, properties);
-			}.bind(this));
+			});
 		},
 		
 		/**
@@ -130,7 +130,7 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 					
 					_validatedFieldProperties.delete(validatedField);
 				}
-			}.bind(this));
+			});
 		},
 		
 		/**
@@ -166,7 +166,7 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 		},
 		
 		/**
-		 * Check all dependencies if they are met.
+		 * Checks if all dependencies are met.
 		 */
 		checkDependencies: function() {
 			var obsoleteNodes = [];
@@ -214,7 +214,7 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 		},
 		
 		/**
-		 * Checks the containers for their availablility.
+		 * Checks the containers for their availability.
 		 * 
 		 * If this function is called while containers are currently checked, the containers
 		 * will be checked after the current check has been finished completely.
