@@ -68,12 +68,6 @@ define(
 			DomChangeListener.add('WoltLabSuite/Core/Ui/Like/Handler-' + objectType, this.initContainers.bind(this));
 			
 			new UiReactionHandler(this._objectType, {
-				// permissions
-				canReact: this._options.canLike,
-				canReactToOwnContent: this._options.canLikeOwnContent,
-				canViewReactions: this._options.canViewSummary,
-				
-				// selectors
 				containerSelector: this._options.containerSelector,
 				summaryListSelector: '.reactionSummaryList'
 			});
@@ -129,7 +123,7 @@ define(
 				isSummaryPosition = false;
 			}
 			
-			if (badgeContainer !== null && this._options.canViewSummary) {
+			if (badgeContainer !== null) {
 				summaryList = elCreate('ul');
 				summaryList.className = 'reactionSummaryList' + (isSummaryPosition ? ' likesSummary' : ' reactionSummaryListTiny') + ((isSummaryPosition && this._options.badgeClassNames) ? ' ' + this._options.badgeClassNames : '');
 				
