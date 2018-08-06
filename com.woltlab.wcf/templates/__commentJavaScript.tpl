@@ -15,9 +15,8 @@
 		});
 		
 		new {if $commentHandlerClass|isset}{@$commentHandlerClass}{else}WCF.Comment.Handler{/if}('{$commentContainerID}');
-		{if MODULE_LIKE && $commentList->getCommentManager()->supportsLike() && $__wcf->getSession()->getPermission('user.like.canViewLike')}
+		{if MODULE_LIKE && $commentList->getCommentManager()->supportsLike() && $__wcf->getSession()->getPermission('user.like.canViewLike') || $__wcf->getSession()->getPermission('user.like.canLike')}
 			require(['WoltLabSuite/Core/Ui/Reaction/Handler'], function(UiReactionHandler) {
-				var canDislike = {if LIKE_ENABLE_DISLIKE}true{else}false{/if};
 				var canLike = {if $__wcf->getUser()->userID && $__wcf->getSession()->getPermission('user.like.canLike')}true{else}false{/if};
 				var canLikeOwnContent = {if LIKE_ALLOW_FOR_OWN_CONTENT}true{else}false{/if};
 				
@@ -28,10 +27,8 @@
 					renderAsButton: false,
 					
 					// permissions
-					canDislike: canDislike,
 					canLike: canLike,
 					canLikeOwnContent: canLikeOwnContent,
-					canViewSummary: false,
 					
 					// selectors
 					containerSelector: 'li.comment',
@@ -47,10 +44,8 @@
 					renderAsButton: false,
 					
 					// permissions
-					canDislike: canDislike,
 					canLike: canLike,
 					canLikeOwnContent: canLikeOwnContent,
-					canViewSummary: false,
 					
 					// selectors
 					containerSelector: '.commentResponse',
