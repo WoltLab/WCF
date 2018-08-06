@@ -24,8 +24,16 @@ OptionEditor::import([
 try {
 	WCF::getDB()->beginTransaction();
 	
+	$reactionTypes = <<<DATA
+('wcf.reactionType.title1', 1, 1, 'like.svg'), 
+('wcf.reactionType.title2', 1, 2, 'haha.svg'), 
+('wcf.reactionType.title3', -1, 3, 'sad.svg'),
+('wcf.reactionType.title4', 0, 4, 'confused.svg'),
+('wcf.reactionType.title5', 1, 5, 'thanks.svg'),
+DATA;
+	
 	// add reaction columns 
-	$statement = WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', 'INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES (\'wcf.reactionType.title1\', 1, 1, \'like.svg\'), (\'wcf.reactionType.title2\', 1, 2, \'haha.svg\'), (\'wcf.reactionType.title3\', -1, 3, \'sad.svg\'), (\'wcf.reactionType.title4\', 0, 4, \'confused.svg\'), (\'wcf.reactionType.title5\', 1, 5, \'thanks.svg\')'));
+	$statement = WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', 'INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES '. $reactionTypes));
 	$statement->execute();
 	
 	// update current likes 
