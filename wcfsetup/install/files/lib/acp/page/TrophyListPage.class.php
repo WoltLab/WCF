@@ -1,7 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\trophy\TrophyList;
-use wcf\page\SortablePage;
+use wcf\page\MultipleLinkPage;
 
 /**
  * Trophy list page.
@@ -12,7 +12,7 @@ use wcf\page\SortablePage;
  * @package	WoltLabSuite\Core\Acp\Page
  * @since	3.1
  */
-class TrophyListPage extends SortablePage {
+class TrophyListPage extends MultipleLinkPage {
 	/**
 	 * @inheritDoc
 	 */
@@ -31,20 +31,15 @@ class TrophyListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $defaultSortField = 'trophyID';
+	public $sortField = 'trophy.showOrder';
 	
 	/**
 	 * @inheritDoc
 	 */
-	public $defaultSortOrder = 'DESC';
+	public $sortOrder = 'ASC';
 	
 	/**
 	 * @inheritDoc
 	 */
 	public $objectListClassName = TrophyList::class;
-	
-	/**
-	 * @inheritDoc
-	 */
-	public $validSortFields = ['trophyID', 'title', 'categoryID'];
 }

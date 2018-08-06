@@ -132,6 +132,12 @@ class TrophyAddForm extends AbstractAcpForm {
 	public $conditions = [];
 	
 	/**
+	 * the showOrder value of the trophy
+	 * @var	int
+	 */
+	public $showOrder = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readData() {
@@ -178,6 +184,7 @@ class TrophyAddForm extends AbstractAcpForm {
 		if (isset($_POST['badgeColor'])) $this->badgeColor = $_POST['badgeColor'];
 		if (isset($_POST['awardAutomatically'])) $this->awardAutomatically = 1;
 		if (isset($_POST['trophyUseHtml'])) $this->trophyUseHtml = 1;
+		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
 		
 		// read file upload 
 		$fileExtension = WCF::getSession()->getVar('trophyImage-'.$this->tmpHash);
@@ -288,7 +295,8 @@ class TrophyAddForm extends AbstractAcpForm {
 				'type' => $this->type,
 				'isDisabled' => $this->isDisabled,
 				'awardAutomatically' => $this->awardAutomatically,
-				'trophyUseHtml' => $this->trophyUseHtml
+				'trophyUseHtml' => $this->trophyUseHtml,
+				'showOrder' => $this->showOrder
 			]),
 			'tmpHash' => $this->tmpHash
 		]);
@@ -320,7 +328,7 @@ class TrophyAddForm extends AbstractAcpForm {
 	public function reset() {
 		parent::reset();
 		
-		$this->isDisabled = $this->awardAutomatically = $this->categoryID = $this->trophyUseHtml = 0;
+		$this->isDisabled = $this->awardAutomatically = $this->categoryID = $this->trophyUseHtml = $this->showOrder = 0;
 		$this->type = Trophy::TYPE_BADGE;
 		$this->iconName = $this->uploadedImageURL = '';
 		$this->iconColor = 'rgba(255, 255, 255, 1)';
@@ -354,7 +362,8 @@ class TrophyAddForm extends AbstractAcpForm {
 			'availableTypes' => $this->availableTypes, 
 			'tmpHash' => $this->tmpHash,
 			'uploadedImageURL' => $this->uploadedImageURL,
-			'trophyUseHtml' => $this->trophyUseHtml
+			'trophyUseHtml' => $this->trophyUseHtml,
+			'showOrder' => $this->showOrder
 		]);
 	}
 }

@@ -122,6 +122,14 @@
 			</dl>
 			
 			<dl>
+				<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
+				<dd>
+					<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" class="tiny" min="0">
+					<small>{lang}wcf.acp.trophy.showOrder.description{/lang}</small>
+				</dd>
+			</dl>
+			
+			<dl>
 				<dt></dt>
 				<dd>
 					<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked{/if}> {lang}wcf.acp.trophy.isDisabled{/lang}</label>

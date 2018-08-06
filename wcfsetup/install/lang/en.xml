@@ -3874,6 +3874,7 @@ Open the link below to access the user profile:
 		<item name="wcf.acp.trophy.error.noCategories"><![CDATA[Please <a href="{link controller='TrophyCategoryAdd'}{/link}">add a category</a> before creating trophies.]]></item>
 		<item name="wcf.acp.trophy.error.noSuitableTrophies"><![CDATA[Please <a href="{link controller='TrophyAdd'}{/link}">add a trophy</a> that is not automatically awarded before you award trophies.]]></item>
 		<item name="wcf.acp.trophy.trophyUseHtml"><![CDATA[Enable HTML code in the description]]></item>
+		<item name="wcf.acp.trophy.showOrder.description"><![CDATA[Choose display order of trophies.]]></item>
 	</category>
 	
 	<category name="wcf.user.usersOnline">

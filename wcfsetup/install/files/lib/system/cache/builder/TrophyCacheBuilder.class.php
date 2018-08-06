@@ -22,6 +22,7 @@ class TrophyCacheBuilder extends AbstractCacheBuilder {
 			$trophyList->getConditionBuilder()->add('isDisabled = ?', [0]);
 		}
 		
+		$trophyList->sqlOrderBy = 'trophy.showOrder ASC';
 		$trophyList->readObjects();
 		return $trophyList->getObjects();
 	}
