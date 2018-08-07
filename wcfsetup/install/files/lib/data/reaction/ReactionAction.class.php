@@ -264,7 +264,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		]);
 		$row = $statement->fetchArray();
 		
-		// no (dis-)likes at all
+		// no reactions at all
 		if ($row === false) {
 			return;
 		}
