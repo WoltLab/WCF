@@ -22,10 +22,10 @@ class Benchmark extends SingletonFactory {
 	protected $startTime = 0;
 	
 	/**
-	* time when the webserver received this request
-	* @var float
-	* @since 3.2
-	*/
+	 * time when the webserver received this request
+	 * @var float
+	 * @since 3.2
+	 */
 	protected $requestStartTime = 0;
 	
 	/**
