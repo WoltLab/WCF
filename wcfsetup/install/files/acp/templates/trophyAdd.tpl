@@ -19,12 +19,12 @@
 		
 		elBySel('select[name=type]').addEventListener('change', function () {
 			if (elBySel('select[name=type]').value == 1) {
-				elById('imageContainer').style.display = 'block';
-				elById('badgeContainer').style.display = 'none';
+				elHide(elById('badgeContainer'));
+				elShow(elById('imageContainer'));
 			} 
 			else if (elBySel('select[name=type]').value == 2) {
-				elById('imageContainer').style.display = 'none';
-				elById('badgeContainer').style.display = 'block';
+				elShow(elById('badgeContainer'));
+				elHide(elById('imageContainer'));
 			}
 		});
 		
