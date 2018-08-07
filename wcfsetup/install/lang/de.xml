@@ -3857,6 +3857,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.acp.trophy.category"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.trophy.isDisabled"><![CDATA[Trophäe deaktivieren]]></item>
 		<item name="wcf.acp.trophy.awardAutomatically"><![CDATA[Trophäe automatisch vergeben]]></item>
+		<item name="wcf.acp.trophy.revokeAutomatically"><![CDATA[Trophäe automatisch entziehen, wenn die Bedingungen nicht mehr erfüllt sind]]></item>
 		<item name="wcf.acp.trophy.type"><![CDATA[Trophäen-Typ]]></item>
 		<item name="wcf.acp.trophy.type.badge"><![CDATA[Badge]]></item>
 		<item name="wcf.acp.trophy.type.imageUpload"><![CDATA[Bild-Datei]]></item>

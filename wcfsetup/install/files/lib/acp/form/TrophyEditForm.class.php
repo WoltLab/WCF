@@ -74,6 +74,7 @@ class TrophyEditForm extends TrophyAddForm {
 			$this->iconColor = $this->trophy->iconColor;
 			$this->badgeColor = $this->trophy->badgeColor;
 			$this->awardAutomatically = $this->trophy->awardAutomatically;
+			$this->revokeAutomatically = $this->trophy->revokeAutomatically;
 			$this->trophyUseHtml = $this->trophy->trophyUseHtml;
 			$this->showOrder = $this->trophy->showOrder;
 			
@@ -167,6 +168,7 @@ class TrophyEditForm extends TrophyAddForm {
 			'type' => $this->type,
 			'isDisabled' => $this->isDisabled,
 			'awardAutomatically' => $this->awardAutomatically,
+			'revokeAutomatically' => $this->revokeAutomatically,
 			'trophyUseHtml' => $this->trophyUseHtml,
 			'showOrder' => $this->showOrder
 		])]);
