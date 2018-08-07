@@ -120,7 +120,7 @@ class TrophyAddForm extends AbstractAcpForm {
 	public $awardAutomatically = 0;
 	
 	/**
-	 * `1` if the trophy is automatically revoked, if the conditions are not longer fulfilled
+	 * `1` if the trophy should be automatically revoked once the conditions are no longer met.
 	 * @var int
 	 */
 	public $revokeAutomatically = 0;
