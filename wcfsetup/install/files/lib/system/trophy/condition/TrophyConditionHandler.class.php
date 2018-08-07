@@ -149,6 +149,7 @@ class TrophyConditionHandler extends SingletonFactory {
 		$userList = new UserList();
 		$userList->sqlConditionJoins = $pseudoUserList->sqlConditionJoins;
 		$userList->sqlOrderBy = $pseudoUserList->sqlOrderBy;
+		$userList->sqlJoins = $pseudoUserList->sqlJoins;
 		$userList->sqlJoins .= " LEFT JOIN wcf".WCF_N."_user_trophy user_trophy ON (user_table.userID = user_trophy.userID)";
 		$userList->useQualifiedShorthand = false;
 		$userList->sqlSelects = "user_trophy.userTrophyID, user_table.userID";
