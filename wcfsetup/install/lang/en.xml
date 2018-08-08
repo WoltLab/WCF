@@ -3850,6 +3850,7 @@ Open the link below to access the user profile:
 		<item name="wcf.acp.trophy.category"><![CDATA[Category]]></item>
 		<item name="wcf.acp.trophy.isDisabled"><![CDATA[Disable Trophy]]></item>
 		<item name="wcf.acp.trophy.awardAutomatically"><![CDATA[Award trophy automatically]]></item>
+		<item name="wcf.acp.trophy.revokeAutomatically"><![CDATA[Revoke trophy automatically if the conditions are not longer fulfilled]]></item>
 		<item name="wcf.acp.trophy.type"><![CDATA[Trophy Type]]></item>
 		<item name="wcf.acp.trophy.type.badge"><![CDATA[Badge]]></item>
 		<item name="wcf.acp.trophy.type.imageUpload"><![CDATA[Image]]></item>

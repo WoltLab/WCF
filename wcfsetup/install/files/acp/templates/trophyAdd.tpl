@@ -31,6 +31,17 @@
 		elBySel('input[name=awardAutomatically]').addEventListener('change', function () {
 			var awardAutomatically = elBySel('input[name=awardAutomatically]').checked;
 			elBySelAll('.conditionSection', null, window[(awardAutomatically ? 'elShow' : 'elHide')]);
+			
+			var revokeCheckbox = elBySel('#revokeAutomaticallyDL input');
+			if (awardAutomatically) {
+				elById('revokeAutomaticallyDL').classList.remove('disabled');
+				revokeCheckbox.disabled = false;
+			}
+			else {
+				elById('revokeAutomaticallyDL').classList.add('disabled');
+				revokeCheckbox.disabled = true;
+				revokeCheckbox.checked = false;
+			}
 		});
 		
 		BadgeHandler.init(); 
@@ -140,6 +151,13 @@
 				<dt></dt>
 				<dd>
 					<label><input type="checkbox" name="awardAutomatically" value="1"{if $awardAutomatically} checked{/if}> {lang}wcf.acp.trophy.awardAutomatically{/lang}</label>
+				</dd>
+			</dl>
+			
+			<dl id="revokeAutomaticallyDL"{if !$awardAutomatically} class="disabled"{/if}>
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" name="revokeAutomatically" value="1"{if $revokeAutomatically && $awardAutomatically} checked{/if}{if !$awardAutomatically} disabled{/if}> {lang}wcf.acp.trophy.revokeAutomatically{/lang}</label>
 				</dd>
 			</dl>
 			

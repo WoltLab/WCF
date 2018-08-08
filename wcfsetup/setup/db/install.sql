@@ -1382,6 +1382,7 @@ CREATE TABLE wcf1_trophy(
 	badgeColor VARCHAR(255),
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	awardAutomatically TINYINT(1) NOT NULL DEFAULT 0,
+	revokeAutomatically TINYINT(1) NOT NULL DEFAULT 0,
 	trophyUseHtml TINYINT(1) NOT NULL DEFAULT 0,
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	KEY(categoryID)

@@ -21,6 +21,7 @@ class AssignTrophiesCronjob extends AbstractCronjob {
 		
 		if (MODULE_TROPHY) {
 			TrophyConditionHandler::getInstance()->assignTrophies(100);
+			TrophyConditionHandler::getInstance()->revokeTrophies(100);
 		}
 	}
 }

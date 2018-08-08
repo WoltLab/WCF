@@ -99,6 +99,10 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	public function delete() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
 		$trophyIDs = $userIDs = []; 
 		foreach ($this->getObjects() as $object) {
 			$trophyIDs[] = $object->trophyID; 
