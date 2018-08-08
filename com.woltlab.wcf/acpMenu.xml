@@ -724,6 +724,26 @@
 				<icon>fa-plus</icon>
 			</acpmenuitem>
 			<!-- /ad -->
+			
+			<!-- reactions -->
+			<acpmenuitem name="wcf.acp.menu.link.reactionType">
+				<parent>wcf.acp.menu.link.customization</parent>
+				<options>module_like</options>
+				<showorder>6</showorder>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.reactionType.list">
+				<controller>wcf\acp\page\ReactionTypeListPage</controller>
+				<parent>wcf.acp.menu.link.reactionType</parent>
+				<permissions>admin.content.reaction.canManageReactionType</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.reactionType.add">
+				<controller>wcf\acp\form\ReactionTypeAddForm</controller>
+				<parent>wcf.acp.menu.link.reactionType.list</parent>
+				<permissions>admin.content.reaction.canManageReactionType</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /reactions -->
 		
 		<!-- /customization -->
 		

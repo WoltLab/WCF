@@ -5,7 +5,7 @@ use wcf\data\comment\response\StructuredCommentResponse;
 use wcf\data\like\object\LikeObject;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\manager\ICommentManager;
-use wcf\system\like\LikeHandler;
+use wcf\system\reaction\ReactionHandler;
 
 /**
  * Provides a structured comment list fetching last responses for every comment.
@@ -165,14 +165,14 @@ class StructuredCommentList extends CommentList {
 		if (empty($this->objectIDs)) return [];
 		
 		$likeData = [];
-		$commentObjectType = LikeHandler::getInstance()->getObjectType('com.woltlab.wcf.comment');
-		LikeHandler::getInstance()->loadLikeObjects($commentObjectType, $this->getObjectIDs());
-		$likeData['comment'] = LikeHandler::getInstance()->getLikeObjects($commentObjectType);
+		$commentObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment');
+		ReactionHandler::getInstance()->loadLikeObjects($commentObjectType, $this->getObjectIDs());
+		$likeData['comment'] = ReactionHandler::getInstance()->getLikeObjects($commentObjectType);
 		
 		if (!empty($this->responseIDs)) {
-			$responseObjectType = LikeHandler::getInstance()->getObjectType('com.woltlab.wcf.comment.response');
-			LikeHandler::getInstance()->loadLikeObjects($responseObjectType, $this->responseIDs);
-			$likeData['response'] = LikeHandler::getInstance()->getLikeObjects($responseObjectType);
+			$responseObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment.response');
+			ReactionHandler::getInstance()->loadLikeObjects($responseObjectType, $this->responseIDs);
+			$likeData['response'] = ReactionHandler::getInstance()->getLikeObjects($responseObjectType);
 		}
 		
 		return $likeData;

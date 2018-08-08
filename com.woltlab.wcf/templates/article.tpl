@@ -132,15 +132,7 @@
 	
 	{event name='beforeArticleContent'}
 	
-	<div class="section articleContent"
-	         data-object-id="{@$article->articleID}"
-	         data-object-type="com.woltlab.wcf.likeableArticle"
-	         data-like-liked="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->liked}{/if}"
-	         data-like-likes="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->likes}{else}0{/if}"
-	         data-like-dislikes="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->dislikes}{else}0{/if}"
-	         data-like-users='{ {if $articleLikeData[$article->articleID]|isset}{implode from=$articleLikeData[$article->articleID]->getUsers() item=likeUser}"{@$likeUser->userID}": "{$likeUser->username|encodeJSON}"{/implode}{/if} }'
-	         data-user-id="{@$article->userID}"
-	>
+	<div class="section articleContent" {@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.likeableArticle', $article->articleID)}>
 		<div class="htmlContent">
 			{if $articleContent->teaser}
 				<p class="articleTeaser">{@$articleContent->getFormattedTeaser()}</p>
@@ -159,14 +151,25 @@
 			</ul>
 		{/if}
 		
-		<div class="row articleLikeSection">
-			<div class="col-xs-12 col-md-6">
-				<div class="articleLikesSummery"></div>
+		{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && ($__wcf->session->getPermission('user.like.canLike') || $__wcf->session->getPermission('user.like.canViewLike'))}
+			<div class="row articleLikeSection">
+				{if $__wcf->session->getPermission('user.like.canViewLike')}
+					<div class="col-xs-12 col-md-6">
+						<div class="articleLikesSummery">
+							{include file="reactionSummaryList" reactionData=$articleLikeData objectType="com.woltlab.wcf.likeableArticle" objectID=$article->articleID}
+						</div>
+					</div>
+				{/if}
+				
+				{if MODULE_LIKE && $__wcf->session->getPermission('user.like.canLike') && (LIKE_ALLOW_FOR_OWN_CONTENT || $article->userID != $__wcf->user->userID)}
+					<div class="col-xs-12 col-md-6">
+						<ul class="articleLikeButtons buttonGroup">
+							<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}">{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{@$__wcf->getReactionHandler()->getReactionTypeByID($articleLikeData[$article->articleID]->reactionTypeID)->renderIcon()}{else}<img src="{$__wcf->getPath()}/images/reaction/reactionIcon.svg" class="reactionType" alt="">{/if}</span></li>
+						</ul>
+					</div>
+				{/if}
 			</div>
-			<div class="col-xs-12 col-md-6">
-				<ul class="articleLikeButtons buttonGroup"></ul>
-			</div>
-		</div>
+		{/if}
 	</div>
 	
 	{event name='afterArticleContent'}
@@ -303,14 +306,6 @@
 											{lang article=$relatedArticle}wcf.article.articleComments{/lang}
 										</li>
 									{/if}
-									
-									{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike')}
-										<li class="wcfLikeCounter{if $relatedArticle->cumulativeLikes > 0} likeCounterLiked{elseif $relatedArticle->cumulativeLikes < 0}likeCounterDisliked{/if}">
-											{if $relatedArticle->likes || $relatedArticle->dislikes}
-												<span class="icon icon16 fa-thumbs-o-{if $relatedArticle->cumulativeLikes < 0}down{else}up{/if} jsTooltip" title="{lang likes=$relatedArticle->likes dislikes=$relatedArticle->dislikes}wcf.like.tooltip{/lang}"></span>{if $relatedArticle->cumulativeLikes > 0}+{elseif $relatedArticle->cumulativeLikes == 0}&plusmn;{/if}{#$relatedArticle->cumulativeLikes}
-											{/if}
-										</li>
-									{/if}
 								</ul>
 							</div>
 							
@@ -335,20 +330,14 @@
 
 {if MODULE_LIKE && ARTICLE_ENABLE_LIKE}
 	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Ui/Like/Handler'], function(UiLikeHandler) {
-			new UiLikeHandler('com.woltlab.wcf.likeableArticle', {
-				// settings
-				isSingleItem: true,
-				
+		require(['WoltLabSuite/Core/Ui/Reaction/Handler'], function(UiReactionHandler) {
+			new UiReactionHandler('com.woltlab.wcf.likeableArticle', {
 				// permissions
-				canDislike: {if LIKE_ENABLE_DISLIKE}true{else}false{/if},
-				canLike: {if $__wcf->getUser()->userID}true{else}false{/if},
-				canLikeOwnContent: {if LIKE_ALLOW_FOR_OWN_CONTENT}true{else}false{/if},
-				canViewSummary: {if LIKE_SHOW_SUMMARY}true{else}false{/if},
+				canReact: {if $__wcf->getUser()->userID}true{else}false{/if},
+				canReactToOwnContent: {if LIKE_ALLOW_FOR_OWN_CONTENT}true{else}false{/if},
+				canViewReactions: {if LIKE_SHOW_SUMMARY}true{else}false{/if},
 				
 				// selectors
-				badgeContainerSelector: '.articleLikesBadge',
-				buttonAppendToSelector: '.articleLikeButtons',
 				containerSelector: '.articleContent',
 				summarySelector: '.articleLikesSummery'
 			});

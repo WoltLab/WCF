@@ -1,0 +1,103 @@
+<?php
+namespace wcf\acp\form;
+use wcf\data\reaction\type\ReactionType;
+use wcf\data\reaction\type\ReactionTypeAction;
+use wcf\data\reaction\type\ReactionTypeList;
+use wcf\form\AbstractFormBuilderForm;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\IsDisabledFormField;
+use wcf\system\form\builder\field\RadioButtonFormField;
+use wcf\system\form\builder\field\ShowOrderFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\TitleFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+
+/**
+ * Represents the reaction type add form.
+ *
+ * @author	Joshua Ruesweg
+ * @copyright	2001-2018 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	WoltLabSuite\Core\Acp\Form
+ * @since	3.2
+ */
+class ReactionTypeAddForm extends AbstractFormBuilderForm {
+	/**
+	 * @inheritDoc
+	 */
+	public $formAction = 'create';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $objectActionClass = ReactionTypeAction::class;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.reactionType.add';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $neededPermissions = ['admin.content.reaction.canManageReactionType'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $neededModules = ['MODULE_LIKE'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function createForm() {
+		parent::createForm();
+		
+		$dataContainer = FormContainer::create('generalSection')
+			->appendChildren([
+				TitleFormField::create()
+					->required()
+					->autoFocus()
+					->maximumLength(255)
+					->i18n()
+					->languageItemPattern('wcf.reactionType.title\d+'),
+				RadioButtonFormField::create('type')
+					->label('wcf.acp.reactionType.type')
+					->required()
+					->options([
+						ReactionType::REACTION_TYPE_POSITIVE => 'wcf.acp.reactionType.type.positive',
+						ReactionType::REACTION_TYPE_NEUTRAL => 'wcf.acp.reactionType.type.neutral',
+						ReactionType::REACTION_TYPE_NEGATIVE => 'wcf.acp.reactionType.type.negative'
+					])
+					->value(ReactionType::REACTION_TYPE_POSITIVE),
+				ShowOrderFormField::create()
+					->required()
+					->options(new ReactionTypeList()),
+				IsDisabledFormField::create()
+					->label('wcf.acp.reactionType.isDisabled')
+			]);
+		
+		$iconContainer = FormContainer::create('imageSection')
+			->label('wcf.acp.reactionType.image')
+			->appendChildren([
+				TextFormField::create('iconFile')
+					->label('wcf.acp.reactionType.image')
+					->description('wcf.acp.reactionType.image.description')
+					->required()
+					->addValidator(new FormFieldValidator('invalidPath', function(TextFormField $field) {
+						if (!file_exists(WCF_DIR.'images/reaction/'.$field->getValue())) {
+							$field->addValidationError(new FormFieldValidationError(
+								'invalidPath',
+								'wcf.acp.reactionType.image.invalidPath'
+							));
+						}
+					}))
+			]);
+		
+		$this->form->appendChildren([
+			$dataContainer, 
+			$iconContainer
+		]);
+	}
+}

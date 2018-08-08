@@ -19,6 +19,7 @@ use wcf\system\WCF;
  */
 class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent {
 	use TTestableCommentLikeUserNotificationEvent;
+	use TReactionUserNotificationEvent;
 	
 	/**
 	 * @inheritDoc
@@ -65,14 +66,17 @@ class UserProfileCommentLikeUserNotificationEvent extends AbstractSharedUserNoti
 				'commentID' => $this->getCommentID(),
 				'count' => $count,
 				'others' => $count - 1,
-				'owner' => $owner
+				'owner' => $owner,
+				'reactions' => $this->getReactionsForAuthors()
 			]);
 		}
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.comment.like.message', [
 			'author' => $this->author,
 			'commentID' => $this->getCommentID(),
-			'owner' => $owner
+			'owner' => $owner, 
+			'userNotificationObject' => $this->getUserNotificationObject(),
+			'reactions' => $this->getReactionsForAuthors()
 		]);
 	}
 	

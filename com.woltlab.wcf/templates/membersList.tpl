@@ -57,7 +57,7 @@
 							<option value="username"{if $sortField == 'username'} selected{/if}>{lang}wcf.user.username{/lang}</option>
 							<option value="registrationDate"{if $sortField == 'registrationDate'} selected{/if}>{lang}wcf.user.registrationDate{/lang}</option>
 							<option value="activityPoints"{if $sortField == 'activityPoints'} selected{/if}>{lang}wcf.user.activityPoint{/lang}</option>
-							{if MODULE_LIKE}<option value="likesReceived"{if $sortField == 'likesReceived'} selected{/if}>{lang}wcf.like.likesReceived{/lang}</option>{/if}
+							{if MODULE_LIKE}<option value="reactionReputation"{if $sortField == 'reactionReputation'} selected{/if}>{lang}wcf.like.reactionReputation{/lang}</option>{/if}
 							<option value="lastActivityTime"{if $sortField == 'lastActivityTime'} selected{/if}>{lang}wcf.user.usersOnline.lastActivity{/lang}</option>
 							{event name='sortField'}
 						</select>

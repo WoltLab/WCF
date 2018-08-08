@@ -5,22 +5,21 @@
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Like/Handler
+ * @deprecated  3.2 use ReactionHandler instead 
  */
 define(
 	[
 		'Ajax',      'Core',                     'Dictionary',         'Language',
 		'ObjectMap', 'StringUtil',               'Dom/ChangeListener', 'Dom/Util',
-		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List', 'User'
+		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List', 'User',         'WoltLabSuite/Core/Ui/Reaction/Handler'
 	],
 	function(
 		Ajax,        Core,                        Dictionary,           Language,
 		ObjectMap,   StringUtil,                  DomChangeListener,    DomUtil,
-		UiDialog,    UiUserList,                  User
+		UiDialog,    UiUserList,                  User,                 UiReactionHandler
 	)
 {
 	"use strict";
-	
-	var _isBusy = false;
 	
 	/**
 	 * @constructor
@@ -67,6 +66,11 @@ define(
 			this.initContainers(options, objectType);
 			
 			DomChangeListener.add('WoltLabSuite/Core/Ui/Like/Handler-' + objectType, this.initContainers.bind(this));
+			
+			new UiReactionHandler(this._objectType, {
+				containerSelector: this._options.containerSelector,
+				summaryListSelector: '.reactionSummaryList'
+			});
 		},
 		
 		/**
@@ -111,61 +115,66 @@ define(
 		 * @param	{object}	elementData	like data
 		 */
 		_buildWidget: function(element, elementData) {
-			// build summary
-			if (this._options.canViewSummary) {
-				var summary, summaryContent, summaryIcon;
-				var summaryContainer = (this._options.isSingleItem) ? elBySel(this._options.summarySelector) : elBySel(this._options.summarySelector, element);
-				if (summaryContainer !== null) {
-					summary = elCreate('div');
-					summary.className = 'likesSummary';
-					
-					if (this._options.summaryUseIcon) {
-						summaryIcon = elCreate('span');
-						summaryIcon.className = 'icon icon16 fa-thumbs-o-up';
-						summary.appendChild(summaryIcon);
-					}
-					
-					summaryContent = elCreate('span');
-					summaryContent.className = 'likesSummaryContent';
-					summaryContent.addEventListener(WCF_CLICK_EVENT, this._showSummary.bind(this, element));
-					summary.appendChild(summaryContent);
-					
-					if (this._options.summaryPrepend) {
-						DomUtil.prepend(summary, summaryContainer);
-					}
-					else {
-						summaryContainer.appendChild(summary);
-					}
-					
-					elementData.summary = summaryContent;
-					
-					this._updateSummary(element);
-				}
+			// build reaction summary list
+			var summaryList, listItem, badgeContainer, isSummaryPosition = true;
+			badgeContainer = (this._options.isSingleItem) ? elBySel(this._options.summarySelector) : elBySel(this._options.summarySelector, element);
+			if (badgeContainer === null) {
+				badgeContainer = (this._options.isSingleItem) ? elBySel(this._options.badgeContainerSelector) : elBySel(this._options.badgeContainerSelector, element);
+				isSummaryPosition = false;
 			}
 			
-			// cumulative likes
-			var badge, listItem;
-			var badgeContainer = (this._options.isSingleItem) ? elBySel(this._options.badgeContainerSelector) : elBySel(this._options.badgeContainerSelector, element);
 			if (badgeContainer !== null) {
-				badge = elCreate('a');
-				badge.href = '#';
-				badge.className = 'wcfLikeCounter jsTooltip' + (this._options.badgeClassNames ? ' ' + this._options.badgeClassNames : '');
-				badge.addEventListener(WCF_CLICK_EVENT, this._showSummary.bind(this, element));
-				
-				if (badgeContainer.nodeName === 'OL' || badgeContainer.nodeName === 'UL') {
-					listItem = elCreate('li');
-					listItem.appendChild(badge);
-					badgeContainer.appendChild(listItem);
+				summaryList = elCreate('ul');
+				summaryList.classList.add('reactionSummaryList');
+				if (isSummaryPosition) {
+					summaryList.classList.add('likesSummary');
 				}
 				else {
-					badgeContainer.appendChild(badge);
+					summaryList.classList.add('reactionSummaryListTiny');
 				}
 				
-				elementData.badge = badge;
+				for (var key in elementData.users) {
+					if (key === "reactionTypeID") continue;
+					if (!REACTION_TYPES.hasOwnProperty(key)) continue;
+					
+					// create element 
+					var createdElement = elCreate('li');
+					createdElement.className = 'reactCountButton';
+					createdElement.innerHTML = REACTION_TYPES[key].renderedIcon +' ';
+					elData(createdElement, 'reaction-type-id', key);
+					
+					var countSpan = elCreate('span');
+					countSpan.className = 'reactionCount';
+					countSpan.innerHTML = StringUtil.shortUnit(elementData.users[key]);
+					createdElement.appendChild(countSpan);
+					
+					summaryList.appendChild(createdElement);
+					
+				}
 				
-				this._updateBadge(element);
+				if (isSummaryPosition) {
+					if (this._options.summaryPrepend) {
+						DomUtil.prepend(summaryList, badgeContainer);
+					}
+					else {
+						badgeContainer.appendChild(summaryList);
+					}
+				}
+				else {
+					if (badgeContainer.nodeName === 'OL' || badgeContainer.nodeName === 'UL') {
+						listItem = elCreate('li');
+						listItem.appendChild(summaryList);
+						badgeContainer.appendChild(listItem);
+					}
+					else {
+						badgeContainer.appendChild(summaryList);
+					}
+				}
+				
+				elementData.badge = summaryList;
 			}
 			
+			// build reaction button
 			if (this._options.canLike && (User.userId != elData(element, 'user-id') || this._options.canLikeOwnContent)) {
 				var appendTo = (this._options.buttonAppendToSelector) ? ((this._options.isSingleItem) ? elBySel(this._options.buttonAppendToSelector) : elBySel(this._options.buttonAppendToSelector, element)) : null;
 				var insertPosition = (this._options.buttonBeforeSelector) ? ((this._options.isSingleItem) ? elBySel(this._options.buttonBeforeSelector) : elBySel(this._options.buttonBeforeSelector, element)) : null;
@@ -173,41 +182,68 @@ define(
 					throw new Error("Unable to find insert location for like/dislike buttons.");
 				}
 				else {
-					// like button
-					elementData.likeButton = this._createButton(element, true, insertPosition, appendTo);
-					
-					// dislike button
-					if (this._options.canDislike) {
-						elementData.dislikeButton = this._createButton(element, false, insertPosition, appendTo);
-					}
-					
-					this._updateActiveState(element);
+					elementData.likeButton = this._createButton(element, elementData.users.reactionTypeID, insertPosition, appendTo);
 				}
 			}
 		},
 		
 		/**
-		 * Creates a like or dislike button.
+		 * Creates a reaction button.
 		 * 
-		 * @param	{Element}	element		container element
-		 * @param	{boolean}	isLike		false if this is a dislike button
-		 * @param	{Element?}	insertBefore	insert button before given element
-		 * @param       {Element?}      appendTo        append button to given element
+		 * @param	{Element}	element		        container element
+		 * @param	{int}	        reactionTypeID		the reactionTypeID of the current state
+		 * @param	{Element?}	insertBefore	        insert button before given element
+		 * @param       {Element?}      appendTo                append button to given element
 		 * @return	{Element}	button element 
 		 */
-		_createButton: function(element, isLike, insertBefore, appendTo) {
-			var title = Language.get('wcf.like.button.' + (isLike ? 'like' : 'dislike'));
+		_createButton: function(element, reactionTypeID, insertBefore, appendTo) {
+			var title = Language.get('wcf.reactions.react');
 			
 			var listItem = elCreate('li');
-			listItem.className = 'wcf' + (isLike ? 'Like' : 'Dislike') + 'Button';
+			listItem.className = 'wcfReactButton';
+			
+			if (insertBefore) {
+				var jsMobileNavigation = insertBefore.parentElement.contains('jsMobileNavigation');
+			}
+			else {
+				var jsMobileNavigation = appendTo.classList.contains('jsMobileNavigation');
+			}
 			
 			var button = elCreate('a');
-			button.className = 'jsTooltip' + (this._options.renderAsButton ? ' button' : '');
+			button.className = 'jsTooltip reactButton';
+			if (this._options.renderAsButton) {
+				button.classList.add('button');
+				
+				if (jsMobileNavigation) {
+					button.classList.add('ignoreMobileNavigation');
+				}
+			}
+			
 			button.href = '#';
 			button.title = title;
-			button.innerHTML = '<span class="icon icon16 fa-thumbs-o-' + (isLike ? 'up' : 'down') + '"></span> <span class="invisible">' + title + '</span>';
-			button.addEventListener(WCF_CLICK_EVENT, this._like.bind(this, element));
-			elData(button, 'type', (isLike ? 'like' : 'dislike'));
+			
+			var icon = elCreate('img');
+			icon.className = 'reactionType';
+			
+			if (reactionTypeID === undefined || reactionTypeID == 0) {
+				icon.src = WCF_PATH+'images/reaction/reactionIcon.svg';
+				elData(icon, 'reaction-type-id', 0);
+			}
+			else {
+				icon.src = REACTION_TYPES[reactionTypeID].iconPath;
+				elData(icon, 'reaction-type-id', reactionTypeID);
+				
+				button.classList.add("active");
+			}
+			
+			button.appendChild(icon);
+			
+			var invisibleText = elCreate("span");
+			invisibleText.className = "invisible";
+			invisibleText.innerHTML = title;
+			
+			button.appendChild(document.createTextNode(" "));
+			button.appendChild(invisibleText);
 			
 			listItem.appendChild(button);
 			
@@ -219,195 +255,6 @@ define(
 			}
 			
 			return button;
-		},
-		
-		/**
-		 * Shows the summary of likes/dislikes.
-		 * 
-		 * @param	{Element}	element		container element
-		 * @param	{object}	event		event object
-		 */
-		_showSummary: function(element, event) {
-			event.preventDefault();
-			
-			if (!this._details.has(element)) {
-				this._details.set(element, new UiUserList({
-					className: 'wcf\\data\\like\\LikeAction',
-					dialogTitle: Language.get('wcf.like.details'),
-					parameters: {
-						data: {
-							containerID: DomUtil.identify(element),
-							objectID: this._containers.get(element).objectId,
-							objectType: this._objectType
-						}
-					}
-				}));
-			}
-			
-			this._details.get(element).open();
-		},
-		
-		/**
-		 * Updates the display of cumulative likes.
-		 * 
-		 * @param	{Element}	element		container element
-		 */
-		_updateBadge: function(element) {
-			var data = this._containers.get(element);
-			
-			if (data.likes === 0 && data.dislikes === 0) {
-				elHide(data.badge);
-			}
-			else {
-				elShow(data.badge);
-				
-				// remove old classes
-				data.badge.classList.remove('likeCounterLiked', 'likeCounterDisliked');
-				
-				// update like counter
-				var cumulativeLikes = data.likes - data.dislikes;
-				var content = '<span class="icon icon16 fa-thumbs-o-' + (cumulativeLikes < 0 ? 'down' : 'up' ) + '"></span><span class="wcfLikeValue">';
-				if (cumulativeLikes > 0) {
-					content += '+' + StringUtil.addThousandsSeparator(cumulativeLikes);
-					data.badge.classList.add('likeCounterLiked');
-				}
-				else if (cumulativeLikes < 0) {
-					// U+2212 = minus sign
-					content += '\u2212' + StringUtil.addThousandsSeparator(Math.abs(cumulativeLikes));
-					data.badge.classList.add('likeCounterDisliked');
-				}
-				else {
-					// U+00B1 = plus-minus sign
-					content += '\u00B1' + '0';
-				}
-				
-				data.badge.innerHTML = content + '</span>';
-				data.badge.setAttribute('data-tooltip', Language.get('wcf.like.tooltip', {
-					dislikes: data.dislikes,
-					likes: data.likes
-				}));
-			}
-		},
-		
-		/**
-		 * Updates the like summary.
-		 * 
-		 * @param	{Element}	element		container element
-		 */
-		_updateSummary: function(element) {
-			var data = this._containers.get(element);
-			
-			if (data.likes) {
-				elShow(data.summary.parentNode);
-				
-				var usernames = [];
-				var keys = Object.keys(data.users);
-				for (var i = 0, length = keys.length; i < length; i++) {
-					usernames.push(data.users[keys[i]]);
-				}
-				
-				var others = data.likes - usernames.length;
-				data.summary.innerHTML = Language.get('wcf.like.summary', { users: usernames, others: others });
-			}
-			else {
-				elHide(data.summary.parentNode);
-			}
-		},
-		
-		/**
-		 * Updates the active like/dislike button state.
-		 * 
-		 * @param	{Element}	element		container element
-		 */
-		_updateActiveState: function(element) {
-			var data = this._containers.get(element);
-			
-			var likeTarget = (this._options.markListItemAsActive) ? data.likeButton.parentNode : data.likeButton;
-			likeTarget.classList.remove('active');
-			
-			if (data.liked === 1) {
-				likeTarget.classList.add('active');
-			}
-			
-			if (this._options.canDislike) {
-				var dislikeTarget = (this._options.markListItemAsActive) ? data.dislikeButton.parentNode : data.dislikeButton;
-				dislikeTarget.classList.remove('active');
-				
-				if (data.liked === -1) {
-					dislikeTarget.classList.add('active');
-				}
-			}
-		},
-		
-		/**
-		 * Likes or dislikes an element.
-		 * 
-		 * @param	{Element}	element		container element
-		 * @param	{object}	event		event object
-		 */
-		_like: function(element, event) {
-			event.preventDefault();
-			
-			if (_isBusy) {
-				return;
-			}
-			
-			_isBusy = true;
-			
-			Ajax.api(this, {
-				actionName: elData(event.currentTarget, 'type'),
-				parameters: {
-					data: {
-						containerID: DomUtil.identify(element),
-						objectID: this._containers.get(element).objectId,
-						objectType: this._objectType
-					}
-				}
-			});
-		},
-		
-		_ajaxSuccess: function(data) {
-			var element = elById(data.returnValues.containerID);
-			var elementData = this._containers.get(element);
-			if (elementData === undefined) {
-				return;
-			}
-			
-			elementData.dislikes = ~~data.returnValues.dislikes;
-			elementData.likes = ~~data.returnValues.likes;
-			
-			var users = data.returnValues.users;
-			elementData.users = [];
-			var keys = Object.keys(users);
-			for (var i = 0, length = keys.length; i < length; i++) {
-				elementData.users.push(StringUtil.escapeHTML(users[keys[i]].username));
-			}
-			
-			if (data.returnValues.isLiked == 1) elementData.liked = 1;
-			else if (data.returnValues.isDisliked == 1) elementData.liked = -1;
-			else elementData.liked = 0;
-			
-			// update label
-			this._updateBadge(element);
-			
-			// update summary
-			if (this._options.canViewSummary) this._updateSummary(element);
-			
-			// mark button as active
-			this._updateActiveState(element);
-			
-			// invalidate cache for like details
-			this._details['delete'](element);
-			
-			_isBusy = false;
-		},
-		
-		_ajaxSetup: function() {
-			return {
-				data: {
-					className: 'wcf\\data\\like\\LikeAction'
-				}
-			};
 		}
 	};
 	

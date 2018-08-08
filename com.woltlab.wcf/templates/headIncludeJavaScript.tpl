@@ -16,6 +16,8 @@
 	var ENABLE_DEVELOPER_TOOLS = {if ENABLE_DEVELOPER_TOOLS}true{else}false{/if};
 	var WSC_API_VERSION = {@WSC_API_VERSION};
 	
+	var REACTION_TYPES = {@$__wcf->getReactionHandler()->getReactionsJSVariable()};
+	
 	{if ENABLE_DEBUG_MODE}
 		{* This constant is a compiler option, it does not exist in production. *}
 		var COMPILER_TARGET_DEFAULT = {if !VISITOR_USE_TINY_BUILD || $__wcf->user->userID}true{else}false{/if};
@@ -119,7 +121,8 @@ requirejs.config({
 				'wcf.like.button.dislike': '{lang}wcf.like.button.dislike{/lang}',
 				'wcf.like.tooltip': '{lang}wcf.like.jsTooltip{/lang}',
 				'wcf.like.summary': '{lang}wcf.like.summary{/lang}',
-				'wcf.like.details': '{lang}wcf.like.details{/lang}'
+				'wcf.like.details': '{lang}wcf.like.details{/lang}',
+				'wcf.reactions.react': '{lang}wcf.reactions.react{/lang}'
 			{/if}
 			
 			{event name='javascriptLanguageImport'}

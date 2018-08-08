@@ -483,6 +483,14 @@
 				<options>module_attachment</options>
 				<usersonly>1</usersonly>
 			</option>
+			
+			<option name="admin.content.reaction.canManageReactionType">
+				<categoryname>admin.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
+			</option>
 			<!-- /admin.content -->
 			
 			<!-- admin.customization -->

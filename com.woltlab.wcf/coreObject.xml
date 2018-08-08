@@ -65,6 +65,10 @@
 		<coreobject>
 			<objectname>wcf\system\search\SearchEngine</objectname>
 		</coreobject>
+		
+		<coreobject>
+			<objectname>wcf\system\reaction\ReactionHandler</objectname>
+		</coreobject>
 	</import>
 	<delete>
 		<coreobject name="wcf\system\menu\page\PageMenu" />

@@ -8,7 +8,7 @@
 	{else}
 		<li class="comment jsComment"
 		    data-object-id="{@$comment->commentID}" data-comment-id="{@$comment->commentID}" data-object-type="com.woltlab.wcf.comment"
-		    data-like-liked="{if $likeData[comment][$comment->commentID]|isset}{@$likeData[comment][$comment->commentID]->liked}{/if}" data-like-likes="{if $likeData[comment][$comment->commentID]|isset}{@$likeData[comment][$comment->commentID]->likes}{else}0{/if}" data-like-dislikes="{if $likeData[comment][$comment->commentID]|isset}{@$likeData[comment][$comment->commentID]->dislikes}{else}0{/if}" data-like-users='{if $likeData[comment][$comment->commentID]|isset}{ {implode from=$likeData[comment][$comment->commentID]->getUsers() item=likeUser}"{@$likeUser->userID}": { "username": "{$likeUser->username|encodeJSON}" }{/implode} }{else}{ }{/if}'
+			{@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment', $comment->commentID)}
 		    data-can-edit="{if $comment->isEditable()}true{else}false{/if}" data-can-delete="{if $comment->isDeletable()}true{else}false{/if}"
 		    data-responses="{@$comment->responses}" data-last-response-time="{if $commentLastResponseTime|empty}{@$comment->getLastResponseTime()}{else}{@$commentLastResponseTime}{/if}" data-user-id="{@$comment->userID}" data-is-disabled="{@$comment->isDisabled}">
 			<div class="box48">
@@ -36,6 +36,8 @@
 								
 								<small class="separatorLeft">{@$comment->time|time}</small>
 								
+								{if MODULE_LIKE && $likeData|isset}{include file="reactionSummaryList" isTiny=true reactionData=$likeData[comment] objectType="com.woltlab.wcf.comment" objectID=$comment->commentID}{/if}
+								
 								{if $comment->isDisabled}
 									<span class="badge label green jsIconDisabled">{lang}wcf.message.status.disabled{/lang}</span>
 								{/if}
@@ -51,6 +53,10 @@
 								{/if}
 								{if $commentManager->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
 									<li class="jsReportCommentComment jsOnly" data-object-id="{@$comment->commentID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
+								{/if}
+								
+								{if MODULE_LIKE && $__wcf->session->getPermission('user.like.canLike') && (LIKE_ALLOW_FOR_OWN_CONTENT || $comment->userID != $__wcf->user->userID)}
+									<li class="jsOnly"><a href="#" class="reactButton jsTooltip" title="{lang}wcf.reactions.react{/lang}">{if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID}{@$__wcf->getReactionHandler()->getReactionTypeByID($likeData[comment][$comment->commentID]->reactionTypeID)->renderIcon()}{else}<img src="{$__wcf->getPath()}/images/reaction/reactionIcon.svg" class="reactionType">{/if} <span class="invisible">{lang}wcf.reactions.react{/lang}</span></a></li>
 								{/if}
 								
 								{event name='commentOptions'}

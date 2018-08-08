@@ -19,6 +19,7 @@ use wcf\system\WCF;
  */
 class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent {
 	use TTestableCommentResponseLikeUserNotificationEvent;
+	use TReactionUserNotificationEvent; 
 	
 	/**
 	 * @inheritDoc
@@ -71,7 +72,8 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 				'count' => $count,
 				'others' => $count - 1,
 				'owner' => $owner,
-				'responseID' => $this->getResponseID()
+				'responseID' => $this->getResponseID(),
+				'reactions' => $this->getReactionsForAuthors()
 			]);
 		}
 		
@@ -79,7 +81,9 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 			'author' => $this->author,
 			'commentID' => $this->additionalData['commentID'],
 			'owner' => $owner,
-			'responseID' => $this->getResponseID()
+			'responseID' => $this->getResponseID(),
+			'userNotificationObject' => $this->getUserNotificationObject(),
+			'reactions' => $this->getReactionsForAuthors()
 		]);
 	}
 	

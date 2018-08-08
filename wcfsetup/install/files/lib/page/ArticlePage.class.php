@@ -6,7 +6,7 @@ use wcf\data\comment\StructuredCommentList;
 use wcf\data\like\object\LikeObject;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\comment\CommentHandler;
-use wcf\system\like\LikeHandler;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\MetaTagHandler;
 use wcf\system\WCF;
@@ -98,9 +98,9 @@ class ArticlePage extends AbstractArticlePage {
 		
 		// fetch likes
 		if (MODULE_LIKE) {
-			$objectType = LikeHandler::getInstance()->getObjectType('com.woltlab.wcf.likeableArticle');
-			LikeHandler::getInstance()->loadLikeObjects($objectType, [$this->article->articleID]);
-			$this->articleLikeData = LikeHandler::getInstance()->getLikeObjects($objectType);
+			$objectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.likeableArticle');
+			ReactionHandler::getInstance()->loadLikeObjects($objectType, [$this->article->articleID]);
+			$this->articleLikeData = ReactionHandler::getInstance()->getLikeObjects($objectType);
 		}
 		
 		// add meta/og tags

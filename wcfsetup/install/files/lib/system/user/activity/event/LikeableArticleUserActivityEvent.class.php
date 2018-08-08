@@ -41,7 +41,10 @@ class LikeableArticleUserActivityEvent extends SingletonFactory implements IUser
 				$event->setIsAccessible();
 				
 				// short output
-				$text = WCF::getLanguage()->getDynamicVariable('wcf.article.recentActivity.likedArticle', ['article' => $article]);
+				$text = WCF::getLanguage()->getDynamicVariable('wcf.article.recentActivity.likedArticle', [
+					'article' => $article, 
+					'reactionType' => $event->reactionType
+				]);
 				$event->setTitle($text);
 				
 				// output
