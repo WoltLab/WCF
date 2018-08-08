@@ -106,7 +106,7 @@ class DateFormField extends AbstractFormField {
 			\DateTime::createFromFormat($saveValueFormat, TIME_NOW);
 		}
 		catch (\Exception $e) {
-			throw new \InvalidArgumentException("Invalid date time format '{$saveValueFormat}'.");
+			throw new \InvalidArgumentException("Invalid date time format '{$saveValueFormat}'.", 0, $e);
 		}
 		
 		$this->__saveValueFormat = $saveValueFormat;
