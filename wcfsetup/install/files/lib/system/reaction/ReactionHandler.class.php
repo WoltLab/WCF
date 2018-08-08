@@ -51,6 +51,12 @@ class ReactionHandler extends SingletonFactory {
 	protected $cache = null;
 	
 	/**
+	 * Cache for likeable objects sorted by objectType.
+	 * @var ILikeObject[][] 
+	 */
+	private $likeableObjectsCache = [];
+	
+	/**
 	 * Creates a new ReactionHandler instance.
 	 */
 	protected function init() {
@@ -102,32 +108,16 @@ class ReactionHandler extends SingletonFactory {
 	/**
 	 * Builds the data attributes for the object container. 
 	 * 
-	 * @param       string          $objectName
+	 * @param       string          $objectTypeName
 	 * @param       integer         $objectID
 	 * @return      string
 	 */
-	public function getDataAttributes($objectName, $objectID) {
-		$objectType = $this->getObjectType($objectName);
-		if ($objectType === null) {
-			throw new \InvalidArgumentException("ObjectName '{$objectName}' is unknown for definition 'com.woltlab.wcf.like.likeableObject'.");
-		}
-		
-		/** @var ILikeObjectTypeProvider $objectTypeProcessor */
-		$objectTypeProcessor = $objectType->getProcessor();
-		
-		$object = $objectTypeProcessor->getObjectByID($objectID);
-		
-		if ($object === null) {
-			throw new \InvalidArgumentException("Object with the object id '{$objectID}' for object type '{$objectName}' is unknown.");
-		}
-		
-		if (!($object instanceof ILikeObject)) {
-			throw new ImplementationException(get_class($object), ILikeObject::class);
-		}
+	public function getDataAttributes($objectTypeName, $objectID) {
+		$object = $this->getLikeableObject($objectTypeName, $objectID);
 		
 		$dataAttributes = [
 			'object-id' => $object->getObjectID(),
-			'object-type' => $objectName,
+			'object-type' => $objectTypeName,
 			'user-id' => $object->getUserID()
 		];
 		
@@ -148,6 +138,55 @@ class ReactionHandler extends SingletonFactory {
 		}
 		
 		return $returnDataAttributes;
+	}
+	
+	/**
+	 * Cache likeable objects. 
+	 * 
+	 * @param       string          $objectTypeName
+	 * @param       integer[]       $objectIDs
+	 */
+	public function cacheLikeableObjects($objectTypeName, array $objectIDs) {
+		$objectType = $this->getObjectType($objectTypeName);
+		if ($objectType === null) {
+			throw new \InvalidArgumentException("ObjectName '{$objectTypeName}' is unknown for definition 'com.woltlab.wcf.like.likeableObject'.");
+		}
+		
+		/** @var ILikeObjectTypeProvider $objectTypeProcessor */
+		$objectTypeProcessor = $objectType->getProcessor();
+		
+		$objects = $objectTypeProcessor->getObjectsByIDs($objectIDs);
+		
+		if (!isset($this->likeableObjectsCache[$objectTypeName])) {
+			$this->likeableObjectsCache[$objectTypeName] = [];
+		}
+		
+		foreach ($objects as $object) {
+			$this->likeableObjectsCache[$objectTypeName][$object->getObjectID()] = $object; 
+		}
+	}
+	
+	/**
+	 * Get an likeable object from the internal cache. 
+	 * 
+	 * @param       string          $objectTypeName
+	 * @param       integer         $objectID
+	 * @return      ILikeObject
+	 */
+	public function getLikeableObject($objectTypeName, $objectID) {
+		if (!isset($this->likeableObjectsCache[$objectTypeName][$objectID])) {
+			$this->cacheLikeableObjects($objectTypeName, [$objectID]);
+		}
+		
+		if (!isset($this->likeableObjectsCache[$objectTypeName][$objectID])) {
+			throw new \InvalidArgumentException("Object with the object id '{$objectID}' for object type '{$objectTypeName}' is unknown.");
+		}
+		
+		if (!($this->likeableObjectsCache[$objectTypeName][$objectID] instanceof ILikeObject)) {
+			throw new ImplementationException(get_class($this->likeableObjectsCache[$objectTypeName][$objectID]), ILikeObject::class);
+		}
+		
+		return $this->likeableObjectsCache[$objectTypeName][$objectID];
 	}
 	
 	/**
@@ -205,6 +244,8 @@ class ReactionHandler extends SingletonFactory {
 		if (empty($objectIDs)) {
 			return 0;
 		}
+		
+		$this->cacheLikeableObjects($objectType->objectType, $objectIDs);
 		
 		$i = 0;
 		
