@@ -36,7 +36,7 @@
 								
 								<small class="separatorLeft">{@$comment->time|time}</small>
 								
-								{if MODULE_LIKE && $likeData|isset}{include file="reactionSummaryList" isTiny=true reactionData=$likeData[comment] objectType="com.woltlab.wcf.comment" objectID=$comment->commentID}{/if}
+								{if MODULE_LIKE}{if $likeData|isset}{include file="reactionSummaryList" isTiny=true reactionData=$likeData[comment] objectType="com.woltlab.wcf.comment" objectID=$comment->commentID}{else}<ul class="reactionSummaryList reactionSummaryListTiny jsOnly" data-object-type="com.woltlab.wcf.comment" data-object-id="{$comment->commentID}">{/if}{/if}
 								
 								{if $comment->isDisabled}
 									<span class="badge label green jsIconDisabled">{lang}wcf.message.status.disabled{/lang}</span>
