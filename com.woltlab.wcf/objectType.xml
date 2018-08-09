@@ -430,6 +430,11 @@
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname>wcf\system\importer\UserTrophyImporter</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.reactionType</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\ReactionTypeImporter</classname>
+		</type>
 		<!-- /importers -->
 		
 		<!-- rebuild data workers -->
