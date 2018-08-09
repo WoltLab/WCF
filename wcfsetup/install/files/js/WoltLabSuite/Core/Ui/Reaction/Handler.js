@@ -53,6 +53,7 @@ define(
 					buttonSelector: '.reactButton', 
 					containerSelector: '',
 					isButtonGroupNavigation: false,
+					isSingleItem: false,
 					
 					// other stuff
 					parameters: {
@@ -102,7 +103,12 @@ define(
 			 * Initializes a specific react button.
 			 */
 			_initReactButton: function(element, elementData) {
-				elementData.reactButton = elBySel(this._options.buttonSelector, element);
+				if (this._options.isSingleItem) {
+					elementData.reactButton = elBySel(this._options.buttonSelector);
+				}
+				else {
+					elementData.reactButton = elBySel(this._options.buttonSelector, element);
+				}
 				
 				if (elementData.reactButton === null || elementData.reactButton.length === 0) {
 					// the element may have no react button 
