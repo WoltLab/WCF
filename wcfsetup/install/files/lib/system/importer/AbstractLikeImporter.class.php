@@ -46,6 +46,10 @@ class AbstractLikeImporter extends AbstractImporter {
 			$data['reactionTypeID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.reactionType', $data['reactionTypeID']);
 		}
 		
+		if ($data['reactionTypeID'] === null) {
+			return 0;
+		}
+		
 		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_like
 						(objectID, objectTypeID, objectUserID, userID, time, likeValue, reactionTypeID)
 			VALUES			(?, ?, ?, ?, ?, ?, ?)";
