@@ -174,7 +174,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 									$adapter->writeImage($object->getLocation());
 									
 									// update width, height and filesize of the object
-									if ($newImage !== null && ($orientation == ExifUtil::ORIENTATION_90_ROTATE || $orientation == ExifUtil::ORIENTATION_270_ROTATE)) {
+									if ($newImage !== null && ($orientation == ExifUtil::ORIENTATION_90_ROTATE || $orientation == ExifUtil::ORIENTATION_180_ROTATE || $orientation == ExifUtil::ORIENTATION_270_ROTATE)) {
 										/** @var DatabaseObjectEditor $editor */
 										$editor = new $this->editorClassName($object);
 										$editor->update([
