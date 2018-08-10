@@ -355,7 +355,7 @@
 		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[Es wurde kein Fehler mit der ID „{$exceptionID}“ gefunden.]]></item>
 		<item name="wcf.acp.exceptionLog.search"><![CDATA[Suche]]></item>
 		<item name="wcf.acp.exceptionLog.search.exceptionID"><![CDATA[Fehler-ID]]></item>
-		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Datei]]></item>
+		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Protokolldatei]]></item>
 		<item name="wcf.acp.exceptionLog.exception.date"><![CDATA[Datum]]></item>
 		<item name="wcf.acp.exceptionLog.exception.userAgent"><![CDATA[Browser]]></item>
 		<item name="wcf.acp.exceptionLog.exception.memory"><![CDATA[Arbeitsspeicher]]></item>
@@ -903,7 +903,7 @@
 		<item name="wcf.acp.option.error.controllerReplacementCollision"><![CDATA[Das Alias „{$urlControllerReplacementError}“ kollidiert mit einem real existierenden Controller und ist daher unzulässig.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementDuplicateAlias"><![CDATA[Das Alias „{$urlControllerReplacementError}“ wird bereits verwendet.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementDuplicateController"><![CDATA[Dem Controller „{$urlControllerReplacementError}“ wurde bereits ein Alias zugewiesen.]]></item>
-		<item name="wcf.acp.option.error.controllerReplacementInvalidFormat"><![CDATA[Die Angabe muss im Format „realer-name=neuer-name“ erfolgen, die Zeile „{$urlControllerReplacementError}“ is ungültig.]]></item>
+		<item name="wcf.acp.option.error.controllerReplacementInvalidFormat"><![CDATA[Die Angabe muss im Format „realer-name=neuer-name“ erfolgen, die Zeile „{$urlControllerReplacementError}“ ist ungültig.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementUnknown"><![CDATA[Der Controller „{$urlControllerReplacementError}“ ist unbekannt.]]></item>
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
