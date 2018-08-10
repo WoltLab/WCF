@@ -3362,6 +3362,8 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.page.search.results"><![CDATA[Search Results]]></item>
 		<item name="wcf.page.comment"><![CDATA[Page Comment]]></item>
 		<item name="wcf.page.commentResponse"><![CDATA[Reply to Page Comment]]></item>
+		<item name="wcf.page.recentActivity.pageComment"><![CDATA[Commented on page <a href="{$page->getLink()}#comment{$commentID}">{$page->getTitle()}</a>.]]></item>
+		<item name="wcf.page.recentActivity.pageCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on page <a href="{$page->getLink()}#comment{@$commentID}/response{@$responseID}">{$page->getTitle()}</a>.]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">
@@ -3954,6 +3956,8 @@ Open the link below to access the user profile:
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.articleComment.recentActivityEvent"><![CDATA[Comment (Article)]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.articleComment.response.recentActivityEvent"><![CDATA[Reply (Article)]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.userTrophy.recentActivityEvent.trophyReceived"><![CDATA[Trophy]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.page.recentActivityEvent"><![CDATA[Comment (Page)]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.page.response.recentActivityEvent"><![CDATA[Reply (Page)]]></item>
 		<item name="wcf.user.recentActivity.condition.excludedObjectType"><![CDATA[Excluded Activities]]></item>
 		<item name="wcf.user.recentActivity.scope.all"><![CDATA[All Activities]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Filter by Followed Users]]></item>

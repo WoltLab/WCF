@@ -154,6 +154,19 @@
 			<classname>wcf\system\moderation\queue\report\UserModerationQueueReportHandler</classname>
 		</type>
 		
+		<!-- page -->
+		<type>
+			<name>com.woltlab.wcf.page.recentActivityEvent</name>
+			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
+			<classname>wcf\system\user\activity\event\PageCommentUserActivityEvent</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.page.response.recentActivityEvent</name>
+			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
+			<classname>wcf\system\user\activity\event\PageCommentResponseUserActivityEvent</classname>
+		</type>
+		<!-- /page -->
+		
 		<!-- moderation type -->
 		<type>
 			<name>com.woltlab.wcf.moderation.activation</name>

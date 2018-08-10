@@ -3415,6 +3415,8 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.page.search.results"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.page.comment"><![CDATA[Seiten-Kommentar]]></item>
 		<item name="wcf.page.commentResponse"><![CDATA[Antwort auf Seiten-Kommentar]]></item>
+		<item name="wcf.page.recentActivity.pageComment"><![CDATA[Hat einen Kommentar auf der Seite <a href="{$page->getLink()}#comment{$commentID}">{$page->getTitle()}</a> geschrieben.]]></item>
+		<item name="wcf.page.recentActivity.pageCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> auf der Seite <a href="{$page->getLink()}#comment{@$commentID}/response{@$responseID}">{$page->getTitle()}</a> geantwortet.]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">
@@ -3959,6 +3961,8 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.articleComment.recentActivityEvent"><![CDATA[Kommentar (Artikel)]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.articleComment.response.recentActivityEvent"><![CDATA[Antwort (Artikel)]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.userTrophy.recentActivityEvent.trophyReceived"><![CDATA[Trophäe]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.page.recentActivityEvent"><![CDATA[Kommentar (Seite)]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.page.response.recentActivityEvent"><![CDATA[Antwort (Seite)]]></item>
 		<item name="wcf.user.recentActivity.condition.excludedObjectType"><![CDATA[Ausgeschlossene Aktivitäten]]></item>
 		<item name="wcf.user.recentActivity.scope.all"><![CDATA[Aktivitäten aller Benutzer]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Aktivitäten von Benutzern, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}]]></item>
