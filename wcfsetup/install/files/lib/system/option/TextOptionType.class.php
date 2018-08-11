@@ -30,6 +30,12 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	protected $inputClass = 'long';
 	
 	/**
+	 * if `true`, the option is considered as being searched when generating the form element
+	 * @var	bool
+	 */
+	public $forceSearchOption = false;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
@@ -50,7 +56,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 			'option' => $option,
 			'inputType' => $this->inputType,
 			'inputClass' => $this->inputClass,
-			'searchOption' => $value !== null && ($value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName])),
+			'searchOption' => $this->forceSearchOption || ($value !== null && $value !== $option->defaultValue) || isset($_POST['searchOptions'][$option->optionName]),
 			'value' => $value
 		]);
 		return WCF::getTPL()->fetch('textSearchableOptionType');
