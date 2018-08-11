@@ -42,7 +42,7 @@ class SelectOptionType extends RadioButtonOptionType {
 			'disableOptions' => $options['disableOptions'],
 			'enableOptions' => $options['enableOptions'],
 			'option' => $option,
-			'searchOption' => ($value !== null && $value !== $option->defaultValue) || isset($_POST['searchOptions'][$option->optionName]),
+			'searchOption' => $this->forceSearchOption || ($value !== null && $value !== $option->defaultValue) || isset($_POST['searchOptions'][$option->optionName]),
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => $value
 		]);
