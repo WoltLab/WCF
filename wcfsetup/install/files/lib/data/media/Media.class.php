@@ -205,7 +205,28 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	 * @return	boolean
 	 */
 	public function isAccessible() {
-		return WCF::getSession()->getPermission('admin.content.cms.canManageMedia') || SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.media', $this->mediaID);
+		if ($this->canManage()) {
+			return true;
+		}
+		
+		return SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.media', $this->mediaID);
+	}
+	
+	/**
+	 * Returns `true` if the active user can manage this media file.
+	 * 
+	 * @return	bool
+	 */
+	public function canManage() {
+		if (WCF::getSession()->getPermission('admin.content.cms.canManageMedia')) {
+			if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+				return WCF::getUser()->userID == $this->userID;
+			}
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**

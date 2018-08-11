@@ -405,8 +405,16 @@
 			<option name="admin.content.cms.canManageMedia">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
+				<enableoptions>admin.content.cms.canOnlyAccessOwnMedia</enableoptions>
 				<defaultvalue>0</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
+			</option>
+			<option name="admin.content.cms.canOnlyAccessOwnMedia">
+				<categoryname>admin.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>0</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
 			<option name="admin.content.cms.canUseMedia">

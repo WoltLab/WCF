@@ -1,4 +1,4 @@
-{include file='header' pageTitle='wcf.media.media'}
+{include file='header' pageTitle='wcf.media.media.pageTitle'}
 
 <script data-relocate="true">
 	{include file='mediaJavaScript'}
@@ -20,7 +20,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.media.media{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
+		<h1 class="contentTitle">{lang}wcf.media.media.pageTitle{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">

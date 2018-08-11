@@ -208,6 +208,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	 */
 	public function getManagementDialog() {
 		$mediaList = new ViewableMediaList();
+		if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+			$mediaList->getConditionBuilder()->add('media.userID = ?', [WCF::getUser()->userID]);
+		}
 		if ($this->parameters['imagesOnly']) {
 			$mediaList->getConditionBuilder()->add('media.isImage = ?', [1]);
 		}
@@ -282,6 +285,10 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
 		
 		$this->getSingleObject();
+		
+		if (!$this->getSingleObject()->canManage()) {
+			throw new PermissionDeniedException();
+		}
 	}
 	
 	/**
@@ -331,6 +338,14 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			
 			if (empty($this->objects)) {
 				throw new UserInputException('objectIDs');
+			}
+		}
+		
+		if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+			foreach ($this->getObjects() as $media) {
+				if ($media->userID != WCF::getUser()->userID) {
+					throw new PermissionDeniedException();
+				}
 			}
 		}
 		
@@ -532,6 +547,14 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 				throw new UserInputException('objectIDs');
 			}
 		}
+		
+		if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+			foreach ($this->getObjects() as $media) {
+				if ($media->userID != WCF::getUser()->userID) {
+					throw new PermissionDeniedException();
+				}
+			}
+		}
 	}
 	
 	/**
@@ -604,7 +627,8 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	/**
 	 * Validates the `setCategory` action.
 	 * 
-	 * @throws	UserInputException	if no object ids are given
+	 * @throws	PermissionDeniedException	if user is not allowed to edit a requested media file
+	 * @throws	UserInputException		if no object ids are given
 	 */
 	public function validateSetCategory() {
 		$this->validateGetSetCategoryDialog();
@@ -614,6 +638,14 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			
 			if (empty($this->objects)) {
 				throw new UserInputException('objectIDs');
+			}
+		}
+		
+		if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+			foreach ($this->getObjects() as $media) {
+				if ($media->userID != WCF::getUser()->userID) {
+					throw new PermissionDeniedException();
+				}
 			}
 		}
 		

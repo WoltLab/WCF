@@ -633,6 +633,7 @@
 		<item name="wcf.acp.group.option.admin.content.article.canManageCategory"><![CDATA[Can manage article categories]]></item>
 		<item name="wcf.acp.group.option.admin.content.cms.canManageBox"><![CDATA[Can manage boxes]]></item>
 		<item name="wcf.acp.group.option.admin.content.cms.canManageMedia"><![CDATA[Can manage media]]></item>
+		<item name="wcf.acp.group.option.admin.content.cms.canOnlyAccessOwnMedia"><![CDATA[Can only access own media]]></item>
 		<item name="wcf.acp.group.option.admin.content.cms.canManagePage"><![CDATA[Can manage pages]]></item>
 		<item name="wcf.acp.group.option.admin.content.cms.canUseMedia"><![CDATA[Can use media]]></item>
 		<item name="wcf.acp.group.option.category.mod.cms"><![CDATA[CMS]]></item>
@@ -3138,6 +3139,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.media.languageID"><![CDATA[Language]]></item>
 		<item name="wcf.media.manager"><![CDATA[Manage Media]]></item>
 		<item name="wcf.media.media"><![CDATA[Media]]></item>
+		<item name="wcf.media.media.pageTitle"><![CDATA[{if $__wcf->session->getPermission('admin.content.cms.canOnlyAccessOwnMedia')}Own {/if}Media]]></item>
 		<item name="wcf.media.search.cancel"><![CDATA[Cancel Search]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Search Files]]></item>
 		<item name="wcf.media.upload.error.noImage"><![CDATA[The uploaded file is no image.]]></item>

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\clipboard\action;
 use wcf\data\clipboard\action\ClipboardAction;
+use wcf\data\media\Media;
 use wcf\data\media\MediaAction;
 use wcf\system\category\CategoryHandler;
 use wcf\system\WCF;
@@ -75,7 +76,20 @@ class MediaClipboardAction extends AbstractClipboardAction {
 			return [];
 		}
 		
-		return array_keys($this->objects);
+		$mediaIDs = array_keys($this->objects);
+		
+		if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+			$mediaIDs = [];
+			
+			/** @var Media $media */
+			foreach ($this->objects as $media) {
+				if ($media->userID == WCF::getUser()->userID) {
+					$mediaIDs[] = $media->mediaID;
+				}
+			}
+		}
+		
+		return $mediaIDs;
 	}
 	
 	/**
@@ -102,6 +116,19 @@ class MediaClipboardAction extends AbstractClipboardAction {
 			return [];
 		}
 		
-		return array_keys($this->objects);
+		$mediaIDs = array_keys($this->objects);
+		
+		if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+			$mediaIDs = [];
+			
+			/** @var Media $media */
+			foreach ($this->objects as $media) {
+				if ($media->userID == WCF::getUser()->userID) {
+					$mediaIDs[] = $media->mediaID;
+				}
+			}
+		}
+		
+		return $mediaIDs;
 	}
 }
