@@ -5,6 +5,7 @@ use wcf\data\page\content\PageContentEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
 use wcf\data\IToggleAction;
+use wcf\system\comment\CommentHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\simple\HtmlSimpleParser;
@@ -325,5 +326,10 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 		}
 		
 		parent::delete();
+		
+		if (!empty($this->getObjectIDs())) {
+			// delete page comments
+			CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.page', $this->getObjectIDs());
+		}
 	}
 }
