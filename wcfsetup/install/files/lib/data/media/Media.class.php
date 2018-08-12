@@ -47,6 +47,8 @@ use wcf\system\WCF;
  * @property-read	integer		$largeThumbnailSize	size of the large thumbnail file for the media file if `$isImage` is `1`, otherwise `0`
  * @property-read	integer		$largeThumbnailWidth	width of the large thumbnail file for the media file if `$isImage` is `1`, otherwise `0`
  * @property-read	integer		$largeThumbnailHeight	height of the large thumbnail file for the media file if `$isImage` is `1`, otherwise `0`
+ * @property-read	integer		$downloads		number of times the media file has been downloaded
+ * @property-read	integer		$lastDownloadTime	timestamp at which the media file has been downloaded the last time
  */
 class Media extends DatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile {
 	/**

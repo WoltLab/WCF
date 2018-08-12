@@ -688,7 +688,10 @@ CREATE TABLE wcf1_media (
 	largeThumbnailType VARCHAR(255) NOT NULL DEFAULT '',
 	largeThumbnailSize INT(10) NOT NULL DEFAULT 0,
 	largeThumbnailWidth SMALLINT(5) NOT NULL DEFAULT 0,
-	largeThumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0
+	largeThumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0,
+	
+	downloads INT(10) NOT NULL DEFAULT 0,
+	lastDownloadTime INT(10) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_media_content;

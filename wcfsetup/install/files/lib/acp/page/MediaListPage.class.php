@@ -82,7 +82,9 @@ class MediaListPage extends SortablePage {
 		'filesize',
 		'mediaID',
 		'title',
-		'uploadTime'
+		'uploadTime',
+		'downloads',
+		'lastDownloadTime'
 	];
 	
 	/**

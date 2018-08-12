@@ -25,6 +25,14 @@
 		
 		<dt>{lang}wcf.media.uploader{/lang}</dt>
 		<dd id="mediaUploader">{@$media->getUserProfile()->getAnchorTag()}</dd>
+		
+		<dt>{lang}wcf.media.downloads{/lang}</dt>
+		<dd id="mediaDownloads">{#$media->downloads}</dd>
+		
+		{if $media->downloads}
+			<dt>{lang}wcf.media.lastDownloadTime{/lang}</dt>
+			<dd id="mediaDownloads">{@$media->lastDownloadTime|time}</dd>
+		{/if}
 	</dl>
 </div>
 

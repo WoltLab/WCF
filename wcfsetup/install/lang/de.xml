@@ -3203,6 +3203,8 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.media.search.noResults"><![CDATA[Es wurden keine Ergebnisse gefunden.]]></item>
 		<item name="wcf.media.search.info.searchStringThreshold"><![CDATA[Der Suchbegriff muss mindestens {#$minSearchLength} Zeichen lang sein.]]></item>
 		<item name="wcf.media.setCategory"><![CDATA[Kategorie bearbeiten]]></item>
+		<item name="wcf.media.downloads"><![CDATA[Downloads]]></item>
+		<item name="wcf.media.lastDownloadTime"><![CDATA[Letzter Download]]></item>
 	</category>
 	
 	<category name="wcf.message">

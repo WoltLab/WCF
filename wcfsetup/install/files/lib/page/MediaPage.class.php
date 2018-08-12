@@ -1,6 +1,7 @@
 <?php
 namespace wcf\page;
 use wcf\data\media\Media;
+use wcf\data\media\MediaEditor;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\util\FileReader;
@@ -136,6 +137,14 @@ class MediaPage extends AbstractPage {
 		if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && $_SERVER['HTTP_IF_NONE_MATCH'] == '"'.$this->eTag.'"') {
 			@header('HTTP/1.1 304 Not Modified');
 			exit;
+		}
+		
+		if (!$this->thumbnail) {
+			// update download count
+			(new MediaEditor($this->media))->update([
+				'downloads' => $this->media->downloads + 1,
+				'lastDownloadTime' => TIME_NOW
+			]);
 		}
 		
 		// send file to client
