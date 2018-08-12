@@ -1,37 +1,76 @@
 [
     {
-        "name": "pelago/emogrifier",
-        "version": "V1.1.0",
-        "version_normalized": "1.1.0.0",
+        "name": "chrisjean/php-ico",
+        "version": "1.0.4",
+        "version_normalized": "1.0.4.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/jjriv/emogrifier.git",
-            "reference": "dd9442740e044a11968bf6a5d94460a5426a2419"
+            "url": "https://github.com/chrisbliss18/php-ico.git",
+            "reference": "ccd5c0d56554f3ddcd7a823e695be83e0d1e43b6"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/jjriv/emogrifier/zipball/dd9442740e044a11968bf6a5d94460a5426a2419",
-            "reference": "dd9442740e044a11968bf6a5d94460a5426a2419",
+            "url": "https://api.github.com/repos/chrisbliss18/php-ico/zipball/ccd5c0d56554f3ddcd7a823e695be83e0d1e43b6",
+            "reference": "ccd5c0d56554f3ddcd7a823e695be83e0d1e43b6",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.4.0,<=7.1.99"
+            "ext-gd": "*",
+            "php": ">=5.2.4"
         },
-        "require-dev": {
-            "phpunit/phpunit": "4.8.27",
-            "squizlabs/php_codesniffer": "2.6.0"
-        },
-        "time": "2016-09-20T15:15:23+00:00",
+        "time": "2016-09-27T22:00:56+00:00",
         "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.2.x-dev"
-            }
-        },
         "installation-source": "dist",
         "autoload": {
-            "psr-4": {
-                "Pelago\\": "Classes/"
+            "classmap": [
+                "class-php-ico.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "GPL-2.0+"
+        ],
+        "authors": [
+            {
+                "name": "Chris Jean",
+                "homepage": "https://chrisjean.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "An easy-to-use library to generate valid ICO files.",
+        "homepage": "https://github.com/chrisbliss18/php-ico",
+        "keywords": [
+            "favicon",
+            "ico"
+        ]
+    },
+    {
+        "name": "erusev/parsedown",
+        "version": "1.6.4",
+        "version_normalized": "1.6.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/erusev/parsedown.git",
+            "reference": "fbe3fe878f4fe69048bb8a52783a09802004f548"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/erusev/parsedown/zipball/fbe3fe878f4fe69048bb8a52783a09802004f548",
+            "reference": "fbe3fe878f4fe69048bb8a52783a09802004f548",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^4.8.35"
+        },
+        "time": "2017-11-14T20:44:03+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Parsedown": ""
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -40,26 +79,17 @@
         ],
         "authors": [
             {
-                "name": "John Reeve",
-                "email": "jreeve@pelagodesign.com"
-            },
-            {
-                "name": "Cameron Brooks"
-            },
-            {
-                "name": "Jaime Prado"
-            },
-            {
-                "name": "Oliver Klee",
-                "email": "typo3-coding@oliverklee.de"
-            },
-            {
-                "name": "Roman Ožana",
-                "email": "ozana@omdesign.cz"
+                "name": "Emanuil Rusev",
+                "email": "hello@erusev.com",
+                "homepage": "http://erusev.com"
             }
         ],
-        "description": "Converts CSS styles into inline style attributes in your HTML code",
-        "homepage": "http://www.pelagodesign.com/sidecar/emogrifier/"
+        "description": "Parser for Markdown.",
+        "homepage": "http://parsedown.org",
+        "keywords": [
+            "markdown",
+            "parser"
+        ]
     },
     {
         "name": "ezyang/htmlpurifier",
@@ -111,29 +141,145 @@
         ]
     },
     {
-        "name": "erusev/parsedown",
-        "version": "1.6.2",
-        "version_normalized": "1.6.2.0",
+        "name": "pear/net_idna2",
+        "version": "v0.2.0",
+        "version_normalized": "0.2.0.0",
         "source": {
             "type": "git",
-            "url": "https://github.com/erusev/parsedown.git",
-            "reference": "1bf24f7334fe16c88bf9d467863309ceaf285b01"
+            "url": "https://github.com/pear/Net_IDNA2.git",
+            "reference": "51734eaf8be2df58e8aad5835b9966459b2fb37c"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/erusev/parsedown/zipball/1bf24f7334fe16c88bf9d467863309ceaf285b01",
-            "reference": "1bf24f7334fe16c88bf9d467863309ceaf285b01",
+            "url": "https://api.github.com/repos/pear/Net_IDNA2/zipball/51734eaf8be2df58e8aad5835b9966459b2fb37c",
+            "reference": "51734eaf8be2df58e8aad5835b9966459b2fb37c",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.3.0"
+            "pear/pear_exception": "@stable"
         },
-        "time": "2017-03-29T16:04:15+00:00",
+        "require-dev": {
+            "phpunit/phpunit": "^4"
+        },
+        "time": "2017-03-06T20:46:41+00:00",
         "type": "library",
         "installation-source": "dist",
         "autoload": {
             "psr-0": {
-                "Parsedown": ""
+                "Net": "./"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "include-path": [
+            "./"
+        ],
+        "license": [
+            "LGPL"
+        ],
+        "authors": [
+            {
+                "name": "Stefan Neufeind",
+                "email": "pear.neufeind@speedpartner.de",
+                "role": "Lead"
+            },
+            {
+                "name": "Daniel O'Connor",
+                "email": "daniel.oconnor@gmail.com",
+                "role": "Lead"
+            }
+        ],
+        "description": "More info available on: https://pear.php.net/package/Net_IDNA2"
+    },
+    {
+        "name": "pear/pear_exception",
+        "version": "v1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/pear/PEAR_Exception.git",
+            "reference": "8c18719fdae000b690e3912be401c76e406dd13b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/pear/PEAR_Exception/zipball/8c18719fdae000b690e3912be401c76e406dd13b",
+            "reference": "8c18719fdae000b690e3912be401c76e406dd13b",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=4.4.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "*"
+        },
+        "time": "2015-02-10T20:07:52+00:00",
+        "type": "class",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "PEAR": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "include-path": [
+            "."
+        ],
+        "license": [
+            "BSD-2-Clause"
+        ],
+        "authors": [
+            {
+                "name": "Helgi Thormar",
+                "email": "dufuz@php.net"
+            },
+            {
+                "name": "Greg Beaver",
+                "email": "cellog@php.net"
+            }
+        ],
+        "description": "The PEAR Exception base class.",
+        "homepage": "https://github.com/pear/PEAR_Exception",
+        "keywords": [
+            "exception"
+        ]
+    },
+    {
+        "name": "pelago/emogrifier",
+        "version": "V1.1.0",
+        "version_normalized": "1.1.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/MyIntervals/emogrifier.git",
+            "reference": "dd9442740e044a11968bf6a5d94460a5426a2419"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/MyIntervals/emogrifier/zipball/dd9442740e044a11968bf6a5d94460a5426a2419",
+            "reference": "dd9442740e044a11968bf6a5d94460a5426a2419",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.4.0,<=7.1.99"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.8.27",
+            "squizlabs/php_codesniffer": "2.6.0"
+        },
+        "time": "2016-09-20T15:15:23+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.2.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Pelago\\": "Classes/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -142,76 +288,40 @@
         ],
         "authors": [
             {
-                "name": "Emanuil Rusev",
-                "email": "hello@erusev.com",
-                "homepage": "http://erusev.com"
-            }
-        ],
-        "description": "Parser for Markdown.",
-        "homepage": "http://parsedown.org",
-        "keywords": [
-            "markdown",
-            "parser"
-        ]
-    },
-    {
-        "name": "chrisjean/php-ico",
-        "version": "1.0.4",
-        "version_normalized": "1.0.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/chrisbliss18/php-ico.git",
-            "reference": "ccd5c0d56554f3ddcd7a823e695be83e0d1e43b6"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/chrisbliss18/php-ico/zipball/ccd5c0d56554f3ddcd7a823e695be83e0d1e43b6",
-            "reference": "ccd5c0d56554f3ddcd7a823e695be83e0d1e43b6",
-            "shasum": ""
-        },
-        "require": {
-            "ext-gd": "*",
-            "php": ">=5.2.4"
-        },
-        "time": "2016-09-27T22:00:56+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "classmap": [
-                "class-php-ico.php"
-            ]
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "GPL-2.0+"
-        ],
-        "authors": [
+                "name": "John Reeve",
+                "email": "jreeve@pelagodesign.com"
+            },
             {
-                "name": "Chris Jean",
-                "homepage": "https://chrisjean.com",
-                "role": "Developer"
+                "name": "Cameron Brooks"
+            },
+            {
+                "name": "Jaime Prado"
+            },
+            {
+                "name": "Oliver Klee",
+                "email": "typo3-coding@oliverklee.de"
+            },
+            {
+                "name": "Roman Ožana",
+                "email": "ozana@omdesign.cz"
             }
         ],
-        "description": "An easy-to-use library to generate valid ICO files.",
-        "homepage": "https://github.com/chrisbliss18/php-ico",
-        "keywords": [
-            "favicon",
-            "ico"
-        ]
+        "description": "Converts CSS styles into inline style attributes in your HTML code",
+        "homepage": "http://www.pelagodesign.com/sidecar/emogrifier/"
     },
     {
         "name": "symfony/polyfill-mbstring",
-        "version": "v1.5.0",
-        "version_normalized": "1.5.0.0",
+        "version": "v1.9.0",
+        "version_normalized": "1.9.0.0",
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/polyfill-mbstring.git",
-            "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803"
+            "reference": "d0cd638f4634c16d8df4508e847f14e9e43168b8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
-            "reference": "7c8fae0ac1d216eb54349e6a8baa57d515fe8803",
+            "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d0cd638f4634c16d8df4508e847f14e9e43168b8",
+            "reference": "d0cd638f4634c16d8df4508e847f14e9e43168b8",
             "shasum": ""
         },
         "require": {
@@ -220,11 +330,11 @@
         "suggest": {
             "ext-mbstring": "For best performance"
         },
-        "time": "2017-06-14T15:44:48+00:00",
+        "time": "2018-08-06T14:22:27+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.5-dev"
+                "dev-master": "1.9-dev"
             }
         },
         "installation-source": "dist",
@@ -307,112 +417,5 @@
             "idna",
             "punycode"
         ]
-    },
-    {
-        "name": "pear/pear_exception",
-        "version": "v1.0.0",
-        "version_normalized": "1.0.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/pear/PEAR_Exception.git",
-            "reference": "8c18719fdae000b690e3912be401c76e406dd13b"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/pear/PEAR_Exception/zipball/8c18719fdae000b690e3912be401c76e406dd13b",
-            "reference": "8c18719fdae000b690e3912be401c76e406dd13b",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=4.4.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "*"
-        },
-        "time": "2015-02-10T20:07:52+00:00",
-        "type": "class",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "PEAR": ""
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "include-path": [
-            "."
-        ],
-        "license": [
-            "BSD-2-Clause"
-        ],
-        "authors": [
-            {
-                "name": "Helgi Thormar",
-                "email": "dufuz@php.net"
-            },
-            {
-                "name": "Greg Beaver",
-                "email": "cellog@php.net"
-            }
-        ],
-        "description": "The PEAR Exception base class.",
-        "homepage": "https://github.com/pear/PEAR_Exception",
-        "keywords": [
-            "exception"
-        ]
-    },
-    {
-        "name": "pear/net_idna2",
-        "version": "v0.2.0",
-        "version_normalized": "0.2.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/pear/Net_IDNA2.git",
-            "reference": "51734eaf8be2df58e8aad5835b9966459b2fb37c"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/pear/Net_IDNA2/zipball/51734eaf8be2df58e8aad5835b9966459b2fb37c",
-            "reference": "51734eaf8be2df58e8aad5835b9966459b2fb37c",
-            "shasum": ""
-        },
-        "require": {
-            "pear/pear_exception": "@stable"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "^4"
-        },
-        "time": "2017-03-06T20:46:41+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Net": "./"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "include-path": [
-            "./"
-        ],
-        "license": [
-            "LGPL"
-        ],
-        "authors": [
-            {
-                "name": "Stefan Neufeind",
-                "email": "pear.neufeind@speedpartner.de",
-                "role": "Lead"
-            },
-            {
-                "name": "Daniel O'Connor",
-                "email": "daniel.oconnor@gmail.com",
-                "role": "Lead"
-            }
-        ],
-        "description": "More info available on: https://pear.php.net/package/Net_IDNA2"
     }
 ]
