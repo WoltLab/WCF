@@ -4,7 +4,7 @@
         "prepend-autoloader": false
     },
     "require": {
-        "ezyang/htmlpurifier": "4.9.*",
+        "ezyang/htmlpurifier": "4.10.*",
         "erusev/parsedown": "1.6.*",
         "pelago/emogrifier": "1.1.*",
         "chrisjean/php-ico": "1.0.*",
