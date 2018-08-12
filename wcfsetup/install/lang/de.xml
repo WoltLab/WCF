@@ -463,7 +463,7 @@
 		<item name="wcf.acp.exceptionLog.exceptionNotFound"><![CDATA[Es wurde kein Fehler mit der ID „{$exceptionID}“ gefunden.]]></item>
 		<item name="wcf.acp.exceptionLog.search"><![CDATA[Suche]]></item>
 		<item name="wcf.acp.exceptionLog.search.exceptionID"><![CDATA[Fehler-ID]]></item>
-		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Datei]]></item>
+		<item name="wcf.acp.exceptionLog.search.logFile"><![CDATA[Protokolldatei]]></item>
 		<item name="wcf.acp.exceptionLog.exception.date"><![CDATA[Datum]]></item>
 		<item name="wcf.acp.exceptionLog.exception.userAgent"><![CDATA[Browser]]></item>
 		<item name="wcf.acp.exceptionLog.exception.memory"><![CDATA[Arbeitsspeicher]]></item>
@@ -1079,7 +1079,7 @@
 		<item name="wcf.acp.option.error.controllerReplacementCollision"><![CDATA[Das Alias „{$urlControllerReplacementError}“ kollidiert mit einem real existierenden Controller und ist daher unzulässig.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementDuplicateAlias"><![CDATA[Das Alias „{$urlControllerReplacementError}“ wird bereits verwendet.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementDuplicateController"><![CDATA[Dem Controller „{$urlControllerReplacementError}“ wurde bereits ein Alias zugewiesen.]]></item>
-		<item name="wcf.acp.option.error.controllerReplacementInvalidFormat"><![CDATA[Die Angabe muss im Format „realer-name=neuer-name“ erfolgen, die Zeile „{$urlControllerReplacementError}“ is ungültig.]]></item>
+		<item name="wcf.acp.option.error.controllerReplacementInvalidFormat"><![CDATA[Die Angabe muss im Format „realer-name=neuer-name“ erfolgen, die Zeile „{$urlControllerReplacementError}“ ist ungültig.]]></item>
 		<item name="wcf.acp.option.error.controllerReplacementUnknown"><![CDATA[Der Controller „{$urlControllerReplacementError}“ ist unbekannt.]]></item>
 		<item name="wcf.acp.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
@@ -4194,7 +4194,7 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Jemandem hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar reagiert]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Jemandem hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar reagiert]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.paidSubscription.user.expiring"><![CDATA[Eine {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Mitgliedschaft läuft bald ab]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.paidSubscription.user.expiring"><![CDATA[Eine {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Mitgliedschaften läuft bald ab]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.userTrophy.notification.received"><![CDATA[Trophäe erhalten]]></item>
 		<item name="wcf.user.notification.trophy.received.title"><![CDATA[Trophäe erhalten]]></item>
 		<item name="wcf.user.notification.trophy.received.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} die Trophäe <a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a> erhalten.]]></item>

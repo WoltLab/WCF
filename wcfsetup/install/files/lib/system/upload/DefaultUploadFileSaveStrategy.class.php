@@ -185,6 +185,13 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 											'filesize' => filesize($object->getLocation())
 										]);
 									}
+									else if ($newImage !== null && $orientation == ExifUtil::ORIENTATION_180_ROTATE) {
+										/** @var DatabaseObjectEditor $editor */
+										$editor = new $this->editorClassName($object);
+										$editor->update([
+											'filesize' => filesize($object->getLocation())
+										]);
+									}
 								}
 							}
 						}

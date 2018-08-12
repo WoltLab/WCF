@@ -437,7 +437,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					break;
 					
 					case 'compatibility':
-						if ($apiVersion !== '3.1') continue;
+						if ($apiVersion !== '3.1') continue 2;
 						
 						$packageInfo['versions'][$versionNo]['compatibility'] = [];
 						
