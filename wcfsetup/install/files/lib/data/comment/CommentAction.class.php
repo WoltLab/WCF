@@ -17,8 +17,8 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
-use wcf\system\like\LikeHandler;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\type\ICommentUserNotificationObjectType;
 use wcf\system\user\notification\object\type\IMultiRecipientCommentUserNotificationObjectType;
@@ -152,7 +152,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			}
 			
 			// remove likes
-			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment', $likeObjectIDs, $notificationObjectTypes);
+			ReactionHandler::getInstance()->removeLikes('com.woltlab.wcf.comment', $likeObjectIDs, $notificationObjectTypes);
 		}
 		
 		// delete responses
