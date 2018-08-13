@@ -83,9 +83,21 @@
 			<classname>wcf\system\label\object\type\ArticleCategoryLabelObjectTypeHandler</classname>
 		</type>
 		<type>
-			<name>com.woltlab.wcf.article.comment</name>
+			<name>com.woltlab.wcf.articleComment</name>
 			<definitionname>com.woltlab.wcf.article.discussionProvider</definitionname>
 			<classname>wcf\system\article\discussion\CommentArticleDiscussionProvider</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.articleComment.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\ArticleCommentUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.page</category>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.articleComment.response.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\ArticleCommentResponseUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.page</category>
 		</type>
 		<!-- /articles -->
 		

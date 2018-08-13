@@ -96,5 +96,24 @@
 			<classname>wcf\system\user\notification\event\PageCommentResponseOwnerUserNotificationEvent</classname>
 			<preset>1</preset>
 		</event>
+		
+		<event>
+			<name>comment</name>
+			<objecttype>com.woltlab.wcf.article.comment.notification</objecttype>
+			<classname>wcf\system\user\notification\event\ArticleCommentUserNotificationEvent</classname>
+			<preset>1</preset>
+		</event>
+		<event>
+			<name>commentResponse</name>
+			<objecttype>com.woltlab.wcf.article.comment.response.notification</objecttype>
+			<classname>wcf\system\user\notification\event\ArticleCommentResponseUserNotificationEvent</classname>
+			<preset>1</preset>
+		</event>
+		<event>
+			<name>commentResponseOwner</name>
+			<objecttype>com.woltlab.wcf.article.comment.response.notification</objecttype>
+			<classname>wcf\system\user\notification\event\ArticleCommentResponseOwnerUserNotificationEvent</classname>
+			<preset>1</preset>
+		</event>
 	</import>
 </data>
