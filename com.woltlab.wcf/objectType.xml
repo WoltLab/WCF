@@ -83,7 +83,7 @@
 			<classname>wcf\system\label\object\type\ArticleCategoryLabelObjectTypeHandler</classname>
 		</type>
 		<type>
-			<name>com.woltlab.wcf.articleComment</name>
+			<name>com.woltlab.wcf.article.comment</name>
 			<definitionname>com.woltlab.wcf.article.discussionProvider</definitionname>
 			<classname>wcf\system\article\discussion\CommentArticleDiscussionProvider</classname>
 		</type>
