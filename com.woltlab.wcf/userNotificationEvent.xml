@@ -75,5 +75,26 @@
 			<options>module_trophy</options>
 			<permissions>user.profile.trophy.canSeeTrophies</permissions>
 		</event>
+		
+		<event>
+			<name>comment</name>
+			<objecttype>com.woltlab.wcf.page.notification</objecttype>
+			<classname>wcf\system\user\notification\event\PageCommentUserNotificationEvent</classname>
+			<preset>1</preset>
+			<permissions>admin.content.cms.canManagePage</permissions>
+		</event>
+		<event>
+			<name>commentResponse</name>
+			<objecttype>com.woltlab.wcf.page.response.notification</objecttype>
+			<classname>wcf\system\user\notification\event\PageCommentResponseUserNotificationEvent</classname>
+			<preset>1</preset>
+			<permissions>admin.content.cms.canManagePage</permissions>
+		</event>
+		<event>
+			<name>commentResponseOwner</name>
+			<objecttype>com.woltlab.wcf.page.response.notification</objecttype>
+			<classname>wcf\system\user\notification\event\PageCommentResponseOwnerUserNotificationEvent</classname>
+			<preset>1</preset>
+		</event>
 	</import>
 </data>

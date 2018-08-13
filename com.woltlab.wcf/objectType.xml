@@ -165,6 +165,18 @@
 			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
 			<classname>wcf\system\user\activity\event\PageCommentResponseUserActivityEvent</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.page.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\PageCommentUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.page</category>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.page.response.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\PageCommentResponseUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.page</category>
+		</type>
 		<!-- /page -->
 		
 		<!-- moderation type -->
