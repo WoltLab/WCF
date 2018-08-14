@@ -101,7 +101,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm {
 						
 						switch ($languageCategoryIDMode->getSaveValue()) {
 							case 'automatic':
-								$languageItemPieces = explode('.' , $formField->getSaveValue());
+								$languageItemPieces = explode('.', $formField->getSaveValue());
 								
 								$category = LanguageFactory::getInstance()->getCategory(
 									$languageItemPieces[0] . '.' . $languageItemPieces[1] . '.' . $languageItemPieces[2]
@@ -180,7 +180,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm {
 				if ($languageCategoryIDMode->getSaveValue() === 'automatic') {
 					/** @var TextFormField $languageItemField */
 					$languageItemField = $document->getNodeById('languageItem');
-					$languageItemPieces = explode('.' , $languageItemField->getSaveValue());
+					$languageItemPieces = explode('.', $languageItemField->getSaveValue());
 					
 					$category = LanguageFactory::getInstance()->getCategory(
 						$languageItemPieces[0] . '.' . $languageItemPieces[1] . '.' . $languageItemPieces[2]
