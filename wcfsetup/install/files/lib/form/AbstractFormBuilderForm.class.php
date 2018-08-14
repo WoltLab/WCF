@@ -1,5 +1,6 @@
 <?php
 namespace wcf\form;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IStorableObject;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
@@ -37,6 +38,13 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	 * @var	IStorableObject
 	 */
 	public $formObject;
+	
+	/**
+	 * name of the object action performing the form action
+	 * if not set, `$formAction` is sued
+	 * @var	null|string
+	 */
+	public $objectActionName;
 	
 	/**
 	 * name of the object action class performing the form action
@@ -128,7 +136,12 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->objectAction = new $this->objectActionClass(array_filter([$this->formObject]), $this->formAction, $this->form->getData());
+		/** @var AbstractDatabaseObjectAction objectAction */
+		$this->objectAction = new $this->objectActionClass(
+			array_filter([$this->formObject]),
+			$this->objectActionName ?: $this->formAction,
+			$this->form->getData()
+		);
 		$this->objectAction->executeAction();
 		
 		$this->saved();
