@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/language.xsd" languagecode="en" languagename="English" countrycode="gb">
 	<category name="wcf.acl">
+		<item name="wcf.acl.tests"><![CDATA[Restricted Access]]></item>
 		<item name="wcf.acl.access"><![CDATA[Restricted Access]]></item>
 		<item name="wcf.acl.access.grant"><![CDATA[Allow Access]]></item>
 		<item name="wcf.acl.access.granted"><![CDATA[Granted Access for Users and User-Groups]]></item>
@@ -762,7 +763,7 @@
 		<item name="wcf.acp.language.variables"><![CDATA[Phrases]]></item>
 		<item name="wcf.acp.language.users"><![CDATA[Used by]]></item>
 		<item name="wcf.acp.language.import"><![CDATA[Import Language]]></item>
-		<item name="wcf.acp.language.item.list"><![CDATA[Manage Phrases]]></item>
+		<item name="wcf.acp.language.item.list"><![CDATA[Phrases]]></item>
 		<item name="wcf.acp.language.category"><![CDATA[Category]]></item>
 		<item name="wcf.acp.language.item.value"><![CDATA[Content]]></item>
 		<item name="wcf.acp.language.item.customValue"><![CDATA[Custom Value]]></item>
@@ -775,6 +776,19 @@
 		<item name="wcf.acp.language.item.oldValue.description"><![CDATA[Your custom value was based on the original content that has changed{if $item->languageCustomItemDisableTime} on {$item->languageCustomItemDisableTime|date}{/if}.]]></item>
 		<item name="wcf.acp.language.item.recentlyDisabledCustomValues"><![CDATA[Recently disabled customized values (past 7 days)]]></item>
 		<item name="wcf.acp.language.item.hasRecentlyDisabledCustomValues"><![CDATA[{if $recentlyDisabledCustomValues == 1}One{else}{#$recentlyDisabledCustomValues}{/if} customized {if $recentlyDisabledCustomValues == 1}phrase has been{else}phrases have been{/if} <a href="{link controller='LanguageItemList' hasRecentlyDisabledCustomValue=1}{/link}">automatically disabled</a> recently.]]></item>
+		<item name="wcf.acp.language.item.languageCategoryID"><![CDATA[Language Category]]></item>
+		<item name="wcf.acp.language.item.languageCategoryID.mode"><![CDATA[Language Category Mode]]></item>
+		<item name="wcf.acp.language.item.languageCategoryID.mode.automatic"><![CDATA[Determined Automatically Based on Identifier]]></item>
+		<item name="wcf.acp.language.item.languageCategoryID.mode.selection"><![CDATA[Manual Selection]]></item>
+		<item name="wcf.acp.language.item.languageCategoryID.description"><![CDATA[The phrase will be added to the selected language category.]]></item>
+		<item name="wcf.acp.language.item.languageItem"><![CDATA[Phrase Identifier]]></item>
+		<item name="wcf.acp.language.item.languageItem.description"><![CDATA[The phrase identifier consists of at least three segments that are separated by dots. Each segment may only contain the following characters: <code>[A-z0-9-_]</code>.]]></item>
+		<item name="wcf.acp.language.item.languageItem.error.format"><![CDATA[The entered identifier is invalid.]]></item>
+		<item name="wcf.acp.language.item.languageCategoryID.mode.error.automaticImpossible"><![CDATA[The language category cannot be determined automatically for the entered phrase identifier. You have to either change the phrase identifier or manually select a language category.]]></item>
+		<item name="wcf.acp.language.item.languageItem.error.prefixMismatch"><![CDATA[The entered identifier does not begin with the selected language category.]]></item>
+		<item name="wcf.acp.language.item.languageItem.error.notUnique"><![CDATA[The entered identifier is already used by a different phrase.]]></item>
+		<item name="wcf.acp.language.item.isCustomLanguageItem"><![CDATA[Manually added phrases]]></item>
+		<item name="wcf.acp.language.item.delete.confirmMessage"><![CDATA[Do you really want to the delete the phrase? It will be deleted for all languages.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -803,7 +817,7 @@
 		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.language"><![CDATA[Languages]]></item>
 		<item name="wcf.acp.menu.link.language.import"><![CDATA[Import Language]]></item>
-		<item name="wcf.acp.menu.link.language.item.list"><![CDATA[Manage Phrases]]></item>
+		<item name="wcf.acp.menu.link.language.item.list"><![CDATA[Phrases]]></item>
 		<item name="wcf.acp.menu.link.language.list"><![CDATA[Languages]]></item>
 		<item name="wcf.acp.menu.link.language.multilingualism"><![CDATA[Multilingualism]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Logs]]></item>
@@ -944,6 +958,7 @@
 		<item name="wcf.acp.menu.link.reactionType.list"><![CDATA[Reaction Types]]></item>
 		<item name="wcf.acp.menu.link.reactionType.add"><![CDATA[Add Reaction Type]]></item>
 		<item name="wcf.acp.menu.link.reactionType.edit"><![CDATA[Edit Reaction Type]]></item>
+		<item name="wcf.acp.menu.link.language.item.add"><![CDATA[Add Phrase]]></item>
 	</category>
 	
 	<category name="wcf.acp.modificationLog">

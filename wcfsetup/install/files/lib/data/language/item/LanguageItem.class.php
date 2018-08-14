@@ -21,6 +21,7 @@ use wcf\data\DatabaseObject;
  * @property-read	integer|null	$packageID			id of the package the which delivers the language item or with which the language item is associated
  * @property-read       string          $languageItemOldValue           previous default value of the language item
  * @property-read       integer         $languageCustomItemDisableTime  the timestamp at which the custom version has been disabled due to a change to the original value
+ * @property-read	integer		$isCustomLanguageItem		is `1` if the language item has been added manually via the ACP
  */
 class LanguageItem extends DatabaseObject {
 	/**

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/language.xsd" languagecode="de" languagename="Deutsch" countrycode="de">
 	<category name="wcf.acl">
+		<item name="wcf.acl.tests"><![CDATA[Zugangsbeschränkung]]></item>
 		<item name="wcf.acl.access"><![CDATA[Zugangsbeschränkung]]></item>
 		<item name="wcf.acl.access.grant"><![CDATA[Zugang gewähren]]></item>
 		<item name="wcf.acl.access.granted"><![CDATA[Erlaubte Benutzer und Benutzergruppen]]></item>
@@ -780,7 +781,7 @@
 		<item name="wcf.acp.language.variables"><![CDATA[Variablen]]></item>
 		<item name="wcf.acp.language.users"><![CDATA[Verwendet von]]></item>
 		<item name="wcf.acp.language.import"><![CDATA[Sprache importieren]]></item>
-		<item name="wcf.acp.language.item.list"><![CDATA[Texte verwalten]]></item>
+		<item name="wcf.acp.language.item.list"><![CDATA[Texte]]></item>
 		<item name="wcf.acp.language.category"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.language.item.value"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.language.item.customValue"><![CDATA[Eigener Inhalt]]></item>
@@ -793,6 +794,19 @@
 		<item name="wcf.acp.language.item.oldValue.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} veränderte Fassung basierte auf dem unten stehenden Stand{if $item->languageCustomItemDisableTime} vom {$item->languageCustomItemDisableTime|date}{/if}.]]></item>
 		<item name="wcf.acp.language.item.recentlyDisabledCustomValues"><![CDATA[Kürzlich deaktivierte Inhalte finden (Letzten 7 Tagen)]]></item>
 		<item name="wcf.acp.language.item.hasRecentlyDisabledCustomValues"><![CDATA[{if $recentlyDisabledCustomValues == 1}Eine{else}{#$recentlyDisabledCustomValues}{/if} individuell angepasste {if $recentlyDisabledCustomValues == 1}Sprachvariable wurde{else}Sprachvariablen wurden{/if} vor Kurzem <a href="{link controller='LanguageItemList' hasRecentlyDisabledCustomValue=1}{/link}">automatisch deaktiviert</a>.]]></item>
+		<item name="wcf.acp.language.item.languageCategoryID"><![CDATA[Text-Kategorie]]></item>
+		<item name="wcf.acp.language.item.languageCategoryID.mode"><![CDATA[Text-Kategorie-Auswahl]]></item>
+		<item name="wcf.acp.language.item.languageCategoryID.mode.automatic"><![CDATA[Automatische Auswahl beruhend auf dem Text-Bezeichner]]></item>
+		<item name="wcf.acp.language.item.languageCategoryID.mode.selection"><![CDATA[Manuelle Auswahl]]></item>
+		<item name="wcf.acp.language.item.languageCategoryID.description"><![CDATA[Der Text wird zur ausgewählten Text-Kategorie hinzugefügt.]]></item>
+		<item name="wcf.acp.language.item.languageItem"><![CDATA[Text-Bezeichner]]></item>
+		<item name="wcf.acp.language.item.languageItem.description"><![CDATA[Der Text-Bezeichner besteht aus mindestens drei durch Punkte getrennte Abschnitte. Jeder Abschnitt darf nur die folgenden Zeichen enthalten: <code>[A-z0-9-_]</code>.]]></item>
+		<item name="wcf.acp.language.item.languageItem.error.format"><![CDATA[Der angegebene Bezeichner ist ungültig.]]></item>
+		<item name="wcf.acp.language.item.languageCategoryID.mode.error.automaticImpossible"><![CDATA[Die Text-Kategorie kann für den angegebenen Bezeichner nicht automatisch bestimmt werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} entweder den Text-Bezeichner ändern oder manuell eine Text-Kategorie auswählen.]]></item>
+		<item name="wcf.acp.language.item.languageItem.error.prefixMismatch"><![CDATA[Der angegebene Bezeichner beginnt nicht mit der ausgewählten Text-Kategorie.]]></item>
+		<item name="wcf.acp.language.item.languageItem.error.notUnique"><![CDATA[Der angegebene Bezeichner wird bereits von einem anderen Text verwendet.]]></item>
+		<item name="wcf.acp.language.item.isCustomLanguageItem"><![CDATA[Manuell hinzugefügte Texte]]></item>
+		<item name="wcf.acp.language.item.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Text wirklich löschen? Er wird in allen Sprachen gelöscht.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -821,7 +835,7 @@
 		<item name="wcf.acp.menu.link.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.menu.link.language"><![CDATA[Sprachen]]></item>
 		<item name="wcf.acp.menu.link.language.import"><![CDATA[Sprache importieren]]></item>
-		<item name="wcf.acp.menu.link.language.item.list"><![CDATA[Texte verwalten]]></item>
+		<item name="wcf.acp.menu.link.language.item.list"><![CDATA[Texte]]></item>
 		<item name="wcf.acp.menu.link.language.list"><![CDATA[Sprachen]]></item>
 		<item name="wcf.acp.menu.link.language.multilingualism"><![CDATA[Mehrsprachigkeit verwalten]]></item>
 		<item name="wcf.acp.menu.link.log"><![CDATA[Protokoll]]></item>
@@ -962,6 +976,7 @@
 		<item name="wcf.acp.menu.link.reactionType.list"><![CDATA[Reaktions-Typen]]></item>
 		<item name="wcf.acp.menu.link.reactionType.add"><![CDATA[Reaktions-Typ hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.reactionType.edit"><![CDATA[Reaktions-Typ bearbeiten]]></item>
+		<item name="wcf.acp.menu.link.language.item.add"><![CDATA[Text hinzufügen]]></item>
 	</category>
 	
 	<category name="wcf.acp.modificationLog">

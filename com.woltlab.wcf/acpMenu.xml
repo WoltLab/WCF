@@ -665,6 +665,12 @@
 				<controller>wcf\acp\form\LanguageItemList</controller>
 				<permissions>admin.language.canManageLanguage</permissions>
 			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.language.item.add">
+				<parent>wcf.acp.menu.link.language.item.list</parent>
+				<controller>wcf\acp\form\LanguageItemAdd</controller>
+				<permissions>admin.language.canManageLanguage</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
 			
 			<acpmenuitem name="wcf.acp.menu.link.language.multilingualism">
 				<parent>wcf.acp.menu.link.language</parent>
