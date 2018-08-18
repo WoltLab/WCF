@@ -123,14 +123,12 @@ class CronjobScheduler extends SingletonFactory {
 				FROM		wcf" . WCF_N . "_cronjob
 				WHERE		state <> ?
 					AND	isDisabled = ?
-					AND	failCount < ?
 					AND	afterNextExec <= ?
 				FOR UPDATE";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
 				Cronjob::READY,
 				0,
-				Cronjob::MAX_FAIL_COUNT,
 				TIME_NOW
 			]);
 			/** @var Cronjob $cronjob */
