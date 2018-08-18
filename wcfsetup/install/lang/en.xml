@@ -401,7 +401,7 @@
 		<item name="wcf.acp.devtools.notificationTest.message"><![CDATA[Message]]></item>
 		<item name="wcf.acp.devtools.notificationTest.message.exception"><![CDATA[Message Error Message]]></item>
 		<item name="wcf.acp.devtools.notificationTest.testCase"><![CDATA[Language: {$language}, Members: {#$timesTriggered}{if $canBeTriggeredByGuests}, Guests: {#$guestsTriggered}{/if}]]></item>
-		<item name="wcf.acp.devtools.notificationTest.title.exception"><![CDATA[Titel Error Message]]></item>
+		<item name="wcf.acp.devtools.notificationTest.title.exception"><![CDATA[Title Error Message]]></item>
 		<item name="wcf.acp.devtools.notificationTest.contentCreationWarning"><![CDATA[Do not use the tests in a productive systems as random data is created during the tests.]]></item>
 		<item name="wcf.acp.devtools.notificationTest.error.generation"><![CDATA[While creating the notifications, {#$errors} errors occurred.]]></item>
 		<item name="wcf.acp.devtools.notificationTest.button.showAll"><![CDATA[All]]></item>
