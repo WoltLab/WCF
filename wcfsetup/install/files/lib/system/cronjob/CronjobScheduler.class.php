@@ -142,7 +142,7 @@ class CronjobScheduler extends SingletonFactory {
 				// implementation was executing the cronjob immediately, which may be undesirable if
 				// the cronjob is expected to be executed in a specific time window only. 
 				$data['nextExec'] = $cronjob->getNextExec(TIME_NOW);
-				$data['afterNextExec'] = $cronjob->getNextExec($data['nextExec']);
+				$data['afterNextExec'] = $cronjob->getNextExec($data['nextExec'] + 120);
 				
 				(new CronjobEditor($cronjob))->update($data);
 			}
