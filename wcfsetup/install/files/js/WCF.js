@@ -21,6 +21,8 @@
 	 * @see	jQuery.fn.data()
 	 */
 	jQuery.fn.data = function(key, value) {
+		var args = [].slice.call(arguments)
+		
 		if (key) {
 			switch (typeof key) {
 				case 'object':
@@ -34,19 +36,19 @@
 						}
 					}
 					
-					arguments[0] = key;
+					args[0] = key;
 				break;
 				
 				case 'string':
 					if (key.match(/ID$/)) {
-						arguments[0] = key.replace(/ID$/, '-id');
+						args[0] = key.replace(/ID$/, '-id');
 					}
 				break;
 			}
 		}
 		
 		// call jQuery's own data method
-		var $data = $jQueryData.apply(this, arguments);
+		var $data = $jQueryData.apply(this, args);
 		
 		// handle .data() call without arguments
 		if (key === undefined) {
