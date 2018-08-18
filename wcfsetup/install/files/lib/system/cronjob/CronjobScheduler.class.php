@@ -75,7 +75,10 @@ class CronjobScheduler extends SingletonFactory {
 				try {
 					$this->executeCronjob($cronjobEditor, $logEditor);
 				}
-				catch (SystemException $e) {
+				catch (\Throwable $e) {
+					$this->logResult($logEditor, $e);
+				}
+				catch (\Exception $e) {
 					$this->logResult($logEditor, $e);
 				}
 			}
@@ -226,9 +229,9 @@ class CronjobScheduler extends SingletonFactory {
 	 * Logs cronjob exec success or failure.
 	 * 
 	 * @param	CronjobLogEditor	$logEditor
-	 * @param	SystemException		$exception
+	 * @param	\Throwable		$exception
 	 */
-	protected function logResult(CronjobLogEditor $logEditor, SystemException $exception = null) {
+	protected function logResult(CronjobLogEditor $logEditor, $exception = null) {
 		if ($exception !== null) {
 			$errString = implode("\n", [
 				$exception->getMessage(),
