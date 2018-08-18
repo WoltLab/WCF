@@ -119,26 +119,47 @@ class CronjobScheduler extends SingletonFactory {
 		/** @noinspection PhpUnusedLocalVariableInspection */
 		$committed = false;
 		try {
-			$sql = "SELECT          *
-				FROM            wcf" . WCF_N . "_cronjob
-				WHERE           isDisabled = ?
-						AND failCount < ?
-						AND afterNextExec <= ?
+			$sql = "SELECT		*
+				FROM		wcf" . WCF_N . "_cronjob
+				WHERE		state <> ?
+					AND	isDisabled = ?
+					AND	failCount < ?
+					AND	afterNextExec <= ?
 				FOR UPDATE";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
+				Cronjob::READY,
 				0,
 				Cronjob::MAX_FAIL_COUNT,
 				TIME_NOW
 			]);
 			/** @var Cronjob $cronjob */
 			while ($cronjob = $statement->fetchObject(Cronjob::class)) {
-				$failCount = $cronjob->failCount + 1;
-				$data['failCount'] = $failCount;
+				// In any case: Reset the state to READY.
+				$data['state'] = Cronjob::READY;
 				
-				if ($failCount == Cronjob::MAX_FAIL_COUNT) {
-					$data['isDisabled'] = 1;
-					$data['state'] = Cronjob::READY;
+				switch ($cronjob->state) {
+					case Cronjob::EXECUTING:
+						// The cronjob spent two periods in the EXECUTING state.
+						// We must assume it crashed.
+						$data['failCount'] = $cronjob->failCount + 1;
+						
+						// The cronjob exceeded the maximum fail count.
+						// Thus it must be disabled.
+						if ($data['failCount'] > Cronjob::MAX_FAIL_COUNT) {
+							$data['isDisabled'] = 1;
+							$data['failCount'] = 0;
+						}
+						break;
+					case Cronjob::PENDING:
+						// The cronjob spent two periods in the PENDING state.
+						// We must assume a previous cronjob in the same request hosed
+						// the whole process (e.g. by exceeding the memory limit).
+						// This is not the fault of this cronjob, thus the fail counter
+						// is not being increased.
+						break;
+					default:
+						throw new \LogicException('Unreachable');
 				}
 				
 				// Schedule the cronjob for execution at the next regular execution date. The previous
