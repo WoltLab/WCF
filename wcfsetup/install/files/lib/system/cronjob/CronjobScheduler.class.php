@@ -150,13 +150,20 @@ class CronjobScheduler extends SingletonFactory {
 							$data['isDisabled'] = 1;
 							$data['failCount'] = 0;
 						}
-						break;
+						// fall through
 					case Cronjob::PENDING:
 						// The cronjob spent two periods in the PENDING state.
 						// We must assume a previous cronjob in the same request hosed
 						// the whole process (e.g. by exceeding the memory limit).
 						// This is not the fault of this cronjob, thus the fail counter
 						// is not being increased.
+						
+						$log = CronjobLogEditor::create([
+							'cronjobID' => $cronjob->cronjobID,
+							'execTime' => TIME_NOW
+						]);
+						$logEditor = new CronjobLogEditor($log);
+						$this->logResult($logEditor, new \Exception('Cronjob stuck in state '.$cronjob->state.' for two periods, resetting.'));
 						break;
 					default:
 						throw new \LogicException('Unreachable');
