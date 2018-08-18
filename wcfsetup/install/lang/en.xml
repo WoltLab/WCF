@@ -2880,7 +2880,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.global.error.timeout"><![CDATA[Did not receive a response from server, request aborted.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Error Message]]></item>
 		<item name="wcf.global.exception.explanation"><![CDATA[<p class="exceptionSubtitle">What happened?</p>
-<p class="exceptionText">An error has occured while trying to handle your request and execution has been terminated. Please forward the above error code to the site administrator.</p>
+<p class="exceptionText">An error has occurred while trying to handle your request and execution has been terminated. Please forward the above error code to the site administrator.</p>
 <p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
 <p class="exceptionText">
 	The error code can be used by an administrator to lookup the full error message in the Administration Control Panel via “Logs » Errors”.
@@ -2888,7 +2888,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 </p>
 <p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
 <p class="exceptionText">Notice: The error code was randomly generated and has no use beyond looking up the full message.</p>]]></item>
-		<item name="wcf.global.exception.title"><![CDATA[An error has occured]]></item>
+		<item name="wcf.global.exception.title"><![CDATA[An error has occurred]]></item>
 		<item name="wcf.global.exception.subtitle"><![CDATA[Internal error code: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$exceptionID}</span></span>]]></item>
 		<item name="wcf.global.filter.button.clear"><![CDATA[Clear Filter]]></item>
 		<item name="wcf.global.filter.button.visibility"><![CDATA[Visibility Filter]]></item>
