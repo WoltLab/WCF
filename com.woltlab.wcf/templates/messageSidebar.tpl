@@ -8,7 +8,7 @@
 	{assign var=__messageSidebarJavascript value=true}
 {/if}
 
-<aside class="messageSidebar{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && !$isReply && $userProfile->isOnline()} userOnline{/if} {if $userProfile->userID}member{else}guest{/if}"{if $enableMicrodata} itemprop="author" itemscope itemtype="http://schema.org/Person"{/if}>
+<aside role="presentation" class="messageSidebar{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && !$isReply && $userProfile->isOnline()} userOnline{/if} {if $userProfile->userID}member{else}guest{/if}"{if $enableMicrodata} itemprop="author" itemscope itemtype="http://schema.org/Person"{/if}>
 	<div class="messageAuthor">
 		{event name='messageAuthor'}
 		
