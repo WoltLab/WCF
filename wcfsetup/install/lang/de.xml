@@ -3436,6 +3436,8 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.page.commentResponse"><![CDATA[Antwort auf Seiten-Kommentar]]></item>
 		<item name="wcf.page.recentActivity.pageComment"><![CDATA[Hat einen Kommentar auf der Seite <a href="{$page->getLink()}#comment{$commentID}">{$page->getTitle()}</a> geschrieben.]]></item>
 		<item name="wcf.page.recentActivity.pageCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> auf der Seite <a href="{$page->getLink()}#comment{@$commentID}/response{@$responseID}">{$page->getTitle()}</a> geantwortet.]]></item>
+		<item name="wcf.page.sidebar.left"><![CDATA[Linke Seitenleiste]]></item>
+		<item name="wcf.page.sidebar.right"><![CDATA[Rechte Seitenleiste]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">
