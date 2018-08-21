@@ -494,19 +494,24 @@ define(
 			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'getText_' + id, parameters.data);
 			
-			if (!this._validate(parameters)) {
-				// validation failed
-				return;
+			var validateResult = this._validate(parameters);
+			
+			if (!(validateResult instanceof Promise)) {
+				validateResult = Promise.resolve(validateResult);
 			}
 			
-			EventHandler.fire('com.woltlab.wcf.redactor2', 'submit_' + id, parameters);
-			
-			Ajax.api(this, {
-				actionName: 'save',
-				parameters: parameters
-			});
-			
-			this._hideEditor();
+			validateResult.then(function (result) {
+				if (!result) return; 
+				
+				EventHandler.fire('com.woltlab.wcf.redactor2', 'submit_' + id, parameters);
+				
+				Ajax.api(this, {
+					actionName: 'save',
+					parameters: parameters
+				});
+				
+				this._hideEditor();
+			}.bind(this));
 		},
 		
 		/**
@@ -523,10 +528,15 @@ define(
 			var data = {
 				api: this,
 				parameters: parameters,
-				valid: true
+				valid: true,
+				promise: null
 			};
 			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'validate_' + this._getEditorId(), data);
+			
+			if (data.valid !== false && data.promise !== null) {
+				return data.promise;
+			}
 			
 			return (data.valid !== false);
 		},
