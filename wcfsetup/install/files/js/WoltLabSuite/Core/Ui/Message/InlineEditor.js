@@ -497,12 +497,15 @@ define(
 			var validateResult = this._validate(parameters);
 			
 			if (!(validateResult instanceof Promise)) {
-				validateResult = Promise.resolve(validateResult);
+				if (validateResult === false) {
+					validateResult = Promise.reject();
+				}
+				else {
+					validateResult = Promise.resolve();
+				}
 			}
 			
-			validateResult.then(function (result) {
-				if (!result) return; 
-				
+			validateResult.then(function () {
 				EventHandler.fire('com.woltlab.wcf.redactor2', 'submit_' + id, parameters);
 				
 				Ajax.api(this, {
@@ -511,7 +514,9 @@ define(
 				});
 				
 				this._hideEditor();
-			}.bind(this));
+			}.bind(this), function() {
+				// ignore failure
+			});
 		},
 		
 		/**
@@ -529,16 +534,14 @@ define(
 				api: this,
 				parameters: parameters,
 				valid: true,
-				promise: null
+				promises: []
 			};
 			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'validate_' + this._getEditorId(), data);
 			
-			if (data.valid !== false && data.promise !== null) {
-				return data.promise;
-			}
+			data.promises.push(Promise[data.valid ? 'resolve' : 'reject']());
 			
-			return (data.valid !== false);
+			return Promise.all(data.promises);
 		},
 		
 		/**
