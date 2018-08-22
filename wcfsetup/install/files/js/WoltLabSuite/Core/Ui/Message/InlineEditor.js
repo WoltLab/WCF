@@ -514,8 +514,8 @@ define(
 				});
 				
 				this._hideEditor();
-			}.bind(this), function() {
-				// ignore failure
+			}.bind(this), function(e) {
+				console.log('Validation of post edit failed: '+ e);
 			});
 		},
 		
