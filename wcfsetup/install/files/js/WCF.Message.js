@@ -2424,6 +2424,14 @@ $.widget('wcf.messageTabMenu', {
 			this._tabsByName[$name] = $i;
 			
 			var $anchor = $tab.children('a').data('index', $i).on('mousedown', this._showTab.bind(this));
+			// handle a11y
+			$anchor.attr('role', 'button').attr('tabindex', '0').attr('aria-haspopup', true).attr('aria-expanded', false).attr('aria-controls', $tabContainer[0].id);
+			$anchor.on('keydown', (function(event) {
+				if (event.which === 13 || event.which === 32) {
+					event.preventDefault();
+					this._showTab(event);
+				}
+			}).bind(this));
 			if ($preselect === $name || ($preselect === true && $i === 0)) {
 				$anchor.trigger('mousedown');
 			}
@@ -2479,6 +2487,7 @@ $.widget('wcf.messageTabMenu', {
 					$current.tab.addClass('active');
 					$current.container.addClass('active');
 					$target = $current;
+					$current.tab.children('a').attr('aria-expanded', true);
 					
 					// if the tab contains a tab menu itself, open the first tab too,
 					// unless there is already at least one open tab
@@ -2497,6 +2506,7 @@ $.widget('wcf.messageTabMenu', {
 			
 			$current.tab.removeClass('active');
 			$current.container.removeClass('active');
+			$current.tab.children('a').attr('aria-expanded', false);
 		}
 		
 		if (event !== null) {
