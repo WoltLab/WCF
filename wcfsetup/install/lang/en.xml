@@ -407,7 +407,7 @@
 		<item name="wcf.acp.devtools.notificationTest.message"><![CDATA[Message]]></item>
 		<item name="wcf.acp.devtools.notificationTest.message.exception"><![CDATA[Message Error Message]]></item>
 		<item name="wcf.acp.devtools.notificationTest.testCase"><![CDATA[Language: {$language}, Members: {#$timesTriggered}{if $canBeTriggeredByGuests}, Guests: {#$guestsTriggered}{/if}]]></item>
-		<item name="wcf.acp.devtools.notificationTest.title.exception"><![CDATA[Titel Error Message]]></item>
+		<item name="wcf.acp.devtools.notificationTest.title.exception"><![CDATA[Title Error Message]]></item>
 		<item name="wcf.acp.devtools.notificationTest.contentCreationWarning"><![CDATA[Do not use the tests in a productive systems as random data is created during the tests.]]></item>
 		<item name="wcf.acp.devtools.notificationTest.error.generation"><![CDATA[While creating the notifications, {#$errors} errors occurred.]]></item>
 		<item name="wcf.acp.devtools.notificationTest.button.showAll"><![CDATA[All]]></item>
@@ -2945,7 +2945,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.global.error.timeout"><![CDATA[Did not receive a response from server, request aborted.]]></item>
 		<item name="wcf.global.error.title"><![CDATA[Error Message]]></item>
 		<item name="wcf.global.exception.explanation"><![CDATA[<p class="exceptionSubtitle">What happened?</p>
-<p class="exceptionText">An error has occured while trying to handle your request and execution has been terminated. Please forward the above error code to the site administrator.</p>
+<p class="exceptionText">An error has occurred while trying to handle your request and execution has been terminated. Please forward the above error code to the site administrator.</p>
 <p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
 <p class="exceptionText">
 	The error code can be used by an administrator to lookup the full error message in the Administration Control Panel via “Logs » Errors”.
@@ -2953,7 +2953,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 </p>
 <p class="exceptionText">&nbsp;</p> <!-- required to ensure spacing after copy & paste -->
 <p class="exceptionText">Notice: The error code was randomly generated and has no use beyond looking up the full message.</p>]]></item>
-		<item name="wcf.global.exception.title"><![CDATA[An error has occured]]></item>
+		<item name="wcf.global.exception.title"><![CDATA[An error has occurred]]></item>
 		<item name="wcf.global.exception.subtitle"><![CDATA[Internal error code: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">{$exceptionID}</span></span>]]></item>
 		<item name="wcf.global.filter.button.clear"><![CDATA[Clear Filter]]></item>
 		<item name="wcf.global.filter.button.visibility"><![CDATA[Visibility Filter]]></item>

@@ -383,7 +383,7 @@ class ACLHandler extends SingletonFactory {
 				$data[$type][$objectID] = [];
 			}
 			
-			// build JS-compilant structure
+			// build JS-compliant structure
 			$data[$type] = [
 				'label' => [],
 				'option' => $data[$type][$objectID]
