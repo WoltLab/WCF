@@ -127,15 +127,15 @@
 					<dd><textarea id="copyException{$exceptionKey}" rows="5" cols="40" class="jsCopyException" readonly>{$exception[0]}</textarea></dd>
 				</dl>
 			</section>
-			
-			<footer class="contentFooter">
-				{hascontent}
-					<div class="paginationBottom">
-						{content}{@$pagesLinks}{/content}
-					</div>
-				{/hascontent}
-			</footer>
 		{/foreach}
+
+		<footer class="contentFooter">
+			{hascontent}
+				<div class="paginationBottom">
+					{content}{@$pagesLinks}{/content}
+				</div>
+			{/hascontent}
+		</footer>
 	{elseif $exceptionID}
 		<p class="error">{lang}wcf.acp.exceptionLog.exceptionNotFound{/lang}</p>
 	{/if}
