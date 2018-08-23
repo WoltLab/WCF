@@ -346,6 +346,9 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			if (values.has(0)) {
 				element.element.value = values.get(0);
 				values['delete'](0);
+				_values.set(elementId, values);
+				this._select(elementId, 0, true);
+				return;
 			}
 			
 			_values.set(elementId, values);
