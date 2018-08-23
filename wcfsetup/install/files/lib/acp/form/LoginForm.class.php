@@ -62,10 +62,6 @@ class LoginForm extends AbstractCaptchaForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (WCF::getUser()->userID) {
-			throw new PermissionDeniedException();
-		}
-		
 		if (!empty($_REQUEST['url'])) {
 			$this->url = StringUtil::trim($_REQUEST['url']);
 			
@@ -73,6 +69,11 @@ class LoginForm extends AbstractCaptchaForm {
 			if (!ApplicationHandler::getInstance()->isInternalURL($this->url)) {
 				$this->url = '';
 			}
+		}
+		
+		if (WCF::getUser()->userID) {
+			// User is already logged in
+			$this->performRedirect();
 		}
 		
 		// check authentication failures
@@ -203,6 +204,13 @@ class LoginForm extends AbstractCaptchaForm {
 		WCF::getSession()->changeUser($this->user);
 		$this->saved();
 		
+		$this->performRedirect();
+	}
+	
+	/**
+	 * Performs the redirect after successful authentication.
+	 */
+	protected function performRedirect() {
 		if (!empty($this->url)) {
 			HeaderUtil::redirect($this->url);
 		}

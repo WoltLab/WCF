@@ -48,14 +48,12 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 		// change user
 		WCF::getSession()->changeUser($this->user);
 		
-		// get redirect url
-		$this->checkURL();
 		$this->saved();
 		
 		// redirect to url
 		WCF::getTPL()->assign('__hideUserMenu', true);
-		HeaderUtil::redirect($this->url);
-		exit;
+		
+		$this->performRedirect();
 	}
 	
 	/**
@@ -73,14 +71,13 @@ class LoginForm extends \wcf\acp\form\LoginForm {
 	}
 	
 	/**
-	 * Sets the redirect url.
+	 * @inheritDoc
 	 */
-	protected function checkURL() {
-		if (empty($this->url) || mb_stripos($this->url, '?Login/') !== false) {
+	protected function performRedirect() {
+		if (empty($this->url) || mb_stripos($this->url, '?login/') !== false || mb_stripos($this->url, '/login/') !== false) {
 			$this->url = LinkHandler::getInstance()->getLink();
 		}
 		
-		// drop index.php
-		$this->url = preg_replace('~index\.php~', '', $this->url);
+		parent::performRedirect();
 	}
 }
