@@ -108,7 +108,7 @@ final class EmailGrammar {
 	}
 	
 	/**
-	 * Forbid creation of EmailGrammer objects.
+	 * Forbid creation of EmailGrammar objects.
 	 */
 	private function __construct() {
 		// does nothing

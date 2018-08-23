@@ -115,7 +115,7 @@
 		<dl{if $errorField == 'htmlOpen'} class="formError"{/if}>
 			<dt><label for="htmlOpen">{lang}wcf.acp.bbcode.htmlOpen{/lang}</label></dt>
 			<dd>
-				<input type="text" id="htmlOpen" name="htmlOpen" value="{$htmlOpen}" class="long">
+				<input type="text" id="htmlOpen" name="htmlOpen" value="{$htmlOpen}" class="long" maxlength="255">
 				{if $errorField == 'htmlOpen'}
 					<small class="innerError">{lang}wcf.acp.bbcode.htmlOpen.error.{$errorType}{/lang}</small>
 				{/if}
@@ -125,7 +125,7 @@
 		<dl{if $errorField == 'htmlClose'} class="formError"{/if}>
 			<dt><label for="htmlClose">{lang}wcf.acp.bbcode.htmlClose{/lang}</label></dt>
 			<dd>
-				<input type="text" id="htmlClose" name="htmlClose" value="{$htmlClose}" class="long">
+				<input type="text" id="htmlClose" name="htmlClose" value="{$htmlClose}" class="long" maxlength="255">
 				{if $errorField == 'htmlClose'}
 					<small class="innerError">{lang}wcf.acp.bbcode.htmlClose.error.{$errorType}{/lang}</small>
 				{/if}
