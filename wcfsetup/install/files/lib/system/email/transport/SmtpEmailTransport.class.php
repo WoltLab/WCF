@@ -85,10 +85,10 @@ class SmtpEmailTransport implements IEmailTransport {
 	 * @throws	\InvalidArgumentException
 	 */
 	public function __construct($host = MAIL_SMTP_HOST, $port = MAIL_SMTP_PORT, $username = MAIL_SMTP_USER, $password = MAIL_SMTP_PASSWORD, $starttls = MAIL_SMTP_STARTTLS) {
-		$this->host = $host;
-		$this->port = $port;
-		$this->username = $username;
-		$this->password = $password;
+		$this->host = StringUtil::trim($host);
+		$this->port = intval($port);
+		$this->username = StringUtil::trim($username);
+		$this->password = StringUtil::trim($password);
 		
 		switch ($starttls) {
 			case 'none':
