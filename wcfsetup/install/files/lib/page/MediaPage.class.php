@@ -117,6 +117,10 @@ class MediaPage extends AbstractPage {
 		}
 		
 		if (isset($_REQUEST['thumbnail'])) $this->thumbnail = StringUtil::trim($_REQUEST['thumbnail']);
+		if ($this->thumbnail === 'original') {
+			// The 'original' size is required by the editor, but is not a valid thumbnail size.  
+			$this->thumbnail = '';
+		}
 		if ($this->thumbnail && !isset(Media::getThumbnailSizes()[$this->thumbnail])) {
 			throw new IllegalLinkException();
 		}
