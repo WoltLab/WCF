@@ -151,14 +151,14 @@
 								<dl>
 									<dt><label for="username">{lang}wcf.user.usernameOrEmail{/lang}</label></dt>
 									<dd>
-										<input type="text" id="username" name="username" value="" required class="long jsDialogAutoFocus">
+										<input type="text" id="username" name="username" value="" required class="long jsDialogAutoFocus" autocomplete="username">
 									</dd>
 								</dl>
 								
 								<dl>
 									<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 									<dd>
-										<input type="password" id="password" name="password" value="" class="long">
+										<input type="password" id="password" name="password" value="" class="long" autocomplete="current-password">
 										<small><a href="{link controller='LostPassword'}{/link}">{lang}wcf.user.lostPassword{/lang}</a></small>
 									</dd>
 								</dl>
