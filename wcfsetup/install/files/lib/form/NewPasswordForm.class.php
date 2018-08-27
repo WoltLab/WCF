@@ -155,7 +155,8 @@ class NewPasswordForm extends AbstractForm {
 		WCF::getTPL()->assign([
 			'user' => $this->user,
 			'newPassword' => $this->newPassword,
-			'confirmNewPassword' => $this->confirmNewPassword
+			'confirmNewPassword' => $this->confirmNewPassword,
+			'passwordRulesAttributeValue' => UserRegistrationUtil::getPasswordRulesAttributeValue()
 		]);
 	}
 }

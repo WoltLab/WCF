@@ -229,7 +229,8 @@ class RegisterForm extends UserAddForm {
 		WCF::getTPL()->assign([
 			'captchaObjectType' => $this->captchaObjectType,
 			'isExternalAuthentication' => $this->isExternalAuthentication,
-			'randomFieldNames' => $this->randomFieldNames
+			'randomFieldNames' => $this->randomFieldNames,
+			'passwordRulesAttributeValue' => UserRegistrationUtil::getPasswordRulesAttributeValue()
 		]);
 	}
 	
