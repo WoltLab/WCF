@@ -151,7 +151,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 				}
 				
 				if (!is_object($parameters['object']) || get_class($parameters['object']) !== get_class($object)) {
-					throw new \UnexpectedValueException('$object is no longer of type ' . get_class($parameters['object']) . ' after being manipulated by event listeners.');
+					throw new \UnexpectedValueException('$object is no longer of class ' . get_class($object) . ' after being manipulated by event listeners.');
 				}
 				else {
 					$object = $parameters['object'];
