@@ -3276,6 +3276,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.comment"><![CDATA[Comment]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
 		<item name="wcf.moderation.type.com.woltlab.wcf.user"><![CDATA[User Profile]]></item>
+		<item name="wcf.moderation.type.com.woltlab.wcf.article"><![CDATA[Article]]></item>
 		<item name="wcf.moderation.showAll"><![CDATA[Display All Items]]></item>
 		<item name="wcf.moderation.showDeletedContent"><![CDATA[Display Deleted Content]]></item>
 		<item name="wcf.moderation.deletedContent.objectTypes"><![CDATA[Deleted Content]]></item>

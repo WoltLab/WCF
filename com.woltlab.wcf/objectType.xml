@@ -99,6 +99,11 @@
 			<classname>wcf\system\user\notification\object\type\ArticleCommentResponseUserNotificationObjectType</classname>
 			<category>com.woltlab.wcf.page</category>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
+			<classname>wcf\system\moderation\queue\report\ArticleModerationQueueReportHandler</classname>
+		</type>
 		<!-- /articles -->
 		
 		<type>

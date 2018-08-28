@@ -165,6 +165,7 @@
 					<div class="col-xs-12 col-md-6">
 						<ul class="articleLikeButtons buttonGroup">
 							<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}">{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{@$__wcf->getReactionHandler()->getReactionTypeByID($articleLikeData[$article->articleID]->reactionTypeID)->renderIcon()}{else}<img src="{$__wcf->getPath()}/images/reaction/reactionIcon.svg" class="reactionType" alt="">{/if}</span></li>
+							<li class="jsReportArticle jsOnly" data-object-id="{@$articleContent->articleContentID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
 						</ul>
 					</div>
 				{/if}
@@ -341,6 +342,18 @@
 				containerSelector: '.articleContent',
 				summarySelector: '.articleLikesSummery'
 			});
+		});
+	</script>
+{/if}
+
+{if $__wcf->session->getPermission('user.profile.canReportContent')}
+	<script data-relocate="true">
+		$(function() {
+			WCF.Language.addObject({
+				'wcf.moderation.report.reportContent': '{lang}wcf.moderation.report.reportContent{/lang}',
+				'wcf.moderation.report.success': '{lang}wcf.moderation.report.success{/lang}'
+			});
+			new WCF.Moderation.Report.Content('com.woltlab.wcf.article', '.jsReportArticle');
 		});
 	</script>
 {/if}
