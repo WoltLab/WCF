@@ -52,10 +52,8 @@ class ArticleEditForm extends ArticleAddForm {
 		}
 		if ($this->article->isMultilingual) $this->isMultilingual = 1;
 		
-		if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
-			if ($this->article->userID != WCF::getUser()->userID || $this->article->publicationStatus != Article::UNPUBLISHED) {
-				throw new PermissionDeniedException();
-			}
+		if (!$this->article->canEdit()) {
+			throw new PermissionDeniedException();
 		}
 	}
 	

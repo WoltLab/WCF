@@ -84,6 +84,10 @@ class Article extends DatabaseObject implements ILinkableObject {
 			return true;
 		}
 		
+		if (WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
+			return true;
+		}
+		
 		return false;
 	}
 	
@@ -108,6 +112,48 @@ class Article extends DatabaseObject implements ILinkableObject {
 		}
 		
 		return WCF::getSession()->getPermission('user.article.canRead');
+	}
+	
+	/**
+	 * Returns true if the current user can edit these article.
+	 * 
+	 * @return      boolean
+	 * @since       3.2
+	 */
+	public function canEdit() {
+		if (WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+			return true; 
+		}
+		
+		if (WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
+			return true;
+		}
+		
+		if ($this->publicationStatus != self::PUBLISHED) {
+			if (WCF::getSession()->getPermission('admin.content.article.canContributeArticle') && $this->userID == WCF::getUser()->userID) {
+				return false;
+			}
+		}
+		
+		return false; 
+	}
+	
+	/**
+	 * Returns true if the current user can publish these article. 
+	 * 
+	 * @return      boolean
+	 * @since       3.2
+	 */
+	public function canPublish() {
+		if (WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+			return true;
+		}
+		
+		if (WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**

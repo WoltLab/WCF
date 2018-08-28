@@ -8,6 +8,7 @@ use wcf\data\language\Language;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\comment\CommentHandler;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\like\LikeHandler;
@@ -274,8 +275,6 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * @throws	UserInputException
 	 */
 	public function validateDelete() {
-		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
-		
 		if (empty($this->objects)) {
 			$this->readObjects();
 			
@@ -285,6 +284,10 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		}
 		
 		foreach ($this->getObjects() as $article) {
+			if (!$article->canDelete()) {
+				throw new PermissionDeniedException();
+			}
+			
 			if (!$article->isDeleted) {
 				throw new UserInputException('objectIDs');
 			}
@@ -331,8 +334,6 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * @throws	UserInputException
 	 */
 	public function validateTrash() {
-		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
-		
 		if (empty($this->objects)) {
 			$this->readObjects();
 			
@@ -342,6 +343,10 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		}
 		
 		foreach ($this->getObjects() as $article) {
+			if (!$article->canDelete()) {
+				throw new PermissionDeniedException();
+			}
+			
 			if ($article->isDeleted) {
 				throw new UserInputException('objectIDs');
 			}
@@ -556,8 +561,6 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * @throws	UserInputException
 	 */
 	public function validatePublish() {
-		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
-		
 		if (empty($this->objects)) {
 			$this->readObjects();
 			
@@ -567,6 +570,10 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		}
 		
 		foreach ($this->getObjects() as $article) {
+			if (!$article->canPublish()) {
+				throw new PermissionDeniedException();	
+			}
+			
 			if ($article->publicationStatus == Article::PUBLISHED) {
 				throw new UserInputException('objectIDs');
 			}
@@ -603,8 +610,6 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * @throws	UserInputException
 	 */
 	public function validateUnpublish() {
-		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
-		
 		if (empty($this->objects)) {
 			$this->readObjects();
 			
@@ -614,6 +619,10 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		}
 		
 		foreach ($this->getObjects() as $article) {
+			if (!$article->canPublish()) {
+				throw new PermissionDeniedException();
+			}
+			
 			if ($article->publicationStatus != Article::PUBLISHED) {
 				throw new UserInputException('objectIDs');
 			}

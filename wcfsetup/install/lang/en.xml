@@ -630,6 +630,7 @@
 		<item name="wcf.acp.group.option.user.tag.canViewTag"><![CDATA[Can view tags]]></item>
 		<item name="wcf.acp.group.option.category.user.cms"><![CDATA[CMS]]></item>
 		<item name="wcf.acp.group.option.admin.content.article.canManageArticle"><![CDATA[Can manage articles]]></item>
+		<item name="wcf.acp.group.option.admin.content.article.canManageOwnArticles"><![CDATA[Can manage own articles]]></item>
 		<item name="wcf.acp.group.option.admin.content.article.canContributeArticle"><![CDATA[Can contribute articles]]></item>
 		<item name="wcf.acp.group.option.admin.content.article.canManageCategory"><![CDATA[Can manage article categories]]></item>
 		<item name="wcf.acp.group.option.admin.content.cms.canManageBox"><![CDATA[Can manage boxes]]></item>

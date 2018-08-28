@@ -136,7 +136,11 @@ class ArticleListPage extends SortablePage {
 		if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
 			// only show own articles
 			$this->objectList->getConditionBuilder()->add('article.userID = ?', [WCF::getUser()->userID]);
-			$this->objectList->getConditionBuilder()->add('article.publicationStatus = ?', [Article::UNPUBLISHED]);
+			
+			if (!WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')) {
+				// only show unpublished articles
+				$this->objectList->getConditionBuilder()->add('article.publicationStatus = ?', [Article::UNPUBLISHED]);
+			}
 		}
 		
 		$this->objectList->sqlSelects = "(SELECT title FROM wcf".WCF_N."_article_content WHERE articleID = article.articleID AND (languageID IS NULL OR languageID = ".WCF::getLanguage()->languageID.") LIMIT 1) AS title";

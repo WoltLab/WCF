@@ -93,15 +93,11 @@ class ArticleClipboardAction extends AbstractClipboardAction {
 	 * @return	integer[]
 	 */
 	public function validateDelete() {
-		if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
-			return [];
-		}
-		
 		$objectIDs = [];
 		
 		/** @var Article $article */
 		foreach ($this->objects as $article) {
-			if ($article->isDeleted) {
+			if ($article->canDelete() && $article->isDeleted) {
 				$objectIDs[] = $article->articleID;
 			}
 		}
@@ -115,15 +111,11 @@ class ArticleClipboardAction extends AbstractClipboardAction {
 	 * @return	integer[]
 	 */
 	public function validatePublish() {
-		if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
-			return [];
-		}
-		
 		$objectIDs = [];
 		
 		/** @var Article $article */
 		foreach ($this->objects as $article) {
-			if ($article->publicationStatus == Article::UNPUBLISHED) {
+			if ($article->canPublish() && $article->publicationStatus == Article::UNPUBLISHED) {
 				$objectIDs[] = $article->articleID;
 			}
 		}
@@ -159,15 +151,11 @@ class ArticleClipboardAction extends AbstractClipboardAction {
 	 * @return	integer[]
 	 */
 	public function validateTrash() {
-		if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
-			return [];
-		}
-		
 		$objectIDs = [];
 		
 		/** @var Article $article */
 		foreach ($this->objects as $article) {
-			if (!$article->isDeleted) {
+			if ($article->canDelete() && !$article->isDeleted) {
 				$objectIDs[] = $article->articleID;
 			}
 		}
@@ -181,15 +169,11 @@ class ArticleClipboardAction extends AbstractClipboardAction {
 	 * @return	integer[]
 	 */
 	public function validateUnpublish() {
-		if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
-			return [];
-		}
-		
 		$objectIDs = [];
 		
 		/** @var Article $article */
 		foreach ($this->objects as $article) {
-			if ($article->publicationStatus == Article::PUBLISHED) {
+			if ($article->canPublish() && $article->publicationStatus == Article::PUBLISHED) {
 				$objectIDs[] = $article->articleID;
 			}
 		}

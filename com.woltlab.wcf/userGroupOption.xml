@@ -441,6 +441,14 @@
 				<usersonly>1</usersonly>
 				<options>module_article</options>
 			</option>
+			<option name="admin.content.article.canManageOwnArticles">
+				<categoryname>admin.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<admindefaultvalue>1</admindefaultvalue>
+				<usersonly>1</usersonly>
+				<options>module_article</options>
+			</option>
 			<option name="admin.content.article.canManageCategory">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>

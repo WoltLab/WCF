@@ -193,7 +193,7 @@
 			</dd>
 		</dl>
 		
-		{if $__wcf->session->getPermission('admin.content.article.canManageArticle')}
+		{if $__wcf->session->getPermission('admin.content.article.canManageArticle') || $__wcf->session->getPermission('admin.content.article.canManageOwnArticles')}
 			<dl>
 				<dt><label for="categoryID">{lang}wcf.acp.article.publicationStatus{/lang}</label></dt>
 				<dd class="floated">

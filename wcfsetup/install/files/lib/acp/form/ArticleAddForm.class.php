@@ -231,7 +231,7 @@ class ArticleAddForm extends AbstractForm {
 		}
 		if (!empty($_POST['enableComments'])) $this->enableComments = 1;
 		
-		if (WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+		if (WCF::getSession()->getPermission('admin.content.article.canManageArticle') || WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles')) {
 			if (isset($_POST['publicationStatus'])) $this->publicationStatus = intval($_POST['publicationStatus']);
 		}
 		else {
