@@ -20,7 +20,7 @@ class ArticleCategoryType extends AbstractCategoryType {
 	/**
 	 * @inheritDoc
 	 */
-	protected $hasDescription = false;
+	protected $forceDescription = false;
 	
 	/**
 	 * @inheritDoc
