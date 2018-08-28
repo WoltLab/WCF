@@ -15,14 +15,14 @@ class RegisterButtonBoxController extends AbstractBoxController {
 	/**
 	 * @inheritDoc
 	 */
-	protected static $supportedPositions = ['sidebarLeft', 'sidebarRight'];
+	protected static $supportedPositions = ['contentTop', 'contentBottom', 'sidebarLeft', 'sidebarRight'];
 	
 	/**
 	 * @inheritDoc
 	 */
 	protected function loadContent() {
 		if (!WCF::getUser()->userID && !REGISTER_DISABLED) {
-			$this->content = WCF::getTPL()->fetch('boxRegisterButton', 'wcf', [], true);
+			$this->content = WCF::getTPL()->fetch('boxRegisterButton', 'wcf', ['box' => $this->box], true);
 		}
 	}
 }

@@ -23,8 +23,8 @@
 		</box>
 		
 		<box identifier="com.woltlab.wcf.RegisterButton">
-			<name language="de">Registrierungs-Button</name>
-			<name language="en">Register Button</name>
+			<name language="de">Registrierungs-Button (Seitenleiste)</name>
+			<name language="en">Register Button (Sidebar)</name>
 			<boxType>system</boxType>
 			<objectType>com.woltlab.wcf.registerButton</objectType>
 			<position>sidebarRight</position>
@@ -40,6 +40,23 @@
 			</content>
 			<content language="en">
 				<title>Registration</title>
+			</content>
+		</box>
+		
+		<box identifier="com.woltlab.wcf.RegisterButton.content">
+			<name language="de">Registrierungs-Button (Inhaltsbereich)</name>
+			<name language="en">Register Button (Content)</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.registerButton</objectType>
+			<position>contentBottom</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			
+			<content language="de">
+				<title>Jetzt mitmachen!</title>
+			</content>
+			<content language="en">
+				<title>Participate now!</title>
 			</content>
 		</box>
 		
