@@ -140,6 +140,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		if (ARTICLE_ENABLE_VISIT_TRACKING) {
 			UserStorageHandler::getInstance()->resetAll('unreadArticles');
 			UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
 		}
 		
 		if ($article->publicationStatus == Article::PUBLISHED) {
@@ -257,6 +258,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		if (ARTICLE_ENABLE_VISIT_TRACKING) {
 			UserStorageHandler::getInstance()->resetAll('unreadArticles');
 			UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
 		}
 		
 		$publicationStatus = (isset($this->parameters['data']['publicationStatus'])) ? $this->parameters['data']['publicationStatus'] : null;
@@ -400,6 +402,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		if (ARTICLE_ENABLE_VISIT_TRACKING) {
 			UserStorageHandler::getInstance()->resetAll('unreadArticles');
 			UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
 		}
 		
 		return ['objectIDs' => $this->objectIDs];
@@ -428,6 +431,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		if (ARTICLE_ENABLE_VISIT_TRACKING) {
 			UserStorageHandler::getInstance()->resetAll('unreadArticles');
 			UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
 		}
 		
 		return ['objectIDs' => $this->objectIDs];
@@ -529,6 +533,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		if (WCF::getUser()->userID) {
 			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticles');
 			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadWatchedArticles');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticlesByCategory');
 		}
 	}
 	
@@ -542,6 +547,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		if (WCF::getUser()->userID) {
 			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticles');
 			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadWatchedArticles');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticlesByCategory');
 		}
 	}
 	
@@ -650,6 +656,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		if (ARTICLE_ENABLE_VISIT_TRACKING) {
 			UserStorageHandler::getInstance()->resetAll('unreadArticles');
 			UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
 		}
 		
 		$this->unmarkItems();

@@ -55,8 +55,16 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	/**
 	 * number of unread articles in watched categories
 	 * @var	integer
+	 * @since 3.2
 	 */
 	protected static $unreadWatchedArticles;
+	
+	/**
+	 * number of unread articles ordered by categories
+	 * @var	integer
+	 * @since 3.2
+	 */
+	protected static $unreadArticlesByCategory;
 	
 	/**
 	 * list of assigned labels
@@ -245,9 +253,96 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	}
 	
 	/**
+	 * Returns the number of unread articles for a specific category.
+	 *
+	 * @param       integer         $articleCategoryID
+	 * @return	integer
+	 * @since       3.2
+	 */
+	public static function getUnreadArticlesForCategory($articleCategoryID) {
+		if (self::$unreadArticlesByCategory === null) {
+			self::$unreadArticlesByCategory = [];
+			
+			if (WCF::getUser()->userID) {
+				$unreadArticlesByCategory = UserStorageHandler::getInstance()->getField('unreadArticlesByCategory');
+				
+				// cache does not exist or is outdated
+				if ($unreadArticlesByCategory === null) {
+					self::$unreadArticlesByCategory[$articleCategoryID] = self::fetchUnreadArticlesForCategory($articleCategoryID);
+					
+					// update storage unreadEntries
+					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadArticlesByCategory', serialize(self::$unreadArticlesByCategory));
+				}
+				else {
+					$unreadArticlesByCategory = unserialize($unreadArticlesByCategory);
+					
+					if (isset($unreadArticlesByCategory[$articleCategoryID])) {
+						self::$unreadArticlesByCategory = $unreadArticlesByCategory;
+					}
+					else {
+						self::$unreadArticlesByCategory[$articleCategoryID] = self::fetchUnreadArticlesForCategory($articleCategoryID);
+						
+						// update storage unreadEntries
+						UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadArticlesByCategory', serialize(self::$unreadArticlesByCategory));
+					}
+				}
+			}
+		}
+		
+		return self::$unreadArticlesByCategory[$articleCategoryID];
+	}
+	
+	/**
+	 * Returns the unread article count for a specific category. 
+	 * 
+	 * @param       integer         $articleCategoryID
+	 * @return      integer
+	 * @since       3.2
+	 */
+	private static function fetchUnreadArticlesForCategory($articleCategoryID) {
+		$accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
+		
+		if (!in_array($articleCategoryID, $accessibleCategoryIDs)) {
+			// the category is not accessible
+			return 0;
+		}
+		
+		$category = ArticleCategory::getCategory($articleCategoryID);
+		
+		if ($category === null) {
+			throw new \InvalidArgumentException('The given article category id "'.$articleCategoryID.'" is not valid.');
+		}
+		
+		$categoryIDs = array_intersect(array_merge(array_map(function ($category) {
+			/** @var ArticleCategory $category */
+			return $category->categoryID;
+		}, $category->getChildCategories()), [$articleCategoryID]), $accessibleCategoryIDs);
+		
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('article.categoryID IN (?)', [$categoryIDs]);
+		$conditionBuilder->add('article.time > ?', [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]);
+		$conditionBuilder->add('article.isDeleted = ?', [0]);
+		$conditionBuilder->add('article.publicationStatus = ?', [Article::PUBLISHED]);
+		$conditionBuilder->add('(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
+		
+		$sql = "SELECT		COUNT(*)
+			FROM		wcf".WCF_N."_article article
+			LEFT JOIN	wcf".WCF_N."_tracked_visit tracked_visit
+			ON		(tracked_visit.objectTypeID = ".VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article')."
+					AND tracked_visit.objectID = article.articleID
+					AND tracked_visit.userID = ".WCF::getUser()->userID.")
+					".$conditionBuilder;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditionBuilder->getParameters());
+		
+		return $statement->fetchSingleColumn();
+	}
+	
+	/**
 	 * Returns the number of unread articles in watched categories.
 	 *
 	 * @return	integer
+	 * @since       3.2
 	 */
 	public static function getWatchedUnreadArticles() {
 		if (self::$unreadWatchedArticles === null) {
