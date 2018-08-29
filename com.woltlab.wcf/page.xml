@@ -518,6 +518,22 @@
 				<title>Artikel</title>
 			</content>
 		</page>
+		<page identifier="com.woltlab.wcf.WatchedArticleList">
+			<pageType>system</pageType>
+			<controller>wcf\page\WatchedArticleListPage</controller>
+			<handler>wcf\system\page\handler\WatchedArticleListPageHandler</handler>
+			<name language="de">Abonnierte Artikel</name>
+			<name language="en">Watched Articles</name>
+			<options>module_article</options>
+			<parent>com.woltlab.wcf.ArticleList</parent>
+			
+			<content language="en">
+				<title>Watched Articles</title>
+			</content>
+			<content language="de">
+				<title>Abonnierte Artikel</title>
+			</content>
+		</page>
 		<page identifier="com.woltlab.wcf.CategoryArticleList">
 			<pageType>system</pageType>
 			<controller>wcf\page\CategoryArticleListPage</controller>

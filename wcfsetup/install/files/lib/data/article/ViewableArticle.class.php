@@ -53,6 +53,12 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	protected static $unreadArticles;
 	
 	/**
+	 * number of unread articles in watched categories
+	 * @var	integer
+	 */
+	protected static $unreadWatchedArticles;
+	
+	/**
 	 * list of assigned labels
 	 * @var	Label[]
 	 */
@@ -236,5 +242,52 @@ class ViewableArticle extends DatabaseObjectDecorator {
 		}
 		
 		return self::$unreadArticles;
+	}
+	
+	/**
+	 * Returns the number of unread articles in watched categories.
+	 *
+	 * @return	integer
+	 */
+	public static function getWatchedUnreadArticles() {
+		if (self::$unreadWatchedArticles === null) {
+			self::$unreadWatchedArticles = 0;
+			
+			if (WCF::getUser()->userID) {
+				$unreadArticles = UserStorageHandler::getInstance()->getField('unreadWatchedArticles');
+				
+				// cache does not exist or is outdated
+				if ($unreadArticles === null) {
+					$categoryIDs = ArticleCategory::getSubscribedCategoryIDs();
+					if (!empty($categoryIDs)) {
+						$conditionBuilder = new PreparedStatementConditionBuilder();
+						$conditionBuilder->add('article.categoryID IN (?)', [$categoryIDs]);
+						$conditionBuilder->add('article.time > ?', [VisitTracker::getInstance()->getVisitTime('com.woltlab.wcf.article')]);
+						$conditionBuilder->add('article.isDeleted = ?', [0]);
+						$conditionBuilder->add('article.publicationStatus = ?', [Article::PUBLISHED]);
+						$conditionBuilder->add('(article.time > tracked_visit.visitTime OR tracked_visit.visitTime IS NULL)');
+						
+						$sql = "SELECT		COUNT(*)
+							FROM		wcf".WCF_N."_article article
+							LEFT JOIN	wcf".WCF_N."_tracked_visit tracked_visit
+							ON		(tracked_visit.objectTypeID = ".VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article')."
+									AND tracked_visit.objectID = article.articleID
+									AND tracked_visit.userID = ".WCF::getUser()->userID.")
+							".$conditionBuilder;
+						$statement = WCF::getDB()->prepareStatement($sql);
+						$statement->execute($conditionBuilder->getParameters());
+						self::$unreadWatchedArticles = $statement->fetchSingleColumn();
+					}
+					
+					// update storage unreadEntries
+					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadWatchedArticles', self::$unreadWatchedArticles);
+				}
+				else {
+					self::$unreadWatchedArticles = $unreadArticles;
+				}
+			}
+		}
+		
+		return self::$unreadWatchedArticles;
 	}
 }
