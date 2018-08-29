@@ -287,6 +287,9 @@ class ViewableArticle extends DatabaseObjectDecorator {
 					}
 				}
 			}
+			else {
+				self::$unreadArticlesByCategory[$articleCategoryID] = 0;
+			}
 		}
 		
 		return self::$unreadArticlesByCategory[$articleCategoryID];
