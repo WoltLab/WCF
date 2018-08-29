@@ -11,6 +11,8 @@ use wcf\system\category\CategoryHandler;
 use wcf\system\category\CategoryPermissionHandler;
 use wcf\system\label\LabelHandler;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\object\watch\UserObjectWatchHandler;
+use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 
 /**
@@ -43,6 +45,12 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 	 * @var	array
 	 */
 	protected $userPermissions = [];
+	
+	/**
+	 * subscribed categories
+	 * @var	integer[]
+	 */
+	protected static $subscribedCategories;
 	
 	/**
 	 * @inheritDoc
@@ -142,5 +150,52 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 		if (empty($groupIDs)) return [];
 		
 		return LabelHandler::getInstance()->getLabelGroups(array_unique($groupIDs));
+	}
+	
+	/**
+	 * Returns true if the active user has subscribed to this category.
+	 *
+	 * @return	boolean
+	 * @since       3.2
+	 */
+	public function isSubscribed() {
+		return in_array($this->categoryID, self::getSubscribedCategoryIDs());
+	}
+	
+	/**
+	 * Returns the list of subscribed categories.
+	 *
+	 * @return	integer[]
+	 * @since       3.2
+	 */
+	public static function getSubscribedCategoryIDs() {
+		if (self::$subscribedCategories === null) {
+			self::$subscribedCategories = [];
+			
+			if (WCF::getUser()->userID) {
+				$data = UserStorageHandler::getInstance()->getField('articleSubscribedCategories');
+				
+				// cache does not exist or is outdated
+				if ($data === null) {
+					$objectTypeID = UserObjectWatchHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article.category');
+					
+					$sql = "SELECT	objectID
+						FROM	wcf".WCF_N."_user_object_watch
+						WHERE	objectTypeID = ?
+							AND userID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute([$objectTypeID, WCF::getUser()->userID]);
+					self::$subscribedCategories = $statement->fetchAll(\PDO::FETCH_COLUMN);
+					
+					// update storage data
+					UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'articleSubscribedCategories', serialize(self::$subscribedCategories));
+				}
+				else {
+					self::$subscribedCategories = unserialize($data);
+				}
+			}
+		}
+		
+		return self::$subscribedCategories;
 	}
 }

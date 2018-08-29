@@ -4291,6 +4291,9 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 	
 	<category name="wcf.user.objectWatch">
 		<item name="wcf.user.objectWatch.manageSubscription"><![CDATA[Manage Subscription]]></item>
+		<item name="wcf.user.objectWatch.subscribe.com.woltlab.wcf.article.category"><![CDATA[Watch this category]]></item>
+		<item name="wcf.user.objectWatch.enableNotification.com.woltlab.wcf.article.category"><![CDATA[Notify me of new articles.]]></item>
+		<item name="wcf.user.objectWatch.unsubscribe.com.woltlab.wcf.article.category"><![CDATA[Unwatch this category]]></item>
 	</category>
 	
 	<category name="wcf.user.option">

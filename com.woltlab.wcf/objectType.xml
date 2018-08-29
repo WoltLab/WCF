@@ -104,6 +104,11 @@
 			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
 			<classname>wcf\system\moderation\queue\report\ArticleModerationQueueReportHandler</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.article.category</name>
+			<definitionname>com.woltlab.wcf.user.objectWatch</definitionname>
+			<classname>wcf\system\user\object\watch\ArticleCategoryUserObjectWatch</classname>
+		</type>
 		<!-- /articles -->
 		
 		<type>
