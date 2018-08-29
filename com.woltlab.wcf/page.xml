@@ -518,6 +518,22 @@
 				<title>Artikel</title>
 			</content>
 		</page>
+		<page identifier="com.woltlab.wcf.UnreadArticleList">
+			<pageType>system</pageType>
+			<controller>wcf\page\UnreadArticleListPage</controller>
+			<handler>wcf\system\page\handler\UnreadArticleListPageHandler</handler>
+			<name language="de">Ungelesene Artikel</name>
+			<name language="en">Unread Articles</name>
+			<options>module_article</options>
+			<parent>com.woltlab.wcf.ArticleList</parent>
+			
+			<content language="en">
+				<title>Unread Articles</title>
+			</content>
+			<content language="de">
+				<title>Ungelesene Artikel</title>
+			</content>
+		</page>
 		<page identifier="com.woltlab.wcf.WatchedArticleList">
 			<pageType>system</pageType>
 			<controller>wcf\page\WatchedArticleListPage</controller>

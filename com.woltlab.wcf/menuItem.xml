@@ -13,6 +13,12 @@
 			<title language="en">Articles</title>
 			<page>com.woltlab.wcf.ArticleList</page>
 		</item>
+		<item identifier="com.woltlab.wcf.UnreadArticleList">
+			<parent>com.woltlab.wcf.ArticleList</parent>
+			<title language="de">Ungelesene Artikel</title>
+			<title language="en">Unread Articles</title>
+			<page>com.woltlab.wcf.UnreadArticleList</page>
+		</item>
 		<item identifier="com.woltlab.wcf.WatchedArticleList">
 			<parent>com.woltlab.wcf.ArticleList</parent>
 			<title language="de">Abonnierte Artikel</title>
