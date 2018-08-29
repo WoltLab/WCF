@@ -6,7 +6,7 @@ use wcf\data\user\UserProfile;
 use wcf\system\user\notification\object\ArticleUserNotificationObject;
 
 /**
- * Notification event for receiving a user trophy.
+ * Notification event for new articles.
  *
  * @author	Joshua Ruesweg
  * @copyright	2001-2018 WoltLab GmbH

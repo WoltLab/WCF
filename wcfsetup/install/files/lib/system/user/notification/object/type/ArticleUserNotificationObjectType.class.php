@@ -5,7 +5,7 @@ use wcf\data\article\ArticleList;
 use wcf\system\user\notification\object\ArticleUserNotificationObject;
 
 /**
- * Represents a gallery image as a notification object type.
+ * Represents a article as a notification object type.
  *
  * @author	Joshua Ruesweg
  * @copyright	2001-2018 WoltLab GmbH
