@@ -256,6 +256,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		// reset storage
 		if (ARTICLE_ENABLE_VISIT_TRACKING) {
 			UserStorageHandler::getInstance()->resetAll('unreadArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
 		}
 		
 		$publicationStatus = (isset($this->parameters['data']['publicationStatus'])) ? $this->parameters['data']['publicationStatus'] : null;
@@ -398,6 +399,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		// reset storage
 		if (ARTICLE_ENABLE_VISIT_TRACKING) {
 			UserStorageHandler::getInstance()->resetAll('unreadArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
 		}
 		
 		return ['objectIDs' => $this->objectIDs];
@@ -425,6 +427,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		// reset storage
 		if (ARTICLE_ENABLE_VISIT_TRACKING) {
 			UserStorageHandler::getInstance()->resetAll('unreadArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
 		}
 		
 		return ['objectIDs' => $this->objectIDs];
@@ -525,6 +528,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		// reset storage
 		if (WCF::getUser()->userID) {
 			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticles');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadWatchedArticles');
 		}
 	}
 	
