@@ -115,5 +115,12 @@
 			<classname>wcf\system\user\notification\event\ArticleCommentResponseOwnerUserNotificationEvent</classname>
 			<preset>1</preset>
 		</event>
+		
+		<event>
+			<name>article</name>
+			<objecttype>com.woltlab.wcf.article.notification</objecttype>
+			<classname>wcf\system\user\notification\event\ArticleUserNotificationEvent</classname>
+			<preset>1</preset>
+		</event>
 	</import>
 </data>

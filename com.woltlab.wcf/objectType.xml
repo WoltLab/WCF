@@ -109,6 +109,12 @@
 			<definitionname>com.woltlab.wcf.user.objectWatch</definitionname>
 			<classname>wcf\system\user\object\watch\ArticleCategoryUserObjectWatch</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.article.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\ArticleUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.page</category>
+		</type>
 		<!-- /articles -->
 		
 		<type>

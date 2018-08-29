@@ -139,6 +139,33 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	}
 	
 	/**
+	 * Returns a version of this message optimized for use in emails.
+	 *
+	 * @param	string	$mimeType	Either 'text/plain' or 'text/html'
+	 * @return	string
+	 * @since       3.2
+	 */
+	public function getMailText($mimeType = 'text/plain') {
+		switch ($mimeType) {
+			case 'text/plain':
+				$processor = new HtmlOutputProcessor();
+				$processor->setOutputType('text/plain');
+				$processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID);
+				
+				return $processor->getHtml();
+			case 'text/html':
+				// parse and return message
+				$processor = new HtmlOutputProcessor();
+				$processor->setOutputType('text/simplified-html');
+				$processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID);
+				
+				return $processor->getHtml();
+		}
+		
+		throw new \LogicException('Unreachable');
+	}
+	
+	/**
 	 * Returns a certain article content or `null` if it does not exist.
 	 * 
 	 * @param       integer         $articleID
