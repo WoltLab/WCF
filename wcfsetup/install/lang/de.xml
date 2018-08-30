@@ -2396,6 +2396,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Zugriffe]]></item>
 		<item name="wcf.article.markAllAsRead"><![CDATA[Alle Artikel als gelesen markieren]]></item>
 		<item name="wcf.article.showArticlesWritten"><![CDATA[Artikel von {$user->username}]]></item>
+		<item name="wcf.article.recentActivity"><![CDATA[Hat den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a> verfasst.]]></item>
 	</category>
 	
 	<category name="wcf.attachment">
@@ -3986,6 +3987,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.userTrophy.recentActivityEvent.trophyReceived"><![CDATA[Trophäe]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.page.recentActivityEvent"><![CDATA[Kommentar (Seite)]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.page.response.recentActivityEvent"><![CDATA[Antwort (Seite)]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.article.recentActivityEvent"><![CDATA[Artikel]]></item>
 		<item name="wcf.user.recentActivity.condition.excludedObjectType"><![CDATA[Ausgeschlossene Aktivitäten]]></item>
 		<item name="wcf.user.recentActivity.scope.all"><![CDATA[Aktivitäten aller Benutzer]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Aktivitäten von Benutzern, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}]]></item>

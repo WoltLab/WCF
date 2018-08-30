@@ -2333,6 +2333,7 @@ full extend.]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Views]]></item>
 		<item name="wcf.article.markAllAsRead"><![CDATA[Mark All Articles as Read]]></item>
 		<item name="wcf.article.showArticlesWritten"><![CDATA[Articles by {$user->username}]]></item>
+		<item name="wcf.article.recentActivity"><![CDATA[Wrote the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
 	</category>
 	
 	<category name="wcf.attachment">
@@ -3981,6 +3982,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.userTrophy.recentActivityEvent.trophyReceived"><![CDATA[Trophy]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.page.recentActivityEvent"><![CDATA[Comment (Page)]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.page.response.recentActivityEvent"><![CDATA[Reply (Page)]]></item>
+		<item name="wcf.user.recentActivity.com.woltlab.wcf.article.recentActivityEvent"><![CDATA[Article]]></item>
 		<item name="wcf.user.recentActivity.condition.excludedObjectType"><![CDATA[Excluded Activities]]></item>
 		<item name="wcf.user.recentActivity.scope.all"><![CDATA[All Activities]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Filter by Followed Users]]></item>

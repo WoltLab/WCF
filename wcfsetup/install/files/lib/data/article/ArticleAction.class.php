@@ -16,6 +16,7 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
+use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\ArticleUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\user\object\watch\UserObjectWatchHandler;
@@ -153,6 +154,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 				'com.woltlab.wcf.article.notification',
 				new ArticleUserNotificationObject($article)
 			);
+			
+			UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.article.recentActivityEvent', $article->articleID, null, $article->userID, $article->time);
 		}
 		
 		return $article;
@@ -263,7 +266,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		
 		$publicationStatus = (isset($this->parameters['data']['publicationStatus'])) ? $this->parameters['data']['publicationStatus'] : null;
 		if ($publicationStatus !== null) {
-			$usersToArticles = $resetNotifications = [];
+			$usersToArticles = $resetArticleIDs = [];
 			/** @var ArticleEditor $articleEditor */
 			foreach ($this->objects as $articleEditor) {
 				if ($publicationStatus != $articleEditor->publicationStatus) {
@@ -284,16 +287,20 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 							'com.woltlab.wcf.article.notification',
 							new ArticleUserNotificationObject($articleEditor->getDecoratedObject())
 						);
+						
+						UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.article.recentActivityEvent', $articleEditor->articleID, null, $articleEditor->userID, $articleEditor->time);
 					}
 					else {
-						$resetNotifications[] = $articleEditor->articleID;
+						$resetArticleIDs[] = $articleEditor->articleID;
 					}
 				}
 			}
 			
-			if (!empty($resetNotifications)) {
+			if (!empty($resetArticleIDs)) {
 				// delete user notifications
-				UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification', $resetNotifications);
+				UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification', $resetArticleIDs);
+				// delete recent activity events
+				UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.article.recentActivityEvent', $resetArticleIDs);
 			}
 			
 			if (!empty($usersToArticles)) {
@@ -353,6 +360,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			SearchIndexManager::getInstance()->delete('com.woltlab.wcf.article', $articleContentIDs);
 			// delete user notifications
 			UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification', $articleIDs);
+			// delete recent activity events
+			UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.article.recentActivityEvent', $articleIDs);
 		}
 		
 		$this->unmarkItems();
@@ -648,6 +657,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 				'com.woltlab.wcf.article.notification',
 				new ArticleUserNotificationObject($articleEditor->getDecoratedObject())
 			);
+			
+			UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.article.recentActivityEvent', $articleEditor->articleID, null, $articleEditor->userID, TIME_NOW);
 		}
 		
 		ArticleEditor::updateArticleCounter($usersToArticles);
@@ -706,6 +717,9 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		
 		// delete user notifications
 		UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification', $articleIDs);
+		
+		// delete recent activity events
+		UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.article.recentActivityEvent', $articleIDs);
 		
 		ArticleEditor::updateArticleCounter($usersToArticles);
 		

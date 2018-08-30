@@ -115,6 +115,11 @@
 			<classname>wcf\system\user\notification\object\type\ArticleUserNotificationObjectType</classname>
 			<category>com.woltlab.wcf.page</category>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.article.recentActivityEvent</name>
+			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
+			<classname>wcf\system\user\activity\event\ArticleUserActivityEvent</classname>
+		</type>
 		<!-- /articles -->
 		
 		<type>
