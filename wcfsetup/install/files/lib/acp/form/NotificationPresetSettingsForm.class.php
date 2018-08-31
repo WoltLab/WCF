@@ -27,7 +27,7 @@ class NotificationPresetSettingsForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $neededPermissions = ['admin.user.canEditUser'];
+	public $neededPermissions = ['admin.user.canManageNotificationSettings'];
 	
 	/**
 	 * list of notification events

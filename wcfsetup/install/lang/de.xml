@@ -508,6 +508,7 @@
 		<item name="wcf.acp.group.option.admin.user.canEditPassword"><![CDATA[Kann Kennwörter bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditUser"><![CDATA[Kann Benutzer bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.user.canMailUser"><![CDATA[Kann E-Mails an Benutzer senden]]></item>
+		<item name="wcf.acp.group.option.admin.user.canManageNotificationSettings"><![CDATA[Kann Vorgabewerte für Benachrichtigungen bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.user.canSearchUser"><![CDATA[Kann Benutzer suchen]]></item>
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrative Rechte]]></item>
 		<item name="wcf.acp.group.option.category.admin.customization"><![CDATA[Anpassung]]></item>

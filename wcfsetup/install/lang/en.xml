@@ -490,6 +490,7 @@
 		<item name="wcf.acp.group.option.admin.user.canEditPassword"><![CDATA[Can edit user passwords]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditUser"><![CDATA[Can edit users]]></item>
 		<item name="wcf.acp.group.option.admin.user.canMailUser"><![CDATA[Can send emails to users]]></item>
+		<item name="wcf.acp.group.option.admin.user.canManageNotificationSettings"><![CDATA[Can edit default notification settings]]></item>
 		<item name="wcf.acp.group.option.admin.user.canSearchUser"><![CDATA[Can search users]]></item>
 		<item name="wcf.acp.group.option.category.admin"><![CDATA[Administrator Permissions]]></item>
 		<item name="wcf.acp.group.option.category.admin.configuration"><![CDATA[Configuration]]></item>

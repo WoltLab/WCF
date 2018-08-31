@@ -74,7 +74,7 @@
 			<acpmenuitem name="wcf.acp.menu.link.notificationPresetSettings">
 				<parent>wcf.acp.menu.link.other</parent>
 				<controller>wcf\acp\form\NotificationPresetSettingsForm</controller>
-				<permissions>admin.user.canEditUser</permissions>
+				<permissions>admin.user.canManageNotificationSettings</permissions>
 			</acpmenuitem>
 		
 			<acpmenuitem name="wcf.acp.menu.link.contact.settings">
