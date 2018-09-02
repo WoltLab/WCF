@@ -52,6 +52,9 @@ define(['Dictionary', './Template'], function(Dictionary, Template) {
 				return key;
 			}
 			
+			// fetch Template, as it cannot be provided because of a circular dependency
+			if (Template === undefined) Template = require('WoltLabSuite/Core/Template');
+			
 			if (typeof value === 'string') {
 				// lazily convert to WCF.Template
 				try {
