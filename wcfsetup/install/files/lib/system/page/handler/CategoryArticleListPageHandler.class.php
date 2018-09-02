@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\page\handler;
 use wcf\data\article\category\ArticleCategory;
+use wcf\data\article\ViewableArticle;
 
 /**
  * Menu page handler for the category article list page.
@@ -19,5 +20,13 @@ class CategoryArticleListPageHandler extends AbstractLookupPageHandler implement
 	 */
 	protected function getDecoratedCategoryClass() {
 		return ArticleCategory::class;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since       3.2
+	 */
+	public function getOutstandingItemCount($objectID = null) {
+		return ARTICLE_ENABLE_VISIT_TRACKING ? ViewableArticle::getUnreadArticlesForCategory($objectID) : 0;
 	}
 }

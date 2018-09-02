@@ -123,7 +123,8 @@
 		}
 		
 		> .boxMenuHasChildren {
-			&:hover .boxMenuDepth1 {
+			&:hover .boxMenuDepth1,
+			> a[aria-expanded="true"] ~ .boxMenuDepth1 {
 				visibility: visible;
 			}
 			

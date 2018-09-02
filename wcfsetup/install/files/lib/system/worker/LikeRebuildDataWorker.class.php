@@ -73,7 +73,8 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 					'likes' => 0,
 					'dislikes' => 0,
 					'cumulativeLikes' => 0,
-					'objectUserID' => $like->objectUserID
+					'objectUserID' => $like->objectUserID, 
+					'cachedReactions' => []
 				];
 			}
 			
@@ -84,17 +85,24 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 				$likeObjectData[$like->objectTypeID][$like->objectID]['dislikes']++;
 			}
 			$likeObjectData[$like->objectTypeID][$like->objectID]['cumulativeLikes'] += $like->likeValue;
+			
+			if (!isset($likeObjectData[$like->objectTypeID][$like->objectID]['cachedReactions'][$like->getReactionType()->reactionTypeID])) {
+				$likeObjectData[$like->objectTypeID][$like->objectID]['cachedReactions'][$like->getReactionType()->reactionTypeID] = 0;
+			}
+			
+			$likeObjectData[$like->objectTypeID][$like->objectID]['cachedReactions'][$like->getReactionType()->reactionTypeID]++;
 		}
 		
 		// update activity points
 		UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $itemsToUser, false);
 		
 		$sql = "INSERT INTO			wcf".WCF_N."_like_object
-							(objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes)
-			VALUES				(?, ?, ?, ?, ?, ?)
+							(objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions)
+			VALUES				(?, ?, ?, ?, ?, ?, ?)
 			ON DUPLICATE KEY UPDATE		likes = likes + VALUES(likes),
 							dislikes = dislikes + VALUES(dislikes),
-							cumulativeLikes = cumulativeLikes + VALUES(cumulativeLikes)";
+							cumulativeLikes = cumulativeLikes + VALUES(cumulativeLikes),
+							cachedReactions = VALUES(cachedReactions)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		WCF::getDB()->beginTransaction();
@@ -106,7 +114,8 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 					$data['objectUserID'],
 					$data['likes'],
 					$data['dislikes'],
-					$data['cumulativeLikes']
+					$data['cumulativeLikes'], 
+					serialize($data['cachedReactions'])
 				]);
 			}
 		}

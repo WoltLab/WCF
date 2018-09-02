@@ -17,22 +17,30 @@ class CategoryArticleList extends AccessibleArticleList {
 	/**
 	 * Creates a new CategoryArticleList object.
 	 *
-	 * @param	integer         $categoryID
+	 * @param	integer[]       $categoryID
 	 * @param       boolean         $includeChildCategories
 	 * @throws      \InvalidArgumentException
 	 */
 	public function __construct($categoryID, $includeChildCategories = false) {
 		ViewableArticleList::__construct();
 		
-		$categoryIDs = [$categoryID];
+		if (!is_array($categoryID)) {
+			$categoryIDs = $fetchChildCategories = [$categoryID];
+		}
+		else {
+			$categoryIDs = $fetchChildCategories = $categoryID;
+		}
+		
 		if ($includeChildCategories) {
-			$category = ArticleCategory::getCategory($categoryID);
-			if ($category === null) {
-				throw new \InvalidArgumentException("invalid category id '".$categoryID."' given");
-			}
-			foreach ($category->getAllChildCategories() as $category) {
-				if ($category->isAccessible()) {
-					$categoryIDs[] = $category->categoryID;
+			foreach ($fetchChildCategories as $categoryID) {
+				$category = ArticleCategory::getCategory($categoryID);
+				if ($category === null) {
+					throw new \InvalidArgumentException("invalid category id '".$categoryID."' given");
+				}
+				foreach ($category->getAllChildCategories() as $category) {
+					if ($category->isAccessible()) {
+						$categoryIDs[] = $category->categoryID;
+					}
 				}
 			}
 		}

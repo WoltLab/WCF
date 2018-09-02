@@ -65,7 +65,7 @@ class Benchmark extends SingletonFactory {
 	
 	/**
 	 * Stops the benchmark with the given index. If no index is given, the
-	 * latest benchmark is stoped.
+	 * latest benchmark is stopped.
 	 * 
 	 * @param	integer		$index
 	 */

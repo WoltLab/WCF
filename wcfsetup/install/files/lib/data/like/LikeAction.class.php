@@ -1,9 +1,6 @@
 <?php
 namespace wcf\data\like;
-use wcf\data\like\object\LikeObjectEditor;
-use wcf\data\object\type\ObjectTypeCache;
-use wcf\data\user\User;
-use wcf\data\user\UserEditor;
+use wcf\data\reaction\ReactionAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IGroupedUserListAction;
 use wcf\system\exception\PermissionDeniedException;
@@ -21,6 +18,7 @@ use wcf\system\WCF;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Like
+ * @deprecated	since 3.2, use \wcf\data\reaction\ReactionAction instead
  * 
  * @method	Like		create()
  * @method	LikeEditor[]	getObjects()
@@ -335,79 +333,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	 * Copies likes from one object id to another.
 	 */
 	public function copy() {
-		$sourceObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', $this->parameters['sourceObjectType']);
-		$targetObjectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.like.likeableObject', $this->parameters['targetObjectType']);
-		
-		//
-		// step 1) get data
-		//
-		
-		// get like object
-		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_like_object
-			WHERE	objectTypeID = ?
-				AND objectID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([
-			$sourceObjectType->objectTypeID,
-			$this->parameters['sourceObjectID']
-		]);
-		$row = $statement->fetchArray();
-		
-		// no (dis-)likes at all
-		if ($row === false) {
-			return;
-		}
-		
-		unset($row['likeObjectID']);
-		$row['objectTypeID'] = $targetObjectType->objectTypeID;
-		$row['objectID'] = $this->parameters['targetObjectID'];
-		$newLikeObject = LikeObjectEditor::create($row);
-		
-		//
-		// step 2) copy
-		//
-		
-		$sql = "INSERT INTO	wcf".WCF_N."_like
-					(objectID, objectTypeID, objectUserID, userID, time, likeValue)
-			SELECT		".$this->parameters['targetObjectID'].", ".$targetObjectType->objectTypeID.", objectUserID, userID, time, likeValue
-			FROM		wcf".WCF_N."_like
-			WHERE		objectTypeID = ?
-					AND objectID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([
-			$sourceObjectType->objectTypeID,
-			$this->parameters['sourceObjectID']
-		]);
-		
-		//
-		// step 3) update owner
-		//
-		
-		if ($newLikeObject->objectUserID) {
-			$sql = "SELECT	COUNT(*)
-				FROM	wcf".WCF_N."_like
-				WHERE	objectTypeID = ?
-					AND objectID = ?
-					AND likeValue = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([
-				$targetObjectType->objectTypeID,
-				$this->parameters['targetObjectID'],
-				Like::LIKE
-			]);
-			$count = $statement->fetchSingleColumn();
-			
-			if ($count) {
-				// update received likes
-				$userEditor = new UserEditor(new User($newLikeObject->objectUserID));
-				$userEditor->updateCounters([
-					'likesReceived' => $count
-				]);
-				
-				// add activity points
-				UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$newLikeObject->objectUserID => $count]);
-			}
-		}
+		$reactionAction = new ReactionAction([], 'copy', $this->getParameters());
+		$reactionAction->executeAction();
 	}
 }

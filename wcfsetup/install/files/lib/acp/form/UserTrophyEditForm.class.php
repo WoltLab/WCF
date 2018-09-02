@@ -70,6 +70,7 @@ class UserTrophyEditForm extends UserTrophyAddForm {
 			$this->readDataI18n($this->userTrophy);
 			
 			$this->useCustomDescription = $this->userTrophy->useCustomDescription;
+			$this->trophyUseHtml = $this->userTrophy->trophyUseHtml;
 		}
 		
 		parent::readData();
@@ -86,7 +87,8 @@ class UserTrophyEditForm extends UserTrophyAddForm {
 		$this->objectAction = new UserTrophyAction([$this->userTrophy], 'update', [
 			'data' => array_merge($this->additionalFields, [
 				'useCustomDescription' => $this->useCustomDescription, 
-				'description' => $this->description
+				'description' => $this->description,
+				'trophyUseHtml' => $this->trophyUseHtml
 			])	
 		]);
 		$this->objectAction->executeAction(); 

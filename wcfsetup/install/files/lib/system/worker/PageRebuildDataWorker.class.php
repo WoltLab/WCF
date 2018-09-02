@@ -86,7 +86,7 @@ class PageRebuildDataWorker extends AbstractRebuildDataWorker {
 			// update embedded objects
 			$data = [];
 			if ($page->pageType == 'text') {
-				$this->getHtmlInputProcessor()->process($pageContent->content, 'com.woltlab.wcf.page.content', $pageContent->pageContentID);
+				$this->getHtmlInputProcessor()->reprocess($pageContent->content, 'com.woltlab.wcf.page.content', $pageContent->pageContentID);
 				$data['content'] = $this->getHtmlInputProcessor()->getHtml();
 				
 				$hasEmbeddedObjects = 0;

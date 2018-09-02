@@ -1,0 +1,188 @@
+.reactionPopover {
+	animation: wcfPopoverOut .3s;
+	animation-fill-mode: forwards;
+	background-color: $wcfContentBackground;
+	border-radius: 2px;
+	box-shadow: 0 2px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	position: absolute;
+	top: 0;
+	vertical-align: middle;
+	visibility: hidden;
+	z-index: 500;
+	
+	&.active {
+		animation: wcfPopover .3s;
+		animation-fill-mode: forwards;
+	}
+	
+	&.forceHide {
+		animation: 0;
+		visibility: hidden;
+	}
+	
+	> .elementPointer {
+		display: none;
+	}
+}
+
+img.reactionType {
+	width: 16px;
+	height: 16px;
+}
+
+.reactionPopoverContent {
+	background-color: $wcfContentBackground;
+	border-radius: 3px;
+	color: $wcfContentText;
+	padding: 15px;
+	
+	a {
+		color: $wcfContentLink;
+		
+		&:hover {
+			color: $wcfContentLinkActive;
+		}
+	}
+	
+	> ul > li.reactionTypeButton > img {
+		width: 24px;
+		height: 24px;
+	}
+	
+	> ul > li.reactionTypeButton > img:hover {
+		transform: scale(1.2);
+	}
+	
+	@include screen-md-down {
+		> ul > li.reactionTypeButton {
+			margin: 0px;
+			display: block;
+			padding: 5px 10px;
+		}
+		
+		> ul > li.reactionTypeButton > .reactionTypeButtonTitle {
+			vertical-align: middle;
+			padding-left: 5px;
+		}
+	}
+	
+	@include screen-lg {
+		> ul > li.reactionTypeButton > .reactionTypeButtonTitle {
+			display: none;
+		}
+		
+		> ul > li.reactionTypeButton {
+			display: inline;
+			cursor: pointer;
+			margin-left: 10px;
+		}
+		
+		> ul > li.reactionTypeButton:first-child {
+			margin-left: 0px;
+		}
+	}
+}
+
+li.reactCountButton {
+	display: inline;
+	padding: 10px;
+	cursor: pointer;
+	background-color: $wcfSidebarBackground;
+	color: $wcfContentDimmedText;
+}
+
+li.reactCountButton:hover {
+	background-color: darken($wcfSidebarBackground, 5);
+	color: $wcfContentText;
+}
+
+.reactionSummaryListTiny {
+	display: inline;
+	
+	li.reactCountButton > img {
+		width: 16px;
+		height: 16px;
+	}
+	
+	span.reactionCount {
+		@include wcfFontSmall;
+	}
+	
+	li.reactCountButton {
+		background-color: transparent;
+		padding: 0px;
+	}
+}
+
+.reactionStatusContainer {
+	margin-top: 10px;
+	
+	.positiveReactionCount {
+		color: $wcfStatusSuccessText;
+		
+		.fa {
+			color: $wcfStatusSuccessText;
+		}
+	}
+	
+	.negativeReactionCount {
+		color: $wcfStatusErrorText;
+		
+		.fa {
+			color: $wcfStatusErrorText;
+		}
+	}
+	
+	.neutralReactionCount {
+		color: $wcfStatusSuccessText;
+		
+		.fa {
+			color: $wcfStatusSuccessText;
+		}
+	}
+}
+
+.box.reactionReputationBox {
+	&.positiveReactionReputationBox {
+		background-color: $wcfStatusSuccessBackground;
+		color: $wcfStatusSuccessText;
+		
+		.fa {
+			color: $wcfStatusSuccessText;
+		}
+		
+		.boxTitle > a {
+			color: $wcfStatusSuccessText;
+		}
+	}
+	
+	&.negativeReactionReputationBox {
+		background-color: $wcfStatusErrorBackground;
+		color: $wcfStatusErrorText;
+		
+		.fa {
+			color: $wcfStatusErrorText;
+		}
+		
+		.boxTitle > a {
+			color: $wcfStatusErrorText;
+		}
+	}
+	
+	.boxContent {
+		@include wcfFontHeadline;
+		
+		text-align: center;
+	}
+}
+
+@include screen-sm-down {
+	.reactionStatusContainer {
+		display: none;
+	}
+}
+
+.messageFooterGroup > .mobileReactButton {
+	margin-left: auto;
+	margin-top: 20px;
+}

@@ -130,6 +130,9 @@ abstract class MultipleLinkPage extends AbstractPage {
 			}
 			$this->readObjects();
 		}
+		else {
+			EventHandler::getInstance()->fireAction($this, 'insteadOfReadObjects');
+		}
 	}
 	
 	/**

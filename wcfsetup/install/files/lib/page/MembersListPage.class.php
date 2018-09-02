@@ -54,7 +54,7 @@ class MembersListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $validSortFields = ['username', 'registrationDate', 'activityPoints', 'likesReceived', 'lastActivityTime'];
+	public $validSortFields = ['username', 'registrationDate', 'activityPoints', 'reactionReputation', 'lastActivityTime'];
 	
 	/**
 	 * @inheritDoc
@@ -131,6 +131,10 @@ class MembersListPage extends SortablePage {
 	 * @inheritDoc
 	 */
 	protected function readObjects() {
+		if ($this->sortField === 'reactionReputation') {
+			$this->sqlOrderBy = '(user_table.positiveReactionsReceived - user_table.negativeReactionsReceived) '. $this->sortOrder;
+		}
+		
 		parent::readObjects();
 		
 		$userIDs = [];

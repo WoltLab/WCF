@@ -8,6 +8,7 @@ use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\category\CategoryHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
@@ -207,6 +208,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	 */
 	public function getManagementDialog() {
 		$mediaList = new ViewableMediaList();
+		if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+			$mediaList->getConditionBuilder()->add('media.userID = ?', [WCF::getUser()->userID]);
+		}
 		if ($this->parameters['imagesOnly']) {
 			$mediaList->getConditionBuilder()->add('media.isImage = ?', [1]);
 		}
@@ -281,6 +285,10 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
 		
 		$this->getSingleObject();
+		
+		if (!$this->getSingleObject()->canManage()) {
+			throw new PermissionDeniedException();
+		}
 	}
 	
 	/**
@@ -330,6 +338,14 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			
 			if (empty($this->objects)) {
 				throw new UserInputException('objectIDs');
+			}
+		}
+		
+		if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+			foreach ($this->getObjects() as $media) {
+				if ($media->userID != WCF::getUser()->userID) {
+					throw new PermissionDeniedException();
+				}
 			}
 		}
 		
@@ -531,6 +547,14 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 				throw new UserInputException('objectIDs');
 			}
 		}
+		
+		if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+			foreach ($this->getObjects() as $media) {
+				if ($media->userID != WCF::getUser()->userID) {
+					throw new PermissionDeniedException();
+				}
+			}
+		}
 	}
 	
 	/**
@@ -566,5 +590,84 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		if (!empty($mediaIDs)) {
 			ClipboardHandler::getInstance()->unmark($mediaIDs, ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.media'));
 		}
+	}
+	
+	/**
+	 * Validates the `getSetCategoryDialog` action.
+	 * 
+	 * @throws	PermissionDeniedException	if user is not allowed to set category of media files
+	 * @throws	IllegalLinkException		if no media file categories exist
+	 */
+	public function validateGetSetCategoryDialog() {
+		if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia')) {
+			throw new PermissionDeniedException();
+		}
+		
+		if (empty(CategoryHandler::getInstance()->getCategories('com.woltlab.wcf.media.category'))) {
+			throw new IllegalLinkException();
+		}
+	}
+	
+	/**
+	 * Returns the dialog to set the category of multiple media files.
+	 * 
+	 * @return	string[]
+	 */
+	public function getSetCategoryDialog() {
+		$categoryList = (new CategoryNodeTree('com.woltlab.wcf.media.category'))->getIterator();
+		$categoryList->setMaxDepth(0);
+		
+		return [
+			'template' => WCF::getTPL()->fetch('__mediaSetCategoryDialog', 'wcf', [
+				'categoryList' => $categoryList
+			])
+		];
+	}
+	
+	/**
+	 * Validates the `setCategory` action.
+	 * 
+	 * @throws	PermissionDeniedException	if user is not allowed to edit a requested media file
+	 * @throws	UserInputException		if no object ids are given
+	 */
+	public function validateSetCategory() {
+		$this->validateGetSetCategoryDialog();
+		
+		if (empty($this->objects)) {
+			$this->readObjects();
+			
+			if (empty($this->objects)) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+		
+		if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+			foreach ($this->getObjects() as $media) {
+				if ($media->userID != WCF::getUser()->userID) {
+					throw new PermissionDeniedException();
+				}
+			}
+		}
+		
+		$this->readInteger('categoryID', true);
+	}
+	
+	/**
+	 * Sets the category of multiple media files.
+	 */
+	public function setCategory() {
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('mediaID IN (?)', [$this->objectIDs]);
+		
+		$sql = "UPDATE	wcf" . WCF_N . "_media
+			SET	categoryID = ?
+			" . $conditionBuilder;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(array_merge(
+			[$this->parameters['categoryID'] ?: null],
+			$conditionBuilder->getParameters()
+		));
+		
+		$this->unmarkItems();
 	}
 }

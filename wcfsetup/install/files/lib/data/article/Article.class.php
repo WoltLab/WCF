@@ -4,6 +4,7 @@ use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
+use wcf\data\IUserContent;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\article\discussion\CommentArticleDiscussionProvider;
 use wcf\system\article\discussion\IArticleDiscussionProvider;
@@ -34,7 +35,7 @@ use wcf\system\WCF;
  * @property-read	integer		$isDeleted		is 1 if the article is in trash bin, otherwise 0
  * @property-read	integer		$hasLabels		is `1` if labels are assigned to the article
  */
-class Article extends DatabaseObject implements ILinkableObject {
+class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	/**
 	 * indicates that article is unpublished
 	 */
@@ -84,6 +85,10 @@ class Article extends DatabaseObject implements ILinkableObject {
 			return true;
 		}
 		
+		if (WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
+			return true;
+		}
+		
 		return false;
 	}
 	
@@ -108,6 +113,48 @@ class Article extends DatabaseObject implements ILinkableObject {
 		}
 		
 		return WCF::getSession()->getPermission('user.article.canRead');
+	}
+	
+	/**
+	 * Returns true if the current user can edit these article.
+	 * 
+	 * @return      boolean
+	 * @since       3.2
+	 */
+	public function canEdit() {
+		if (WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+			return true; 
+		}
+		
+		if (WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
+			return true;
+		}
+		
+		if ($this->publicationStatus != self::PUBLISHED) {
+			if (WCF::getSession()->getPermission('admin.content.article.canContributeArticle') && $this->userID == WCF::getUser()->userID) {
+				return false;
+			}
+		}
+		
+		return false; 
+	}
+	
+	/**
+	 * Returns true if the current user can publish these article. 
+	 * 
+	 * @return      boolean
+	 * @since       3.2
+	 */
+	public function canPublish() {
+		if (WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+			return true;
+		}
+		
+		if (WCF::getSession()->getPermission('admin.content.article.canManageOwnArticles') && $this->userID == WCF::getUser()->userID) {
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -314,5 +361,29 @@ class Article extends DatabaseObject implements ILinkableObject {
 		}
 		
 		return $discussionProviders;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since       3.2
+	 */
+	public function getTime() {
+		return $this->time;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since       3.2
+	 */
+	public function getUserID() {
+		return $this->userID;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since       3.2
+	 */
+	public function getUsername() {
+		return $this->username;
 	}
 }

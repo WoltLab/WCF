@@ -46,6 +46,8 @@ class CronjobScheduler extends SingletonFactory {
 			return;
 		}
 		
+		$this->resetFailedCronjobs();
+		
 		// get outstanding cronjobs
 		$this->loadCronjobs();
 		
@@ -73,7 +75,10 @@ class CronjobScheduler extends SingletonFactory {
 				try {
 					$this->executeCronjob($cronjobEditor, $logEditor);
 				}
-				catch (SystemException $e) {
+				catch (\Throwable $e) {
+					$this->logResult($logEditor, $e);
+				}
+				catch (\Exception $e) {
 					$this->logResult($logEditor, $e);
 				}
 			}
@@ -106,6 +111,82 @@ class CronjobScheduler extends SingletonFactory {
 	}
 	
 	/**
+	 * Resets any cronjobs that have previously failed to execute. Cronjobs that have failed too often will
+	 * be disabled automatically.
+	 */
+	protected function resetFailedCronjobs() {
+		WCF::getDB()->beginTransaction();
+		/** @noinspection PhpUnusedLocalVariableInspection */
+		$committed = false;
+		try {
+			$sql = "SELECT		*
+				FROM		wcf" . WCF_N . "_cronjob
+				WHERE		state <> ?
+					AND	isDisabled = ?
+					AND	afterNextExec <= ?
+				FOR UPDATE";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				Cronjob::READY,
+				0,
+				TIME_NOW
+			]);
+			/** @var Cronjob $cronjob */
+			while ($cronjob = $statement->fetchObject(Cronjob::class)) {
+				// In any case: Reset the state to READY.
+				$data['state'] = Cronjob::READY;
+				
+				switch ($cronjob->state) {
+					case Cronjob::EXECUTING:
+						// The cronjob spent two periods in the EXECUTING state.
+						// We must assume it crashed.
+						$data['failCount'] = $cronjob->failCount + 1;
+						
+						// The cronjob exceeded the maximum fail count.
+						// Thus it must be disabled.
+						if ($data['failCount'] > Cronjob::MAX_FAIL_COUNT) {
+							$data['isDisabled'] = 1;
+							$data['failCount'] = 0;
+						}
+						// fall through
+					case Cronjob::PENDING:
+						// The cronjob spent two periods in the PENDING state.
+						// We must assume a previous cronjob in the same request hosed
+						// the whole process (e.g. by exceeding the memory limit).
+						// This is not the fault of this cronjob, thus the fail counter
+						// is not being increased.
+						
+						$log = CronjobLogEditor::create([
+							'cronjobID' => $cronjob->cronjobID,
+							'execTime' => TIME_NOW
+						]);
+						$logEditor = new CronjobLogEditor($log);
+						$this->logResult($logEditor, new \Exception('Cronjob stuck in state '.$cronjob->state.' for two periods, resetting.'));
+						break;
+					default:
+						throw new \LogicException('Unreachable');
+				}
+				
+				// Schedule the cronjob for execution at the next regular execution date. The previous
+				// implementation was executing the cronjob immediately, which may be undesirable if
+				// the cronjob is expected to be executed in a specific time window only. 
+				$data['nextExec'] = $cronjob->getNextExec(TIME_NOW);
+				$data['afterNextExec'] = $cronjob->getNextExec($data['nextExec'] + 120);
+				
+				(new CronjobEditor($cronjob))->update($data);
+			}
+			
+			WCF::getDB()->commitTransaction();
+			$committed = true;
+		}
+		finally {
+			if (!$committed) {
+				WCF::getDB()->rollBackTransaction();
+			}
+		}
+	}
+	
+	/**
 	 * Loads outstanding cronjobs.
 	 */
 	protected function loadCronjobs() {
@@ -114,46 +195,24 @@ class CronjobScheduler extends SingletonFactory {
 		$committed = false;
 		try {
 			$sql = "SELECT	        *
-				FROM	        wcf" . WCF_N . "_cronjob cronjob
-				WHERE	        (cronjob.nextExec <= ? OR cronjob.afterNextExec <= ?)
-						AND cronjob.isDisabled = ?
-						AND cronjob.failCount < ?
+				FROM	        wcf" . WCF_N . "_cronjob
+				WHERE	        isDisabled = ?
+						AND state = ?
+						AND nextExec <= ?
 				FOR UPDATE";
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([TIME_NOW, TIME_NOW, 0, Cronjob::MAX_FAIL_COUNT]);
-			while ($row = $statement->fetchArray()) {
-				$cronjob = new Cronjob(null, $row);
+			$statement->execute([
+				0,
+				Cronjob::READY,
+				TIME_NOW
+			]);
+			while ($cronjob = $statement->fetchObject(Cronjob::class)) {
 				$cronjobEditor = new CronjobEditor($cronjob);
-				$executeCronjob = true;
 				
-				$data = ['state' => Cronjob::PENDING];
+				// Mark the cronjob as pending to prevent concurrent requests from executing it.
+				$cronjobEditor->update(['state' => Cronjob::PENDING]);
 				
-				// reset cronjob if it got stuck before and afterNextExec is in the past
-				if ($cronjobEditor->afterNextExec <= TIME_NOW) {
-					if ($cronjobEditor->state == Cronjob::EXECUTING) {
-						$failCount = $cronjobEditor->failCount + 1;
-						$data['failCount'] = $failCount;
-						
-						// disable cronjob
-						if ($failCount == Cronjob::MAX_FAIL_COUNT) {
-							$data['isDisabled'] = 1;
-							$data['state'] = 0;
-							$executeCronjob = false;
-						}
-					}
-				} // ignore cronjobs which seem to be running
-				else {
-					if ($cronjobEditor->nextExec <= TIME_NOW && $cronjobEditor->state != Cronjob::READY) {
-						$executeCronjob = false;
-					}
-				}
-				
-				// mark cronjob as pending, preventing parallel execution
-				$cronjobEditor->update($data);
-				
-				if ($executeCronjob) {
-					$this->cronjobEditors[] = $cronjobEditor;
-				}
+				$this->cronjobEditors[] = $cronjobEditor;
 			}
 			WCF::getDB()->commitTransaction();
 			$committed = true;
@@ -196,9 +255,9 @@ class CronjobScheduler extends SingletonFactory {
 	 * Logs cronjob exec success or failure.
 	 * 
 	 * @param	CronjobLogEditor	$logEditor
-	 * @param	SystemException		$exception
+	 * @param	\Throwable		$exception
 	 */
-	protected function logResult(CronjobLogEditor $logEditor, SystemException $exception = null) {
+	protected function logResult(CronjobLogEditor $logEditor, $exception = null) {
 		if ($exception !== null) {
 			$errString = implode("\n", [
 				$exception->getMessage(),

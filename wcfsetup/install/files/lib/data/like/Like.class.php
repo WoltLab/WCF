@@ -1,5 +1,7 @@
 <?php
 namespace wcf\data\like;
+use wcf\data\reaction\type\ReactionType;
+use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
 
@@ -18,6 +20,7 @@ use wcf\system\WCF;
  * @property-read	integer		$userID			id of the user who created the like
  * @property-read	integer		$time			timestamp at which the like has been created
  * @property-read	integer		$likeValue		value of the like (`+1` = like, `-1` = dislike, see `Like::LIKE` and `Like::Dislike`)
+ * @property-read	integer		$reactionTypeID		reactionTypeID of the reaction
  */
 class Like extends DatabaseObject {
 	/**
@@ -73,17 +76,29 @@ class Like extends DatabaseObject {
 	 * Returns true, if like value is a like.
 	 * 
 	 * @return	boolean
+	 * @deprecated	3.2
 	 */
 	public function isLike() {
-		return ($this->likeValue == self::LIKE);
+		return $this->getReactionType()->isPositive();
 	}
 	
 	/**
 	 * Returns true, if like value is a dislike.
 	 * 
 	 * @return	boolean
+	 * @deprecated	3.2
 	 */
 	public function isDislike() {
-		return ($this->likeValue == self::DISLIKE);
+		return $this->getReactionType()->isNegative();
+	}
+	
+	/**
+	 * Returns the reaction for these like. 
+	 * 
+	 * @return	ReactionType
+	 * @since	3.2
+	 */
+	public function getReactionType() {
+		return ReactionTypeCache::getInstance()->getReactionTypeByID($this->reactionTypeID);
 	}
 }

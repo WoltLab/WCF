@@ -620,6 +620,8 @@ CREATE TABLE wcf1_language_item (
 	packageID INT(10),
 	languageItemOldValue MEDIUMTEXT,
 	languageCustomItemDisableTime INT(10),
+	isCustomLanguageItem TINYINT(1) NOT NULL DEFAULT 0,
+	
 	UNIQUE KEY languageItem (languageItem, languageID),
 	KEY languageItemOriginIsSystem (languageItemOriginIsSystem)
 );
@@ -633,6 +635,7 @@ CREATE TABLE wcf1_like (
 	userID INT(10) NOT NULL,
 	time INT(10) NOT NULL DEFAULT 1,
 	likeValue TINYINT(1) NOT NULL DEFAULT 1,
+	reactionTypeID INT(10) NOT NULL,
 	UNIQUE KEY (objectTypeID, objectID, userID)
 );
 
@@ -646,6 +649,7 @@ CREATE TABLE wcf1_like_object (
 	dislikes MEDIUMINT(7) NOT NULL DEFAULT 0,
 	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
 	cachedUsers TEXT,
+	cachedReactions TEXT,
 	UNIQUE KEY (objectTypeID, objectID)
 );
 
@@ -686,7 +690,10 @@ CREATE TABLE wcf1_media (
 	largeThumbnailType VARCHAR(255) NOT NULL DEFAULT '',
 	largeThumbnailSize INT(10) NOT NULL DEFAULT 0,
 	largeThumbnailWidth SMALLINT(5) NOT NULL DEFAULT 0,
-	largeThumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0
+	largeThumbnailHeight SMALLINT(5) NOT NULL DEFAULT 0,
+	
+	downloads INT(10) NOT NULL DEFAULT 0,
+	lastDownloadTime INT(10) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_media_content;
@@ -1156,6 +1163,16 @@ CREATE TABLE wcf1_poll_option_vote (
 	UNIQUE KEY vote (pollID, optionID, userID)
 );
 
+DROP TABLE IF EXISTS wcf1_reaction_type; 
+CREATE TABLE wcf1_reaction_type (
+	reactionTypeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+	title VARCHAR(255), 
+	type TINYINT(1),
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	iconFile MEDIUMTEXT,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0
+);
+
 DROP TABLE IF EXISTS wcf1_registry;
 CREATE TABLE wcf1_registry (
 	packageID INT(10) NOT NULL,
@@ -1382,6 +1399,9 @@ CREATE TABLE wcf1_trophy(
 	badgeColor VARCHAR(255),
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	awardAutomatically TINYINT(1) NOT NULL DEFAULT 0,
+	revokeAutomatically TINYINT(1) NOT NULL DEFAULT 0,
+	trophyUseHtml TINYINT(1) NOT NULL DEFAULT 0,
+	showOrder INT(10) NOT NULL DEFAULT 0,
 	KEY(categoryID)
 );
 
@@ -1434,6 +1454,9 @@ CREATE TABLE wcf1_user (
 	disableCoverPhotoReason TEXT,
 	disableCoverPhotoExpires INT(10) NOT NULL DEFAULT 0,
 	articles INT(10) NOT NULL DEFAULT 0,
+	positiveReactionsReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
+	negativeReactionsReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
+	neutralReactionsReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
 	
 	KEY username (username),
 	KEY email (email),
@@ -1443,6 +1466,9 @@ CREATE TABLE wcf1_user (
 	KEY registrationData (registrationIpAddress, registrationDate),
 	KEY activityPoints (activityPoints),
 	KEY likesReceived (likesReceived),
+	KEY positiveReactionsReceived (positiveReactionsReceived),
+	KEY negativeReactionsReceived (negativeReactionsReceived),
+	KEY neutralReactionsReceived (neutralReactionsReceived),
 	KEY authData (authData),
 	KEY trophyPoints (trophyPoints)
 );
@@ -1594,6 +1620,7 @@ CREATE TABLE wcf1_user_trophy(
 	time INT(10) NOT NULL DEFAULT 0,
 	description MEDIUMTEXT,
 	useCustomDescription TINYINT(1) NOT NULL DEFAULT 0,
+	trophyUseHtml TINYINT(1) NOT NULL DEFAULT 0,
 	KEY(trophyID, time)
 );
 
@@ -2111,6 +2138,7 @@ ALTER TABLE wcf1_moderation_queue_to_user ADD FOREIGN KEY (userID) REFERENCES wc
 ALTER TABLE wcf1_like ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_like ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_like ADD FOREIGN KEY (objectUserID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+ALTER TABLE wcf1_like ADD FOREIGN KEY (reactionTypeID) REFERENCES wcf1_reaction_type (reactionTypeID) ON DELETE CASCADE; 
 
 ALTER TABLE wcf1_like_object ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_like_object ADD FOREIGN KEY (objectUserID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
@@ -2356,3 +2384,10 @@ INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optio
 
 -- default recipient: site administrator
 INSERT INTO wcf1_contact_recipient (recipientID, name, email, isAdministrator, originIsSystem) VALUES (1, 'wcf.contact.recipient.name1', '', 1, 1);
+
+-- default reaction type
+INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title1', 1, 1, 'like.svg');
+INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title2', 1, 2, 'haha.svg');
+INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title3', -1, 3, 'sad.svg');
+INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title4', 0, 4, 'confused.svg');
+INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title5', 1, 5, 'thanks.svg');

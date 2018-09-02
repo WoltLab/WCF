@@ -49,6 +49,7 @@
 			<name>com.woltlab.wcf.likeableArticle.recentActivityEvent</name>
 			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
 			<classname>wcf\system\user\activity\event\LikeableArticleUserActivityEvent</classname>
+			<supportsReactions>1</supportsReactions>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.articleComment.recentActivityEvent</name>
@@ -85,6 +86,39 @@
 			<name>com.woltlab.wcf.article.comment</name>
 			<definitionname>com.woltlab.wcf.article.discussionProvider</definitionname>
 			<classname>wcf\system\article\discussion\CommentArticleDiscussionProvider</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.articleComment.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\ArticleCommentUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.page</category>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.articleComment.response.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\ArticleCommentResponseUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.page</category>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
+			<classname>wcf\system\moderation\queue\report\ArticleModerationQueueReportHandler</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.category</name>
+			<definitionname>com.woltlab.wcf.user.objectWatch</definitionname>
+			<classname>wcf\system\user\object\watch\ArticleCategoryUserObjectWatch</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\ArticleUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.page</category>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.recentActivityEvent</name>
+			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
+			<classname>wcf\system\user\activity\event\ArticleUserActivityEvent</classname>
 		</type>
 		<!-- /articles -->
 		
@@ -152,6 +186,31 @@
 			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
 			<classname>wcf\system\moderation\queue\report\UserModerationQueueReportHandler</classname>
 		</type>
+		
+		<!-- page -->
+		<type>
+			<name>com.woltlab.wcf.page.recentActivityEvent</name>
+			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
+			<classname>wcf\system\user\activity\event\PageCommentUserActivityEvent</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.page.response.recentActivityEvent</name>
+			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
+			<classname>wcf\system\user\activity\event\PageCommentResponseUserActivityEvent</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.page.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\PageCommentUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.page</category>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.page.response.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\PageCommentResponseUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.page</category>
+		</type>
+		<!-- /page -->
 		
 		<!-- moderation type -->
 		<type>
@@ -258,12 +317,14 @@
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
 			<classname>wcf\system\user\notification\object\type\LikeUserNotificationObjectType</classname>
 			<category>com.woltlab.wcf.user</category>
+			<supportsReactions>1</supportsReactions>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.profileComment.response.like.notification</name>
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
 			<classname>wcf\system\user\notification\object\type\LikeUserNotificationObjectType</classname>
 			<category>com.woltlab.wcf.user</category>
+			<supportsReactions>1</supportsReactions>
 		</type>
 		
 		<type>
@@ -427,6 +488,11 @@
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname>wcf\system\importer\UserTrophyImporter</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.reactionType</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\ReactionTypeImporter</classname>
+		</type>
 		<!-- /importers -->
 		
 		<!-- rebuild data workers -->
@@ -441,12 +507,6 @@
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 			<classname>wcf\system\worker\LikeRebuildDataWorker</classname>
 			<nicevalue>-100</nicevalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.like.user</name>
-			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
-			<classname>wcf\system\worker\LikeUserRebuildDataWorker</classname>
-			<nicevalue>-90</nicevalue>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.article</name>
@@ -612,8 +672,30 @@
 			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>likesReceived</propertyname>
+			<propertyname>positiveReactionsReceived</propertyname>
 			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.negativeReactionsReceived</name>
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>negativeReactionsReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.neutralReactionsReceived</name>
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>neutralReactionsReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userReputation</name>
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+			<classname>wcf\system\condition\UserReputationCondition</classname>
+			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.userOptions</name>
@@ -699,8 +781,30 @@
 			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>likesReceived</propertyname>
+			<propertyname>positiveReactionsReceived</propertyname>
 			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.negativeReactionsReceived</name>
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>negativeReactionsReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.neutralReactionsReceived</name>
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>neutralReactionsReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userReputation</name>
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+			<classname>wcf\system\condition\UserReputationCondition</classname>
+			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.userOptions</name>
@@ -832,8 +936,33 @@
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>likesReceived</propertyname>
+			<propertyname>positiveReactionsReceived</propertyname>
 			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.negativeReactionsReceived</name>
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>negativeReactionsReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.neutralReactionsReceived</name>
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>neutralReactionsReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userReputation</name>
+			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
+			<classname>wcf\system\condition\UserReputationCondition</classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.userOptions</name>
@@ -1000,8 +1129,33 @@
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>likesReceived</propertyname>
+			<propertyname>positiveReactionsReceived</propertyname>
 			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.negativeReactionsReceived</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>negativeReactionsReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.neutralReactionsReceived</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>neutralReactionsReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userReputation</name>
+			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
+			<classname>wcf\system\condition\UserReputationCondition</classname>
+			<conditionobject>com.woltlab.wcf.user</conditionobject>
+			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.userOptions</name>
@@ -1204,8 +1358,30 @@
 			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>likesReceived</propertyname>
+			<propertyname>positiveReactionsReceived</propertyname>
 			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.negativeReactionsReceived</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>negativeReactionsReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.neutralReactionsReceived</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>neutralReactionsReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userReputation</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname>wcf\system\condition\UserReputationCondition</classname>
+			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.userOptions</name>
@@ -1297,8 +1473,30 @@
 			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>likesReceived</propertyname>
+			<propertyname>positiveReactionsReceived</propertyname>
 			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.negativeReactionsReceived</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>negativeReactionsReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.neutralReactionsReceived</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
+			<conditiongroup>contents</conditiongroup>
+			<propertyname>neutralReactionsReceived</propertyname>
+			<minvalue>0</minvalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.userReputation</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname>wcf\system\condition\UserReputationCondition</classname>
+			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.userOptions</name>
@@ -1536,6 +1734,9 @@
 		<!-- /deprecated -->
 	</import>
 	<delete>
+		<type name="com.woltlab.wcf.like.user">
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+		</type>
 		<type name="com.woltlab.wcf.collapsibleSidebar">
 			<definitionname>com.woltlab.wcf.collapsibleContent</definitionname>
 		</type>

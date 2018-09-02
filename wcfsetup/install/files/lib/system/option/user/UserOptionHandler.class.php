@@ -192,6 +192,24 @@ class UserOptionHandler extends OptionHandler {
 	 */
 	protected function getFormElement($type, Option $option) {
 		if ($this->searchMode) {
+			$optionType = $this->getTypeObject($type);
+			
+			if ($this->conditionMode) {
+				$hasProperty = property_exists($optionType, 'forceSearchOption');
+				
+				if ($hasProperty && isset($this->optionValues[$option->optionName])) {
+					$optionType->forceSearchOption = $this->optionValues[$option->optionName] == $option->defaultValue;
+				}
+				
+				$element = $this->getTypeObject($type)->getSearchFormElement($option, (isset($this->optionValues[$option->optionName]) ? $this->optionValues[$option->optionName] : null));
+				
+				if ($hasProperty && isset($this->optionValues[$option->optionName])) {
+					$optionType->forceSearchOption = false;
+				}
+				
+				return $element;
+			}
+			
 			/** @noinspection PhpUndefinedMethodInspection */
 			return $this->getTypeObject($type)->getSearchFormElement($option, (isset($this->optionValues[$option->optionName]) ? $this->optionValues[$option->optionName] : null));
 		}

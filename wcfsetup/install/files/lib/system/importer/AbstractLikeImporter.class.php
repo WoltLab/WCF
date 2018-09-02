@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\importer;
 use wcf\data\like\Like;
+use wcf\data\reaction\type\ReactionType;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\WCF;
 
 /**
@@ -32,9 +34,25 @@ class AbstractLikeImporter extends AbstractImporter {
 		if (!$data['userID']) return 0;
 		if (empty($data['time'])) $data['time'] = 1;
 		
+		if (!isset($data['reactionTypeID'])) {
+			if ($data['likeValue'] == 1) {
+				$data['reactionTypeID'] = ReactionHandler::getInstance()->getLegacyReactionTypeID(ReactionType::REACTION_TYPE_POSITIVE);
+			}
+			else {
+				$data['reactionTypeID'] = ReactionHandler::getInstance()->getLegacyReactionTypeID(ReactionType::REACTION_TYPE_NEGATIVE);
+			}
+		}
+		else {
+			$data['reactionTypeID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.reactionType', $data['reactionTypeID']);
+		}
+		
+		if ($data['reactionTypeID'] === null) {
+			return 0;
+		}
+		
 		$sql = "INSERT IGNORE INTO	wcf".WCF_N."_like
-						(objectID, objectTypeID, objectUserID, userID, time, likeValue)
-			VALUES			(?, ?, ?, ?, ?, ?)";
+						(objectID, objectTypeID, objectUserID, userID, time, likeValue, reactionTypeID)
+			VALUES			(?, ?, ?, ?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			$data['objectID'],

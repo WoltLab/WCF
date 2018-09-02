@@ -288,7 +288,8 @@ class AccountManagementForm extends AbstractForm {
 			'facebookConnect' => $this->facebookConnect,
 			'facebookDisconnect' => $this->facebookDisconnect,
 			'googleConnect' => $this->googleConnect,
-			'googleDisconnect' => $this->googleDisconnect
+			'googleDisconnect' => $this->googleDisconnect,
+			'passwordRulesAttributeValue' => UserRegistrationUtil::getPasswordRulesAttributeValue()
 		]);
 	}
 	

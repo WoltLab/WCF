@@ -139,6 +139,11 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 				event.preventDefault();
 			}
 			
+			// Ignore requests to submit the message while a previous request is still pending.
+			if (this._content.classList.contains('loading')) {
+				return;
+			}
+			
 			if (!this._validate()) {
 				// validation failed, bail out
 				return;

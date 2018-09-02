@@ -178,7 +178,6 @@ class InstallPackageAction extends AbstractDialogAction {
 			case 'install':
 			case 'prepare':
 			case 'rollback':
-				continue;
 			break;
 			
 			default:

@@ -6,7 +6,7 @@ use wcf\data\comment\StructuredCommentList;
 use wcf\data\like\object\LikeObject;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\comment\CommentHandler;
-use wcf\system\like\LikeHandler;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\MetaTagHandler;
 use wcf\system\WCF;
@@ -98,9 +98,9 @@ class ArticlePage extends AbstractArticlePage {
 		
 		// fetch likes
 		if (MODULE_LIKE) {
-			$objectType = LikeHandler::getInstance()->getObjectType('com.woltlab.wcf.likeableArticle');
-			LikeHandler::getInstance()->loadLikeObjects($objectType, [$this->article->articleID]);
-			$this->articleLikeData = LikeHandler::getInstance()->getLikeObjects($objectType);
+			$objectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.likeableArticle');
+			ReactionHandler::getInstance()->loadLikeObjects($objectType, [$this->article->articleID]);
+			$this->articleLikeData = ReactionHandler::getInstance()->getLikeObjects($objectType);
 		}
 		
 		// add meta/og tags
@@ -109,13 +109,15 @@ class ArticlePage extends AbstractArticlePage {
 		MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'article', true);
 		MetaTagHandler::getInstance()->addTag('og:description', 'og:description', ($this->articleContent->teaser ?: StringUtil::decodeHTML(StringUtil::stripHTML($this->articleContent->getFormattedTeaser()))), true);
 		
-		if ($this->articleContent->getTeaserImage()) {
+		if ($this->articleContent->getTeaserImage() && $this->articleContent->getTeaserImage()->width >= 200 && $this->articleContent->getTeaserImage()->height >= 200) {
 			MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->articleContent->getTeaserImage()->getLink(), true);
-			
-			if ($this->articleContent->getImage()) {
-				MetaTagHandler::getInstance()->addTag('og:image:width', 'og:image:width', $this->articleContent->getImage()->width, true);
-				MetaTagHandler::getInstance()->addTag('og:image:height', 'og:image:height', $this->articleContent->getImage()->height, true);
-			}
+			MetaTagHandler::getInstance()->addTag('og:image:width', 'og:image:width', $this->articleContent->getTeaserImage()->width, true);
+			MetaTagHandler::getInstance()->addTag('og:image:height', 'og:image:height', $this->articleContent->getTeaserImage()->height, true);
+		}
+		else if ($this->articleContent->getImage()) {
+			MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->articleContent->getImage()->getLink(), true);
+			MetaTagHandler::getInstance()->addTag('og:image:width', 'og:image:width', $this->articleContent->getImage()->width, true);
+			MetaTagHandler::getInstance()->addTag('og:image:height', 'og:image:height', $this->articleContent->getImage()->height, true);
 		}
 		
 		// add tags as keywords

@@ -102,20 +102,32 @@ trait TSelectionFormField {
 	}
 	
 	/**
-	 * Sets the possible options of this selection and returns this field.
+	 * Sets the possible options of this field and returns this field.
 	 * 
 	 * Note: If PHP considers the key of the first selectable option to be empty
 	 * and the this field is nullable, then the save value of that key is `null`
 	 * instead of the given empty value.
 	 * 
-	 * @param	array|callable		$options	selectable options or callable returning the options
-	 * @param	bool			$nestedOptions
+	 * If a `callable` is passed, it is expected that it either returns an array
+	 * or a `DatabaseObjectList` object.
+	 * 
+	 * If a `DatabaseObjectList` object is passed and `$options->objectIDs === null`,
+	 * `$options->readObjects()` is called so that the `readObjects()` does not have
+	 * to be called by the API user.
+	 * 
+	 * If nested options are passed, the given options must be a array or a
+	 * callable returning an array. Each array value must be an array with the
+	 * following entries: `depth`, `label`, and `value`.
+	 * 
+	 * @param	array|callable|DatabaseObjectList	$options	selectable options or callable returning the options
+	 * @param	bool					$nestedOptions	is `true` if the passed options are nested options
+	 * @param	bool					$labelLanguageItems	is `true` if the labels should be treated as language items if possible
 	 * @return	static					this field
 	 * 
-	 * @throws	\InvalidArgumentException		if given options are no array or callable or otherwise invalid
-	 * @throws	\UnexpectedValueException		if callable does not return an array
+	 * @throws	\InvalidArgumentException	if given options are no array or callable or otherwise invalid
+	 * @throws	\UnexpectedValueException	if callable does not return an array
 	 */
-	public function options($options, $nestedOptions = false) {
+	public function options($options, $nestedOptions = false, $labelLanguageItems = true) {
 		if ($nestedOptions) {
 			if (!is_array($options) && !is_callable($options)) {
 				throw new \InvalidArgumentException("The given nested options are neither an array nor a callable, " . gettype($options) . " given.");
@@ -137,7 +149,7 @@ trait TSelectionFormField {
 				throw new \UnexpectedValueException("The options callable is expected to return an array or an instance of '" . DatabaseObjectList::class . "', " . gettype($options) . " returned.");
 			}
 			
-			return $this->options($options, $nestedOptions);
+			return $this->options($options, $nestedOptions, $labelLanguageItems);
 		}
 		else if ($options instanceof DatabaseObjectList) {
 			// automatically read objects
@@ -186,7 +198,7 @@ trait TSelectionFormField {
 				}
 				
 				// resolve language item for label
-				if (preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', (string) $option['label'])) {
+				if ($labelLanguageItems && preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', (string) $option['label'])) {
 					$option['label'] = WCF::getLanguage()->getDynamicVariable($option['label']);
 				}
 				
@@ -231,7 +243,7 @@ trait TSelectionFormField {
 				}
 				
 				// resolve language item for label
-				if (preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', (string) $label)) {
+				if ($labelLanguageItems && preg_match('~^([a-zA-Z0-9-_]+\.){2,}[a-zA-Z0-9-_]+$~', (string) $label)) {
 					$label = WCF::getLanguage()->getDynamicVariable($label);
 				}
 				

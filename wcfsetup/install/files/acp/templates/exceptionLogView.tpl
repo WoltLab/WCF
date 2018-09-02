@@ -96,7 +96,7 @@
 				</dl>
 				<dl>
 					<dt>{lang}wcf.acp.exceptionLog.exception.memory{/lang}</dt>
-					<dd>{$exception[peakMemory]|filesizeBinary} / {$exception[maxMemory]|filesizeBinary}</dd>
+					<dd>{$exception[peakMemory]|filesizeBinary} / {if $exception[maxMemory] == -1}&infin;{else}{$exception[maxMemory]|filesizeBinary}{/if}</dd>
 				</dl>
 				{foreach from=$exception[chain] item=chain}
 				<dl>
@@ -127,15 +127,15 @@
 					<dd><textarea id="copyException{$exceptionKey}" rows="5" cols="40" class="jsCopyException" readonly>{$exception[0]}</textarea></dd>
 				</dl>
 			</section>
-			
-			<footer class="contentFooter">
-				{hascontent}
-					<div class="paginationBottom">
-						{content}{@$pagesLinks}{/content}
-					</div>
-				{/hascontent}
-			</footer>
 		{/foreach}
+
+		<footer class="contentFooter">
+			{hascontent}
+				<div class="paginationBottom">
+					{content}{@$pagesLinks}{/content}
+				</div>
+			{/hascontent}
+		</footer>
 	{elseif $exceptionID}
 		<p class="error">{lang}wcf.acp.exceptionLog.exceptionNotFound{/lang}</p>
 	{/if}

@@ -4,6 +4,7 @@ use wcf\data\language\category\LanguageCategoryList;
 use wcf\data\language\item\LanguageItemList;
 use wcf\page\SortablePage;
 use wcf\system\language\LanguageFactory;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -84,6 +85,13 @@ class LanguageItemListPage extends SortablePage {
 	public $hasRecentlyDisabledCustomValue = 0;
 	
 	/**
+	 * is `1` if only custom language items (created via ACP) should be shown
+	 * @var	integer
+	 * @since	3.2
+	 */
+	public $isCustomLanguageItem = 0;
+	
+	/**
 	 * available languages
 	 * @var	array
 	 */
@@ -94,6 +102,12 @@ class LanguageItemListPage extends SortablePage {
 	 * @var	array
 	 */
 	public $availableLanguageCategories = [];
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public $forceCanonicalURL = true;
 	
 	/**
 	 * @inheritDoc
@@ -108,6 +122,19 @@ class LanguageItemListPage extends SortablePage {
 		if (!empty($_REQUEST['hasCustomValue'])) $this->hasCustomValue = 1;
 		if (!empty($_REQUEST['hasDisabledCustomValue'])) $this->hasDisabledCustomValue = 1;
 		if (!empty($_REQUEST['hasRecentlyDisabledCustomValue'])) $this->hasRecentlyDisabledCustomValue = 1;
+		if (!empty($_REQUEST['isCustomLanguageItem'])) $this->isCustomLanguageItem = 1;
+		
+		$parameters = [];
+		if ($this->languageID) $parameters['languageID'] = $this->languageID;
+		if ($this->languageCategoryID) $parameters['languageCategoryID'] = $this->languageCategoryID;
+		if ($this->languageItem) $parameters['languageItem'] = $this->languageItem;
+		if ($this->languageItemValue) $parameters['languageItemValue'] = $this->languageItemValue;
+		if ($this->hasCustomValue) $parameters['hasCustomValue'] = $this->hasCustomValue;
+		if ($this->hasDisabledCustomValue) $parameters['hasDisabledCustomValue'] = $this->hasDisabledCustomValue;
+		if ($this->hasRecentlyDisabledCustomValue) $parameters['hasRecentlyDisabledCustomValue'] = $this->hasRecentlyDisabledCustomValue;
+		if ($this->isCustomLanguageItem) $parameters['isCustomLanguageItem'] = $this->isCustomLanguageItem;
+		
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('LanguageItemList', $parameters);
 	}
 	
 	/**
@@ -122,6 +149,7 @@ class LanguageItemListPage extends SortablePage {
 		if ($this->hasCustomValue || $this->hasDisabledCustomValue || $this->hasRecentlyDisabledCustomValue) $this->objectList->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
 		if ($this->hasDisabledCustomValue || $this->hasRecentlyDisabledCustomValue) $this->objectList->getConditionBuilder()->add("languageUseCustomValue = ?", [0]);
 		if ($this->hasRecentlyDisabledCustomValue) $this->objectList->getConditionBuilder()->add("languageCustomItemDisableTime >= ?", [TIME_NOW - 86400 * 7]);
+		if ($this->isCustomLanguageItem) $this->objectList->getConditionBuilder()->add("isCustomLanguageItem = ?", [1]);
 	}
 	
 	/**
@@ -161,6 +189,7 @@ class LanguageItemListPage extends SortablePage {
 			'hasCustomValue' => $this->hasCustomValue,
 			'hasDisabledCustomValue' => $this->hasDisabledCustomValue,
 			'hasRecentlyDisabledCustomValue' => $this->hasRecentlyDisabledCustomValue,
+			'isCustomLanguageItem' => $this->isCustomLanguageItem,
 			'availableLanguages' => $this->availableLanguages,
 			'availableLanguageCategories' => $this->availableLanguageCategories
 		]);

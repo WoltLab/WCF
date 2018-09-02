@@ -47,6 +47,8 @@ use wcf\system\WCF;
  * @property-read	integer		$largeThumbnailSize	size of the large thumbnail file for the media file if `$isImage` is `1`, otherwise `0`
  * @property-read	integer		$largeThumbnailWidth	width of the large thumbnail file for the media file if `$isImage` is `1`, otherwise `0`
  * @property-read	integer		$largeThumbnailHeight	height of the large thumbnail file for the media file if `$isImage` is `1`, otherwise `0`
+ * @property-read	integer		$downloads		number of times the media file has been downloaded
+ * @property-read	integer		$lastDownloadTime	timestamp at which the media file has been downloaded the last time
  */
 class Media extends DatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile {
 	/**
@@ -205,7 +207,28 @@ class Media extends DatabaseObject implements ILinkableObject, IRouteController,
 	 * @return	boolean
 	 */
 	public function isAccessible() {
-		return WCF::getSession()->getPermission('admin.content.cms.canManageMedia') || SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.media', $this->mediaID);
+		if ($this->canManage()) {
+			return true;
+		}
+		
+		return SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.media', $this->mediaID);
+	}
+	
+	/**
+	 * Returns `true` if the active user can manage this media file.
+	 * 
+	 * @return	bool
+	 */
+	public function canManage() {
+		if (WCF::getSession()->getPermission('admin.content.cms.canManageMedia')) {
+			if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+				return WCF::getUser()->userID == $this->userID;
+			}
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**

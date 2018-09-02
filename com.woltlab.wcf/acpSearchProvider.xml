@@ -33,5 +33,9 @@
 			<classname>wcf\system\search\acp\ArticleACPSearchResultProvider</classname>
 			<showorder>8</showorder>
 		</acpsearchprovider>
+		<acpsearchprovider name="com.woltlab.wcf.trophy">
+			<classname>wcf\system\search\acp\TrophyACPSearchResultProvider</classname>
+			<showorder>9</showorder>
+		</acpsearchprovider>
 	</import>
 </data>

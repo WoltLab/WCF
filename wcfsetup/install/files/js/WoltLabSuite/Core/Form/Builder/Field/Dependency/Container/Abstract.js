@@ -24,7 +24,7 @@ define(['EventHandler', '../Manager'], function(EventHandler, DependencyManager)
 		 * @abstract
 		 */
 		checkContainer: function() {
-			throw new Error("Implement me!")
+			throw new Error("Missing implementation of WoltLabSuite/Core/Form/Builder/Field/Dependency/Container.checkContainer!");
 		},
 		
 		/**

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\builder\field\dependency;
+use wcf\data\DatabaseObjectList;
 
 /**
  * Represents a dependency that requires that requires a field to have a certain value.
@@ -82,12 +83,43 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	/**
 	 * Sets the possible values the field may have for the dependency to be met.
 	 * 
-	 * @param	array		$values		possible field values
-	 * @return	static		$this		this dependency
+	 * @param	array|callable|DatabaseObjectList	$values		possible field values
+	 * @return	static		$this					this dependency
 	 * 
-	 * @throws	\InvalidArgumentException	if given values are invalid
+	 * @throws	\InvalidArgumentException				if given value are no array, callable, DatabaseObjectList, or otherwise invalid
+	 * @throws	\UnexpectedValueException				if callable does not return an array or a DatabaseObjectList
 	 */
-	public function values(array $values) {
+	public function values($values) {
+		if (!is_array($values) && !is_callable($values) && !($values instanceof DatabaseObjectList)) {
+			throw new \InvalidArgumentException("The given values are neither an array, a callable nor an instance of '" . DatabaseObjectList::class . "', " . gettype($values) . " given.");
+		}
+		
+		if (is_callable($values)) {
+			$values = $values();
+			
+			if (!is_array($values) && !($values instanceof DatabaseObjectList)) {
+				throw new \UnexpectedValueException("The values callable is expected to return an array or an instance of '" . DatabaseObjectList::class . "', " . gettype($values) . " returned.");
+			}
+		}
+		
+		if ($values instanceof DatabaseObjectList) {
+			// automatically read objects
+			if ($values->objectIDs === null) {
+				$values->readObjects();
+			}
+			
+			$dboValues = [];
+			foreach ($values as $object) {
+				if (!$object::getDatabaseTableIndexIsIdentity()) {
+					throw new \InvalidArgumentException("The database objects in the passed list must must have an index that identifies the objects.");
+				}
+				
+				$dboValues[] = $object->getObjectID();
+			}
+			
+			$values = $dboValues;
+		}
+		
 		if (empty($values)) {
 			throw new \InvalidArgumentException("Given values are empty.");
 		}

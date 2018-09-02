@@ -19,18 +19,29 @@
 		
 		elBySel('select[name=type]').addEventListener('change', function () {
 			if (elBySel('select[name=type]').value == 1) {
-				elById('imageContainer').style.display = 'block';
-				elById('badgeContainer').style.display = 'none';
+				elHide(elById('badgeContainer'));
+				elShow(elById('imageContainer'));
 			} 
 			else if (elBySel('select[name=type]').value == 2) {
-				elById('imageContainer').style.display = 'none';
-				elById('badgeContainer').style.display = 'block';
+				elShow(elById('badgeContainer'));
+				elHide(elById('imageContainer'));
 			}
 		});
 		
 		elBySel('input[name=awardAutomatically]').addEventListener('change', function () {
 			var awardAutomatically = elBySel('input[name=awardAutomatically]').checked;
 			elBySelAll('.conditionSection', null, window[(awardAutomatically ? 'elShow' : 'elHide')]);
+			
+			var revokeCheckbox = elBySel('#revokeAutomaticallyDL input');
+			if (awardAutomatically) {
+				elById('revokeAutomaticallyDL').classList.remove('disabled');
+				revokeCheckbox.disabled = false;
+			}
+			else {
+				elById('revokeAutomaticallyDL').classList.add('disabled');
+				revokeCheckbox.disabled = true;
+				revokeCheckbox.checked = false;
+			}
 		});
 		
 		BadgeHandler.init(); 
@@ -94,6 +105,13 @@
 			</dl>
 			{include file='multipleLanguageInputJavascript' elementIdentifier='description' forceSelection=false}
 			
+			<dl id="trophyUseHtmlDL">
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" name="trophyUseHtml" value="1"{if $trophyUseHtml} checked{/if}> {lang}wcf.acp.trophy.trophyUseHtml{/lang}</label>
+				</dd>
+			</dl>
+			
 			<dl{if $errorField == 'categoryID'} class="formError"{/if}>
 				<dt><label for="categoryID">{lang}wcf.acp.trophy.category{/lang}</label></dt>
 				<dd>
@@ -115,6 +133,14 @@
 			</dl>
 			
 			<dl>
+				<dt><label for="showOrder">{lang}wcf.global.showOrder{/lang}</label></dt>
+				<dd>
+					<input type="number" id="showOrder" name="showOrder" value="{$showOrder}" class="tiny" min="0">
+					<small>{lang}wcf.acp.trophy.showOrder.description{/lang}</small>
+				</dd>
+			</dl>
+			
+			<dl>
 				<dt></dt>
 				<dd>
 					<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked{/if}> {lang}wcf.acp.trophy.isDisabled{/lang}</label>
@@ -125,6 +151,13 @@
 				<dt></dt>
 				<dd>
 					<label><input type="checkbox" name="awardAutomatically" value="1"{if $awardAutomatically} checked{/if}> {lang}wcf.acp.trophy.awardAutomatically{/lang}</label>
+				</dd>
+			</dl>
+			
+			<dl id="revokeAutomaticallyDL"{if !$awardAutomatically} class="disabled"{/if}>
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" name="revokeAutomatically" value="1"{if $revokeAutomatically && $awardAutomatically} checked{/if}{if !$awardAutomatically} disabled{/if}> {lang}wcf.acp.trophy.revokeAutomatically{/lang}</label>
 				</dd>
 			</dl>
 			

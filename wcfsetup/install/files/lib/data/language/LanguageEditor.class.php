@@ -334,17 +334,21 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				$conditions->add("languageItem IN (?)", [array_keys($languageItemValues)]);
 				$conditions->add("languageID = ?", [$this->languageID]);
 				if ($packageID > 0) $conditions->add("packageID = ?", [$packageID]);
-				$conditions->add("languageUseCustomValue = ?", [1]);
-				$conditions->add("languageItemOriginIsSystem = ?", [1]);
+				$conditions->add("(languageUseCustomValue = ? OR isCustomLanguageItem = ?)", [1, 1]); 
 				
-				$sql = "SELECT  languageItemID, languageItem, languageItemValue
+				$sql = "SELECT  languageItemID, languageItem, languageItemValue, isCustomLanguageItem
 					FROM    wcf".WCF_N."_language_item
 					".$conditions;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditions->getParameters());
-				$updateValues = [];
+				$updateValues = $customLanguageItemIDs = [];
 				while ($row = $statement->fetchArray()) {
-					if ($row['languageItemValue'] != $languageItemValues[$row['languageItem']]) {
+					if ($row['isCustomLanguageItem']) {
+						$customLanguageItemIDs[] = $row['languageItemID'];
+					}
+					
+					// also save old values of custom language items
+					if ($row['isCustomLanguageItem'] || $row['languageItemValue'] != $languageItemValues[$row['languageItem']]) {
 						$updateValues[] = $row['languageItemID'];
 					}
 				}
@@ -362,6 +366,27 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 						$statement->execute([
 							TIME_NOW,
 							0,
+							$languageItemID
+						]);
+					}
+					WCF::getDB()->commitTransaction();
+				}
+				
+				// make custom language items normal ones
+				if (!empty($customLanguageItemIDs)) {
+					$sql = "UPDATE	wcf" . WCF_N . "_language_item
+						SET	isCustomLanguageItem = ?,
+							languageItemOriginIsSystem = ?,
+							packageID = ?
+						WHERE	languageItemID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					
+					WCF::getDB()->beginTransaction();
+					foreach ($updateValues as $languageItemID) {
+						$statement->execute([
+							0,
+							1,
+							$packageID,
 							$languageItemID
 						]);
 					}

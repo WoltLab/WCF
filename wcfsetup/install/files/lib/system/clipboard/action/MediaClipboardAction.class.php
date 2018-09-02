@@ -1,7 +1,9 @@
 <?php
 namespace wcf\system\clipboard\action;
 use wcf\data\clipboard\action\ClipboardAction;
+use wcf\data\media\Media;
 use wcf\data\media\MediaAction;
+use wcf\system\category\CategoryHandler;
 use wcf\system\WCF;
 
 /**
@@ -24,7 +26,8 @@ class MediaClipboardAction extends AbstractClipboardAction {
 	 */
 	protected $supportedActions = [
 		'delete',
-		'insert'
+		'insert',
+		'setCategory'
 	];
 	
 	/**
@@ -73,7 +76,20 @@ class MediaClipboardAction extends AbstractClipboardAction {
 			return [];
 		}
 		
-		return array_keys($this->objects);
+		$mediaIDs = array_keys($this->objects);
+		
+		if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+			$mediaIDs = [];
+			
+			/** @var Media $media */
+			foreach ($this->objects as $media) {
+				if ($media->userID == WCF::getUser()->userID) {
+					$mediaIDs[] = $media->mediaID;
+				}
+			}
+		}
+		
+		return $mediaIDs;
 	}
 	
 	/**
@@ -83,5 +99,36 @@ class MediaClipboardAction extends AbstractClipboardAction {
 	 */
 	public function validateInsert() {
 		return array_keys($this->objects);
+	}
+	
+	/**
+	 * Returns the ids of the media files whose category can be set.
+	 * 
+	 * @return	integer[]
+	 */
+	public function validateSetCategory() {
+		if (!WCF::getSession()->getPermission('admin.content.cms.canManageMedia')) {
+			return [];
+		}
+		
+		// category can only be set if any category exists
+		if (empty(CategoryHandler::getInstance()->getCategories('com.woltlab.wcf.media.category'))) {
+			return [];
+		}
+		
+		$mediaIDs = array_keys($this->objects);
+		
+		if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+			$mediaIDs = [];
+			
+			/** @var Media $media */
+			foreach ($this->objects as $media) {
+				if ($media->userID == WCF::getUser()->userID) {
+					$mediaIDs[] = $media->mediaID;
+				}
+			}
+		}
+		
+		return $mediaIDs;
 	}
 }

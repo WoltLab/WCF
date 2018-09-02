@@ -346,6 +346,15 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					}).bind(this));
 				}
 				
+				// Convert <br> inside <pre> into plain newline characters.
+				elBySelAll('pre', div, function (pre) {
+					elBySelAll('br', pre, function (br) {
+						var parent = br.parentNode;
+						parent.insertBefore(document.createTextNode("\n"), br);
+						parent.removeChild(br);
+					});
+				});
+				
 				mpInsert.call(this, div.innerHTML, data);
 				
 				// check if the caret is now inside an <a> element, but at

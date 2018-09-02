@@ -293,7 +293,7 @@ class SystemException extends \Exception implements IPrintableException {
 	<div class="exceptionContainer">
 		<div class="exceptionHeader">
 			<div class="exceptionBoundary">
-				<p class="exceptionTitle">An error has occured</p>
+				<p class="exceptionTitle">An error has occurred</p>
 			</div>
 		</div>
 		

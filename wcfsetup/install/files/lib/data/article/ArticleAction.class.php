@@ -8,6 +8,7 @@ use wcf\data\language\Language;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\comment\CommentHandler;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\like\LikeHandler;
@@ -15,6 +16,10 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
+use wcf\system\user\activity\event\UserActivityEventHandler;
+use wcf\system\user\notification\object\ArticleUserNotificationObject;
+use wcf\system\user\notification\UserNotificationHandler;
+use wcf\system\user\object\watch\UserObjectWatchHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\version\VersionTracker;
 use wcf\system\visitTracker\VisitTracker;
@@ -135,10 +140,22 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		// reset storage
 		if (ARTICLE_ENABLE_VISIT_TRACKING) {
 			UserStorageHandler::getInstance()->resetAll('unreadArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
 		}
 		
 		if ($article->publicationStatus == Article::PUBLISHED) {
 			ArticleEditor::updateArticleCounter([$article->userID => 1]);
+			
+			UserObjectWatchHandler::getInstance()->updateObject(
+				'com.woltlab.wcf.article.category',
+				$article->getCategory()->categoryID,
+				'article',
+				'com.woltlab.wcf.article.notification',
+				new ArticleUserNotificationObject($article)
+			);
+			
+			UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.article.recentActivityEvent', $article->articleID, null, $article->userID, $article->time);
 		}
 		
 		return $article;
@@ -243,11 +260,13 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		// reset storage
 		if (ARTICLE_ENABLE_VISIT_TRACKING) {
 			UserStorageHandler::getInstance()->resetAll('unreadArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
 		}
 		
 		$publicationStatus = (isset($this->parameters['data']['publicationStatus'])) ? $this->parameters['data']['publicationStatus'] : null;
 		if ($publicationStatus !== null) {
-			$usersToArticles = [];
+			$usersToArticles = $resetArticleIDs = [];
 			/** @var ArticleEditor $articleEditor */
 			foreach ($this->objects as $articleEditor) {
 				if ($publicationStatus != $articleEditor->publicationStatus) {
@@ -259,7 +278,29 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 						
 						$usersToArticles[$articleEditor->userID] += ($publicationStatus == Article::PUBLISHED) ? 1 : -1;
 					}
+					
+					if ($publicationStatus == Article::PUBLISHED) {
+						UserObjectWatchHandler::getInstance()->updateObject(
+							'com.woltlab.wcf.article.category',
+							$articleEditor->getCategory()->categoryID,
+							'article',
+							'com.woltlab.wcf.article.notification',
+							new ArticleUserNotificationObject($articleEditor->getDecoratedObject())
+						);
+						
+						UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.article.recentActivityEvent', $articleEditor->articleID, null, $articleEditor->userID, $articleEditor->time);
+					}
+					else {
+						$resetArticleIDs[] = $articleEditor->articleID;
+					}
 				}
+			}
+			
+			if (!empty($resetArticleIDs)) {
+				// delete user notifications
+				UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification', $resetArticleIDs);
+				// delete recent activity events
+				UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.article.recentActivityEvent', $resetArticleIDs);
 			}
 			
 			if (!empty($usersToArticles)) {
@@ -274,8 +315,6 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * @throws	UserInputException
 	 */
 	public function validateDelete() {
-		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
-		
 		if (empty($this->objects)) {
 			$this->readObjects();
 			
@@ -285,6 +324,10 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		}
 		
 		foreach ($this->getObjects() as $article) {
+			if (!$article->canDelete()) {
+				throw new PermissionDeniedException();
+			}
+			
 			if (!$article->isDeleted) {
 				throw new UserInputException('objectIDs');
 			}
@@ -315,6 +358,10 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			TagEngine::getInstance()->deleteObjects('com.woltlab.wcf.article', $articleContentIDs);
 			// delete entry from search index
 			SearchIndexManager::getInstance()->delete('com.woltlab.wcf.article', $articleContentIDs);
+			// delete user notifications
+			UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification', $articleIDs);
+			// delete recent activity events
+			UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.article.recentActivityEvent', $articleIDs);
 		}
 		
 		$this->unmarkItems();
@@ -331,8 +378,6 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * @throws	UserInputException
 	 */
 	public function validateTrash() {
-		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
-		
 		if (empty($this->objects)) {
 			$this->readObjects();
 			
@@ -342,6 +387,10 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		}
 		
 		foreach ($this->getObjects() as $article) {
+			if (!$article->canDelete()) {
+				throw new PermissionDeniedException();
+			}
+			
 			if ($article->isDeleted) {
 				throw new UserInputException('objectIDs');
 			}
@@ -361,6 +410,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		// reset storage
 		if (ARTICLE_ENABLE_VISIT_TRACKING) {
 			UserStorageHandler::getInstance()->resetAll('unreadArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
 		}
 		
 		return ['objectIDs' => $this->objectIDs];
@@ -388,6 +439,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		// reset storage
 		if (ARTICLE_ENABLE_VISIT_TRACKING) {
 			UserStorageHandler::getInstance()->resetAll('unreadArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
 		}
 		
 		return ['objectIDs' => $this->objectIDs];
@@ -488,6 +541,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		// reset storage
 		if (WCF::getUser()->userID) {
 			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticles');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadWatchedArticles');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticlesByCategory');
 		}
 	}
 	
@@ -500,6 +555,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		// reset storage
 		if (WCF::getUser()->userID) {
 			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticles');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadWatchedArticles');
+			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'unreadArticlesByCategory');
 		}
 	}
 	
@@ -556,8 +613,6 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * @throws	UserInputException
 	 */
 	public function validatePublish() {
-		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
-		
 		if (empty($this->objects)) {
 			$this->readObjects();
 			
@@ -567,6 +622,10 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		}
 		
 		foreach ($this->getObjects() as $article) {
+			if (!$article->canPublish()) {
+				throw new PermissionDeniedException();	
+			}
+			
 			if ($article->publicationStatus == Article::PUBLISHED) {
 				throw new UserInputException('objectIDs');
 			}
@@ -590,9 +649,26 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			}
 			
 			$usersToArticles[$articleEditor->userID]++;
+			
+			UserObjectWatchHandler::getInstance()->updateObject(
+				'com.woltlab.wcf.article.category',
+				$articleEditor->getCategory()->categoryID,
+				'article',
+				'com.woltlab.wcf.article.notification',
+				new ArticleUserNotificationObject($articleEditor->getDecoratedObject())
+			);
+			
+			UserActivityEventHandler::getInstance()->fireEvent('com.woltlab.wcf.article.recentActivityEvent', $articleEditor->articleID, null, $articleEditor->userID, TIME_NOW);
 		}
 		
 		ArticleEditor::updateArticleCounter($usersToArticles);
+		
+		// reset storage
+		if (ARTICLE_ENABLE_VISIT_TRACKING) {
+			UserStorageHandler::getInstance()->resetAll('unreadArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadWatchedArticles');
+			UserStorageHandler::getInstance()->resetAll('unreadArticlesByCategory');
+		}
 		
 		$this->unmarkItems();
 	}
@@ -603,8 +679,6 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * @throws	UserInputException
 	 */
 	public function validateUnpublish() {
-		WCF::getSession()->checkPermissions(['admin.content.article.canManageArticle']);
-		
 		if (empty($this->objects)) {
 			$this->readObjects();
 			
@@ -614,6 +688,10 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		}
 		
 		foreach ($this->getObjects() as $article) {
+			if (!$article->canPublish()) {
+				throw new PermissionDeniedException();
+			}
+			
 			if ($article->publicationStatus != Article::PUBLISHED) {
 				throw new UserInputException('objectIDs');
 			}
@@ -624,7 +702,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * Unpublishes articles.
 	 */
 	public function unpublish() {
-		$usersToArticles = [];
+		$usersToArticles = $articleIDs = [];
 		foreach ($this->getObjects() as $articleEditor) {
 			$articleEditor->update(['publicationStatus' => Article::UNPUBLISHED]);
 			
@@ -633,7 +711,15 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			}
 			
 			$usersToArticles[$articleEditor->userID]--;
+			
+			$articleIDs[] = $articleEditor->articleID;
 		}
+		
+		// delete user notifications
+		UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification', $articleIDs);
+		
+		// delete recent activity events
+		UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.article.recentActivityEvent', $articleIDs);
 		
 		ArticleEditor::updateArticleCounter($usersToArticles);
 		

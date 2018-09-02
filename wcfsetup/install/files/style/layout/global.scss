@@ -181,3 +181,11 @@ a.externalURL::after {
 	margin-left: 4px;
 	vertical-align: -1px;
 }
+
+.visuallyHidden {
+	clip: rect(1px, 1px, 1px, 1px);
+	height: 1px !important;
+	overflow: hidden !important;
+	position: absolute !important;
+	width: 1px !important;
+}

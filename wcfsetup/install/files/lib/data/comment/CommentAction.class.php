@@ -17,10 +17,11 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
-use wcf\system\like\LikeHandler;
 use wcf\system\moderation\queue\ModerationQueueActivationManager;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\type\ICommentUserNotificationObjectType;
+use wcf\system\user\notification\object\type\IMultiRecipientCommentResponseOwnerUserNotificationObjectType;
 use wcf\system\user\notification\object\type\IMultiRecipientCommentUserNotificationObjectType;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 use wcf\system\user\notification\object\CommentUserNotificationObject;
@@ -152,7 +153,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			}
 			
 			// remove likes
-			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment', $likeObjectIDs, $notificationObjectTypes);
+			ReactionHandler::getInstance()->removeLikes('com.woltlab.wcf.comment', $likeObjectIDs, $notificationObjectTypes);
 		}
 		
 		// delete responses
@@ -598,6 +599,25 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 					// make sure that the active user gets no notification
 					$recipientIDs = array_diff($recipientIDs, [WCF::getUser()->userID]);
 					
+					if ($notificationObjectType instanceof IMultiRecipientCommentResponseOwnerUserNotificationObjectType) {
+						if ($notificationObjectType->getCommentOwnerID($comment)) {
+							UserNotificationHandler::getInstance()->fireEvent(
+								'commentResponseOwner',
+								$objectType->objectType . '.response.notification',
+								$notificationObject,
+								[$notificationObjectType->getCommentOwnerID($comment)],
+								[
+									'commentID' => $comment->commentID,
+									'objectID' => $comment->objectID,
+									'objectUserID' => $notificationObjectType->getCommentOwnerID($comment),
+									'userID' => $comment->userID
+								]
+							);
+							
+							$recipientIDs = array_diff($recipientIDs, [$notificationObjectType->getCommentOwnerID($comment)]);
+						}
+					}
+					
 					if (!empty($recipientIDs)) {
 						UserNotificationHandler::getInstance()->fireEvent(
 							'commentResponse',
@@ -638,7 +658,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 								'commentResponseOwner',
 								$objectType->objectType . '.response.notification',
 								$notificationObject,
-								[$userID], [
+								[$userID], 
+								[
 									'commentID' => $comment->commentID,
 									'objectID' => $comment->objectID,
 									'objectUserID' => $userID,

@@ -494,19 +494,29 @@ define(
 			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'getText_' + id, parameters.data);
 			
-			if (!this._validate(parameters)) {
-				// validation failed
-				return;
+			var validateResult = this._validate(parameters);
+			
+			if (!(validateResult instanceof Promise)) {
+				if (validateResult === false) {
+					validateResult = Promise.reject();
+				}
+				else {
+					validateResult = Promise.resolve();
+				}
 			}
 			
-			EventHandler.fire('com.woltlab.wcf.redactor2', 'submit_' + id, parameters);
-			
-			Ajax.api(this, {
-				actionName: 'save',
-				parameters: parameters
+			validateResult.then(function () {
+				EventHandler.fire('com.woltlab.wcf.redactor2', 'submit_' + id, parameters);
+				
+				Ajax.api(this, {
+					actionName: 'save',
+					parameters: parameters
+				});
+				
+				this._hideEditor();
+			}.bind(this), function(e) {
+				console.log('Validation of post edit failed: '+ e);
 			});
-			
-			this._hideEditor();
 		},
 		
 		/**
@@ -523,12 +533,15 @@ define(
 			var data = {
 				api: this,
 				parameters: parameters,
-				valid: true
+				valid: true,
+				promises: []
 			};
 			
 			EventHandler.fire('com.woltlab.wcf.redactor2', 'validate_' + this._getEditorId(), data);
 			
-			return (data.valid !== false);
+			data.promises.push(Promise[data.valid ? 'resolve' : 'reject']());
+			
+			return Promise.all(data.promises);
 		},
 		
 		/**

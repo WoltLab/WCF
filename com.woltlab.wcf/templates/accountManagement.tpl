@@ -24,7 +24,7 @@
 			<dl{if $errorField == 'password'} class="formError"{/if}>
 				<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
 				<dd>
-					<input type="password" id="password" name="password" value="" required class="medium">
+					<input type="password" id="password" name="password" value="" required class="medium" autocomplete="current-password">
 					{if $errorField == 'password'}
 						<small class="innerError">
 							{if $errorType == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
@@ -47,7 +47,7 @@
 			<dl{if $errorField == 'username'} class="formError"{/if}>
 				<dt><label for="username">{lang}wcf.user.newUsername{/lang}</label></dt>
 				<dd>
-					<input type="text" id="username" name="username" value="{$username}" required pattern="^[^,]{ldelim}{REGISTER_USERNAME_MIN_LENGTH},{REGISTER_USERNAME_MAX_LENGTH}}$" class="medium">
+					<input type="text" id="username" name="username" value="{$username}" required pattern="^[^,]{ldelim}{REGISTER_USERNAME_MIN_LENGTH},{REGISTER_USERNAME_MAX_LENGTH}}$" class="medium" autocomplete="username">
 						
 					{if $errorField == 'username'}
 						<small class="innerError">
@@ -74,7 +74,7 @@
 			<dl{if $errorField == 'newPassword'} class="formError"{/if}>
 				<dt><label for="newPassword">{lang}wcf.user.newPassword{/lang}</label></dt>
 				<dd>
-					<input type="password" id="newPassword" name="newPassword" value="{$newPassword}" class="medium">
+					<input type="password" id="newPassword" name="newPassword" value="{$newPassword}" class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
 						
 					{if $errorField == 'newPassword'}
 						<small class="innerError">
@@ -88,7 +88,7 @@
 			<dl{if $errorField == 'confirmNewPassword'} class="formError"{/if}>
 				<dt><label for="confirmNewPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
 				<dd>
-					<input type="password" id="confirmNewPassword" name="confirmNewPassword" value="{$confirmNewPassword}" class="medium">
+					<input type="password" id="confirmNewPassword" name="confirmNewPassword" value="{$confirmNewPassword}" class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
 						
 					{if $errorField == 'confirmNewPassword'}
 						<small class="innerError">

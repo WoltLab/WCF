@@ -5,6 +5,7 @@ use wcf\data\DatabaseObjectEditor;
 use wcf\data\IDatabaseObjectAction;
 use wcf\data\IFile;
 use wcf\data\IThumbnailFile;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\ParentClassException;
 use wcf\system\exception\SystemException;
@@ -184,6 +185,13 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 											'filesize' => filesize($object->getLocation())
 										]);
 									}
+									else if ($newImage !== null && $orientation == ExifUtil::ORIENTATION_180_ROTATE) {
+										/** @var DatabaseObjectEditor $editor */
+										$editor = new $this->editorClassName($object);
+										$editor->update([
+											'filesize' => filesize($object->getLocation())
+										]);
+									}
 								}
 							}
 						}
@@ -265,6 +273,20 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 					$updateData[$prefix.'Height'] = $imageData[1];
 				}
 			}
+		}
+		
+		$parameters = [
+			'file' => $file,
+			'updateData' => $updateData
+		];
+		
+		EventHandler::getInstance()->fireAction($this, 'generateThumbnails', $parameters);
+		
+		if (!is_array($parameters['updateData'])) {
+			throw new \UnexpectedValueException('$updateData is no longer an array after being manipulated by event listeners.');
+		}
+		else {
+			$updateData = $parameters['updateData'];
 		}
 		
 		if (!empty($updateData)) {

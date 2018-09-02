@@ -1,12 +1,12 @@
 /**
- * Handles main menu overflow.
+ * Handles main menu overflow and a11y.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Header/Menu
  */
-define(['Environment', 'Ui/Screen'], function(Environment, UiScreen) {
+define(['Environment', 'Language', 'Ui/Screen'], function(Environment, Language, UiScreen) {
 	"use strict";
 	
 	var _enabled = false;
@@ -162,10 +162,20 @@ define(['Environment', 'Ui/Screen'], function(Environment, UiScreen) {
 		
 		/**
 		 * Builds the UI and binds the event listeners.
-		 * 
+		 *
 		 * @protected
 		 */
 		_setup: function () {
+			this._setupOverflow();
+			this._setupA11y();
+		},
+		
+		/**
+		 * Setups overflow handling.
+		 * 
+		 * @protected
+		 */
+		_setupOverflow: function () {
 			_buttonShowNext = elCreate('a');
 			_buttonShowNext.className = 'mainMenuShowNext';
 			_buttonShowNext.href = '#';
@@ -193,6 +203,35 @@ define(['Environment', 'Ui/Screen'], function(Environment, UiScreen) {
 			});
 			
 			this._enable();
+		},
+		
+		/**
+		 * Setups a11y improvements.
+		 *
+		 * @protected
+		 */
+		_setupA11y: function() {
+			elBySelAll('.boxMenuHasChildren', _menu, (function(element) {
+				var showMenu = false;
+				var link = elBySel('.boxMenuLink', element);
+				if (link) {
+					elAttr(link, 'aria-haspopup', true);
+					elAttr(link, 'aria-expanded', showMenu);
+				}
+				
+				var showMenuButton = elCreate('button');
+				showMenuButton.className = 'visuallyHidden';
+				showMenuButton.tabindex = 0;
+				elAttr(showMenuButton, 'role', 'button');
+				elAttr(showMenuButton, 'aria-label', Language.get('wcf.global.button.showMenu'));
+				element.insertBefore(showMenuButton, link.nextSibling);
+				
+				showMenuButton.addEventListener(WCF_CLICK_EVENT, function() {
+					showMenu = !showMenu;
+					elAttr(link, 'aria-expanded', showMenu);
+					elAttr(showMenuButton, 'aria-label', (showMenu ? Language.get('wcf.global.button.hideMenu') : Language.get('wcf.global.button.showMenu')));
+				});
+			}).bind(this));
 		}
 	};
 });

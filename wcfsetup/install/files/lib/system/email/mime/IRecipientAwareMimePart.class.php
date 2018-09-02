@@ -15,7 +15,7 @@ interface IRecipientAwareMimePart {
 	/**
 	 * Makes this mime part aware of it's recipient.
 	 * Note: `null` is a valid parameter and denotes that this mime part should
-	 * not be individualised.
+	 * not be individualized.
 	 * 
 	 * @param	Mailbox		$mailbox
 	 */

@@ -64,6 +64,22 @@ WCF.ACP.Language.ItemList = Class.extend({
 	},
 	
 	/**
+	 * Handles clicking on the delete language item button.
+	 */
+	_delete: function() {
+		WCF.System.Confirmation.show(WCF.Language.get('wcf.acp.language.item.delete.confirmMessage'), function (action) {
+			if (action !== 'cancel') {
+				this._proxy.setOption('data', {
+					actionName: 'deleteCustomLanguageItems',
+					className: 'wcf\\data\\language\\item\\LanguageItemAction',
+					objectIDs: [ $('#overlayLanguageItemID').val() ]
+				});
+				this._proxy.sendRequest();
+			}
+		}.bind(this));
+	},
+	
+	/**
 	 * Handles successful AJAX requests.
 	 * 
 	 * @param	object		data
@@ -77,6 +93,7 @@ WCF.ACP.Language.ItemList = Class.extend({
 			
 			// bind event listener
 			this._dialog.find('.jsSubmitLanguageItem').click($.proxy(this._submit, this));
+			this._dialog.find('.jsDeleteLanguageItem').click($.proxy(this._delete, this));
 		}
 		else {
 			if (this._notification === null) {
@@ -85,7 +102,13 @@ WCF.ACP.Language.ItemList = Class.extend({
 			
 			// show success and close dialog
 			this._dialog.wcfDialog('close');
-			this._notification.show();
+			
+			if (data.actionName === 'deleteCustomLanguageItems') {
+				this._notification.show(window.location.reload.bind(window.location));
+			}
+			else {
+				this._notification.show();
+			}
 		}
 	},
 	

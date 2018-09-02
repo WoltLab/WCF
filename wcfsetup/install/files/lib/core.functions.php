@@ -184,7 +184,7 @@ namespace wcf\functions\exception {
 		
 		if (!$exceptionTitle || !$exceptionSubtitle || !$exceptionExplanation) {
 			// one or more failed, fallback to english
-			$exceptionTitle = 'An error has occured';
+			$exceptionTitle = 'An error has occurred';
 			$exceptionSubtitle = 'Internal error code: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">'.$exceptionID.'</span></span>';
 			$exceptionExplanation = <<<EXPLANATION
 <p class="exceptionSubtitle">What happened?</p>

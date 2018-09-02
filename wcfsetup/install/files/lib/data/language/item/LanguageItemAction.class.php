@@ -45,6 +45,29 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 	protected $requireACP = ['create', 'delete', 'edit', 'prepareEdit', 'update'];
 	
 	/**
+	 * Creates multiple language items.
+	 * 
+	 * @since	3.2
+	 */
+	public function createLanguageItems() {
+		if (!isset($this->parameters['data']['packageID'])) {
+			$this->parameters['data']['packageID'] = 1;
+		}
+		
+		foreach ($this->parameters['languageItemValue_i18n'] as $languageID => $value) {
+			(new LanguageItemAction([], 'create', [
+				'data' => array_merge(
+					$this->parameters['data'],
+					[
+						'languageID' => $languageID,
+						'languageItemValue' => $value
+					]
+				)
+			]))->executeAction();
+		}
+	}
+	
+	/**
 	 * Validates parameters to prepare edit.
 	 */
 	public function validatePrepareEdit() {
@@ -96,6 +119,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 	 */
 	public function edit() {
 		// save item
+		/** @var LanguageItemEditor $editor */
 		$editor = reset($this->objects);
 		if ($editor->languageItemOriginIsSystem) {
 			$updateData = [
@@ -118,5 +142,53 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 		// clear cache
 		LanguageFactory::getInstance()->clearCache();
 		LanguageFactory::getInstance()->deleteLanguageCache();
+	}
+	
+	/**
+	 * Validates the `deleteCustomLanguageItems` action.
+	 * 
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
+	 * @since	3.2
+	 */
+	public function validateDeleteCustomLanguageItems() {
+		if (!WCF::getSession()->getPermission('admin.language.canManageLanguage')) {
+			throw new PermissionDeniedException();
+		}
+		
+		$this->readObjects();
+		if (empty($this->objects)) {
+			throw new UserInputException('objectIDs');
+		}
+		
+		// this method is only available for custom language items
+		foreach ($this->getObjects() as $languageItem) {
+			if (!$languageItem->isCustomLanguageItem) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Deletes custom language items in every language.
+	 * 
+	 * @since	3.2
+	 */
+	public function deleteCustomLanguageItems() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		$languageItems = [];
+		foreach ($this->getObjects() as $languageItem) {
+			$languageItems[] = $languageItem->languageItem;
+		}
+		
+		$languageItemList = new LanguageItemList();
+		$languageItemList->getConditionBuilder()->add('isCustomLanguageItem = ?', [1]);
+		$languageItemList->getConditionBuilder()->add('languageItem IN (?)', [array_unique($languageItems)]);
+		$languageItemList->readObjects();
+		
+		(new LanguageItemAction($languageItemList->getObjects(), 'delete'))->executeAction();
 	}
 }

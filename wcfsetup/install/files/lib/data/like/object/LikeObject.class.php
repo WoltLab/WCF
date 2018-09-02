@@ -1,9 +1,11 @@
 <?php
 namespace wcf\data\like\object;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\User;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
+use wcf\util\JSON;
 
 /**
  * Represents a liked object.
@@ -21,6 +23,7 @@ use wcf\system\WCF;
  * @property-read	integer		$dislikes		number of dislikes of the liked object
  * @property-read	integer		$cumulativeLikes	cumulative result of likes (counting +1) and dislikes (counting -1)
  * @property-read	string		$cachedUsers		serialized array with the ids and names of the three users who liked (+1) the object last
+ * @property-read	string		$cachedReactions	serialized array with the reactionTypeIDs and the count of the reactions
  */
 class LikeObject extends DatabaseObject {
 	/**
@@ -41,6 +44,12 @@ class LikeObject extends DatabaseObject {
 	protected $users = [];
 	
 	/**
+	 * A list with all reaction counts. 
+	 * @var integer[] 
+	 */
+	protected $reactions = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected function handleData($data) {
@@ -57,15 +66,57 @@ class LikeObject extends DatabaseObject {
 				}
 			}
 		}
+		
+		// get user objects from cache
+		if (!empty($data['cachedReactions'])) {
+			$cachedReactions = @unserialize($data['cachedReactions']);
+			
+			if (is_array($cachedReactions)) {
+				foreach ($cachedReactions as $reactionTypeID => $reactionCount) {
+					$reactionType = ReactionTypeCache::getInstance()->getReactionTypeByID($reactionTypeID);
+					
+					// prevent outdated reactions
+					if ($reactionType !== null) {
+						$this->reactions[$reactionTypeID] = [
+							'reactionCount' => $reactionCount,
+							'renderedReactionIcon' => $reactionType->renderIcon(),
+							'renderedReactionIconEncoded' => JSON::encode($reactionType->renderIcon()),
+							'reactionTitle' => $reactionType->getTitle(),
+							'reactionType' => $reactionType->type
+						];
+					}
+				}
+			}
+		}
 	}
 	
 	/**
-	 * Returns the first 3 users who liked this object.
+	 * Since version 3.2, this method returns all reactionCounts for the different reactionTypes, 
+	 * instead of the user (as the method name suggests). This behavior is intentional and helps 
+	 * to establish backward compatibility.
 	 * 
-	 * @return	User[]
+	 * @return	mixed[]
+	 * @deprecated  since 3.2
 	 */
 	public function getUsers() {
-		return $this->users;
+		$returnValues = [];
+		
+		foreach ($this->getReactions() as $reactionID => $reaction) {
+			$returnValues[] = (object) [
+				'userID' => $reactionID,
+				'username' => $reaction['reactionCount'],
+			];
+		}
+		
+		// this value is only set, if the object was loaded over the ReactionHandler::loadLikeObjects()
+		if ($this->reactionTypeID) {
+			$returnValues[] = (object) [
+				'userID' => 'reactionTypeID',
+				'username' => $this->reactionTypeID,
+			];
+		}
+		
+		return $returnValues;
 	}
 	
 	/**
@@ -79,6 +130,17 @@ class LikeObject extends DatabaseObject {
 		}
 		
 		return $this->likedObject;
+	}
+	
+	/**
+	 * Returns all reaction counts for this object. Reactions without any count won't be saved in the array. 
+	 * So this method returns an empty array, if this object has no reactions.
+	 * 
+	 * @return      integer[]
+	 * @since	3.2
+	 */
+	public function getReactions() {
+		return $this->reactions; 
 	}
 	
 	/**

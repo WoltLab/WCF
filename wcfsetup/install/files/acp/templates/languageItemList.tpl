@@ -3,6 +3,8 @@
 <script data-relocate="true" src="{@$__wcf->getPath()}acp/js/WCF.ACP.Language.js?v={@LAST_UPDATE_TIME}"></script>
 <script data-relocate="true">
 	$(function() {
+		WCF.Language.add('wcf.acp.language.item.delete.confirmMessage', '{lang}wcf.acp.language.item.delete.confirmMessage{/lang}');
+		
 		new WCF.ACP.Language.ItemList();
 	});
 </script>
@@ -12,13 +14,13 @@
 		<h1 class="contentTitle">{lang}wcf.acp.language.item.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
 	</div>
 	
-	{hascontent}
-		<nav class="contentHeaderNavigation">
-			<ul>
-				{content}{event name='contentHeaderNavigation'}{/content}
-			</ul>
-		</nav>
-	{/hascontent}
+	<nav class="contentHeaderNavigation">
+		<ul>
+			<li><a href="{link controller='LanguageItemAdd'}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.menu.link.language.item.add{/lang}</span></a></li>
+			
+			{event name='contentHeaderNavigation'}
+		</ul>
+	</nav>
 </header>
 
 {include file='formError'}
@@ -66,6 +68,7 @@
 					<label><input type="checkbox" name="hasCustomValue" value="1"{if $hasCustomValue == 1} checked{/if}> {lang}wcf.acp.language.item.customValues{/lang}</label>
 					<label><input type="checkbox" name="hasDisabledCustomValue" value="1"{if $hasDisabledCustomValue == 1} checked{/if}> {lang}wcf.acp.language.item.disabledCustomValues{/lang}</label>
 					<label><input type="checkbox" name="hasRecentlyDisabledCustomValue" value="1"{if $hasRecentlyDisabledCustomValue == 1} checked{/if}> {lang}wcf.acp.language.item.recentlyDisabledCustomValues{/lang}</label>
+					<label><input type="checkbox" name="isCustomLanguageItem" value="1"{if $isCustomLanguageItem == 1} checked{/if}> {lang}wcf.acp.language.item.isCustomLanguageItem{/lang}</label>
 				</dd>
 			</dl>
 			
@@ -88,6 +91,7 @@
 			{if $languageItem}{capture append=linkParameters}&languageItem={@$languageItem|rawurlencode}{/capture}{/if}
 			{if $languageItemValue}{capture append=linkParameters}&languageItemValue={@$languageItemValue|rawurlencode}{/capture}{/if}
 			{if $hasCustomValue}{capture append=linkParameters}&hasCustomValue=1{/capture}{/if}
+			{if $isCustomLanguageItem}{capture append=linkParameters}&isCustomLanguageItem=1{/capture}{/if}
 			
 			{pages print=true assign=pagesLinks controller="LanguageItemList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 		{/content}

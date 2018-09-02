@@ -51,13 +51,13 @@ interface ISelectionFormField {
 	 * 
 	 * @param	array|callable|DatabaseObjectList	$options	selectable options or callable returning the options
 	 * @param	bool					$nestedOptions	is `true` if the passed options are nested options
-	 *
+	 * @param	bool					$labelLanguageItems	is `true` if the labels should be treated as language items if possible
 	 * @return	static					this field
 	 * 
 	 * @throws	\InvalidArgumentException		if given options are no array or callable or otherwise invalid
 	 * @throws	\UnexpectedValueException		if callable does not return an array
 	 */
-	public function options($options, $nestedOptions = false);
+	public function options($options, $nestedOptions = false, $labelLanguageItems = true);
 	
 	/**
 	 * Returns `true` if the field class supports nested options and `false` otherwise.

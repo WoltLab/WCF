@@ -10,6 +10,10 @@ use wcf\data\comment\Comment;
  * comment responses. In this case, there is no distinction between commentResponse
  * and commentResponseOwner event and only a commentResponse event is fired.
  * 
+ * Since version 3.2 it is possible to send an `commentResponseOwner` notification 
+ * even if you implement this interface. Simple add the interface 
+ * `IMultiRecipientCommentResponseOwnerUserNotificationObjectType`, too.
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>

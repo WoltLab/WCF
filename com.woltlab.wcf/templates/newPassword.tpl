@@ -9,7 +9,7 @@
 		<dl{if $errorField == 'newPassword'} class="formError"{/if}>
 			<dt><label for="newPassword">{lang}wcf.user.newPassword{/lang}</label></dt>
 			<dd>
-				<input type="password" id="newPassword" name="newPassword" value="{$newPassword}" class="medium">
+				<input type="password" id="newPassword" name="newPassword" value="{$newPassword}" class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
 					
 				{if $errorField == 'newPassword'}
 					<small class="innerError">
@@ -23,7 +23,7 @@
 		<dl{if $errorField == 'confirmNewPassword'} class="formError"{/if}>
 			<dt><label for="confirmNewPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
 			<dd>
-				<input type="password" id="confirmNewPassword" name="confirmNewPassword" value="{$confirmNewPassword}" class="medium">
+				<input type="password" id="confirmNewPassword" name="confirmNewPassword" value="{$confirmNewPassword}" class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
 					
 				{if $errorField == 'confirmNewPassword'}
 					<small class="innerError">

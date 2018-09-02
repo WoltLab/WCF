@@ -21,7 +21,7 @@
 				<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label>
 			</dt>
 			<dd>
-				<input type="text" id="{@$randomFieldNames[username]}" name="{@$randomFieldNames[username]}" value="{$username}" required class="medium">
+				<input type="text" id="{@$randomFieldNames[username]}" name="{@$randomFieldNames[username]}" value="{$username}" required class="medium" autocomplete="username">
 				{if $errorType.username|isset}
 					<small class="innerError">
 						{if $errorType.username == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
@@ -108,7 +108,7 @@
 					<label for="{@$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label>
 				</dt>
 				<dd>
-					<input type="password" id="{@$randomFieldNames[password]}" name="{@$randomFieldNames[password]}" value="{$password}" required class="medium">
+					<input type="password" id="{@$randomFieldNames[password]}" name="{@$randomFieldNames[password]}" value="{$password}" required class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
 					{if $errorType.password|isset}
 						<small class="innerError">
 							{if $errorType.password == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
@@ -124,7 +124,7 @@
 					<label for="{@$randomFieldNames[confirmPassword]}">{lang}wcf.user.confirmPassword{/lang}</label>
 				</dt>
 				<dd>
-					<input type="password" id="{@$randomFieldNames[confirmPassword]}" name="{@$randomFieldNames[confirmPassword]}" value="{$confirmPassword}" required class="medium">
+					<input type="password" id="{@$randomFieldNames[confirmPassword]}" name="{@$randomFieldNames[confirmPassword]}" value="{$confirmPassword}" required class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
 					{if $errorType.confirmPassword|isset}
 						<small class="innerError">
 							{if $errorType.confirmPassword == 'notEqual'}{lang}wcf.user.confirmPassword.error.notEqual{/lang}{/if}

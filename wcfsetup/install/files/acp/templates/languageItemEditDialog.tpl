@@ -47,4 +47,8 @@
 
 <div class="formSubmit">
 	<button class="jsSubmitLanguageItem buttonPrimary" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>
+	
+	{if $item->isCustomLanguageItem}
+		<button class="jsDeleteLanguageItem">{lang}wcf.global.button.delete{/lang}</button>
+	{/if}
 </div>

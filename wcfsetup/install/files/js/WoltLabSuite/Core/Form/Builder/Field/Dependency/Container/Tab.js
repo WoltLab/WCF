@@ -35,6 +35,7 @@ define(['./Abstract', 'Core', 'Dom/Util', '../Manager', 'Ui/TabMenu'], function(
 			for (var i = 0, length = children.length; i < length; i++) {
 				if (!elIsHidden(children.item(i))) {
 					containerShouldBeVisible = true;
+					break;
 				}
 			}
 			

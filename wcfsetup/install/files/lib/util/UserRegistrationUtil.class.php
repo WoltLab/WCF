@@ -88,6 +88,43 @@ final class UserRegistrationUtil {
 	}
 	
 	/**
+	 * Returns the `passwordrules` attribute value. 
+	 * 
+	 * @see         https://developer.apple.com/password-rules/
+	 * @return	string
+	 */
+	public static function getPasswordRulesAttributeValue() {
+		if (REGISTER_ENABLE_PASSWORD_SECURITY_CHECK) {
+			$rules = '';
+			
+			if (REGISTER_PASSWORD_MIN_LENGTH) {
+				$rules .= 'minlength:'.REGISTER_PASSWORD_MIN_LENGTH.';';
+			}
+			
+			if (REGISTER_PASSWORD_MUST_CONTAIN_DIGIT) {
+				$rules .= 'required:digit;';
+			}
+			
+			if (REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE) {
+				$rules .= 'required:lower;';
+			}
+			
+			if (REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE) {
+				$rules .= 'required:upper;';
+			}
+			
+			if (REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR) {
+				$rules .= 'required:special;';
+			}
+		}
+		else {
+			$rules = "minlength:8;";
+		}
+		
+		return $rules;
+	}
+	
+	/**
 	 * Generates a random activation code with the given length.
 	 * Warning: A length greater than 9 is out of integer range.
 	 * 

@@ -8,7 +8,7 @@
 	{assign var=__messageSidebarJavascript value=true}
 {/if}
 
-<aside class="messageSidebar{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && !$isReply && $userProfile->isOnline()} userOnline{/if} {if $userProfile->userID}member{else}guest{/if}"{if $enableMicrodata} itemprop="author" itemscope itemtype="http://schema.org/Person"{/if}>
+<aside role="presentation" class="messageSidebar{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && !$isReply && $userProfile->isOnline()} userOnline{/if} {if $userProfile->userID}member{else}guest{/if}"{if $enableMicrodata} itemprop="author" itemscope itemtype="http://schema.org/Person"{/if}>
 	<div class="messageAuthor">
 		{event name='messageAuthor'}
 		
@@ -43,6 +43,22 @@
 				{if $userProfile->getRank() && $userProfile->getRank()->rankImage}
 					<div class="userRank">{@$userProfile->getRank()->getImage()}</div>
 				{/if}
+			{/if}
+			
+			{if MODULE_LIKE && MESSAGE_SIDEBAR_ENABLE_LIKES_RECEIVED && !$isReply}
+				<div class="reactionStatusContainer">
+					{assign var=overallReactionCount value=$userProfile->positiveReactionsReceived - $userProfile->negativeReactionsReceived}
+					<a href="{link controller='User' object=$userProfile}{/link}#likes" class="jsTooltip" title="{lang user=$userProfile}wcf.like.showLikesReceived{/lang}">
+						{if $overallReactionCount > 0}
+							<span class="positiveReactionCount"><span class="fa fa-plus-circle icon16"></span> {$overallReactionCount|shortUnit}</span>
+						{elseif $overallReactionCount < 0}
+							{assign var=overallReactionCount value=$overallReactionCount*-1}
+							<span class="negativeReactionCount"><span class="fa fa-minus-circle icon16"></span> {$overallReactionCount|shortUnit}</span>
+						{else}
+							<span class="neutralReactionCount"><span class="fa fa-plus-circle icon16"></span> {$overallReactionCount|shortUnit}</span>
+						{/if}
+					</a>
+				</div>
 			{/if}
 
 			{if !$isReply && MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies') && ($userProfile->isAccessible('canViewTrophies') || $userProfile->userID == $__wcf->session->userID) && $userProfile->getSpecialTrophies()|count}
@@ -81,11 +97,6 @@
 				<div class="userCredits">
 					<dl class="plain dataList">
 						{content}
-							{if MODULE_LIKE && MESSAGE_SIDEBAR_ENABLE_LIKES_RECEIVED && $userProfile->likesReceived}
-								<dt><a href="{link controller='User' object=$userProfile}{/link}#likes" class="jsTooltip" title="{lang user=$userProfile}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.likesReceived{/lang}</a></dt>
-								<dd>{#$userProfile->likesReceived}</dd>
-							{/if}
-							
 							{if MESSAGE_SIDEBAR_ENABLE_ACTIVITY_POINTS && $userProfile->activityPoints}
 								<dt><a href="#" class="activityPointsDisplay jsTooltip" title="{lang user=$userProfile}wcf.user.activityPoint.showActivityPoints{/lang}" data-user-id="{@$userProfile->userID}">{lang}wcf.user.activityPoint{/lang}</a></dt>
 								<dd>{#$userProfile->activityPoints}</dd>

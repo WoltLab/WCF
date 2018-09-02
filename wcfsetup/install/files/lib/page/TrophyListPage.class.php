@@ -42,7 +42,7 @@ class TrophyListPage extends MultipleLinkPage {
 	 * selected sort field
 	 * @var	string
 	 */
-	public $sortField = 'trophyID';
+	public $sortField = 'trophy.showOrder';
 	
 	/**
 	 * selected sort order
