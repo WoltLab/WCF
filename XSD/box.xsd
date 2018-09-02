@@ -72,16 +72,17 @@
 	</xs:complexType>
 	
 	<xs:complexType name="content_element">
-			<xs:all>
-				<xs:element name="title" type="woltlab_varchar" minOccurs="1" />
-			</xs:all>
-			<xs:attribute name="language" type="woltlab_varchar" use="optional" />
+		<xs:all>
+			<xs:element name="title" type="woltlab_varchar" minOccurs="1" />
+			<xs:element name="content" type="xs:string" minOccurs="0" />
+		</xs:all>
+		<xs:attribute name="language" type="woltlab_varchar" use="optional" />
 	</xs:complexType>
 	
 	<xs:complexType name="visibilityExceptions_element">
-			<xs:choice maxOccurs="unbounded">
-				<xs:element name="page" type="xs:string" minOccurs="1" />
-			</xs:choice>
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="page" type="xs:string" minOccurs="1" />
+		</xs:choice>
 	</xs:complexType>
 	
 	<xs:complexType name="name_element">
