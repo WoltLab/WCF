@@ -1479,7 +1479,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 	</category>
 	
 	<category name="wcf.acp.package">
-		<item name="wcf.acp.package.apiVersions"><![CDATA[Unterstütze WoltLab Suite&trade; API-Versionen]]></item>
+		<item name="wcf.acp.package.apiVersions"><![CDATA[Unterstützte WoltLab Suite&trade; API-Versionen]]></item>
 		<item name="wcf.acp.package.apiVersions.missing"><![CDATA[Dieses Paket stellt keine Informationen zur Kompatibilität bereit.]]></item>
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installierte Apps]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Apps]]></item>
