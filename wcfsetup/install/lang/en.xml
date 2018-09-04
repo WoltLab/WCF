@@ -1528,8 +1528,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Required Version]]></item>
 		<item name="wcf.acp.package.license"><![CDATA[License]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Packages]]></item>
-		<item name="wcf.acp.package.name"><![CDATA[Packages]]></item>
-		<item name="wcf.acp.package.packageDate"><![CDATA[Package Date]]></item>
+		<item name="wcf.acp.package.name"><![CDATA[Package]]></item>
+		<item name="wcf.acp.package.packageDate"><![CDATA[Creation Date]]></item>
 		<item name="wcf.acp.package.packageDir.notAvailable"><![CDATA[Target directory already contains an app.]]></item>
 		<item name="wcf.acp.package.plugin.installed"><![CDATA[Installed Packages]]></item>
 		<item name="wcf.acp.package.plugin.title"><![CDATA[Plugins]]></item>
