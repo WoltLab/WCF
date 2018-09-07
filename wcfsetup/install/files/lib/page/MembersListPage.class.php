@@ -99,8 +99,10 @@ class MembersListPage extends SortablePage {
 		}
 		
 		if (!empty($_POST)) {
-			$parameters = http_build_query($_POST, '', '&');
-			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('MembersList', [], $parameters));
+			$parameters = [];
+			if ($this->searchID) $parameters['id'] = $this->searchID;
+			$url = http_build_query($_POST, '', '&');
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('MembersList', $parameters, $url));
 			exit;
 		}
 	}
