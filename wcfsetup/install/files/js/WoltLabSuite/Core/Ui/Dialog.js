@@ -23,17 +23,33 @@ define(
 	"use strict";
 	
 	var _activeDialog = null;
+	var _callbackFocus = null;
 	var _container = null;
 	var _dialogs = new Dictionary();
 	var _dialogFullHeight = false;
 	var _dialogObjects = new ObjectMap();
 	var _dialogToObject = new Dictionary();
+	var _focusedBeforeDialog = null;
 	var _keyupListener = null;
 	var _staticDialogs = elByClass('jsStaticDialog');
 	var _validCallbacks = ['onBeforeClose', 'onClose', 'onShow'];
 	
 	// list of supported `input[type]` values for dialog submit
 	var _validInputTypes = ['number', 'password', 'search', 'tel', 'text', 'url'];
+	
+	var _focusableElements = [
+		'a[href]:not([tabindex^="-"]):not([inert])',
+		'area[href]:not([tabindex^="-"]):not([inert])',
+		'input:not([disabled]):not([inert])',
+		'select:not([disabled]):not([inert])',
+		'textarea:not([disabled]):not([inert])',
+		'button:not([disabled]):not([inert])',
+		'iframe:not([tabindex^="-"]):not([inert])',
+		'audio:not([tabindex^="-"]):not([inert])',
+		'video:not([tabindex^="-"]):not([inert])',
+		'[contenteditable]:not([tabindex^="-"]):not([inert])',
+		'[tabindex]:not([tabindex^="-"]):not([inert])'
+	];
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Ui/Dialog
@@ -361,6 +377,8 @@ define(
 			if (options.closable) {
 				var closeButton = elCreate('a');
 				closeButton.className = 'dialogCloseButton jsTooltip';
+				elAttr(closeButton, 'role', 'button');
+				elAttr(closeButton, 'tabindex', '0');
 				elAttr(closeButton, 'title', options.closeButtonLabel);
 				elAttr(closeButton, 'aria-label', options.closeButtonLabel);
 				closeButton.addEventListener(WCF_CLICK_EVENT, this._close.bind(this));
@@ -488,6 +506,11 @@ define(
 			}
 			
 			if (elAttr(data.dialog, 'aria-hidden') === 'true') {
+				if (_callbackFocus === null) {
+					_callbackFocus = this._maintainFocus.bind(this);
+					document.body.addEventListener('focus', _callbackFocus, { capture: true });
+				}
+				
 				if (data.closable && elAttr(_container, 'aria-hidden') === 'true') {
 					window.addEventListener('keyup', _keyupListener);
 				}
@@ -497,18 +520,14 @@ define(
 				elData(_container, 'close-on-click', (data.backdropCloseOnClick ? 'true' : 'false'));
 				_activeDialog = id;
 				
-				// set focus on first applicable element
-				var focusElement = elBySel('.jsDialogAutoFocus', data.dialog);
-				if (focusElement !== null && focusElement.offsetParent !== null) {
-					if (focusElement.id === 'username' || focusElement.name === 'username') {
-						if (Environment.browser() === 'safari' && Environment.platform() === 'ios') {
-							// iOS Safari's username/password autofill breaks if the input field is focused 
-							focusElement = null;
-						}
-					}
-					
-					if (focusElement) focusElement.focus();
-				}
+				// Keep a reference to the currently focused element to be able to restore it later.
+				_focusedBeforeDialog = document.activeElement;
+				
+				// Set the focus to the first focusable child of the dialog element.
+				var closeButton = elBySel('.dialogCloseButton', data.header);
+				if (closeButton) elAttr(closeButton, 'inert', true);
+				this._setFocusToFirstItem(data.dialog);
+				if (closeButton) closeButton.removeAttribute('inert');
 				
 				if (typeof data.onShow === 'function') {
 					data.onShow(data.content);
@@ -529,6 +548,53 @@ define(
 			this.rebuild(id);
 			
 			DomChangeListener.trigger();
+		},
+		
+		/**
+		 * @param {Event} event
+		 */
+		_maintainFocus: function(event) {
+			if (_activeDialog) {
+				var data = _dialogs.get(_activeDialog);
+				if (!data.dialog.contains(event.target) && !event.target.closest('.dropdownMenuContainer')) {
+					this._setFocusToFirstItem(data.dialog, true);
+				}
+			}
+		},
+		
+		/**
+		 * @param {Element} dialog
+		 * @param {boolean} maintain
+		 */
+		_setFocusToFirstItem: function(dialog, maintain) {
+			var focusElement = this._getFirstFocusableChild(dialog);
+			if (focusElement !== null) {
+				if (maintain) {
+					if (focusElement.id === 'username' || focusElement.name === 'username') {
+						if (Environment.browser() === 'safari' && Environment.platform() === 'ios') {
+							// iOS Safari's username/password autofill breaks if the input field is focused 
+							focusElement = null;
+						}
+					}
+				}
+				
+				if (focusElement) focusElement.focus();
+			}
+		},
+		
+		/**
+		 * @param {Element} node
+		 * @returns {?Element}
+		 */
+		_getFirstFocusableChild: function(node) {
+			var nodeList = elBySelAll(_focusableElements.join(','), node);
+			for (var i = 0, length = nodeList.length; i < length; i++) {
+				if (nodeList[i].offsetWidth && nodeList[i].offsetHeight && nodeList[i].getClientRects().length) {
+					return nodeList[i];
+				}
+			}
+			
+			return null;	
 		},
 		
 		/**
