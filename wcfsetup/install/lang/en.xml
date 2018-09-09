@@ -2170,6 +2170,19 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.bbcode.iconPath.description"><![CDATA[The entered path has to be relative to <code>{'WCF_DIR'|constant}icon/</code>.]]></item>
 		<item name="wcf.acp.pip.bbcode.iconPath.error.fileDoesNotExist"><![CDATA[The entered file does not exist.]]></item>
 		<item name="wcf.acp.pip.bbcode.wysiwygIcon"><![CDATA[Icon]]></item>
+		<item name="wcf.acp.pip.smiley.smileyCode"><![CDATA[Primary Smiley Code]]></item>
+		<item name="wcf.acp.pip.smiley.smileyCode.description"><![CDATA[Primary code that is converted into this smiley.]]></item>
+		<item name="wcf.acp.pip.smiley.smileyCode.error.notUnique"><![CDATA[The entered identifier is already used by another smiley.]]></item>
+		<item name="wcf.acp.pip.smiley.aliases"><![CDATA[Secondary Smiley Codes]]></item>
+		<item name="wcf.acp.pip.smiley.aliases.description"><![CDATA[Secondary codes that are converted into this smiley.]]></item>
+		<item name="wcf.acp.pip.smiley.aliases.error.notUnique"><![CDATA[The following aliases are already used by another smiley: {implode from=$notUniqueCodes item=notUniqueCode}<code>{$notUniqueCode}</code>{/implode}.]]></item>
+		<item name="wcf.acp.pip.smiley.showOrder"><![CDATA[Display Order]]></item>
+		<item name="wcf.acp.pip.smiley.showOrder.description"><![CDATA[The entered value determines in which order the smiley are shown.]]></item>
+		<item name="wcf.acp.pip.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
+		<item name="wcf.acp.pip.smiley.smileyPath.description"><![CDATA[The entered path has to be relative to <code>{'WCF_DIR'|constant}</code>.]]></item>
+		<item name="wcf.acp.pip.smiley.smileyPath.error.fileDoesNotExist"><![CDATA[The entered file does not exist.]]></item>
+		<item name="wcf.acp.pip.smiley.smileyPath2x"><![CDATA[HD Smiley Path]]></item>
+		<item name="wcf.acp.pip.smiley.smileyPath2x.description"><![CDATA[The entered path has to be relative to <code>{'WCF_DIR'|constant}</code>.]]></item>
 	</category>
 	
 	<category name="wcf.acp.reactionType">
