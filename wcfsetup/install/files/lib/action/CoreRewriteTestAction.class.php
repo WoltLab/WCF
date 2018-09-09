@@ -1,7 +1,6 @@
 <?php
 namespace wcf\action;
 use wcf\system\exception\IllegalLinkException;
-use wcf\util\CryptoUtil;
 use wcf\util\JSON;
 
 /**

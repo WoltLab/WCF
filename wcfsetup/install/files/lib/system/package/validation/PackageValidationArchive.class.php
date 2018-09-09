@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\package\validation;
 use wcf\data\package\Package;
-use wcf\data\package\PackageCache;
 use wcf\data\package\PackageList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageArchive;

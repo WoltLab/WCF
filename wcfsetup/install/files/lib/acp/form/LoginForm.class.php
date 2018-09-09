@@ -7,7 +7,6 @@ use wcf\data\user\UserProfile;
 use wcf\form\AbstractCaptchaForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\NamedUserException;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;

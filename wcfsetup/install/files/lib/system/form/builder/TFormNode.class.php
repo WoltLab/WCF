@@ -148,7 +148,9 @@ trait TFormNode {
 	public function checkDependencies() {
 		if (!empty($this->dependencies)) {
 			foreach ($this->dependencies as $dependency) {
-				if (!$dependency->checkDependency()) {
+				// check dependencies directly and check if a dependent
+				// field itself is unavailable because of its dependencies 
+				if (!$dependency->checkDependency() || !$dependency->getField()->checkDependencies()) {
 					return false;
 				}
 			}

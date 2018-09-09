@@ -40,6 +40,13 @@ class ItemListFormField extends AbstractFormField {
 	const SAVE_VALUE_TYPE_CSV = 'csv';
 	
 	/**
+	 * save value return type so that newline-separated list with the item values
+	 * will be returned
+	 * @var	string
+	 */
+	const SAVE_VALUE_TYPE_NSV = 'nsv';
+	
+	/**
 	 * save value return type so that space-separated list with the item values
 	 * will be returned
 	 * @var	string
@@ -56,6 +63,9 @@ class ItemListFormField extends AbstractFormField {
 			
 			case self::SAVE_VALUE_TYPE_CSV:
 				return implode(',', $this->getValue() ?: []);
+			
+			case self::SAVE_VALUE_TYPE_NSV:
+				return implode("\n", $this->getValue() ?: []);
 			
 			case self::SAVE_VALUE_TYPE_SSV:
 				return implode(' ', $this->getValue() ?: []);
@@ -136,7 +146,7 @@ class ItemListFormField extends AbstractFormField {
 			throw new \BadMethodCallException("Save value type has already been set.");
 		}
 		
-		if ($saveValueType !== self::SAVE_VALUE_TYPE_ARRAY && $saveValueType !== self::SAVE_VALUE_TYPE_CSV && $saveValueType !== self::SAVE_VALUE_TYPE_SSV) {
+		if (!in_array($saveValueType, [self::SAVE_VALUE_TYPE_ARRAY, self::SAVE_VALUE_TYPE_CSV, self::SAVE_VALUE_TYPE_NSV, self::SAVE_VALUE_TYPE_SSV])) {
 			throw new \InvalidArgumentException("Unknown save value type '{$saveValueType}'.");
 		}
 		
@@ -163,6 +173,16 @@ class ItemListFormField extends AbstractFormField {
 			case self::SAVE_VALUE_TYPE_CSV:
 				if (is_string($value)) {
 					$this->__value = explode(',', $value);
+				}
+				else {
+					throw new \InvalidArgumentException("Given value is no string, '" . gettype($value) . "' given.");
+				}
+				
+				break;
+			
+			case self::SAVE_VALUE_TYPE_NSV:
+				if (is_string($value)) {
+					$this->__value = explode("\n", $value);
 				}
 				else {
 					throw new \InvalidArgumentException("Given value is no string, '" . gettype($value) . "' given.");
@@ -206,6 +226,13 @@ class ItemListFormField extends AbstractFormField {
 						
 						break;
 					
+					case self::SAVE_VALUE_TYPE_NSV:
+						if (strpos($item, "\n") !== false) {
+							$invalidItems[] = $item;
+						}
+						
+						break;
+					
 					case self::SAVE_VALUE_TYPE_SSV:
 						if (strpos($item, ' ') !== false) {
 							$invalidItems[] = $item;
@@ -219,12 +246,27 @@ class ItemListFormField extends AbstractFormField {
 			}
 			
 			if (!empty($invalidItems)) {
+				$separator = '';
+				switch ($this->getSaveValue()) {
+					case self::SAVE_VALUE_TYPE_CSV:
+						$separator = ',';
+						break;
+						
+					case self::SAVE_VALUE_TYPE_NSV:
+						$separator = "\n";
+						break;
+						
+					case self::SAVE_VALUE_TYPE_SSV:
+						$separator = ' ';
+						break;
+				}
+				
 				$this->addValidationError(new FormFieldValidationError(
 					'separator',
 					'wcf.form.field.itemList.error.separator',
 					[
 						'invalidItems' => $invalidItems,
-						'separator' => $this->getSaveValueType() === self::SAVE_VALUE_TYPE_CSV ? ',' : ' '
+						'separator' => $separator
 					]
 				));
 			}

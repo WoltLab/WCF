@@ -4,7 +4,6 @@ use wcf\data\article\Article;
 use wcf\data\language\Language;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
-use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\output\AmpHtmlOutputProcessor;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\language\LanguageFactory;

@@ -10,7 +10,6 @@ use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
-use wcf\util\CryptoUtil;
 use wcf\util\PasswordUtil;
 use wcf\util\UserUtil;
 

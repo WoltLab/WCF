@@ -25,7 +25,6 @@ use wcf\system\user\notification\object\IUserNotificationObject;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use wcf\util\CryptoUtil;
 
 /**
  * Handles user notifications.

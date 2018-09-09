@@ -21,9 +21,7 @@ use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
-use wcf\util\CryptoUtil;
 use wcf\util\HeaderUtil;
-use wcf\util\StringUtil;
 use wcf\util\UserUtil;
 
 /**
