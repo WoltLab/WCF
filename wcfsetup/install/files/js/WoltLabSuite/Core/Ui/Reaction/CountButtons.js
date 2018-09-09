@@ -130,13 +130,14 @@ define(
 						// create element 
 						var createdElement = elCreate('li');
 						createdElement.className = 'reactCountButton';
-						createdElement.innerHTML = REACTION_TYPES[key].renderedIcon + ' '; 
 						elData(createdElement, 'reaction-type-id', key);
 						
 						var countSpan = elCreate('span');
 						countSpan.className = 'reactionCount';
 						countSpan.innerHTML = StringUtil.shortUnit(data[key]);
 						createdElement.appendChild(countSpan);
+						
+						createdElement.innerHTML = createdElement.innerHTML + REACTION_TYPES[key].renderedIcon;
 						
 						summaryList.appendChild(createdElement);
 						

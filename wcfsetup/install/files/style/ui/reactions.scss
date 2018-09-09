@@ -26,8 +26,14 @@
 }
 
 img.reactionType {
-	width: 16px;
-	height: 16px;
+	width: 24px;
+	height: 24px;
+}
+
+.reactionSummaryList {
+	span.reactionCount::after {
+		content: ' × ';
+	}
 }
 
 .reactionPopoverContent {
@@ -85,14 +91,12 @@ img.reactionType {
 
 li.reactCountButton {
 	display: inline;
-	padding: 10px;
+	padding: 5px;
 	cursor: pointer;
-	background-color: $wcfSidebarBackground;
 	color: $wcfContentDimmedText;
 }
 
 li.reactCountButton:hover {
-	background-color: darken($wcfSidebarBackground, 5);
 	color: $wcfContentText;
 }
 
