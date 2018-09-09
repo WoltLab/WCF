@@ -7,7 +7,6 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\like\LikeHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
-use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
 

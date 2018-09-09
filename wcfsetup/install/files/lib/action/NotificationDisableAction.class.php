@@ -5,7 +5,6 @@ use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\CryptoUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
