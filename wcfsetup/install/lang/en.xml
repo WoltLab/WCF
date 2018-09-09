@@ -117,6 +117,7 @@
 		<item name="wcf.acp.bbcode.add"><![CDATA[Add BBCode]]></item>
 		<item name="wcf.acp.bbcode.add.userGroupOptionInfo"><![CDATA[Newly created BBCodes will be accessible for everyone. You can restrict usage by editing the specific user group permissions.]]></item>
 		<item name="wcf.acp.bbcode.attribute"><![CDATA[Attribute]]></item>
+		<item name="wcf.acp.bbcode.numberedAttribute"><![CDATA[Attribute {#$attributeNumber}]]></item>
 		<item name="wcf.acp.bbcode.attribute.attributeHtml"><![CDATA[Attribute HTML code]]></item>
 		<item name="wcf.acp.bbcode.attribute.validationPattern"><![CDATA[Regular Expression for Validation]]></item>
 		<item name="wcf.acp.bbcode.attribute.validationPattern.error.invalid"><![CDATA[The regular expression failed to validate.]]></item>
@@ -2142,6 +2143,33 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.abstractOption.options.optionType.integer.suffix.description"><![CDATA[When setting the option value, the entered suffix (using the language item <code>wcf.acp.option.suffix.{literal}{$suffix}{/literal}</code>) is shown behind the input field.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.text.minLength"><![CDATA[Minimum Length]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.text.maxLength"><![CDATA[Maximum Length]]></item>
+		<item name="wcf.acp.pip.bbcode.bbcodeTag"><![CDATA[BBCode Identifier]]></item>
+		<item name="wcf.acp.pip.bbcode.bbcodeTag.description"><![CDATA[The textual BBCode identifier is used to identify BBCodes, for example when updating BBCodes. The identifier may only contain lowercase letters and numbers.]]></item>
+		<item name="wcf.acp.pip.bbcode.bbcodeTag.error.allNone"><![CDATA[The identifier may neither be <code>all</code> nor <code>none</code>.]]></item>
+		<item name="wcf.acp.pip.bbcode.bbcodeTag.error.format"><![CDATA[The identifier may only contain lowercase letters and numbers.]]></item>
+		<item name="wcf.acp.pip.bbcode.bbcodeTag.error.notUnique"><![CDATA[The entered identifier is already used by another BBCode.]]></item>
+		<item name="wcf.acp.pip.bbcode.htmlOpen"><![CDATA[Opening HTML tag]]></item>
+		<item name="wcf.acp.pip.bbcode.htmlOpen.description"><![CDATA[Opening tag of the HTML element wrapping the BBCode’s content (without leading or trailing angle brackets).]]></item>
+		<item name="wcf.acp.pip.bbcode.htmlOpen.error.leadingBracket"><![CDATA[The tag may not begin with an angle bracket.]]></item>
+		<item name="wcf.acp.pip.bbcode.htmlOpen.error.trailingBracket"><![CDATA[The tag may not end with an angle bracket.]]></item>
+		<item name="wcf.acp.pip.bbcode.htmlClose"><![CDATA[Closing HTML tag]]></item>
+		<item name="wcf.acp.pip.bbcode.htmlClose.description"><![CDATA[Closing tag of the HTML element wrapping the BBCode’s content (without leading or trailing angle brackets).]]></item>
+		<item name="wcf.acp.pip.bbcode.attributes"><![CDATA[Attributes]]></item>
+		<item name="wcf.acp.pip.bbcode.isBlockElement"><![CDATA[BBCode represents block element]]></item>
+		<item name="wcf.acp.pip.bbcode.isBlockElement.description"><![CDATA[Block elements can contain line breaks and paragraphs, and generally take up the entire available width. This option must not be selected for inline elements.]]></item>
+		<item name="wcf.acp.pip.bbcode.isSourceCode"><![CDATA[Content represents source code]]></item>
+		<item name="wcf.acp.pip.bbcode.isSourceCode.description"><![CDATA[The content of the BBCode will not be parsed.]]></item>
+		<item name="wcf.acp.pip.bbcode.showButton"><![CDATA[Display button in WYSIWYG editor]]></item>
+		<item name="wcf.acp.pip.bbcode.showButton.description"><![CDATA[The BBCode will be easily available by clicking on the associated button in the WYSIWYG editor toolbar.]]></item>
+		<item name="wcf.acp.pip.bbcode.buttonLabel"><![CDATA[Button Label]]></item>
+		<item name="wcf.acp.pip.bbcode.buttonLabel.description"><![CDATA[The label is shown when hovering over the button in the WYSIWYG editor toolbar.]]></item>
+		<item name="wcf.acp.pip.bbcode.iconType"><![CDATA[Button Icon Type]]></item>
+		<item name="wcf.acp.pip.bbcode.iconType.filePath"><![CDATA[Image]]></item>
+		<item name="wcf.acp.pip.bbcode.iconType.fontAwesome"><![CDATA[FontAwesome Icon]]></item>
+		<item name="wcf.acp.pip.bbcode.iconPath"><![CDATA[Path to icon file]]></item>
+		<item name="wcf.acp.pip.bbcode.iconPath.description"><![CDATA[The entered path has to be relative to <code>{'WCF_DIR'|constant}icon/</code>.]]></item>
+		<item name="wcf.acp.pip.bbcode.iconPath.error.fileDoesNotExist"><![CDATA[The entered file does not exist.]]></item>
+		<item name="wcf.acp.pip.bbcode.wysiwygIcon"><![CDATA[Icon]]></item>
 	</category>
 	
 	<category name="wcf.acp.reactionType">
@@ -3469,8 +3497,8 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.form.field.option.error.nonExistent"><![CDATA[The following options do not exist: {implode from=$options item=option}<code>{$option}</code>{/implode}.]]></item>
 		<item name="wcf.form.field.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.form.field.showOrder.firstPosition"><![CDATA[(first position)]]></item>
-		<item name="wcf.form.field.text.error.maximumLength"><![CDATA[The entered text{if $language} for language “{$language}”{/if} contains {#$length} characters but it may not be longer than {#$maximumLength} characters.]]></item>
-		<item name="wcf.form.field.text.error.minimumLength"><![CDATA[The entered text{if $language} for language “{$language}”{/if} only contains {#$length} characters but it may not be shorter than {#$minimumLength} characters.]]></item>
+		<item name="wcf.form.field.text.error.maximumLength"><![CDATA[The entered text{if $language|isset} for language “{$language}”{/if} contains {#$length} characters but it may not be longer than {#$maximumLength} characters.]]></item>
+		<item name="wcf.form.field.text.error.minimumLength"><![CDATA[The entered text{if $language|isset} for language “{$language}”{/if} only contains {#$length} characters but it may not be shorter than {#$minimumLength} characters.]]></item>
 		<item name="wcf.form.field.user.error.maxmimumMultiples"><![CDATA[You may not enter more than {#$maximumCount} users but {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
 		<item name="wcf.form.field.user.error.minimumMultiples"><![CDATA[You have to entered at least {#$minimumCount} users but only {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
 		<item name="wcf.form.field.user.error.nonExistent"><![CDATA[{if $nonExistentUsernames|isset}The following users do not exist: {implode from=$nonExistentUsernames item=nonExistentUsername}“{$nonExistentUsername}”{/implode}.{else}The entered user does not exists.{/if}]]></item>

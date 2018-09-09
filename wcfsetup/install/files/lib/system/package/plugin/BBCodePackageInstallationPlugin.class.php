@@ -3,10 +3,28 @@ namespace wcf\system\package\plugin;
 use wcf\data\bbcode\attribute\BBCodeAttributeEditor;
 use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeEditor;
+use wcf\data\bbcode\BBCodeList;
 use wcf\data\package\PackageCache;
+use wcf\system\bbcode\IBBCode;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\system\devtools\pip\IDevtoolsPipEntryList;
+use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
+use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\bbcode\BBCodeAttributesFormField;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\ClassNameFormField;
+use wcf\system\form\builder\field\data\VoidFormFieldDataProcessor;
+use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\IconFormField;
+use wcf\system\form\builder\field\RadioButtonFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
+use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -18,7 +36,9 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */
-class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
+class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
+	use TXmlGuiPackageInstallationPlugin;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -175,6 +195,10 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		
 		if (!empty($this->attributes)) {
 			foreach ($this->attributes as $bbcodeID => $bbcodeAttributes) {
+				if ($bbcodeID != intval($bbcodeID)) {
+					$bbcodeID = BBCode::getBBCodeByTag($bbcodeID)->bbcodeID;
+				}
+				
 				foreach ($bbcodeAttributes as $attributeNo => $attribute) {
 					BBCodeAttributeEditor::create([
 						'bbcodeID' => $bbcodeID,
@@ -199,8 +223,344 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.1
 	 */
 	public static function getSyncDependencies() {
 		return [];
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getElementData(\DOMElement $element, $saveData = false) {
+		$data = [
+			'attributes' => [],
+			'bbcodeTag' => $element->getAttribute('name'),
+			'packageID' => $this->installation->getPackage()->packageID,
+			'originIsSystem' => 1
+		];
+		
+		$optionalElements = [
+			'buttonLabel' => 'buttonlabel',
+			'className' => 'classname',
+			'htmlClose' => 'htmlclose',
+			'htmlOpen' => 'htmlopen',
+			'isBlockElement' => 'isBlockElement',
+			'isSourceCode' => 'sourcecode',
+			'wysiwygIcon' => 'wysiwygicon'
+		];
+		foreach ($optionalElements as $arrayKey => $elementName) {
+			$child = $element->getElementsByTagName($elementName)->item(0);
+			if ($child !== null) {
+				$data[$arrayKey] = $child->nodeValue;
+			}
+		}
+		
+		if (!empty($data['wysiwygIcon']) && !empty($data['buttonLabel'])) {
+			$data['showButton'] = 1;
+		}
+		
+		// attributes
+		$attributes = $element->getElementsByTagName('attributes')->item(0);
+		if ($attributes !== null) {
+			$optionalAttributeElements = [
+				'attributeHtml' => 'html',
+				'required' => 'required',
+				'useText' => 'usetext',
+				'validationPattern' => 'validationpattern',
+			];
+			
+			/** @var \DOMElement $attribute */
+			foreach ($attributes->childNodes as $attribute) {
+				$attributeData = ['name' => $attribute->nodeValue];
+				
+				foreach ($optionalAttributeElements as $arrayKey => $elementName) {
+					$child = $attribute->getElementsByTagName($elementName)->item(0);
+					if ($child !== null) {
+						$attributeData[$arrayKey] = $child->nodeValue;
+					}
+				}
+				
+				$data['attributes'][] = $attributeData;
+			}
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getElementIdentifier(\DOMElement $element) {
+		return $element->getAttribute('name');
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function addFormFields(IFormDocument $form) {
+		/** @var FormContainer $dataContainer */
+		$dataContainer = $form->getNodeById('data');
+		
+		// shared validators
+		$htmlValidator = new FormFieldValidator('format', function(TextFormField $formField) {
+			$value = $formField->getValue();
+			if ($value !== null && $value !== '') {
+				if (in_array(substr($formField->getValue(), 0, 1), ['<', '>'])) {
+					$formField->addValidationError(
+						new FormFieldValidationError(
+							'leadingBracket',
+							'wcf.acp.pip.bbcode.htmlOpen.error.leadingBracket'
+						)
+					);
+				}
+				else if (in_array(substr($formField->getValue(), -1, 1), ['<', '>'])) {
+					$formField->addValidationError(
+						new FormFieldValidationError(
+							'trailingBracket',
+							'wcf.acp.pip.bbcode.htmlOpen.error.trailingBracket'
+						)
+					);
+				}
+			}
+		});
+		
+		// add fields
+		$dataContainer->appendChildren([
+			TextFormField::create('bbcodeTag')
+				->objectProperty('name')
+				->label('wcf.acp.pip.bbcode.bbcodeTag')
+				->description('wcf.acp.pip.bbcode.bbcodeTag.description')
+				->required()
+				->maximumLength(191)
+				->addValidator(FormFieldValidatorUtil::getRegularExpressionValidator(
+					'[a-z0-9]+',
+					'wcf.acp.pip.bbcode.bbcodeTag'
+				))
+				->addValidator(new FormFieldValidator('allNone', function(TextFormField $formField) {
+					if ($formField->getValue() === 'all' || $formField->getValue() === 'none') {
+						$formField->addValidationError(
+							new FormFieldValidationError(
+								'allNone',
+								'wcf.acp.pip.bbcode.bbcodeTag.error.allNone'
+							)
+						);
+					}
+				}))
+				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
+					if (
+						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
+						$this->editedEntry->getAttribute('name') !== $formField->getValue()
+					) {
+						$providerList = new BBCodeList();
+						$providerList->getConditionBuilder()->add('bbcodeTag = ?', [$formField->getValue()]);
+						
+						if ($providerList->countObjects() > 0) {
+							$formField->addValidationError(
+								new FormFieldValidationError(
+									'notUnique',
+									'wcf.acp.pip.bbcode.bbcodeTag.error.notUnique'
+								)
+							);
+						}
+					}
+				})),
+			
+			TextFormField::create('htmlOpen')
+				->objectProperty('htmlopen')
+				->label('wcf.acp.pip.bbcode.htmlOpen')
+				->description('wcf.acp.pip.bbcode.htmlOpen.description')
+				->maximumLength(255)
+				->addValidator($htmlValidator),
+			
+			TextFormField::create('htmlClose')
+				->objectProperty('htmlclose')
+				->label('wcf.acp.pip.bbcode.htmlClose')
+				->description('wcf.acp.pip.bbcode.htmlClose.description')
+				->maximumLength(255)
+				// note: the language items for the opening tag are reused 
+				->addValidator($htmlValidator),
+			
+			BooleanFormField::create('isBlockElement')
+				->label('wcf.acp.pip.bbcode.isBlockElement')
+				->description('wcf.acp.pip.bbcode.isBlockElement.description'),
+			
+			BooleanFormField::create('isSourceCode')
+				->objectProperty('sourcecode')
+				->label('wcf.acp.pip.bbcode.isSourceCode')
+				->description('wcf.acp.pip.bbcode.isSourceCode.description'),
+			
+			ClassNameFormField::create()
+				->objectProperty('classname')
+				->implementedInterface(IBBCode::class),
+			
+			BooleanFormField::create('showButton')
+				->objectProperty('showbutton')
+				->label('wcf.acp.pip.bbcode.showButton')
+				->description('wcf.acp.pip.bbcode.showButton.description'),
+			
+			TextFormField::create('buttonLabel')
+				->objectProperty('buttonlabel')
+				->label('wcf.acp.pip.bbcode.buttonLabel')
+				->description('wcf.acp.pip.bbcode.buttonLabel.description')
+				->required()
+				->maximumLength(255),
+			
+			RadioButtonFormField::create('iconType')
+				->label('wcf.acp.pip.bbcode.iconType')
+				->options([
+					'filePath' => 'wcf.acp.pip.bbcode.iconType.filePath',
+					'fontAwesome' => 'wcf.acp.pip.bbcode.iconType.fontAwesome',
+				])
+				->required()
+				->value('fontAwesome'),
+			
+			TextFormField::create('iconPath')
+				->objectProperty('wysiwygicon')
+				->label('wcf.acp.pip.bbcode.iconPath')
+				->description('wcf.acp.pip.bbcode.iconPath.description')
+				->required()
+				->maximumLength(255)
+				->addValidator(new FormFieldValidator('fileExists', function(TextFormField $formField) {
+					if (!file_exists(WCF_DIR . 'icon/' . $formField->getValue())) {
+						$formField->addValidationError(
+							new FormFieldValidationError(
+								'fileDoesNotExist',
+								'wcf.acp.pip.bbcode.iconPath.error.fileDoesNotExist'
+							)
+						);
+					}
+				})),
+			
+			IconFormField::create('fontAwesomeIcon')
+				->objectProperty('wysiwygicon')
+				->label('wcf.acp.pip.bbcode.wysiwygIcon')
+				->required()
+		]);
+		
+		$form->appendChild(
+			FormContainer::create('bbcodeAttributes')
+				->attribute('data-ignore-dependencies', 1)
+				->label('wcf.acp.pip.bbcode.attributes')
+				->appendChild(
+					BBCodeAttributesFormField::create()
+				)
+		);
+		
+		// discard the `iconType` value as it is only used to distinguish the two icon input fields
+		$form->getDataHandler()->add(new VoidFormFieldDataProcessor('iconType'));
+		
+		// add dependencies
+		/** @var BooleanFormField $showButton */
+		$showButton = $dataContainer->getNodeById('showButton');
+		$iconType = $dataContainer->getNodeById('iconType');
+		
+		$dataContainer->getNodeById('buttonLabel')->addDependency(
+			NonEmptyFormFieldDependency::create('showButton')
+				->field($showButton)
+		);
+		$iconType->addDependency(
+			NonEmptyFormFieldDependency::create('showButton')
+				->field($showButton)
+		);
+		$dataContainer->getNodeById('iconPath')->addDependency(
+			ValueFormFieldDependency::create('iconType')
+				->field($iconType)
+				->values(['filePath'])
+		);
+		$dataContainer->getNodeById('fontAwesomeIcon')->addDependency(
+			ValueFormFieldDependency::create('iconType')
+				->field($iconType)
+				->values(['fontAwesome'])
+		);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
+		$entryList->setKeys([
+			'bbcodeTag' => 'wcf.acp.pip.bbcode.bbcodeTag',
+			'htmlOpen' => 'wcf.acp.pip.bbcode.htmlOpen',
+			'className' => 'wcf.form.field.className'
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function sortDocument(\DOMDocument $document) {
+		$this->sortImportDelete($document);
+		
+		$compareFunction = static::getSortFunction([
+			[
+				'isAttribute' => 1,
+				'name' => 'name'
+			]
+		]);
+		
+		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+		$data = $form->getData()['data'];
+		
+		$bbcode = $document->createElement($this->tagName);
+		$bbcode->setAttribute('name', $data['name']);
+		
+		$fields = [
+			'classname' => '',
+			'htmlclose' => '',
+			'htmlopen' => '',
+			'isBlockElement' => 0,
+			'sourcecode' => 0,
+			'buttonlabel' => '',
+			'wysiwygicon' => ''
+		];
+		
+		foreach ($fields as $field => $defaultValue) {
+			if (isset($data[$field]) && $data[$field] !== $defaultValue) {
+				$bbcode->appendChild($document->createElement($field, (string) $data[$field]));
+			}
+		}
+		
+		if (!empty($data['attributes'])) {
+			$attributes = $document->createElement('attributes');
+			$bbcode->appendChild($attributes);
+			
+			foreach ($data['attributes'] as $attributeNumber => $attributeData) {
+				$attribute = $document->createElement('attribute');
+				$attribute->setAttribute('name', (string) $attributeNumber);
+				
+				if (!empty($attributeData['attributeHtml'])) {
+					$attribute->appendChild($document->createElement('html', $attributeData['attributeHtml']));
+				}
+				if (!empty($attributeData['validationPattern'])) {
+					$attribute->appendChild($document->createElement('validationpattern', $attributeData['validationPattern']));
+				}
+				if (!empty($attributeData['required'])) {
+					$attribute->appendChild($document->createElement('required', $attributeData['required']));
+				}
+				if (!empty($attributeData['useText'])) {
+					$attribute->appendChild($document->createElement('usetext', $attributeData['useText']));
+				}
+				
+				$attributes->appendChild($attribute);
+			}
+		}
+		
+		$document->getElementsByTagName('import')->item(0)->appendChild($bbcode);
+		
+		return $bbcode;
 	}
 }
