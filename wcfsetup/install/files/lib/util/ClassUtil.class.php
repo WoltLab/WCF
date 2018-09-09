@@ -76,6 +76,7 @@ final class ClassUtil {
 				return false;
 			}
 			
+			/** @noinspection PhpUndefinedMethodInspection */
 			if (is_subclass_of($className::getBaseClass(), $targetClass)) {
 				return true;
 			}

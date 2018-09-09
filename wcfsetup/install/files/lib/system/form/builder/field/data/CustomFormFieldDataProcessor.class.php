@@ -47,6 +47,8 @@ class CustomFormFieldDataProcessor implements IFormFieldDataProcessor {
 				" parameter" . (count($parameters) !== 1 ? 's' : '') . " are expected."
 			);
 		}
+		
+		/** @var \ReflectionClass $parameterClass */
 		$parameterClass = $parameters[0]->getClass();
 		if ($parameterClass === null || ($parameterClass->getName() !== IFormDocument::class && !is_subclass_of($parameterClass->getName(), IFormDocument::class))) {
 			throw new \InvalidArgumentException(
