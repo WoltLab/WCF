@@ -3490,7 +3490,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.form.field.className.error.leadingBackslash"><![CDATA[The entered class name{if $language|isset} ({$language}){/if} must not have a leading backslash.]]></item>
 		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not exist.]]></item>
 		<item name="wcf.form.field.className.error.parentClass"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not extend <code>{$parentClass}</code>.]]></item>
-		<item name="wcf.form.field.itemList.error.separator"><![CDATA[The following items may contain no {if $separator === ','}comma{else}space{/if}: {implode from=$invalidItems item=item}“{$item}”{/implode}.]]></item>
+		<item name="wcf.form.field.itemList.error.separator"><![CDATA[The following items may contain no {if $separator === ','}comma{else if $separator === "\n"}newline{else}space{/if}: {implode from=$invalidItems item=item}“{$item}”{/implode}.]]></item>
 		<item name="wcf.form.field.numeric.error.maximum"><![CDATA[The entered value may not be less than {#$maximum}.]]></item>
 		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[The entered value may not be greater than {#$minimum}.]]></item>
 		<item name="wcf.form.field.option"><![CDATA[Options]]></item>
