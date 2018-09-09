@@ -8,7 +8,6 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 use wcf\util\PasswordUtil;
-use wcf\util\StringUtil;
 
 /**
  * Provides functions to edit users.

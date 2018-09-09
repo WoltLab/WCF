@@ -228,6 +228,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				
 				case 'general':
 					$elements = $xpath->query('child::*', $category);
+					
+					/** @var \DOMElement $element */
 					foreach ($elements as $element) {
 						switch ($element->tagName) {
 							case 'date':

@@ -4,7 +4,6 @@ use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
-use wcf\util\CryptoUtil;
 use wcf\util\StringUtil;
 
 /**

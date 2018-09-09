@@ -124,7 +124,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm {
 								break;
 								
 							case 'selection':
-								/** @var SingleSelectionFormField $languageCategoryIDMode */
+								/** @var SingleSelectionFormField $languageCategoryID */
 								$languageCategoryID = $formField->getDocument()->getNodeById('languageCategoryID');
 								
 								$languageCategory = LanguageFactory::getInstance()->getCategoryByID($languageCategoryID->getSaveValue());

@@ -14,7 +14,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\exception\CryptoException;
-use wcf\util\CryptoUtil;
 
 /**
  * Worker implementation for sending new passwords.

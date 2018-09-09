@@ -105,7 +105,7 @@ class StructuredCommentList extends CommentList {
 		
 		// fetch response ids
 		$responseIDs = $userIDs = [];
-		/** @var Comment $comment */
+		/** @var StructuredComment $comment */
 		foreach ($this->objects as $comment) {
 			if (!$this->minCommentTime || $comment->time < $this->minCommentTime) $this->minCommentTime = $comment->time;
 			

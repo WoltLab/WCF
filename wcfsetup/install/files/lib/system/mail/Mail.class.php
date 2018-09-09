@@ -3,7 +3,6 @@ namespace wcf\system\mail;
 use wcf\data\language\Language;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 
 /**
  * This class represents an e-mail.

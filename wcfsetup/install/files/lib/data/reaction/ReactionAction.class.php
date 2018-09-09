@@ -1,9 +1,13 @@
 <?php
 namespace wcf\data\reaction;
+use wcf\data\like\ILikeObjectTypeProvider;
 use wcf\data\like\IRestrictedLikeObjectTypeProvider;
+use wcf\data\like\Like;
 use wcf\data\like\LikeEditor;
+use wcf\data\like\object\ILikeObject;
 use wcf\data\like\object\LikeObjectEditor;
 use wcf\data\like\ViewableLikeList;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeCache;
@@ -43,13 +47,13 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * likeable object
-	 * @var	\wcf\data\like\object\ILikeObject
+	 * @var	ILikeObject
 	 */
 	public $likeableObject = null;
 	
 	/**
 	 * object type object
-	 * @var	\wcf\data\object\type\ObjectType
+	 * @var	ObjectType
 	 */
 	public $objectType = null;
 	

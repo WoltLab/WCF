@@ -3,7 +3,6 @@ namespace wcf\form;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
 use wcf\system\WCF;
-use wcf\util\HeaderUtil;
 
 /**
  * Shows the user login form.

@@ -16,7 +16,6 @@ use wcf\system\email\UserMailbox;
 use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
-use wcf\util\CryptoUtil;
 
 /**
  * Sends daily mail notifications.
