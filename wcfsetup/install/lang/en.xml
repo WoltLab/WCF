@@ -3389,6 +3389,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.page.recentActivity.pageCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on page <a href="{$page->getLink()}#comment{@$commentID}/response{@$responseID}">{$page->getTitle()}</a>.]]></item>
 		<item name="wcf.page.sidebar.left"><![CDATA[Left Sidebar]]></item>
 		<item name="wcf.page.sidebar.right"><![CDATA[Right Sidebar]]></item>
+		<item name="wcf.page.breadcrumb"><![CDATA[Breadcrumb]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">

@@ -1,7 +1,7 @@
 {if !$__microdata|isset}{assign var=__microdata value=true}{/if}
 {if $__microdata}{assign var='__breadcrumbPos' value=1}{/if}
 {hascontent}
-	<nav class="breadcrumbs">
+	<nav class="breadcrumbs" aria-label="{lang}wcf.page.breadcrumb{/lang}">
 		<ol{if $__microdata} itemprop="breadcrumb" itemscope itemtype="http://schema.org/BreadcrumbList"{/if}>
 			{content}
 				{foreach from=$__wcf->getBreadcrumbs() item=$breadcrumb}
