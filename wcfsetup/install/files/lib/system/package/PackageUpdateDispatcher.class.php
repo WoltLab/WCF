@@ -321,10 +321,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				break;
 				
 				case 'pluginStoreFileID':
-					if ($updateServer->isWoltLabStoreServer()) {
-						$packageInfo['pluginStoreFileID'] = intval($element->nodeValue);
-					}
-					break;
+					$packageInfo['pluginStoreFileID'] = intval($element->nodeValue);
+				break;
 			}
 		}
 		
