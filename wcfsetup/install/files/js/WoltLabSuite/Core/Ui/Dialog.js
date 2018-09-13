@@ -435,6 +435,9 @@ define(
 						content = children[0];
 					}
 				}
+				else {
+					throw new TypeError("'html' must either be a string or a DocumentFragment");
+				}
 			}
 			else {
 				content = element;
