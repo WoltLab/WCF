@@ -326,7 +326,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			}
 			
 			if (!message || message === 'undefined') {
-				return;
+				message = 'XMLHttpRequest failed without a responseText. Check your browser console.'
 			}
 			
 			return '<div class="ajaxDebugMessage"><p>' + message + '</p>' + details + '</div>';

@@ -362,17 +362,17 @@
 		
 		{if $action == 'edit'}
 			<div id="avatarForm" class="tabMenuContent hidden">
-				<section class="section">
+				<section class="section avatarEdit">
 					<h2 class="sectionTitle">{lang}wcf.user.avatar{/lang}</h2>
 					
-					<dl>
+					<dl class="avatarType">
 						<dt></dt>
 						<dd>
 							<label><input type="radio" name="avatarType" value="none"{if $avatarType == 'none'} checked{/if}> {lang}wcf.user.avatar.type.none{/lang}</label>
 						</dd>
 					</dl>
 					
-					<dl class="jsOnly{if $errorType[customAvatar]|isset} formError{/if}" id="avatarUpload">
+					<dl class="avatarType jsOnly{if $errorType[customAvatar]|isset} formError{/if}" id="avatarUpload">
 						<dt>
 							{if $avatarType == 'custom'}
 								{@$userAvatar->getImageTag(96)}
@@ -384,7 +384,7 @@
 							<label><input type="radio" name="avatarType" value="custom"{if $avatarType == 'custom'} checked{/if}> {lang}wcf.user.avatar.type.custom{/lang}</label>
 							
 							{* placeholder for upload button: *}
-							<div></div>
+							<div class="avatarUploadButtonContainer"></div>
 							
 							{if $errorType[customAvatar]|isset}
 								<small class="innerError">
@@ -395,7 +395,7 @@
 					</dl>
 					
 					{if MODULE_GRAVATAR}
-						<dl{if $errorType[gravatar]|isset} class="formError"{/if}>
+						<dl class="avatarType{if $errorType[gravatar]|isset} formError{/if}">
 							<dt><img src="https://secure.gravatar.com/avatar/{@$user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage icon96"></dt>
 							<dd>
 								<label><input type="radio" name="avatarType" value="gravatar"{if $avatarType == 'gravatar'} checked{/if}> {lang}wcf.user.avatar.type.gravatar{/lang}</label>

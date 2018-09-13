@@ -356,7 +356,7 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[Benutzerprofilfelder]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[Follower]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[Followers]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[Avatare]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Pinnwand-Kommentare]]></item>
@@ -1148,7 +1148,7 @@
 		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Eine Aktivierung dieser Einstellung kann Benutzer ausschließen, die mit wechselnden IP-Adressen im Internet unterwegs sind.]]></item>
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Browser-Kennung der Sitzung überprüfen]]></item>
 		<item name="wcf.acp.option.session_enable_virtualization"><![CDATA[Virtuelle Sessions erlauben]]></item>
-		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Benutzer können sich mit mehreren Endgeräten (PC, Tablet, Smartphone, etc.) gleichzeitig anmelden, alle Geräte nutzen dann die selbe Sitzung. Die Abschaltung dieser Option hat zur Folge, dass ein Benutzer nur von einem einzigen Gerät gleichzeitig angemeldet sein darf und sich unter Umständen die Geräte auf diese Weise gegenseitig abmelden. Die Deaktivierung dieser Option wird nicht empfohlen und sollte nur vorgenommen werden, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dir{else}Sie sich{/if} der Konsequenzen bewusst sind.]]></item>
+		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Benutzer können sich mit mehreren Endgeräten (PC, Tablet, Smartphone, etc.) gleichzeitig anmelden, alle Geräte nutzen dann die selbe Sitzung. Die Abschaltung dieser Option hat zur Folge, dass ein Benutzer nur von einem einzigen Gerät gleichzeitig angemeldet sein darf und sich unter Umständen die Geräte auf diese Weise gegenseitig abmelden. Die Deaktivierung dieser Option wird nicht empfohlen und sollte nur vorgenommen werden, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dir{else}Sie sich{/if} der Konsequenzen bewusst {if LANGUAGE_USE_INFORMAL_VARIANT}bist{else}sind{/if}.]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Zeitzone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[Standard-Zeitzone {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Seite]]></item>
 		<item name="wcf.acp.option.user_online_timeout"><![CDATA[Timeout für Benutzer-Online]]></item>
@@ -1523,7 +1523,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 	</category>
 	
 	<category name="wcf.acp.package">
-		<item name="wcf.acp.package.apiVersions"><![CDATA[Unterstütze WoltLab Suite&trade; API-Versionen]]></item>
+		<item name="wcf.acp.package.apiVersions"><![CDATA[Unterstützte WoltLab Suite&trade; API-Versionen]]></item>
 		<item name="wcf.acp.package.apiVersions.missing"><![CDATA[Dieses Paket stellt keine Informationen zur Kompatibilität bereit.]]></item>
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installierte Apps]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Apps]]></item>
