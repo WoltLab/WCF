@@ -3,7 +3,7 @@
 	<import>
 		<provider name="youtube">
 			<title>YouTube</title>
-			<regex><![CDATA[https?://(?:.+?\.)?youtu(?:\.be/|be\.com/(?:#/)?watch\?(?:.*?&)?v=)(?P<ID>[a-zA-Z0-9_-]+)(?:(?:\?|&)t=(?P<start>[0-9hms]+)$)?]]></regex>
+			<regex><![CDATA[https?://(?:.+?\.)?youtu(?:\.be/|be\.com/(?:#/)?watch\?(?:.*?&)?v=)(?P<ID>[a-zA-Z0-9_-]+)]]></regex>
 			<className><![CDATA[wcf\system\bbcode\media\provider\YouTubeBBCodeMediaProvider]]></className>
 		</provider>
 		
