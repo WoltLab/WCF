@@ -33,6 +33,6 @@ class YouTubeBBCodeMediaProvider implements IBBCodeMediaProvider {
 			}
 		}
 		
-		return '<div class="videoContainer"><iframe src="https://www.youtube-nocookie.com/embed/' . $matches['ID'] . '?wmode=transparent' . ($start ? '&amp;start='.$start : '') . '" allowfullscreen></iframe></div>';
+		return '<div class="videoContainer"><iframe src="https://www.youtube-nocookie.com/embed/' . $matches['ID'] . '?wmode=transparent' . ($start ? '&amp;start='.$start : '') . '&amp;rel=0" allowfullscreen></iframe></div>';
 	}
 }
