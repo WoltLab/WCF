@@ -2328,7 +2328,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.quote.edit.author"><![CDATA[Author]]></item>
 		<item name="wcf.bbcode.quote.edit.link"><![CDATA[Source]]></item>
 		<item name="wcf.bbcode.quote.insert"><![CDATA[Insert Quote]]></item>
-		<item name="wcf.bbcode.quote.title"><![CDATA[{$quoteAuthor} wrote:]]></item>
+		<item name="wcf.bbcode.quote.title"><![CDATA[Quote from {$quoteAuthor}]]></item>
 		<item name="wcf.bbcode.quote.title.clickToSet"><![CDATA[(Click to set source)]]></item>
 		<item name="wcf.bbcode.quote.title.javascript"><![CDATA[{literal}{$quoteAuthor} wrote:{/literal}]]></item>
 		<item name="wcf.bbcode.quote.simplified"><![CDATA[(Quote{if $cite} from {$cite}{/if})]]></item>
