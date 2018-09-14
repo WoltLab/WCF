@@ -319,7 +319,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 							$progress = 100;
 							$currentAction = CLIWCF::getLanguage()->get('wcf.acp.package.installation.step.install.success');
 							$finished = true;
-							continue;
+							continue 2;
 						}
 						else {
 							// continue with next node
@@ -418,7 +418,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 						$progress = 100;
 						$step = 'success';
 						$finished = true;
-						continue;
+						continue 2;
 					}
 					
 					// continue with next node
