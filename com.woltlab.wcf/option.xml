@@ -937,6 +937,7 @@ encrypt:wcf.acp.option.mail_smtp_starttls.encrypt</selectoptions>
 			<option name="mail_smtp_user">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>text</optiontype>
+				<disableAutocomplete>1</disableAutocomplete>
 			</option>
 			<option name="mail_smtp_password">
 				<categoryname>general.mail.send</categoryname>
