@@ -2457,7 +2457,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.bbcode.quote.edit.author"><![CDATA[Autor]]></item>
 		<item name="wcf.bbcode.quote.edit.link"><![CDATA[Quelle]]></item>
 		<item name="wcf.bbcode.quote.insert"><![CDATA[Zitat einfügen]]></item>
-		<item name="wcf.bbcode.quote.title"><![CDATA[{$quoteAuthor} schrieb:]]></item>
+		<item name="wcf.bbcode.quote.title"><![CDATA[Zitat von {$quoteAuthor}]]></item>
 		<item name="wcf.bbcode.quote.title.clickToSet"><![CDATA[(Klicken um eine Quelle anzugeben)]]></item>
 		<item name="wcf.bbcode.quote.title.javascript"><![CDATA[{literal}{$quoteAuthor} schrieb:{/literal}]]></item>
 		<item name="wcf.bbcode.quote.simplified"><![CDATA[(Zitat{if $cite} von {$cite}{/if})]]></item>
