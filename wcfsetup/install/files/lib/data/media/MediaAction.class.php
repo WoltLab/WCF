@@ -145,6 +145,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		return [
 			'altText' => $media instanceof ViewableMedia ? $media->altText : [],
 			'caption' => $media instanceof ViewableMedia ? $media->caption : [],
+			'captionEnableHtml' => $media->captionEnableHtml,
 			'categoryID' => $media->categoryID,
 			'fileHash' => $media->fileHash,
 			'filename' => $media->filename,

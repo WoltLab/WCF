@@ -3189,6 +3189,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.media.button.insert"><![CDATA[Einfügen]]></item>
 		<item name="wcf.media.button.select"><![CDATA[Auswählen]]></item>
 		<item name="wcf.media.caption"><![CDATA[Bildunterschrift]]></item>
+		<item name="wcf.media.caption.enableHtml"><![CDATA[HTML in der Bildunterschrift verwenden]]></item>
 		<item name="wcf.media.category.choose"><![CDATA[Kategorien]]></item>
 		<item name="wcf.media.categoryID"><![CDATA[Kategorie]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Bild auswählen]]></item>

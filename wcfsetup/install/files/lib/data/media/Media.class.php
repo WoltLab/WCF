@@ -28,6 +28,7 @@ use wcf\system\WCF;
  * @property-read	string		$username		name of the user who uploaded the media file
  * @property-read	integer|null	$languageID		id of the language associated with the media file or null if the media file is multilingual or if the language has been deleted
  * @property-read	integer		$isMultilingual		is `1` if the media file's title, description and altText is available in multiple languages, otherwise `0`
+ * @property-read	integer		$captionEnableHtml	is `1` if html code in caption is supported, otherwise `0`
  * @property-read	integer		$isImage		is `1` if the media file is an image, otherwise `0`
  * @property-read	integer		$width			width of the media file if `$isImage` is `1`, otherwise `0`
  * @property-read	integer		$height			height of the media file if `$isImage` is `1`, otherwise `0`

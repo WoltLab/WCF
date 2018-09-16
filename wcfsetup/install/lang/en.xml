@@ -3136,6 +3136,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.media.button.insert"><![CDATA[Insert]]></item>
 		<item name="wcf.media.button.select"><![CDATA[Select]]></item>
 		<item name="wcf.media.caption"><![CDATA[Caption]]></item>
+		<item name="wcf.media.caption.enableHtml"><![CDATA[Enable HTML code in caption]]></item>
 		<item name="wcf.media.category.choose"><![CDATA[Categories]]></item>
 		<item name="wcf.media.categoryID"><![CDATA[Category]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Select Image]]></item>
