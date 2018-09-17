@@ -653,7 +653,7 @@ class ReactionHandler extends SingletonFactory {
 	 * @param	integer[]	$objectIDs
 	 * @param	string[]	$notificationObjectTypes
 	 */
-	public function removeReacts($objectType, array $objectIDs, array $notificationObjectTypes = []) {
+	public function removeReactions($objectType, array $objectIDs, array $notificationObjectTypes = []) {
 		$objectTypeObj = $this->getObjectType($objectType);
 		
 		if ($objectTypeObj === null) {

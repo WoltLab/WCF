@@ -167,7 +167,7 @@ class LikeHandler extends SingletonFactory {
 	 * @param	string[]	$notificationObjectTypes
 	 */
 	public function removeLikes($objectType, array $objectIDs, array $notificationObjectTypes = []) {
-		ReactionHandler::getInstance()->removeReacts($objectType, $objectIDs, $notificationObjectTypes);
+		ReactionHandler::getInstance()->removeReactions($objectType, $objectIDs, $notificationObjectTypes);
 	}
 	
 	/**
