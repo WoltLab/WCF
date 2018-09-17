@@ -222,17 +222,14 @@ define(
 			button.href = '#';
 			button.title = title;
 			
-			var icon = elCreate('img');
-			icon.className = 'reactionType';
+			var icon = elCreate('span');
+			icon.className = 'icon icon16 fa-smile-o';
 			
 			if (reactionTypeID === undefined || reactionTypeID == 0) {
-				icon.src = WCF_PATH+'images/reaction/reactionIcon.svg';
 				elData(icon, 'reaction-type-id', 0);
 			}
 			else {
-				icon.src = REACTION_TYPES[reactionTypeID].iconPath;
-				elData(icon, 'reaction-type-id', reactionTypeID);
-				
+				elData(button, 'reaction-type-id', reactionTypeID);
 				button.classList.add("active");
 			}
 			

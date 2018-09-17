@@ -56,7 +56,7 @@
 								{/if}
 								
 								{if MODULE_LIKE && $__wcf->session->getPermission('user.like.canLike') && (LIKE_ALLOW_FOR_OWN_CONTENT || $comment->userID != $__wcf->user->userID)}
-									<li class="jsOnly"><a href="#" class="reactButton jsTooltip" title="{lang}wcf.reactions.react{/lang}">{if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID}{@$__wcf->getReactionHandler()->getReactionTypeByID($likeData[comment][$comment->commentID]->reactionTypeID)->renderIcon()}{else}<img src="{$__wcf->getPath()}/images/reaction/reactionIcon.svg" class="reactionType">{/if} <span class="invisible">{lang}wcf.reactions.react{/lang}</span></a></li>
+									<li class="jsOnly"><a href="#" class="reactButton jsTooltip {if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $likeData[comment][$comment->commentID]|isset && $likeData[comment][$comment->commentID]->reactionTypeID}{$likeData[comment][$comment->commentID]->reactionTypeID}{else}0{/if}"><span class="icon icon16 fa-smile-o"></span> <span class="invisible">{lang}wcf.reactions.react{/lang}</span></a></li>
 								{/if}
 								
 								{event name='commentOptions'}
