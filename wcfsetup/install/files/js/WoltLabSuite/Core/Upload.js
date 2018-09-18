@@ -72,6 +72,9 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		this._fileElements = [];
 		this._internalFileId = 0;
 		
+		// upload ids that belong to an upload of multiple files at once
+		this._multiFileUploadIds = [];
+		
 		this._createButton();
 	}
 	Upload.prototype = {
@@ -285,7 +288,12 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 				if (this._options.singleFileRequests) {
 					uploadId = [];
 					for (var i = 0, length = files.length; i < length; i++) {
-						uploadId.push(this._uploadFiles([ files[i] ], blob));
+						var localUploadId = this._uploadFiles([ files[i] ], blob);
+						
+						if (files.length !== 1) {
+							this._multiFileUploadIds.push(localUploadId)
+						}
+						uploadId.push(localUploadId);
 					}
 				}
 				else {

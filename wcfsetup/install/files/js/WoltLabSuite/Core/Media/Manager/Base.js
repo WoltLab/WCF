@@ -80,6 +80,8 @@ define(
 		}
 		
 		DomChangeListener.add('WoltLabSuite/Core/Media/Manager', this._addButtonEventListeners.bind(this));
+		
+		EventHandler.add('com.woltlab.wcf.media.upload', 'success', this._openEditorAfterUpload.bind(this));
 	}
 	MediaManagerBase.prototype = {
 		/**
@@ -325,6 +327,24 @@ define(
 			var checkboxes = elByClass('mediaCheckbox', this._mediaManagerMediaList);
 			while (checkboxes.length) {
 				elRemove(checkboxes[0]);
+			}
+		},
+		
+		/**
+		 * Opens the media editor after uploading a single file.
+		 * 
+		 * @param	{object}	data	upload event data
+		 * @since	3.2
+		 */
+		_openEditorAfterUpload: function(data) {
+			if (data.upload === this._upload && !data.isMultiFileUpload) {
+				var keys = Object.keys(data.media);
+				
+				if (keys.length) {
+					UiDialog.close(this);
+					
+					this._mediaEditor.edit(this._media.get(~~data.media[keys[0]].mediaID));
+				}
 			}
 		},
 		

@@ -342,6 +342,7 @@ define(
 			
 			EventHandler.fire('com.woltlab.wcf.media.upload', 'success', {
 				files: files,
+				isMultiFileUpload: this._multiFileUploadIds.indexOf(uploadId) !== -1,
 				media: data.returnValues.media,
 				upload: this,
 				uploadId: uploadId
