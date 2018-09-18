@@ -130,7 +130,7 @@ define([
 		 * @since	3.2
 		 */
 		_openEditorAfterUpload: function(data) {
-			if (data.upload === _upload && !data.isMultiFileUpload) {
+			if (data.upload === _upload && !data.isMultiFileUpload && !_upload.hasPendingUploads()) {
 				var keys = Object.keys(data.media);
 				
 				if (keys.length) {

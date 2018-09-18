@@ -376,6 +376,26 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		},
 		
 		/**
+		 * Returns true if there are any pending uploads handled by this
+		 * upload manager.
+		 * 
+		 * @return	{boolean}
+		 * @since	3.2
+		 */
+		hasPendingUploads: function() {
+			for (var uploadId in this._fileElements) {
+				for (var i in this._fileElements[uploadId]) {
+					var progress = elByTag('PROGRESS', this._fileElements[uploadId][i]);
+					if (progress.length === 1) {
+						return true;
+					}
+				}
+			}
+			
+			return false;
+		},
+		
+		/**
 		 * Uploads the given file blob.
 		 * 
 		 * @param	{Blob}		blob		file blob
