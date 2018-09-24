@@ -144,6 +144,8 @@ define(
 					fileIcon.classList.add('pointer');
 					
 					file.classList.add('uploadFailed');
+					file.classList.add('jsTooltip');
+					elAttr(file, 'title', Language.get('wcf.global.button.delete'));
 					file.addEventListener(WCF_CLICK_EVENT, function() {
 						elRemove(this);
 					});
