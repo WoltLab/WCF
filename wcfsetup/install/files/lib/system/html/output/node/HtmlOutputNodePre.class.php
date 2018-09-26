@@ -1,18 +1,6 @@
 <?php
 namespace wcf\system\html\output\node;
-use wcf\system\bbcode\highlighter\BashHighlighter;
-use wcf\system\bbcode\highlighter\CHighlighter;
-use wcf\system\bbcode\highlighter\DiffHighlighter;
-use wcf\system\bbcode\highlighter\HtmlHighlighter;
-use wcf\system\bbcode\highlighter\JavaHighlighter;
-use wcf\system\bbcode\highlighter\JsHighlighter;
-use wcf\system\bbcode\highlighter\PerlHighlighter;
-use wcf\system\bbcode\highlighter\PhpHighlighter;
-use wcf\system\bbcode\highlighter\PlainHighlighter;
-use wcf\system\bbcode\highlighter\PythonHighlighter;
-use wcf\system\bbcode\highlighter\SqlHighlighter;
-use wcf\system\bbcode\highlighter\TexHighlighter;
-use wcf\system\bbcode\highlighter\XmlHighlighter;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -95,109 +83,100 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 		$highlighter = $data['highlighter'];
 		$line = ($data['line'] < 1) ? 1 : $data['line'];
 		
-		// fetch highlighter-classname
-		$className = PlainHighlighter::class;
+		switch ($highlighter) {
+			case 'js':
+				$highlighter = 'javascript';
+				break;
+			case 'c++':
+				$highlighter = 'cpp';
+				break;
+			case 'tex':
+				$highlighter = 'latex';
+				break;
+			case 'shell':
+				$highlighter = 'bash';
+				break;
+		}
 		
-		// no highlighting for strings over a certain size, to prevent DoS
-		// this serves as a safety net in case one of the regular expressions
-		// in a highlighter causes PCRE to exhaust resources, such as the stack
-		if (strlen($content) < 16384) {
-			if ($highlighter) {
-				$className = '\wcf\system\bbcode\highlighter\\'.StringUtil::firstCharToUpperCase(mb_strtolower($highlighter)).'Highlighter';
-				
-				switch (mb_substr($className, strlen('\wcf\system\bbcode\highlighter\\'))) {
-					case 'ShellHighlighter':
-						$className = BashHighlighter::class;
-						break;
-					
-					case 'C++Highlighter':
-						$className = CHighlighter::class;
-						break;
-					
-					case 'JavascriptHighlighter':
-						$className = JsHighlighter::class;
-						break;
-					
-					case 'LatexHighlighter':
-						$className = TexHighlighter::class;
-						break;
-				}
+		if (!$highlighter) {
+			// try to guess highlighter
+			if (mb_strpos($content, '<?php') !== false) {
+				$highlighter = 'php';
 			}
-			else {
-				// try to guess highlighter
-				if (mb_strpos($content, '<?php') !== false) {
-					$className = PhpHighlighter::class;
-				}
-				else if (mb_strpos($content, '<html') !== false) {
-					$className = HtmlHighlighter::class;
-				}
-				else if (mb_strpos($content, '<?xml') === 0) {
-					$className = XmlHighlighter::class;
-				}
-				else if (	mb_strpos($content, 'SELECT') === 0
-					||	mb_strpos($content, 'UPDATE') === 0
-					||	mb_strpos($content, 'INSERT') === 0
-					||	mb_strpos($content, 'DELETE') === 0) {
-					$className = SqlHighlighter::class;
-				}
-				else if (mb_strpos($content, 'import java.') !== false) {
-					$className = JavaHighlighter::class;
-				}
-				else if (	mb_strpos($content, "---") !== false
-					&&	mb_strpos($content, "\n+++") !== false) {
-					$className = DiffHighlighter::class;
-				}
-				else if (mb_strpos($content, "\n#include ") !== false) {
-					$className = CHighlighter::class;
-				}
-				else if (mb_strpos($content, '#!/usr/bin/perl') === 0) {
-					$className = PerlHighlighter::class;
-				}
-				else if (mb_strpos($content, 'def __init__(self') !== false) {
-					$className = PythonHighlighter::class;
-				}
-				else if (Regex::compile('^#!/bin/(ba|z)?sh')->match($content)) {
-					$className = BashHighlighter::class;
-				}
-				else if (mb_strpos($content, '\\documentclass') !== false) {
-					$className = TexHighlighter::class;
-				}
+			else if (mb_strpos($content, '<html') !== false) {
+				$highlighter = 'html';
+			}
+			else if (mb_strpos($content, '<?xml') === 0) {
+				$highlighter = 'xml';
+			}
+			else if (	mb_strpos($content, 'SELECT') === 0
+				||	mb_strpos($content, 'UPDATE') === 0
+				||	mb_strpos($content, 'INSERT') === 0
+				||	mb_strpos($content, 'DELETE') === 0) {
+				$highlighter = 'sql';
+			}
+			else if (mb_strpos($content, 'import java.') !== false) {
+				$highlighter = 'java';
+			}
+			else if (	mb_strpos($content, "---") !== false
+				&&	mb_strpos($content, "\n+++") !== false) {
+				$highlighter = 'diff';
+			}
+			else if (mb_strpos($content, "\n#include ") !== false) {
+				$highlighter = 'c';
+			}
+			else if (mb_strpos($content, '#!/usr/bin/perl') === 0) {
+				$highlighter = 'perl';
+			}
+			else if (mb_strpos($content, 'def __init__(self') !== false) {
+				$highlighter = 'python';
+			}
+			else if (Regex::compile('^#!/bin/(ba|z)?sh')->match($content)) {
+				$highlighter = 'bash';
+			}
+			else if (mb_strpos($content, '\\documentclass') !== false) {
+				$highlighter = 'latex';
 			}
 		}
 		
-		if (!class_exists($className)) {
-			$className = PlainHighlighter::class;
+		$meta = BBCodeHandler::getInstance()->getHighlighterMeta();
+		$title = WCF::getLanguage()->get('wcf.bbcode.code');
+		if (isset($meta[$highlighter])) {
+			$title = $meta[$highlighter]['title'];
 		}
-		
-		/** @noinspection PhpUndefinedMethodInspection */
-		$highlightedContent = $this->fixMarkup(explode("\n", $className::getInstance()->highlight($content)));
+		else {
+			$highlighter = null;
+		}
+
+		$splitContent = explode("\n", $content);
+		$last = array_pop($splitContent);
+		$splitContent = array_map(function ($item) {
+			return $item."\n";
+		}, $splitContent);
+		$splitContent[] = $last;
 		
 		// show template
 		/** @noinspection PhpUndefinedMethodInspection */
 		WCF::getTPL()->assign([
-			'lineNumbers' => $this->makeLineNumbers($content, $line),
+			'codeID' => $this->getCodeID($content),
 			'startLineNumber' => $line,
-			'content' => $highlightedContent,
-			'highlighter' => $className::getInstance(),
+			'content' => $splitContent,
+			'language' => $highlighter,
 			'filename' => $file,
-			'lines' => substr_count($content, "\n") + 1
+			'title' => $title,
+			'lines' => count($splitContent)
 		]);
 		
 		return WCF::getTPL()->fetch('codeMetaCode');
 	}
 	
 	/**
-	 * Returns a string with all line numbers
+	 * Returns a unique ID for this code block.
 	 *
 	 * @param	string		$code
-	 * @param	integer		$start
-	 * @param	string		$split
-	 * @return	string[]
+	 * @return	string
 	 */
-	protected function makeLineNumbers($code, $start, $split = "\n") {
-		$lines = explode($split, $code);
-		
-		$lineNumbers = [];
+	protected function getCodeID($code) {
 		$i = -1;
 		// find an unused codeID
 		do {
@@ -208,49 +187,6 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 		// mark codeID as used
 		self::$codeIDs[$codeID] = true;
 		
-		for ($i = $start, $j = count($lines) + $start; $i < $j; $i++) {
-			$lineNumbers[$i] = 'codeLine_'.$i.'_'.$codeID;
-		}
-		return $lineNumbers;
-	}
-	
-	/**
-	 * Fixes markup that every line has proper number of opening and closing tags
-	 *
-	 * @param	string[]	$lines
-	 * @return	string[]
-	 */
-	protected function fixMarkup(array $lines) {
-		static $spanRegex = null;
-		static $emptyTagRegex = null;
-		if ($spanRegex === null) {
-			$spanRegex = new Regex('(?:<span(?: class="(?:[^"])*")?>|</span>)');
-			$emptyTagRegex = new Regex('<span(?: class="(?:[^"])*")?></span>');
-		}
-		
-		$openTags = [];
-		foreach ($lines as &$line) {
-			$spanRegex->match($line, true);
-			// open all tags again
-			$line = implode('', $openTags).$line;
-			$matches = $spanRegex->getMatches();
-			
-			// parse opening and closing spans
-			foreach ($matches[0] as $match) {
-				if ($match === '</span>') array_pop($openTags);
-				else {
-					array_push($openTags, $match);
-				}
-			}
-			
-			// close all tags
-			$line .= str_repeat('</span>', count($openTags));
-			
-			// remove empty tags to avoid cluttering the output
-			$line = $emptyTagRegex->replace($line, '');
-		}
-		unset($line);
-		
-		return $lines;
+		return $codeID;
 	}
 }

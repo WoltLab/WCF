@@ -2869,21 +2869,6 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.button.collapse"><![CDATA[Display Less]]></item>
 		<item name="wcf.bbcode.button.showAll"><![CDATA[Display More]]></item>
 		<item name="wcf.bbcode.code"><![CDATA[Code]]></item>
-		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
-		<item name="wcf.bbcode.code.c.title"><![CDATA[C]]></item>
-		<item name="wcf.bbcode.code.css.title"><![CDATA[CSS]]></item>
-		<item name="wcf.bbcode.code.diff.title"><![CDATA[Diff]]></item>
-		<item name="wcf.bbcode.code.html.title"><![CDATA[HTML]]></item>
-		<item name="wcf.bbcode.code.java.title"><![CDATA[Java]]></item>
-		<item name="wcf.bbcode.code.js.title"><![CDATA[JavaScript]]></item>
-		<item name="wcf.bbcode.code.perl.title"><![CDATA[Perl]]></item>
-		<item name="wcf.bbcode.code.php.title"><![CDATA[PHP]]></item>
-		<item name="wcf.bbcode.code.plain.title"><![CDATA[Code]]></item>
-		<item name="wcf.bbcode.code.python.title"><![CDATA[Python]]></item>
-		<item name="wcf.bbcode.code.sql.title"><![CDATA[SQL]]></item>
-		<item name="wcf.bbcode.code.tex.title"><![CDATA[TeX]]></item>
-		<item name="wcf.bbcode.code.tpl.title"><![CDATA[Smarty]]></item>
-		<item name="wcf.bbcode.code.xml.title"><![CDATA[XML]]></item>
 		<item name="wcf.bbcode.code.simplified"><![CDATA[(Code, {#$lines} line{if $lines != 1}s{/if})]]></item>
 		<item name="wcf.bbcode.image.source"><![CDATA[Image Link]]></item>
 		<item name="wcf.bbcode.quote"><![CDATA[Quote]]></item>
