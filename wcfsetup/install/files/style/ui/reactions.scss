@@ -140,34 +140,6 @@ li.reactCountButton:hover {
 	}
 }
 
-.reactionStatusContainer {
-	margin-top: 10px;
-	
-	.positiveReactionCount {
-		color: $wcfStatusSuccessText;
-		
-		.fa {
-			color: $wcfStatusSuccessText;
-		}
-	}
-	
-	.negativeReactionCount {
-		color: $wcfStatusErrorText;
-		
-		.fa {
-			color: $wcfStatusErrorText;
-		}
-	}
-	
-	.neutralReactionCount {
-		color: $wcfStatusSuccessText;
-		
-		.fa {
-			color: $wcfStatusSuccessText;
-		}
-	}
-}
-
 .box.reactionReputationBox {
 	&.positiveReactionReputationBox {
 		background-color: $wcfStatusSuccessBackground;

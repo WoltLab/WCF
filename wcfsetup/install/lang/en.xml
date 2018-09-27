@@ -3082,7 +3082,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.like.jsTooltip"><![CDATA[{literal}{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}{/literal}]]></item>
 		<item name="wcf.like.button.like"><![CDATA[Like]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Dislike]]></item>
-		<item name="wcf.like.likesReceived"><![CDATA[Likes Received]]></item>
+		<item name="wcf.like.likesReceived"><![CDATA[Reputation]]></item>
 		<item name="wcf.like.showLikesReceived"><![CDATA[Reactions Received by {$user->username}]]></item>
 		<item name="wcf.like.likesGiven"><![CDATA[Likes Given]]></item>
 		<item name="wcf.like.dislikesReceived"><![CDATA[Dislikes Received]]></item>
