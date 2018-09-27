@@ -38,9 +38,7 @@ define(
 				}
 				
 				this._containers = new Dictionary();
-				this._details = new ObjectMap();
 				this._objectType = objectType;
-				this._cache = new Dictionary();
 				
 				this._options = Core.extend({
 					// selectors
@@ -88,15 +86,6 @@ define(
 				if (triggerChange) {
 					DomChangeListener.trigger();
 				}
-			},
-			
-			/**
-			 * Invalidates the cache for the object with the given objectId. 
-			 * 
-			 * @param       {int}   objectId
-			 */
-			invalidateCache: function(objectId) {
-				this._cache.delete(objectId);
 			},
 			
 			/**
@@ -150,8 +139,6 @@ define(
 				if (triggerChange) {
 					DomChangeListener.trigger();
 				}
-				
-				this.invalidateCache(objectId);
 			},
 			
 			/**
@@ -183,20 +170,17 @@ define(
 			 * @param       {int}            objectId
 			 */
 			_initReactionCountButton: function(element, objectId) {
-				element.addEventListener(WCF_CLICK_EVENT, this._showReactionOverlay.bind(this, elData(element, 'reaction-type-id'), objectId));
+				element.addEventListener(WCF_CLICK_EVENT, this._showReactionOverlay.bind(this, objectId));
 			},
 			
 			/**
-			 * Shows the reaction overly for a specific object and reaction type. 
+			 * Shows the reaction overly for a specific object. 
 			 *
-			 * @param       {int}        reactionTypeId
 			 * @param       {int}        objectId
 			 */
-			_showReactionOverlay: function(reactionTypeId, objectId) {
+			_showReactionOverlay: function(objectId) {
 				this._currentObjectId = objectId;
-				this._currentPageNo = 1;
-				this._currentReactionTypeId = reactionTypeId;
-				this._showPage();
+				this._showOverlay();
 			},
 			
 			/**
@@ -204,70 +188,19 @@ define(
 			 *
 			 * @param       {int}        pageNo
 			 */
-			_showPage: function(pageNo) {
-				if (pageNo !== undefined) {
-					this._currentPageNo = pageNo;
-				}
+			_showOverlay: function() {
+				this._options.parameters.data.containerID = this._objectType + '-' + this._currentObjectId;
+				this._options.parameters.data.objectID = this._currentObjectId;
+				this._options.parameters.data.objectType = this._objectType;
 				
-				if (this._cache.has(this._currentObjectId) && this._cache.get(this._currentObjectId).has(this._currentReactionTypeId)) {
-					// validate pageNo
-					if (this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).get('pageCount') !== 0 && (this._currentPageNo < 1 || this._currentPageNo > this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).get('pageCount'))) {
-						throw new RangeError("pageNo must be between 1 and " + this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).get('pageCount') + " (" + this._currentPageNo + " given).");
-					}
-				}
-				else {
-					// init objectId cache
-					if (!this._cache.has(this._currentObjectId)) {
-						this._cache.set(this._currentObjectId, new Dictionary());
-					}
-					
-					// init reaction type id cache for objectId
-					this._cache.get(this._currentObjectId).set(this._currentReactionTypeId, new Dictionary());
-				}
-				
-				if (this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).has(this._currentPageNo)) {
-					var dialog = UiDialog.open(this, this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).get(this._currentPageNo));
-					UiDialog.setTitle('userReactionOverlay-' + this._objectType, this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).get('title'));
-					
-					if (this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).get('pageCount') > 1) {
-						var element = elBySel('.jsPagination', dialog.content);
-						if (element !== null) {
-							new UiPagination(element, {
-								activePage: this._currentPageNo,
-								maxPage: this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).get('pageCount'),
-								callbackSwitch: this._showPage.bind(this)
-							});
-						}
-					}
-					
-					// init tab menu
-					var tabMenu = elBySel('.tabMenu ul', dialog.content);
-					var elements = elBySelAll('li', tabMenu);
-					for (var i = 0, length = elements.length; i < length; i++) {
-						elements[i].addEventListener(WCF_CLICK_EVENT, this._showReactionOverlay.bind(this, elData(elements[i], 'reaction-type-id'), this._currentObjectId));
-					}
-				}
-				else {
-					this._options.parameters.pageNo = this._currentPageNo;
-					this._options.parameters.reactionTypeID = this._currentReactionTypeId;
-					this._options.parameters.data.containerID = this._currentReactionTypeId;
-					this._options.parameters.data.objectID = this._currentObjectId;
-					this._options.parameters.data.objectType = this._objectType;
-					
-					Ajax.api(this, {
-						parameters: this._options.parameters
-					});
-				}
+				Ajax.api(this, {
+					parameters: this._options.parameters
+				});
 			},
 			
 			_ajaxSuccess: function(data) {
-				if (data.returnValues.pageCount !== undefined) {
-					this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).set('pageCount', ~~data.returnValues.pageCount);
-				}
-				
-				this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).set(this._currentPageNo, data.returnValues.template);
-				this._cache.get(this._currentObjectId).get(this._currentReactionTypeId).set('title', data.returnValues.title);
-				this._showPage();
+				UiDialog.open(this, data.returnValues.template);
+				UiDialog.setTitle('userReactionOverlay-' + this._objectType, data.returnValues.title);
 			},
 			
 			_ajaxSetup: function() {

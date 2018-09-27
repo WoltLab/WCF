@@ -19,6 +19,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
+use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
 
 /**
@@ -78,15 +79,6 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		if (!WCF::getSession()->getPermission('user.like.canViewLike')) {
 			throw new PermissionDeniedException();
 		}
-		
-		$this->readInteger('reactionTypeID');
-		$this->readInteger('pageNo');
-		
-		$this->reactionType = ReactionTypeCache::getInstance()->getReactionTypeByID($this->parameters['reactionTypeID']); 
-		
-		if ($this->reactionType === null) {
-			throw new IllegalLinkException();
-		}
 	}
 	
 	/**
@@ -98,24 +90,33 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		$likeList = new ViewableLikeList();
 		$likeList->getConditionBuilder()->add('objectID = ?', [$this->parameters['data']['objectID']]);
 		$likeList->getConditionBuilder()->add('objectTypeID = ?', [$this->objectType->objectTypeID]);
-		$likeList->getConditionBuilder()->add('reactionTypeID = ?', [$this->reactionType->reactionTypeID]);
-		$likeList->sqlLimit = 25;
-		$likeList->sqlOffset = ($this->parameters['pageNo'] - 1) * 10;
 		$likeList->sqlOrderBy = 'time DESC';
-		$pageCount = ceil($likeList->countObjects() / 10);
 		$likeList->readObjects();
 		
-		WCF::getTPL()->assign([
-			'reactionUserList' => $likeList->getObjects(),
-			'reactions' => ReactionTypeCache::getInstance()->getEnabledReactionTypes(), 
-			'reactionTypeID' => $this->reactionType->reactionTypeID
-		]);
+		$data = [];
+		foreach ($likeList as $item) {
+			if ($item->getReactionType()->isDisabled) continue; 
+			
+			// we cast the reactionTypeID to a string, so that we can sort the array
+			if (!isset($data[(string)$item->getReactionType()->reactionTypeID])) {
+				$data[(string)$item->getReactionType()->reactionTypeID] = new GroupedUserList($item->getReactionType()->getTitle());
+			}
+			
+			$data[(string)$item->getReactionType()->reactionTypeID]->addUserIDs([$item->userID]);
+		}
+		
+		GroupedUserList::loadUsers();
+		
+		uksort($data, function ($a, $b) {
+			$sortOrderA = ReactionTypeCache::getInstance()->getReactionTypeByID($a)->showOrder;
+			$sortOrderB = ReactionTypeCache::getInstance()->getReactionTypeByID($b)->showOrder;
+			
+			return ($sortOrderA < $sortOrderB) ? -1 : 1;
+			
+		});
 		
 		return [
-			'reactionTypeID' => $this->reactionType->reactionTypeID,
-			'pageNo' => $this->parameters['pageNo'],
-			'pageCount' => $pageCount,
-			'template' => WCF::getTPL()->fetch('reactionTabbedUserList'),
+			'template' => WCF::getTPL()->fetch('groupedUserList', 'wcf', ['groupedUsers' => $data]),
 			'title' => WCF::getLanguage()->get('wcf.reactions.summary.title')
 		];
 	}
