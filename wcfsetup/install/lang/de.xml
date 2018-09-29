@@ -3780,7 +3780,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.trophy.specialTrophies"><![CDATA[Besondere Trophäen]]></item>
 		<item name="wcf.user.trophy.specialTrophies.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Wähle{else}Wählen Sie{/if} hier {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} besonderen Trophäen aus, welche im Profil und in der Nachrichten-Seitenleiste angezeigt werden.]]></item>
 		<item name="wcf.user.trophy.specialTrophies.error.tooMany"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} maximal {#$__wcf->session->getPermission('user.profile.trophy.maxUserSpecialTrophies')} Trophäen auswählen.]]></item>
-		<item name="wcf.user.trophy.specialTrophies.error.invalid"><![CDATA[Die angegebenen Trophäen sind invalid.]]></item>
+		<item name="wcf.user.trophy.specialTrophies.error.invalid"><![CDATA[Die angegebenen Trophäen sind ungültig.]]></item>
 		<item name="wcf.user.trophy.recentActivity.received"><![CDATA[Hat die Trophäe <a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a> erhalten.]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophies"><![CDATA[Ausgeschlossene Trophäen]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophyCategories"><![CDATA[Ausgeschlossene Trophäen Kategorien]]></item>
