@@ -1,7 +1,15 @@
 /* edit history */
 .editHistoryDiff {
+	@include screen-md-down {
+		overflow: auto;
+	}
+	
+	
 	> .table {
-		table-layout: fixed;
+		@include screen-lg {
+			table-layout: fixed;
+		}
+		
 		width: 100%;
 		
 		th {
