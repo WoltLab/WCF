@@ -180,7 +180,7 @@
 
 {if $usersOnline}
 	<section class="section sectionContainerList">
-		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.users{/lang} <span class="badge">{#$usersOnline}</span></h2>
+		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.users{/lang}</h2>
 		
 		<ol class="containerList userList">
 			{@$usersOnlineList}
@@ -190,7 +190,7 @@
 
 {if $guestsOnline && USERS_ONLINE_SHOW_GUESTS}
 	<section class="section sectionContainerList">
-		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.guests{/lang} <span class="badge">{#$guestsOnline}</span></h2>
+		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.guests{/lang}</h2>
 		
 		<ol class="containerList userList">
 			{@$guestsOnlineList}
@@ -200,7 +200,7 @@
 
 {if $robotsOnline && USERS_ONLINE_SHOW_ROBOTS}
 	<section class="section sectionContainerList">
-		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.robots{/lang} <span class="badge">{#$robotsOnline}</span></h2>
+		<h2 class="sectionTitle">{lang}wcf.user.usersOnline.robots{/lang}</h2>
 		
 		<ol class="containerList userList">
 			{@$robotsOnlineList}
