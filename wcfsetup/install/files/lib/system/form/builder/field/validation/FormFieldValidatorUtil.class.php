@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder\field\validation;
 use wcf\system\form\builder\field\IFormField;
+use wcf\system\form\builder\field\TextFormField;
 use wcf\system\Regex;
 
 /**
@@ -13,6 +14,65 @@ use wcf\system\Regex;
  * @since	3.2
  */
 abstract class FormFieldValidatorUtil {
+	/**
+	 * Returns a form field validator to ensure that the value of the form field
+	 * is a dot-separated string.
+	 * 
+	 * @param	string		$lalnguageItemPrefix		language item prefix used for error language items `{$languageItemPrefix}.error.{errorType}`
+	 * @param	int		$minimumSegmentCount		minimum number of dot-separated segments, or `-1` if there is no minimum
+	 * @param	int		$maximumSegmentCount		maximum number of dot-separated segments, or `-1` if there is no minimum
+	 * @param	string		$segmentRegularExpression	regular expression used to validate each segment
+	 * @return	FormFieldValidator
+	 */
+	public static function getDotSeparatedStringValidator($languageItemPrefix, $minimumSegmentCount = 3, $maximumSegmentCount = -1, $segmentRegularExpression = '^[A-z0-9\-\_]+$') {
+		$regex = Regex::compile($segmentRegularExpression);
+		if (!$regex->isValid()) {
+			throw new \InvalidArgumentException("Invalid regular expression '{$segmentRegularExpression}' given.");
+		}
+		
+		return new FormFieldValidator('format', function(TextFormField $formField) use ($languageItemPrefix, $minimumSegmentCount, $maximumSegmentCount, $regex) {
+			if ($formField->getValue()) {
+				$segments = explode('.', $formField->getValue());
+				if ($minimumSegmentCount !== -1 && count($segments) < $minimumSegmentCount) {
+					$formField->addValidationError(
+						new FormFieldValidationError(
+							'tooFewSegments',
+							$languageItemPrefix . '.error.tooFewSegments',
+							['segmentCount' => count($segments)]
+						)
+					);
+				}
+				else if ($maximumSegmentCount !== -1 && count($segments) > $maximumSegmentCount) {
+					$formField->addValidationError(
+						new FormFieldValidationError(
+							'tooManySegments',
+							$languageItemPrefix . '.error.tooManySegments',
+							['segmentCount' => count($segments)]
+						)
+					);
+				}
+				else {
+					$invalidSegments = [];
+					foreach ($segments as $key => $segment) {
+						if (!$regex->match($segment)) {
+							$invalidSegments[$key] = $segment;
+						}
+					}
+					
+					if (!empty($invalidSegments)) {
+						$formField->addValidationError(
+							new FormFieldValidationError(
+								'invalidSegments',
+								$languageItemPrefix . '.error.invalidSegments',
+								['invalidSegments' => $invalidSegments]
+							)
+						);
+					}
+				}
+			}
+		});
+	}
+	
 	/**
 	 * Returns a form field validator to check the form field value against
 	 * the given regular expression.

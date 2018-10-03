@@ -7,7 +7,9 @@ use wcf\data\DatabaseObject;
 use wcf\system\devtools\package\DevtoolsPackageArchive;
 use wcf\system\devtools\pip\DevtoolsPip;
 use wcf\system\package\validation\PackageValidationException;
+use wcf\system\Regex;
 use wcf\system\WCF;
+use wcf\util\DirectoryUtil;
 
 /**
  * Represents a devtools project.
@@ -156,6 +158,17 @@ class DevtoolsProject extends DatabaseObject {
 	 */
 	public function getPackageArchive() {
 		return $this->packageArchive;
+	}
+	
+	/**
+	 * Returns the absolute paths of the language files.
+	 * 
+	 * @return	string[]
+	 */
+	public function getLanguageFiles() {
+		$languageDirectory = $this->path . ($this->isCore() ? 'wcfsetup/install/lang/' : 'language/');
+		
+		return array_values(DirectoryUtil::getInstance($languageDirectory)->getFiles(SORT_ASC, Regex::compile('\w+\.xml')));
 	}
 	
 	/**

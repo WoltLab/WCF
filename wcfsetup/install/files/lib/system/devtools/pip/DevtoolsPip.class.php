@@ -122,7 +122,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	 * 
 	 * Note: No target will be set for the package installation plugin object.
 	 * 
-	 * @return	IPackageInstallationPlugin
+	 * @return	IPackageInstallationPlugin|IGuiPackageInstallationPlugin
 	 * @since	3.2
 	 */
 	public function getPip() {

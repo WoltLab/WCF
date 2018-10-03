@@ -1,12 +1,32 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\IEditableCachedObject;
+use wcf\data\language\category\LanguageCategory;
+use wcf\data\language\category\LanguageCategoryAction;
+use wcf\data\language\item\LanguageItemEditor;
+use wcf\data\language\item\LanguageItemList;
 use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
-use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\system\devtools\pip\DevtoolsPipEntryList;
+use wcf\system\devtools\pip\IDevtoolsPipEntryList;
+use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
+use wcf\system\devtools\pip\TMultiXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\MultilineTextFormField;
+use wcf\system\form\builder\field\RadioButtonFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
+use wcf\system\form\builder\IFormDocument;
+use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 use wcf\util\XML;
 
 /**
@@ -17,11 +37,29 @@ use wcf\util\XML;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
+class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
+	use TMultiXmlGuiPackageInstallationPlugin;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $className = LanguageItemEditor::class;
+	
+	/**
+	 * newly created language categories when saving language item via GUI
+	 * @var	LanguageCategory[]
+	 */
+	public $newLanguageCategories = [];
+	
 	/**
 	 * @inheritDoc
 	 */
 	public $tableName = 'language_item';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $tagName = 'item';
 	
 	/**
 	 * @inheritDoc
@@ -237,17 +275,23 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	/**
 	 * @inheritDoc
 	 */
-	protected function handleDelete(array $items) { }
+	protected function handleDelete(array $items) {
+		// does nothing
+	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected function prepareImport(array $data) { }
+	protected function prepareImport(array $data) {
+		// does nothing
+	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected function findExistingItem(array $data) { }
+	protected function findExistingItem(array $data) {
+		wcfDebug($data);
+	}
 	
 	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
@@ -265,8 +309,501 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
+	 * @since	3.1
 	 */
 	public static function getSyncDependencies() {
 		return [];
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function addFormFields(IFormDocument $form) {
+		/** @var FormContainer $dataContainer */
+		$dataContainer = $form->getNodeById('data');
+		
+		// add fields
+		$dataContainer->appendChildren([
+			RadioButtonFormField::create('languageCategoryIDMode')
+				->label('wcf.acp.language.item.languageCategoryID.mode')
+				->options([
+					'automatic' => 'wcf.acp.language.item.languageCategoryID.mode.automatic',
+					'selection' => 'wcf.acp.language.item.languageCategoryID.mode.selection',
+					'new' => 'wcf.acp.language.item.languageCategoryID.mode.new'
+				])
+				->value('automatic'),
+			
+			SingleSelectionFormField::create('languageCategoryID')
+				->label('wcf.acp.language.item.languageCategoryID')
+				->description('wcf.acp.language.item.languageCategoryID.description')
+				->options(function() {
+					$categories = [];
+					
+					foreach (LanguageFactory::getInstance()->getCategories() as $languageCategory) {
+						$categories[$languageCategory->languageCategoryID] = $languageCategory->getTitle();
+					}
+					
+					asort($categories);
+					
+					return $categories;
+				}, false, false)
+				->filterable(),
+			
+			TextFormField::create('languageCategory')
+				->label('wcf.acp.language.item.languageCategoryID')
+				->description('wcf.acp.language.item.languageCategory.description')
+				->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
+					'wcf.acp.language.item.languageItem',
+					2,
+					3
+				))
+				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
+					if (LanguageFactory::getInstance()->getCategory($formField->getSaveValue()) !== null) {
+						$formField->addValidationError(
+							new FormFieldValidationError(
+								'notUnique',
+								'wcf.acp.language.item.languageCategory.error.notUnique'
+							)
+						);
+					}
+				})),
+			
+			TextFormField::create('languageItem')
+				->label('wcf.acp.language.item.languageItem')
+				->description('wcf.acp.language.item.languageItem.description')
+				->required()
+				->maximumLength(191)
+				->addValidator(FormFieldValidatorUtil::getRegularExpressionValidator(
+					'^[A-z0-9-_]+(\.[A-z0-9-_]+){2,}$',
+					'wcf.acp.language.item.languageItem'
+				))
+				->addValidator(new FormFieldValidator('languageCategory', function(TextFormField $formField) {
+					/** @var RadioButtonFormField $languageCategoryIDMode */
+					$languageCategoryIDMode = $formField->getDocument()->getNodeById('languageCategoryIDMode');
+					
+					switch ($languageCategoryIDMode->getSaveValue()) {
+						case 'automatic':
+							$languageItemPieces = explode('.', $formField->getSaveValue());
+							
+							$category = LanguageFactory::getInstance()->getCategory(
+								$languageItemPieces[0] . '.' . $languageItemPieces[1] . '.' . $languageItemPieces[2]
+							);
+							if ($category === null) {
+								$category = LanguageFactory::getInstance()->getCategory(
+									$languageItemPieces[0] . '.' . $languageItemPieces[1]
+								);
+							}
+							
+							if ($category === null) {
+								$languageCategoryIDMode->addValidationError(
+									new FormFieldValidationError(
+										'automatic',
+										'wcf.acp.language.item.languageCategoryID.mode.error.automaticImpossible'
+									)
+								);
+							}
+							
+							break;
+						
+						case 'selection':
+							/** @var SingleSelectionFormField $languageCategoryID */
+							$languageCategoryID = $formField->getDocument()->getNodeById('languageCategoryID');
+							
+							$languageCategory = LanguageFactory::getInstance()->getCategoryByID($languageCategoryID->getSaveValue());
+							
+							if (strpos($formField->getSaveValue(), $languageCategory->languageCategory . '.') !== 0) {
+								$formField->addValidationError(
+									new FormFieldValidationError(
+										'prefixMismatch',
+										'wcf.acp.language.item.languageItem.error.prefixMismatch'
+									)
+								);
+							}
+							
+							break;
+							
+						case 'new':
+							/** @var TextFormField $languageCategory */
+							$languageCategory = $formField->getDocument()->getNodeById('languageCategory');
+							
+							if (strpos($formField->getSaveValue(), $languageCategory->getSaveValue() . '.') !== 0) {
+								$formField->addValidationError(
+									new FormFieldValidationError(
+										'prefixMismatch',
+										'wcf.acp.language.item.languageItem.error.prefixMismatch'
+									)
+								);
+							}
+							
+							break;
+							
+						default:
+							throw new \LogicException("Unknown language category mode '{$languageCategoryIDMode->getSaveValue()}'.");
+					}
+				}))
+				->addValidator(
+					new FormFieldValidator('uniqueness', function(TextFormField $formField) {
+						if (
+							$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
+							$this->editedEntries[0]->getAttribute('name') !== $formField->getSaveValue()
+						) {
+							$languageItemList = new LanguageItemList();
+							$languageItemList->getConditionBuilder()->add('languageItem = ?', [$formField->getSaveValue()]);
+							
+							if ($languageItemList->countObjects() > 0) {
+								$formField->addValidationError(
+									new FormFieldValidationError(
+										'notUnique',
+										'wcf.acp.language.item.languageItem.error.notUnique'
+									)
+								);
+							}
+						}
+					}
+				)),
+		]);
+		
+		// add one field per language
+		foreach ($this->getProjectXmls() as $xml) {
+			$languageCode = $xml->getDocument()->documentElement->getAttribute('languagecode');
+			$languageName = $xml->getDocument()->documentElement->getAttribute('languagename');
+			
+			if ($dataContainer->getNodeById($languageCode) !== null) {
+				throw new \LogicException("Duplicate language file with language code '{$languageCode}'.");
+			}
+			
+			$dataContainer->appendChild(
+				MultilineTextFormField::create($languageCode)
+					->label($languageName)
+			);
+		}
+		
+		// add dependencies
+		/** @var SingleSelectionFormField $languageCategoryIDMode */
+		$languageCategoryIDMode = $dataContainer->getNodeById('languageCategoryIDMode');
+		
+		$dataContainer->getNodeById('languageCategoryID')->addDependency(
+			ValueFormFieldDependency::create('languageCategoryIDMode')
+				->field($languageCategoryIDMode)
+				->values(['selection'])
+		);
+		$dataContainer->getNodeById('languageCategory')->addDependency(
+			ValueFormFieldDependency::create('languageCategoryIDMode')
+				->field($languageCategoryIDMode)
+				->values(['new'])
+		);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getElementData(\DOMElement $element, $saveData = false) {
+		$data = [
+			'languageID' => LanguageFactory::getInstance()->getLanguageByCode($element->ownerDocument->documentElement->getAttribute('languagecode'))->languageID,
+			'languageItem' => $element->getAttribute('name'),
+			'languageItemValue' => $element->nodeValue,
+			'languageItemOriginIsSystem' => 1,
+			'packageID' => $this->installation->getPackage()->packageID
+		];
+		
+		if ($element->parentNode) {
+			$languageCategory = $element->parentNode->getAttribute('name');
+			
+			if ($saveData) {
+				if (isset($this->newLanguageCategories[$languageCategory])) {
+					$data['languageCategoryID'] = $this->newLanguageCategories[$languageCategory]->languageCategoryID;
+				}
+				else {
+					$languageCategoryObject = LanguageFactory::getInstance()->getCategory($languageCategory);
+					if ($languageCategoryObject !== null) {
+						$data['languageCategoryID'] = $languageCategoryObject->languageCategoryID;
+					}
+					else {
+						// if a new language category should be created, pass the name
+						// instead of the id
+						$data['languageCategory'] = $languageCategory;
+					}
+				}
+			}
+			else {
+				$data['languageCategory'] = $languageCategory;
+			}
+		}
+		
+		if (!$saveData) {
+			$data[$element->ownerDocument->documentElement->getAttribute('languagecode')] = $element->nodeValue;
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function getElementIdentifier(\DOMElement $element) {
+		return $element->getAttribute('name');
+	}
+	
+	/**
+	 * Returns a list of all pip entries of this pip.
+	 * 
+	 * @return	IDevtoolsPipEntryList
+	 */
+	public function getEntryList() {
+		$entryList = new DevtoolsPipEntryList();
+		$this->setEntryListKeys($entryList);
+		
+		$entryData = [];
+		foreach ($this->getProjectXmls() as $xml) {
+			$xpath = $xml->xpath();
+			$languageCode = $xml->getDocument()->documentElement->getAttribute('languagecode');
+			
+			/** @var \DOMElement $element */
+			foreach ($this->getImportElements($xpath) as $element) {
+				$elementIdentifier = $this->getElementIdentifier($element);
+				
+				if (!isset($entryData[$elementIdentifier])) {
+					$entryData[$elementIdentifier] = [
+						'languageItem' => $element->getAttribute('name'),
+						'languageItemCategory' => $element->parentNode->getAttribute('name'),
+						$languageCode => 1
+					];
+				}
+				else {
+					$entryData[$elementIdentifier][$languageCode] = 1;
+				}
+			}
+		}
+		
+		// re-sort language items as missing language items in first processed language
+		// can cause non-sorted entries even in each language file is sorted
+		uasort($entryData, function(array $item1, array $item2) {
+			return $item1['languageItem'] <=> $item2['languageItem'];
+		});
+		
+		foreach ($entryData as $identifier => $data) {
+			foreach ($entryList->getKeys() as $key => $label) {
+				if (!isset($data[$key])) {
+					$data[$key] = 0;
+				}
+			}
+			
+			$entryList->addEntry($identifier, $data);
+		}
+		
+		return $entryList;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function getImportElements(\DOMXPath $xpath) {
+		return $xpath->query('/ns:language/ns:category/ns:item');
+	}
+	
+	/**
+	 * Returns the xml code of an empty xml file with the appropriate structure
+	 * present for a new entry to be added as if it was added to an existing
+	 * file.
+	 * 
+	 * @param	string		$languageCode
+	 * @return	string
+	 */
+	protected function getEmptyXml($languageCode) {
+		$xsdFilename = $this->getXsdFilenlangame();
+		
+		$language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
+		if ($language === null) {
+			throw new \InvalidArgumentException("Unknown language code '{$languageCode}'.");
+		}
+		
+		return <<<XML
+<?xml version="1.0" encoding="UTF-8"?>
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/{$xsdFilename}.xsd" languagecode="{$language->languageCode}" languagename="{$language->languageName}" countrycode="{$language->countryCode}">
+</language>
+XML;
+	}
+	
+	/**
+	 * Returns the xml objects for this pip.
+	 *
+	 * @return	XML[]
+	 */
+	protected function getProjectXmls() {
+		$xmls = [];
+		
+		foreach ($this->installation->getProject()->getLanguageFiles() as $languageFile) {
+			$xml = new XML();
+			if (!file_exists($languageFile)) {
+				$xml->loadXML($languageFile, $this->getEmptyXml(substr(basename($languageFile), 0, -4)));
+			}
+			else {
+				$xml->load($languageFile);
+			}
+			
+			// only consider installed languages
+			$languageCode = $xml->getDocument()->documentElement->getAttribute('languagecode');
+			if (LanguageFactory::getInstance()->getLanguageByCode($languageCode) !== null) {
+				$xmls[] = $xml;
+			}
+		}
+		
+		return $xmls;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function saveObject(\DOMElement $newElement, \DOMElement $oldElement = null) {
+		$newElementData = $this->getElementData($newElement, true);
+		
+		$existingRow = [];
+		if ($oldElement !== null) {
+			$sql = "SELECT	*
+				FROM	wcf" . WCF_N . "_language_item
+				WHERE	languageItem = ?
+					AND languageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				$oldElement->getAttribute('name'),
+				// use new element as old element has no access to parent element anymore
+				LanguageFactory::getInstance()->getLanguageByCode(
+					$newElement->ownerDocument->documentElement->getAttribute('languagecode')
+				)->languageID
+			]);
+			
+			$existingRow = $statement->fetchArray();
+		}
+		
+		if (!isset($newElementData['languageCategoryID']) && isset($newElementData['languageCategory'])) {
+			/** @var LanguageCategory $languageCategory */
+			$languageCategory = (new LanguageCategoryAction([], 'create', [
+				'data' => [
+					'languageCategory' => $newElementData['languageCategory']
+				]
+			]))->executeAction()['returnValues'];
+			
+			$this->newLanguageCategories[$languageCategory->languageCategory] = $languageCategory;
+			
+			$newElementData['languageCategoryID'] = $languageCategory->languageCategoryID;
+			unset($newElementData['languageCategory']);
+			
+			LanguageFactory::getInstance()->clearCache();
+		}
+		
+		$this->import($existingRow, $newElementData);
+		
+		$this->postImport();
+		
+		if (is_subclass_of($this->className, IEditableCachedObject::class)) {
+			call_user_func([$this->className, 'resetCache']);
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
+		$keys = [
+			'languageItem' => 'wcf.acp.language.item.languageItem',
+			'languageItemCategory' => 'wcf.acp.language.item.languageCategoryID'
+		];
+		
+		foreach ($this->getProjectXmls() as $xml) {
+			$keys[$xml->getDocument()->documentElement->getAttribute('languagecode')] = $xml->getDocument()->documentElement->getAttribute('languagecode');
+		}
+		
+		$entryList->setKeys($keys);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function sortDocument(\DOMDocument $document) {
+		$compareFunction = static::getSortFunction([
+			[
+				'isAttribute' => 1,
+				'name' => 'name'
+			]
+		]);
+		
+		$this->sortChildNodes($document->childNodes, $compareFunction);
+		$this->sortChildNodes($document->getElementsByTagName('category'), $compareFunction);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+		$data = $form->getData()['data'];
+		
+		$languageCode = $document->documentElement->getAttribute('languagecode');
+		$languageItemValue = $data[$languageCode];
+		
+		$languageItem = $document->createElement($this->tagName);
+		$languageItem->setAttribute('name', $data['languageItem']);
+		$languageItem->appendChild($document->createCDATASection(StringUtil::escapeCDATA($languageItemValue)));
+		
+		// language category
+		$languageCategoryName = null;
+		switch ($data['languageCategoryIDMode']) {
+			case 'automatic':
+				$languageItemPieces = explode('.', $data['languageItem']);
+				
+				$category = LanguageFactory::getInstance()->getCategory(
+					$languageItemPieces[0] . '.' . $languageItemPieces[1] . '.' . $languageItemPieces[2]
+				);
+				if ($category === null) {
+					$category = LanguageFactory::getInstance()->getCategory(
+						$languageItemPieces[0] . '.' . $languageItemPieces[1]
+					);
+				}
+				
+				if ($category === null) {
+					throw new \UnexpectedValueException("Cannot determine language item category for language item '{$data['languageItem']}'.");
+				}
+				
+				$languageCategoryName = $category->languageCategory;
+				
+				break;
+				
+			case 'new':
+				$languageCategoryName = $data['languageCategory'];
+				
+				break;
+			
+			case 'selection':
+				$languageCategoryName = LanguageFactory::getInstance()->getCategoryByID($data['languageCategoryID'])->languageCategory;
+				
+				break;
+			
+			default:
+				throw new \LogicException("Unknown language category mode '{$data['languageCategoryIDMode']}'.");
+		}
+		
+		/** @var \DOMElement $languageCategory */
+		foreach ($document->documentElement as $languageCategory) {
+			if ($languageCategory->getAttribute('name') === $languageCategoryName) {
+				$languageCategory->appendChild($languageItem);
+				break;
+			}
+		}
+		
+		if ($languageItem->parentNode === null) {
+			$languageCategory = $document->createElement('category');
+			$languageCategory->setAttribute('name', $languageCategoryName);
+			$languageCategory->appendChild($languageItem);
+			
+			$document->documentElement->appendChild($languageCategory);
+		}
+		
+		return $languageItem;
 	}
 }

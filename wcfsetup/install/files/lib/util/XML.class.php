@@ -217,8 +217,12 @@ class XML {
 		$schemaParts = explode(' ', $this->document->documentElement->getAttributeNS($this->document->documentElement->lookupNamespaceUri('xsi'), 'schemaLocation'));
 		
 		$writer = new XMLWriter();
-		// TODO: additional attributes of main element
-		$writer->beginDocument($this->document->documentElement->nodeName, $schemaParts[0], $schemaParts[1]);
+		$writer->beginDocument(
+			$this->document->documentElement->nodeName,
+			$schemaParts[0],
+			$schemaParts[1],
+			$this->getAttributes($this->document->documentElement)
+		);
 		foreach ($this->document->documentElement->childNodes as $childNode) {
 			$this->writeElement($writer, $childNode, $cdata);
 		}
@@ -270,5 +274,14 @@ class XML {
 		}
 		
 		return $attributes;
+	}
+	
+	/**
+	 * Returns the path to the xml file.
+	 * 
+	 * @return	string
+	 */
+	public function getPath() {
+		return $this->path;
 	}
 }

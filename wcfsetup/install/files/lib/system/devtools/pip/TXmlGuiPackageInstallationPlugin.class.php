@@ -26,7 +26,7 @@ use wcf\util\XML;
  */
 trait TXmlGuiPackageInstallationPlugin {
 	/**
-	 * dom element representing the original data of the edited element
+	 * dom element representing the original data of the edited entry
 	 * @var	null|\DOMElement
 	 */
 	protected $editedEntry;

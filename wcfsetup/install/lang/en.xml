@@ -795,6 +795,7 @@
 		<item name="wcf.acp.language.item.languageCategoryID"><![CDATA[Language Category]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.mode"><![CDATA[Language Category Mode]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.mode.automatic"><![CDATA[Determined Automatically Based on Identifier]]></item>
+		<item name="wcf.acp.language.item.languageCategoryID.mode.new"><![CDATA[New Language Category]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.mode.selection"><![CDATA[Manual Selection]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.description"><![CDATA[The phrase will be added to the selected language category.]]></item>
 		<item name="wcf.acp.language.item.languageItem"><![CDATA[Phrase Identifier]]></item>
@@ -805,6 +806,10 @@
 		<item name="wcf.acp.language.item.languageItem.error.notUnique"><![CDATA[The entered identifier is already used by a different phrase.]]></item>
 		<item name="wcf.acp.language.item.isCustomLanguageItem"><![CDATA[Manually added phrases]]></item>
 		<item name="wcf.acp.language.item.delete.confirmMessage"><![CDATA[Do you really want to the delete the phrase? It will be deleted for all languages.]]></item>
+		<item name="wcf.acp.language.item.languageCategory"><![CDATA[Language Category Identifier]]></item>
+		<item name="wcf.acp.language.item.languageCategory.description"><![CDATA[The entered language category identifier is used to group phrases.]]></item>
+		<item name="wcf.acp.language.item.languageCategory.error.notUnique"><![CDATA[This language category identifier is already used by an existing language category.]]></item>
+		<item name="wcf.acp.language.item.languageItem.error.notUnique"><![CDATA[The entered identifier is already used by another phrase.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
