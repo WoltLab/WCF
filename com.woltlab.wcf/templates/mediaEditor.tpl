@@ -102,7 +102,17 @@
 		{if $availableLanguages|count > 1}
 			{include file='multipleLanguageInputJavascript' elementIdentifier='caption'|concat:'_':$media->mediaID forceSelection=true}
 		{/if}
-	
+		
+		<dl>
+			<dt></dt>
+			<dd>
+				<label>
+					<input type="checkbox" name="captionEnableHtml" value="1"{if $media->captionEnableHtml} checked{/if}>
+					<span>{lang}wcf.media.caption.enableHtml{/lang}</span>
+				</label>
+			</dd>
+		</dl>
+		
 		<dl>
 			<dt><label for="altText_{@$media->mediaID}">{lang}wcf.media.altText{/lang}</label></dt>
 			<dd>

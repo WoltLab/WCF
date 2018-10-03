@@ -1586,8 +1586,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.package.installation.requiredVersion"><![CDATA[Required Version]]></item>
 		<item name="wcf.acp.package.license"><![CDATA[License]]></item>
 		<item name="wcf.acp.package.list"><![CDATA[Packages]]></item>
-		<item name="wcf.acp.package.name"><![CDATA[Packages]]></item>
-		<item name="wcf.acp.package.packageDate"><![CDATA[Package Date]]></item>
+		<item name="wcf.acp.package.name"><![CDATA[Package]]></item>
+		<item name="wcf.acp.package.packageDate"><![CDATA[Creation Date]]></item>
 		<item name="wcf.acp.package.packageDir.notAvailable"><![CDATA[Target directory already contains an app.]]></item>
 		<item name="wcf.acp.package.plugin.installed"><![CDATA[Installed Packages]]></item>
 		<item name="wcf.acp.package.plugin.title"><![CDATA[Plugins]]></item>
@@ -2269,7 +2269,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Disable Sitemap]]></item>
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Edit Sitemap]]></item>
 		<item name="wcf.acp.sitemap.cliInfo"><![CDATA[You can rebuild the sitemap using CLI. For that, execute <kbd>worker wcf\system\worker\SitemapRebuildWorker</kbd> in a CLI session.]]></item>
-		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.user"><![CDATA[User]]></item>
+		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.articleCategory"><![CDATA[Article categories]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.article"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.simplePage"><![CDATA[Simple pages]]></item>
@@ -2855,9 +2855,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.quote.edit.author"><![CDATA[Author]]></item>
 		<item name="wcf.bbcode.quote.edit.link"><![CDATA[Source]]></item>
 		<item name="wcf.bbcode.quote.insert"><![CDATA[Insert Quote]]></item>
-		<item name="wcf.bbcode.quote.title"><![CDATA[{$quoteAuthor} wrote:]]></item>
-		<item name="wcf.bbcode.quote.title.clickToSet"><![CDATA[(Click to set source)]]></item>
-		<item name="wcf.bbcode.quote.title.javascript"><![CDATA[{literal}{$quoteAuthor} wrote:{/literal}]]></item>
+		<item name="wcf.bbcode.quote.title"><![CDATA[Quote from {$quoteAuthor}]]></item>
 		<item name="wcf.bbcode.quote.simplified"><![CDATA[(Quote{if $cite} from {$cite}{/if})]]></item>
 		<item name="wcf.bbcode.spoiler.hide"><![CDATA[Hide Spoiler]]></item>
 		<item name="wcf.bbcode.spoiler.show"><![CDATA[Display Spoiler]]></item>
@@ -3549,7 +3547,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.like.jsTooltip"><![CDATA[{literal}{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}{/literal}]]></item>
 		<item name="wcf.like.button.like"><![CDATA[Like]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Dislike]]></item>
-		<item name="wcf.like.likesReceived"><![CDATA[Likes Received]]></item>
+		<item name="wcf.like.likesReceived"><![CDATA[Reputation]]></item>
 		<item name="wcf.like.showLikesReceived"><![CDATA[Reactions Received by {$user->username}]]></item>
 		<item name="wcf.like.likesGiven"><![CDATA[Likes Given]]></item>
 		<item name="wcf.like.dislikesReceived"><![CDATA[Dislikes Received]]></item>
@@ -3603,6 +3601,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.media.button.insert"><![CDATA[Insert]]></item>
 		<item name="wcf.media.button.select"><![CDATA[Select]]></item>
 		<item name="wcf.media.caption"><![CDATA[Caption]]></item>
+		<item name="wcf.media.caption.enableHtml"><![CDATA[Enable HTML code in caption]]></item>
 		<item name="wcf.media.category.choose"><![CDATA[Categories]]></item>
 		<item name="wcf.media.categoryID"><![CDATA[Category]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Select Image]]></item>
@@ -3854,6 +3853,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.page.recentActivity.pageCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on page <a href="{$page->getLink()}#comment{@$commentID}/response{@$responseID}">{$page->getTitle()}</a>.]]></item>
 		<item name="wcf.page.sidebar.left"><![CDATA[Left Sidebar]]></item>
 		<item name="wcf.page.sidebar.right"><![CDATA[Right Sidebar]]></item>
+		<item name="wcf.page.breadcrumb"><![CDATA[Breadcrumb]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">
@@ -4197,7 +4197,7 @@ not register with us.]]></item>
 		<item name="wcf.user.emailActivation.error.emailAlreadyEnabled"><![CDATA[The email address is already activated.]]></item>
 		<item name="wcf.user.emailActivation.success"><![CDATA[The email address has been activated.]]></item>
 		<item name="wcf.user.registerActivation.info"><![CDATA[An email containing the 9-digit activation code has been sent to “{$__wcf->user->email}”.]]></item>
-		<item name="wcf.user.username.error.alreadyRenamed"><![CDATA[The username was already changed within the last {#$__wcf->getSession()->getPermission('user.profile.renamePeriod')} day.]]></item>
+		<item name="wcf.user.username.error.alreadyRenamed"><![CDATA[The username was already changed within the last {#$__wcf->getSession()->getPermission('user.profile.renamePeriod')} days.]]></item>
 		<item name="wcf.user.guest"><![CDATA[Guest]]></item>
 		<item name="wcf.user.signature"><![CDATA[Signature]]></item>
 		<item name="wcf.user.signature.current"><![CDATA[Current Signature]]></item>

@@ -39,6 +39,7 @@ define([
 	var _mediaEditor;
 	var _tableBody = elById('mediaListTableBody');
 	var _clipboardObjectIds = [];
+	var _upload;
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Controller/Media/List
@@ -46,7 +47,7 @@ define([
 	return {
 		init: function(options) {
 			options = options || {};
-			new MediaListUpload('uploadButton', 'mediaListTableBody', {
+			_upload = new MediaListUpload('uploadButton', 'mediaListTableBody', {
 				categoryId: options.categoryId,
 				multiple: true
 			});
@@ -75,6 +76,8 @@ define([
 			this._addButtonEventListeners();
 			
 			DomChangeListener.add('WoltLabSuite/Core/Controller/Media/List', this._addButtonEventListeners.bind(this));
+			
+			EventHandler.add('com.woltlab.wcf.media.upload', 'success', this._openEditorAfterUpload.bind(this));
 		},
 		
 		/**
@@ -118,6 +121,22 @@ define([
 		 */
 		_edit: function(event) {
 			_mediaEditor.edit(elData(event.currentTarget, 'object-id'));
+		},
+		
+		/**
+		 * Opens the media editor after uploading a single file.
+		 *
+		 * @param	{object}	data	upload event data
+		 * @since	3.2
+		 */
+		_openEditorAfterUpload: function(data) {
+			if (data.upload === _upload && !data.isMultiFileUpload && !_upload.hasPendingUploads()) {
+				var keys = Object.keys(data.media);
+				
+				if (keys.length) {
+					_mediaEditor.edit(this._media.get(~~data.media[keys[0]].mediaID));
+				}
+			}
 		},
 		
 		/**

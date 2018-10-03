@@ -667,6 +667,7 @@ CREATE TABLE wcf1_media (
 	username VARCHAR(255) NOT NULL,
 	languageID INT(10),
 	isMultilingual TINYINT(1) NOT NULL DEFAULT 0,
+	captionEnableHtml TINYINT(1) NOT NULL DEFAULT 0,
 	
 	isImage TINYINT(1) NOT NULL DEFAULT 0,
 	width SMALLINT(5) NOT NULL DEFAULT 0,

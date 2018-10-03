@@ -356,7 +356,7 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.group"><![CDATA[Benutzergruppen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.option"><![CDATA[Benutzerprofilfelder]]></item>
-		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[Follower]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.follower"><![CDATA[Followers]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.rank"><![CDATA[Benutzerränge]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.avatar"><![CDATA[Avatare]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Pinnwand-Kommentare]]></item>
@@ -1161,7 +1161,7 @@
 		<item name="wcf.acp.option.session_validate_ip_address.description"><![CDATA[Eine Aktivierung dieser Einstellung kann Benutzer ausschließen, die mit wechselnden IP-Adressen im Internet unterwegs sind.]]></item>
 		<item name="wcf.acp.option.session_validate_user_agent"><![CDATA[Browser-Kennung der Sitzung überprüfen]]></item>
 		<item name="wcf.acp.option.session_enable_virtualization"><![CDATA[Virtuelle Sessions erlauben]]></item>
-		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Benutzer können sich mit mehreren Endgeräten (PC, Tablet, Smartphone, etc.) gleichzeitig anmelden, alle Geräte nutzen dann die selbe Sitzung. Die Abschaltung dieser Option hat zur Folge, dass ein Benutzer nur von einem einzigen Gerät gleichzeitig angemeldet sein darf und sich unter Umständen die Geräte auf diese Weise gegenseitig abmelden. Die Deaktivierung dieser Option wird nicht empfohlen und sollte nur vorgenommen werden, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dir{else}Sie sich{/if} der Konsequenzen bewusst sind.]]></item>
+		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Benutzer können sich mit mehreren Endgeräten (PC, Tablet, Smartphone, etc.) gleichzeitig anmelden, alle Geräte nutzen dann die selbe Sitzung. Die Abschaltung dieser Option hat zur Folge, dass ein Benutzer nur von einem einzigen Gerät gleichzeitig angemeldet sein darf und sich unter Umständen die Geräte auf diese Weise gegenseitig abmelden. Die Deaktivierung dieser Option wird nicht empfohlen und sollte nur vorgenommen werden, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dir{else}Sie sich{/if} der Konsequenzen bewusst {if LANGUAGE_USE_INFORMAL_VARIANT}bist{else}sind{/if}.]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Zeitzone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[Standard-Zeitzone {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Seite]]></item>
 		<item name="wcf.acp.option.user_online_timeout"><![CDATA[Timeout für Benutzer-Online]]></item>
@@ -1536,7 +1536,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 	</category>
 	
 	<category name="wcf.acp.package">
-		<item name="wcf.acp.package.apiVersions"><![CDATA[Unterstütze WoltLab Suite&trade; API-Versionen]]></item>
+		<item name="wcf.acp.package.apiVersions"><![CDATA[Unterstützte WoltLab Suite&trade; API-Versionen]]></item>
 		<item name="wcf.acp.package.apiVersions.missing"><![CDATA[Dieses Paket stellt keine Informationen zur Kompatibilität bereit.]]></item>
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installierte Apps]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Apps]]></item>
@@ -2554,9 +2554,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.bbcode.quote.edit.author"><![CDATA[Autor]]></item>
 		<item name="wcf.bbcode.quote.edit.link"><![CDATA[Quelle]]></item>
 		<item name="wcf.bbcode.quote.insert"><![CDATA[Zitat einfügen]]></item>
-		<item name="wcf.bbcode.quote.title"><![CDATA[{$quoteAuthor} schrieb:]]></item>
-		<item name="wcf.bbcode.quote.title.clickToSet"><![CDATA[(Klicken um eine Quelle anzugeben)]]></item>
-		<item name="wcf.bbcode.quote.title.javascript"><![CDATA[{literal}{$quoteAuthor} schrieb:{/literal}]]></item>
+		<item name="wcf.bbcode.quote.title"><![CDATA[Zitat von {$quoteAuthor}]]></item>
 		<item name="wcf.bbcode.quote.simplified"><![CDATA[(Zitat{if $cite} von {$cite}{/if})]]></item>
 		<item name="wcf.bbcode.spoiler.hide"><![CDATA[Spoiler ausblenden]]></item>
 		<item name="wcf.bbcode.spoiler.show"><![CDATA[Spoiler anzeigen]]></item>
@@ -3239,7 +3237,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.like.jsTooltip"><![CDATA[{literal}{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}{/literal}]]></item>
 		<item name="wcf.like.button.like"><![CDATA[Gefällt mir]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Gefällt mir nicht]]></item>
-		<item name="wcf.like.likesReceived"><![CDATA[Erhaltene Reaktionen]]></item>
+		<item name="wcf.like.likesReceived"><![CDATA[Reputation]]></item>
 		<item name="wcf.like.showLikesReceived"><![CDATA[Erhaltene Reaktionen von {$user->username}]]></item>
 		<item name="wcf.like.likesGiven"><![CDATA[Vergebene Likes]]></item>
 		<item name="wcf.like.dislikesReceived"><![CDATA[Erhaltene Dislikes]]></item>
@@ -3293,6 +3291,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.media.button.insert"><![CDATA[Einfügen]]></item>
 		<item name="wcf.media.button.select"><![CDATA[Auswählen]]></item>
 		<item name="wcf.media.caption"><![CDATA[Bildunterschrift]]></item>
+		<item name="wcf.media.caption.enableHtml"><![CDATA[HTML in der Bildunterschrift verwenden]]></item>
 		<item name="wcf.media.category.choose"><![CDATA[Kategorien]]></item>
 		<item name="wcf.media.categoryID"><![CDATA[Kategorie]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Bild auswählen]]></item>
@@ -3544,6 +3543,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.page.recentActivity.pageCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> auf der Seite <a href="{$page->getLink()}#comment{@$commentID}/response{@$responseID}">{$page->getTitle()}</a> geantwortet.]]></item>
 		<item name="wcf.page.sidebar.left"><![CDATA[Linke Seitenleiste]]></item>
 		<item name="wcf.page.sidebar.right"><![CDATA[Rechte Seitenleiste]]></item>
+		<item name="wcf.page.breadcrumb"><![CDATA[Verlaufsnavigation]]></item>
 	</category>
 	
 	<category name="wcf.paidSubscription">

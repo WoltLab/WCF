@@ -120,6 +120,7 @@ define(
 			var categoryId = elBySel('select[name=categoryID]', content);
 			var altText = elBySel('input[name=altText]', content);
 			var caption = elBySel('textarea[name=caption]', content);
+			var captionEnableHtml = elBySel('input[name=captionEnableHtml]', content);
 			var title = elBySel('input[name=title]', content);
 			
 			var hasError = false;
@@ -190,6 +191,9 @@ define(
 				this._media.title[this._media.languageID] = title.value;
 			}
 			
+			// captionEnableHtml
+			this._media.captionEnableHtml = ~~elBySel('input[name=captionEnableHtml]', content).checked;
+			
 			var aclValues = {
 				allowAll: ~~elById('mediaEditor_' + this._media.mediaID + '_aclAllowAll').checked,
 				group: [],
@@ -219,6 +223,7 @@ define(
 						altText: this._media.altText,
 						caption: this._media.caption,
 						data: {
+							captionEnableHtml: this._media.captionEnableHtml,
 							categoryID: this._media.categoryID,
 							isMultilingual: this._media.isMultilingual,
 							languageID: this._media.languageID

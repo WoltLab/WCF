@@ -638,7 +638,7 @@
 				<content><![CDATA[<p>This website uses cookies required to operate and use this site. Below you will find an explanation on our cookie usage.</p>
 		
 <h2>What are cookies</h2>
-<p>Cookies are small text files which a website may put on your computer or mobile device when you first visit a site or page. The cookie will help the website, or another website, to recognise your device the next time you visit. There are many functions cookies serve, for example they can help us to remember your username and preferences.</p>
+<p>Cookies are small text files which a website may put on your computer or mobile device when you first visit a site or page. The cookie will help the website, or another website, to recognize your device the next time you visit. There are many functions cookies serve, for example they can help us to remember your username and preferences.</p>
 
 <h2>What do we use cookies for</h2>
 <p>We’re using cookies for the following purposes:</p>
@@ -652,6 +652,7 @@
 <p>Your internet browser offers specialized options to manage and remove cookies. They offer settings to reject many or all cookies. Please refer to the instructions for your internet browser from the list below.</p>
 <ul>
 <li><a href="https://support.google.com/chrome/answer/95647?hl=en" class="externalURL" rel="nofollow">Google Chrome</a></li>
+<li><a href="https://privacy.microsoft.com/en-us/windows-10-microsoft-edge-and-privacy" class="externalURL" rel="nofollow">Microsoft Edge</a></li>
 <li><a href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer" class="externalURL" rel="nofollow">Mozilla Firefox</a></li>
 <li><a href="https://help.opera.com/Windows/12.00/en/cookies.html" class="externalURL" rel="nofollow">Opera</a></li>
 <li><a href="https://support.apple.com/kb/ph17191?locale=en_US" class="externalURL" rel="nofollow">Safari</a></li>
@@ -679,10 +680,11 @@
 <p>Cookies können in den Einstellungen Ihres Internet-Browsers verwaltet und entfernt werden. Darüber hinaus lässt sich in den Einstellungen das Speichern von Cookies vollständig deaktivieren. Bitte entnehmen Sie der folgenden Auflistung die passende Anleitung für den Umgang mit Cookies zu dem von Ihnen genutzten Internet-Browser.</p>
 <ul>
 <li><a href="https://support.google.com/chrome/answer/95647?hl=de" class="externalURL" rel="nofollow">Google Chrome</a></li>
+<li><a href="https://privacy.microsoft.com/de-de/windows-10-microsoft-edge-and-privacy" class="externalURL" rel="nofollow">Microsoft Edge</a></li>
 <li><a href="https://support.mozilla.org/de/kb/cookies-informationen-websites-auf-ihrem-computer" class="externalURL" rel="nofollow">Mozilla Firefox</a></li>
-<li><a href="https://help.opera.com/Windows/12.00/de/cookies.html" class="externalURL" rel="nofollow">Opera</a></li>
-<li><a href="https://support.apple.com/kb/ph17191?locale=de_DE" class="externalURL" rel="nofollow">Safari</a></li>
-<li><a href="https://windows.microsoft.com/de-DE/internet-explorer/delete-manage-cookies" class="externalURL" rel="nofollow">Windows Internet Explorer</a></li>
+<li><a href="https://help.opera.com/de/latest/web-preferences/#cookies" class="externalURL" rel="nofollow">Opera</a></li>
+<li><a href="https://support.apple.com/de-de/guide/safari/manage-cookies-and-website-data-sfri11471/" class="externalURL" rel="nofollow">Safari</a></li>
+<li><a href="http://windows.microsoft.com/de-DE/internet-explorer/delete-manage-cookies" class="externalURL" rel="nofollow">Windows Internet Explorer</a></li>
 </ul>]]></content>
 				<customURL>cookie-richtlinie</customURL>
 			</content>

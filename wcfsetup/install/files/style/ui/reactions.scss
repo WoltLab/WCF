@@ -40,7 +40,6 @@ img.reactionType {
 	background-color: $wcfContentBackground;
 	border-radius: 3px;
 	color: $wcfContentText;
-	padding: 15px;
 	
 	a {
 		color: $wcfContentLink;
@@ -60,27 +59,50 @@ img.reactionType {
 	}
 	
 	@include screen-md-down {
+		padding: 5px 0px;
+		
 		> ul > li.reactionTypeButton {
 			margin: 0px;
 			display: block;
-			padding: 5px 10px;
+			padding: 5px 25px;
 		}
 		
 		> ul > li.reactionTypeButton > .reactionTypeButtonTitle {
 			vertical-align: middle;
 			padding-left: 5px;
 		}
+		
+		> ul > li.reactionTypeButton.active {
+			background-color: $wcfContentBorderInner; // @TODO maybe find a better color value
+		}
 	}
 	
 	@include screen-lg {
+		padding: 5px 15px;
+		
 		> ul > li.reactionTypeButton > .reactionTypeButtonTitle {
 			display: none;
 		}
 		
 		> ul > li.reactionTypeButton {
-			display: inline;
+			display: inline-block;
+			padding-top: 10px;
+			padding-bottom: 10px;
 			cursor: pointer;
 			margin-left: 10px;
+		}
+		
+		> ul > li.reactionTypeButton.active {
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+		
+		> ul > li.reactionTypeButton.active > img {
+			transform: scale(1.4);
+		}
+		
+		> ul > li.reactionTypeButton.active > img:hover {
+			transform: scale(1.2);
 		}
 		
 		> ul > li.reactionTypeButton:first-child {
@@ -115,34 +137,6 @@ li.reactCountButton:hover {
 	li.reactCountButton {
 		background-color: transparent;
 		padding: 0px;
-	}
-}
-
-.reactionStatusContainer {
-	margin-top: 10px;
-	
-	.positiveReactionCount {
-		color: $wcfStatusSuccessText;
-		
-		.fa {
-			color: $wcfStatusSuccessText;
-		}
-	}
-	
-	.negativeReactionCount {
-		color: $wcfStatusErrorText;
-		
-		.fa {
-			color: $wcfStatusErrorText;
-		}
-	}
-	
-	.neutralReactionCount {
-		color: $wcfStatusSuccessText;
-		
-		.fa {
-			color: $wcfStatusSuccessText;
-		}
 	}
 }
 

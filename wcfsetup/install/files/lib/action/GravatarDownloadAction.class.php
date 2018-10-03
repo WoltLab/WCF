@@ -55,7 +55,7 @@ class GravatarDownloadAction extends AbstractAction {
 	public function execute() {
 		parent::execute();
 		
-		if ($this->user->enableGravatar) {
+		if ($this->user->enableGravatar && MODULE_GRAVATAR) {
 			$fileExtension = ($this->user->gravatarFileExtension ?: 'png');
 			
 			// try to use cached gravatar

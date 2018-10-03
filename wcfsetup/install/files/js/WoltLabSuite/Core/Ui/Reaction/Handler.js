@@ -166,34 +166,29 @@ define(
 				messageFooterGroup.appendChild(button);
 			},
 			
-			_rebuildMobileView: function(objectID) {
-				if (this._containers.get(objectID).reactButton.closest('.messageFooterGroup > .jsMobileNavigation')) {
-					var messageFooterGroup = this._containers.get(objectID).reactButton.parentElement.parentElement.parentElement;
-					var button = elBySel('.mobileReactButton', messageFooterGroup);
-					
-					if (button !== null) {
-						button.innerHTML = this._containers.get(objectID).reactButton.innerHTML;
-					}
-				}
-			},
-			
 			_updateReactButton: function(objectID, reactionTypeID) {
 				if (reactionTypeID) {
 					this._containers.get(objectID).reactButton.classList.add('active');
-					
-					// update icon 
-					elBySel('img', this._containers.get(objectID).reactButton).src = REACTION_TYPES[reactionTypeID].iconPath;
-					elData(elBySel('img', this._containers.get(objectID).reactButton), 'reaction-type-id', reactionTypeID);
+					elData(this._containers.get(objectID).reactButton, 'reaction-type-id', reactionTypeID);
 				}
 				else {
+					elData(this._containers.get(objectID).reactButton, 'reaction-type-id', 0);
 					this._containers.get(objectID).reactButton.classList.remove('active');
-					
-					// update icon
-					elBySel('img', this._containers.get(objectID).reactButton).src = WCF_PATH + 'images/reaction/reactionIcon.svg';
-					elData(elBySel('img', this._containers.get(objectID).reactButton), 'reaction-type-id', 0);
+				}
+			},
+			
+			_markReactionAsActive() {
+				var reactionTypeID = elData(this._containers.get(this._popoverCurrentObjectId).reactButton, 'reaction-type-id');
+				
+				//  clear old active state
+				var elements = elBySelAll('.reactionTypeButton.active', this._getPopover());
+				for (var i = 0, length = elements.length; i < length; i++) {
+					elements[i].classList.remove('active');
 				}
 				
-				this._rebuildMobileView(objectID);
+				if (reactionTypeID != 0) {
+					elBySel('.reactionTypeButton[data-reaction-type-id="'+reactionTypeID+'"]', this._getPopover()).classList.add('active');
+				}
 			},
 			
 			/**
@@ -228,13 +223,14 @@ define(
 					this._closePopover(this._popoverCurrentObjectId, this._containers.get(this._popoverCurrentObjectId).reactButton);
 				}
 				
+				this._popoverCurrentObjectId = objectId;
+				this._markReactionAsActive();
+				
 				UiAlignment.set(this._getPopover(), element, {
 					pointer: true,
 					horizontal: (this._options.isButtonGroupNavigation) ? 'left' :'center',
 					vertical: 'top'
 				});
-				
-				this._popoverCurrentObjectId = objectId;
 				
 				if (this._options.isButtonGroupNavigation) {
 					// find nav element
