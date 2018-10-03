@@ -24,10 +24,40 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 	public $activeMenuItem = 'wcf.acp.menu.link.devtools.project.list';
 	
 	/**
+	 * indicates the range of the listed items
+	 * @var	integer
+	 */
+	public $endIndex = 0;
+	
+	/**
+	 * pip entry list
+	 * @var	IDevtoolsPipEntryList
+	 */
+	public $entryList;
+	
+	/**
 	 * type of the listed pip entries
 	 * @var	string
 	 */
 	public $entryType;
+	
+	/**
+	 * number of items shown per page
+	 * @var	integer
+	 */
+	public $itemsPerPage = 100;
+	
+	/**
+	 * number of all items
+	 * @var	integer
+	 */
+	public $items = 0;
+	
+	/**
+	 * pagination link parameters
+	 * @var	string
+	 */
+	public $linkParameters = '';
 	
 	/**
 	 * @inheritDoc
@@ -38,6 +68,18 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 	 * @inheritDoc
 	 */
 	public $neededPermissions = ['admin.configuration.package.canInstallPackage'];
+	
+	/**
+	 * current page number
+	 * @var	integer
+	 */
+	public $pageNo = 0;
+	
+	/**
+	 * number of all pages
+	 * @var	integer
+	 */
+	public $pages = 0;
 	
 	/**
 	 * name of the requested pip
@@ -62,6 +104,12 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 	 * @var	integer
 	 */
 	public $projectID = 0;
+	
+	/**
+	 * indicates the range of the listed items
+	 * @var	integer
+	 */
+	public $startIndex = 0;
 	
 	/**
 	 * @inheritDoc
@@ -106,6 +154,13 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 		else if (!empty($this->pipObject->getPip()->getEntryTypes())) {
 			throw new IllegalLinkException();
 		}
+		
+		if (isset($_REQUEST['pageNo'])) $this->pageNo = intval($_REQUEST['pageNo']);
+		
+		$this->linkParameters = 'pip=' . $this->pip;
+		if ($this->entryType !== null) {
+			$this->linkParameters .= '&entryType=' . $this->entryType;
+		}
 	}
 	
 	/**
@@ -116,6 +171,19 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 		
 		/** @var IDevtoolsPipEntryList entryList */
 		$this->entryList = $this->pipObject->getPip()->getEntryList();
+		
+		$this->items = count($this->entryList->getEntries());
+		$this->pages = intval(ceil($this->items / $this->itemsPerPage));
+		
+		// correct active page number
+		if ($this->pageNo > $this->pages) $this->pageNo = $this->pages;
+		if ($this->pageNo < 1) $this->pageNo = 1;
+		
+		// calculate start and end index
+		$this->startIndex = ($this->pageNo - 1) * $this->itemsPerPage;
+		$this->endIndex = $this->startIndex + $this->itemsPerPage;
+		$this->startIndex++;
+		if ($this->endIndex > $this->items) $this->endIndex = $this->items;
 	}
 	
 	/**
@@ -125,10 +193,17 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
+			'endIndex' => $this->endIndex,
 			'entryList' => $this->entryList,
 			'entryType' => $this->entryType,
+			'items' => $this->items,
+			'itemsPerPage' => $this->itemsPerPage,
+			'linkParameters' => $this->linkParameters,
+			'pageNo' => $this->pageNo,
+			'pages' => $this->pages,
 			'pip' => $this->pip,
-			'project' => $this->project
+			'project' => $this->project,
+			'startIndex' => $this->startIndex
 		]);
 	}
 }

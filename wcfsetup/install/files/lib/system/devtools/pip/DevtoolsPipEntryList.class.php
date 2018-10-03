@@ -55,7 +55,11 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList {
 	/**
 	 * @inheritDoc
 	 */
-	public function getEntries() {
+	public function getEntries($startIndex = null, $entryCount = null) {
+		if ($startIndex !== null && $entryCount !== null) {
+			return array_slice($this->entries, $startIndex, $entryCount);
+		}
+		
 		return $this->entries;
 	}
 	
@@ -68,6 +72,13 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList {
 		}
 		
 		return $this->keys;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function hasEntry($id) {
+		return isset($this->entries[$id]);
 	}
 	
 	/**

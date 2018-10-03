@@ -25,9 +25,11 @@ interface IDevtoolsPipEntryList {
 	/**
 	 * Returns all entries in the list.
 	 * 
+	 * @param	int	$startIndex
+	 * @param	int	$entryCount
 	 * @return	array
 	 */
-	public function getEntries();
+	public function getEntries($startIndex = null, $entryCount = null);
 	
 	/**
 	 * Returns the expected keys of the entries that can be used to display the
@@ -40,6 +42,14 @@ interface IDevtoolsPipEntryList {
 	 * @throws	\BadMethodCallException		if no keys have been set
 	 */
 	public function getKeys();
+	
+	/**
+	 * Returns true if an entry with the given entry identifier exists.
+	 * 
+	 * @param	string		$id	unique entry identifier
+	 * @return	bool
+	 */
+	public function hasEntry($id);
 	
 	/**
 	 * Sets the keys of the entries that can be used to display the entry list
