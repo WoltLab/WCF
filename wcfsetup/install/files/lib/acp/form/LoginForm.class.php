@@ -151,7 +151,7 @@ class LoginForm extends AbstractCaptchaForm {
 						'userID' => $user->userID ?: null,
 						'username' => $this->username,
 						'time' => TIME_NOW,
-						'ipAddress' => UserUtil::getIpAddress(),
+						'ipAddress' => LOG_IP_ADDRESS ? UserUtil::getIpAddress() : '',
 						'userAgent' => UserUtil::getUserAgent()
 					]
 				]);
