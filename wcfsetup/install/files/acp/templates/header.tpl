@@ -67,6 +67,8 @@
 				'__monthsShort': [ '{lang}wcf.date.month.short.jan{/lang}', '{lang}wcf.date.month.short.feb{/lang}', '{lang}wcf.date.month.short.mar{/lang}', '{lang}wcf.date.month.short.apr{/lang}', '{lang}wcf.date.month.short.may{/lang}', '{lang}wcf.date.month.short.jun{/lang}', '{lang}wcf.date.month.short.jul{/lang}', '{lang}wcf.date.month.short.aug{/lang}', '{lang}wcf.date.month.short.sep{/lang}', '{lang}wcf.date.month.short.oct{/lang}', '{lang}wcf.date.month.short.nov{/lang}', '{lang}wcf.date.month.short.dec{/lang}' ],
 				'wcf.acp.search.noResults': '{lang}wcf.acp.search.noResults{/lang}',
 				'wcf.clipboard.item.unmarkAll': '{lang}wcf.clipboard.item.unmarkAll{/lang}',
+				'wcf.clipboard.item.markAll': '{lang}wcf.clipboard.item.markAll{/lang}',
+				'wcf.clipboard.item.mark': '{lang}wcf.clipboard.item.mark{/lang}',
 				'wcf.date.relative.now': '{lang __literal=true}wcf.date.relative.now{/lang}',
 				'wcf.date.relative.minutes': '{capture assign=relativeMinutes}{lang __literal=true}wcf.date.relative.minutes{/lang}{/capture}{@$relativeMinutes|encodeJS}',
 				'wcf.date.relative.hours': '{capture assign=relativeHours}{lang __literal=true}wcf.date.relative.hours{/lang}{/capture}{@$relativeHours|encodeJS}',

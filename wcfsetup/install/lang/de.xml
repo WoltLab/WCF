@@ -2527,6 +2527,8 @@ Fehler sind beispielsweise:
 	
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Demarkieren]]></item>
+		<item name="wcf.clipboard.item.markAll"><![CDATA[Alle Elemente markieren]]></item>
+		<item name="wcf.clipboard.item.mark"><![CDATA[Element markieren]]></item>
 		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete"><![CDATA[Endgültig löschen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Artikel löschen?]]></item>

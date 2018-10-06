@@ -2463,6 +2463,8 @@ Errors are:
 	
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Unmark All]]></item>
+		<item name="wcf.clipboard.item.markAll"><![CDATA[Mark All Objects]]></item>
+		<item name="wcf.clipboard.item.mark"><![CDATA[Mark Object]]></item>
 		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} article{if $count != 1}s{/if}?]]></item>
