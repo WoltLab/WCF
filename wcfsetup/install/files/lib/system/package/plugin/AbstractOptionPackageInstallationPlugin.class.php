@@ -806,18 +806,18 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		$optionHandler->init();
 		
 		// only consider categories of relevant packages
-		$vrelevantPackageIDs = array_merge(
+		$relevantPackageIDs = array_merge(
 			[$this->installation->getPackage()->packageID],
 			array_keys($this->installation->getPackage()->getAllRequiredPackages())
 		);
 		
-		$buildSortedCategories = function($parentCategories) use ($vrelevantPackageIDs, &$buildSortedCategories) {
+		$buildSortedCategories = function($parentCategories) use ($relevantPackageIDs, &$buildSortedCategories) {
 			$categories = [];
 			foreach ($parentCategories as $categoryData) {
 				/** @var OptionCategory $category */
 				$category = $categoryData['object'];
 				
-				if (in_array($category->packageID, $vrelevantPackageIDs)) {
+				if (in_array($category->packageID, $relevantPackageIDs)) {
 					$categories[$category->categoryName] = $category;
 					
 					$categories = array_merge($categories, $buildSortedCategories($categoryData['categories']));
