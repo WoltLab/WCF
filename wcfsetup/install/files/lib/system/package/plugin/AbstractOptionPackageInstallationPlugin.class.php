@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\data\DatabaseObjectList;
+use wcf\data\DatabaseObject;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\package\Package;
 use wcf\system\application\ApplicationHandler;
@@ -21,6 +21,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\option\II18nOptionType;
+use wcf\system\option\IOptionHandler;
 use wcf\system\option\IOptionType;
 use wcf\system\option\ISelectOptionOptionType;
 use wcf\system\Regex;
@@ -30,8 +31,6 @@ use wcf\util\StringUtil;
 
 /**
  * Abstract implementation of a package installation plugin for options.
- * 
- * TODO: Finalize GUI implementation
  * 
  * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
@@ -388,9 +387,40 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 						->description('wcf.acp.pip.' . $this->tagName . '.categories.categoryName.description')
 						->required(),
 					
-					TextFormField::create('parentCategoryName')
-						->label('wcf.acp.pip.abstractOption.categories.parentCategoryName'),
-					// TODO: select option
+					SingleSelectionFormField::create('parentCategoryName')
+						->label('wcf.acp.pip.abstractOption.categories.parentCategoryName')
+						->options(function() {
+							$categories = $this->getSortedCategories();
+							
+							$getDepth = function(/** @var OptionCategory $category */$category) use ($categories) {
+								$depth = 0;
+								
+								while (isset($categories[$category->parentCategoryName])) {
+									$depth++;
+									
+									$category = $categories[$category->parentCategoryName];
+								}
+								
+								return $depth;
+							};
+							
+							$options = [];
+							/** @var OptionCategory $category */
+							foreach ($categories as $category) {
+								$depth = $getDepth($category);
+								
+								// the maximum nesting level is three
+								if ($depth <= 1) {
+									$options[] = [
+										'depth' => $depth,
+										'label' => $category->categoryName,
+										'value' => $category->categoryName
+									];
+								}
+							}
+							
+							return $options;
+						}, true),
 					
 					IntegerFormField::create('showOrder')
 						->label('wcf.acp.pip.abstractOption.categories.showOrder')
@@ -430,32 +460,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 						->required()
 						->filterable()
 						->options(function(): array {
-							$classNamePieces = explode('\\', $this->className);
-							// remove class name and convert editor classname into DBO classname
-							$className = substr(array_pop($classNamePieces), 0, -6);
-							
-							// add additional `category` sub-namespace and re-add class name
-							$classNamePieces[] = 'category';
-							$classNamePieces[] = $className . 'CategoryList';
-							
-							$listClassname = implode('\\', $classNamePieces);
-							
-							/** @var DatabaseObjectList $categoryList */
-							$categoryList = new $listClassname();
-							$categoryList->getConditionBuilder()->add('packageID IN (?)', [array_merge(
-								[$this->installation->getPackage()->packageID],
-								array_keys($this->installation->getPackage()->getAllRequiredPackages())
-							)]);
-							$categoryList->readObjects();
-							
-							$categories = [];
-							
-							/** @var OptionCategory $category */
-							foreach ($categoryList as $category) {
-								$categories[$category->categoryName] = $category;
-							}
-							
-							ksort($categories);
+							$categories = $this->getSortedCategories();
 							
 							$getDepth = function(/** @var OptionCategory $category */$category) use ($categories) {
 								$depth = 0;
@@ -470,6 +475,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 							};
 							
 							$options = [];
+							/** @var OptionCategory $category */
 							foreach ($categories as $category) {
 								$options[] = [
 									'depth' => $getDepth($category),
@@ -607,6 +613,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					IntegerFormField::create('minValue')
 						->objectProperty('minvalue')
 						->label('wcf.acp.pip.abstractOption.options.optionType.integer.minValue')
+						->nullable()
 						->addDependency(
 							ValueFormFieldDependency::create('optionType')
 								->field($optionType)
@@ -616,6 +623,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					IntegerFormField::create('maxValue')
 						->objectProperty('maxvalue')
 						->label('wcf.acp.pip.abstractOption.options.optionType.integer.maxValue')
+						->nullable()
 						->addDependency(
 							ValueFormFieldDependency::create('optionType')
 								->field($optionType)
@@ -635,6 +643,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 						->objectProperty('minlength')
 						->label('wcf.acp.pip.abstractOption.options.optionType.text.minLength')
 						->minimum(0)
+						->nullable()
 						->addDependency(
 							ValueFormFieldDependency::create('optionType')
 								->field($optionType)
@@ -645,6 +654,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 						->objectProperty('maxlength')
 						->label('wcf.acp.pip.abstractOption.options.optionType.text.maxLength')
 						->minimum(1)
+						->nullable()
 						->addDependency(
 							ValueFormFieldDependency::create('optionType')
 								->field($optionType)
@@ -726,7 +736,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 				$data['categoryName'] = $element->getElementsByTagName('categoryname')->item(0)->nodeValue;
 				$data['optionType'] = $element->getElementsByTagName('optiontype')->item(0)->nodeValue;
 				
-				foreach (['enableOptions', 'validationPattern', 'showOrder'] as $optionalPropertyName) {
+				foreach (['defaultValue', 'enableOptions', 'validationPattern', 'showOrder'] as $optionalPropertyName) {
 					$optionalProperty = $element->getElementsByTagName(strtolower($optionalPropertyName))->item(0);
 					if ($optionalProperty !== null) {
 						$data[$optionalPropertyName] = $optionalProperty->nodeValue;
@@ -737,6 +747,24 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					$optionalProperty = $element->getElementsByTagName($optionalPropertyName)->item(0);
 					if ($optionalProperty !== null) {
 						$data[$optionalPropertyName] = StringUtil::normalizeCsv($optionalProperty->nodeValue);
+					}
+				}
+				
+				// object-type specific elements
+				$optionals = [
+					'minvalue',
+					'maxvalue',
+					'suffix',
+					'minlength',
+					'maxlength',
+					'issortable',
+					'allowemptyvalue',
+				];
+				
+				foreach ($optionals as $optionalPropertyName) {
+					$optionalProperty = $element->getElementsByTagName($optionalPropertyName)->item(0);
+					if ($optionalProperty !== null) {
+						$data[$optionalPropertyName] = $optionalProperty->nodeValue;
 					}
 				}
 				
@@ -763,6 +791,53 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 */
 	public function getEntryTypes() {
 		return ['options', 'categories'];
+	}
+	
+	/**
+	 * Returns a list of sorted categories with array keys being the category names.
+	 * 
+	 * @return	DatabaseObject[]
+	 */
+	public function getSortedCategories() {
+		$optionHandler = $this->getSortOptionHandler();
+		if ($optionHandler === null) {
+			throw new \LogicException("Missing option handler");
+		}
+		$optionHandler->init();
+		
+		// only consider categories of relevant packages
+		$vrelevantPackageIDs = array_merge(
+			[$this->installation->getPackage()->packageID],
+			array_keys($this->installation->getPackage()->getAllRequiredPackages())
+		);
+		
+		$buildSortedCategories = function($parentCategories) use ($vrelevantPackageIDs, &$buildSortedCategories) {
+			$categories = [];
+			foreach ($parentCategories as $categoryData) {
+				/** @var OptionCategory $category */
+				$category = $categoryData['object'];
+				
+				if (in_array($category->packageID, $vrelevantPackageIDs)) {
+					$categories[$category->categoryName] = $category;
+					
+					$categories = array_merge($categories, $buildSortedCategories($categoryData['categories']));
+				}
+			}
+			
+			return $categories;
+		};
+		
+		return $buildSortedCategories($optionHandler->getOptionTree());
+	}
+	
+	/**
+	 * Returns an option handler used for sorting.
+	 * 
+	 * @return	IOptionHandler
+	 * @see		OptionPackageInstallationPlugin::getSortOptionHandler()
+	 */
+	protected function getSortOptionHandler() {
+		return null;
 	}
 	
 	/**
@@ -832,64 +907,66 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		
 		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
 		
-		// TODO: use options
-		
 		$xpath = new \DOMXPath($document);
 		$xpath->registerNamespace('ns', $document->documentElement->getAttribute('xmlns'));
 		
+		// sort categories
+		$categoryOrder = array_flip(array_keys($this->getSortedCategories()));
+		
 		$this->sortChildNodes(
 			$xpath->query('/ns:data/ns:import/ns:categories'),
-			static::getSortFunction([
-				'showorder',
-				[
-					'missingLast' => false,
-					'name' => 'parent'
-				],
-				[
-					'isAttribute' => 1,
-					'name' => 'name'
-				]
-			])
+			function(\DOMElement $category1, \DOMElement $category2) use ($categoryOrder) {
+				return $categoryOrder[$category1->getAttribute('name')] <=> $categoryOrder[$category2->getAttribute('name')];
+			}
 		);
 		
-		return;
-		
-		$importElements = $xpath->query('/ns:data/ns:import/ns:categories');
+		// sort options
+		$this->sortChildNodes(
+			$xpath->query('/ns:data/ns:import/ns:options'),
+			function(\DOMElement $option1, \DOMElement $option2) use ($categoryOrder) {
+				$category1 = $option1->getElementsByTagName('categoryname')->item(0)->nodeValue;
+				$category2 = $option2->getElementsByTagName('categoryname')->item(0)->nodeValue;
 				
-				$compareFunction = static::getSortFunction([
-					'showorder',
-					'parent',
-					[
-						'isAttribute' => 1,
-						'name' => 'name'
-					]
-				]);
-				
-				$importElements = $xpath->query('/ns:data/ns:import/ns:options');
-				
-				$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
-					$category1 = $element1->getElementsByTagName('categoryname')->item(0);
-					$category2 = $element2->getElementsByTagName('categoryname')->item(0);
-					
-					if ($category1 !== null) {
-						if ($category2 !== null) {
-							return strcmp($category1->nodeValue, $category2->nodeValue);
+				if ($category1 !== 'hidden') {
+					if ($category2 !== 'hidden') {
+						$cmp = $categoryOrder[$category1] <=> $categoryOrder[$category2];
+						
+						if ($cmp === 0) {
+							$showOrder1 = $option1->getElementsByTagName('showorder')->item(0);
+							$showOrder2 = $option2->getElementsByTagName('showorder')->item(0);
+							
+							if ($showOrder1 !== null) {
+								if ($showOrder2 !== null) {
+									return $showOrder1->nodeValue <=> $showOrder2->nodeValue;
+								}
+								
+								return -1;
+							}
+							else if ($showOrder2 !== null) {
+								return 1;
+							}
+							
+							return strcmp($option1->nodeValue, $option2->nodeValue);
 						}
 						
-						return -1;
-					}
-					else if ($category2 !== null) {
-						return 1;
+						return $cmp;
 					}
 					
-					return strcmp($element1->getAttribute('name'), $element2->getAttribute('name'));
-				};
+					return -1;
+				}
+				else if ($category2 !== 'hidden') {
+					return 1;
+				}
+				
+				return strcmp($option1->nodeValue, $option2->nodeValue);
+			}
+		);
 		
-		$this->sortChildNodes($importElements, $compareFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), function(\DOMElement $element1, \DOMElement $element2) {
+		// sort deleted elements
+		$this->sortChildNodes($document->getElementsByTagName('delete'), function(\DOMElement $element1, \DOMElement $element2) use ($categoryOrder) {
 			if ($element1->nodeName === 'optioncategory') {
 				if ($element2->nodeName === 'optioncategory') {
-					return strcmp($element1->nodeName, $element2->nodeName);
+					return $categoryOrder[$element1->getAttribute('name')] <=> $categoryOrder[$element2->getAttribute('name')];
 				}
 				else {
 					return -1;
@@ -939,11 +1016,21 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 				}
 				
 				$fields = [
+					'defaultvalue' => '',
 					'validationpattern' => '',
 					'enableoptions' => '',
 					'showorder' => 0,
 					'options' => '',
-					'permissions' => ''
+					'permissions' => '',
+					
+					// object-type specific elements
+					'minvalue' => null,
+					'maxvalue' => null,
+					'suffix' => '',
+					'minlength' => null,
+					'maxlength' => null,
+					'issortable' => false,
+					'allowemptyvalue' => false
 				];
 				foreach ($fields as $field => $defaultValue) {
 					if (isset($formData[$field]) && $formData[$field] !== $defaultValue) {

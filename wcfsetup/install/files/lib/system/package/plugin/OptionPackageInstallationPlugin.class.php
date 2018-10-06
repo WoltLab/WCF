@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
 use wcf\data\option\OptionEditor;
 use wcf\data\package\Package;
@@ -12,13 +13,12 @@ use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\option\OptionHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes options.
- * 
- * TODO: Finalize GUI implementation
  * 
  * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
@@ -209,6 +209,39 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 		}
 		
 		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getSortOptionHandler() {
+		// reuse OptionHandler
+		return new class(true) extends OptionHandler {
+			/**
+			 * @inheritDoc
+			 */
+			protected function checkCategory(OptionCategory $category) {
+				// we do not care for category checks here
+				return true;
+			}
+			
+			/**
+			 * @inheritDoc
+			 */
+			protected function checkOption(Option $option) {
+				// we do not care for option checks here
+				return true;
+			}
+			
+			/**
+			 * @inheritDoc
+			 */
+			public function getCategoryOptions($categoryName = '', $inherit = true) {
+				// we just need to ensure that the category is not empty
+				return [new Option(null, [])];
+			}
+		};
 	}
 	
 	/**
