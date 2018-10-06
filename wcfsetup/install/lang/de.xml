@@ -1162,6 +1162,8 @@
 		<item name="wcf.acp.option.show_version_number"><![CDATA[Versionsnummer der Software im Copyright-Hinweis anzeigen]]></item>
 		<item name="wcf.acp.option.enable_debug_mode"><![CDATA[Debug-Modus aktivieren]]></item>
 		<item name="wcf.acp.option.enable_debug_mode.description"><![CDATA[Aktiviert ausführliche Fehlerberichte. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
+		<item name="wcf.acp.option.enable_production_debug_mode"><![CDATA[Problemanalyse im Live-Betrieb]]></item>
+		<item name="wcf.acp.option.enable_production_debug_mode.description"><![CDATA[Hängt die aktuelle URL an Datenbankabfragen an, um diese im Log des Datenbankservers einfacher identifizieren zu können.]]></item>
 		<item name="wcf.acp.option.external_link_rel_nofollow"><![CDATA[Externe Links mit dem Attribut „rel="nofollow"“ versehen]]></item>
 		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[Das Attribut „rel="nofollow"“ weist Suchmaschinen an, einen bestimmten Link auf einer Seite zu ignorieren.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Externe Links in neuem Fenster öffnen]]></item>

@@ -247,7 +247,7 @@ abstract class Database {
 			//       useful. Thus the code to retrieve the request information
 			//       must be absolutely lightweight.
 			$requestInformation = '';
-			if (isset($_SERVER['REQUEST_URI'])) {
+			if (ENABLE_PRODUCTION_DEBUG_MODE && isset($_SERVER['REQUEST_URI'])) {
 				$requestInformation = substr($_SERVER['REQUEST_URI'], 0, 90);
 				if (isset($_REQUEST['className']) && isset($_REQUEST['actionName'])) {
 					$requestInformation .= ' ('.$_REQUEST['className'].':'.$_REQUEST['actionName'].')';
@@ -255,7 +255,7 @@ abstract class Database {
 			}
 			$requestInformation = substr($requestInformation, 0, 180);
 			
-			$pdoStatement = $this->pdo->prepare($statement." -- ".$this->pdo->quote($requestInformation));
+			$pdoStatement = $this->pdo->prepare($statement.($requestInformation ? " -- ".$this->pdo->quote($requestInformation) : ''));
 			
 			return new $this->preparedStatementClassName($this, $pdoStatement, $statement);
 		}
