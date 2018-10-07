@@ -252,8 +252,8 @@ abstract class Database {
 				if (isset($_REQUEST['className']) && isset($_REQUEST['actionName'])) {
 					$requestInformation .= ' ('.$_REQUEST['className'].':'.$_REQUEST['actionName'].')';
 				}
+				$requestInformation = substr($requestInformation, 0, 180);
 			}
-			$requestInformation = substr($requestInformation, 0, 180);
 			
 			$pdoStatement = $this->pdo->prepare($statement.($requestInformation ? " -- ".$this->pdo->quote($requestInformation) : ''));
 			
