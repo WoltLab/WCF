@@ -8,7 +8,7 @@
 					{if $_messageCustomIcon === ''}
 						{if $message->getUserProfile()}
 							{if $message->getUserProfile()->userID}
-								<a href="{link controller='User' object=$message->getUserProfile()}{/link}" title="{$message->getUserProfile()->username}">{@$message->getUserProfile()->getAvatar()->getImageTag(48)}</a>
+								<a href="{link controller='User' object=$message->getUserProfile()}{/link}" title="{$message->getUserProfile()->username}" aria-hidden="true">{@$message->getUserProfile()->getAvatar()->getImageTag(48)}</a>
 							{else}
 								<p>{@$message->getUserProfile()->getAvatar()->getImageTag(48)}</p>
 							{/if}

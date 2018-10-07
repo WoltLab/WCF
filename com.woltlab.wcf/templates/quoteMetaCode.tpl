@@ -1,7 +1,7 @@
 <blockquote class="quoteBox collapsibleBbcode jsCollapsibleBbcode{if $collapseQuote} collapsed{/if}{if !$quoteAuthorObject} quoteBoxSimple{/if}"{if $quoteLink} cite="{$quoteLink}"{/if}>
 	<div class="quoteBoxIcon">
 		{if $quoteAuthorObject}
-			<a href="{link controller='User' object=$quoteAuthorObject}{/link}" class="userLink" data-user-id="{@$quoteAuthorObject->userID}">{@$quoteAuthorObject->getAvatar()->getImageTag(64)}</a>
+			<a href="{link controller='User' object=$quoteAuthorObject}{/link}" class="userLink" data-user-id="{@$quoteAuthorObject->userID}" aria-hidden="true">{@$quoteAuthorObject->getAvatar()->getImageTag(64)}</a>
 		{else}
 			<span class="quoteBoxQuoteSymbol"></span>
 		{/if}
