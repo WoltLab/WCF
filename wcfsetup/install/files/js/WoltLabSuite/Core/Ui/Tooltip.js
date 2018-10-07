@@ -76,6 +76,7 @@ define(['Environment', 'Dom/ChangeListener', 'Ui/Alignment'], function(Environme
 				if (title.length) {
 					elData(element, 'tooltip', title);
 					element.removeAttribute('title');
+					elAttr(element, 'aria-label', title);
 					
 					element.addEventListener('mouseenter', _callbackMouseEnter);
 					element.addEventListener('mouseleave', _callbackMouseLeave);
