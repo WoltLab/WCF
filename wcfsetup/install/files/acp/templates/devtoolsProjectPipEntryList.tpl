@@ -32,6 +32,24 @@
 	</nav>
 </header>
 
+<form method="post" action="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID pip=$pip}{/link}">
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
+		
+		<dl>
+			<dt></dt>
+			<dd>
+				<input type="text" id="search" name="entryFilter" value="{$entryFilter}" placeholder="{lang}wcf.global.filter{/lang}" class="long">
+			</dd>
+		</dl>
+		
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+			{@SECURITY_TOKEN_INPUT_TAG}
+		</div>
+	</section>
+</form>
+
 {hascontent}
 	<div class="paginationTop">
 		{content}

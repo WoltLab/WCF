@@ -23,6 +23,19 @@ interface IDevtoolsPipEntryList {
 	public function addEntry($id, array $entry);
 	
 	/**
+	 * Internally filters the entries using the given filter.
+	 * `getEntries()` will only return filter entries afterwards.
+	 * 
+	 * This filter is applied to the elements currently in the list.
+	 * Entries added afterwards are not affected by this filter.
+	 * 
+	 * Applying a second filter will filter the pre-filtered entries.
+	 * 
+	 * @param	string|array	$filter		either a string that is used to search all entry elements or filter map `key => searchString`
+	 */
+	public function filterEntries($filter);
+	
+	/**
 	 * Returns all entries in the list.
 	 * 
 	 * @param	int	$startIndex

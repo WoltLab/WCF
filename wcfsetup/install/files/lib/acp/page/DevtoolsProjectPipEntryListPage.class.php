@@ -5,6 +5,7 @@ use wcf\page\AbstractPage;
 use wcf\system\devtools\pip\DevtoolsPip;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -30,6 +31,12 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 	public $endIndex = 0;
 	
 	/**
+	 * entry filter string
+	 * @var	string
+	 */
+	public $entryFilter;
+	
+	/**
 	 * pip entry list
 	 * @var	IDevtoolsPipEntryList
 	 */
@@ -40,6 +47,11 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 	 * @var	string
 	 */
 	public $entryType;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $forceCanonicalURL = true;
 	
 	/**
 	 * number of items shown per page
@@ -113,6 +125,7 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 	
 	/**
 	 * @inheritDoc
+	 * @throws	IllegalLinkException
 	 */
 	public function readParameters() {
 		parent::readParameters();
@@ -161,6 +174,16 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 		if ($this->entryType !== null) {
 			$this->linkParameters .= '&entryType=' . $this->entryType;
 		}
+		
+		if (isset($_REQUEST['entryFilter'])) $this->entryFilter = StringUtil::trim($_REQUEST['entryFilter']);
+		
+		if ($this->entryFilter !== null && $this->entryFilter !== '') {
+			$this->linkParameters .= '&entryFilter=' . $this->entryFilter;
+		}
+		
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('DevtoolsProjectPipEntryList', [
+			'id' => $this->project->projectID,
+		], $this->linkParameters);
 	}
 	
 	/**
@@ -171,6 +194,10 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 		
 		/** @var IDevtoolsPipEntryList entryList */
 		$this->entryList = $this->pipObject->getPip()->getEntryList();
+		
+		if ($this->entryFilter !== null && $this->entryFilter !== '') {
+			$this->entryList->filterEntries($this->entryFilter);
+		}
 		
 		$this->items = count($this->entryList->getEntries());
 		$this->pages = intval(ceil($this->items / $this->itemsPerPage));
@@ -194,6 +221,7 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 		
 		WCF::getTPL()->assign([
 			'endIndex' => $this->endIndex,
+			'entryFilter' => $this->entryFilter,
 			'entryList' => $this->entryList,
 			'entryType' => $this->entryType,
 			'items' => $this->items,

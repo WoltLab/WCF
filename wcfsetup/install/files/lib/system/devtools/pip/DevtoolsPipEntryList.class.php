@@ -55,6 +55,52 @@ class DevtoolsPipEntryList implements IDevtoolsPipEntryList {
 	/**
 	 * @inheritDoc
 	 */
+	public function filterEntries($filter) {
+		$filterType = gettype($filter);
+		
+		switch ($filterType) {
+			case 'array':
+				$unknownFilters = array_diff(array_keys($filter), array_keys($this->keys));
+				
+				if (!empty($unknownFilters)) {
+					throw new \InvalidArgumentException("Unknown filter" . (count($unknownFilters) > 1 ? 's' : '') . " '". implode(', ', $unknownFilters) ."'.");
+				}
+				
+				$filteredEntries = [];
+				foreach ($this->entries as $id => $entry) {
+					foreach ($filter as $filterKey => $filterString) {
+						if (isset($entry[$filterKey]) && strpos($entry[$filterKey], $filterString) !== false) {
+							$filteredEntries[$id] = $entry;
+						}
+					}
+				}
+				
+				$this->entries = $filteredEntries;
+				
+				break;
+				
+			case 'string':
+				$filteredEntries = [];
+				foreach ($this->entries as $id => $entry) {
+					foreach ($this->keys as $key => $label) {
+						if (isset($entry[$key]) && strpos($entry[$key], $filter) !== false) {
+							$filteredEntries[$id] = $entry;
+						}
+					}
+				}
+				
+				$this->entries = $filteredEntries;
+				
+				break;
+				
+			default:
+				throw new \InvalidArgumentException("Cannot use '{$filterType}' to filter entries.");
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getEntries($startIndex = null, $entryCount = null) {
 		if ($startIndex !== null && $entryCount !== null) {
 			return array_slice($this->entries, $startIndex, $entryCount);
