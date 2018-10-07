@@ -124,8 +124,8 @@ if (COMPILER_TARGET_DEFAULT) {
 			// insert buttons
 			var $container = $('<div class="pollOptionInput" />').appendTo($listItem);
 			$('<span class="icon icon16 fa-arrows sortableNodeHandle" />').appendTo($container);
-			$('<span class="icon icon16 fa-plus jsTooltip jsAddOption pointer" title="' + WCF.Language.get('wcf.poll.button.addOption') + '" />').click($.proxy(this._addOption, this)).appendTo($container);
-			$('<span class="icon icon16 fa-times jsTooltip jsDeleteOption pointer" title="' + WCF.Language.get('wcf.poll.button.removeOption') + '" />').click($.proxy(this._removeOption, this)).appendTo($container);
+			$('<a role="button" href="#" class="icon icon16 fa-plus jsTooltip jsAddOption pointer" title="' + WCF.Language.get('wcf.poll.button.addOption') + '" />').click($.proxy(this._addOption, this)).appendTo($container);
+			$('<a role="button" href="#" class="icon icon16 fa-times jsTooltip jsDeleteOption pointer" title="' + WCF.Language.get('wcf.poll.button.removeOption') + '" />').click($.proxy(this._removeOption, this)).appendTo($container);
 			
 			// insert input field
 			var $input = $('<input type="text" value="' + optionValue + '" maxlength="255" />').keydown($.proxy(this._keyDown, this)).appendTo($container);
@@ -170,6 +170,8 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @param        object                event
 		 */
 		_addOption: function (event) {
+			event.preventDefault();
+			
 			if (this._count === this._maxOptions) {
 				return false;
 			}
@@ -185,6 +187,8 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @param        object                event
 		 */
 		_removeOption: function (event) {
+			event.preventDefault();
+			
 			$(event.currentTarget).closest('li', this._container[0]).remove();
 			
 			this._count--;

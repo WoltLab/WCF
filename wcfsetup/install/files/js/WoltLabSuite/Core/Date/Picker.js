@@ -161,7 +161,8 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				container.className = 'inputAddon';
 				
 				var button = elCreate('a');
-				button.className = 'inputSuffix button';
+				button.href = '#';
+				button.className = 'inputSuffix button jsTooltip';
 				button.addEventListener(WCF_CLICK_EVENT, _callbackOpen);
 				container.appendChild(button);
 				
