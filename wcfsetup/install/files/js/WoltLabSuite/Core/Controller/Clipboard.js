@@ -130,21 +130,21 @@ define(
 				if (containerData === undefined) {
 					var markAll = elBySel('.jsClipboardMarkAll', container);
 					
-					if (markAll.matches(_specialCheckboxSelector)) {
-						var label = markAll.closest('label');
-						elAttr(label, 'role', 'checkbox');
-						elAttr(label, 'tabindex', '0');
-						elAttr(label, 'aria-checked', false);
-						elAttr(label, 'aria-label', Language.get('wcf.clipboard.item.markAll'));
-						
-						label.addEventListener('keyup', function (event) {
-							if (event.keyCode === 13 || event.keyCode === 32) {
-								checkbox.click();
-							}
-						});
-					}
-					
 					if (markAll !== null) {
+						if (markAll.matches(_specialCheckboxSelector)) {
+							var label = markAll.closest('label');
+							elAttr(label, 'role', 'checkbox');
+							elAttr(label, 'tabindex', '0');
+							elAttr(label, 'aria-checked', false);
+							elAttr(label, 'aria-label', Language.get('wcf.clipboard.item.markAll'));
+							
+							label.addEventListener('keyup', function (event) {
+								if (event.keyCode === 13 || event.keyCode === 32) {
+									checkbox.click();
+								}
+							});
+						}
+						
 						elData(markAll, 'container-id', containerId);
 						markAll.addEventListener(WCF_CLICK_EVENT, this._markAll.bind(this));
 					}
