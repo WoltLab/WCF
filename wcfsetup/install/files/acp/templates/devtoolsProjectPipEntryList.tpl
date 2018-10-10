@@ -70,7 +70,7 @@
 			</thead>
 			
 			<tbody>
-				{foreach from=$entryList->getEntries($startIndex, $itemsPerPage) key=identifier item=entry}
+				{foreach from=$entryList->getEntries($startIndex-1, $itemsPerPage) key=identifier item=entry}
 					<tr>
 						<td class="columnIcon"><a href="{link controller='DevtoolsProjectPipEntryEdit' id=$project->projectID pip=$pip identifier=$identifier entryType=$entryType}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a></td>
 						{foreach from=$entryList->getKeys() key=key item=languageItem}
