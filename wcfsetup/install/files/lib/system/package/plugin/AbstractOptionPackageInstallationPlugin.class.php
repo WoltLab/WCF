@@ -447,11 +447,14 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 				break;
 			
 			case 'options':
+				$classnamePieces = explode('\\', get_class($this));
+				$pipPrefix = str_replace('PackageInstallationPlugin', '', array_pop($classnamePieces));
+				
 				$dataContainer->appendChildren([
 					TextFormField::create('optionName')
 						->objectProperty('name')
 						->label('wcf.acp.pip.abstractOption.options.optionName')
-						->description('wcf.acp.pip.abstractOption.categories.options.description')
+						->description('wcf.acp.pip.abstractOption.options.optionName.description')
 						->required(),
 					
 					SingleSelectionFormField::create('categoryName')
@@ -490,7 +493,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					SingleSelectionFormField::create('optionType')
 						->objectProperty('optiontype')
 						->label('wcf.acp.pip.abstractOption.options.optionType')
-						->description('wcf.acp.pip.' . $this->tagName . '.options.optionType.description')
+						->description('wcf.acp.pip.' . lcfirst($pipPrefix) . '.options.optionType.description')
 						->required()
 						->options(function(): array {
 							$classnamePieces = explode('\\', get_class());
@@ -774,6 +777,32 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 				throw new \LogicException('Unreachable');
 		}
 		
+		if ($saveData) {
+			$lowercaseData = [
+				'packageID' => $this->installation->getPackage()->packageID
+			];
+			
+			$lowercaseFields = [
+				'categoryName',
+				'optionName',
+				'optionType',
+				'defaultValue',
+				'enableOptions',
+				'validationPattern',
+				'showOrder',
+				'parentCategoryName',
+				'showOrder'
+			];
+			
+			foreach ($lowercaseFields as $name) {
+				if (isset($data[$name])) {
+					$lowercaseData[strtolower($name)] = $data[$name];
+				}
+			}
+			
+			return $lowercaseData;
+		}
+		
 		return $data;
 	}
 	
@@ -854,7 +883,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			case 'options':
 				$optionData = $this->getElementData($newElement, true);
 				
-				$this->saveOption($optionData, $optionData['categoryName']);
+				$this->saveOption($optionData, $optionData['categoryname']);
 				
 				break;
 		}
@@ -1023,7 +1052,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					'options' => '',
 					'permissions' => '',
 					
-					// object-type specific elements
+					// option type-specific elements
 					'minvalue' => null,
 					'maxvalue' => null,
 					'suffix' => '',
@@ -1034,7 +1063,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 				];
 				foreach ($fields as $field => $defaultValue) {
 					if (isset($formData[$field]) && $formData[$field] !== $defaultValue) {
-						$option->appendChild($document->createElement($field, (string) $formData[$field]));
+						$option->appendChild($document->createElement($field, StringUtil::unifyNewlines((string) $formData[$field])));
 					}
 				}
 				

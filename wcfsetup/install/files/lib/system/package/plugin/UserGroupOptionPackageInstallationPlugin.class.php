@@ -1,10 +1,20 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\option\category\OptionCategory;
+use wcf\data\option\Option;
 use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionEditor;
 use wcf\data\user\group\UserGroup;
-use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
+use wcf\system\form\builder\container\IFormContainer;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\MultilineTextFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\IFormDocument;
+use wcf\system\option\user\group\UserGroupOptionHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -16,7 +26,7 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
+class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
 	/**
 	 * list of group ids by type
 	 * @var	integer[][]
@@ -27,6 +37,11 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 * @inheritDoc
 	 */
 	public $tableName = 'user_group_option';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $tagName = 'option';
 	
 	/**
 	 * list of names of tags which aren't considered as additional data
@@ -188,5 +203,144 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		}
 		
 		return $this->groupIDs;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function addFormFields(IFormDocument $form) {
+		parent::addFormFields($form);
+		
+		if ($this->entryType === 'options') {
+			/** @var IFormContainer $dataContainer */
+			$dataContainer = $form->getNodeById('data');
+			
+			/** @var SingleSelectionFormField $optionType */
+			$optionType = $form->getNodeById('optionType');
+			
+			$dataContainer->appendChildren([
+				MultilineTextFormField::create('adminDefaultValue')
+					->objectProperty('admindefaultvalue')
+					->label('wcf.acp.pip.userGroupOption.options.adminDefaultValue')
+					->description('wcf.acp.pip.userGroupOption.options.adminDefaultValue.description')
+					->rows(5),
+				
+				MultilineTextFormField::create('modDefaultValue')
+					->objectProperty('moddefaultvalue')
+					->label('wcf.acp.pip.userGroupOption.options.modDefaultValue')
+					->description('wcf.acp.pip.userGroupOption.options.modDefaultValue.description')
+					->rows(5),
+				
+				BooleanFormField::create('usersOnly')
+					->objectProperty('usersonly')
+					->label('wcf.acp.pip.userGroupOption.options.usersOnly')
+					->description('wcf.acp.pip.userGroupOption.options.usersOnly.description'),
+				
+				BooleanFormField::create('excludedInTinyBuild')
+					->label('wcf.acp.pip.userGroupOption.options.excludedInTinyBuild')
+					->description('wcf.acp.pip.userGroupOption.options.excludedInTinyBuild.description'),
+				
+				TextFormField::create('wildcard')
+					->label('wcf.acp.pip.userGroupOption.options.wildcard')
+					->description('wcf.acp.pip.userGroupOption.options.wildcard.description')
+					->addDependency(
+						ValueFormFieldDependency::create('optionType')
+							->field($optionType)
+							->values(['textarea'])
+					)
+			]);
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getElementData(\DOMElement $element, $saveData = false) {
+		$data = parent::getElementData($element, $saveData);
+		
+		switch ($this->entryType) {
+			case 'options':
+				foreach (['adminDefaultValue', 'modDefaultValue', 'usersOnly', 'excludedInTinyBuild', 'wildcard'] as $optionalPropertyName) {
+					$optionalProperty = $element->getElementsByTagName(strtolower($optionalPropertyName))->item(0);
+					if ($optionalProperty !== null) {
+						if ($saveData && $optionalPropertyName !== 'excludedInTinyBuild') {
+							$data[strtolower($optionalPropertyName)] = $optionalProperty->nodeValue;
+						}
+						else {
+							$data[$optionalPropertyName] = $optionalProperty->nodeValue;
+						}
+					}
+				}
+				
+				break;
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getSortOptionHandler() {
+		// reuse UserGroupOptionHandler
+		return new class(true) extends UserGroupOptionHandler {
+			/**
+			 * @inheritDoc
+			 */
+			protected function checkCategory(OptionCategory $category) {
+				// we do not care for category checks here
+				return true;
+			}
+			
+			/**
+			 * @inheritDoc
+			 */
+			protected function checkOption(Option $option) {
+				// we do not care for option checks here
+				return true;
+			}
+			
+			/**
+			 * @inheritDoc
+			 */
+			public function getCategoryOptions($categoryName = '', $inherit = true) {
+				// we just need to ensure that the category is not empty
+				return [new Option(null, [])];
+			}
+		};
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+		$option = parent::writeEntry($document, $form);
+		
+		$formData = $form->getData()['data'];
+		
+		switch ($this->entryType) {
+			case 'options':
+				$fields = [
+					'admindefaultvalue' => '',
+					'moddefaultvalue' => '',
+					'usersonly' => 0,
+					'excludedInTinyBuild' => 0,
+					'wildcard' => ''
+				];
+				
+				foreach ($fields as $field => $defaultValue) {
+					if (isset($formData[$field]) && $formData[$field] !== $defaultValue) {
+						$option->appendChild($document->createElement($field, (string) $formData[$field]));
+					}
+				}
+				
+				break;
+		}
+		
+		return $option;
 	}
 }

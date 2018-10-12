@@ -72,8 +72,18 @@ class OptionFormField extends ItemListFormField {
 		parent::validate();
 		
 		if (empty($this->getValidationErrors()) && is_array($this->getValue()) && !empty($this->getValue())) {
+			// ignore `module_attachment`, see https://github.com/WoltLab/WCF/issues/2531
+			$options = $this->getValue();
+			if (($index = array_search('module_attachment', $options)) !== false) {
+				unset($options[$index]);
+			}
+			
+			if (empty($options)) {
+				return;
+			}
+			
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add('optionName IN (?)', [$this->getValue()]);
+			$conditionBuilder->add('optionName IN (?)', [$options]);
 			if (!empty($this->getPackageIDs())) {
 				$conditionBuilder->add('packageID IN (?)', [$this->getPackageIDs()]);
 			}
@@ -85,7 +95,7 @@ class OptionFormField extends ItemListFormField {
 			$statement->execute($conditionBuilder->getParameters());
 			$availableOptions = $statement->fetchAll(\PDO::FETCH_COLUMN);
 			
-			$unknownOptions = array_diff($this->getValue(), $availableOptions);
+			$unknownOptions = array_diff($options, $availableOptions);
 			
 			if (!empty($unknownOptions)) {
 				$this->addValidationError(

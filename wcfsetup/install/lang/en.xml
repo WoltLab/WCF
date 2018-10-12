@@ -2137,7 +2137,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.option.options.supportI18n.description"><![CDATA[If selected, the option supports different values for each available language.]]></item>
 		<item name="wcf.acp.pip.option.options.requireI18n"><![CDATA[Require Multilingual Input]]></item>
 		<item name="wcf.acp.pip.option.options.requireI18n.description"><![CDATA[If selected, the option’s value must be explicitly set for each available language.]]></item>
-		<item name="wcf.acp.pip.option.options.optionType.description"><![CDATA[The option types determine the interface with which the value of the option is set and which (types of) values the option may have.]]></item>
+		<item name="wcf.acp.pip.option.options.optionType.description"><![CDATA[The option type determines the interface with which the value of the option is set and which (types of) values the option may have.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.select.allowEmptyValue"><![CDATA[Allow Empty Value]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.select.allowEmptyValue.description"><![CDATA[If selected, the value of the option may be empty.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.useroptions.isSortable"><![CDATA[User Options Are Sortable]]></item>
@@ -2188,6 +2188,20 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.smiley.smileyPath.error.fileDoesNotExist"><![CDATA[The entered file does not exist.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath2x"><![CDATA[HD Smiley Path]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath2x.description"><![CDATA[The entered path has to be relative to <code>{'WCF_DIR'|constant}</code>.]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.usersOnly"><![CDATA[Members Only]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.usersOnly.description"><![CDATA[The user group option is only available for registered members-only user groups.]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.optionType.description"><![CDATA[The option type determines the interface with which the value of the user group option is set and which (types of) values the option may have. Additionally, the option type also determines how the final option value is determined if a user is in multiple user groups with different option values.]]></item>
+		<item name="wcf.acp.pip.abstractOption.options.optionName.description"><![CDATA[The option name is used to update options and to identify options in PHP code.]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.adminDefaultValue"><![CDATA[Administrator Default Value]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.adminDefaultValue.description"><![CDATA[The administrator default value is used for administrator user groups. Administrator user groups are user groups that can edit every user group.]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.modDefaultValue"><![CDATA[Moderator Default Value]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.modDefaultValue.description"><![CDATA[The moderator default value is used for moderator user groups. Moderator user groups are user groups that can access the moderation.]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.usersOnly"><![CDATA[Members Only]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.usersOnly.description"><![CDATA[The user group option value cannot be set for the guests user group.]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.excludedInTinyBuild"><![CDATA[Disable for Accelerated Guest View]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.excludedInTinyBuild.description"><![CDATA[If the accelared guest view is enabled, the user group option’s value is “Never” for guests regardless of the actual value set for the guests user group.]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.wildcard"><![CDATA[Wildcard]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.wildcard.description"><![CDATA[If a wildcard is specified and if one line of the user group option value only contains this wildcare, the entire option value will be replaced by the wildcard.]]></item>
 	</category>
 	
 	<category name="wcf.acp.reactionType">
