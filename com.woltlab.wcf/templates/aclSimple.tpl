@@ -5,7 +5,7 @@
 	<dl>
 		<dt><label for="{@$__aclSimplePrefix}aclAllowAll">{lang}wcf.acl.allowAll{/lang}</label></dt>
 		<dd>
-			<ol class="flexibleButtonGroup">
+			<ol role="group" aria-label="{lang}wcf.acl.allowAll{/lang}" class="flexibleButtonGroup">
 				<li>
 					<input type="radio" id="{@$__aclSimplePrefix}aclAllowAll" name="{@$__aclInputName}[allowAll]" value="1"{if $aclValues[allowAll]} checked{/if}>
 					<label for="{@$__aclSimplePrefix}aclAllowAll" class="green"><span class="icon icon16 fa-check"></span> {lang}wcf.acp.option.type.boolean.yes{/lang}</label>

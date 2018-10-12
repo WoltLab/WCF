@@ -11,3 +11,8 @@
 		@include wcfFontSmall;
 	}
 }
+
+/* workaround for broken iframes without height on mobile */
+iframe.instagram-media {
+	min-height: 530px;
+}

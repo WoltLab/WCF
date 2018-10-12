@@ -402,6 +402,7 @@ class ReactionHandler extends SingletonFactory {
 		if ($likeObject->likeObjectID) {
 			$likes = $likeObject->likes;
 			$dislikes = $likeObject->dislikes;
+			$neutralReactions = $likeObject->neutralReactions;
 			$cumulativeLikes = $likeObject->cumulativeLikes;
 			
 			if ($likeObject->cachedReactions !== null) {
@@ -424,6 +425,9 @@ class ReactionHandler extends SingletonFactory {
 					$dislikes--;
 					$cumulativeLikes++;
 				}
+				else {
+					$neutralReactions--;
+				}
 				
 				if (isset($cachedReactions[$like->getReactionType()->reactionTypeID])) {
 					if (--$cachedReactions[$like->getReactionType()->reactionTypeID] == 0) {
@@ -440,6 +444,9 @@ class ReactionHandler extends SingletonFactory {
 				$dislikes++;
 				$cumulativeLikes--;
 			}
+			else {
+				$neutralReactions++;
+			}
 			
 			if (isset($cachedReactions[$reactionType->reactionTypeID])) {
 				$cachedReactions[$reactionType->reactionTypeID]++;
@@ -452,6 +459,7 @@ class ReactionHandler extends SingletonFactory {
 			$updateData = [
 				'likes' => $likes,
 				'dislikes' => $dislikes,
+				'neutralReactions' => $neutralReactions,
 				'cumulativeLikes' => $cumulativeLikes,
 				'cachedReactions' => serialize($cachedReactions)
 			];
@@ -473,6 +481,7 @@ class ReactionHandler extends SingletonFactory {
 				'objectUserID' => $likeable->getUserID() ?: null,
 				'likes' => ($reactionType->isPositive()) ? 1 : 0,
 				'dislikes' => ($reactionType->isNegative()) ? 1 : 0,
+				'neutralReactions' => ($reactionType->isNeutral()) ? 1 : 0,
 				'cumulativeLikes' => $cumulativeLikes,
 				'cachedReactions' => serialize($cachedReactions)
 			]);

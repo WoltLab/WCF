@@ -14,14 +14,14 @@ define(
 		'Ui/SimpleDropdown',       'WoltLabSuite/Core/Ui/Mobile',  'WoltLabSuite/Core/Ui/TabMenu', 'WoltLabSuite/Core/Ui/FlexibleMenu',
 		'Ui/Dialog',               'WoltLabSuite/Core/Ui/Tooltip', 'WoltLabSuite/Core/Language',   'WoltLabSuite/Core/Environment',
 		'WoltLabSuite/Core/Date/Picker', 'EventHandler',           'Core',                   'WoltLabSuite/Core/Ui/Page/JumpToTop',
-		'Devtools'
+		'Devtools', 'Dom/ChangeListener'
 	], 
 	function(
 		 favico,                   enquire,                  perfectScrollbar,         DateTimeRelative,
 		 UiSimpleDropdown,         UiMobile,                 UiTabMenu,                UiFlexibleMenu,
 		 UiDialog,                 UiTooltip,                Language,                 Environment,
 		 DatePicker,               EventHandler,             Core,                     UiPageJumpToTop,
-	         Devtools
+	         Devtools, DomChangeListener
 	)
 {
 	"use strict";
@@ -97,6 +97,19 @@ define(
 					window.jQuery.holdReady(false);
 				}
 			}, 20);
+			
+			this._initA11y();
+			DomChangeListener.add('WoltLabSuite/Core/Bootstrap', this._initA11y.bind(this));
+		},
+		
+		_initA11y: function() {
+			elBySelAll('nav:not([aria-label]):not([role])', undefined, function(element) {
+				elAttr(element, 'role', 'presentation');
+			});
+			
+			elBySelAll('article:not([aria-label]):not([role])', undefined, function(element) {
+				elAttr(element, 'role', 'presentation');
+			});
 		}
 	};
 });

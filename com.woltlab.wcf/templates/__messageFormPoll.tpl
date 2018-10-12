@@ -41,7 +41,7 @@
 				<label for="pollEndTime">{lang}wcf.poll.endTime{/lang}</label>
 			</dt>
 			<dd>
-				<input type="datetime" name="pollEndTime" id="pollEndTime" value="{if $pollEndTime}{@$pollEndTime|date:'c'}{/if}" class="medium">
+				<input type="datetime" tabindex="-1" name="pollEndTime" id="pollEndTime" value="{if $pollEndTime}{@$pollEndTime|date:'c'}{/if}" class="medium">
 				{if $errorField == 'pollEndTime'}
 					<small class="innerError">
 						{lang}wcf.poll.endTime.error.{@$errorType}{/lang}

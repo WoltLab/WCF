@@ -38,7 +38,7 @@
 				<label for="pollEndTime_{$wysiwygSelector}">{lang}wcf.poll.endTime{/lang}</label>
 			</dt>
 			<dd>
-				<input type="datetime" name="pollEndTime" id="pollEndTime_{$wysiwygSelector}" value="{if $pollEndTime}{@$pollEndTime|date:'c'}{/if}" class="medium">
+				<input type="datetime" tabindex="-1" name="pollEndTime" id="pollEndTime_{$wysiwygSelector}" value="{if $pollEndTime}{@$pollEndTime|date:'c'}{/if}" class="medium">
 			</dd>
 		</dl>
 		<dl>

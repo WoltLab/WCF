@@ -1,7 +1,7 @@
 {foreach from=$likeList item=like}
 	<li>
 		<div class="box48">
-			<a href="{link controller='User' object=$like->getUserProfile()}{/link}" title="{$like->getUserProfile()->username}">{@$like->getUserProfile()->getAvatar()->getImageTag(48)}</a>
+			<a href="{link controller='User' object=$like->getUserProfile()}{/link}" title="{$like->getUserProfile()->username}" aria-hidden="true">{@$like->getUserProfile()->getAvatar()->getImageTag(48)}</a>
 			
 			<div>
 				<div class="containerHeadline">

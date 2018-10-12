@@ -57,6 +57,7 @@ define(
 	var _callbackUnmarkAll = null;
 	
 	var _addPageOverlayActiveClass = false;
+	var _specialCheckboxSelector = '.messageCheckboxLabel > input[type="checkbox"], .message .messageClipboardCheckbox > input[type="checkbox"], .messageGroupList .columnMark > label > input[type="checkbox"]';
 	
 	/**
 	 * Clipboard API
@@ -95,6 +96,10 @@ define(
 				_options.pageClassNames.push(options.pageClassName);
 			}
 			
+			if (!Element.prototype.matches) {
+				Element.prototype.matches = Element.prototype.msMatchesSelector;
+			}
+			
 			this._initContainers();
 			
 			if (_options.hasMarkedItems && _elements.length) {
@@ -124,7 +129,22 @@ define(
 				
 				if (containerData === undefined) {
 					var markAll = elBySel('.jsClipboardMarkAll', container);
+					
 					if (markAll !== null) {
+						if (markAll.matches(_specialCheckboxSelector)) {
+							var label = markAll.closest('label');
+							elAttr(label, 'role', 'checkbox');
+							elAttr(label, 'tabindex', '0');
+							elAttr(label, 'aria-checked', false);
+							elAttr(label, 'aria-label', Language.get('wcf.clipboard.item.markAll'));
+							
+							label.addEventListener('keyup', function (event) {
+								if (event.keyCode === 13 || event.keyCode === 32) {
+									checkbox.click();
+								}
+							});
+						}
+						
 						elData(markAll, 'container-id', containerId);
 						markAll.addEventListener(WCF_CLICK_EVENT, this._markAll.bind(this));
 					}
@@ -145,6 +165,20 @@ define(
 						elData(checkbox, 'container-id', containerId);
 						
 						(function(checkbox) {
+							if (checkbox.matches(_specialCheckboxSelector)) {
+								var label = checkbox.closest('label');
+								elAttr(label, 'role', 'checkbox');
+								elAttr(label, 'tabindex', '0');
+								elAttr(label, 'aria-checked', false);
+								elAttr(label, 'aria-label', Language.get('wcf.clipboard.item.mark'));
+								
+								label.addEventListener('keyup', function (event) {
+									if (event.keyCode === 13 || event.keyCode === 32) {
+										checkbox.click();
+									}
+								});
+							}
+							
 							var link = checkbox.closest('a');
 							if (link === null) {
 								checkbox.addEventListener(WCF_CLICK_EVENT, _callbackCheckbox);
@@ -191,6 +225,11 @@ define(
 		_markAll: function(event) {
 			var checkbox = event.currentTarget;
 			var isMarked = (checkbox.nodeName !== 'INPUT' || checkbox.checked);
+			
+			if (elAttr(checkbox.parentNode, 'role') === 'checkbox') {
+				elAttr(checkbox.parentNode, 'aria-checked', isMarked);
+			}
+			
 			var objectIds = [];
 			
 			var containerId = elData(checkbox, 'container-id');
@@ -216,6 +255,10 @@ define(
 						data.markedObjectIds['delete'](objectId);
 						objectIds.push(objectId);
 					}
+				}
+				
+				if (elAttr(item.parentNode, 'role') === 'checkbox') {
+					elAttr(item.parentNode, 'aria-checked', isMarked);
 				}
 				
 				var clipboardObject = DomTraverse.parentByClass(checkbox, 'jsClipboardObject');
@@ -256,6 +299,14 @@ define(
 				}
 				
 				data.markAll.checked = markedAll;
+				
+				if (elAttr(data.markAll.parentNode, 'role') === 'checkbox') {
+					elAttr(data.markAll.parentNode, 'aria-checked', isMarked);
+				}
+			}
+			
+			if (elAttr(checkbox.parentNode, 'role') === 'checkbox') {
+				elAttr(checkbox.parentNode, 'aria-checked', checkbox.checked);
 			}
 			
 			this._saveState(type, [ objectId ], isMarked);
@@ -463,9 +514,17 @@ define(
 						
 						if (containerData.markAll !== null) {
 							containerData.markAll.checked = false;
+							
+							if (elAttr(containerData.markAll.parentNode, 'role') === 'checkbox') {
+								elAttr(containerData.markAll.parentNode, 'aria-checked', false);
+							}
 						}
 						for (var i = 0, length = containerData.checkboxes.length; i < length; i++) {
 							containerData.checkboxes[i].checked = false;
+							
+							if (elAttr(containerData.checkboxes[i].parentNode, 'role') === 'checkbox') {
+								elAttr(containerData.checkboxes[i].parentNode, 'aria-checked', false);
+							}
 						}
 						
 						UiPageAction.remove('wcfClipboard-' + data.returnValues.objectType);
@@ -614,10 +673,18 @@ define(
 				
 				checkbox.checked = isMarked;
 				clipboardObject.classList[(isMarked ? 'add' : 'remove')]('jsMarked');
+				
+				if (elAttr(checkbox.parentNode, 'role') === 'checkbox') {
+					elAttr(checkbox.parentNode, 'aria-checked', isMarked);
+				}
 			}
 			
 			if (data.markAll !== null) {
 				data.markAll.checked = markAll;
+				
+				if (elAttr(data.markAll.parentNode, 'role') === 'checkbox') {
+					elAttr(data.markAll.parentNode, 'aria-checked', markAll);
+				}
 				
 				var parent = data.markAll;
 				while (parent = parent.parentNode) {

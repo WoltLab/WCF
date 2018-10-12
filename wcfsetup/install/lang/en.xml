@@ -1163,6 +1163,8 @@
 		<item name="wcf.acp.option.show_version_number"><![CDATA[Display version number in copyright notice]]></item>
 		<item name="wcf.acp.option.enable_debug_mode"><![CDATA[Enable debug mode]]></item>
 		<item name="wcf.acp.option.enable_debug_mode.description"><![CDATA[Enables extensive error messages, it should always be disabled in production environments!]]></item>
+		<item name="wcf.acp.option.enable_production_debug_mode"><![CDATA[Problem analysis in production environments]]></item>
+		<item name="wcf.acp.option.enable_production_debug_mode.description"><![CDATA[Appends the current URL to database queries to assist looking them up in the database server’s log files.]]></item>
 		<item name="wcf.acp.option.external_link_rel_nofollow"><![CDATA[Append the attribute “rel="nofollow"” to all external links]]></item>
 		<item name="wcf.acp.option.external_link_rel_nofollow.description"><![CDATA[The attribute “rel="nofollow"” tells search engines to disregard external links.]]></item>
 		<item name="wcf.acp.option.external_link_target_blank"><![CDATA[Open external links in a new window]]></item>
@@ -2942,6 +2944,8 @@ Errors are:
 	
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Unmark All]]></item>
+		<item name="wcf.clipboard.item.markAll"><![CDATA[Mark All Objects]]></item>
+		<item name="wcf.clipboard.item.mark"><![CDATA[Mark Object]]></item>
 		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} article{if $count != 1}s{/if}?]]></item>
@@ -4418,7 +4422,7 @@ Open the link below to access the user profile:
 		<item name="wcf.acp.trophy.userTrophy.user"><![CDATA[User]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user.description"><![CDATA[Enter the names of the users who should be awarded the trophy.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.user.error.notFound"><![CDATA[The username “{$errorData[username]}” does not exist.]]></item>
-		<item name="wcf.acp.trophy.userTrophy.description"><![CDATA[Select the trophy who should be awarded to the users. You cannot select automatically awarded trophies.]]></item>
+		<item name="wcf.acp.trophy.userTrophy.description"><![CDATA[Select the trophy that should be awarded to the users. You cannot select automatically awarded trophies.]]></item>
 		<item name="wcf.acp.trophy.userTrophy.useCustomDescription"><![CDATA[Use custom trophy description]]></item>
 		<item name="wcf.acp.trophy.userTrophy.delete.confirmMessage"><![CDATA[Do you really want to delete the trophy <span class="confirmationObject">{$userTrophy->getTrophy()->getTitle()}</span> from <span class="confirmationObject">{$userTrophy->getUserProfile()->username}</span>?]]></item>
 		<item name="wcf.acp.trophy.error.noCategories"><![CDATA[Please <a href="{link controller='TrophyCategoryAdd'}{/link}">add a category</a> before creating trophies.]]></item>
@@ -4519,7 +4523,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar Management]]></item>
 		<item name="wcf.user.avatar.error.disabled"><![CDATA[The administrators {if $__wcf->user->avatarID || $__wcf->user->enableGravatar}have banned your avatar and {/if}disallowed you from using an avatar{if $__wcf->user->disableAvatarReason}: {$__wcf->user->disableAvatarReason}{/if}.]]></item>
 		<item name="wcf.user.avatar.type.custom"><![CDATA[Upload Your Avatar]]></item>
-		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar with a maximum file size of {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize}. The minimum dimensions are 128×128 pixel.]]></item>
+		<item name="wcf.user.avatar.type.custom.description"><![CDATA[You may use the following file extensions “{"\n"|str_replace:', ':$__wcf->session->getPermission('user.profile.avatar.allowedFileExtensions')}” for your avatar with a maximum file size of {@$__wcf->session->getPermission('user.profile.avatar.maxSize')|filesize}. The minimum dimensions are 128×128 pixels.]]></item>
 		<item name="wcf.user.avatar.type.gravatar"><![CDATA[Use Gravatar]]></item>
 		<item name="wcf.user.avatar.type.gravatar.description"><![CDATA[Gravatar (Global Recognized Avatar) provides a globally reusable avatar connected with your email address “{$__wcf->user->email}”. Visit <a href="https://www.gravatar.com" class="externalURL"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>www.gravatar.com</a> to set up or change your avatar.]]></item>
 		<item name="wcf.user.avatar.type.gravatar.error.notFound"><![CDATA[Your email address is not connected with a gravatar.]]></item>

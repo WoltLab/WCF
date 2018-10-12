@@ -647,6 +647,7 @@ CREATE TABLE wcf1_like_object (
 	objectUserID INT(10),
 	likes MEDIUMINT(7) NOT NULL DEFAULT 0,
 	dislikes MEDIUMINT(7) NOT NULL DEFAULT 0,
+	neutralReactions MEDIUMINT(7) NOT NULL DEFAULT 0,
 	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
 	cachedUsers TEXT,
 	cachedReactions TEXT,

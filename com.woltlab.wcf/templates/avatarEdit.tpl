@@ -13,7 +13,7 @@
 {/if}
 
 <form method="post" action="{link controller='AvatarEdit'}{/link}" id="avatarForm">
-	<div class="section avatarEdit">
+	<div role="group" aria-label="{lang}wcf.user.avatar{/lang}" class="section avatarEdit">
 		<dl class="avatarType">
 			<dt></dt>
 			<dd>

@@ -72,17 +72,21 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 				$likeObjectData[$like->objectTypeID][$like->objectID] = [
 					'likes' => 0,
 					'dislikes' => 0,
+					'neutralReactions' => 0,
 					'cumulativeLikes' => 0,
 					'objectUserID' => $like->objectUserID, 
 					'cachedReactions' => []
 				];
 			}
 			
-			if ($like->likeValue == Like::LIKE) {
+			if ($like->isLike()) {
 				$likeObjectData[$like->objectTypeID][$like->objectID]['likes']++;
 			}
-			else {
+			else if ($like->isDislike()) {
 				$likeObjectData[$like->objectTypeID][$like->objectID]['dislikes']++;
+			}
+			else {
+				$likeObjectData[$like->objectTypeID][$like->objectID]['neutralReactions']++;
 			}
 			$likeObjectData[$like->objectTypeID][$like->objectID]['cumulativeLikes'] += $like->likeValue;
 			
@@ -97,10 +101,11 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 		UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $itemsToUser, false);
 		
 		$sql = "INSERT INTO			wcf".WCF_N."_like_object
-							(objectTypeID, objectID, objectUserID, likes, dislikes, cumulativeLikes, cachedReactions)
-			VALUES				(?, ?, ?, ?, ?, ?, ?)
+							(objectTypeID, objectID, objectUserID, likes, dislikes, neutralReactions, cumulativeLikes, cachedReactions)
+			VALUES				(?, ?, ?, ?, ?, ?, ?, ?)
 			ON DUPLICATE KEY UPDATE		likes = likes + VALUES(likes),
 							dislikes = dislikes + VALUES(dislikes),
+							neutralReactions = neutralReactions + VALUES(neutralReactions),
 							cumulativeLikes = cumulativeLikes + VALUES(cumulativeLikes),
 							cachedReactions = VALUES(cachedReactions)";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -114,6 +119,7 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 					$data['objectUserID'],
 					$data['likes'],
 					$data['dislikes'],
+					$data['neutralReactions'],
 					$data['cumulativeLikes'], 
 					serialize($data['cachedReactions'])
 				]);
