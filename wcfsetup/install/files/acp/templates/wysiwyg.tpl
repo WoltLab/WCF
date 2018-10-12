@@ -296,6 +296,7 @@
 					
 					// set value
 					redactor.core.textarea().val(redactor.clean.onSync(redactor.$editor.html()));
+					redactor.code.html = false;
 					
 					// work-around for autosave notice being stuck
 					window.setTimeout(function() {
