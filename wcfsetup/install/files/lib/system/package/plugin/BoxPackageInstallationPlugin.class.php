@@ -34,8 +34,6 @@ use wcf\util\StringUtil;
 /**
  * Installs, updates and deletes boxes.
  * 
- * TODO: Finalize GUI implementation
- * 
  * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -508,7 +506,8 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			RadioButtonFormField::create('boxType')
 				->label('wcf.acp.pip.box.boxType')
 				->description('wcf.acp.pip.box.boxType.description')
-				->options(array_combine(Box::$availableBoxTypes, Box::$availableBoxTypes)),
+				->options(array_combine(Box::$availableBoxTypes, Box::$availableBoxTypes))
+				->value('text'),
 			
 			SingleSelectionFormField::create('objectType')
 				->label('wcf.acp.pip.box.objectType')
@@ -532,10 +531,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				->options(array_combine(Box::$availablePositions, Box::$availablePositions)),
 			
 			BooleanFormField::create('showHeader')
-				->label('wcf.acp.pip.box.showHeader'),
+				->label('wcf.acp.pip.box.showHeader')
+				->value(true),
 			
 			BooleanFormField::create('visibleEverywhere')
-				->label('wcf.acp.pip.box.visibleEverywhere'),
+				->label('wcf.acp.pip.box.visibleEverywhere')
+				->value(true),
 			
 			MultipleSelectionFormField::create('visibilityExceptions')
 				->label('wcf.acp.pip.box.visibilityExceptions.hiddenEverywhere')
@@ -629,14 +630,108 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			$data['name'][LanguageFactory::getInstance()->getLanguageByCode($name->getAttribute('language'))->languageID] = $name->nodeValue;
 		}
 		
-		foreach (['objectType'] as $optionalElementName) {
+		/** @var \DOMElement $content */
+		foreach ($element->getElementsByTagName('content') as $content) {
+			if ($content->parentNode === $element) {
+				$languageID = LanguageFactory::getInstance()->getLanguageByCode($content->getAttribute('language'))->languageID;
+				
+				$contentContent = $content->getElementsByTagName('content')->item(0);
+				if ($contentContent !== null) {
+					$data['content'][$languageID] = $contentContent->nodeValue;
+				}
+				
+				$title = $content->getElementsByTagName('title')->item(0);
+				if ($title !== null) {
+					$data['title'][$languageID] = $title->nodeValue;
+				}
+			}
+		}
+		
+		foreach (['objectType', 'cssClassName', 'showHeader', 'visibleEverywhere'] as $optionalElementName) {
 			$optionalElement = $element->getElementsByTagName($optionalElementName)->item(0);
 			if ($optionalElement !== null) {
 				$data[$optionalElementName] = $optionalElement->nodeValue;
 			}
 		}
 		
-		// TODO: rest
+		$visibilityExceptions = $element->getElementsByTagName('visibilityExceptions')->item(0);
+		if ($visibilityExceptions !== null) {
+			$exceptions = [];
+			/** @var \DOMElement $page */
+			foreach ($visibilityExceptions->getElementsByTagName('page') as $page) {
+				$exceptions[] = $page->nodeValue;
+			}
+			
+			if (!empty($exceptions)) {
+				$data['visibilityExceptions'] = $exceptions;
+			}
+		}
+		
+		$objectTypeData = null;
+		if (isset($data['objectType'])) {
+			$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.boxController', $data['objectType']);
+			if ($objectType !== null && is_subclass_of($objectType->className, AbstractDatabaseObjectListBoxController::class)) {
+				/** @var AbstractDatabaseObjectListBoxController $boxController */
+				$boxController = new $objectType->className;
+				
+				$objectTypeData = $boxController->getPipGuiElementData($element, $saveData);
+			}
+		}
+		
+		if ($objectTypeData !== null) {
+			if ($saveData) {
+				$data['additionalData'] = serialize($objectTypeData);
+			}
+			else {
+				$data = array_merge($objectTypeData, $data);
+			}
+		}
+		
+		if ($saveData) {
+			$defaultLanguageID = LanguageFactory::getInstance()->getDefaultLanguage()->languageID;
+			$englishLanguage = LanguageFactory::getInstance()->getLanguageByCode('en');
+			
+			if (isset($data['name'][$defaultLanguageID])) {
+				// use the default language
+				$name = $data['name'][$defaultLanguageID];
+			}
+			else if ($englishLanguage !== null && isset($data['name'][$englishLanguage->languageID])) {
+				// use the value for English
+				$name = $data['name'][$englishLanguage->languageID];
+			}
+			else {
+				// fallback to first element
+				$name = reset($data['name']);
+			}
+			
+			$data['name'] = $name;
+			
+			if (isset($data['objectType'])) {
+				$objectType = $data['objectType'];
+				unset($data['objectType']);
+				
+				$data['objectTypeID'] = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.boxController', $objectType)->objectTypeID;
+			}
+			
+			if (isset($data['visibilityExceptions'])) {
+				$this->visibilityExceptions[$data['identifier']] = $data['visibilityExceptions'];
+				unset($data['visibilityExceptions']);
+			}
+			
+			$content = [];
+			if (isset($data['content'])) {
+				$content['content'] = $data['content'];
+				unset($data['content']);
+			}
+			if (isset($data['title'])) {
+				$content['title'] = $data['title'];
+				unset($data['title']);
+			}
+			
+			if (!empty($content)) {
+				$data['content'] = $content;
+			}
+		}
 		
 		return $data;
 	}
@@ -684,13 +779,14 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 */
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
+		$data = $formData['data'];
 		
-		if ($formData['data']['identifier'] === 'com.woltlab.wcf.MainMenu') {
-			$formData['data']['boxPosition'] = 'mainMenu';
+		if ($data['identifier'] === 'com.woltlab.wcf.MainMenu') {
+			$data['boxPosition'] = 'mainMenu';
 		}
 		
 		$box = $document->createElement($this->tagName);
-		$box->setAttribute('identifier', $formData['data']['identifier']);
+		$box->setAttribute('identifier', $data['identifier']);
 		
 		foreach ($formData['name_i18n'] as $languageID => $name) {
 			$nameElement = $document->createElement('name', $this->getAutoCdataValue($name));
@@ -699,12 +795,29 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			$box->appendChild($nameElement);
 		}
 		
-		$box->appendChild($document->createElement('boxType', $formData['data']['boxType']));
+		$box->appendChild($document->createElement('boxType', $data['boxType']));
+		$box->appendChild($document->createElement('position', $data['position']));
 		
-		foreach ($formData['data'] as $property => $value) {
-			if (!in_array($property, self::$reservedTags) && $value !== null) {
-				$box->appendChild($document->createElement($property, (string)$value));
+		$optionals = [
+			'objectType' => '',
+			'cssClassName' => '',
+			'showHeader' => 1,
+			'visibleEverywhere' => 1
+		];
+		foreach ($optionals as $field => $defaultValue) {
+			if (isset($data[$field]) && $data[$field] !== $defaultValue) {
+				$box->appendChild($document->createElement($field, (string)$data[$field]));
 			}
+		}
+		
+		if (!empty($data['visibilityExceptions'])) {
+			$visibilityExceptions = $document->createElement('visibilityExceptions');
+			
+			foreach ($data['visibilityExceptions'] as $page) {
+				$visibilityExceptions->appendChild($document->createElement('page', $page));
+			}
+			
+			$box->appendChild($visibilityExceptions);
 		}
 		
 		foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
@@ -742,5 +855,19 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				}
 			}
 		}
+		
+		if (isset($data['objectType'])) {
+			$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.boxController', $data['objectType']);
+			if ($objectType !== null && is_subclass_of($objectType->className, AbstractDatabaseObjectListBoxController::class)) {
+				/** @var AbstractDatabaseObjectListBoxController $boxController */
+				$boxController = new $objectType->className;
+				
+				$boxController->writePipGuiEntry($box, $form);
+			}
+		}
+		
+		$document->getElementsByTagName('import')->item(0)->appendChild($box);
+		
+		return $box;
 	}
 }

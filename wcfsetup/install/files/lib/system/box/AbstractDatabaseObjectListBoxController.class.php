@@ -167,6 +167,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 					),
 				
 				SortOrderFormField::create($prefix . 'sortOrder')
+					->objectProperty('sortOrder')
 					->addDependency(
 						ValueFormFieldDependency::create('boxType')
 							->field($objectTypeField)
@@ -178,10 +179,11 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 		if ($this->defaultLimit !== null) {
 			$dataContainer->appendChild(
 				IntegerFormField::create($prefix . 'limit')
+					->objectProperty('limit')
 					->label('wcf.acp.box.controller.limit')
-					->description('wcf.acp.box.controller.limit.description')
 					->minimum($this->minimumLimit)
 					->maximum($this->maximumLimit)
+					->nullable()
 					->addDependency(
 						ValueFormFieldDependency::create('boxType')
 							->field($objectTypeField)
@@ -189,6 +191,26 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 					)
 			);
 		}
+	}
+	
+	/**
+	 * Returns additional element data for the given DOM element.
+	 * 
+	 * @param	\DOMElement	$element
+	 * @param	bool		$saveData
+	 * @return	array
+	 * @since	3.2
+	 */
+	public function getPipGuiElementData(\DOMElement $element, $saveData = false) {
+		$data = [];
+		foreach (['sortField', 'sortOrder', 'limit'] as $optionalElementName) {
+			$optionalElement = $element->getElementsByTagName($optionalElementName)->item(0);
+			if ($optionalElement !== null) {
+				$data[$optionalElementName] = $optionalElement->nodeValue;
+			}
+		}
+		
+		return $data;
 	}
 	
 	/**
@@ -392,6 +414,29 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 		
 		foreach ($this->conditionObjectTypes as $objectType) {
 			$objectType->getProcessor()->validate();
+		}
+	}
+	
+	/**
+	 * @param	\DOMElement	$element
+	 * @param	IFormDocument	$form
+	 * @sicne	3.2
+	 */
+	public function writePipGuiEntry(\DOMElement $element, IFormDocument $form) {
+		$data = $form->getData()['data'];
+		
+		$content = $element->getElementsByTagName('content')->item(0);
+		foreach (['sortField' => '', 'sortOrder' => '', 'limit' => null] as $field => $defaultValue) {
+			if (isset($data[$field]) && $data[$field] !== $defaultValue) {
+				$newElement = $element->ownerDocument->createElement($field, (string)$data[$field]);
+				
+				if ($content !== null) {
+					$element->insertBefore($newElement, $content);
+				}
+				else {
+					$element->appendChild($newElement);
+				}
+			}
 		}
 	}
 }

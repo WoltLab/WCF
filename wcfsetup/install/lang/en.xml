@@ -2112,6 +2112,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.box.content"><![CDATA[Box Contents]]></item>
 		<item name="wcf.acp.pip.box.content.title"><![CDATA[Box Title]]></item>
 		<item name="wcf.acp.pip.box.content.content"><![CDATA[Box Content]]></item>
+		<item name="wcf.acp.box.controller.sortField"><![CDATA[Sort By]]></item>
+		<item name="wcf.acp.box.controller.sortField.description"><![CDATA[The selected object property is used for sorting.]]></item>
+		<item name="wcf.acp.box.controller.limit"><![CDATA[Maximum Number of Items]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionName"><![CDATA[Option Name]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.categoryName"><![CDATA[Category]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType"><![CDATA[Option Type]]></item>
