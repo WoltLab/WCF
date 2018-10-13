@@ -726,15 +726,15 @@ XML;
 	 * @since	3.2
 	 */
 	protected function sortDocument(\DOMDocument $document) {
-		$compareFunction = static::getSortFunction([
+		$sortFunction = static::getSortFunction([
 			[
 				'isAttribute' => 1,
 				'name' => 'name'
 			]
 		]);
 		
-		$this->sortChildNodes($document->childNodes, $compareFunction);
-		$this->sortChildNodes($document->getElementsByTagName('category'), $compareFunction);
+		$this->sortChildNodes($document->childNodes, $sortFunction);
+		$this->sortChildNodes($document->getElementsByTagName('category'), $sortFunction);
 	}
 	
 	/**

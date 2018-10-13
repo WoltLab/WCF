@@ -296,39 +296,14 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	protected function sortDocument(\DOMDocument $document) {
 		$this->sortImportDelete($document);
 		
-		$sortFunction = function(\DOMElement $element1, \DOMElement $element2) {
-			$className1 = $element1->getElementsByTagName('actionclassname')->item(0)->nodeValue;
-			$className2 = $element2->getElementsByTagName('actionclassname')->item(0)->nodeValue;
-			
-			$compare = strcmp($className1, $className2);
-			
-			if ($compare !== 0) {
-				return $compare;
-			}
-			
-			$showOrder1 = $element1->getElementsByTagName('showorder')->item(0);
-			$showOrder2 = $element2->getElementsByTagName('showorder')->item(0);
-			
-			if ($showOrder1 !== null) {
-				if ($showOrder2 !== null) {
-					$compare = $showOrder1->nodeValue <=> $showOrder2->nodeValue;
-					
-					if ($compare !== 0) {
-						return $compare;
-					}
-				}
-				
-				return -1;
-			}
-			else if ($showOrder2 !== null) {
-				return 1;
-			}
-			
-			return strcmp(
-				$element1->getAttribute('name'),
-				$element2->getAttribute('name')
-			);
-		};
+		$sortFunction = static::getSortFunction([
+			'actionclassname',
+			'showorder',
+			[
+				'isAttribute' => 1,
+				'name' => 'name'
+			]
+		]);
 		
 		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
 		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);

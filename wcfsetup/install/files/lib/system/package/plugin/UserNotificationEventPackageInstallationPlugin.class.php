@@ -355,22 +355,10 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	protected function sortDocument(\DOMDocument $document) {
 		$this->sortImportDelete($document);
 		
-		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
-			$objectType1 = $element1->getElementsByTagName('objecttype')->item(0)->nodeValue;
-			$objectType2 = $element2->getElementsByTagName('objecttype')->item(0)->nodeValue;
-			
-			if ($objectType1 !== $objectType2) {
-				return strcmp($objectType1, $objectType2);
-			}
-			
-			return strcmp(
-				$element1->getElementsByTagName('name')->item(0)->nodeValue,
-				$element2->getElementsByTagName('name')->item(0)->nodeValue
-			);
-		};
+		$sortFunction = static::getSortFunction(['objecttype', 'name']);
 		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
+		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
 	}
 	
 	/**

@@ -533,41 +533,14 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	protected function sortDocument(\DOMDocument $document) {
 		$this->sortImportDelete($document);
 		
-		$this->sortChildNodes($document->getElementsByTagName('import'), function(\DOMElement $element1, \DOMElement $element2) {
-			// first, compare by `menu`, then by `parent` ...
-			foreach (['menu', 'parent'] as $element) {
-				$compareElement1 = $element1->getElementsByTagName($element)->item(0);
-				$compareElement2 = $element2->getElementsByTagName($element)->item(0);
-				
-				if ($compareElement1 !== null) {
-					if ($compareElement2 !== null) {
-						$compare = $compareElement1->nodeValue <=> $compareElement2->nodeValue;
-						
-						if ($compare !== 0) {
-							return $compare;
-						}
-					}
-					
-					return -1;
-				}
-				else if ($compareElement2 !== null) {
-					return 1;
-				}
-			}
-			
-			// ... and lastly by `identifier`
-			return strcmp(
-				$element1->getAttribute('identifier'),
-				$element2->getAttribute('identifier')
-			);
-		});
+		// do not support imported menu items automatically
 		
-		$this->sortChildNodes($document->getElementsByTagName('delete'), function(\DOMElement $element1, \DOMElement $element2) {
-			return strcmp(
-				$element1->getAttribute('identifier'),
-				$element2->getAttribute('identifier')
-			);
-		});
+		$this->sortChildNodes($document->getElementsByTagName('delete'), static::getSortFunction([
+			[
+				'isAttribute' => 1,
+				'name' => 'identifier'
+			]
+		]));
 	}
 	
 	/**

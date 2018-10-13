@@ -156,7 +156,12 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @since	3.2
 	 */
 	protected function sortDocument(\DOMDocument $document) {
+		$this->sortImportDelete($document);
 		
+		$sortFunction = static::getSortFunction(['objectname']);
+		
+		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
 	}
 	
 	/**

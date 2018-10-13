@@ -331,15 +331,15 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	protected function sortDocument(\DOMDocument $document) {
 		$this->sortImportDelete($document);
 		
-		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
-			return strcmp(
-				$element1->getAttribute('name'),
-				$element2->getAttribute('name')
-			);
-		};
+		$sortFunction = static::getSortFunction([
+			[
+				'isAttribute' => 1,
+				'name' => 'name'
+			]
+		]);
 		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
+		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
 	}
 	
 	/**

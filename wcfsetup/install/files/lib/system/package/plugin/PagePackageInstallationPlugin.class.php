@@ -753,15 +753,15 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	protected function sortDocument(\DOMDocument $document) {
 		$this->sortImportDelete($document);
 		
-		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
+		$sortFunction = function(\DOMElement $element1, \DOMElement $element2) {
 			return strcmp(
 				$element1->getAttribute('identifier'),
 				$element2->getAttribute('identifier')
 			);
 		};
 		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
+		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
 	}
 	
 	/**

@@ -232,29 +232,16 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	protected function sortDocument(\DOMDocument $document) {
 		$this->sortImportDelete($document);
 		
-		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
-			$showOrder1 = PHP_INT_MAX;
-			if ($element1->getElementsByTagName('showorder')->length === 1) {
-				$showOrder1 = $element1->getElementsByTagName('showorder')->item(0)->nodeValue;
-			}
-			
-			$showOrder2 = PHP_INT_MAX;
-			if ($element2->getElementsByTagName('showorder')->length === 1) {
-				$showOrder2 = $element2->getElementsByTagName('showorder')->item(0)->nodeValue;
-			}
-			
-			if ($showOrder1 !== $showOrder2) {
-				return $showOrder1 > $showOrder2;
-			}
-			
-			return strcmp(
-				$element1->getAttribute('name'),
-				$element2->getAttribute('name')
-			);
-		};
+		$sortFunction = static::getSortFunction([
+			'showorder',
+			[
+				'isAttribute' => 1,
+				'name' => 'name'
+			]
+		]);
 		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
+		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
 	}
 	
 	/**

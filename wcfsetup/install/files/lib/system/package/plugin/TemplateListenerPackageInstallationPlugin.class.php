@@ -426,29 +426,10 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	protected function sortDocument(\DOMDocument $document) {
 		$this->sortImportDelete($document);
 		
-		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
-			$templateName1 = $element1->getElementsByTagName('templatename')->item(0)->nodeValue;
-			$templateName2 = $element2->getElementsByTagName('templatename')->item(0)->nodeValue;
-			
-			if ($templateName1 !== $templateName2) {
-				return strcmp($templateName1, $templateName2);
-			}
-			
-			$eventName1 = $element1->getElementsByTagName('eventname')->item(0)->nodeValue;
-			$eventName2 = $element2->getElementsByTagName('eventname')->item(0)->nodeValue;
-			
-			if ($eventName1 !== $eventName2) {
-				return strcmp($eventName1, $eventName2);
-			}
-			
-			return strcmp(
-				$element1->getElementsByTagName('environment')->item(0)->nodeValue,
-				$element2->getElementsByTagName('environment')->item(0)->nodeValue
-			);
-		};
+		$sortFunction = static::getSortFunction(['templatename', 'eventname', 'environment']);
 		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
+		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
 	}
 	
 	/**

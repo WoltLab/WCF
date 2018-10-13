@@ -684,15 +684,7 @@ XML;
 	protected function sortDocument(\DOMDocument $document) {
 		$this->sortImportDelete($document);
 		
-		$this->sortChildNodes($document->getElementsByTagName('import'), function(\DOMElement $element1, \DOMElement $element2) {
-			return strcmp(
-				$element1->getElementsByTagName('definitionname')->item(0)->nodeValue,
-				$element2->getElementsByTagName('definitionname')->item(0)->nodeValue
-			) ?: strcmp(
-				$element1->getElementsByTagName('name')->item(0)->nodeValue,
-				$element2->getElementsByTagName('name')->item(0)->nodeValue
-			);
-		});
+		$this->sortChildNodes($document->getElementsByTagName('import'), static::getSortFunction(['definitionname', 'name']));
 		
 		$this->sortChildNodes($document->getElementsByTagName('import')->item(0)->childNodes, function(\DOMElement $element1, \DOMElement $element2) {
 			// force `definitionname` to be at the first position
@@ -722,12 +714,12 @@ XML;
 			}
 		});
 		
-		$this->sortChildNodes($document->getElementsByTagName('delete'), function(\DOMElement $element1, \DOMElement $element2) {
-			return strcmp(
-				$element1->getAttribute('name'),
-				$element2->getAttribute('name')
-			);
-		});
+		$this->sortChildNodes($document->getElementsByTagName('delete'), static::getSortFunction([
+			[
+				'isAttribute' => 1,
+				'name' => 'name'
+			]
+		]));
 	}
 	
 	/**

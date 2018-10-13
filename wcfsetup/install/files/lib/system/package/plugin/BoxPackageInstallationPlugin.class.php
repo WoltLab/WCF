@@ -762,15 +762,15 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	protected function sortDocument(\DOMDocument $document) {
 		$this->sortImportDelete($document);
 		
-		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
-			return strcmp(
-				$element1->getAttribute('identifier'),
-				$element2->getAttribute('identifier')
-			);
-		};
+		$sortFunction = static::getSortFunction([
+			[
+				'isAttribute' => 1,
+				'name' => 'identifier'
+			]
+		]);
 		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
+		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
+		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
 	}
 	
 	/**

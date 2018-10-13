@@ -337,26 +337,13 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	protected function sortDocument(\DOMDocument $document) {
 		$this->sortImportDelete($document);
 		
-		$sortFunction = function(\DOMElement $element1, \DOMElement $element2) {
-			$name1 = $element1->getAttribute('name');
-			$name2 = $element2->getAttribute('name');
-			
-			if ($name1 !== '') {
-				$compare = strcmp($name1, $name2);
-				
-				if ($compare !== 0) {
-					return $compare;
-				}
-			}
-			else if ($name2 !== '') {
-				return -1;
-			}
-			
-			return strcmp(
-				$element1->getElementsByTagName('classname')->item(0)->nodeValue,
-				$element2->getElementsByTagName('classname')->item(0)->nodeValue
-			);
-		};
+		$sortFunction = static::getSortFunction([
+			[
+				'isAttribute' => 1,
+				'name' => 'name'
+			],
+			'classname'
+		]);
 		
 		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
 		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
