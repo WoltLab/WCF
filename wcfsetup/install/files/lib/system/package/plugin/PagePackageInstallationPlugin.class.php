@@ -772,7 +772,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		$formData = $form->getData();
 		$data = $formData['data'];
 		
-		$page = $document->createElement('page');
+		$page = $document->createElement($this->tagName);
 		$page->setAttribute('identifier', $data['identifier']);
 		
 		$page->appendChild($document->createElement('pageType', $data['pageType']));

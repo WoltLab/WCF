@@ -236,7 +236,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
-		$acpSearchProvider = $document->createElement('acpsearchprovider');
+		$acpSearchProvider = $document->createElement($this->tagName);
 		$acpSearchProvider->setAttribute('name', $data['name']);
 		$acpSearchProvider->appendChild($document->createElement('classname', $data['classname']));
 		

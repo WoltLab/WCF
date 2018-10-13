@@ -551,7 +551,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		$formData = $form->getData();
 		$data = $formData['data'];
 		
-		$menuItem = $document->createElement('item');
+		$menuItem = $document->createElement($this->tagName);
 		$menuItem->setAttribute('identifier', $data['identifier']);
 		
 		if (!empty($data['menu'])) {

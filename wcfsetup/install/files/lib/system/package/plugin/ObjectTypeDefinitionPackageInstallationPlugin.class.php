@@ -228,7 +228,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
-		$definition = $document->createElement('definition');
+		$definition = $document->createElement($this->tagName);
 		$definition->appendChild($document->createElement('name', $data['name']));
 		
 		if (!empty($data['interfacename'])) {

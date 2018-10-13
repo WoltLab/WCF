@@ -727,7 +727,7 @@ XML;
 	 * @since	3.2
 	 */
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
-		$type = $document->createElement('type');
+		$type = $document->createElement($this->tagName);
 		foreach ($form->getData()['data'] as $key => $value) {
 			if ($key === 'definitionID') {
 				$key = 'definitionname';

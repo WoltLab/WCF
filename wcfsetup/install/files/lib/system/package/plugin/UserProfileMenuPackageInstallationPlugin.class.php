@@ -251,7 +251,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
-		$userProfileMenuItem = $document->createElement('userprofilemenuitem');
+		$userProfileMenuItem = $document->createElement($this->tagName);
 		$userProfileMenuItem->setAttribute('name', $data['name']);
 		$userProfileMenuItem->appendChild($document->createElement('classname', $data['classname']));
 		

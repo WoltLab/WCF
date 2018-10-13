@@ -357,7 +357,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		$data = $form->getData();
 		$formData = $form->getData()['data'];
 		
-		$cronjob = $document->createElement('cronjob');
+		$cronjob = $document->createElement($this->tagName);
 		$cronjob->setAttribute('name', $formData['name']);
 		
 		$className = $document->createElement('classname', $formData['classname']);

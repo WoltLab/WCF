@@ -203,7 +203,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		/** @var TextFormField $pluginName */
 		$pluginName = $form->getNodeById('pluginName');
 		
-		$pip = $document->createElement('pip', $className->getSaveValue());
+		$pip = $document->createElement($this->tagName, $className->getSaveValue());
 		$pip->setAttribute('name', $pluginName->getSaveValue());
 		
 		$document->getElementsByTagName('import')->item(0)->appendChild($pip);
