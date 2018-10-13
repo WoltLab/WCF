@@ -66,7 +66,7 @@ class MultipleSelectionFormField extends AbstractFormField implements INullableF
 			throw new \InvalidArgumentException("Given value is no array, " . gettype($value) . " given.");
 		}
 		
-		$unknownValues = array_diff($this->getValue(), array_keys($this->getOptions()));
+		$unknownValues = array_diff($value, array_keys($this->getOptions()));
 		if (!empty($unknownValues)) {
 			throw new \InvalidArgumentException("Unknown values '" . implode("', '", $unknownValues) . '"');
 		}
