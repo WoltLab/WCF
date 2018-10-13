@@ -395,13 +395,18 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		
 		// com.woltlab.wcf.notification.objectType
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.notification.objectType')
-			->appendChild(
+			->appendChildren([
 				TextFormField::create('notificationObjectTypeCategory')
 					->objectProperty('category')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category')
-					->description('wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.description')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.description'),
 					// TODO: validator
-			);
+				
+				BooleanFormField::create('notificationObjectTypeSupportsReactions')
+					->objectProperty('supportsReactions')
+					->label('wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions.description')
+			]);
 		
 		// com.woltlab.wcf.rebuildData
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.rebuildData')
@@ -527,6 +532,15 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.user.activityPointEvent.points.description')
 					->minimum(0)
 					->required()
+			);
+		
+		// com.woltlab.wcf.user.recentActivityEvent
+		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.user.recentActivityEvent')
+			->appendChild(
+				BooleanFormField::create('userRecentActivityEventSupportsReactions')
+					->objectProperty('supportsReactions')
+					->label('wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description')
 			);
 		
 		// com.woltlab.wcf.versionTracker.objectType

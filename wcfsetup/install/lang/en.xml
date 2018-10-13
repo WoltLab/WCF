@@ -2226,6 +2226,11 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.userOption.options.contentPattern"><![CDATA[Content Pattern]]></item>
 		<item name="wcf.acp.pip.userOption.options.contentPattern.description"><![CDATA[The entered content pattern is used to extract specific parts of the user-entered value to be stored as the option value.]]></item>
 		<item name="wcf.acp.pip.userOption.options.contentPattern.error.invalid"><![CDATA[The entered regular expression is invalid.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions"><![CDATA[Supports Reactions]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions"><![CDATA[Supports Reactions]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description"><![CDATA[TODO]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.data.title"><![CDATA[Recent Activity Event Data]]></item>
 	</category>
 	
 	<category name="wcf.acp.reactionType">
