@@ -92,7 +92,8 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 		$dataContainer = $form->getNodeById('data');
 		
 		$dataContainer->appendChildren([
-			TextFormField::create('name')
+			TextFormField::create('definitionName')
+				->objectProperty('name')
 				->label('wcf.acp.pip.objectTypeDefinition.definitionName')
 				->description('wcf.acp.pip.objectTypeDefinition.definitionName.description', ['project' => $this->installation->getProject()])
 				->required()
