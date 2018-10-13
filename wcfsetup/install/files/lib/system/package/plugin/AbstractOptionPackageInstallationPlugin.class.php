@@ -383,11 +383,13 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			case 'categories':
 				$dataContainer->appendChildren([
 					TextFormField::create('categoryName')
+						->objectProperty('name')
 						->label('wcf.acp.pip.abstractOption.categories.categoryName')
 						->description('wcf.acp.pip.' . $this->tagName . '.categories.categoryName.description')
 						->required(),
 					
 					SingleSelectionFormField::create('parentCategoryName')
+						->objectProperty('parent')
 						->label('wcf.acp.pip.abstractOption.categories.parentCategoryName')
 						->options(function() {
 							$categories = $this->getSortedCategories();
@@ -423,6 +425,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 						}, true),
 					
 					IntegerFormField::create('showOrder')
+						->objectProperty('showorder')
 						->label('wcf.acp.pip.abstractOption.categories.showOrder')
 						->description('wcf.acp.pip.abstractOption.categories.showOrder.description')
 						->nullable(),
@@ -771,36 +774,34 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					}
 				}
 				
+				if ($saveData) {
+					$lowercaseData = [
+						'packageID' => $this->installation->getPackage()->packageID
+					];
+					
+					$lowercaseFields = [
+						'categoryName',
+						'optionName',
+						'optionType',
+						'defaultValue',
+						'enableOptions',
+						'validationPattern',
+						'showOrder'
+					];
+					
+					foreach ($lowercaseFields as $name) {
+						if (isset($data[$name])) {
+							$lowercaseData[strtolower($name)] = $data[$name];
+						}
+					}
+					
+					return $lowercaseData;
+				}
+				
 				break;
 			
 			default:
 				throw new \LogicException('Unreachable');
-		}
-		
-		if ($saveData) {
-			$lowercaseData = [
-				'packageID' => $this->installation->getPackage()->packageID
-			];
-			
-			$lowercaseFields = [
-				'categoryName',
-				'optionName',
-				'optionType',
-				'defaultValue',
-				'enableOptions',
-				'validationPattern',
-				'showOrder',
-				'parentCategoryName',
-				'showOrder'
-			];
-			
-			foreach ($lowercaseFields as $name) {
-				if (isset($data[$name])) {
-					$lowercaseData[strtolower($name)] = $data[$name];
-				}
-			}
-			
-			return $lowercaseData;
 		}
 		
 		return $data;
@@ -1023,6 +1024,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		switch ($this->entryType) {
 			case 'categories':
 				$category = $document->createElement('category');
+				$category->setAttribute('name', $formData['name']);
 				
 				$document->getElementsByTagName('import')->item(0)->appendChild($category);
 				
