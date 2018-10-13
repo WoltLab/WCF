@@ -120,16 +120,21 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 					}
 				}))
 				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
-					$pipList = new PackageInstallationPluginList();
-					$pipList->getConditionBuilder()->add('pluginName = ?', [$formField->getValue()]);
-					
-					if ($pipList->countObjects()) {
-						$formField->addValidationError(
-							new FormFieldValidationError(
-								'format',
-								'wcf.acp.pip.pip.pluginName.error.notUnique'
-							)
-						);
+					if (
+						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
+						$this->editedEntry->getAttribute('name') !== $formField->getValue()
+					) {
+						$pipList = new PackageInstallationPluginList();
+						$pipList->getConditionBuilder()->add('pluginName = ?', [$formField->getValue()]);
+						
+						if ($pipList->countObjects()) {
+							$formField->addValidationError(
+								new FormFieldValidationError(
+									'format',
+									'wcf.acp.pip.pip.pluginName.error.notUnique'
+								)
+							);
+						}
 					}
 				})),
 			
