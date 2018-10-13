@@ -600,59 +600,8 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	protected function sortDocument(\DOMDocument $document) {
 		$this->sortImportDelete($document);
 		
-		// `<categories>` before `<options>`
-		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
-			if ($element1->nodeName === 'categories') {
-				return -1;
-			}
-			else if ($element2->nodeName === 'categories') {
-				return 1;
-			}
-			
-			return 0;
-		};
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
-		
-		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
-			$objectType1 = $element1->getElementsByTagName('objecttype')->item(0)->nodeValue;
-			$objectType2 = $element2->getElementsByTagName('objecttype')->item(0)->nodeValue;
-			
-			if ($objectType1 !== $objectType2) {
-				return strcmp($objectType1, $objectType2);
-			}
-			
-			if ($element1->nodeName === 'option') {
-				$categoryName1 = $element1->getElementsByTagName('categoryname')->item(0);
-				$categoryName2 = $element2->getElementsByTagName('categoryname')->item(0);
-				
-				if ($categoryName1 !== null) {
-					// both categories specified
-					if ($categoryName2 !== null) {
-						if ($categoryName1->nodeValue !== $categoryName2->nodeValue) {
-							return strcmp($categoryName1->nodeValue, $categoryName2->nodeValue);
-						}
-					}
-					// only first category specified
-					else {
-						return 1;
-					}
-				}
-				// only second category specified
-				else if ($categoryName2 !== null) {
-					return -1;
-				}
-			}
-			
-			return strcmp(
-				$element1->getAttribute('name'),
-				$element2->getAttribute('name')
-			);
-		};
-		
-		$this->sortChildNodes($document->getElementsByTagName('categories'), $compareFunction);
-		$this->sortChildNodes($document->getElementsByTagName('options'), $compareFunction);
+		// do not sort options and categories as their position in the XML
+		// file implies the order in which they are shown in the frontend
 	}
 	
 	/**
