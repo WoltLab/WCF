@@ -561,7 +561,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 						$oldData['packageID']
 					]);
 					(new ACLOptionCategoryEditor($statement->fetchObject(ACLOptionCategory::class)))->update([
-						'categoryNameName' => $newData['name'],
+						'categoryName' => $newData['name'],
 						'objectTypeID' => ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl', $newData['objectType'])
 					]);
 					
