@@ -24,6 +24,7 @@ use wcf\system\option\II18nOptionType;
 use wcf\system\option\IOptionHandler;
 use wcf\system\option\IOptionType;
 use wcf\system\option\ISelectOptionOptionType;
+use wcf\system\option\TextOptionType;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
@@ -49,6 +50,13 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @var string[]
 	 */
 	public $i18nOptionTypes = [];
+	
+	/**
+	 * list of option types with i18n support extending `TextOptionType`
+	 * (in addition to `text`)
+	 * @var	string[]
+	 */
+	public $textOptionTypes = ['text'];
 	
 	/**
 	 * list of option types with a pre-defined list of options via `selectOptions`
@@ -550,6 +558,10 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 											$this->selectOptionOptionTypes[] = $optionType;
 										}
 										
+										if (is_subclass_of($classname, TextOptionType::class)) {
+											$this->textOptionTypes[] = $optionType;
+										}
+										
 										$options[] = $optionType;
 									}
 								}
@@ -696,6 +708,15 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 								->field($optionType)
 								->values(['select'])
 						),
+					
+					BooleanFormField::create('disableAutocomplete')
+						->label('wcf.acp.pip.abstractOption.options.optionType.text.disableAutocomplete')
+						->description('wcf.acp.pip.abstractOption.options.optionType.text.disableAutocomplete.description')
+						->addDependency(
+							ValueFormFieldDependency::create('optionType')
+								->field($optionType)
+								->values($this->textOptionTypes)
+						)
 				]);
 				
 				break;
@@ -765,6 +786,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					'maxlength',
 					'issortable',
 					'allowemptyvalue',
+					'disableAutocomplete'
 				];
 				
 				foreach ($optionals as $optionalPropertyName) {
@@ -1060,8 +1082,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					'suffix' => '',
 					'minlength' => null,
 					'maxlength' => null,
-					'issortable' => false,
-					'allowemptyvalue' => false
+					'issortable' => 0,
+					'allowemptyvalue' => 0,
+					'disableAutocomplete' => 0
 				];
 				foreach ($fields as $field => $defaultValue) {
 					if (isset($formData[$field]) && $formData[$field] !== $defaultValue) {

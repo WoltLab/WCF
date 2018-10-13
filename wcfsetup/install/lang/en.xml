@@ -2231,6 +2231,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions"><![CDATA[Supports Reactions]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.data.title"><![CDATA[Recent Activity Event Data]]></item>
+		<item name="wcf.acp.pip.abstractOption.options.optionType.text.disableAutocomplete"><![CDATA[Disable Autocomplete]]></item>
+		<item name="wcf.acp.pip.abstractOption.options.optionType.text.disableAutocomplete.description"><![CDATA[Disables the browser’s autocomplete support for the input field.]]></item>
 	</category>
 	
 	<category name="wcf.acp.reactionType">
