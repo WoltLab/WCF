@@ -237,7 +237,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 		$data = $form->getData()['data'];
 		
 		$acpSearchProvider = $document->createElement('acpsearchprovider');
-		$acpSearchProvider->setAttribute('name', $data['providerName']);
+		$acpSearchProvider->setAttribute('name', $data['name']);
 		$acpSearchProvider->appendChild($document->createElement('classname', $data['classname']));
 		
 		/** @var IntegerFormField $showOrder */
