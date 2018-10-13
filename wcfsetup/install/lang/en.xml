@@ -2204,6 +2204,25 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.userGroupOption.options.excludedInTinyBuild.description"><![CDATA[If the accelared guest view is enabled, the user group option’s value is “Never” for guests regardless of the actual value set for the guests user group.]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.wildcard"><![CDATA[Wildcard]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.wildcard.description"><![CDATA[If a wildcard is specified and if one line of the user group option value only contains this wildcare, the entire option value will be replaced by the wildcard.]]></item>
+		<item name="wcf.acp.pip.userOption.options.required"><![CDATA[Required User Option]]></item>
+		<item name="wcf.acp.pip.userOption.options.required.description"><![CDATA[Users must provide a value for this user option.]]></item>
+		<item name="wcf.acp.pip.userOption.options.askDuringRegistration"><![CDATA[Available During Registration]]></item>
+		<item name="wcf.acp.pip.userOption.options.askDuringRegistration.description"><![CDATA[The user option is available during registration.]]></item>
+		<item name="wcf.acp.pip.userOption.options.editable"><![CDATA[Editability]]></item>
+		<item name="wcf.acp.pip.userOption.options.editable.description"><![CDATA[The user option value can only be edited by the selected group of users.]]></item>
+		<item name="wcf.acp.pip.userOption.options.visible"><![CDATA[Visibility]]></item>
+		<item name="wcf.acp.pip.userOption.options.visible.description"><![CDATA[The user option value is only visible for the selected group of users.]]></item>
+		<item name="wcf.acp.pip.userOption.options.outputClass"><![CDATA[PHP class for custom output format]]></item>
+		<item name="wcf.acp.pip.userOption.options.searchable"><![CDATA[User option value is searchable]]></item>
+		<item name="wcf.acp.pip.userOption.options.searchable.description"><![CDATA[Users can search this user option in the member search.]]></item>
+		<item name="wcf.acp.pip.userOption.options.isDisabled"><![CDATA[Disable User Option]]></item>
+		<item name="wcf.acp.pip.userOption.options.isDisabled.description"><![CDATA[The user option is not visible for users and its value cannot be set.]]></item>
+		<item name="wcf.acp.pip.userOption.options.optionType.description"><![CDATA[The option type determines the interface with which the value of the user group option is set and which (types of) values the option may have.]]></item>
+		<item name="wcf.acp.pip.userOption.options.messageObjectType"><![CDATA[Message Object Type]]></item>
+		<item name="wcf.acp.pip.userOption.options.messageObjectType.description"><![CDATA[The message object type is passed to the <code>wcf\system\html\input\HtmlInputProcessor</code> object used to process the user option value.]]></item>
+		<item name="wcf.acp.pip.userOption.options.contentPattern"><![CDATA[Content Pattern]]></item>
+		<item name="wcf.acp.pip.userOption.options.contentPattern.description"><![CDATA[The entered content pattern is used to extract specific parts of the user-entered value to be stored as the option value.]]></item>
+		<item name="wcf.acp.pip.userOption.options.contentPattern.error.invalid"><![CDATA[The entered regular expression is invalid.]]></item>
 	</category>
 	
 	<category name="wcf.acp.reactionType">

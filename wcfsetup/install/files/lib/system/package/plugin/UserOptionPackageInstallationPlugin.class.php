@@ -1,27 +1,47 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\option\category\OptionCategory;
+use wcf\data\option\Option;
 use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\category\UserOptionCategoryEditor;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionEditor;
-use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
+use wcf\system\form\builder\container\IFormContainer;
+use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\ClassNameFormField;
+use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\IFormDocument;
+use wcf\system\option\user\IUserOptionOutput;
+use wcf\system\option\user\UserOptionHandler;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes user options.
  * 
- * @author	Alexander Ebert
+ * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
+class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
 	public $tableName = 'user_option';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $tagName = 'option';
 	
 	/**
 	 * list of names of tags which aren't considered as additional data
@@ -36,8 +56,8 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		// use for create and update
 		$data = [
 			'parentCategoryName' => $category['parentCategoryName'],
-			'permissions' => $category['permissions'],
-			'options' => $category['options']
+			'permissions' => $category['permissions'] ?? '',
+			'options' => $category['options'] ?? ''
 		];
 		// append show order if explicitly stated
 		if ($category['showOrder'] !== null) $data['showOrder'] = $category['showOrder'];
@@ -162,5 +182,221 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		
 		// uninstall options and categories
 		parent::uninstall();
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function addFormFields(IFormDocument $form) {
+		parent::addFormFields($form);
+		
+		if ($this->entryType === 'options') {
+			/** @var IFormContainer $dataContainer */
+			$dataContainer = $form->getNodeById('data');
+			
+			/** @var SingleSelectionFormField $optionType */
+			$optionType = $form->getNodeById('optionType');
+			
+			$dataContainer->appendChildren([
+				BooleanFormField::create('required')
+					->label('wcf.acp.pip.userOption.options.required')
+					->description('wcf.acp.pip.userOption.options.required.description'),
+				
+				BooleanFormField::create('askDuringRegistration')
+					->objectProperty('askduringregistration')
+					->label('wcf.acp.pip.userOption.options.askDuringRegistration')
+					->description('wcf.acp.pip.userOption.options.askDuringRegistration.description'),
+				
+				SingleSelectionFormField::create('editable')
+					->label('wcf.acp.pip.userOption.options.editable')
+					->description('wcf.acp.pip.userOption.options.editable.description')
+					->options([
+						1 => 'wcf.acp.user.option.editable.1',
+						2 => 'wcf.acp.user.option.editable.2',
+						3 => 'wcf.acp.user.option.editable.3',
+						6 => 'wcf.acp.user.option.editable.6'
+					]),
+				
+				SingleSelectionFormField::create('visible')
+					->label('wcf.acp.pip.userOption.options.visible')
+					->description('wcf.acp.pip.userOption.options.visible.description')
+					->options([
+						0 => 'wcf.acp.user.option.visible.0',
+						1 => 'wcf.acp.user.option.visible.1',
+						2 => 'wcf.acp.user.option.visible.2',
+						3 => 'wcf.acp.user.option.visible.3',
+						7 => 'wcf.acp.user.option.visible.7',
+						15 => 'wcf.acp.user.option.visible.15',
+					]),
+				
+				ClassNameFormField::create('outputClass')
+					->objectProperty('outputclass')
+					->label('wcf.acp.pip.userOption.options.outputClass')
+					->implementedInterface(IUserOptionOutput::class),
+				
+				BooleanFormField::create('searchable')
+					->label('wcf.acp.pip.userOption.options.searchable')
+					->description('wcf.acp.pip.userOption.options.searchable.description'),
+				
+				BooleanFormField::create('isDisabled')
+					->objectProperty('isdisabled')
+					->label('wcf.acp.pip.userOption.options.isDisabled')
+					->description('wcf.acp.pip.userOption.options.isDisabled.description'),
+				
+				// option type-specific fields
+				SingleSelectionFormField::create('messageObjectType')
+					->label('wcf.acp.pip.userOption.options.messageObjectType')
+					->description('wcf.acp.pip.userOption.options.messageObjectType.description')
+					->options(function() {
+						$options = [];
+						foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.message') as $objectType) {
+							$options[$objectType->objectType] = $objectType->objectType;
+						}
+						
+						asort($options);
+						
+						return $options;
+					}, false, false)
+					->addDependency(
+						ValueFormFieldDependency::create('optionType')
+							->field($optionType)
+							->values(['aboutMe', 'message'])
+					),
+				
+				TextFormField::create('contentPattern')
+					->objectProperty('contentpattern')
+					->label('wcf.acp.pip.userOption.options.contentPattern')
+					->description('wcf.acp.pip.userOption.options.contentPattern.description')
+					->addValidator(new FormFieldValidator('regex', function(TextFormField $formField) {
+						if ($formField->getSaveValue() !== '') {
+							if (!Regex::compile($formField->getSaveValue())->isValid()) {
+								$formField->addValidationError(
+									new FormFieldValidationError(
+										'invalid',
+										'wcf.acp.pip.userOption.options.contentPattern.error.invalid'
+									)
+								);
+							}
+						}
+					}))
+					->addDependency(
+						ValueFormFieldDependency::create('optionType')
+							->field($optionType)
+							->values(['text'])
+					),
+			]);
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getElementData(\DOMElement $element, $saveData = false) {
+		$data = parent::getElementData($element, $saveData);
+		
+		switch ($this->entryType) {
+			case 'options':
+				$optionals = [
+					'required',
+					'askDuringRegistration',
+					'editable',
+					'visible',
+					'outputClass',
+					'searchable',
+					'isDisabled',
+					'contentPattern'
+				];
+				
+				foreach ($optionals as $optionalPropertyName) {
+					$optionalProperty = $element->getElementsByTagName(strtolower($optionalPropertyName))->item(0);
+					if ($optionalProperty !== null) {
+						if ($saveData) {
+							$data[strtolower($optionalPropertyName)] = $optionalProperty->nodeValue;
+						}
+						else {
+							$data[$optionalPropertyName] = $optionalProperty->nodeValue;
+						}
+					}
+				}
+				
+				$messageObjectType = $element->getElementsByTagName('messageObjectType')->item(0);
+				if ($messageObjectType !== null) {
+					$data['messageObjectType'] = $messageObjectType->nodeValue;
+				}
+				
+				break;
+		}
+		
+		return $data;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getSortOptionHandler() {
+		// reuse UserGroupOptionHandler
+		return new class(true) extends UserOptionHandler {
+			/**
+			 * @inheritDoc
+			 */
+			protected function checkCategory(OptionCategory $category) {
+				// we do not care for category checks here
+				return true;
+			}
+			
+			/**
+			 * @inheritDoc
+			 */
+			protected function checkOption(Option $option) {
+				// we do not care for option checks here
+				return true;
+			}
+			
+			/**
+			 * @inheritDoc
+			 */
+			public function getCategoryOptions($categoryName = '', $inherit = true) {
+				// we just need to ensure that the category is not empty
+				return [new Option(null, [])];
+			}
+		};
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+		$option = parent::writeEntry($document, $form);
+		
+		$formData = $form->getData()['data'];
+		
+		switch ($this->entryType) {
+			case 'options':
+				$fields = [
+					'outputclass' => '',
+					'required' => 0,
+					'askduringregistration' => 0,
+					'editable' => 0,
+					'visible' => 0,
+					'searchable' => 0,
+					'isdisabled' => 0,
+					'messageObjectType' => '',
+					'contentpattern' => ''
+				];
+				
+				foreach ($fields as $field => $defaultValue) {
+					if (isset($formData[$field]) && $formData[$field] !== $defaultValue) {
+						$option->appendChild($document->createElement($field, (string) $formData[$field]));
+					}
+				}
+				
+				break;
+		}
+		
+		return $option;
 	}
 }
