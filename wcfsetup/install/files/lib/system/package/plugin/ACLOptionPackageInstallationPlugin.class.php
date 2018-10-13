@@ -486,7 +486,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 		if ($this->entryType === 'options') {
 			$categoryName = $element->getElementsByTagName('categoryname')->item(0);
 			if ($categoryName !== null) {
-				$data['categoryName'] = $categoryName->nodeValue;
+				$data['categoryname'] = $categoryName->nodeValue;
 			}
 		}
 		
