@@ -30,7 +30,9 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
 class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
-	use TXmlGuiPackageInstallationPlugin;
+	use TXmlGuiPackageInstallationPlugin {
+		setEntryData as defaultSetEntryData;
+	}
 	
 	/**
 	 * @inheritDoc
@@ -203,7 +205,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 					}
 				})),
 			
-			SingleSelectionFormField::create('templateName')
+			SingleSelectionFormField::create('frontendTemplateName')
 				->objectProperty('templatename')
 				->label('wcf.acp.pip.templateListener.templateName')
 				->description('wcf.acp.pip.templateListener.templateName.description')
@@ -223,14 +225,14 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		foreach ($templateEvents as $templateName => $events) {
 			$dataContainer->appendChild(
 				SingleSelectionFormField::create($templateName . '_eventName')
-					->objectProperty('eventname')
+					->objectProperty('eventName')
 					->label('wcf.acp.pip.templateListener.eventName')
 					->description('wcf.acp.pip.templateListener.eventName.description')
 					->required()
 					->options(array_combine($events, $events))
 					->addDependency(
 						ValueFormFieldDependency::create('templateName')
-							->field($form->getNodeById('templateName'))
+							->field($form->getNodeById('frontendTemplateName'))
 							->values([$templateName])
 					)
 			);
@@ -239,7 +241,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		foreach ($acpTemplateEvents as $templateName => $events) {
 			$dataContainer->appendChild(
 				SingleSelectionFormField::create('acp_' . $templateName . '_eventName')
-					->objectProperty('eventname')
+					->objectProperty('eventName')
 					->label('wcf.acp.pip.templateListener.eventName')
 					->description('wcf.acp.pip.templateListener.eventName.description')
 					->required()
@@ -266,42 +268,60 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 					/** @var TextFormField $nameField */
 					$nameField = $formField->getDocument()->getNodeById('name');
 					
-					$listenerList = new TemplateListenerList();
-					$listenerList->getConditionBuilder()->add(
-						'name = ?',
-						[$nameField->getSaveValue()]
-					);
+					/** @var SingleSelectionFormField $actionNameFormField */
+					$templateNameFormField = $formField->getDocument()->getNodeById('templateName');
 					
-					if ($formField->getSaveValue() === 'admin') {
-						/** @var SingleSelectionFormField $templateNameField */
-						$templateNameField = $formField->getDocument()->getNodeById('acpTemplateName');
-						
-						/** @var SingleSelectionFormField $eventNameField */
-						$eventNameField = $formField->getDocument()->getNodeById('acp_' . $templateNameField->getSaveValue() . '_eventName');
-					}
-					else {
-						/** @var SingleSelectionFormField $templateNameField */
-						$templateNameField = $formField->getDocument()->getNodeById('templateName');
-						
-						/** @var SingleSelectionFormField $eventNameField */
-						$eventNameField = $formField->getDocument()->getNodeById($templateNameField->getSaveValue() . '_eventName');
-					}
+					/** @var SingleSelectionFormField $actionNameFormField */
+					$acpTemplateNameFormField = $formField->getDocument()->getNodeById('acpTemplateName');
 					
-					$templateName = $templateNameField->getSaveValue();
-					$eventName = $eventNameField->getSaveValue();
-					
-					$listenerList->getConditionBuilder()->add('templateName = ?', [$templateName]);
-					
-					$listenerList->getConditionBuilder()->add('eventName = ?', [$eventName]);
-					$listenerList->getConditionBuilder()->add('environment = ?', [$formField->getSaveValue()]);
-					
-					if ($listenerList->countObjects() > 0) {
-						$nameField->addValidationError(
-							new FormFieldValidationError(
-								'notUnique',
-								'wcf.acp.pip.templateListener.name.error.notUnique'
-							)
+					if (
+						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
+						$this->editedEntry->getAttribute('name') !== $nameField->getSaveValue() ||
+						$this->editedEntry->getElementsByTagName('environment')->item(0)->nodeValue !== $formField->getSaveValue() ||
+						(
+							$formField->getSaveValue() === 'admin' &&
+							$this->editedEntry->getElementsByTagName('templatename')->item(0)->nodeValue !== $acpTemplateNameFormField->getSaveValue()
+						) ||
+						(
+							$formField->getSaveValue() === 'user' &&
+							$this->editedEntry->getElementsByTagName('templatename')->item(0)->nodeValue !== $templateNameFormField->getSaveValue()
+						)
+					) {
+						$listenerList = new TemplateListenerList();
+						$listenerList->getConditionBuilder()->add(
+							'name = ?',
+							[$nameField->getSaveValue()]
 						);
+						
+						if ($formField->getSaveValue() === 'admin') {
+							/** @var SingleSelectionFormField $templateNameField */
+							$templateNameField = $formField->getDocument()->getNodeById('acpTemplateName');
+							
+							/** @var SingleSelectionFormField $eventNameField */
+							$eventNameField = $formField->getDocument()->getNodeById('acp_' . $templateNameField->getSaveValue() . '_eventName');
+						} else {
+							/** @var SingleSelectionFormField $templateNameField */
+							$templateNameField = $formField->getDocument()->getNodeById('frontendTemplateName');
+							
+							/** @var SingleSelectionFormField $eventNameField */
+							$eventNameField = $formField->getDocument()->getNodeById($templateNameField->getSaveValue() . '_eventName');
+						}
+						
+						$templateName = $templateNameField->getSaveValue();
+						$eventName = $eventNameField->getSaveValue();
+						
+						$listenerList->getConditionBuilder()->add('templateName = ?', [$templateName]);
+						$listenerList->getConditionBuilder()->add('eventName = ?', [$eventName]);
+						$listenerList->getConditionBuilder()->add('environment = ?', [$formField->getSaveValue()]);
+						
+						if ($listenerList->countObjects() > 0) {
+							$nameField->addValidationError(
+								new FormFieldValidationError(
+									'notUnique',
+									'wcf.acp.pip.templateListener.name.error.notUnique'
+								)
+							);
+						}
 					}
 				})),
 			
@@ -313,7 +333,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 				->required()
 		]);
 		
-		$form->getNodeById('templateName')->addDependency(
+		$form->getNodeById('frontendTemplateName')->addDependency(
 			ValueFormFieldDependency::create('environment')
 				->field($form->getNodeById('environment'))
 				->values(['user'])
@@ -351,6 +371,39 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 			$element->getElementsByTagName('environment')->item(0)->nodeValue . '/' .
 			$element->getAttribute('name')
 		);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function setEntryData($identifier, IFormDocument $document) {
+		if ($this->defaultSetEntryData($identifier, $document)) {
+			$data = $this->getElementData($this->getElementByIdentifier($this->getProjectXml(), $identifier));
+			
+			switch ($data['environment']) {
+				case 'admin':
+					/** @var SingleSelectionFormField $templateName */
+					$templateName = $document->getNodeById('acpTemplateName');
+					
+					$templateName->value($data['templateName']);
+					break;
+					
+				case 'user':
+					/** @var SingleSelectionFormField $templateName */
+					$templateName = $document->getNodeById('templateName');
+					
+					$templateName->value($data['templateName']);
+					break;
+					
+				default:
+					throw new \LogicException("Unknown enviornment '{$data['environment']}'.");
+			}
+			
+			return true;
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -408,25 +461,13 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		$listener = $document->createElement($this->tagName);
 		$listener->setAttribute('name', $data['name']);
 		
-		if ($data['environment'] === 'user') {
-			$templateName = $data['templateName'];
-			
-			$listener->appendChild($document->createElement('templatename', $templateName));
-			$listener->appendChild($document->createElement('eventname', $data[$templateName . '_eventName']));
-		}
-		else {
-			$templateName = $data['acpTemplateName'];
-			
-			$listener->appendChild($document->createElement('templatename', $templateName));
-			$listener->appendChild($document->createElement('eventname', $data['acp_' . $templateName . '_eventName']));
-		}
-		$listener->appendChild(
-			$document->createElement(
-				'templatecode',
-				'<![CDATA[' . StringUtil::unifyNewlines(StringUtil::escapeCDATA($data['templatecode'])) . ']]>'
-			)
-		);
 		$listener->appendChild($document->createElement('environment', $data['environment']));
+		$listener->appendChild($document->createElement('templatename', $data['templatename']));
+		$listener->appendChild($document->createElement('eventname', $data['eventName']));
+		
+		$templateCode = $document->createElement('templatecode');
+		$templateCode->appendChild($document->createCDATASection(StringUtil::unifyNewlines(StringUtil::escapeCDATA($data['templatecode']))));
+		$listener->appendChild($templateCode);
 		
 		$document->getElementsByTagName('import')->item(0)->appendChild($listener);
 		
