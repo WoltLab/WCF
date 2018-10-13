@@ -115,16 +115,17 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 		$dataContainer = $form->getNodeById('data');
 		
 		$dataContainer->appendChildren([
-			TextFormField::create('name')
-				->label('wcf.acp.pip.userProfileMenu.name')
-				->description('wcf.acp.pip.userProfileMenu.name.description')
+			TextFormField::create('menuItem')
+				->objectProperty('name')
+				->label('wcf.acp.pip.userProfileMenu.eventName')
+				->description('wcf.acp.pip.userProfileMenu.eventName.description')
 				->required()
 				->addValidator(new FormFieldValidator('format', function(TextFormField $formField) {
 					if (!preg_match('~^[a-z][A-z]+$~', $formField->getValue())) {
 						$formField->addValidationError(
 							new FormFieldValidationError(
 								'format',
-								'wcf.acp.pip.userProfileMenu.name.error.format'
+								'wcf.acp.pip.userProfileMenu.menuItem.error.format'
 							)
 						);
 					}
@@ -138,7 +139,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 							$formField->addValidationError(
 								new FormFieldValidationError(
 									'notUnique',
-									'wcf.acp.pip.userProfileMenu.name.error.notUnique'
+									'wcf.acp.pip.userProfileMenu.menuItem.error.notUnique'
 								)
 							);
 						}
@@ -219,8 +220,8 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
-			'name' => 'wcf.acp.pip.userProfileMenu.name',
-			'className' => 'wcf.acp.pip.userProfileMenu.className'
+			'menuItem' => 'wcf.acp.pip.userProfileMenu.menuItem',
+			'className' => 'wcf.form.field.className'
 		]);
 	}
 	
@@ -265,7 +266,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 		
 		$userProfileMenuItem = $document->createElement('userprofilemenuitem');
 		$userProfileMenuItem->setAttribute('name', $data['name']);
-		$userProfileMenuItem->appendChild($document->createElement('classname', $data['className']));
+		$userProfileMenuItem->appendChild($document->createElement('classname', $data['classname']));
 		
 		foreach (['options', 'permissions', 'showorder'] as $optionalElement) {
 			if (!empty($data[$optionalElement])) {
