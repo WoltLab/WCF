@@ -264,10 +264,6 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 			}
 		}
 		
-		if (!$saveData) {
-			$data['pages'] = implode(',', $data['pages']);
-		}
-		
 		return $data;
 	}
 	
