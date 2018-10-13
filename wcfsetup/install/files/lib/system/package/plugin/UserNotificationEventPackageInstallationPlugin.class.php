@@ -185,16 +185,17 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 		$dataContainer = $form->getNodeById('data');
 		
 		$dataContainer->appendChildren([
-			TextFormField::create('name')
-				->label('wcf.acp.pip.userNotificationEvent.name')
-				->description('wcf.acp.pip.userNotificationEvent.name.description')
+			TextFormField::create('eventName')
+				->objectProperty('name')
+				->label('wcf.acp.pip.userNotificationEvent.eventName')
+				->description('wcf.acp.pip.userNotificationEvent.eventName.description')
 				->required()
 				->addValidator(new FormFieldValidator('format', function(TextFormField $formField) {
 					if (!preg_match('~^[a-z][A-z]+$~', $formField->getValue())) {
 						$formField->addValidationError(
 							new FormFieldValidationError(
 								'format',
-								'wcf.acp.pip.userNotificationEvent.name.error.format'
+								'wcf.acp.pip.userNotificationEvent.eventName.error.format'
 							)
 						);
 					}
@@ -218,11 +219,18 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 				// validate the uniqueness of the `name` field after knowing that the selected object type is valid
 				->addValidator(new FormFieldValidator('nameUniqueness', function(SingleSelectionFormField $formField) {
 					/** @var TextFormField $nameField */
-					$nameField = $formField->getDocument()->getNodeById('name');
+					$nameField = $formField->getDocument()->getNodeById('eventName');
 					
-					if ($formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE || $this->editedEntry->getAttribute('name') !== $nameField->getSaveValue()) {
+					if (
+						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
+						$this->editedEntry->getElementsByTagName('name')->item(0)->nodeValue !== $nameField->getSaveValue() ||
+						$this->editedEntry->getElementsByTagName('objecttype')->item(0)->nodeValue !== $formField->getSaveValue()
+					) {
 						$eventList = new UserNotificationEventList();
 						$eventList->getConditionBuilder()->add('user_notification_event.eventName = ?', [$nameField->getSaveValue()]);
+						$eventList->getConditionBuilder()->add('user_notification_event.objectTypeID = ?', [
+							ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.notification.objectType', $formField->getSaveValue())
+						]);
 						$eventList->getConditionBuilder()->add(
 							'user_notification_event.objectTypeID = ?',
 							[ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.notification.objectType', $formField->getSaveValue())->objectTypeID]
@@ -232,7 +240,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 							$nameField->addValidationError(
 								new FormFieldValidationError(
 									'notUnique',
-									'wcf.acp.pip.userNotificationEvent.name.error.notUnique'
+									'wcf.acp.pip.userNotificationEvent.eventName.error.notUnique'
 								)
 							);
 						}
@@ -282,11 +290,18 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	protected function getElementData(\DOMElement $element, $saveData = false) {
 		$data = [
 			'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,
-			'objectTypeID' => $this->getObjectTypeID($element->getElementsByTagName('objecttype')->item(0)->nodeValue),
 			'eventName' => $element->getElementsByTagName('name')->item(0)->nodeValue,
 			'packageID' => $this->installation->getPackage()->packageID,
 			'preset' => 0
 		];
+		
+		$objectType = $element->getElementsByTagName('objecttype')->item(0)->nodeValue;
+		if ($saveData) {
+			$data['objectTypeID'] = $this->getObjectTypeID($objectType);
+		}
+		else {
+			$data['objectType'] = $objectType;
+		}
 		
 		$options = $element->getElementsByTagName('options')->item(0);
 		if ($options) {
@@ -328,7 +343,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
-			'name' => 'wcf.acp.pip.userNotificationEvent.name',
+			'eventName' => 'wcf.acp.pip.userNotificationEvent.eventName',
 			'className' => 'wcf.acp.pip.userNotificationEvent.className'
 		]);
 	}
