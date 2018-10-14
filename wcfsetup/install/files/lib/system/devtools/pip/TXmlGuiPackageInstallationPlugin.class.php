@@ -55,9 +55,7 @@ trait TXmlGuiPackageInstallationPlugin {
 		/** @var DevtoolsProject $project */
 		$project = $this->installation->getProject();
 		
-		// TODO: while creating/testing the gui, write into a temporary file
-		// $xml->write($this->getXmlFileLocation($project));
-		$xml->write($project->path . ($project->getPackage()->package === 'com.woltlab.wcf' ? 'com.woltlab.wcf/' : '') . 'tmp_' . static::getDefaultFilename());
+		$xml->write($this->getXmlFileLocation($project));
 	}
 	
 	/**
@@ -95,9 +93,7 @@ trait TXmlGuiPackageInstallationPlugin {
 		/** @var DevtoolsProject $project */
 		$project = $this->installation->getProject();
 		
-		// TODO: while creating/testing the gui, write into a temporary file
-		// $xml->write($this->getXmlFileLocation($project));
-		$xml->write($project->path . ($project->getPackage()->package === 'com.woltlab.wcf' ? 'com.woltlab.wcf/' : '') . 'tmp_' . static::getDefaultFilename());
+		$xml->write($this->getXmlFileLocation($project));
 		
 		return $this->getElementIdentifier($newElement);
 	}
