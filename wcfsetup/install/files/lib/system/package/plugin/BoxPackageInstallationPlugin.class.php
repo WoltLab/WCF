@@ -801,8 +801,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		$optionals = [
 			'objectType' => '',
 			'cssClassName' => '',
-			'showHeader' => 1,
-			'visibleEverywhere' => 1
+			'showHeader' => 0
 		];
 		foreach ($optionals as $field => $defaultValue) {
 			if (isset($data[$field]) && $data[$field] !== $defaultValue) {
@@ -811,13 +810,19 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		}
 		
 		if (!empty($data['visibilityExceptions'])) {
+			$box->appendChild($document->createElement('visibleEverywhere', (string)($data['visibleEverywhere'] ?? 0)));
+			
 			$visibilityExceptions = $document->createElement('visibilityExceptions');
 			
+			sort($data['visibilityExceptions']);
 			foreach ($data['visibilityExceptions'] as $page) {
 				$visibilityExceptions->appendChild($document->createElement('page', $page));
 			}
 			
 			$box->appendChild($visibilityExceptions);
+		}
+		else if (!empty($data['visibleEverywhere'])) {
+			$box->appendChild($document->createElement('visibleEverywhere', (string)$data['visibleEverywhere']));
 		}
 		
 		foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
