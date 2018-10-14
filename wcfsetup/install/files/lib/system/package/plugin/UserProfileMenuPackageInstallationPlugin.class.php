@@ -199,9 +199,6 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 		if ($showOrder) {
 			$data['showOrder'] = intval($showOrder->nodeValue);
 		}
-		else {
-			$data['showOrder'] = null;
-		}
 		
 		return $data;
 	}
