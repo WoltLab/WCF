@@ -160,6 +160,13 @@ class ClassNameFormField extends TextFormField {
 		
 		$this->__parentClass = $parentClass;
 		
+		if ($this->getDescription() === null) {
+			$this->description(
+				'wcf.form.field.className.description.parentClass',
+				['parentClass' => $this->__parentClass]
+			);
+		}
+		
 		return $this;
 	}
 	
