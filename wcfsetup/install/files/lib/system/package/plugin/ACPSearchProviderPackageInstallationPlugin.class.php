@@ -239,10 +239,8 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 		$acpSearchProvider = $document->createElement($this->tagName);
 		$acpSearchProvider->setAttribute('name', $data['name']);
 		$acpSearchProvider->appendChild($document->createElement('classname', $data['classname']));
-		
-		/** @var IntegerFormField $showOrder */
-		if (!empty($data['showOrder'])) {
-			$acpSearchProvider->appendChild($document->createElement('showorder', (string) $data['showorder']));
+		if (isset($data['showorder'])) {
+			$acpSearchProvider->appendChild($document->createElement('showorder', (string)$data['showorder']));
 		}
 		
 		$document->getElementsByTagName('import')->item(0)->appendChild($acpSearchProvider);
