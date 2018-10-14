@@ -394,7 +394,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 			}
 		}
 		
-		foreach (['startdom', 'startdow', 'starthour', 'startminute', 'startmonth'] as $timeProperty) {
+		foreach (['startmonth', 'startdom', 'startdow', 'starthour', 'startminute'] as $timeProperty) {
 			$cronjob->appendChild($document->createElement($timeProperty, $formData[$timeProperty]));
 		}
 		
