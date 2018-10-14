@@ -144,9 +144,10 @@ final class HTTPRequest {
 		$this->setOptions($options);
 		
 		// set default headers
-		$this->addHeader('user-agent', "HTTP.PHP (HTTPRequest.class.php; WoltLab Suite/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")");
+		$language = WCF::getLanguage();
+		$this->addHeader('user-agent', "HTTP.PHP (HTTPRequest.class.php; WoltLab Suite/".WCF_VERSION."; ".($language ? $language->languageCode : 'en').")");
 		$this->addHeader('accept', '*/*');
-		$this->addHeader('accept-language', WCF::getLanguage()->getFixedLanguageCode());
+		if ($language) $this->addHeader('accept-language', $language->getFixedLanguageCode());
 		
 		if (isset($this->options['maxLength'])) {
 			$this->addHeader('Range', 'bytes=0-'.($this->options['maxLength'] - 1));
