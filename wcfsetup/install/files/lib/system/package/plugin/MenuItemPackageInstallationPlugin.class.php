@@ -554,11 +554,11 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		$menuItem = $document->createElement($this->tagName);
 		$menuItem->setAttribute('identifier', $data['identifier']);
 		
-		if (!empty($data['menu'])) {
-			$menuItem->appendChild($document->createElement('menu', $data['menu']));
-		}
-		else if (!empty($data['parent'])) {
+		if (!empty($data['parent'])) {
 			$menuItem->appendChild($document->createElement('parent', $data['parent']));
+		}
+		else if (!empty($data['menu'])) {
+			$menuItem->appendChild($document->createElement('menu', $data['menu']));
 		}
 		
 		foreach ($formData['title_i18n'] as $languageID => $title) {
