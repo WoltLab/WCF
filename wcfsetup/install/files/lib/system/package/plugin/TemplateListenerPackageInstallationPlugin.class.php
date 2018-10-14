@@ -423,20 +423,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		$sortFunction = static::getSortFunction(['templatename', 'eventname', 'environment']);
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$listener = $document->createElement($this->tagName);
@@ -449,8 +436,6 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		$templateCode = $document->createElement('templatecode');
 		$templateCode->appendChild($document->createCDATASection(StringUtil::unifyNewlines(StringUtil::escapeCDATA($data['templatecode']))));
 		$listener->appendChild($templateCode);
-		
-		$document->getElementsByTagName('import')->item(0)->appendChild($listener);
 		
 		return $listener;
 	}

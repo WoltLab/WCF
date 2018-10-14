@@ -386,49 +386,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$menuStructureData = $this->getMenuStructureData();
-		/** @var ACPMenuItem[][] $menuItemStructure */
-		$menuItemStructure = $menuStructureData['structure'];
-		
-		$this->sortImportDelete($document);
-		
-		// build array containing the ACP menu items saved in the database
-		// in the order as they would be displayed in the ACP
-		$buildPositions = function($parent = '') use ($menuItemStructure, &$buildPositions) {
-			$positions = [];
-			foreach ($menuItemStructure[$parent] as $menuItem) {
-				// only consider menu items of the current package for positions
-				if ($menuItem->packageID === $this->installation->getPackageID()) {
-					$positions[] = $menuItem->menuItem;
-				}
-				
-				if (isset($menuItemStructure[$menuItem->menuItem])) {
-					$positions = array_merge($positions, $buildPositions($menuItem->menuItem));
-				}
-			}
-			
-			return $positions;
-		};
-		
-		// flip positions array so that the keys are the menu item names
-		// and the values become the positions so that the array values
-		// can be used in the sort function
-		$positions = array_flip($buildPositions());
-		
-		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) use ($positions) {
-			return $positions[$element1->getAttribute('name')] <=> $positions[$element2->getAttribute('name')];
-		};
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData()['data'];
 		
 		$menuItem = $document->createElement($this->tagName);
@@ -439,8 +397,6 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 				$menuItem->appendChild($document->createElement($field, (string) $formData[$field]));
 			}
 		}
-		
-		$document->getElementsByTagName('import')->item(0)->appendChild($menuItem);
 		
 		return $menuItem;
 	}

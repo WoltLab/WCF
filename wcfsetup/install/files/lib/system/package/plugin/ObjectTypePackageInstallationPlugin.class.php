@@ -695,52 +695,7 @@ XML;
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), static::getSortFunction(['definitionname', 'name']));
-		
-		$this->sortChildNodes($document->getElementsByTagName('import')->item(0)->childNodes, function(\DOMElement $element1, \DOMElement $element2) {
-			// force `definitionname` to be at the first position
-			if ($element1->nodeName === 'definitionname') {
-				return -1;
-			}
-			else if ($element2->nodeName === 'definitionname') {
-				return 1;
-			}
-			// force `name` to be at the second position
-			else if ($element1->nodeName === 'name') {
-				return -1;
-			}
-			else if ($element2->nodeName === 'name') {
-				return 1;
-			}
-			// force `classname` to be at the third position
-			else if ($element1->nodeName === 'classname') {
-				return -1;
-			}
-			else if ($element2->nodeName === 'classname') {
-				return 1;
-			}
-			else {
-				// the rest is sorted by node name
-				return strcmp($element1->nodeName, $element2->nodeName);
-			}
-		});
-		
-		$this->sortChildNodes($document->getElementsByTagName('delete'), static::getSortFunction([
-			[
-				'isAttribute' => 1,
-				'name' => 'name'
-			]
-		]));
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$type = $document->createElement($this->tagName);
 		foreach ($form->getData()['data'] as $key => $value) {
 			if ($key === 'definitionID') {
@@ -757,8 +712,6 @@ XML;
 				}
 			}
 		}
-		
-		$document->getElementsByTagName('import')->item(0)->appendChild($type);
 		
 		return $type;
 	}

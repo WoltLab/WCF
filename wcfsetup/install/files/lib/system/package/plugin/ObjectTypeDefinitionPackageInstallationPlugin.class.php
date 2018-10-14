@@ -209,23 +209,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), static::getSortFunction(['name']));
-		$this->sortChildNodes($document->getElementsByTagName('delete'), static::getSortFunction([
-			[
-				'isAttribute' => 1,
-				'name' => 'name'
-			]
-		]));
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$definition = $document->createElement($this->tagName);
@@ -234,9 +218,6 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 		if (!empty($data['interfacename'])) {
 			$definition->appendChild($document->createElement('interfacename', $data['interfacename']));
 		}
-		
-		$import = $document->getElementsByTagName('import')->item(0);
-		$import->appendChild($definition);
 		
 		return $definition;
 	}

@@ -262,33 +262,14 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		$compareFunction = static::getSortFunction([
-			'showOrder',
-			[
-				'isAttribute' => 1,
-				'name' => 'name'
-			]
-		]);
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
-		$bbcode = $document->createElement($this->tagName);
-		$bbcode->setAttribute('name', $data['name']);
+		$smiley = $document->createElement($this->tagName);
+		$smiley->setAttribute('name', $data['name']);
 		
 		foreach (['title', 'path', 'path2x'] as $element) {
-			$bbcode->appendChild($document->createElement($element, $data[$element]));
+			$smiley->appendChild($document->createElement($element, $data[$element]));
 		}
 		
 		if ($data['aliases'] !== '') {
@@ -296,15 +277,13 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			$aliases->appendChild($document->createCDATASection(
 				StringUtil::escapeCDATA(StringUtil::unifyNewlines($data['aliases']))
 			));
-			$bbcode->appendChild($aliases);
+			$smiley->appendChild($aliases);
 		}
 		
 		if ($data['showorder'] !== null) {
-			$bbcode->appendChild($document->createElement('showorder', $data['showorder']));
+			$smiley->appendChild($document->createElement('showorder', $data['showorder']));
 		}
 		
-		$document->getElementsByTagName('import')->item(0)->appendChild($bbcode);
-		
-		return $bbcode;
+		return $smiley;
 	}
 }

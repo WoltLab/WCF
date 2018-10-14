@@ -597,18 +597,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		// do not sort options and categories as their position in the XML
-		// file implies the order in which they are shown in the frontend
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData()['data'];
 		
 		switch ($this->entryType) {
@@ -617,15 +606,6 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 				$category->setAttribute('name', $formData['name']);
 				
 				$category->appendChild($document->createElement('objecttype', $formData['objecttype']));
-				
-				$import = $document->getElementsByTagName('import')->item(0);
-				$categories = $import->getElementsByTagName('categories')->item(0);
-				if ($categories === null) {
-					$categories = $document->createElement('categories');
-					$import->appendChild($categories);
-				}
-				
-				$categories->appendChild($category);
 				
 				return $category;
 				
@@ -638,15 +618,6 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 				if (isset($formData['categoryname'])) {
 					$option->appendChild($document->createElement('categoryname', $formData['categoryname']));
 				}
-				
-				$import = $document->getElementsByTagName('import')->item(0);
-				$options = $import->getElementsByTagName('options')->item(0);
-				if ($options === null) {
-					$options = $document->createElement('options');
-					$import->appendChild($options);
-				}
-				
-				$options->appendChild($option);
 				
 				return $option;
 		}

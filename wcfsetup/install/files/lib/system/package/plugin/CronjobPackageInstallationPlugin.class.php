@@ -334,26 +334,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		$sortFunction = static::getSortFunction([
-			[
-				'isAttribute' => 1,
-				'name' => 'name'
-			],
-			'classname'
-		]);
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData();
 		$formData = $form->getData()['data'];
 		
@@ -407,8 +388,6 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 				$cronjob->appendChild($document->createElement($booleanProperty, (string) $formData[$booleanProperty]));
 			}
 		}
-		
-		$document->getElementsByTagName('import')->item(0)->appendChild($cronjob);
 		
 		return $cronjob;
 	}

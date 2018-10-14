@@ -47,11 +47,10 @@ trait TXmlGuiPackageInstallationPlugin {
 		$xml = $this->getProjectXml();
 		$document = $xml->getDocument();
 		
-		$newElement = $this->writeEntry($document, $form);
+		$newElement = $this->createXmlElement($document, $form);
+		$this->insertNewXmlElement($xml, $newElement);
 		
 		$this->saveObject($newElement);
-	
-		$this->sortDocument($document);
 		
 		/** @var DevtoolsProject $project */
 		$project = $this->installation->getProject();
@@ -60,6 +59,16 @@ trait TXmlGuiPackageInstallationPlugin {
 		// $xml->write($this->getXmlFileLocation($project));
 		$xml->write($project->path . ($project->getPackage()->package === 'com.woltlab.wcf' ? 'com.woltlab.wcf/' : '') . 'tmp_' . static::getDefaultFilename());
 	}
+	
+	/**
+	 * Creates a new XML element for the given document using the data provided
+	 * by the given form and return the new dom element.
+	 * 
+	 * @param	\DOMDocument		$document
+	 * @param	IFormDocument		$form
+	 * @return	\DOMElement
+	 */
+	abstract protected function createXmlElement(\DOMDocument $document, IFormDocument $form);
 	
 	/**
 	 * Edits the entry of this pip with the given identifier based on the data
@@ -74,16 +83,14 @@ trait TXmlGuiPackageInstallationPlugin {
 		$xml = $this->getProjectXml();
 		$document = $xml->getDocument();
 		
-		// remove old element
-		$element = $this->getElementByIdentifier($xml, $identifier);
-		DOMUtil::removeNode($element);
-		
 		// add updated element
-		$newEntry = $this->writeEntry($document, $form);
+		$newElement = $this->createXmlElement($document, $form);
 		
-		$this->saveObject($newEntry, $element);
+		// replace old element
+		$element = $this->getElementByIdentifier($xml, $identifier);
+		DOMUtil::replaceElement($element, $newElement, false);
 		
-		$this->sortDocument($document);
+		$this->saveObject($newElement, $element);
 		
 		/** @var DevtoolsProject $project */
 		$project = $this->installation->getProject();
@@ -92,7 +99,7 @@ trait TXmlGuiPackageInstallationPlugin {
 		// $xml->write($this->getXmlFileLocation($project));
 		$xml->write($project->path . ($project->getPackage()->package === 'com.woltlab.wcf' ? 'com.woltlab.wcf/' : '') . 'tmp_' . static::getDefaultFilename());
 		
-		return $this->getElementIdentifier($newEntry);
+		return $this->getElementIdentifier($newElement);
 	}
 	
 	/**
@@ -269,6 +276,16 @@ XML;
 	}
 	
 	/**
+	 * Inserts the give new element into the given XML document.
+	 * 
+	 * @param	XML		$xml		XML document to which the element is added
+	 * @param	\DOMElement	$newElement	added new element
+	 */
+	protected function insertNewXmlElement(XML $xml, \DOMElement $newElement) {
+		$xml->xpath()->query('/ns:data/ns:import')->item(0)->appendChild($newElement);
+	}
+	
+	/**
 	 * Saves an object represented by an XML element in the database by either
 	 * creating a new element (if `$oldElement = null`) or updating an existing
 	 * element.
@@ -382,152 +399,5 @@ XML;
 		}
 		
 		$this->entryType = $entryType;
-	}
-	
-	/**
-	 * Sorts the entries of this pip that are represented by the given dom
-	 * document to achieve a deterministic order.
-	 * 
-	 * @param	\DOMDocument	$document
-	 */
-	abstract protected function sortDocument(\DOMDocument $document);
-	
-	/**
-	 * Sorts the given child nodes of all nodes in the given node list by
-	 * applying the given sort function on the child nodes.
-	 * 
-	 * Internally, the old child nodes are removed and appended again in
-	 * the sorted order.
-	 * 
-	 * @param	\DOMNodeList	$nodeList
-	 * @param	callable	$sortFunction
-	 */
-	protected function sortChildNodes(\DOMNodeList $nodeList, callable $sortFunction) {
-		/** @var \DOMElement $node */
-		foreach ($nodeList as $node) {
-			$childNodes = array_filter(iterator_to_array($node->childNodes), function($element) {
-				return $element instanceof \DOMElement;
-			});
-			
-			usort($childNodes, $sortFunction);
-			
-			// remove old nodes
-			while ($node->hasChildNodes()) {
-				$node->removeChild($node->firstChild);
-			}
-			
-			// add sorted nodes
-			foreach ($childNodes as $childNode) {
-				$node->appendChild($childNode);
-			}
-		}
-	}
-	
-	/**
-	 * Sorts the standard `import` and `delete` blocks and ensures that the
-	 * `import` block is before the `delete` block.
-	 * 
-	 * @param	\DOMDocument	$document
-	 */
-	protected function sortImportDelete(\DOMDocument $document) {
-		switch ($document->documentElement->childNodes->length) {
-			case 0:
-				throw new \InvalidArgumentException('Empty xml document.');
-			
-			case 1:
-				// nothing to sort
-				break;
-			
-			case 2:
-				$firstChild = $document->documentElement->firstChild;
-				$lastChild = $document->documentElement->lastChild;
-				
-				if (!($firstChild->nodeName === 'import' && $lastChild->nodeName === 'delete') && !($firstChild->nodeName === 'delete' && $lastChild->nodeName === 'import')) {
-					throw new \InvalidArgumentException('Invalid xml given.');
-				}
-				
-				if ($document->documentElement->firstChild->nodeName !== 'import') {
-					$firstChild = $document->documentElement->firstChild;
-					$document->documentElement->removeChild($firstChild);
-					$document->documentElement->appendChild($firstChild);
-				}
-				break;
-			
-			default:
-				throw new \InvalidArgumentException('Xml document has more than two direct children.');
-		}
-	}
-	
-	/**
-	 * Writes a new entry into the xml structure represented by the given
-	 * dom document using the data provided by the given form and return
-	 * the new dom element.
-	 * 
-	 * Note: Inserting at the correct position regarding sorting is irrelevant
-	 * as the dom document will be sorted after adding the entry.
-	 * 
-	 * @param	\DOMDocument		$document
-	 * @param	IFormDocument		$form
-	 * @return	\DOMElement
-	 */
-	abstract protected function writeEntry(\DOMDocument $document, IFormDocument $form);
-	
-	/**
-	 * Returns a sort function for DOM elements using the list of attributes
-	 * and child elements by whose values the DOM elements are sorted.
-	 * 
-	 * @param	array	$sortParameters
-	 * @return	\Closure
-	 */
-	public static function getSortFunction(array $sortParameters) {
-		return function(\DOMElement $element1, \DOMElement $element2) use ($sortParameters) {
-			foreach ($sortParameters as $sortParameter) {
-				if (is_array($sortParameter)) {
-					$isAttribute = !empty($sortParameter['isAttribute']);
-					$name = $sortParameter['name'];
-					$missingLast = !empty($sortParameter['missingLast']);
-				}
-				else {
-					$isAttribute = false;
-					$name = $sortParameter;
-					$missingLast = true;
-				}
-				
-				$value1 = $value2 = null;
-				if ($isAttribute) {
-					$value1 = $element1->getAttribute($name);
-					$value2 = $element2->getAttribute($name);
-				}
-				else {
-					$value1Node = $element1->getElementsByTagName($name)->item(0);
-					if ($value1Node !== null) {
-						$value1 = $value1Node->nodeValue;
-					}
-					
-					$value2Node = $element2->getElementsByTagName($name)->item(0);
-					if ($value2Node !== null) {
-						$value2 = $value2Node->nodeValue;
-					}
-				}
-				
-				if ($value1 !== null) {
-					if ($value2 !== null) {
-						$compare = $value1 <=> $value2;
-						
-						if ($compare !== 0) {
-							return $compare;
-						}
-					}
-					else {
-						return $missingLast ? -1 : 1;
-					}
-				}
-				else if ($value2 !== null) {
-					return $missingLast ? 1 : -1;
-				}
-			}
-			
-			return -1;
-		};
 	}
 }

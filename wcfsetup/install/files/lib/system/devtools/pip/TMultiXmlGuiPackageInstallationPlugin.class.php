@@ -39,11 +39,10 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 		foreach ($this->getProjectXmls() as $xml) {
 			$document = $xml->getDocument();
 			
-			$newElement = $this->writeEntry($document, $form);
+			$newElement = $this->createXmlElement($document, $form);
+			$this->insertNewXmlElement($xml, $newElement);
 			
 			$this->saveObject($newElement);
-			
-			$this->sortDocument($document);
 			
 			// TODO: while creating/testing the gui, write into a temporary file
 			// $xml->write($this->getXmlFileLocation($project));
@@ -65,16 +64,14 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 		foreach ($this->getProjectXmls() as $xml) {
 			$document = $xml->getDocument();
 			
-			// remove old element
-			$element = $this->getElementByIdentifier($xml, $identifier);
-			DOMUtil::removeNode($element);
-			
 			// add updated element
-			$newEntry = $this->writeEntry($document, $form);
+			$newElement = $this->createXmlElement($document, $form);
+			
+			// replace old element
+			$element = $this->getElementByIdentifier($xml, $identifier);
+			DOMUtil::replaceElement($newElement, $element);
 			
 			$this->saveObject($newEntry, $element);
-			
-			$this->sortDocument($document);
 			
 			// TODO: while creating/testing the gui, write into a temporary file
 			// $xml->write($this->getXmlFileLocation($project));

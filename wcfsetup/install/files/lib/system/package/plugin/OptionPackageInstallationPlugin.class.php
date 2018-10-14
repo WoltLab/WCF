@@ -249,7 +249,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 	 * @since	3.2
 	 */
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
-		$option = parent::writeEntry($document, $form);
+		$option = parent::createXmlElement($document, $form);
 		
 		$formData = $form->getData()['data'];
 		

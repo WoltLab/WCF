@@ -369,8 +369,8 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
-		$option = parent::writeEntry($document, $form);
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
+		$option = parent::createXmlElement($document, $form);
 		
 		$formData = $form->getData()['data'];
 		

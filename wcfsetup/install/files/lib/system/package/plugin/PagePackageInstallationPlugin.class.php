@@ -750,25 +750,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		$sortFunction = function(\DOMElement $element1, \DOMElement $element2) {
-			return strcmp(
-				$element1->getAttribute('identifier'),
-				$element2->getAttribute('identifier')
-			);
-		};
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
 		$data = $formData['data'];
 		
@@ -831,8 +813,6 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				}
 			}
 		}
-		
-		$document->getElementsByTagName('import')->item(0)->appendChild($page);
 		
 		return $page;
 	}

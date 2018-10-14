@@ -225,25 +225,7 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		$sortFunction = static::getSortFunction([
-			[
-				'isAttribute' => 1,
-				'name' => 'name'
-			]
-		]);
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$provider = $document->createElement($this->tagName);
@@ -266,8 +248,6 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		if (!empty($data['className'])) {
 			$provider->appendChild($document->createElement('className', $data['className']));
 		}
-		
-		$document->getElementsByTagName('import')->item(0)->appendChild($provider);
 		
 		return $provider;
 	}

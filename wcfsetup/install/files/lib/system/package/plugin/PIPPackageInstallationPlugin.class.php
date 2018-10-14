@@ -179,34 +179,11 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
+		$data = $form->getData()['data'];
 		
-		$sortFunction = static::getSortFunction([
-			[
-				'isAttribute' => 1,
-				'name' => 'name'
-			]
-		]);
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
-		/** @var TextFormField $className */
-		$className = $form->getNodeById('className');
-		/** @var TextFormField $pluginName */
-		$pluginName = $form->getNodeById('pluginName');
-		
-		$pip = $document->createElement($this->tagName, $className->getSaveValue());
-		$pip->setAttribute('name', $pluginName->getSaveValue());
-		
-		$document->getElementsByTagName('import')->item(0)->appendChild($pip);
+		$pip = $document->createElement($this->tagName, $data['className']);
+		$pip->setAttribute('name', $data['name']);
 		
 		return $pip;
 	}

@@ -198,42 +198,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), function(\DOMElement $element1, \DOMElement $element2) {
-			$showOrder1 = PHP_INT_MAX;
-			if ($element1->getElementsByTagName('showorder')->length === 1) {
-				$showOrder1 = $element1->getElementsByTagName('showorder')->item(0)->nodeValue;
-			}
-			
-			$showOrder2 = PHP_INT_MAX;
-			if ($element2->getElementsByTagName('showorder')->length === 1) {
-				$showOrder2 = $element2->getElementsByTagName('showorder')->item(0)->nodeValue;
-			}
-			
-			if ($showOrder1 !== $showOrder2) {
-				return $showOrder1 > $showOrder2;
-			}
-			
-			return strcmp(
-				$element1->getAttribute('name'),
-				$element2->getAttribute('name')
-			);
-		});
-		$this->sortChildNodes($document->getElementsByTagName('delete'), function(\DOMElement $element1, \DOMElement $element2) {
-			return strcmp(
-				$element1->getAttribute('name'),
-				$element2->getAttribute('name')
-			);
-		});
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$acpSearchProvider = $document->createElement($this->tagName);
@@ -242,8 +207,6 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 		if (isset($data['showorder'])) {
 			$acpSearchProvider->appendChild($document->createElement('showorder', (string)$data['showorder']));
 		}
-		
-		$document->getElementsByTagName('import')->item(0)->appendChild($acpSearchProvider);
 		
 		return $acpSearchProvider;
 	}

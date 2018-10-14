@@ -155,27 +155,12 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		$sortFunction = static::getSortFunction(['objectname']);
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$coreObject = $document->createElement($this->tagName);
 		
 		$coreObject->appendChild($document->createElement('objectname', $data['objectname']));
-		
-		$document->getElementsByTagName('import')->item(0)->appendChild($coreObject);
 		
 		return $coreObject;
 	}

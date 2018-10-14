@@ -520,25 +520,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		$sortFunction = static::getSortFunction([
-			[
-				'isAttribute' => 1,
-				'name' => 'identifier'
-			]
-		]);
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
 		
 		if ($formData['data']['identifier'] === 'com.woltlab.wcf.MainMenu') {
@@ -577,8 +559,6 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			
 			$menu->appendChild($box);
 		}
-		
-		$document->getElementsByTagName('import')->item(0)->appendChild($menu);
 		
 		return $menu;
 	}

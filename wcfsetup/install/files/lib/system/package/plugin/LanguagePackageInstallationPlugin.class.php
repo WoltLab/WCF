@@ -725,23 +725,7 @@ XML;
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$sortFunction = static::getSortFunction([
-			[
-				'isAttribute' => 1,
-				'name' => 'name'
-			]
-		]);
-		
-		$this->sortChildNodes($document->childNodes, $sortFunction);
-		$this->sortChildNodes($document->getElementsByTagName('category'), $sortFunction);
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$languageCode = $document->documentElement->getAttribute('languagecode');

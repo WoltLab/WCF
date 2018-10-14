@@ -352,20 +352,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		$sortFunction = static::getSortFunction(['objecttype', 'name']);
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $sortFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $sortFunction);
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$event = $document->createElement($this->tagName);
@@ -389,8 +376,6 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 				);
 			}
 		}
-		
-		$document->getElementsByTagName('import')->item(0)->appendChild($event);
 		
 		return $event;
 	}

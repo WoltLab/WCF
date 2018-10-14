@@ -530,24 +530,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		// do not support imported menu items automatically
-		
-		$this->sortChildNodes($document->getElementsByTagName('delete'), static::getSortFunction([
-			[
-				'isAttribute' => 1,
-				'name' => 'identifier'
-			]
-		]));
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
 		$data = $formData['data'];
 		
@@ -573,8 +556,6 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				$menuItem->appendChild($document->createElement($property, (string)$data[$property]));
 			}
 		}
-		
-		$document->getElementsByTagName('import')->item(0)->appendChild($menuItem);
 		
 		return $menuItem;
 	}

@@ -29,6 +29,7 @@ use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\StringUtil;
+use wcf\util\XML;
 
 /**
  * Abstract implementation of a package installation plugin for options.
@@ -942,106 +943,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		// `<categories>` before `<options>`
-		$compareFunction = function(\DOMElement $element1, \DOMElement $element2) {
-			if ($element1->nodeName === 'categories') {
-				return -1;
-			}
-			else if ($element2->nodeName === 'categories') {
-				return 1;
-			}
-			
-			return 0;
-		};
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
-		
-		$xpath = new \DOMXPath($document);
-		$xpath->registerNamespace('ns', $document->documentElement->getAttribute('xmlns'));
-		
-		// sort categories
-		$categoryOrder = array_flip(array_keys($this->getSortedCategories()));
-		
-		$this->sortChildNodes(
-			$xpath->query('/ns:data/ns:import/ns:categories'),
-			function(\DOMElement $category1, \DOMElement $category2) use ($categoryOrder) {
-				return $categoryOrder[$category1->getAttribute('name')] <=> $categoryOrder[$category2->getAttribute('name')];
-			}
-		);
-		
-		// sort options
-		$this->sortChildNodes(
-			$xpath->query('/ns:data/ns:import/ns:options'),
-			function(\DOMElement $option1, \DOMElement $option2) use ($categoryOrder) {
-				$category1 = $option1->getElementsByTagName('categoryname')->item(0)->nodeValue;
-				$category2 = $option2->getElementsByTagName('categoryname')->item(0)->nodeValue;
-				
-				if ($category1 !== 'hidden') {
-					if ($category2 !== 'hidden') {
-						$cmp = $categoryOrder[$category1] <=> $categoryOrder[$category2];
-						
-						if ($cmp === 0) {
-							$showOrder1 = $option1->getElementsByTagName('showorder')->item(0);
-							$showOrder2 = $option2->getElementsByTagName('showorder')->item(0);
-							
-							if ($showOrder1 !== null) {
-								if ($showOrder2 !== null) {
-									return $showOrder1->nodeValue <=> $showOrder2->nodeValue;
-								}
-								
-								return -1;
-							}
-							else if ($showOrder2 !== null) {
-								return 1;
-							}
-							
-							return strcmp($option1->nodeValue, $option2->nodeValue);
-						}
-						
-						return $cmp;
-					}
-					
-					return -1;
-				}
-				else if ($category2 !== 'hidden') {
-					return 1;
-				}
-				
-				return strcmp($option1->nodeValue, $option2->nodeValue);
-			}
-		);
-		
-		// sort deleted elements
-		$this->sortChildNodes($document->getElementsByTagName('delete'), function(\DOMElement $element1, \DOMElement $element2) use ($categoryOrder) {
-			if ($element1->nodeName === 'optioncategory') {
-				if ($element2->nodeName === 'optioncategory') {
-					return $categoryOrder[$element1->getAttribute('name')] <=> $categoryOrder[$element2->getAttribute('name')];
-				}
-				else {
-					return -1;
-				}
-			}
-			else if ($element2->nodeName === 'optioncategory') {
-				return 1;
-			}
-			
-			// two options
-			return strcmp($element1->nodeName, $element2->nodeName);
-		});
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData()['data'];
-		
-		$xpath = new \DOMXPath($document);
-		$xpath->registerNamespace('ns', $document->documentElement->getAttribute('xmlns'));
 		
 		switch ($this->entryType) {
 			case 'categories':
@@ -1092,12 +995,40 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					}
 				}
 				
-				$xpath->query('/ns:data/ns:import/ns:options')->item(0)->appendChild($option);
-				
 				return $option;
 			
 			default:
 				throw new \LogicException('Unreachable');
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function insertNewXmlElement(XML $xml, \DOMElement $newElement) {
+		switch ($this->entryType) {
+			case 'categories':
+				$categories = $xml->xpath()->query('/ns:data/ns:import/ns:categories')->item(0);
+				if ($categories === null) {
+					$categories = $xml->getDocument()->createElement('categories');
+					$xml->xpath()->query('/ns:data/ns:import')->item(0)->appendChild($categories);
+				}
+				
+				$categories->appendChild($newElement);
+				
+				break;
+			
+			case 'options':
+				$options = $xml->xpath()->query('/ns:data/ns:import/ns:options')->item(0);
+				if ($options === null) {
+					$categories = $xml->getDocument()->createElement('options');
+					$xml->xpath()->query('/ns:data/ns:import')->item(0)->appendChild($categories);
+				}
+				
+				$options->appendChild($newElement);
+				
+				break;
 		}
 	}
 }

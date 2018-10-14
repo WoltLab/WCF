@@ -494,25 +494,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function sortDocument(\DOMDocument $document) {
-		$this->sortImportDelete($document);
-		
-		$compareFunction = static::getSortFunction([
-			[
-				'isAttribute' => 1,
-				'name' => 'name'
-			]
-		]);
-		
-		$this->sortChildNodes($document->getElementsByTagName('import'), $compareFunction);
-		$this->sortChildNodes($document->getElementsByTagName('delete'), $compareFunction);
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$bbcode = $document->createElement($this->tagName);
@@ -558,8 +540,6 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 				$attributes->appendChild($attribute);
 			}
 		}
-		
-		$document->getElementsByTagName('import')->item(0)->appendChild($bbcode);
 		
 		return $bbcode;
 	}
