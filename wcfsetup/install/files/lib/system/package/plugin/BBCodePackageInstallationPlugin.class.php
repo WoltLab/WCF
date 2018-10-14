@@ -248,7 +248,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			'htmlOpen' => 'htmlopen',
 			'isBlockElement' => 'isBlockElement',
 			'isSourceCode' => 'sourcecode',
-			'wysiwygIcon' => 'wysiwygicon'
+			'wysiwygicon' => 'wysiwygicon'
 		];
 		foreach ($optionalElements as $arrayKey => $elementName) {
 			$child = $element->getElementsByTagName($elementName)->item(0);
@@ -257,7 +257,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			}
 		}
 		
-		if (!empty($data['wysiwygIcon']) && !empty($data['buttonLabel'])) {
+		if (!empty($data['wysiwygicon']) && !empty($data['buttonLabel'])) {
 			$data['showButton'] = 1;
 		}
 		
