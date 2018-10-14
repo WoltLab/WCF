@@ -2,6 +2,7 @@
 namespace wcf\system\devtools\pip;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\IFormNode;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\util\DOMUtil;
 use wcf\util\XML;
@@ -153,7 +154,8 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 			
 			$data = $this->getElementData($element);
 			
-			/** @var IFormNode $node */
+			/** @var IFormNode $node
+			 */
 			foreach ($document->getIterator() as $node) {
 				if ($node instanceof IFormField && $node->isAvailable()) {
 					$key = $node->getId();

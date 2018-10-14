@@ -613,7 +613,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @return	string
 	 */
 	protected function getEmptyXml($languageCode) {
-		$xsdFilename = $this->getXsdFilenlangame();
+		$xsdFilename = $this->getXsdFilename();
 		
 		$language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
 		if ($language === null) {

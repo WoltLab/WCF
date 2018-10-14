@@ -2,7 +2,6 @@
 namespace wcf\system\devtools\pip;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\system\devtools\package\DevtoolsInstaller;
-use wcf\system\devtools\package\DevtoolsPackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
 
 /**
