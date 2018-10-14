@@ -116,7 +116,7 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 				->label('wcf.acp.pip.mediaProvider.name')
 				->description('wcf.acp.pip.mediaProvider.name.description')
 				->addValidator(new FormFieldValidator('format', function(TextFormField $formField) {
-					if (!preg_match('~^[a-z][A-z]+$~', $formField->getSaveValue())) {
+					if (!preg_match('~^[a-z][A-z0-9-]+$~', $formField->getSaveValue())) {
 						$formField->addValidationError(
 							new FormFieldValidationError(
 								'format',
