@@ -302,7 +302,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 			$data['permissions'] = $permissions->nodeValue;
 		}
 		
-		$showOrder = $element->getElementsByTagName('showOrder')->item(0);
+		$showOrder = $element->getElementsByTagName('showorder')->item(0);
 		if ($showOrder !== null) {
 			$data['showOrder'] = $showOrder->nodeValue;
 		}
