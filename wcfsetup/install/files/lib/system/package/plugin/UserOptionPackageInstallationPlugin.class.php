@@ -192,6 +192,17 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		parent::addFormFields($form);
 		
 		if ($this->entryType === 'options') {
+			// add `hidden` pseudo-category
+			/** @var SingleSelectionFormField $categoryName */
+			$categoryName = $form->getNodeById('categoryName');
+			$options = $categoryName->getNestedOptions();
+			$options[] = [
+				'depth' => 0,
+				'label' => 'hidden',
+				'value' => 'hidden'
+			];
+			$categoryName->options($options, true);
+			
 			/** @var IFormContainer $dataContainer */
 			$dataContainer = $form->getNodeById('data');
 			
