@@ -224,7 +224,10 @@ class XML {
 			$this->getAttributes($this->document->documentElement)
 		);
 		foreach ($this->document->documentElement->childNodes as $childNode) {
-			$this->writeElement($writer, $childNode, $cdata);
+			// only consider dom elements, ignore comments
+			if ($childNode instanceof \DOMElement) {
+				$this->writeElement($writer, $childNode, $cdata);
+			}
 		}
 		$writer->endDocument($fileLocation);
 	}
