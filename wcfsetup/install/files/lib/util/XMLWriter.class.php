@@ -52,11 +52,18 @@ class XMLWriter {
 		
 		$this->xml->startDocument('1.0', 'UTF-8');
 		$this->startElement($rootElement);
-		$attributes = array_merge($attributes, [
-			'xmlns' => $namespace,
-			'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
-			'xsi:schemaLocation' => $namespace . ' ' . $schemaLocation
-		]);
+		$attributes = array_merge(
+			[
+				'xmlns' => $namespace,
+				'xmlns:xsi' => 'http://www.w3.org/2001/XMLSchema-instance',
+				'xsi:schemaLocation' => $namespace . ' ' . $schemaLocation
+			],
+			// `xmlns`, `xmlns:xsi`, and `xsi:schemaLocation` are explicitly set
+			// as first attributes in that order 
+			array_filter($attributes, function($attributeName) {
+				return !in_array($attributeName, ['xmlns', 'xmlns:xsi', 'xsi:schemaLocation']);
+			}, ARRAY_FILTER_USE_KEY)
+		);
 		$this->writeAttributes($attributes);
 		
 		$this->activeDocument = true;
