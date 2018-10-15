@@ -386,19 +386,24 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 					/** @var SingleSelectionFormField $templateName */
 					$templateName = $document->getNodeById('acpTemplateName');
 					
-					$templateName->value($data['templateName']);
+					/** @var SingleSelectionFormField $eventName */
+					$eventName = $document->getNodeById('acp_' . $data['templateName'] . '_eventName');
 					break;
 					
 				case 'user':
 					/** @var SingleSelectionFormField $templateName */
 					$templateName = $document->getNodeById('templateName');
 					
-					$templateName->value($data['templateName']);
+					/** @var SingleSelectionFormField $eventName */
+					$eventName = $document->getNodeById($data['templateName'] . '_eventName');
 					break;
 					
 				default:
 					throw new \LogicException("Unknown enviornment '{$data['environment']}'.");
 			}
+			
+			$templateName->value($data['templateName']);
+			$eventName->value($data['eventName']);
 			
 			return true;
 		}
