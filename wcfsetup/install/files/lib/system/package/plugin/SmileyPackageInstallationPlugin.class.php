@@ -169,7 +169,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 					
 					if (
 						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
-						$this->editedEntry->getAttribute('aliases') !== $formField->getSaveValue()
+						$this->editedEntry->getElementsByTagName('aliases')->item(0)->nodeValue !== $formField->getSaveValue()
 					) {
 						$notUniqueCodes = [];
 						foreach ($formField->getValue() as $alias) {
