@@ -45,9 +45,7 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 			
 			$this->saveObject($newElement);
 			
-			// TODO: while creating/testing the gui, write into a temporary file
-			// $xml->write($this->getXmlFileLocation($project));
-			$xml->write(substr($xml->getPath(), 0, -4) . '_tmp.xml');
+			$xml->write($xml->getPath());
 		}
 	}
 	
@@ -61,7 +59,7 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 	 * @return	string			new identifier
 	 */
 	public function editEntry(IFormDocument $form, $identifier) {
-		$newEntry = null;
+		$newElement = null;
 		foreach ($this->getProjectXmls() as $xml) {
 			$document = $xml->getDocument();
 			
@@ -70,20 +68,18 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 			
 			// replace old element
 			$element = $this->getElementByIdentifier($xml, $identifier);
-			DOMUtil::replaceElement($newElement, $element);
+			DOMUtil::replaceElement($element, $newElement);
 			
-			$this->saveObject($newEntry, $element);
+			$this->saveObject($newElement, $element);
 			
-			// TODO: while creating/testing the gui, write into a temporary file
-			// $xml->write($this->getXmlFileLocation($project));
-			$xml->write(substr($xml->getPath(), 0, -4) . '_tmp.xml');
+			$xml->write($xml->getPath());
 		}
 		
-		if ($newEntry === null) {
+		if ($newElement === null) {
 			throw new \UnexpectedValueException("Have not edited any entry");
 		}
 		
-		return $this->getElementIdentifier($newEntry);
+		return $this->getElementIdentifier($newElement);
 	}
 	
 	/**
