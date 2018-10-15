@@ -780,16 +780,15 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 		$box->appendChild($document->createElement('boxType', $data['boxType']));
 		$box->appendChild($document->createElement('position', $data['position']));
 		
-		$optionals = [
-			'objectType' => '',
-			'cssClassName' => '',
-			'showHeader' => 0
-		];
-		foreach ($optionals as $field => $defaultValue) {
-			if (isset($data[$field]) && $data[$field] !== $defaultValue) {
-				$box->appendChild($document->createElement($field, (string)$data[$field]));
-			}
-		}
+		$this->appendElementChildren(
+			$box,
+			[
+				'objectType' => '',
+				'cssClassName' => '',
+				'showHeader' => 0
+			],
+			$form
+		);
 		
 		if (!empty($data['visibilityExceptions'])) {
 			$box->appendChild($document->createElement('visibleEverywhere', (string)($data['visibleEverywhere'] ?? 0)));

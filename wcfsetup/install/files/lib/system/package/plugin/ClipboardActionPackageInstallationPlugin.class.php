@@ -300,11 +300,14 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 		$clipboardAction = $document->createElement($this->tagName);
 		$clipboardAction->setAttribute('name', $data['name']);
 		
-		$clipboardAction->appendChild($document->createElement('actionclassname', $data['actionclassname']));
-		
-		if (!empty($data['showorder'])) {
-			$clipboardAction->appendChild($document->createElement('showorder', (string)$data['showorder']));
-		}
+		$this->appendElementChildren(
+			$clipboardAction,
+			[
+				'actionclassname',
+				'showorder' => null
+			],
+			$form
+		);
 		
 		$pages = $document->createElement('pages');
 		$clipboardAction->appendChild($pages);

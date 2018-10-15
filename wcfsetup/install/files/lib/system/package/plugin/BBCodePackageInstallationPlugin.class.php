@@ -500,21 +500,19 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		$bbcode = $document->createElement($this->tagName);
 		$bbcode->setAttribute('name', $data['name']);
 		
-		$fields = [
-			'classname' => '',
-			'htmlclose' => '',
-			'htmlopen' => '',
-			'isBlockElement' => 0,
-			'sourcecode' => 0,
-			'buttonlabel' => '',
-			'wysiwygicon' => ''
-		];
-		
-		foreach ($fields as $field => $defaultValue) {
-			if (isset($data[$field]) && $data[$field] !== $defaultValue) {
-				$bbcode->appendChild($document->createElement($field, (string) $data[$field]));
-			}
-		}
+		$this->appendElementChildren(
+			$bbcode,
+			[
+				'classname' => '',
+				'htmlclose' => '',
+				'htmlopen' => '',
+				'isBlockElement' => 0,
+				'sourcecode' => 0,
+				'buttonlabel' => '',
+				'wysiwygicon' => ''
+			],
+			$form
+		);
 		
 		if (!empty($data['attributes'])) {
 			$attributes = $document->createElement('attributes');

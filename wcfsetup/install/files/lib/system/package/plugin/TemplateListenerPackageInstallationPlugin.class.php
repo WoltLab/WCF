@@ -11,6 +11,7 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
@@ -225,7 +226,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		foreach ($templateEvents as $templateName => $events) {
 			$dataContainer->appendChild(
 				SingleSelectionFormField::create($templateName . '_eventName')
-					->objectProperty('eventName')
+					->objectProperty('eventname')
 					->label('wcf.acp.pip.templateListener.eventName')
 					->description('wcf.acp.pip.templateListener.eventName.description')
 					->required()
@@ -241,7 +242,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		foreach ($acpTemplateEvents as $templateName => $events) {
 			$dataContainer->appendChild(
 				SingleSelectionFormField::create('acp_' . $templateName . '_eventName')
-					->objectProperty('eventName')
+					->objectProperty('eventname')
 					->label('wcf.acp.pip.templateListener.eventName')
 					->description('wcf.acp.pip.templateListener.eventName.description')
 					->required()
@@ -343,6 +344,13 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 				->field($form->getNodeById('environment'))
 				->values(['admin'])
 		);
+		
+		// ensure proper normalization of template code
+		$form->getDataHandler()->add(new CustomFormFieldDataProcessor('templateCode', function(IFormDocument $document, array $parameters) {
+			$parameters['data']['templatecode'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['templatecode']));
+			
+			return $parameters;
+		}));
 	}
 	
 	/**
@@ -434,13 +442,18 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		$listener = $document->createElement($this->tagName);
 		$listener->setAttribute('name', $data['name']);
 		
-		$listener->appendChild($document->createElement('environment', $data['environment']));
-		$listener->appendChild($document->createElement('templatename', $data['templatename']));
-		$listener->appendChild($document->createElement('eventname', $data['eventName']));
-		
-		$templateCode = $document->createElement('templatecode');
-		$templateCode->appendChild($document->createCDATASection(StringUtil::unifyNewlines(StringUtil::escapeCDATA($data['templatecode']))));
-		$listener->appendChild($templateCode);
+		$this->appendElementChildren(
+			$listener,
+			[
+				'environment',
+				'templatename',
+				'eventname',
+				'templatecode' => [
+					'cdata' => true
+				]
+			],
+			$form
+		);
 		
 		return $listener;
 	}

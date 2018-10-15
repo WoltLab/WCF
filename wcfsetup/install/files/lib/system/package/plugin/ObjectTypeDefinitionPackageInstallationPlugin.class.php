@@ -210,14 +210,16 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	 * @since	3.2
 	 */
 	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$data = $form->getData()['data'];
-		
 		$definition = $document->createElement($this->tagName);
-		$definition->appendChild($document->createElement('name', $data['name']));
 		
-		if (!empty($data['interfacename'])) {
-			$definition->appendChild($document->createElement('interfacename', $data['interfacename']));
-		}
+		$this->appendElementChildren(
+			$definition,
+			[
+				'name',
+				'interfacename' => ''
+			],
+			$form
+		);
 		
 		return $definition;
 	}

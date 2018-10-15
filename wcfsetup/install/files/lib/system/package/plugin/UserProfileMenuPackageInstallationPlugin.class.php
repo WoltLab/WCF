@@ -230,18 +230,17 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 		
 		$userProfileMenuItem = $document->createElement($this->tagName);
 		$userProfileMenuItem->setAttribute('name', $data['name']);
-		$userProfileMenuItem->appendChild($document->createElement('classname', $data['classname']));
 		
-		foreach (['options', 'permissions', 'showorder'] as $optionalElement) {
-			if (!empty($data[$optionalElement])) {
-				$userProfileMenuItem->appendChild(
-					$document->createElement(
-						$optionalElement,
-						(string)$data[$optionalElement]
-					)
-				);
-			}
-		}
+		$this->appendElementChildren(
+			$userProfileMenuItem,
+			[
+				'classname',
+				'options' => '',
+				'permissions' => '',
+				'showorder' => null
+			],
+			$form
+		);
 		
 		return $userProfileMenuItem;
 	}

@@ -59,6 +59,57 @@ trait TXmlGuiPackageInstallationPlugin {
 	}
 	
 	/**
+	 * Adds optional child elements to the given elements based on the given
+	 * child data and form.
+	 *
+	 * @param	\DOMElement	$element		element to which the child elements are added
+	 * @param	array		$children
+	 * @param	IFormDocument	$form			form containing the children's data
+	 */
+	protected function appendElementChildren(\DOMElement $element, array $children, IFormDocument $form) {
+		$data = $form->getData()['data'];
+		
+		$document = $element->ownerDocument;
+		
+		foreach ($children as $index => $key) {
+			if (is_string($index)) {
+				$childName = $index;
+				if (!is_array($key)) {
+					$isOptional = true;
+					$cdata = false;
+					$defaultValue = $key;
+				}
+				else {
+					$isOptional = array_key_exists('defaultValue', $key);
+					$cdata = $key['cdata'] ?? false;
+					$defaultValue = $key['defaultValue'] ?? null;
+				}
+			}
+			else {
+				$childName = $key;
+				$isOptional = false;
+				$cdata = false;
+				$defaultValue = null;
+			}
+			
+			if (!$isOptional || (isset($data[$childName]) && $data[$childName] !== $defaultValue)) {
+				if ($cdata) {
+					$childElement = $document->createElement($childName);
+					$childElement->appendChild($document->createCDATASection($data[$childName]));
+				}
+				else {
+					$childElement = $document->createElement(
+						$childName,
+						(string)$data[$childName]
+					);
+				}
+				
+				$element->appendChild($childElement);
+			}
+		}
+	}
+	
+	/**
 	 * Creates a new XML element for the given document using the data provided
 	 * by the given form and return the new dom element.
 	 * 

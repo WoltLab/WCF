@@ -340,9 +340,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		
 		$cronjob = $document->createElement($this->tagName);
 		$cronjob->setAttribute('name', $formData['name']);
-		
-		$className = $document->createElement('classname', $formData['classname']);
-		$cronjob->appendChild($className);
+		$cronjob->appendChild($document->createElement('classname', $formData['classname']));
 		
 		if (isset($formData['description'])) {
 			if ($formData['description'] !== '') {
@@ -375,19 +373,21 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 			}
 		}
 		
-		foreach (['startmonth', 'startdom', 'startdow', 'starthour', 'startminute'] as $timeProperty) {
-			$cronjob->appendChild($document->createElement($timeProperty, $formData[$timeProperty]));
-		}
-		
-		if (isset($formData['options']) && $formData['options'] !== '') {
-			$cronjob->appendChild($document->createElement('options', $formData['options']));
-		}
-		
-		foreach (['canbeedited' => 1, 'canbedisabled' => 1, 'isdisabled' => 0] as $booleanProperty => $defaultValue) {
-			if ($formData[$booleanProperty] !== $defaultValue) {
-				$cronjob->appendChild($document->createElement($booleanProperty, (string) $formData[$booleanProperty]));
-			}
-		}
+		$this->appendElementChildren(
+			$cronjob,
+			[
+				'startmonth',
+				'startdom',
+				'startdow',
+				'starthour',
+				'startminute',
+				'options' => '',
+				'canbeedited' => 1,
+				'canbedisabled' => 1,
+				'isdisabled' => 0
+			],
+			$form
+		);
 		
 		return $cronjob;
 	}

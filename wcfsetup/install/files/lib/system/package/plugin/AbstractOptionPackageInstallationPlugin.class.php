@@ -307,16 +307,16 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 				SET	parentCategoryName = ?,
 					permissions = ?,
 					options = ?
-					".($category['showOrder'] !== null ? ", showOrder = ?" : "")."
+					".(isset($category['showOrder']) ? ", showOrder = ?" : "")."
 				WHERE	categoryID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			
 			$data = [
 				$category['parentCategoryName'],
-				$category['permissions'],
-				$category['options']
+				$category['permissions'] ?? '',
+				$category['options'] ?? ''
 			];
-			if ($category['showOrder'] !== null) $data[] = $category['showOrder'];
+			if (isset($category['showOrder'])) $data[] = $category['showOrder'];
 			$data[] = $row['categoryID'];
 			
 			$statement->execute($data);
@@ -959,41 +959,36 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					}
 				}
 				
-				$xpath->query('/ns:data/ns:import/ns:categories')->item(0)->appendChild($category);
-				
 				return $category;
 			
 			case 'options':
 				$option = $document->createElement($this->tagName);
 				$option->setAttribute('name', $formData['name']);
 				
-				foreach (['categoryname', 'optiontype'] as $field) {
-					$option->appendChild($document->createElement($field, (string) $formData[$field]));
-				}
-				
-				$fields = [
-					'defaultvalue' => '',
-					'validationpattern' => '',
-					'enableoptions' => '',
-					'showorder' => 0,
-					'options' => '',
-					'permissions' => '',
-					
-					// option type-specific elements
-					'minvalue' => null,
-					'maxvalue' => null,
-					'suffix' => '',
-					'minlength' => null,
-					'maxlength' => null,
-					'issortable' => 0,
-					'allowemptyvalue' => 0,
-					'disableAutocomplete' => 0
-				];
-				foreach ($fields as $field => $defaultValue) {
-					if (isset($formData[$field]) && $formData[$field] !== $defaultValue) {
-						$option->appendChild($document->createElement($field, StringUtil::unifyNewlines((string) $formData[$field])));
-					}
-				}
+				$this->appendElementChildren(
+					$option,
+					[
+						'categoryname',
+						'optiontype',
+						'defaultvalue' => '',
+						'validationpattern' => '',
+						'enableoptions' => '',
+						'showorder' => 0,
+						'options' => '',
+						'permissions' => '',
+						
+						// option type-specific elements
+						'minvalue' => null,
+						'maxvalue' => null,
+						'suffix' => '',
+						'minlength' => null,
+						'maxlength' => null,
+						'issortable' => 0,
+						'allowemptyvalue' => 0,
+						'disableAutocomplete' => 0
+					],
+					$form
+				);
 				
 				return $option;
 			

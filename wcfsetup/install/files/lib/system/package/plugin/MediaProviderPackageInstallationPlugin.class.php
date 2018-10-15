@@ -231,23 +231,21 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		$provider = $document->createElement($this->tagName);
 		$provider->setAttribute('name', $data['name']);
 		
-		$provider->appendChild($document->createElement('title', $data['title']));
-		
-		$regex = $document->createElement('regex');
-		$regex->appendChild($document->createCDATASection(
-			StringUtil::escapeCDATA(StringUtil::unifyNewlines($data['regex']))
-		));
-		$provider->appendChild($regex);
-		
-		if (!empty($data['html'])) {
-			$htmlElement = $document->createElement('html');
-			$htmlElement->appendChild($document->createCDATASection(StringUtil::escapeCDATA($data['html'])));
-			$provider->appendChild($htmlElement);
-		}
-		
-		if (!empty($data['className'])) {
-			$provider->appendChild($document->createElement('className', $data['className']));
-		}
+		$this->appendElementChildren(
+			$provider,
+			[
+				'title',
+				'regex' => [
+					'cdata' => true
+				],
+				'html' => [
+					'cdata' => true,
+					'defaultValue' => ''
+				],
+				'className' => ''
+			],
+			$form
+		);
 		
 		return $provider;
 	}

@@ -146,16 +146,16 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	 * @since	3.2
 	 */
 	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$formData = $form->getData()['data'];
-		
 		$menuItem = parent::createXmlElement($document, $form);
 		
-		if (!empty($formData['classname'])) {
-			$menuItem->appendChild($document->createElement('classname', $formData['classname']));
-		}
-		if (!empty($formData['iconclassname'])) {
-			$menuItem->appendChild($document->createElement('iconclassname', $formData['iconclassname']));
-		}
+		$this->appendElementChildren(
+			$menuItem,
+			[
+				'classname' => '',
+				'iconclassname' => ''
+			],
+			$form
+		);
 		
 		return $menuItem;
 	}

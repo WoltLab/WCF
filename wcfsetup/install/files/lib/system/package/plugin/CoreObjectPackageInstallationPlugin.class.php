@@ -156,11 +156,9 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @since	3.2
 	 */
 	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$data = $form->getData()['data'];
-		
 		$coreObject = $document->createElement($this->tagName);
 		
-		$coreObject->appendChild($document->createElement('objectname', $data['objectname']));
+		$this->appendElementChildren($coreObject, ['objectname'], $form);
 		
 		return $coreObject;
 	}

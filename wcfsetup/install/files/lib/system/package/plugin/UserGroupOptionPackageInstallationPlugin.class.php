@@ -320,23 +320,19 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$option = parent::createXmlElement($document, $form);
 		
-		$formData = $form->getData()['data'];
-		
 		switch ($this->entryType) {
 			case 'options':
-				$fields = [
-					'admindefaultvalue' => '',
-					'moddefaultvalue' => '',
-					'usersonly' => 0,
-					'excludedInTinyBuild' => 0,
-					'wildcard' => ''
-				];
-				
-				foreach ($fields as $field => $defaultValue) {
-					if (isset($formData[$field]) && $formData[$field] !== $defaultValue) {
-						$option->appendChild($document->createElement($field, (string) $formData[$field]));
-					}
-				}
+				$this->appendElementChildren(
+					$option,
+					[
+						'admindefaultvalue' => '',
+						'moddefaultvalue' => '',
+						'usersonly' => 0,
+						'excludedInTinyBuild' => 0,
+						'wildcard' => ''
+					],
+					$form
+				);
 				
 				break;
 		}

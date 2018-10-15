@@ -605,7 +605,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 				$category = $document->createElement('category');
 				$category->setAttribute('name', $formData['name']);
 				
-				$category->appendChild($document->createElement('objecttype', $formData['objecttype']));
+				$this->appendElementChildren($category, ['objecttype'], $form);
 				
 				return $category;
 				
@@ -613,11 +613,14 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 				$option = $document->createElement('option');
 				$option->setAttribute('name', $formData['name']);
 				
-				$option->appendChild($document->createElement('objecttype', $formData['objecttype']));
-				
-				if (isset($formData['categoryname'])) {
-					$option->appendChild($document->createElement('categoryname', $formData['categoryname']));
-				}
+				$this->appendElementChildren(
+					$option,
+					[
+						'objecttype',
+						'categoryname' => ''
+					],
+					$form
+				);
 				
 				return $option;
 		}

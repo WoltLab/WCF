@@ -251,15 +251,18 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
 		$option = parent::createXmlElement($document, $form);
 		
-		$formData = $form->getData()['data'];
-		
 		switch ($this->entryType) {
 			case 'options':
-				foreach (['selectoptions' => '', 'hidden' => 0, 'supporti18n' => 0, 'requirei18n' => 0] as $field => $defaultValue) {
-					if (isset($formData[$field]) && $formData[$field] !== $defaultValue) {
-						$option->appendChild($document->createElement($field, (string) $formData[$field]));
-					}
-				}
+				$this->appendElementChildren(
+					$option,
+					[
+						'selectoptions' => '',
+						'hidden' => 0,
+						'supporti18n' => 0,
+						'requirei18n' => 0
+					],
+					$form
+				);
 				
 				break;
 		}

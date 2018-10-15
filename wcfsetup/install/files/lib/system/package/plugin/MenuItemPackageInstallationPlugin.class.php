@@ -369,6 +369,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				->description('wcf.acp.pip.menuItem.showOrder.description')
 				->objectProperty('showorder')
 				->minimum(1)
+				->nullable()
 		]);
 		
 		/** @var SingleSelectionFormField $menuField */
@@ -535,6 +536,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		$data = $formData['data'];
 		
 		$menuItem = $document->createElement($this->tagName);
+		
 		$menuItem->setAttribute('identifier', $data['identifier']);
 		
 		if (!empty($data['parent'])) {
@@ -551,11 +553,15 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 			$menuItem->appendChild($title);
 		}
 		
-		foreach (['page', 'externalURL', 'showOrder'] as $property) {
-			if (!empty($data[$property])) {
-				$menuItem->appendChild($document->createElement($property, (string)$data[$property]));
-			}
-		}
+		$this->appendElementChildren(
+			$menuItem,
+			[
+				'page' => '',
+				'externalURL' => '',
+				'showOrder' => null
+			],
+			$form
+		);
 		
 		return $menuItem;
 	}

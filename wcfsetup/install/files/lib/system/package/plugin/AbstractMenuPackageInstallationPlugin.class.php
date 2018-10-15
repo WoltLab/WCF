@@ -264,6 +264,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 				->description('wcf.acp.pip.abstractMenu.showOrder.description')
 				->objectProperty('showorder')
 				->minimum(1)
+				->nullable()
 		]);
 	}
 	
@@ -392,11 +393,18 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 		$menuItem = $document->createElement($this->tagName);
 		$menuItem->setAttribute('name', $formData['name']);
 		
-		foreach (['parent', 'controller', 'link', 'options', 'permissions', 'showorder'] as $field) {
-			if (isset($formData[$field]) && $formData[$field] !== '') {
-				$menuItem->appendChild($document->createElement($field, (string) $formData[$field]));
-			}
-		}
+		$this->appendElementChildren(
+			$menuItem,
+			[
+				'parent' => '',
+				'controller' => '',
+				'link' => '',
+				'options' => '',
+				'permissions' => '',
+				'showorder' => null
+			],
+			$form
+		);
 		
 		return $menuItem;
 	}

@@ -6,6 +6,7 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\TextFormField;
@@ -211,6 +212,13 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 				->maximumLength(255)
 				->addValidator($fileValidator)
 		]);
+		
+		// ensure proper normalization of template code
+		$form->getDataHandler()->add(new CustomFormFieldDataProcessor('templateCode', function(IFormDocument $document, array $parameters) {
+			$parameters['data']['aliases'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['aliases']));
+			
+			return $parameters;
+		}));
 	}
 	
 	/**
@@ -269,21 +277,20 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		$smiley = $document->createElement($this->tagName);
 		$smiley->setAttribute('name', $data['name']);
 		
-		foreach (['title', 'path', 'path2x'] as $element) {
-			$smiley->appendChild($document->createElement($element, $data[$element]));
-		}
-		
-		if ($data['aliases'] !== '') {
-			$aliases = $document->createElement('aliases');
-			$aliases->appendChild($document->createCDATASection(
-				StringUtil::escapeCDATA(StringUtil::unifyNewlines($data['aliases']))
-			));
-			$smiley->appendChild($aliases);
-		}
-		
-		if ($data['showorder'] !== null) {
-			$smiley->appendChild($document->createElement('showorder', $data['showorder']));
-		}
+		$this->appendElementChildren(
+			$smiley,
+			[
+				'title',
+				'path',
+				'path2x',
+				'aliases' => [
+					'cdata' => true,
+					'defaultValue' => ''
+				],
+				'showOrder' => null
+			],
+			$form
+		);
 		
 		return $smiley;
 	}

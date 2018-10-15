@@ -766,6 +766,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			$page->appendChild($name);
 		}
 		
+		// TODO: use `appendElementChildren`
 		$optionalElements = [
 			'controller', 'handler', 'controllerCustomURL', 'hasFixedParent',
 			'parent', 'options', 'permissions', 'cssClassName', 'allowSpidersToIndex',

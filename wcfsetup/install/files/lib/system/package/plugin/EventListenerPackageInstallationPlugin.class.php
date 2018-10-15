@@ -334,15 +334,20 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		$eventListener = $document->createElement($this->tagName);
 		$eventListener->setAttribute('name', $data['listenerName']);
 		
-		foreach (['eventclassname', 'eventname', 'listenerclassname'] as $property) {
-			$eventListener->appendChild($document->createElement($property, $data[$property]));
-		}
-		
-		foreach (['environment', 'inherit', 'nice', 'options', 'permissions'] as $optionalProperty) {
-			if (!empty($data[$optionalProperty])) {
-				$eventListener->appendChild($document->createElement($optionalProperty, (string)$data[$optionalProperty]));
-			}
-		}
+		$this->appendElementChildren(
+			$eventListener,
+			[
+				'eventclassname',
+				'eventname',
+				'listenerclassname',
+				'environment' => 'user',
+				'inherit' => 0,
+				'nice' => null,
+				'options' => '',
+				'permissions' => ''
+			],
+			$form
+		);
 		
 		return $eventListener;
 	}

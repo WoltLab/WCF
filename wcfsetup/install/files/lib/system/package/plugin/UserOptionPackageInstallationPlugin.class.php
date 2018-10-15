@@ -383,27 +383,23 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$option = parent::createXmlElement($document, $form);
 		
-		$formData = $form->getData()['data'];
-		
 		switch ($this->entryType) {
 			case 'options':
-				$fields = [
-					'outputclass' => '',
-					'required' => 0,
-					'askduringregistration' => 0,
-					'editable' => 0,
-					'visible' => 0,
-					'searchable' => 0,
-					'isdisabled' => 0,
-					'messageObjectType' => '',
-					'contentpattern' => ''
-				];
-				
-				foreach ($fields as $field => $defaultValue) {
-					if (isset($formData[$field]) && $formData[$field] !== $defaultValue) {
-						$option->appendChild($document->createElement($field, (string) $formData[$field]));
-					}
-				}
+				$this->appendElementChildren(
+					$option,
+					[
+						'outputclass' => '',
+						'required' => 0,
+						'askduringregistration' => 0,
+						'editable' => 0,
+						'visible' => 0,
+						'searchable' => 0,
+						'isdisabled' => 0,
+						'messageObjectType' => '',
+						'contentpattern' => ''
+					],
+					$form
+				);
 				
 				break;
 		}

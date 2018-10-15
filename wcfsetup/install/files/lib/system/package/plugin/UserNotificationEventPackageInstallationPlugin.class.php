@@ -352,29 +352,21 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @since	3.2
 	 */
 	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$data = $form->getData()['data'];
-		
 		$event = $document->createElement($this->tagName);
 		
-		foreach (['name', 'objecttype', 'classname'] as $element) {
-			$event->appendChild(
-				$document->createElement(
-					$element,
-					(string)$data[$element]
-				)
-			);
-		}
-		
-		foreach (['options', 'permissions', 'preset', 'presetmailnotificationtype'] as $optionalElement) {
-			if (!empty($data[$optionalElement])) {
-				$event->appendChild(
-					$document->createElement(
-						$optionalElement,
-						(string)$data[$optionalElement]
-					)
-				);
-			}
-		}
+		$this->appendElementChildren(
+			$event,
+			[
+				'name',
+				'objecttype',
+				'classname',
+				'options' => '',
+				'permissions' => '',
+				'preset' => 0,
+				'presetmailnotificationtype' => ''
+			],
+			$form
+		);
 		
 		return $event;
 	}
