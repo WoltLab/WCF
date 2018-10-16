@@ -504,8 +504,14 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			$bbcode,
 			[
 				'classname' => '',
-				'htmlclose' => '',
-				'htmlopen' => '',
+				'htmlclose' => [
+					'cdata' => true,
+					'defaultValue' => ''
+				],
+				'htmlopen' => [
+					'cdata' => true,
+					'defaultValue' => ''
+				],
 				'isBlockElement' => 0,
 				'sourcecode' => 0,
 				'buttonlabel' => '',
@@ -523,7 +529,9 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 				$attribute->setAttribute('name', (string) $attributeNumber);
 				
 				if (!empty($attributeData['attributeHtml'])) {
-					$attribute->appendChild($document->createElement('html', $attributeData['attributeHtml']));
+					$html = $document->createElement('html');
+					$html->appendChild($document->createCDATASection($attributeData['attributeHtml']));
+					$attribute->appendChild($html);
 				}
 				if (!empty($attributeData['validationPattern'])) {
 					$attribute->appendChild($document->createElement('validationpattern', $attributeData['validationPattern']));
