@@ -26,6 +26,7 @@ use wcf\system\form\builder\IFormDocument;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
+use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
 use wcf\util\XML;
 
@@ -599,18 +600,15 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
+	 * @sicne	3.2
 	 */
 	protected function getImportElements(\DOMXPath $xpath) {
 		return $xpath->query('/ns:language/ns:category/ns:item');
 	}
 	
 	/**
-	 * Returns the xml code of an empty xml file with the appropriate structure
-	 * present for a new entry to be added as if it was added to an existing
-	 * file.
-	 * 
-	 * @param	string		$languageCode
-	 * @return	string
+	 * @inheritDoc
+	 * @sicne	3.2
 	 */
 	protected function getEmptyXml($languageCode) {
 		$xsdFilename = $this->getXsdFilename();
@@ -773,7 +771,7 @@ XML;
 		}
 		
 		/** @var \DOMElement $languageCategory */
-		foreach ($document->documentElement as $languageCategory) {
+		foreach ($document->documentElement->childNodes as $languageCategory) {
 			if ($languageCategory->getAttribute('name') === $languageCategoryName) {
 				$languageCategory->appendChild($languageItem);
 				break;
@@ -789,5 +787,33 @@ XML;
 		}
 		
 		return $languageItem;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function createAndInsertNewXmlElement(XML $xml, IFormDocument $form) {
+		return $this->createXmlElement($xml->getDocument(), $form);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function replaceXmlElement(XML $xml, IFormDocument $form, $identifier) {
+		$newElement = $this->createXmlElement($xml->getDocument(), $form);
+		
+		// replace old element
+		$element = $this->getElementByIdentifier($xml, $identifier);
+		
+		if ($element->parentNode === $newElement->parentNode) {
+			DOMUtil::replaceElement($element, $newElement, false);
+		}
+		else {
+			DOMUtil::removeNode($element);
+		}
+		
+		return $newElement;
 	}
 }

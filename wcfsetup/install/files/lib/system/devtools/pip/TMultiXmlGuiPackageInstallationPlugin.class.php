@@ -38,15 +38,26 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 	 */
 	public function addEntry(IFormDocument $form) {
 		foreach ($this->getProjectXmls() as $xml) {
-			$document = $xml->getDocument();
-			
-			$newElement = $this->createXmlElement($document, $form);
-			$this->insertNewXmlElement($xml, $newElement);
+			$newElement = $this->createAndInsertNewXmlElement($xml, $form);
 			
 			$this->saveObject($newElement);
 			
 			$xml->write($xml->getPath());
 		}
+	}
+	
+	/**
+	 * Creates a new XML element and insert it into the XML file.
+	 * 
+	 * @param	XML		$xml
+	 * @param	IFormDocument	$form
+	 * @return	\DOMElement
+	 */
+	protected function createAndInsertNewXmlElement(XML $xml, IFormDocument $form) {
+		$newElement = $this->createXmlElement($xml->getDocument(), $form);
+		$this->insertNewXmlElement($xml, $newElement);
+		
+		return $newElement;
 	}
 	
 	/**
@@ -61,14 +72,8 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 	public function editEntry(IFormDocument $form, $identifier) {
 		$newElement = null;
 		foreach ($this->getProjectXmls() as $xml) {
-			$document = $xml->getDocument();
-			
-			// add updated element
-			$newElement = $this->createXmlElement($document, $form);
-			
-			// replace old element
 			$element = $this->getElementByIdentifier($xml, $identifier);
-			DOMUtil::replaceElement($element, $newElement);
+			$newElement = $this->replaceXmlElement($xml, $form, $identifier);
 			
 			$this->saveObject($newElement, $element);
 			
@@ -80,6 +85,24 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 		}
 		
 		return $this->getElementIdentifier($newElement);
+	}
+	
+	/**
+	 * Replaces an edited element with a new element and returns the new element.
+	 * 
+	 * @param	XML		$xml
+	 * @param	IFormDocument	$form
+	 * @param	string		$identifier
+	 * @return	\DOMElement
+	 */
+	protected function replaceXmlElement(XML $xml, IFormDocument $form, $identifier) {
+		$newElement = $this->createXmlElement($xml->getDocument(), $form);
+		
+		// replace old element
+		$element = $this->getElementByIdentifier($xml, $identifier);
+		DOMUtil::replaceElement($element, $newElement);
+		
+		return $newElement;
 	}
 	
 	/**
