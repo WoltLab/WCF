@@ -107,7 +107,13 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 						$this->editedEntry->getElementsByTagName('objectname')->item(0)->nodeValue !== $formField->getValue()
 					) {
 						$coreObjectList = new CoreObjectList();
-						$coreObjectList->getConditionBuilder()->add('objectName <> ?', [$formField->getValue()]);
+						$coreObjectList->getConditionBuilder()->add('objectName = ?', [$formField->getValue()]);
+						$coreObjectList->getConditionBuilder()->add('packageID IN (?)', [
+							array_merge(
+								[$this->installation->getPackage()->packageID],
+								array_keys($this->installation->getPackage()->getAllRequiredPackages())
+							)
+						]);
 						
 						if ($coreObjectList->countObjects() > 0) {
 							$formField->addValidationError(
