@@ -156,7 +156,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 						$this->editedEntry->getAttribute('name') !== $formField->getValue()
 					) {
 						$providerList = new ACPSearchProviderList();
-						$providerList->getConditionBuilder()->add('providerName <> ?', [$formField->getValue()]);
+						$providerList->getConditionBuilder()->add('providerName = ?', [$formField->getValue()]);
 						
 						if ($providerList->countObjects() > 0) {
 							$formField->addValidationError(
