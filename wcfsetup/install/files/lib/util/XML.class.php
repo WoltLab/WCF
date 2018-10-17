@@ -256,6 +256,9 @@ class XML {
 				if ($childNode instanceof \DOMElement) {
 					$this->writeElement($writer, $childNode, $cdata);
 				}
+				else if ($childNode instanceof \DOMComment) {
+					$writer->writeComment($childNode->nodeValue);
+				}
 			}
 			$writer->endElement();
 		}
