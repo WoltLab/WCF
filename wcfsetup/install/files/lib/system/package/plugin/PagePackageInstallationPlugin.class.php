@@ -704,7 +704,19 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					$titles[LanguageFactory::getInstance()->getLanguage($languageID)->languageCode] = $title;
 				}
 				
-				$data['name'] = $titles;
+				if (isset($data['name'][LanguageFactory::getInstance()->getDefaultLanguage()->languageID])) {
+					// use the default language
+					$data['name'] = $data['name'][LanguageFactory::getInstance()->getDefaultLanguage()->languageID];
+				}
+				else {
+					$english = LanguageFactory::getInstance()->getLanguageByCode('en');
+					if ($english !== null && isset($data['name'][$english->languageID])) {
+						$data['name'] = $data['name'][$english->languageID];
+					}
+					else {
+						$data['name'] = reset($data['name']);
+					}
+				}
 			}
 			
 			$content = [];
