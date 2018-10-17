@@ -245,6 +245,10 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			}
 		}
 		
+		if ($saveData && !isset($data['aliases'])) {
+			$data['aliases'] = '';
+		}
+		
 		return $data;
 	}
 	
@@ -282,7 +286,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			[
 				'title',
 				'path',
-				'path2x',
+				'path2x' => '',
 				'aliases' => [
 					'cdata' => true,
 					'defaultValue' => ''
