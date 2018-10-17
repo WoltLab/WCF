@@ -54,6 +54,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			this._content = elBySel('.messageContent', this._container);
 			this._textarea = elById('text');
 			this._editor = null;
+			this._guestDialogId = '';
 			this._loadingOverlay = null;
 			
 			// prevent marking of text for quoting
@@ -141,7 +142,9 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			
 			// Ignore requests to submit the message while a previous request is still pending.
 			if (this._content.classList.contains('loading')) {
-				return;
+				if (!this._guestDialogId || !UiDialog.isOpen(this._guestDialogId)) {
+					return;
+				}
 			}
 			
 			if (!this._validate()) {
@@ -378,6 +381,8 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 				var dialog = UiDialog.getDialog(data.returnValues.guestDialogID);
 				elBySel('input[type=submit]', dialog.content).addEventListener(WCF_CLICK_EVENT, this._submitGuestDialog.bind(this));
 				elBySel('input[type=text]', dialog.content).addEventListener('keypress', this._submitGuestDialog.bind(this));
+				
+				this._guestDialogId = data.returnValues.guestDialogID;
 			}
 			else {
 				this._insertMessage(data);
