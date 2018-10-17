@@ -574,7 +574,6 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			TitleFormField::create('contentTitle')
 				->objectProperty('title')
 				->label('wcf.acp.pip.page.contentTitle')
-				->required()
 				->i18n()
 				->i18nRequired()
 				->languageItemPattern('__NONE__'),
@@ -582,7 +581,6 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			MultilineTextFormField::create('contentContent')
 				->objectProperty('content')
 				->label('wcf.acp.pip.page.contentContent')
-				->required()
 				->i18n()
 				->i18nRequired()
 				->languageItemPattern('__NONE__'),
@@ -719,9 +717,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				unset($data[$contentProperty]);
 			}
 			
-			if (!empty($content)) {
-				$data['content'] = $content;
-			}
+			$data['content'] = $content;
 		}
 		
 		return $data;
