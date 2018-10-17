@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\builder\field;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
 
 /**
  * Implementation of a radio buttons form field for selecting a single value.
@@ -38,5 +39,19 @@ class RadioButtonFormField extends AbstractFormField implements ISelectionFormFi
 	 */
 	public function supportsNestedOptions() {
 		return false;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validate() {
+		if (!isset($this->getOptions()[$this->getValue()])) {
+			$this->addValidationError(new FormFieldValidationError(
+				'invalidValue',
+				'wcf.global.form.error.noValidSelection'
+			));
+		}
+		
+		parent::validate();
 	}
 }
