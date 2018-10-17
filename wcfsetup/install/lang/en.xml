@@ -2019,7 +2019,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.menuItem.identifier"><![CDATA[Menu Item Identifier]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier.description"><![CDATA[The menu item identifier is used to update menu items and for menu item-related language item names. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier. Example: <code>com.foo.bar.menu</code>]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
-		<item name="wcf.acp.pip.menuItem.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another menu.]]></item>
+		<item name="wcf.acp.pip.menuItem.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another menu item.]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier.error.tooFewSegments"><![CDATA[The identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.menuItem.menu"><![CDATA[Menu]]></item>
 		<item name="wcf.acp.pip.menuItem.menu.description"><![CDATA[The menu item will belong to the selected menu.]]></item>
@@ -2037,7 +2037,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.page.identifier"><![CDATA[Page Identifier]]></item>
 		<item name="wcf.acp.pip.page.identifier.description"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.pip.page.identifier.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
-		<item name="wcf.acp.pip.page.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another menu.]]></item>
+		<item name="wcf.acp.pip.page.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another page.]]></item>
 		<item name="wcf.acp.pip.page.identifier.error.tooFewSegments"><![CDATA[The identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.page.pageType"><![CDATA[Page Type]]></item>
 		<item name="wcf.acp.pip.page.pageType.description"><![CDATA[The content of “text” pages can be edited by administrators using the built-in WYSIWYG editor. “html” pages addditionally allow HTML code and “tpl” pages also template scripting. The content of “system” pages cannot be edited by administrators as their content is provided by the pages' controller.]]></item>
