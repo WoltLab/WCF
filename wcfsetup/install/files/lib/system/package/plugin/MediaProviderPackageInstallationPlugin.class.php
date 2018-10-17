@@ -193,6 +193,10 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		if ($html !== null) {
 			$data['html'] = $html->nodeValue;
 		}
+		else if ($saveData) {
+			// when saving data, `html` has to be present
+			$data['html'] = '';
+		}
 		
 		$className = $element->getElementsByTagName('className')->item(0);
 		if ($className !== null) {
