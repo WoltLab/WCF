@@ -332,16 +332,12 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				->options(function() {
 					$pageNodeList = (new PageNodeTree())->getNodeList();
 					
-					$nestedOptions = [[
-						'depth' => 0,
-						'label' => 'wcf.global.noSelection',
-						'value' => ''
-					]];
-					
 					$packageIDs = array_merge(
 						[$this->installation->getPackage()->packageID],
 						array_keys($this->installation->getPackage()->getAllRequiredPackages())
 					);
+					
+					$nestedOptions = [];
 					
 					/** @var PageNode $pageNode */
 					foreach ($pageNodeList as $pageNode) {
