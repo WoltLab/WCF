@@ -772,7 +772,7 @@ XML;
 		
 		/** @var \DOMElement $languageCategory */
 		foreach ($document->documentElement->childNodes as $languageCategory) {
-			if ($languageCategory->getAttribute('name') === $languageCategoryName) {
+			if ($languageCategory instanceof \DOMElement && $languageCategory->getAttribute('name') === $languageCategoryName) {
 				$languageCategory->appendChild($languageItem);
 				break;
 			}
