@@ -161,7 +161,7 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 			MultilineTextFormField::create('html')
 				->label('wcf.acp.pip.mediaProvider.html')
 				->description('wcf.acp.pip.mediaProvider.html.description')
-				->addValidator(new FormFieldValidator('noClassName', function(MultilineTextFormField $formField) {
+				->addValidator(new FormFieldValidator('className', function(MultilineTextFormField $formField) {
 					/** @var ClassNameFormField $className */
 					$className = $formField->getDocument()->getNodeById('className');
 					
@@ -170,6 +170,19 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 							new FormFieldValidationError(
 								'className',
 								'wcf.acp.pip.mediaProvider.html.error.className'
+							)
+						);
+					}
+				}))
+				->addValidator(new FormFieldValidator('noClassName', function(MultilineTextFormField $formField) {
+					/** @var ClassNameFormField $className */
+					$className = $formField->getDocument()->getNodeById('className');
+					
+					if ($formField->getSaveValue() === '' && $className->getSaveValue() === '') {
+						$formField->addValidationError(
+							new FormFieldValidationError(
+								'noClassName',
+								'wcf.acp.pip.mediaProvider.html.error.noClassName'
 							)
 						);
 					}

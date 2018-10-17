@@ -1947,7 +1947,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.mediaProvider.regex.description"><![CDATA[The entered regular expressions (without delimiters) are used to check if this media provider is responsible for a given link. Each line is treated as its own regular expression.]]></item>
 		<item name="wcf.acp.pip.mediaProvider.html"><![CDATA[HTML Code]]></item>
 		<item name="wcf.acp.pip.mediaProvider.html.description"><![CDATA[The html code is used to produce the rendered output of the linked media content. Every named group of the regular expression is accessible as <code>{literal}{$name}{/literal}</code> where <code>name</code> is the name of the group.]]></item>
-		<item name="wcf.acp.pip.mediaProvider.html.error.className"><![CDATA[You cannot enter HTML code if you are already using a class that handles the output.]]></item>
+		<item name="wcf.acp.pip.mediaProvider.html.error.className"><![CDATA[You cannot enter HTML code if you have already provided a class that handles the output.]]></item>
+		<item name="wcf.acp.pip.mediaProvider.html.error.noClassName"><![CDATA[You have to provide either HTML code or a class that handles the output.]]></item>
 		<item name="wcf.acp.pip.aclOption.categories.name"><![CDATA[Category Name]]></item>
 		<item name="wcf.acp.pip.aclOption.categories.name.description"><![CDATA[The name of an ACL option category consists of least two segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes.]]></item>
 		<item name="wcf.acp.pip.aclOption.categories.name.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
