@@ -167,7 +167,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IMa
 	public function value($value) {
 		if ($value !== null) {
 			if (is_string($value) && is_numeric($value)) {
-				if (preg_match('~^\d+$~', $value)) {
+				if (preg_match('~^-?\d+$~', $value)) {
 					$value = intval($value);
 				}
 				else {
