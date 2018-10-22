@@ -290,10 +290,12 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			if (options.ignoreError !== true && showError !== false) {
 				var html = this.getErrorHtml(data, xhr);
 				
-				if (UiDialog === undefined) UiDialog = require('Ui/Dialog');
-				UiDialog.openStatic(DomUtil.getUniqueId(), html, {
-					title: Language.get('wcf.global.error.title')
-				});
+				if (html) {
+					if (UiDialog === undefined) UiDialog = require('Ui/Dialog');
+					UiDialog.openStatic(DomUtil.getUniqueId(), html, {
+						title: Language.get('wcf.global.error.title')
+					});
+				}
 			}
 			
 			this._finalize(options);
@@ -326,6 +328,8 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			}
 			
 			if (!message || message === 'undefined') {
+				if (!ENABLE_DEBUG_MODE && !ENABLE_PRODUCTION_DEBUG_MODE) return null;
+				
 				message = 'XMLHttpRequest failed without a responseText. Check your browser console.'
 			}
 			
