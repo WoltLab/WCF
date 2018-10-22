@@ -495,7 +495,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->objectProperty('categoryname')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName.description')
-					->addValidator(self::getObjectTypeAlikeValueValidator('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName')),
+					->addValidator(self::getObjectTypeAlikeValueValidator('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName', 3)),
 				
 				BooleanFormField::create('statDailyHandlerIsDefault')
 					->objectProperty('default')
