@@ -152,11 +152,6 @@ class ModificationLogListPage extends SortablePage {
 	
 	protected function initObjectTypes() {
 		foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.modifiableContent') as $objectType) {
-			/** @noinspection PhpUndefinedFieldInspection */
-			if ($objectType->excludeFromLogList) {
-				continue;
-			}
-			
 			$this->objectTypes[$objectType->objectTypeID] = $objectType;
 			
 			/** @var IExtendedModificationLogHandler $processor */
@@ -164,7 +159,7 @@ class ModificationLogListPage extends SortablePage {
 			if ($processor === null) {
 				$this->unsupportedObjectTypes[] = $objectType;
 			}
-			else {
+			else if ($processor->includeInLogList()) {
 				$this->availableObjectTypeIDs[] = $objectType->objectTypeID;
 				if (!isset($this->packages[$objectType->packageID])) {
 					$this->actions[$objectType->packageID] = [];
