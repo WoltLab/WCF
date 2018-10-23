@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\DatabaseObject;
 use wcf\data\modification\log\IViewableModificationLog;
 use wcf\data\modification\log\ModificationLogList;
 use wcf\data\object\type\ObjectType;
@@ -286,6 +287,8 @@ class ModificationLogListPage extends SortablePage {
 				}
 			}
 		}
+		
+		DatabaseObject::sort($this->logItems, $this->sortField, $this->sortOrder);
 	}
 	
 	/**
