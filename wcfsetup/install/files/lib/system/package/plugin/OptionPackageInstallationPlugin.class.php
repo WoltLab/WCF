@@ -3,15 +3,20 @@ namespace wcf\system\package\plugin;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
 use wcf\data\option\OptionEditor;
+use wcf\data\option\OptionList;
 use wcf\data\package\Package;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\option\OptionHandler;
 use wcf\system\WCF;
@@ -139,6 +144,42 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 		
 		switch ($this->entryType) {
 			case 'options':
+				/** @var TextFormField $optionNameField */
+				$optionNameField = $dataContainer->getNodeById('optionName');
+				$optionNameField->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
+					if (
+						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
+						$this->editedEntry->getAttribute('name') !== $formField->getValue()
+					) {
+						$optionList = new OptionList();
+						$optionList->getConditionBuilder()->add('optionName = ?', [$formField->getValue()]);
+						$optionList->getConditionBuilder()->add('packageID IN (?)', [array_merge(
+							[$this->installation->getPackage()->packageID],
+							array_keys($this->installation->getPackage()->getAllRequiredPackages())
+						)]);
+						
+						if ($optionList->countObjects() > 0) {
+							$formField->addValidationError(
+								new FormFieldValidationError(
+									'notUnique',
+									'wcf.acp.pip.option.optionName.error.notUnique'
+								)
+							);
+						}
+					}
+				}));
+				
+				// add `hidden` pseudo-category
+				/** @var SingleSelectionFormField $categoryName */
+				$categoryName = $form->getNodeById('categoryName');
+				$options = $categoryName->getNestedOptions();
+				$options[] = [
+					'depth' => 0,
+					'label' => 'hidden',
+					'value' => 'hidden'
+				];
+				$categoryName->options($options, true);
+				
 				$selectOptions = MultilineTextFormField::create('selectOptions')
 					->objectProperty('selectoptions')
 					->label('wcf.acp.pip.abstractOption.options.selectOptions')
@@ -185,6 +226,16 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 					NonEmptyFormFieldDependency::create('supportI18n')
 						->field($supportI18n)
 				);
+				
+				// ensure proper normalization of select options
+				$form->getDataHandler()->add(new CustomFormFieldDataProcessor('selectOptions', function(IFormDocument $document, array $parameters) {
+					if (isset($parameters['data']['selectoptions'])) {
+						$parameters['data']['selectoptions'] = StringUtil::unifyNewlines($parameters['data']['selectoptions']);
+					}
+					
+					return $parameters;
+				}));
+				
 				break;
 		}
 	}
@@ -248,7 +299,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function writeEntry(\DOMDocument $document, IFormDocument $form) {
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$option = parent::createXmlElement($document, $form);
 		
 		switch ($this->entryType) {

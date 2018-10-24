@@ -2137,6 +2137,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.abstractOption.options.enableOptions.description"><![CDATA[TODO: format]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.showOrder.description"><![CDATA[The entered value determines in which order the options in the same category are shown.]]></item>
+		<item name="wcf.acp.pip.option.optionName.error.notUnique"><![CDATA[The entered option name is already used by another option.]]></item>
 		<item name="wcf.acp.pip.option.options.hidden"><![CDATA[Hidden Option]]></item>
 		<item name="wcf.acp.pip.option.options.hidden.description"><![CDATA[The value of the option cannot be actively set by the administrator in the ACP.]]></item>
 		<item name="wcf.acp.pip.option.options.supportI18n"><![CDATA[Support Multilingual Input]]></item>
