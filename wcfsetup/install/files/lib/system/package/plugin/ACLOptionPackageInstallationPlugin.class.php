@@ -1,15 +1,11 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\data\acl\option\ACLOption;
 use wcf\data\acl\option\ACLOptionEditor;
 use wcf\data\acl\option\ACLOptionList;
-use wcf\data\acl\option\category\ACLOptionCategory;
-use wcf\data\acl\option\category\ACLOptionCategoryEditor;
 use wcf\data\acl\option\category\ACLOptionCategoryList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
-use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
@@ -29,8 +25,6 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
 class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
-	use TXmlGuiPackageInstallationPlugin;
-	
 	/**
 	 * @inheritDoc
 	 */
@@ -152,7 +146,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * @inheritDoc
 	 */
 	protected function saveCategory($category) {
-		$objectTypeID = $this->getObjectTypeID($category['objecttype']);
+		$objectTypeID = $this->getObjectTypeID($category['objecttype'] ?? $category['objectType']);
 		
 		// search existing category
 		$sql = "SELECT	categoryID
@@ -489,6 +483,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 				$data['categoryname'] = $categoryName->nodeValue;
 			}
 		}
+		else if ($saveData) {
+			$data['categoryName'] = $data['name'];
+			unset($data['name']);
+		}
 		
 		return $data;
 	}
@@ -520,77 +518,6 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 			'name' => 'wcf.acp.pip.aclOption.' . $this->entryType . '.name',
 			'objectType' => 'wcf.acp.pip.aclOption.objectType'
 		]);
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function saveObject(\DOMElement $newElement, \DOMElement $oldElement = null) {
-		if ($oldElement === null) {
-			$xpath = $this->getProjectXml()->xpath();
-			
-			switch ($this->entryType) {
-				case 'categories':
-					$this->importCategories($xpath);
-					break;
-				
-				case 'options':
-					$this->importOptions($xpath);
-					break;
-					
-				default:
-					throw new \LogicException('Unreachable');
-			}
-		}
-		else {
-			$oldData = $this->getElementData($oldElement);
-			$newData = $this->getElementData($newElement);
-			
-			switch ($this->entryType) {
-				case 'categories':
-					$sql = "SELECT	*
-						FROM	wcf" . WCF_N . "_acl_option_category
-						WHERE	categoryName = ?
-							AND objectTypeID = ?
-							AND packageID = ?";
-					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute([
-						$oldData['name'],
-						ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl', $oldData['objectType']),
-						$oldData['packageID']
-					]);
-					(new ACLOptionCategoryEditor($statement->fetchObject(ACLOptionCategory::class)))->update([
-						'categoryName' => $newData['name'],
-						'objectTypeID' => ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl', $newData['objectType'])
-					]);
-					
-					break;
-				
-				case 'options':
-					$sql = "SELECT	*
-						FROM	wcf" . WCF_N . "_acl_option
-						WHERE	optionName = ?
-							AND objectTypeID = ?
-							AND packageID = ?";
-					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute([
-						$oldData['name'],
-						ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl', $oldData['objectType']),
-						$oldData['packageID']
-					]);
-					(new ACLOptionEditor($statement->fetchObject(ACLOption::class)))->update([
-						'objectTypeID' => ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.acl', $newData['objectType']),
-						'optionName' => $newData['name'],
-						'categoryName' => $newData['categoryname'] ?? ''
-					]);
-					
-					break;
-				
-				default:
-					throw new \LogicException('Unreachable');
-			}
-		}
 	}
 	
 	/**

@@ -28,6 +28,7 @@ use wcf\system\option\TextOptionType;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
+use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
 use wcf\util\XML;
 
@@ -907,7 +908,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			case 'options':
 				$optionData = $this->getElementData($newElement, true);
 				
-				$this->saveOption($optionData, $optionData['categoryname']);
+				$this->saveOption($optionData, $optionData['categoryname'] ?? '');
 				
 				break;
 		}
@@ -1002,12 +1003,20 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @since	3.2
 	 */
 	protected function insertNewXmlElement(XML $xml, \DOMElement $newElement) {
+		$options = $xml->xpath()->query('/ns:data/ns:import/ns:options')->item(0);
+		
 		switch ($this->entryType) {
 			case 'categories':
 				$categories = $xml->xpath()->query('/ns:data/ns:import/ns:categories')->item(0);
 				if ($categories === null) {
 					$categories = $xml->getDocument()->createElement('categories');
-					$xml->xpath()->query('/ns:data/ns:import')->item(0)->appendChild($categories);
+					
+					if ($options === null) {
+						$xml->xpath()->query('/ns:data/ns:import')->item(0)->appendChild($categories);
+					}
+					else {
+						DOMUtil::insertBefore($categories, $options);
+					}
 				}
 				
 				$categories->appendChild($newElement);
@@ -1015,10 +1024,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 				break;
 			
 			case 'options':
-				$options = $xml->xpath()->query('/ns:data/ns:import/ns:options')->item(0);
 				if ($options === null) {
-					$categories = $xml->getDocument()->createElement('options');
-					$xml->xpath()->query('/ns:data/ns:import')->item(0)->appendChild($categories);
+					$options = $xml->getDocument()->createElement('options');
+					$xml->xpath()->query('/ns:data/ns:import')->item(0)->appendChild($options);
 				}
 				
 				$options->appendChild($newElement);
