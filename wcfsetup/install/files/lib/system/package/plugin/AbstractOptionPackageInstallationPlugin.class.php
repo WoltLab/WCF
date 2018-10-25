@@ -23,6 +23,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\option\II18nOptionType;
+use wcf\system\option\IntegerOptionType;
 use wcf\system\option\IOptionHandler;
 use wcf\system\option\IOptionType;
 use wcf\system\option\ISelectOptionOptionType;
@@ -54,6 +55,12 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @var string[]
 	 */
 	public $i18nOptionTypes = [];
+	
+	/**
+	 * list of integer-like option types
+	 * @var string[]
+	 */
+	public $integerOptionTypes = [];
 	
 	/**
 	 * list of option types with i18n support extending `TextOptionType`
@@ -516,71 +523,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 						->label('wcf.acp.pip.abstractOption.options.optionType')
 						->description('wcf.acp.pip.' . lcfirst($pipPrefix) . '.options.optionType.description')
 						->required()
-						->options(function(): array {
-							$classnamePieces = explode('\\', get_class());
-							$pipPrefix = str_replace('OptionPackageInstallationPlugin', '', $classnamePieces);
-							
-							$options = [];
-							
-							// consider all applications for potential object types
-							foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-								$optionDir = $application->getPackage()->getAbsolutePackageDir() . 'lib/system/option';
-								$directoryUtil = DirectoryUtil::getInstance($optionDir);
-								
-								foreach ($directoryUtil->getFileObjects() as $fileObject) {
-									if ($fileObject->isFile()) {
-										$optionTypePrefix = '';
-										
-										// determine additional sub-namespace
-										// example: `user` in `wcf\system\option\user`
-										$additionalSubNamespace = ltrim(str_replace([$optionDir, '/'], ['', '\\'], $fileObject->getPath()), '\\');
-										if ($additionalSubNamespace !== '') {
-											$optionTypePrefix = implode('', array_map('ucfirst', explode('\\', $additionalSubNamespace)));
-											
-											// ignore additional sub-namespaced option types if they do not
-											// belong to the pip
-											if ($optionTypePrefix !== $pipPrefix) {
-												continue;
-											}
-										}
-										
-										$namespace = $application->getAbbreviation() . '\\system\\option' . str_replace([$optionDir, '/'], ['', '\\'], $fileObject->getPath());
-										$unqualifiedClassname = str_replace('.class.php', '', $fileObject->getFilename());
-										$classname = $namespace . '\\' . $unqualifiedClassname;
-										
-										if (!is_subclass_of($classname, IOptionType::class) || !(new \ReflectionClass($classname))->isInstantiable()) {
-											continue;
-										}
-										
-										$optionType = str_replace( $optionTypePrefix . 'OptionType.class.php', '', $fileObject->getFilename());
-										
-										// only make first letter lowercase if the first two letters are not uppercase
-										// relevant cases: `URL` and the `WBB` prefix
-										if (!preg_match('~^[A-Z]{2}~', $optionType)) {
-											$optionType = lcfirst($optionType);
-										}
-										
-										if (is_subclass_of($classname, II18nOptionType::class)) {
-											$this->i18nOptionTypes[] = $optionType;
-										}
-										
-										if (is_subclass_of($classname, ISelectOptionOptionType::class)) {
-											$this->selectOptionOptionTypes[] = $optionType;
-										}
-										
-										if (is_subclass_of($classname, TextOptionType::class)) {
-											$this->textOptionTypes[] = $optionType;
-										}
-										
-										$options[] = $optionType;
-									}
-								}
-							}
-							
-							natcasesort($options);
-							
-							return array_combine($options, $options);
-						}),
+						->options($this->getOptionTypeOptions()),
 					
 					MultilineTextFormField::create('defaultValue')
 						->objectProperty('defaultvalue')
@@ -645,7 +588,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 						->addDependency(
 							ValueFormFieldDependency::create('optionType')
 								->field($optionType)
-								->values(['integer'])
+								->values(array_merge($this->integerOptionTypes, ['fileSize']))
 						),
 					
 					IntegerFormField::create('maxValue')
@@ -655,7 +598,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 						->addDependency(
 							ValueFormFieldDependency::create('optionType')
 								->field($optionType)
-								->values(['integer'])
+								->values(array_merge($this->integerOptionTypes, ['fileSize']))
 						),
 					
 					TextFormField::create('suffix')
@@ -664,7 +607,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 						->addDependency(
 							ValueFormFieldDependency::create('optionType')
 								->field($optionType)
-								->values(['integer'])
+								->values($this->integerOptionTypes)
 						),
 					
 					IntegerFormField::create('minLength')
@@ -1060,5 +1003,63 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 				
 				break;
 		}
+	}
+	
+	/**
+	 * Returns the options for the option type form field.
+	 * 
+	 * @return	array
+	 * @since	3.2
+	 */
+	protected function getOptionTypeOptions() {
+		$options = [];
+		
+		// consider all applications for potential object types
+		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			$optionDir = $application->getPackage()->getAbsolutePackageDir() . 'lib/system/option';
+			$directoryUtil = DirectoryUtil::getInstance($optionDir);
+			
+			foreach ($directoryUtil->getFileObjects() as $fileObject) {
+				if ($fileObject->isFile()) {
+					$namespace = $application->getAbbreviation() . '\\system\\option';
+					$unqualifiedClassname = str_replace('.class.php', '', $fileObject->getFilename());
+					$classname = $namespace . '\\' . $unqualifiedClassname;
+					
+					if (!is_subclass_of($classname, IOptionType::class) || !(new \ReflectionClass($classname))->isInstantiable()) {
+						continue;
+					}
+					
+					$optionType = str_replace( 'OptionType.class.php', '', $fileObject->getFilename());
+					
+					// only make first letter lowercase if the first two letters are not uppercase
+					// relevant cases: `URL` and the `WBB` prefix
+					if (!preg_match('~^[A-Z]{2}~', $optionType)) {
+						$optionType = lcfirst($optionType);
+					}
+					
+					if (is_subclass_of($classname, II18nOptionType::class)) {
+						$this->i18nOptionTypes[] = $optionType;
+					}
+					
+					if (is_subclass_of($classname, ISelectOptionOptionType::class)) {
+						$this->selectOptionOptionTypes[] = $optionType;
+					}
+					
+					if (is_subclass_of($classname, IntegerOptionType::class)) {
+						$this->integerOptionTypes[] = $optionType;
+					}
+					
+					if (is_subclass_of($classname, TextOptionType::class)) {
+						$this->textOptionTypes[] = $optionType;
+					}
+					
+					$options[] = $optionType;
+				}
+			}
+		}
+		
+		natcasesort($options);
+		
+		return array_combine($options, $options);
 	}
 }

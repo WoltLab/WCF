@@ -1,10 +1,12 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\application\Application;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
 use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionEditor;
 use wcf\data\user\group\UserGroup;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\IFormContainer;
@@ -14,8 +16,12 @@ use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\option\IntegerOptionType;
+use wcf\system\option\IOptionType;
+use wcf\system\option\TextOptionType;
 use wcf\system\option\user\group\UserGroupOptionHandler;
 use wcf\system\WCF;
+use wcf\util\DirectoryUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -232,6 +238,12 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 					->description('wcf.acp.pip.userGroupOption.options.modDefaultValue.description')
 					->rows(5),
 				
+				MultilineTextFormField::create('userDefaultValue')
+					->objectProperty('userdefaultvalue')
+					->label('wcf.acp.pip.userGroupOption.options.userDefaultValue')
+					->description('wcf.acp.pip.userGroupOption.options.userDefaultValue.description')
+					->rows(5),
+				
 				BooleanFormField::create('usersOnly')
 					->objectProperty('usersonly')
 					->label('wcf.acp.pip.userGroupOption.options.usersOnly')
@@ -262,8 +274,13 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		
 		switch ($this->entryType) {
 			case 'options':
-				foreach (['adminDefaultValue', 'modDefaultValue', 'usersOnly', 'excludedInTinyBuild', 'wildcard'] as $optionalPropertyName) {
-					$optionalProperty = $element->getElementsByTagName(strtolower($optionalPropertyName))->item(0);
+				foreach (['adminDefaultValue', 'modDefaultValue', 'userDefaultValue', 'usersOnly', 'excludedInTinyBuild', 'wildcard'] as $optionalPropertyName) {
+					$elementName = strtolower($optionalPropertyName);
+					if ($optionalPropertyName === 'excludedInTinyBuild') {
+						$elementName = 'excludedInTinyBuild';
+					}
+					
+					$optionalProperty = $element->getElementsByTagName($elementName)->item(0);
 					if ($optionalProperty !== null) {
 						if ($saveData && $optionalPropertyName !== 'excludedInTinyBuild') {
 							$data[strtolower($optionalPropertyName)] = $optionalProperty->nodeValue;
@@ -327,6 +344,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 					[
 						'admindefaultvalue' => '',
 						'moddefaultvalue' => '',
+						'userdefaultvalue' => '',
 						'usersonly' => 0,
 						'excludedInTinyBuild' => 0,
 						'wildcard' => ''
@@ -338,5 +356,55 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		}
 		
 		return $option;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function getOptionTypeOptions() {
+		$options = [];
+		
+		// consider all applications for potential object types
+		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			$optionDir = $application->getPackage()->getAbsolutePackageDir() . 'lib/system/option/user/group/';
+			if (!is_dir($optionDir)) continue;
+			$directoryUtil = DirectoryUtil::getInstance($optionDir);
+			
+			foreach ($directoryUtil->getFileObjects() as $fileObject) {
+				if ($fileObject->isFile()) {
+					$optionTypePrefix = '';
+					
+					$unqualifiedClassname = str_replace('.class.php', '', $fileObject->getFilename());
+					$classname = $application->getAbbreviation() . '\\system\\option\\user\\group\\' . $unqualifiedClassname;
+					
+					if (!is_subclass_of($classname, IOptionType::class) || !(new \ReflectionClass($classname))->isInstantiable()) {
+						continue;
+					}
+					
+					$optionType = str_replace( $optionTypePrefix . 'UserGroupOptionType.class.php', '', $fileObject->getFilename());
+					
+					// only make first letter lowercase if the first two letters are not uppercase
+					// relevant cases: `URL` and the `WBB` prefix
+					if (!preg_match('~^[A-Z]{2}~', $optionType)) {
+						$optionType = lcfirst($optionType);
+					}
+					
+					if (is_subclass_of($classname, IntegerOptionType::class)) {
+						$this->integerOptionTypes[] = $optionType;
+					}
+					
+					if (is_subclass_of($classname, TextOptionType::class)) {
+						$this->textOptionTypes[] = $optionType;
+					}
+					
+					$options[] = $optionType;
+				}
+			}
+		}
+		
+		natcasesort($options);
+		
+		return array_combine($options, $options);
 	}
 }
