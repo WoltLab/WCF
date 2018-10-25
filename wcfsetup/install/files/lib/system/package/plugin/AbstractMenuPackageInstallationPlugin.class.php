@@ -205,11 +205,18 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 				->description('wcf.acp.pip.abstractMenu.menuItemLink.description')
 				->objectProperty('link')
 				->addValidator(new FormFieldValidator('linkSpecified', function(TextFormField $formField) {
+					/** @var TextFormField $menuItem */
+					$menuItem = $formField->getDocument()->getNodeById('menuItem');
+					
 					/** @var ClassNameFormField $menuItemController */
 					$menuItemController = $formField->getDocument()->getNodeById('menuItemController');
 					
 					// ensure that either a menu item controller is specified or a link
-					if ($formField->getSaveValue() === '' && $menuItemController->getSaveValue() === '') {
+					// and workaround for special ACP menu item `wcf.acp.menu.link.option.category` 
+					if (
+						$formField->getSaveValue() === '' && $menuItemController->getSaveValue() === '' &&
+						(!($this instanceof ACPMenuPackageInstallationPlugin) || $menuItem->getSaveValue() !== 'wcf.acp.menu.link.option.category')
+					) {
 						$formField->addValidationError(
 							new FormFieldValidationError(
 								'noLinkSpecified',
@@ -228,14 +235,6 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 								new FormFieldValidationError(
 									'noLink',
 									'wcf.acp.pip.abstractMenu.menuItemLink.error.noLink'
-								)
-							);
-						}
-						else if ($menuItemController->getSaveValue() && Url::is($formField->getSaveValue())) {
-							$formField->addValidationError(
-								new FormFieldValidationError(
-									'isLink',
-									'wcf.acp.pip.abstractMenu.menuItemLink.error.isLink'
 								)
 							);
 						}
@@ -396,8 +395,8 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 		$this->appendElementChildren(
 			$menuItem,
 			[
-				'parent' => '',
 				'controller' => '',
+				'parent' => '',
 				'link' => '',
 				'options' => '',
 				'permissions' => '',

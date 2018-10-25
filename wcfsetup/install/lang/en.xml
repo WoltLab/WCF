@@ -1968,7 +1968,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.abstractMenu.menuItemController"><![CDATA[Menu Item Controller]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItemLink"><![CDATA[Menu Item Link]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItemLink.description"><![CDATA[If no menu item controller is used, the entered link will be used. If, however, a menu item controller is used, the entered link will be appended to the link to the controller.]]></item>
-		<item name="wcf.acp.pip.abstractMenu.menuItemLink.error.isLink"><![CDATA[The entered value is a valid link. If you entered a menu item controller, the menu item link is appended to the link to the controller.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItemLink.error.noLink"><![CDATA[The entered value is no valid link.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItemLink.error.noLinkSpecified"><![CDATA[You either have to enter a menu item controller or a menu item link.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.options.description"><![CDATA[At least one of the entered options has to be enabled for the menu item to be visible. Options of non-required packages will be reported as non-existing.]]></item>
