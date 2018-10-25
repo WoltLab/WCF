@@ -404,7 +404,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					TextFormField::create('categoryName')
 						->objectProperty('name')
 						->label('wcf.acp.pip.abstractOption.categories.categoryName')
-						->description('wcf.acp.pip.' . $this->tagName . '.categories.categoryName.description')
 						->required(),
 					
 					SingleSelectionFormField::create('parentCategoryName')

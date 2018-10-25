@@ -355,7 +355,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				->label('wcf.acp.language.item.languageCategoryID')
 				->description('wcf.acp.language.item.languageCategory.description')
 				->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
-					'wcf.acp.language.item.languageItem',
+					'wcf.acp.language.item.languageCategory',
 					2,
 					3
 				))

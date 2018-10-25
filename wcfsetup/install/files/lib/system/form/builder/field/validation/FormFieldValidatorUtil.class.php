@@ -18,7 +18,7 @@ abstract class FormFieldValidatorUtil {
 	 * Returns a form field validator to ensure that the value of the form field
 	 * is a dot-separated string.
 	 * 
-	 * @param	string		$lalnguageItemPrefix		language item prefix used for error language items `{$languageItemPrefix}.error.{errorType}`
+	 * @param	string		$languageItemPrefix		language item prefix used for error language items `{$languageItemPrefix}.error.{errorType}`
 	 * @param	int		$minimumSegmentCount		minimum number of dot-separated segments, or `-1` if there is no minimum
 	 * @param	int		$maximumSegmentCount		maximum number of dot-separated segments, or `-1` if there is no minimum
 	 * @param	string		$segmentRegularExpression	regular expression used to validate each segment

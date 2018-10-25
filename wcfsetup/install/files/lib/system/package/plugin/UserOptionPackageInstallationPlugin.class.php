@@ -219,7 +219,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 			$selectOptions = MultilineTextFormField::create('selectOptions')
 				->objectProperty('selectoptions')
 				->label('wcf.acp.pip.abstractOption.options.selectOptions')
-				->description('wcf.acp.pip.option.options.selectOptions.description')
+				->description('wcf.acp.pip.abstractOption.options.selectOptions.description')
 				->rows(5);
 			
 			$dataContainer->insertBefore($selectOptions, 'enableOptions');

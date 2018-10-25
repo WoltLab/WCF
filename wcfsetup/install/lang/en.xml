@@ -809,7 +809,8 @@
 		<item name="wcf.acp.language.item.languageCategory"><![CDATA[Language Category Identifier]]></item>
 		<item name="wcf.acp.language.item.languageCategory.description"><![CDATA[The entered language category identifier is used to group phrases.]]></item>
 		<item name="wcf.acp.language.item.languageCategory.error.notUnique"><![CDATA[This language category identifier is already used by an existing language category.]]></item>
-		<item name="wcf.acp.language.item.languageItem.error.notUnique"><![CDATA[The entered identifier is already used by another phrase.]]></item>
+		<item name="wcf.acp.language.item.languageCategory.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
+		<item name="wcf.acp.language.item.languageCategory.error.tooFewSegments"><![CDATA[The entered category contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 	</category>
 	
 	<category name="wcf.acp.masterPassword">
@@ -1923,7 +1924,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.templateListener.environment.description"><![CDATA[The environment determines whether the template listener is executed in the frontend (<code>user</code>) or the ACP (<code>admin</code>).]]></item>
 		<item name="wcf.acp.pip.templateListener.eventName"><![CDATA[Event]]></item>
 		<item name="wcf.acp.pip.templateListener.eventName.description"><![CDATA[The selected event determines at which location in the template the template listeners’ code is inserted.]]></item>
-		<item name="wcf.acp.pip.templateListener.eventName.error.nonExistent"><![CDATA[The is no event with the given name in the selected template.]]></item>
 		<item name="wcf.acp.pip.templateListener.name"><![CDATA[Template Listener Name]]></item>
 		<item name="wcf.acp.pip.templateListener.name.description"><![CDATA[The name of the event may only contain letters and must begin with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.templateListener.name.error.format"><![CDATA[The entered name is invalid.]]></item>
@@ -1949,6 +1949,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.mediaProvider.html.description"><![CDATA[The html code is used to produce the rendered output of the linked media content. Every named group of the regular expression is accessible as <code>{literal}{$name}{/literal}</code> where <code>name</code> is the name of the group.]]></item>
 		<item name="wcf.acp.pip.mediaProvider.html.error.className"><![CDATA[You cannot enter HTML code if you have already provided a class that handles the output.]]></item>
 		<item name="wcf.acp.pip.mediaProvider.html.error.noClassName"><![CDATA[You have to provide either HTML code or a class that handles the output.]]></item>
+		<item name="wcf.acp.pip.mediaProvider.title.description"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.pip.aclOption.categories.name"><![CDATA[Category Name]]></item>
 		<item name="wcf.acp.pip.aclOption.categories.name.description"><![CDATA[The name of an ACL option category consists of least two segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes.]]></item>
 		<item name="wcf.acp.pip.aclOption.categories.name.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
@@ -1957,6 +1958,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.aclOption.options.categoryName.description"><![CDATA[The ACL option is listed in the selected category.]]></item>
 		<item name="wcf.acp.pip.aclOption.options.name"><![CDATA[Option Name]]></item>
 		<item name="wcf.acp.pip.aclOption.options.name.description"><![CDATA[The name of the ACL option may only contain letters and must begin with a lowercase letter.]]></item>
+		<item name="wcf.acp.pip.aclOption.options.name.error.format"><![CDATA[The entered option name is invalid]]></item>
 		<item name="wcf.acp.pip.aclOption.objectType"><![CDATA[ACL Object Type]]></item>
 		<item name="wcf.acp.pip.aclOption.objectType.categories.description"><![CDATA[The ACL object type determines to which type of objects the category belongs to. Note that only ACL object types of the package itself or its required packages are available.]]></item>
 		<item name="wcf.acp.pip.aclOption.objectType.categories.error.notUnique"><![CDATA[The entered name is already used by another ACL option category for the same ACL object type.]]></item>
@@ -2003,7 +2005,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.menu.identifier.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
 		<item name="wcf.acp.pip.menu.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another menu.]]></item>
 		<item name="wcf.acp.pip.menu.identifier.error.tooFewSegments"><![CDATA[The entered menu identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
-		<item name="wcf.acp.pip.menu.title.description"><![CDATA[]]></item>
+		<item name="wcf.acp.pip.menu.title.description"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.pip.menu.createBox"><![CDATA[Automatically Create Box for Menu]]></item>
 		<item name="wcf.acp.pip.menu.createBox.description"><![CDATA[If this option is selected, after creating the menu, a box for the menu will also be created.]]></item>
 		<item name="wcf.acp.pip.menu.boxPosition"><![CDATA[Box Position]]></item>
@@ -2025,7 +2027,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.menuItem.linkType"><![CDATA[Menu Item Link Type]]></item>
 		<item name="wcf.acp.pip.menuItem.linkType.internal"><![CDATA[Internal Link]]></item>
 		<item name="wcf.acp.pip.menuItem.linkType.external"><![CDATA[External Link]]></item>
-		<item name="wcf.acp.pip.menuItem.linkType"><![CDATA[Menu Item Link Type]]></item>
 		<item name="wcf.acp.pip.menuItem.page"><![CDATA[Page]]></item>
 		<item name="wcf.acp.pip.menuItem.page.description"><![CDATA[The menu item will link to the selected page.]]></item>
 		<item name="wcf.acp.pip.menuItem.parentMenuItem"><![CDATA[Parent Menu Item]]></item>
@@ -2130,8 +2131,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.abstractOption.options.defaultValue.description"><![CDATA[After installing the option, the entered value is the option’s default value.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.validationPattern"><![CDATA[Validation Pattern]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.validationPattern.description"><![CDATA[The entered validation pattern is used to validate the entered value when editing the option’s value.]]></item>
+		<item name="wcf.acp.pip.abstractOption.options.validationPattern.error.invalid"><![CDATA[The entered validation pattern is invalid.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.selectOptions"><![CDATA[Selectable Options]]></item>
-		<item name="wcf.acp.pip.option.options.selectOptions.description"><![CDATA[TODO: format]]></item>
+		<item name="wcf.acp.pip.abstractOption.options.selectOptions.description"><![CDATA[TODO: format]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.enableOptions"><![CDATA[Enabled Options]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.enableOptions.description"><![CDATA[TODO: format]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.showOrder"><![CDATA[Position]]></item>
@@ -2202,8 +2204,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.userGroupOption.options.adminDefaultValue.description"><![CDATA[The administrator default value is used for administrator user groups. Administrator user groups are user groups that can edit every user group.]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.modDefaultValue"><![CDATA[Moderator Default Value]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.modDefaultValue.description"><![CDATA[The moderator default value is used for moderator user groups. Moderator user groups are user groups that can access the moderation.]]></item>
-		<item name="wcf.acp.pip.userGroupOption.options.usersOnly"><![CDATA[Members Only]]></item>
-		<item name="wcf.acp.pip.userGroupOption.options.usersOnly.description"><![CDATA[The user group option value cannot be set for the guests user group.]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.userDefaultValue"><![CDATA[User Default Value]]></item>
+		<item name="wcf.acp.pip.userGroupOption.options.userDefaultValue.description"><![CDATA[The user default value is used for the user groups containing all registered users.]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.excludedInTinyBuild"><![CDATA[Disable for Accelerated Guest View]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.excludedInTinyBuild.description"><![CDATA[If the accelared guest view is enabled, the user group option’s value is “Never” for guests regardless of the actual value set for the guests user group.]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.wildcard"><![CDATA[Wildcard]]></item>

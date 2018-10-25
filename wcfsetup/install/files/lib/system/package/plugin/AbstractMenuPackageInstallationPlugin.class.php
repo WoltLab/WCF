@@ -196,7 +196,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 			
 			ClassNameFormField::create('menuItemController')
 				->objectProperty('controller')
-				->label('wcf.acp.pip.abstractForm.menuItemController')
+				->label('wcf.acp.pip.abstractMenu.menuItemController')
 				->implementedInterface(IPage::class),
 			
 			TextFormField::create('menuItemLink')
@@ -250,7 +250,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 				)),
 			
 			UserGroupOptionFormField::create()
-				->description('wcf.acp.pip.abstractMenu.options.description')
+				->description('wcf.acp.pip.abstractMenu.permissions.description')
 				->saveValueType(OptionFormField::SAVE_VALUE_TYPE_CSV)
 				->packageIDs(array_merge(
 					[$this->installation->getPackage()->packageID],

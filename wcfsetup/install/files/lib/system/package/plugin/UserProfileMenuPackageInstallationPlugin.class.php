@@ -116,8 +116,8 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 		$dataContainer->appendChildren([
 			TextFormField::create('menuItem')
 				->objectProperty('name')
-				->label('wcf.acp.pip.userProfileMenu.eventName')
-				->description('wcf.acp.pip.userProfileMenu.eventName.description')
+				->label('wcf.acp.pip.userProfileMenu.menuItem')
+				->description('wcf.acp.pip.userProfileMenu.menuItem.description')
 				->required()
 				->addValidator(new FormFieldValidator('format', function(TextFormField $formField) {
 					if (!preg_match('~^[a-z][A-z]+$~', $formField->getValue())) {
