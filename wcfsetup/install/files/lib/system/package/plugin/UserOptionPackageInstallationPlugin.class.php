@@ -38,6 +38,11 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	/**
 	 * @inheritDoc
 	 */
+	public $className = UserOptionEditor::class;
+	
+	/**
+	 * @inheritDoc
+	 */
 	public $tableName = 'user_option';
 	
 	/**

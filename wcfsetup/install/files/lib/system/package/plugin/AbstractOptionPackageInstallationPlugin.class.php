@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\DatabaseObject;
+use wcf\data\IEditableCachedObject;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\package\Package;
 use wcf\system\application\ApplicationHandler;
@@ -931,6 +932,12 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 				$this->saveOption($optionData, $optionData['categoryname'] ?? '');
 				
 				break;
+		}
+		
+		$this->postImport();
+		
+		if (is_subclass_of($this->className, IEditableCachedObject::class)) {
+			call_user_func([$this->className, 'resetCache']);
 		}
 	}
 	
