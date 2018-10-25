@@ -12,7 +12,9 @@ use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
+use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -55,12 +57,12 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	protected function saveCategory($category, $categoryXML = null) {
 		// use for create and update
 		$data = [
-			'parentCategoryName' => $category['parentCategoryName'],
+			'parentCategoryName' => $category['parentCategoryName'] ?? '',
 			'permissions' => $category['permissions'] ?? '',
 			'options' => $category['options'] ?? ''
 		];
 		// append show order if explicitly stated
-		if ($category['showOrder'] !== null) $data['showOrder'] = $category['showOrder'];
+		if (isset($category['showOrder'])) $data['showOrder'] = $category['showOrder'];
 		
 		$userOptionCategory = UserOptionCategory::getCategoryByName($category['categoryName']);
 		if ($userOptionCategory !== null) {
@@ -209,6 +211,14 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 			/** @var SingleSelectionFormField $optionType */
 			$optionType = $form->getNodeById('optionType');
 			
+			$selectOptions = MultilineTextFormField::create('selectOptions')
+				->objectProperty('selectoptions')
+				->label('wcf.acp.pip.abstractOption.options.selectOptions')
+				->description('wcf.acp.pip.option.options.selectOptions.description')
+				->rows(5);
+			
+			$dataContainer->insertBefore($selectOptions, 'enableOptions');
+			
 			$dataContainer->appendChildren([
 				BooleanFormField::create('required')
 					->label('wcf.acp.pip.userOption.options.required')
@@ -297,6 +307,21 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 							->values(['text'])
 					),
 			]);
+			
+			$selectOptions->addDependency(
+				ValueFormFieldDependency::create('optionType')
+					->field($optionType)
+					->values($this->selectOptionOptionTypes)
+			);
+			
+			// ensure proper normalization of select options
+			$form->getDataHandler()->add(new CustomFormFieldDataProcessor('selectOptions', function(IFormDocument $document, array $parameters) {
+				if (isset($parameters['data']['selectoptions'])) {
+					$parameters['data']['selectoptions'] = StringUtil::unifyNewlines($parameters['data']['selectoptions']);
+				}
+				
+				return $parameters;
+			}));
 		}
 	}
 	
@@ -317,7 +342,8 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 					'outputClass',
 					'searchable',
 					'isDisabled',
-					'contentPattern'
+					'contentPattern',
+					'selectOptions'
 				];
 				
 				foreach ($optionals as $optionalPropertyName) {
@@ -388,11 +414,12 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 				$this->appendElementChildren(
 					$option,
 					[
+						'selectoptions' => '',
 						'outputclass' => '',
 						'required' => 0,
 						'askduringregistration' => 0,
-						'editable' => 0,
-						'visible' => 0,
+						'editable' => '0',
+						'visible' => '0',
 						'searchable' => 0,
 						'isdisabled' => 0,
 						'messageObjectType' => '',
