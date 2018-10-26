@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\DatabaseObject;
 use wcf\data\modification\log\IViewableModificationLog;
 use wcf\data\modification\log\ModificationLogList;
 use wcf\data\object\type\ObjectType;
@@ -152,11 +153,6 @@ class ModificationLogListPage extends SortablePage {
 	
 	protected function initObjectTypes() {
 		foreach (ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.modifiableContent') as $objectType) {
-			/** @noinspection PhpUndefinedFieldInspection */
-			if ($objectType->excludeFromLogList) {
-				continue;
-			}
-			
 			$this->objectTypes[$objectType->objectTypeID] = $objectType;
 			
 			/** @var IExtendedModificationLogHandler $processor */
@@ -164,7 +160,7 @@ class ModificationLogListPage extends SortablePage {
 			if ($processor === null) {
 				$this->unsupportedObjectTypes[] = $objectType;
 			}
-			else {
+			else if ($processor->includeInLogList()) {
 				$this->availableObjectTypeIDs[] = $objectType->objectTypeID;
 				if (!isset($this->packages[$objectType->packageID])) {
 					$this->actions[$objectType->packageID] = [];
@@ -291,6 +287,8 @@ class ModificationLogListPage extends SortablePage {
 				}
 			}
 		}
+		
+		DatabaseObject::sort($this->logItems, $this->sortField, $this->sortOrder);
 	}
 	
 	/**

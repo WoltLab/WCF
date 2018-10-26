@@ -112,7 +112,14 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 			_dependencyHiddenNodes.delete(node);
 			
 			elBySelAll('input, select', node, function(validatedField) {
-				if (_validatedFieldProperties.has(validatedField)) {
+				// if a container is shown, ignore all fields that
+				// have a hidden parent element within the container
+				var parentNode = validatedField.parentNode;
+				while (parentNode !== node && parentNode.style.getPropertyValue('display') !== 'none') {
+					parentNode = parentNode.parentNode;
+				}
+				
+				if (parentNode === node && _validatedFieldProperties.has(validatedField)) {
 					var properties = _validatedFieldProperties.get(validatedField);
 					
 					if (properties.has('max')) {

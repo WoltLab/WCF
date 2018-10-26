@@ -167,7 +167,9 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 		$this->objectList->readObjects();
 		
 		// execute action
-		$this->actions[$this->action]->getProcessor()->executeAction($this->objectList);
+		if (count($this->objectList)) {
+			$this->actions[$this->action]->getProcessor()->executeAction($this->objectList);
+		}
 		
 		$this->affectedObjectCount = count($this->objectList);
 		
