@@ -195,7 +195,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function addFormFields(IFormDocument $form) {
+	protected function addFormFields(IFormDocument $form) {
 		parent::addFormFields($form);
 		
 		if ($this->entryType === 'options') {
@@ -334,8 +334,8 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, $saveData = false) {
-		$data = parent::getElementData($element, $saveData);
+	protected function doGetElementData(\DOMElement $element, $saveData) {
+		$data = parent::doGetElementData($element, $saveData);
 		
 		switch ($this->entryType) {
 			case 'options':
@@ -411,8 +411,8 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$option = parent::createXmlElement($document, $form);
+	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+		$option = parent::doCreateXmlElement($document, $form);
 		
 		switch ($this->entryType) {
 			case 'options':

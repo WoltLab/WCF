@@ -22,13 +22,6 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
 	public function addEntry(IFormDocument $form);
 	
 	/**
-	 * Adds all fields to the given form to add or edit an entry.
-	 *
-	 * @param	IFormDocument		$form
-	 */
-	public function addFormFields(IFormDocument $form);
-	
-	/**
 	 * Edits the entry of this pip with the given identifier based on the data
 	 * provided by the given form and returns the new identifier of the entry
 	 * (or the old identifier if it has not changed).
@@ -84,6 +77,14 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
 	 * @return	string[]
 	 */
 	public function getEntryTypes();
+	
+	/**
+	 * Populates the given form to be used for adding and editing entries
+	 * managed by this PIP.
+	 * 
+	 * @param	IFormDocument		$form
+	 */
+	public function populateForm(IFormDocument $form);
 	
 	/**
 	 * Sets the type of the currently handled pip entries.

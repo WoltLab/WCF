@@ -168,7 +168,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, $saveData = false) {
+	protected function doGetElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'definitionID' => $this->getDefinitionID($element->getElementsByTagName('definitionname')->item(0)->nodeValue),
 			'objectType' => $element->getElementsByTagName('name')->item(0)->nodeValue,
@@ -203,7 +203,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function addFormFields(IFormDocument $form) {
+	protected function addFormFields(IFormDocument $form) {
 		// read available object type definitions
 		$list = new ObjectTypeDefinitionList();
 		$list->sqlOrderBy = 'definitionName';
@@ -695,7 +695,7 @@ XML;
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$type = $document->createElement($this->tagName);
 		foreach ($form->getData()['data'] as $key => $value) {
 			if ($key === 'definitionID') {
@@ -854,7 +854,6 @@ XML;
 				$className,
 				UserIntegerPropertyCondition::class,
 				$prefix . 'UserIntegerPropertyName',
-				'wcf.acp.pip.objectType.condition.userIntegerProperty',
 				'wcf' . WCF_N . '_user'
 			)->required()
 		);
@@ -865,7 +864,6 @@ XML;
 				$className,
 				UserTimestampPropertyCondition::class,
 				$prefix . 'UserTimestampPropertyName',
-				'wcf.acp.pip.objectType.condition.userIntegerProperty',
 				'wcf' . WCF_N . '_user'
 			)->required()
 		);
@@ -903,31 +901,26 @@ XML;
 	 * Returns a form field to enter the name of an integer property for an
 	 * integer condition.
 	 * 
-	 * TODO: Can be use generic language items instead?
-	 * The following language items must exist:
-	 * 	- `{$languageItemPrefix}.propertyName`,
-	 * 	- `{$languageItemPrefix}.propertyName.description`,
-	 * 	- `{$languageItemPrefix}.propertyName.error.noIntegerColumn`,
-	 * 	- `{$languageItemPrefix}.propertyName.error.nonExistent`.
-	 * 
 	 * @param	TextFormField	$classNameField		class name field on which the visibility of the created field depends
 	 * @param	string		$conditionClass		name of the PHP class the field is created for
 	 * @param	string		$id			id of the created field
-	 * @param	string		$languageItemPrefix	language item prefix used for label, description, and error language items
 	 * @param	string		$databaseTableName	name of the database table that stores the conditioned objects
 	 * @return	TextFormField
 	 */
-	public function getIntegerConditionPropertyNameField(TextFormField $classNameField, $conditionClass, $id, $languageItemPrefix, $databaseTableName) {
+	public function getIntegerConditionPropertyNameField(TextFormField $classNameField, $conditionClass, $id, $databaseTableName) {
 		return TextFormField::create($id)
 			->objectProperty('propertyname')
-			->label($languageItemPrefix . '.propertyName')
-			->description($languageItemPrefix . '.propertyName.description')
+			->label('wcf.acp.pip.objectType.integerCondition.propertyName')
+			->description(
+				'wcf.acp.pip.objectType.integerCondition.propertyName.description',
+				['tableName' => $databaseTableName]
+			)
 			->addDependency(
 				ValueFormFieldDependency::create('className')
 					->field($classNameField)
 					->values([$conditionClass])
 			)
-			->addValidator(new FormFieldValidator('userTableIntegerColumn', function(TextFormField $formField) use ($databaseTableName, $languageItemPrefix) {
+			->addValidator(new FormFieldValidator('userTableIntegerColumn', function(TextFormField $formField) use ($databaseTableName) {
 				if ($formField->getSaveValue()) {
 					$columns = WCF::getDB()->getEditor()->getColumns($databaseTableName);
 					
@@ -936,7 +929,8 @@ XML;
 							if ($column['data']['type'] !== 'int') {
 								$formField->addValidationError(new FormFieldValidationError(
 									'noIntegerColumn',
-									$languageItemPrefix . '.propertyName.error.noIntegerColumn'
+									 'wcf.acp.pip.objectType.integerCondition.propertyName.error.noIntegerColumn',
+									['tableName' => $databaseTableName]
 								));
 							}
 							
@@ -946,7 +940,8 @@ XML;
 					
 					$formField->addValidationError(new FormFieldValidationError(
 						'nonExistent',
-						$languageItemPrefix . '.propertyName.error.nonExistent'
+						'wcf.acp.pip.objectType.integerCondition.propertyName.error.nonExistent',
+						['tableName' => $databaseTableName]
 					));
 				}
 			}));

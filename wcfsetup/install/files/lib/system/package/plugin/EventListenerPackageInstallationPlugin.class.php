@@ -187,7 +187,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function addFormFields(IFormDocument $form) {
+	protected function addFormFields(IFormDocument $form) {
 		/** @var FormContainer $dataContainer */
 		$dataContainer = $form->getNodeById('data');
 		
@@ -285,7 +285,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, $saveData = false) {
+	protected function doGetElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'eventClassName' => $element->getElementsByTagName('eventclassname')->item(0)->nodeValue,
 			'eventName' => StringUtil::normalizeCsv($element->getElementsByTagName('eventname')->item(0)->nodeValue),
@@ -328,7 +328,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$eventListener = $document->createElement($this->tagName);

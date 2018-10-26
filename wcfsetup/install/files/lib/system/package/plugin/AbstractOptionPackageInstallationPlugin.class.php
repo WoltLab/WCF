@@ -394,7 +394,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function addFormFields(IFormDocument $form) {
+	protected function addFormFields(IFormDocument $form) {
 		/** @var IFormContainer $dataContainer */
 		$dataContainer = $form->getNodeById('data');
 		
@@ -695,7 +695,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, $saveData = false) {
+	protected function doGetElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'packageID' => $this->installation->getPackage()->packageID
 		];
@@ -913,7 +913,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData()['data'];
 		
 		switch ($this->entryType) {

@@ -320,7 +320,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function addFormFields(IFormDocument $form) {
+	protected function addFormFields(IFormDocument $form) {
 		/** @var FormContainer $dataContainer */
 		$dataContainer = $form->getNodeById('data');
 		
@@ -500,7 +500,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, $saveData = false) {
+	protected function doGetElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'languageID' => LanguageFactory::getInstance()->getLanguageByCode($element->ownerDocument->documentElement->getAttribute('languagecode'))->languageID,
 			'languageItem' => $element->getAttribute('name'),
@@ -723,7 +723,7 @@ XML;
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$languageCode = $document->documentElement->getAttribute('languagecode');

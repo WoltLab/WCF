@@ -2,6 +2,7 @@
 namespace wcf\system\devtools\pip;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\data\IEditableCachedObject;
+use wcf\system\event\EventHandler;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
@@ -57,6 +58,13 @@ trait TXmlGuiPackageInstallationPlugin {
 		
 		$xml->write($this->getXmlFileLocation($project));
 	}
+	
+	/**
+	 * Adds all fields to the given form to add or edit an entry.
+	 * 
+	 * @param	IFormDocument		$form
+	 */
+	abstract protected function addFormFields(IFormDocument $form);
 	
 	/**
 	 * Adds optional child elements to the given elements based on the given
@@ -117,7 +125,35 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @param	IFormDocument		$form
 	 * @return	\DOMElement
 	 */
-	abstract protected function createXmlElement(\DOMDocument $document, IFormDocument $form);
+	abstract protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form);
+	
+	/**
+	 * Creates a new XML element for the given document using the data provided
+	 * by the given form and return the new dom element.
+	 * 
+	 * This method internally calls `doCreateXmlElement()` and fires an event.
+	 *
+	 * @param	\DOMDocument		$document
+	 * @param	IFormDocument		$form
+	 * @return	\DOMElement
+	 */
+	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
+		$xmlElement = $this->doCreateXmlElement($document, $form);
+		
+		$data = [
+			'document' => $document,
+			'element' => $xmlElement,
+			'form' => $form
+		];
+		
+		EventHandler::getInstance()->fireAction($this,'didDoCreateXmlElement', $data);
+		
+		if (!($data['element'] instanceof \DOMElement)) {
+			throw new \UnexpectedValueException('XML element is no "\DOMElement" object anymore.');
+		}
+		
+		return $data['element'];
+	}
 	
 	/**
 	 * Edits the entry of this pip with the given identifier based on the data
@@ -197,7 +233,33 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @param	bool		$saveData	is `true` if data is intended to be saved and otherwise `false`
 	 * @return	array
 	 */
-	abstract protected function getElementData(\DOMElement $element, $saveData = false);
+	abstract protected function doGetElementData(\DOMElement $element, $saveData);
+	
+	/**
+	 * Extracts the PIP object data from the given XML element by calling
+	 * `doGetElementData` and firing an event.
+	 * 
+	 * @param	\DOMElement	$element	element whose data is returned
+	 * @param	bool		$saveData	is `true` if data is intended to be saved and otherwise `false`
+	 * @return	array
+	 */
+	protected function getElementData(\DOMElement $element, $saveData = false) {
+		$elementData = $this->doGetElementData($element, $saveData);
+		
+		$data = [
+			'element' => $element,
+			'elementData' => $elementData,
+			'saveData' => $saveData
+		];
+		
+		EventHandler::getInstance()->fireAction($this, 'getElementData', $data);
+		
+		if (!is_array($data['elementData'])) {
+			throw new \UnexpectedValueException("Element data is no longer an array.");
+		}
+		
+		return $data['elementData'];
+	}
 	
 	/**
 	 * Returns the identifier of the given `import` element.
@@ -253,7 +315,8 @@ XML;
 		foreach ($this->getImportElements($xpath) as $element) {
 			$entryList->addEntry(
 				$this->getElementIdentifier($element),
-				array_intersect_key($this->getElementData($element), $entryList->getKeys())
+				// we skip the event here to avoid firing all of those events
+				array_intersect_key($this->doGetElementData($element), $entryList->getKeys())
 			);
 		}
 		
@@ -333,6 +396,30 @@ XML;
 	}
 	
 	/**
+	 * Populates the given form to be used for adding and editing entries
+	 * managed by this PIP.
+	 *
+	 * @param	IFormDocument		$form
+	 */
+	public function populateForm(IFormDocument $form) {
+		$eventParameters = ['form' => $form];
+		
+		EventHandler::getInstance()->fireAction($this, 'beforeAddFormFields', $eventParameters);
+		
+		if (!($eventParameters['form'] instanceof IFormDocument)) {
+			throw new \UnexpectedValueException('Form document is no longer a "' . IFormDocument::class . '" object.');
+		}
+		
+		$this->addFormFields($eventParameters['form']);
+		
+		if (!($eventParameters['form'] instanceof IFormDocument)) {
+			throw new \UnexpectedValueException('Form document is no longer a "' . IFormDocument::class . '" object.');
+		}
+		
+		EventHandler::getInstance()->fireAction($this, 'afterAddFormFields', $eventParameters);
+	}
+	
+	/**
 	 * Saves an object represented by an XML element in the database by either
 	 * creating a new element (if `$oldElement = null`) or updating an existing
 	 * element.
@@ -354,6 +441,12 @@ XML;
 		}
 		
 		$this->import($existingRow, $newElementData);
+		
+		$eventParameters = [
+			'newElement' => $newElement,
+			'oldElement' => $oldElement
+		];
+		EventHandler::getInstance()->fireAction($this, 'saveObject', $eventParameters);
 		
 		$this->postImport();
 		

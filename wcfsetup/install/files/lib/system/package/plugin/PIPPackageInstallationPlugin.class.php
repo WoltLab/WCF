@@ -99,7 +99,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function addFormFields(IFormDocument $form) {
+	protected function addFormFields(IFormDocument $form) {
 		/** @var FormContainer $dataContainer */
 		$dataContainer = $form->getNodeById('data');
 		
@@ -148,7 +148,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, $saveData = false) {
+	protected function doGetElementData(\DOMElement $element, $saveData) {
 		return [
 			'className' => $element->nodeValue,
 			'pluginName' => $element->getAttribute('name'),
@@ -179,7 +179,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$pip = $document->createElement($this->tagName, $data['className']);

@@ -131,7 +131,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function addFormFields(IFormDocument $form) {
+	protected function addFormFields(IFormDocument $form) {
 		$ldq = preg_quote(WCF::getTPL()->getCompiler()->getLeftDelimiter(), '~');
 		$rdq = preg_quote(WCF::getTPL()->getCompiler()->getRightDelimiter(), '~');
 		
@@ -357,7 +357,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, $saveData = false) {
+	protected function doGetElementData(\DOMElement $element, $saveData) {
 		return [
 			'environment' => $element->getElementsByTagName('environment')->item(0)->nodeValue,
 			'eventName' => $element->getElementsByTagName('eventname')->item(0)->nodeValue,
@@ -436,7 +436,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$listener = $document->createElement($this->tagName);

@@ -59,7 +59,7 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function addFormFields(IFormDocument $form) {
+	protected function addFormFields(IFormDocument $form) {
 		parent::addFormFields($form);
 		
 		/** @var IFormContainer $dataContainer */
@@ -125,8 +125,8 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, $saveData = false) {
-		$data = parent::getElementData($element);
+	protected function doGetElementData(\DOMElement $element, $saveData) {
+		$data = parent::doGetElementData($element);
 		
 		$className = $element->getElementsByTagName('classname')->item(0);
 		if ($className !== null) {
@@ -145,8 +145,8 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$menuItem = parent::createXmlElement($document, $form);
+	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+		$menuItem = parent::doCreateXmlElement($document, $form);
 		
 		$this->appendElementChildren(
 			$menuItem,

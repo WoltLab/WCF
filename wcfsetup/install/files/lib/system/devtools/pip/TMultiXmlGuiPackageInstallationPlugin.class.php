@@ -121,7 +121,8 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 			foreach ($this->getImportElements($xpath) as $element) {
 				$entryList->addEntry(
 					$this->getElementIdentifier($element),
-					array_intersect_key($this->getElementData($element), $entryList->getKeys())
+					// we skip the event here to avoid firing all of those events
+					array_intersect_key($this->doGetElementData($element), $entryList->getKeys())
 				);
 			}
 		}

@@ -174,7 +174,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	public function addFormFields(IFormDocument $form) {
+	protected function addFormFields(IFormDocument $form) {
 		/** @var FormContainer $dataContainer */
 		$dataContainer = $form->getNodeById('data');
 		
@@ -244,7 +244,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getElementData(\DOMElement $element, $saveData = false) {
+	protected function doGetElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'actionClassName' => $element->getElementsByTagName('actionclassname')->item(0)->nodeValue,
 			'actionName' => $element->getAttribute('name'),
@@ -293,7 +293,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
 		$data = $formData['data'];
 		

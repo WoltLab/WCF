@@ -129,7 +129,7 @@ class DevtoolsProjectPipEntryAddForm extends AbstractFormBuilderForm {
 				->label('wcf.global.form.data')
 		);
 		
-		$this->pipObject->getPip()->addFormFields($this->form);
+		$this->pipObject->getPip()->populateForm($this->form);
 		
 		EventHandler::getInstance()->fireAction($this, 'addPipFormFields');
 	}
