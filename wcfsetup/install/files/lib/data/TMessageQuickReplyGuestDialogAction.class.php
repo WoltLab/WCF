@@ -78,7 +78,7 @@ trait TMessageQuickReplyGuestDialogAction {
 			throw new \BadMethodCallException("Guest dialogs are only relevant for guests");
 		}
 		
-		if (CAPTCHA_TYPE) {
+		if (CAPTCHA_TYPE && $this->guestDialogCaptchaObjectType) {
 			/** @var ICaptchaHandler $processor */
 			$processor = $this->guestDialogCaptchaObjectType->getProcessor();
 			
