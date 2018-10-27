@@ -403,7 +403,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		
 		// com.woltlab.wcf.condition.ad
 		$conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.ad');
-		$this->addConditionFields($conditionAdContainer, true, false);
+		$this->addConditionFields($conditionAdContainer, true, true);
 		
 		// com.woltlab.wcf.condition.notice
 		$conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.notice');
