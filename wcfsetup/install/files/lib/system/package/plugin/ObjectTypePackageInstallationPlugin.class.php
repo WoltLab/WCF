@@ -469,13 +469,13 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.changeFreq.description')
 					->options([
-						'always',
-						'hourly',
-						'daily',
-						'weekly',
-						'monthly',
-						'yearly',
-						'never'
+						'always' => 'always',
+						'hourly' => 'hourly',
+						'daily' => 'daily',
+						'weekly' => 'weekly',
+						'monthly' => 'monthly',
+						'yearly' => 'yearly',
+						'never' => 'never'
 					])
 					->required(),
 				
