@@ -4,6 +4,8 @@ use wcf\data\object\type\definition\ObjectTypeDefinitionList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\object\type\ObjectTypeEditor;
 use wcf\data\DatabaseObjectList;
+use wcf\data\page\PageNode;
+use wcf\data\page\PageNodeTree;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\condition\AbstractIntegerCondition;
 use wcf\system\condition\UserGroupCondition;
@@ -305,6 +307,32 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		// com.woltlab.wcf.adLocation
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.adLocation')
 			->appendChildren([
+				SingleSelectionFormField::create('adLocationPage')
+					->objectProperty('page')
+					->label('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.page')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.page.description')
+					->options(function() {
+						$options = [
+							[
+								'depth' => 0,
+								'label' => 'wcf.global.noSelection',
+								'value' => ''
+							]
+						];
+						
+						$pageNodeTree = new PageNodeTree();
+						
+						/** @var PageNode $pageNode */
+						foreach ($pageNodeTree->getNodeList() as $pageNode) {
+							$options[] = [
+								'depth' => $pageNode->getDepth() - 1,
+								'label' => $pageNode->name,
+								'value' => $pageNode->identifier
+							];
+						}
+						
+						return $options;
+					}, true),
 				TextFormField::create('adLocationCategoryName')
 					->objectProperty('categoryname')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName')

@@ -1756,6 +1756,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.cssClassName"><![CDATA[CSS Classes]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.cssClassName.description"><![CDATA[The entered comma-separated CSS classes are assigned to the element that wraps all ads at the specific location. ]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.cssClassName.error.invalid"><![CDATA[The following CSS classes are invalid: {implode from=$invalidClasses item=invalidClass}<code>{$invalidClass}</code>{/implode}.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.page"><![CDATA[Page]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.page.description"><![CDATA[Page on which the ad location is positioned.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.attachment.objectType.data.title"><![CDATA[Attachment Type Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.attachment.objectType.private"><![CDATA[Attachments are Private]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.attachment.objectType.private.description"><![CDATA[Private attachments are ignored by the attachment management in the ACP.]]></item>
