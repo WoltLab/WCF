@@ -1798,7 +1798,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime.description"><![CDATA[After the entered time interval, the sitemap will be rebuilt by the system.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.data.title"><![CDATA[Daily Statistics Handler Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName"><![CDATA[Category]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName.description"><![CDATA[Daily statistics handler are grouped by their category on the stats page. The category consists of at least four segments that are separated by dots. Each segment may only contain the following characters: <code>[A-z0-9-_]</code>.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName.description"><![CDATA[Daily statistics handler are grouped by their category on the stats page. The category consists of at least three segments that are separated by dots. Each segment may only contain the following characters: <code>[A-z0-9-_]</code>.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName.error.tooFewSegments"><![CDATA[The entered category only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.isDefault"><![CDATA[Default Daily Statistics Handler]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.isDefault.description"><![CDATA[Default daily statistics handler are pre-selected when loading the stats page.]]></item>
