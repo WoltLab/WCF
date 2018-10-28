@@ -122,6 +122,29 @@ li.reactCountButton:hover {
 	color: $wcfContentText;
 }
 
+.reputationCounter {
+	color: $wcfContentDimmedText;
+	cursor: pointer;
+	
+	&.positive {
+		color: #060 !important;
+	}
+	
+	&.negative {
+		color: #900 !important;
+	}
+	
+	&::before {
+		font-family: FontAwesome;
+		content: $fa-var-smile-o + "\00A0";
+		display: inline-block;
+	}
+	
+	&:empty {
+		display: none;	
+	}
+}
+
 .reactionSummaryListTiny {
 	display: inline;
 	

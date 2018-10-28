@@ -166,6 +166,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 			'objectType' => $this->parameters['data']['objectType'],
 			'reactionTypeID' => $reactionData['reactionTypeID'],
 			'containerID' => $this->parameters['data']['containerID'],
+			'reputationCount' => $reactionData['cumulativeLikes']
 		];
 	}
 	

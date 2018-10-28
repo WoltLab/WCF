@@ -376,7 +376,8 @@ class ReactionHandler extends SingletonFactory {
 			return [
 				'cachedReactions' => $likeObjectData['cachedReactions'], 
 				'reactionTypeID' => $reactionTypeID, 
-				'likeObject' => $likeObjectData['likeObject']
+				'likeObject' => $likeObjectData['likeObject'],
+				'cumulativeLikes' => $likeObjectData['cumulativeLikes']
 			];
 		}
 		catch (DatabaseQueryException $e) {
@@ -584,7 +585,8 @@ class ReactionHandler extends SingletonFactory {
 			return [
 				'cachedReactions' => $likeObjectData['cachedReactions'],
 				'reactionTypeID' => null,
-				'likeObject' => $likeObjectData['likeObject']
+				'likeObject' => $likeObjectData['likeObject'],
+				'cumulativeLikes' => $likeObjectData['cumulativeLikes']
 			];
 		}
 		catch (DatabaseQueryException $e) {
@@ -594,7 +596,8 @@ class ReactionHandler extends SingletonFactory {
 		return [
 			'cachedReactions' => [],
 			'reactionTypeID' => null,
-			'likeObject' => []
+			'likeObject' => [],
+			'cumulativeLikes' => null
 		];
 	}
 	
@@ -633,6 +636,10 @@ class ReactionHandler extends SingletonFactory {
 				if (--$cachedReactions[$like->getReactionType()->reactionTypeID] == 0) {
 					unset($cachedReactions[$like->getReactionType()->reactionTypeID]);
 				}
+			}
+			
+			if (!$likes && !$dislikes) {
+				$cumulativeLikes = null;
 			}
 			
 			// build update date
