@@ -605,7 +605,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 							
 							if (empty($tableName->getValidationErrors())) {
 								// table name has already been validated and table exists
-								$columns = WCF::getDB()->getEditor()->getColumns($tableName->getValue());
+								$columns = WCF::getDB()->getEditor()->getColumns(ApplicationHandler::insertRealDatabaseTableNames($tableName->getValue()));
 								
 								foreach ($columns as $column) {
 									if ($column['name'] === $formField->getValue()) {
