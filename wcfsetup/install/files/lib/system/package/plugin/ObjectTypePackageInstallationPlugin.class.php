@@ -842,11 +842,14 @@ XML;
 						array_keys($this->installation->getPackage()->getAllRequiredPackages())
 					))
 			]);
-		$this->definitionElementChildren[$objectTypeDefinition] = [
-			'action' => '',
-			'options' => '',
-			'permissions' => ''
-		];
+		$this->definitionElementChildren[$objectTypeDefinition] = array_merge(
+			$this->definitionElementChildren[$objectTypeDefinition] ?? [],
+			[
+				'action' => '',
+				'options' => '',
+				'permissions' => ''
+			]
+		);
 	}
 	
 	/**
@@ -861,7 +864,9 @@ XML;
 	public function addConditionFields(IFormContainer $dataContainer, $objectTypeDefinition, $addConditionObject = true, $addConditionGroup = true) {
 		$prefix = preg_replace('~Fields$~', '', $dataContainer->getId());
 		
-		$this->definitionElementChildren[$objectTypeDefinition] = [];
+		if (!isset($this->definitionElementChildren[$objectTypeDefinition])) {
+			$this->definitionElementChildren[$objectTypeDefinition] = [];
+		}
 		
 		if ($addConditionObject) {
 			$dataContainer->appendChild(
@@ -969,6 +974,7 @@ XML;
 		
 		$parameters = [
 			'dataContainer' => $dataContainer,
+			'objectTypeDefinition' => $objectTypeDefinition,
 			'prefix' => $prefix
 		];
 		EventHandler::getInstance()->fireAction($this, 'addConditionFields', $parameters);
@@ -1008,11 +1014,12 @@ XML;
 	 * @param	string		$conditionClass		name of the PHP class the field is created for
 	 * @param	string		$id			id of the created field
 	 * @param	string		$databaseTableName	name of the database table that stores the conditioned objects
+	 * @param	bool		$lowercase		is `true`, if `propertyname` should be used, otherwise `propertyName` is used
 	 * @return	TextFormField
 	 */
-	public function getIntegerConditionPropertyNameField(TextFormField $classNameField, $conditionClass, $id, $databaseTableName) {
+	public function getIntegerConditionPropertyNameField(TextFormField $classNameField, $conditionClass, $id, $databaseTableName, $lowercase = true) {
 		return TextFormField::create($id)
-			->objectProperty('propertyname')
+			->objectProperty($lowercase ? 'propertyname' : 'propertyName')
 			->label('wcf.acp.pip.objectType.integerCondition.propertyName')
 			->description(
 				'wcf.acp.pip.objectType.integerCondition.propertyName.description',
