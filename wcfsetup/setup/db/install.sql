@@ -1456,9 +1456,9 @@ CREATE TABLE wcf1_user (
 	disableCoverPhotoReason TEXT,
 	disableCoverPhotoExpires INT(10) NOT NULL DEFAULT 0,
 	articles INT(10) NOT NULL DEFAULT 0,
-	positiveReactionsReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
-	negativeReactionsReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
-	neutralReactionsReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
+	positiveReactionsReceived INT(10) NOT NULL DEFAULT 0,
+	negativeReactionsReceived INT(10) NOT NULL DEFAULT 0,
+	neutralReactionsReceived INT(10) NOT NULL DEFAULT 0,
 	
 	KEY username (username),
 	KEY email (email),
