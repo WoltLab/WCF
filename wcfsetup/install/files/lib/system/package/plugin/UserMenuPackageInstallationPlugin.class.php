@@ -126,7 +126,7 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	 * @since	3.2
 	 */
 	protected function doGetElementData(\DOMElement $element, $saveData) {
-		$data = parent::doGetElementData($element);
+		$data = parent::doGetElementData($element, $saveData);
 		
 		$className = $element->getElementsByTagName('classname')->item(0);
 		if ($className !== null) {

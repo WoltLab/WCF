@@ -129,7 +129,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	 * @since	3.2
 	 */
 	protected function doGetElementData(\DOMElement $element, $saveData) {
-		$data = parent::doGetElementData($element);
+		$data = parent::doGetElementData($element, $saveData);
 		
 		$icon = $element->getElementsByTagName('icon')->item(0);
 		if ($icon !== null) {
