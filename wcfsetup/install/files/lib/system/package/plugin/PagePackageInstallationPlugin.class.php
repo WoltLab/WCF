@@ -767,6 +767,12 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		
 		$page->appendChild($document->createElement('pageType', $data['pageType']));
 		
+		$this->appendElementChildren(
+			$page,
+			['controller' => '',],
+			$form
+		);
+		
 		foreach ($formData['name_i18n'] as $languageID => $name) {
 			$name = $document->createElement('name', $this->getAutoCdataValue($name));
 			$name->setAttribute('language', LanguageFactory::getInstance()->getLanguage($languageID)->languageCode);
@@ -774,16 +780,23 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			$page->appendChild($name);
 		}
 		
-		// TODO: use `appendElementChildren`
-		$optionalElements = [
-			'controller', 'handler', 'controllerCustomURL', 'hasFixedParent',
-			'parent', 'options', 'permissions', 'cssClassName', 'allowSpidersToIndex',
-			'excludeFromLandingPage', 'availableDuringOfflineMode', 'requireObjectID'
-		];
-		
-		foreach ($optionalElements as $property) {
-			if (!empty($data[$property])) {
-				$page->appendChild($document->createElement($property, (string)$data[$property]));
+		$this->appendElementChildren(
+			$page,
+			[
+				'handler' => '',
+				'controllerCustomURL' => '',
+				'hasFixedParent' => 0,
+				'parent' => '',
+				'options' => '',
+				'permissions' => '',
+				'cssClassName' => '',
+				'allowSpidersToIndex' => 0,
+				'excludeFromLandingPage' => 0,
+				'availableDuringOfflineMode' => 0,
+				'requireObjectID' => 0
+			],
+			$form
+		);
 			}
 		}
 		

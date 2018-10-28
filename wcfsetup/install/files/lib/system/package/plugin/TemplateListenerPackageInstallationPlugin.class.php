@@ -326,7 +326,6 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 					}
 				})),
 			
-			// TODO: use field with code support
 			MultilineTextFormField::create('templateCode')
 				->objectProperty('templatecode')
 				->label('wcf.acp.pip.templateListener.templateCode')

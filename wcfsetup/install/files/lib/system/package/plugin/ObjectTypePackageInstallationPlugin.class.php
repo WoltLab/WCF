@@ -31,6 +31,7 @@ use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -450,8 +451,11 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 				TextFormField::create('notificationObjectTypeCategory')
 					->objectProperty('category')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category')
-					->description('wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.description'),
-					// TODO: validator
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.description')
+					->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
+						'wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category',
+						3
+					)),
 				
 				BooleanFormField::create('notificationObjectTypeSupportsReactions')
 					->objectProperty('supportsReactions')

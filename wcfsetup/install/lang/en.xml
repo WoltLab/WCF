@@ -1781,7 +1781,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.condition.userSearch.data.title"><![CDATA[User Search Condition Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.data.title"><![CDATA[Notification Object Type Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category"><![CDATA[Category]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.description"><![CDATA[The category is used to group events on the notification settings page.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.description"><![CDATA[The category is used to group events on the notification settings page. The category consists of at least three segments that are separated by dots. Each segment may only contain the following characters: [A-z0-9-_].]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.error.tooFewSegments"><![CDATA[The category only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.data.title"><![CDATA[Rebuild Data Worker Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.niceValue"><![CDATA[Nice Value]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.niceValue.description"><![CDATA[The nice value is used to determine the order in which the rebuild data workers are shown and thus in which order they should be executed. Workers with lower nice value are shown first.]]></item>
