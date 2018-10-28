@@ -2,6 +2,7 @@
 namespace wcf\data\user\group\assignment;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\system\condition\ConditionHandler;
 
 /**
@@ -17,6 +18,8 @@ use wcf\system\condition\ConditionHandler;
  * @method	UserGroupAssignmentEditor	getSingleObject()
  */
 class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -39,23 +42,5 @@ class UserGroupAssignmentAction extends AbstractDatabaseObjectAction implements 
 		ConditionHandler::getInstance()->deleteConditions('com.woltlab.wcf.condition.userGroupAssignment', $this->objectIDs);
 		
 		return parent::delete();
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $assignment) {
-			$assignment->update([
-				'isDisabled' => $assignment->isDisabled ? 0 : 1
-			]);
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function validateToggle() {
-		parent::validateUpdate();
 	}
 }
