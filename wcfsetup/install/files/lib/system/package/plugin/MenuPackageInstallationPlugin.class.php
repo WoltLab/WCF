@@ -339,7 +339,6 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				})),
 			
 			TitleFormField::create()
-				->description('wcf.acp.pip.menu.title.description')
 				->required()
 				->i18n()
 				->i18nRequired()

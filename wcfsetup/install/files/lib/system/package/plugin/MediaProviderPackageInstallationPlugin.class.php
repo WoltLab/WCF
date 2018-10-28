@@ -127,7 +127,6 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 				})),
 			
 			TitleFormField::create()
-				->description('wcf.acp.pip.mediaProvider.title.description')
 				->required(),
 			
 			MultilineTextFormField::create('regex')
