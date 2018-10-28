@@ -1,9 +1,14 @@
 <?php
 namespace wcf\system\mail;
 use wcf\data\language\Language;
+use wcf\system\email\Email;
+use wcf\system\email\EmailGrammar;
+use wcf\system\email\Mailbox;
+use wcf\system\email\mime\AttachmentMimePart;
+use wcf\system\email\mime\HtmlTextMimePart;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\PlainTextMimePart;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
-use wcf\util\StringUtil;
 
 /**
  * This class represents an e-mail.
@@ -22,82 +27,30 @@ class Mail {
 	public static $lineEnding = "\n";
 	
 	/**
-	 * mail header
-	 * @var	string
-	 */
-	protected $header = '';
-	
-	/**
-	 * boundary for multipart/mixed mail
-	 * @var	string
-	 */
-	protected $boundary = '';
-	
-	/**
 	 * mail content mime type
 	 * @var	string
 	 */
 	protected $contentType = "text/plain";
 	
 	/**
-	 * mail recipients
-	 * @var	string[]
+	 * mail object this class get's forwarded to
+	 * @var Email
+	 * @since WSC 3.2.0
 	 */
-	protected $to = [];
+	protected $email = null;
 	
 	/**
-	 * mail subject
-	 * @var	string
+	 * language object for the recipients language setting
+	 * @var Language
+	 * @since 3.2.0
 	 */
-	protected $subject = '';
-	
-	/**
-	 * mail message
-	 * @var	string
-	 */
-	protected $message = '';
-	
-	/**
-	 * mail sender
-	 * @var	string
-	 */
-	protected $from = '';
-	
-	/**
-	 * mail carbon copy
-	 * @var	string[]
-	 */
-	protected $cc = [];
-	
-	/**
-	 * mail blind carbon copy
-	 * @var	string[]
-	 */
-	protected $bcc = [];
+	protected $language = null;
 	
 	/**
 	 * mail attachments
 	 * @var	array
 	 */
 	protected $attachments = [];
-	
-	/**
-	 * priority of the mail
-	 * @var	integer
-	 */
-	protected $priority = 3;
-	
-	/**
-	 * mail body
-	 * @var	string
-	 */
-	protected $body = '';
-	
-	/**
-	 * mail language
-	 * @var	Language
-	 */
-	protected $language = null;
 	
 	/**
 	 * Creates a new Mail object.
@@ -113,16 +66,16 @@ class Mail {
 	 * @param	string		$header
 	 */
 	public function __construct($to = '', $subject = '', $message = '', $from = '', $cc = '', $bcc = '', $attachments = [], $priority = '', $header = '') {
-		$this->setBoundary();
+		$this->email = new Email();
 		
 		if (empty($from)) $from = [MAIL_FROM_NAME => MAIL_FROM_ADDRESS];
-		if (empty($priority)) $priority = 3;
 		
 		$this->setFrom($from);
 		$this->setSubject($subject);
 		$this->setMessage($message);
-		$this->setPriority($priority);
-		$this->setHeader($header);
+		
+		if (!empty($header)) $this->setHeader($header);
+		if (!empty($priority)) $this->setPriority($priority);
 		
 		if (!empty($to)) $this->addTo($to);
 		if (!empty($cc)) $this->addCC($cc);
@@ -137,30 +90,7 @@ class Mail {
 	 * @return	string		mail header
 	 */
 	public function getHeader() {
-		if (!empty($this->header)) {
-			$this->header = preg_replace('%(\r\n|\r|\n)%', self::$lineEnding, $this->header);
-		}
-		
-		$this->header .=
-			'X-Priority: 3'.self::$lineEnding
-			.'X-Mailer: WoltLab Suite Mail Package'.self::$lineEnding
-			.'From: '.$this->getFrom().self::$lineEnding
-			.($this->getCCString() != '' ? 'CC:'.$this->getCCString().self::$lineEnding : '')
-			.($this->getBCCString() != '' ? 'BCC:'.$this->getBCCString().self::$lineEnding : '');
-			
-		if (count($this->getAttachments())) {
-			$this->header .= 'Content-Transfer-Encoding: 8bit'.self::$lineEnding;
-			$this->header .= 'Content-Type: multipart/mixed;'.self::$lineEnding;
-			$this->header .= "\tboundary=".'"'.$this->getBoundary().'";'.self::$lineEnding;
-		}
-		else {
-			$this->header .= 'Content-Transfer-Encoding: 8bit'.self::$lineEnding;
-			$this->header .= 'Content-Type: '.$this->getContentType().'; charset=UTF-8'.self::$lineEnding;
-		}
-		
-		$this->header .= 'MIME-Version: 1.0'.self::$lineEnding;
-		
-		return $this->header;
+		return $this->email->getHeaderString();
 	}
 	
 	/**
@@ -183,52 +113,7 @@ class Mail {
 	 * @return	string		mail body
 	 */
 	public function getBody() {
-		$counter = 1;
-		$this->body = '';
-		
-		if (count($this->getAttachments())) {
-			// add message
-			$this->body .= '--'.$this->getBoundary().self::$lineEnding;
-			$this->body .= 'Content-Type: '.$this->getContentType().'; charset="UTF-8"'.self::$lineEnding;
-			$this->body .= 'Content-Transfer-Encoding: 8bit'.self::$lineEnding;
-			$this->body .= self::$lineEnding;
-			
-			// wrap lines after 70 characters
-			$this->body .= wordwrap($this->getMessage(), 70);
-			$this->body .= self::$lineEnding.self::$lineEnding;
-			$this->body .= '--'.$this->getBoundary().self::$lineEnding;
-			
-			// add attachments
-			foreach ($this->getAttachments() as $attachment) {
-				$fileName = $attachment['name'];
-				$path = $attachment['path'];
-				
-				// download file
-				if (FileUtil::isURL($path)) {
-					$tmpPath = FileUtil::getTemporaryFilename('mailAttachment_');
-					if (!@copy($path, $tmpPath)) continue;
-					$path = $tmpPath;
-				}
-				
-				// get file contents
-				$data = @file_get_contents($path);
-				$data = chunk_split(base64_encode($data), 70, self::$lineEnding);
-				
-				$this->body .= 'Content-Type: application/octetstream; name="'.$fileName.'"'.self::$lineEnding;
-				$this->body .= 'Content-Transfer-Encoding: base64'.self::$lineEnding;
-				$this->body .= 'Content-Disposition: attachment; filename="'.$fileName.'"'.self::$lineEnding.self::$lineEnding;
-				$this->body .= $data.self::$lineEnding.self::$lineEnding;
-				
-				if ($counter < count($this->getAttachments())) $this->body .= '--'.$this->getBoundary().self::$lineEnding;
-				$counter++;
-			}
-			
-			$this->body .= self::$lineEnding.'--'.$this->getBoundary().'--';
-		}
-		else {
-			$this->body .= $this->getMessage();
-		}
-		return $this->body;
+		return $this->email->getBodyString();
 	}
 	
 	/**
@@ -247,7 +132,15 @@ class Mail {
 	 * Sends this mail.
 	 */
 	public function send() {
-		MailSender::getInstance()->sendMail($this);
+		if (!empty($this->attachmments)) {
+			$attachments = array_map(function ($attachment) {
+				return new AttachmentMimePart($attachment['path'], $attachment['name']);
+			}, $this->attachments);
+			$mimePart = $this->email->getBody();
+			$this->email->setBody(new MimePartFacade([$mimePart], $attachments));
+		}
+		
+		$this->email->send();
 	}
 	
 	/**
@@ -256,14 +149,7 @@ class Mail {
 	 * @param	mixed		$to
 	 */
 	public function addTo($to) {
-		if (is_array($to)) {
-			foreach ($to as $name => $recipient) {
-				$this->to[] = self::buildAddress($name, $recipient);
-			}
-		}
-		else {
-			$this->to[] = $to;
-		}
+		$this->addRecipient($to);
 	}
 	
 	/**
@@ -272,7 +158,14 @@ class Mail {
 	 * @return	mixed
 	 */
 	public function getTo() {
-		return $this->to;
+		$recipients = $this->email->getRecipients();
+		$result = [];
+		
+		foreach ($recipients as $recipient) {
+			if ($recipient['type'] == 'to') $result[] = $recipient->getAddress();
+		}
+		
+		return $result;
 	}
 	
 	/**
@@ -281,7 +174,7 @@ class Mail {
 	 * @return	string
 	 */
 	public function getToString() {
-		return implode(', ', $this->to);
+		return implode(', ', $this->getTo());
 	}
 	
 	/**
@@ -290,7 +183,7 @@ class Mail {
 	 * @param	string		$subject
 	 */
 	public function setSubject($subject) {
-		$this->subject = $subject;
+		$this->email->setSubject($subject);
 	}
 	
 	/**
@@ -299,7 +192,7 @@ class Mail {
 	 * @return	string
 	 */
 	public function getSubject() {
-		return $this->subject;
+		return $this->email->getSubject();
 	}
 	
 	/**
@@ -308,7 +201,8 @@ class Mail {
 	 * @param	string		$message
 	 */
 	public function setMessage($message) {
-		$this->message = $message;
+		if ($this->contentType == 'text/html') $this->email->setBody(new HtmlTextMimePart($message));
+		else $this->email->setBody(new PlainTextMimePart($message));
 	}
 	
 	/**
@@ -317,7 +211,7 @@ class Mail {
 	 * @return	string
 	 */
 	public function getMessage() {
-		return preg_replace('%(\r\n|\r|\n)%', self::$lineEnding, $this->message . (MAIL_SIGNATURE ? self::$lineEnding . self::$lineEnding . '-- ' . self::$lineEnding . $this->getLanguage()->get(MAIL_SIGNATURE) : ''));
+		return $this->email->getBody()->getContent();
 	}
 	
 	/**
@@ -327,10 +221,26 @@ class Mail {
 	 */
 	public function setFrom($from) {
 		if (is_array($from)) {
-			$this->from = self::buildAddress(key($from), current($from));
+			$this->email->setSender(new Mailbox(current($from), key($from)));
 		}
 		else {
-			$this->from = $from;
+			$this->email->setSender(new Mailbox($from));
+		}
+	}
+	
+	/**
+	 * Adds recipients as to, cc or bcc to this mail.
+	 *
+	 * @param	mixed		$recipient
+	 * @param	string		$type
+	 * @since 3.2.0
+	 */
+	protected function addRecipient($recipient, $type = 'to') {
+		if (is_array($recipient)) {
+			$this->email->addRecipient(new Mailbox(current($recipient), key($recipient), $this->language), $type);
+		}
+		else {
+			$this->email->addRecipient(new Mailbox($recipient, null, $this->language), $type);
 		}
 	}
 	
@@ -340,7 +250,7 @@ class Mail {
 	 * @return	string
 	 */
 	public function getFrom() {
-		return $this->from;
+		return $this->email->getSender()->getAddress();
 	}
 	
 	/**
@@ -349,14 +259,7 @@ class Mail {
 	 * @param	mixed		$cc
 	 */
 	public function addCC($cc) {
-		if (is_array($cc)) {
-			foreach ($cc as $name => $recipient) {
-				$this->cc[] = self::buildAddress($name, $recipient);
-			}
-		}
-		else {
-			$this->cc[] = $cc;
-		}
+		$this->addRecipient($cc, 'cc');
 	}
 	
 	/**
@@ -365,7 +268,14 @@ class Mail {
 	 * @return	mixed
 	 */
 	public function getCC() {
-		return $this->cc;
+		$recipients = $this->email->getRecipients();
+		$result = [];
+		
+		foreach ($recipients as $recipient) {
+			if ($recipient['type'] == 'cc') $result[] = $recipient->getAddress();
+		}
+		
+		return $result;
 	}
 	
 	/**
@@ -374,7 +284,7 @@ class Mail {
 	 * @return	string
 	 */
 	public function getCCString() {
-		return implode(', ', $this->cc);
+		return implode(', ', $this->getCC());
 	}
 	
 	/**
@@ -383,14 +293,7 @@ class Mail {
 	 * @param	mixed		$bcc
 	 */
 	public function addBCC($bcc) {
-		if (is_array($bcc)) {
-			foreach ($bcc as $name => $recipient) {
-				$this->bcc[] = self::buildAddress($name, $recipient);
-			}
-		}
-		else {
-			$this->bcc[] = $bcc;
-		}
+		$this->addRecipient($bcc, 'bcc');
 	}
 	
 	/**
@@ -399,7 +302,14 @@ class Mail {
 	 * @return	mixed
 	 */
 	public function getBCC() {
-		return $this->bcc;
+		$recipients = $this->email->getRecipients();
+		$result = [];
+		
+		foreach ($recipients as $recipient) {
+			if ($recipient['type'] == 'bcc') $result[] = $recipient->getAddress();
+		}
+		
+		return $result;
 	}
 	
 	/**
@@ -408,7 +318,7 @@ class Mail {
 	 * @return	string
 	 */
 	public function getBCCString() {
-		return implode(', ', $this->bcc);
+		return implode(', ', $this->getBCC());
 	}
 	
 	/**
@@ -445,7 +355,7 @@ class Mail {
 	 * @param	integer		$priority
 	 */
 	public function setPriority($priority) {
-		$this->priority = $priority;
+		$this->email->addHeader('X-Priority', $priority);
 	}
 	
 	/**
@@ -454,23 +364,12 @@ class Mail {
 	 * @return	integer
 	 */
 	public function getPriority() {
-		return $this->priority;
-	}
-	
-	/**
-	 * Creates a boundary for multipart/mixed mail.
-	 */
-	protected function setBoundary() {
-		$this->boundary = "==Multipart_Boundary_x".StringUtil::getRandomID()."x";
-	}
-	
-	/**
-	 * Returns the created boundary.
-	 * 
-	 * @return	string
-	 */
-	protected function getBoundary() {
-		return $this->boundary;
+		$headers = $this->email->getHeaders();
+		foreach ($headers as $header) {
+			if ($header[0] == 'x-priority') return $header[1];
+		}
+		
+		return 3;
 	}
 	
 	/**
@@ -479,7 +378,7 @@ class Mail {
 	 * @return	string
 	 */
 	public function getContentType() {
-		return $this->contentType;
+		return $this->email->getBody()->getContentType();
 	}
 	
 	/**
@@ -497,8 +396,19 @@ class Mail {
 	 * @param	string		$header
 	 */
 	public function setHeader($header) {
-		if (!empty($header)) {
-			$this->header .= $header.self::$lineEnding;
+		$header = explode(':', $header);
+		
+		if (count($header) == 2) {
+			$this->email->addHeader($header[0], $header[1]);
+		}
+		else if (count($header) > 2) {
+			$name = $header[0];
+			unset($header[0]);
+			$value = implode(':', $header);
+			$this->email->addHeader($name, $value);
+		}
+		else {
+			$this->email->addHeader($header[0], '');
 		}
 	}
 	
@@ -509,6 +419,15 @@ class Mail {
 	 */
 	public function setLanguage(Language $language) {
 		$this->language = $language;
+		
+		$recipients = $this->email->getRecipients();
+		if (!empty($recipients)) {
+			foreach ($recipients as $recipient) {
+				// workaround since there is currently no way to set the language of a mailbox
+				$this->email->removeRecipient($recipient);
+				$this->email->addRecipient(new Mailbox($recipient->getAddress(), $recipient->getName()));
+			}
+		}
 	}
 	
 	/**
@@ -529,13 +448,6 @@ class Mail {
 	 * @return	string
 	 */
 	public static function encodeMIMEHeader($string) {
-		if (function_exists('mb_encode_mimeheader')) {
-			$string = mb_encode_mimeheader($string, 'UTF-8', 'Q', self::$lineEnding);
-		}
-		else {
-			$string = '=?UTF-8?Q?'.preg_replace('/[^\r\n]{73}[^=\r\n]{2}/', "$0=\r\n", str_replace("%", "=", str_replace("%0D%0A", "\r\n", str_replace("%20", " ", rawurlencode($string))))).'?=';
-		}
-		
-		return $string;
+		return EmailGrammar::encodeQuotedPrintableHeader($string);
 	}
 }
