@@ -63,7 +63,7 @@ abstract class FormFieldValidatorUtil {
 						$formField->addValidationError(
 							new FormFieldValidationError(
 								'invalidSegments',
-								$languageItemPrefix . '.error.invalidSegments',
+								'wcf.form.fieldValidator.dotSeparatedString.error.invalidSegments',
 								['invalidSegments' => $invalidSegments]
 							)
 						);
