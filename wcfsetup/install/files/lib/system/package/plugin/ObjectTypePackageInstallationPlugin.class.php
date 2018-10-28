@@ -421,7 +421,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		
 		// com.woltlab.wcf.condition.ad
 		$conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.ad');
-		$this->addConditionFields($conditionAdContainer,'com.woltlab.wcf.condition.ad', true, true);
+		$this->addConditionFields($conditionAdContainer, 'com.woltlab.wcf.condition.ad', true, true);
 		
 		// com.woltlab.wcf.condition.notice
 		$conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.notice');
@@ -437,7 +437,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		
 		// com.woltlab.wcf.condition.userSearch
 		$conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.userSearch');
-		$this->addConditionFields($conditionAdContainer, 'com.woltlab.wcf.condition.userSearch',false, true);
+		$this->addConditionFields($conditionAdContainer, 'com.woltlab.wcf.condition.userSearch', false, true);
 		
 		// com.woltlab.wcf.message
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.message')

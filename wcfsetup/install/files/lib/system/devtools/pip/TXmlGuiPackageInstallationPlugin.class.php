@@ -146,7 +146,7 @@ trait TXmlGuiPackageInstallationPlugin {
 			'form' => $form
 		];
 		
-		EventHandler::getInstance()->fireAction($this,'didDoCreateXmlElement', $data);
+		EventHandler::getInstance()->fireAction($this, 'didDoCreateXmlElement', $data);
 		
 		if (!($data['element'] instanceof \DOMElement)) {
 			throw new \UnexpectedValueException('XML element is no "\DOMElement" object anymore.');
