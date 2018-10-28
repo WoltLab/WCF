@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\data\language\Language;
 use wcf\data\package\PackageCache;
 use wcf\data\page\Page;
 use wcf\data\page\PageAction;
@@ -797,10 +798,22 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			],
 			$form
 		);
-			}
-		}
 		
-		foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+		$languages = LanguageFactory::getInstance()->getLanguages();
+		
+		// sort languages by language code but keep English first
+		uasort($languages, function(Language $language1, Language $language2) {
+			if ($language1->languageCode === 'en') {
+				return -1;
+			}
+			else if ($language2->languageCode === 'en') {
+				return 1;
+			}
+			
+			return $language1->languageCode <=> $language2->languageCode;
+		});
+		
+		foreach ($languages as $language) {
 			$content = null;
 			
 			foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $property) {
