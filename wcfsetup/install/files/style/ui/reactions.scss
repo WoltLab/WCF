@@ -163,40 +163,6 @@ li.reactCountButton:hover {
 	}
 }
 
-.box.reactionReputationBox {
-	&.positiveReactionReputationBox {
-		background-color: $wcfStatusSuccessBackground;
-		color: $wcfStatusSuccessText;
-		
-		.fa {
-			color: $wcfStatusSuccessText;
-		}
-		
-		.boxTitle > a {
-			color: $wcfStatusSuccessText;
-		}
-	}
-	
-	&.negativeReactionReputationBox {
-		background-color: $wcfStatusErrorBackground;
-		color: $wcfStatusErrorText;
-		
-		.fa {
-			color: $wcfStatusErrorText;
-		}
-		
-		.boxTitle > a {
-			color: $wcfStatusErrorText;
-		}
-	}
-	
-	.boxContent {
-		@include wcfFontHeadline;
-		
-		text-align: center;
-	}
-}
-
 @include screen-sm-down {
 	.reactionStatusContainer {
 		display: none;
