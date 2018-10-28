@@ -1044,11 +1044,11 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 						$this->selectOptionOptionTypes[] = $optionType;
 					}
 					
-					if (is_subclass_of($classname, IntegerOptionType::class)) {
+					if ($classname === IntegerOptionType::class || is_subclass_of($classname, IntegerOptionType::class)) {
 						$this->integerOptionTypes[] = $optionType;
 					}
 					
-					if (is_subclass_of($classname, TextOptionType::class)) {
+					if ($classname === TextOptionType::class || is_subclass_of($classname, TextOptionType::class)) {
 						$this->textOptionTypes[] = $optionType;
 					}
 					
