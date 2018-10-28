@@ -79,7 +79,7 @@
 		
 			<acpmenuitem name="wcf.acp.menu.link.contact.settings">
 				<parent>wcf.acp.menu.link.other</parent>
-				<controller>wcf\acp\form\ContactSettingsPage</controller>
+				<controller>wcf\acp\page\ContactSettingsPage</controller>
 				<options>module_contact_form</options>
 				<permissions>admin.contact.canManageContactForm</permissions>
 			</acpmenuitem>
@@ -662,12 +662,12 @@
 			
 			<acpmenuitem name="wcf.acp.menu.link.language.item.list">
 				<parent>wcf.acp.menu.link.language</parent>
-				<controller>wcf\acp\form\LanguageItemList</controller>
+				<controller>wcf\acp\page\LanguageItemListPage</controller>
 				<permissions>admin.language.canManageLanguage</permissions>
 			</acpmenuitem>
 			<acpmenuitem name="wcf.acp.menu.link.language.item.add">
 				<parent>wcf.acp.menu.link.language.item.list</parent>
-				<controller>wcf\acp\form\LanguageItemAdd</controller>
+				<controller>wcf\acp\form\LanguageItemAddForm</controller>
 				<permissions>admin.language.canManageLanguage</permissions>
 				<icon>fa-plus</icon>
 			</acpmenuitem>
