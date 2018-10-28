@@ -46,7 +46,9 @@ use wcf\util\DirectoryUtil;
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */
 class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IGuiPackageInstallationPlugin {
-	use TXmlGuiPackageInstallationPlugin;
+	use TXmlGuiPackageInstallationPlugin {
+		setEntryData as defaultSetEntryData;
+	}
 	
 	/**
 	 * @inheritDoc
@@ -1055,5 +1057,37 @@ XML;
 					));
 				}
 			}));
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function setEntryData($identifier, IFormDocument $document) {
+		$returnValue = $this->defaultSetEntryData($identifier, $document);
+		
+		// set dynamic descriptions here instead of relying on the JavaScript
+		// code to avoid delayed appearance of the descriptions
+		
+		/** @var SingleSelectionFormField $definitionID */
+		$definitionID = $document->getNodeById('definitionID');
+		$objectTypeDefinition = ObjectTypeCache::getInstance()->getDefinition($definitionID->getSaveValue());
+		
+		$definitionID->description(
+			'wcf.acp.pip.objectType.definitionName.' .
+			$objectTypeDefinition->definitionName .
+			'.description'
+		);
+		
+		/** @var ClassNameFormField $className */
+		$className = $document->getNodeById('className');
+		if ($objectTypeDefinition->interfaceName) {
+			$className->description(
+				'wcf.form.field.className.description.interface',
+				['interface' => $objectTypeDefinition->interfaceName]
+			);
+		}
+		
+		return $returnValue;
 	}
 }

@@ -30,7 +30,5 @@
 		}
 		
 		definitionID.addEventListener('change', update);
-		
-		update();
 	});
 </script>
