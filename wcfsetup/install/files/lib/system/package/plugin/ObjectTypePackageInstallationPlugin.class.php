@@ -74,6 +74,12 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	public $definitionInterfaces = [];
 	
 	/**
+	 * data for object type definition-specific xml element children
+	 * @var	array
+	 */
+	public $definitionElementChildren = [];
+	
+	/**
 	 * Returns the id of the object type definition with the given name.
 	 * 
 	 * @param	string		$definitionName
@@ -364,6 +370,11 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 						}
 					}))
 			]);
+		$this->definitionElementChildren['com.woltlab.wcf.adLocation'] = [
+			'page' => '',
+			'categoryname' => '',
+			'cssclassname' => ''
+		];
 		
 		// com.woltlab.wcf.attachment.objectType
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.attachment.objectType')
@@ -373,13 +384,14 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.attachment.objectType.private')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.attachment.objectType.private.description')
 			);
+		$this->definitionElementChildren['com.woltlab.wcf.attachment.objectType'] = ['private' => 0];
 		
 		// com.woltlab.wcf.bulkProcessing.user.action
 		$this->addBulkProcessingActionFields($form, 'com.woltlab.wcf.bulkProcessing.user.action');
 		
 		// com.woltlab.wcf.bulkProcessing.user.condition
 		$bulkProcessingUserConditionContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.bulkProcessing.user.condition');
-		$this->addConditionFields($bulkProcessingUserConditionContainer, false, true);
+		$this->addConditionFields($bulkProcessingUserConditionContainer, 'com.woltlab.wcf.bulkProcessing.user.condition', false, true);
 		
 		// com.woltlab.wcf.category
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.category')
@@ -389,6 +401,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.category.defaultPermission')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.category.defaultPermission.description')
 			);
+		$this->definitionElementChildren['com.woltlab.wcf.category'] = ['defaultpermission' => 0];
 		
 		// com.woltlab.wcf.clipboardItem
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.clipboardItem')
@@ -400,26 +413,27 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->required()
 					->parentClass(DatabaseObjectList::class)
 			);
+		$this->definitionElementChildren['com.woltlab.wcf.clipboardItem'] = ['listclassname'];
 		
 		// com.woltlab.wcf.condition.ad
 		$conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.ad');
-		$this->addConditionFields($conditionAdContainer, true, true);
+		$this->addConditionFields($conditionAdContainer,'com.woltlab.wcf.condition.ad', true, true);
 		
 		// com.woltlab.wcf.condition.notice
 		$conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.notice');
-		$this->addConditionFields($conditionAdContainer);
+		$this->addConditionFields($conditionAdContainer, 'com.woltlab.wcf.condition.notice');
 		
 		// com.woltlab.wcf.condition.trophy
 		$conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.trophy');
-		$this->addConditionFields($conditionAdContainer, false, true);
+		$this->addConditionFields($conditionAdContainer, 'com.woltlab.wcf.condition.trophy', false, true);
 		
 		// com.woltlab.wcf.condition.userGroupAssignment
 		$conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.userGroupAssignment');
-		$this->addConditionFields($conditionAdContainer, false, true);
+		$this->addConditionFields($conditionAdContainer, 'com.woltlab.wcf.condition.userGroupAssignment', false, true);
 		
 		// com.woltlab.wcf.condition.userSearch
 		$conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.userSearch');
-		$this->addConditionFields($conditionAdContainer, false, true);
+		$this->addConditionFields($conditionAdContainer, 'com.woltlab.wcf.condition.userSearch',false, true);
 		
 		// com.woltlab.wcf.message
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.message')
@@ -428,6 +442,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description')
 			]);
+		$this->definitionElementChildren['com.woltlab.wcf.message'] = ['enableToc' => 0];
 		
 		// com.woltlab.wcf.notification.objectType
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.notification.objectType')
@@ -443,6 +458,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions.description')
 			]);
+		$this->definitionElementChildren['com.woltlab.wcf.notification.objectType'] = [
+			'category' => 0,
+			'supportsReactions' => 0
+		];
 		
 		// com.woltlab.wcf.rebuildData
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.rebuildData')
@@ -453,6 +472,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.niceValue.description')
 					->nullable()
 			);
+		$this->definitionElementChildren['com.woltlab.wcf.rebuildData'] = ['nicevalue' => null];
 		
 		// com.woltlab.wcf.searchableObjectType
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.searchableObjectType')
@@ -486,6 +506,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 						}
 					}))
 			);
+		$this->definitionElementChildren['com.woltlab.wcf.searchableObjectType'] = ['searchindex'];
 		
 		// com.woltlab.wcf.sitemap.object
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.sitemap.object')
@@ -523,6 +544,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->required()
 					->minimum(0)
 			]);
+		$this->definitionElementChildren['com.woltlab.wcf.sitemap.object'] = ['priority', 'changeFreq', 'rebuildTime'];
 		
 		// com.woltlab.wcf.statDailyHandler
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.statDailyHandler')
@@ -538,6 +560,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.isDefault')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.isDefault.description')
 			]);
+		$this->definitionElementChildren['com.woltlab.wcf.statDailyHandler'] = [
+			'categoryname' => '',
+			'default' => 0
+		];
 		
 		// com.woltlab.wcf.tagging.taggableObject
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.tagging.taggableObject')
@@ -558,6 +584,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 						array_keys($this->installation->getPackage()->getAllRequiredPackages())
 					))
 			]);
+		$this->definitionElementChildren['com.woltlab.wcf.tagging.taggableObject'] = [
+			'options' => '',
+			'permissions' => ''
+		];
 		
 		// com.woltlab.wcf.user.activityPointEvent
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.user.activityPointEvent')
@@ -569,6 +599,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->minimum(0)
 					->required()
 			);
+		$this->definitionElementChildren['com.woltlab.wcf.user.activityPointEvent'] = ['points'];
 		
 		// com.woltlab.wcf.user.recentActivityEvent
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.user.recentActivityEvent')
@@ -578,6 +609,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description')
 			);
+		$this->definitionElementChildren['com.woltlab.wcf.user.recentActivityEvent'] = ['supportsReactions' => 0];
 		
 		// com.woltlab.wcf.versionTracker.objectType
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.versionTracker.objectType')
@@ -636,6 +668,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 						}
 					})),
 			]);
+		$this->definitionElementChildren['com.woltlab.wcf.versionTracker.objectType'] = ['tableName', 'tablePrimaryKey'];
 	}
 	
 	/**
@@ -732,24 +765,28 @@ XML;
 	 * @since	3.2
 	 */
 	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$type = $document->createElement($this->tagName);
-		foreach ($form->getData()['data'] as $key => $value) {
-			if ($key === 'definitionID') {
-				$key = 'definitionname';
-				$value = ObjectTypeCache::getInstance()->getDefinition($value)->definitionName;
-			}
-			
-			if ($value !== '') {
-				if (is_string($value)) {
-					$type->appendChild($document->createElement($key, $this->getAutoCdataValue($value)));
-				}
-				else {
-					$type->appendChild($document->createElement($key, (string) $value));
-				}
-			}
+		$data = $form->getData()['data'];
+		$definitionName = ObjectTypeCache::getInstance()->getDefinition($data['definitionID'])->definitionName;
+		
+		$objectType = $document->createElement($this->tagName);
+		$objectType->appendChild($document->createElement('name', $data['name']));
+		$objectType->appendChild($document->createElement('definitionname', $definitionName));
+		
+		$this->appendElementChildren(
+			$objectType,
+			['classname' => ''],
+			$form
+		);
+		
+		if (isset($this->definitionElementChildren[$definitionName])) {
+			$this->appendElementChildren(
+				$objectType,
+				$this->definitionElementChildren[$definitionName],
+				$form
+			);
 		}
 		
-		return $type;
+		return $objectType;
 	}
 	
 	/**
@@ -796,18 +833,26 @@ XML;
 						array_keys($this->installation->getPackage()->getAllRequiredPackages())
 					))
 			]);
+		$this->definitionElementChildren[$objectTypeDefinition] = [
+			'action' => '',
+			'options' => '',
+			'permissions' => ''
+		];
 	}
 	
 	/**
 	 * Adds all condition specific fields to the given form container.
 	 * 
 	 * @param	IFormContainer		$dataContainer
+	 * @param	string			$objectTypeDefinition
 	 * @param	bool			$addConditionObject
 	 * @param	bool			$addConditionGroup
 	 * @since	3.2
 	 */
-	public function addConditionFields(IFormContainer $dataContainer, $addConditionObject = true, $addConditionGroup = true) {
+	public function addConditionFields(IFormContainer $dataContainer, $objectTypeDefinition, $addConditionObject = true, $addConditionGroup = true) {
 		$prefix = preg_replace('~Fields$~', '', $dataContainer->getId());
+		
+		$this->definitionElementChildren[$objectTypeDefinition] = [];
 		
 		if ($addConditionObject) {
 			$dataContainer->appendChild(
@@ -818,6 +863,7 @@ XML;
 					->required()
 					->addValidator(self::getObjectTypeAlikeValueValidator('wcf.acp.pip.objectType.condition.conditionObject'))
 			);
+			$this->definitionElementChildren[$objectTypeDefinition][] = 'conditionobject';
 		}
 		
 		if ($addConditionGroup) {
@@ -837,6 +883,7 @@ XML;
 						}
 					}))
 			);
+			$this->definitionElementChildren[$objectTypeDefinition]['conditiongroup'] = '';
 		}
 		
 		// classes extending `AbstractIntegerCondition`
@@ -883,6 +930,7 @@ XML;
 						->values([UserGroupCondition::class])
 				)
 		);
+		$this->definitionElementChildren[$objectTypeDefinition]['includeguests'] = 0;
 		
 		// `UserIntegerPropertyCondition`
 		$dataContainer->appendChild(
@@ -893,6 +941,7 @@ XML;
 				'wcf' . WCF_N . '_user'
 			)->required()
 		);
+		$this->definitionElementChildren[$objectTypeDefinition]['propertyname'] = '';
 		
 		// `UserTimestampPropertyCondition`
 		$dataContainer->appendChild(
@@ -903,6 +952,8 @@ XML;
 				'wcf' . WCF_N . '_user'
 			)->required()
 		);
+		// already added above:
+		// $this->definitionElementChildren[$objectTypeDefinition]['propertyname'] = '';
 		
 		$parameters = [
 			'dataContainer' => $dataContainer,
@@ -916,6 +967,7 @@ XML;
 				->objectProperty('minvalue')
 				->label('wcf.acp.pip.objectType.condition.integer.minValue')
 				->description('wcf.acp.pip.objectType.condition.integer.minValue.description')
+				->nullable()
 				->addDependency(
 					ValueFormFieldDependency::create('className')
 						->field($className)
@@ -925,12 +977,15 @@ XML;
 				->objectProperty('maxvalue')
 				->label('wcf.acp.pip.objectType.condition.integer.maxValue')
 				->description('wcf.acp.pip.objectType.condition.integer.maxValue.description')
+				->nullable()
 				->addDependency(
 					ValueFormFieldDependency::create('className')
 						->field($className)
 						->values($integerConditions)
 				)
 		]);
+		$this->definitionElementChildren[$objectTypeDefinition]['minvalue'] = null;
+		$this->definitionElementChildren[$objectTypeDefinition]['maxvalue'] = null;
 	}
 	
 	/**
