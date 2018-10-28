@@ -1737,8 +1737,5 @@
 		<type name="com.woltlab.wcf.like.user">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 		</type>
-		<type name="com.woltlab.wcf.collapsibleSidebar">
-			<definitionname>com.woltlab.wcf.collapsibleContent</definitionname>
-		</type>
 	</delete>
 </data>

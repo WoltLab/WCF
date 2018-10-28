@@ -856,8 +856,4 @@
 		
 		<!-- /management -->
 	</import>
-	
-	<delete>
-		<acpmenuitem name="wcf.acp.menu.link.cms.media.list" />
-	</delete>
 </data>

@@ -8,11 +8,4 @@
 			<templatecode><![CDATA[{if $objectType->objectType == "com.woltlab.wcf.article.category"}{include file='__articleSortField'}{/if}]]></templatecode>
 		</templatelistener>
 	</import>
-	<delete>
-		<templatelistener name="articleShowOrder">
-			<environment>admin</environment>
-			<templatename>categoryAdd</templatename>
-			<eventname>dataFields</eventname>
-		</templatelistener>
-	</delete>
 </data>

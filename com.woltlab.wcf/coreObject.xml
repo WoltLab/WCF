@@ -70,7 +70,4 @@
 			<objectname>wcf\system\reaction\ReactionHandler</objectname>
 		</coreobject>
 	</import>
-	<delete>
-		<coreobject name="wcf\system\menu\page\PageMenu" />
-	</delete>
 </data>

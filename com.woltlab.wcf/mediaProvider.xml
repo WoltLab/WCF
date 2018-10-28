@@ -103,8 +103,4 @@ https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<ID>[0-9]+)]]></regex>
 <script>twttr.ready(function(t){elBySelAll("[data-wsc-twitter-tweet]",void 0,function(t){elData(t,"wsc-twitter-tweet")&&(twttr.widgets.createTweet(elData(t,"wsc-twitter-tweet"),t,{dnt:!0}),elData(t,"wsc-twitter-tweet",""))})});</script>]]></html>
 		</provider>
 	</import>
-	
-	<delete>
-		<provider name="facebook-video" />
-	</delete>
 </data>

@@ -32,9 +32,4 @@
 		<pip name="menuItem">wcf\system\package\plugin\MenuItemPackageInstallationPlugin</pip>
 		<pip name="mediaProvider">wcf\system\package\plugin\MediaProviderPackageInstallationPlugin</pip>
 	</import>
-	<delete>
-		<pip name="pageMenu" />
-		<pip name="sitemap" />
-		<pip name="dashboardBox" />
-	</delete>
 </data>

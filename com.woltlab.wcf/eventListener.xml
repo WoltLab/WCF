@@ -35,37 +35,4 @@
 			<environment>admin</environment>
 		</eventlistener>
 	</import>
-	
-	<delete>
-		<!-- event listeners with names now -->
-		<eventlistener>
-			<eventclassname>wcf\page\AbstractPage</eventclassname>
-			<eventname>readParameters</eventname>
-			<environment>admin</environment>
-			<inherit>1</inherit>
-			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
-		</eventlistener>
-		<eventlistener>
-			<eventclassname>wcf\form\AbstractForm</eventclassname>
-			<eventname>readParameters</eventname>
-			<environment>admin</environment>
-			<inherit>1</inherit>
-			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
-		</eventlistener>
-		<eventlistener>
-			<eventclassname>wcf\action\AbstractAction</eventclassname>
-			<eventname>readParameters</eventname>
-			<environment>admin</environment>
-			<inherit>1</inherit>
-			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
-		</eventlistener>
-		<!-- /event listeners with names now -->
-		
-		<eventlistener>
-			<eventclassname>wcf\system\bbcode\PreParser</eventclassname>
-			<eventname>beforeParsing</eventname>
-			<listenerclassname>wcf\system\event\listener\PreParserAtUserListener</listenerclassname>
-			<environment>user</environment>
-		</eventlistener>
-	</delete>
 </data>
