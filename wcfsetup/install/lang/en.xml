@@ -1953,7 +1953,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.aclOption.categories.name"><![CDATA[Category Name]]></item>
 		<item name="wcf.acp.pip.aclOption.categories.name.description"><![CDATA[The name of an ACL option category consists of least two segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes.]]></item>
 		<item name="wcf.acp.pip.aclOption.categories.name.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
-		<item name="wcf.acp.pip.aclOption.categories.name.error.tooFewSegments"><![CDATA[The entered provider name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
+		<item name="wcf.acp.pip.aclOption.categories.name.error.tooFewSegments"><![CDATA[The entered category name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.aclOption.options.categoryName"><![CDATA[Category]]></item>
 		<item name="wcf.acp.pip.aclOption.options.categoryName.description"><![CDATA[The ACL option is listed in the selected category.]]></item>
 		<item name="wcf.acp.pip.aclOption.options.name"><![CDATA[Option Name]]></item>

@@ -13,6 +13,7 @@ use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
 
@@ -335,7 +336,10 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 					->label('wcf.acp.pip.aclOption.categories.name')
 					->description('wcf.acp.pip.aclOption.categories.name.description')
 					->required()
-					->addValidator(ObjectTypePackageInstallationPlugin::getObjectTypeAlikeValueValidator('wcf.acp.pip.aclOption.categories.name', 2));
+					->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
+						'wcf.acp.pip.aclOption.categories.name',
+						2
+					));
 				break;
 			
 			case 'options':

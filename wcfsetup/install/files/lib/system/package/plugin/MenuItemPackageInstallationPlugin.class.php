@@ -21,6 +21,7 @@ use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
@@ -270,7 +271,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				->label('wcf.acp.pip.menuItem.identifier')
 				->description('wcf.acp.pip.menuItem.identifier.description')
 				->required()
-				->addValidator(ObjectTypePackageInstallationPlugin::getObjectTypeAlikeValueValidator(
+				->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
 					'wcf.acp.pip.menuItem.identifier',
 					4
 				))

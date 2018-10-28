@@ -12,6 +12,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\search\acp\IACPSearchResultProvider;
 use wcf\system\WCF;
@@ -149,7 +150,10 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 				->label('wcf.acp.pip.acpSearchProvider.providerName')
 				->description('wcf.acp.pip.acpSearchProvider.providerName.description', ['project' => $this->installation->getProject()])
 				->required()
-				->addValidator(ObjectTypePackageInstallationPlugin::getObjectTypeAlikeValueValidator('wcf.acp.pip.acpSearchProvider.providerName'))
+				->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
+					'wcf.acp.pip.acpSearchProvider.providerName',
+					4
+				))
 				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
 					if (
 						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||

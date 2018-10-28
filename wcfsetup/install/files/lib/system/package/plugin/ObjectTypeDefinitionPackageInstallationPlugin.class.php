@@ -9,6 +9,7 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\TextFormField;
+use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
 
@@ -97,38 +98,10 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 				->label('wcf.acp.pip.objectTypeDefinition.definitionName')
 				->description('wcf.acp.pip.objectTypeDefinition.definitionName.description', ['project' => $this->installation->getProject()])
 				->required()
-				->addValidator(new FormFieldValidator('format', function(TextFormField $formField) {
-					if ($formField->getValue()) {
-						$segments = explode('.', $formField->getValue());
-						if (count($segments) < 4) {
-							$formField->addValidationError(
-								new FormFieldValidationError(
-									'tooFewSegments',
-									'wcf.acp.pip.objectTypeDefinition.definitionName.error.tooFewSegments',
-									['segmentCount' => count($segments)]
-								)
-							);
-						}
-						else {
-							$invalidSegments = [];
-							foreach ($segments as $key => $segment) {
-								if (!preg_match('~^[A-z0-9\-\_]+$~', $segment)) {
-									$invalidSegments[$key] = $segment;
-								}
-							}
-							
-							if (!empty($invalidSegments)) {
-								$formField->addValidationError(
-									new FormFieldValidationError(
-										'invalidSegments',
-										'wcf.acp.pip.objectTypeDefinition.definitionName.error.invalidSegments',
-										['invalidSegments' => $invalidSegments]
-									)
-								);
-							}
-						}
-					}
-				}))
+				->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
+					'wcf.acp.pip.objectTypeDefinition.definitionName',
+					4
+				))
 				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
 					if ($formField->getValue()) {
 						$objectTypeDefinition = ObjectTypeCache::getInstance()->getDefinitionByName($formField->getValue());

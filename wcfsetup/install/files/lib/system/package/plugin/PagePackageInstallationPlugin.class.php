@@ -29,6 +29,7 @@ use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\language\LanguageFactory;
 use wcf\system\page\handler\IMenuPageHandler;
@@ -440,7 +441,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				->label('wcf.acp.pip.page.identifier')
 				->description('wcf.acp.pip.page.identifier.description')
 				->required()
-				->addValidator(ObjectTypePackageInstallationPlugin::getObjectTypeAlikeValueValidator(
+				->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
 					'wcf.acp.pip.page.identifier',
 					4
 				))

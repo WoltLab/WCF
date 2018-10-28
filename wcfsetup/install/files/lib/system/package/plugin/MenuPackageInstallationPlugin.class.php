@@ -23,6 +23,7 @@ use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
@@ -314,8 +315,8 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				->label('wcf.acp.pip.menu.identifier')
 				->description('wcf.acp.pip.menu.identifier.description')
 				->required()
-				->addValidator(ObjectTypePackageInstallationPlugin::getObjectTypeAlikeValueValidator(
-					'wcf.acp.pip.menu.identifier', 
+				->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
+					'wcf.acp.pip.menu.identifier',
 					4
 				))
 				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {

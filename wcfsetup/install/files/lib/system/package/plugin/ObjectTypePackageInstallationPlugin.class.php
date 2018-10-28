@@ -242,7 +242,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 				->label('wcf.acp.pip.objectType.objectType')
 				->description('wcf.acp.pip.objectType.objectType.description')
 				->required()
-				->addValidator(self::getObjectTypeAlikeValueValidator('wcf.acp.pip.objectType.objectType'))
+				->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator('wcf.acp.pip.objectType.objectType', 4))
 				->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
 					/** @var SingleSelectionFormField $definitionIDField */
 					$definitionIDField = $formField->getDocument()->getNodeById('definitionID');
@@ -344,7 +344,10 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->objectProperty('categoryname')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName.description')
-					->addValidator(self::getObjectTypeAlikeValueValidator('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName')),
+					->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
+						'wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName',
+						4
+					)),
 				ItemListFormField::create('adLocationCssClassName')
 					->objectProperty('cssclassname')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.cssClassName')
@@ -557,7 +560,9 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->objectProperty('categoryname')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName.description')
-					->addValidator(self::getObjectTypeAlikeValueValidator('wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName', 3)),
+					->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
+						'wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName'
+					)),
 				
 				BooleanFormField::create('statDailyHandlerIsDefault')
 					->objectProperty('default')
@@ -865,7 +870,10 @@ XML;
 					->label('wcf.acp.pip.objectType.condition.conditionObject')
 					->description('wcf.acp.pip.objectType.condition.conditionObject.description')
 					->required()
-					->addValidator(self::getObjectTypeAlikeValueValidator('wcf.acp.pip.objectType.condition.conditionObject'))
+					->addValidator(FormFieldValidatorUtil::getDotSeparatedStringValidator(
+						'wcf.acp.pip.objectType.condition.conditionObject',
+						4
+					))
 			);
 			$this->definitionElementChildren[$objectTypeDefinition][] = 'conditionobject';
 		}
@@ -1040,48 +1048,5 @@ XML;
 					));
 				}
 			}));
-	}
-	
-	/**
-	 * Returns a form field validator to validate a string value that has a
-	 * object type-alike structure.
-	 * 
-	 * @param	string		$languageItemPrefix	used for error language items: `{$languageItemPrefix}.error.{errorType}`
-	 * @param	int		$minimumSegmentCount	minimum number of dot-separated segments
-	 * @return	FormFieldValidator
-	 */
-	public static function getObjectTypeAlikeValueValidator($languageItemPrefix, $minimumSegmentCount = 4) {
-		return new FormFieldValidator('format', function(TextFormField $formField) use ($languageItemPrefix, $minimumSegmentCount) {
-			if ($formField->getValue()) {
-				$segments = explode('.', $formField->getValue());
-				if (count($segments) < $minimumSegmentCount) {
-					$formField->addValidationError(
-						new FormFieldValidationError(
-							'tooFewSegments',
-							$languageItemPrefix . '.error.tooFewSegments',
-							['segmentCount' => count($segments)]
-						)
-					);
-				}
-				else {
-					$invalidSegments = [];
-					foreach ($segments as $key => $segment) {
-						if (!preg_match('~^[A-z0-9\-\_]+$~', $segment)) {
-							$invalidSegments[$key] = $segment;
-						}
-					}
-					
-					if (!empty($invalidSegments)) {
-						$formField->addValidationError(
-							new FormFieldValidationError(
-								'invalidSegments',
-								$languageItemPrefix . '.error.invalidSegments',
-								['invalidSegments' => $invalidSegments]
-							)
-						);
-					}
-				}
-			}
-		});
 	}
 }
