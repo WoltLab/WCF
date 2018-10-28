@@ -379,7 +379,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		
 		// com.woltlab.wcf.bulkProcessing.user.condition
 		$bulkProcessingUserConditionContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.bulkProcessing.user.condition');
-		$this->addConditionFields($bulkProcessingUserConditionContainer);
+		$this->addConditionFields($bulkProcessingUserConditionContainer, false, true);
 		
 		// com.woltlab.wcf.category
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.category')
