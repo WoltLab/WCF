@@ -421,6 +421,14 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.userSearch');
 		$this->addConditionFields($conditionAdContainer, false, true);
 		
+		// com.woltlab.wcf.message
+		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.message')
+			->appendChildren([
+				BooleanFormField::create('enableToc')
+					->label('wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description')
+			]);
+		
 		// com.woltlab.wcf.notification.objectType
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.notification.objectType')
 			->appendChildren([

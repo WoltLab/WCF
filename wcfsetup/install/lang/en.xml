@@ -2238,6 +2238,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.integerCondition.propertyName.error.nonExistent"><![CDATA[The entered column does not exist in the <code>{$tableName}</code> database table.]]></item>
 		<item name="wcf.acp.pip.objectType.integerCondition.propertyName.description"><![CDATA[Name of the property and column of <code>{$tableName}</code> database table used for the condition.]]></item>
 		<item name="wcf.acp.pip.objectType.integerCondition.propertyName"><![CDATA[Property Name]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.data.title"><![CDATA[Message Data]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc"><![CDATA[Generate Table of Contents]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description"><![CDATA[If selected, a table of contents is created for each message of this type.]]></item>
 	</category>
 	
 	<category name="wcf.acp.reactionType">
