@@ -2282,6 +2282,13 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rescueMode.description"><![CDATA[The configured domains and/or paths do not match the address used to access this page. This can happen when moving to a new domain or changing the directory structure. Please use the form below to provide the new values.]]></item>
 		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[This user is not authorized to manage installed apps.]]></item>
 	</category>
+
+	<category name="wcf.acp.rewrite">
+		<item name="wcf.acp.rewrite"><![CDATA[Rewrite Rules (Apache)]]></item>
+		<item name="wcf.acp.rewrite.generate"><![CDATA[Generate Rewrite-Rules]]></item>
+		<item name="wcf.acp.rewrite.description"><![CDATA[Generates the rewrite rules for necessary .htaccess-files. Please keep in mind, that you might have to provide different rules for special webserver configurations.]]></item>
+		<item name="wcf.acp.rewrite.error.notApache"><![CDATA[Your webserver could not be identified as Apache. This function supports rewrite rules for Apache only.]]></item>
+	</category>
 	
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.noResults"><![CDATA[No results]]></item>
