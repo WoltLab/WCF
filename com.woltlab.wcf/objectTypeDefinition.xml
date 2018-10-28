@@ -34,7 +34,7 @@
 		
 		<definition>
 			<name>com.woltlab.wcf.message.quote</name>
-			<interfacename>wcf\system\message\IMessageQuoteHandler</interfacename>
+			<interfacename>wcf\system\message\quote\IMessageQuoteHandler</interfacename>
 		</definition>
 		
 		<definition>
