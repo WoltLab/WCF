@@ -3,7 +3,6 @@ namespace wcf\data\article;
 use wcf\data\article\content\ViewableArticleContentList;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\label\object\ArticleLabelObjectHandler;
-use wcf\system\like\LikeHandler;
 use wcf\system\reaction\ReactionHandler;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;

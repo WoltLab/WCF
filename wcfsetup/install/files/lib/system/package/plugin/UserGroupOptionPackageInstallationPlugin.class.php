@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\data\application\Application;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
 use wcf\data\user\group\option\UserGroupOption;

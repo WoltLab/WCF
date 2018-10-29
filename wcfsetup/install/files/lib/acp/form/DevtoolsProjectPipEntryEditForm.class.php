@@ -1,8 +1,6 @@
 <?php
 namespace wcf\acp\form;
 use wcf\form\AbstractForm;
-use wcf\form\AbstractFormBuilderForm;
-use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\request\LinkHandler;

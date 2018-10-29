@@ -3,7 +3,6 @@ namespace wcf\system\form\builder\field;
 use wcf\data\package\PackageCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
-use wcf\system\form\builder\IFormNode;
 use wcf\system\WCF;
 
 /**
