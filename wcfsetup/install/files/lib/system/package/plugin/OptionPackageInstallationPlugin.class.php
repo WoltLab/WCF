@@ -204,7 +204,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 						->description('wcf.acp.pip.option.options.requireI18n.description'),
 				]);
 				
-				/** @var SingleSelectionFormField $supportI18n */
+				/** @var SingleSelectionFormField $optionType */
 				$optionType = $form->getNodeById('optionType');
 				
 				/** @var BooleanFormField $supportI18n */

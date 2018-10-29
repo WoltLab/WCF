@@ -301,7 +301,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 				})),
 		]);
 		
-		/** @var SingleSelectionFormField $definitionName */
+		/** @var SingleSelectionFormField $definitionID */
 		$definitionID = $form->getNodeById('definitionID');
 		
 		// add general field dependencies
@@ -753,7 +753,7 @@ XML;
 	 * @since	3.2
 	 */
 	public function getObjectTypeDefinitionDataContainer(IFormDocument $form, $definitionName) {
-		/** @var SingleSelectionFormField $definitionNameField */
+		/** @var SingleSelectionFormField $definitionIDField */
 		$definitionIDField = $form->getNodeById('definitionID');
 		
 		$definitionPieces = explode('.', $definitionName);

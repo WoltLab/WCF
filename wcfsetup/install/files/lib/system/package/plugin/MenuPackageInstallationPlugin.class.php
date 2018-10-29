@@ -394,9 +394,11 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			);
 		}
 		
+		/** @var TextFormField $identifier */
+		$identifier = $form->getNodeById('identifier');
 		$form->getNodeById('boxPosition')->addDependency(
 			ValueFormFieldDependency::create('identifier')
-				->field($form->getNodeById('identifier'))
+				->field($identifier)
 				->values(['com.woltlab.wcf.MainMenu'])
 				->negate()
 		);

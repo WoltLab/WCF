@@ -223,6 +223,8 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 				->filterable()
 		]);
 		
+		/** @var SingleSelectionFormField $frontendTemplateName */
+		$frontendTemplateName = $form->getNodeById('frontendTemplateName');
 		foreach ($templateEvents as $templateName => $events) {
 			$dataContainer->appendChild(
 				SingleSelectionFormField::create($templateName . '_eventName')
@@ -233,12 +235,14 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 					->options(array_combine($events, $events))
 					->addDependency(
 						ValueFormFieldDependency::create('templateName')
-							->field($form->getNodeById('frontendTemplateName'))
+							->field($frontendTemplateName)
 							->values([$templateName])
 					)
 			);
 		}
 		
+		/** @var SingleSelectionFormField $acpTemplateName */
+		$acpTemplateName = $form->getNodeById('acpTemplateName');
 		foreach ($acpTemplateEvents as $templateName => $events) {
 			$dataContainer->appendChild(
 				SingleSelectionFormField::create('acp_' . $templateName . '_eventName')
@@ -249,7 +253,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 					->options(array_combine($events, $events))
 					->addDependency(
 						ValueFormFieldDependency::create('acpTemplateName')
-							->field($form->getNodeById('acpTemplateName'))
+							->field($acpTemplateName)
 							->values([$templateName])
 					)
 			);
@@ -269,10 +273,10 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 					/** @var TextFormField $nameField */
 					$nameField = $formField->getDocument()->getNodeById('name');
 					
-					/** @var SingleSelectionFormField $actionNameFormField */
+					/** @var SingleSelectionFormField $templateNameFormField */
 					$templateNameFormField = $formField->getDocument()->getNodeById('templateName');
 					
-					/** @var SingleSelectionFormField $actionNameFormField */
+					/** @var SingleSelectionFormField $acpTemplateNameFormField */
 					$acpTemplateNameFormField = $formField->getDocument()->getNodeById('acpTemplateName');
 					
 					if (
@@ -333,14 +337,17 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 				->required()
 		]);
 		
+		/** @var SingleSelectionFormField $environment */
+		$environment = $form->getNodeById('environment');
+		
 		$form->getNodeById('frontendTemplateName')->addDependency(
 			ValueFormFieldDependency::create('environment')
-				->field($form->getNodeById('environment'))
+				->field($environment)
 				->values(['user'])
 		);
 		$form->getNodeById('acpTemplateName')->addDependency(
 			ValueFormFieldDependency::create('environment')
-				->field($form->getNodeById('environment'))
+				->field($environment)
 				->values(['admin'])
 		);
 		

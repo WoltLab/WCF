@@ -456,6 +456,8 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		// add dependencies
 		/** @var BooleanFormField $showButton */
 		$showButton = $dataContainer->getNodeById('showButton');
+		
+		/** @var RadioButtonFormField $iconType */
 		$iconType = $dataContainer->getNodeById('iconType');
 		
 		$dataContainer->getNodeById('buttonLabel')->addDependency(
