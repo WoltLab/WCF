@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\box;
+use wcf\data\DatabaseObject;
 use wcf\data\user\option\UserOption;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
@@ -16,7 +17,7 @@ use wcf\util\DateUtil;
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
  */
-class TodaysBirthdaysBoxController extends AbstractBoxController {
+class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxController {
 	/**
 	 * @inheritDoc
 	 */
@@ -27,6 +28,44 @@ class TodaysBirthdaysBoxController extends AbstractBoxController {
 	 * @var string
 	 */
 	protected $templateName = 'boxTodaysBirthdays';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $defaultLimit = 5;
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $sortFieldLanguageItemPrefix = 'wcf.user.sortField';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $validSortFields = [
+		'username',
+		'activityPoints',
+		'registrationDate'
+	];
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function getObjectList() {}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function getTemplate() {}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function hasContent() {
+		parent::hasContent();
+		
+		return AbstractBoxController::hasContent();
+	}
 	
 	/**
 	 * @inheritDoc
@@ -54,8 +93,8 @@ class TodaysBirthdaysBoxController extends AbstractBoxController {
 					// ignore deleted users
 					if ($userProfile === null) continue;
 					
-					// show a maximum of 10 users
-					if ($i == 10) break;
+					// show a maximum of x users
+					if ($i == $this->box->limit) break;
 					
 					$birthdayUserOption->setUser($userProfile->getDecoratedObject());
 					
@@ -66,6 +105,14 @@ class TodaysBirthdaysBoxController extends AbstractBoxController {
 				}
 				
 				if (!empty($visibleUserProfiles)) {
+					// sort users
+					DatabaseObject::sort($visibleUserProfiles, $this->sortField, $this->sortOrder);
+					
+					// apply limit
+					if (count($visibleUserProfiles) > $this->box->limit) {
+						$visibleUserProfiles = array_slice($visibleUserProfiles, 0, $this->box->limit);
+					}
+					
 					$this->content = WCF::getTPL()->fetch($this->templateName, 'wcf', [
 						'birthdayUserProfiles' => $visibleUserProfiles
 					], true);
