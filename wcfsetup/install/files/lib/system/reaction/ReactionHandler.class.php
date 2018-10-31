@@ -638,10 +638,6 @@ class ReactionHandler extends SingletonFactory {
 				}
 			}
 			
-			if (!$likes && !$dislikes) {
-				$cumulativeLikes = null;
-			}
-			
 			// build update date
 			$updateData = [
 				'likes' => $likes,
