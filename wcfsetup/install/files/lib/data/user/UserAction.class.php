@@ -59,7 +59,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete'];
+	protected $requireACP = ['create', 'delete', 'resendActivationMail'];
 	
 	/**
 	 * Validates permissions and parameters.
@@ -827,5 +827,54 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function saveSocialNetworkPrivacySettings() {
 		// does nothing
+	}
+	
+	/**
+	 * Validates the 'resendActivationMail' action.
+	 * @throws UserInputException
+	 * @since 3.2
+	 */
+	public function validateResendActivationMail() {
+		$this->readObjects();
+		
+		foreach ($this->objects as $object) {
+			if (!$object->activationCode) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Triggers a new activation email.
+	 * @since 3.2
+	 */
+	public function resendActivationMail() {
+		// update every selected user's activation code
+		foreach ($this->objects as $object) {
+			$action = new UserAction($object, 'update', [
+				'data' => [
+					'activationCode' => UserRegistrationUtil::getActivationCode()
+				]
+			]);
+			$action->executeAction();
+			
+		}
+		
+		// get fresh user list with updated user objects
+		$newUserList = new UserList();
+		$newUserList->getConditionBuilder()->add('user.userID IN (?)', [$this->objectIDs]);
+		$newUserList->readObjects();
+		foreach ($newUserList->getObjects() as $object) {
+			$email = new Email();
+			$email->addRecipient(new UserMailbox($object));
+			$email->setSubject($object->getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject'));
+			$email->setBody(new MimePartFacade([
+				new RecipientAwareTextMimePart('text/html', 'email_registerNeedActivation'),
+				new RecipientAwareTextMimePart('text/plain', 'email_registerNeedActivation')
+			]));
+			$email->send();
+		}
+		
+		$this->unmarkItems($this->objectIDs);
 	}
 }
