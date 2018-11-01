@@ -1152,6 +1152,8 @@
 		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Users can login from multiple devices (desktop, tablet, smartphone, etc.) concurrently; all devices will share the same session. Disabling this will restrict users to only one device (session) at a time, causing all the other device sessions to terminate. It is not recommended to disable this option.]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[The default timezone of your page.]]></item>
+		<item name="wcf.acp.option.user_ip_address_searchengine"><![CDATA[Search Engine for IP Addresses]]></item>
+		<item name="wcf.acp.option.user_ip_address_searchengine.description"><![CDATA[IP Addresses will be linked to this search engine; by default IP addresses are linked to www.google.com. <span class="inlineCode">%s</span> will be replaced by the IP address.]]></item>
 		<item name="wcf.acp.option.user_online_timeout"><![CDATA[Users Online Timeout]]></item>
 		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Inactive users will not appear in ‘users online’ after the following seconds.]]></item>
 		<item name="wcf.acp.option.offline"><![CDATA[Enable maintenance mode]]></item>
@@ -4086,6 +4088,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.user.email.error.notUnique"><![CDATA[The email is already in use.]]></item>
 		<item name="wcf.user.email.error.invalid"><![CDATA[The email is invalid.]]></item>
 		<item name="wcf.user.ipAddress"><![CDATA[IP Address]]></item>
+		<item name="wcf.user.ipAddress.searchEngine"><![CDATA[Search for {if !$ipAddress|empty}{$ipAddress}{else}this IP address{/if} {if !$host|empty}on {$host}{/if}]]></item>
 		<item name="wcf.user.userAgent"><![CDATA[User Agent]]></item>
 		<item name="wcf.user.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[The login requires the acceptance of cookies, please enable cookies to proceed.]]></item>
