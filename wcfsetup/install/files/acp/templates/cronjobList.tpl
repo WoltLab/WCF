@@ -86,9 +86,9 @@
 							<td class="columnDate columnStartDow">{$cronjob->startDow|truncate:30}</td>
 							<td class="columnText columnDescription" title="{$cronjob->description|language}">
 								{if $cronjob->isEditable()}
-									<a title="{lang}wcf.acp.cronjob.edit{/lang}" href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}">{$cronjob->description|language|truncate:50}</a>
+									<a title="{lang}wcf.acp.cronjob.edit{/lang}" href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}">{$cronjob->description|language}</a>
 								{else}
-									{$cronjob->description|language|truncate:50}
+									{$cronjob->description|language}
 								{/if}
 							</td>
 							<td class="columnDate columnNextExec">
