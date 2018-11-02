@@ -763,6 +763,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 				
 				if ($saveData) {
 					$lowercaseData = [
+						'categoryname' => $data['categoryName'],
 						'packageID' => $this->installation->getPackage()->packageID,
 						'name' => $data['optionName']
 					];
