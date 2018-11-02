@@ -1958,6 +1958,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.abstractMenu.menuItem"><![CDATA[Menu Item Identifier]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItem.error.notUnique"><![CDATA[The entered identifier is already used by another menu item.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.parentMenuItem"><![CDATA[Parent Menu Item]]></item>
+		<item name="wcf.acp.pip.abstractMenu.parentMenuItem.error.childAsParent"><![CDATA[You cannot select a child menu item of the menu item as its parent.]]></item>
+		<item name="wcf.acp.pip.abstractMenu.parentMenuItem.error.selfParent"><![CDATA[You cannot select the menu item itself as its own parent.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItemController"><![CDATA[Menu Item Controller]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItemLink"><![CDATA[Menu Item Link]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItemLink.description"><![CDATA[If no menu item controller is used, the entered link will be used. If, however, a menu item controller is used, the entered link will be appended to the link to the controller.]]></item>

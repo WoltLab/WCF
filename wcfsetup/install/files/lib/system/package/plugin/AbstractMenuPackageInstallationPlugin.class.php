@@ -192,7 +192,53 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 					
 					return array_merge($options, $buildOptions());
 				}, true)
-				->value(''),
+				->value('')
+				->addValidator(new FormFieldValidator('selfChildAsParent', function(SingleSelectionFormField $formField) {
+					if (
+						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_UPDATE &&
+						$formField->getSaveValue() !== ''
+					) {
+						/** @var TextFormField $menuItemField */
+						$menuItemField = $formField->getDocument()->getNodeById('menuItem');
+						$menuItem = $menuItemField->getSaveValue();
+						$parentMenuItem = $formField->getSaveValue();
+						
+						if ($menuItem === $parentMenuItem) {
+							$formField->addValidationError(new FormFieldValidationError(
+								'selfParent',
+								'wcf.acp.pip.abstractMenu.parentMenuItem.error.selfParent'
+							));
+						}
+						else {
+							$menuStructure = $this->getMenuStructureData()['structure'];
+							
+							$checkChildren = function($menuItem) use ($formField, $menuStructure, $parentMenuItem, &$checkChildren) {
+								if (isset($menuStructure[$menuItem])) {
+									/** @var ACPMenuItem $childMenuItem */
+									foreach ($menuStructure[$menuItem] as $childMenuItem) {
+										if ($childMenuItem->menuItem === $parentMenuItem) {
+											$formField->addValidationError(new FormFieldValidationError(
+												'childAsParent',
+												'wcf.acp.pip.abstractMenu.parentMenuItem.error.childAsParent'
+											));
+											
+											return false;
+										}
+										else {
+											if (!$checkChildren($childMenuItem->menuItem)) {
+												return false;
+											}
+										}
+									}
+								}
+								
+								return true;
+							};
+							
+							$checkChildren($menuItem);
+						}
+					}
+				})),
 			
 			ClassNameFormField::create('menuItemController')
 				->objectProperty('controller')
