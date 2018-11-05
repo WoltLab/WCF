@@ -616,13 +616,6 @@
 			<permissions>user.profile.trophy.canSeeTrophies</permissions>
 			<options>module_trophy</options>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
-			
-			<content language="en">
-				<title>Trophies</title>
-			</content>
-			<content language="de">
-				<title>Trophäen</title>
-			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.Trophy">
 			<pageType>system</pageType>
