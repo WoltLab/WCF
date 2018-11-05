@@ -1078,6 +1078,11 @@ Pinterest</defaultvalue>
 				<categoryname>message.general.image</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<enableoptions>!image_external_source_whitelist</enableoptions>
+			</option>
+			<option name="image_external_source_whitelist">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>textarea</optiontype>
 			</option>
 			<option name="message_force_secure_images">
 				<categoryname>message.general.image</categoryname>

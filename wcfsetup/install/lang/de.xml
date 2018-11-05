@@ -1502,6 +1502,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.module_user_cover_photo"><![CDATA[Titelbilder aktivieren]]></item>
 		<item name="wcf.acp.option.module_user_cover_photo.description"><![CDATA[Aktiviert die Darstellung und die Verwaltung von Titelbildern.]]></item>
 		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Bilder von externen Seiten erlauben]]></item>
+		<item name="wcf.acp.option.image_external_source_whitelist"><![CDATA[Erlaubte Bilder von externen Seiten]]></item>
+		<item name="wcf.acp.option.image_external_source_whitelist.description"><![CDATA[Die aufgeführten Domains sind von der Blockade ausgenommen. Der Abgleich erfolgt auf Basis der strikten Übereinstimmung, optional können Subdomains mit einem Platzhalter berücksichtigt werden: <kbd>*.example.com</kbd> umfasst sowohl <kbd>example.com</kbd> als auch Subdomains wie <kbd>foo.example.com</kbd> oder <kbd>www.example.com</kbd>.<br>Bitte nur eine Domain pro Zeile eingeben.]]></item>
 		<item name="wcf.acp.option.message_enable_toc"><![CDATA[Inhaltsverzeichnisse aktivieren]]></item>
 	</category>
 	
