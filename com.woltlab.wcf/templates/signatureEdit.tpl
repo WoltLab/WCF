@@ -29,7 +29,6 @@
 				<dt><label for="text">{lang}wcf.user.signature{/lang}</label></dt>
 				<dd>
 					<textarea id="text" class="wysiwygTextarea" name="text" rows="20" cols="40"
-					          data-disable-attachments="true"
 					          data-disable-media="true"
 					>{$text}</textarea>
 					{if $errorField == 'text'}
