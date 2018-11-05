@@ -82,7 +82,7 @@ class MultiSelectOptionType extends SelectOptionType {
 		if (!isset($_POST['searchOptions'][$option->optionName])) return false;
 		
 		if (!is_array($value) || empty($value)) return false;
-		$value = ArrayUtil::trim($value);
+		$value = ArrayUtil::trim($value, false);
 		
 		$conditions->add("option_value.userOption".$option->optionID." REGEXP '".'(^|\n)'.implode('\n([^\n]*\n)*', array_map('escapeString', $value)).'($|\n)'."'");
 		return true;
@@ -93,7 +93,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	 */
 	public function addCondition(UserList $userList, Option $option, $value) {
 		if (!is_array($value) || empty($value)) return false;
-		$value = ArrayUtil::trim($value);
+		$value = ArrayUtil::trim($value, false);
 		
 		$userList->getConditionBuilder()->add("user_option_value.userOption".$option->optionID." REGEXP '".'(^|\n)'.implode('\n([^\n]*\n)*', array_map('escapeString', $value)).'($|\n)'."'");
 	}
