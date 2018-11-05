@@ -12,13 +12,13 @@ define(
 		'Ajax',      'Core',                            'Dictionary',           'Language',
 		'ObjectMap', 'StringUtil',                      'Dom/ChangeListener',   'Dom/Util',
 		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List',  'User',                 'WoltLabSuite/Core/Ui/Reaction/CountButtons', 
-		'Ui/Alignment', 'Ui/CloseOverlay',              'Ui/Screen',            'WoltLabSuite/Core/Ui/Reaction/ReputationButtons',
+		'Ui/Alignment', 'Ui/CloseOverlay',              'Ui/Screen'
 	],
 	function(
 		Ajax,        Core,              Dictionary,             Language,
 		ObjectMap,   StringUtil,        DomChangeListener,      DomUtil,
 		UiDialog,    UiUserList,        User,                   CountButtons, 
-		UiAlignment, UiCloseOverlay,    UiScreen,               ReputationButtons
+		UiAlignment, UiCloseOverlay,    UiScreen
 	)
 	{
 		"use strict";
@@ -63,8 +63,7 @@ define(
 				
 				this.initReactButtons(options, objectType);
 				
-				this.countButtons = new CountButtons(this._objectType, this._options); 
-				this.reputationButtons = new ReputationButtons(this._objectType);
+				this.countButtons = new CountButtons(this._objectType, this._options);
 				
 				DomChangeListener.add('WoltLabSuite/Core/Ui/Reaction/Handler-' + objectType, this.initReactButtons.bind(this));
 				UiCloseOverlay.add('WoltLabSuite/Core/Ui/Reaction/Handler', this._closePopover.bind(this));
@@ -364,7 +363,6 @@ define(
 			
 			_ajaxSuccess: function(data) {
 				this.countButtons.updateCountButtons(data.returnValues.objectID, data.returnValues.reactions);
-				this.reputationButtons.setReputationCount(data.returnValues.objectID, data.returnValues.reputationCount);
 				
 				// update react button status
 				this._updateReactButton(data.returnValues.objectID, data.returnValues.reactionTypeID);

@@ -36,7 +36,7 @@
 								
 								{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike')}
 									{if $article->likes || $article->dislikes || $article->neutralReactions}
-										<li class="reputationCounter {if $article->cumulativeLikes > 0}positive{elseif $article->cumulativeLikes < 0}negative{else}neutral{/if}" data-object-id="{@$article->articleID}" data-object-type="com.woltlab.wcf.likeableArticle">{if $article->cumulativeLikes > 0}+{elseif $article->cumulativeLikes == 0}±{/if}{#$article->cumulativeLikes}</li>
+										<li class="reputationCounter {if $article->cumulativeLikes > 0}positive{elseif $article->cumulativeLikes < 0}negative{else}neutral{/if}">{if $article->cumulativeLikes > 0}+{elseif $article->cumulativeLikes == 0}±{/if}{#$article->cumulativeLikes}</li>
 									{/if}
 								{/if}
 								

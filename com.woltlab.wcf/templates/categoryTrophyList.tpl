@@ -1,17 +1,22 @@
+{capture assign='pageTitle'}{$category->getTitle()}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/capture}
+
 {capture assign='contentHeader'}
 	<header class="contentHeader messageGroupContentHeader">
 		<div class="contentHeaderTitle">
-			<h1 class="contentTitle">{$__wcf->getActivePage()->getTitle()}</h1>
+			<h1 class="contentTitle">{$category->getTitle()}</h1>
+			{if $category && $category->getDescription()}
+				<p class="contentHeaderDescription">{$category->getDescription()}</p>
+			{/if}
 		</div>
 	</header>
 {/capture}
 
 {capture assign='headContent'}
 	{if $pageNo < $pages}
-		<link rel="next" href="{link controller='TrophyList'}pageNo={@$pageNo+1}{/link}">
+		<link rel="next" href="{link controller='CategoryTrophyList' object=$category}pageNo={@$pageNo+1}{/link}">
 	{/if}
 	{if $pageNo > 1}
-		<link rel="prev" href="{link controller='TrophyList'}{if $pageNo > 2}pageNo={@$pageNo-1}{/if}{/link}">
+		<link rel="prev" href="{link controller='CategoryTrophyList' object=$category}{if $pageNo > 2}pageNo={@$pageNo-1}{/if}{/link}">
 	{/if}
 {/capture}
 
@@ -20,7 +25,7 @@
 {hascontent}
 	<div class="paginationTop">
 		{content}
-			{pages print=true assign='pagesLinks' controller='TrophyList' link="pageNo=%d"}
+			{pages print=true assign='pagesLinks' controller='CategoryTrophyList' object=$category link="pageNo=%d"}
 		{/content}
 	</div>
 {/hascontent}
