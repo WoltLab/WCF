@@ -3,8 +3,6 @@ namespace wcf\page;
 use wcf\data\trophy\category\TrophyCategory;
 use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\trophy\TrophyList;
-use wcf\system\exception\IllegalLinkException;
-use wcf\system\exception\PermissionDeniedException;
 use wcf\system\WCF;
 
 /**
@@ -53,33 +51,16 @@ class TrophyListPage extends MultipleLinkPage {
 	/**
 	 * the category id filter
 	 * @var int
+	 * @deprecated since 3.2, use CategoryTrophyListPage instead
 	 */
 	public $categoryID = 0;
 	
 	/**
 	 * The category object filter 
 	 * @var TrophyCategory
+	 * @deprecated since 3.2, use CategoryTrophyListPage instead
 	 */
 	public $category;
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function readParameters() {
-		parent::readParameters();
-		
-		if (isset($_REQUEST['id'])) $this->categoryID = intval($_REQUEST['id']);
-		
-		$this->category = TrophyCategoryCache::getInstance()->getCategoryByID($this->categoryID);
-		
-		if ($this->category === null) {
-			throw new IllegalLinkException();
-		}
-		
-		if (!$this->category->isAccessible()) {
-			throw new PermissionDeniedException();
-		}
-	}
 	
 	/**
 	 * @inheritDoc
@@ -88,7 +69,9 @@ class TrophyListPage extends MultipleLinkPage {
 		parent::initObjectList();
 		
 		$this->objectList->getConditionBuilder()->add('isDisabled = ?', [0]);
-		$this->objectList->getConditionBuilder()->add('categoryID = ?', [$this->categoryID]);
+		$this->objectList->getConditionBuilder()->add('categoryID IN (?)', [array_map(function ($category) {
+			return $category->categoryID;
+		}, TrophyCategoryCache::getInstance()->getEnabledCategories())]);
 	}
 	
 	/**

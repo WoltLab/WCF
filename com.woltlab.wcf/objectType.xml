@@ -1602,6 +1602,11 @@
 			<definitionname>com.woltlab.wcf.boxController</definitionname>
 			<classname>wcf\system\box\ProfileCommentListBoxController</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.trophyCategories</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\TrophyCategoriesBoxController</classname>
+		</type>
 		<!-- /box controllers -->
 		
 		<!-- simple acl -->

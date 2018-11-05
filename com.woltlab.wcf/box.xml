@@ -239,5 +239,27 @@
 				<title>Categories</title>
 			</content>
 		</box>
+		
+		<box identifier="com.woltlab.wcf.TrophyCategories">
+			<name language="de">Kategorien (Trophäen)</name>
+			<name language="en">Categories (Trophies)</name>
+			<boxType>system</boxType>
+			<objectType>com.woltlab.wcf.trophyCategories</objectType>
+			<position>sidebarRight</position>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.TrophyList</page>
+				<page>com.woltlab.wcf.Trophy</page>
+				<page>com.woltlab.wcf.TrophyCategoryList</page>
+			</visibilityExceptions>
+			
+			<content language="de">
+				<title>Kategorien</title>
+			</content>
+			<content language="en">
+				<title>Categories</title>
+			</content>
+		</box>
 	</import>
 </data>
