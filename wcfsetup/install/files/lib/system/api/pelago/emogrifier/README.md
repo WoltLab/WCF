@@ -1,6 +1,6 @@
 # Emogrifier
 
-[![Build Status](https://travis-ci.org/jjriv/emogrifier.svg?branch=master)](https://travis-ci.org/jjriv/emogrifier)
+[![Build Status](https://travis-ci.org/MyIntervals/emogrifier.svg?branch=master)](https://travis-ci.org/MyIntervals/emogrifier)
 [![Latest Stable Version](https://poser.pugx.org/pelago/emogrifier/v/stable.svg)](https://packagist.org/packages/pelago/emogrifier)
 [![Total Downloads](https://poser.pugx.org/pelago/emogrifier/downloads.svg)](https://packagist.org/packages/pelago/emogrifier)
 [![Latest Unstable Version](https://poser.pugx.org/pelago/emogrifier/v/unstable.svg)](https://packagist.org/packages/pelago/emogrifier)
@@ -31,11 +31,10 @@ into inline style attributes in your HTML code.
 - [Installation](#installation)
 - [Usage](#usage)
 - [Options](#options)
-- [Requirements](#requirements)
 - [Installing with Composer](#installing-with-composer)
 - [Supported CSS selectors](#supported-css-selectors)
 - [Caveats](#caveats)
-- [Maintainer](#maintainer)
+- [Maintainers](#maintainers)
 
 
 ## How it Works
@@ -50,7 +49,7 @@ selectors.
 For installing emogrifier, either add pelago/emogrifier to your
 project's composer.json, or you can use composer as below:
 
-```
+```bash
 composer require pelago/emogrifier
 ```
 
@@ -60,24 +59,31 @@ composer require pelago/emogrifier
 First, you provide Emogrifier with the HTML and CSS you would like to merge.
 This can happen directly during instantiation:
 
-    $html = '<html><h1>Hello world!</h1></html>';
-    $css = 'h1 {font-size: 32px;}';
-    $emogrifier = new \Pelago\Emogrifier($html, $css);
+```php
+$html = '<html><h1>Hello world!</h1></html>';
+$css = 'h1 {font-size: 32px;}';
+$emogrifier = new \Pelago\Emogrifier($html, $css);
+```
 
 You could also use the setters for providing this data after instantiation:
 
-    $emogrifier = new \Pelago\Emogrifier();
+```php
+$emogrifier = new \Pelago\Emogrifier();
 
-    $html = '<html><h1>Hello world!</h1></html>';
-    $css = 'h1 {font-size: 32px;}';
+$html = '<html><h1>Hello world!</h1></html>';
+$css = 'h1 {font-size: 32px;}';
 
-    $emogrifier->setHtml($html);
-    $emogrifier->setCss($css);
+$emogrifier->setHtml($html);
+$emogrifier->setCss($css);
+```
+
 
 After you have set the HTML and CSS, you can call the `emogrify` method to
 merge both:
 
-    $mergedHtml = $emogrifier->emogrify();
+```php
+$mergedHtml = $emogrifier->emogrify();
+```
 
 Emogrifier automatically adds a Content-Type meta tag to set the charset for
 the document (if it is not provided).
@@ -85,7 +91,9 @@ the document (if it is not provided).
 If you would like to get back only the content of the BODY element instead of
 the complete HTML document, you can use the `emogrifyBodyContent` instead:
 
-    $bodyContent = $emogrifier->emogrifyBodyContent();
+```php
+$bodyContent = $emogrifier->emogrifyBodyContent();
+```
 
 
 ## Options
@@ -98,7 +106,9 @@ calling the `emogrify` method:
   "style" attributes to the HTML. The `<style>` blocks will then be removed
   from the HTML. If you want to disable this functionality so that Emogrifier
   leaves these `<style>` blocks in the HTML and does not parse them, you should
-  use this option.
+  use this option. If you use this option, the contents of the `<style>` blocks
+  will _not_ be applied as inline styles and any CSS you want Emogrifier to
+  use must be passed in as described in the [Usage section](#usage) above.
 * `$emogrifier->disableInlineStylesParsing()` - By default, Emogrifier
   preserves all of the "style" attributes on tags in the HTML you pass to it.
   However if you want to discard all existing inline styles in the HTML before
@@ -119,63 +129,72 @@ calling the `emogrify` method:
   CSS while the transformed content will have all the available HTML tags set.
 
 
-## Requirements
-
-* PHP from 5.4 to 7.0
-* or HHVM
-
-
 ## Installing with Composer
 
 Download the [`composer.phar`](https://getcomposer.org/composer.phar) locally
 or install [Composer](https://getcomposer.org/) globally:
 
-    curl -s https://getcomposer.org/installer | php
+```bash
+curl -s https://getcomposer.org/installer | php
+```
 
 Run the following command for a local installation:
 
-    php composer.phar require pelago/emogrifier:@dev
+```bash
+php composer.phar require pelago/emogrifier:^2.0.0
+```
 
 Or for a global installation, run the following command:
 
-    composer require pelago/emogrifier:@dev
+```bash
+composer require pelago/emogrifier:^2.0.0
+```
 
 You can also add follow lines to your `composer.json` and run the
 `composer update` command:
 
-    "require": {
-      "pelago/emogrifier": "@dev"
-    }
+```json
+"require": {
+  "pelago/emogrifier": "^2.0.0"
+}
+```
 
 See https://getcomposer.org/ for more information and documentation.
 
 
 ## Supported CSS selectors
 
-Emogrifier currently support the following
-[CSS selectors](http://www.w3.org/TR/CSS2/selector.html):
+Emogrifier currently supports the following
+[CSS selectors](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Selectors):
 
- * ID
- * class
- * type
- * descendant
- * child
- * adjacent
- * attribute presence
- * attribute value
- * attribute value with |
- * attribute value with ~
- * attribute value with ^
- * attribute value with *
- * attribute value with $
- * attribute only
- * first-child
- * last-child
+ * [type](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors)
+ * [class](https://developer.mozilla.org/en-US/docs/Web/CSS/Class_selectors)
+ * [ID](https://developer.mozilla.org/en-US/docs/Web/CSS/ID_selectors)
+ * [universal](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors):
+ * [attribute](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors):
+    * presence
+    * exact value match
+    * value with `~` (one word within a whitespace-separated list of words)
+    * value with `|` (either exact value match or prefix followed by a hyphen)
+    * value with `^` (prefix match)
+    * value with `$` (suffix match)
+    * value with `*` (substring match)
+ * [adjacent](https://developer.mozilla.org/en-US/docs/Web/CSS/Adjacent_sibling_selectors)
+ * [child](https://developer.mozilla.org/en-US/docs/Web/CSS/Child_selectors)
+ * [descendant](https://developer.mozilla.org/en-US/docs/Web/CSS/Descendant_selectors)
+ * [pseudo-classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes):
+   * [first-child](https://developer.mozilla.org/en-US/docs/Web/CSS/:first-child)
+   * [last-child](https://developer.mozilla.org/en-US/docs/Web/CSS/:last-child)
+   * [not()](https://developer.mozilla.org/en-US/docs/Web/CSS/:not)
 
 The following selectors are not implemented yet:
 
- * universal
- * pseudo-elements (will never be supported)
+ * [universal](https://developer.mozilla.org/en-US/docs/Web/CSS/Universal_selectors)
+ * [case-insensitive attribute value](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors#case-insensitive)
+ * [general sibling](https://developer.mozilla.org/en-US/docs/Web/CSS/General_sibling_selectors)
+ * [pseudo-classes](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-classes)
+   (some of them will never be supported)
+ * [pseudo-elements](https://developer.mozilla.org/en-US/docs/Web/CSS/Pseudo-elements)
 
 
 ## Caveats
@@ -213,7 +232,26 @@ The following selectors are not implemented yet:
   cannot be converted accurately).
 
 
-## Maintainer
+## Steps to release a new version
 
-Emogrifier is maintained by the good people at
-[Pelago](http://www.pelagodesign.com/), info AT pelagodesign DOT com.
+1. Create a pull request "Prepare release of version x.y.z" with the following
+   changes.
+2. Set the new version number in the `@version` annotation in the class PHPDoc
+   of [Emogrifier.php](Classes/Emogrifier.php).
+3. In the [composer.json](composer.json), update the `branch-alias` entry to
+   point to the release _after_ the upcoming release.
+4. In the [README.md](README.md), update the version numbers in the section
+   [Installing with Composer](#installing-with-composer).
+5. In the [CHANGELOG.md](CHANGELOG.md), set the version number and remove any
+   empty sections.
+6. Have the pull request reviewed and merged.
+7. In the [Releases tab](https://github.com/MyIntervals/emogrifier/releases),
+   create a new release and copy the change log entries to the new release.
+8. Post about the new release on social media.
+
+
+## Maintainers
+
+* [Oliver Klee](https://github.com/oliverklee)
+* [Zoli Szabó](https://github.com/zoliszabo)
+* [John Reeve](https://github.com/jjriv)
