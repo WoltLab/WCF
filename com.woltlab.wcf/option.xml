@@ -1418,6 +1418,11 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<optiontype>integer</optiontype>
 				<hidden>1</hidden>
 			</option>
+			<option name="user_ip_address_searchengine">
+				<categoryname>user.list.online</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue><![CDATA[]]></defaultvalue>
+			</option>
 			<!-- /user.list.online -->
 			
 			<!-- user.cleanup -->
