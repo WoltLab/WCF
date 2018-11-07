@@ -2,6 +2,7 @@
 namespace wcf\data\paid\subscription;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
+use wcf\data\TDatabaseObjectToggle;
 
 /**
  * Executes paid subscription-related actions.
@@ -15,6 +16,8 @@ use wcf\data\IToggleAction;
  * @method	PaidSubscriptionEditor		getSingleObject()
  */
 class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -58,23 +61,5 @@ class PaidSubscriptionAction extends AbstractDatabaseObjectAction implements ITo
 		if (count($this->objects) == 1 && isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] != reset($this->objects)->showOrder) {
 			reset($this->objects)->setShowOrder($this->parameters['data']['showOrder']);
 		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $object) {
-			$object->update([
-				'isDisabled' => $object->isDisabled ? 0 : 1
-			]);
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function validateToggle() {
-		parent::validateUpdate();
 	}
 }

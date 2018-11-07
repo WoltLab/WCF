@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\style;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
@@ -32,6 +33,8 @@ use wcf\util\FileUtil;
  * @method	StyleEditor	getSingleObject()
  */
 class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction, IUploadAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -1010,16 +1013,6 @@ BROWSERCONFIG;
 			if ($style->isDefault) {
 				throw new UserInputException('objectIDs');
 			}
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $style) {
-			$isDisabled = $style->isDisabled ? 0 : 1;
-			$style->update(['isDisabled' => $isDisabled]);
 		}
 	}
 	
