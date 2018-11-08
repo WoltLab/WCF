@@ -1539,6 +1539,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.customOption.validationPattern"><![CDATA[Regulärer Ausdruck zur Validierung]]></item>
 		<item name="wcf.acp.customOption.validationPattern.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Trage{else}Tragen Sie{/if} hier den regulären Ausdruck ein, um die Eingabe der Benutzer zu validieren.]]></item>
 		<item name="wcf.acp.customOption.required"><![CDATA[Das Feld muss zwingend ausgefüllt werden.]]></item>
+		<item name="wcf.acp.customOption.isDisabled"><![CDATA[Option deaktivieren]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">

@@ -1538,6 +1538,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.customOption.validationPattern"><![CDATA[Regular Expression]]></item>
 		<item name="wcf.acp.customOption.validationPattern.description"><![CDATA[You can provide a regular expression to validate the user input.]]></item>
 		<item name="wcf.acp.customOption.required"><![CDATA[This is a required field]]></item>
+		<item name="wcf.acp.customOption.isDisabled"><![CDATA[Disable option]]></item>
 	</category>
 	
 	<category name="wcf.acp.package">
