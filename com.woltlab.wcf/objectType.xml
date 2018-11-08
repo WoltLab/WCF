@@ -139,6 +139,11 @@
 			<definitionname>com.woltlab.wcf.message</definitionname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.user.signature</name>
+			<definitionname>com.woltlab.wcf.attachment.objectType</definitionname>
+			<classname>wcf\system\attachment\SignatureAttachmentObjectType</classname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.comment</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
 		</type>
@@ -1601,6 +1606,11 @@
 			<name>com.woltlab.wcf.profileCommentList</name>
 			<definitionname>com.woltlab.wcf.boxController</definitionname>
 			<classname>wcf\system\box\ProfileCommentListBoxController</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.trophyCategories</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\TrophyCategoriesBoxController</classname>
 		</type>
 		<!-- /box controllers -->
 		

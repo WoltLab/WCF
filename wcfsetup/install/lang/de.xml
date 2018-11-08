@@ -1164,6 +1164,8 @@
 		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Benutzer können sich mit mehreren Endgeräten (PC, Tablet, Smartphone, etc.) gleichzeitig anmelden, alle Geräte nutzen dann die selbe Sitzung. Die Abschaltung dieser Option hat zur Folge, dass ein Benutzer nur von einem einzigen Gerät gleichzeitig angemeldet sein darf und sich unter Umständen die Geräte auf diese Weise gegenseitig abmelden. Die Deaktivierung dieser Option wird nicht empfohlen und sollte nur vorgenommen werden, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dir{else}Sie sich{/if} der Konsequenzen bewusst {if LANGUAGE_USE_INFORMAL_VARIANT}bist{else}sind{/if}.]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Zeitzone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[Standard-Zeitzone {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Seite]]></item>
+		<item name="wcf.acp.option.user_ip_address_searchengine"><![CDATA[Suchmaschine für IP-Adressen]]></item>
+		<item name="wcf.acp.option.user_ip_address_searchengine.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier die URL an, die für das Suchen von IP-Adressen hinterlegt werden soll. <span class="inlineCode">%s</span> wird durch die IP-Adresse ersetzt. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dieses Feld leer lässt{else}Sie dieses Feld leer lassen{/if}, wird automatisch auf www.google.com verlinkt.]]></item>
 		<item name="wcf.acp.option.user_online_timeout"><![CDATA[Timeout für Benutzer-Online]]></item>
 		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Zeit in Sekunden, in der der Benutzer trotz Inaktivität als online markiert werden soll.]]></item>
 		<item name="wcf.acp.option.offline"><![CDATA[Wartungsmodus aktivieren]]></item>
@@ -1502,6 +1504,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.module_user_cover_photo"><![CDATA[Titelbilder aktivieren]]></item>
 		<item name="wcf.acp.option.module_user_cover_photo.description"><![CDATA[Aktiviert die Darstellung und die Verwaltung von Titelbildern.]]></item>
 		<item name="wcf.acp.option.image_allow_external_source"><![CDATA[Bilder von externen Seiten erlauben]]></item>
+		<item name="wcf.acp.option.image_external_source_whitelist"><![CDATA[Erlaubte Bilder von externen Seiten]]></item>
+		<item name="wcf.acp.option.image_external_source_whitelist.description"><![CDATA[Die aufgeführten Domains sind von der Blockade ausgenommen. Der Abgleich erfolgt auf Basis der strikten Übereinstimmung, optional können Subdomains mit einem Platzhalter berücksichtigt werden: <kbd>*.example.com</kbd> umfasst sowohl <kbd>example.com</kbd> als auch Subdomains wie <kbd>foo.example.com</kbd> oder <kbd>www.example.com</kbd>.<br>Bitte nur eine Domain pro Zeile eingeben.]]></item>
 		<item name="wcf.acp.option.message_enable_toc"><![CDATA[Inhaltsverzeichnisse aktivieren]]></item>
 	</category>
 	
@@ -3674,6 +3678,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.user.email.error.notUnique"><![CDATA[Diese E-Mail-Adresse ist bereits durch einen anderen Benutzer vergeben.]]></item>
 		<item name="wcf.user.email.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} eine ungültige E-Mail-Adresse eingegeben.]]></item>
 		<item name="wcf.user.ipAddress"><![CDATA[IP-Adresse]]></item>
+		<item name="wcf.user.ipAddress.searchEngine"><![CDATA[{if !$host|empty}Auf {$host} nach{else}Nach{/if} {if !$ipAddress|empty}{$ipAddress}{else}dieser IP-Adresse{/if} suchen]]></item>
 		<item name="wcf.user.userAgent"><![CDATA[Browser-Kennung]]></item>
 		<item name="wcf.user.login"><![CDATA[Anmeldung]]></item>
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[Die Anmeldung erfordert den Einsatz von Cookies, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}aktiviere{else}aktivieren Sie{/if} diese, um die Anmeldung durchzuführen.]]></item>

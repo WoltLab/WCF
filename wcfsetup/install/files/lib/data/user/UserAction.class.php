@@ -5,6 +5,7 @@ use wcf\data\user\group\UserGroup;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IClipboardAction;
 use wcf\data\ISearchAction;
+use wcf\system\attachment\AttachmentHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -134,9 +135,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$action->executeAction();
 		}
 		
-		// delete profile comments
+		// delete profile comments and signature attachments
 		if (!empty($this->objectIDs)) {
 			CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.user.profileComment', $this->objectIDs);
+			AttachmentHandler::removeAttachments('com.woltlab.wcf.user.signature', $this->objectIDs);
 		}
 		
 		return parent::delete();

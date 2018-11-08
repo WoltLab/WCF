@@ -27,6 +27,12 @@ class Mailbox {
 	protected $name = null;
 	
 	/**
+	 * The preferred language of this mailbox.
+	 * @var	Language
+	 */
+	protected $language = null;
+	
+	/**
 	 * Creates a new Mailbox.
 	 * 
 	 * @param	string		$address	email address of this mailbox

@@ -591,10 +591,27 @@
 		<page identifier="com.woltlab.wcf.TrophyList">
 			<pageType>system</pageType>
 			<controller>wcf\page\TrophyListPage</controller>
-			<handler>wcf\system\page\handler\TrophyListPageHandler</handler>
 			<name language="de">Trophäen</name>
 			<name language="en">Trophies</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
+			<permissions>user.profile.trophy.canSeeTrophies</permissions>
+			<options>module_trophy</options>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
+			
+			<content language="en">
+				<title>Trophies</title>
+			</content>
+			<content language="de">
+				<title>Trophäen</title>
+			</content>
+		</page>
+		<page identifier="com.woltlab.wcf.TrophyCategoryList">
+			<pageType>system</pageType>
+			<controller>wcf\page\CategoryTrophyListPage</controller>
+			<handler>wcf\system\page\handler\TrophyListPageHandler</handler>
+			<name language="de">Liste von Trophäen aus einer bestimmten Kategorie</name>
+			<name language="en">List of Trophies in Certain Category</name>
+			<parent>com.woltlab.wcf.TrophyList</parent>
 			<requireObjectID>1</requireObjectID>
 			<permissions>user.profile.trophy.canSeeTrophies</permissions>
 			<options>module_trophy</options>
@@ -606,7 +623,7 @@
 			<handler>wcf\system\page\handler\TrophyPageHandler</handler>
 			<name language="de">Trophäe</name>
 			<name language="en">Trophy</name>
-			<parent>com.woltlab.wcf.TrophyList</parent>
+			<parent>com.woltlab.wcf.TrophyCategoryList</parent>
 			<hasFixedParent>1</hasFixedParent>
 			<requireObjectID>1</requireObjectID>
 			<permissions>user.profile.trophy.canSeeTrophies</permissions>

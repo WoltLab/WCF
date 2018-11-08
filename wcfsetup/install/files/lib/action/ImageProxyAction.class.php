@@ -72,6 +72,17 @@ class ImageProxyAction extends AbstractAction {
 			
 			if ($fileLocation === null) {
 				try {
+					// rewrite schemaless URLs to https
+					$scheme = parse_url($url, PHP_URL_SCHEME);
+					if (!$scheme) {
+						if (StringUtil::startsWith($url, '//')) {
+							$url = 'https:'.$url;
+						}
+						else {
+							throw new \DomainException();
+						}
+					}
+					
 					// download image
 					try {
 						$request = new HTTPRequest($url, [

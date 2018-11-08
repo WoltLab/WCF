@@ -258,17 +258,23 @@ class PackageInstallationDispatcher {
 						}
 						
 						foreach (DevtoolsSetup::getInstance()->getUsers() as $newUser) {
-							(new UserAction([], 'create', [
-								'data' => [
-									'email' => $newUser['email'],
-									'password' => $newUser['password'],
-									'username' => $newUser['username']
-								],
-								'groups' => [
-									1,
-									3
-								]
-							]))->executeAction();
+							try {
+								(new UserAction([], 'create', [
+									'data' => [
+										'email' => $newUser['email'],
+										'password' => $newUser['password'],
+										'username' => $newUser['username']
+									],
+									'groups' => [
+										1,
+										3
+									]
+								]))->executeAction();
+							}
+							catch (SystemException $e) {
+								// ignore errors due to event listeners missing at this
+								// point during installation
+							}
 						}
 						
 						if (($importPath = DevtoolsSetup::getInstance()->getDevtoolsImportPath()) !== '') {

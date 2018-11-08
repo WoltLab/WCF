@@ -2,6 +2,7 @@
 namespace wcf\data\user\option;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\system\exception\PermissionDeniedException;
 
 /**
@@ -17,6 +18,8 @@ use wcf\system\exception\PermissionDeniedException;
  * @method	UserOptionEditor	getSingleObject()
  */
 class UserOptionAction extends AbstractDatabaseObjectAction implements IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -53,23 +56,5 @@ class UserOptionAction extends AbstractDatabaseObjectAction implements IToggleAc
 				throw new PermissionDeniedException();
 			}
 		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $optionEditor) {
-			$optionEditor->update([
-				'isDisabled' => 1 - $optionEditor->isDisabled
-			]);
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function validateToggle() {
-		$this->validateUpdate();
 	}
 }

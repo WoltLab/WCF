@@ -54,12 +54,6 @@
 				
 				{if $article->isDeleted}<li><span class="badge label red">{lang}wcf.message.status.deleted{/lang}</span></li>{/if}
 				
-				{if $articleLikeData|isset && $articleLikeData[$article->articleID]|isset && !$articleLikeData[$article->articleID]->getReactions()|empty}
-					<li class="reputationCounter {if $articleLikeData[$article->articleID]->getReputation() > 0}positive{elseif $articleLikeData[$article->articleID]->getReputation() < 0}negative{else}neutral{/if}" data-object-id="{@$article->articleID}" data-object-type="com.woltlab.wcf.likeableArticle">{if $articleLikeData[$article->articleID]->getReputation() > 0}+{elseif $articleLikeData[$article->articleID]->getReputation() < 0}−{else}±{/if}{#$articleLikeData[$article->articleID]->getReputation()}</li>
-				{else}
-					<li class="reputationCounter" data-object-id="{@$article->articleID}" data-object-type="com.woltlab.wcf.likeableArticle"></li>
-				{/if}
-				
 				{event name='contentHeaderMetaData'}
 			</ul>
 			

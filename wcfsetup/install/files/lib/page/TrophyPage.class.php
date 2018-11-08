@@ -1,5 +1,6 @@
 <?php
 namespace wcf\page;
+use wcf\data\trophy\category\TrophyCategory;
 use wcf\data\trophy\Trophy;
 use wcf\data\trophy\TrophyCache;
 use wcf\data\user\trophy\UserTrophy;
@@ -66,10 +67,19 @@ class TrophyPage extends MultipleLinkPage {
 	 */
 	public $trophy;
 	
+	/**
+	 * category object
+	 * @var TrophyCategory
+	 */
+	public $category;
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function readData() {
 		parent::readData();
 		
-		PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.TrophyList', $this->trophy->getCategory()->getObjectID(), $this->trophy->getCategory());
+		PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.TrophyCategoryList', $this->trophy->getCategory()->getObjectID(), $this->trophy->getCategory());
 	}
 	
 	/**
@@ -88,6 +98,8 @@ class TrophyPage extends MultipleLinkPage {
 		if ($this->trophy->isDisabled()) {
 			throw new PermissionDeniedException();
 		}
+		
+		$this->category = $this->trophy->getCategory();
 	}
 	
 	/**
