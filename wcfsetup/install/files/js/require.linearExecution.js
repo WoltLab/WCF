@@ -2,6 +2,8 @@
 	var orgRequire = window.require;
 	var queue = [];
 	var counter = 0;
+
+	window.orgRequire = orgRequire
 	
 	window.require = function(dependencies, callback, errBack) {
 		if (!Array.isArray(dependencies)) {
@@ -26,8 +28,8 @@
 		});
 		
 		if (callback) {
-			promise.then(function (objects) {
-				callback.apply(window, objects);
+			promise = promise.then(function (objects) {
+				return callback.apply(window, objects);
 			});
 		}
 		if (errBack) {
