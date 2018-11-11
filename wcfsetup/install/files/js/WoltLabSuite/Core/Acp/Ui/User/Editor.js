@@ -7,7 +7,7 @@
  * @module	WoltLabSuite/Core/Acp/Ui/User/Editor
  * @since       3.1
  */
-define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown'], function(Ajax, Core, EventHandler, Language, UiSimpleDropdown) {
+define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown', 'WoltLabSuite/Core/Acp/Ui/Worker', 'Ui/Confirmation'], function(Ajax, Core, EventHandler, Language, UiSimpleDropdown, Worker, Confirmation) {
 	"use strict";
 	
 	/**
@@ -65,6 +65,30 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown'], functi
 							actionName: 'com.woltlab.wcf.user.sendNewPassword',
 							objectIDs: [userId]
 						}
+					});
+				});
+			}
+			
+			var deleteContent = elBySel('.jsDeleteContent', dropdownMenu);
+			if (deleteContent !== null) {
+				deleteContent.addEventListener(WCF_CLICK_EVENT, function (event) {
+					event.preventDefault();
+					
+					Confirmation.show({
+						confirm: function () {
+							new Worker({
+								// dialog
+								dialogId: 'deleteContentWorker',
+								dialogTitle: Language.get('wcf.acp.user.content.removeContent'),
+								
+								// ajax
+								className: '\\wcf\\system\\worker\\UserContentRemoveWorker',
+								parameters: {
+									userID: userId
+								}
+							});
+						},
+						message: Language.get('wcf.acp.user.content.removeContent.confirmMessage')
 					});
 				});
 			}

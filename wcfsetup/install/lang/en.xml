@@ -2809,6 +2809,8 @@ full extend.]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Send New Password]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to this user?]]></item>
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Export Personal Data (GDPR)]]></item>
+		<item name="wcf.acp.user.content.removeContent"><![CDATA[Delete User Content]]></item>
+		<item name="wcf.acp.user.content.removeContent.confirmMessage"><![CDATA[Do you really want to delete all user content from this user?]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">

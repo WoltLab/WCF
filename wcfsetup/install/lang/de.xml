@@ -2461,6 +2461,8 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Neues Passwort zusenden]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesem Benutzer wirklich ein neues Kennwort zusenden?]]></item>
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Persönliche Daten exportieren (DSGVO)]]></item>
+		<item name="wcf.acp.user.content.removeContent"><![CDATA[Inhalte des Benutzers löschen]]></item>
+		<item name="wcf.acp.user.content.removeContent.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich alle Inhalte von dem Benutzer löschen?]]></item>
 	</category>
 	
 	<category name="wcf.acp.worker">
