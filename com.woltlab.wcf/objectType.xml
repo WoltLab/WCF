@@ -1739,6 +1739,11 @@
 			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
 			<classname>\wcf\system\user\content\provider\CommentResponseUserContentProvider</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
+			<classname>\wcf\system\user\content\provider\ArticleUserContentProvider</classname>
+		</type>
 		<!-- /user content provider -->
 		
 		<!-- deprecated -->
