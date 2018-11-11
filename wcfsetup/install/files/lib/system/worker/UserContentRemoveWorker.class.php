@@ -10,11 +10,11 @@ use wcf\system\WCF;
 /**
  * Worker implementation for updating users.
  *
- * @author	Joshua Rueweg
+ * @author	Joshua Ruesweg
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Worker
- * @since       3.2
+ * @since	3.2
  */
 class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 	/**
