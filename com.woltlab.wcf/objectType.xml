@@ -1742,6 +1742,14 @@
 			<conditionobject>com.woltlab.wcf.page</conditionobject>
 		</type>
 		<!-- /deprecated -->
+		
+		<!-- user content provider -->
+		<type>
+			<name>com.woltlab.wcf.comment</name>
+			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
+			<classname>\wcf\system\user\content\provider\CommentUserContentProvider</classname>
+		</type>
+		<!-- /user content provider -->
 	</import>
 	<delete>
 		<type name="com.woltlab.wcf.like.user">
