@@ -1744,6 +1744,11 @@
 			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
 			<classname>\wcf\system\user\content\provider\ArticleUserContentProvider</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.reaction</name>
+			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
+			<classname>\wcf\system\user\content\provider\ReactionUserContentProvider</classname>
+		</type>
 		<!-- /user content provider -->
 		
 		<!-- deprecated -->
