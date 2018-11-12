@@ -153,7 +153,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			}
 			
 			// remove likes
-			ReactionHandler::getInstance()->removeLikes('com.woltlab.wcf.comment', $likeObjectIDs, $notificationObjectTypes);
+			ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.comment', $likeObjectIDs, $notificationObjectTypes);
 		}
 		
 		// delete responses
