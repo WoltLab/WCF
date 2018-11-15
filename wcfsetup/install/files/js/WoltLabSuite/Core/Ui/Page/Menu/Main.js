@@ -57,7 +57,7 @@ define(['Core', 'Language', 'Dom/Traverse', './Abstract'], function(Core, Langua
 				return true;
 			}
 			
-			_hasItems = _navigationList.childElementCount > 0;
+			_hasItems = _navigationList && _navigationList.childElementCount > 0;
 			
 			if (_hasItems) {
 				var item, link;
