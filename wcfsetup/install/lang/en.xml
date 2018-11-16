@@ -3884,6 +3884,8 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.page.error.illegalLink"><![CDATA[Sorry, but the page you are looking for has not been found. Try checking the URL for errors, then hit the refresh button on your browser.]]></item>
 		<item name="wcf.page.error.illegalLink.title"><![CDATA[Page Not Found]]></item>
 		<item name="wcf.page.error.backward"><![CDATA[Back to previous page.]]></item>
+		<item name="wcf.page.error.insufficientPermissions"><![CDATA[Insufficient Permissions]]></item>
+		<item name="wcf.page.error.loginAvailable"><![CDATA[This page or section may be accessible for authorized users only.]]></item>
 		<item name="wcf.page.jumpTo"><![CDATA[Go to Page]]></item>
 		<item name="wcf.page.jumpTo.description"><![CDATA[Enter a value between “1” and “#pages#”.]]></item>
 		<item name="wcf.page.redirect.title"><![CDATA[Redirection]]></item>

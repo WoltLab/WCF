@@ -3524,6 +3524,8 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.page.error.illegalLink"><![CDATA[Die von {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} angeforderte Seite wurde nicht gefunden. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}überprüfe{else}überprüfen Sie{/if} die Adresse oder {if LANGUAGE_USE_INFORMAL_VARIANT}geh{else}gehen Sie{/if} zurück auf die Startseite.]]></item>
 		<item name="wcf.page.error.illegalLink.title"><![CDATA[Seite nicht gefunden]]></item>
 		<item name="wcf.page.error.backward"><![CDATA[Zurück zur vorherigen Seite]]></item>
+		<item name="wcf.page.error.insufficientPermissions"><![CDATA[Unzureichende Berechtigungen]]></item>
+		<item name="wcf.page.error.loginAvailable"><![CDATA[Diese Seite bzw. dieser Bereich steht möglicherweise nur angemeldeten Benutzern zur Verfügung.]]></item>
 		<item name="wcf.page.jumpTo"><![CDATA[Gehe zu Seite]]></item>
 		<item name="wcf.page.jumpTo.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} einen Wert zwischen „1“ und „#pages#“ ein.]]></item>
 		<item name="wcf.page.redirect.title"><![CDATA[Weiterleitung]]></item>
