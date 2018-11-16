@@ -84,7 +84,11 @@ class MultiSelectOptionType extends SelectOptionType {
 		if (!is_array($value) || empty($value)) return false;
 		$value = ArrayUtil::trim($value, false);
 		
-		$conditions->add("option_value.userOption".$option->optionID." REGEXP '".'(^|\n)'.implode('\n([^\n]*\n)*', array_map('escapeString', $value)).'($|\n)'."'");
+		$value = array_map(function($value) {
+			return escapeString(preg_quote($value));
+		}, $value);
+		
+		$conditions->add("option_value.userOption".$option->optionID." REGEXP '".'(^|\n)'.implode('\n([^\n]*\n)*', $value).'($|\n)'."'");
 		return true;
 	}
 	
@@ -95,7 +99,11 @@ class MultiSelectOptionType extends SelectOptionType {
 		if (!is_array($value) || empty($value)) return false;
 		$value = ArrayUtil::trim($value, false);
 		
-		$userList->getConditionBuilder()->add("user_option_value.userOption".$option->optionID." REGEXP '".'(^|\n)'.implode('\n([^\n]*\n)*', array_map('escapeString', $value)).'($|\n)'."'");
+		$value = array_map(function($value) {
+			return escapeString(preg_quote($value));
+		}, $value);
+		
+		$userList->getConditionBuilder()->add("user_option_value.userOption".$option->optionID." REGEXP '".'(^|\n)'.implode('\n([^\n]*\n)*', $value).'($|\n)'."'");
 	}
 	
 	/**
