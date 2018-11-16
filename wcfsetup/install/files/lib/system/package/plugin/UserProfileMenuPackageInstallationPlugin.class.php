@@ -188,15 +188,25 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 		if ($options) {
 			$data['options'] = StringUtil::normalizeCsv($options->nodeValue);
 		}
+		else if ($saveData) {
+			$data['options'] = '';
+		}
 		
 		$permissions = $element->getElementsByTagName('permissions')->item(0);
 		if ($permissions) {
 			$data['permissions'] = StringUtil::normalizeCsv($permissions->nodeValue);
 		}
+		else if ($saveData) {
+			$data['permissions'] = '';
+		}
 		
 		$showOrder = $element->getElementsByTagName('showorder')->item(0);
 		if ($showOrder) {
 			$data['showOrder'] = intval($showOrder->nodeValue);
+		}
+		if ($saveData && $this->editedEntry === null) {
+			// only set explicit showOrder when adding new menu item
+			$data['showOrder'] = $this->getShowOrder($data['showOrder'] ?? null);
 		}
 		
 		return $data;

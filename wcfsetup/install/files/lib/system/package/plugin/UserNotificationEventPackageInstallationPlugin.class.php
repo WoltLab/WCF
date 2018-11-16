@@ -306,20 +306,32 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 		if ($options) {
 			$data['options'] = StringUtil::normalizeCsv($options->nodeValue);
 		}
+		else if ($saveData) {
+			$data['options'] = '';
+		}
 		
 		$permissions = $element->getElementsByTagName('permissions')->item(0);
 		if ($permissions) {
 			$data['permissions'] = StringUtil::normalizeCsv($permissions->nodeValue);
+		}
+		else if ($saveData) {
+			$data['permissions'] = '';
 		}
 		
 		// the presence of a `preset` element is treated as `<preset>1</preset>
 		if ($element->getElementsByTagName('preset')->length === 1) {
 			$data['preset'] = 1;
 		}
+		else if ($saveData) {
+			$data['preset'] = 0;
+		}
 		
 		$presetMailNotificationType = $element->getElementsByTagName('presetmailnotificationtype')->item(0);
 		if ($presetMailNotificationType && in_array($presetMailNotificationType->nodeValue, ['instant', 'daily'])) {
 			$data['presetMailNotificationType'] = $presetMailNotificationType->nodeValue;
+		}
+		else if ($saveData) {
+			$data['presetMailNotificationType'] = 'none';
 		}
 		
 		return $data;

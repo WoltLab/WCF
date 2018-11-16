@@ -2183,7 +2183,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.smiley.aliases.description"><![CDATA[Secondary codes that are converted into this smiley.]]></item>
 		<item name="wcf.acp.pip.smiley.aliases.error.notUnique"><![CDATA[The following aliases are already used by another smiley: {implode from=$notUniqueCodes item=notUniqueCode}<code>{$notUniqueCode}</code>{/implode}.]]></item>
 		<item name="wcf.acp.pip.smiley.showOrder"><![CDATA[Display Order]]></item>
-		<item name="wcf.acp.pip.smiley.showOrder.description"><![CDATA[The entered value determines in which order the smiley are shown.]]></item>
+		<item name="wcf.acp.pip.smiley.showOrder.description"><![CDATA[The entered value determines in which order the smilies are shown.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath.description"><![CDATA[The entered path has to be relative to <code>{'WCF_DIR'|constant}</code>.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath.error.fileDoesNotExist"><![CDATA[The entered file does not exist.]]></item>

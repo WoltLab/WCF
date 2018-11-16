@@ -238,6 +238,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 					->label('wcf.acp.pip.userOption.options.editable')
 					->description('wcf.acp.pip.userOption.options.editable.description')
 					->options([
+						0 => 'wcf.acp.user.option.editable.0',
 						1 => 'wcf.acp.user.option.editable.1',
 						2 => 'wcf.acp.user.option.editable.2',
 						3 => 'wcf.acp.user.option.editable.3',
@@ -361,6 +362,11 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 							$data[$optionalPropertyName] = $optionalProperty->nodeValue;
 						}
 					}
+					else if ($saveData && $optionalPropertyName === 'selectOptions') {
+						// all of the other fields will be put in `additionalData`,
+						// thus empty values are not necessary 
+						$data['selectoptions'] = '';
+					}
 				}
 				
 				$messageObjectType = $element->getElementsByTagName('messageObjectType')->item(0);
@@ -423,9 +429,9 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 						'outputclass' => '',
 						'required' => 0,
 						'askduringregistration' => 0,
-						'editable' => '0',
-						'visible' => '0',
 						'searchable' => 0,
+						'visible' => '0',
+						'editable' => '0',
 						'isdisabled' => 0,
 						'messageObjectType' => '',
 						'contentpattern' => ''

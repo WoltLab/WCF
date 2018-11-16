@@ -300,12 +300,44 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		
 		$canBeEdited = $element->getElementsByTagName('canbeedited')->item(0);
 		if ($canBeEdited !== null) {
+			$data['canBeEdited'] = $canBeEdited->nodeValue;
+		}
+		else if ($saveData) {
+			$data['canBeEdited'] = 1;
+		}
+		
+		$canBeEdited = $element->getElementsByTagName('canbeedited')->item(0);
+		if ($canBeEdited !== null) {
 			$data['canBeDisabled'] = $canBeEdited->nodeValue;
+		}
+		else if ($saveData) {
+			$data['canBeDisabled'] = 1;
 		}
 		
 		$isDisabled = $element->getElementsByTagName('isdisabled')->item(0);
 		if ($isDisabled !== null) {
-			$data['canBeDisabled'] = $isDisabled->nodeValue;
+			$data['isDisabled'] = $isDisabled->nodeValue;
+		}
+		else if ($saveData) {
+			$data['isDisabled'] = 0;
+		}
+		
+		$isDisabled = $element->getElementsByTagName('options')->item(0);
+		if ($isDisabled !== null) {
+			$data['options'] = $isDisabled->nodeValue;
+		}
+		else if ($saveData) {
+			$data['options'] = '';
+		}
+		
+		if ($saveData) {
+			$descriptions = $data['description'];
+			unset($data['description']);
+			
+			$data['description'] = [];
+			foreach ($descriptions as $languageID => $description) {
+				$data['description'][LanguageFactory::getInstance()->getLanguage($languageID)->languageCode] = $description;
+			}
 		}
 		
 		return $data;

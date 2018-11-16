@@ -294,11 +294,35 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 			'packageID' => $this->installation->getPackage()->packageID
 		];
 		
-		foreach (['environment', 'inherit', 'nice', 'options', 'permissions'] as $optionalElementProperty) {
+		foreach (['environment', 'inherit', 'options', 'permissions'] as $optionalElementProperty) {
 			$optionalElement = $element->getElementsByTagName($optionalElementProperty)->item(0);
 			if ($optionalElement !== null) {
 				$data[$optionalElementProperty] = $optionalElement->nodeValue;
 			}
+			else if ($saveData) {
+				switch ($optionalElementProperty) {
+					case 'environment':
+						$data[$optionalElementProperty] = 'user';
+						break;
+						
+					case 'inherit':
+						$data[$optionalElementProperty] = 0;
+						break;
+					
+					case 'options':
+					case 'permissions':
+						$data[$optionalElementProperty] = '';
+						break;
+				}
+			}
+		}
+		
+		$niceValue = $element->getElementsByTagName('nice')->item(0);
+		if ($niceValue !== null) {
+			$data['niceValue'] = $niceValue->nodeValue;
+		}
+		else if ($saveData) {
+			$data['niceValue'] = 0;
 		}
 		
 		return $data;

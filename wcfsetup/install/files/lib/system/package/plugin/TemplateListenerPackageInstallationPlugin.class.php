@@ -13,6 +13,9 @@ use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
+use wcf\system\form\builder\field\IntegerFormField;
+use wcf\system\form\builder\field\OptionFormField;
+use wcf\system\form\builder\field\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\MultilineTextFormField;
@@ -274,7 +277,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 					$nameField = $formField->getDocument()->getNodeById('name');
 					
 					/** @var SingleSelectionFormField $templateNameFormField */
-					$templateNameFormField = $formField->getDocument()->getNodeById('templateName');
+					$templateNameFormField = $formField->getDocument()->getNodeById('frontendTemplateName');
 					
 					/** @var SingleSelectionFormField $acpTemplateNameFormField */
 					$acpTemplateNameFormField = $formField->getDocument()->getNodeById('acpTemplateName');
@@ -334,7 +337,29 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 				->objectProperty('templatecode')
 				->label('wcf.acp.pip.templateListener.templateCode')
 				->description('wcf.acp.pip.templateListener.templateCode.description')
-				->required()
+				->required(),
+			
+			IntegerFormField::create('niceValue')
+				->objectProperty('nice')
+				->label('wcf.acp.pip.templateListener.niceValue')
+				->description('wcf.acp.pip.templateListener.niceValue.description')
+				->nullable()
+				->minimum(-128)
+				->maximum(127),
+			
+			OptionFormField::create()
+				->description('wcf.acp.pip.templateListener.options.description')
+				->packageIDs(array_merge(
+					[$this->installation->getPackage()->packageID],
+					array_keys($this->installation->getPackage()->getAllRequiredPackages())
+				)),
+			
+			UserGroupOptionFormField::create()
+				->description('wcf.acp.pip.templateListener.permissions.description')
+				->packageIDs(array_merge(
+					[$this->installation->getPackage()->packageID],
+					array_keys($this->installation->getPackage()->getAllRequiredPackages())
+				))
 		]);
 		
 		/** @var SingleSelectionFormField $environment */
@@ -364,7 +389,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 * @since	3.2
 	 */
 	protected function doGetElementData(\DOMElement $element, $saveData) {
-		return [
+		$data = [
 			'environment' => $element->getElementsByTagName('environment')->item(0)->nodeValue,
 			'eventName' => $element->getElementsByTagName('eventname')->item(0)->nodeValue,
 			'name' => $element->getAttribute('name'),
@@ -372,6 +397,26 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 			'templateCode' => $element->getElementsByTagName('templatecode')->item(0)->nodeValue,
 			'templateName' => $element->getElementsByTagName('templatename')->item(0)->nodeValue
 		];
+		
+		$nice = $element->getElementsByTagName('nice')->item(0);
+		if ($nice !== null) {
+			$data['niceValue'] = $nice->nodeValue;
+		}
+		else if ($saveData) {
+			$data['niceValue'] = 0;
+		}
+		
+		foreach (['options', 'permissions'] as $elementName) {
+			$optionalElement = $element->getElementsByTagName($elementName)->item(0);
+			if ($optionalElement !== null) {
+				$data[$elementName] = $optionalElement->nodeValue;
+			}
+			else if ($saveData) {
+				$data[$elementName] = '';
+			}
+		}
+		
+		return $data;
 	}
 	
 	/**
@@ -406,7 +451,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 					
 				case 'user':
 					/** @var SingleSelectionFormField $templateName */
-					$templateName = $document->getNodeById('templateName');
+					$templateName = $document->getNodeById('frontendTemplateName');
 					
 					/** @var SingleSelectionFormField $eventName */
 					$eventName = $document->getNodeById($data['templateName'] . '_eventName');
@@ -456,7 +501,10 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 				'eventname',
 				'templatecode' => [
 					'cdata' => true
-				]
+				],
+				'nice' => 0,
+				'options' => '',
+				'permissions' => ''
 			],
 			$form
 		);

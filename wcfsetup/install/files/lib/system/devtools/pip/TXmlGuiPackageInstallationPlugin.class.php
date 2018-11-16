@@ -7,6 +7,7 @@ use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\package\plugin\AbstractXMLPackageInstallationPlugin;
 use wcf\system\WCF;
 use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
@@ -24,6 +25,7 @@ use wcf\util\XML;
  * @since	3.2
  * 
  * @property	PackageInstallationDispatcher|DevtoolsPackageInstallationDispatcher	$installation
+ * @mixin	AbstractXMLPackageInstallationPlugin
  */
 trait TXmlGuiPackageInstallationPlugin {
 	/**
@@ -69,7 +71,7 @@ trait TXmlGuiPackageInstallationPlugin {
 	/**
 	 * Adds optional child elements to the given elements based on the given
 	 * child data and form.
-	 *
+	 * 
 	 * @param	\DOMElement	$element		element to which the child elements are added
 	 * @param	array		$children
 	 * @param	IFormDocument	$form			form containing the children's data
@@ -79,22 +81,22 @@ trait TXmlGuiPackageInstallationPlugin {
 		
 		$document = $element->ownerDocument;
 		
-		foreach ($children as $index => $key) {
-			if (is_string($index)) {
-				$childName = $index;
-				if (!is_array($key)) {
+		foreach ($children as $key => $value) {
+			if (is_string($key)) {
+				$childName = $key;
+				if (!is_array($value)) {
 					$isOptional = true;
 					$cdata = false;
-					$defaultValue = $key;
+					$defaultValue = $value;
 				}
 				else {
-					$isOptional = array_key_exists('defaultValue', $key);
-					$cdata = $key['cdata'] ?? false;
-					$defaultValue = $key['defaultValue'] ?? null;
+					$isOptional = array_key_exists('defaultValue', $value);
+					$cdata = $value['cdata'] ?? false;
+					$defaultValue = $value['defaultValue'] ?? null;
 				}
 			}
 			else {
-				$childName = $key;
+				$childName = $value;
 				$isOptional = false;
 				$cdata = false;
 				$defaultValue = null;

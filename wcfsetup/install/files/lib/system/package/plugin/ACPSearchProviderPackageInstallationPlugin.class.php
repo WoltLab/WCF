@@ -124,6 +124,9 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 		if ($showOrder) {
 			$data['showOrder'] = $showOrder->nodeValue;
 		}
+		else if ($saveData) {
+			$data['showOrder'] = $this->getShowOrder(null);
+		}
 		
 		return $data;
 	}

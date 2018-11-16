@@ -327,30 +327,53 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 		if ($parentMenuItem !== null) {
 			$data['parentMenuItem'] = $parentMenuItem->nodeValue;
 		}
+		else if ($saveData) {
+			$data['parentMenuItem'] = '';
+		}
 		
 		$controller = $element->getElementsByTagName('controller')->item(0);
 		if ($controller !== null) {
 			$data['menuItemController'] = $controller->nodeValue;
+		}
+		else if ($saveData) {
+			$data['menuItemController'] = '';
 		}
 		
 		$link = $element->getElementsByTagName('link')->item(0);
 		if ($link !== null) {
 			$data['menuItemLink'] = $link->nodeValue;
 		}
+		else if ($saveData) {
+			$data['menuItemLink'] = '';
+		}
 		
 		$options = $element->getElementsByTagName('options')->item(0);
 		if ($options !== null) {
 			$data['options'] = $options->nodeValue;
+		}
+		else if ($saveData) {
+			$data['options'] = '';
 		}
 		
 		$permissions = $element->getElementsByTagName('permissions')->item(0);
 		if ($permissions !== null) {
 			$data['permissions'] = $permissions->nodeValue;
 		}
+		else if ($saveData) {
+			$data['permissions'] = '';
+		}
 		
 		$showOrder = $element->getElementsByTagName('showorder')->item(0);
 		if ($showOrder !== null) {
 			$data['showOrder'] = $showOrder->nodeValue;
+		}
+		if ($saveData && $this->editedEntry === null) {
+			// only set explicit showOrder when adding new menu item
+			$data['showOrder'] = $this->getShowOrder(
+				$data['showOrder'] ?? null,
+				$data['parentMenuItem'],
+				'parentMenuItem'
+			);
 		}
 		
 		return $data;

@@ -168,9 +168,11 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 						return;
 					}
 					
+					$aliases = $this->editedEntry ? $this->editedEntry->getElementsByTagName('aliases')->item(0) : null;
 					if (
 						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
-						$this->editedEntry->getElementsByTagName('aliases')->item(0)->nodeValue !== $formField->getSaveValue()
+						$aliases === null ||
+						$aliases->nodeValue !== $formField->getSaveValue()
 					) {
 						$notUniqueCodes = [];
 						foreach ($formField->getValue() as $alias) {
@@ -243,10 +245,16 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			if ($child !== null) {
 				$data[$arrayKey] = $child->nodeValue;
 			}
-		}
-		
-		if ($saveData && !isset($data['aliases'])) {
-			$data['aliases'] = '';
+			else {
+				if ($arrayKey === 'showOrder') {
+					if ($this->editedEntry === null) {
+						$data[$arrayKey] = $this->getShowOrder(null);
+					}
+				}
+				else {
+					$data[$arrayKey] = '';
+				}
+			}
 		}
 		
 		return $data;

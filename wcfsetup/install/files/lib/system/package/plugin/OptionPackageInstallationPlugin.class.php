@@ -252,7 +252,15 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 				foreach (['selectOptions', 'hidden', 'supportI18n', 'requireI18n'] as $optionalPropertyName) {
 					$optionalProperty = $element->getElementsByTagName(strtolower($optionalPropertyName))->item(0);
 					if ($optionalProperty !== null) {
-						$data[$optionalPropertyName] = $optionalProperty->nodeValue;
+						$data[$saveData ? strtolower($optionalPropertyName) : $optionalPropertyName] = $optionalProperty->nodeValue;
+					}
+					else if ($saveData) {
+						if ($optionalPropertyName === 'selectOptions') {
+							$data['selectoptions'] = '';
+						}
+						else {
+							$data[strtolower($optionalPropertyName)] = 0;
+						}
 					}
 				}
 				

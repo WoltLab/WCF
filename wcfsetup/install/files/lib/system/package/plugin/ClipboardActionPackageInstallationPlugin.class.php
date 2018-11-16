@@ -4,6 +4,7 @@ use wcf\data\clipboard\action\ClipboardAction;
 use wcf\data\clipboard\action\ClipboardActionEditor;
 use wcf\data\clipboard\action\ClipboardActionList;
 use wcf\system\clipboard\action\IClipboardAction;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
@@ -138,11 +139,15 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @inheritDoc
 	 */
 	protected function postImport() {
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('packageID = ?', [$this->installation->getPackageID()]);
+		$conditionBuilder->add('actionID IN (?)', [array_keys($this->pages)]);
+		
 		// clear pages
 		$sql = "DELETE FROM	wcf".WCF_N."_clipboard_page
-			WHERE		packageID = ?";
+			" . $conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$this->installation->getPackageID()]);
+		$statement->execute($conditionBuilder->getParameters());
 		
 		if (!empty($this->pages)) {
 			// insert pages
@@ -255,6 +260,14 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 		$showOrder = $element->getElementsByTagName('showorder')->item(0);
 		if ($showOrder !== null) {
 			$data['showOrder'] = $showOrder->nodeValue;
+		}
+		if ($saveData && $this->editedEntry === null) {
+			// only set explicit showOrder when adding new clipboard actions
+			$data['showOrder'] = $this->getShowOrder(
+				$data['showOrder'] ?? null,
+				$data['actionClassName'],
+				'actionClassName'
+			);
 		}
 		
 		/** @var \DOMElement $page */

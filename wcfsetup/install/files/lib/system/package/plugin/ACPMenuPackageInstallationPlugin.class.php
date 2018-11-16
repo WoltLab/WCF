@@ -135,6 +135,9 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 		if ($icon !== null) {
 			$data['icon'] = $icon->nodeValue;
 		}
+		else {
+			$data['icon'] = '';
+		}
 		
 		return $data;
 	}
