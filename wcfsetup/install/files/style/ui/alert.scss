@@ -79,7 +79,9 @@
 }
 
 .innerError,
-.innerInfo {
+.innerInfo,
+.innerSuccess,
+.innerWarning{
 	display: table;
 	line-height: 1.5;
 	margin-top: 8px;
@@ -99,7 +101,7 @@
 	}
 }
 
-/* inline errors */
+/* inline messages */
 .innerError {
 	background-color: rgb(242, 222, 222);
 	color: rgb(169, 68, 66);
@@ -113,6 +115,38 @@
 		
 		&:hover {
 			color: $wcfStatusErrorLinkActive;
+		}
+	}
+}
+.innerSuccess {
+	background-color: $wcfStatusSuccessBackground;
+	color: $wcfStatusSuccessText;
+	
+	&::before {
+		border-bottom-color: $wcfStatusSuccessBackground;
+	}
+	
+	a {
+		color: $wcfStatusSuccessLink;
+		
+		&:hover {
+			color: $wcfStatusSuccessLinkActive;
+		}
+	}
+}
+.innerWarning {
+	background-color: $wcfStatusWarningBackground;
+	color: $wcfStatusWarningText;
+	
+	&::before {
+		border-bottom-color: $wcfStatusWarningBackground;
+	}
+	
+	a {
+		color: $wcfStatusWarningLink;
+		
+		&:hover {
+			color: $wcfStatusWarningLinkActive;
 		}
 	}
 }
