@@ -276,7 +276,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		$attributes = $element->getElementsByTagName('attributes')->item(0);
 		if ($attributes !== null) {
 			$optionalAttributeElements = [
-				$saveData ? 'html' : 'attributeHtml' => 'html',
+				'html' => 'attributeHtml',
 				'required' => 'required',
 				'usetext' => $saveData ? 'usetext' : 'useText',
 				'validationpattern' => $saveData ? 'validationpattern' : 'validationPattern'
@@ -525,11 +525,11 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			$bbcode,
 			[
 				'classname' => '',
-				'htmlclose' => [
+				'htmlopen' => [
 					'cdata' => true,
 					'defaultValue' => ''
 				],
-				'htmlopen' => [
+				'htmlclose' => [
 					'cdata' => true,
 					'defaultValue' => ''
 				],
@@ -549,9 +549,9 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 				$attribute = $document->createElement('attribute');
 				$attribute->setAttribute('name', (string) $attributeNumber);
 				
-				if (!empty($attributeData['html'])) {
+				if (!empty($attributeData['attributeHtml'])) {
 					$html = $document->createElement('html');
-					$html->appendChild($document->createCDATASection($attributeData['html']));
+					$html->appendChild($document->createCDATASection($attributeData['attributeHtml']));
 					$attribute->appendChild($html);
 				}
 				if (!empty($attributeData['validationPattern'])) {
