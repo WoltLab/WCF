@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/userMenu.xsd">
 	<import>
 		<!-- profile -->
@@ -6,7 +6,6 @@
 			<showorder>1</showorder>
 			<iconclassname>fa-user</iconclassname>
 		</usermenuitem>
-		
 		<usermenuitem name="wcf.user.menu.profile.accountManagement">
 			<controller>wcf\form\AccountManagementForm</controller>
 			<parent>wcf.user.menu.profile</parent>
@@ -20,35 +19,30 @@
 		<usermenuitem name="wcf.user.menu.profile.signature">
 			<controller>wcf\form\SignatureEditForm</controller>
 			<parent>wcf.user.menu.profile</parent>
-			<showorder>3</showorder>
 			<options>module_user_signature</options>
+			<showorder>3</showorder>
 		</usermenuitem>
 		<!-- /profile -->
-		
 		<!-- settings -->
 		<usermenuitem name="wcf.user.menu.settings">
 			<showorder>2</showorder>
 			<iconclassname>fa-cog</iconclassname>
 		</usermenuitem>
-		
 		<usermenuitem name="wcf.user.menu.settings.notification">
 			<controller>wcf\form\NotificationSettingsForm</controller>
 			<parent>wcf.user.menu.settings</parent>
 		</usermenuitem>
-		
 		<usermenuitem name="wcf.user.menu.settings.paidSubscription">
 			<controller>wcf\page\PaidSubscriptionListPage</controller>
 			<parent>wcf.user.menu.settings</parent>
 			<options>module_paid_subscription</options>
 		</usermenuitem>
 		<!-- /settings -->
-		
 		<!-- community -->
 		<usermenuitem name="wcf.user.menu.community">
 			<showorder>3</showorder>
 			<iconclassname>fa-globe</iconclassname>
 		</usermenuitem>
-		
 		<usermenuitem name="wcf.user.menu.community.notification">
 			<controller>wcf\page\NotificationListPage</controller>
 			<parent>wcf.user.menu.community</parent>
@@ -64,6 +58,5 @@
 			<parent>wcf.user.menu.community</parent>
 			<showorder>3</showorder>
 		</usermenuitem>
-		<!-- /community -->
 	</import>
 </data>

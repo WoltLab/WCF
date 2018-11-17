@@ -6,245 +6,228 @@
 			<category name="module">
 				<showorder>1</showorder>
 			</category>
-				<category name="module.system">
-					<parent>module</parent>
-				</category>
-				<category name="module.user">
-					<parent>module</parent>
-				</category>
-				<category name="module.customization">
-					<parent>module</parent>
-				</category>
-				<category name="module.content">
-					<parent>module</parent>
-				</category>
-				<category name="module.community">
-					<parent>module</parent>
-				</category>
-				<category name="module.development">
-					<parent>module</parent>
-				</category>
+			<category name="module.system">
+				<parent>module</parent>
+			</category>
+			<category name="module.user">
+				<parent>module</parent>
+			</category>
+			<category name="module.customization">
+				<parent>module</parent>
+			</category>
+			<category name="module.content">
+				<parent>module</parent>
+			</category>
+			<category name="module.community">
+				<parent>module</parent>
+			</category>
+			<category name="module.development">
+				<parent>module</parent>
+			</category>
 			<!-- /modules -->
-			
 			<!-- general -->
 			<category name="general">
 				<showorder>2</showorder>
 			</category>
-				<category name="general.page">
-					<parent>general</parent>
-					<showorder>1</showorder>
-				</category>
-					<category name="general.page.seo">
-						<parent>general.page</parent>
-					</category>
-					<category name="general.page.sitemap">
-						<parent>general.page</parent>
-					</category>
-				<category name="general.offline">
-					<parent>general</parent>
-					<showorder>2</showorder>
-				</category>
-				<category name="general.system">
-					<parent>general</parent>
-					<showorder>3</showorder>
-				</category>
-					<category name="general.system.error">
-						<parent>general.system</parent>
-					</category>
-					<category name="general.system.cookie">
-						<parent>general.system</parent>
-					</category>
-					<category name="general.system.http">
-						<parent>general.system</parent>
-					</category>
-					<category name="general.system.packageServer">
-						<parent>general.system</parent>
-					</category>
-					<category name="general.system.proxy">
-						<parent>general.system</parent>
-					</category>
-					<category name="general.system.image">
-						<parent>general.system</parent>
-					</category>
-					<category name="general.system.search">
-						<parent>general.system</parent>
-					</category>
-					<category name="general.system.date">
-						<parent>general.system</parent>
-					</category>
-					<category name="general.system.googleMaps">
-						<parent>general.system</parent>
-					</category>
-				<category name="general.mail">
-					<parent>general</parent>
-					<showorder>4</showorder>
-				</category>
-					<category name="general.mail.general">
-						<parent>general.mail</parent>
-					</category>
-					<category name="general.mail.send">
-						<parent>general.mail</parent>
-					</category>
-				<category name="general.cache">
-					<parent>general</parent>
-					<showorder>5</showorder>
-				</category>
-					<category name="general.cache.general">
-						<parent>general.cache</parent>
-					</category>
-					<category name="general.cache.memcached">
-						<parent>general.cache</parent>
-					</category>
-					<category name="general.cache.redis">
-						<parent>general.cache</parent>
-					</category>
-				<category name="general.payment">
-					<parent>general</parent>
-					<showorder>6</showorder>
-				</category>
-					<category name="general.payment.paidSubscription">
-						<parent>general.payment</parent>
-					</category>
+			<category name="general.page">
+				<parent>general</parent>
+				<showorder>1</showorder>
+			</category>
+			<category name="general.page.seo">
+				<parent>general.page</parent>
+			</category>
+			<category name="general.page.sitemap">
+				<parent>general.page</parent>
+			</category>
+			<category name="general.offline">
+				<parent>general</parent>
+				<showorder>2</showorder>
+			</category>
+			<category name="general.system">
+				<parent>general</parent>
+				<showorder>3</showorder>
+			</category>
+			<category name="general.system.error">
+				<parent>general.system</parent>
+			</category>
+			<category name="general.system.cookie">
+				<parent>general.system</parent>
+			</category>
+			<category name="general.system.http">
+				<parent>general.system</parent>
+			</category>
+			<category name="general.system.packageServer">
+				<parent>general.system</parent>
+			</category>
+			<category name="general.system.proxy">
+				<parent>general.system</parent>
+			</category>
+			<category name="general.system.image">
+				<parent>general.system</parent>
+			</category>
+			<category name="general.system.search">
+				<parent>general.system</parent>
+			</category>
+			<category name="general.system.date">
+				<parent>general.system</parent>
+			</category>
+			<category name="general.system.googleMaps">
+				<parent>general.system</parent>
+			</category>
+			<category name="general.mail">
+				<parent>general</parent>
+				<showorder>4</showorder>
+			</category>
+			<category name="general.mail.general">
+				<parent>general.mail</parent>
+			</category>
+			<category name="general.mail.send">
+				<parent>general.mail</parent>
+			</category>
+			<category name="general.cache">
+				<parent>general</parent>
+				<showorder>5</showorder>
+			</category>
+			<category name="general.cache.general">
+				<parent>general.cache</parent>
+			</category>
+			<category name="general.cache.memcached">
+				<parent>general.cache</parent>
+			</category>
+			<category name="general.cache.redis">
+				<parent>general.cache</parent>
+			</category>
+			<category name="general.payment">
+				<parent>general</parent>
+				<showorder>6</showorder>
+			</category>
+			<category name="general.payment.paidSubscription">
+				<parent>general.payment</parent>
+			</category>
 			<!-- /general -->
-			
 			<!-- user -->
 			<category name="user">
 				<showorder>3</showorder>
 			</category>
-				<category name="user.general">
-					<parent>user</parent>
-				</category>
-				
-				<category name="user.profile">
-					<parent>user</parent>
-				</category>
-					<category name="user.avatar">
-						<parent>user.profile</parent>
-					</category>
-					<category name="user.signature">
-						<parent>user.profile</parent>
-					</category>
-					<category name="user.title">
-						<parent>user.profile</parent>
-					</category>
-					<category name="user.cleanup">
-						<parent>user.profile</parent>
-					</category>
-				
-				<category name="user.list">
-					<parent>user</parent>
-				</category>
-					<category name="user.list.members">
-						<parent>user.list</parent>
-					</category>
-					<category name="user.list.online">
-						<parent>user.list</parent>
-					</category>
-				
-				<category name="user.register">
-					<parent>user</parent>
-				</category>
-					<category name="user.3rdPartyAuth">
-						<parent>user.register</parent>
-					</category>
-					<category name="user.password">
-						<parent>user.register</parent>
-					</category>
-					<category name="user.ban">
-						<parent>user.register</parent>
-					</category>
+			<category name="user.general">
+				<parent>user</parent>
+			</category>
+			<category name="user.profile">
+				<parent>user</parent>
+			</category>
+			<category name="user.avatar">
+				<parent>user.profile</parent>
+			</category>
+			<category name="user.signature">
+				<parent>user.profile</parent>
+			</category>
+			<category name="user.title">
+				<parent>user.profile</parent>
+			</category>
+			<category name="user.cleanup">
+				<parent>user.profile</parent>
+			</category>
+			<category name="user.list">
+				<parent>user</parent>
+			</category>
+			<category name="user.list.members">
+				<parent>user.list</parent>
+			</category>
+			<category name="user.list.online">
+				<parent>user.list</parent>
+			</category>
+			<category name="user.register">
+				<parent>user</parent>
+			</category>
+			<category name="user.3rdPartyAuth">
+				<parent>user.register</parent>
+			</category>
+			<category name="user.password">
+				<parent>user.register</parent>
+			</category>
+			<category name="user.ban">
+				<parent>user.register</parent>
+			</category>
 			<!-- /user -->
-			
 			<!-- security -->
 			<category name="security">
 				<showorder>4</showorder>
 			</category>
-				<category name="security.general">
-					<parent>security</parent>
-				</category>
-					<category name="security.general.session">
-						<parent>security.general</parent>
-					</category>
-					<category name="security.general.authentication">
-						<parent>security.general</parent>
-					</category>
-					<category name="security.general.secrets">
-						<parent>security.general</parent>
-						<showorder>15</showorder>
-					</category>
-				<category name="security.blacklist">
-					<parent>security</parent>
-				</category>
-				<category name="security.antispam">
-					<parent>security</parent>
-				</category>
-					<category name="security.antispam.captcha">
-						<parent>security.antispam</parent>
-					</category>
-					<category name="security.antispam.recaptcha">
-						<parent>security.antispam</parent>
-					</category>
-				
-				<category name="security.censorship">
-					<parent>security</parent>
-				</category>
-					<category name="message.censorship">
-						<parent>security.censorship</parent>
-					</category>
+			<category name="security.general">
+				<parent>security</parent>
+			</category>
+			<category name="security.general.session">
+				<parent>security.general</parent>
+			</category>
+			<category name="security.general.authentication">
+				<parent>security.general</parent>
+			</category>
+			<category name="security.general.secrets">
+				<parent>security.general</parent>
+				<showorder>15</showorder>
+			</category>
+			<category name="security.blacklist">
+				<parent>security</parent>
+			</category>
+			<category name="security.antispam">
+				<parent>security</parent>
+			</category>
+			<category name="security.antispam.captcha">
+				<parent>security.antispam</parent>
+			</category>
+			<category name="security.antispam.recaptcha">
+				<parent>security.antispam</parent>
+			</category>
+			<category name="security.censorship">
+				<parent>security</parent>
+			</category>
+			<category name="message.censorship">
+				<parent>security.censorship</parent>
+			</category>
 			<!-- /security -->
-			
 			<!-- message -->
 			<category name="message">
 				<showorder>5</showorder>
 			</category>
-				
-				<category name="message.general">
-					<parent>message</parent>
-				</category>
-					<category name="message.general.share">
-						<parent>message.general</parent>
-					</category>
-					<category name="message.general.likes">
-						<parent>message.general</parent>
-					</category>
-					<category name="message.general.poll">
-						<parent>message.general</parent>
-						<options>module_poll</options>
-					</category>
-					<category name="message.general.edit">
-						<parent>message.general</parent>
-					</category>
-					<category name="message.general.image">
-						<parent>message.general</parent>
-					</category>
-				
-				<category name="message.attachment">
-					<parent>message</parent>
-					<options>module_attachment</options>
-				</category>
-				
-				<category name="message.sidebar">
-					<parent>message</parent>
-				</category>
-				
-				<category name="message.search">
-					<parent>message</parent>
-				</category>
+			<category name="message.general">
+				<parent>message</parent>
+			</category>
+			<category name="message.general.share">
+				<parent>message.general</parent>
+			</category>
+			<category name="message.general.likes">
+				<parent>message.general</parent>
+			</category>
+			<category name="message.general.poll">
+				<parent>message.general</parent>
+				<options>module_poll</options>
+			</category>
+			<category name="message.general.edit">
+				<parent>message.general</parent>
+			</category>
+			<category name="message.general.image">
+				<parent>message.general</parent>
+			</category>
+			<category name="message.attachment">
+				<parent>message</parent>
+				<options>module_attachment</options>
+			</category>
+			<category name="message.sidebar">
+				<parent>message</parent>
+			</category>
+			<category name="message.search">
+				<parent>message</parent>
+			</category>
 			<!-- /message -->
-			
-			<category name="dashboard">
+			<category name="dashboard"/>
+			<category name="dashboard.content">
+				<parent>dashboard</parent>
 			</category>
-				<category name="dashboard.content">
-					<parent>dashboard</parent>
-				</category>
-				
-				<category name="dashboard.sidebar">
-					<parent>dashboard</parent>
-				</category>
-			
+			<category name="dashboard.sidebar">
+				<parent>dashboard</parent>
+			</category>
 			<!-- cms -->
-			<category name="cms">
-			</category>
+			<category name="cms"/>
 			<category name="cms.media">
 				<parent>cms</parent>
 			</category>
@@ -254,9 +237,7 @@
 			<category name="cms.article">
 				<parent>cms</parent>
 			</category>
-			<!-- /cms -->
 		</categories>
-		
 		<options>
 			<option name="last_update_time">
 				<categoryname>general</categoryname>
@@ -264,76 +245,66 @@
 				<defaultvalue>0</defaultvalue>
 				<hidden>1</hidden>
 			</option>
-			
+			<!-- value will automatically be replaced during WCFSetup -->
 			<option name="wcf_uuid">
 				<categoryname>general</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue>bd096261-15f4-5dc1-9767-01ce08d7c80b</defaultvalue> <!-- automatically replaced during WCFSetup -->
+				<defaultvalue>bd096261-15f4-5dc1-9767-01ce08d7c80b</defaultvalue>
 				<hidden>1</hidden>
 			</option>
-			
 			<option name="woltlab_branding">
 				<categoryname>general</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>1</defaultvalue>
 				<hidden>1</hidden>
 			</option>
-			
 			<option name="module_master_password">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
-			
 			<option name="visitor_use_tiny_build">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
-			
 			<option name="module_contact_form">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
-			
 			<option name="log_ip_address">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
-			
 			<option name="enable_woltlab_news">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			
-			<option name="module_system_recaptcha"><!-- @deprecated -->
+			<!-- deprecated -->
+			<option name="module_system_recaptcha">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 				<hidden>1</hidden>
 			</option>
-			
 			<option name="module_cookie_policy_page">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			
 			<option name="module_article">
 				<categoryname>module.content</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			
 			<option name="module_smiley">
 				<categoryname>module.customization</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			
 			<option name="module_gravatar">
 				<categoryname>module.user</categoryname>
 				<optiontype>boolean</optiontype>
@@ -369,43 +340,36 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			
 			<option name="module_like">
 				<categoryname>module.community</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			
 			<option name="module_user_profile_wall">
 				<categoryname>module.user</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			
 			<option name="module_trophy">
 				<categoryname>module.user</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			
 			<option name="module_tagging">
 				<categoryname>module.content</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			
 			<option name="module_poll">
 				<categoryname>module.community</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			
 			<option name="module_wcf_ad">
 				<categoryname>module.customization</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
-			
 			<option name="enable_debug_mode">
 				<categoryname>module.development</categoryname>
 				<optiontype>boolean</optiontype>
@@ -426,13 +390,12 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
-			
 			<!-- general.page -->
 			<option name="page_title">
 				<categoryname>general.page</categoryname>
 				<optiontype>textI18n</optiontype>
-				<supporti18n>1</supporti18n>
 				<defaultvalue>WoltLab Suite</defaultvalue>
+				<supporti18n>1</supporti18n>
 			</option>
 			<option name="page_description">
 				<categoryname>general.page</categoryname>
@@ -461,7 +424,6 @@
 			<option name="fb_share_app_id">
 				<categoryname>general.page</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue></defaultvalue>
 			</option>
 			<option name="show_version_number">
 				<categoryname>general.page</categoryname>
@@ -529,7 +491,6 @@
 				<categoryname>general.page</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
-			
 			<!-- legacy option, no longer used -->
 			<option name="url_legacy_mode">
 				<categoryname>hidden</categoryname>
@@ -537,7 +498,6 @@
 				<defaultvalue>0</defaultvalue>
 			</option>
 			<!-- /legacy option, no longer used -->
-			
 			<option name="url_omit_index_php">
 				<categoryname>general.page.seo</categoryname>
 				<optiontype>boolean</optiontype>
@@ -547,7 +507,6 @@
 				<categoryname>general.page.seo</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
-			
 			<option name="sitemap_index_time_frame">
 				<categoryname>general.page.sitemap</categoryname>
 				<optiontype>integer</optiontype>
@@ -556,7 +515,6 @@
 				<suffix>days</suffix>
 			</option>
 			<!-- /general.page -->
-			
 			<!-- offline -->
 			<option name="offline">
 				<categoryname>general.offline</categoryname>
@@ -573,18 +531,15 @@
 				<optiontype>boolean</optiontype>
 			</option>
 			<!-- /offline -->
-			
 			<!-- general.system.image -->
 			<option name="image_adapter_type">
 				<categoryname>general.system.image</categoryname>
 				<optiontype>radioButton</optiontype>
 				<defaultvalue>gd</defaultvalue>
 				<selectoptions>gd:wcf.acp.option.image_adapter_type.gd
-imagick:wcf.acp.option.image_adapter_type.imagick
-				</selectoptions>
+imagick:wcf.acp.option.image_adapter_type.imagick</selectoptions>
 			</option>
 			<!-- /general.system.image -->
-			
 			<!-- general.system.search -->
 			<option name="search_engine">
 				<categoryname>general.system.search</categoryname>
@@ -593,7 +548,6 @@ imagick:wcf.acp.option.image_adapter_type.imagick
 				<selectoptions>mysql:wcf.acp.option.search_engine.mysql</selectoptions>
 			</option>
 			<!-- /general.system.search -->
-			
 			<!-- general.system.error -->
 			<option name="exception_privacy">
 				<categoryname>general.system.error</categoryname>
@@ -604,7 +558,6 @@ reduced:wcf.acp.option.exception_privacy.reduced
 private:wcf.acp.option.exception_privacy.private</selectoptions>
 			</option>
 			<!-- /general.system.error-->
-			
 			<!-- general.system.cookie -->
 			<option name="cookie_prefix">
 				<categoryname>general.system.cookie</categoryname>
@@ -613,7 +566,6 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<validationpattern>^[a-zA-Z0-9_]+$</validationpattern>
 			</option>
 			<!-- /general.system.cookie-->
-			
 			<!-- general.system.http -->
 			<option name="http_send_x_frame_options">
 				<categoryname>general.system.http</categoryname>
@@ -626,21 +578,18 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /general.system.http -->
-			
 			<!-- general.system.packageServer -->
 			<option name="package_server_auth_code">
 				<categoryname>general.system.packageServer</categoryname>
 				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.system.packageServer -->
-			
 			<!-- general.system.proxy -->
 			<option name="proxy_server_http">
 				<categoryname>general.system.proxy</categoryname>
 				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.system.proxy -->
-			
 			<!-- security.general.session -->
 			<option name="session_timeout">
 				<categoryname>security.general.session</categoryname>
@@ -673,7 +622,6 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /security.general.session -->
-			
 			<!-- security.general.authentication -->
 			<option name="enable_user_authentication_failure">
 				<categoryname>security.general.authentication</categoryname>
@@ -716,16 +664,13 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<suffix>days</suffix>
 			</option>
 			<!-- /security.general.authentication -->
-			
 			<!-- security.general.secrets -->
 			<option name="signature_secret">
 				<categoryname>security.general.secrets</categoryname>
 				<optiontype>text</optiontype>
-				<allowempty>0</allowempty>
 				<validationpattern>^.{15,}$</validationpattern>
 			</option>
 			<!-- /security.general.secrets -->
-			
 			<!-- security.blacklist -->
 			<option name="blacklist_ip_addresses">
 				<categoryname>security.blacklist</categoryname>
@@ -740,14 +685,13 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<optiontype>textarea</optiontype>
 			</option>
 			<!-- /security.blacklist -->
-			
 			<!-- security.antispam.captcha -->
 			<option name="captcha_type">
 				<categoryname>security.antispam.captcha</categoryname>
 				<optiontype>captchaSelect</optiontype>
 				<defaultvalue>com.woltlab.wcf.recaptcha</defaultvalue>
-				<allowemptyvalue>1</allowemptyvalue>
 				<enableoptions>:!register_use_captcha,!lost_password_use_captcha,!profile_mail_use_captcha,!search_use_captcha</enableoptions>
+				<allowemptyvalue>1</allowemptyvalue>
 			</option>
 			<option name="register_use_captcha">
 				<categoryname>security.antispam.captcha</categoryname>
@@ -770,7 +714,6 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<defaultvalue>0</defaultvalue>
 			</option>
 			<!-- /security.antispam.captcha -->
-			
 			<!-- security.antispam.recaptcha -->
 			<option name="recaptcha_publickey">
 				<categoryname>security.antispam.recaptcha</categoryname>
@@ -797,7 +740,6 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<showorder>4</showorder>
 			</option>
 			<!-- /security.antispam.recaptcha -->
-			
 			<!-- general.system.date -->
 			<option name="timezone">
 				<categoryname>general.system.date</categoryname>
@@ -805,7 +747,6 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<defaultvalue>Europe/London</defaultvalue>
 			</option>
 			<!-- /general.system.date -->
-			
 			<!-- general.system.googleMaps -->
 			<option name="google_maps_api_key">
 				<categoryname>general.system.googleMaps</categoryname>
@@ -879,7 +820,6 @@ physical:wcf.acp.option.google_maps_type.physical</selectoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /general.system.googleMaps -->
-			
 			<!-- general.mail.general -->
 			<option name="mail_from_name">
 				<categoryname>general.mail.general</categoryname>
@@ -888,12 +828,12 @@ physical:wcf.acp.option.google_maps_type.physical</selectoptions>
 			<option name="mail_from_address">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>text</optiontype>
-				<validationpattern><![CDATA[^.+@.+\..+$]]></validationpattern>
+				<validationpattern>^.+@.+\..+$</validationpattern>
 			</option>
 			<option name="mail_admin_address">
 				<categoryname>general.mail.general</categoryname>
 				<optiontype>text</optiontype>
-				<validationpattern><![CDATA[^.+@.+\..+$]]></validationpattern>
+				<validationpattern>^.+@.+\..+$</validationpattern>
 			</option>
 			<option name="mail_signature">
 				<categoryname>general.mail.general</categoryname>
@@ -901,18 +841,17 @@ physical:wcf.acp.option.google_maps_type.physical</selectoptions>
 				<supporti18n>1</supporti18n>
 			</option>
 			<!-- /general.mail.general -->
-			
 			<!-- general.mail.send -->
 			<option name="mail_send_method">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>radioButton</optiontype>
 				<defaultvalue>php</defaultvalue>
-				<selectoptions>php:wcf.acp.option.mail_send_method.php
-smtp:wcf.acp.option.mail_send_method.smtp
-debug:wcf.acp.option.mail_send_method.debug</selectoptions>
 				<enableoptions>php:mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password
 smtp:!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_starttls,mail_smtp_user,mail_smtp_password
 debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password</enableoptions>
+				<selectoptions>php:wcf.acp.option.mail_send_method.php
+smtp:wcf.acp.option.mail_send_method.smtp
+debug:wcf.acp.option.mail_send_method.debug</selectoptions>
 			</option>
 			<option name="mail_smtp_host">
 				<categoryname>general.mail.send</categoryname>
@@ -948,20 +887,18 @@ encrypt:wcf.acp.option.mail_smtp_starttls.encrypt</selectoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /general.mail.send -->
-			
 			<!-- general.cache -->
 			<option name="cache_source_type">
 				<categoryname>general.cache.general</categoryname>
 				<optiontype>radioButton</optiontype>
 				<defaultvalue>disk</defaultvalue>
-				<selectoptions>disk:wcf.acp.option.cache_source_type.disk
-memcached:wcf.acp.option.cache_source_type.memcached
-redis:wcf.acp.option.cache_source_type.redis</selectoptions>
 				<enableoptions>disk:!cache_source_memcached_host,!cache_source_redis_host
 memcached:cache_source_memcached_host,!cache_source_redis_host
 redis:cache_source_redis_host,!cache_source_memcached_host</enableoptions>
+				<selectoptions>disk:wcf.acp.option.cache_source_type.disk
+memcached:wcf.acp.option.cache_source_type.memcached
+redis:wcf.acp.option.cache_source_type.redis</selectoptions>
 			</option>
-			
 			<option name="cache_source_memcached_host">
 				<categoryname>general.cache.memcached</categoryname>
 				<optiontype>textarea</optiontype>
@@ -971,35 +908,29 @@ redis:cache_source_redis_host,!cache_source_memcached_host</enableoptions>
 				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.cache -->
-			
 			<!-- general.payment -->
 			<option name="available_payment_methods">
 				<categoryname>general.payment</categoryname>
 				<optiontype>paymentMethodSelect</optiontype>
 			</option>
-			
 			<option name="paypal_email_address">
 				<categoryname>general.payment</categoryname>
 				<optiontype>text</optiontype>
 			</option>
-			
 			<option name="module_paid_subscription">
 				<categoryname>general.payment.paidSubscription</categoryname>
 				<optiontype>boolean</optiontype>
 			</option>
-			
 			<option name="paid_subscription_enable_tos_confirmation">
 				<categoryname>general.payment.paidSubscription</categoryname>
 				<optiontype>boolean</optiontype>
 				<enableoptions>paid_subscription_tos_url</enableoptions>
 			</option>
-			
 			<option name="paid_subscription_tos_url">
 				<categoryname>general.payment.paidSubscription</categoryname>
 				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.payment -->
-			
 			<option name="attachment_storage">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>text</optiontype>
@@ -1029,7 +960,6 @@ redis:cache_source_redis_host,!cache_source_memcached_host</enableoptions>
 				<minvalue>96</minvalue>
 				<suffix>pixel</suffix>
 			</option>
-			
 			<!-- message.general.edit -->
 			<option name="module_edit_history">
 				<categoryname>message.general.edit</categoryname>
@@ -1045,7 +975,6 @@ redis:cache_source_redis_host,!cache_source_memcached_host</enableoptions>
 				<suffix>days</suffix>
 			</option>
 			<!-- /message.general.edit -->
-			
 			<!-- message.general.share -->
 			<option name="enable_share_buttons">
 				<categoryname>message.general.share</categoryname>
@@ -1055,6 +984,12 @@ redis:cache_source_redis_host,!cache_source_memcached_host</enableoptions>
 			<option name="share_buttons_providers">
 				<categoryname>message.general.share</categoryname>
 				<optiontype>checkboxes</optiontype>
+				<defaultvalue>Facebook
+Twitter
+Google
+Reddit
+LinkedIn
+Pinterest</defaultvalue>
 				<selectoptions>Facebook
 Twitter
 Google
@@ -1063,16 +998,8 @@ WhatsApp
 LinkedIn
 Pinterest
 XING</selectoptions>
-				<defaultvalue>Facebook
-Twitter
-Google
-Reddit
-LinkedIn
-Pinterest</defaultvalue>
 			</option>
-			
 			<!-- /message.general.share -->
-			
 			<!-- message.general.image -->
 			<option name="image_allow_external_source">
 				<categoryname>message.general.image</categoryname>
@@ -1110,8 +1037,8 @@ Pinterest</defaultvalue>
 				<categoryname>message.general.image</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>14</defaultvalue>
-				<maxvalue>30</maxvalue>
 				<minvalue>7</minvalue>
+				<maxvalue>30</maxvalue>
 				<suffix>days</suffix>
 			</option>
 			<option name="image_proxy_host_whitelist">
@@ -1119,7 +1046,6 @@ Pinterest</defaultvalue>
 				<optiontype>textarea</optiontype>
 			</option>
 			<!-- /message.general.image -->
-			
 			<!-- message.censorship -->
 			<option name="enable_censorship">
 				<categoryname>message.censorship</categoryname>
@@ -1131,7 +1057,6 @@ Pinterest</defaultvalue>
 				<optiontype>textarea</optiontype>
 			</option>
 			<!-- /message.censorship -->
-			
 			<option name="register_enable_password_security_check">
 				<categoryname>user.password</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1165,7 +1090,6 @@ Pinterest</defaultvalue>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /user.password -->
-			
 			<!-- user.ban -->
 			<option name="register_forbidden_usernames">
 				<categoryname>user.ban</categoryname>
@@ -1180,7 +1104,6 @@ Pinterest</defaultvalue>
 				<optiontype>textarea</optiontype>
 			</option>
 			<!-- /user.ban -->
-			
 			<!-- user.register -->
 			<option name="force_login">
 				<categoryname>user.register</categoryname>
@@ -1237,7 +1160,6 @@ Pinterest</defaultvalue>
 				<suffix>years</suffix>
 			</option>
 			<!-- /user.register -->
-			
 			<!-- user.3rdPartyAuth -->
 			<option name="github_public_key">
 				<categoryname>user.3rdPartyAuth</categoryname>
@@ -1272,7 +1194,6 @@ Pinterest</defaultvalue>
 				<optiontype>text</optiontype>
 			</option>
 			<!-- /user.3rdPartyAuth -->
-			
 			<!-- user.avatar -->
 			<option name="avatar_default_type">
 				<categoryname>user.avatar</categoryname>
@@ -1285,26 +1206,24 @@ silhouette:wcf.acp.option.avatar_default_type.silhouette</selectoptions>
 				<categoryname>user.avatar</categoryname>
 				<optiontype>select</optiontype>
 				<defaultvalue>404</defaultvalue>
+				<options>module_gravatar</options>
 				<selectoptions>404:wcf.acp.option.gravatar_default_type.404
 identicon:wcf.acp.option.gravatar_default_type.identicon
 wavatar:wcf.acp.option.gravatar_default_type.wavatar
 monsterid:wcf.acp.option.gravatar_default_type.monsterid
 retro:wcf.acp.option.gravatar_default_type.retro</selectoptions>
-				<options>module_gravatar</options>
 			</option>
 			<!-- /user.avatar -->
-			
 			<!-- user.signature -->
 			<option name="signature_max_image_height">
 				<categoryname>user.signature</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>150</defaultvalue>
+				<options>module_user_signature</options>
 				<minvalue>0</minvalue>
 				<suffix>pixel</suffix>
-				<options>module_user_signature</options>
 			</option>
 			<!-- /user.signature -->
-			
 			<!-- user.title -->
 			<option name="user_title_max_length">
 				<categoryname>user.title</categoryname>
@@ -1320,7 +1239,6 @@ retro:wcf.acp.option.gravatar_default_type.retro</selectoptions>
 				<options>module_user_rank</options>
 			</option>
 			<!-- /user.title -->
-			
 			<!-- user.profile -->
 			<option name="profile_show_old_username">
 				<categoryname>user.profile</categoryname>
@@ -1335,7 +1253,6 @@ retro:wcf.acp.option.gravatar_default_type.retro</selectoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /user.profile -->
-			
 			<!-- user.list.members -->
 			<option name="members_list_users_per_page">
 				<categoryname>user.list.members</categoryname>
@@ -1362,7 +1279,6 @@ lastActivityTime:wcf.user.usersOnline.lastActivity</selectoptions>
 DESC:wcf.global.sortOrder.descending</selectoptions>
 			</option>
 			<!-- /user.list.members -->
-			
 			<!-- user.list.online -->
 			<option name="users_online_show_guests">
 				<categoryname>user.list.online</categoryname>
@@ -1421,10 +1337,8 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 			<option name="user_ip_address_searchengine">
 				<categoryname>user.list.online</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue><![CDATA[]]></defaultvalue>
 			</option>
 			<!-- /user.list.online -->
-			
 			<!-- user.cleanup -->
 			<option name="user_cleanup_notification_lifetime">
 				<categoryname>user.cleanup</categoryname>
@@ -1448,14 +1362,12 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<suffix>days</suffix>
 			</option>
 			<!-- /user.cleanup -->
-			
 			<option name="like_allow_for_own_content">
 				<categoryname>message.general.likes</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 				<options>module_like</options>
 			</option>
-			
 			<option name="like_enable_dislike">
 				<categoryname>message.general.likes</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1463,7 +1375,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<options>module_like</options>
 				<hidden>1</hidden>
 			</option>
-			
 			<option name="like_show_summary">
 				<categoryname>message.general.likes</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1471,7 +1382,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<options>module_like</options>
 				<hidden>1</hidden>
 			</option>
-			
 			<option name="message_sidebar_enable_online_status">
 				<categoryname>message.sidebar</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1510,18 +1420,16 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<optiontype>useroptions</optiontype>
 				<issortable>1</issortable>
 			</option>
-			
 			<!-- message.general -->
 			<option name="tagging_max_tag_length">
 				<categoryname>message.general</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>30</defaultvalue>
+				<options>module_tagging</options>
 				<minvalue>1</minvalue>
 				<maxvalue>255</maxvalue>
 				<suffix>chars</suffix>
-				<options>module_tagging</options>
 			</option>
-			
 			<option name="message_max_quote_depth">
 				<categoryname>message.general</categoryname>
 				<optiontype>integer</optiontype>
@@ -1529,14 +1437,12 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<minvalue>0</minvalue>
 				<maxvalue>255</maxvalue>
 			</option>
-			
 			<option name="message_enable_toc">
 				<categoryname>message.general</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /message.general -->
-			
 			<option name="search_results_per_page">
 				<categoryname>message.search</categoryname>
 				<optiontype>integer</optiontype>
@@ -1544,15 +1450,14 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<minvalue>5</minvalue>
 				<maxvalue>40</maxvalue>
 			</option>
-			
 			<option name="search_default_sort_field">
 				<categoryname>message.search</categoryname>
 				<optiontype>select</optiontype>
+				<defaultvalue>time</defaultvalue>
 				<selectoptions>relevance:wcf.search.sortBy.relevance
 subject:wcf.global.subject
 time:wcf.search.sortBy.time
 username:wcf.search.sortBy.username</selectoptions>
-				<defaultvalue>time</defaultvalue>
 			</option>
 			<option name="search_default_sort_order">
 				<categoryname>message.search</categoryname>
@@ -1561,7 +1466,6 @@ username:wcf.search.sortBy.username</selectoptions>
 				<selectoptions>ASC:wcf.global.sortOrder.ascending
 DESC:wcf.global.sortOrder.descending</selectoptions>
 			</option>
-			
 			<!-- message.general.poll -->
 			<option name="poll_max_options">
 				<categoryname>message.general.poll</categoryname>
@@ -1576,7 +1480,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<defaultvalue>0</defaultvalue>
 			</option>
 			<!-- /message.general.poll -->
-			
 			<!-- cms.media.thumbnail -->
 			<option name="media_small_thumbnail_width">
 				<categoryname>cms.media.thumbnail</categoryname>
@@ -1640,7 +1543,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /cms.media.thumbnail -->
-			
 			<!-- cms.article -->
 			<option name="article_show_about_author">
 				<categoryname>cms.article</categoryname>
@@ -1693,15 +1595,13 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<categoryname>cms.article</categoryname>
 				<optiontype>select</optiontype>
 				<defaultvalue>DESC</defaultvalue>
+				<options>module_article</options>
 				<selectoptions>ASC:wcf.global.sortOrder.ascending
 DESC:wcf.global.sortOrder.descending</selectoptions>
-				<options>module_article</options>
 			</option>
-			<!-- /cms.article -->
 		</options>
 	</import>
-	
 	<delete>
-		<option name="module_attachment" />
+		<option name="module_attachment"/>
 	</delete>
 </data>
