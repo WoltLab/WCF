@@ -355,7 +355,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
 			'eventName' => 'wcf.acp.pip.userNotificationEvent.eventName',
-			'className' => 'wcf.acp.pip.userNotificationEvent.className'
+			'className' => 'wcf.form.field.className'
 		]);
 	}
 	
