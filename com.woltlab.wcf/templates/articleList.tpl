@@ -20,11 +20,21 @@
 	{/if}
 {/capture}
 
-{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
-	{capture assign='contentHeaderNavigation'}
+{capture assign='contentHeaderNavigation'}
+	<li class="dropdown jsOnly">
+		<a href="#" class="button dropdownToggle"><span class="icon icon16 fa-sort-amount-asc"></span> <span>{lang}wcf.article.button.sort{/lang}</span></a>
+		<ul class="dropdownMenu">
+			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.title{/lang}{if $sortField == 'title'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
+			<li><a href="{link controller='ArticleList'}pageNo={@$pageNo}&sortField=time&sortOrder={if $sortField == 'time' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.date{/lang}{if $sortField == 'time'} <span class="icon icon16 fa-caret-{if $sortOrder == 'ASC'}up{else}down{/if}"></span>{/if}</a></li>
+			
+			{event name='sortOptions'}
+		</ul>
+	</li>
+	
+	{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
 		<li><a href="{link controller='ArticleAdd' isACP=true}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
-	{/capture}
-{/if}
+	{/if}
+{/capture}
 
 {capture assign='sidebarRight'}
 	{if !$labelGroups|empty}

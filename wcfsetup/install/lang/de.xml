@@ -2452,6 +2452,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.article.markAllAsRead"><![CDATA[Alle Artikel als gelesen markieren]]></item>
 		<item name="wcf.article.showArticlesWritten"><![CDATA[Artikel von {$user->username}]]></item>
 		<item name="wcf.article.recentActivity"><![CDATA[Hat den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a> verfasst.]]></item>
+		<item name="wcf.article.button.sort"><![CDATA[Sortieren]]></item>
 	</category>
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, <b>{#$attachment->downloads}</b> Mal heruntergeladen{if $attachment->downloads > 0}, zuletzt: {@$attachment->lastDownloadTime|time}{/if})]]></item>
