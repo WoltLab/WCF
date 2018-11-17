@@ -260,7 +260,7 @@ class LinkHandler extends SingletonFactory {
 		}
 		
 		return $this->getLink($data['controller'], [
-			'application' => $application,
+			'application' => $data['application'],
 			'forceFrontend' => true
 		]);
 	}
