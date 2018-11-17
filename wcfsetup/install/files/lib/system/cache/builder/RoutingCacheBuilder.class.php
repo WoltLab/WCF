@@ -5,6 +5,7 @@ use wcf\data\application\Application;
 use wcf\data\page\PageCache;
 use wcf\page\CmsPage;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\ControllerMap;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -35,10 +36,69 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 	protected function rebuild(array $parameters) {
 		$data = [
 			'ciControllers' => $this->getCaseInsensitiveControllers(),
-			'landingPages' => $this->getLandingPages()
+			'landingPages' => $this->getLandingPages(),
 		];
 		
 		$data['customUrls'] = $this->getCustomUrls($data['landingPages']);
+		$data['applicationOverrides'] = $this->getApplicationOverrides($data['customUrls']);
+		
+		return $data;
+	}
+	
+	/**
+	 * Pages that belong to an installed package have an immutable application assigned to
+	 * them which controls both the controller resolution and the base link. The override
+	 * declares a different application that will be used instead without actually migrating
+	 * the page to a different application.
+	 * 
+	 * @param array $customUrls
+	 * @return array
+	 */
+	protected function getApplicationOverrides(array &$customUrls) {
+		$data = [
+			// URL -> Controller
+			'lookup' => [],
+			// Controller -> URL
+			'reverse' => [],
+		];
+		
+		$abbreviations = [];
+		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			$abbreviations[$application->packageID] = $application->getAbbreviation();
+		}
+		
+		$languageIDs = [0];
+		foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+			$languageIDs[] = $language->languageID;
+		}
+		
+		$sql = "SELECT  pageID, pageType, controller, applicationPackageID, overrideApplicationPackageID
+			FROM    wcf".WCF_N."_page
+			WHERE   overrideApplicationPackageID IS NOT NULL";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		while ($row = $statement->fetchArray()) {
+			$application = $abbreviations[$row['applicationPackageID']];
+			$overrideApplication = $abbreviations[$row['overrideApplicationPackageID']];
+			
+			if ($row['pageType'] === 'system') {
+				$tmp = explode('\\', $row['controller']);
+				$controller = preg_replace('/(?:Action|Form|Page)$/', '', array_pop($tmp));
+				$data['lookup'][$overrideApplication][$controller] = $application;
+				$data['reverse'][$application][$controller] = $overrideApplication;
+			}
+			else {
+				foreach ($languageIDs as $languageID) {
+					$key = "__WCF_CMS__{$row['pageID']}-{$languageID}";
+					if (isset($customUrls['reverse'][$application][$key])) {
+						$controller = $customUrls['reverse'][$application][$key];
+						$data['lookup'][$overrideApplication][$controller] = $application;
+						$data['reverse'][$application][$controller] = $overrideApplication;
+					}
+				}
+			}
+			
+		}
 		
 		return $data;
 	}

@@ -139,7 +139,7 @@
 					</dd>
 				</dl>
 				
-				<dl{if $errorField == 'applicationPackageID'} class="formError"{/if}>
+				<dl{if $errorField == 'applicationPackageID'} class="formError"{/if}{if $action == 'edit' && $page->originIsSystem} style="display: none"{/if}>
 					<dt><label for="applicationPackageID">{lang}wcf.acp.page.application{/lang}</label></dt>
 					<dd>
 						<select name="applicationPackageID" id="applicationPackageID"{if $action == 'edit' && $page->originIsSystem} disabled{/if}>
@@ -158,6 +158,28 @@
 						{/if}
 					</dd>
 				</dl>
+				
+				{if $action === 'edit' && $page->originIsSystem}
+					<dl{if $errorField == 'overrideApplicationPackageID'} class="formError"{/if}>
+						<dt><label for="overrideApplicationPackageID">{lang}wcf.acp.page.application{/lang}</label></dt>
+						<dd>
+							<select name="overrideApplicationPackageID" id="overrideApplicationPackageID">
+								{foreach from=$availableApplications item=availableApplication}
+									<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $overrideApplicationPackageID} selected{/if}>{$availableApplication->domainName}{$availableApplication->domainPath}</option>
+								{/foreach}
+							</select>
+							{if $errorField == 'overrideApplicationPackageID'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.page.application.error.{@$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+				{/if}
 				
 				{if !$isMultilingual}
 					<dl{if $errorField == 'customURL_0'} class="formError"{/if}>
