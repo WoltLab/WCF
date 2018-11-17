@@ -306,9 +306,9 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 			$data['canBeEdited'] = 1;
 		}
 		
-		$canBeEdited = $element->getElementsByTagName('canbeedited')->item(0);
-		if ($canBeEdited !== null) {
-			$data['canBeDisabled'] = $canBeEdited->nodeValue;
+		$canBeDisabled = $element->getElementsByTagName('canbedisabled')->item(0);
+		if ($canBeDisabled !== null) {
+			$data['canBeDisabled'] = $canBeDisabled->nodeValue;
 		}
 		else if ($saveData) {
 			$data['canBeDisabled'] = 1;
