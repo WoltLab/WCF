@@ -68,6 +68,7 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 		// add menu item className form field
 		
 		$classNameFormField = ClassNameFormField::create()
+			->objectProperty('classname')
 			->implementedInterface(IUserMenuItemProvider::class);
 		$dataContainer->insertBefore($classNameFormField, 'menuItemController');
 		
