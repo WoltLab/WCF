@@ -2979,7 +2979,7 @@ Errors are:
 		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[The start date is invalid.]]></item>
 	</category>
 	<category name="wcf.contact">
-		<item name="wcf.contact.data"><![CDATA[Your Data]]></item>
+		<item name="wcf.contact.data"><![CDATA[Your Inquiry]]></item>
 		<item name="wcf.contact.mail.subject"><![CDATA[New message via the contact form]]></item>
 		<item name="wcf.contact.mail.plaintext"><![CDATA[Hello,
 
@@ -3006,7 +3006,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.contact.recipient.name1"><![CDATA[Administrator]]></item>
 		<item name="wcf.contact.recipientID"><![CDATA[Recipient]]></item>
 		<item name="wcf.contact.sender"><![CDATA[Sender]]></item>
-		<item name="wcf.contact.sender.information"><![CDATA[Your Inquiry]]></item>
+		<item name="wcf.contact.sender.information"><![CDATA[Your Data]]></item>
 		<item name="wcf.contact.success"><![CDATA[Message has been sent.]]></item>
 		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[I have read the <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">privacy policy</a> and expressly accept it. <span class="customOptionRequired">*</span>]]></item>
 	</category>
