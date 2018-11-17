@@ -525,7 +525,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					}
 					
 					return $nestedOptions;
-				}, atrue)
+				}, true)
 				->addValidator(new FormFieldValidator('selfParent', function(SingleSelectionFormField $formField) {
 					/** @var TextFormField $identifier */
 					$identifier = $formField->getDocument()->getNodeById('identifier');
