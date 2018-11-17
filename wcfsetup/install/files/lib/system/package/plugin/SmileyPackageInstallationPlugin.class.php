@@ -238,7 +238,6 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		$optionalElements = [
 			'aliases' => 'aliases',
 			'smileyPath2x' => 'path2x',
-			'showOrder' => 'showOrder'
 		];
 		foreach ($optionalElements as $arrayKey => $elementName) {
 			$child = $element->getElementsByTagName($elementName)->item(0);
@@ -246,15 +245,19 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 				$data[$arrayKey] = $child->nodeValue;
 			}
 			else {
-				if ($arrayKey === 'showOrder') {
-					if ($this->editedEntry === null) {
-						$data[$arrayKey] = $this->getShowOrder(null);
-					}
-				}
-				else {
-					$data[$arrayKey] = '';
-				}
+				$data[$arrayKey] = '';
 			}
+		}
+		
+		$showOrder = $element->getElementsByTagName('showorder')->item(0);
+		if ($showOrder !== null) {
+			$data['showOrder'] = $showOrder->nodeValue;
+		}
+		if ($saveData && $this->editedEntry === null) {
+			// only set explicit showOrder when adding new menu item
+			$data['showOrder'] = $this->getShowOrder(
+				$data['showOrder'] ?? null
+			);
 		}
 		
 		return $data;
