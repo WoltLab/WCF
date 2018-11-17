@@ -220,7 +220,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 				->value(true)
 		]);
 		
-		foreach (['startDom', 'startDow', 'startHour', 'startMinute', 'startMonth'] as $timeProperty) {
+		foreach (['startMinute', 'startHour', 'startDom', 'startMonth', 'startDow'] as $timeProperty) {
 			$dataContainer->insertBefore(
 				TextFormField::create($timeProperty)
 					->objectProperty(strtolower($timeProperty))
@@ -408,11 +408,11 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		$this->appendElementChildren(
 			$cronjob,
 			[
-				'startmonth',
-				'startdom',
-				'startdow',
-				'starthour',
 				'startminute',
+				'starthour',
+				'startdom',
+				'startmonth',
+				'startdow',
 				'options' => '',
 				'canbeedited' => 1,
 				'canbedisabled' => 1,
