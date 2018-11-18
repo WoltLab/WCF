@@ -147,13 +147,14 @@
 		<item name="wcf.acp.bbcode.mediaProvider.delete.sure"><![CDATA[Do you really want to delete the media provider <span class="confirmationObject">{$mediaProvider->title}</span>?]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.edit"><![CDATA[Edit Media Provider]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.html"><![CDATA[HTML Code]]></item>
-		<item name="wcf.acp.bbcode.mediaProvider.html.description"><![CDATA[{literal}Variables are recognized as {$variable} and will be replaced with the regular expression’s matching named group. Enter the media’s HTML code here. Example: <code>{$ID}</code> will be replaced with the medium ID as shown above.{/literal}]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.html.description"><![CDATA[{literal}Enter the media’s HTML code here. Variables are recognized as <kbd>{$variable}</kbd> and will be replaced with the regular expression’s matching named group.<br>
+		Example: <kbd>{$ID}</kbd> will be replaced with the medium ID as shown above.{/literal}]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.list"><![CDATA[Media Providers]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.regex"><![CDATA[Regular Expression]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.regex.description"><![CDATA[Provide the link format as a <a href="https://en.wikipedia.org/wiki/Regular_expression">regular expression</a>. Enter one expression per line. Examples for medium ID detection:
 <ul class="nativeList">
-	<li><code>(?&lt;ID&gt;[0-9]+)</code> detects a numeric ID.</li>
-	<li><code>(?&lt;ID&gt;[0-9a-zA-Z]+)</code> detects an alphanumeric ID.</li>
+	<li><kbd>(?&lt;ID&gt;[0-9]+)</kbd> detects a numeric ID.</li>
+	<li><kbd>(?&lt;ID&gt;[0-9a-zA-Z]+)</kbd> detects an alphanumeric ID.</li>
 </ul>]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.regex.error.invalid"><![CDATA[The regular expression failed to validate.]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Media Providers]]></item>
@@ -3046,7 +3047,7 @@ Errors are:
 	</category>
 	
 	<category name="wcf.contact">
-		<item name="wcf.contact.data"><![CDATA[Your Data]]></item>
+		<item name="wcf.contact.data"><![CDATA[Your Inquiry]]></item>
 		<item name="wcf.contact.mail.subject"><![CDATA[New message via the contact form]]></item>
 		<item name="wcf.contact.mail.plaintext"><![CDATA[Hello,
 
@@ -3073,7 +3074,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.contact.recipient.name1"><![CDATA[Administrator]]></item>
 		<item name="wcf.contact.recipientID"><![CDATA[Recipient]]></item>
 		<item name="wcf.contact.sender"><![CDATA[Sender]]></item>
-		<item name="wcf.contact.sender.information"><![CDATA[Your Inquiry]]></item>
+		<item name="wcf.contact.sender.information"><![CDATA[Your Data]]></item>
 		<item name="wcf.contact.success"><![CDATA[Message has been sent.]]></item>
 		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[I have read the <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">privacy policy</a> and expressly accept it. <span class="customOptionRequired">*</span>]]></item>
 	</category>
