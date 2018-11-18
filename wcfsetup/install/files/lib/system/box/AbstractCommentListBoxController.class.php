@@ -4,6 +4,7 @@ use wcf\data\comment\ViewableCommentList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\InvalidObjectTypeException;
+use wcf\system\user\UserProfileHandler;
 use wcf\system\WCF;
 
 /**
@@ -83,6 +84,10 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
 		$commentList->getConditionBuilder()->add('comment.objectTypeID = ?', [$this->objectType->objectTypeID]);
 		
 		$this->applyObjectTypeFilters($commentList);
+		
+		if (!empty(UserProfileHandler::getInstance()->getIgnoredUsers())) {
+			$commentList->getConditionBuilder()->add("comment.userID NOT IN (?)", [UserProfileHandler::getInstance()->getIgnoredUsers()]);
+		}
 		
 		return $commentList;
 	}

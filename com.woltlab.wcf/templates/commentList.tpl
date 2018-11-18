@@ -11,7 +11,7 @@
 			{@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment', $comment->commentID)}
 		    data-can-edit="{if $comment->isEditable()}true{else}false{/if}" data-can-delete="{if $comment->isDeletable()}true{else}false{/if}"
 		    data-responses="{@$comment->responses}" data-last-response-time="{if $commentLastResponseTime|empty}{@$comment->getLastResponseTime()}{else}{@$commentLastResponseTime}{/if}" data-user-id="{@$comment->userID}" data-is-disabled="{@$comment->isDisabled}">
-			<div class="box48">
+			<div class="box48{if $__wcf->getUserProfileHandler()->isIgnoredUser($comment->userID)} ignoredUserContent{/if}">
 				{if $comment->userID}
 					<a href="{link controller='User' object=$comment->getUserProfile()}{/link}" title="{$comment->getUserProfile()->username}">
 						{@$comment->getUserProfile()->getAvatar()->getImageTag(48)}

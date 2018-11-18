@@ -4,6 +4,7 @@ use wcf\data\user\activity\event\ViewableUserActivityEventList;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
+use wcf\system\user\UserProfileHandler;
 use wcf\system\WCF;
 
 /**
@@ -37,6 +38,10 @@ class RecentActivityListPage extends AbstractPage {
 		parent::readData();
 		
 		$this->eventList = new ViewableUserActivityEventList();
+		
+		if (!empty(UserProfileHandler::getInstance()->getIgnoredUsers())) {
+			$this->eventList->getConditionBuilder()->add("user_activity_event.userID NOT IN (?)", [UserProfileHandler::getInstance()->getIgnoredUsers()]);
+		}
 		
 		// load more items than necessary to avoid empty list if some items are invisible for current user
 		$this->eventList->sqlLimit = 60;
