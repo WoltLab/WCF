@@ -2734,6 +2734,8 @@ the lost password form <a href="{link controller='LostPassword' isEmail=true}{/l
 		<item name="wcf.acp.user.authentication.failure.environment.user"><![CDATA[User]]></item>
 		<item name="wcf.acp.user.authentication.failure.environment.admin"><![CDATA[Administration]]></item>
 		<item name="wcf.acp.user.authentication.failure.time"><![CDATA[Date]]></item>
+		<item name="wcf.acp.user.authentication.failure.password"><![CDATA[Invalid Password]]></item>
+		<item name="wcf.acp.user.authentication.failure.username"><![CDATA[Unknown Username]]></item>
 		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[Your account on the website: {@PAGE_TITLE|language} has been approved]]></item>
 		<item name="wcf.acp.user.activation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.activation.mail.html.text"><![CDATA[

@@ -2387,6 +2387,8 @@ aus Sicherheitsgründen erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{
 		<item name="wcf.acp.user.authentication.failure.environment.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.user.authentication.failure.environment.admin"><![CDATA[Administration]]></item>
 		<item name="wcf.acp.user.authentication.failure.time"><![CDATA[Datum]]></item>
+		<item name="wcf.acp.user.authentication.failure.password"><![CDATA[Ungültiges Kennwort]]></item>
+		<item name="wcf.acp.user.authentication.failure.username"><![CDATA[Unbekannter Benutzername]]></item>
 		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|language} wurde freigeschaltet]]></item>
 		<item name="wcf.acp.user.activation.mail.html.headline"><![CDATA[Hallo {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.activation.mail.html.text"><![CDATA[

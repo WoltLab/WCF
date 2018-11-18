@@ -41,7 +41,10 @@
 					<tr>
 						<td class="columnID columnFailureID">{@$authenticationFailure->failureID}</td>
 						<td class="columnText columnEnvironment">{lang}wcf.acp.user.authentication.failure.environment.{@$authenticationFailure->environment}{/lang}</td>
-						<td class="columnTitle columnUsername">{if $authenticationFailure->userID}<a href="{link controller='UserEdit' id=$authenticationFailure->userID}{/link}">{$authenticationFailure->username}</a>{else}{$authenticationFailure->username}{/if}</td>
+						<td class="columnTitle columnUsername">
+							<span class="icon icon16 fa-{if $authenticationFailure->userID}key{else}user{/if} jsTooltip" title="{lang}wcf.acp.user.authentication.failure.{if $authenticationFailure->userID}password{else}username{/if}{/lang}"></span>
+							{if $authenticationFailure->userID}<a href="{link controller='UserEdit' id=$authenticationFailure->userID}{/link}">{$authenticationFailure->username}</a>{else}{$authenticationFailure->username}{/if}
+						</td>
 						<td class="columnDate columnTime">{@$authenticationFailure->time|time}</td>
 						<td class="columnSmallText columnIpAddress">{$authenticationFailure->getIpAddress()}</td>
 						<td class="columnSmallText columnUserAgent" title="{$authenticationFailure->userAgent}">{$authenticationFailure->userAgent|truncate:75|tableWordwrap}</td>
