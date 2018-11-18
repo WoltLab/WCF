@@ -590,6 +590,7 @@
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Can manage tags]]></item>
 		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximum Signature Length]]></item>
+		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Can edit their signature]]></item>
 		<item name="wcf.acp.group.option.admin.management.canImportData"><![CDATA[Can import data]]></item>
 		<item name="wcf.acp.group.option.admin.management.canRebuildData"><![CDATA[Can rebuild data]]></item>
 		<item name="wcf.acp.group.description"><![CDATA[Description]]></item>

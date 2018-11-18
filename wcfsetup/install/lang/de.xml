@@ -606,6 +606,7 @@
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Kann Tags verwalten]]></item>
 		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximale Signaturlänge]]></item>
+		<item name="wcf.acp.group.option.user.signature.canEditSignature"><![CDATA[Kann eigene Signatur bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.management.canImportData"><![CDATA[Kann Daten importieren]]></item>
 		<item name="wcf.acp.group.option.admin.management.canRebuildData"><![CDATA[Kann Anzeigen aktualisieren]]></item>
 		<item name="wcf.acp.group.description"><![CDATA[Beschreibung der Benutzergruppe]]></item>

@@ -604,6 +604,13 @@ pdf</defaultvalue>
 			</option>
 			<!-- /user.message.comment -->
 			<!-- user.signature -->
+			<option name="user.signature.canEditSignature">
+				<categoryname>user.signature</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<usersonly>1</usersonly>
+				<options>module_user_signature</options>
+			</option>
 			<option name="user.signature.maxLength">
 				<categoryname>user.signature</categoryname>
 				<optiontype>integer</optiontype>

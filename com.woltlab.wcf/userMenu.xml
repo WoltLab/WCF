@@ -20,6 +20,7 @@
 			<controller>wcf\form\SignatureEditForm</controller>
 			<parent>wcf.user.menu.profile</parent>
 			<options>module_user_signature</options>
+			<permissions>user.signature.canEditSignature</permissions>
 			<showorder>3</showorder>
 		</usermenuitem>
 		<!-- /profile -->

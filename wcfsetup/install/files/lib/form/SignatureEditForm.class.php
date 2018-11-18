@@ -62,6 +62,11 @@ class SignatureEditForm extends MessageForm {
 	/**
 	 * @inheritDoc
 	 */
+	public $neededPermissions = ['user.signature.canEditSignature'];
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function readParameters() {
 		parent::readParameters();
 		
