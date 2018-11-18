@@ -138,17 +138,15 @@
 		<item name="wcf.acp.bbcode.mediaProvider.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Medienanbieter <span class="confirmationObject">{$mediaProvider->title}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.edit"><![CDATA[Medienanbieter bearbeiten]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.html"><![CDATA[HTML-Code]]></item>
-		<item name="wcf.acp.bbcode.mediaProvider.html.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if}{literal} hier den HTML-Code für das Medium an. Variablen im Format <code>{$variable}</code> werden durch die entsprechend benannte Untergruppe des regulären Ausdrucks ersetzt.<br>
-		Beispiel:<br>
-		<code>{$ID}</code> wird durch die beispielhaften Medium-IDs der Erklärung oberhalb ersetzt.{/literal}]]></item>
+		<item name="wcf.acp.bbcode.mediaProvider.html.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if}{literal} hier den HTML-Code für das Medium an. Variablen im Format <kbd>{$variable}</kbd> werden durch die entsprechend benannte Untergruppe des regulären Ausdrucks ersetzt.<br>
+		Beispiel: <kbd>{$ID}</kbd> wird durch die beispielhaften Medium-IDs der Erklärung oberhalb ersetzt.{/literal}]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.list"><![CDATA[Medienanbieter]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.regex"><![CDATA[Regulärer Ausdruck]]></item>
-		<item name="wcf.acp.bbcode.mediaProvider.regex.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier das Linkformat als <a href="https://de.wikipedia.org/wiki/Regul%C3%A4rer_Ausdruck">regulären Ausdruck</a> an.<br>
-		Mehrere Ausdrücke können zeilenweise angegeben werden.<br>
+		<item name="wcf.acp.bbcode.mediaProvider.regex.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier das Linkformat als <a href="https://de.wikipedia.org/wiki/Regul%C3%A4rer_Ausdruck">regulären Ausdruck</a> an. Mehrere Ausdrücke können zeilenweise angegeben werden.<br>
 		Beispiele für die Medium-ID Erkennungen:
-		<ul>
-			<li><code>(?&lt;ID&gt;[0-9]+)</code> erkennt eine Medium-ID aus Zahlen.</li>
-			<li><code>(?&lt;ID&gt;[0-9a-zA-Z]+)</code> erkennt eine alphanumerische Medium-ID.</li>
+		<ul class="nativeList">
+			<li><kbd>(?&lt;ID&gt;[0-9]+)</kbd> erkennt eine Medium-ID aus Zahlen.</li>
+			<li><kbd>(?&lt;ID&gt;[0-9a-zA-Z]+)</kbd> erkennt eine alphanumerische Medium-ID.</li>
 		</ul>]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.regex.error.invalid"><![CDATA[Dies ist kein gültiger regulärer Ausdruck.]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.title"><![CDATA[Medienanbieter]]></item>
