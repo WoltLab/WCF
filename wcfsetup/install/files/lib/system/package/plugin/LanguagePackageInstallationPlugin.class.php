@@ -291,7 +291,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
-		wcfDebug($data);
+		// does nothing
 	}
 	
 	/**
@@ -529,12 +529,13 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				}
 			}
 			else {
-				$data['languageCategory'] = $languageCategory;
+				$data['languageCategoryID'] = LanguageFactory::getInstance()->getCategory($languageCategory)->languageCategoryID;
 			}
 		}
 		
 		if (!$saveData) {
 			$data[$element->ownerDocument->documentElement->getAttribute('languagecode')] = $element->nodeValue;
+			$data['languageCategoryIDMode'] = 'selection';
 		}
 		
 		return $data;

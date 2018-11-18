@@ -8,7 +8,6 @@
 			<option name="canSetLabel">
 				<objecttype>com.woltlab.wcf.label</objecttype>
 			</option>
-			
 			<option name="canReadArticle">
 				<objecttype>com.woltlab.wcf.article.category</objecttype>
 			</option>

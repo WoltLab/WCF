@@ -6,7 +6,6 @@
 		<item name="wcf.acl.access.grant"><![CDATA[Allow Access]]></item>
 		<item name="wcf.acl.access.granted"><![CDATA[Granted Access for Users and User-Groups]]></item>
 		<item name="wcf.acl.allowAll"><![CDATA[Content Can be Accessed by Everyone]]></item>
-		
 		<item name="wcf.acl.option.deny"><![CDATA[Deny]]></item>
 		<item name="wcf.acl.option.fullAccess"><![CDATA[Full Access]]></item>
 		<item name="wcf.acl.option.grant"><![CDATA[Grant]]></item>
@@ -15,13 +14,11 @@
 		<item name="wcf.acl.search.description"><![CDATA[Enter username or user group …]]></item>
 		<item name="wcf.acl.search.user.description"><![CDATA[Enter username …]]></item>
 	</category>
-	
 	<category name="wcf.acl.option">
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canViewLabel"><![CDATA[Can view labels]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.label.canSetLabel"><![CDATA[Can set labels]]></item>
 		<item name="wcf.acl.option.com.woltlab.wcf.article.category.canReadArticle"><![CDATA[Can read articles]]></item>
 	</category>
-	
 	<category name="wcf.acp.ad">
 		<item name="wcf.acp.ad.ad"><![CDATA[Ads]]></item>
 		<item name="wcf.acp.ad.ad.description"><![CDATA[Enter the ad’s HTML code here.]]></item>
@@ -48,7 +45,6 @@
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.footer.bottom"><![CDATA[End of Page]]></item>
 		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Choose display order of ads.]]></item>
 	</category>
-	
 	<category name="wcf.acp.application">
 		<item name="wcf.acp.application.cookie"><![CDATA[Cookie Settings]]></item>
 		<item name="wcf.acp.application.cookie.warning"><![CDATA[The setting below is used to establish a persistent login for your website; Keep in mind to update this value whenever the domain name changes. If you are unsure which value you need to provide, you can safely copy the value of “Domain”.]]></item>
@@ -68,7 +64,6 @@
 		<item name="wcf.acp.application.landingPage.description"><![CDATA[Optional: This page will be shown when a user is navigating to this app.]]></item>
 		<item name="wcf.acp.application.list"><![CDATA[Installed Applications]]></item>
 	</category>
-	
 	<category name="wcf.acp.article">
 		<item name="wcf.acp.article.add"><![CDATA[Add Article]]></item>
 		<item name="wcf.acp.article.edit"><![CDATA[Edit Article]]></item>
@@ -107,12 +102,10 @@
 		<item name="wcf.acp.article.views"><![CDATA[Views]]></item>
 		<item name="wcf.acp.article.lastVersion"><![CDATA[There are <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.article' objectID=$article->articleID}{/link}">previous versions</a> of this article, the last change was by <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 	</category>
-	
 	<category name="wcf.acp.attachment">
 		<item name="wcf.acp.attachment.list"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.attachment.stats"><![CDATA[<ul class="inlineList dotSeparated"><li>{#$stats.count} Attachment{if $stats.count != 1}s{/if}</li><li>{@$stats.size|filesize}</li><li>{#$stats.downloads} Download{if $stats.downloads != 1}s{/if}</li></ul>]]></item>
 	</category>
-	
 	<category name="wcf.acp.bbcode">
 		<item name="wcf.acp.bbcode.add"><![CDATA[Add BBCode]]></item>
 		<item name="wcf.acp.bbcode.add.userGroupOptionInfo"><![CDATA[Newly created BBCodes will be accessible for everyone. You can restrict usage by editing the specific user group permissions.]]></item>
@@ -140,7 +133,6 @@
 		<item name="wcf.acp.bbcode.isSourceCode"><![CDATA[Content represents source code]]></item>
 		<item name="wcf.acp.bbcode.isSourceCode.description"><![CDATA[Disables conversion of BBCodes and smilies.]]></item>
 		<item name="wcf.acp.bbcode.list"><![CDATA[BBCodes]]></item>
-		
 		<item name="wcf.acp.bbcode.mediaProvider.add"><![CDATA[Add Media Provider]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.className"><![CDATA[PHP Class Name]]></item>
 		<item name="wcf.acp.bbcode.mediaProvider.className.error.notFound"><![CDATA[Unable to find specified class.]]></item>
@@ -162,7 +154,6 @@
 		<item name="wcf.acp.bbcode.wysiwygIcon"><![CDATA[Button Image]]></item>
 		<item name="wcf.acp.bbcode.wysiwygIcon.description"><![CDATA[The image must be placed inside the directory wcf/icon/ or use a <a href="https://fontawesome.com/v4.7.0/icons/">FontAwesome</a>-icon, e.g. “fa-caret-square-o-up”.]]></item>
 	</category>
-	
 	<category name="wcf.acp.box">
 		<item name="wcf.acp.box.add"><![CDATA[Add Box]]></item>
 		<item name="wcf.acp.box.boxController"><![CDATA[Controller]]></item>
@@ -235,7 +226,6 @@
 		<item name="wcf.acp.box.lastVersion"><![CDATA[There are <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.box' objectID=$box->boxID}{/link}">previous versions</a> of this box, the last change was by <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 		<item name="wcf.acp.box.originIsNotSystem"><![CDATA[Custom boxes only]]></item>
 	</category>
-	
 	<category name="wcf.acp.cache">
 		<item name="wcf.acp.cache.button.clear"><![CDATA[Clear Cache]]></item>
 		<item name="wcf.acp.cache.clear.sure"><![CDATA[Do you really want to clear the cache?]]></item>
@@ -257,7 +247,6 @@
 		<item name="wcf.acp.cache.type.style"><![CDATA[Styles]]></item>
 		<item name="wcf.acp.cache.type.template"><![CDATA[Templates]]></item>
 	</category>
-	
 	<category name="wcf.acp.captcha">
 		<item name="wcf.acp.captcha.question.add"><![CDATA[Add Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.answers"><![CDATA[Answers]]></item>
@@ -269,11 +258,10 @@
 		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha Questions]]></item>
 		<item name="wcf.acp.captcha.question.question"><![CDATA[Question]]></item>
 	</category>
-	
 	<category name="wcf.acp.cronjob">
 		<item name="wcf.acp.cronjob.list"><![CDATA[Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.add"><![CDATA[Add Cronjob]]></item>
-		<item name="wcf.acp.cronjob.subtitle"><![CDATA[]]></item>
+		<item name="wcf.acp.cronjob.subtitle"/>
 		<item name="wcf.acp.cronjob.startDom"><![CDATA[Day of Month]]></item>
 		<item name="wcf.acp.cronjob.startDom.description"><![CDATA[Day of the month (1 - 31), the cronjob should be executed.]]></item>
 		<item name="wcf.acp.cronjob.startDomShort"><![CDATA[D]]></item>
@@ -310,7 +298,6 @@
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Error Message]]></item>
 		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[There are not any entries at the moment.]]></item>
 	</category>
-	
 	<category name="wcf.acp.dataImport">
 		<item name="wcf.acp.dataImport"><![CDATA[Data Import]]></item>
 		<item name="wcf.acp.dataImport.cli.configure.data.alreadySelected"><![CDATA[This data is already selected to be imported.]]></item>
@@ -364,7 +351,6 @@
 		<item name="wcf.acp.dataImport.selectExporter.noExporters"><![CDATA[There are not any data importers installed at the moment.]]></item>
 		<item name="wcf.acp.dataImport.started"><![CDATA[Import started.]]></item>
 	</category>
-	
 	<category name="wcf.acp.devtools">
 		<item name="wcf.acp.devtools.project.add"><![CDATA[Add Project]]></item>
 		<item name="wcf.acp.devtools.project.edit"><![CDATA[Edit Project]]></item>
@@ -434,7 +420,6 @@
 		<item name="wcf.acp.devtools.pip.showGuiSupportingPipsOnly"><![CDATA[Show PIPs supporting GUI only]]></item>
 		<item name="wcf.acp.devtools.pip.showGuiSupportingPipsOnly.description"><![CDATA[Show only PIPs that support managing entries via a graphical user interface.]]></item>
 	</category>
-	
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP Connection Test]]></item>
 		<item name="wcf.acp.email.smtp.test.description"><![CDATA[Validates the connection data and user credentials, for their basic validity. No email is sent during this process!<br><br><strong>Notice:</strong> This is only a very basic test. Passing it does not guarantee emails to be successfully delivered!]]></item>
@@ -448,7 +433,6 @@
 		<item name="wcf.acp.email.smtp.test.error.notTlsSupport"><![CDATA[The server does not support encryption.]]></item>
 		<item name="wcf.acp.email.smtp.test.error.tlsFailed"><![CDATA[Unable to establish a secure connection.]]></item>
 	</category>
-	
 	<category name="wcf.acp.exceptionLog">
 		<item name="wcf.acp.exceptionLog"><![CDATA[Logged errors]]></item>
 		<item name="wcf.acp.exceptionLog.exception.message"><![CDATA[Error Message]]></item>
@@ -466,7 +450,6 @@
 		<item name="wcf.acp.exceptionLog.exception.userAgent"><![CDATA[User Agent]]></item>
 		<item name="wcf.acp.exceptionLog.exception.memory"><![CDATA[Memory]]></item>
 	</category>
-	
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
 		<item name="wcf.acp.group.delete.sure"><![CDATA[Do you really want to delete the user group <span class="confirmationObject">{$group->groupName|language}</span>?]]></item>
@@ -608,6 +591,7 @@
 		<item name="wcf.acp.group.option.category.admin.content.tag"><![CDATA[Tags]]></item>
 		<item name="wcf.acp.group.option.admin.content.tag.canManageTag"><![CDATA[Can manage tags]]></item>
 		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Maximum Signature Length]]></item>
+		<item name="wcf.acp.group.option.user.signature.maxLength"><![CDATA[Can edit their signature]]></item>
 		<item name="wcf.acp.group.option.admin.management.canImportData"><![CDATA[Can import data]]></item>
 		<item name="wcf.acp.group.option.admin.management.canRebuildData"><![CDATA[Can rebuild data]]></item>
 		<item name="wcf.acp.group.description"><![CDATA[Description]]></item>
@@ -682,7 +666,8 @@
 		<item name="wcf.acp.group.option.admin.trophy.canAwardTrophy"><![CDATA[Can award trophies]]></item>
 		<item name="wcf.acp.group.option.category.user.profile.trophy"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.group.option.user.profile.trophy.canSeeTrophies"><![CDATA[Can see trophies]]></item>
-		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies"><![CDATA[Maximum number of special trophies]]></item> <!-- @TODO: find a better name? -->
+		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies"><![CDATA[Maximum number of special trophies]]></item>
+		<!-- @TODO: find a better name? -->
 		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies.description"><![CDATA[Special trophies can be individually selected by the user and displayed in the message sidebar and the user profile.]]></item>
 		<item name="wcf.acp.group.option.category.user.profile.coverPhoto"><![CDATA[Cover Photos]]></item>
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.canSeeCoverPhotos"><![CDATA[Can view  users’ cover photos]]></item>
@@ -690,7 +675,6 @@
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.maxSize"><![CDATA[Maximum Image File Size]]></item>
 		<item name="wcf.acp.group.option.admin.content.reaction.canManageReactionType"><![CDATA[Can manage reaction types]]></item>
 	</category>
-	
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab Suite&trade;]]></item>
 		<item name="wcf.acp.index.credits.contributor"><![CDATA[Contributions]]></item>
@@ -723,7 +707,6 @@
 		<item name="wcf.acp.index.tinyBuild"><![CDATA[The accelerated guest view improves the page responsiveness and loading times for both visitors and search engines alike, please consider <a href="{link controller='Option' id=1 optionName="visitor_use_tiny_build"}#category_module.system{/link}">enabling it</a>.]]></item>
 		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Using reCAPTCHA without an individual website key is no longer supported by Google.<br><br>For further use you need to <a href="{$recaptchaKeyLink}">provide a key in your options</a>, please follow the instructions below the input field to obtain a key.]]></item>
 	</category>
-	
 	<category name="wcf.acp.label">
 		<item name="wcf.acp.label.add"><![CDATA[Add Label]]></item>
 		<item name="wcf.acp.label.cssClassName"><![CDATA[CSS Class Name]]></item>
@@ -750,7 +733,6 @@
 		<item name="wcf.acp.label.filter"><![CDATA[Filter]]></item>
 		<item name="wcf.acp.label.container.com.woltlab.wcf.article.category"><![CDATA[Articles]]></item>
 	</category>
-	
 	<category name="wcf.acp.language">
 		<item name="wcf.acp.language.add"><![CDATA[Add Language]]></item>
 		<item name="wcf.acp.language.add.languageCode.error.notUnique"><![CDATA[The language code is already in use by an installed language.]]></item>
@@ -812,7 +794,6 @@
 		<item name="wcf.acp.language.item.languageCategory.error.notUnique"><![CDATA[This language category identifier is already used by an existing language category.]]></item>
 		<item name="wcf.acp.language.item.languageCategory.error.tooFewSegments"><![CDATA[The entered category contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 	</category>
-	
 	<category name="wcf.acp.masterPassword">
 		<item name="wcf.acp.masterPassword"><![CDATA[Master Password]]></item>
 		<item name="wcf.acp.masterPassword.confirm"><![CDATA[Confirm Master Password]]></item>
@@ -826,7 +807,6 @@
 		<item name="wcf.acp.masterPassword.init"><![CDATA[Set Master Password]]></item>
 		<item name="wcf.acp.masterPassword.init.description"><![CDATA[The master password is the last line of defense, protecting both critical settings and sensitive data. One should choose a rather strong password which is neither known to any 3rd party person nor re-used on other web pages.]]></item>
 	</category>
-	
 	<category name="wcf.acp.menu">
 		<item name="wcf.acp.menu.link.management"><![CDATA[Management]]></item>
 		<item name="wcf.acp.menu.link.maintenance"><![CDATA[Maintenance]]></item>
@@ -982,7 +962,6 @@
 		<item name="wcf.acp.menu.link.reactionType.edit"><![CDATA[Edit Reaction Type]]></item>
 		<item name="wcf.acp.menu.link.language.item.add"><![CDATA[Add Phrase]]></item>
 	</category>
-	
 	<category name="wcf.acp.modificationLog">
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Global Modification Log]]></item>
 		<item name="wcf.acp.modificationLog.action"><![CDATA[Action]]></item>
@@ -995,7 +974,6 @@
 		<item name="wcf.acp.modificationLog.time.beforeDate"><![CDATA[Before the date]]></item>
 		<item name="wcf.acp.modificationLog.unsupportedObjectTypes"><![CDATA[Some types are currently not supported and require changes to be made by the vendor.]]></item>
 	</category>
-	
 	<category name="wcf.acp.notice">
 		<item name="wcf.acp.notice.add"><![CDATA[Add Notice]]></item>
 		<item name="wcf.acp.notice.cssClassName"><![CDATA[Appearance]]></item>
@@ -1027,7 +1005,6 @@
 		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[The notice will be displayed again to users who dismissed the previous version. Guests who dismissed the notice will only view it in a new session.]]></item>
 		<item name="wcf.acp.notice.showOrder.description"><![CDATA[Choose display order of notices.]]></item>
 	</category>
-	
 	<category name="wcf.acp.option">
 		<item name="wcf.acp.option.blacklist_hostnames"><![CDATA[Block by Hostname]]></item>
 		<item name="wcf.acp.option.blacklist_hostnames.description"><![CDATA[You can specify which hostnames will be blacklisted. Enter one hostname per line.]]></item>
@@ -1162,7 +1139,7 @@
 		<item name="wcf.acp.option.offline_message"><![CDATA[Maintenance Mode Notice]]></item>
 		<item name="wcf.acp.option.offline_message.description"><![CDATA[The notice that is displayed to visitors while maintenance mode is enabled.]]></item>
 		<item name="wcf.acp.option.offline_message_allow_html"><![CDATA[Enable HTML code in maintenance mode notice]]></item>
-		<item name="wcf.acp.option.offline_message_allow_html.description"><![CDATA[]]></item>
+		<item name="wcf.acp.option.offline_message_allow_html.description"/>
 		<item name="wcf.acp.option.show_version_number"><![CDATA[Display version number in copyright notice]]></item>
 		<item name="wcf.acp.option.enable_debug_mode"><![CDATA[Enable debug mode]]></item>
 		<item name="wcf.acp.option.enable_debug_mode.description"><![CDATA[Enables extensive error messages, it should always be disabled in production environments!]]></item>
@@ -1367,9 +1344,6 @@
 <li>the link “https://example.com/index.php?thread/1-hello-i-am-john-doe/” will turn into “https://example.com/thread/1-hello-i-am-john-doe/”</li>
 <li>the link “https://example.com/index.php?members-list/” will turn into “https://example.com/members-list/”</li>
 </ul>]]></item>
-		
-		
-		
 		<item name="wcf.acp.option.url_omit_index_php.test.failure"><![CDATA[The test has failed.]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.failure.description"><![CDATA[The webserver cannot handle rewrites or it has not been configured correctly.<br>
 <br>
@@ -1379,7 +1353,6 @@ Please follow the instructions described in <a href="https://www.woltlab.com/art
 		<item name="wcf.acp.option.url_omit_index_php.test.status.failure"><![CDATA[Failed]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.status.success"><![CDATA[Pass]]></item>
 		<item name="wcf.acp.option.url_omit_index_php.test.success"><![CDATA[The test was successful.]]></item>
-		
 		<item name="wcf.acp.option.module_wcf_ad"><![CDATA[Ads]]></item>
 		<item name="wcf.acp.option.module_wcf_ad.description"><![CDATA[Enables the <a href="{link controller='AdList'}{/link}">advertisement management</a>.]]></item>
 		<item name="wcf.acp.option.captcha_type"><![CDATA[Captcha Type]]></item>
@@ -1508,7 +1481,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.image_external_source_whitelist.description"><![CDATA[The listed domains will be exempt from blocking. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.<br>Enter one domain per line only.]]></item>
 		<item name="wcf.acp.option.message_enable_toc"><![CDATA[Enable the table of contents]]></item>
 	</category>
-	
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>
 		<item name="wcf.acp.customOption.optionType"><![CDATA[Option Type]]></item>
@@ -1541,7 +1513,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.customOption.required"><![CDATA[This is a required field]]></item>
 		<item name="wcf.acp.customOption.isDisabled"><![CDATA[Disable option]]></item>
 	</category>
-	
 	<category name="wcf.acp.package">
 		<item name="wcf.acp.package.apiVersions"><![CDATA[Supported WoltLab Suite&trade; API-versions]]></item>
 		<item name="wcf.acp.package.apiVersions.missing"><![CDATA[This package does not provide any compatibility data.]]></item>
@@ -1687,7 +1658,6 @@ When prompted for the notification URL for the instant payment notifications, pl
 </ul>
 If you have <strong>already bought the licenses for the listed apps</strong>, then it is enough to install all upcoming updates. <strong>The evaluation copy will automatically be upgraded to the full version.</strong>]]></item>
 	</category>
-	
 	<category name="wcf.acp.paidSubscription">
 		<item name="wcf.acp.paidSubscription.list"><![CDATA[Paid Subscriptions]]></item>
 		<item name="wcf.acp.paidSubscription.add"><![CDATA[Add Subscription]]></item>
@@ -1725,7 +1695,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.paidSubscription.error.noPaymentMethods"><![CDATA[Adding subscriptions requires at least one active payment provider for the “Supported Payment Methods” option.]]></item>
 		<item name="wcf.acp.paidSubscription.delete.confirmMessage"><![CDATA[Do you really want to delete the paid subscription <span class="confirmationObject">{$subscription->title|language}</span>?]]></item>
 	</category>
-	
 	<category name="wcf.acp.pluginStore">
 		<item name="wcf.acp.pluginStore.api.error"><![CDATA[Error {@$status}: The server was unable to process your request.]]></item>
 		<item name="wcf.acp.pluginStore.api.noSSL"><![CDATA[Querying the Plugin-Store to fetch the purchased products requires a secure connection.<br><br>Your PHP version has been compiled without OpenSSL support, it is required to establish secure connections, please contact your hosting company or system-administrator to resolve this shortcoming.]]></item>
@@ -1751,7 +1720,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[The Update-Server for “{$wcfMajorRelease}” has not been queried yet, please search for updates to fetch the package list.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Update-Server for “{$wcfMajorRelease}”]]></item>
 	</category>
-	
 	<category name="wcf.acp.pip">
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.data.title"><![CDATA[Ad Location Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName"><![CDATA[Category]]></item>
@@ -1977,12 +1945,12 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.abstractMenu.showOrder.description"><![CDATA[The entered value determines in which order the menu items with the same parent are shown.]]></item>
 		<item name="wcf.acp.pip.acpMenu.icon"><![CDATA[Menu Item Icon]]></item>
 		<item name="wcf.acp.pip.acpMenu.icon.description"><![CDATA[The menu item icon is only available for menu items on the first level (without any parent) and for menu items on the fourth level. For first level menu items, the icon is shown in addition to the menu item title while for fourth level menu items, only the icon is shown and the menu item title becomes a tooltip.]]></item>
-		<item name="wcf.acp.pip.acpMenu.menuItem.description"><![CDATA[The menu item identifier must have the format <code>{literal}{app}.acp.menu.link.{additionalIdentifiers}{/literal}</code> where <code>{literal}{app}{/literal}</code> and <code>{literal}{additionalIdentifiers}{/literal}</code> have to be replaced with the appropriate values. <code>{literal}{additionalIdentifiers}{/literal}</code> may only contain letters, numbers, ands dots.]]></item>
+		<item name="wcf.acp.pip.acpMenu.menuItem.description"><![CDATA[The menu item identifier must have the format <code>{literal}{app}.acp.menu.link.{additionalIdentifiers}{/literal}</code> where <code>{literal}{app}{/literal}</code> and <code>{literal}{additionalIdentifiers}{/literal}</code> have to be replaced with the appropriate values. <code>{literal}{additionalIdentifiers}{/literal}</code> may only contain letters, numbers, and dots.]]></item>
 		<item name="wcf.acp.pip.acpMenu.menuItem.error.format"><![CDATA[The entered identifier is invalid.]]></item>
 		<item name="wcf.acp.pip.acpMenu.menuItemController.error.noAcpController"><![CDATA[The entered controller is no ACP controller. An ACP controller begins with <code>{literal}{app}{/literal}\acp\</code> where <code>{literal}{app}{/literal}</code> is the abbreviation of the relevant app.]]></item>
 		<item name="wcf.acp.pip.userMenu.iconClassName"><![CDATA[Menu Item Icon]]></item>
 		<item name="wcf.acp.pip.userMenu.iconClassName.description"><![CDATA[The menu item icon is only available for menu items on the first level.]]></item>
-		<item name="wcf.acp.pip.userMenu.menuItem.description"><![CDATA[The menu item identifier must have the format <code>{literal}{app}.user.menu.{additionalIdentifiers}{/literal}</code> where <code>{literal}{app}{/literal}</code> and <code>{literal}{additionalIdentifiers}{/literal}</code> have to be replaced with the appropriate values. <code>{literal}{additionalIdentifiers}{/literal}</code> may only contain letters, numbers, ands dots.]]></item>
+		<item name="wcf.acp.pip.userMenu.menuItem.description"><![CDATA[The menu item identifier must have the format <code>{literal}{app}.user.menu.{additionalIdentifiers}{/literal}</code> where <code>{literal}{app}{/literal}</code> and <code>{literal}{additionalIdentifiers}{/literal}</code> have to be replaced with the appropriate values. <code>{literal}{additionalIdentifiers}{/literal}</code> may only contain letters, numbers, and dots.]]></item>
 		<item name="wcf.acp.pip.userMenu.menuItem.error.format"><![CDATA[The entered identifier is invalid.]]></item>
 		<item name="wcf.acp.pip.cronjob.cronjobName"><![CDATA[Cronjob Identifier]]></item>
 		<item name="wcf.acp.pip.cronjob.cronjobName.description"><![CDATA[The cronjob identifier generally consists of the package identifier and the unqualified class name beginning with a lowercase letter and without the “Cronjob” suffix (example: <code>com.woltlab.wcf.example.doStuff</code> is the identifier for the cronjob <code>wcf\system\cronjob\DoStuffCronjob</code> from the <code>com.woltlab.wcf.example</code> package).]]></item>
@@ -2184,7 +2152,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.smiley.aliases.description"><![CDATA[Secondary codes that are converted into this smiley.]]></item>
 		<item name="wcf.acp.pip.smiley.aliases.error.notUnique"><![CDATA[The following aliases are already used by another smiley: {implode from=$notUniqueCodes item=notUniqueCode}<code>{$notUniqueCode}</code>{/implode}.]]></item>
 		<item name="wcf.acp.pip.smiley.showOrder"><![CDATA[Display Order]]></item>
-		<item name="wcf.acp.pip.smiley.showOrder.description"><![CDATA[The entered value determines in which order the smiley are shown.]]></item>
+		<item name="wcf.acp.pip.smiley.showOrder.description"><![CDATA[The entered value determines in which order the smilies are shown.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath.description"><![CDATA[The entered path has to be relative to <code>{'WCF_DIR'|constant}</code>.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath.error.fileDoesNotExist"><![CDATA[The entered file does not exist.]]></item>
@@ -2238,7 +2206,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc"><![CDATA[Generate Table of Contents]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description"><![CDATA[If selected, a table of contents is created for each message of this type.]]></item>
 	</category>
-	
 	<category name="wcf.acp.reactionType">
 		<item name="wcf.acp.reactionType.delete.confirmMessage"><![CDATA[Do you really want to delete the reaction type <span class="confirmationObject">{$reactionType->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.reactionType.type"><![CDATA[Reaction Type]]></item>
@@ -2249,7 +2216,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaction File]]></item>
 		<item name="wcf.acp.reactionType.image.description"><![CDATA[The path is relative to “{$__wcf->getPath()}images/reaction/”.]]></item>
 	</category>
-	
 	<category name="wcf.acp.rebuildData">
 		<item name="wcf.acp.rebuildData"><![CDATA[Rebuild Data]]></item>
 		<item name="wcf.acp.rebuildData.description"><![CDATA[In order to ensure consistency, e.g. after a data import, it is highly recommended to perform all the actions below in their respective order, starting from top to bottom.]]></item>
@@ -2280,7 +2246,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.sitemap"><![CDATA[Rebuild Sitemap]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.sitemap.description"><![CDATA[Rebuilds the sitemap.]]></item>
 	</category>
-	
 	<category name="wcf.acp.rescueMode">
 		<item name="wcf.acp.rescueMode"><![CDATA[Rescue Mode]]></item>
 		<item name="wcf.acp.rescueMode.application"><![CDATA[Installed Apps]]></item>
@@ -2290,7 +2255,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rescueMode.description"><![CDATA[The configured domains and/or paths do not match the address used to access this page. This can happen when moving to a new domain or changing the directory structure. Please use the form below to provide the new values.]]></item>
 		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[This user is not authorized to manage installed apps.]]></item>
 	</category>
-	
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.noResults"><![CDATA[No results]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[ACP Menu]]></item>
@@ -2304,7 +2268,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.trophy"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.search.result.subtitle"><![CDATA[{implode from=$pieces item=piece glue=' » '}{$piece|language}{/implode}]]></item>
 	</category>
-	
 	<category name="wcf.acp.sitemap">
 		<item name="wcf.acp.sitemap"><![CDATA[Sitemap]]></item>
 		<item name="wcf.acp.sitemap.priority"><![CDATA[Priority]]></item>
@@ -2329,7 +2292,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.simplePage"><![CDATA[Simple pages]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.multilingualPage"><![CDATA[Multilingual pages]]></item>
 	</category>
-	
 	<category name="wcf.acp.stat">
 		<item name="wcf.acp.stat"><![CDATA[Statistics]]></item>
 		<item name="wcf.acp.stat.settings"><![CDATA[Settings]]></item>
@@ -2357,7 +2319,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.user"><![CDATA[User Data]]></item>
 		<item name="wcf.acp.stat.noData"><![CDATA[There is no data available for the set period.]]></item>
 	</category>
-	
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Add Server]]></item>
 		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Do you really want to delete the server <span class="confirmationObject">{$updateServer->serverURL}</span>?]]></item>
@@ -2375,7 +2336,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.updateServer.status"><![CDATA[Status]]></item>
 		<item name="wcf.acp.updateServer.lastUpdateTime"><![CDATA[Last Access]]></item>
 	</category>
-	
 	<category name="wcf.acp.sessionLog">
 		<item name="wcf.acp.sessionLog.access.list"><![CDATA[Logged actions of session from “{$sessionLog->username}”]]></item>
 		<item name="wcf.acp.sessionLog.actions"><![CDATA[Actions]]></item>
@@ -2387,7 +2347,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.sessionLog.requestURI"><![CDATA[URI]]></item>
 		<item name="wcf.acp.sessionLog.time"><![CDATA[Time]]></item>
 	</category>
-	
 	<category name="wcf.acp.smiley">
 		<item name="wcf.acp.smiley.list"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.smiley.delete.sure"><![CDATA[Do you really want to delete the smiley <span class="confirmationObject">{$smiley->smileyTitle|language}</span>?]]></item>
@@ -2415,7 +2374,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.smiley.fileUpload.error.noImage"><![CDATA[The uploaded file is not an image.]]></item>
 		<item name="wcf.acp.smiley.fileUpload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 	</category>
-	
 	<category name="wcf.acp.style">
 		<item name="wcf.acp.style.add"><![CDATA[Add Style]]></item>
 		<item name="wcf.acp.style.advanced"><![CDATA[Advanced Settings]]></item>
@@ -2545,7 +2503,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[The image must be exactly 256px × 256px large.]]></item>
 		<item name="wcf.acp.style.favicon.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
 	</category>
-	
 	<category name="wcf.acp.tag">
 		<item name="wcf.acp.tag.add"><![CDATA[Add Tag]]></item>
 		<item name="wcf.acp.tag.edit"><![CDATA[Edit Tag]]></item>
@@ -2563,7 +2520,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.tag.setAsSynonyms"><![CDATA[Set as Synonyms]]></item>
 		<item name="wcf.acp.tag.setAsSynonyms.description"><![CDATA[Select one of the tags. The other tags will be set as synonyms of the selected tag.]]></item>
 	</category>
-	
 	<category name="wcf.acp.template">
 		<item name="wcf.acp.template.list"><![CDATA[Templates]]></item>
 		<item name="wcf.acp.template.group"><![CDATA[Template Group]]></item>
@@ -2594,7 +2550,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.template.name.error.invalid"><![CDATA[The specified name is invalid.]]></item>
 		<item name="wcf.acp.template.delete.sure"><![CDATA[Do you really want to delete the template <span class="confirmationObject">{$template->templateName}</span>?]]></item>
 	</category>
-	
 	<category name="wcf.acp.user">
 		<item name="wcf.acp.user.add"><![CDATA[Add User]]></item>
 		<item name="wcf.acp.user.assignToGroup"><![CDATA[Add to User Group]]></item>
@@ -2781,6 +2736,8 @@ the lost password form <a href="{link controller='LostPassword' isEmail=true}{/l
 		<item name="wcf.acp.user.authentication.failure.environment.user"><![CDATA[User]]></item>
 		<item name="wcf.acp.user.authentication.failure.environment.admin"><![CDATA[Administration]]></item>
 		<item name="wcf.acp.user.authentication.failure.time"><![CDATA[Date]]></item>
+		<item name="wcf.acp.user.authentication.failure.password"><![CDATA[Invalid Password]]></item>
+		<item name="wcf.acp.user.authentication.failure.username"><![CDATA[Unknown Username]]></item>
 		<item name="wcf.acp.user.activation.mail.subject"><![CDATA[Your account on the website: {@PAGE_TITLE|language} has been approved]]></item>
 		<item name="wcf.acp.user.activation.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.activation.mail.html.text"><![CDATA[
@@ -2811,12 +2768,10 @@ full extend.]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to this user?]]></item>
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Export Personal Data (GDPR)]]></item>
 	</category>
-	
 	<category name="wcf.acp.worker">
 		<item name="wcf.acp.worker.abort.confirmMessage"><![CDATA[Do you really want to terminate the execution?]]></item>
 		<item name="wcf.acp.worker.success"><![CDATA[Task completed]]></item>
 	</category>
-	
 	<category name="wcf.ajax">
 		<item name="wcf.ajax.error.illegalLink"><![CDATA[The server was unable to process your request because the target is unknown or no longer available.]]></item>
 		<item name="wcf.ajax.error.invalidParameter"><![CDATA[The parameter “{$fieldName}” is missing or invalid.]]></item>
@@ -2825,7 +2780,6 @@ full extend.]]></item>
 		<item name="wcf.ajax.error.permissionDenied"><![CDATA[You are not authorized to execute this action.]]></item>
 		<item name="wcf.ajax.error.sessionExpired"><![CDATA[Your session has expired, please reload this page.]]></item>
 	</category>
-	
 	<category name="wcf.article">
 		<item name="wcf.article.nextArticle"><![CDATA[Next Article]]></item>
 		<item name="wcf.article.previousArticle"><![CDATA[Previous Article]]></item>
@@ -2849,8 +2803,8 @@ full extend.]]></item>
 		<item name="wcf.article.markAllAsRead"><![CDATA[Mark All Articles as Read]]></item>
 		<item name="wcf.article.showArticlesWritten"><![CDATA[Articles by {$user->username}]]></item>
 		<item name="wcf.article.recentActivity"><![CDATA[Wrote the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.article.button.sort"><![CDATA[Sort]]></item>
 	</category>
-	
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, downloaded <b>{#$attachment->downloads}</b> times{if $attachment->downloads > 0}, last: {@$attachment->lastDownloadTime|time}{/if})]]></item>
 		<item name="wcf.attachment.image.info"><![CDATA[{@$attachment->filesize|filesize}, {#$attachment->width}×{#$attachment->height}, viewed {#$attachment->downloads} times]]></item>
@@ -2861,7 +2815,6 @@ full extend.]]></item>
 		<item name="wcf.attachment.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
 		<item name="wcf.attachment.upload.error.tooLarge"><![CDATA[The file is too big.]]></item>
 		<item name="wcf.attachment.upload.error.reachedLimit"><![CDATA[You have reached the maximum number of attachments allowed.]]></item>
-		
 		<item name="wcf.attachment.upload.error.reachedRemainingLimit"><![CDATA[You have selected too many attachments, remaining: #remaining#.]]></item>
 		<item name="wcf.attachment.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 		<item name="wcf.attachment.upload.error.uploadPhpLimit"><![CDATA[The file exceeds the PHP limit “upload_max_filesize” and/or “post_max_size”.]]></item>
@@ -2881,7 +2834,6 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.attachment.dragAndDrop.dropHere"><![CDATA[Drag and Drop here to upload]]></item>
 		<item name="wcf.attachment.dragAndDrop.dropNow"><![CDATA[Drop now to upload]]></item>
 	</category>
-	
 	<category name="wcf.bbcode">
 		<item name="wcf.bbcode.button.collapse"><![CDATA[Display Less]]></item>
 		<item name="wcf.bbcode.button.showAll"><![CDATA[Display More]]></item>
@@ -2916,27 +2868,22 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.spoiler.text"><![CDATA[(Hidden Content)]]></item>
 		<item name="wcf.bbcode.spoiler.simplified"><![CDATA[(Hidden Content)]]></item>
 	</category>
-	
 	<category name="wcf.captcha">
 		<item name="wcf.captcha.useNoCaptcha"><![CDATA[(No Captcha)]]></item>
 		<item name="wcf.captcha.com.woltlab.wcf.recaptcha"><![CDATA[reCAPTCHA]]></item>
 		<item name="wcf.captcha.com.woltlab.wcf.captchaQuestion"><![CDATA[Question]]></item>
 	</category>
-	
 	<category name="wcf.captcha.question">
 		<item name="wcf.captcha.question.answer.error.false"><![CDATA[You have entered an incorrect answer.]]></item>
 		<item name="wcf.captcha.question.captcha"><![CDATA[Question]]></item>
 		<item name="wcf.captcha.question.captcha.description"><![CDATA[Please answer the question respectively to solve the problem below.]]></item>
 	</category>
-	
 	<category name="wcf.captcha.recaptchaV2">
 		<item name="wcf.captcha.recaptchaV2.error.recaptchaString.false"><![CDATA[Please confirm that you are not a robot.]]></item>
 	</category>
-	
 	<category name="wcf.captcha.recaptchaInvisible">
 		<item name="wcf.captcha.recaptchaInvisible.error.recaptchaString.false"><![CDATA[The check failed, please re-submit the form.]]></item>
 	</category>
-	
 	<category name="wcf.category">
 		<item name="wcf.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.category.button.list"><![CDATA[Categories]]></item>
@@ -2952,7 +2899,6 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.category.title"><![CDATA[Title]]></item>
 		<item name="wcf.category.button.choose"><![CDATA[Choose Category]]></item>
 	</category>
-	
 	<category name="wcf.cli">
 		<item name="wcf.cli.help.noLongHelp"><![CDATA[There is no long help for the parameter "{$topic}".]]></item>
 		<item name="wcf.cli.help.language"><![CDATA[Forces the language with the given language code.]]></item>
@@ -2974,12 +2920,10 @@ Errors are:
 		<item name="wcf.cli.error.language.notFound"><![CDATA[The language with the language code "{$languageCode}" could not be found.]]></item>
 		<item name="wcf.cli.error.command.notFound"><![CDATA[The command "{$command}" could not be found. Type in "commands" to list available commands.]]></item>
 	</category>
-	
 	<category name="wcf.clipboard">
 		<item name="wcf.clipboard.item.unmarkAll"><![CDATA[Unmark All]]></item>
 		<item name="wcf.clipboard.item.markAll"><![CDATA[Mark All Objects]]></item>
 		<item name="wcf.clipboard.item.mark"><![CDATA[Mark Object]]></item>
-		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} article{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.publish"><![CDATA[Publish ({#$count})]]></item>
@@ -2988,16 +2932,13 @@ Errors are:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.trash"><![CDATA[Move to Trash ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.trash.confirmMessage"><![CDATA[Do you really want to move {#$count} article{if $count != 1}s{/if} to the trash bin?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.unpublish"><![CDATA[Withdraw Publication ({#$count})]]></item>
-		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} file{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.insert"><![CDATA[Insert ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.setCategory"><![CDATA[Edit Category ({#$count})]]></item>
-		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete"><![CDATA[Delete ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete.confirmMessage"><![CDATA[Do you really want to delete {#$count} tag{if $count != 1}s{/if}?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.setAsSynonyms"><![CDATA[Set as Synonyms ({#$count})]]></item>
-		
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Add to User Group]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"><![CDATA[Ban ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Delete ({#$count})]]></item>
@@ -3009,13 +2950,11 @@ Errors are:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[Send Email]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Send New Password ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to {#$count} user{if $count != 1}s{/if}?]]></item>
-		
 		<item name="wcf.clipboard.label.com.woltlab.wcf.article.marked"><![CDATA[{if $count == 1}One Article{else}{#$count} Articles{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}One File{else}{#$count} Files{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}One Tag{else}{#$count} Tags{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.user.marked"><![CDATA[{if $count == 1}One User{else}{#$count} Users{/if}]]></item>
 	</category>
-	
 	<category name="wcf.comment">
 		<item name="wcf.comment.add"><![CDATA[Write a comment …]]></item>
 		<item name="wcf.comment.approve"><![CDATA[Approve]]></item>
@@ -3032,7 +2971,6 @@ Errors are:
 		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Likes]]></item>
 		<item name="wcf.comment.sortField.time"><![CDATA[Date]]></item>
 	</category>
-	
 	<category name="wcf.condition">
 		<item name="wcf.condition.greaterThan"><![CDATA[greater than]]></item>
 		<item name="wcf.condition.greaterThan.error.lessThan"><![CDATA[The “less than” value and the “greater than” value are conflicting.]]></item>
@@ -3045,7 +2983,6 @@ Errors are:
 		<item name="wcf.condition.timestamp.error.invalidEnd"><![CDATA[The end date is invalid.]]></item>
 		<item name="wcf.condition.timestamp.error.invalidStart"><![CDATA[The start date is invalid.]]></item>
 	</category>
-	
 	<category name="wcf.contact">
 		<item name="wcf.contact.data"><![CDATA[Your Inquiry]]></item>
 		<item name="wcf.contact.mail.subject"><![CDATA[New message via the contact form]]></item>
@@ -3078,7 +3015,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.contact.success"><![CDATA[Message has been sent.]]></item>
 		<item name="wcf.contact.confirmPrivacyPolicy"><![CDATA[I have read the <a href="{page}com.woltlab.wcf.PrivacyPolicy{/page}">privacy policy</a> and expressly accept it. <span class="customOptionRequired">*</span>]]></item>
 	</category>
-	
 	<category name="wcf.acp.contact">
 		<item name="wcf.acp.contact.options"><![CDATA[Input Fields]]></item>
 		<item name="wcf.acp.contact.option.add"><![CDATA[Add Input Field]]></item>
@@ -3091,13 +3027,11 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.acp.contact.recipient.name"><![CDATA[Display Name]]></item>
 		<item name="wcf.acp.contact.settings"><![CDATA[Edit Contact Form]]></item>
 	</category>
-	
 	<category name="wcf.date">
 		<item name="wcf.date.dateFormat"><![CDATA[M jS Y]]></item>
-		<item name="wcf.date.timeFormat">g:i&#xa0;a</item>
+		<item name="wcf.date.timeFormat"><![CDATA[g:i&#xa0;a]]></item>
 		<item name="wcf.date.dateTimeFormat"><![CDATA[%date%, %time%]]></item>
 		<item name="wcf.date.shortDateTimeFormat"><![CDATA[%date%]]></item>
-		
 		<item name="wcf.date.interval.days.past"><![CDATA[{if $days > 1}{#$days} days{else}A day{/if} ago]]></item>
 		<item name="wcf.date.interval.full.past"><![CDATA[{if $years}{if $years > 1}{#$years} years{else}A year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{if $months > 1}{#$months} months{else}{if $firstElement == 'months'}A{else}a{/if} month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}{if $firstElement == 'weeks'}A{else}a{/if} week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}{if $firstElement == 'days'}A{else}a{/if} day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}{if $firstElement == 'hours'}An{else}an{/if} hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}{if $firstElement == 'minutes'}A{else}a{/if} minute{/if}{/if} ago]]></item>
 		<item name="wcf.date.interval.hours.past"><![CDATA[{if $hours > 1}{#$hours} hours{else}An hour{/if} ago]]></item>
@@ -3105,7 +3039,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.date.interval.months.past"><![CDATA[{if $months > 1}{#$months} months{else}A Month{/if} ago]]></item>
 		<item name="wcf.date.interval.weeks.past"><![CDATA[{if $weeks > 1}{#$weeks} weeks{else}A week{/if} ago]]></item>
 		<item name="wcf.date.interval.years.past"><![CDATA[{if $years > 1}{#$years} years{else}A year{/if} ago]]></item>
-		
 		<item name="wcf.date.interval.days.past.inSentence"><![CDATA[{if $days > 1}{#$days} days{else}a day{/if} ago]]></item>
 		<item name="wcf.date.interval.full.past.inSentence"><![CDATA[{if $years}{if $years > 1}{#$years} years{else}a year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{if $months > 1}{#$months} months{else}a month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}{if $firstElement == 'weeks'}a{else}a{/if} week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}{if $firstElement == 'days'}{else}a{/if} day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}{if $firstElement == 'hours'}an{else}an{/if} hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}{if $firstElement == 'minutes'}a{else}a{/if} minute{/if}{/if} ago]]></item>
 		<item name="wcf.date.interval.hours.past.inSentence"><![CDATA[{if $hours > 1}{#$hours} hours{else}an hour{/if} ago]]></item>
@@ -3113,7 +3046,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.date.interval.months.past.inSentence"><![CDATA[{if $months > 1}{#$months} months{else}a Month{/if} ago]]></item>
 		<item name="wcf.date.interval.weeks.past.inSentence"><![CDATA[{if $weeks > 1}{#$weeks} weeks{else}a week{/if} ago]]></item>
 		<item name="wcf.date.interval.years.past.inSentence"><![CDATA[{if $years > 1}{#$years} years{else}a year{/if} ago]]></item>
-		
 		<item name="wcf.date.interval.days.future"><![CDATA[In {if $days > 1}{#$days} days{else}a day{/if}]]></item>
 		<item name="wcf.date.interval.full.future"><![CDATA[In {if $years}{if $years > 1}{#$years} years{else}a year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{if $months > 1}{#$months} months{else}a month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}a week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}a day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}an hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}a minute{/if}{/if}]]></item>
 		<item name="wcf.date.interval.hours.future"><![CDATA[In {if $hours > 1}{#$hours} hours{else}an hour{/if}]]></item>
@@ -3121,7 +3053,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.date.interval.months.future"><![CDATA[In {if $months > 1}{#$months} months{else}a Month{/if}]]></item>
 		<item name="wcf.date.interval.weeks.future"><![CDATA[In {if $weeks > 1}{#$weeks} weeks{else}a week{/if}]]></item>
 		<item name="wcf.date.interval.years.future"><![CDATA[In {if $years > 1}{#$years} years{else}a year{/if}]]></item>
-		
 		<item name="wcf.date.interval.days.future.inSentence"><![CDATA[in {if $days > 1}{#$days} days{else}a day{/if}]]></item>
 		<item name="wcf.date.interval.full.future.inSentence"><![CDATA[in {if $years}{if $years > 1}{#$years} years{else}a year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{if $months > 1}{#$months} months{else}a month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}a week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}a day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}an hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}a minute{/if}{/if}]]></item>
 		<item name="wcf.date.interval.hours.future.inSentence"><![CDATA[in {if $hours > 1}{#$hours} hours{else}an hour{/if}]]></item>
@@ -3129,7 +3060,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.date.interval.months.future.inSentence"><![CDATA[in {if $months > 1}{#$months} months{else}a Month{/if}]]></item>
 		<item name="wcf.date.interval.weeks.future.inSentence"><![CDATA[in {if $weeks > 1}{#$weeks} weeks{else}a week{/if}]]></item>
 		<item name="wcf.date.interval.years.future.inSentence"><![CDATA[in {if $years > 1}{#$years} years{else}a year{/if}]]></item>
-		
 		<item name="wcf.date.interval.days.plain"><![CDATA[{if $days > 1}{#$days} days{else}one day{/if}]]></item>
 		<item name="wcf.date.interval.full.plain"><![CDATA[{if $years}{if $years > 1}{#$years} years{else}one year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{if $months > 1}{#$months} months{else}one month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}one week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}one day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}one hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}one minute{/if}{/if}]]></item>
 		<item name="wcf.date.interval.hours.plain"><![CDATA[{if $hours > 1}{#$hours} hours{else}one hour{/if}]]></item>
@@ -3137,18 +3067,15 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.date.interval.months.plain"><![CDATA[{if $months > 1}{#$months} months{else}one Month{/if}]]></item>
 		<item name="wcf.date.interval.weeks.plain"><![CDATA[{if $weeks > 1}{#$weeks} weeks{else}one week{/if}]]></item>
 		<item name="wcf.date.interval.years.plain"><![CDATA[{if $years > 1}{#$years} years{else}one year{/if}]]></item>
-		
 		<!-- variables for time periods -->
 		<item name="wcf.date.period.older"><![CDATA[Older]]></item>
 		<item name="wcf.date.period.today"><![CDATA[Today]]></item>
 		<item name="wcf.date.period.yesterday"><![CDATA[Yesterday]]></item>
-		
 		<!-- variables for relative datetime -->
 		<item name="wcf.date.relative.now"><![CDATA[A moment ago]]></item>
 		<item name="wcf.date.relative.minutes"><![CDATA[{if $minutes > 1}{#$minutes} minutes{else}A minute{/if} ago]]></item>
 		<item name="wcf.date.relative.hours"><![CDATA[{if $hours > 1}{#$hours} hours{else}An hour{/if} ago]]></item>
 		<item name="wcf.date.relative.pastDays"><![CDATA[{if $days > 1}{$day}{else}Yesterday{/if}, {$time}]]></item>
-		
 		<!-- variables for localized date formats -->
 		<item name="wcf.date.hour"><![CDATA[Hour]]></item>
 		<item name="wcf.date.minute"><![CDATA[Minute]]></item>
@@ -3183,7 +3110,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.date.day.thu"><![CDATA[Thu]]></item>
 		<item name="wcf.date.day.fri"><![CDATA[Fri]]></item>
 		<item name="wcf.date.day.sat"><![CDATA[Sat]]></item>
-		
 		<!-- localized days -->
 		<item name="wcf.date.day.sunday"><![CDATA[Sunday]]></item>
 		<item name="wcf.date.day.monday"><![CDATA[Monday]]></item>
@@ -3192,7 +3118,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.date.day.thursday"><![CDATA[Thursday]]></item>
 		<item name="wcf.date.day.friday"><![CDATA[Friday]]></item>
 		<item name="wcf.date.day.saturday"><![CDATA[Saturday]]></item>
-		
 		<!-- time zones -->
 		<item name="wcf.date.timezone.pacific.samoa"><![CDATA[(UTC-11:00) American Samoa, Midway]]></item>
 		<item name="wcf.date.timezone.pacific.honolulu"><![CDATA[(UTC-10:00) Hawaii]]></item>
@@ -3287,7 +3212,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.date.timezone.pacific.fiji"><![CDATA[(UTC+12:00) Fiji]]></item>
 		<item name="wcf.date.timezone.pacific.tongatapu"><![CDATA[(UTC+13:00) Nukuʻalofa]]></item>
 		<item name="wcf.date.timezone.pacific.apia"><![CDATA[(UTC+13:00) Samoa]]></item>
-		
 		<item name="wcf.date.period.start"><![CDATA[from]]></item>
 		<item name="wcf.date.period.end"><![CDATA[to]]></item>
 		<item name="wcf.date.firstDayOfTheWeek"><![CDATA[0]]></item>
@@ -3299,7 +3223,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.date.startTime.error.invalid"><![CDATA[The start time is invalid.]]></item>
 		<item name="wcf.date.endTime.error.invalid"><![CDATA[The end time is invalid.]]></item>
 	</category>
-	
 	<category name="wcf.edit">
 		<item name="wcf.edit.version"><![CDATA[Version]]></item>
 		<item name="wcf.edit.versions"><![CDATA[Versions]]></item>
@@ -3316,17 +3239,14 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.edit.headline.new"><![CDATA[{if $newID == 'current'}Current version{else}Version{/if} as of {@$new->time|plainTime} ({$new->username})]]></item>
 		<item name="wcf.edit.headline.newOrCurrent"><![CDATA[{if $newID == 'current'}Current version{else}Version as of {@$new->time|plainTime}{/if}{if $new->username} ({$new->username}){/if}]]></item>
 	</category>
-	
 	<category name="wcf.editor">
 		<item name="wcf.editor.alignment.center"><![CDATA[Align center]]></item>
 		<item name="wcf.editor.alignment.justify"><![CDATA[Align justify]]></item>
 		<item name="wcf.editor.alignment.left"><![CDATA[Align left]]></item>
 		<item name="wcf.editor.alignment.right"><![CDATA[Align right]]></item>
-		
 		<item name="wcf.editor.autosave.discard"><![CDATA[Discard and revert editor]]></item>
 		<item name="wcf.editor.autosave.keep"><![CDATA[Hide notice]]></item>
 		<item name="wcf.editor.autosave.restored"><![CDATA[Draft restored]]></item>
-		
 		<item name="wcf.editor.button.alignment"><![CDATA[Alignment]]></item>
 		<item name="wcf.editor.button.bold"><![CDATA[Bold]]></item>
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
@@ -3356,7 +3276,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.editor.button.underline"><![CDATA[Underline]]></item>
 		<item name="wcf.editor.button.undo"><![CDATA[Undo]]></item>
 		<item name="wcf.editor.button.woltlabHtml"><![CDATA[Unsafe HTML]]></item>
-		
 		<item name="wcf.editor.code.edit"><![CDATA[Edit Code]]></item>
 		<item name="wcf.editor.code.file"><![CDATA[Filename]]></item>
 		<item name="wcf.editor.code.file.description"><![CDATA[Optional: Specify the displayed filename.]]></item>
@@ -3366,15 +3285,12 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.editor.code.line"><![CDATA[Start Line Number]]></item>
 		<item name="wcf.editor.code.line.description"><![CDATA[Optional: Specify the start for line enumeration.]]></item>
 		<item name="wcf.editor.code.title"><![CDATA[{if $highlighter}{$highlighter}{else}Code{/if}{if $file} - {$file}{/if}]]></item>
-		
 		<item name="wcf.editor.format.heading2"><![CDATA[Heading 1]]></item>
 		<item name="wcf.editor.format.heading3"><![CDATA[Heading 2]]></item>
 		<item name="wcf.editor.format.heading4"><![CDATA[Heading 3]]></item>
 		<item name="wcf.editor.format.paragraph"><![CDATA[Normal text]]></item>
-		
 		<item name="wcf.editor.html.description"><![CDATA[Contents will be evaluated unchecked.]]></item>
 		<item name="wcf.editor.html.title"><![CDATA[Unsafe HTML]]></item>
-		
 		<item name="wcf.editor.image.edit"><![CDATA[Edit Image]]></item>
 		<item name="wcf.editor.image.insert"><![CDATA[Insert Image]]></item>
 		<item name="wcf.editor.image.link"><![CDATA[Link]]></item>
@@ -3385,31 +3301,25 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.editor.image.source"><![CDATA[Source]]></item>
 		<item name="wcf.editor.image.source.error.insecure"><![CDATA[Insecure sources (“http://”) for images have been disabled, please use secure sources only (“https://”).]]></item>
 		<item name="wcf.editor.image.source.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
-		
 		<item name="wcf.editor.link.add"><![CDATA[Insert Link]]></item>
 		<item name="wcf.editor.link.edit"><![CDATA[Edit Link]]></item>
 		<item name="wcf.editor.link.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
 		<item name="wcf.editor.link.unlink"><![CDATA[Unlink]]></item>
 		<item name="wcf.editor.link.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.link.text"><![CDATA[Text]]></item>
-		
 		<item name="wcf.editor.list.indent"><![CDATA[Indent]]></item>
 		<item name="wcf.editor.list.outdent"><![CDATA[Outdent]]></item>
-		
 		<item name="wcf.editor.quote.author"><![CDATA[Source]]></item>
 		<item name="wcf.editor.quote.edit"><![CDATA[Edit Quote]]></item>
 		<item name="wcf.editor.quote.title"><![CDATA[{if $author}Quote from {@$author}{else}Quote{/if}]]></item>
 		<item name="wcf.editor.quote.url"><![CDATA[Link]]></item>
 		<item name="wcf.editor.quote.url.description"><![CDATA[Optional: Specify the link to the source.]]></item>
 		<item name="wcf.editor.quote.url.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
-		
 		<item name="wcf.editor.source.error.active"><![CDATA[Please return to the normal view before submitting.]]></item>
-		
 		<item name="wcf.editor.spoiler.label"><![CDATA[Label]]></item>
 		<item name="wcf.editor.spoiler.label.description"><![CDATA[Optional: Specify the label for the spoiler toggle button.]]></item>
 		<item name="wcf.editor.spoiler.edit"><![CDATA[Edit Spoiler]]></item>
 		<item name="wcf.editor.spoiler.title"><![CDATA[Spoiler{if $label}: {$label}{/if}]]></item>
-		
 		<item name="wcf.editor.table.addHead"><![CDATA[Add head]]></item>
 		<item name="wcf.editor.table.cols"><![CDATA[Columns]]></item>
 		<item name="wcf.editor.table.deleteColumn"><![CDATA[Delete column]]></item>
@@ -3423,7 +3333,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.editor.table.insertRowBelow"><![CDATA[Insert row below]]></item>
 		<item name="wcf.editor.table.rows"><![CDATA[Rows]]></item>
 	</category>
-	
 	<category name="wcf.global">
 		<item name="wcf.global.button.add"><![CDATA[Add]]></item>
 		<item name="wcf.global.button.back"><![CDATA[« Back]]></item>
@@ -3490,7 +3399,8 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.global.page.next"><![CDATA[Next Page]]></item>
 		<item name="wcf.global.page.pagination"><![CDATA[Navigation]]></item>
 		<item name="wcf.global.page.previous"><![CDATA[Previous Page]]></item>
-		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item> <!-- system variable; do not translate -->
+		<item name="wcf.global.pageDirection"><![CDATA[ltr]]></item>
+		<!-- system variable; do not translate -->
 		<item name="wcf.global.scrollDown"><![CDATA[Go to Page Bottom]]></item>
 		<item name="wcf.global.scrollUp"><![CDATA[Go to Page Top]]></item>
 		<item name="wcf.global.search.enterSearchTerm"><![CDATA[Search …]]></item>
@@ -3529,7 +3439,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.global.button.showMenu"><![CDATA[Show Menu]]></item>
 		<item name="wcf.global.button.hideMenu"><![CDATA[Hide Menu]]></item>
 	</category>
-	
 	<category name="wcf.global.form">
 		<item name="wcf.global.form.boolean.no"><![CDATA[No]]></item>
 		<item name="wcf.global.form.boolean.yes"><![CDATA[Yes]]></item>
@@ -3542,13 +3451,11 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.global.form.error.noValidSelection"><![CDATA[Choose one of the available options.]]></item>
 		<item name="wcf.global.form.error.securityToken"><![CDATA[Your session has expired, please submit the form again.]]></item>
 		<item name="wcf.global.form.input.maxItems"><![CDATA[Maximum items reached]]></item>
-		
 		<!-- deprecated since 2.1 -->
 		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}The entered value has to be greater than {#$greaterThan}.{/literal}]]></item>
 		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}The entered value has to be less than {#$lessThan}.{/literal}]]></item>
 		<!-- /deprecated since 2.1 -->
-	</category>
-	
+</category>
 	<category name="wcf.form">
 		<item name="wcf.form.field.className"><![CDATA[Class]]></item>
 		<item name="wcf.form.field.className.description.interface"><![CDATA[The entered class (without leading backslash) must implement the interface <code>{$interface}</code>.]]></item>
@@ -3576,7 +3483,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.form.field.username.error.notUnique"><![CDATA[The entered username is already in use.]]></item>
 		<item name="wcf.form.fieldValidator.dotSeparatedString.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
 	</category>
-	
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Full Screen Mode]]></item>
 		<item name="wcf.imageViewer.button.full"><![CDATA[View Source Image]]></item>
@@ -3588,7 +3494,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.imageViewer.next"><![CDATA[Next Image]]></item>
 		<item name="wcf.imageViewer.previous"><![CDATA[Previous Image]]></item>
 	</category>
-	
 	<category name="wcf.label">
 		<item name="wcf.label.all"><![CDATA[All]]></item>
 		<item name="wcf.label.error.missing"><![CDATA[You are required to select a label.]]></item>
@@ -3598,7 +3503,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.label.none"><![CDATA[No Selection]]></item>
 		<item name="wcf.label.withoutSelection"><![CDATA[Without Label]]></item>
 	</category>
-	
 	<category name="wcf.like">
 		<item name="wcf.like.cumulativeLikes"><![CDATA[Likes]]></item>
 		<item name="wcf.like.tooltip"><![CDATA[{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}]]></item>
@@ -3635,7 +3539,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.like.reactionReputation"><![CDATA[Reputation from Reactions]]></item>
 		<item name="wcf.like.reputation"><![CDATA[Reputation]]></item>
 	</category>
-	
 	<category name="wcf.map">
 		<item name="wcf.map.noLocationSuggestions"><![CDATA[There are no location suggestions in the current map section.]]></item>
 		<item name="wcf.map.route.button.calculateRoute"><![CDATA[Calculate Route]]></item>
@@ -3653,7 +3556,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.map.showLocationSuggestions"><![CDATA[Suggest Locations]]></item>
 		<item name="wcf.map.useLocationSuggestion"><![CDATA[Use Location]]></item>
 	</category>
-	
 	<category name="wcf.media">
 		<item name="wcf.media.altText"><![CDATA[Alternate Text]]></item>
 		<item name="wcf.media.button.insert"><![CDATA[Insert]]></item>
@@ -3693,7 +3595,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.media.downloads"><![CDATA[Downloads]]></item>
 		<item name="wcf.media.lastDownloadTime"><![CDATA[Last Download]]></item>
 	</category>
-	
 	<category name="wcf.message">
 		<item name="wcf.message.autosave.prompt"><![CDATA[Restore saved draft?]]></item>
 		<item name="wcf.message.autosave.prompt.confirm"><![CDATA[Restore draft]]></item>
@@ -3742,17 +3643,14 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.message.toc.hide"><![CDATA[hide]]></item>
 		<item name="wcf.message.toc.show"><![CDATA[show]]></item>
 	</category>
-	
 	<category name="wcf.menu">
 		<!-- category for menus and menu items -->
-		
 		<item name="wcf.menu.page"><![CDATA[Menu]]></item>
 		<item name="wcf.menu.page.location"><![CDATA[Current Location]]></item>
 		<item name="wcf.menu.page.navigation"><![CDATA[Navigation]]></item>
 		<item name="wcf.menu.page.options"><![CDATA[Options]]></item>
 		<item name="wcf.menu.user"><![CDATA[User Menu]]></item>
 	</category>
-	
 	<category name="wcf.moderation">
 		<item name="wcf.moderation.assignedUser"><![CDATA[Assigned User]]></item>
 		<item name="wcf.moderation.assignedUser.change"><![CDATA[Change Assigned User]]></item>
@@ -3809,7 +3707,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.moderation.markAllAsRead"><![CDATA[Mark All Items Read]]></item>
 		<item name="wcf.moderation.markAsRead.doubleClick"><![CDATA[Double-Click to Mark This Item Read]]></item>
 	</category>
-	
 	<category name="wcf.moderation.activation">
 		<item name="wcf.moderation.activation"><![CDATA[Approval]]></item>
 		<item name="wcf.moderation.activation.details"><![CDATA[Information]]></item>
@@ -3831,7 +3728,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.moderation.activation.removeContent"><![CDATA[Delete Content]]></item>
 		<item name="wcf.moderation.activation.removeContent.confirmMessage"><![CDATA[Do you really want to delete this content?]]></item>
 	</category>
-	
 	<category name="wcf.moderation.report">
 		<item name="wcf.moderation.report"><![CDATA[Report]]></item>
 		<item name="wcf.moderation.report.alreadyReported"><![CDATA[This content has already been reported.]]></item>
@@ -3861,11 +3757,9 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.moderation.report.reportedContent"><![CDATA[Reported Content]]></item>
 		<item name="wcf.moderation.report.success"><![CDATA[The content has been reported.]]></item>
 	</category>
-	
 	<category name="wcf.notice">
 		<item name="wcf.notice.button.dismiss"><![CDATA[Permanently dismiss this notice]]></item>
 	</category>
-	
 	<category name="wcf.page">
 		<item name="wcf.page.pageNo"><![CDATA[Page {#$pageNo}]]></item>
 		<item name="wcf.page.offline"><![CDATA[Page is currently in maintenance mode{if OFFLINE_MESSAGE != ''}:{else}.{/if}]]></item>
@@ -3885,6 +3779,8 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.page.error.illegalLink"><![CDATA[Sorry, but the page you are looking for has not been found. Try checking the URL for errors, then hit the refresh button on your browser.]]></item>
 		<item name="wcf.page.error.illegalLink.title"><![CDATA[Page Not Found]]></item>
 		<item name="wcf.page.error.backward"><![CDATA[Back to previous page.]]></item>
+		<item name="wcf.page.error.insufficientPermissions"><![CDATA[Insufficient Permissions]]></item>
+		<item name="wcf.page.error.loginAvailable"><![CDATA[This page or section may be accessible for authorized users only.]]></item>
 		<item name="wcf.page.jumpTo"><![CDATA[Go to Page]]></item>
 		<item name="wcf.page.jumpTo.description"><![CDATA[Enter a value between “1” and “#pages#”.]]></item>
 		<item name="wcf.page.redirect.title"><![CDATA[Redirection]]></item>
@@ -3913,7 +3809,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.page.sidebar.right"><![CDATA[Right Sidebar]]></item>
 		<item name="wcf.page.breadcrumb"><![CDATA[Breadcrumb]]></item>
 	</category>
-	
 	<category name="wcf.acp.page">
 		<item name="wcf.acp.page.add"><![CDATA[Add Page]]></item>
 		<item name="wcf.acp.page.application"><![CDATA[App]]></item>
@@ -3967,7 +3862,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.acp.page.originIsNotSystem"><![CDATA[Custom pages only]]></item>
 		<item name="wcf.acp.page.enableShareButtons"><![CDATA[Enable the share buttons for this page]]></item>
 	</category>
-	
 	<category name="wcf.paidSubscription">
 		<item name="wcf.paidSubscription.availableSubscriptions"><![CDATA[Available Subscriptions]]></item>
 		<item name="wcf.paidSubscription.purchasedSubscriptions"><![CDATA[Purchased Subscriptions]]></item>
@@ -3981,13 +3875,11 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.paidSubscription.expiringSubscription.notification.mail.plaintext"><![CDATA[Your subscription “{$subscription->getTitle()}” will expire {dateInterval start=$notification->time end=$subscription->endDate format='sentence'} (on {$subscription->endDate|date:'F jS'}).]]></item>
 		<item name="wcf.paidSubscription.expiringSubscription.notification.mail.html"><![CDATA[Your subscription “{$subscription->getTitle()}” will expire <b>{dateInterval start=$notification->time end=$subscription->endDate format='sentence'}</b> (on {$subscription->endDate|date:'F jS'}).]]></item>
 	</category>
-	
 	<category name="wcf.payment">
 		<item name="wcf.payment.com.woltlab.wcf.payment.method.paypal"><![CDATA[Use PayPal]]></item>
 		<item name="wcf.payment.paypal.button.purchase"><![CDATA[Purchase with PayPal]]></item>
 		<item name="wcf.payment.paypal.button.subscribe"><![CDATA[Subscribe with PayPal]]></item>
 	</category>
-	
 	<category name="wcf.poll">
 		<item name="wcf.poll.button.addOption"><![CDATA[Add Another Option]]></item>
 		<item name="wcf.poll.button.removeOption"><![CDATA[Remove Option]]></item>
@@ -4014,14 +3906,12 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.poll.totalVotes"><![CDATA[A total of {#$poll->votes} vote{if $poll->votes != 1}s{/if}]]></item>
 		<item name="wcf.poll.endTimeInfo"><![CDATA[Poll ends on {@$poll->endTime|plainTime}]]></item>
 	</category>
-	
 	<category name="wcf.reactions">
 		<item name="wcf.reactions.summary.title"><![CDATA[Reactions]]></item>
 		<item name="wcf.reactions.summary.noReactions"><![CDATA[There are not any reactions at the moment.]]></item>
 		<item name="wcf.reactions.summary.listReactions"><![CDATA[List Reactions]]></item>
 		<item name="wcf.reactions.react"><![CDATA[React]]></item>
 	</category>
-	
 	<category name="wcf.reactionType">
 		<item name="wcf.reactionType.title1"><![CDATA[Like]]></item>
 		<item name="wcf.reactionType.title2"><![CDATA[Haha]]></item>
@@ -4029,7 +3919,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.reactionType.title4"><![CDATA[Confused]]></item>
 		<item name="wcf.reactionType.title5"><![CDATA[Thanks!]]></item>
 	</category>
-	
 	<category name="wcf.recaptcha">
 		<item name="wcf.recaptcha.title"><![CDATA[Verification (“reCAPTCHA”)]]></item>
 		<item name="wcf.recaptcha.description"><![CDATA[Please enter the letters that are displayed in the picture below (letters are not case-sensitive). If you cannot identify the captcha even after reloading it, please contact the administrator.]]></item>
@@ -4039,7 +3928,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.recaptcha.help"><![CDATA[Help]]></item>
 		<item name="wcf.recaptcha.error.recaptchaString.false"><![CDATA[You have entered the security code incorrectly. Please try again.]]></item>
 	</category>
-	
 	<category name="wcf.search">
 		<item name="wcf.search.author"><![CDATA[Search by Author]]></item>
 		<item name="wcf.search.extended"><![CDATA[More Options]]></item>
@@ -4064,7 +3952,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.search.object.com.woltlab.wcf.page"><![CDATA[Page]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.page"><![CDATA[Pages]]></item>
 	</category>
-	
 	<category name="wcf.style">
 		<item name="wcf.style.changeStyle"><![CDATA[Change Style]]></item>
 		<item name="wcf.style.colorPicker"><![CDATA[Color Picker]]></item>
@@ -4073,7 +3960,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.style.currentStyle"><![CDATA[Current Style]]></item>
 		<item name="wcf.style.colorPicker.button.apply"><![CDATA[Apply]]></item>
 	</category>
-	
 	<category name="wcf.tagging">
 		<item name="wcf.tagging.tags"><![CDATA[Tags]]></item>
 		<item name="wcf.tagging.tags.add"><![CDATA[Tags]]></item>
@@ -4083,7 +3969,6 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.tagging.objectType.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
 		<item name="wcf.tagging.taggedObjects.com.woltlab.wcf.article"><![CDATA[Articles Tagged With “{$tag->name}”]]></item>
 	</category>
-	
 	<category name="wcf.user">
 		<item name="wcf.user.confirmEmail"><![CDATA[Confirm Email]]></item>
 		<item name="wcf.user.confirmPassword"><![CDATA[Confirm Password]]></item>
@@ -4328,7 +4213,6 @@ not register with us.]]></item>
 		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Last Activity]]></item>
 		<item name="wcf.user.articles"><![CDATA[Articles]]></item>
 	</category>
-	
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>
 		<item name="wcf.user.menu.community.notification"><![CDATA[Notifications]]></item>
@@ -4342,10 +4226,8 @@ not register with us.]]></item>
 		<item name="wcf.user.menu.settings.notification"><![CDATA[Notifications]]></item>
 		<item name="wcf.user.menu.settings.paidSubscription"><![CDATA[Paid Subscriptions]]></item>
 	</category>
-	
 	<category name="wcf.user.register">
 		<item name="wcf.user.register"><![CDATA[Registration]]></item>
-		
 		<!-- Need Activation -->
 		<item name="wcf.user.register.needActivation"><![CDATA[Your user account is not activated yet. You must complete the <a href="{link controller='RegisterActivation'}{/link}">activation process</a> first.]]></item>
 		<item name="wcf.user.register.needActivation.mail.subject"><![CDATA[Activate Your Registration for Website: {@PAGE_TITLE|language}]]></item>
@@ -4372,7 +4254,6 @@ Your activation code is: {@$mailbox->getUser()->activationCode} {* this line end
 If you have trouble confirming your email address, please contact the
 administrator at: {@MAIL_ADMIN_ADDRESS}. Please ignore this email if you did
 not register with us.]]></item>
-		
 		<!-- Success Messages -->
 		<item name="wcf.user.register.success"><![CDATA[Thank you for registering, {$user->username}.<br>
 Your registration is now completed.]]></item>
@@ -4381,10 +4262,8 @@ An email was sent to “{$user->email}” containing a one-time link to verify y
 		<item name="wcf.user.register.success.awaitActivation"><![CDATA[Thank you for registering, {$user->username}.<br>
 Your account is awaiting approval from an administrator.<br>
 A notification will be sent once your account has been approved.]]></item>
-		
 		<!-- Error Messages -->
 		<item name="wcf.user.register.error.disabled"><![CDATA[Registration is currently disabled.]]></item>
-		
 		<!-- Administrator Notification -->
 		<item name="wcf.user.register.notification.mail"><![CDATA[Dear Administrator,
 
@@ -4395,7 +4274,6 @@ Email address used: {@$user->email}
 Open the link below to access the user profile:
 {link controller='User' object=$user isEmail=true}{/link} ]]></item>
 		<item name="wcf.user.register.notification.mail.subject"><![CDATA[New Registration with Your Website: {@PAGE_TITLE|language}]]></item>
-		
 		<!-- Disclaimer -->
 		<item name="wcf.user.register.disclaimer.accept"><![CDATA[Accept]]></item>
 		<item name="wcf.user.register.disclaimer.decline"><![CDATA[Decline]]></item>
@@ -4416,7 +4294,6 @@ Open the link below to access the user profile:
 <p><br></p>
 <p><small><em>Source: <a href="http://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
 	</category>
-	
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>
 		<item name="wcf.user.trophy.showTrophies"><![CDATA[Display Trophies of {$user->username}]]></item>
@@ -4432,7 +4309,6 @@ Open the link below to access the user profile:
 		<item name="wcf.user.trophy.condition.excludedTrophyCategories"><![CDATA[Excluded Trophy Categories]]></item>
 		<item name="wcf.user.trophy.trophyAwarded"><![CDATA[{if $items == 1}Awarded once{else}Awarded {#$items} times{/if}]]></item>
 	</category>
-	
 	<category name="wcf.acp.trophy">
 		<item name="wcf.acp.trophy"><![CDATA[Trophy]]></item>
 		<item name="wcf.acp.trophy.description"><![CDATA[Description]]></item>
@@ -4466,7 +4342,6 @@ Open the link below to access the user profile:
 		<item name="wcf.acp.trophy.trophyUseHtml"><![CDATA[Enable HTML code in the description]]></item>
 		<item name="wcf.acp.trophy.showOrder.description"><![CDATA[Choose display order of trophies.]]></item>
 	</category>
-	
 	<category name="wcf.user.usersOnline">
 		<item name="wcf.user.usersOnline"><![CDATA[Users Online]]></item>
 		<item name="wcf.user.usersOnline.detail"><![CDATA[
@@ -4492,7 +4367,6 @@ Open the link below to access the user profile:
 		<item name="wcf.user.usersOnline.record"><![CDATA[Record: {#USERS_ONLINE_RECORD} User{if USERS_ONLINE_RECORD != 1}s{/if} ({@USERS_ONLINE_RECORD_TIME|time})]]></item>
 		<item name="wcf.user.usersOnline.users"><![CDATA[Users]]></item>
 	</category>
-	
 	<category name="wcf.user.recentActivity">
 		<item name="wcf.user.recentActivity"><![CDATA[Recent Activities]]></item>
 		<item name="wcf.user.recentActivity.more"><![CDATA[Display More]]></item>
@@ -4513,7 +4387,6 @@ Open the link below to access the user profile:
 		<item name="wcf.user.recentActivity.scope.followedUsers"><![CDATA[Filter by Followed Users]]></item>
 		<item name="wcf.user.recentActivity.scope.followedUsers.noResults"><![CDATA[There are no recent activities by followed users. Displaying activity for all users.]]></item>
 	</category>
-	
 	<category name="wcf.user.3rdparty">
 		<item name="wcf.user.3rdparty"><![CDATA[Third-Party Login]]></item>
 		<item name="wcf.user.3rdparty.github"><![CDATA[GitHub]]></item>
@@ -4553,7 +4426,6 @@ Open the link below to access the user profile:
 		<item name="wcf.user.3rdparty.google.disconnect"><![CDATA[Cancel connection with Google]]></item>
 		<item name="wcf.user.3rdparty.google.disconnect.success"><![CDATA[Your account is no longer connected with Google.]]></item>
 	</category>
-	
 	<category name="wcf.user.avatar">
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
 		<item name="wcf.user.avatar.edit"><![CDATA[Avatar Management]]></item>
@@ -4572,7 +4444,6 @@ Open the link below to access the user profile:
 		<item name="wcf.user.avatar.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 		<item name="wcf.user.avatar.upload.success"><![CDATA[Your avatar has been saved.]]></item>
 	</category>
-	
 	<category name="wcf.user.condition">
 		<item name="wcf.user.condition.activityPoints"><![CDATA[Points]]></item>
 		<item name="wcf.user.condition.avatar"><![CDATA[Avatar]]></item>
@@ -4613,7 +4484,6 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.neutralReactionsReceived"><![CDATA[Neutral Reactions]]></item>
 		<item name="wcf.user.condition.userReputation"><![CDATA[Reputation from Reactions]]></item>
 	</category>
-	
 	<category name="wcf.user.coverPhoto">
 		<item name="wcf.user.coverPhoto"><![CDATA[Cover Photo]]></item>
 		<item name="wcf.user.coverPhoto.delete"><![CDATA[Delete Cover Photo]]></item>
@@ -4632,7 +4502,6 @@ Open the link below to access the user profile:
 		<item name="wcf.user.coverPhoto.upload.error.minWidth"><![CDATA[The image is too small.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 	</category>
-	
 	<category name="wcf.user.notification">
 		<item name="wcf.user.notification.button.confirmed"><![CDATA[OK]]></item>
 		<item name="wcf.user.notification.count"><![CDATA[if (data.returnValues.count == 0) { "No Notifications" } else if (data.returnValues.count == 1) { "1 Notification" } else { data.returnValues.count + " Notifications" }]]></item>
@@ -4651,7 +4520,6 @@ Open the link below to access the user profile:
 		<item name="wcf.user.notification.mailNotificationType.instant"><![CDATA[Instant Email Notification]]></item>
 		<item name="wcf.user.notification.mailNotificationType.daily"><![CDATA[Daily Email Notification]]></item>
 		<item name="wcf.user.notification.mailNotificationType.notSupported"><![CDATA[Email Notifications are not supported.]]></item>
-		
 		<!-- Email Wrapper -->
 		<item name="wcf.user.notification.mail.subject"><![CDATA[New Notification: {@$title}]]></item>
 		<item name="wcf.user.notification.mail.plaintext.intro"><![CDATA[Dear {@$mailbox->getUser()->username},]]></item>
@@ -4693,10 +4561,8 @@ If you wish to disable all email notifications you can do so by visiting:
 your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> as you wish.</p>
 
 <p>You can <a href="{link controller='NotificationDisable' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}">disable all email notifications</a> as well.</p>]]></item>
-		
 		<item name="wcf.user.notification.mail.authorList.plaintext"><![CDATA[{if !$event->getAuthor()->userID}{if $guestTimesTriggered > 1}Guests{else}A guest{/if}{else}{@$event->getAuthor()->username} [URL:{link controller='User' object=$event->getAuthor() isEmail=true}{/link}]{/if}{if $count > 1 && $count < 4}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->username} [URL:{link controller='User' object=$authors[1] isEmail=true}{/link}]{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if}{@$authors[2]->username} [URL:{link controller='User' object=$authors[2] isEmail=true}{/link}]{/if}{elseif $count >= 4}{if $guestTimesTriggered},{else} and{/if} {#$count-1} other users{/if}{if $event->getAuthor()->userID && $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}{#$guestTimesTriggered} guests{/if}{/if}]]></item>
 		<item name="wcf.user.notification.mail.authorList.html"><![CDATA[{if !$event->getAuthor()->userID}{if $guestTimesTriggered > 1}Guests{else}A guest{/if}{else}<a href="{link controller='User' object=$event->getAuthor() isEmail=true}{/link}">{$event->getAuthor()->username}</a>{/if}{if $count > 1 && $count < 4}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}<a href="{link controller='User' object=$authors[1] isEmail=true}{/link}">{$authors[1]->username}</a>{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if}<a href="{link controller='User' object=$authors[2] isEmail=true}{/link}">{$authors[2]->username}</a>{/if}{elseif $count >= 4}{if $guestTimesTriggered},{else} and{/if} {#$count-1} other users{/if}{if $event->getAuthor()->userID && $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}{#$guestTimesTriggered} guests{/if}{/if}]]></item>
-		
 		<!-- Notifications -->
 		<item name="wcf.user.notification.com.woltlab.wcf.user"><![CDATA[User Profiles]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.follow.following"><![CDATA[Notify me of new followers]]></item>
@@ -4741,11 +4607,9 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.com.woltlab.wcf.userTrophy.notification.received"><![CDATA[Notify me when I receive a trophy]]></item>
 		<item name="wcf.user.notification.trophy.received.title"><![CDATA[Trophy received]]></item>
 		<item name="wcf.user.notification.trophy.received.message"><![CDATA[You received the trophy <a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a>.]]></item>
-		
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Notify me when new comments are written in moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.response.notification.commentResponse"><![CDATA[Notify me when new replies to comments are written in moderation]]></item>
-		
 		<item name="wcf.user.notification.com.woltlab.wcf.page"><![CDATA[Page]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.notification.comment"><![CDATA[Notify me when new comments are written on pages]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.page.response.notification.commentResponse"><![CDATA[Notify me when new replies to comments are written on pages]]></item>
@@ -4761,13 +4625,13 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.pageComment.response.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} wrote a reply to {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if}’s comment on the page <a href="{$page->getLink()}#comment{@$commentID}/response{@$responseID}">{$page->getTitle()}</a>.]]></item>
 		<item name="wcf.user.notification.pageComment.response.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} replied to {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if}’s comment on the page <a href="{$page->getLink()}#comment{@$commentID}">{$page->getTitle()}</a>.]]></item>
 		<item name="wcf.user.notification.pageComment.response.mail.plaintext"><![CDATA[{@$authorList} wrote {if $count == 1 && !$guestTimesTriggered}a reply{else}replies{/if} to {@$notificationContent[variables][commentAuthor]->username}’s comment on the page [URL:{$notificationContent[variables][page]->getLink()}#comment{@$commentID}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
-		<item name="wcf.user.notification.pageComment.response.mail.html"><![CDATA[<p>{@$authorList} wrote {if $count == 1 && !$guestTimesTriggered}a reply{else}replies{/if} to {@$notificationContent[variables][commentAuthor]->username}’s comment on the page <a href="{$notificationContent[variables][page]->getLink()}#comment{@$commentID}">{$notificationContent[variables][page]->getTitle()}</a>:</p>]]></item><item name="wcf.user.notification.pageComment.response.title"><![CDATA[New Reply (Page)]]></item>
+		<item name="wcf.user.notification.pageComment.response.mail.html"><![CDATA[<p>{@$authorList} wrote {if $count == 1 && !$guestTimesTriggered}a reply{else}replies{/if} to {@$notificationContent[variables][commentAuthor]->username}’s comment on the page <a href="{$notificationContent[variables][page]->getLink()}#comment{@$commentID}">{$notificationContent[variables][page]->getTitle()}</a>:</p>]]></item>
+		<item name="wcf.user.notification.pageComment.response.title"><![CDATA[New Reply (Page)]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.title.stacked"><![CDATA[{#$timesTriggered} new replies (Page)]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} wrote a reply to your comment on the page <a href="{$page->getLink()}#comment{@$commentID}/response{@$responseID}">{$page->getTitle()}</a>.]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} replied to your comment on the page <a href="{$page->getLink()}#comment{@$commentID}">{$page->getTitle()}</a>.]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.mail.plaintext"><![CDATA[{@$authorList} wrote {if $count == 1 && !$guestTimesTriggered}a reply{else}replies{/if} to your comment on the page [URL:{$notificationContent[variables][page]->getLink()}#comment{@$commentID}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.mail.html"><![CDATA[<p>{@$authorList} wrote {if $count == 1 && !$guestTimesTriggered}a reply{else}replies{/if} to your comment on the page <a href="{$notificationContent[variables][page]->getLink()}#comment{@$commentID}">{$notificationContent[variables][page]->getTitle()}</a>:</p>]]></item>
-		
 		<item name="wcf.user.notification.com.woltlab.wcf.article.comment.notification.comment"><![CDATA[Notify me of new comments on my articles]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.article.comment.response.notification.commentResponse"><![CDATA[Notify me of new replies to my comments]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.article.comment.response.notification.commentResponseOwner"><![CDATA[Notify me of new replies to comments on my articles]]></item>
@@ -4789,14 +4653,12 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.articleComment.responseOwner.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} replied to a comment by {if $author->userID}<a href="{link controller='User' object=$author}{/link}" class="userLink" data-user-id="{@$author->userID}">{$author->username}</a>{else}{$author->username}{/if} on your article <a href="{link controller='Article' object=$article}#comments/comment{@$commentID}{/link}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.user.notification.articleComment.responseOwner.mail.plaintext"><![CDATA[{@$authorList} wrote {if $count == 1 && !$guestTimesTriggered}a reply{else}replies{/if} to {@$notificationContent[variables][commentAuthor]->username}’s{if $notificationContent[variables][commentAuthor]->userID} [URL:{link controller='User' object=$notificationContent[variables][commentAuthor] isEmail=true}{/link}]{/if} comment on your article “{@$article->getTitle()}” [URL:{link controller='Article' object=$article isEmail=true}#comments/comment{@$commentID}/response{@$responseID}{/link}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.articleComment.responseOwner.mail.html"><![CDATA[<p>{@$authorList} wrote {if $count == 1 && !$guestTimesTriggered}a reply{else}replies{/if} to {if $notificationContent[variables][commentAuthor]->userID}<a href="{link controller='User' object=$notificationContent[variables][commentAuthor] isEmail=true}{/link}">{$notificationContent[variables][commentAuthor]->username}</a>{else}{$notificationContent[variables][commentAuthor]->username}{/if}’s comment on your article <a href="{link controller='Article' object=$article isEmail=true}#comments/comment{@$commentID}/response{@$responseID}{/link}">{$article->getTitle()}</a>:</p>]]></item>
-		
 		<item name="wcf.user.notification.com.woltlab.wcf.article.notification.article"><![CDATA[Notify me of new articles in watched categories]]></item>
 		<item name="wcf.user.notification.article.title"><![CDATA[New Article]]></item>
 		<item name="wcf.user.notification.article.message"><![CDATA[{if $author->userID}{@$author->getAnchorTag()}{else}A guest{/if} wrote the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.user.notification.article.mail.plaintext"><![CDATA[{if $event->getAuthor()->userID}{@$event->getAuthor()->username} [URL:{link controller='User' object=$event->getAuthor() isEmail=true}{/link}]{else}A guest{/if} wrote the article “{@$notificationContent[variables][articleContent]->getTitle()}” [URL:{link controller='Article' object=$notificationContent[variables][articleContent] isEmail=true}{/link}]:]]></item>
 		<item name="wcf.user.notification.article.mail.html"><![CDATA[<p>{if $event->getAuthor()->userID}<a href="{link controller='User' object=$event->getAuthor() isEmail=true}{/link}">{$event->getAuthor()->username}</a>{else}A guest{/if} wrote the article <a href="{link controller='Article' object=$notificationContent[variables][articleContent] isEmail=true}{/link}">{$notificationContent[variables][articleContent]->getTitle()}</a>:</p>]]></item>
 	</category>
-	
 	<category name="wcf.user.profile">
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You have not provided any details yet.{else}There are not any details visible to you.{/if}]]></item>
 		<item name="wcf.user.profile.content.recentActivity.noEntries"><![CDATA[There are not any recent activities at the moment.]]></item>
@@ -4821,14 +4683,12 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.profile.customization"><![CDATA[Customization]]></item>
 		<item name="wcf.user.profile.title"><![CDATA[User profile of {$user->username}]]></item>
 	</category>
-	
 	<category name="wcf.user.objectWatch">
 		<item name="wcf.user.objectWatch.manageSubscription"><![CDATA[Manage Subscription]]></item>
 		<item name="wcf.user.objectWatch.subscribe.com.woltlab.wcf.article.category"><![CDATA[Watch this category]]></item>
 		<item name="wcf.user.objectWatch.enableNotification.com.woltlab.wcf.article.category"><![CDATA[Notify me of new articles.]]></item>
 		<item name="wcf.user.objectWatch.unsubscribe.com.woltlab.wcf.article.category"><![CDATA[Unwatch this category]]></item>
 	</category>
-	
 	<category name="wcf.user.option">
 		<item name="wcf.user.option.aboutMe"><![CDATA[About Me]]></item>
 		<item name="wcf.user.option.adminCanMail"><![CDATA[Accept emails sent by administrators]]></item>
@@ -4841,7 +4701,6 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.option.canViewOnlineStatus"><![CDATA[Can View My Online Status]]></item>
 		<item name="wcf.user.option.canViewProfile"><![CDATA[Can View My Profile]]></item>
 		<item name="wcf.user.option.canViewTrophies"><![CDATA[Can View Trophies]]></item>
-		
 		<item name="wcf.user.option.category.profile"><![CDATA[Personal Data]]></item>
 		<item name="wcf.user.option.category.profile.aboutMe"><![CDATA[About Me]]></item>
 		<item name="wcf.user.option.category.profile.contact"><![CDATA[Contact Options]]></item>
@@ -4854,7 +4713,6 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.option.category.settings.privacy"><![CDATA[Privacy]]></item>
 		<item name="wcf.user.option.category.settings.privacy.content"><![CDATA[Content]]></item>
 		<item name="wcf.user.option.category.settings.privacy.messaging"><![CDATA[Messaging]]></item>
-		
 		<item name="wcf.user.option.gender"><![CDATA[Gender]]></item>
 		<item name="wcf.user.option.hobbies"><![CDATA[Hobbies]]></item>
 		<item name="wcf.user.option.homepage"><![CDATA[Website]]></item>
@@ -4871,11 +4729,9 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Can Write Comments on My Wall]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting"><![CDATA[Preserve text formatting when pasting into the editor]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting.description"><![CDATA[Disabling this option will force any content to be pasted from clipboard as plain text, stripping all formatting.]]></item>
-		
 		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[User’s selection for “{lang}wcf.user.option.{$option->optionName}{/lang}”:]]></item>
 		<item name="wcf.user.option.searchTextOption"><![CDATA[“{lang}wcf.user.option.{$option->optionName}{/lang}” contains:]]></item>
 	</category>
-	
 	<category name="wcf.user.mail">
 		<item name="wcf.user.mail.information"><![CDATA[Details]]></item>
 		<item name="wcf.user.mail.mail.subject"><![CDATA[Message From {@$username}: {@$subject}]]></item>
@@ -4884,7 +4740,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 “{@$username}” sent you a message on {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]:
 
 {@$message}]]></item>
-<item name="wcf.user.mail.mail.html"><![CDATA[<h2>Dear {$mailbox->getUser()->username},</h2>
+		<item name="wcf.user.mail.mail.html"><![CDATA[<h2>Dear {$mailbox->getUser()->username},</h2>
 
 <p>„{$username}“ sent you a message on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a>:</p>
 
@@ -4895,7 +4751,6 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.mail.showAddress"><![CDATA[Use my email address as sender address, the recipient can directly reply to me.]]></item>
 		<item name="wcf.user.mail.subject"><![CDATA[Subject]]></item>
 	</category>
-	
 	<category name="wcf.user.rank">
 		<item name="wcf.user.rank.administrator"><![CDATA[Administrator]]></item>
 		<item name="wcf.user.rank.moderator"><![CDATA[Moderator]]></item>
@@ -4906,7 +4761,5 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.rank.user4"><![CDATA[Master]]></item>
 		<item name="wcf.user.rank.user5"><![CDATA[Enlightened]]></item>
 	</category>
-	
-	<!-- i18n categories -->
-	<category name="wcf.smiley" />
+	<category name="wcf.smiley"/>
 </language>

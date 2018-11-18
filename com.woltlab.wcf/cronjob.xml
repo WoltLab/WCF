@@ -10,10 +10,7 @@
 			<startdom>*/2</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.refreshSearchRobots">
 			<classname>wcf\system\cronjob\RefreshSearchRobotsCronjob</classname>
 			<description>Refreshes list of search robots</description>
@@ -23,10 +20,7 @@
 			<startdom>1</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.dailyCleanUp">
 			<classname>wcf\system\cronjob\DailyCleanUpCronjob</classname>
 			<description>Executes daily Cleanup</description>
@@ -36,10 +30,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.hourlyCleanUp">
 			<classname>wcf\system\cronjob\HourlyCleanUpCronjob</classname>
 			<description>Executes hourly Cleanup</description>
@@ -49,10 +40,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.sessionCleanUp">
 			<classname>wcf\system\cronjob\SessionCleanUpCronjob</classname>
 			<description>Deletes expired sessions</description>
@@ -62,10 +50,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.attachmentCleanUp">
 			<classname>wcf\system\cronjob\AttachmentCleanUpCronjob</classname>
 			<description>Deletes orphaned attachments</description>
@@ -75,10 +60,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.backgroundQueueCleanUp">
 			<classname>wcf\system\cronjob\BackgroundQueueCleanUpCronjob</classname>
 			<description>Requeues stuck queue items</description>
@@ -88,10 +70,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.lastActivityUpdate">
 			<classname>wcf\system\cronjob\LastActivityCronjob</classname>
 			<description>Updates last activity timestamp</description>
@@ -101,11 +80,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<active>1</active>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.userQuit">
 			<classname>wcf\system\cronjob\UserQuitCronjob</classname>
 			<description>Deletes canceled user accounts</description>
@@ -115,11 +90,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<active>1</active>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.dailyMailNotification">
 			<classname>wcf\system\cronjob\DailyMailNotificationCronjob</classname>
 			<description>Sends daily mail notifications</description>
@@ -129,11 +100,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<active>1</active>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.moderationQueueCleanup">
 			<classname>wcf\system\cronjob\ModerationQueueCronjob</classname>
 			<description>Moderation queue cleanup</description>
@@ -143,11 +110,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<active>1</active>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.statDailyBuilder">
 			<classname>wcf\system\cronjob\StatDailyBuilderCronjob</classname>
 			<description>Builds the daily statistics</description>
@@ -157,11 +120,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<active>1</active>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.userGroupAssignment">
 			<classname>wcf\system\cronjob\UserGroupAssignmentCronjob</classname>
 			<description>Automatically assigns users to user groups</description>
@@ -171,11 +130,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<active>1</active>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.userBan">
 			<classname>wcf\system\cronjob\UserBanCronjob</classname>
 			<description>Unbans users and enables disabled avatars and disabled signatures</description>
@@ -185,11 +140,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<active>1</active>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.articlePublication">
 			<classname>wcf\system\cronjob\ArticlePublicationCronjob</classname>
 			<description>Publishes delayed articles</description>
@@ -199,10 +150,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.expiringPaidSubscriptionUser">
 			<classname>wcf\system\cronjob\ExpiringPaidSubscriptionUserCronjob</classname>
 			<description>Sends notifications about expiring paid subscriptions</description>
@@ -212,10 +160,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.rebuildSitemap">
 			<classname>wcf\system\cronjob\RebuildSitemapCronjob</classname>
 			<description>Rebuilds the sitemap</description>
@@ -225,10 +170,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
-		
 		<cronjob name="com.woltlab.wcf.assignTrophies">
 			<classname>wcf\system\cronjob\AssignTrophiesCronjob</classname>
 			<description>Assign trophies based on rules</description>
@@ -238,8 +180,6 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
-			<canbeedited>1</canbeedited>
-			<canbedisabled>1</canbedisabled>
 		</cronjob>
 	</import>
 </data>

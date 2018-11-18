@@ -4,25 +4,24 @@
 		<eventlistener name="sessionPageAccessLog">
 			<eventclassname>wcf\page\AbstractPage</eventclassname>
 			<eventname>readParameters</eventname>
+			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 			<environment>admin</environment>
 			<inherit>1</inherit>
-			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 		</eventlistener>
 		<eventlistener name="sessionFormAccessLog">
 			<eventclassname>wcf\form\AbstractForm</eventclassname>
 			<eventname>readParameters</eventname>
+			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 			<environment>admin</environment>
 			<inherit>1</inherit>
-			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 		</eventlistener>
 		<eventlistener name="sessionActionAccessLog">
 			<eventclassname>wcf\action\AbstractAction</eventclassname>
 			<eventname>readParameters</eventname>
+			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 			<environment>admin</environment>
 			<inherit>1</inherit>
-			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 		</eventlistener>
-		
 		<eventlistener name="articleLinkhtmlInputNodeProcessor">
 			<eventclassname>wcf\system\html\input\node\HtmlInputNodeProcessor</eventclassname>
 			<eventname>afterProcess</eventname>

@@ -168,9 +168,11 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 						return;
 					}
 					
+					$aliases = $this->editedEntry ? $this->editedEntry->getElementsByTagName('aliases')->item(0) : null;
 					if (
 						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_CREATE ||
-						$this->editedEntry->getElementsByTagName('aliases')->item(0)->nodeValue !== $formField->getSaveValue()
+						$aliases === null ||
+						$aliases->nodeValue !== $formField->getSaveValue()
 					) {
 						$notUniqueCodes = [];
 						foreach ($formField->getValue() as $alias) {
@@ -236,17 +238,26 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		$optionalElements = [
 			'aliases' => 'aliases',
 			'smileyPath2x' => 'path2x',
-			'showOrder' => 'showOrder'
 		];
 		foreach ($optionalElements as $arrayKey => $elementName) {
 			$child = $element->getElementsByTagName($elementName)->item(0);
 			if ($child !== null) {
 				$data[$arrayKey] = $child->nodeValue;
 			}
+			else {
+				$data[$arrayKey] = '';
+			}
 		}
 		
-		if ($saveData && !isset($data['aliases'])) {
-			$data['aliases'] = '';
+		$showOrder = $element->getElementsByTagName('showorder')->item(0);
+		if ($showOrder !== null) {
+			$data['showOrder'] = $showOrder->nodeValue;
+		}
+		if ($saveData && $this->editedEntry === null) {
+			// only set explicit showOrder when adding new menu item
+			$data['showOrder'] = $this->getShowOrder(
+				$data['showOrder'] ?? null
+			);
 		}
 		
 		return $data;

@@ -640,10 +640,16 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				if ($contentContent !== null) {
 					$data['content'][$languageID] = $contentContent->nodeValue;
 				}
+				else if ($saveData) {
+					$data['content'][$languageID] = '';
+				}
 				
 				$title = $content->getElementsByTagName('title')->item(0);
 				if ($title !== null) {
 					$data['title'][$languageID] = $title->nodeValue;
+				}
+				else if ($saveData) {
+					$data['title'][$languageID] = '';
 				}
 			}
 		}
@@ -652,6 +658,14 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			$optionalElement = $element->getElementsByTagName($optionalElementName)->item(0);
 			if ($optionalElement !== null) {
 				$data[$optionalElementName] = $optionalElement->nodeValue;
+			}
+			else if ($saveData) {
+				if ($optionalElementName === 'showHeader' || $optionalElementName === 'visibleEverywhere') {
+					$data[$optionalElementName] = 0;
+				}
+				else {
+					$data[$optionalElementName] = '';
+				}
 			}
 		}
 		

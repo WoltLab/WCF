@@ -220,7 +220,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 				->value(true)
 		]);
 		
-		foreach (['startDom', 'startDow', 'startHour', 'startMinute', 'startMonth'] as $timeProperty) {
+		foreach (['startMinute', 'startHour', 'startDom', 'startMonth', 'startDow'] as $timeProperty) {
 			$dataContainer->insertBefore(
 				TextFormField::create($timeProperty)
 					->objectProperty(strtolower($timeProperty))
@@ -300,12 +300,44 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		
 		$canBeEdited = $element->getElementsByTagName('canbeedited')->item(0);
 		if ($canBeEdited !== null) {
-			$data['canBeDisabled'] = $canBeEdited->nodeValue;
+			$data['canBeEdited'] = $canBeEdited->nodeValue;
+		}
+		else if ($saveData) {
+			$data['canBeEdited'] = 1;
+		}
+		
+		$canBeDisabled = $element->getElementsByTagName('canbedisabled')->item(0);
+		if ($canBeDisabled !== null) {
+			$data['canBeDisabled'] = $canBeDisabled->nodeValue;
+		}
+		else if ($saveData) {
+			$data['canBeDisabled'] = 1;
 		}
 		
 		$isDisabled = $element->getElementsByTagName('isdisabled')->item(0);
 		if ($isDisabled !== null) {
-			$data['canBeDisabled'] = $isDisabled->nodeValue;
+			$data['isDisabled'] = $isDisabled->nodeValue;
+		}
+		else if ($saveData) {
+			$data['isDisabled'] = 0;
+		}
+		
+		$isDisabled = $element->getElementsByTagName('options')->item(0);
+		if ($isDisabled !== null) {
+			$data['options'] = $isDisabled->nodeValue;
+		}
+		else if ($saveData) {
+			$data['options'] = '';
+		}
+		
+		if ($saveData) {
+			$descriptions = $data['description'];
+			unset($data['description']);
+			
+			$data['description'] = [];
+			foreach ($descriptions as $languageID => $description) {
+				$data['description'][LanguageFactory::getInstance()->getLanguage($languageID)->languageCode] = $description;
+			}
 		}
 		
 		return $data;
@@ -376,11 +408,11 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		$this->appendElementChildren(
 			$cronjob,
 			[
-				'startmonth',
-				'startdom',
-				'startdow',
-				'starthour',
 				'startminute',
+				'starthour',
+				'startdom',
+				'startmonth',
+				'startdow',
 				'options' => '',
 				'canbeedited' => 1,
 				'canbedisabled' => 1,

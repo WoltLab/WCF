@@ -48,7 +48,9 @@
 	}
 }
 
-.messageTabMenu + .innerError {
+.messageTabMenu + .innerError,
+.messageTabMenu + .innerSuccess,
+.messageTabMenu + .innerWarning {
 	margin-top: -1px;
 	width: 100%;
 }

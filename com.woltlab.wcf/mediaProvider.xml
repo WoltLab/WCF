@@ -4,97 +4,82 @@
 		<provider name="youtube">
 			<title>YouTube</title>
 			<regex><![CDATA[https?://(?:.+?\.)?youtu(?:\.be/|be\.com/(?:#/)?watch\?(?:.*?&)?v=)(?P<ID>[a-zA-Z0-9_-]+)]]></regex>
-			<className><![CDATA[wcf\system\bbcode\media\provider\YouTubeBBCodeMediaProvider]]></className>
+			<className>wcf\system\bbcode\media\provider\YouTubeBBCodeMediaProvider</className>
 		</provider>
-		
 		<provider name="youtube-playlist">
 			<title>YouTube Playlist</title>
 			<regex><![CDATA[https?://(?:.+?\.)?youtu(?:\.be/|be\.com/)playlist\?(?:.*?&)?list=(?P<ID>[a-zA-Z0-9_-]+)]]></regex>
 			<html><![CDATA[<div class="videoContainer"><iframe src="https://www.youtube.com/embed/videoseries?list={$ID}" allowfullscreen></iframe></div>]]></html>
 		</provider>
-		
 		<provider name="vimeo">
 			<title>Vimeo</title>
 			<regex><![CDATA[https?://vimeo\.com/(?:channels/[^/]+/)?(?P<ID>\d+)
 https?://vimeo\.com/groups/[^/]+/videos/(?P<ID>\d+)]]></regex>
 			<html><![CDATA[<div class="videoContainer"><iframe src="https://player.vimeo.com/video/{$ID}" allowfullscreen></iframe></div>]]></html>
 		</provider>
-		
 		<provider name="veoh">
 			<title>Veoh</title>
 			<regex><![CDATA[http://(?:www\.)?veoh\.com/watch/v(?P<ID>\d+[a-zA-Z0-9]+)]]></regex>
 			<html><![CDATA[<object width="410" height="341" id="veohFlashPlayer" name="veohFlashPlayer" type="application/x-shockwave-flash" data="http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1308&amp;permalinkId=v{$ID}&amp;player=videodetailsembedded&amp;videoAutoPlay=0&amp;id=anonymous"><param name="movie" value="http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1308&amp;permalinkId=v{$ID}&amp;player=videodetailsembedded&amp;videoAutoPlay=0&amp;id=anonymous" /><param name="allowFullScreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="wmode" value="transparent" /></object>]]></html>
 		</provider>
-		
 		<provider name="dailymotion">
 			<title>Dailymotion</title>
 			<regex><![CDATA[https?://(?:www\.)?dailymotion\.com/video/(?P<ID>[a-zA-Z0-9_-]+)]]></regex>
 			<html><![CDATA[<div class="videoContainer"><iframe src="//www.dailymotion.com/embed/video/{$ID}"></iframe></div>]]></html>
 		</provider>
-		
 		<provider name="github-gist">
 			<title>GitHub Gist</title>
 			<regex><![CDATA[https://gist.github.com/(?P<ID>[^/]+/[0-9a-zA-Z]+)]]></regex>
 			<html><![CDATA[<script src="https://gist.github.com/{$ID}.js"> </script>]]></html>
 		</provider>
-		
 		<provider name="soundcloud">
 			<title>SoundCloud</title>
 			<regex><![CDATA[https?://soundcloud.com/(?P<artist>[a-zA-Z0-9_-]+)/(?!sets/)(?P<song>[a-zA-Z0-9_-]+)]]></regex>
 			<html><![CDATA[<iframe width="100%" height="166" scrolling="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fsoundcloud.com%2F{$artist}%2F{$song}"></iframe>]]></html>
 		</provider>
-		
 		<provider name="soundcloud-set">
 			<title>Soundcloud Set</title>
 			<regex><![CDATA[https?://soundcloud.com/(?P<artist>[a-zA-Z0-9_-]+)/sets/(?P<name>[a-zA-Z0-9_-]+)]]></regex>
 			<html><![CDATA[<iframe width="100%" height="450" scrolling="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fsoundcloud.com%2F{$artist}%2Fsets%2F{$name}"></iframe>]]></html>
 		</provider>
-		
 		<provider name="instagram">
 			<title>Instagram</title>
 			<regex><![CDATA[https?://(?:www\.)?(?:instagram\.com|instagr\.am)/p/(?<ID>[a-zA-Z0-9_-]+)]]></regex>
 			<html><![CDATA[<blockquote class="instagram-media" data-instgrm-version="7"><a href="https://www.instagram.com/p/{$ID}/"></a></blockquote><script async defer src="//platform.instagram.com/en_US/embeds.js"></script>]]></html>
 		</provider>
-		
 		<provider name="imgur">
 			<title>Imgur</title>
 			<regex><![CDATA[https?://imgur.com/(?:gallery/)?(?P<ID>[a-zA-Z0-9-]+)]]></regex>
 			<html><![CDATA[<blockquote class="imgur-embed-pub" data-id="a/{$ID}"></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>]]></html>
 		</provider>
-		
 		<provider name="spotify-playlist">
 			<title>Spotify Playlist</title>
 			<regex><![CDATA[https?://play.spotify.com/user/(?<USER>[0-9a-zA-Z]+)/playlist/(?<ID>[0-9a-zA-Z]+)
 https?://open.spotify.com/user/(?<USER>[0-9a-zA-Z]+)/playlist/(?<ID>[0-9a-zA-Z]+)]]></regex>
 			<html><![CDATA[<iframe width="300" height="380" src="https://embed.spotify.com/?uri=spotify:user:{$USER}:playlist:{$ID}" frameborder="0" allowtransparency="true"></iframe>]]></html>
 		</provider>
-		
 		<provider name="spotify">
 			<title>Spotify</title>
 			<regex><![CDATA[https?://play.spotify.com/(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)
 https?://open.spotify.com/(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)]]></regex>
 			<html><![CDATA[<iframe width="300" height="380" src="https://embed.spotify.com/?uri=spotify:{$TYPE}:{$ID}" frameborder="0" allowtransparency="true"></iframe>]]></html>
 		</provider>
-		
 		<provider name="twitch-channel">
 			<title>Twitch Channel</title>
 			<regex><![CDATA[https?://www.twitch.tv/(?!videos)(?!.*/v/)(?<CHANNEL>[a-zA-Z0-9_]+)]]></regex>
 			<html><![CDATA[<div class="videoContainer"><iframe src="https://player.twitch.tv/?channel={$CHANNEL}&autoplay=false" frameborder="0" scrolling="no" allowfullscreen></iframe></div>]]></html>
 		</provider>
-		
 		<provider name="twitch-clip">
 			<title>Twitch Clip</title>
 			<regex><![CDATA[https?://clips.twitch.tv/(?<AUTHOR>([a-zA-Z0-9_]+)/)?(?<VIDEO>[a-zA-Z0-9_]+)]]></regex>
 			<html><![CDATA[<div class="videoContainer"><iframe src="https://clips.twitch.tv/embed?clip={$AUTHOR}{$VIDEO}&autoplay=false" frameborder="0" scrolling="no" allowfullscreen></iframe></div>]]></html>
 		</provider>
-		
 		<provider name="twitch-video">
 			<title>Twitch Video</title>
 			<regex><![CDATA[https?://www.twitch.tv/videos/(?<ID>[0-9]+)
 https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<ID>[0-9]+)]]></regex>
 			<html><![CDATA[<div class="videoContainer"><iframe src="https://player.twitch.tv/?video=v{$ID}&autoplay=false" frameborder="0" scrolling="no" allowfullscreen></iframe></div>]]></html>
 		</provider>
-		
 		<provider name="twitter-tweet">
 			<title>Twitter Tweet</title>
 			<regex><![CDATA[https://twitter.com/(?<USERNAME>[0-9a-zA-Z_]+)/status/(?<ID>[0-9]+)]]></regex>

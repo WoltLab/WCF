@@ -19,6 +19,12 @@ use wcf\system\WCFACP;
  */
 class ControllerMap extends SingletonFactory {
 	/**
+	 * @var array
+	 * @since 3.2
+	 */
+	protected $applicationOverrides;
+	
+	/**
 	 * @var	array
 	 */
 	protected $ciControllers;
@@ -44,6 +50,7 @@ class ControllerMap extends SingletonFactory {
 	 * @throws	SystemException
 	 */
 	protected function init() {
+		$this->applicationOverrides = RoutingCacheBuilder::getInstance()->getData([], 'applicationOverrides');
 		$this->ciControllers = RoutingCacheBuilder::getInstance()->getData([], 'ciControllers');
 		$this->customUrls = RoutingCacheBuilder::getInstance()->getData([], 'customUrls');
 		$this->landingPages = RoutingCacheBuilder::getInstance()->getData([], 'landingPages');
@@ -78,8 +85,13 @@ class ControllerMap extends SingletonFactory {
 			else if ($controller === 'AjaxUpload') $controller = 'AJAXUpload';
 			else if ($controller === 'AjaxInvoke') $controller = 'AJAXInvoke';
 			
-			// work-around for package installation during upgrade 2.1 -> 3.0
+			// work-around for package installation during the upgrade 2.1 -> 3.0
 			if ($isAcpRequest && $controller === 'InstallPackage') $application = 'wcf';
+			
+			// Map virtual controllers to their true application
+			if (isset($this->applicationOverrides['lookup'][$application][$controller])) {
+				$application = $this->applicationOverrides['lookup'][$application][$controller];
+			}
 			
 			$classData = $this->getClassData($application, $controller, $isAcpRequest, 'page');
 			if ($classData === null) $classData = $this->getClassData($application, $controller, $isAcpRequest, 'form');
@@ -313,6 +325,21 @@ class ControllerMap extends SingletonFactory {
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Returns the virtual application abbreviation for the provided controller.
+	 * 
+	 * @param string $application
+	 * @param string $controller
+	 * @return string
+	 */
+	public function getApplicationOverride($application, $controller) {
+		if (isset($this->applicationOverrides['reverse'][$application][$controller])) {
+			return $this->applicationOverrides['reverse'][$application][$controller];
+		}
+		
+		return $application;
 	}
 	
 	/**

@@ -55,7 +55,6 @@
 			<title language="en">Search Members</title>
 			<page>com.woltlab.wcf.UserSearch</page>
 		</item>
-		
 		<item identifier="com.woltlab.wcf.PrivacyPolicy">
 			<menu>com.woltlab.wcf.FooterMenu</menu>
 			<title language="de">Datenschutzerklärung</title>

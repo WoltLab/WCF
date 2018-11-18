@@ -20,7 +20,7 @@ use wcf\util\HeaderUtil;
  * @package	WoltLabSuite\Core\Page
  * @since	3.0
  */
-class ArticleListPage extends MultipleLinkPage {
+class ArticleListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
@@ -75,6 +75,21 @@ class ArticleListPage extends MultipleLinkPage {
 	 * @since 3.2
 	 */
 	public $user;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $defaultSortField = 'time';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $defaultSortOrder = 'DESC';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $validSortFields = ['title', 'time'];
 	
 	/**
 	 * @inheritDoc
@@ -134,6 +149,10 @@ class ArticleListPage extends MultipleLinkPage {
 		parent::initObjectList();
 		
 		$this->applyFilters();
+		
+		if ($this->sortField === 'title') {
+			$this->objectList->sqlSelects = "(SELECT title FROM wcf".WCF_N."_article_content WHERE articleID = article.articleID AND (languageID IS NULL OR languageID = ".WCF::getLanguage()->languageID.") LIMIT 1) AS title";
+		}
 	}
 	
 	protected function applyFilters() {

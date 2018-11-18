@@ -6,7 +6,7 @@
 				<span class="badge">{#$categoryItem->getArticles()}</span>
 			</a>
 			
-			{if $activeCategory && ($activeCategory->categoryID == $categoryItem->categoryID || $activeCategory->isParentCategory($categoryItem->getDecoratedObject())) && $categoryItem->hasChildren()}
+			{if $categoryItem->hasChildren() && (!$categoryItem->parentCategoryID || ($activeCategory->categoryID == $categoryItem->categoryID || $activeCategory->isParentCategory($categoryItem->getDecoratedObject())))}
 				<ol class="boxMenuDepth1">
 					{foreach from=$categoryItem item=subCategoryItem}
 						<li{if $activeCategory && $activeCategory->categoryID == $subCategoryItem->categoryID} class="active"{/if} data-category-id="{@$subCategoryItem->categoryID}">

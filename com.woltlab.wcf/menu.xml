@@ -4,35 +4,27 @@
 		<menu identifier="com.woltlab.wcf.MainMenu">
 			<title language="de">Hauptmenü</title>
 			<title language="en">Main Menu</title>
-			
 			<box>
 				<position>mainMenu</position>
-				<cssClassName>mainMenu</cssClassName>
-				<showHeader>0</showHeader>
 				<visibleEverywhere>1</visibleEverywhere>
+				<cssClassName>mainMenu</cssClassName>
 			</box>
 		</menu>
-		
 		<menu identifier="com.woltlab.wcf.FooterMenu">
 			<title language="de">Footer-Menü</title>
 			<title language="en">Footer Menu</title>
-			
 			<box>
 				<position>footer</position>
-				<showHeader>0</showHeader>
 				<visibleEverywhere>1</visibleEverywhere>
 			</box>
 		</menu>
-		
 		<menu identifier="com.woltlab.wcf.FooterLinks">
 			<title language="de">Footer-Links</title>
 			<title language="en">Footer Links</title>
-			
 			<box>
 				<position>footer</position>
-				<cssClassName>boxMenuLinkGroup</cssClassName>
-				<showHeader>0</showHeader>
 				<visibleEverywhere>1</visibleEverywhere>
+				<cssClassName>boxMenuLinkGroup</cssClassName>
 			</box>
 		</menu>
 	</import>

@@ -183,6 +183,8 @@
 						<span class="userRankImage">{@$user->getRank()->getImage()}</span>
 					{/if}
 				{/if}
+				
+				{event name='afterContentTitle'}
 			</h1>
 			
 			<div class="contentHeaderDescription">
