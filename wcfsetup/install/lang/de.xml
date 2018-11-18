@@ -227,6 +227,7 @@
 		<item name="wcf.acp.box.linkPageObjectID.error.invalid"><![CDATA[Die eingetragene ID ist ungültig.]]></item>
 		<item name="wcf.acp.box.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.box' objectID=$box->boxID}{/link}">vorherige Versionen</a> dieser Box, die letzte Änderung erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 		<item name="wcf.acp.box.originIsNotSystem"><![CDATA[Eigene Boxen]]></item>
+		<item name="wcf.acp.box.isDisabled"><![CDATA[Box ist deaktiviert]]></item>
 	</category>
 	<category name="wcf.acp.cache">
 		<item name="wcf.acp.cache.button.clear"><![CDATA[Cache leeren]]></item>

@@ -3,6 +3,7 @@
 <script data-relocate="true">
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\box\\BoxAction', '.jsBoxRow');
+		new WCF.Action.Toggle('wcf\\data\\box\\BoxAction', '.jsBoxRow');
 	});
 </script>
 
@@ -123,6 +124,7 @@
 				{foreach from=$objects item=box}
 					<tr class="jsBoxRow">
 						<td class="columnIcon">
+							<span class="icon icon24 fa-{if !$box->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$box->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$box->boxID}"></span>
 							<a href="{link controller='BoxEdit' id=$box->boxID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon24 fa-pencil"></span></a>
 							{if $box->canDelete()}
 								<span class="icon icon24 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$box->boxID}" data-confirm-message-html="{lang __encode=true}wcf.acp.box.delete.confirmMessage{/lang}"></span>

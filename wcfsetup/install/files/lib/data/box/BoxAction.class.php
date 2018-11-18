@@ -2,9 +2,11 @@
 namespace wcf\data\box;
 use wcf\data\box\content\BoxContent;
 use wcf\data\box\content\BoxContentEditor;
+use wcf\data\IToggleAction;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\system\box\IConditionBoxController;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -25,7 +27,9 @@ use wcf\system\WCF;
  * @method	BoxEditor[]	getObjects()
  * @method	BoxEditor	getSingleObject()
  */
-class BoxAction extends AbstractDatabaseObjectAction {
+class BoxAction extends AbstractDatabaseObjectAction implements IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
