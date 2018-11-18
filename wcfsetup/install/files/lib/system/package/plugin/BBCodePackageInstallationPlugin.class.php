@@ -255,30 +255,49 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			if ($child !== null) {
 				$data[$arrayKey] = $child->nodeValue;
 			}
+			else if ($saveData) {
+				if (substr($arrayKey, 0, 2) === 'is') {
+					$data[$arrayKey] = 0;
+				}
+				else {
+					$data[$arrayKey] = '';
+				}
+			}
 		}
 		
 		if (!empty($data['wysiwygicon']) && !empty($data['buttonLabel'])) {
 			$data['showButton'] = 1;
+		}
+		else if ($saveData) {
+			$data['showButton'] = 0;
 		}
 		
 		// attributes
 		$attributes = $element->getElementsByTagName('attributes')->item(0);
 		if ($attributes !== null) {
 			$optionalAttributeElements = [
-				'attributeHtml' => 'html',
+				'html' => 'attributeHtml',
 				'required' => 'required',
-				'useText' => 'usetext',
-				'validationPattern' => 'validationpattern',
+				'usetext' => $saveData ? 'usetext' : 'useText',
+				'validationpattern' => $saveData ? 'validationpattern' : 'validationPattern'
 			];
 			
 			/** @var \DOMElement $attribute */
 			foreach ($attributes->childNodes as $attribute) {
-				$attributeData = ['name' => $attribute->nodeValue];
+				$attributeData = [];
 				
-				foreach ($optionalAttributeElements as $arrayKey => $elementName) {
+				foreach ($optionalAttributeElements as $elementName => $arrayIndex) {
 					$child = $attribute->getElementsByTagName($elementName)->item(0);
 					if ($child !== null) {
-						$attributeData[$arrayKey] = $child->nodeValue;
+						$attributeData[$arrayIndex] = $child->nodeValue;
+					}
+					else if ($saveData) {
+						if ($elementName === 'required' || $elementName === 'usetext') {
+							$attributeData[$arrayIndex] = 0;
+						}
+						else {
+							$attributeData[$arrayIndex] = '';
+						}
 					}
 				}
 				
@@ -506,11 +525,11 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			$bbcode,
 			[
 				'classname' => '',
-				'htmlclose' => [
+				'htmlopen' => [
 					'cdata' => true,
 					'defaultValue' => ''
 				],
-				'htmlopen' => [
+				'htmlclose' => [
 					'cdata' => true,
 					'defaultValue' => ''
 				],
@@ -536,7 +555,9 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 					$attribute->appendChild($html);
 				}
 				if (!empty($attributeData['validationPattern'])) {
-					$attribute->appendChild($document->createElement('validationpattern', $attributeData['validationPattern']));
+					$validationpattern = $document->createElement('validationpattern');
+					$validationpattern->appendChild($document->createCDATASection($attributeData['validationPattern']));
+					$attribute->appendChild($validationpattern);
 				}
 				if (!empty($attributeData['required'])) {
 					$attribute->appendChild($document->createElement('required', $attributeData['required']));

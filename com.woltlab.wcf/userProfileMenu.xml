@@ -1,26 +1,23 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/userProfileMenu.xsd">
 	<import>
 		<userprofilemenuitem name="about">
 			<classname>wcf\system\menu\user\profile\content\AboutUserProfileMenuContent</classname>
 			<showorder>3</showorder>
 		</userprofilemenuitem>
-		
 		<userprofilemenuitem name="likes">
 			<classname>wcf\system\menu\user\profile\content\LikesUserProfileMenuContent</classname>
-			<showorder>2</showorder>
 			<options>module_like</options>
+			<showorder>2</showorder>
 		</userprofilemenuitem>
-		
 		<userprofilemenuitem name="recentActivity">
 			<classname>wcf\system\menu\user\profile\content\RecentActivityUserProfileMenuContent</classname>
 			<showorder>1</showorder>
 		</userprofilemenuitem>
-		
 		<userprofilemenuitem name="wall">
 			<classname>wcf\system\menu\user\profile\content\CommentUserProfileMenuContent</classname>
-			<showorder>1</showorder>
 			<options>module_user_profile_wall</options>
+			<showorder>1</showorder>
 		</userprofilemenuitem>
 	</import>
 </data>

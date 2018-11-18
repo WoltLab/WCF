@@ -1049,6 +1049,7 @@ CREATE TABLE wcf1_page (
 	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
 	packageID INT(10) NOT NULL,
 	applicationPackageID INT(10),
+	overrideApplicationPackageID INT(10),
 	controller VARCHAR(255) NOT NULL DEFAULT '',
 	handler VARCHAR(255) NOT NULL DEFAULT '',
 	controllerCustomURL VARCHAR(255) NOT NULL DEFAULT '',
@@ -1995,6 +1996,7 @@ ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (paymentMetho
 ALTER TABLE wcf1_page ADD FOREIGN KEY (parentPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 ALTER TABLE wcf1_page ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_page ADD FOREIGN KEY (applicationPackageID) REFERENCES wcf1_package (packageID) ON DELETE SET NULL;
+ALTER TABLE wcf1_page ADD FOREIGN KEY (overrideApplicationPackageID) REFERENCES wcf1_package (packageID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_page_box_order ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_page_box_order ADD FOREIGN KEY (boxID) REFERENCES wcf1_box (boxID) ON DELETE CASCADE;

@@ -49,7 +49,8 @@ class PermissionDeniedException extends UserException {
 			'stacktrace' => $this->getTraceAsString(),
 			'templateName' => 'permissionDenied',
 			'templateNameApplication' => 'wcf',
-			'exceptionClassName' => $exceptionClassName
+			'exceptionClassName' => $exceptionClassName,
+			'isFirstVisit' => SessionHandler::getInstance()->isFirstVisit(),
 		]);
 		WCF::getTPL()->display('permissionDenied');
 	}

@@ -119,17 +119,26 @@ define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metac
 				value = '';
 			}
 			
-			// check if storage is outdated
+			// Check if the storage is outdated.
 			if (value !== null && typeof value === 'object' && value.content) {
 				var lastEditTime = ~~elData(this._element, 'autosave-last-edit-time');
 				if (lastEditTime * 1000 <= value.timestamp) {
-					//noinspection JSUnresolvedVariable
-					this._originalMessage = this._element.value;
-					this._restored = true;
+					// Compare the stored version with the editor content, but only use the `innerText` property
+					// in order to ignore differences in whitespace, e. g. caused by indentation of HTML tags.
+					var div1 = elCreate('div');
+					div1.innerHTML = this._element.value;
+					var div2 = elCreate('div');
+					div2.innerHTML = value.content;
 					
-					this._metaData = value.meta || {};
-					
-					return value.content;
+					if (div1.innerText.trim() !== div2.innerText.trim()) {
+						//noinspection JSUnresolvedVariable
+						this._originalMessage = this._element.value;
+						this._restored = true;
+						
+						this._metaData = value.meta || {};
+						
+						return value.content;
+					}
 				}
 			}
 			

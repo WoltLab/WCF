@@ -11,14 +11,20 @@
 	}
 	
 	& + .innerError,
-	> .innerError {
+	& + .innerSuccess,
+	& + .innerWarning,
+	> .innerError,
+	> .innerSuccess,
+	> .innerWarning {
 		border-radius: 0;
 		box-shadow: none;
 		display: block;
 		margin-top: -1px;
 	}
 	
-	> .innerError {
+	> .innerError,
+	> .innerSuccess,
+	> .innerWarning {
 		margin: -1px 0;
 	}
 }

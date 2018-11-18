@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\page;
+use wcf\data\application\Application;
 use wcf\data\page\content\PageContent;
 use wcf\data\DatabaseObject;
 use wcf\data\ILinkableObject;
@@ -35,6 +36,7 @@ use wcf\system\WCF;
  * @property-read	integer		$originIsSystem		        is `1` if the page has been delivered by a package, otherwise `0` (i.e. the page has been created in the ACP)
  * @property-read	integer		$packageID		        id of the package the which delivers the page or `1` if it has been created in the ACP
  * @property-read	integer		$applicationPackageID	        id of the package of the application the pages belongs to
+ * @property-read	integer		overrideApplicationPackageID	id of the package of the application that the page virtually belongs to
  * @property-read	string		$controller		        name of the page controller class
  * @property-read	string		$handler		        name of the page handler class for `system` pages or empty 
  * @property-read	string		$controllerCustomURL	        custom url of the page
@@ -157,15 +159,20 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 			$controllerName = $controllerParts[count($controllerParts) - 1];
 			$controllerName = preg_replace('/(page|action|form)$/i', '', $controllerName);
 			
+			$application = $controllerParts[0];
+			if ($this->overrideApplicationPackageID) {
+				$application = ApplicationHandler::getInstance()->getApplicationByID($this->overrideApplicationPackageID)->getAbbreviation();
+			}
+			
 			return LinkHandler::getInstance()->getLink($controllerName, [
-				'application' => $controllerParts[0],
+				'application' => $application,
 				'forceFrontend' => true
 			]);
 		}
-		else if ($this->applicationPackageID === null) {
+		else if ($this->applicationPackageID === null && $this->overrideApplicationPackageID === null) {
 			// we cannot reliably generate a link for an orphaned page
 			return '';
-		}
+		}       
 		
 		return LinkHandler::getInstance()->getCmsLink($this->pageID);
 	}
@@ -191,10 +198,10 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	/**
 	 * Returns the application of this page.
 	 *
-	 * @return	\wcf\data\application\Application
+	 * @return Application
 	 */
 	public function getApplication() {
-		return ApplicationHandler::getInstance()->getApplicationByID($this->applicationPackageID);
+		return ApplicationHandler::getInstance()->getApplicationByID($this->overrideApplicationPackageID ?: $this->applicationPackageID);
 	}
 	
 	/**

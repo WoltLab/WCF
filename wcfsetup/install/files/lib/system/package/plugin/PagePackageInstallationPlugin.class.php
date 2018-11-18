@@ -660,22 +660,41 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			'excludeFromLandingPage', 'availableDuringOfflineMode', 'requireObjectID'
 		];
 		
+		$zeroDefaultOptions = [
+			'hasFixedParent',
+			'allowSpidersToIndex',
+			'excludeFromLandingPage',
+			'availableDuringOfflineMode',
+			'requireObjectID'
+		];
+		
 		foreach ($optionalElements as $optionalElementName) {
 			$optionalElement = $element->getElementsByTagName($optionalElementName)->item(0);
 			if ($optionalElement !== null) {
 				$data[$optionalElementName] = $optionalElement->nodeValue;
 			}
+			else if ($saveData) {
+				if (in_array($optionalElementName, $zeroDefaultOptions)) {
+					$data[$optionalElementName] = 0;
+				}
+				else {
+					$data[$optionalElementName] = '';
+				}
+			}
 		}
 		
-		$readData = function($languageID, \DOMElement $content) use (&$data) {
+		$readData = function($languageID, \DOMElement $content) use (&$data, $saveData) {
 			foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $contentElementName) {
 				$contentElement = $content->getElementsByTagName($contentElementName)->item(0);
+				if (!isset($data[$contentElementName])) {
+					$data[$contentElementName] = [];
+				}
+				
 				if ($contentElement) {
-					if (!isset($data[$contentElementName])) {
-						$data[$contentElementName] = [];
-					}
-					
 					$data[$contentElementName][$languageID] = $contentElement->nodeValue;
+				}
+				else if ($saveData) {
+					$data[$contentElementName][$languageID] = '';
 				}
 			}
 		};

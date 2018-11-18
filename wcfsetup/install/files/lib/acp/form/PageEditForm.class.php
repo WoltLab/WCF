@@ -5,6 +5,7 @@ use wcf\data\page\PageAction;
 use wcf\data\page\PageCache;
 use wcf\form\AbstractForm;
 use wcf\system\acl\simple\SimpleAclHandler;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
@@ -25,6 +26,11 @@ class PageEditForm extends PageAddForm {
 	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.cms.page.list';
+	
+	/**
+	 * @var int
+	 */
+	public $overrideApplicationPackageID;
 	
 	/**
 	 * page id
@@ -67,6 +73,8 @@ class PageEditForm extends PageAddForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
+		if (isset($_POST['overrideApplicationPackageID'])) $this->overrideApplicationPackageID = intval($_POST['overrideApplicationPackageID']);
+		
 		$this->pageType = $this->page->pageType;
 		if ($this->page->originIsSystem) {
 			$this->applicationPackageID = $this->page->applicationPackageID;
@@ -75,10 +83,34 @@ class PageEditForm extends PageAddForm {
 				$this->parentPageID = $this->page->parentPageID;
 			}
 		}
+		else {
+			$this->overrideApplicationPackageID = null;
+		}
 		
 		if ($this->page->requireObjectID || $this->page->excludeFromLandingPage) {
 			// pages that require an object id can never be set as landing page
 			$this->isLandingPage = 0;
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validate() {
+		parent::validate();
+		
+		$this->validateOverrideApplicationPackageID();
+	}
+	
+	protected function validateOverrideApplicationPackageID() {
+		if ($this->overrideApplicationPackageID) {
+			if ($this->overrideApplicationPackageID == $this->applicationPackageID) {
+				// Picking the same app would have the same result, but also creates some overhead in the internal routing.
+				$this->overrideApplicationPackageID = null;
+			}
+			else if (ApplicationHandler::getInstance()->getApplicationByID($this->overrideApplicationPackageID) === null) {
+				throw new UserInputException('overrideApplicationPackageID', 'invalid');
+			}
 		}
 	}
 	
@@ -155,6 +187,7 @@ class PageEditForm extends PageAddForm {
 			'lastUpdateTime' => TIME_NOW,
 			'parentPageID' => $this->parentPageID ?: null,
 			'applicationPackageID' => $this->applicationPackageID,
+			'overrideApplicationPackageID' => $this->overrideApplicationPackageID,
 			'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
 			'allowSpidersToIndex' => $this->allowSpidersToIndex,
 			'enableShareButtons' => $this->enableShareButtons
@@ -240,6 +273,7 @@ class PageEditForm extends PageAddForm {
 			$this->parentPageID = $this->page->parentPageID;
 			$this->pageType = $this->page->pageType;
 			$this->applicationPackageID = $this->page->applicationPackageID;
+			$this->overrideApplicationPackageID = $this->page->overrideApplicationPackageID;
 			$this->cssClassName = $this->page->cssClassName;
 			if ($this->page->controllerCustomURL) $this->customURL[0] = $this->page->controllerCustomURL;
 			if ($this->page->isLandingPage) $this->isLandingPage = 1;
@@ -285,7 +319,8 @@ class PageEditForm extends PageAddForm {
 			'action' => 'edit',
 			'pageID' => $this->pageID,
 			'page' => $this->page,
-			'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.page', $this->pageID)
+			'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.page', $this->pageID),
+			'overrideApplicationPackageID' => $this->overrideApplicationPackageID,
 		]);
 	}
 }

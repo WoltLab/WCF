@@ -155,6 +155,9 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 		if ($interfaceName) {
 			$data['interfaceName'] = $interfaceName->nodeValue;
 		}
+		else if ($saveData) {
+			$data['interfaceName'] = '';
+		}
 		
 		return $data;
 	}

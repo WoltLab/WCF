@@ -14,7 +14,6 @@ use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
-use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
@@ -358,15 +357,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				->label('wcf.acp.pip.menuItem.externalURL')
 				->description('wcf.acp.pip.menuItem.externalURL.description')
 				->required()
-				->i18n(),
-			
-			IntegerFormField::create('showOrder')
-				->objectProperty('showorder')
-				->label('wcf.acp.pip.menuItem.showOrder')
-				->description('wcf.acp.pip.menuItem.showOrder.description')
-				->objectProperty('showorder')
-				->minimum(1)
-				->nullable()
+				->i18n()
 		]);
 		
 		/** @var SingleSelectionFormField $menuField */
@@ -449,14 +440,17 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 			$data['title'][LanguageFactory::getInstance()->getLanguageByCode($title->getAttribute('language'))->languageID] = $title->nodeValue;
 		}
 		
-		foreach (['externalURL', 'menu', 'page', 'parent', 'showOrder'] as $optionalElementName) {
+		foreach (['externalURL', 'menu', 'page', 'parent'] as $optionalElementName) {
 			$optionalElement = $element->getElementsByTagName($optionalElementName)->item(0);
 			if ($optionalElement !== null) {
 				$data[$optionalElementName] = $optionalElement->nodeValue;
 			}
+			else if ($saveData) {
+				$data[$optionalElementName] = '';
+			}
 		}
 		
-		if (isset($data['parent'])) {
+		if (!empty($data['parent'])) {
 			$menuItemList = new MenuItemList();
 			$menuItemList->getConditionBuilder()->add('identifier = ?', [$data['parent']]);
 			$menuItemList->getConditionBuilder()->add('packageID IN (?)', [
@@ -470,15 +464,27 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 			if (count($menuItemList) === 1) {
 				if ($saveData) {
 					$data['menuID'] = $menuItemList->current()->menuID;
+					$data['parentItemID'] = $menuItemList->current()->itemID;
+					
+					unset($data['parent']);
 				}
 				else {
 					$data['menu'] = (new Menu($menuItemList->current()->menuID))->identifier;
 				}
 			}
 		}
-		else if (isset($data['menu']) && $saveData) {
-			$data['menuID'] = $this->getMenuID($data['menu']);
-			unset($data['menu']);
+		else if ($saveData) {
+			if (isset($data['menu'])) {
+				$data['menuID'] = $this->getMenuID($data['menu']);
+				unset($data['menu']);
+			}
+			
+			$data['parentItemID'] = null;
+		}
+		
+		if ($saveData && $this->editedEntry === null) {
+			// only set explicit showOrder when adding new menu item
+			$data['showOrder'] = $this->getItemOrder($data['menuID'], $data['parentItemID']);
 		}
 		
 		if ($saveData) {

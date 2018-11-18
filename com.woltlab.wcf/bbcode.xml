@@ -2,142 +2,136 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/bbcode.xsd">
 	<import>
 		<bbcode name="b">
-			<htmlopen>b</htmlopen>
-			<htmlclose>b</htmlclose>
+			<htmlopen><![CDATA[b]]></htmlopen>
+			<htmlclose><![CDATA[b]]></htmlclose>
 		</bbcode>
 		<bbcode name="i">
-			<htmlopen>i</htmlopen>
-			<htmlclose>i</htmlclose>
+			<htmlopen><![CDATA[i]]></htmlopen>
+			<htmlclose><![CDATA[i]]></htmlclose>
 		</bbcode>
 		<bbcode name="u">
-			<htmlopen>span style="text-decoration: underline"</htmlopen>
-			<htmlclose>span</htmlclose>
+			<htmlopen><![CDATA[span style="text-decoration: underline"]]></htmlopen>
+			<htmlclose><![CDATA[span]]></htmlclose>
 		</bbcode>
 		<bbcode name="s">
-			<htmlopen>s</htmlopen>
-			<htmlclose>s</htmlclose>
+			<htmlopen><![CDATA[s]]></htmlopen>
+			<htmlclose><![CDATA[s]]></htmlclose>
 		</bbcode>
 		<bbcode name="sub">
-			<htmlopen>sub</htmlopen>
-			<htmlclose>sub</htmlclose>
+			<htmlopen><![CDATA[sub]]></htmlopen>
+			<htmlclose><![CDATA[sub]]></htmlclose>
 		</bbcode>
 		<bbcode name="sup">
-			<htmlopen>sup</htmlopen>
-			<htmlclose>sup</htmlclose>
+			<htmlopen><![CDATA[sup]]></htmlopen>
+			<htmlclose><![CDATA[sup]]></htmlclose>
 		</bbcode>
 		<bbcode name="email">
 			<classname>wcf\system\bbcode\EmailBBCode</classname>
 			<attributes>
 				<attribute name="0">
+					<validationpattern><![CDATA[^[^\s]+@[^\s]+$]]></validationpattern>
 					<required>1</required>
 					<usetext>1</usetext>
-					<validationpattern>^[^\s]+@[^\s]+$</validationpattern>
 				</attribute>
 			</attributes>
 		</bbcode>
 		<bbcode name="color">
-			<htmlopen>span</htmlopen>
-			<htmlclose>span</htmlclose>
+			<htmlopen><![CDATA[span]]></htmlopen>
+			<htmlclose><![CDATA[span]]></htmlclose>
 			<attributes>
 				<attribute name="0">
-					<html>style="color: %s"</html>
-					<validationpattern>^(#([0-9a-f]{3}|[0-9a-f]{6})|[a-z]+)$</validationpattern>
+					<html><![CDATA[style="color: %s"]]></html>
+					<validationpattern><![CDATA[^(#([0-9a-f]{3}|[0-9a-f]{6})|[a-z]+)$]]></validationpattern>
 					<required>1</required>
 				</attribute>
 			</attributes>
 		</bbcode>
 		<bbcode name="size">
-			<htmlopen>span</htmlopen>
-			<htmlclose>span</htmlclose>
+			<htmlopen><![CDATA[span]]></htmlopen>
+			<htmlclose><![CDATA[span]]></htmlclose>
 			<attributes>
 				<attribute name="0">
-					<html>style="font-size: %dpt"</html>
-					<validationpattern>^([89]{1}|[1-3]{1}[0-9]{1})$</validationpattern>
+					<html><![CDATA[style="font-size: %dpt"]]></html>
+					<validationpattern><![CDATA[^([89]{1}|[1-3]{1}[0-9]{1})$]]></validationpattern>
 					<required>1</required>
 				</attribute>
 			</attributes>
 		</bbcode>
 		<bbcode name="font">
-			<htmlopen>span</htmlopen>
-			<htmlclose>span</htmlclose>
+			<htmlopen><![CDATA[span]]></htmlopen>
+			<htmlclose><![CDATA[span]]></htmlclose>
 			<attributes>
 				<attribute name="0">
-					<html>style="font-family: %s"</html>
-					<validationpattern>^[^"';}\(\)]*$</validationpattern>
+					<html><![CDATA[style="font-family: %s"]]></html>
+					<validationpattern><![CDATA[^[^"';}\(\)]*$]]></validationpattern>
 					<required>1</required>
 				</attribute>
 			</attributes>
 		</bbcode>
 		<bbcode name="align">
-			<htmlopen>div</htmlopen>
-			<htmlclose>div</htmlclose>
+			<htmlopen><![CDATA[div]]></htmlopen>
+			<htmlclose><![CDATA[div]]></htmlclose>
+			<isBlockElement>1</isBlockElement>
 			<attributes>
 				<attribute name="0">
-					<html>class="text-%s"</html>
-					<validationpattern>^(left|right|center|justify)$</validationpattern>
+					<html><![CDATA[class="text-%s"]]></html>
+					<validationpattern><![CDATA[^(left|right|center|justify)$]]></validationpattern>
 					<required>1</required>
 				</attribute>
 			</attributes>
-			<isBlockElement>1</isBlockElement>
 		</bbcode>
 		<bbcode name="quote">
-			<attributes>
-				<attribute name="0">
-				</attribute>
-				<attribute name="1">
-				</attribute>
-			</attributes>
-			<wysiwygicon>fa-quote-left</wysiwygicon>
-			<buttonlabel>wcf.editor.button.quote</buttonlabel>
 			<isBlockElement>1</isBlockElement>
+			<buttonlabel>wcf.editor.button.quote</buttonlabel>
+			<wysiwygicon>fa-quote-left</wysiwygicon>
+			<attributes>
+				<attribute name="0"/>
+				<attribute name="1"/>
+			</attributes>
 		</bbcode>
 		<bbcode name="code">
-			<attributes>
-				<attribute name="0">
-				</attribute>
-				<attribute name="1">
-				</attribute>
-				<attribute name="2">
-				</attribute>
-			</attributes>
-			<sourcecode>1</sourcecode>
-			<wysiwygicon>fa-code</wysiwygicon>
-			<buttonlabel>wcf.editor.button.code</buttonlabel>
 			<isBlockElement>1</isBlockElement>
+			<sourcecode>1</sourcecode>
+			<buttonlabel>wcf.editor.button.code</buttonlabel>
+			<wysiwygicon>fa-code</wysiwygicon>
+			<attributes>
+				<attribute name="0"/>
+				<attribute name="1"/>
+				<attribute name="2"/>
+			</attributes>
 		</bbcode>
 		<bbcode name="img">
 			<attributes>
 				<attribute name="0">
+					<validationpattern><![CDATA[^.+$]]></validationpattern>
 					<required>1</required>
 					<usetext>1</usetext>
-					<validationpattern>^.+$</validationpattern>
 				</attribute>
 				<attribute name="1">
-					<validationpattern>^(left|right|none)$</validationpattern>
+					<validationpattern><![CDATA[^(left|right|none)$]]></validationpattern>
 				</attribute>
 				<attribute name="2">
-					<validationpattern>^\d+$</validationpattern>
+					<validationpattern><![CDATA[^\d+$]]></validationpattern>
 				</attribute>
 			</attributes>
 		</bbcode>
 		<bbcode name="url">
 			<attributes>
 				<attribute name="0">
+					<validationpattern><![CDATA[^.+$]]></validationpattern>
 					<required>1</required>
 					<usetext>1</usetext>
-					<validationpattern>^.+$</validationpattern>
 				</attribute>
 			</attributes>
 		</bbcode>
 		<bbcode name="list">
+			<isBlockElement>1</isBlockElement>
 			<attributes>
 				<attribute name="0">
-					<validationpattern>^(1|a|none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)$</validationpattern>
+					<validationpattern><![CDATA[^(1|a|none|circle|square|disc|decimal|lower-roman|upper-roman|decimal-leading-zero|lower-greek|lower-latin|upper-latin|armenian|georgian)$]]></validationpattern>
 				</attribute>
 			</attributes>
-			<isBlockElement>1</isBlockElement>
 		</bbcode>
-		
 		<bbcode name="table">
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
@@ -149,68 +143,62 @@
 			<classname>wcf\system\bbcode\TdBBCode</classname>
 			<isBlockElement>1</isBlockElement>
 		</bbcode>
-		
 		<bbcode name="media">
 			<classname>wcf\system\bbcode\MediaBBCode</classname>
 			<sourcecode>1</sourcecode>
 		</bbcode>
 		<bbcode name="spoiler">
-			<attributes>
-				<attribute name="0">
-				</attribute>
-			</attributes>
-			<wysiwygicon>fa-eye-slash</wysiwygicon>
-			<buttonlabel>wcf.editor.button.spoiler</buttonlabel>
 			<isBlockElement>1</isBlockElement>
+			<buttonlabel>wcf.editor.button.spoiler</buttonlabel>
+			<wysiwygicon>fa-eye-slash</wysiwygicon>
+			<attributes>
+				<attribute name="0"/>
+			</attributes>
 		</bbcode>
 		<bbcode name="tt">
-			<htmlopen>kbd</htmlopen>
-			<htmlclose>kbd</htmlclose>
+			<htmlopen><![CDATA[kbd]]></htmlopen>
+			<htmlclose><![CDATA[kbd]]></htmlclose>
 			<sourcecode>1</sourcecode>
-			<wysiwygicon>fa-terminal</wysiwygicon>
 			<buttonlabel>wcf.editor.button.inlineCode</buttonlabel>
+			<wysiwygicon>fa-terminal</wysiwygicon>
 		</bbcode>
-		
 		<bbcode name="attach">
 			<classname>wcf\system\bbcode\AttachmentBBCode</classname>
 			<attributes>
 				<attribute name="0">
-					<validationpattern>^\d+$</validationpattern>
+					<validationpattern><![CDATA[^\d+$]]></validationpattern>
 					<required>1</required>
 					<usetext>1</usetext>
 				</attribute>
 				<attribute name="1">
-					<validationpattern>^(left|right|none)$</validationpattern>
+					<validationpattern><![CDATA[^(left|right|none)$]]></validationpattern>
 				</attribute>
 				<attribute name="2">
-					<!-- "\d+" is only matched for backward compatibility -->
-					<validationpattern>^(\d+|true|false)$</validationpattern>
+					<validationpattern><![CDATA[^(\d+|true|false)$]]></validationpattern>
 				</attribute>
 			</attributes>
 		</bbcode>
-		
 		<bbcode name="wsm">
 			<classname>wcf\system\bbcode\WoltLabSuiteMediaBBCode</classname>
 			<isBlockElement>1</isBlockElement>
 			<attributes>
 				<attribute name="0">
-					<validationpattern>^\d+$</validationpattern>
+					<validationpattern><![CDATA[^\d+$]]></validationpattern>
 					<required>1</required>
 				</attribute>
 				<attribute name="1">
-					<validationpattern>^(small|medium|large|original)$</validationpattern>
+					<validationpattern><![CDATA[^(small|medium|large|original)$]]></validationpattern>
 				</attribute>
 				<attribute name="2">
-					<validationpattern>^(left|right|none)$</validationpattern>
+					<validationpattern><![CDATA[^(left|right|none)$]]></validationpattern>
 				</attribute>
 			</attributes>
 		</bbcode>
-		
 		<bbcode name="wsp">
 			<classname>wcf\system\bbcode\WoltLabSuitePageBBCode</classname>
 			<attributes>
 				<attribute name="0">
-					<validationpattern>^\d+$</validationpattern>
+					<validationpattern><![CDATA[^\d+$]]></validationpattern>
 					<required>1</required>
 				</attribute>
 				<attribute name="1">
@@ -218,22 +206,20 @@
 				</attribute>
 			</attributes>
 		</bbcode>
-		
 		<bbcode name="user">
 			<classname>wcf\system\bbcode\UserBBCode</classname>
 			<attributes>
 				<attribute name="0">
-					<validationpattern>^\d+$</validationpattern>
+					<validationpattern><![CDATA[^\d+$]]></validationpattern>
 					<required>1</required>
 				</attribute>
 			</attributes>
 		</bbcode>
-		
 		<bbcode name="html">
 			<isBlockElement>1</isBlockElement>
 			<sourcecode>1</sourcecode>
-			<wysiwygicon>fa-html5</wysiwygicon>
 			<buttonlabel>wcf.editor.button.woltlabHtml</buttonlabel>
+			<wysiwygicon>fa-html5</wysiwygicon>
 		</bbcode>
 	</import>
 </data>

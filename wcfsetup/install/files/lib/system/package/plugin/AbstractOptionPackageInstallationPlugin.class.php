@@ -696,9 +696,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @since	3.2
 	 */
 	protected function doGetElementData(\DOMElement $element, $saveData) {
-		$data = [
-			'packageID' => $this->installation->getPackage()->packageID
-		];
+		$data = [];
 		
 		switch ($this->entryType) {
 			case 'categories':
@@ -708,11 +706,17 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 				if ($parent !== null) {
 					$data['parentCategoryName'] = $parent->nodeValue;
 				}
+				else if ($saveData) {
+					$data['parentCategoryName'] = '';
+				}
 				
 				foreach (['options', 'permissions'] as $optionalPropertyName) {
 					$optionalProperty = $element->getElementsByTagName($optionalPropertyName)->item(0);
 					if ($optionalProperty !== null) {
 						$data[$optionalPropertyName] = StringUtil::normalizeCsv($optionalProperty->nodeValue);
+					}
+					else if ($saveData) {
+						$data[$optionalPropertyName] = '';
 					}
 				}
 				
@@ -720,70 +724,121 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 				if ($showOrder !== null) {
 					$data['showOrder'] = $showOrder->nodeValue;
 				}
+				if ($saveData && $this->editedEntry === null) {
+					// only set explicit showOrder when adding new categories
+					$data['showOrder'] = $this->getShowOrder(
+						$data['showOrder'] ?? null,
+						$data['parentCategoryName'],
+						'parentCategoryName',
+						'_category'
+					);
+				}
 				
 				break;
 			
 			case 'options':
-				$data['optionName'] = $element->getAttribute('name');
-				$data['categoryName'] = $element->getElementsByTagName('categoryname')->item(0)->nodeValue;
-				$data['optionType'] = $element->getElementsByTagName('optiontype')->item(0)->nodeValue;
-				
-				foreach (['defaultValue', 'enableOptions', 'validationPattern', 'showOrder'] as $optionalPropertyName) {
-					$optionalProperty = $element->getElementsByTagName(strtolower($optionalPropertyName))->item(0);
-					if ($optionalProperty !== null) {
-						$data[$optionalPropertyName] = $optionalProperty->nodeValue;
-					}
-				}
-				
-				foreach (['options', 'permissions'] as $optionalPropertyName) {
-					$optionalProperty = $element->getElementsByTagName($optionalPropertyName)->item(0);
-					if ($optionalProperty !== null) {
-						$data[$optionalPropertyName] = StringUtil::normalizeCsv($optionalProperty->nodeValue);
-					}
-				}
-				
-				// object-type specific elements
-				$optionals = [
-					'minvalue',
-					'maxvalue',
-					'suffix',
-					'minlength',
-					'maxlength',
-					'issortable',
-					'allowemptyvalue',
-					'disableAutocomplete'
-				];
-				
-				foreach ($optionals as $optionalPropertyName) {
-					$optionalProperty = $element->getElementsByTagName($optionalPropertyName)->item(0);
-					if ($optionalProperty !== null) {
-						$data[$optionalPropertyName] = $optionalProperty->nodeValue;
-					}
-				}
-				
-				if ($saveData) {
-					$lowercaseData = [
-						'categoryname' => $data['categoryName'],
-						'packageID' => $this->installation->getPackage()->packageID,
-						'name' => $data['optionName']
-					];
+				if (!$saveData) {
+					$data['optionName'] = $element->getAttribute('name');
+					$data['categoryName'] = $element->getElementsByTagName('categoryname')->item(0)->nodeValue;
+					$data['optionType'] = $element->getElementsByTagName('optiontype')->item(0)->nodeValue;
 					
-					$lowercaseFields = [
-						'optionName',
-						'optionType',
-						'defaultValue',
-						'enableOptions',
-						'validationPattern',
-						'showOrder'
-					];
-					
-					foreach ($lowercaseFields as $name) {
-						if (isset($data[$name])) {
-							$lowercaseData[strtolower($name)] = $data[$name];
+					foreach (['defaultValue', 'enableOptions', 'validationPattern'] as $optionalPropertyName) {
+						$optionalProperty = $element->getElementsByTagName(strtolower($optionalPropertyName))->item(0);
+						if ($optionalProperty !== null) {
+							$data[$optionalPropertyName] = $optionalProperty->nodeValue;
 						}
 					}
 					
-					return $lowercaseData;
+					$showOrder = $element->getElementsByTagName('showorder')->item(0);
+					if ($showOrder !== null) {
+						$data['showOrder'] = $showOrder->nodeValue;
+					}
+					
+					foreach (['options', 'permissions'] as $optionalPropertyName) {
+						$optionalProperty = $element->getElementsByTagName($optionalPropertyName)->item(0);
+						if ($optionalProperty !== null) {
+							$data[$optionalPropertyName] = StringUtil::normalizeCsv($optionalProperty->nodeValue);
+						}
+					}
+					
+					// object-type specific elements
+					$optionals = [
+						'minvalue',
+						'maxvalue',
+						'suffix',
+						'minlength',
+						'maxlength',
+						'issortable',
+						'allowemptyvalue',
+						'disableAutocomplete'
+					];
+					
+					foreach ($optionals as $optionalPropertyName) {
+						$optionalProperty = $element->getElementsByTagName($optionalPropertyName)->item(0);
+						if ($optionalProperty !== null) {
+							$data[$optionalPropertyName] = $optionalProperty->nodeValue;
+						}
+					}
+				}
+				else {
+					$data['name'] = $element->getAttribute('name');
+					$data['categoryname'] = $element->getElementsByTagName('categoryname')->item(0)->nodeValue;
+					$data['optiontype'] = $element->getElementsByTagName('optiontype')->item(0)->nodeValue;
+					
+					foreach (['defaultvalue', 'enableoptions', 'validationpattern'] as $optionalPropertyName) {
+						$optionalProperty = $element->getElementsByTagName($optionalPropertyName)->item(0);
+						if ($optionalProperty !== null) {
+							$data[$optionalPropertyName] = $optionalProperty->nodeValue;
+						}
+						else if ($optionalPropertyName === 'defaultvalue') {
+							$data[$optionalPropertyName] = null;
+						}
+						else {
+							$data[$optionalPropertyName] = '';
+						}
+					}
+					
+					$showOrder = $element->getElementsByTagName('showorder')->item(0);
+					if ($showOrder !== null) {
+						$data['showorder'] = $showOrder->nodeValue;
+					}
+					if ($this->editedEntry === null) {
+						// only set explicit showOrder when adding new categories
+						$data['showorder'] = $this->getShowOrder(
+							$data['showorder'] ?? null,
+							$data['categoryName'],
+							'categoryName'
+						);
+					}
+					
+					foreach (['options', 'permissions'] as $optionalPropertyName) {
+						$optionalProperty = $element->getElementsByTagName($optionalPropertyName)->item(0);
+						if ($optionalProperty !== null) {
+							$data[$optionalPropertyName] = StringUtil::normalizeCsv($optionalProperty->nodeValue);
+						}
+						else {
+							$daota[$optionalPropertyName] = '';
+						}
+					}
+					
+					// object-type specific elements
+					$optionals = [
+						'minvalue',
+						'maxvalue',
+						'suffix',
+						'minlength',
+						'maxlength',
+						'issortable',
+						'allowemptyvalue',
+						'disableAutocomplete'
+					];
+					
+					foreach ($optionals as $optionalPropertyName) {
+						$optionalProperty = $element->getElementsByTagName($optionalPropertyName)->item(0);
+						if ($optionalProperty !== null) {
+							$data[$optionalPropertyName] = $optionalProperty->nodeValue;
+						}
+					}
 				}
 				
 				break;

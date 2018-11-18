@@ -7,10 +7,9 @@
 			<controller>wcf\page\MembersListPage</controller>
 			<name language="de">Mitglieder</name>
 			<name language="en">Members</name>
-			<permissions>user.profile.canViewMembersList</permissions>
 			<options>module_members_list</options>
+			<permissions>user.profile.canViewMembersList</permissions>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Members</title>
 			</content>
@@ -25,7 +24,6 @@
 			<name language="en">Recent Activities</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Recent Activities</title>
 			</content>
@@ -39,10 +37,9 @@
 			<name language="de">Benutzer online</name>
 			<name language="en">Users Online</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<permissions>user.profile.canViewUsersOnlineList</permissions>
 			<options>module_users_online</options>
+			<permissions>user.profile.canViewUsersOnlineList</permissions>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Users Online</title>
 			</content>
@@ -56,10 +53,9 @@
 			<name language="de">Team</name>
 			<name language="en">Team</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<permissions>user.profile.canViewMembersList</permissions>
 			<options>module_team_page</options>
+			<permissions>user.profile.canViewMembersList</permissions>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Team</title>
 			</content>
@@ -73,9 +69,8 @@
 			<name language="de">Benutzer suchen</name>
 			<name language="en">Search Users</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<permissions>user.profile.canViewMembersList</permissions>
 			<options>module_members_list</options>
-			
+			<permissions>user.profile.canViewMembersList</permissions>
 			<content language="en">
 				<title>Search Users</title>
 			</content>
@@ -83,13 +78,11 @@
 				<title>Benutzer suchen</title>
 			</content>
 		</page>
-		
 		<page identifier="com.woltlab.wcf.AccountManagement">
 			<pageType>system</pageType>
 			<controller>wcf\form\AccountManagementForm</controller>
 			<name language="de">Benutzerkonto-Verwaltung</name>
 			<name language="en">Account Management</name>
-			
 			<content language="en">
 				<title>Account Management</title>
 			</content>
@@ -104,7 +97,6 @@
 			<name language="en">Avatar Management</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
 			<content language="en">
 				<title>Avatar Management</title>
 			</content>
@@ -120,7 +112,6 @@
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>New Email Address Verification</title>
 			</content>
@@ -136,7 +127,6 @@
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>New Email Activation Code Request</title>
 			</content>
@@ -150,7 +140,6 @@
 			<name language="de">Anmeldung</name>
 			<name language="en">Login</name>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>Login</title>
 			</content>
@@ -165,7 +154,6 @@
 			<name language="en">Lost Password</name>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>Lost Password</title>
 			</content>
@@ -176,10 +164,9 @@
 		<page identifier="com.woltlab.wcf.Mail">
 			<pageType>system</pageType>
 			<controller>wcf\form\MailForm</controller>
-			<requireObjectID>1</requireObjectID>
 			<name language="de">E-Mail-Formular</name>
 			<name language="en">Mail Form</name>
-			
+			<requireObjectID>1</requireObjectID>
 			<content language="en">
 				<title>Mail Form</title>
 			</content>
@@ -194,7 +181,6 @@
 			<name language="en">New Password Request</name>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>New Password Request</title>
 			</content>
@@ -209,7 +195,6 @@
 			<name language="en">Notification Settings</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
 			<content language="en">
 				<title>Notification Settings</title>
 			</content>
@@ -223,7 +208,6 @@
 			<name language="de">Registrierung</name>
 			<name language="en">Registration</name>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>Registration</title>
 			</content>
@@ -237,7 +221,6 @@
 			<name language="de">Disclaimer</name>
 			<name language="en">Disclaimer</name>
 			<parent>com.woltlab.wcf.Register</parent>
-			
 			<content language="en">
 				<title>Disclaimer</title>
 			</content>
@@ -253,7 +236,6 @@
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.Register</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>Complete Registration</title>
 			</content>
@@ -269,7 +251,6 @@
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.Register</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>New Activation Code Request</title>
 			</content>
@@ -282,7 +263,6 @@
 			<controller>wcf\form\SearchForm</controller>
 			<name language="de">Suche</name>
 			<name language="en">Search</name>
-			
 			<content language="en">
 				<title>Search</title>
 			</content>
@@ -297,7 +277,6 @@
 			<name language="en">Settings</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
 			<content language="en">
 				<title>Settings</title>
 			</content>
@@ -310,10 +289,9 @@
 			<controller>wcf\form\SignatureEditForm</controller>
 			<name language="de">Signatur-Verwaltung</name>
 			<name language="en">Signature Management</name>
-			<options>module_user_signature</options>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
+			<options>module_user_signature</options>
 			<content language="en">
 				<title>Signature Management</title>
 			</content>
@@ -328,7 +306,6 @@
 			<name language="en">Edit History</name>
 			<options>module_edit_history</options>
 			<requireObjectID>1</requireObjectID>
-			
 			<content language="en">
 				<title>Edit History</title>
 			</content>
@@ -343,7 +320,6 @@
 			<name language="en">Followed Users</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
 			<content language="en">
 				<title>Followed Users</title>
 			</content>
@@ -358,7 +334,6 @@
 			<name language="en">Blocked Users</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
 			<content language="en">
 				<title>Blocked Users</title>
 			</content>
@@ -372,7 +347,6 @@
 			<name language="de">Moderation</name>
 			<name language="en">Moderation</name>
 			<permissions>mod.general.canUseModeration</permissions>
-			
 			<content language="en">
 				<title>Moderation</title>
 			</content>
@@ -385,10 +359,9 @@
 			<controller>wcf\page\DeletedContentListPage</controller>
 			<name language="de">Gelöschte Inhalte</name>
 			<name language="en">Deleted Content</name>
-			<permissions>mod.general.canUseModeration</permissions>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.ModerationList</parent>
-			
+			<permissions>mod.general.canUseModeration</permissions>
 			<content language="en">
 				<title>Deleted Content</title>
 			</content>
@@ -401,11 +374,10 @@
 			<controller>wcf\form\ModerationActivationForm</controller>
 			<name language="de">Inhaltsfreischaltung</name>
 			<name language="en">Content Approval</name>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.ModerationList</parent>
 			<permissions>mod.general.canUseModeration</permissions>
-			<hasFixedParent>1</hasFixedParent>
 			<requireObjectID>1</requireObjectID>
-			
 			<content language="en">
 				<title>Content Approval</title>
 			</content>
@@ -418,11 +390,10 @@
 			<controller>wcf\form\ModerationReportForm</controller>
 			<name language="de">Inhaltsmeldung</name>
 			<name language="en">Content Report</name>
-			<parent>com.woltlab.wcf.ModerationList</parent>
 			<hasFixedParent>1</hasFixedParent>
+			<parent>com.woltlab.wcf.ModerationList</parent>
 			<permissions>mod.general.canUseModeration</permissions>
 			<requireObjectID>1</requireObjectID>
-			
 			<content language="en">
 				<title>Content Report</title>
 			</content>
@@ -437,7 +408,6 @@
 			<name language="en">Notifications</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
 			<content language="en">
 				<title>Notifications</title>
 			</content>
@@ -450,10 +420,9 @@
 			<controller>wcf\page\PaidSubscriptionListPage</controller>
 			<name language="de">Bezahlte Mitgliedschaften</name>
 			<name language="en">Paid Subscriptions</name>
-			<options>module_paid_subscription</options>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
+			<options>module_paid_subscription</options>
 			<content language="en">
 				<title>Paid Subscriptions</title>
 			</content>
@@ -466,10 +435,9 @@
 			<controller>wcf\page\SearchResultPage</controller>
 			<name language="de">Suchergebnisse</name>
 			<name language="en">Search Results</name>
-			<parent>com.woltlab.wcf.Search</parent>
 			<hasFixedParent>1</hasFixedParent>
+			<parent>com.woltlab.wcf.Search</parent>
 			<requireObjectID>1</requireObjectID>
-			
 			<content language="en">
 				<title>Search Results</title>
 			</content>
@@ -484,7 +452,6 @@
 			<name language="en">Content With Particular Tag</name>
 			<permissions>user.tag.canViewTag</permissions>
 			<requireObjectID>1</requireObjectID>
-			
 			<content language="en">
 				<title>Content With Particular Tag</title>
 			</content>
@@ -495,22 +462,21 @@
 		<page identifier="com.woltlab.wcf.User">
 			<pageType>system</pageType>
 			<controller>wcf\page\UserPage</controller>
-			<handler>wcf\system\page\handler\UserPageHandler</handler>
 			<name language="de">Benutzerprofil</name>
 			<name language="en">User Profile</name>
+			<handler>wcf\system\page\handler\UserPageHandler</handler>
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<requireObjectID>1</requireObjectID>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
+			<requireObjectID>1</requireObjectID>
 		</page>
 		<page identifier="com.woltlab.wcf.ArticleList">
 			<pageType>system</pageType>
 			<controller>wcf\page\ArticleListPage</controller>
-			<handler>wcf\system\page\handler\ArticleListPageHandler</handler>
 			<name language="de">Artikel-Liste</name>
 			<name language="en">Article List</name>
+			<handler>wcf\system\page\handler\ArticleListPageHandler</handler>
 			<options>module_article</options>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Articles</title>
 			</content>
@@ -521,12 +487,11 @@
 		<page identifier="com.woltlab.wcf.UnreadArticleList">
 			<pageType>system</pageType>
 			<controller>wcf\page\UnreadArticleListPage</controller>
-			<handler>wcf\system\page\handler\UnreadArticleListPageHandler</handler>
 			<name language="de">Ungelesene Artikel</name>
 			<name language="en">Unread Articles</name>
-			<options>module_article</options>
+			<handler>wcf\system\page\handler\UnreadArticleListPageHandler</handler>
 			<parent>com.woltlab.wcf.ArticleList</parent>
-			
+			<options>module_article</options>
 			<content language="en">
 				<title>Unread Articles</title>
 			</content>
@@ -537,12 +502,11 @@
 		<page identifier="com.woltlab.wcf.WatchedArticleList">
 			<pageType>system</pageType>
 			<controller>wcf\page\WatchedArticleListPage</controller>
-			<handler>wcf\system\page\handler\WatchedArticleListPageHandler</handler>
 			<name language="de">Abonnierte Artikel</name>
 			<name language="en">Watched Articles</name>
-			<options>module_article</options>
+			<handler>wcf\system\page\handler\WatchedArticleListPageHandler</handler>
 			<parent>com.woltlab.wcf.ArticleList</parent>
-			
+			<options>module_article</options>
 			<content language="en">
 				<title>Watched Articles</title>
 			</content>
@@ -553,25 +517,25 @@
 		<page identifier="com.woltlab.wcf.CategoryArticleList">
 			<pageType>system</pageType>
 			<controller>wcf\page\CategoryArticleListPage</controller>
-			<handler>wcf\system\page\handler\CategoryArticleListPageHandler</handler>
 			<name language="de">Liste von Artikeln aus bestimmter Kategorie</name>
 			<name language="en">List of Articles in Certain Category</name>
-			<options>module_article</options>
+			<handler>wcf\system\page\handler\CategoryArticleListPageHandler</handler>
 			<parent>com.woltlab.wcf.ArticleList</parent>
-			<requireObjectID>1</requireObjectID>
+			<options>module_article</options>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
+			<requireObjectID>1</requireObjectID>
 		</page>
 		<page identifier="com.woltlab.wcf.Article">
 			<pageType>system</pageType>
 			<controller>wcf\page\ArticlePage</controller>
-			<handler>wcf\system\page\handler\ArticlePageHandler</handler>
 			<name language="de">Artikel</name>
 			<name language="en">Article</name>
-			<options>module_article</options>
-			<parent>com.woltlab.wcf.CategoryArticleList</parent>
+			<handler>wcf\system\page\handler\ArticlePageHandler</handler>
 			<hasFixedParent>1</hasFixedParent>
-			<requireObjectID>1</requireObjectID>
+			<parent>com.woltlab.wcf.CategoryArticleList</parent>
+			<options>module_article</options>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
+			<requireObjectID>1</requireObjectID>
 		</page>
 		<page identifier="com.woltlab.wcf.Contact">
 			<pageType>system</pageType>
@@ -579,8 +543,6 @@
 			<name language="de">Kontakt-Formular</name>
 			<name language="en">Contact Form</name>
 			<options>module_contact_form</options>
-			<allowSpidersToIndex>0</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Contact</title>
 			</content>
@@ -594,10 +556,9 @@
 			<name language="de">Trophäen</name>
 			<name language="en">Trophies</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<permissions>user.profile.trophy.canSeeTrophies</permissions>
 			<options>module_trophy</options>
+			<permissions>user.profile.trophy.canSeeTrophies</permissions>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Trophies</title>
 			</content>
@@ -608,48 +569,47 @@
 		<page identifier="com.woltlab.wcf.TrophyCategoryList">
 			<pageType>system</pageType>
 			<controller>wcf\page\CategoryTrophyListPage</controller>
-			<handler>wcf\system\page\handler\TrophyListPageHandler</handler>
 			<name language="de">Liste von Trophäen aus einer bestimmten Kategorie</name>
 			<name language="en">List of Trophies in Certain Category</name>
+			<handler>wcf\system\page\handler\TrophyListPageHandler</handler>
 			<parent>com.woltlab.wcf.TrophyList</parent>
-			<requireObjectID>1</requireObjectID>
-			<permissions>user.profile.trophy.canSeeTrophies</permissions>
 			<options>module_trophy</options>
+			<permissions>user.profile.trophy.canSeeTrophies</permissions>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
+			<requireObjectID>1</requireObjectID>
 		</page>
 		<page identifier="com.woltlab.wcf.Trophy">
 			<pageType>system</pageType>
 			<controller>wcf\page\TrophyPage</controller>
-			<handler>wcf\system\page\handler\TrophyPageHandler</handler>
 			<name language="de">Trophäe</name>
 			<name language="en">Trophy</name>
-			<parent>com.woltlab.wcf.TrophyCategoryList</parent>
+			<handler>wcf\system\page\handler\TrophyPageHandler</handler>
 			<hasFixedParent>1</hasFixedParent>
-			<requireObjectID>1</requireObjectID>
-			<permissions>user.profile.trophy.canSeeTrophies</permissions>
+			<parent>com.woltlab.wcf.TrophyCategoryList</parent>
 			<options>module_trophy</options>
+			<permissions>user.profile.trophy.canSeeTrophies</permissions>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
+			<requireObjectID>1</requireObjectID>
 		</page>
-		
 		<!-- static -->
 		<page identifier="com.woltlab.wcf.Dashboard">
 			<pageType>text</pageType>
 			<name language="de">Dashboard</name>
 			<name language="en">Dashboard</name>
-			
-			<content>
+			<content language="en">
 				<title>Dashboard</title>
-				<content></content>
+				<customURL>dashboard</customURL>
+			</content>
+			<content language="de">
+				<title>Dashboard</title>
 				<customURL>dashboard</customURL>
 			</content>
 		</page>
-		
 		<page identifier="com.woltlab.wcf.CookiePolicy">
 			<pageType>text</pageType>
-			<name language="en">Cookie Policy</name>
 			<name language="de">Cookie-Richtlinie</name>
+			<name language="en">Cookie Policy</name>
 			<availableDuringOfflineMode>1</availableDuringOfflineMode>
-			
 			<content language="en">
 				<title>Cookie Policy</title>
 				<content><![CDATA[<p>This website uses cookies required to operate and use this site. Below you will find an explanation on our cookie usage.</p>
@@ -677,7 +637,6 @@
 </ul>]]></content>
 				<customURL>cookie-policy</customURL>
 			</content>
-			
 			<content language="de">
 				<title>Einsatz von Cookies</title>
 				<content><![CDATA[<p>Wie viele Internetseiten nutzt auch diese Seite Cookies. An dieser Stelle wird erklärt was Cookies sind und wie sie genutzt werden.</p>
@@ -706,13 +665,11 @@
 				<customURL>cookie-richtlinie</customURL>
 			</content>
 		</page>
-		
 		<page identifier="com.woltlab.wcf.PrivacyPolicy">
 			<pageType>text</pageType>
-			<name language="en">Privacy Policy</name>
 			<name language="de">Datenschutzerklärung</name>
+			<name language="en">Privacy Policy</name>
 			<availableDuringOfflineMode>1</availableDuringOfflineMode>
-			
 			<content language="en">
 				<title>Privacy Policy</title>
 				<content><![CDATA[<h2>1. An overview of data protection</h2>
@@ -765,7 +722,6 @@ Email: [email address of the responsible party]</p><p><br></p><p>The controller 
 <h3>PayPal</h3> <p>Among other options, we offer payment via PayPal on our website. The provider of this payment processing service is PayPal (Europe) S.à.r.l. et Cie, S.C.A., 22-24 Boulevard Royal, L-2449 Luxembourg (hereinafter referred to as “PayPal”).</p><p><br></p><p>If you choose payment via PayPal, we will share the payment information you enter with PayPal.</p><p><br></p><p>The legal basis for the sharing of your data with PayPal is Art. 6 Sect. 1 lit. a GDPR (consent) as well as Art. 6 Sect. 1 lit. b GDPR (processing for the fulfilment of a contract). You have the option to at any time revoke your consent to the processing of your data. Such a revocation shall not have any impact on the effectiveness of data processing transactions that occurred in the past.</p>]]></content>
 				<customURL>privacy-policy</customURL>
 			</content>
-			
 			<content language="de">
 				<title>Datenschutzerklärung</title>
 				<content><![CDATA[<h2>1. Datenschutz auf einen Blick</h2>

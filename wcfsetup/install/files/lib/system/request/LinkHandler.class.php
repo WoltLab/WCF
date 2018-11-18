@@ -186,6 +186,8 @@ class LinkHandler extends SingletonFactory {
 		
 		$url = $routeURL . $url;
 		
+		$abbreviation = ControllerMap::getInstance()->getApplicationOverride($abbreviation, $controller);
+		
 		// handle applications
 		if (!PACKAGE_ID) {
 			$url = RouteHandler::getHost() . RouteHandler::getPath(['acp']) . ($isACP ? 'acp/' : '') . $url;

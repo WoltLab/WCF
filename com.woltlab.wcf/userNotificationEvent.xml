@@ -6,89 +6,83 @@
 			<objecttype>com.woltlab.wcf.user.follow</objecttype>
 			<classname>wcf\system\user\notification\event\UserFollowFollowingUserNotificationEvent</classname>
 		</event>
-		
 		<event>
 			<name>comment</name>
 			<objecttype>com.woltlab.wcf.user.profileComment.notification</objecttype>
 			<classname>wcf\system\user\notification\event\UserProfileCommentUserNotificationEvent</classname>
-			<preset>1</preset>
 			<options>module_user_profile_wall</options>
+			<preset>1</preset>
 		</event>
 		<event>
 			<name>commentResponse</name>
 			<objecttype>com.woltlab.wcf.user.profileComment.response.notification</objecttype>
 			<classname>wcf\system\user\notification\event\UserProfileCommentResponseUserNotificationEvent</classname>
-			<preset>1</preset>
 			<options>module_user_profile_wall</options>
+			<preset>1</preset>
 		</event>
 		<event>
 			<name>commentResponseOwner</name>
 			<objecttype>com.woltlab.wcf.user.profileComment.response.notification</objecttype>
 			<classname>wcf\system\user\notification\event\UserProfileCommentResponseOwnerUserNotificationEvent</classname>
-			<preset>1</preset>
 			<options>module_user_profile_wall</options>
+			<preset>1</preset>
 		</event>
-		
 		<event>
 			<name>like</name>
 			<objecttype>com.woltlab.wcf.user.profileComment.like.notification</objecttype>
 			<classname>wcf\system\user\notification\event\UserProfileCommentLikeUserNotificationEvent</classname>
-			<preset>1</preset>
 			<options>module_like</options>
+			<preset>1</preset>
 		</event>
 		<event>
 			<name>like</name>
 			<objecttype>com.woltlab.wcf.user.profileComment.response.like.notification</objecttype>
 			<classname>wcf\system\user\notification\event\UserProfileCommentResponseLikeUserNotificationEvent</classname>
-			<preset>1</preset>
 			<options>module_like</options>
+			<preset>1</preset>
 		</event>
-		
 		<event>
 			<name>comment</name>
 			<objecttype>com.woltlab.wcf.moderation.queue.notification</objecttype>
 			<classname>wcf\system\user\notification\event\ModerationQueueCommentUserNotificationEvent</classname>
-			<preset>1</preset>
 			<permissions>mod.general.canUseModeration</permissions>
+			<preset>1</preset>
 		</event>
 		<event>
 			<name>commentResponse</name>
 			<objecttype>com.woltlab.wcf.moderation.queue.response.notification</objecttype>
 			<classname>wcf\system\user\notification\event\ModerationQueueCommentResponseUserNotificationEvent</classname>
-			<preset>1</preset>
 			<permissions>mod.general.canUseModeration</permissions>
+			<preset>1</preset>
 		</event>
-		
 		<event>
 			<name>expiring</name>
 			<objecttype>com.woltlab.wcf.paidSubscription.user</objecttype>
 			<classname>wcf\system\user\notification\event\ExpiringPaidSubscriptionUserUserNotificationEvent</classname>
-			<preset>1</preset>
 			<options>module_paid_subscription</options>
+			<preset>1</preset>
 		</event>
-		
 		<event>
 			<name>received</name>
 			<objecttype>com.woltlab.wcf.userTrophy.notification</objecttype>
 			<classname>wcf\system\user\notification\event\UserTrophyReceivedNotificationEvent</classname>
-			<preset>1</preset>
 			<options>module_trophy</options>
 			<permissions>user.profile.trophy.canSeeTrophies</permissions>
+			<preset>1</preset>
 		</event>
-		
 		<event>
 			<name>comment</name>
 			<objecttype>com.woltlab.wcf.page.notification</objecttype>
 			<classname>wcf\system\user\notification\event\PageCommentUserNotificationEvent</classname>
-			<preset>1</preset>
 			<permissions>admin.content.cms.canManagePage</permissions>
+			<preset>1</preset>
 		</event>
 		<event>
 			<name>commentResponse</name>
 			<objecttype>com.woltlab.wcf.page.response.notification</objecttype>
 			<classname>wcf\system\user\notification\event\PageCommentResponseUserNotificationEvent</classname>
-			<preset>1</preset>
 			<permissions>admin.content.cms.canManagePage</permissions>
+			<preset>1</preset>
 		</event>
 		<event>
 			<name>commentResponseOwner</name>
@@ -96,7 +90,6 @@
 			<classname>wcf\system\user\notification\event\PageCommentResponseOwnerUserNotificationEvent</classname>
 			<preset>1</preset>
 		</event>
-		
 		<event>
 			<name>comment</name>
 			<objecttype>com.woltlab.wcf.articleComment.notification</objecttype>
@@ -115,7 +108,6 @@
 			<classname>wcf\system\user\notification\event\ArticleCommentResponseOwnerUserNotificationEvent</classname>
 			<preset>1</preset>
 		</event>
-		
 		<event>
 			<name>article</name>
 			<objecttype>com.woltlab.wcf.article.notification</objecttype>

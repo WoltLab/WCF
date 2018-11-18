@@ -45,6 +45,8 @@
 		<instruction type="menuItem" />
 		<instruction type="box" />
 		<instruction type="mediaProvider" />
+		<instruction type="templateListener" />
+		
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
