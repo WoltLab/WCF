@@ -3823,6 +3823,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.acp.page.boxOrder.position.content"><![CDATA[(Content)]]></item>
 		<item name="wcf.acp.page.button.boxOrder"><![CDATA[Sort Boxes]]></item>
 		<item name="wcf.acp.page.button.viewPage"><![CDATA[Show Preview]]></item>
+		<item name="wcf.acp.page.button.copyPage"><![CDATA[Copy Page]]></item>
 		<item name="wcf.acp.page.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.page.contents"><![CDATA[Contents]]></item>
 		<item name="wcf.acp.page.customURL"><![CDATA[Custom URL]]></item>
@@ -3862,6 +3863,8 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.acp.page.lastVersion"><![CDATA[There are <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.page' objectID=$page->pageID}{/link}">previous versions</a> of this page, the last change was by <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 		<item name="wcf.acp.page.originIsNotSystem"><![CDATA[Custom pages only]]></item>
 		<item name="wcf.acp.page.enableShareButtons"><![CDATA[Enable the share buttons for this page]]></item>
+		<item name="wcf.acp.page.copy"><![CDATA[Copy Page]]></item>
+		<item name="wcf.acp.page.copy.description"><![CDATA[The values entered for this page will be used as a preset to create a new page. Only values editable in this form are included.<br><br>You’ll need to submit the form to save the new page. You can make changes to the new page by editing the values in that form, please bear in mind that new pages are disabled by default.]]></item>
 	</category>
 	<category name="wcf.paidSubscription">
 		<item name="wcf.paidSubscription.availableSubscriptions"><![CDATA[Available Subscriptions]]></item>

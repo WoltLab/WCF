@@ -32,7 +32,7 @@
 {if $action == 'add'}
 	<script data-relocate="true">
 		elById('name').addEventListener('blur', function() {
-			var name = this.value;
+			var name = this.value.toLowerCase();
 			if (!name) return;
 			name = name.replace(/ /g, '-');
 			name = name.replace(/[^a-z0-9-]/gi, '');
@@ -50,6 +50,25 @@
 			{/if}
 		});
 	</script>
+{else}
+	<script data-relocate="true">
+		require(['Language', 'WoltLabSuite/Core/Acp/Ui/Page/Copy'], function (Language, AcpUiPageCopy) {
+			Language.addObject({
+				'wcf.acp.page.copy': '{lang}wcf.acp.page.copy{/lang}'
+			});
+			
+			AcpUiPageCopy.init();
+		});
+	</script>
+	<div id="acpPageCopyDialog" style="display: none">
+		<div>
+			{lang}wcf.acp.page.copy.description{/lang}
+		</div>
+		
+		<div class="formSubmit">
+			<a href="{link controller='PageAdd' presetPageID=$page->pageID}{/link}" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</a>
+		</div>
+	</div>
 {/if}
 
 <header class="contentHeader">
@@ -60,6 +79,8 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
+				<li><a href="#" class="button jsButtonCopyPage"><span class="icon icon16 fa-copy"></span> {lang}wcf.acp.page.button.copyPage{/lang}</a></li>
+				
 				{if !$page->requireObjectID}
 					<li><a href="{$page->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.page.button.viewPage{/lang}</span></a></li>
 				{/if}

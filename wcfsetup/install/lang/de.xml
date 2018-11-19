@@ -1673,6 +1673,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.page.boxOrder.position.content"><![CDATA[(Inhalt)]]></item>
 		<item name="wcf.acp.page.button.boxOrder"><![CDATA[Boxen sortieren]]></item>
 		<item name="wcf.acp.page.button.viewPage"><![CDATA[Vorschau anzeigen]]></item>
+		<item name="wcf.acp.page.button.copyPage"><![CDATA[Seite kopieren]]></item>
 		<item name="wcf.acp.page.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.page.contents"><![CDATA[Inhalte]]></item>
 		<item name="wcf.acp.page.customURL"><![CDATA[Individuelle URL]]></item>
@@ -1712,6 +1713,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.page.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.page' objectID=$page->pageID}{/link}">vorherige Versionen</a> dieser Seite, die letzte Änderung erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
 		<item name="wcf.acp.page.originIsNotSystem"><![CDATA[Eigene Seiten]]></item>
 		<item name="wcf.acp.page.enableShareButtons"><![CDATA[Teilen-Buttons für diese Seite aktivieren]]></item>
+		<item name="wcf.acp.page.copy"><![CDATA[Seite kopieren]]></item>
+		<item name="wcf.acp.page.copy.description"><![CDATA[Die eingegebenen Werte dieser Seite werden als Vorlage zum Anlegen einer neuen Seite verwendet. Es werden nur die in diesem Formular sichtbaren Einstellungen übernommen.<br><br>Sie müssen das folgende Formular absenden, damit die neue Seite gespeichert wird. In diesem Formular können Sie zusätzliche Änderungen vornehmen, darüber hinaus beachten Sie bitte, dass die neue Seite standardmäßig deaktiviert angelegt wird.]]></item>
 	</category>
 	<category name="wcf.acp.paidSubscription">
 		<item name="wcf.acp.paidSubscription.list"><![CDATA[Bezahlte Mitgliedschaften]]></item>
