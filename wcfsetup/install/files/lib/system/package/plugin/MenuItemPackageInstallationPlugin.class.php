@@ -427,7 +427,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'identifier' => $element->getAttribute('identifier'),
 			'packageID' => $this->installation->getPackageID(),

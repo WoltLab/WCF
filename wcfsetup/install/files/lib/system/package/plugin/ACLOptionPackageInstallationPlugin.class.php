@@ -509,7 +509,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'packageID' => $this->installation->getPackage()->packageID,
 			'objectType' => $element->getElementsByTagName('objecttype')->item(0)->nodeValue

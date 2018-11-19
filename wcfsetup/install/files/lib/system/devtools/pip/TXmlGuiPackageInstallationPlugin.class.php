@@ -235,18 +235,18 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @param	bool		$saveData	is `true` if data is intended to be saved and otherwise `false`
 	 * @return	array
 	 */
-	abstract protected function doGetElementData(\DOMElement $element, $saveData);
+	abstract protected function fetchElementData(\DOMElement $element, $saveData);
 	
 	/**
 	 * Extracts the PIP object data from the given XML element by calling
-	 * `doGetElementData` and firing an event.
+	 * `fetchElementData` and firing an event.
 	 * 
 	 * @param	\DOMElement	$element	element whose data is returned
 	 * @param	bool		$saveData	is `true` if data is intended to be saved and otherwise `false`
 	 * @return	array
 	 */
 	protected function getElementData(\DOMElement $element, $saveData = false) {
-		$elementData = $this->doGetElementData($element, $saveData);
+		$elementData = $this->fetchElementData($element, $saveData);
 		
 		$data = [
 			'element' => $element,
@@ -318,7 +318,7 @@ XML;
 			$entryList->addEntry(
 				$this->getElementIdentifier($element),
 				// we skip the event here to avoid firing all of those events
-				array_intersect_key($this->doGetElementData($element, false), $entryList->getKeys())
+				array_intersect_key($this->fetchElementData($element, false), $entryList->getKeys())
 			);
 		}
 		

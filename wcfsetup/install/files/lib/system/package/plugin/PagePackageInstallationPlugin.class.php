@@ -635,7 +635,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'identifier' => $element->getAttribute('identifier'),
 			'originIsSystem' => 1,
