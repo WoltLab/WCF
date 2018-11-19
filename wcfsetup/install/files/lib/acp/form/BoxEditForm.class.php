@@ -109,6 +109,7 @@ class BoxEditForm extends BoxAddForm {
 			'lastUpdateTime' => TIME_NOW,
 			'cssClassName' => $this->cssClassName,
 			'showHeader' => $this->showHeader,
+			'isDisabled' => $this->isDisabled ? 1 : 0,
 			'linkPageID' => $this->linkPageID,
 			'linkPageObjectID' => $this->linkPageObjectID ?: 0,
 			'externalURL' => $this->externalURL
@@ -178,6 +179,8 @@ class BoxEditForm extends BoxAddForm {
 			$this->boxControllerID = $this->box->objectTypeID;
 			if ($this->box->showHeader) $this->showHeader = 1;
 			else $this->showHeader = 0;
+			if ($this->box->isDisabled) $this->isDisabled = 1;
+			else $this->isDisabled = 0;
 			if ($this->box->visibleEverywhere) $this->visibleEverywhere = 1;
 			else $this->visibleEverywhere = 0;
 			$this->pageIDs = $this->box->getPageIDs();

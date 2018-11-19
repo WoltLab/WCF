@@ -173,6 +173,12 @@
 						<label><input type="checkbox" id="showHeader" name="showHeader" value="1"{if $showHeader} checked{/if}> {lang}wcf.acp.box.showHeader{/lang}</label>
 					</dd>
 				</dl>
+				<dl>
+					<dt></dt>
+					<dd>
+						<label><input type="checkbox" id="isDisabled" name="isDisabled" value="1"{if $isDisabled} checked{/if}> {lang}wcf.acp.box.isDisabled{/lang}</label>
+					</dd>
+				</dl>
 			</div>
 			
 			{if $boxType === 'system'}

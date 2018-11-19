@@ -195,6 +195,12 @@ class BoxAddForm extends AbstractForm {
 	public $availableBoxPositions = [];
 	
 	/**
+	 * @var	bool
+	 * @since 3.2
+	 */
+	public $isDisabled = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -272,6 +278,7 @@ class BoxAddForm extends AbstractForm {
 		if (isset($_POST['visibleEverywhere'])) $this->visibleEverywhere = intval($_POST['visibleEverywhere']);
 		if (isset($_POST['cssClassName'])) $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
 		if (isset($_POST['showHeader'])) $this->showHeader = intval($_POST['showHeader']);
+		if (isset($_POST['isDisabled'])) $this->isDisabled = 1;
 		if (isset($_POST['pageIDs']) && is_array($_POST['pageIDs'])) $this->pageIDs = ArrayUtil::toIntegerArray($_POST['pageIDs']);
 		
 		if (isset($_POST['linkType'])) $this->linkType = $_POST['linkType'];
@@ -491,6 +498,7 @@ class BoxAddForm extends AbstractForm {
 			'lastUpdateTime' => TIME_NOW,
 			'cssClassName' => $this->cssClassName,
 			'showHeader' => $this->showHeader,
+			'isDisabled' => $this->isDisabled ? 1 : 0,
 			'linkPageID' => $this->linkPageID,
 			'linkPageObjectID' => $this->linkPageObjectID ?: 0,
 			'externalURL' => $this->externalURL,
@@ -532,7 +540,7 @@ class BoxAddForm extends AbstractForm {
 		// reset variables
 		$this->cssClassName = $this->name = '';
 		$this->position = 'contentTop';
-		$this->showOrder = $this->boxControllerID = 0;
+		$this->showOrder = $this->boxControllerID = $this->isDisabled = 0;
 		$this->visibleEverywhere = $this->showHeader = 1;
 		$this->title = $this->content = $this->images = $this->imageID = $this->pageIDs = $this->aclValues = [];
 		$this->boxController = null;
@@ -554,6 +562,7 @@ class BoxAddForm extends AbstractForm {
 			'showOrder' => $this->showOrder,
 			'visibleEverywhere' => $this->visibleEverywhere,
 			'showHeader' => $this->showHeader,
+			'isDisabled' => $this->isDisabled,
 			'title' => $this->title,
 			'content' => $this->content,
 			'imageID' => $this->imageID,
