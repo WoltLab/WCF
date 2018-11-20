@@ -388,7 +388,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'environment' => $element->getElementsByTagName('environment')->item(0)->nodeValue,
 			'eventName' => $element->getElementsByTagName('eventname')->item(0)->nodeValue,

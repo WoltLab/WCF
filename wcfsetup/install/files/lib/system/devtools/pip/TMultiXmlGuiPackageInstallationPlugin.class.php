@@ -122,7 +122,7 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 				$entryList->addEntry(
 					$this->getElementIdentifier($element),
 					// we skip the event here to avoid firing all of those events
-					array_intersect_key($this->doGetElementData($element), $entryList->getKeys())
+					array_intersect_key($this->fetchElementData($element), $entryList->getKeys())
 				);
 			}
 		}

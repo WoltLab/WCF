@@ -268,8 +268,8 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
-		$data = parent::doGetElementData($element, $saveData);
+	protected function fetchElementData(\DOMElement $element, $saveData) {
+		$data = parent::fetchElementData($element, $saveData);
 		
 		switch ($this->entryType) {
 			case 'options':

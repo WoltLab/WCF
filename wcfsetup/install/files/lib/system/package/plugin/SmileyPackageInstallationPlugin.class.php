@@ -227,7 +227,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'packageID' => $this->installation->getPackage()->packageID,
 			'smileyCode' => $element->getAttribute('name'),
