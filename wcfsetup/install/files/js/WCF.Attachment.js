@@ -61,9 +61,15 @@ if (COMPILER_TARGET_DEFAULT) {
 		_replaceOnLoad: {},
 		
 		/**
+		 * additional options
+		 * @var Object
+		 */
+		_options: {},
+		
+		/**
 		 * @see        WCF.Upload.init()
 		 */
-		init: function (buttonSelector, fileListSelector, objectType, objectID, tmpHash, parentObjectID, maxUploads, editorId) {
+		init: function (buttonSelector, fileListSelector, objectType, objectID, tmpHash, parentObjectID, maxUploads, editorId, options) {
 			this._super(buttonSelector, fileListSelector, 'wcf\\data\\attachment\\AttachmentAction', {
 				multiple: true,
 				maxUploads: maxUploads
@@ -75,6 +81,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			this._tmpHash = tmpHash;
 			this._parentObjectID = parseInt(parentObjectID);
 			this._editorId = editorId;
+			this._options = $.extend(true, this._options, options || {});
 			
 			this._buttonSelector.children('p.button').click($.proxy(this._validateLimit, this));
 			this._fileListSelector.find('.jsButtonInsertAttachment').click($.proxy(this._insert, this));
@@ -285,20 +292,114 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @see        WCF.Upload._upload()
 		 */
 		_upload: function (event, file, blob) {
-			var $uploadID = undefined;
+			var _super = this._super.bind(this);
 			
-			if (this._validateLimit()) {
-				$uploadID = this._super(event, file, blob);
-			}
-			
-			if (this._fileUpload) {
-				// remove and re-create the upload button since the 'files' property
-				// of the input field is readonly thus it can't be reset
-				this._removeButton();
-				this._createButton();
-			}
-			
-			return $uploadID;
+			require([
+				'WoltLabSuite/Core/FileUtil',
+				'WoltLabSuite/Core/ImageResizer',
+				'WoltLabSuite/Core/Ajax/Status'
+			]).then((function (modules) {
+				var FileUtil = modules[0];
+				var ImageResizer = modules[1];
+				var AjaxStatus = modules[2];
+				
+				AjaxStatus.show();
+				
+				var $files = [];
+				
+				if (file) {
+					$files.push(file);
+				}
+				else if (blob) {
+					$files.push(FileUtil.blobToFile(blob, 'pasted-from-clipboard'));
+				}
+				else {
+					$files = this._fileUpload.prop('files');
+				}
+				
+				// Default action is to resolve with the unaltered list of files
+				var $promise = Promise.resolve($files);
+				
+				if (this._options.autoScale && this._options.autoScale.enable) {
+					var $maxSize = this._buttonSelector.data('maxSize');
+					
+					// Create an ImageResizer instance
+					var $resizer = new ImageResizer();
+					var $maxWidth = this._options.autoScale.maxWidth;
+					var $maxHeight = this._options.autoScale.maxHeight;
+					var $quality = this._options.autoScale.quality;
+					
+					if (this._options.autoScale.fileType !== 'keep') {
+						$resizer.setFileType(this._options.autoScale.fileType);
+					}
+					
+					// Resize the images in series.
+					// As our resizer is based on Pica it will use multiple workers per image if possible.
+					$promise = Array.prototype.reduce.call($files, (function (acc, file) {
+						var $oldSize = file.size;
+						
+						return acc.then((function (arr) {
+							var $timeout = new Promise(function (resolve, reject) {
+								setTimeout(function () {
+									resolve(file);
+								}, 10e3); // Timeout per image
+							});
+							
+							var $promise = $resizer.resize(file, $maxWidth, $maxHeight, $quality, file.size > $maxSize, $timeout)
+							.then((function (result) {
+								if (result instanceof File) {
+									return result;
+								}
+								
+								var $fileType = undefined;
+								
+								if (this._options.autoScale.fileType === 'keep') {
+									$fileType = file.type;
+								}
+								
+								return $resizer.getFile(result, file.name, $fileType, $quality);
+							}).bind(this))
+							.then(function (resizedFile) {
+								if (resizedFile.size > $oldSize) {
+									console.debug('[WCF.Attachment] File size of "' + file.name + '" increased, uploading untouched image.');
+									return file;
+								}
+								
+								return resizedFile;
+							})
+							.catch(function (error) {
+								console.debug('[WCF.Attachment] Failed to resize image "' + file.name + '":', error);
+								return file;
+							});
+							
+							return Promise.race([$timeout, $promise])
+								.then(function (file) {
+									arr.push(file);
+									return arr;
+								});
+						}).bind(this));
+					}).bind(this), Promise.resolve([]));
+				}
+				
+				return $promise.then((function (files) {
+					var $uploadID = undefined;
+					
+					if (this._validateLimit()) {
+						$uploadID = _super(event, undefined, undefined, files);
+					}
+					
+					if (this._fileUpload) {
+						// remove and re-create the upload button since the 'files' property
+						// of the input field is readonly thus it can't be reset
+						this._removeButton();
+						this._createButton();
+					}
+					
+					return $uploadID;
+				}).bind(this)).finally(AjaxStatus.hide);
+			}).bind(this)).catch(function (error) {
+				console.debug('[WCF.Attachment] Failed to upload attachments:', error);
+			});
 		},
 		
 		/**
