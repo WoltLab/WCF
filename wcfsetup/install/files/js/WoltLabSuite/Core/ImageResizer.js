@@ -11,7 +11,7 @@ define([
 	'WoltLabSuite/Core/ExifUtil',
 	'Pica'
 ], function(FileUtil, ExifUtil, Pica) {
-	var pica = Pica({ features: [ 'js', 'wasm', 'ww' ] });
+	var pica = new Pica({ features: [ 'js', 'wasm', 'ww' ] });
 	
 	/**
 	 * @constructor
@@ -100,7 +100,7 @@ define([
 					image.onload = function () {
 						var canvas = document.createElement('canvas');
 						
-						// Prevent upscalingq
+						// Prevent upscaling
 						var newWidth = Math.min(maxWidth, image.width);
 						var newHeight = Math.min(maxHeight, image.height);
 						

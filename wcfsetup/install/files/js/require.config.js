@@ -9,7 +9,7 @@ requirejs.config({
 	shim: {
 		enquire: { exports: 'enquire' },
 		favico: { exports: 'Favico' },
-		'perfect-scrollbar': { exports: 'PerfectScrollbar' },
+		'perfect-scrollbar': { exports: 'PerfectScrollbar' }
 	},
 	map: {
 		'*': {
@@ -45,7 +45,7 @@ requirejs.config({
 			'Ui/TabMenu': 'WoltLabSuite/Core/Ui/TabMenu',
 			'Upload': 'WoltLabSuite/Core/Upload',
 			'User': 'WoltLabSuite/Core/User'
-		},
+		}
 	},
 	waitSeconds: 0
 });

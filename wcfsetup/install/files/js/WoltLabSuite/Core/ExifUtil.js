@@ -44,7 +44,7 @@ define([], function() {
 		getExifBytesFromJpeg: function (blob) {
 			return new Promise(function (resolve, reject) {
 				if (!(blob instanceof Blob) && !(blob instanceof File)) {
-					return reject(TypeError('The argument must be a Blob or a File'));
+					return reject(new TypeError('The argument must be a Blob or a File'));
 				}
 				
 				var reader = new FileReader();
@@ -67,7 +67,7 @@ define([], function() {
 						// Check if the next byte indicates an EXIF sequence
 						if (bytes[i + 1] === _tagNames.APP1) {
 							var signature = '';
-							for (let j = i + 4; bytes[j] !== 0 && j < bytes.length; j++) {
+							for (var j = i + 4; bytes[j] !== 0 && j < bytes.length; j++) {
 								signature += String.fromCharCode(bytes[j]);
 							}
 							
@@ -102,7 +102,7 @@ define([], function() {
 		removeExifData: function (blob) {
 			return new Promise(function (resolve, reject) {
 				if (!(blob instanceof Blob) && !(blob instanceof File)) {
-					return reject(TypeError('The argument must be a Blob or a File'));
+					return reject(new TypeError('The argument must be a Blob or a File'));
 				}
 				
 				var reader = new FileReader();
@@ -124,7 +124,7 @@ define([], function() {
 						// Check if the next byte indicates an EXIF sequence
 						if (bytes[i + 1] === _tagNames.APP1) {
 							var signature = '';
-							for (let j = i + 4; bytes[j] !== 0 && j < bytes.length; j++) {
+							for (var j = i + 4; bytes[j] !== 0 && j < bytes.length; j++) {
 								signature += String.fromCharCode(bytes[j]);
 							}
 							
