@@ -3,7 +3,8 @@ requirejs.config({
 	paths: {
 		enquire: '3rdParty/enquire',
 		favico: '3rdParty/favico',
-		'perfect-scrollbar': '3rdParty/perfect-scrollbar'
+		'perfect-scrollbar': '3rdParty/perfect-scrollbar',
+		prism: '3rdParty/prism',
 	},
 	shim: {
 		enquire: { exports: 'enquire' },
