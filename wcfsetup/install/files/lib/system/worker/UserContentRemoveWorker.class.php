@@ -40,17 +40,44 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 	protected $data = null;
 	
 	/**
+	 * 
+	 * @var null 
+	 */
+	public $contentProvider = null;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function validate() {
 		if (!isset($this->parameters['userID'])) {
-			throw new \InvalidArgumentException("userID missing");
+			throw new \InvalidArgumentException('userID missing');
 		}
 		
 		$this->user = new User($this->parameters['userID']);
 		
+		if (!$this->user->userID) {
+			throw new \InvalidArgumentException('userID is unknown.');
+		}
+		
 		if (!$this->user->canEdit()) {
 			throw new PermissionDeniedException();
+		}
+		
+		if (isset($this->parameters['contentProvider'])) {
+			if (!is_array($this->parameters['contentProvider'])) {
+				throw new \InvalidArgumentException('The parameter `contentProvider` must be an array.');
+			}
+			
+			$knownContentProvider = array_map(function ($contentProvider) {
+				return $contentProvider->objectType;
+			}, ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'));
+			
+			$unknownContentProvider = array_diff($this->parameters['contentProvider'], $knownContentProvider);
+			if (!empty($unknownContentProvider)) {
+				throw new \InvalidArgumentException('The parameter `contentProvider` contains unknown objectTypes ('. implode(', ', $unknownContentProvider) .').');
+			}
+			
+			$this->contentProvider = $this->parameters['contentProvider'];
 		}
 		
 		if ($this->loopCount === 0) {
@@ -79,18 +106,20 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 		$contentProviders = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider');
 		
 		foreach ($contentProviders as $contentProvider) {
-			/** @var IUserContentProvider $processor */
-			$processor = $contentProvider->getProcessor();
-			$contentList = $processor->getContentListForUser($this->user);
-			$count = $contentList->countObjects();
-			
-			if ($count) {
-				$this->data['provider'][$contentProvider->objectTypeID] = [
-					'processor' => $processor,
-					'count' => $count
-				];
+			if ($this->contentProvider === null || (is_array($this->contentProvider) && in_array($contentProvider->objectType, $this->contentProvider))) {
+				/** @var IUserContentProvider $processor */
+				$processor = $contentProvider->getProcessor();
+				$contentList = $processor->getContentListForUser($this->user);
+				$count = $contentList->countObjects();
 				
-				$this->data['count'] += ceil($count / $this->limit) * $this->limit;
+				if ($count) {
+					$this->data['provider'][$contentProvider->objectTypeID] = [
+						'processor' => $processor,
+						'count' => $count
+					];
+					
+					$this->data['count'] += ceil($count / $this->limit) * $this->limit;
+				}
 			}
 		}
 	}
