@@ -5966,39 +5966,46 @@ if (COMPILER_TARGET_DEFAULT) {
 		/**
 		 * Callback for file uploads.
 		 *
-		 * @param        object                event
+		 * @param        object              event
 		 * @param        File                file
 		 * @param        Blob                blob
-		 * @return        integer
+		 * @param        Array|FileList      list of files
+		 * @return       integer
 		 */
-		_upload: function (event, file, blob) {
+		_upload: function (event, file, blob, files) {
 			var $uploadID = null;
 			var $files = [];
-			if (file) {
-				$files.push(file);
-			}
-			else if (blob) {
-				var $ext = '';
-				switch (blob.type) {
-					case 'image/png':
-						$ext = '.png';
-						break;
-					
-					case 'image/jpeg':
-						$ext = '.jpg';
-						break;
-					
-					case 'image/gif':
-						$ext = '.gif';
-						break;
-				}
-				
-				$files.push({
-					name: 'pasted-from-clipboard' + $ext
-				});
+			
+			if (typeof files !== 'undefined') {
+				$files = files;
 			}
 			else {
-				$files = this._fileUpload.prop('files');
+				if (file) {
+					$files.push(file);
+				}
+				else if (blob) {
+					var $ext = '';
+					switch (blob.type) {
+						case 'image/png':
+							$ext = '.png';
+							break;
+						
+						case 'image/jpeg':
+							$ext = '.jpg';
+							break;
+						
+						case 'image/gif':
+							$ext = '.gif';
+							break;
+					}
+					
+					$files.push({
+						name: 'pasted-from-clipboard' + $ext
+					});
+				}
+				else {
+					$files = this._fileUpload.prop('files');
+				}
 			}
 			
 			if ($files.length) {
@@ -7908,3 +7915,4 @@ WCF.Notice = { };
 function wcfEval(expression) {
 	return eval(expression);
 }
+
