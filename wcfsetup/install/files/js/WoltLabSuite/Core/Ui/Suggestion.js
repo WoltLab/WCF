@@ -230,7 +230,14 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 					item = data.returnValues[i];
 					
 					anchor = elCreate('a');
-					anchor.textContent = item.label;
+					if (item.icon) {
+						anchor.className = 'box16';
+						anchor.innerHTML = item.icon + ' <span></span>';
+						anchor.children[1].textContent = item.label;
+					}
+					else {
+						anchor.textContent = item.label;
+					}
 					elData(anchor, 'object-id', item.objectID);
 					anchor.addEventListener(WCF_CLICK_EVENT, this._select.bind(this));
 					
