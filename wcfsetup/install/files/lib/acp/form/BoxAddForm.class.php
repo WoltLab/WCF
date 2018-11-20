@@ -201,10 +201,30 @@ class BoxAddForm extends AbstractForm {
 	public $isDisabled = 0;
 	
 	/**
+	 * @var int
+	 * @since 3.2
+	 */
+	public $presetBoxID = 0;
+	
+	/**
+	 * @var Box
+	 * @since 3.2
+	 */
+	public $presetBox;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
+		
+		if (isset($_GET['presetBoxID'])) $this->presetBoxID = intval($_GET['presetBoxID']);
+		if ($this->presetBoxID) {
+			$this->presetBox = new Box($this->presetBoxID);
+			if (!$this->presetBox->boxID) {
+				throw new IllegalLinkException();
+			}
+		}
 		
 		$this->readBoxType();
 		
@@ -249,6 +269,12 @@ class BoxAddForm extends AbstractForm {
 	 * @throws	IllegalLinkException
 	 */
 	protected function readBoxType() {
+		if ($this->presetBox) {
+			$this->isMultilingual = $this->presetBox->isMultilingual;
+			$this->boxType = $this->presetBox->boxType;
+			return;
+		}
+		
 		if (!empty($_REQUEST['isMultilingual'])) $this->isMultilingual = 1;
 		if (!empty($_REQUEST['boxType'])) $this->boxType = $_REQUEST['boxType'];
 		
@@ -544,6 +570,50 @@ class BoxAddForm extends AbstractForm {
 		$this->visibleEverywhere = $this->showHeader = 1;
 		$this->title = $this->content = $this->images = $this->imageID = $this->pageIDs = $this->aclValues = [];
 		$this->boxController = null;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function readData() {
+		parent::readData();
+		
+		if (empty($_POST) && $this->presetBox) {
+			$this->name = $this->presetBox->name;
+			$this->boxType = $this->presetBox->boxType;
+			$this->position = $this->presetBox->position;
+			$this->showOrder = $this->presetBox->showOrder;
+			$this->cssClassName = $this->presetBox->cssClassName;
+			$this->boxControllerID = $this->presetBox->objectTypeID;
+			if ($this->presetBox->showHeader) $this->showHeader = 1;
+			else $this->showHeader = 0;
+			$this->isDisabled = 1;
+			if ($this->presetBox->visibleEverywhere) $this->visibleEverywhere = 1;
+			else $this->visibleEverywhere = 0;
+			$this->pageIDs = $this->presetBox->getPageIDs();
+			$this->linkPageID = $this->presetBox->linkPageID;
+			$this->linkPageObjectID = $this->presetBox->linkPageObjectID;
+			$this->externalURL = $this->presetBox->externalURL;
+			if ($this->linkPageID) $this->linkType = 'internal';
+			if ($this->externalURL) $this->linkType = 'external';
+			
+			foreach ($this->presetBox->getBoxContents() as $languageID => $content) {
+				$this->title[$languageID] = $content->title;
+				$this->content[$languageID] = $content->content;
+				$this->imageID[$languageID] = $content->imageID;
+			}
+			
+			if ($this->boxControllerID) {
+				$this->boxController = ObjectTypeCache::getInstance()->getObjectType($this->boxControllerID);
+				if ($this->boxController->getProcessor() instanceof IConditionBoxController) {
+					$this->boxController->getProcessor()->setBox($this->presetBox);
+				}
+			}
+			
+			$this->aclValues = SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.box', $this->presetBox->boxID);
+			
+			$this->readBoxImages();
+		}
 	}
 	
 	/**
