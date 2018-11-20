@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\group\UserGroup;
 use wcf\data\AbstractDatabaseObjectAction;
@@ -796,6 +797,43 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$userEditor->update([
 				'disableAvatar' => 0
 			]);
+		}
+	}
+	
+	/**
+	 * Returns the remove content dialog. 
+	 * 
+	 * @return      String[]
+	 * @since       3.2
+	 */
+	public function prepareRemoveContent() {
+		$knownContentProvider = array_map(function ($contentProvider) {
+			return $contentProvider->objectType;
+		}, ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'));
+		
+		return [
+			'template' => WCF::getTPL()->fetch('removeUserContentDialog', 'wcf', [
+				'knownContentProvider' => $knownContentProvider,
+				'userID' => $this->parameters['userID'],
+				'user' => $this->parameters['user']
+			])
+		];
+	}
+	
+	/**
+	 * Validates the prepareRemoveContent method. 
+	 * 
+	 * @since       3.2
+	 */
+	public function validatePrepareRemoveContent() {
+		if (!isset($this->parameters['userID'])) {
+			throw new \InvalidArgumentException("userID missing");
+		}
+		
+		$this->parameters['user'] = new User($this->parameters['userID']);
+		
+		if ($this->parameters['user']->userID && !$this->parameters['user']->canEdit()) {
+			throw new PermissionDeniedException();
 		}
 	}
 	

@@ -3033,6 +3033,16 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.acp.contact.recipient.name"><![CDATA[Display Name]]></item>
 		<item name="wcf.acp.contact.settings"><![CDATA[Edit Contact Form]]></item>
 	</category>
+	<category name="wcf.acp.content">
+		<item name="wcf.acp.content.removeContent"><![CDATA[Delete User Content]]></item>
+		<item name="wcf.acp.content.provider.removeContentSectionTitle"><![CDATA[Content]]></item>
+		<item name="wcf.acp.content.provider.removeContentInfo"><![CDATA[Please select which content of the user “<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>” should be deleted.]]></item>
+		<item name="wcf.acp.content.provider.removeContentWarning"><![CDATA[<strong>Heads up</strong>: The content will be deleted irrevocably and without any further confirmation prompt!]]></item>
+		<item name="wcf.acp.content.provider.com.woltlab.wcf.comment"><![CDATA[Comments]]></item>
+		<item name="wcf.acp.content.provider.com.woltlab.wcf.commentResponse"><![CDATA[Comment Responses]]></item>
+		<item name="wcf.acp.content.provider.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.content.provider.com.woltlab.wcf.reaction"><![CDATA[Reactions]]></item>
+	</category>
 	<category name="wcf.date">
 		<item name="wcf.date.dateFormat"><![CDATA[M jS Y]]></item>
 		<item name="wcf.date.timeFormat"><![CDATA[g:i&#xa0;a]]></item>

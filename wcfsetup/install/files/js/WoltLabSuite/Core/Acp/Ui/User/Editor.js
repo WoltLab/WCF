@@ -7,7 +7,7 @@
  * @module	WoltLabSuite/Core/Acp/Ui/User/Editor
  * @since       3.1
  */
-define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown'], function(Ajax, Core, EventHandler, Language, UiSimpleDropdown) {
+define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown', 'WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler'], function(Ajax, Core, EventHandler, Language, UiSimpleDropdown, RemoveContentHandler) {
 	"use strict";
 	
 	/**
@@ -67,6 +67,11 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown'], functi
 						}
 					});
 				});
+			}
+			
+			var deleteContent = elBySel('.jsDeleteContent', dropdownMenu);
+			if (deleteContent !== null) {
+				new RemoveContentHandler(deleteContent, userId);
 			}
 		},
 		
