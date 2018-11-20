@@ -114,7 +114,6 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 				
 				if ($count) {
 					$this->data['provider'][$contentProvider->objectTypeID] = [
-						'processor' => $processor,
 						'count' => $count
 					];
 					
@@ -141,9 +140,9 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 		
 		$values = array_keys($this->data['provider']);
 		$providerID = array_pop($values);
-		$provider = $this->data['provider'][$providerID];
+		
 		/** @var IUserContentProvider $processor */
-		$processor = $provider['processor'];
+		$processor = ObjectTypeCache::getInstance()->getObjectType($providerID)->getProcessor();
 		
 		$objectList = $processor->getContentListForUser($this->user);
 		$objectList->sqlLimit = $this->limit;
