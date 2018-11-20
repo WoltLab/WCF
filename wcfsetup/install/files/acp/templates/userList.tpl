@@ -30,7 +30,9 @@
 			'wcf.acp.user.ban.expires.description': '{lang}wcf.acp.user.ban.expires.description{/lang}',
 			'wcf.acp.user.ban.neverExpires': '{lang}wcf.acp.user.ban.neverExpires{/lang}',
 			'wcf.acp.user.sendNewPassword.workerTitle': '{lang}wcf.acp.user.sendNewPassword.workerTitle{/lang}',
-			'wcf.acp.worker.abort.confirmMessage': '{lang}wcf.acp.worker.abort.confirmMessage{/lang}'
+			'wcf.acp.worker.abort.confirmMessage': '{lang}wcf.acp.worker.abort.confirmMessage{/lang}',
+			'wcf.acp.user.content.removeContent': '{lang}wcf.acp.user.content.removeContent{/lang}',
+			'wcf.acp.user.content.removeContent.confirmMessage': '{lang}wcf.acp.user.content.removeContent.confirmMessage{/lang}',
 		});
 		WCF.ACP.User.BanHandler.init();
 		
@@ -130,6 +132,7 @@
 									{if $user->deletable}
 										<li class="dropdownDivider"></li>
 										<li><a href="#" class="jsDispatchDelete">{lang}wcf.global.button.delete{/lang}</a></li>
+										<li><a href="#" class="jsDeleteContent">{lang}wcf.acp.user.content.removeContent{/lang}</a></li>
 									{/if}
 									
 									{if $user->editable}
