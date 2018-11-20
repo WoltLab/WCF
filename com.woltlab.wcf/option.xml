@@ -212,6 +212,9 @@
 				<parent>message</parent>
 				<options>module_attachment</options>
 			</category>
+			<category name="message.attachment.autoscale">
+				<parent>message.attachment</parent>
+			</category>
 			<category name="message.sidebar">
 				<parent>message</parent>
 			</category>
@@ -969,6 +972,39 @@ redis:wcf.acp.option.cache_source_type.redis</selectoptions>
 				<defaultvalue>352</defaultvalue>
 				<minvalue>96</minvalue>
 				<suffix>pixel</suffix>
+			</option>
+			<option name="attachment_image_autoscale">
+				<categoryname>message.attachment.autoscale</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions>attachment_image_autoscale_max_width,attachment_image_autoscale_max_height,attachment_image_autoscale_file_type,attachment_image_autoscale_quality</enableoptions>
+			</option>
+			<option name="attachment_image_autoscale_max_width">
+				<categoryname>message.attachment.autoscale</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>1024</defaultvalue>
+				<minvalue>1</minvalue>
+			</option>
+			<option name="attachment_image_autoscale_max_height">
+				<categoryname>message.attachment.autoscale</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>1024</defaultvalue>
+				<minvalue>1</minvalue>
+			</option>
+			<option name="attachment_image_autoscale_file_type">
+				<categoryname>message.attachment.autoscale</categoryname>
+				<optiontype>radioButton</optiontype>
+				<defaultvalue>keep</defaultvalue>
+				<selectoptions>keep:wcf.acp.option.attachment_image_autoscale_file_type.keep
+image/jpeg:wcf.acp.option.attachment_image_autoscale_file_type.jpeg</selectoptions>
+			</option>
+			<option name="attachment_image_autoscale_quality">
+				<categoryname>message.attachment.autoscale</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>80</defaultvalue>
+				<minvalue>1</minvalue>
+				<maxvalue>100</maxvalue>
+				<suffix>percent</suffix>
 			</option>
 			<!-- message.general.edit -->
 			<option name="module_edit_history">

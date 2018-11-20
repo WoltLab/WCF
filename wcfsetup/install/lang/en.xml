@@ -1174,6 +1174,16 @@
 		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Thumbnail Width]]></item>
 		<item name="wcf.acp.option.attachment_storage"><![CDATA[Storage Location]]></item>
 		<item name="wcf.acp.option.attachment_storage.description"><![CDATA[You can specify a different storage location for attachments. Attention! You are responsible to move any existing attachments to the new storage location.]]></item>
+		<item name="wcf.acp.option.category.message.attachment.autoscale"><![CDATA[Automatic Image Scaling]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale"><![CDATA[Enables image scaling in the web browser]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale.description"><![CDATA[When enabled images are being scaled automatically in the web browser before uploading if they exceed the allowed dimensions or the file size limit.]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_max_width"><![CDATA[Maximum allowed width]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_max_height"><![CDATA[Maximum allowed height]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_quality"><![CDATA[Quality]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_quality.description"><![CDATA[Defines the quality of the scaled image.]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_file_type"><![CDATA[File type]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_file_type.jpeg"><![CDATA[JPEG (lossy, does not support transparency, usually the generated files are small)]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_file_type.keep"><![CDATA[Keep the file type]]></item>
 		<item name="wcf.acp.option.module_attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.option.module_smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.option.category.message.censorship"><![CDATA[Censorship]]></item>
