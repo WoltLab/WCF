@@ -3,6 +3,10 @@
 	max-height: 540px;
 	overflow: auto;
 	
+	@media only screen and (min-height: 700px) and (max-height: 800px) {
+		max-height: 450px;
+	}
+	
 	> li {
 		display: inline-flex;
 		flex-wrap: wrap;
