@@ -3307,7 +3307,6 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.moderation.outstandingItems"><![CDATA[Ausstehende Einträge]]></item>
 		<item name="wcf.moderation.doneItems"><![CDATA[Erledigte Einträge]]></item>
 		<item name="wcf.moderation.lastChangeTime"><![CDATA[Letzte Änderung]]></item>
-		<item name="wcf.moderation.markAllAsRead.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich alle Einträge als gelesen markieren?]]></item>
 		<item name="wcf.moderation.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.moderation.noMoreItems"><![CDATA[Keine weiteren Einträge]]></item>
 		<item name="wcf.moderation.notification.comment.title"><![CDATA[Neuer Kommentar (Moderation)]]></item>

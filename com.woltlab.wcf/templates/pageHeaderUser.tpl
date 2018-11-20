@@ -88,7 +88,6 @@
 						<script data-relocate="true">
 							$(function() {
 								new WCF.User.Panel.Notification({
-									markAllAsReadConfirmMessage: '{lang}wcf.user.notification.markAllAsConfirmed.confirmMessage{/lang}',
 									noItems: '{lang}wcf.user.notification.noMoreNotifications{/lang}',
 									settingsLink: '{link controller='NotificationSettings' encode=false}{/link}',
 									showAllLink: '{link controller='NotificationList' encode=false}{/link}',
@@ -264,7 +263,6 @@
 								new WCF.User.Panel.Moderation({
 									deletedContent: '{lang}wcf.moderation.showDeletedContent{/lang}',
 									deletedContentLink: '{link controller='DeletedContentList' encode=false}{/link}',
-									markAllAsReadConfirmMessage: '{lang}wcf.moderation.markAllAsRead.confirmMessage{/lang}',
 									noItems: '{lang}wcf.moderation.noMoreItems{/lang}',
 									showAllLink: '{link controller='ModerationList' encode=false}{/link}',
 									title: '{lang}wcf.moderation.moderation{/lang}'
