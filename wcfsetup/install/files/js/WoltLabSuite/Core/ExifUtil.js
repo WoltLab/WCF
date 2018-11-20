@@ -38,8 +38,7 @@ define([], function() {
 		 * Extracts the EXIF / XMP sections of a JPEG blob.
 		 *
 		 * @param       blob    {Blob}                                  JPEG blob
-		 * @param       exif    {Uint8Array}                            APP1 sections
-		 * @returns             {Promise<Uint8Array | TypeError>}       Promise resolving with the altered JPEG blob
+		 * @returns             {Promise<Uint8Array | TypeError>}       Promise resolving with the EXIF / XMP sections
 		 */
 		getExifBytesFromJpeg: function (blob) {
 			return new Promise(function (resolve, reject) {

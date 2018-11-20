@@ -336,8 +336,6 @@ if (COMPILER_TARGET_DEFAULT) {
 					// Resize the images in series.
 					// As our resizer is based on Pica it will use multiple workers per image if possible.
 					$promise = Array.prototype.reduce.call($files, (function (acc, file) {
-						var $oldSize = file.size;
-						
 						return acc.then((function (arr) {
 							var $timeout = new Promise(function (resolve, reject) {
 								setTimeout(function () {
@@ -360,7 +358,7 @@ if (COMPILER_TARGET_DEFAULT) {
 								return $resizer.getFile(result, file.name, $fileType, $quality);
 							}).bind(this))
 							.then(function (resizedFile) {
-								if (resizedFile.size > $oldSize) {
+								if (resizedFile.size > file.size) {
 									console.debug('[WCF.Attachment] File size of "' + file.name + '" increased, uploading untouched image.');
 									return file;
 								}

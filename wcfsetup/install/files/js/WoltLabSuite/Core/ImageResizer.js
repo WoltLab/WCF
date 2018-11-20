@@ -11,13 +11,14 @@ define([
 	'WoltLabSuite/Core/ExifUtil',
 	'Pica'
 ], function(FileUtil, ExifUtil, Pica) {
+	"use strict";
+	
 	var pica = new Pica({ features: [ 'js', 'wasm', 'ww' ] });
 	
 	/**
 	 * @constructor
 	 */
 	function ImageResizer() { }
-	
 	ImageResizer.prototype = {
 		maxWidth: 800,
 		maxHeight: 600,
@@ -53,22 +54,21 @@ define([
 		},
 		
 		getFile: function (result, fileName, fileType, quality) {
-			var image = result.image;
-			var exif = result.exif;
+			fileType = fileType || this.fileType;
+			quality = quality || this.quality;
 			
-			return pica.toBlob(image, fileType, quality)
+			var basename = fileName.match(/(.+)(\..+?)$/);
+			
+			return pica.toBlob(result.image, fileType, quality)
 				.then(function (blob) {
 					if (fileType === 'image/jpeg' && typeof exif !== 'undefined') {
-						blob = ExifUtil.setExifData(blob, exif);
+						return ExifUtil.setExifData(blob, result.exif);
 					}
 					
-					var matches = fileName.match(/(.+)(\..+?)$/);
-					
-					// If we inserted EXIF data blob has been converted to a Promise
-					return Promise.resolve(blob)
-						.then(function (blob) {
-							return FileUtil.blobToFile(blob, matches[1] + '_autoscaled')
-						});
+					return blob;
+				})
+				.then(function (blob) {
+					return FileUtil.blobToFile(blob, basename[1] + '_autoscaled');
 				});
 		},
 		
@@ -104,7 +104,7 @@ define([
 						var newWidth = Math.min(maxWidth, image.width);
 						var newHeight = Math.min(maxHeight, image.height);
 						
-						if (image.width < newWidth && image.height < newHeight && !force) {
+						if (image.width <= newWidth && image.height <= newHeight && !force) {
 							return resolve(file);
 						}
 						
@@ -132,9 +132,9 @@ define([
 							cancelToken: cancelPromise
 						};
 						
-						resolve(pica.resize(image, canvas, options).then(function (result) {
-							return { image: result, exif: exif };
-						}));
+						pica.resize(image, canvas, options).then(function (result) {
+							resolve({ image: result, exif: exif });
+						}, reject);
 					}
 				})
 			});
