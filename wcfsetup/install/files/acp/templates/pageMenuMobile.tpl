@@ -44,6 +44,8 @@
 	{* user menu *}
 	<div id="pageUserMenuMobile" class="pageUserMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getPath()}acp/images/woltlabSuite.png">
 		<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.user{/lang}">
+			{event name='userMenuBefore'}
+			
 			<li class="menuOverlayTitle">{lang}wcf.menu.user{/lang}</li>
 			<li class="menuOverlayItem">
 				<a href="#" class="menuOverlayItemLink box24">
@@ -77,6 +79,8 @@
 					<span class="menuOverlayItemTitle">{lang}wcf.user.logout{/lang}</span>
 				</a>
 			</li>
+			
+			{event name='userMenuAfter'}
 		</ol>
 	</div>
 {/if}
