@@ -32,7 +32,7 @@ class StyleCompiler extends SingletonFactory {
 	 * names of option types which are supported as additional variables
 	 * @var	string[]
 	 */
-	public static $supportedOptionType = ['boolean', 'integer'];
+	public static $supportedOptionType = ['boolean', 'float', 'integer', 'radioButton', 'select'];
 	
 	/**
 	 * file used to store global SCSS declarations, relative to `WCF_DIR`
