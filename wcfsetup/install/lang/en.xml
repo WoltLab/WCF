@@ -1484,6 +1484,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.image_external_source_whitelist"><![CDATA[Allowed images from external sites]]></item>
 		<item name="wcf.acp.option.image_external_source_whitelist.description"><![CDATA[The listed domains will be exempt from blocking. Hostnames are exact matches only, a leading wildcard can be used to exclude an entire domain: <kbd>*.example.com</kbd> matches <kbd>example.com</kbd> and subdomains such as <kbd>foo.example.com</kbd> or <kbd>www.example.com</kbd>.<br>Enter one domain per line only.]]></item>
 		<item name="wcf.acp.option.message_enable_toc"><![CDATA[Enable the table of contents]]></item>
+		<item name="wcf.acp.option.search_enable_articles"><![CDATA[Articles are searchable]]></item>
+		<item name="wcf.acp.option.search_enable_pages"><![CDATA[Pages are searchable]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>
