@@ -44,7 +44,7 @@ define(['Ajax', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Acp/Ui/Worker'], fun
 			new Worker({
 				// dialog
 				dialogId: 'removeContentWorker',
-				dialogTitle: Language.get('wcf.acp.user.content.removeContent'),
+				dialogTitle: Language.get('wcf.acp.content.removeContent'),
 				
 				// ajax
 				className: '\\wcf\\system\\worker\\UserContentRemoveWorker',
@@ -97,7 +97,7 @@ define(['Ajax', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Acp/Ui/Worker'], fun
 			return {
 				id: 'userRemoveContentHandler-' + this._userId,
 				options: {
-					title: Language.get('wcf.acp.user.content.removeContent')
+					title: Language.get('wcf.acp.content.removeContent')
 				},
 				source: null
 			};

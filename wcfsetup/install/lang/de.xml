@@ -275,6 +275,7 @@
 		<item name="wcf.acp.contact.settings"><![CDATA[Kontaktformular bearbeiten]]></item>
 	</category>
 	<category name="wcf.acp.content">
+		<item name="wcf.acp.content.removeContent"><![CDATA[Inhalte des Benutzers löschen]]></item>
 		<item name="wcf.acp.content.provider.removeContentSectionTitle"><![CDATA[Inhalte]]></item>
 		<item name="wcf.acp.content.provider.removeContentInfo"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}wähle{else}wählen Sie{/if} aus, welche Inhalte vom Benutzer „<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>“ gelöscht werden sollen.]]></item>
 		<item name="wcf.acp.content.provider.removeContentWarning"><![CDATA[<strong>Achtung</strong>: Der ausgewählte Inhalt wird nach dem Absenden <strong>unwiderruflich und ohne zusätzliche Sicherheitsabfrage</strong> gelöscht!]]></item>
@@ -2435,8 +2436,6 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Neues Passwort zusenden]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesem Benutzer wirklich ein neues Kennwort zusenden?]]></item>
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Persönliche Daten exportieren (DSGVO)]]></item>
-		<item name="wcf.acp.user.content.removeContent"><![CDATA[Inhalte des Benutzers löschen]]></item>
-		<item name="wcf.acp.user.content.removeContent.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich alle Inhalte von dem Benutzer löschen?]]></item>
 	</category>
 	<category name="wcf.acp.worker">
 		<item name="wcf.acp.worker.abort.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Ausführung wirklich abbrechen?]]></item>
