@@ -92,7 +92,7 @@ class Style extends DatabaseObject {
 				return '';
 			}
 			
-			if ($toHex && preg_match('/^rgba\((\d+), (\d+), (\d+), (1|0\.\d+)\)$/', $this->variables[$variableName], $matches)) {
+			if ($toHex && preg_match('/^rgba\((\d+), (\d+), (\d+), (1|0?\.\d+)\)$/', $this->variables[$variableName], $matches)) {
 				$r = $matches[1];
 				$g = $matches[2];
 				$b = $matches[3];
@@ -143,6 +143,11 @@ class Style extends DatabaseObject {
 			$variableValue = isset($row['variableValue']) ? $row['variableValue'] : $row['defaultValue'];
 			
 			$this->variables[$variableName] = $variableValue;
+		}
+		
+		// see https://github.com/WoltLab/WCF/issues/2636
+		if (empty($this->variables['wcfPageThemeColor'])) {
+			$this->variables['wcfPageThemeColor'] = $this->variables['wcfHeaderBackground'];
 		}
 	}
 	

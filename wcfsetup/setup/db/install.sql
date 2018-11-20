@@ -2322,6 +2322,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigat
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationLink', 'rgba(44, 62, 80, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationLinkActive', 'rgba(44, 62, 80, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationText', 'rgba(170, 170, 170, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageThemeColor', ''); -- uses `$wcfHeaderBackground` if left empty
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSidebarBackground', 'rgba(236, 241, 247, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSidebarDimmedLink', 'rgba(44, 62, 80, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSidebarDimmedLinkActive', 'rgba(44, 62, 80, 1)');
