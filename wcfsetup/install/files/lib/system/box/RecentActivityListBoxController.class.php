@@ -4,6 +4,7 @@ use wcf\data\user\activity\event\ViewableUserActivityEventList;
 use wcf\system\condition\IObjectListCondition;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
+use wcf\system\user\UserProfileHandler;
 use wcf\system\WCF;
 
 /**
@@ -152,6 +153,9 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 				/** @noinspection PhpUndefinedMethodInspection */
 				$this->objectList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
 			}
+		}
+		else if (!empty(UserProfileHandler::getInstance()->getIgnoredUsers())) {
+			$this->objectList->getConditionBuilder()->add("user_activity_event.userID NOT IN (?)", [UserProfileHandler::getInstance()->getIgnoredUsers()]);
 		}
 		
 		// load more items than necessary to avoid empty list if some items are invisible for current user
