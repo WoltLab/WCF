@@ -68,6 +68,8 @@ define(['Ajax', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Acp/Ui/Worker'], fun
 				}
 			}
 			
+			UiDialog.close('userRemoveContentHandler-' + this._userId);
+			
 			if (objectTypes.length > 0) {
 				this._executeWorker(objectTypes);
 			}
