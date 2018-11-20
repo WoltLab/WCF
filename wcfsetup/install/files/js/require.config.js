@@ -3,12 +3,13 @@ requirejs.config({
 	paths: {
 		enquire: '3rdParty/enquire',
 		favico: '3rdParty/favico',
-		'perfect-scrollbar': '3rdParty/perfect-scrollbar'
+		'perfect-scrollbar': '3rdParty/perfect-scrollbar',
+		'Pica': '3rdParty/pica'
 	},
 	shim: {
 		enquire: { exports: 'enquire' },
 		favico: { exports: 'Favico' },
-		'perfect-scrollbar': { exports: 'PerfectScrollbar' }
+		'perfect-scrollbar': { exports: 'PerfectScrollbar' },
 	},
 	map: {
 		'*': {
@@ -44,7 +45,7 @@ requirejs.config({
 			'Ui/TabMenu': 'WoltLabSuite/Core/Ui/TabMenu',
 			'Upload': 'WoltLabSuite/Core/Upload',
 			'User': 'WoltLabSuite/Core/User'
-		}
+		},
 	},
 	waitSeconds: 0
 });
@@ -57,3 +58,4 @@ requirejs.config({
 define('jquery', function() {
 	return window.jQuery;
 });
+
