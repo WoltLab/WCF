@@ -25,6 +25,12 @@ define([
 		quality: 0.8,
 		fileType: 'image/jpeg',
 		
+		/**
+		 * Sets the default maximum width for this instance
+		 *
+		 * @param       {Number}        value   the new default maximum width
+		 * @returns     {ImageResizer}          this ImageResizer instance
+		 */
 		setMaxWidth: function (value) {
 			if (value == null) value = ImageResizer.prototype.maxWidth;
 			
@@ -32,6 +38,12 @@ define([
 			return this;
 		},
 		
+		/**
+		 * Sets the default maximum height for this instance
+		 *
+		 * @param       {Number}        value   the new default maximum height
+		 * @returns     {ImageResizer}          this ImageResizer instance
+		 */
 		setMaxHeight: function (value) {
 			if (value == null) value = ImageResizer.prototype.maxHeight;
 			
@@ -39,6 +51,12 @@ define([
 			return this;
 		},
 		
+		/**
+		 * Sets the default quality for this instance
+		 *
+		 * @param       {Number}        value   the new default quality
+		 * @returns     {ImageResizer}          this ImageResizer instance
+		 */
 		setQuality: function (value) {
 			if (value == null) value = ImageResizer.prototype.quality;
 			
@@ -46,6 +64,12 @@ define([
 			return this;
 		},
 		
+		/**
+		 * Sets the default file type for this instance
+		 *
+		 * @param       {Number}        value   the new default file type
+		 * @returns     {ImageResizer}          this ImageResizer instance
+		 */
 		setFileType: function (value) {
 			if (value == null) value = ImageResizer.prototype.fileType;
 			
@@ -53,6 +77,15 @@ define([
 			return this;
 		},
 		
+		/**
+		 * Converts the result of ImageResizer.resize() into a File
+		 *
+		 * @param       {Object{exif: Uint8Array|undefined, image: Canvas|File} result  the result of ImageResizer.resize()
+		 * @param       {String}        fileName        the name of the returned file
+		 * @param       {String}        [fileType]      the type of the returned image
+		 * @param       {Number}        [quality]       quality setting, currently only effective for "image/jpeg"
+		 * @returns     {Promise<File>} the File object
+		 */
 		getFile: function (result, fileName, fileType, quality) {
 			fileType = fileType || this.fileType;
 			quality = quality || this.quality;
@@ -72,6 +105,17 @@ define([
 				});
 		},
 		
+		/**
+		 * Downscales an image given as File object.
+		 *
+		 * @param       {File}        file              the image to resize
+		 * @param       {Number}      [maxWidth]        maximum width
+		 * @param       {Number}      [maxHeight]       maximum height
+		 * @param       {Number}      [quality]         quality in percent
+		 * @param       {boolean}     [force]           whether to force scaling even if unneeded
+		 * @param       {Promise}     cancelPromise     a Promise used to cancel pica's operation
+		 * @returns     {Promise<{exif: any, image: any} | never>} a Promise resolving with the resized image as Canvas and optional EXIF data
+		 */
 		resize: function (file, maxWidth, maxHeight, quality, force, cancelPromise) {
 			maxWidth = maxWidth || this.maxWidth;
 			maxHeight = maxHeight || this.maxHeight;
