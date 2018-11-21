@@ -77,66 +77,74 @@ define([
 			maxHeight = maxHeight || this.maxHeight;
 			quality = quality || this.quality;
 			force = force || false;
-			
-			var reader = new FileReader();
-			var image = new Image();
-			var exif = Promise.resolve();
-			
-			reader.onloadend = function () {
-				image.src = reader.result;
-			};
-			
+
+			var exif;
 			if (file.type === 'image/jpeg') {
 				// Extract EXIF data
 				exif = ExifUtil.getExifBytesFromJpeg(file);
 			}
 			
-			reader.readAsDataURL(file);
-			
-			return exif.then(function (exif) {
-				return new Promise(function (resolve, reject) {
-					image.onerror = reject;
+			var resizer = new Promise(function (resolve, reject) {
+				var reader = new FileReader();
+				var image = new Image();
+				
+				reader.onloadend = function () {
+					image.src = reader.result;
+				};
+				
+				reader.onerror = function () {
+					reader.abort();
+					reject();
+				};
+				
+				image.onerror = reject;
+				
+				image.onload = function () {
+					var canvas = document.createElement('canvas');
 					
-					image.onload = function () {
-						var canvas = document.createElement('canvas');
-						
-						// Prevent upscaling
-						var newWidth = Math.min(maxWidth, image.width);
-						var newHeight = Math.min(maxHeight, image.height);
-						
-						if (image.width <= newWidth && image.height <= newHeight && !force) {
-							return resolve(file);
-						}
-						
-						// Keep image ratio
-						if (newWidth >= newHeight) {
-							canvas.width = newWidth;
-							canvas.height = newWidth * (image.height / image.width);
-						}
-						else {
-							canvas.width = newHeight * (image.width / image.height);
-							canvas.height = newHeight;
-						}
-						
-						// Map to Pica's quality
-						var resizeQuality = 1;
-						if (quality >= 0.8) {
-							resizeQuality = 3;
-						}
-						else if (quality >= 0.4) {
-							resizeQuality = 2;
-						}
-						
-						var options = {
-							quality: resizeQuality,
-							cancelToken: cancelPromise
-						};
-						
-						pica.resize(image, canvas, options).then(function (result) {
-							resolve({ image: result, exif: exif });
-						}, reject);
+					// Prevent upscaling
+					var newWidth = Math.min(maxWidth, image.width);
+					var newHeight = Math.min(maxHeight, image.height);
+					
+					if (image.width <= newWidth && image.height <= newHeight && !force) {
+						return resolve(file);
 					}
-				})
+					
+					// Keep image ratio
+					if (newWidth >= newHeight) {
+						canvas.width = newWidth;
+						canvas.height = newWidth * (image.height / image.width);
+					}
+					else {
+						canvas.width = newHeight * (image.width / image.height);
+						canvas.height = newHeight;
+					}
+					
+					// Map to Pica's quality
+					var resizeQuality = 1;
+					if (quality >= 0.8) {
+						resizeQuality = 3;
+					}
+					else if (quality >= 0.4) {
+						resizeQuality = 2;
+					}
+					
+					var options = {
+						quality: resizeQuality,
+						cancelToken: cancelPromise
+					};
+					
+					pica.resize(image, canvas, options).then(function (result) {
+						resolve(result);
+					}, reject);
+				};
+				
+				reader.readAsDataURL(file);
+			});
+			
+			return Promise.all([ exif, resizer ])
+			.then(function (result) {
+				return { exif: result[0], image: result[1] };
 			});
 		}
 	};

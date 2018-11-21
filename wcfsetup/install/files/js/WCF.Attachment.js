@@ -345,8 +345,8 @@ if (COMPILER_TARGET_DEFAULT) {
 							
 							var $promise = $resizer.resize(file, $maxWidth, $maxHeight, $quality, file.size > $maxSize, $timeout)
 							.then((function (result) {
-								if (result instanceof File) {
-									return result;
+								if (result.image instanceof File) {
+									return result.image;
 								}
 								
 								var $fileType = undefined;
