@@ -125,8 +125,8 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 			foreach ($this->contentProvider as $contentProvider) {
 				$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $contentProvider);
 				
-				if ($objectType->requiredObjectType !== null) {
-					$objectTypeNames = explode(',', $objectType->requiredObjectType);
+				if ($objectType->requiredobjecttype !== null) {
+					$objectTypeNames = explode(',', $objectType->requiredobjecttype);
 					
 					foreach ($objectTypeNames as $objectTypeName) {
 						$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $objectTypeName);
