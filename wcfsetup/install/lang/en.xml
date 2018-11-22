@@ -365,7 +365,7 @@
 		<item name="wcf.acp.devtools.project.name.error.notUnique"><![CDATA[The name is already used by another project.]]></item>
 		<item name="wcf.acp.devtools.project.path"><![CDATA[Path]]></item>
 		<item name="wcf.acp.devtools.project.path.error.missingCompatibility"><![CDATA[This package does not contain any data on API compatibility.]]></item>
-		<item name="wcf.acp.devtools.project.path.error.notInstalled"><![CDATA[The package must be installed already.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.notInstalled"><![CDATA[The package has not been installed yet. <a href="#" {if $project->getPackageArchive()->getOpenRequirements()|empty}class="jsDevtoolsInstallPackage"{else}class="jsStaticDialog" data-dialog-id="openPackageRequirements"{/if}>Do you want to install the package?</a>]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notFound"><![CDATA[The path is invalid.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notUnique"><![CDATA[The path is already used by another project.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.packageXml"><![CDATA[The path does not contain a valid <kbd>package.xml</kbd>.]]></item>
@@ -423,6 +423,10 @@
 		<item name="wcf.acp.devtools.project.pips"><![CDATA[PIPs]]></item>
 		<item name="wcf.acp.devtools.pip.showGuiSupportingPipsOnly"><![CDATA[Show PIPs supporting GUI only]]></item>
 		<item name="wcf.acp.devtools.pip.showGuiSupportingPipsOnly.description"><![CDATA[Show only PIPs that support managing entries via a graphical user interface.]]></item>
+		<item name="wcf.acp.devtools.project.installPackage.confirmMessage"><![CDATA[Do you really want to install the package <span class="confirmationObject">{@$packageIdentifier}</span>?]]></item>
+		<item name="wcf.acp.devtools.project.installPackage.error.openRequirements"><![CDATA[The project cannot be installed because the following packages are missing:]]></item>
+		<item name="wcf.acp.devtools.project.installPackage.openRequirement"><![CDATA[{$openPackage} (Version {$openRequirement[minversion]})]]></item>
+		<item name="wcf.acp.devtools.project.installPackage.error.openRequirements.title"><![CDATA[Missing Packages]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP Connection Test]]></item>

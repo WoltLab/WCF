@@ -446,7 +446,7 @@ class PackageInstallationDispatcher {
 		}
 		else {
 			// create package entry
-			$package = PackageEditor::create($nodeData);
+			$package = $this->createPackage($nodeData);
 			
 			// update package id for current queue
 			$queueEditor = new PackageInstallationQueueEditor($this->queue);
@@ -531,6 +531,17 @@ class PackageInstallationDispatcher {
 		}
 		
 		return $installationStep;
+	}
+	
+	/**
+	 * Creates a new package based on the given data and returns it.
+	 * 
+	 * @param	array	$packageData
+	 * @return	Package
+	 * @since	3.2
+	 */
+	protected function createPackage(array $packageData) {
+		return PackageEditor::create($packageData);
 	}
 	
 	/**

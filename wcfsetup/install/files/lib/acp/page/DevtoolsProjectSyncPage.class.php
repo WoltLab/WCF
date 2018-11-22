@@ -63,7 +63,8 @@ class DevtoolsProjectSyncPage extends AbstractPage {
 		
 		WCF::getTPL()->assign([
 			'objectID' => $this->objectID,
-			'object' => $this->object
+			'object' => $this->object,
+			'project' => $this->object
 		]);
 	}
 }
