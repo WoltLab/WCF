@@ -295,6 +295,13 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	}
 	
 	/**
+	 * @inheritDoc
+	 */
+	protected function postImport() {
+		LanguageFactory::getInstance()->deleteLanguageCache();
+	}
+	
+	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
 	 * @since	3.0
 	 */
