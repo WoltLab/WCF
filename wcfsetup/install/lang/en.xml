@@ -3309,6 +3309,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.editor.code.highlighter"><![CDATA[Syntax Highlighting]]></item>
 		<item name="wcf.editor.code.highlighter.description"><![CDATA[Highlighting is not displayed within the editor.]]></item>
 		<item name="wcf.editor.code.highlighter.detect"><![CDATA[(Automatically Detect)]]></item>
+		<item name="wcf.editor.code.highlighter.plain"><![CDATA[(None)]]></item>
 		<item name="wcf.editor.code.line"><![CDATA[Start Line Number]]></item>
 		<item name="wcf.editor.code.line.description"><![CDATA[Optional: Specify the start for line enumeration.]]></item>
 		<item name="wcf.editor.code.title"><![CDATA[{if $highlighter}{$highlighter}{else}Code{/if}{if $file} - {$file}{/if}]]></item>

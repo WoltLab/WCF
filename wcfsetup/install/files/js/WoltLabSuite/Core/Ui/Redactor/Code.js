@@ -6,7 +6,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Redactor/Code
  */
-define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './PseudoHeader'], function (EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog, UiRedactorPseudoHeader) {
+define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './PseudoHeader', 'prism/prism-meta'], function (EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog, UiRedactorPseudoHeader, PrismMeta) {
 	"use strict";
 	
 	if (!COMPILER_TARGET_DEFAULT) {
@@ -208,16 +208,12 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 						
 						// set highlighters
 						var highlighters = '<option value="">' + Language.get('wcf.editor.code.highlighter.detect') + '</option>';
+						highlighters += '<option value="plain">' + Language.get('wcf.editor.code.highlighter.plain') + '</option>';
 						
-						var values = [];
 						//noinspection JSUnresolvedVariable
-						for (var highlighter in this._editor.opts.woltlab.highlighters) {
-							//noinspection JSUnresolvedVariable
-							if (this._editor.opts.woltlab.highlighters.hasOwnProperty(highlighter)) {
-								//noinspection JSUnresolvedVariable
-								values.push([highlighter, this._editor.opts.woltlab.highlighters[highlighter]]);
-							}
-						}
+						var values = this._editor.opts.woltlab.highlighters.map(function (highlighter) {
+							return [highlighter, PrismMeta[highlighter].title];
+						});
 						
 						// sort by label
 						values.sort(function(a, b) {

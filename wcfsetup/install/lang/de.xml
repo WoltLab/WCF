@@ -2937,6 +2937,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.editor.code.highlighter"><![CDATA[Syntax-Hervorhebung]]></item>
 		<item name="wcf.editor.code.highlighter.description"><![CDATA[Die farbliche Hervorherbung wird im Editor nicht angezeigt.]]></item>
 		<item name="wcf.editor.code.highlighter.detect"><![CDATA[(Automatische Erkennung)]]></item>
+		<item name="wcf.editor.code.highlighter.plain"><![CDATA[(Kein)]]></item>
 		<item name="wcf.editor.code.line"><![CDATA[Start-Zeilennummer]]></item>
 		<item name="wcf.editor.code.line.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Lege{else}Legen Sie{/if} den Wert fest, ab dem die Zeilennummierung startet.]]></item>
 		<item name="wcf.editor.code.title"><![CDATA[{if $highlighter}{$highlighter}{else}Quellcode{/if}{if $file} - {$file}{/if}]]></item>

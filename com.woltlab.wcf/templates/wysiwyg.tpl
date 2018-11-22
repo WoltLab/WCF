@@ -70,6 +70,7 @@
 				'wcf.editor.code.highlighter': '{lang}wcf.editor.code.highlighter{/lang}',
 				'wcf.editor.code.highlighter.description': '{lang}wcf.editor.code.highlighter.description{/lang}',
 				'wcf.editor.code.highlighter.detect': '{lang}wcf.editor.code.highlighter.detect{/lang}',
+				'wcf.editor.code.highlighter.plain': '{lang}wcf.editor.code.highlighter.plain{/lang}',
 				'wcf.editor.code.line': '{lang}wcf.editor.code.line{/lang}',
 				'wcf.editor.code.line.description': '{lang}wcf.editor.code.line.description{/lang}',
 				'wcf.editor.code.title': '{lang __literal=true}wcf.editor.code.title{/lang}',
@@ -119,7 +120,7 @@
 			var allowedInlineStyles = [], buttons = [], buttonMobile = [], buttonOptions = [], customButtons = [];
 			{include file='wysiwygToolbar'}
 			
-			var highlighters = { {implode from=$__wcf->getBBCodeHandler()->getHighlighters() item=__highlighter}'{$__highlighter}': '{lang}wcf.bbcode.code.{@$__highlighter}.title{/lang}'{/implode} };
+			var highlighters = [ {implode from=$__wcf->getBBCodeHandler()->getHighlighters() item=__highlighter}'{$__highlighter}'{/implode} ];
 			
 			{include file='mediaJavaScript'}
 			
