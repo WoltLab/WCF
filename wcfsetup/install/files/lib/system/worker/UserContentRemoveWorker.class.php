@@ -105,6 +105,21 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 		
 		$contentProviders = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider');
 		
+		// sort object types
+		uasort($contentProviders, function ($a, $b) {
+			$niceValueA = ($a->nicevalue ?: 0);
+			$niceValueB = ($b->nicevalue ?: 0);
+			
+			if ($niceValueA < $niceValueB) {
+				return -1;
+			}
+			else if ($niceValueA > $niceValueB) {
+				return 1;
+			}
+			
+			return 0;
+		});
+		
 		foreach ($contentProviders as $contentProvider) {
 			if ($this->contentProvider === null || (is_array($this->contentProvider) && in_array($contentProvider->objectType, $this->contentProvider))) {
 				/** @var IUserContentProvider $processor */
@@ -113,8 +128,9 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 				$count = $contentList->countObjects();
 				
 				if ($count) {
-					$this->data['provider'][$contentProvider->objectTypeID] = [
-						'count' => $count
+					$this->data['provider'][$contentProvider->objectType] = [
+						'count' => $count,
+						'objectTypeID' => $contentProvider->objectTypeID
 					];
 					
 					$this->data['count'] += ceil($count / $this->limit) * $this->limit;
@@ -139,20 +155,20 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 		} 
 		
 		$values = array_keys($this->data['provider']);
-		$providerID = array_pop($values);
+		$providerObjectType = array_pop($values);
 		
 		/** @var IUserContentProvider $processor */
-		$processor = ObjectTypeCache::getInstance()->getObjectType($providerID)->getProcessor();
+		$processor = ObjectTypeCache::getInstance()->getObjectType($this->data['provider'][$providerObjectType]['objectTypeID'])->getProcessor();
 		
 		$objectList = $processor->getContentListForUser($this->user);
 		$objectList->sqlLimit = $this->limit;
 		$objectList->readObjectIDs();
 		$processor->deleteContent($objectList->objectIDs);
 		
-		$this->data['provider'][$providerID]['count'] -= $this->limit;
+		$this->data['provider'][$providerObjectType]['count'] -= $this->limit;
 		
-		if ($this->data['provider'][$providerID]['count'] <= 0) {
-			unset($this->data['provider'][$providerID]);
+		if ($this->data['provider'][$providerObjectType]['count'] <= 0) {
+			unset($this->data['provider'][$providerObjectType]);
 		}
 	}
 	
