@@ -809,7 +809,9 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public function prepareRemoveContent() {
 		$knownContentProvider = array_map(function ($contentProvider) {
 			return $contentProvider->objectType;
-		}, ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'));
+		}, array_filter(ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'), function ($contentProvider) {
+			return !$contentProvider->hidden;
+		}));
 		
 		return [
 			'template' => WCF::getTPL()->fetch('removeUserContentDialog', 'wcf', [
