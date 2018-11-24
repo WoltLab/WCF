@@ -38,7 +38,24 @@ class DevtoolsInstaller extends Installer {
 	public function getTar($source) {
 		$directory = null;
 		
-		foreach ($this->project->getPackageArchive()->getInstallInstructions() as $instruction) {
+		$instructions = $this->project->getPackageArchive()->getInstallInstructions();
+		
+		// WoltLab Suite Core does not install its acp templates and files via PIP
+		if ($this->project->isCore()) {
+			$instructions[] = [
+				'attributes' => ['type' => 'acpTemplate'],
+				'pip' => 'acpTemplate',
+				'value' => ''
+			];
+			
+			$instructions[] = [
+				'attributes' => ['type' => 'file'],
+				'pip' => 'file',
+				'value' => ''
+			];
+		}
+		
+		foreach ($instructions as $instruction) {
 			$archive = null;
 			switch ($instruction['pip']) {
 				case 'acpTemplate':
@@ -55,7 +72,25 @@ class DevtoolsInstaller extends Installer {
 			}
 			
 			if ($archive !== null) {
-				$directory = FileUtil::addTrailingSlash($this->project->path . pathinfo($archive, PATHINFO_FILENAME));
+				if ($this->project->isCore()) {
+					switch ($instruction['pip']) {
+						case 'acpTemplate':
+							$directory = $this->project->path . 'wcfsetup/install/files/acp/templates/';
+							break;
+						
+						case 'file':
+							$directory = $this->project->path . 'wcfsetup/install/files/';
+							break;
+						
+						case 'template':
+							$directory = $this->project->path . 'com.woltlab.wcf/templates/';
+							break;
+					}
+				}
+				else {
+					$directory = FileUtil::addTrailingSlash($this->project->path . pathinfo($archive, PATHINFO_FILENAME));
+				}
+				
 				if ($source == $archive && is_dir($directory)) {
 					$files = $this->project->getPackageArchive()->getTar()->getFiles();
 					
