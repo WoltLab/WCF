@@ -814,12 +814,13 @@ XML;
 		
 		// replace old element
 		$element = $this->getElementByIdentifier($xml, $identifier);
-		
-		if ($element->parentNode === $newElement->parentNode) {
-			DOMUtil::replaceElement($element, $newElement, false);
-		}
-		else {
-			DOMUtil::removeNode($element);
+		if ($element !== null) {
+			if ($element->parentNode === $newElement->parentNode) {
+				DOMUtil::replaceElement($element, $newElement, false);
+			}
+			else {
+				DOMUtil::removeNode($element);
+			}
 		}
 		
 		return $newElement;
