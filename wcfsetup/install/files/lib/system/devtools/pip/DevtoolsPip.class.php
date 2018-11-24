@@ -252,7 +252,9 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 		$tar = $project->getPackageArchive()->getTar();
 		$tar->reset();
 		
-		$instructions = [];
+		$instructions = [
+			'value' => $target
+		];
 		
 		if ($project->isCore()) {
 			switch ($pluginName) {
@@ -310,23 +312,17 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						}
 					}
 					
-					$instructions['value'] = $defaultFilename;
-					
 					break;
 				
 				case 'language':
 					$filename = "wcfsetup/install/lang/{$target}";
 					$tar->registerFile($filename, $project->path . $filename);
 					
-					$instructions['value'] = $filename;
-					
 					break;
 					
 				default:
 					$filename = "com.woltlab.wcf/{$target}";
 					$tar->registerFile($filename, $project->path . $filename);
-					
-					$instructions['value'] = $filename;
 					
 					break;
 			}
@@ -389,8 +385,6 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						}
 					}
 					
-					$instructions['value'] = $defaultFilename;
-					
 					break;
 				
 				default:
@@ -402,8 +396,6 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						$filename = $target;
 						$tar->registerFile($filename, $project->path . $filename);
 					}
-					
-					$instructions['value'] = $filename;
 					
 					break;
 			}
