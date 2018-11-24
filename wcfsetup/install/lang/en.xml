@@ -1490,6 +1490,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.message_enable_toc"><![CDATA[Enable the table of contents]]></item>
 		<item name="wcf.acp.option.search_enable_articles"><![CDATA[Articles are searchable]]></item>
 		<item name="wcf.acp.option.search_enable_pages"><![CDATA[Pages are searchable]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_articles"><![CDATA[Display author’s article count]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>
