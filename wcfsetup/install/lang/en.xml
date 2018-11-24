@@ -3056,7 +3056,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 	</category>
 	<category name="wcf.date">
 		<item name="wcf.date.dateFormat"><![CDATA[M jS Y]]></item>
-		<item name="wcf.date.timeFormat"><![CDATA[g:i&#xa0;a]]></item>
+		<item name="wcf.date.timeFormat"><![CDATA[g:i a]]></item>
 		<item name="wcf.date.dateTimeFormat"><![CDATA[%date%, %time%]]></item>
 		<item name="wcf.date.shortDateTimeFormat"><![CDATA[%date%]]></item>
 		<item name="wcf.date.interval.days.past"><![CDATA[{if $days > 1}{#$days} days{else}A day{/if} ago]]></item>
