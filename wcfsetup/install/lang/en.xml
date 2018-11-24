@@ -682,6 +682,7 @@
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.canUploadCoverPhoto"><![CDATA[Can upload their cover photo]]></item>
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.maxSize"><![CDATA[Maximum Image File Size]]></item>
 		<item name="wcf.acp.group.option.admin.content.reaction.canManageReactionType"><![CDATA[Can manage reaction types]]></item>
+		<item name="wcf.acp.group.option.user.signature.canEditSignature"><![CDATA[Can edit own signature]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab Suite&trade;]]></item>
