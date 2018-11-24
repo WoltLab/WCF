@@ -229,6 +229,7 @@
 		<item name="wcf.acp.box.button.copyBox"><![CDATA[Box kopieren]]></item>
 		<item name="wcf.acp.box.copy"><![CDATA[Box kopieren]]></item>
 		<item name="wcf.acp.box.copy.description"><![CDATA[Die eingegebenen Werte dieser Box werden als Vorlage zum Anlegen einer neuen Box verwendet. Es werden nur die in diesem Formular sichtbaren Einstellungen übernommen.<br><br>Sie müssen das folgende Formular absenden, damit die neue Box gespeichert wird. In diesem Formular können Sie zusätzliche Änderungen vornehmen, darüber hinaus beachten Sie bitte, dass die neue Box standardmäßig deaktiviert angelegt wird.]]></item>
+		<item name="wcf.acp.box.boxController.com.woltlab.wcf.trophyCategories"><![CDATA[Trophäen-Kategorien]]></item>
 	</category>
 	<category name="wcf.acp.cache">
 		<item name="wcf.acp.cache.button.clear"><![CDATA[Cache leeren]]></item>
