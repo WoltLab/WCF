@@ -315,14 +315,12 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 					break;
 				
 				case 'language':
-					$filename = "wcfsetup/install/lang/{$target}";
-					$tar->registerFile($filename, $project->path . $filename);
+					$tar->registerFile($target, $project->path . 'wcfsetup/install/lang/' . $target);
 					
 					break;
 					
 				default:
-					$filename = "com.woltlab.wcf/{$target}";
-					$tar->registerFile($filename, $project->path . $filename);
+					$tar->registerFile($target, $project->path . 'com.woltlab.wcf/' . $target);
 					
 					break;
 			}
@@ -389,12 +387,10 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 				
 				default:
 					if (strpos($defaultFilename, '*') !== false) {
-						$filename = preg_replace('~\*.*$~', $target, $defaultFilename);
-						$tar->registerFile($filename, $project->path . $filename);
+						$tar->registerFile($target, $project->path . preg_replace('~\*.*$~', $target, $defaultFilename));
 					}
 					else {
-						$filename = $target;
-						$tar->registerFile($filename, $project->path . $filename);
+						$tar->registerFile($target, $project->path . $target);
 					}
 					
 					break;
