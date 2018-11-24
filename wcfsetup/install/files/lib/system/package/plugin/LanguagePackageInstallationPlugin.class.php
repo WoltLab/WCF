@@ -475,7 +475,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		// add one field per language
 		foreach ($this->getProjectXmls() as $xml) {
 			$languageCode = $xml->getDocument()->documentElement->getAttribute('languagecode');
-			$languageName = $xml->getDocument()->documentElement->getAttribute('languagename');
+			$languageName = LanguageFactory::getInstance()->getLanguageByCode($languageCode)->languageName;
 			
 			if ($dataContainer->getNodeById($languageCode) !== null) {
 				throw new \LogicException("Duplicate language file with language code '{$languageCode}'.");
