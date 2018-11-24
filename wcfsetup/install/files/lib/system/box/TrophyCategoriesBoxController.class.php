@@ -7,8 +7,8 @@ use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 
 /**
- * Box for article categories.
- *
+ * Box for trophy categories.
+ * 
  * @author	Joshua Ruesweg
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
