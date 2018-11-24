@@ -2215,6 +2215,10 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.data.title"><![CDATA[Message Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc"><![CDATA[Generate Table of Contents]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description"><![CDATA[If selected, a table of contents is created for each message of this type.]]></item>
+		<item name="wcf.acp.pip.templateListener.niceValue"><![CDATA[Nice Value]]></item>
+		<item name="wcf.acp.pip.templateListener.niceValue.description"><![CDATA[The nice value is used to determine the order in which template listeners for the same event are executed. Template listeners with lower nice value are executed first.]]></item>
+		<item name="wcf.acp.pip.templateListener.options.description"><![CDATA[At least one of the entered options has to be enabled for the template listener’ code to be executed. The options are checked in the template by wrapping the template code in an if statement checking the options. Options of non-required packages will be reported as non-existing.]]></item>
+		<item name="wcf.acp.pip.templateListener.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions for the template listener’ code to be executed. The permissions are checked in the template by wrapping the template code in an if statement checking the permissions. Permissions of non-required packages will be reported as non-existing.]]></item>
 	</category>
 	<category name="wcf.acp.reactionType">
 		<item name="wcf.acp.reactionType.delete.confirmMessage"><![CDATA[Do you really want to delete the reaction type <span class="confirmationObject">{$reactionType->getTitle()}</span>?]]></item>
