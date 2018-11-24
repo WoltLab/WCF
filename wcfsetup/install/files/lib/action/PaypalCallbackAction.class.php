@@ -55,8 +55,8 @@ class PaypalCallbackAction extends AbstractAction {
 			}
 			
 			// Check that receiver_email is your Primary PayPal email
-			if (strtolower($_POST['business']) != strtolower(PAYPAL_EMAIL_ADDRESS) && (strtolower($_POST['receiver_email']) != strtolower(PAYPAL_EMAIL_ADDRESS))) {
-				throw new SystemException('invalid business or receiver_email');
+			if (strtolower($_POST['receiver_email']) != strtolower(PAYPAL_EMAIL_ADDRESS)) {
+				throw new SystemException('invalid receiver_email');
 			}
 			
 			// get token
