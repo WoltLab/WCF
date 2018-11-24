@@ -806,8 +806,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 						// only set explicit showOrder when adding new categories
 						$data['showorder'] = $this->getShowOrder(
 							$data['showorder'] ?? null,
-							$data['categoryName'],
-							'categoryName'
+							$data['categoryname'],
+							'categoryname'
 						);
 					}
 					
