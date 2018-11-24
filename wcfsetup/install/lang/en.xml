@@ -3970,6 +3970,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.coverPhoto.upload.error.minHeight"><![CDATA[The image is too small.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.minWidth"><![CDATA[The image is too small.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
+		<item name="wcf.user.coverPhoto.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
 	</category>
 	
 	<category name="wcf.user.notification">
