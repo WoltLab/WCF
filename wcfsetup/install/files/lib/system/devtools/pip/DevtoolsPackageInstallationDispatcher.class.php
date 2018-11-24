@@ -26,6 +26,10 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
 	 */
 	public function __construct(DevtoolsProject $project, PackageInstallationQueue $queue = null) {
 		$this->queue = $queue;
+		if ($this->queue === null) {
+			$this->queue = new DevtoolsPackageInstallationQueue($project);
+		}
+		
 		$this->nodeBuilder = new class($this) extends PackageInstallationNodeBuilder {
 			protected function buildOptionalNodes() {
 				// does nothing; optional packages are not supported
