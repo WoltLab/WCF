@@ -454,6 +454,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->objectProperty('hidden')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.hidden')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.hidden.description'),
+				
 				ItemListFormField::create('userContentProviderRequiredObjectType')
 					->objectProperty('requiredobjecttype')
 					->saveValueType(ItemListFormField::SAVE_VALUE_TYPE_CSV)
