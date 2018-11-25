@@ -1676,22 +1676,22 @@
 		<type>
 			<name>com.woltlab.wcf.comment</name>
 			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
-			<classname>\wcf\system\user\content\provider\CommentUserContentProvider</classname>
+			<classname>wcf\system\user\content\provider\CommentUserContentProvider</classname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.commentResponse</name>
 			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
-			<classname>\wcf\system\user\content\provider\CommentResponseUserContentProvider</classname>
+			<classname>wcf\system\user\content\provider\CommentResponseUserContentProvider</classname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.article</name>
 			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
-			<classname>\wcf\system\user\content\provider\ArticleUserContentProvider</classname>
+			<classname>wcf\system\user\content\provider\ArticleUserContentProvider</classname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.reaction</name>
 			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
-			<classname>\wcf\system\user\content\provider\ReactionUserContentProvider</classname>
+			<classname>wcf\system\user\content\provider\ReactionUserContentProvider</classname>
 		</type>
 		<!-- /user content provider -->
 		<!-- deprecated -->
@@ -1708,7 +1708,7 @@
 			<conditionobject>com.woltlab.wcf.page</conditionobject>
 		</type>
 		<!-- /deprecated -->
-	</import>
+</import>
 	<delete>
 		<type name="com.woltlab.wcf.like.user">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
