@@ -441,6 +441,46 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		$conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.userSearch');
 		$this->addConditionFields($conditionAdContainer, 'com.woltlab.wcf.condition.userSearch', false, true);
 		
+		// com.woltlab.wcf.content.userContentProvider
+		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.content.userContentProvider')
+			->appendChildren([
+				IntegerFormField::create('userContentProviderNiceValue')
+					->objectProperty('nicevalue')
+					->label('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.niceValue')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.niceValue.description')
+					->nullable(),
+				
+				BooleanFormField::create('userContentProviderHidden')
+					->objectProperty('hidden')
+					->label('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.hidden')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.hidden.description'),
+				ItemListFormField::create('userContentProviderRequiredObjectType')
+					->objectProperty('requiredobjecttype')
+					->saveValueType(ItemListFormField::SAVE_VALUE_TYPE_CSV)
+					->label('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType.description')
+					->addValidator(new FormFieldValidator('objectTypeValue', function(ItemListFormField $formField) {
+						if ($formField->getValue() === null) return; 
+						
+						foreach ($formField->getValue() as $segment) {
+							if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $segment) === null) {
+								$formField->addValidationError(
+									new FormFieldValidationError(
+										'unknownObjectType',
+										'wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.error.unknownObjectType',
+										['objectType' => $segment]
+									)
+								);
+							}
+						}
+					})),
+			]);
+		$this->definitionElementChildren['com.woltlab.wcf.content.userContentProvider'] = [
+			'nicevalue' => null,
+			'hidden' => 0,
+			'requiredobjecttype' => ''
+		];
+		
 		// com.woltlab.wcf.message
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.message')
 			->appendChildren([
