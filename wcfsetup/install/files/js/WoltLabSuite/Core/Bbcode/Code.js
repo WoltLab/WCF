@@ -11,23 +11,29 @@ define(['WoltLabSuite/Core/Prism', 'prism/prism-meta'], function(Prism, PrismMet
 	
 	/** @const */ var CHUNK_SIZE = 50;
 	
-	// Define idle() for piecewiese highlighting to not block the UI thread.
-	var idle = function (value) {
-		return new Promise(function (resolve, reject) {
-			setTimeout(function () {
-				resolve(value);
-			}, 0);
-		});
-	};
-	if (window.requestIdleCallback) {
-		idle = function (value) {
+	// Define idleify() for piecewiese highlighting to not block the UI thread.
+	var idleify = function (callback) {
+		return function () {
+			var args = arguments;
 			return new Promise(function (resolve, reject) {
-				window.requestIdleCallback(function () {
-					resolve(value);
-				}, { timeout: 5000 });
+				var body = function () {
+					try {
+						resolve(callback.apply(null, args));
+					}
+					catch (e) {
+						reject(e);
+					}
+				};
+				
+				if (window.requestIdleCallback) {
+					window.requestIdleCallback(body, { timeout: 5000 });
+				}
+				else {
+					setTimeout(body, 0);
+				}
 			});
 		};
-	}
+	};
 	
 	/**
 	 * @constructor
@@ -62,10 +68,7 @@ define(['WoltLabSuite/Core/Prism', 'prism/prism-meta'], function(Prism, PrismMet
 			this.container.classList.add('highlighting');
 			
 			return require(['prism/components/prism-' + PrismMeta[this.language].file])
-			.then(function () {
-				return idle();
-			})
-			.then(function () {
+			.then(idleify(function () {
 				var highlighted = Prism.highlightSeparateLines(this.codeContainer.textContent, this.language);
 				var highlightedLines = elBySelAll('[data-number]', highlighted);
 				var originalLines = elBySelAll('.codeBoxLine > span', this.codeContainer);
@@ -76,16 +79,16 @@ define(['WoltLabSuite/Core/Prism', 'prism/prism-meta'], function(Prism, PrismMet
 				
 				var promises = [];
 				for (var chunkStart = 0, max = highlightedLines.length; chunkStart < max; chunkStart += CHUNK_SIZE) {
-					promises.push(idle(chunkStart).then(function (chunkStart) {
+					promises.push(idleify(function (chunkStart) {
 						var chunkEnd = Math.min(chunkStart + CHUNK_SIZE, max);
 						
 						for (var offset = chunkStart; offset < chunkEnd; offset++) {
 							originalLines[offset].parentNode.replaceChild(highlightedLines[offset], originalLines[offset]);
 						}
-					}));
+					})(chunkStart));
 				}
 				return Promise.all(promises);
-			}.bind(this))
+			}.bind(this)))
 			.then(function () {
 				this.container.classList.remove('highlighting');
 				this.container.classList.add('highlighted');
