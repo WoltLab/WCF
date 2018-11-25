@@ -132,18 +132,18 @@ define([
 				var reader = new FileReader();
 				var image = new Image();
 				
-				reader.onloadend = function () {
+				reader.addEventListener('load', function () {
 					image.src = reader.result;
-				};
+				});
 				
-				reader.onerror = function () {
+				reader.addEventListener('error', function () {
 					reader.abort();
-					reject();
-				};
+					reject(reader.error);
+				});
 				
-				image.onerror = reject;
+				image.addEventListener('error', reject);
 				
-				image.onload = function () {
+				image.addEventListener('load', function () {
 					var canvas = document.createElement('canvas');
 					
 					// Prevent upscaling
@@ -181,7 +181,7 @@ define([
 					pica.resize(image, canvas, options).then(function (result) {
 						resolve(result);
 					}, reject);
-				};
+				});
 				
 				reader.readAsDataURL(file);
 			});

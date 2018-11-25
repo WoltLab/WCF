@@ -48,7 +48,12 @@ define([], function() {
 				
 				var reader = new FileReader();
 				
-				reader.addEventListener("loadend", function() {
+				reader.addEventListener('error', function () {
+					reader.abort();
+					reject(reader.error);
+				});
+				
+				reader.addEventListener('load', function() {
 					var buffer = reader.result;
 					var bytes = new Uint8Array(buffer);
 					var exif = new Uint8Array();
@@ -106,7 +111,12 @@ define([], function() {
 				
 				var reader = new FileReader();
 				
-				reader.addEventListener("loadend", function () {
+				reader.addEventListener('error', function () {
+					reader.abort();
+					reject(reader.error);
+				});
+				
+				reader.addEventListener('load', function () {
 					var buffer = reader.result;
 					var bytes = new Uint8Array(buffer);
 					
@@ -160,7 +170,12 @@ define([], function() {
 				return new Promise(function (resolve) {
 					var reader = new FileReader();
 					
-					reader.addEventListener("loadend", function () {
+					reader.addEventListener('error', function () {
+						reader.abort();
+						reject(reader.error);
+					});
+					
+					reader.addEventListener('load', function () {
 						var buffer = reader.result;
 						var bytes = new Uint8Array(buffer);
 						var offset = 2;
