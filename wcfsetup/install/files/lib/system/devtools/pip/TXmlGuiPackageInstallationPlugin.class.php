@@ -127,20 +127,20 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @param	IFormDocument		$form
 	 * @return	\DOMElement
 	 */
-	abstract protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form);
+	abstract protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form);
 	
 	/**
 	 * Creates a new XML element for the given document using the data provided
 	 * by the given form and return the new dom element.
 	 * 
-	 * This method internally calls `doCreateXmlElement()` and fires an event.
+	 * This method internally calls `prepareXmlElement()` and fires an event.
 	 *
 	 * @param	\DOMDocument		$document
 	 * @param	IFormDocument		$form
 	 * @return	\DOMElement
 	 */
 	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$xmlElement = $this->doCreateXmlElement($document, $form);
+		$xmlElement = $this->prepareXmlElement($document, $form);
 		
 		$data = [
 			'document' => $document,
@@ -148,7 +148,7 @@ trait TXmlGuiPackageInstallationPlugin {
 			'form' => $form
 		];
 		
-		EventHandler::getInstance()->fireAction($this, 'didDoCreateXmlElement', $data);
+		EventHandler::getInstance()->fireAction($this, 'didPrepareXmlElement', $data);
 		
 		if (!($data['element'] instanceof \DOMElement)) {
 			throw new \UnexpectedValueException('XML element is no "\DOMElement" object anymore.');

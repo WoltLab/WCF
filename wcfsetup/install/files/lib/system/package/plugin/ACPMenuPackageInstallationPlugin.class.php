@@ -146,8 +146,8 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$menuItem = parent::doCreateXmlElement($document, $form);
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
+		$menuItem = parent::prepareXmlElement($document, $form);
 		
 		$this->appendElementChildren($menuItem, ['icon' => null], $form);
 		
