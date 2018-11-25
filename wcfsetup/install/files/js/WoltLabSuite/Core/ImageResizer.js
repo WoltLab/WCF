@@ -94,7 +94,7 @@ define([
 			
 			return pica.toBlob(result.image, fileType, quality)
 				.then(function (blob) {
-					if (fileType === 'image/jpeg' && typeof exif !== 'undefined') {
+					if (fileType === 'image/jpeg' && typeof result.exif !== 'undefined') {
 						return ExifUtil.setExifData(blob, result.exif);
 					}
 					
