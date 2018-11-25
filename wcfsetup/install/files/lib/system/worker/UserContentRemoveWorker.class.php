@@ -150,14 +150,7 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 			$niceValueA = ($a['nicevalue'] ?: 0);
 			$niceValueB = ($b['nicevalue'] ?: 0);
 			
-			if ($niceValueA < $niceValueB) {
-				return -1;
-			}
-			else if ($niceValueA > $niceValueB) {
-				return 1;
-			}
-			
-			return 0;
+			return $niceValueA <=> $niceValueB;
 		});
 	}
 	
