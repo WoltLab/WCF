@@ -105,21 +105,6 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 		
 		$contentProviders = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider');
 		
-		// sort object types
-		uasort($contentProviders, function ($a, $b) {
-			$niceValueA = ($a->nicevalue ?: 0);
-			$niceValueB = ($b->nicevalue ?: 0);
-			
-			if ($niceValueA < $niceValueB) {
-				return -1;
-			}
-			else if ($niceValueA > $niceValueB) {
-				return 1;
-			}
-			
-			return 0;
-		});
-		
 		// add the required object types for the select content provider
 		if (is_array($this->contentProvider)) {
 			foreach ($this->contentProvider as $contentProvider) {
@@ -135,7 +120,7 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 							throw new \RuntimeException('Unknown required object type "' . $objectTypeName . '" for object type "' . $contentProvider . '" given.');
 						}
 						
-						$this->contentProvider[] = $objectType;
+						$this->contentProvider[] = $objectTypeName;
 					}
 				}
 			}
@@ -151,13 +136,29 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 				if ($count) {
 					$this->data['provider'][$contentProvider->objectType] = [
 						'count' => $count,
-						'objectTypeID' => $contentProvider->objectTypeID
+						'objectTypeID' => $contentProvider->objectTypeID,
+						'nicevalue' => $contentProvider->nicevalue ?: 0
 					];
 					
 					$this->data['count'] += ceil($count / $this->limit) * $this->limit;
 				}
 			}
 		}
+		
+		// sort object types
+		uasort($this->data['provider'], function ($a, $b) {
+			$niceValueA = ($a['nicevalue'] ?: 0);
+			$niceValueB = ($b['nicevalue'] ?: 0);
+			
+			if ($niceValueA < $niceValueB) {
+				return -1;
+			}
+			else if ($niceValueA > $niceValueB) {
+				return 1;
+			}
+			
+			return 0;
+		});
 	}
 	
 	/**
@@ -173,10 +174,10 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 	public function execute() {
 		if (empty($this->data['provider'])) {
 			return;
-		} 
+		}
 		
 		$values = array_keys($this->data['provider']);
-		$providerObjectType = array_pop($values);
+		$providerObjectType = array_shift($values);
 		
 		/** @var IUserContentProvider $processor */
 		$processor = ObjectTypeCache::getInstance()->getObjectType($this->data['provider'][$providerObjectType]['objectTypeID'])->getProcessor();
