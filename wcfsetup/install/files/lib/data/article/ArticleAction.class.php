@@ -73,7 +73,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete', 'restore', 'toggleI18n', 'trash', 'update'];
+	protected $requireACP = ['create', 'delete', 'restore', 'search', 'toggleI18n', 'trash', 'update'];
 	
 	/**
 	 * @inheritDoc
@@ -724,6 +724,54 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		ArticleEditor::updateArticleCounter($usersToArticles);
 		
 		$this->unmarkItems();
+	}
+	
+	/**
+	 * Validates parameters to search for an article by its localized title.
+	 */
+	public function validateSearch() {
+		$this->readString('searchString');
+	}
+	
+	/**
+	 * Searches for an article by its localized title.
+	 * 
+	 * @return      array   list of matching articles
+	 */
+	public function search() {
+		$sql = "SELECT          DISTINCT articleID
+			FROM            wcf".WCF_N."_article_content
+			WHERE           title LIKE ?
+					AND (
+						languageID = ?
+						OR languageID IS NULL
+					)
+			ORDER BY        title";
+		$statement = WCF::getDB()->prepareStatement($sql, 5);
+		$statement->execute([
+			'%' . $this->parameters['searchString'] . '%',
+			WCF::getLanguage()->languageID,
+		]);
+		
+		$articleIDs = [];
+		while ($articleID = $statement->fetchColumn()) {
+			$articleIDs[] = $articleID;
+		}
+		
+		$articleList = new ArticleList();
+		$articleList->setObjectIDs($articleIDs);
+		$articleList->readObjects();
+		
+		$articles = [];
+		foreach ($articleList as $article) {
+			$articles[] = [
+				'displayLink' => $article->getLink(),
+				'name' => $article->getTitle(),
+				'articleID' => $article->articleID,	
+			];
+		}
+		
+		return $articles;
 	}
 	
 	/**

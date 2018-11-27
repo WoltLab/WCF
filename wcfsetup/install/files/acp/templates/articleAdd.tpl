@@ -25,11 +25,6 @@
 			'wcf.acp.article.i18n.toI18n.confirmMessage': '{lang}wcf.acp.article.i18n.toI18n.confirmMessage{/lang}',
 			'wcf.acp.article.i18n.fromI18n.confirmMessage': '{lang}wcf.acp.article.i18n.fromI18n.confirmMessage{/lang}',
 			'wcf.message.status.deleted': '{lang}wcf.message.status.deleted{/lang}',
-			'wcf.page.search': '{lang}wcf.page.search{/lang}',
-			'wcf.page.search.error.tooShort': '{lang}wcf.page.search.error.tooShort{/lang}',
-			'wcf.page.search.error.noResults': '{lang}wcf.page.search.error.noResults{/lang}',
-			'wcf.page.search.name': '{lang}wcf.page.search.name{/lang}',
-			'wcf.page.search.results': '{lang}wcf.page.search.results{/lang}'
 		});
 		
 		new UiUserSearchInput(elBySel('input[name="username"]'));

@@ -1,15 +1,3 @@
-<script data-relocate="true">
-	require(['Language'], function (Language) {
-		Language.addObject({
-			'wcf.page.search': '{lang}wcf.page.search{/lang}',
-			'wcf.page.search.error.tooShort': '{lang}wcf.page.search.error.tooShort{/lang}',
-			'wcf.page.search.error.noResults': '{lang}wcf.page.search.error.noResults{/lang}',
-			'wcf.page.search.name': '{lang}wcf.page.search.name{/lang}',
-			'wcf.page.search.results': '{lang}wcf.page.search.results{/lang}'
-		});
-	})
-</script>
-
 {if $boxType == 'html' || $boxType == 'tpl'}
 	<ul class="codemirrorToolbar">
 		<li><a href="#" id="codemirror-content{@$languageID}-media" class="jsTooltip" title="{lang}wcf.editor.button.media{/lang}"><span class="icon icon16 fa-file-o"></span></a></li>

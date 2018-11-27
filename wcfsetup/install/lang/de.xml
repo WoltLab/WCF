@@ -2480,6 +2480,11 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.article.showArticlesWritten"><![CDATA[Artikel von {$user->username}]]></item>
 		<item name="wcf.article.recentActivity"><![CDATA[Hat den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a> verfasst.]]></item>
 		<item name="wcf.article.button.sort"><![CDATA[Sortieren]]></item>
+		<item name="wcf.article.search"><![CDATA[Artikel durchsuchen]]></item>
+		<item name="wcf.article.search.error.noResults"><![CDATA[Es wurden keine Ergebnisse gefunden.]]></item>
+		<item name="wcf.article.search.error.tooShort"><![CDATA[Der Suchbegriff ist zu kurz.]]></item>
+		<item name="wcf.article.search.name"><![CDATA[Titel durchsuchen]]></item>
+		<item name="wcf.article.search.results"><![CDATA[Suchergebnisse]]></item>
 	</category>
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, <b>{#$attachment->downloads}</b> Mal heruntergeladen{if $attachment->downloads > 0}, zuletzt: {@$attachment->lastDownloadTime|time}{/if})]]></item>
@@ -2912,6 +2917,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.editor.autosave.keep"><![CDATA[Hinweis ausblenden]]></item>
 		<item name="wcf.editor.autosave.restored"><![CDATA[Entwurf wiederhergestellt]]></item>
 		<item name="wcf.editor.button.alignment"><![CDATA[Ausrichtung]]></item>
+		<item name="wcf.editor.button.article"><![CDATA[CMS-Artikel]]></item>
 		<item name="wcf.editor.button.bold"><![CDATA[Fett]]></item>
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
 		<item name="wcf.editor.button.color"><![CDATA[Schriftfarbe]]></item>
