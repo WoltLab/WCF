@@ -69,7 +69,17 @@ define(['WoltLabSuite/Core/Prism', 'prism/prism-meta'], function(Prism, PrismMet
 			
 			return require(['prism/components/prism-' + PrismMeta[this.language].file])
 			.then(idleify(function () {
-				var highlighted = Prism.highlightSeparateLines(this.codeContainer.textContent, this.language);
+				var grammar = Prism.languages[this.language];
+				if (!grammar) {
+					throw new Error('Invalid language ' + language + ' given.');
+				}
+				
+				var container = elCreate('div');
+				container.innerHTML = Prism.highlight(this.codeContainer.textContent, grammar, this.language);
+				return container;
+			}.bind(this)))
+			.then(idleify(function (container) {
+				var highlighted = Prism.wscSplitIntoLines(container);
 				var highlightedLines = elBySelAll('[data-number]', highlighted);
 				var originalLines = elBySelAll('.codeBoxLine > span', this.codeContainer);
 				

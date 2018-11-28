@@ -11,10 +11,10 @@ window.Prism = window.Prism || {}
 window.Prism.manual = true
 
 define(['prism/prism'], function () {
-	Prism.highlightSeparateLines = function (text, language) {
-		var	frag = new DocumentFragment(),
-			lineNo = 1,
-			it, node, line, grammar, container;
+	Prism.wscSplitIntoLines = function (container) {
+		var frag = new DocumentFragment();
+		var lineNo = 1;
+		var it, node, line;
 		
 		function newLine() {
 			var line = elCreate('span');
@@ -24,18 +24,6 @@ define(['prism/prism'], function () {
 			return line;
 		}
 		
-		function highlightStringIntoContainer() {
-			var container = elCreate('div');
-			container.innerHTML = Prism.highlight(text, grammar, language);
-			return container;
-		}
-		
-		grammar = Prism.languages[language];
-		if (!grammar) {
-			throw new Error('Invalid language ' + language + ' given.');
-		}
-		
-		container = highlightStringIntoContainer();
 		it = document.createNodeIterator(container, NodeFilter.SHOW_TEXT);
 		
 		line = newLine(lineNo);
