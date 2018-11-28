@@ -22,6 +22,7 @@ class BBCodeCache extends SingletonFactory {
 	/**
 	 * list of known highlighters
 	 * @var	string[]
+	 * @deprecated	since 3.2, use Prism to highlight your code.
 	 */
 	protected $highlighters = [];
 	
@@ -70,6 +71,7 @@ class BBCodeCache extends SingletonFactory {
 	 * Returns a list of known highlighters.
 	 * 
 	 * @return	string[]
+	 * @deprecated	since 3.2, use Prism to highlight your code.
 	 */
 	public function getHighlighters() {
 		if (empty($this->highlighters)) {
