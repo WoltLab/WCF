@@ -120,7 +120,7 @@
 			var allowedInlineStyles = [], buttons = [], buttonMobile = [], buttonOptions = [], customButtons = [];
 			{include file='wysiwygToolbar'}
 			
-			var highlighters = [ {implode from=$__wcf->getBBCodeHandler()->getHighlighters() item=__highlighter}'{$__highlighter}'{/implode} ];
+			var highlighters = '{@MESSAGE_PUBLIC_HIGHLIGHTERS|encodeJS}'.split(/\n/);
 			
 			{include file='mediaJavaScript'}
 			

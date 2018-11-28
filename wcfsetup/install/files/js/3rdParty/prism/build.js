@@ -32,16 +32,11 @@ const contents = Object.entries(meta.languages).reduce(function(acc, [key, value
 		title: value.title,
 		file: key,
 	};
-	if (typeof value.alias === 'string') {
-		acc[value.alias] = {
-			title: value.title,
-			file: key,
-		};
-	}
-	if (value.alias && value.alias.forEach != null) {
+	if (value.alias && value.alias.forEach != null && value.aliasTitles) {
 		value.alias.forEach(function (alias) {
+			if (!value.aliasTitles[alias]) return;
 			acc[alias] = {
-				title: (value.aliasTitles && value.aliasTitles[alias]) || value.title,
+				title: value.aliasTitles[alias],
 				file: key,
 			};
 		});

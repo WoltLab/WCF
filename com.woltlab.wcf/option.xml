@@ -1452,6 +1452,21 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="message_public_highlighters">
+				<categoryname>message.general</categoryname>
+				<optiontype>highlighters</optiontype>
+				<defaultvalue>html
+css
+php
+javascript
+java
+c
+cpp
+csharp
+ruby
+rust
+go</defaultvalue>
+			</option>
 			<!-- /message.general -->
 			<option name="search_results_per_page">
 				<categoryname>message.search</categoryname>
