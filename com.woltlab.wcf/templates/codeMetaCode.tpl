@@ -18,9 +18,13 @@
 {if !$__wcfCodeBBCodeJavaScript|isset}
 	{assign var='__wcfCodeBBCodeJavaScript' value=true}
 	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Bbcode/Collapsible', 'WoltLabSuite/Core/Bbcode/Code'], function (BbcodeCollapsible, BbcodeCode) {
+		require(['Language', 'WoltLabSuite/Core/Bbcode/Collapsible', 'WoltLabSuite/Core/Bbcode/Code'], function (Language, BbcodeCollapsible, BbcodeCode) {
+			Language.addObject({
+				'wcf.message.bbcode.code.copy': '{lang}wcf.message.bbcode.code.copy{/lang}',
+				'wcf.message.bbcode.code.copy.success': '{lang}wcf.message.bbcode.code.copy.success{/lang}'
+			});
 			BbcodeCollapsible.observe();
-			BbcodeCode.highlightAll();
+			BbcodeCode.processAll();
 		});
 	</script>
 {/if}

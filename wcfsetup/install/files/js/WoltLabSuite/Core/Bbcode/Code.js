@@ -6,7 +6,13 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Bbcode/Code
  */
-define(['WoltLabSuite/Core/Prism', 'prism/prism-meta'], function(Prism, PrismMeta) {
+define([
+		'Language', 'WoltLabSuite/Core/Ui/Notification', 'WoltLabSuite/Core/Clipboard', 'WoltLabSuite/Core/Prism', 'prism/prism-meta'
+	],
+	function(
+		Language, UiNotification, Clipboard, Prism, PrismMeta
+	)
+{
 	"use strict";
 	
 	/** @const */ var CHUNK_SIZE = 50;
@@ -50,13 +56,29 @@ define(['WoltLabSuite/Core/Prism', 'prism/prism-meta'], function(Prism, PrismMet
 			}
 		}
 	}
-	Code.highlightAll = function () {
-		elBySelAll('.codeBox:not(.highlighting):not(.highlighted)', document, function (codeBox) {
+	Code.processAll = function () {
+		elBySelAll('.codeBox:not([data-processed])', document, function (codeBox) {
+			elData(codeBox, 'processed', '1');
+
 			var handle = new Code(codeBox);
 			if (handle.language) handle.highlight();
+			handle.createCopyButton();
 		})
 	};
 	Code.prototype = {
+		createCopyButton: function () {
+			var header = elBySel('.codeBoxHeader', this.container);
+			var button = elCreate('span');
+			button.className = 'icon icon24 fa-files-o pointer jsTooltip';
+			button.setAttribute('title', Language.get('wcf.message.bbcode.code.copy'));
+			button.addEventListener('click', function () {
+				Clipboard.copyElementTextToClipboard(this.codeContainer).then(function () {
+					UiNotification.show(Language.get('wcf.message.bbcode.code.copy.success'));
+				});
+			}.bind(this));
+			
+			header.appendChild(button);
+		},
 		highlight: function () {
 			if (!this.language) {
 				return Promise.reject(new Error('No language detected'));

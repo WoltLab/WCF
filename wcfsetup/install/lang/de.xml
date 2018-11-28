@@ -3260,6 +3260,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.message.autosave.restored.version"><![CDATA[Entwurf vom {@$date}]]></item>
 		<item name="wcf.message.autosave.saved"><![CDATA[Entwurf gespeichert]]></item>
 		<item name="wcf.message.bbcode.code.copy"><![CDATA[Inhalt kopieren]]></item>
+		<item name="wcf.message.bbcode.code.copy.success"><![CDATA[Der Inhalt wurde erfolgreich kopiert.]]></item>
 		<item name="wcf.message.quote.insertAllQuotes"><![CDATA[Alle Zitate einfügen]]></item>
 		<item name="wcf.message.quote.insertQuote"><![CDATA[Zitat einfügen]]></item>
 		<item name="wcf.message.quote.insertSelectedQuotes"><![CDATA[Markierte Zitate einfügen]]></item>
