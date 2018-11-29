@@ -120,7 +120,7 @@
 			var allowedInlineStyles = [], buttons = [], buttonMobile = [], buttonOptions = [], customButtons = [];
 			{include file='wysiwygToolbar'}
 			
-			var highlighters = '{@MESSAGE_PUBLIC_HIGHLIGHTERS|encodeJS}'.split(/\n/);
+			var highlighters = '{@MESSAGE_PUBLIC_HIGHLIGHTERS|encodeJS}'.split(/\n/).filter(function (item) { return item != ''; });
 			
 			{include file='mediaJavaScript'}
 			
