@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\html\output\node;
 use wcf\system\bbcode\BBCodeHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -145,6 +146,13 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 				$highlighter = 'latex';
 			}
 		}
+		$eventData = [
+			'highlighter' => $highlighter,
+			'data' => $data,
+			'content' => $content
+		];
+		EventHandler::getInstance()->fireAction($this, 'selectHighlighter', $eventData);
+		$highlighter = $eventData['highlighter'];
 		
 		$meta = BBCodeHandler::getInstance()->getHighlighterMeta();
 		$title = WCF::getLanguage()->get('wcf.bbcode.code');
