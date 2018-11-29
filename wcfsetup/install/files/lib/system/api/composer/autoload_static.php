@@ -24,6 +24,10 @@ class ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab
         array (
             'Pelago\\' => 7,
         ),
+        'L' => 
+        array (
+            'Leafo\\ScssPhp\\' => 14,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -38,6 +42,10 @@ class ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab
         'Pelago\\' => 
         array (
             0 => __DIR__ . '/..' . '/pelago/emogrifier/Classes',
+        ),
+        'Leafo\\ScssPhp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/leafo/scssphp/src',
         ),
     );
 
