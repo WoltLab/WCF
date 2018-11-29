@@ -177,7 +177,7 @@ define(
 				}
 			},
 			
-			_markReactionAsActive() {
+			_markReactionAsActive: function() {
 				var reactionTypeID = elData(this._containers.get(this._popoverCurrentObjectId).reactButton, 'reaction-type-id');
 				
 				//  clear old active state
