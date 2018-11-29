@@ -44,12 +44,19 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 			switch ($this->outputType) {
 				case 'text/html':
 					$nodeIdentifier = StringUtil::getRandomID();
+					$context = $htmlNodeProcessor->getHtmlProcessor()->getContext();
+					$prefix = '';
+					// Create a unique prefix if possible
+					if (isset($context['objectType']) && isset($context['objectID'])) {
+						$prefix = $context['objectType'].'_'.$context['objectID'].'_';
+					}
 					$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
 						'content' => $element->textContent,
 						'file' => $element->getAttribute('data-file'),
 						'highlighter' => $element->getAttribute('data-highlighter'),
 						'line' => $element->hasAttribute('data-line') ? $element->getAttribute('data-line') : 1,
-						'skipInnerContent' => true
+						'skipInnerContent' => true,
+						'prefix' => $prefix
 					]);
 					
 					$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
@@ -158,7 +165,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 		// show template
 		/** @noinspection PhpUndefinedMethodInspection */
 		WCF::getTPL()->assign([
-			'codeID' => $this->getCodeID($content),
+			'codeID' => $this->getCodeID($data['prefix'] ?? '', $content),
 			'startLineNumber' => $line,
 			'content' => $splitContent,
 			'language' => $highlighter,
@@ -176,11 +183,11 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 	 * @param	string		$code
 	 * @return	string
 	 */
-	protected function getCodeID($code) {
+	protected function getCodeID($prefix, $code) {
 		$i = -1;
 		// find an unused codeID
 		do {
-			$codeID = mb_substr(StringUtil::getHash($code), 0, 6).(++$i ? '_'.$i : '');
+			$codeID = $prefix.mb_substr(StringUtil::getHash($code), 0, 6).(++$i ? '_'.$i : '');
 		}
 		while (isset(self::$codeIDs[$codeID]));
 		
