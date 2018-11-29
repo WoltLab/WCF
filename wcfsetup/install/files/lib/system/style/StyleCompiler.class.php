@@ -52,6 +52,9 @@ class StyleCompiler extends SingletonFactory {
 	protected function init() {
 		require_once(WCF_DIR.'lib/system/style/scssphp/scss.inc.php');
 		$this->compiler = new Compiler();
+		// Disable Unicode support because of its horrible performance (7x slowdown)
+		// https://github.com/WoltLab/WCF/pull/2736#issuecomment-416084079
+		$this->compiler->setEncoding('iso8859-1');
 		$this->compiler->setImportPaths([WCF_DIR]);
 	}
 	
