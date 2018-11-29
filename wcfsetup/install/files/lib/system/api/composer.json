@@ -9,6 +9,7 @@
         "pelago/emogrifier": "2.0.*",
         "chrisjean/php-ico": "1.0.*",
         "true/punycode": "~2.0",
-        "pear/net_idna2": "^0.2.0"
+        "pear/net_idna2": "^0.2.0",
+        "leafo/scssphp": "^0.7.7"
     }
 }

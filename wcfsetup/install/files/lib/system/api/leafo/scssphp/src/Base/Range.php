@@ -2,7 +2,7 @@
 /**
  * SCSSPHP
  *
- * @copyright 2015 Leaf Corcoran
+ * @copyright 2015-2018 Leaf Corcoran
  *
  * @license http://opensource.org/licenses/MIT MIT
  *
@@ -12,7 +12,7 @@
 namespace Leafo\ScssPhp\Base;
 
 /**
- * Range class
+ * Range
  *
  * @author Anthon Pang <anthon.pang@gmail.com>
  */
