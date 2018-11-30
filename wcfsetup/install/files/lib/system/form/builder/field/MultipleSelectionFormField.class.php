@@ -42,7 +42,12 @@ class MultipleSelectionFormField extends AbstractFormField implements INullableF
 	 * @inheritDoc
 	 */
 	public function validate() {
-		if ($this->getValue() !== null && !empty(array_diff($this->getValue(), array_keys($this->getOptions())))) {
+		$value = $this->getValue();
+		
+		if (($value === null || empty($value)) && $this->isRequired()) {
+			$this->addValidationError(new FormFieldValidationError('empty'));
+		}
+		else if ($value !== null && !empty(array_diff($this->getValue(), array_keys($this->getOptions())))) {
 			$this->addValidationError(new FormFieldValidationError(
 				'invalidValue',
 				'wcf.global.form.error.noValidSelection'
