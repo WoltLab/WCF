@@ -2830,6 +2830,11 @@ full extend.]]></item>
 		<item name="wcf.article.showArticlesWritten"><![CDATA[Articles by {$user->username}]]></item>
 		<item name="wcf.article.recentActivity"><![CDATA[Wrote the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.article.button.sort"><![CDATA[Sort]]></item>
+		<item name="wcf.article.search"><![CDATA[Search Articles]]></item>
+		<item name="wcf.article.search.error.noResults"><![CDATA[The search returned no results.]]></item>
+		<item name="wcf.article.search.error.tooShort"><![CDATA[The entered keyword is too short.]]></item>
+		<item name="wcf.article.search.name"><![CDATA[Search Titles]]></item>
+		<item name="wcf.article.search.results"><![CDATA[Search Results]]></item>
 	</category>
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, downloaded <b>{#$attachment->downloads}</b> times{if $attachment->downloads > 0}, last: {@$attachment->lastDownloadTime|time}{/if})]]></item>
@@ -3284,6 +3289,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.editor.autosave.keep"><![CDATA[Hide notice]]></item>
 		<item name="wcf.editor.autosave.restored"><![CDATA[Draft restored]]></item>
 		<item name="wcf.editor.button.alignment"><![CDATA[Alignment]]></item>
+		<item name="wcf.editor.button.article"><![CDATA[CMS Article]]></item>
 		<item name="wcf.editor.button.bold"><![CDATA[Bold]]></item>
 		<item name="wcf.editor.button.code"><![CDATA[Code]]></item>
 		<item name="wcf.editor.button.color"><![CDATA[Font Color]]></item>
