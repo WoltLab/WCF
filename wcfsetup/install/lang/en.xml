@@ -1493,6 +1493,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.search_enable_articles"><![CDATA[Articles are searchable]]></item>
 		<item name="wcf.acp.option.search_enable_pages"><![CDATA[Pages are searchable]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_articles"><![CDATA[Display author’s article count]]></item>
+		<item name="wcf.acp.option.log_missing_language_items"><![CDATA[Log Missing Language Items]]></item>
+		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[The missing language items are logged in the log file <code>{'WCF_DIR'|constant}log/missingLanguageItems.txt</code>.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>

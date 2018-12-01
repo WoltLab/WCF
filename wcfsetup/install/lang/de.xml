@@ -1503,6 +1503,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.search_enable_articles"><![CDATA[Artikel sind durchsuchbar]]></item>
 		<item name="wcf.acp.option.search_enable_pages"><![CDATA[Seiten sind durchsuchbar]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_articles"><![CDATA[Artikelanzahl der Autoren anzeigen]]></item>
+		<item name="wcf.acp.option.log_missing_language_items"><![CDATA[Fehlende Sprachvariablen protokollieren]]></item>
+		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[Die fehlenden Sprachvariablen werden in der Datei <code>{'WCF_DIR'|constant}log/missingLanguageItems.txt</code> protokolliert.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Eingabefelder]]></item>
