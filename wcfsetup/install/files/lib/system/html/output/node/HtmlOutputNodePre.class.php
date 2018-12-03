@@ -188,6 +188,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 	/**
 	 * Returns a unique ID for this code block.
 	 *
+	 * @param	string		$prefix
 	 * @param	string		$code
 	 * @return	string
 	 */
