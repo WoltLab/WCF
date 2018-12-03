@@ -136,10 +136,18 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
+		$action = $this->formAction;
+		if ($this->objectActionName) {
+			$action = $this->objectActionName;
+		}
+		else if ($this->formAction === 'edit') {
+			$action = 'update';
+		}
+		
 		/** @var AbstractDatabaseObjectAction objectAction */
 		$this->objectAction = new $this->objectActionClass(
 			array_filter([$this->formObject]),
-			$this->objectActionName ?: $this->formAction,
+			$action,
 			$this->form->getData()
 		);
 		$this->objectAction->executeAction();
