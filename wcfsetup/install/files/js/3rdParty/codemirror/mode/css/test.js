@@ -1,5 +1,5 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: http://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/LICENSE
 
 (function() {
   var mode = CodeMirror.getMode({indentUnit: 2}, "css");
@@ -23,6 +23,9 @@
 
   MT("atMediaUnknownFeatureValueKeyword",
      "[def @media] ([property orientation]: [error upsidedown]) { }");
+
+  MT("atMediaUppercase",
+     "[def @MEDIA] ([property orienTAtion]: [keyword landScape]) { }");
 
   MT("tagSelector",
      "[tag foo] { }");
@@ -197,4 +200,10 @@
 
    MT("counter-style-symbols",
       "[tag ol] { [property list-style]: [atom symbols]([atom cyclic] [string \"*\"] [string \"\\2020\"] [string \"\\2021\"] [string \"\\A7\"]); }");
+
+  MT("comment-does-not-disrupt",
+     "[def @font-face] [comment /* foo */] {",
+     "  [property src]: [atom url]([string x]);",
+     "  [property font-family]: [variable One];",
+     "}")
 })();
