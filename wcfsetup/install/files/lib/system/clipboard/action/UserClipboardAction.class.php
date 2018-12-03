@@ -19,12 +19,12 @@ class UserClipboardAction extends AbstractClipboardAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $actionClassActions = ['delete'];
+	protected $actionClassActions = ['delete', 'resendActivationMail'];
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected $supportedActions = ['assignToGroup', 'ban', 'delete', 'enable', 'exportMailAddress', 'merge', 'sendMail', 'sendNewPassword'];
+	protected $supportedActions = ['assignToGroup', 'ban', 'delete', 'enable', 'exportMailAddress', 'merge', 'sendMail', 'sendNewPassword', 'resendActivationMail'];
 	
 	/**
 	 * @inheritDoc
@@ -208,6 +208,26 @@ class UserClipboardAction extends AbstractClipboardAction {
 		
 		$userIDs = array_keys($this->objects);
 		if (count($userIDs) < 2) return [];
+		
+		return $userIDs;
+	}
+	
+	/**
+	 * Returns the ids of the users which aren't activated.
+	 *
+	 * @return	integer[]
+	 * @since	3.2
+	 */
+	protected function validateResendActivationMail() {
+		// check permissions
+		if (!WCF::getSession()->getPermission('admin.user.canEnableUser') || REGISTER_ACTIVATION_METHOD != 1) {
+			return [];
+		}
+		
+		$userIDs = [];
+		foreach ($this->objects as $user) {
+			if ($user->activationCode) $userIDs[] = $user->userID;
+		}
 		
 		return $userIDs;
 	}

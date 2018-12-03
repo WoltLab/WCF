@@ -37,30 +37,37 @@
 				<page>wcf\acp\page\UserListPage</page>
 			</pages>
 		</action>
-		<action name="sendMail">
+		<action name="resendActivationMail">
 			<actionclassname>wcf\system\clipboard\action\UserClipboardAction</actionclassname>
 			<showorder>6</showorder>
 			<pages>
 				<page>wcf\acp\page\UserListPage</page>
 			</pages>
 		</action>
-		<action name="exportMailAddress">
+		<action name="sendMail">
 			<actionclassname>wcf\system\clipboard\action\UserClipboardAction</actionclassname>
 			<showorder>7</showorder>
 			<pages>
 				<page>wcf\acp\page\UserListPage</page>
 			</pages>
 		</action>
-		<action name="sendNewPassword">
+		<action name="exportMailAddress">
 			<actionclassname>wcf\system\clipboard\action\UserClipboardAction</actionclassname>
 			<showorder>8</showorder>
 			<pages>
 				<page>wcf\acp\page\UserListPage</page>
 			</pages>
 		</action>
+		<action name="sendNewPassword">
+			<actionclassname>wcf\system\clipboard\action\UserClipboardAction</actionclassname>
+			<showorder>9</showorder>
+			<pages>
+				<page>wcf\acp\page\UserListPage</page>
+			</pages>
+		</action>
 		<action name="revertContentChanges">
 			<actionclassname>wcf\system\clipboard\action\UserContentClipboardAction</actionclassname>
-			<showorder>9</showorder>
+			<showorder>10</showorder>
 			<pages>
 				<page>wcf\acp\page\UserListPage</page>
 			</pages>
