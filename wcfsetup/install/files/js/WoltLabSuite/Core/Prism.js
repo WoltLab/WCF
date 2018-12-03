@@ -26,7 +26,7 @@ define(['prism/prism'], function () {
 		
 		// IE11 expects a fourth, non-standard, parameter (entityReferenceExpansion) and a valid function as third
 		it = document.createNodeIterator(container, NodeFilter.SHOW_TEXT, function () {
-			return NodeFilter.FILTER_ACCEPT
+			return NodeFilter.FILTER_ACCEPT;
 		}, false);
 		
 		line = newLine(lineNo);
@@ -59,4 +59,4 @@ define(['prism/prism'], function () {
 	};
 
 	return Prism;
-})
+});
