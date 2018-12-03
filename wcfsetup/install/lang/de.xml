@@ -1505,6 +1505,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.message_sidebar_enable_articles"><![CDATA[Artikelanzahl der Autoren anzeigen]]></item>
 		<item name="wcf.acp.option.message_public_highlighters"><![CDATA[Auswählbare Syntax-Highlighter]]></item>
 		<item name="wcf.acp.option.message_public_highlighters.description"><![CDATA[Die gewählten Syntax-Highlighter stehen dem Nutzer unmittelbar im Editor zur Verfügung. Die anderen Highlighter sind weiterhin verfügbar, der Nutzer muss jedoch den internen Namen kennen.]]></item>
+		<item name="wcf.acp.option.log_missing_language_items"><![CDATA[Fehlende Sprachvariablen protokollieren]]></item>
+		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[Die fehlenden Sprachvariablen werden in der Datei <code>{'WCF_DIR'|constant}log/missingLanguageItems.txt</code> protokolliert.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Eingabefelder]]></item>

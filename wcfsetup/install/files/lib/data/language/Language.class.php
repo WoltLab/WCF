@@ -104,6 +104,14 @@ class Language extends DatabaseObject {
 			return '';
 		}
 		
+		if (LOG_MISSING_LANGUAGE_ITEMS && preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)) {
+			$logFile = WCF_DIR . 'log/missingLanguageItems.txt';
+			\wcf\functions\exception\logThrowable(
+				new \Exception("Missing language item '{$item}'."),
+				$logFile
+			);
+		}
+		
 		// return plain input
 		return $item;
 	}
@@ -125,6 +133,14 @@ class Language extends DatabaseObject {
 			$variables['__language'] = $this;
 			
 			return WCF::getTPL()->fetchString($this->dynamicItems[$item], $variables);
+		}
+		
+		if (LOG_MISSING_LANGUAGE_ITEMS && $staticItem === $item && preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)) {
+			$logFile = WCF_DIR . 'log/missingLanguageItems.txt';
+			\wcf\functions\exception\logThrowable(
+				new \Exception("Missing language item '{$item}'."),
+				$logFile
+			);
 		}
 		
 		return $staticItem;

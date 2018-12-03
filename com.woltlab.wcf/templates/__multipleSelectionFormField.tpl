@@ -25,9 +25,7 @@
 		{/foreach}
 	</ul>
 {else}
-	<select id="{@$field->getPrefixedId()}" name="{@$field->getPrefixedId()}">
-		{htmlOptions options=$field->getOptions() selected=$field->getValue() disableEncoding=true}
-	</select>
+	{htmlCheckboxes options=$field->getOptions() name=$field->getPrefixedId()|concat:'[]' selected=$field->getValue() disableEncoding=true}
 {/if}
 
 {include file='__formFieldFooter'}
