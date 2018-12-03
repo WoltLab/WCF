@@ -10,25 +10,32 @@ define([], function() {
 	"use strict";
 	
 	return {
-		copyElementTextToClipboard: function (element) {
-			var promise;
+		copyTextToClipboard: function (text) {
 			if (navigator.clipboard) {
-				promise = navigator.clipboard.writeText(element.innerText);
+				return navigator.clipboard.writeText(text);
 			}
-			else {
-				promise = Promise.reject('navigator.clipboard is not supported');
+			else if (window.getSelection) {
+				var textarea = elCreate('textarea');
+				textarea.style.cssText = 'position: absolute; left: -9999px; width: 0;';
+				document.body.appendChild(textarea);
+				try {
+					textarea.value = text;
+					textarea.select();
+					if (!document.execCommand('copy')) {
+						return Promise.reject(new Error("execCommand('copy') failed"));
+					}
+					return Promise.resolve();
+				}
+				finally {
+					elRemove(textarea);
+				}
 			}
 			
-			return promise.catch(function () {
-				if (!window.getSelection) throw new Error('window.getSelection is not supported');
-				
-				var range = document.createRange();
-				range.selectNode(element);
-				window.getSelection().addRange(range);
-				if (!document.execCommand('copy')) {
-					throw new Error("execCommand('copy') failed");
-				}
-			})
+			return Promise.reject(new Error('Neither navigator.clipboard, nor window.getSelection is supported.'));
+		},
+		
+		copyElementTextToClipboard: function (element) {
+			return this.copyTextToClipboard(element.textContent);
 		}
 	};
 });
