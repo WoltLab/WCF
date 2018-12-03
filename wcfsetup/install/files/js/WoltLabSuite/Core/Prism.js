@@ -12,7 +12,7 @@ window.Prism.manual = true
 
 define(['prism/prism'], function () {
 	Prism.wscSplitIntoLines = function (container) {
-		var frag = new DocumentFragment();
+		var frag = document.createDocumentFragment();
 		var lineNo = 1;
 		var it, node, line;
 		
@@ -24,7 +24,10 @@ define(['prism/prism'], function () {
 			return line;
 		}
 		
-		it = document.createNodeIterator(container, NodeFilter.SHOW_TEXT);
+		// IE11 expects a fourth, non-standard, parameter (entityReferenceExpansion) and a valid function as third
+		it = document.createNodeIterator(container, NodeFilter.SHOW_TEXT, function () {
+			return NodeFilter.FILTER_ACCEPT
+		}, false);
 		
 		line = newLine(lineNo);
 		while (node = it.nextNode()) {
