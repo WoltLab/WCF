@@ -5,6 +5,7 @@ use wcf\data\smiley\SmileyCache;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 use wcf\util\exception\CryptoException;
 use wcf\util\CryptoUtil;
 use wcf\util\DOMUtil;
@@ -107,7 +108,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 					}
 				}
 				else if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
-					$element->parentNode->insertBefore($element->ownerDocument->createTextNode('[IMG:'), $element);
+					$element->parentNode->insertBefore($element->ownerDocument->createTextNode('['.WCF::getLanguage()->get('wcf.bbcode.image.blocked').': '), $element);
 					
 					$link = $element->ownerDocument->createElement('a');
 					$link->setAttribute('href', $src);
