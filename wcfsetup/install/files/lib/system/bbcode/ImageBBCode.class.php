@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\bbcode;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
@@ -25,7 +26,7 @@ class ImageBBCode extends AbstractBBCode {
 		
 		if ($parser->getOutputType() == 'text/html') {
 			if (!IMAGE_ALLOW_EXTERNAL_SOURCE && !$this->isAllowedOrigin($src)) {
-				return '[IMG:<a href="'.$src.'">'.$src.'</a>]';
+				return '['.WCF::getLanguage()->get('wcf.bbcode.image.blocked').': <a href="'.$src.'">'.$src.'</a>]';
 			}
 			
 			$float = '';

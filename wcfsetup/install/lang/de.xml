@@ -1810,6 +1810,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.bbcode.code.tex.title"><![CDATA[TeX-Quellcode]]></item>
 		<item name="wcf.bbcode.code.tpl.title"><![CDATA[Smarty-Template]]></item>
 		<item name="wcf.bbcode.code.xml.title"><![CDATA[XML-Quellcode]]></item>
+		<item name="wcf.bbcode.image.blocked"><![CDATA[Blockierte Grafik]]></item>
 		<item name="wcf.bbcode.image.source"><![CDATA[Bild-Link]]></item>
 		<item name="wcf.bbcode.quote.delete"><![CDATA[Zitat löschen]]></item>
 		<item name="wcf.bbcode.quote.edit"><![CDATA[Zitat bearbeiten]]></item>
