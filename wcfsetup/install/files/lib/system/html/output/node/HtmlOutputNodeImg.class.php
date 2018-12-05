@@ -148,7 +148,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 	 * @param       string          $src
 	 */
 	protected function replaceExternalSource(\DOMElement $element, $src) {
-		$element->parentNode->insertBefore($element->ownerDocument->createTextNode('[IMG:'), $element);
+		$element->parentNode->insertBefore($element->ownerDocument->createTextNode('['.WCF::getLanguage()->get('wcf.bbcode.image.blocked').': '), $element);
 		
 		$link = $element->ownerDocument->createElement('a');
 		$link->setAttribute('href', $src);
