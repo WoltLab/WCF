@@ -11,8 +11,8 @@ use wcf\system\comment\CommentHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\like\LikeHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
@@ -351,7 +351,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		
 		if (!empty($articleIDs)) {
 			// delete like data
-			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.likeableArticle', $articleIDs);
+			ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.likeableArticle', $articleIDs);
 			// delete comments
 			CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.articleComment', $articleContentIDs);
 			// delete tag to object entries
