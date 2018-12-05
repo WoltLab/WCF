@@ -4527,6 +4527,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.notUserTrophyIDs.description"><![CDATA[User has not received the selected trophies.]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs.error.userTrophyIntersection"><![CDATA[The selected trophies in “User has Trophy” and “User does not have Trophy” are conflicting.]]></item>
 		<item name="wcf.user.condition.trophyPoints"><![CDATA[Trophies]]></item>
+		<item name="wcf.user.condition.positiveReactionsReceived"><![CDATA[Positive Reactions]]></item>
 		<item name="wcf.user.condition.negativeReactionsReceived"><![CDATA[Negative Reactions]]></item>
 		<item name="wcf.user.condition.neutralReactionsReceived"><![CDATA[Neutral Reactions]]></item>
 		<item name="wcf.user.condition.userReputation"><![CDATA[Reputation from Reactions]]></item>
