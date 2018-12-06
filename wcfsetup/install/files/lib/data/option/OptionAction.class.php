@@ -1,9 +1,12 @@
 <?php
 namespace wcf\data\option;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\email\transport\SmtpEmailTransport;
+use wcf\system\exception\AJAXException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 
 /**
  * Executes option-related actions.
@@ -41,7 +44,7 @@ class OptionAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete', 'emailSmtpTest', 'import', 'update', 'updateAll'];
+	protected $requireACP = ['create', 'delete', 'emailSmtpTest', 'import', 'update', 'updateAll', 'generateRewriteRules'];
 	
 	/**
 	 * Validates permissions and parameters.
@@ -110,5 +113,90 @@ class OptionAction extends AbstractDatabaseObjectAction {
 		);
 		
 		return ['validationResult' => $smtp->testConnection()];
+	}
+	
+	/**
+	 * Validates the "generateRewriteRules" action
+	 * @throws \wcf\system\exception\AJAXException
+	 */
+	public function validateGenerateRewriteRules() {
+		WCF::getSession()->checkPermissions(['admin.configuration.canEditOption']);
+		
+		if (!FileUtil::isApacheModule()) {
+			throw new AJAXException(WCF::getLanguage()->get('wcf.acp.rewrite.error.notApache'));
+		}
+	}
+	
+	/**
+	 * Returns a list of code-bbcode-containers containing the necessary
+	 * rewrite rules
+	 *
+	 * @return string
+	 */
+	public function generateRewriteRules() {
+		$output = '';
+		
+		foreach ($this->fetchRewriteRules() as $path => $content) {
+			$output .= <<<SNIPPET
+<span class="inlineCode">{$path}</span>
+<pre>{$content}</pre>
+<br>
+SNIPPET;
+
+		}
+		
+		return $output;
+	}
+	
+	/**
+	 * Returns an array with rewrite rules per necessary directory/file
+	 * Applications in sub-directories of another application will be mapped to the top one
+	 *
+	 * @return string[]
+	 */
+	protected function fetchRewriteRules() {
+		$dirs = $rules = [];
+		foreach (ApplicationHandler::getInstance()->getApplications() as $app) {
+			$test = $app->getPackage()->getAbsolutePackageDir();
+			$insert = true;
+			
+			foreach ($dirs as $dir => $apps) {
+				if (strpos($dir, $test) !== false) {
+					unset($dirs[$dir]);
+					$insert = false;
+					break;
+				}
+				else if (strpos($test, $dir) !== false) {
+					$insert = false;
+					break;
+				}
+			}
+			
+			if ($insert) $dirs[$test] = [];
+		}
+		
+		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			foreach ($dirs as $dir => $value) {
+				if (strpos($application->getPackage()->getAbsolutePackageDir(), $dir) !== false) {
+					$dirs[$dir][$application->domainPath] = $application->getPackage()->getAbsolutePackageDir();
+				}
+			}
+		}
+		
+		foreach ($dirs as $dir => $domainPaths) {
+			krsort($domainPaths);
+			
+			foreach ($domainPaths as $domainPath => $value) {
+				$path = FileUtil::removeTrailingSlash(substr($value, strlen($dir)));
+				$snippet = <<<SNIPPET
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+RewriteRule ^/{$path}(.*)$ {$path}/index.php?$1 [L,QSA]
+SNIPPET;
+				$rules[$dir . '.htaccess'] = (!empty($rules[$dir . '.htaccess']) ? $rules[$dir . '.htaccess'] . "\n \n " : '') . $snippet;
+			}
+		}
+		
+		return $rules;
 	}
 }

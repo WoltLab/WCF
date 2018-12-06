@@ -1929,6 +1929,14 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.rescueMode.description"><![CDATA[Die eingestellte Domains und/oder Pfade stimmen nicht mit der für den Aufruf verwendeten Adresse überein; Dies kann in Folge eines Umzugs auf eine andere Domain oder Veränderung der Verzeichnisstruktur auftreten. Mit Hilfe des unten stehenden Formulars {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die Angaben schnell und einfach anpassen.]]></item>
 		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[Diese Benutzer ist nicht berechtigt die Konfiguration zu verändern.]]></item>
 	</category>
+	
+	<category name="wcf.acp.rewrite">
+		<item name="wcf.acp.rewrite"><![CDATA[Rewrite-Regeln (Apache)]]></item>
+		<item name="wcf.acp.rewrite.generate"><![CDATA[Rewrite-Regeln generieren]]></item>
+		<item name="wcf.acp.rewrite.description"><![CDATA[Generiert die Inhalte der benötigten .htaccess-Dateien und gibt sie aus. Beachte{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} bitte, dass die benötigten Regeln bei speziellen Server-Konfigurationen abweichen können.]]></item>
+		<item name="wcf.acp.rewrite.error.notApache"><![CDATA[Der Webserver konnte nicht als Apache identifiziert werden. Diese Funktion unterstützt ausschließlich Rewrite-Regeln für Apache.]]></item>
+	</category>
+	
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.noResults"><![CDATA[Keine Treffer]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[Administrationsmenü]]></item>
