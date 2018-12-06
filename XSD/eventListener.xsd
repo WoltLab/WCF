@@ -31,7 +31,7 @@
 	<!-- event listener element type -->
 	<xs:complexType name="eventlistener">
 		<xs:all>
-			<xs:element name="eventclassname" minOccurs="0">
+			<xs:element name="eventclassname">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:minLength value="0" />
@@ -39,15 +39,8 @@
 					</xs:restriction>
 				</xs:simpleType>
 			</xs:element>
-			<xs:element name="eventname" minOccurs="0">
-				<xs:simpleType>
-					<xs:restriction base="xs:string">
-						<xs:minLength value="0" />
-						<xs:maxLength value="50" />
-					</xs:restriction>
-				</xs:simpleType>
-			</xs:element>
-			<xs:element name="listenerclassname" minOccurs="0">
+			<xs:element name="eventname" type="xs:string" />
+			<xs:element name="listenerclassname">
 				<xs:simpleType>
 					<xs:restriction base="xs:string">
 						<xs:minLength value="0" />
