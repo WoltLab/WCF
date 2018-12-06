@@ -311,10 +311,12 @@ class StyleCompiler extends SingletonFactory {
 		
 		$variables['wcfFontFamily'] = $variables['wcfFontFamilyFallback'];
 		if (!empty($variables['wcfFontFamilyGoogle'])) {
-			$variables['wcfFontFamily'] = '"' . $variables['wcfFontFamilyGoogle'] . '", ' . $variables['wcfFontFamily'];
+			// The SCSS parser attempts to evaluate the variables, causing issues with font names that
+			// include logical operators such as "And" or "Or".
+			$variables['wcfFontFamilyGoogle'] = '"' . $variables['wcfFontFamilyGoogle'] . '"';
+			
+			$variables['wcfFontFamily'] = $variables['wcfFontFamilyGoogle'] . ', ' . $variables['wcfFontFamily'];
 		}
-		unset($variables['wcfFontFamilyFallback']);
-		unset($variables['wcfFontFamilyGoogle']);
 		
 		// add options as SCSS variables
 		if (PACKAGE_ID) {
