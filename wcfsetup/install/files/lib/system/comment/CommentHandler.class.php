@@ -10,8 +10,8 @@ use wcf\system\comment\manager\ICommentManager;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
-use wcf\system\like\LikeHandler;
 use wcf\system\message\censorship\Censorship;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\SingletonFactory;
@@ -144,7 +144,7 @@ class CommentHandler extends SingletonFactory {
 			$notificationObjectTypes[] = $objectTypeObj->objectType.'.like.notification';
 		}
 		
-		LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment', $commentIDs, $notificationObjectTypes);
+		ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.comment', $commentIDs, $notificationObjectTypes);
 		
 		// delete activity events
 		if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType.'.recentActivityEvent')) {
@@ -162,7 +162,7 @@ class CommentHandler extends SingletonFactory {
 				$notificationObjectTypes[] = $objectTypeObj->objectType.'.response.like.notification';
 			}
 			
-			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment.response', $responseIDs, $notificationObjectTypes);
+			ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.comment.response', $responseIDs, $notificationObjectTypes);
 			
 			// delete activity events (for responses)
 			if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType.'.response.recentActivityEvent')) {

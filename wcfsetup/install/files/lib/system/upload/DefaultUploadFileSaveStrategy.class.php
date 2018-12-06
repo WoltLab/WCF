@@ -136,6 +136,27 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 		// move uploaded file
 		if (@move_uploaded_file($uploadFile->getLocation(), $object->getLocation())) {
 			try {
+				$parameters = [
+					'object' => $object,
+					'updateData' => []
+				];
+				
+				EventHandler::getInstance()->fireAction($this, 'save', $parameters);
+				
+				if (!is_array($parameters['updateData'])) {
+					throw new \UnexpectedValueException('$updateData is no longer an array after being manipulated by event listeners.');
+				}
+				else {
+					$updateData = $parameters['updateData'];
+				}
+				
+				if (!is_object($parameters['object']) || get_class($parameters['object']) !== get_class($object)) {
+					throw new \UnexpectedValueException('$object is no longer of class ' . get_class($object) . ' after being manipulated by event listeners.');
+				}
+				else {
+					$object = $parameters['object'];
+				}
+				
 				// rotate image based on the exif data
 				if (!empty($this->options['rotateImages'])) {
 					if ($object->isImage) {
@@ -177,18 +198,14 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 									
 									// update width, height and filesize of the object
 									if ($newImage !== null && ($orientation == ExifUtil::ORIENTATION_90_ROTATE || $orientation == ExifUtil::ORIENTATION_270_ROTATE)) {
-										/** @var DatabaseObjectEditor $editor */
-										$editor = new $this->editorClassName($object);
-										$editor->update([
+										$updateData = array_merge($updateData, [
 											'height' => $object->width,
 											'width' => $object->height,
 											'filesize' => filesize($object->getLocation())
 										]);
 									}
 									else if ($newImage !== null && $orientation == ExifUtil::ORIENTATION_180_ROTATE) {
-										/** @var DatabaseObjectEditor $editor */
-										$editor = new $this->editorClassName($object);
-										$editor->update([
+										$updateData = array_merge($updateData, [
 											'filesize' => filesize($object->getLocation())
 										]);
 									}
@@ -196,6 +213,12 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 							}
 						}
 					}
+				}
+				
+				if (!empty($updateData)) {
+					/** @var DatabaseObjectEditor $editor */
+					$editor = new $this->editorClassName($object);
+					$editor->update($updateData);
 				}
 				
 				$this->objects[$uploadFile->getInternalFileID()] = $object;

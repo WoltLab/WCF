@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Date/Picker
  */
-define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment', 'WoltLabSuite/Core/Ui/CloseOverlay'], function(DateUtil, Language, ObjectMap, DomChangeListener, UiAlignment, UiCloseOverlay) {
+define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment', 'WoltLabSuite/Core/Ui/CloseOverlay'], function(DateUtil, EventHandler, Language, ObjectMap, DomChangeListener, UiAlignment, UiCloseOverlay) {
 	"use strict";
 	
 	var _didInit = false;
@@ -336,6 +336,8 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 				if (typeof data.onClose === 'function') {
 					data.onClose();
 				}
+				
+				EventHandler.fire('WoltLabSuite/Core/Date/Picker', 'close', {element: _input});
 				
 				_input = null;
 				_minDate = 0;

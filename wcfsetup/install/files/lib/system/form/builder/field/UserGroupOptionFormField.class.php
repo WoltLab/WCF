@@ -1,9 +1,7 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\data\package\PackageCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
-use wcf\system\form\builder\IFormNode;
 use wcf\system\WCF;
 
 /**
@@ -20,49 +18,13 @@ use wcf\system\WCF;
  */
 class UserGroupOptionFormField extends ItemListFormField {
 	use TDefaultIdFormField;
-	
-	/**
-	 * ids of the packages whose user group options will be considered
-	 * @var	int[]
-	 */
-	protected $__packageIDs = [];
+	use TPackagesFormField;
 	
 	/**
 	 * Creates a new instance of `OptionsFormField`.
 	 */
 	public function __construct() {
 		$this->label('wcf.form.field.userGroupOption');
-	}
-	
-	/**
-	 * Returns the ids of the packages whose user group options will be considered.
-	 * An empty array is returned if all packages are considered.
-	 * 
-	 * @return	int[]
-	 */
-	public function getPackageIDs() {
-		return $this->__packageIDs;
-	}
-	
-	/**
-	 * Sets the ids of the packages whose user group options will be considered.
-	 * If an empty array is given, all packages will be considered.
-	 * 
-	 * @param	int[]		$packageIDs
-	 * @return	static
-	 * 
-	 * @throws	\InvalidArgumentException	if the given package ids are invalid
-	 */
-	public function packageIDs(array $packageIDs) {
-		foreach ($packageIDs as $packageID) {
-			if (PackageCache::getInstance()->getPackage($packageID) === null) {
-				throw new \InvalidArgumentException("Unknown package with id '{$packageID}'.");
-			}
-		}
-		
-		$this->__packageIDs = $packageIDs;
-		
-		return $this;
 	}
 	
 	/**

@@ -285,7 +285,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'eventClassName' => $element->getElementsByTagName('eventclassname')->item(0)->nodeValue,
 			'eventName' => StringUtil::normalizeCsv($element->getElementsByTagName('eventname')->item(0)->nodeValue),
@@ -294,11 +294,35 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 			'packageID' => $this->installation->getPackage()->packageID
 		];
 		
-		foreach (['environment', 'inherit', 'nice', 'options', 'permissions'] as $optionalElementProperty) {
+		foreach (['environment', 'inherit', 'options', 'permissions'] as $optionalElementProperty) {
 			$optionalElement = $element->getElementsByTagName($optionalElementProperty)->item(0);
 			if ($optionalElement !== null) {
 				$data[$optionalElementProperty] = $optionalElement->nodeValue;
 			}
+			else if ($saveData) {
+				switch ($optionalElementProperty) {
+					case 'environment':
+						$data[$optionalElementProperty] = 'user';
+						break;
+						
+					case 'inherit':
+						$data[$optionalElementProperty] = 0;
+						break;
+					
+					case 'options':
+					case 'permissions':
+						$data[$optionalElementProperty] = '';
+						break;
+				}
+			}
+		}
+		
+		$niceValue = $element->getElementsByTagName('nice')->item(0);
+		if ($niceValue !== null) {
+			$data['niceValue'] = $niceValue->nodeValue;
+		}
+		else if ($saveData) {
+			$data['niceValue'] = 0;
 		}
 		
 		return $data;
@@ -328,7 +352,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$eventListener = $document->createElement($this->tagName);

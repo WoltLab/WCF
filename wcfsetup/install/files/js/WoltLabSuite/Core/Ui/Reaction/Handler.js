@@ -9,15 +9,15 @@
  */
 define(
 	[
-		'Ajax',      'Core',                     'Dictionary',         'Language',
-		'ObjectMap', 'StringUtil',               'Dom/ChangeListener', 'Dom/Util',
-		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List', 'User', 'WoltLabSuite/Core/Ui/Reaction/CountButtons', 
-		'Ui/Alignment', 'Ui/CloseOverlay',       'Ui/Screen'
+		'Ajax',      'Core',                            'Dictionary',           'Language',
+		'ObjectMap', 'StringUtil',                      'Dom/ChangeListener',   'Dom/Util',
+		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List',  'User',                 'WoltLabSuite/Core/Ui/Reaction/CountButtons', 
+		'Ui/Alignment', 'Ui/CloseOverlay',              'Ui/Screen'
 	],
 	function(
-		Ajax,        Core,              Dictionary,           Language,
-		ObjectMap,   StringUtil,        DomChangeListener,    DomUtil,
-		UiDialog,    UiUserList,        User,                 CountButtons, 
+		Ajax,        Core,              Dictionary,             Language,
+		ObjectMap,   StringUtil,        DomChangeListener,      DomUtil,
+		UiDialog,    UiUserList,        User,                   CountButtons, 
 		UiAlignment, UiCloseOverlay,    UiScreen
 	)
 	{
@@ -63,7 +63,7 @@ define(
 				
 				this.initReactButtons(options, objectType);
 				
-				this.countButtons = new CountButtons(this._objectType, this._options); 
+				this.countButtons = new CountButtons(this._objectType, this._options);
 				
 				DomChangeListener.add('WoltLabSuite/Core/Ui/Reaction/Handler-' + objectType, this.initReactButtons.bind(this));
 				UiCloseOverlay.add('WoltLabSuite/Core/Ui/Reaction/Handler', this._closePopover.bind(this));
@@ -177,7 +177,7 @@ define(
 				}
 			},
 			
-			_markReactionAsActive() {
+			_markReactionAsActive: function() {
 				var reactionTypeID = elData(this._containers.get(this._popoverCurrentObjectId).reactButton, 'reaction-type-id');
 				
 				//  clear old active state

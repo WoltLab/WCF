@@ -2,7 +2,7 @@
 <data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/userGroupOption.xsd">
 	<import>
 		<categories>
-			<category name="user" />
+			<category name="user"/>
 			<category name="user.profile">
 				<parent>user</parent>
 			</category>
@@ -21,7 +21,6 @@
 			<category name="user.profile.trophy">
 				<parent>user.profile</parent>
 			</category>
-			
 			<category name="user.message">
 				<parent>user</parent>
 			</category>
@@ -34,7 +33,6 @@
 			<category name="user.message.comment">
 				<parent>user.message</parent>
 			</category>
-			
 			<category name="user.cms">
 				<parent>user</parent>
 			</category>
@@ -44,15 +42,13 @@
 			<category name="user.page">
 				<parent>user.cms</parent>
 			</category>
-			
-			<category name="mod" />
+			<category name="mod"/>
 			<category name="mod.general">
 				<parent>mod</parent>
 			</category>
 			<category name="mod.profileComment">
 				<parent>mod.general</parent>
 			</category>
-			
 			<category name="mod.cms">
 				<parent>mod</parent>
 			</category>
@@ -62,13 +58,10 @@
 			<category name="mod.article">
 				<parent>mod.cms</parent>
 			</category>
-			
-			<category name="admin" />
-			
+			<category name="admin"/>
 			<category name="admin.general">
 				<parent>admin</parent>
 			</category>
-			
 			<!-- admin.configuration -->
 			<category name="admin.configuration">
 				<parent>admin</parent>
@@ -77,7 +70,6 @@
 				<parent>admin.configuration</parent>
 			</category>
 			<!-- /admin.configuration -->
-			
 			<!-- admin.user -->
 			<category name="admin.user">
 				<parent>admin</parent>
@@ -92,32 +84,26 @@
 				<parent>admin.user</parent>
 			</category>
 			<!-- /admin.user -->
-			
 			<!-- admin.content -->
 			<category name="admin.content">
 				<parent>admin</parent>
 			</category>
 			<!-- /admin.content -->
-			
 			<!-- admin.application -->
 			<category name="admin.application">
 				<parent>admin</parent>
 			</category>
 			<!-- /admin.application -->
-			
 			<!-- admin.customization -->
 			<category name="admin.customization">
 				<parent>admin</parent>
 			</category>
 			<!-- /admin.customization -->
-			
 			<!-- admin.management -->
 			<category name="admin.management">
 				<parent>admin</parent>
 			</category>
-			<!-- /admin.management -->
 		</categories>
-		
 		<options>
 			<!-- admin.general -->
 			<option name="admin.general.canViewPrivateUserOptions">
@@ -149,7 +135,6 @@
 				<usersonly>1</usersonly>
 			</option>
 			<!-- /admin.general -->
-			
 			<!-- admin.configuration -->
 			<option name="admin.configuration.canEditOption">
 				<categoryname>admin.configuration</categoryname>
@@ -176,9 +161,9 @@
 				<categoryname>admin.configuration</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_contact_form</options>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_contact_form</options>
 			</option>
 			<option name="admin.configuration.canManageApplication">
 				<categoryname>admin.configuration.package</categoryname>
@@ -209,12 +194,10 @@
 				<usersonly>1</usersonly>
 			</option>
 			<!-- /admin.configuration -->
-			
 			<!-- admin.user -->
 			<option name="admin.user.accessibleGroups">
 				<categoryname>admin.user.group</categoryname>
 				<optiontype>userGroups</optiontype>
-				<defaultvalue />
 				<admindefaultvalue>1,2,3,4,5</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
@@ -285,9 +268,9 @@
 				<categoryname>admin.user.user</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_user_signature</options>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_user_signature</options>
 			</option>
 			<option name="admin.user.canDisableCoverPhoto">
 				<categoryname>admin.user.user</categoryname>
@@ -310,7 +293,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.user.canAddGroup">
 				<categoryname>admin.user.group</categoryname>
 				<optiontype>boolean</optiontype>
@@ -332,7 +314,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.user.canManageUserOption">
 				<categoryname>admin.user.user</categoryname>
 				<optiontype>boolean</optiontype>
@@ -340,7 +321,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.notice.canManageNotice">
 				<categoryname>admin.user.user</categoryname>
 				<optiontype>boolean</optiontype>
@@ -348,7 +328,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.user.rank.canManageRank">
 				<categoryname>admin.user.user</categoryname>
 				<optiontype>boolean</optiontype>
@@ -356,7 +335,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.paidSubscription.canManageSubscription">
 				<categoryname>admin.user.user</categoryname>
 				<optiontype>boolean</optiontype>
@@ -364,26 +342,23 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.trophy.canManageTrophy">
 				<categoryname>admin.user.trophy</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_trophy</options>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_trophy</options>
 			</option>
-			
 			<option name="admin.trophy.canAwardTrophy">
 				<categoryname>admin.user.trophy</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_trophy</options>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_trophy</options>
 			</option>
 			<!-- /admin.user -->
-			
 			<!-- admin.content -->
 			<option name="admin.content.cms.canManagePage">
 				<categoryname>admin.content</categoryname>
@@ -392,7 +367,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.content.cms.canManageMenu">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
@@ -400,7 +374,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.content.cms.canManageBox">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
@@ -408,12 +381,11 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.content.cms.canManageMedia">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
-				<enableoptions>admin.content.cms.canOnlyAccessOwnMedia</enableoptions>
 				<defaultvalue>0</defaultvalue>
+				<enableoptions>admin.content.cms.canOnlyAccessOwnMedia</enableoptions>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
@@ -431,49 +403,46 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.content.article.canManageArticle">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_article</options>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_article</options>
 			</option>
 			<option name="admin.content.article.canContributeArticle">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_article</options>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_article</options>
 			</option>
 			<option name="admin.content.article.canManageOwnArticles">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_article</options>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_article</options>
 			</option>
 			<option name="admin.content.article.canManageCategory">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_article</options>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_article</options>
 			</option>
-			
 			<option name="admin.content.canBulkRevertContentChanges">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_edit_history</options>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_edit_history</options>
 			</option>
-			
 			<option name="admin.content.label.canManageLabel">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
@@ -481,7 +450,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.content.bbcode.canManageBBCode">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
@@ -489,7 +457,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.content.tag.canManageTag">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
@@ -497,16 +464,14 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.attachment.canManageAttachment">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<admindefaultvalue>1</admindefaultvalue>
 				<options>module_attachment</options>
+				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.content.reaction.canManageReactionType">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
@@ -515,7 +480,6 @@
 				<usersonly>1</usersonly>
 			</option>
 			<!-- /admin.content -->
-			
 			<!-- admin.customization -->
 			<option name="admin.style.canManageStyle">
 				<categoryname>admin.customization</categoryname>
@@ -531,7 +495,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.template.canManageTemplate">
 				<categoryname>admin.customization</categoryname>
 				<optiontype>boolean</optiontype>
@@ -539,7 +502,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.language.canManageLanguage">
 				<categoryname>admin.customization</categoryname>
 				<optiontype>boolean</optiontype>
@@ -547,7 +509,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.content.smiley.canManageSmiley">
 				<categoryname>admin.content</categoryname>
 				<optiontype>boolean</optiontype>
@@ -555,7 +516,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.ad.canManageAd">
 				<categoryname>admin.customization</categoryname>
 				<optiontype>boolean</optiontype>
@@ -564,7 +524,6 @@
 				<usersonly>1</usersonly>
 			</option>
 			<!-- /admin.customization -->
-			
 			<!-- admin.management -->
 			<option name="admin.management.canManageCronjob">
 				<categoryname>admin.management</categoryname>
@@ -573,7 +532,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.management.canRebuildData">
 				<categoryname>admin.management</categoryname>
 				<optiontype>boolean</optiontype>
@@ -581,7 +539,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.management.canImportData">
 				<categoryname>admin.management</categoryname>
 				<optiontype>boolean</optiontype>
@@ -589,7 +546,6 @@
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="admin.management.canViewLog">
 				<categoryname>admin.management</categoryname>
 				<optiontype>boolean</optiontype>
@@ -598,13 +554,12 @@
 				<usersonly>1</usersonly>
 			</option>
 			<!-- /admin.management -->
-			
 			<option name="user.attachment.maxSize">
 				<categoryname>user.message.attachment</categoryname>
 				<optiontype>fileSize</optiontype>
 				<defaultvalue>1000000</defaultvalue>
-				<minvalue>10000</minvalue>
 				<options>module_attachment</options>
+				<minvalue>10000</minvalue>
 			</option>
 			<option name="user.attachment.allowedExtensions">
 				<categoryname>user.message.attachment</categoryname>
@@ -617,60 +572,63 @@ bmp
 zip
 txt
 pdf</defaultvalue>
-				<wildcard>*</wildcard>
 				<options>module_attachment</options>
+				<wildcard>*</wildcard>
 			</option>
 			<option name="user.attachment.maxCount">
 				<categoryname>user.message.attachment</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>10</defaultvalue>
-				<minvalue>1</minvalue>
 				<options>module_attachment</options>
+				<minvalue>1</minvalue>
 				<maxvalue>100</maxvalue>
 			</option>
-			
 			<!-- user.message -->
 			<option name="user.message.disallowedBBCodes">
 				<categoryname>user.message</categoryname>
 				<optiontype>BBCodeSelect</optiontype>
 			</option>
 			<!-- /user.message -->
-			
 			<!-- user.message.comment -->
 			<option name="user.comment.floodControlTime">
 				<categoryname>user.message.comment</categoryname>
 				<optiontype>inverseInteger</optiontype>
 				<defaultvalue>15</defaultvalue>
-				<admindefaultvalue>0</admindefaultvalue>
 				<minvalue>0</minvalue>
 				<suffix>seconds</suffix>
+				<admindefaultvalue>0</admindefaultvalue>
 			</option>
 			<option name="user.comment.disallowedBBCodes">
 				<categoryname>user.message.comment</categoryname>
 				<optiontype>BBCodeSelect</optiontype>
 			</option>
 			<!-- /user.message.comment -->
-			
 			<!-- user.signature -->
+			<option name="user.signature.canEditSignature">
+				<categoryname>user.signature</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<usersonly>1</usersonly>
+				<options>module_user_signature</options>
+			</option>
 			<option name="user.signature.maxLength">
 				<categoryname>user.signature</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>500</defaultvalue>
-				<admindefaultvalue>10000</admindefaultvalue>
+				<options>module_user_signature</options>
 				<minvalue>100</minvalue>
 				<maxvalue>65535</maxvalue>
-				<usersonly>1</usersonly>
 				<suffix>chars</suffix>
-				<options>module_user_signature</options>
+				<admindefaultvalue>10000</admindefaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="user.signature.disallowedBBCodes">
 				<categoryname>user.signature</categoryname>
 				<optiontype>BBCodeSelect</optiontype>
-				<usersonly>1</usersonly>
 				<options>module_user_signature</options>
+				<usersonly>1</usersonly>
 			</option>
 			<!-- /user.signature -->
-			
 			<!-- user.profile -->
 			<option name="user.profile.canMail">
 				<categoryname>user.profile</categoryname>
@@ -701,8 +659,8 @@ pdf</defaultvalue>
 				<categoryname>user.profile</categoryname>
 				<optiontype>inverseInteger</optiontype>
 				<defaultvalue>182</defaultvalue>
-				<usersonly>1</usersonly>
 				<suffix>days</suffix>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="user.profile.canEditUserTitle">
 				<categoryname>user.profile</categoryname>
@@ -748,12 +706,11 @@ pdf</defaultvalue>
 				<categoryname>user.profile</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>1000</defaultvalue>
-				<admindefaultvalue>10000</admindefaultvalue>
 				<minvalue>100</minvalue>
 				<maxvalue>65535</maxvalue>
 				<suffix>chars</suffix>
+				<admindefaultvalue>10000</admindefaultvalue>
 			</option>
-			
 			<option name="user.profile.avatar.canSeeAvatars">
 				<categoryname>user.profile.avatar</categoryname>
 				<optiontype>boolean</optiontype>
@@ -782,7 +739,6 @@ jpeg
 png</defaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="user.profile.coverPhoto.canSeeCoverPhotos">
 				<categoryname>user.profile.coverPhoto</categoryname>
 				<optiontype>boolean</optiontype>
@@ -801,7 +757,6 @@ png</defaultvalue>
 				<minvalue>100000</minvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="user.profile.trophy.canSeeTrophies">
 				<categoryname>user.profile.trophy</categoryname>
 				<optiontype>boolean</optiontype>
@@ -811,14 +766,13 @@ png</defaultvalue>
 			<option name="user.profile.trophy.maxUserSpecialTrophies">
 				<categoryname>user.profile.trophy</categoryname>
 				<optiontype>integer</optiontype>
+				<defaultvalue>3</defaultvalue>
+				<options>module_trophy</options>
 				<minvalue>0</minvalue>
 				<maxvalue>5</maxvalue>
-				<defaultvalue>3</defaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_trophy</options>
 			</option>
 			<!-- /user.profile -->
-			
 			<option name="user.page.canAddComment">
 				<categoryname>user.page</categoryname>
 				<optiontype>boolean</optiontype>
@@ -845,7 +799,6 @@ png</defaultvalue>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="user.article.canReadArticle">
 				<categoryname>user.article</categoryname>
 				<optiontype>boolean</optiontype>
@@ -857,32 +810,31 @@ png</defaultvalue>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 				<enableoptions>user.article.canAddCommentWithoutModeration</enableoptions>
-				<excludedInTinyBuild>1</excludedInTinyBuild>
 				<options>module_article</options>
+				<excludedInTinyBuild>1</excludedInTinyBuild>
 			</option>
 			<option name="user.article.canAddCommentWithoutModeration">
 				<categoryname>user.article</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<excludedInTinyBuild>1</excludedInTinyBuild>
 				<options>module_article</options>
+				<excludedInTinyBuild>1</excludedInTinyBuild>
 			</option>
 			<option name="user.article.canEditComment">
 				<categoryname>user.article</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<usersonly>1</usersonly>
 				<options>module_article</options>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="user.article.canDeleteComment">
 				<categoryname>user.article</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_article</options>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_article</options>
 			</option>
-			
 			<option name="mod.general.canUseModeration">
 				<categoryname>mod.general</categoryname>
 				<optiontype>boolean</optiontype>
@@ -890,7 +842,6 @@ png</defaultvalue>
 				<moddefaultvalue>1</moddefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="user.like.canViewLike">
 				<categoryname>user.like</categoryname>
 				<optiontype>boolean</optiontype>
@@ -904,34 +855,32 @@ png</defaultvalue>
 				<options>module_like</options>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<!-- mod.general -->
 			<option name="mod.profileComment.canEditComment">
 				<categoryname>mod.profileComment</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_user_profile_wall</options>
 				<moddefaultvalue>1</moddefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_user_profile_wall</options>
 			</option>
 			<option name="mod.profileComment.canDeleteComment">
 				<categoryname>mod.profileComment</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_user_profile_wall</options>
 				<moddefaultvalue>1</moddefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_user_profile_wall</options>
 			</option>
 			<option name="mod.profileComment.canModerateComment">
 				<categoryname>mod.profileComment</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_user_profile_wall</options>
 				<moddefaultvalue>1</moddefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_user_profile_wall</options>
 			</option>
 			<!-- /mod.general -->
-			
 			<option name="mod.page.canEditComment">
 				<categoryname>mod.page</categoryname>
 				<optiontype>boolean</optiontype>
@@ -953,39 +902,37 @@ png</defaultvalue>
 				<moddefaultvalue>1</moddefaultvalue>
 				<usersonly>1</usersonly>
 			</option>
-			
 			<option name="mod.article.canEditComment">
 				<categoryname>mod.article</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_article</options>
 				<moddefaultvalue>1</moddefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_article</options>
 			</option>
 			<option name="mod.article.canDeleteComment">
 				<categoryname>mod.article</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_article</options>
 				<moddefaultvalue>1</moddefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_article</options>
 			</option>
 			<option name="mod.article.canModerateComment">
 				<categoryname>mod.article</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_article</options>
 				<moddefaultvalue>1</moddefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_article</options>
 			</option>
-			
 			<!-- user.profileComment -->
 			<option name="user.profileComment.canAddComment">
 				<categoryname>user.profileComment</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<options>module_user_profile_wall</options>
 				<enableoptions>user.profileComment.canAddCommentWithoutModeration</enableoptions>
+				<options>module_user_profile_wall</options>
 				<excludedInTinyBuild>1</excludedInTinyBuild>
 			</option>
 			<option name="user.profileComment.canAddCommentWithoutModeration">
@@ -998,26 +945,25 @@ png</defaultvalue>
 				<categoryname>user.profileComment</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
-				<usersonly>1</usersonly>
 				<options>module_user_profile_wall</options>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="user.profileComment.canDeleteComment">
 				<categoryname>user.profileComment</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<options>module_user_profile_wall</options>
 				<admindefaultvalue>1</admindefaultvalue>
 				<usersonly>1</usersonly>
-				<options>module_user_profile_wall</options>
 			</option>
 			<option name="user.profileComment.canDeleteCommentInOwnProfile">
 				<categoryname>user.profileComment</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<usersonly>1</usersonly>
 				<options>module_user_profile_wall</options>
+				<usersonly>1</usersonly>
 			</option>
 			<!-- /user.profileComment -->
-			
 			<option name="user.tag.canViewTag">
 				<categoryname>user.message</categoryname>
 				<optiontype>boolean</optiontype>

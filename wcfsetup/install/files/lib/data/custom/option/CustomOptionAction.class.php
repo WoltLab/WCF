@@ -2,6 +2,7 @@
 namespace wcf\data\custom\option;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
+use wcf\data\TDatabaseObjectToggle;
 
 /**
  * Executes option-related actions.
@@ -17,6 +18,8 @@ use wcf\data\IToggleAction;
  * @method	CustomOptionEditor	getSingleObject()
  */
 abstract class CustomOptionAction extends AbstractDatabaseObjectAction implements IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -26,22 +29,4 @@ abstract class CustomOptionAction extends AbstractDatabaseObjectAction implement
 	 * @inheritDoc
 	 */
 	protected $requireACP = ['create', 'delete', 'update'];
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function validateToggle() {
-		$this->validateUpdate();
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $optionEditor) {
-			$optionEditor->update([
-				'isDisabled' => 1 - $optionEditor->isDisabled
-			]);
-		}
-	}
 }

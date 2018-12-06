@@ -159,7 +159,10 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 					->objectProperty('sortField')
 					->label('wcf.acp.box.controller.sortField')
 					->description('wcf.acp.box.controller.sortField.description')
-					->options(array_combine($this->validSortFields, $this->validSortFields))
+					->options(array_merge(
+						['' => 'wcf.global.noSelection'],
+						array_combine($this->validSortFields, $this->validSortFields)
+					))
 					->addDependency(
 						ValueFormFieldDependency::create('boxType')
 							->field($objectTypeField)
@@ -168,6 +171,11 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 				
 				SortOrderFormField::create($prefix . 'sortOrder')
 					->objectProperty('sortOrder')
+					->options([
+						'' => 'wcf.global.noSelection',
+						'ASC' => 'wcf.global.sortOrder.ascending',
+						'DESC' => 'wcf.global.sortOrder.descending',
+					])
 					->addDependency(
 						ValueFormFieldDependency::create('boxType')
 							->field($objectTypeField)

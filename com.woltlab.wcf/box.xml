@@ -5,15 +5,13 @@
 			<name language="de">Letzte Aktivitäten</name>
 			<name language="en">Recent Activities</name>
 			<boxType>system</boxType>
-			<objectType>com.woltlab.wcf.recentActivityList</objectType>
 			<position>contentBottom</position>
-			<showHeader>0</showHeader>
+			<objectType>com.woltlab.wcf.recentActivityList</objectType>
 			<visibleEverywhere>0</visibleEverywhere>
 			<visibilityExceptions>
 				<page>com.woltlab.wcf.Dashboard</page>
 			</visibilityExceptions>
 			<limit>10</limit>
-			
 			<content language="de">
 				<title>Letzte Aktivitäten</title>
 			</content>
@@ -21,20 +19,18 @@
 				<title>Recent Activities</title>
 			</content>
 		</box>
-		
 		<box identifier="com.woltlab.wcf.RegisterButton">
 			<name language="de">Registrierungs-Button (Seitenleiste)</name>
 			<name language="en">Register Button (Sidebar)</name>
 			<boxType>system</boxType>
-			<objectType>com.woltlab.wcf.registerButton</objectType>
 			<position>sidebarRight</position>
+			<objectType>com.woltlab.wcf.registerButton</objectType>
+			<cssClassName>boxInfo</cssClassName>
 			<showHeader>1</showHeader>
 			<visibleEverywhere>0</visibleEverywhere>
-			<cssClassName>boxInfo</cssClassName>
 			<visibilityExceptions>
 				<page>com.woltlab.wcf.Dashboard</page>
 			</visibilityExceptions>
-			
 			<content language="de">
 				<title>Registrierung</title>
 			</content>
@@ -42,16 +38,13 @@
 				<title>Registration</title>
 			</content>
 		</box>
-		
 		<box identifier="com.woltlab.wcf.RegisterButton.content">
 			<name language="de">Registrierungs-Button (Inhaltsbereich)</name>
 			<name language="en">Register Button (Content)</name>
 			<boxType>system</boxType>
-			<objectType>com.woltlab.wcf.registerButton</objectType>
 			<position>contentBottom</position>
+			<objectType>com.woltlab.wcf.registerButton</objectType>
 			<showHeader>1</showHeader>
-			<visibleEverywhere>0</visibleEverywhere>
-			
 			<content language="de">
 				<title>Jetzt mitmachen!</title>
 			</content>
@@ -59,19 +52,16 @@
 				<title>Participate now!</title>
 			</content>
 		</box>
-		
 		<box identifier="com.woltlab.wcf.SignedInAs">
 			<name language="de">Angemeldet als</name>
 			<name language="en">Signed In As</name>
 			<boxType>system</boxType>
-			<objectType>com.woltlab.wcf.signedInAs</objectType>
 			<position>sidebarRight</position>
-			<showHeader>0</showHeader>
+			<objectType>com.woltlab.wcf.signedInAs</objectType>
 			<visibleEverywhere>0</visibleEverywhere>
 			<visibilityExceptions>
 				<page>com.woltlab.wcf.Dashboard</page>
 			</visibilityExceptions>
-			
 			<content language="de">
 				<title>Angemeldet als</title>
 			</content>
@@ -79,19 +69,17 @@
 				<title>Signed In As</title>
 			</content>
 		</box>
-		
 		<box identifier="com.woltlab.wcf.StaffOnline">
 			<name language="de">Team-Mitglieder online</name>
 			<name language="en">Staff-Members Online</name>
 			<boxType>system</boxType>
-			<objectType>com.woltlab.wcf.staffOnlineList</objectType>
 			<position>sidebarRight</position>
+			<objectType>com.woltlab.wcf.staffOnlineList</objectType>
 			<showHeader>1</showHeader>
 			<visibleEverywhere>0</visibleEverywhere>
 			<visibilityExceptions>
 				<page>com.woltlab.wcf.Dashboard</page>
 			</visibilityExceptions>
-			
 			<content language="de">
 				<title>Team-Mitglieder online</title>
 			</content>
@@ -99,19 +87,17 @@
 				<title>Staff-Members Online</title>
 			</content>
 		</box>
-		
 		<box identifier="com.woltlab.wcf.Statistics">
 			<name language="de">Statistiken</name>
 			<name language="en">Statistics</name>
 			<boxType>system</boxType>
-			<objectType>com.woltlab.wcf.statistics</objectType>
 			<position>sidebarRight</position>
+			<objectType>com.woltlab.wcf.statistics</objectType>
 			<showHeader>1</showHeader>
 			<visibleEverywhere>0</visibleEverywhere>
 			<visibilityExceptions>
 				<page>com.woltlab.wcf.Dashboard</page>
 			</visibilityExceptions>
-			
 			<content language="de">
 				<title>Statistiken</title>
 			</content>
@@ -119,13 +105,12 @@
 				<title>Statistics</title>
 			</content>
 		</box>
-		
 		<box identifier="com.woltlab.wcf.NewestMembers">
 			<name language="de">Neueste Mitglieder</name>
 			<name language="en">Newest Members</name>
 			<boxType>system</boxType>
-			<objectType>com.woltlab.wcf.userList</objectType>
 			<position>sidebarRight</position>
+			<objectType>com.woltlab.wcf.userList</objectType>
 			<showHeader>1</showHeader>
 			<visibleEverywhere>0</visibleEverywhere>
 			<visibilityExceptions>
@@ -133,7 +118,6 @@
 			</visibilityExceptions>
 			<sortField>registrationDate</sortField>
 			<sortOrder>DESC</sortOrder>
-			
 			<content language="de">
 				<title>Neueste Mitglieder</title>
 			</content>
@@ -141,13 +125,12 @@
 				<title>Newest Members</title>
 			</content>
 		</box>
-		
 		<box identifier="com.woltlab.wcf.MostActiveMembers">
 			<name language="de">Aktivste Mitglieder</name>
 			<name language="en">Most Active Members</name>
 			<boxType>system</boxType>
-			<objectType>com.woltlab.wcf.userList</objectType>
 			<position>sidebarRight</position>
+			<objectType>com.woltlab.wcf.userList</objectType>
 			<showHeader>1</showHeader>
 			<visibleEverywhere>0</visibleEverywhere>
 			<visibilityExceptions>
@@ -155,7 +138,6 @@
 			</visibilityExceptions>
 			<sortField>activityPoints</sortField>
 			<sortOrder>DESC</sortOrder>
-			
 			<content language="de">
 				<title>Aktivste Mitglieder</title>
 			</content>
@@ -163,19 +145,17 @@
 				<title>Most Active Members</title>
 			</content>
 		</box>
-		
 		<box identifier="com.woltlab.wcf.TodaysBirthdays">
 			<name language="de">Heutige Geburtstage</name>
 			<name language="en">Today’s Birthdays</name>
 			<boxType>system</boxType>
-			<objectType>com.woltlab.wcf.todaysBirthdays</objectType>
 			<position>sidebarRight</position>
+			<objectType>com.woltlab.wcf.todaysBirthdays</objectType>
 			<showHeader>1</showHeader>
 			<visibleEverywhere>0</visibleEverywhere>
 			<visibilityExceptions>
 				<page>com.woltlab.wcf.MembersList</page>
 			</visibilityExceptions>
-			
 			<content language="de">
 				<title>Heutige Geburtstage</title>
 			</content>
@@ -183,16 +163,13 @@
 				<title>Today’s Birthdays</title>
 			</content>
 		</box>
-				
 		<box identifier="com.woltlab.wcf.UsersOnline">
 			<name language="de">Benutzer online</name>
 			<name language="en">Users Online</name>
 			<boxType>system</boxType>
-			<objectType>com.woltlab.wcf.userOnlineList</objectType>
 			<position>footerBoxes</position>
+			<objectType>com.woltlab.wcf.userOnlineList</objectType>
 			<showHeader>1</showHeader>
-			<visibleEverywhere>0</visibleEverywhere>
-			
 			<content language="de">
 				<title>Benutzer online</title>
 			</content>
@@ -200,16 +177,13 @@
 				<title>Users Online</title>
 			</content>
 		</box>
-		
 		<box identifier="com.woltlab.wcf.PageComments">
 			<name language="de">Seiten-Kommentare</name>
 			<name language="en">Page Comments</name>
 			<boxType>system</boxType>
-			<objectType>com.woltlab.wcf.pageCommentList</objectType>
 			<position>contentBottom</position>
+			<objectType>com.woltlab.wcf.pageCommentList</objectType>
 			<showHeader>1</showHeader>
-			<visibleEverywhere>0</visibleEverywhere>
-			
 			<content language="de">
 				<title>Kommentare</title>
 			</content>
@@ -217,21 +191,39 @@
 				<title>Comments</title>
 			</content>
 		</box>
-		
 		<box identifier="com.woltlab.wcf.ArticleCategories">
 			<name language="de">Kategorien (Artikel)</name>
 			<name language="en">Categories (Articles)</name>
 			<boxType>system</boxType>
-			<objectType>com.woltlab.wcf.articleCategories</objectType>
 			<position>sidebarRight</position>
+			<objectType>com.woltlab.wcf.articleCategories</objectType>
 			<showHeader>1</showHeader>
 			<visibleEverywhere>0</visibleEverywhere>
 			<visibilityExceptions>
+				<page>com.woltlab.wcf.Article</page>
 				<page>com.woltlab.wcf.ArticleList</page>
 				<page>com.woltlab.wcf.CategoryArticleList</page>
-				<page>com.woltlab.wcf.Article</page>
 			</visibilityExceptions>
-			
+			<content language="de">
+				<title>Kategorien</title>
+			</content>
+			<content language="en">
+				<title>Categories</title>
+			</content>
+		</box>
+		<box identifier="com.woltlab.wcf.TrophyCategories">
+			<name language="de">Kategorien (Trophäen)</name>
+			<name language="en">Categories (Trophies)</name>
+			<boxType>system</boxType>
+			<position>sidebarRight</position>
+			<objectType>com.woltlab.wcf.trophyCategories</objectType>
+			<showHeader>1</showHeader>
+			<visibleEverywhere>0</visibleEverywhere>
+			<visibilityExceptions>
+				<page>com.woltlab.wcf.Trophy</page>
+				<page>com.woltlab.wcf.TrophyCategoryList</page>
+				<page>com.woltlab.wcf.TrophyList</page>
+			</visibilityExceptions>
 			<content language="de">
 				<title>Kategorien</title>
 			</content>

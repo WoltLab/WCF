@@ -5,6 +5,7 @@ use wcf\data\user\UserAction;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\menu\user\UserMenu;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\WCF;
 
@@ -35,6 +36,11 @@ class SignatureEditForm extends MessageForm {
 	/**
 	 * @inheritDoc
 	 */
+	public $attachmentObjectType = 'com.woltlab.wcf.user.signature';
+	
+	/**
+	 * @inheritDoc
+	 */
 	public $neededModules = ['MODULE_USER_SIGNATURE'];
 	
 	/**
@@ -56,11 +62,17 @@ class SignatureEditForm extends MessageForm {
 	/**
 	 * @inheritDoc
 	 */
+	public $neededPermissions = ['user.signature.canEditSignature'];
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function readParameters() {
 		parent::readParameters();
 		
 		// get max text length
 		$this->maxTextLength = WCF::getSession()->getPermission('user.signature.maxLength');
+		$this->attachmentObjectID = WCF::getUser()->userID;
 	}
 	
 	/**
@@ -120,12 +132,15 @@ class SignatureEditForm extends MessageForm {
 	 */
 	public function save() {
 		parent::save();
+		$this->htmlInputProcessor->setObjectID(WCF::getUser()->userID);
+		MessageEmbeddedObjectManager::getInstance()->registerObjects($this->htmlInputProcessor);
 		
 		$this->objectAction = new UserAction([WCF::getUser()], 'update', [
 			'data' => array_merge($this->additionalFields, [
 				'signature' => $this->htmlInputProcessor->getHtml(),
 				'signatureEnableHtml' => 1
-			])
+			]),
+			'signatureAttachmentHandler' => $this->attachmentHandler
 		]);
 		$this->objectAction->executeAction();
 		SignatureCache::getInstance()->getSignature(new User(WCF::getUser()->userID));

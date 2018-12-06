@@ -32,7 +32,7 @@
 {if $action == 'add'}
 	<script data-relocate="true">
 		elById('name').addEventListener('blur', function() {
-			var name = this.value;
+			var name = this.value.toLowerCase();
 			if (!name) return;
 			name = name.replace(/ /g, '-');
 			name = name.replace(/[^a-z0-9-]/gi, '');
@@ -50,6 +50,25 @@
 			{/if}
 		});
 	</script>
+{else}
+	<script data-relocate="true">
+		require(['Language', 'WoltLabSuite/Core/Acp/Ui/Page/Copy'], function (Language, AcpUiPageCopy) {
+			Language.addObject({
+				'wcf.acp.page.copy': '{lang}wcf.acp.page.copy{/lang}'
+			});
+			
+			AcpUiPageCopy.init();
+		});
+	</script>
+	<div id="acpPageCopyDialog" style="display: none">
+		<div>
+			{lang}wcf.acp.page.copy.description{/lang}
+		</div>
+		
+		<div class="formSubmit">
+			<a href="{link controller='PageAdd' presetPageID=$page->pageID}{/link}" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</a>
+		</div>
+	</div>
 {/if}
 
 <header class="contentHeader">
@@ -60,6 +79,8 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
+				<li><a href="#" class="button jsButtonCopyPage"><span class="icon icon16 fa-copy"></span> {lang}wcf.acp.page.button.copyPage{/lang}</a></li>
+				
 				{if !$page->requireObjectID}
 					<li><a href="{$page->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.page.button.viewPage{/lang}</span></a></li>
 				{/if}
@@ -139,7 +160,7 @@
 					</dd>
 				</dl>
 				
-				<dl{if $errorField == 'applicationPackageID'} class="formError"{/if}>
+				<dl{if $errorField == 'applicationPackageID'} class="formError"{/if}{if $action == 'edit' && $page->originIsSystem} style="display: none"{/if}>
 					<dt><label for="applicationPackageID">{lang}wcf.acp.page.application{/lang}</label></dt>
 					<dd>
 						<select name="applicationPackageID" id="applicationPackageID"{if $action == 'edit' && $page->originIsSystem} disabled{/if}>
@@ -158,6 +179,28 @@
 						{/if}
 					</dd>
 				</dl>
+				
+				{if $action === 'edit' && $page->originIsSystem}
+					<dl{if $errorField == 'overrideApplicationPackageID'} class="formError"{/if}>
+						<dt><label for="overrideApplicationPackageID">{lang}wcf.acp.page.application{/lang}</label></dt>
+						<dd>
+							<select name="overrideApplicationPackageID" id="overrideApplicationPackageID">
+								{foreach from=$availableApplications item=availableApplication}
+									<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $overrideApplicationPackageID} selected{/if}>{$availableApplication->domainName}{$availableApplication->domainPath}</option>
+								{/foreach}
+							</select>
+							{if $errorField == 'overrideApplicationPackageID'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.page.application.error.{@$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+				{/if}
 				
 				{if !$isMultilingual}
 					<dl{if $errorField == 'customURL_0'} class="formError"{/if}>
@@ -468,7 +511,7 @@
 						<ul class="scrollableCheckboxList" id="boxVisibilitySettings">
 							{foreach from=$availableBoxes item=availableBox}
 								<li>
-									<label><input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked{/if}{if $availableBox->identifier == 'com.woltlab.wcf.MainMenu'} disabled{/if}> {$availableBox->name}</label>
+									<label><input type="checkbox" name="boxIDs[]" value="{@$availableBox->boxID}"{if $availableBox->boxID|in_array:$boxIDs} checked{/if}{if $availableBox->identifier == 'com.woltlab.wcf.MainMenu'} disabled{/if}> {$availableBox->name}{if $availableBox->isDisabled} <span class="icon icon16 fa-exclamation-triangle red jsTooltip" title="{lang}wcf.acp.box.isDisabled{/lang}"></span>{/if}</label>
 								</li>
 							{/foreach}
 						</ul>

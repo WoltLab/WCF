@@ -85,7 +85,8 @@
 			}
 		}
 		
-		> div {
+		> div img,
+		> div .icon:first-child {
 			visibility: hidden;
 		}
 	}

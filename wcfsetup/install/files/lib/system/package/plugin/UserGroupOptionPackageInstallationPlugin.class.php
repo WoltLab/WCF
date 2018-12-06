@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\package\plugin;
-use wcf\data\application\Application;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\Option;
 use wcf\data\user\group\option\UserGroupOption;
@@ -269,8 +268,8 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
-		$data = parent::doGetElementData($element, $saveData);
+	protected function fetchElementData(\DOMElement $element, $saveData) {
+		$data = parent::fetchElementData($element, $saveData);
 		
 		switch ($this->entryType) {
 			case 'options':
@@ -288,6 +287,11 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 						else {
 							$data[$optionalPropertyName] = $optionalProperty->nodeValue;
 						}
+					}
+					else if ($saveData && $optionalPropertyName === 'usersOnly') {
+						// all of the other fields will be put in `additionalData`
+						// or not saved thus empty values are not necessary 
+						$data['usersonly'] = 0;
 					}
 				}
 				
@@ -334,8 +338,8 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$option = parent::doCreateXmlElement($document, $form);
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
+		$option = parent::prepareXmlElement($document, $form);
 		
 		switch ($this->entryType) {
 			case 'options':

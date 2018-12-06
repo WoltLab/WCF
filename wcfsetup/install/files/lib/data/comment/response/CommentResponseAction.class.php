@@ -12,7 +12,7 @@ use wcf\system\comment\CommentHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
-use wcf\system\like\LikeHandler;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
@@ -158,7 +158,7 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 		
 		// remove likes
 		if (!empty($likeObjectIDs)) {
-			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.comment.response', $likeObjectIDs, $notificationObjectTypes);
+			ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.comment.response', $likeObjectIDs, $notificationObjectTypes);
 		}
 		
 		return $count;

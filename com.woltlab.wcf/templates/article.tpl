@@ -54,8 +54,6 @@
 				
 				{if $article->isDeleted}<li><span class="badge label red">{lang}wcf.message.status.deleted{/lang}</span></li>{/if}
 				
-				<li class="articleLikesBadge"></li>
-				
 				{event name='contentHeaderMetaData'}
 			</ul>
 			
@@ -183,7 +181,11 @@
 				<span class="articleAboutAuthorAvatar">{@$article->getUserProfile()->getAvatar()->getImageTag(128)}</span>
 				
 				<div>
+					{event name='beforeAboutAuthorText'}
+					
 					<div class="articleAboutAuthorText">{@$article->getUserProfile()->getFormattedUserOption('aboutMe')}</div>
+					
+					{event name='afterAboutAuthorText'}
 					
 					<div class="articleAboutAuthorUsername">
 						<a href="{link controller='User' object=$article->getUserProfile()->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$article->getUserProfile()->userID}">{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$article->getUserProfile()->getFormattedUsername()}{else}{$article->getUserProfile()->username}{/if}</a>

@@ -146,7 +146,7 @@ class ArticleSearch extends AbstractSearchableObjectType {
 	 * @inheritDoc
 	 */
 	public function isAccessible() {
-		return MODULE_ARTICLE;
+		return MODULE_ARTICLE && SEARCH_ENABLE_ARTICLES;
 	}
 	
 	/**

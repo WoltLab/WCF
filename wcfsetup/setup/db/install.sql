@@ -307,6 +307,7 @@ CREATE TABLE wcf1_box (
 	linkPageID INT(10),
 	linkPageObjectID INT(10) NOT NULL DEFAULT 0,
 	externalURL VARCHAR(255) NOT NULL DEFAULT '',
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	additionalData TEXT
 );
 
@@ -1049,6 +1050,7 @@ CREATE TABLE wcf1_page (
 	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
 	packageID INT(10) NOT NULL,
 	applicationPackageID INT(10),
+	overrideApplicationPackageID INT(10),
 	controller VARCHAR(255) NOT NULL DEFAULT '',
 	handler VARCHAR(255) NOT NULL DEFAULT '',
 	controllerCustomURL VARCHAR(255) NOT NULL DEFAULT '',
@@ -1456,9 +1458,9 @@ CREATE TABLE wcf1_user (
 	disableCoverPhotoReason TEXT,
 	disableCoverPhotoExpires INT(10) NOT NULL DEFAULT 0,
 	articles INT(10) NOT NULL DEFAULT 0,
-	positiveReactionsReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
-	negativeReactionsReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
-	neutralReactionsReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
+	positiveReactionsReceived INT(10) NOT NULL DEFAULT 0,
+	negativeReactionsReceived INT(10) NOT NULL DEFAULT 0,
+	neutralReactionsReceived INT(10) NOT NULL DEFAULT 0,
 	
 	KEY username (username),
 	KEY email (email),
@@ -1995,6 +1997,7 @@ ALTER TABLE wcf1_paid_subscription_transaction_log ADD FOREIGN KEY (paymentMetho
 ALTER TABLE wcf1_page ADD FOREIGN KEY (parentPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
 ALTER TABLE wcf1_page ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_page ADD FOREIGN KEY (applicationPackageID) REFERENCES wcf1_package (packageID) ON DELETE SET NULL;
+ALTER TABLE wcf1_page ADD FOREIGN KEY (overrideApplicationPackageID) REFERENCES wcf1_package (packageID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_page_box_order ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_page_box_order ADD FOREIGN KEY (boxID) REFERENCES wcf1_box (boxID) ON DELETE CASCADE;
@@ -2319,6 +2322,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigat
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationLink', 'rgba(44, 62, 80, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationLinkActive', 'rgba(44, 62, 80, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfNavigationText', 'rgba(170, 170, 170, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfPageThemeColor', ''); -- uses `$wcfHeaderBackground` if left empty
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSidebarBackground', 'rgba(236, 241, 247, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSidebarDimmedLink', 'rgba(44, 62, 80, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfSidebarDimmedLinkActive', 'rgba(44, 62, 80, 1)');

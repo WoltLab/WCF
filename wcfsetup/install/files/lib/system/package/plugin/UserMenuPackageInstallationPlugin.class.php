@@ -68,6 +68,7 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 		// add menu item className form field
 		
 		$classNameFormField = ClassNameFormField::create()
+			->objectProperty('classname')
 			->implementedInterface(IUserMenuItemProvider::class);
 		$dataContainer->insertBefore($classNameFormField, 'menuItemController');
 		
@@ -107,7 +108,7 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 		// thus the parent menu item must be at least on the second level
 		// for the menu item to support links
 		$menuItemsSupportingLinks = array_keys(array_filter($menuItemLevels, function($menuItemLevel) {
-			return $menuItemLevel >= 2;
+			return $menuItemLevel >= 1;
 		}));
 		
 		foreach (['menuItemController', 'menuItemLink'] as $nodeId) {
@@ -125,17 +126,23 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
-		$data = parent::doGetElementData($element, $saveData);
+	protected function fetchElementData(\DOMElement $element, $saveData) {
+		$data = parent::fetchElementData($element, $saveData);
 		
 		$className = $element->getElementsByTagName('classname')->item(0);
 		if ($className !== null) {
 			$data['className'] = $className->nodeValue;
 		}
+		else if ($saveData) {
+			$data['className'] = '';
+		}
 		
 		$icon = $element->getElementsByTagName('iconclassname')->item(0);
 		if ($icon !== null) {
 			$data['iconClassName'] = $icon->nodeValue;
+		}
+		else if ($saveData) {
+			$data['iconClassName'] = '';
 		}
 		
 		return $data;
@@ -145,8 +152,8 @@ class UserMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationP
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$menuItem = parent::doCreateXmlElement($document, $form);
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
+		$menuItem = parent::prepareXmlElement($document, $form);
 		
 		$this->appendElementChildren(
 			$menuItem,

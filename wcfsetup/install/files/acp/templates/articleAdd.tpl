@@ -25,11 +25,6 @@
 			'wcf.acp.article.i18n.toI18n.confirmMessage': '{lang}wcf.acp.article.i18n.toI18n.confirmMessage{/lang}',
 			'wcf.acp.article.i18n.fromI18n.confirmMessage': '{lang}wcf.acp.article.i18n.fromI18n.confirmMessage{/lang}',
 			'wcf.message.status.deleted': '{lang}wcf.message.status.deleted{/lang}',
-			'wcf.page.search': '{lang}wcf.page.search{/lang}',
-			'wcf.page.search.error.tooShort': '{lang}wcf.page.search.error.tooShort{/lang}',
-			'wcf.page.search.error.noResults': '{lang}wcf.page.search.error.noResults{/lang}',
-			'wcf.page.search.name': '{lang}wcf.page.search.name{/lang}',
-			'wcf.page.search.results': '{lang}wcf.page.search.results{/lang}'
 		});
 		
 		new UiUserSearchInput(elBySel('input[name="username"]'));
@@ -345,15 +340,7 @@
 				<dd>
 					<textarea name="content[0]" id="content0" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-0">{if !$content[0]|empty}{$content[0]}{/if}</textarea>
 					
-					{capture append='__redactorJavaScript'}, '{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabPage.js?v={@LAST_UPDATE_TIME}'{/capture}
-					{capture append='__redactorConfig'}
-						buttonOptions.woltlabPage = { icon: 'fa-file-text-o', title: '{lang}wcf.editor.button.page{/lang}' };
-						
-						buttons.push('woltlabPage');
-						
-						config.plugins.push('WoltLabPage');
-					{/capture}
-					
+					{include file='__wysiwygCmsToolbar'}
 					{include file='wysiwyg' wysiwygSelector='content0'}
 					
 					{if $errorField == 'content'}

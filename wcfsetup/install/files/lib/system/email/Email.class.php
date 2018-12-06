@@ -410,13 +410,31 @@ class Email {
 	
 	/**
 	 * Returns the email's headers as a string.
+	 * Note: This method attempts to convert the header name to the "canonical"
+	 *       case of the header (e.g. upper case at the start and after the hyphen).
+	 * 
 	 * @see	\wcf\system\email\Email::getHeaders()
 	 * 
 	 * @return	string
 	 */
 	public function getHeaderString() {
 		return implode("\r\n", array_map(function ($item) {
-			return implode(': ', $item);
+			list($name, $value) = $item;
+			
+			switch ($name) {
+				case 'message-id':
+					$name = 'Message-ID';
+					break;
+				case 'mime-version':
+					$name = 'MIME-Version';
+					break;
+				default:
+					$name = preg_replace_callback('/(?:^|-)[a-z]/', function ($matches) {
+						return mb_strtoupper($matches[0]);
+					}, $name);
+			}
+			
+			return $name.': '.$value;
 		}, $this->getHeaders()));
 	}
 	

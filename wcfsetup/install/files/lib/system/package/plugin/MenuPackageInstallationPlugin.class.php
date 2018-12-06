@@ -394,9 +394,11 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			);
 		}
 		
+		/** @var TextFormField $identifier */
+		$identifier = $form->getNodeById('identifier');
 		$form->getNodeById('boxPosition')->addDependency(
 			ValueFormFieldDependency::create('identifier')
-				->field($form->getNodeById('identifier'))
+				->field($identifier)
 				->values(['com.woltlab.wcf.MainMenu'])
 				->negate()
 		);
@@ -406,7 +408,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'identifier' => $element->getAttribute('identifier'),
 			'packageID' => $this->installation->getPackageID(),
@@ -520,7 +522,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
 		
 		if ($formData['data']['identifier'] === 'com.woltlab.wcf.MainMenu') {

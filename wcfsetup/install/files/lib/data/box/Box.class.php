@@ -49,6 +49,7 @@ use wcf\system\WCF;
  * @property-read	integer|null	$limit			number of objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
  * @property-read	string|null	$sortField		sort field of the objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
  * @property-read	string|null	$sortOrder		sort order of the objects shown in the box for `AbstractDatabaseObjectListBoxController` controllers or `null` otherwise
+ * @property-read	integer		$isDisabled		is `1` if the box is disabled and thus is not displayed, otherwise `0`
  */
 class Box extends DatabaseObject {
 	/**

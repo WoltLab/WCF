@@ -43,7 +43,29 @@
 			});
 		});
 	{/if}
+	
+	{if $action === 'edit'}
+		require(['Language', 'WoltLabSuite/Core/Acp/Ui/Box/Copy'], function (Language, AcpUiBoxCopy) {
+			Language.addObject({
+				'wcf.acp.box.copy': '{lang}wcf.acp.box.copy{/lang}'
+			});
+			
+			AcpUiBoxCopy.init();
+		});
+	{/if}
 </script>
+
+{if $action === 'edit'}
+	<div id="acpBoxCopyDialog" style="display: none">
+		<div>
+			{lang}wcf.acp.box.copy.description{/lang}
+		</div>
+		
+		<div class="formSubmit">
+			<a href="{link controller='BoxAdd' presetBoxID=$box->boxID}{/link}" class="button buttonPrimary">{lang}wcf.global.button.submit{/lang}</a>
+		</div>
+	</div>
+{/if}
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
@@ -52,6 +74,9 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
+			{if $action === 'edit'}
+				<li><a href="#" class="button jsButtonCopyBox"><span class="icon icon16 fa-copy"></span> {lang}wcf.acp.box.button.copyBox{/lang}</a></li>
+			{/if}
 			<li><a href="{link controller='BoxList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.cms.box.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
@@ -171,6 +196,12 @@
 					<dt></dt>
 					<dd>
 						<label><input type="checkbox" id="showHeader" name="showHeader" value="1"{if $showHeader} checked{/if}> {lang}wcf.acp.box.showHeader{/lang}</label>
+					</dd>
+				</dl>
+				<dl>
+					<dt></dt>
+					<dd>
+						<label><input type="checkbox" id="isDisabled" name="isDisabled" value="1"{if $isDisabled} checked{/if}> {lang}wcf.acp.box.isDisabled{/lang}</label>
 					</dd>
 				</dl>
 			</div>

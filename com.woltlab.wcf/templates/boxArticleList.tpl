@@ -16,9 +16,7 @@
 								{$boxArticle->getDiscussionProvider()->getDiscussionCountPhrase()}
 							{elseif $boxSortField == 'cumulativeLikes'}
 								{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && ($boxArticle->likes || $boxArticle->dislikes)}
-									<span class="wcfLikeCounter{if $boxArticle->cumulativeLikes > 0} likeCounterLiked{elseif $boxArticle->cumulativeLikes < 0}likeCounterDisliked{/if}">
-										<span class="icon icon16 fa-thumbs-o-{if $boxArticle->cumulativeLikes < 0}down{else}up{/if} jsTooltip" title="{lang likes=$boxArticle->likes dislikes=$boxArticle->dislikes}wcf.like.tooltip{/lang}"></span>{if $boxArticle->cumulativeLikes > 0}+{elseif $boxArticle->cumulativeLikes == 0}&plusmn;{/if}{#$boxArticle->cumulativeLikes}
-									</span>
+									<span class="reputationCounter {if $boxArticle->cumulativeLikes > 0}positive{elseif $boxArticle->cumulativeLikes < 0}negative{else}neutral{/if}">{if $boxArticle->cumulativeLikes > 0}+{elseif $boxArticle->cumulativeLikes == 0}±{/if}{#$boxArticle->cumulativeLikes}</span>
 								{/if}
 							{/if}
 						</small>

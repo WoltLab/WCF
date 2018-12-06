@@ -3,7 +3,7 @@ namespace wcf\data\article;
 use wcf\data\article\content\ViewableArticleContentList;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\label\object\ArticleLabelObjectHandler;
-use wcf\system\like\LikeHandler;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
@@ -48,8 +48,8 @@ class ViewableArticleList extends ArticleList {
 		
 		// get like status
 		if (!empty($this->sqlSelects)) $this->sqlSelects .= ',';
-		$this->sqlSelects .= "like_object.likes, like_object.dislikes";
-		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_like_object like_object ON (like_object.objectTypeID = ".LikeHandler::getInstance()->getObjectType('com.woltlab.wcf.likeableArticle')->objectTypeID." AND like_object.objectID = article.articleID)";
+		$this->sqlSelects .= "like_object.likes, like_object.dislikes, like_object.neutralReactions";
+		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_like_object like_object ON (like_object.objectTypeID = ".ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.likeableArticle')->objectTypeID." AND like_object.objectID = article.articleID)";
 	}
 	
 	/**

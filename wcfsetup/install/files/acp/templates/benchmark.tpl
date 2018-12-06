@@ -10,10 +10,15 @@
 			});
 		</script>
 		<ul id="benchmarkDetails" style="display: none;">
+			<li id="benchmarkItemPhp" style="margin-bottom: 8px;"{if $__wcf->getBenchmark()->getOffsetToRequestTime() >= 0.5} class="hot"{/if}>
+				<span>Request Execution Time: <kbd>{$__wcf->getBenchmark()->getRequestExecutionTime()}s</kbd></span><br>
+				<small>Benchmark started after: <kbd>{$__wcf->getBenchmark()->getOffsetToRequestTime()}s</kbd></small>
+				<hr>
+			</li>
 			{foreach from=$__wcf->getBenchmark()->getItems() key=benchmarkIndex item=item}
 				<li id="benchmarkItem{@$benchmarkIndex}" style="margin-bottom: 8px;"{if $item.use >= 0.01} class="hot"{/if}>
 					<span>{if $item.type == 1}(SQL Query) {/if}{$item.text}</span><br>
-					<small style="font-size: .85em">Execution time: {@$item.use}s</small>
+					<small style="font-size: .85em">Execution time: <kbd>{@$item.use}s</kbd></small>
 				
 				<pre style="display: none">{foreach from=$item.trace key=traceNo item=traceItem}#{#$traceNo} {if !$traceItem.class|empty}{$traceItem.class}{$traceItem.type}{else}{if !$traceItem.file|empty}{$traceItem.file}: {/if}{/if}{$traceItem.function}() {if !$traceItem.line|empty}(line {#$traceItem.line}){/if} 
 {/foreach}</pre>

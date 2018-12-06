@@ -1,8 +1,10 @@
 <?php
 namespace wcf\system\devtools\pip;
 use wcf\data\devtools\project\DevtoolsProject;
+use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\system\devtools\package\DevtoolsInstaller;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\package\PackageInstallationNodeBuilder;
 
 /**
  * Specialized implementation to emulate a regular package installation.
@@ -22,10 +24,33 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
 	/**
 	 * @inheritDoc
 	 */
-	public function __construct(DevtoolsProject $project) {
-		parent::__construct(new DevtoolsPackageInstallationQueue($project));
+	public function __construct(DevtoolsProject $project, PackageInstallationQueue $queue = null) {
+		$this->queue = $queue;
+		if ($this->queue === null) {
+			$this->queue = new DevtoolsPackageInstallationQueue($project);
+		}
+		
+		$this->nodeBuilder = new class($this) extends PackageInstallationNodeBuilder {
+			protected function buildOptionalNodes() {
+				// does nothing; optional packages are not supported
+			}
+		};
+		
+		$this->action = $this->queue->action;
 		
 		$this->project = $project;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function createPackage(array $packageData) {
+		$package = parent::createPackage($packageData);
+		
+		$this->project->setPackage($package);
+		
+		return $package;
 	}
 	
 	/**

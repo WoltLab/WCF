@@ -177,7 +177,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,
 			'menuItem' => $element->getAttribute('name'),
@@ -188,15 +188,25 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 		if ($options) {
 			$data['options'] = StringUtil::normalizeCsv($options->nodeValue);
 		}
+		else if ($saveData) {
+			$data['options'] = '';
+		}
 		
 		$permissions = $element->getElementsByTagName('permissions')->item(0);
 		if ($permissions) {
 			$data['permissions'] = StringUtil::normalizeCsv($permissions->nodeValue);
 		}
+		else if ($saveData) {
+			$data['permissions'] = '';
+		}
 		
 		$showOrder = $element->getElementsByTagName('showorder')->item(0);
 		if ($showOrder) {
 			$data['showOrder'] = intval($showOrder->nodeValue);
+		}
+		if ($saveData && $this->editedEntry === null) {
+			// only set explicit showOrder when adding new menu item
+			$data['showOrder'] = $this->getShowOrder($data['showOrder'] ?? null);
 		}
 		
 		return $data;
@@ -225,7 +235,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$userProfileMenuItem = $document->createElement($this->tagName);

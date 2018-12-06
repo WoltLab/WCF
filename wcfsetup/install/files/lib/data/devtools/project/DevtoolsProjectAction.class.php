@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\devtools\project;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\package\installation\queue\PackageInstallationQueue;
+use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
@@ -9,7 +11,7 @@ use wcf\util\FileUtil;
 /**
  * Executes devtools project related actions.
  * 
- * @author	Alexander Ebert
+ * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Devtools\Project
@@ -27,12 +29,19 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['delete'];
+	protected $requireACP = ['delete', 'installPackage'];
 	
 	/**
 	 * @inheritDoc
 	 */
 	protected $permissionsDelete = ['admin.configuration.package.canInstallPackage'];
+	
+	/**
+	 * package installation queue for project to be installed from source
+	 * @var		PackageInstallationQueue
+	 * @since	3.2
+	 */
+	public $queue;
 	
 	/**
 	 * @inheritDoc
@@ -128,6 +137,49 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction {
 			'successMessage' => WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.project.quickSetup.success', [
 				'count' => $projectCount
 			])
+		];
+	}
+	
+	/**
+	 * Checks if the `installPackage` action can be executed.
+	 * 
+	 * @throws	IllegalLinkException
+	 * @since	3.2
+	 */
+	public function validateInstallPackage() {
+		if (!ENABLE_DEVELOPER_TOOLS) {
+			throw new IllegalLinkException();
+		}
+		
+		WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
+		
+		$this->getSingleObject();
+	}
+	
+	/**
+	 * Installs a package that is currently only available as a project.
+	 * 
+	 * @return	int[]		id of the package installation queue for the
+	 * @since	3.2
+	 */
+	public function installPackage() {
+		$packageArchive = $this->getSingleObject()->getPackageArchive();
+		$packageArchive->openArchive();
+		
+		$this->queue = PackageInstallationQueueEditor::create([
+			'processNo' => PackageInstallationQueue::getNewProcessNo(),
+			'userID' => WCF::getUser()->userID,
+			'package' => $packageArchive->getPackageInfo('name'),
+			'packageName' => $packageArchive->getLocalizedPackageInfo('packageName'),
+			'packageID' => null,
+			'archive' => '',
+			'action' => 'install',
+			'isApplication' => $packageArchive->getPackageInfo('isApplication') ? 1 : 0
+		]);
+		
+		return [
+			'isApplication' => $this->queue->isApplication,
+			'queueID' => $this->queue->queueID
 		];
 	}
 }

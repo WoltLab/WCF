@@ -2,6 +2,8 @@
 namespace wcf\system\package\plugin;
 use wcf\data\acl\option\ACLOptionEditor;
 use wcf\data\acl\option\ACLOptionList;
+use wcf\data\acl\option\category\ACLOptionCategory;
+use wcf\data\acl\option\category\ACLOptionCategoryEditor;
 use wcf\data\acl\option\category\ACLOptionCategoryList;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
@@ -147,32 +149,65 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * @inheritDoc
 	 */
 	protected function saveCategory($category) {
-		$objectTypeID = $this->getObjectTypeID($category['objecttype'] ?? $category['objectType']);
+		if (isset($category['objectTypeID'])) {
+			$objectTypeID = $category['objectTypeID'];
+		}
+		else {
+			$objectTypeID = $this->getObjectTypeID($category['objecttype']);
+		}
 		
-		// search existing category
-		$sql = "SELECT	categoryID
-			FROM	wcf".WCF_N."_".$this->tableName."_category
-			WHERE	categoryName = ?
-				AND objectTypeID = ?
-				AND packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([
-			$category['categoryName'],
-			$objectTypeID,
-			$this->installation->getPackageID()
-		]);
-		$row = $statement->fetchArray();
-		if (!$row) {
-			// insert new category
-			$sql = "INSERT INTO	wcf".WCF_N."_".$this->tableName."_category
-						(packageID, objectTypeID, categoryName)
-				VALUES		(?, ?, ?)";
+		if ($this->editedEntry === null) {
+			// search existing category
+			$sql = "SELECT	categoryID
+				FROM	wcf".WCF_N."_".$this->tableName."_category
+				WHERE	categoryName = ?
+					AND objectTypeID = ?
+					AND packageID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
-				$this->installation->getPackageID(),
+				$category['categoryName'],
 				$objectTypeID,
-				$category['categoryName']
+				$this->installation->getPackageID()
 			]);
+			$row = $statement->fetchArray();
+			if (!$row) {
+				// insert new category
+				$sql = "INSERT INTO	wcf".WCF_N."_".$this->tableName."_category
+							(packageID, objectTypeID, categoryName)
+					VALUES		(?, ?, ?)";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					$this->installation->getPackageID(),
+					$objectTypeID,
+					$category['categoryName']
+				]);
+			}
+		}
+		else {
+			$editedData = $this->getElementData($this->editedEntry, true);
+			
+			$sql = "SELECT	categoryID
+				FROM	wcf".WCF_N."_".$this->tableName."_category
+				WHERE	categoryName = ?
+					AND objectTypeID = ?
+					AND packageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				$editedData['categoryName'],
+				$editedData['objectTypeID'],
+				$this->installation->getPackageID()
+			]);
+			$categoryID = $statement->fetchSingleColumn();
+			
+			if ($categoryID === false) {
+				throw new \UnexpectedValueException("Cannot find edited acl option category in database.");
+			}
+			else {
+				(new ACLOptionCategoryEditor(new ACLOptionCategory($categoryID)))->update([
+					'categoryName' => $category['categoryName'],
+					'objectTypeID' => $objectTypeID
+				]);
+			}
 		}
 	}
 	
@@ -218,41 +253,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 				'objectTypeID' => $objectTypeID
 			];
 			
-			// check for option existence
-			$sql = "SELECT	optionID
-				FROM	wcf".WCF_N."_".$this->tableName."
-				WHERE	optionName = ?
-					AND objectTypeID = ?
-					AND packageID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([
-				$data['optionName'],
-				$data['objectTypeID'],
-				$this->installation->getPackageID()
-			]);
-			$row = $statement->fetchArray();
-			if (!$row) {
-				$sql = "INSERT INTO	wcf".WCF_N."_".$this->tableName."
-							(packageID, objectTypeID, optionName, categoryName)
-					VALUES		(?, ?, ?, ?)";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute([
-					$this->installation->getPackageID(),
-					$data['objectTypeID'],
-					$data['optionName'],
-					$data['categoryName']
-				]);
-			}
-			else {
-				$sql = "UPDATE	wcf".WCF_N."_".$this->tableName."
-					SET	categoryName = ?
-					WHERE	optionID = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute([
-					$data['categoryName'],
-					$row['optionID']
-				]);
-			}
+			$this->saveOption($data, $data['categoryName']);
 		}
 	}
 	
@@ -260,7 +261,41 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * @inheritDoc
 	 */
 	protected function saveOption($option, $categoryName, $existingOptionID = 0) {
-		// does nothing
+		// check for option existence
+		$sql = "SELECT	optionID
+			FROM	wcf".WCF_N."_".$this->tableName."
+			WHERE	optionName = ?
+				AND objectTypeID = ?
+				AND packageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$option['optionName'],
+			$option['objectTypeID'],
+			$this->installation->getPackageID()
+		]);
+		$row = $statement->fetchArray();
+		if (!$row) {
+			$sql = "INSERT INTO	wcf".WCF_N."_".$this->tableName."
+						(packageID, objectTypeID, optionName, categoryName)
+				VALUES		(?, ?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				$this->installation->getPackageID(),
+				$option['objectTypeID'],
+				$option['optionName'],
+				$categoryName
+			]);
+		}
+		else {
+			$sql = "UPDATE	wcf".WCF_N."_".$this->tableName."
+				SET	categoryName = ?
+				WHERE	optionID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				$categoryName,
+				$row['optionID']
+			]);
+		}
 	}
 	
 	/**
@@ -474,22 +509,40 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
-			'name' => $element->getAttribute('name'),
 			'packageID' => $this->installation->getPackage()->packageID,
 			'objectType' => $element->getElementsByTagName('objecttype')->item(0)->nodeValue
 		];
 		
-		if ($this->entryType === 'options') {
-			$categoryName = $element->getElementsByTagName('categoryname')->item(0);
-			if ($categoryName !== null) {
-				$data['categoryname'] = $categoryName->nodeValue;
-			}
+		switch ($this->entryType) {
+			case 'categories':
+				$data['categoryName'] = $element->getAttribute('name');
+				
+				break;
+				
+			case 'options':
+				$data['optionName'] = $element->getAttribute('name');
+				
+				$categoryName = $element->getElementsByTagName('categoryname')->item(0);
+				if ($categoryName !== null) {
+					$data['categoryname'] = $categoryName->nodeValue;
+				}
+				else if ($saveData) {
+					$data['categoryname'] = '';
+				}
+				
+				break;
 		}
-		else if ($saveData) {
-			$data['categoryName'] = $data['name'];
-			unset($data['name']);
+		
+		if (!$saveData) {
+			$data['name'] = $element->getAttribute('name');
+		}
+		else {
+			$objectType = $data['objectType'];
+			unset($data['objectType']);
+			
+			$data['objectTypeID'] = $this->getObjectTypeID($objectType);
 		}
 		
 		return $data;
@@ -528,7 +581,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData()['data'];
 		
 		switch ($this->entryType) {

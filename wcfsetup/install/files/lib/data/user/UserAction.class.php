@@ -1,10 +1,12 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\avatar\UserAvatarAction;
 use wcf\data\user\group\UserGroup;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IClipboardAction;
 use wcf\data\ISearchAction;
+use wcf\system\attachment\AttachmentHandler;
 use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -59,7 +61,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete'];
+	protected $requireACP = ['create', 'delete', 'resendActivationMail'];
 	
 	/**
 	 * Validates permissions and parameters.
@@ -134,9 +136,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$action->executeAction();
 		}
 		
-		// delete profile comments
+		// delete profile comments and signature attachments
 		if (!empty($this->objectIDs)) {
 			CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.user.profileComment', $this->objectIDs);
+			AttachmentHandler::removeAttachments('com.woltlab.wcf.user.signature', $this->objectIDs);
 		}
 		
 		return parent::delete();
@@ -798,6 +801,45 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
+	 * Returns the remove content dialog. 
+	 * 
+	 * @return      String[]
+	 * @since       3.2
+	 */
+	public function prepareRemoveContent() {
+		$knownContentProvider = array_map(function ($contentProvider) {
+			return $contentProvider->objectType;
+		}, array_filter(ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'), function ($contentProvider) {
+			return !$contentProvider->hidden;
+		}));
+		
+		return [
+			'template' => WCF::getTPL()->fetch('removeUserContentDialog', 'wcf', [
+				'knownContentProvider' => $knownContentProvider,
+				'userID' => $this->parameters['userID'],
+				'user' => $this->parameters['user']
+			])
+		];
+	}
+	
+	/**
+	 * Validates the prepareRemoveContent method. 
+	 * 
+	 * @since       3.2
+	 */
+	public function validatePrepareRemoveContent() {
+		if (!isset($this->parameters['userID'])) {
+			throw new \InvalidArgumentException("userID missing");
+		}
+		
+		$this->parameters['user'] = new User($this->parameters['userID']);
+		
+		if ($this->parameters['user']->userID && !$this->parameters['user']->canEdit()) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	/**
 	 * Validates parameters to retrieve the social network privacy settings.
 	 * @deprecated 3.0
 	 */
@@ -827,5 +869,54 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function saveSocialNetworkPrivacySettings() {
 		// does nothing
+	}
+	
+	/**
+	 * Validates the 'resendActivationMail' action.
+	 * @throws UserInputException
+	 * @since 3.2
+	 */
+	public function validateResendActivationMail() {
+		$this->readObjects();
+		
+		foreach ($this->objects as $object) {
+			if (!$object->activationCode) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Triggers a new activation email.
+	 * @since 3.2
+	 */
+	public function resendActivationMail() {
+		// update every selected user's activation code
+		foreach ($this->objects as $object) {
+			$action = new UserAction($object, 'update', [
+				'data' => [
+					'activationCode' => UserRegistrationUtil::getActivationCode()
+				]
+			]);
+			$action->executeAction();
+			
+		}
+		
+		// get fresh user list with updated user objects
+		$newUserList = new UserList();
+		$newUserList->getConditionBuilder()->add('user.userID IN (?)', [$this->objectIDs]);
+		$newUserList->readObjects();
+		foreach ($newUserList->getObjects() as $object) {
+			$email = new Email();
+			$email->addRecipient(new UserMailbox($object));
+			$email->setSubject($object->getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject'));
+			$email->setBody(new MimePartFacade([
+				new RecipientAwareTextMimePart('text/html', 'email_registerNeedActivation'),
+				new RecipientAwareTextMimePart('text/plain', 'email_registerNeedActivation')
+			]));
+			$email->send();
+		}
+		
+		$this->unmarkItems($this->objectIDs);
 	}
 }

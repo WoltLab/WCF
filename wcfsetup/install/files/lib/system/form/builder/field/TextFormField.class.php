@@ -33,13 +33,15 @@ class TextFormField extends AbstractFormField implements II18nFormField, IMaximu
 		if ($this->isI18n()) {
 			$this->i18nValidate();
 			
-			$value = $this->getValue();
-			if ($this->hasPlainValue()) {
-				$this->validateText($value);
-			}
-			else {
-				foreach ($value as $languageID => $languageValue) {
-					$this->validateText($languageValue, LanguageFactory::getInstance()->getLanguage($languageID));
+			if (empty($this->getValidationErrors())) {
+				$value = $this->getValue();
+				if ($this->hasPlainValue()) {
+					$this->validateText($value);
+				}
+				else {
+					foreach ($value as $languageID => $languageValue) {
+						$this->validateText($languageValue, LanguageFactory::getInstance()->getLanguage($languageID));
+					}
 				}
 			}
 		}

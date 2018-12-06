@@ -168,6 +168,12 @@ WCF.ACP.Package.Installation = Class.extend({
 	_actionName: 'InstallPackage',
 	
 	/**
+	 * additional parameters send in all requests
+	 * @var	object
+	 */
+	_additionalRequestParameters: {},
+	
+	/**
 	 * true, if rollbacks are supported
 	 * @var	boolean
 	 */
@@ -210,20 +216,17 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	string		actionName
 	 * @param	boolean		allowRollback
 	 * @param	boolean		isUpdate
+	 * @param	object		additionalRequestParameters
 	 */
-	init: function(queueID, actionName, allowRollback, isUpdate) {
+	init: function(queueID, actionName, allowRollback, isUpdate, additionalRequestParameters) {
 		this._actionName = (actionName) ? actionName : 'InstallPackage';
 		this._allowRollback = (allowRollback === true);
 		this._queueID = queueID;
+		this._additionalRequestParameters = additionalRequestParameters || {};
 		
-		switch (this._actionName) {
-			case 'InstallPackage':
-				this._dialogTitle = 'wcf.acp.package.' + (isUpdate ? 'update' : 'install') + '.title';
-			break;
-			
-			case 'UninstallPackage':
-				this._dialogTitle = 'wcf.acp.package.uninstallation.title';
-			break;
+		this._dialogTitle = 'wcf.acp.package.' + (isUpdate ? 'update' : 'install') + '.title';
+		if (this._actionName === 'UninstallPackage') {
+			this._dialogTitle = 'wcf.acp.package.uninstallation.title';
 		}
 		
 		this._initProxy();
@@ -317,10 +320,10 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @return	object
 	 */
 	_getParameters: function() {
-		return {
+		return $.extend({}, this._additionalRequestParameters, {
 			queueID: this._queueID,
 			step: 'prepare'
-		};
+		});
 	},
 	
 	/**
@@ -517,7 +520,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	_executeStep: function(step, node, additionalData) {
 		if (!additionalData) additionalData = { };
 		
-		var $data = $.extend({
+		var $data = $.extend({}, this._additionalRequestParameters, {
 			node: node,
 			queueID: this._queueID,
 			step: step

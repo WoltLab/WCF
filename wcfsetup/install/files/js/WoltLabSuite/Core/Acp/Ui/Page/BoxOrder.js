@@ -6,7 +6,7 @@
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Acp/Ui/Page/BoxOrder
  */
-define(['Ajax', 'Language', 'Ui/Confirmation', 'Ui/Notification'], function (Ajax, Language, UiConfirmation, UiNotification) {
+define(['Ajax', 'Language', 'Dom/ChangeListener', 'Ui/Confirmation', 'Ui/Notification'], function (Ajax, Language, DomChangeListener, UiConfirmation, UiNotification) {
 	"use strict";
 	
 	var _pageId = 0;
@@ -30,7 +30,13 @@ define(['Ajax', 'Language', 'Ui/Confirmation', 'Ui/Notification'], function (Aja
 				boxData.forEach(function(box) {
 					var item = elCreate('li');
 					elData(item, 'box-id', box.boxID);
-					item.innerHTML = box.name;
+					
+					var icon = '';
+					if (box.isDisabled) {
+						icon = ' <span class="icon icon16 fa-exclamation-triangle red jsTooltip" title="' + Language.get('wcf.acp.box.isDisabled') + '"></span>';
+					}
+					
+					item.innerHTML = box.name + icon;
 					
 					container.appendChild(item);
 				});
@@ -49,6 +55,8 @@ define(['Ajax', 'Language', 'Ui/Confirmation', 'Ui/Notification'], function (Aja
 			
 			var buttonDiscard = elBySel('.jsButtonCustomShowOrder');
 			if (buttonDiscard) buttonDiscard.addEventListener(WCF_CLICK_EVENT, this._discard.bind(this));
+			
+			DomChangeListener.trigger();
 		},
 		
 		/**

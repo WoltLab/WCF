@@ -122,6 +122,28 @@ li.reactCountButton:hover {
 	color: $wcfContentText;
 }
 
+.reputationCounter {
+	color: $wcfContentDimmedText;
+	
+	&.positive {
+		color: #060 !important;
+	}
+	
+	&.negative {
+		color: #900 !important;
+	}
+	
+	&::before {
+		font-family: FontAwesome;
+		content: $fa-var-smile-o + "\00A0";
+		display: inline-block;
+	}
+	
+	&:empty {
+		display: none;	
+	}
+}
+
 .reactionSummaryListTiny {
 	display: inline;
 	
@@ -137,40 +159,6 @@ li.reactCountButton:hover {
 	li.reactCountButton {
 		background-color: transparent;
 		padding: 0px;
-	}
-}
-
-.box.reactionReputationBox {
-	&.positiveReactionReputationBox {
-		background-color: $wcfStatusSuccessBackground;
-		color: $wcfStatusSuccessText;
-		
-		.fa {
-			color: $wcfStatusSuccessText;
-		}
-		
-		.boxTitle > a {
-			color: $wcfStatusSuccessText;
-		}
-	}
-	
-	&.negativeReactionReputationBox {
-		background-color: $wcfStatusErrorBackground;
-		color: $wcfStatusErrorText;
-		
-		.fa {
-			color: $wcfStatusErrorText;
-		}
-		
-		.boxTitle > a {
-			color: $wcfStatusErrorText;
-		}
-	}
-	
-	.boxContent {
-		@include wcfFontHeadline;
-		
-		text-align: center;
 	}
 }
 

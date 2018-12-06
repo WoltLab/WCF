@@ -2,8 +2,8 @@
 namespace wcf\data\devtools\project;
 use wcf\data\package\installation\plugin\PackageInstallationPluginList;
 use wcf\data\package\Package;
-use wcf\data\package\PackageCache;
 use wcf\data\DatabaseObject;
+use wcf\data\package\PackageList;
 use wcf\system\devtools\package\DevtoolsPackageArchive;
 use wcf\system\devtools\pip\DevtoolsPip;
 use wcf\system\package\validation\PackageValidationException;
@@ -25,6 +25,13 @@ use wcf\util\DirectoryUtil;
  * @property-read	string		$path		file system path
  */
 class DevtoolsProject extends DatabaseObject {
+	/**
+	 * is `true` if it has already been attempted to fetch a package
+	 * @var		bool
+	 * @since	3.2
+	 */
+	protected $didFetchPackage = false;
+	
 	/**
 	 * @var boolean
 	 */
@@ -104,8 +111,7 @@ class DevtoolsProject extends DatabaseObject {
 			return $e->getErrorMessage();
 		}
 		
-		$this->package = PackageCache::getInstance()->getPackageByIdentifier($this->packageArchive->getPackageInfo('name'));
-		if ($this->package === null) {
+		if ($this->getPackage() === null) {
 			return WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.project.path.error.notInstalled', [
 				'package' => $this->packageArchive->getPackageInfo('name')
 			]);
@@ -150,6 +156,18 @@ class DevtoolsProject extends DatabaseObject {
 	 * @return      Package
 	 */
 	public function getPackage() {
+		if ($this->package === null) {
+			$packageList = new PackageList();
+			$packageList->getConditionBuilder()->add('package = ?', [$this->getPackageArchive()->getPackageInfo('name')]);
+			$packageList->readObjects();
+			
+			if (count($packageList)) {
+				$this->package = $packageList->current();
+			}
+			
+			$this->didFetchPackage = true;
+		}
+		
 		return $this->package;
 	}
 	
@@ -157,6 +175,18 @@ class DevtoolsProject extends DatabaseObject {
 	 * @return      DevtoolsPackageArchive
 	 */
 	public function getPackageArchive() {
+		if ($this->packageArchive === null) {
+			$this->packageArchive = new DevtoolsPackageArchive($this->path . ($this->isCore() ? 'com.woltlab.wcf/' : '') . 'package.xml');
+			
+			try {
+				$this->packageArchive->openArchive();
+			}
+			catch (PackageValidationException $e) {
+				// we do not care for errors here, `validatePackageXml()`
+				// takes care of that
+			}
+		}
+		
 		return $this->packageArchive;
 	}
 	
@@ -169,6 +199,21 @@ class DevtoolsProject extends DatabaseObject {
 		$languageDirectory = $this->path . ($this->isCore() ? 'wcfsetup/install/lang/' : 'language/');
 		
 		return array_values(DirectoryUtil::getInstance($languageDirectory)->getFiles(SORT_ASC, Regex::compile('\w+\.xml')));
+	}
+	
+	/**
+	 * Sets the package that belongs to this project.
+	 * 
+	 * @param	Package		$package
+	 * @throws	\InvalidArgumentException	if the identifier of the given package does not match
+	 * @since	3.2
+	 */
+	public function setPackage(Package $package) {
+		if ($package->package !== $this->getPackageArchive()->getPackageInfo('name')) {
+			throw new \InvalidArgumentException("Package identifier of given package ('{$package->package}') does not match ('{$this->packageArchive->getPackageInfo('name')}')");
+		}
+		
+		$this->package = $package;
 	}
 	
 	/**

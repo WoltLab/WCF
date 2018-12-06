@@ -136,4 +136,5 @@
 	updateDisplayedPips();
 </script>
 
+{include file='__devtoolsProjectInstallationJavaScript'}
 {include file='footer'}

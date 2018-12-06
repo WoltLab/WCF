@@ -286,7 +286,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,
 			'eventName' => $element->getElementsByTagName('name')->item(0)->nodeValue,
@@ -306,20 +306,32 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 		if ($options) {
 			$data['options'] = StringUtil::normalizeCsv($options->nodeValue);
 		}
+		else if ($saveData) {
+			$data['options'] = '';
+		}
 		
 		$permissions = $element->getElementsByTagName('permissions')->item(0);
 		if ($permissions) {
 			$data['permissions'] = StringUtil::normalizeCsv($permissions->nodeValue);
+		}
+		else if ($saveData) {
+			$data['permissions'] = '';
 		}
 		
 		// the presence of a `preset` element is treated as `<preset>1</preset>
 		if ($element->getElementsByTagName('preset')->length === 1) {
 			$data['preset'] = 1;
 		}
+		else if ($saveData) {
+			$data['preset'] = 0;
+		}
 		
 		$presetMailNotificationType = $element->getElementsByTagName('presetmailnotificationtype')->item(0);
 		if ($presetMailNotificationType && in_array($presetMailNotificationType->nodeValue, ['instant', 'daily'])) {
 			$data['presetMailNotificationType'] = $presetMailNotificationType->nodeValue;
+		}
+		else if ($saveData) {
+			$data['presetMailNotificationType'] = 'none';
 		}
 		
 		return $data;
@@ -343,7 +355,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
 			'eventName' => 'wcf.acp.pip.userNotificationEvent.eventName',
-			'className' => 'wcf.acp.pip.userNotificationEvent.className'
+			'className' => 'wcf.form.field.className'
 		]);
 	}
 	
@@ -351,7 +363,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$event = $document->createElement($this->tagName);
 		
 		$this->appendElementChildren(

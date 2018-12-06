@@ -23,7 +23,6 @@
 			<listclassname>wcf\data\article\ArticleList</listclassname>
 		</type>
 		<!-- /clipboard items -->
-		
 		<!-- articles -->
 		<type>
 			<name>com.woltlab.wcf.article.category</name>
@@ -121,7 +120,6 @@
 			<classname>wcf\system\user\activity\event\ArticleUserActivityEvent</classname>
 		</type>
 		<!-- /articles -->
-		
 		<type>
 			<name>com.woltlab.wcf.page.content</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
@@ -139,6 +137,11 @@
 			<definitionname>com.woltlab.wcf.message</definitionname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.user.signature</name>
+			<definitionname>com.woltlab.wcf.attachment.objectType</definitionname>
+			<classname>wcf\system\attachment\SignatureAttachmentObjectType</classname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.comment</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
 		</type>
@@ -154,39 +157,33 @@
 			<name>com.woltlab.wcf.user.option.generic</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.page</name>
 			<definitionname>com.woltlab.wcf.searchableObjectType</definitionname>
 			<classname>wcf\system\search\PageSearch</classname>
 			<searchindex>wcf1_page_search_index</searchindex>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.bbcode.smiley</name>
 			<definitionname>com.woltlab.wcf.category</definitionname>
 			<classname>wcf\system\category\SmileyCategoryType</classname>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.user.follow</name>
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
 			<classname>wcf\system\user\notification\object\type\UserFollowUserNotificationObjectType</classname>
 			<category>com.woltlab.wcf.user</category>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.user.recentActivityEvent.follow</name>
 			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
 			<classname>wcf\system\user\activity\event\FollowUserActivityEvent</classname>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.user</name>
 			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
 			<classname>wcf\system\moderation\queue\report\UserModerationQueueReportHandler</classname>
 		</type>
-		
 		<!-- page -->
 		<type>
 			<name>com.woltlab.wcf.page.recentActivityEvent</name>
@@ -211,7 +208,6 @@
 			<category>com.woltlab.wcf.page</category>
 		</type>
 		<!-- /page -->
-		
 		<!-- moderation type -->
 		<type>
 			<name>com.woltlab.wcf.moderation.activation</name>
@@ -224,7 +220,6 @@
 			<classname>wcf\system\moderation\queue\ModerationQueueReportManager</classname>
 		</type>
 		<!-- /moderation type -->
-		
 		<!-- version tracker -->
 		<type>
 			<name>com.woltlab.wcf.article</name>
@@ -248,7 +243,6 @@
 			<tablePrimaryKey>pageID</tablePrimaryKey>
 		</type>
 		<!-- /version tracker -->
-		
 		<!-- Visit Tracker -->
 		<type>
 			<name>com.woltlab.wcf.moderation.queue</name>
@@ -259,7 +253,6 @@
 			<definitionname>com.woltlab.wcf.visitTracker.objectType</definitionname>
 		</type>
 		<!-- /Visit Tracker -->
-		
 		<!-- activity points -->
 		<type>
 			<name>com.woltlab.wcf.like.activityPointEvent.receivedLikes</name>
@@ -267,38 +260,32 @@
 			<points>1</points>
 		</type>
 		<!-- /activity points -->
-		
 		<!-- comments -->
 		<type>
 			<name>com.woltlab.wcf.user.profileComment</name>
 			<definitionname>com.woltlab.wcf.comment.commentableContent</definitionname>
 			<classname>wcf\system\comment\manager\UserProfileCommentManager</classname>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.comment</name>
 			<definitionname>com.woltlab.wcf.like.likeableObject</definitionname>
 			<classname>wcf\data\comment\LikeableCommentProvider</classname>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.comment.response</name>
 			<definitionname>com.woltlab.wcf.like.likeableObject</definitionname>
 			<classname>wcf\data\comment\response\LikeableCommentResponseProvider</classname>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.user.profileComment.recentActivityEvent</name>
 			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
 			<classname>wcf\system\user\activity\event\ProfileCommentUserActivityEvent</classname>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.user.profileComment.response.recentActivityEvent</name>
 			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
 			<classname>wcf\system\user\activity\event\ProfileCommentResponseUserActivityEvent</classname>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.user.profileComment.notification</name>
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
@@ -311,7 +298,6 @@
 			<classname>wcf\system\user\notification\object\type\UserProfileCommentResponseUserNotificationObjectType</classname>
 			<category>com.woltlab.wcf.user</category>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.user.profileComment.like.notification</name>
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
@@ -326,7 +312,6 @@
 			<category>com.woltlab.wcf.user</category>
 			<supportsReactions>1</supportsReactions>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.moderation.queue</name>
 			<definitionname>com.woltlab.wcf.comment.commentableContent</definitionname>
@@ -344,20 +329,17 @@
 			<classname>wcf\system\user\notification\object\type\ModerationQueueCommentResponseUserNotificationObjectType</classname>
 			<category>com.woltlab.wcf.moderation</category>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.page</name>
 			<definitionname>com.woltlab.wcf.comment.commentableContent</definitionname>
 			<classname>wcf\system\comment\manager\PageCommentManager</classname>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.articleComment</name>
 			<definitionname>com.woltlab.wcf.comment.commentableContent</definitionname>
 			<classname>wcf\system\comment\manager\ArticleCommentManager</classname>
 		</type>
 		<!-- /comments -->
-		
 		<!-- moderation -->
 		<type>
 			<name>com.woltlab.wcf.comment.comment</name>
@@ -369,7 +351,6 @@
 			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
 			<classname>wcf\system\moderation\queue\report\CommentCommentModerationQueueReportHandler</classname>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.comment.response</name>
 			<definitionname>com.woltlab.wcf.moderation.activation</definitionname>
@@ -381,12 +362,10 @@
 			<classname>wcf\system\moderation\queue\report\CommentResponseModerationQueueReportHandler</classname>
 		</type>
 		<!-- /moderation -->
-		
 		<type>
 			<name>com.woltlab.wcf.label</name>
 			<definitionname>com.woltlab.wcf.acl</definitionname>
 		</type>
-		
 		<!-- importers -->
 		<type>
 			<name>com.woltlab.wcf.user</name>
@@ -494,7 +473,6 @@
 			<classname>wcf\system\importer\ReactionTypeImporter</classname>
 		</type>
 		<!-- /importers -->
-		
 		<!-- rebuild data workers -->
 		<type>
 			<name>com.woltlab.wcf.databaseConvertEncoding</name>
@@ -569,14 +547,13 @@
 			<nicevalue>130</nicevalue>
 		</type>
 		<!-- /rebuild data workers -->
-		
 		<!-- stat handlers -->
 		<type>
 			<name>com.woltlab.wcf.user</name>
 			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
 			<classname>wcf\system\stat\UserStatDailyHandler</classname>
-			<default>1</default>
 			<categoryname>com.woltlab.wcf.general</categoryname>
+			<default>1</default>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.attachment</name>
@@ -609,7 +586,6 @@
 			<categoryname>com.woltlab.wcf.user</categoryname>
 		</type>
 		<!-- /stat handlers -->
-		
 		<!-- user group assignment conditions -->
 		<type>
 			<name>com.woltlab.wcf.username</name>
@@ -712,13 +688,12 @@
 		<type>
 			<name>com.woltlab.wcf.trophyPoints</name>
 			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname><![CDATA[wcf\system\condition\UserIntegerPropertyCondition]]></classname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
 			<propertyname>trophyPoints</propertyname>
 			<minvalue>0</minvalue>
 		</type>
 		<!-- /user group assignment conditions -->
-		
 		<!-- trophy conditions -->
 		<type>
 			<name>com.woltlab.wcf.username</name>
@@ -821,13 +796,12 @@
 		<type>
 			<name>com.woltlab.wcf.trophyPoints</name>
 			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname><![CDATA[wcf\system\condition\UserIntegerPropertyCondition]]></classname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
 			<propertyname>trophyPoints</propertyname>
 			<minvalue>0</minvalue>
 		</type>
 		<!-- /trophy conditions -->
-		
 		<!-- notice conditions -->
 		<type>
 			<name>com.woltlab.wcf.page</name>
@@ -835,7 +809,6 @@
 			<classname>wcf\system\condition\page\MultiPageCondition</classname>
 			<conditionobject>com.woltlab.wcf.page</conditionobject>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.pointInTime.daysOfWeek</name>
 			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
@@ -848,7 +821,6 @@
 			<classname>wcf\system\condition\TimeCondition</classname>
 			<conditionobject>com.woltlab.wcf.pointInTime</conditionobject>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.user.username</name>
 			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
@@ -913,7 +885,6 @@
 			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>general</conditiongroup>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.user.birthday</name>
 			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
@@ -981,14 +952,13 @@
 		<type>
 			<name>com.woltlab.wcf.trophyPoints</name>
 			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname><![CDATA[wcf\system\condition\UserIntegerPropertyCondition]]></classname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>contents</conditiongroup>
 			<propertyname>trophyPoints</propertyname>
 			<minvalue>0</minvalue>
 		</type>
 		<!-- /notice conditions -->
-		
 		<!-- ad locations -->
 		<type>
 			<name>com.woltlab.wcf.logo</name>
@@ -1027,7 +997,6 @@
 			<cssclassname>wcfAdLocationFooterBottom</cssclassname>
 		</type>
 		<!-- /ad locations -->
-		
 		<!-- ad conditions -->
 		<type>
 			<name>com.woltlab.wcf.page</name>
@@ -1035,7 +1004,6 @@
 			<classname>wcf\system\condition\page\MultiPageCondition</classname>
 			<conditionobject>com.woltlab.wcf.page</conditionobject>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.pointInTime.daysOfWeek</name>
 			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
@@ -1048,7 +1016,6 @@
 			<classname>wcf\system\condition\TimeCondition</classname>
 			<conditionobject>com.woltlab.wcf.pointInTime</conditionobject>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.user.username</name>
 			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
@@ -1113,7 +1080,6 @@
 			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>general</conditiongroup>
 		</type>
-		
 		<type>
 			<name>com.woltlab.wcf.user.activityPoints</name>
 			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
@@ -1174,14 +1140,13 @@
 		<type>
 			<name>com.woltlab.wcf.trophyPoints</name>
 			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname><![CDATA[wcf\system\condition\UserIntegerPropertyCondition]]></classname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>contents</conditiongroup>
 			<propertyname>trophyPoints</propertyname>
 			<minvalue>0</minvalue>
 		</type>
 		<!-- /ad conditions -->
-		
 		<!-- captcha types -->
 		<type>
 			<name>com.woltlab.wcf.recaptcha</name>
@@ -1194,7 +1159,6 @@
 			<classname>wcf\system\captcha\CaptchaQuestionHandler</classname>
 		</type>
 		<!-- captcha types -->
-		
 		<!-- embedded object handlers -->
 		<type>
 			<name>com.woltlab.wcf.quote</name>
@@ -1221,14 +1185,17 @@
 			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
 			<classname>wcf\system\message\embedded\object\UserMessageEmbeddedObjectHandler</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
+			<classname>wcf\system\message\embedded\object\ArticleMessageEmbeddedObjectHandler</classname>
+		</type>
 		<!-- embedded object handlers -->
-		
 		<type>
 			<name>com.woltlab.wcf.payment.method.paypal</name>
 			<definitionname>com.woltlab.wcf.payment.method</definitionname>
 			<classname>wcf\system\payment\method\PaypalPaymentMethod</classname>
 		</type>
-		
 		<!-- paid subscriptions -->
 		<type>
 			<name>com.woltlab.wcf.payment.type.paidSubscription</name>
@@ -1242,7 +1209,6 @@
 			<category>com.woltlab.wcf.user</category>
 		</type>
 		<!-- /paid subscriptions -->
-		
 		<!-- bulk processable objects -->
 		<type>
 			<name>com.woltlab.wcf.bulkProcessing.user</name>
@@ -1250,7 +1216,6 @@
 			<classname>wcf\system\bulk\processing\user\UserBulkProcessableObjectType</classname>
 		</type>
 		<!-- /bulk processable objects -->
-		
 		<!-- user bulk processing actions -->
 		<type>
 			<name>com.woltlab.wcf.delete</name>
@@ -1288,7 +1253,6 @@
 			<permissions>admin.user.canMailUser</permissions>
 		</type>
 		<!-- /user bulk processing actions -->
-		
 		<!-- user bulk processing conditions -->
 		<type>
 			<name>com.woltlab.wcf.username</name>
@@ -1398,13 +1362,12 @@
 		<type>
 			<name>com.woltlab.wcf.trophyPoints</name>
 			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
-			<classname><![CDATA[wcf\system\condition\UserIntegerPropertyCondition]]></classname>
+			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
 			<propertyname>trophyPoints</propertyname>
 			<minvalue>0</minvalue>
 		</type>
 		<!-- /user bulk processing conditions -->
-		
 		<!-- user search conditions -->
 		<type>
 			<name>com.woltlab.wcf.userID</name>
@@ -1505,7 +1468,6 @@
 			<conditiongroup>userOptions</conditiongroup>
 		</type>
 		<!-- /user search conditions -->
-		
 		<!-- box controllers -->
 		<type>
 			<name>com.woltlab.wcf.recentActivityList</name>
@@ -1602,8 +1564,12 @@
 			<definitionname>com.woltlab.wcf.boxController</definitionname>
 			<classname>wcf\system\box\ProfileCommentListBoxController</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.trophyCategories</name>
+			<definitionname>com.woltlab.wcf.boxController</definitionname>
+			<classname>wcf\system\box\TrophyCategoriesBoxController</classname>
+		</type>
 		<!-- /box controllers -->
-		
 		<!-- simple acl -->
 		<type>
 			<name>com.woltlab.wcf.page</name>
@@ -1614,7 +1580,6 @@
 			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
 		</type>
 		<!-- /simple acl -->
-		
 		<!-- article list box condition -->
 		<type>
 			<name>com.woltlab.wcf.articleCategory</name>
@@ -1622,7 +1587,6 @@
 			<classname>wcf\system\condition\article\ArticleCategoryCondition</classname>
 		</type>
 		<!-- /article list box condition -->
-		
 		<!-- recent activity list box condition -->
 		<type>
 			<name>com.woltlab.wcf.excludedObjectType</name>
@@ -1630,7 +1594,6 @@
 			<classname>wcf\system\condition\user\activity\event\UserActivityEventExcludedObjectTypeCondition</classname>
 		</type>
 		<!-- /recent activity box condition -->
-		
 		<!-- trophy list box condition -->
 		<type>
 			<name>com.woltlab.wcf.excludedTrophies</name>
@@ -1643,7 +1606,6 @@
 			<classname>wcf\system\condition\user\trophy\UserTrophyExcludedTrophyCategoriesCondition</classname>
 		</type>
 		<!-- /trophy list box condition -->
-		
 		<!-- media -->
 		<type>
 			<name>com.woltlab.wcf.media</name>
@@ -1655,7 +1617,6 @@
 			<classname>wcf\system\category\MediaCategoryType</classname>
 		</type>
 		<!-- /media -->
-		
 		<!-- sitemap -->
 		<type>
 			<name>com.woltlab.wcf.sitemap.object.user</name>
@@ -1698,7 +1659,6 @@
 			<rebuildTime>604800</rebuildTime>
 		</type>
 		<!-- /sitemap -->
-		
 		<!-- trophy -->
 		<type>
 			<name>com.woltlab.wcf.trophy.category</name>
@@ -1717,7 +1677,28 @@
 			<classname>wcf\system\user\activity\event\TrophyReceivedUserActivityEvent</classname>
 		</type>
 		<!-- /trophy -->
-		
+		<!-- user content provider -->
+		<type>
+			<name>com.woltlab.wcf.comment</name>
+			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
+			<classname>wcf\system\user\content\provider\CommentUserContentProvider</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.commentResponse</name>
+			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
+			<classname>wcf\system\user\content\provider\CommentResponseUserContentProvider</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
+			<classname>wcf\system\user\content\provider\ArticleUserContentProvider</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.reaction</name>
+			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
+			<classname>wcf\system\user\content\provider\ReactionUserContentProvider</classname>
+		</type>
+		<!-- /user content provider -->
 		<!-- deprecated -->
 		<type>
 			<name>com.woltlab.wcf.page.controller</name>
@@ -1732,7 +1713,7 @@
 			<conditionobject>com.woltlab.wcf.page</conditionobject>
 		</type>
 		<!-- /deprecated -->
-	</import>
+</import>
 	<delete>
 		<type name="com.woltlab.wcf.like.user">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>

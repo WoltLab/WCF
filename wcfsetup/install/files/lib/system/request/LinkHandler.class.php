@@ -19,6 +19,13 @@ use wcf\util\StringUtil;
  */
 class LinkHandler extends SingletonFactory {
 	/**
+	 * regex object to extract controller data from controller class name
+	 * @var		Regex
+	 * @since	3.2
+	 */
+	protected $controllerRegex;
+	
+	/**
 	 * regex object to filter title
 	 * @var	RegEx
 	 */
@@ -36,12 +43,12 @@ class LinkHandler extends SingletonFactory {
 	 */
 	protected $titleReplace = [];
 	
-	
 	/**
 	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->titleRegex = new Regex('[^\p{L}\p{N}]+', Regex::UTF_8);
+		$this->controllerRegex = new Regex('^(?P<application>[a-z]+)\\\\(?P<isAcp>acp\\\\)?.+\\\\(?P<controller>[^\\\\]+)(?:Action|Form|Page)$');
 		
 		if (defined('URL_TITLE_COMPONENT_REPLACEMENT') && URL_TITLE_COMPONENT_REPLACEMENT) {
 			$replacements = explode("\n", StringUtil::unifyNewlines(StringUtil::trim(URL_TITLE_COMPONENT_REPLACEMENT)));
@@ -52,6 +59,36 @@ class LinkHandler extends SingletonFactory {
 				$this->titleReplace[] = $components[1];
 			}
 		}
+	}
+	
+	/**
+	 * Returns in internal link based on the given fully qualified controller
+	 * class name.
+	 * 
+	 * Important: The controller class is not checked if it actually exists.
+	 * That check happens during the runtime.
+	 * 
+	 * @param	string		$controllerClass
+	 * @param	array		$parameters
+	 * @param	string		$url
+	 * @return	string
+	 * 
+	 * @throws	\InvalidArgumentException	if the passed string is no controller class name
+	 * @since	3.2
+	 */
+	public function getControllerLink($controllerClass, array $parameters = [], $url = '') {
+		if (!$this->controllerRegex->match($controllerClass)) {
+			throw new \InvalidArgumentException("Invalid controller '{$controllerClass}' passed.");
+		}
+		
+		$matches = $this->controllerRegex->getMatches();
+		
+		// important: matches cannot overwrite explicitly set parameters
+		$parameters['application'] = $parameters['application'] ?? $matches['application'];
+		$parameters['isACP'] = $parameters['isACP'] ?? $matches['isAcp'];
+		$parameters['forceFrontend'] = $parameters['forceFrontend'] ?? !$matches['isAcp'];
+		
+		return $this->getLink($matches['controller'], $parameters, $url);
 	}
 	
 	/**
@@ -185,6 +222,8 @@ class LinkHandler extends SingletonFactory {
 		}
 		
 		$url = $routeURL . $url;
+		
+		$abbreviation = ControllerMap::getInstance()->getApplicationOverride($abbreviation, $controller);
 		
 		// handle applications
 		if (!PACKAGE_ID) {

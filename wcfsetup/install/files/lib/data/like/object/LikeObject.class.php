@@ -4,6 +4,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\User;
 use wcf\data\DatabaseObject;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\WCF;
 use wcf\util\JSON;
 
@@ -49,6 +50,12 @@ class LikeObject extends DatabaseObject {
 	 * @var integer[] 
 	 */
 	protected $reactions = [];
+	
+	/**
+	 * The reputation for the current object. 
+	 * @var integer
+	 */
+	protected $reputation = null;
 	
 	/**
 	 * @inheritDoc
@@ -142,6 +149,30 @@ class LikeObject extends DatabaseObject {
 	 */
 	public function getReactions() {
 		return $this->reactions; 
+	}
+	
+	/**
+	 * Returns the reputation of the current like object. Returns null, if
+	 * there are no reactions on the object. 
+	 * 
+	 * @return      integer|null
+	 * @since	3.2
+	 */
+	public function getReputation() {
+		if ($this->reputation === null && !empty($this->getReactions())) {
+			$this->reputation = 0;
+			foreach ($this->getReactions() as $reactionTypeID => $data) {
+				$reactionType = ReactionHandler::getInstance()->getReactionTypeByID($reactionTypeID);
+				if ($reactionType->isPositive()) {
+					$this->reputation += $data['reactionCount'];
+				}
+				else if ($reactionType->isNegative()) {
+					$this->reputation -= $data['reactionCount'];
+				}
+			}
+		}
+		
+		return $this->reputation;
 	}
 	
 	/**

@@ -179,7 +179,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'definitionID' => $this->getDefinitionID($element->getElementsByTagName('definitionname')->item(0)->nodeValue),
 			'objectType' => $element->getElementsByTagName('name')->item(0)->nodeValue,
@@ -301,7 +301,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 				})),
 		]);
 		
-		/** @var SingleSelectionFormField $definitionName */
+		/** @var SingleSelectionFormField $definitionID */
 		$definitionID = $form->getNodeById('definitionID');
 		
 		// add general field dependencies
@@ -440,6 +440,47 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		// com.woltlab.wcf.condition.userSearch
 		$conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.userSearch');
 		$this->addConditionFields($conditionAdContainer, 'com.woltlab.wcf.condition.userSearch', false, true);
+		
+		// com.woltlab.wcf.content.userContentProvider
+		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.content.userContentProvider')
+			->appendChildren([
+				IntegerFormField::create('userContentProviderNiceValue')
+					->objectProperty('nicevalue')
+					->label('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.niceValue')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.niceValue.description')
+					->nullable(),
+				
+				BooleanFormField::create('userContentProviderHidden')
+					->objectProperty('hidden')
+					->label('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.hidden')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.hidden.description'),
+				
+				ItemListFormField::create('userContentProviderRequiredObjectType')
+					->objectProperty('requiredobjecttype')
+					->saveValueType(ItemListFormField::SAVE_VALUE_TYPE_CSV)
+					->label('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType.description')
+					->addValidator(new FormFieldValidator('objectTypeValue', function(ItemListFormField $formField) {
+						if ($formField->getValue() === null) return; 
+						
+						foreach ($formField->getValue() as $segment) {
+							if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $segment) === null) {
+								$formField->addValidationError(
+									new FormFieldValidationError(
+										'unknownObjectType',
+										'wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.error.unknownObjectType',
+										['objectType' => $segment]
+									)
+								);
+							}
+						}
+					})),
+			]);
+		$this->definitionElementChildren['com.woltlab.wcf.content.userContentProvider'] = [
+			'nicevalue' => null,
+			'hidden' => 0,
+			'requiredobjecttype' => ''
+		];
 		
 		// com.woltlab.wcf.message
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.message')
@@ -753,7 +794,7 @@ XML;
 	 * @since	3.2
 	 */
 	public function getObjectTypeDefinitionDataContainer(IFormDocument $form, $definitionName) {
-		/** @var SingleSelectionFormField $definitionNameField */
+		/** @var SingleSelectionFormField $definitionIDField */
 		$definitionIDField = $form->getNodeById('definitionID');
 		
 		$definitionPieces = explode('.', $definitionName);
@@ -775,7 +816,7 @@ XML;
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		$definitionName = ObjectTypeCache::getInstance()->getDefinition($data['definitionID'])->definitionName;
 		

@@ -7,10 +7,9 @@
 			<controller>wcf\page\MembersListPage</controller>
 			<name language="de">Mitglieder</name>
 			<name language="en">Members</name>
-			<permissions>user.profile.canViewMembersList</permissions>
 			<options>module_members_list</options>
+			<permissions>user.profile.canViewMembersList</permissions>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Members</title>
 			</content>
@@ -25,7 +24,6 @@
 			<name language="en">Recent Activities</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Recent Activities</title>
 			</content>
@@ -39,10 +37,9 @@
 			<name language="de">Benutzer online</name>
 			<name language="en">Users Online</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<permissions>user.profile.canViewUsersOnlineList</permissions>
 			<options>module_users_online</options>
+			<permissions>user.profile.canViewUsersOnlineList</permissions>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Users Online</title>
 			</content>
@@ -56,10 +53,9 @@
 			<name language="de">Team</name>
 			<name language="en">Team</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<permissions>user.profile.canViewMembersList</permissions>
 			<options>module_team_page</options>
+			<permissions>user.profile.canViewMembersList</permissions>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Team</title>
 			</content>
@@ -73,9 +69,8 @@
 			<name language="de">Benutzer suchen</name>
 			<name language="en">Search Users</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<permissions>user.profile.canViewMembersList</permissions>
 			<options>module_members_list</options>
-			
+			<permissions>user.profile.canViewMembersList</permissions>
 			<content language="en">
 				<title>Search Users</title>
 			</content>
@@ -83,13 +78,11 @@
 				<title>Benutzer suchen</title>
 			</content>
 		</page>
-		
 		<page identifier="com.woltlab.wcf.AccountManagement">
 			<pageType>system</pageType>
 			<controller>wcf\form\AccountManagementForm</controller>
 			<name language="de">Benutzerkonto-Verwaltung</name>
 			<name language="en">Account Management</name>
-			
 			<content language="en">
 				<title>Account Management</title>
 			</content>
@@ -104,7 +97,6 @@
 			<name language="en">Avatar Management</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
 			<content language="en">
 				<title>Avatar Management</title>
 			</content>
@@ -120,7 +112,6 @@
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>New Email Address Verification</title>
 			</content>
@@ -136,7 +127,6 @@
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>New Email Activation Code Request</title>
 			</content>
@@ -150,7 +140,6 @@
 			<name language="de">Anmeldung</name>
 			<name language="en">Login</name>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>Login</title>
 			</content>
@@ -165,7 +154,6 @@
 			<name language="en">Lost Password</name>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>Lost Password</title>
 			</content>
@@ -176,10 +164,9 @@
 		<page identifier="com.woltlab.wcf.Mail">
 			<pageType>system</pageType>
 			<controller>wcf\form\MailForm</controller>
-			<requireObjectID>1</requireObjectID>
 			<name language="de">E-Mail-Formular</name>
 			<name language="en">Mail Form</name>
-			
+			<requireObjectID>1</requireObjectID>
 			<content language="en">
 				<title>Mail Form</title>
 			</content>
@@ -194,7 +181,6 @@
 			<name language="en">New Password Request</name>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>New Password Request</title>
 			</content>
@@ -209,7 +195,6 @@
 			<name language="en">Notification Settings</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
 			<content language="en">
 				<title>Notification Settings</title>
 			</content>
@@ -223,7 +208,6 @@
 			<name language="de">Registrierung</name>
 			<name language="en">Registration</name>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>Registration</title>
 			</content>
@@ -237,7 +221,6 @@
 			<name language="de">Disclaimer</name>
 			<name language="en">Disclaimer</name>
 			<parent>com.woltlab.wcf.Register</parent>
-			
 			<content language="en">
 				<title>Disclaimer</title>
 			</content>
@@ -253,7 +236,6 @@
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.Register</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>Complete Registration</title>
 			</content>
@@ -269,7 +251,6 @@
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.Register</parent>
 			<excludeFromLandingPage>1</excludeFromLandingPage>
-			
 			<content language="en">
 				<title>New Activation Code Request</title>
 			</content>
@@ -282,7 +263,6 @@
 			<controller>wcf\form\SearchForm</controller>
 			<name language="de">Suche</name>
 			<name language="en">Search</name>
-			
 			<content language="en">
 				<title>Search</title>
 			</content>
@@ -297,7 +277,6 @@
 			<name language="en">Settings</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
 			<content language="en">
 				<title>Settings</title>
 			</content>
@@ -310,10 +289,9 @@
 			<controller>wcf\form\SignatureEditForm</controller>
 			<name language="de">Signatur-Verwaltung</name>
 			<name language="en">Signature Management</name>
-			<options>module_user_signature</options>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
+			<options>module_user_signature</options>
 			<content language="en">
 				<title>Signature Management</title>
 			</content>
@@ -328,7 +306,6 @@
 			<name language="en">Edit History</name>
 			<options>module_edit_history</options>
 			<requireObjectID>1</requireObjectID>
-			
 			<content language="en">
 				<title>Edit History</title>
 			</content>
@@ -343,7 +320,6 @@
 			<name language="en">Followed Users</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
 			<content language="en">
 				<title>Followed Users</title>
 			</content>
@@ -358,7 +334,6 @@
 			<name language="en">Blocked Users</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
 			<content language="en">
 				<title>Blocked Users</title>
 			</content>
@@ -372,7 +347,6 @@
 			<name language="de">Moderation</name>
 			<name language="en">Moderation</name>
 			<permissions>mod.general.canUseModeration</permissions>
-			
 			<content language="en">
 				<title>Moderation</title>
 			</content>
@@ -385,10 +359,9 @@
 			<controller>wcf\page\DeletedContentListPage</controller>
 			<name language="de">Gelöschte Inhalte</name>
 			<name language="en">Deleted Content</name>
-			<permissions>mod.general.canUseModeration</permissions>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.ModerationList</parent>
-			
+			<permissions>mod.general.canUseModeration</permissions>
 			<content language="en">
 				<title>Deleted Content</title>
 			</content>
@@ -401,11 +374,10 @@
 			<controller>wcf\form\ModerationActivationForm</controller>
 			<name language="de">Inhaltsfreischaltung</name>
 			<name language="en">Content Approval</name>
+			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.ModerationList</parent>
 			<permissions>mod.general.canUseModeration</permissions>
-			<hasFixedParent>1</hasFixedParent>
 			<requireObjectID>1</requireObjectID>
-			
 			<content language="en">
 				<title>Content Approval</title>
 			</content>
@@ -418,11 +390,10 @@
 			<controller>wcf\form\ModerationReportForm</controller>
 			<name language="de">Inhaltsmeldung</name>
 			<name language="en">Content Report</name>
-			<parent>com.woltlab.wcf.ModerationList</parent>
 			<hasFixedParent>1</hasFixedParent>
+			<parent>com.woltlab.wcf.ModerationList</parent>
 			<permissions>mod.general.canUseModeration</permissions>
 			<requireObjectID>1</requireObjectID>
-			
 			<content language="en">
 				<title>Content Report</title>
 			</content>
@@ -437,7 +408,6 @@
 			<name language="en">Notifications</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
 			<content language="en">
 				<title>Notifications</title>
 			</content>
@@ -450,10 +420,9 @@
 			<controller>wcf\page\PaidSubscriptionListPage</controller>
 			<name language="de">Bezahlte Mitgliedschaften</name>
 			<name language="en">Paid Subscriptions</name>
-			<options>module_paid_subscription</options>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
-			
+			<options>module_paid_subscription</options>
 			<content language="en">
 				<title>Paid Subscriptions</title>
 			</content>
@@ -466,10 +435,9 @@
 			<controller>wcf\page\SearchResultPage</controller>
 			<name language="de">Suchergebnisse</name>
 			<name language="en">Search Results</name>
-			<parent>com.woltlab.wcf.Search</parent>
 			<hasFixedParent>1</hasFixedParent>
+			<parent>com.woltlab.wcf.Search</parent>
 			<requireObjectID>1</requireObjectID>
-			
 			<content language="en">
 				<title>Search Results</title>
 			</content>
@@ -484,7 +452,6 @@
 			<name language="en">Content With Particular Tag</name>
 			<permissions>user.tag.canViewTag</permissions>
 			<requireObjectID>1</requireObjectID>
-			
 			<content language="en">
 				<title>Content With Particular Tag</title>
 			</content>
@@ -495,22 +462,21 @@
 		<page identifier="com.woltlab.wcf.User">
 			<pageType>system</pageType>
 			<controller>wcf\page\UserPage</controller>
-			<handler>wcf\system\page\handler\UserPageHandler</handler>
 			<name language="de">Benutzerprofil</name>
 			<name language="en">User Profile</name>
+			<handler>wcf\system\page\handler\UserPageHandler</handler>
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<requireObjectID>1</requireObjectID>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
+			<requireObjectID>1</requireObjectID>
 		</page>
 		<page identifier="com.woltlab.wcf.ArticleList">
 			<pageType>system</pageType>
 			<controller>wcf\page\ArticleListPage</controller>
-			<handler>wcf\system\page\handler\ArticleListPageHandler</handler>
 			<name language="de">Artikel-Liste</name>
 			<name language="en">Article List</name>
+			<handler>wcf\system\page\handler\ArticleListPageHandler</handler>
 			<options>module_article</options>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Articles</title>
 			</content>
@@ -521,12 +487,11 @@
 		<page identifier="com.woltlab.wcf.UnreadArticleList">
 			<pageType>system</pageType>
 			<controller>wcf\page\UnreadArticleListPage</controller>
-			<handler>wcf\system\page\handler\UnreadArticleListPageHandler</handler>
 			<name language="de">Ungelesene Artikel</name>
 			<name language="en">Unread Articles</name>
-			<options>module_article</options>
+			<handler>wcf\system\page\handler\UnreadArticleListPageHandler</handler>
 			<parent>com.woltlab.wcf.ArticleList</parent>
-			
+			<options>module_article</options>
 			<content language="en">
 				<title>Unread Articles</title>
 			</content>
@@ -537,12 +502,11 @@
 		<page identifier="com.woltlab.wcf.WatchedArticleList">
 			<pageType>system</pageType>
 			<controller>wcf\page\WatchedArticleListPage</controller>
-			<handler>wcf\system\page\handler\WatchedArticleListPageHandler</handler>
 			<name language="de">Abonnierte Artikel</name>
 			<name language="en">Watched Articles</name>
-			<options>module_article</options>
+			<handler>wcf\system\page\handler\WatchedArticleListPageHandler</handler>
 			<parent>com.woltlab.wcf.ArticleList</parent>
-			
+			<options>module_article</options>
 			<content language="en">
 				<title>Watched Articles</title>
 			</content>
@@ -553,25 +517,25 @@
 		<page identifier="com.woltlab.wcf.CategoryArticleList">
 			<pageType>system</pageType>
 			<controller>wcf\page\CategoryArticleListPage</controller>
-			<handler>wcf\system\page\handler\CategoryArticleListPageHandler</handler>
 			<name language="de">Liste von Artikeln aus bestimmter Kategorie</name>
 			<name language="en">List of Articles in Certain Category</name>
-			<options>module_article</options>
+			<handler>wcf\system\page\handler\CategoryArticleListPageHandler</handler>
 			<parent>com.woltlab.wcf.ArticleList</parent>
-			<requireObjectID>1</requireObjectID>
+			<options>module_article</options>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
+			<requireObjectID>1</requireObjectID>
 		</page>
 		<page identifier="com.woltlab.wcf.Article">
 			<pageType>system</pageType>
 			<controller>wcf\page\ArticlePage</controller>
-			<handler>wcf\system\page\handler\ArticlePageHandler</handler>
 			<name language="de">Artikel</name>
 			<name language="en">Article</name>
-			<options>module_article</options>
-			<parent>com.woltlab.wcf.CategoryArticleList</parent>
+			<handler>wcf\system\page\handler\ArticlePageHandler</handler>
 			<hasFixedParent>1</hasFixedParent>
-			<requireObjectID>1</requireObjectID>
+			<parent>com.woltlab.wcf.CategoryArticleList</parent>
+			<options>module_article</options>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
+			<requireObjectID>1</requireObjectID>
 		</page>
 		<page identifier="com.woltlab.wcf.Contact">
 			<pageType>system</pageType>
@@ -579,8 +543,6 @@
 			<name language="de">Kontakt-Formular</name>
 			<name language="en">Contact Form</name>
 			<options>module_contact_form</options>
-			<allowSpidersToIndex>0</allowSpidersToIndex>
-			
 			<content language="en">
 				<title>Contact</title>
 			</content>
@@ -591,48 +553,63 @@
 		<page identifier="com.woltlab.wcf.TrophyList">
 			<pageType>system</pageType>
 			<controller>wcf\page\TrophyListPage</controller>
-			<handler>wcf\system\page\handler\TrophyListPageHandler</handler>
 			<name language="de">Trophäen</name>
 			<name language="en">Trophies</name>
 			<parent>com.woltlab.wcf.MembersList</parent>
-			<requireObjectID>1</requireObjectID>
-			<permissions>user.profile.trophy.canSeeTrophies</permissions>
 			<options>module_trophy</options>
+			<permissions>user.profile.trophy.canSeeTrophies</permissions>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
+			<content language="en">
+				<title>Trophies</title>
+			</content>
+			<content language="de">
+				<title>Trophäen</title>
+			</content>
+		</page>
+		<page identifier="com.woltlab.wcf.TrophyCategoryList">
+			<pageType>system</pageType>
+			<controller>wcf\page\CategoryTrophyListPage</controller>
+			<name language="de">Liste von Trophäen aus einer bestimmten Kategorie</name>
+			<name language="en">List of Trophies in Certain Category</name>
+			<handler>wcf\system\page\handler\TrophyListPageHandler</handler>
+			<parent>com.woltlab.wcf.TrophyList</parent>
+			<options>module_trophy</options>
+			<permissions>user.profile.trophy.canSeeTrophies</permissions>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
+			<requireObjectID>1</requireObjectID>
 		</page>
 		<page identifier="com.woltlab.wcf.Trophy">
 			<pageType>system</pageType>
 			<controller>wcf\page\TrophyPage</controller>
-			<handler>wcf\system\page\handler\TrophyPageHandler</handler>
 			<name language="de">Trophäe</name>
 			<name language="en">Trophy</name>
-			<parent>com.woltlab.wcf.TrophyList</parent>
+			<handler>wcf\system\page\handler\TrophyPageHandler</handler>
 			<hasFixedParent>1</hasFixedParent>
-			<requireObjectID>1</requireObjectID>
-			<permissions>user.profile.trophy.canSeeTrophies</permissions>
+			<parent>com.woltlab.wcf.TrophyCategoryList</parent>
 			<options>module_trophy</options>
+			<permissions>user.profile.trophy.canSeeTrophies</permissions>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
+			<requireObjectID>1</requireObjectID>
 		</page>
-		
 		<!-- static -->
 		<page identifier="com.woltlab.wcf.Dashboard">
 			<pageType>text</pageType>
 			<name language="de">Dashboard</name>
 			<name language="en">Dashboard</name>
-			
-			<content>
+			<content language="en">
 				<title>Dashboard</title>
-				<content></content>
+				<customURL>dashboard</customURL>
+			</content>
+			<content language="de">
+				<title>Dashboard</title>
 				<customURL>dashboard</customURL>
 			</content>
 		</page>
-		
 		<page identifier="com.woltlab.wcf.CookiePolicy">
 			<pageType>text</pageType>
-			<name language="en">Cookie Policy</name>
 			<name language="de">Cookie-Richtlinie</name>
+			<name language="en">Cookie Policy</name>
 			<availableDuringOfflineMode>1</availableDuringOfflineMode>
-			
 			<content language="en">
 				<title>Cookie Policy</title>
 				<content><![CDATA[<p>This website uses cookies required to operate and use this site. Below you will find an explanation on our cookie usage.</p>
@@ -660,7 +637,6 @@
 </ul>]]></content>
 				<customURL>cookie-policy</customURL>
 			</content>
-			
 			<content language="de">
 				<title>Einsatz von Cookies</title>
 				<content><![CDATA[<p>Wie viele Internetseiten nutzt auch diese Seite Cookies. An dieser Stelle wird erklärt was Cookies sind und wie sie genutzt werden.</p>
@@ -689,13 +665,11 @@
 				<customURL>cookie-richtlinie</customURL>
 			</content>
 		</page>
-		
 		<page identifier="com.woltlab.wcf.PrivacyPolicy">
 			<pageType>text</pageType>
-			<name language="en">Privacy Policy</name>
 			<name language="de">Datenschutzerklärung</name>
+			<name language="en">Privacy Policy</name>
 			<availableDuringOfflineMode>1</availableDuringOfflineMode>
-			
 			<content language="en">
 				<title>Privacy Policy</title>
 				<content><![CDATA[<h2>1. An overview of data protection</h2>
@@ -742,12 +716,12 @@ Email: [email address of the responsible party]</p><p><br></p><p>The controller 
 <h3>Instagram</h3> <p>Our website uses plug-ins provided by Instagram. The provider is Instagram Inc., 1601 Willow Road, Menlo Park, CA 94025, USA.</p><p><br></p><p>If you visit one of our pages featuring a Instagram plugin, a connection to the Instagram servers is established. Here the Instagram server is informed about which of our pages you have visited. In addition, Instagram will receive your IP address. This also applies if you are not logged in to Instagram when you visit our website or do not have a Instagram account. The information is transmitted to a Instagram server in the US, where it is stored.</p><p><br></p><p>If you are logged in to your Instagram account, Instagram allows you to associate your browsing behavior directly with your personal profile. You can prevent this by logging out of your Instagram account.</p><p><br></p><p>The use of Instagram is based on our interest in presenting our online content in an appealing manner. Pursuant to Art. 6 Sect. 1 lit. f GDPR, this is a legitimate interest.</p><p><br></p><p>For more information on how to handle user data, please refer to the Instagram Privacy Policy at <a href="https://instagram.com/about/legal/privacy/" target="_blank" rel="noopener">https://instagram.com/about/legal/privacy/</a>.</p>
 <h3>Imgur</h3> <p>Our website uses plug-ins provided by Imgur. The provider is Imgur, Inc., 415 Jackson Street, 2nd Floor, Suite 200, San Francisco, CA 94111, USA.</p><p><br></p><p>If you visit one of our pages featuring a Imgur plugin, a connection to the Imgur servers is established. Here the Imgur server is informed about which of our pages you have visited. In addition, Imgur will receive your IP address. This also applies if you are not logged in to Imgur when you visit our website or do not have a Imgur account. The information is transmitted to a Imgur server in the US, where it is stored.</p><p><br></p><p>If you are logged in to your Imgur account, Imgur allows you to associate your browsing behavior directly with your personal profile. You can prevent this by logging out of your Imgur account.</p><p><br></p><p>The use of Imgur is based on our interest in presenting our online content in an appealing manner. Pursuant to Art. 6 Sect. 1 lit. f GDPR, this is a legitimate interest.</p><p><br></p><p>For more information on how to handle user data, please refer to the Imgur Privacy Policy at <a href="https://imgur.com/privacy" target="_blank" rel="noopener">https://imgur.com/privacy</a>.</p>
 <h3>Twitch</h3> <p>Our website uses plug-ins provided by Twitch. The provider is Twitch Interactive, Inc., 225 Bush Street, 6th Floor, San Francisco, CA 94104, USA.</p><p><br></p><p>If you visit one of our pages featuring a Twitch plugin, a connection to the Twitch servers is established. Here the Twitch server is informed about which of our pages you have visited. In addition, Twitch will receive your IP address. This also applies if you are not logged in to Twitch when you visit our website or do not have a Twitch account. The information is transmitted to a Twitch server in the US, where it is stored.</p><p><br></p><p>If you are logged in to your Twitch account, Twitch allows you to associate your browsing behavior directly with your personal profile. You can prevent this by logging out of your Twitch account.</p><p><br></p><p>The use of Twitch is based on our interest in presenting our online content in an appealing manner. Pursuant to Art. 6 Sect. 1 lit. f GDPR, this is a legitimate interest.</p><p><br></p><p>For more information on how to handle user data, please refer to the Twitch Privacy Policy at <a href="https://www.twitch.tv/p/legal/privacy-policy/" target="_blank" rel="noopener">https://www.twitch.tv/p/legal/privacy-policy/</a>.</p>
+<h3>Twitter</h3> <p>Our website uses plug-ins provided by Twitter. The provider is  Twitter Inc., 1355 Market Street, Suite 900, San Francisco, CA 94103, USA.</p><p><br></p><p>If you visit one of our pages featuring a Twitter plugin, a connection to the Twitter servers is established. Here the Twitter server is informed about which of our pages you have visited. In addition, Twitter will receive your IP address. This also applies if you are not logged in to Twitter when you visit our website or do not have a Twitter account. The information is transmitted to a Twitter server in the US, where it is stored.</p><p><br></p><p>If you are logged in to your Twitter account, Twitter allows you to associate your browsing behavior directly with your personal profile. You can prevent this by logging out of your Twitter account.</p><p><br></p><p>The use of Twitter is based on our interest in presenting our online content in an appealing manner. Pursuant to Art. 6 Sect. 1 lit. f GDPR, this is a legitimate interest.</p><p><br></p><p>For more information on how to handle user data, please refer to the Twitter Privacy Policy at <a href="https://twitter.com/en/privacy" target="_blank" rel="noopener">https://twitter.com/en/privacy</a>.</p>
 
 <h2>6. Payment service providers</h2>
 <h3>PayPal</h3> <p>Among other options, we offer payment via PayPal on our website. The provider of this payment processing service is PayPal (Europe) S.à.r.l. et Cie, S.C.A., 22-24 Boulevard Royal, L-2449 Luxembourg (hereinafter referred to as “PayPal”).</p><p><br></p><p>If you choose payment via PayPal, we will share the payment information you enter with PayPal.</p><p><br></p><p>The legal basis for the sharing of your data with PayPal is Art. 6 Sect. 1 lit. a GDPR (consent) as well as Art. 6 Sect. 1 lit. b GDPR (processing for the fulfilment of a contract). You have the option to at any time revoke your consent to the processing of your data. Such a revocation shall not have any impact on the effectiveness of data processing transactions that occurred in the past.</p>]]></content>
 				<customURL>privacy-policy</customURL>
 			</content>
-			
 			<content language="de">
 				<title>Datenschutzerklärung</title>
 				<content><![CDATA[<h2>1. Datenschutz auf einen Blick</h2>
@@ -794,6 +768,7 @@ E-Mail: [E-Mail-Adresse der verantwortlichen Stelle]</p><p><br></p><p>Verantwort
 <h3>Instagram</h3> <p>Unsere Website nutzt Plugins des Online-Dienstes Instagram. Anbieter ist Instagram Inc., 1601 Willow Road, Menlo Park, CA 94025, USA.</p><p><br></p><p>Wenn Sie eine unserer mit einem Instagram-Plugin ausgestatteten Seiten besuchen, wird eine Verbindung zu den Servern von Instagram hergestellt. Dabei wird dem Instagram-Server mitgeteilt, welche unserer Seiten Sie besucht haben. Zudem erlangt Instagram Ihre IP-Adresse. Dies gilt auch dann, wenn Sie nicht bei Instagram eingeloggt sind oder keinen Account bei Instagram besitzen. Die von Instagram erfassten Informationen werden an den Instagram-Server in den USA übermittelt.</p><p><br></p><p>Wenn Sie in Ihrem Instagram-Account eingeloggt sind, ermöglichen Sie Instagram, Ihr Surfverhalten direkt Ihrem persönlichen Profil zuzuordnen. Dies können Sie verhindern, indem Sie sich aus Ihrem Instagram-Account ausloggen.</p><p><br></p><p>Die Nutzung von Instagram erfolgt im Interesse einer ansprechenden Darstellung unserer Online-Angebote. Dies stellt ein berechtigtes Interesse im Sinne des Art. 6 Abs. 1 lit. f DSGVO dar.</p><p><br></p><p>Weitere Informationen zum Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von Instagram unter: <a href="https://instagram.com/about/legal/privacy/" target="_blank" rel="noopener">https://instagram.com/about/legal/privacy/</a>.</p>
 <h3>Imgur</h3> <p>Unsere Website nutzt Plugins des Online-Dienstes Imgur. Anbieter ist Imgur, Inc., 415 Jackson Street, 2nd Floor, Suite 200, San Francisco, CA 94111, USA.</p><p><br></p><p>Wenn Sie eine unserer mit einem Imgur-Plugin ausgestatteten Seiten besuchen, wird eine Verbindung zu den Servern von Imgur hergestellt. Dabei wird dem Imgur-Server mitgeteilt, welche unserer Seiten Sie besucht haben. Zudem erlangt Imgur Ihre IP-Adresse. Dies gilt auch dann, wenn Sie nicht bei Imgur eingeloggt sind oder keinen Account bei Imgur besitzen. Die von Imgur erfassten Informationen werden an den Imgur-Server in den USA übermittelt.</p><p><br></p><p>Wenn Sie in Ihrem Imgur-Account eingeloggt sind, ermöglichen Sie Imgur, Ihr Surfverhalten direkt Ihrem persönlichen Profil zuzuordnen. Dies können Sie verhindern, indem Sie sich aus Ihrem Imgur-Account ausloggen.</p><p><br></p><p>Die Nutzung von Imgur erfolgt im Interesse einer ansprechenden Darstellung unserer Online-Angebote. Dies stellt ein berechtigtes Interesse im Sinne des Art. 6 Abs. 1 lit. f DSGVO dar.</p><p><br></p><p>Weitere Informationen zum Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von Imgur unter: <a href="https://imgur.com/privacy" target="_blank" rel="noopener">https://imgur.com/privacy</a>.</p>
 <h3>Twitch</h3> <p>Unsere Website nutzt Plugins des Online-Dienstes Twitch. Anbieter ist Twitch Interactive, Inc., 225 Bush Street, 6th Floor, San Francisco, CA 94104, USA.</p><p><br></p><p>Wenn Sie eine unserer mit einem Twitch-Plugin ausgestatteten Seiten besuchen, wird eine Verbindung zu den Servern von Twitch hergestellt. Dabei wird dem Twitch-Server mitgeteilt, welche unserer Seiten Sie besucht haben. Zudem erlangt Twitch Ihre IP-Adresse. Dies gilt auch dann, wenn Sie nicht bei Twitch eingeloggt sind oder keinen Account bei Twitch besitzen. Die von Twitch erfassten Informationen werden an den Twitch-Server in den USA übermittelt.</p><p><br></p><p>Wenn Sie in Ihrem Twitch-Account eingeloggt sind, ermöglichen Sie Twitch, Ihr Surfverhalten direkt Ihrem persönlichen Profil zuzuordnen. Dies können Sie verhindern, indem Sie sich aus Ihrem Twitch-Account ausloggen.</p><p><br></p><p>Die Nutzung von Twitch erfolgt im Interesse einer ansprechenden Darstellung unserer Online-Angebote. Dies stellt ein berechtigtes Interesse im Sinne des Art. 6 Abs. 1 lit. f DSGVO dar.</p><p><br></p><p>Weitere Informationen zum Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von Twitch unter: <a href="https://www.twitch.tv/p/legal/privacy-policy/" target="_blank" rel="noopener">https://www.twitch.tv/p/legal/privacy-policy/</a>.</p>
+<h3>Twitter</h3> <p>Unsere Website nutzt Plugins des Online-Dienstes Twitter. Anbieter ist Twitter Inc., 1355 Market Street, Suite 900, San Francisco, CA 94103, USA.</p><p><br></p><p>Wenn Sie eine unserer mit einem Twitter-Plugin ausgestatteten Seiten besuchen, wird eine Verbindung zu den Servern von Twitter hergestellt. Dabei wird dem Twitter-Server mitgeteilt, welche unserer Seiten Sie besucht haben. Zudem erlangt Twitter Ihre IP-Adresse. Dies gilt auch dann, wenn Sie nicht bei Twitter eingeloggt sind oder keinen Account bei Twitter besitzen. Die von Twitter erfassten Informationen werden an den Twitter-Server in den USA übermittelt.</p><p><br></p><p>Wenn Sie in Ihrem Twitter-Account eingeloggt sind, ermöglichen Sie Twitter, Ihr Surfverhalten direkt Ihrem persönlichen Profil zuzuordnen. Dies können Sie verhindern, indem Sie sich aus Ihrem Twitter-Account ausloggen.</p><p><br></p><p>Die Nutzung von Twitter erfolgt im Interesse einer ansprechenden Darstellung unserer Online-Angebote. Dies stellt ein berechtigtes Interesse im Sinne des Art. 6 Abs. 1 lit. f DSGVO dar.</p><p><br></p><p>Weitere Informationen zum Umgang mit Nutzerdaten finden Sie in der Datenschutzerklärung von Twitter unter: <a href="https://twitter.com/de/privacy" target="_blank" rel="noopener">https://twitter.com/de/privacy</a>.</p>
 
 <h2>6. Zahlungsanbieter</h2>
 <h3>PayPal</h3> <p>Auf unserer Website bieten wir u.a. die Bezahlung via PayPal an. Anbieter dieses Zahlungsdienstes ist die PayPal (Europe) S.à.r.l. et Cie, S.C.A., 22-24 Boulevard Royal, L-2449 Luxembourg (im Folgenden “PayPal”).</p><p><br></p><p>Wenn Sie die Bezahlung via PayPal auswählen, werden die von Ihnen eingegebenen Zahlungsdaten an PayPal übermittelt.</p><p><br></p><p>Die Übermittlung Ihrer Daten an PayPal erfolgt auf Grundlage von Art. 6 Abs. 1 lit. a DSGVO (Einwilligung) und Art. 6 Abs. 1 lit. b DSGVO (Verarbeitung zur Erfüllung eines Vertrags). Sie haben die Möglichkeit, Ihre Einwilligung zur Datenverarbeitung jederzeit zu widerrufen. Ein Widerruf wirkt sich auf die Wirksamkeit von in der Vergangenheit liegenden Datenverarbeitungsvorgängen nicht aus.</p>]]></content>

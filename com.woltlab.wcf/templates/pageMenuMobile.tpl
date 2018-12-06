@@ -1,6 +1,8 @@
 {* main menu / page options / breadcrumbs *}
 <div id="pageMainMenuMobile" class="pageMainMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getStyleHandler()->getStyle()->getPageLogo()}">
 	<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.page{/lang}">
+		{event name='menuBefore'}
+		
 		<li class="menuOverlayTitle">{lang}wcf.menu.page.navigation{/lang}</li>
 		{foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.MainMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
 			<li class="menuOverlayItem">
@@ -54,12 +56,16 @@
 				{/foreach}
 			{/content}
 		{/hascontent}
+		
+		{event name='menuAfter'}
 	</ol>
 </div>
 
 {* user menu *}
 <div id="pageUserMenuMobile" class="pageUserMenuMobile menuOverlayMobile" data-page-logo="{$__wcf->getStyleHandler()->getStyle()->getPageLogo()}">
 	<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.user{/lang}">
+		{event name='userMenuBefore'}
+		
 		{if $__wcf->user->userID}
 			{* logged-in *}
 			<li class="menuOverlayTitle">{lang}wcf.menu.user{/lang}</li>
@@ -75,6 +81,8 @@
 					<span class="menuOverlayItemTitle">{lang}wcf.user.panel.settings{/lang}</span>
 				</a>
 				<ol class="menuOverlayItemList">
+					{event name='userMenuItemsBefore'}
+					
 					{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
 						<li class="menuOverlayTitle">{lang}{$menuCategory->menuItem}{/lang}</li>
 						{foreach from=$__wcf->getUserMenu()->getMenuItems($menuCategory->menuItem) item=menuItem}
@@ -83,6 +91,8 @@
 							</li>
 						{/foreach}
 					{/foreach}
+					
+					{event name='userMenuItemsAfter'}
 				</ol>
 			</li>
 			{if $__wcf->session->getPermission('admin.general.canUseAcp')}
@@ -163,5 +173,7 @@
 				</li>
 			{/if}
 		{/if}
+		
+		{event name='userMenuAfter'}
 	</ol>
 </div>

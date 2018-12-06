@@ -47,7 +47,7 @@ class TrophyCategory extends AbstractDecoratedCategory implements ITitledLinkObj
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('TrophyList', [
+		return LinkHandler::getInstance()->getLink('CategoryTrophyList', [
 			'forceFrontend' => true,
 			'object' => $this->getDecoratedObject()
 		]);

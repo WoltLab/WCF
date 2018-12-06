@@ -291,7 +291,14 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) {
-		wcfDebug($data);
+		// does nothing
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function postImport() {
+		LanguageFactory::getInstance()->deleteLanguageCache();
 	}
 	
 	/**
@@ -468,7 +475,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		// add one field per language
 		foreach ($this->getProjectXmls() as $xml) {
 			$languageCode = $xml->getDocument()->documentElement->getAttribute('languagecode');
-			$languageName = $xml->getDocument()->documentElement->getAttribute('languagename');
+			$languageName = LanguageFactory::getInstance()->getLanguageByCode($languageCode)->languageName;
 			
 			if ($dataContainer->getNodeById($languageCode) !== null) {
 				throw new \LogicException("Duplicate language file with language code '{$languageCode}'.");
@@ -500,7 +507,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'languageID' => LanguageFactory::getInstance()->getLanguageByCode($element->ownerDocument->documentElement->getAttribute('languagecode'))->languageID,
 			'languageItem' => $element->getAttribute('name'),
@@ -529,12 +536,13 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				}
 			}
 			else {
-				$data['languageCategory'] = $languageCategory;
+				$data['languageCategoryID'] = LanguageFactory::getInstance()->getCategory($languageCategory)->languageCategoryID;
 			}
 		}
 		
 		if (!$saveData) {
 			$data[$element->ownerDocument->documentElement->getAttribute('languagecode')] = $element->nodeValue;
+			$data['languageCategoryIDMode'] = 'selection';
 		}
 		
 		return $data;
@@ -723,7 +731,7 @@ XML;
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$languageCode = $document->documentElement->getAttribute('languagecode');
@@ -806,12 +814,13 @@ XML;
 		
 		// replace old element
 		$element = $this->getElementByIdentifier($xml, $identifier);
-		
-		if ($element->parentNode === $newElement->parentNode) {
-			DOMUtil::replaceElement($element, $newElement, false);
-		}
-		else {
-			DOMUtil::removeNode($element);
+		if ($element !== null) {
+			if ($element->parentNode === $newElement->parentNode) {
+				DOMUtil::replaceElement($element, $newElement, false);
+			}
+			else {
+				DOMUtil::removeNode($element);
+			}
 		}
 		
 		return $newElement;

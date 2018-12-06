@@ -128,12 +128,15 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
-		$data = parent::doGetElementData($element, $saveData);
+	protected function fetchElementData(\DOMElement $element, $saveData) {
+		$data = parent::fetchElementData($element, $saveData);
 		
 		$icon = $element->getElementsByTagName('icon')->item(0);
 		if ($icon !== null) {
 			$data['icon'] = $icon->nodeValue;
+		}
+		else {
+			$data['icon'] = '';
 		}
 		
 		return $data;
@@ -143,8 +146,8 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$menuItem = parent::doCreateXmlElement($document, $form);
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
+		$menuItem = parent::prepareXmlElement($document, $form);
 		
 		$this->appendElementChildren($menuItem, ['icon' => null], $form);
 		

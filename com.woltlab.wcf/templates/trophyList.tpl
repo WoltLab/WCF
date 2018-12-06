@@ -1,22 +1,17 @@
-{capture assign='pageTitle'}{$category->getTitle()}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/capture}
-
 {capture assign='contentHeader'}
 	<header class="contentHeader messageGroupContentHeader">
 		<div class="contentHeaderTitle">
-			<h1 class="contentTitle">{$category->getTitle()}</h1>
-			{if $category->getDescription()}
-				<p class="contentHeaderDescription">{$category->getDescription()}</p>
-			{/if}
+			<h1 class="contentTitle">{$__wcf->getActivePage()->getTitle()}</h1>
 		</div>
 	</header>
 {/capture}
 
 {capture assign='headContent'}
 	{if $pageNo < $pages}
-		<link rel="next" href="{link controller='TrophyList' object=$category}pageNo={@$pageNo+1}{/link}">
+		<link rel="next" href="{link controller='TrophyList'}pageNo={@$pageNo+1}{/link}">
 	{/if}
 	{if $pageNo > 1}
-		<link rel="prev" href="{link controller='TrophyList' object=$category}{if $pageNo > 2}pageNo={@$pageNo-1}{/if}{/link}">
+		<link rel="prev" href="{link controller='TrophyList'}{if $pageNo > 2}pageNo={@$pageNo-1}{/if}{/link}">
 	{/if}
 {/capture}
 
@@ -25,22 +20,12 @@
 {hascontent}
 	<div class="paginationTop">
 		{content}
-			{pages print=true assign='pagesLinks' controller='TrophyList' object=$category link="pageNo=%d"}
+			{pages print=true assign='pagesLinks' controller='TrophyList' link="pageNo=%d"}
 		{/content}
 	</div>
 {/hascontent}
 
 <div class="section">
-	{if $categories|count > 1}
-		<nav class="tabMenu">
-			<ul>
-				{foreach from=$categories item='menuCategory'}
-					<li{if $menuCategory->categoryID == $category->categoryID} class="active"{/if}><a href="{$menuCategory->getLink()}">{$menuCategory->getTitle()}</a></li>
-				{/foreach}
-			</ul>
-		</nav>
-	{/if}
-
 	<div{if $categories|count > 1} class="tabMenuContent"{/if}>
 		{if $objects|count}
 			<ol class="section containerList trophyCategoryList tripleColumned">

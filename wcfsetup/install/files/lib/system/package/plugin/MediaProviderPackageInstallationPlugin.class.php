@@ -8,6 +8,7 @@ use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\ClassNameFormField;
+use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
@@ -187,13 +188,20 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 					}
 				}))
 		]);
+		
+		$form->getDataHandler()->add(new CustomFormFieldDataProcessor('unifyNewlines', function(IFormDocument $document, array $parameters) {
+			$parameters['data']['regex'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['regex']));
+			$parameters['data']['html'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['html']));
+			
+			return $parameters;
+		}));
 	}
 	
 	/**
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'name' => $element->getAttribute('name'),
 			'packageID' => $this->installation->getPackage()->packageID,
@@ -206,13 +214,15 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 			$data['html'] = $html->nodeValue;
 		}
 		else if ($saveData) {
-			// when saving data, `html` has to be present
 			$data['html'] = '';
 		}
 		
 		$className = $element->getElementsByTagName('className')->item(0);
 		if ($className !== null) {
 			$data['className'] = $className->nodeValue;
+		}
+		else if ($saveData) {
+			$data['className'] = '';
 		}
 		
 		return $data;
@@ -241,7 +251,7 @@ class MediaProviderPackageInstallationPlugin extends AbstractXMLPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$provider = $document->createElement($this->tagName);

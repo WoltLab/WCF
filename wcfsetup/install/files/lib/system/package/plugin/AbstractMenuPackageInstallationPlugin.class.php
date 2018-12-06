@@ -192,7 +192,53 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 					
 					return array_merge($options, $buildOptions());
 				}, true)
-				->value(''),
+				->value('')
+				->addValidator(new FormFieldValidator('selfChildAsParent', function(SingleSelectionFormField $formField) {
+					if (
+						$formField->getDocument()->getFormMode() === IFormDocument::FORM_MODE_UPDATE &&
+						$formField->getSaveValue() !== ''
+					) {
+						/** @var TextFormField $menuItemField */
+						$menuItemField = $formField->getDocument()->getNodeById('menuItem');
+						$menuItem = $menuItemField->getSaveValue();
+						$parentMenuItem = $formField->getSaveValue();
+						
+						if ($menuItem === $parentMenuItem) {
+							$formField->addValidationError(new FormFieldValidationError(
+								'selfParent',
+								'wcf.acp.pip.abstractMenu.parentMenuItem.error.selfParent'
+							));
+						}
+						else {
+							$menuStructure = $this->getMenuStructureData()['structure'];
+							
+							$checkChildren = function($menuItem) use ($formField, $menuStructure, $parentMenuItem, &$checkChildren) {
+								if (isset($menuStructure[$menuItem])) {
+									/** @var ACPMenuItem $childMenuItem */
+									foreach ($menuStructure[$menuItem] as $childMenuItem) {
+										if ($childMenuItem->menuItem === $parentMenuItem) {
+											$formField->addValidationError(new FormFieldValidationError(
+												'childAsParent',
+												'wcf.acp.pip.abstractMenu.parentMenuItem.error.childAsParent'
+											));
+											
+											return false;
+										}
+										else {
+											if (!$checkChildren($childMenuItem->menuItem)) {
+												return false;
+											}
+										}
+									}
+								}
+								
+								return true;
+							};
+							
+							$checkChildren($menuItem);
+						}
+					}
+				})),
 			
 			ClassNameFormField::create('menuItemController')
 				->objectProperty('controller')
@@ -271,7 +317,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'menuItem' => $element->getAttribute('name'),
 			'packageID' => $this->installation->getPackage()->packageID
@@ -281,30 +327,53 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 		if ($parentMenuItem !== null) {
 			$data['parentMenuItem'] = $parentMenuItem->nodeValue;
 		}
+		else if ($saveData) {
+			$data['parentMenuItem'] = '';
+		}
 		
 		$controller = $element->getElementsByTagName('controller')->item(0);
 		if ($controller !== null) {
 			$data['menuItemController'] = $controller->nodeValue;
+		}
+		else if ($saveData) {
+			$data['menuItemController'] = '';
 		}
 		
 		$link = $element->getElementsByTagName('link')->item(0);
 		if ($link !== null) {
 			$data['menuItemLink'] = $link->nodeValue;
 		}
+		else if ($saveData) {
+			$data['menuItemLink'] = '';
+		}
 		
 		$options = $element->getElementsByTagName('options')->item(0);
 		if ($options !== null) {
 			$data['options'] = $options->nodeValue;
+		}
+		else if ($saveData) {
+			$data['options'] = '';
 		}
 		
 		$permissions = $element->getElementsByTagName('permissions')->item(0);
 		if ($permissions !== null) {
 			$data['permissions'] = $permissions->nodeValue;
 		}
+		else if ($saveData) {
+			$data['permissions'] = '';
+		}
 		
 		$showOrder = $element->getElementsByTagName('showorder')->item(0);
 		if ($showOrder !== null) {
 			$data['showOrder'] = $showOrder->nodeValue;
+		}
+		if ($saveData && $this->editedEntry === null) {
+			// only set explicit showOrder when adding new menu item
+			$data['showOrder'] = $this->getShowOrder(
+				$data['showOrder'] ?? null,
+				$data['parentMenuItem'],
+				'parentMenuItem'
+			);
 		}
 		
 		return $data;
@@ -386,7 +455,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData()['data'];
 		
 		$menuItem = $document->createElement($this->tagName);

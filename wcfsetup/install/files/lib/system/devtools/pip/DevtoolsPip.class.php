@@ -252,7 +252,9 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 		$tar = $project->getPackageArchive()->getTar();
 		$tar->reset();
 		
-		$instructions = [];
+		$instructions = [
+			'value' => $target
+		];
 		
 		if ($project->isCore()) {
 			switch ($pluginName) {
@@ -310,23 +312,15 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						}
 					}
 					
-					$instructions['value'] = $defaultFilename;
-					
 					break;
 				
 				case 'language':
-					$filename = "wcfsetup/install/lang/{$target}";
-					$tar->registerFile($filename, $project->path . $filename);
-					
-					$instructions['value'] = $filename;
+					$tar->registerFile($target, $project->path . 'wcfsetup/install/lang/' . $target);
 					
 					break;
 					
 				default:
-					$filename = "com.woltlab.wcf/{$target}";
-					$tar->registerFile($filename, $project->path . $filename);
-					
-					$instructions['value'] = $filename;
+					$tar->registerFile($target, $project->path . 'com.woltlab.wcf/' . $target);
 					
 					break;
 			}
@@ -389,21 +383,15 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						}
 					}
 					
-					$instructions['value'] = $defaultFilename;
-					
 					break;
 				
 				default:
 					if (strpos($defaultFilename, '*') !== false) {
-						$filename = preg_replace('~\*.*$~', $target, $defaultFilename);
-						$tar->registerFile($filename, $project->path . $filename);
+						$tar->registerFile($target, $project->path . preg_replace('~\*.*$~', $target, $defaultFilename));
 					}
 					else {
-						$filename = $target;
-						$tar->registerFile($filename, $project->path . $filename);
+						$tar->registerFile($target, $project->path . $target);
 					}
-					
-					$instructions['value'] = $filename;
 					
 					break;
 			}

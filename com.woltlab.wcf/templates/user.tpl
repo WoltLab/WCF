@@ -183,6 +183,8 @@
 						<span class="userRankImage">{@$user->getRank()->getImage()}</span>
 					{/if}
 				{/if}
+				
+				{event name='afterContentTitle'}
 			</h1>
 			
 			<div class="contentHeaderDescription">
@@ -214,7 +216,7 @@
 								{if $user->getCurrentLocation()}<li>{@$user->getCurrentLocation()}</li>{/if}
 							{/if}
 							{if $__wcf->session->getPermission('admin.user.canViewIpAddress') && $user->registrationIpAddress}
-								<li>{lang}wcf.user.registrationIpAddress{/lang}: <span class="userRegistrationIpAddress">{$user->getRegistrationIpAddress()}</span></li>
+								<li>{lang}wcf.user.registrationIpAddress{/lang}: <span class="userRegistrationIpAddress">{@$user->getRegistrationIpAddress()|ipSearch}</span></li>
 							{/if}
 						{/content}
 					</ul>

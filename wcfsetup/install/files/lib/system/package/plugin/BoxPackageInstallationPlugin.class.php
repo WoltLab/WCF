@@ -614,7 +614,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'boxType' => $element->getElementsByTagName('boxType')->item(0)->nodeValue,
 			'content' => [],
@@ -640,10 +640,16 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				if ($contentContent !== null) {
 					$data['content'][$languageID] = $contentContent->nodeValue;
 				}
+				else if ($saveData) {
+					$data['content'][$languageID] = '';
+				}
 				
 				$title = $content->getElementsByTagName('title')->item(0);
 				if ($title !== null) {
 					$data['title'][$languageID] = $title->nodeValue;
+				}
+				else if ($saveData) {
+					$data['title'][$languageID] = '';
 				}
 			}
 		}
@@ -652,6 +658,14 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			$optionalElement = $element->getElementsByTagName($optionalElementName)->item(0);
 			if ($optionalElement !== null) {
 				$data[$optionalElementName] = $optionalElement->nodeValue;
+			}
+			else if ($saveData) {
+				if ($optionalElementName === 'showHeader' || $optionalElementName === 'visibleEverywhere') {
+					$data[$optionalElementName] = 0;
+				}
+				else {
+					$data[$optionalElementName] = '';
+				}
 			}
 		}
 		
@@ -760,7 +774,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
 		$data = $formData['data'];
 		

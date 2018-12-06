@@ -35,11 +35,9 @@
 								{/if}
 								
 								{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike')}
-									<li class="reputationCounter {if $article->cumulativeLikes > 0}positive{elseif $article->cumulativeLikes < 0}negative{else}neutral{/if}" data-object-id="{@$article->articleID}" data-object-type="com.woltlab.wcf.likeableArticle">
-										{if $article->likes || $article->dislikes || $article->neutralReactions}
-											<span class="icon icon16 fa-smile-o"></span>{if $article->cumulativeLikes > 0}+{elseif $article->cumulativeLikes == 0}±{/if}{#$article->cumulativeLikes}
-										{/if}
-									</li>
+									{if $article->likes || $article->dislikes || $article->neutralReactions}
+										<li class="reputationCounter {if $article->cumulativeLikes > 0}positive{elseif $article->cumulativeLikes < 0}negative{else}neutral{/if}">{if $article->cumulativeLikes > 0}+{elseif $article->cumulativeLikes == 0}±{/if}{#$article->cumulativeLikes}</li>
+									{/if}
 								{/if}
 								
 								{if ARTICLE_ENABLE_VISIT_TRACKING && $article->isNew()}<li><span class="badge label newMessageBadge">{lang}wcf.message.new{/lang}</span></li>{/if}

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\cronjob;
 use wcf\data\cronjob\log\CronjobLogEditor;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\data\user\User;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
@@ -23,6 +24,8 @@ use wcf\util\DateUtil;
  * @method	CronjobEditor		getSingleObject()
  */
 class CronjobAction extends AbstractDatabaseObjectAction implements IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -89,17 +92,6 @@ class CronjobAction extends AbstractDatabaseObjectAction implements IToggleActio
 			if (!$cronjob->canBeDisabled()) {
 				throw new PermissionDeniedException();
 			}
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $cronjob) {
-			$cronjob->update([
-				'isDisabled' => $cronjob->isDisabled ? 0 : 1
-			]);
 		}
 	}
 	

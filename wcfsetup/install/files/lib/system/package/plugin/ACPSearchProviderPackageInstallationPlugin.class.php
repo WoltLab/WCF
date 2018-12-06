@@ -113,7 +113,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'className' => $element->getElementsByTagName('classname')->item(0)->nodeValue,
 			'packageID' => $this->installation->getPackage()->packageID,
@@ -123,6 +123,9 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 		$showOrder = $element->getElementsByTagName('showorder')->item(0);
 		if ($showOrder) {
 			$data['showOrder'] = $showOrder->nodeValue;
+		}
+		else if ($saveData) {
+			$data['showOrder'] = $this->getShowOrder(null);
 		}
 		
 		return $data;
@@ -202,7 +205,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$acpSearchProvider = $document->createElement($this->tagName);

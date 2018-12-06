@@ -95,4 +95,22 @@ class DevtoolsTar extends Tar {
 		
 		return $this->contentList;
 	}
+	
+	/**
+	 * Returns all files in the virtual file list.
+	 * 
+	 * @return	string[]
+	 */
+	public function getFiles() {
+		return $this->files;
+	}
+	
+	/**
+	 * Sets all files in the virtual file list.
+	 * 
+	 * @param	string[]	$files
+	 */
+	public function setFiles(array $files) {
+		$this->files = $files;
+	}
 }

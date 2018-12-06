@@ -163,6 +163,57 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 	}
 	
 	/**
+	 * Returns a function that matches hosts against the given whitelist.
+	 * The whitelist supports wildcards using using `*.` prefix.
+	 * 
+	 * @param       string[]        $whitelist
+	 * @return      callable
+	 */
+	protected function getHostMatcher(array $whitelist) {
+		$hosts = [];
+		foreach ($whitelist as $host) {
+			$isWildcard = false;
+			if (mb_strpos($host, '*') !== false) {
+				$host = preg_replace('~^(\*\.)+~', '', $host);
+				if (mb_strpos($host, '*') !== false || $host === '') {
+					// bad host
+					continue;
+				}
+				
+				$isWildcard = true;
+			}
+			
+			$host = mb_strtolower($host);
+			if (!isset($hosts[$host])) $hosts[$host] = $isWildcard;
+		}
+		
+		return function ($hostname) use ($hosts) {
+			static $validHosts = [];
+			
+			$hostname = mb_strtolower($hostname);
+			if (isset($hosts[$hostname]) || isset($validHosts[$hostname])) {
+				return true;
+			}
+			else {
+				// check wildcard hosts
+				foreach ($hosts as $host => $isWildcard) {
+					if ($isWildcard && mb_strpos($hostname, $host) !== false) {
+						// the prepended dot will ensure that `example.com` matches only
+						// on domains like `foo.example.com` but not on `bar-example.com`
+						if (StringUtil::endsWith($hostname, '.' . $host)) {
+							$validHosts[$hostname] = $hostname;
+							
+							return true;
+						}
+					}
+				}
+			}
+			
+			return false;
+		};
+	}
+	
+	/**
 	 * Validates the domain name against the list of own domains
 	 * and whitelisted ones with wildcard support.
 	 * 
@@ -170,53 +221,20 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 	 * @return      boolean
 	 */
 	protected function bypassProxy($hostname) {
-		static $hosts = null;
-		static $validHosts = [];
+		static $matcher = null;
 		
-		if ($hosts === null) {
+		if ($matcher === null) {
 			$whitelist = explode("\n", StringUtil::unifyNewlines(IMAGE_PROXY_HOST_WHITELIST));
-			foreach ($whitelist as $host) {
-				$isWildcard = false;
-				if (mb_strpos($host, '*') !== false) {
-					$host = preg_replace('~^(\*\.)+~', '', $host);
-					if (mb_strpos($host, '*') !== false || $host === '') {
-						// bad host
-						continue;
-					}
-					
-					$isWildcard = true;
-				}
-				
-				$host = mb_strtolower($host);
-				if (!isset($hosts[$host])) $hosts[$host] = $isWildcard;
-			}
 			
 			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
 				$host = mb_strtolower($application->domainName);
-				if (!isset($hosts[$host])) $hosts[$host] = false;
+				$whitelist[] = $host;
 			}
+			
+			$matcher = $this->getHostMatcher($whitelist);
 		}
 		
-		$hostname = mb_strtolower($hostname);
-		if (isset($hosts[$hostname]) || isset($validHosts[$hostname])) {
-			return true;
-		}
-		else {
-			// check wildcard hosts
-			foreach ($hosts as $host => $isWildcard) {
-				if ($isWildcard && mb_strpos($hostname, $host) !== false) {
-					// the prepended dot will ensure that `example.com` matches only
-					// on domains like `foo.example.com` but not on `bar-example.com`
-					if (StringUtil::endsWith($hostname, '.' . $host)) {
-						$validHosts[$hostname] = $hostname;
-						
-						return true;
-					}
-				}
-			}
-		}
-		
-		return false;
+		return $matcher($hostname);
 	}
 	
 	/**
@@ -240,17 +258,19 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 	}
 	
 	protected function isAllowedOrigin($src) {
-		static $ownDomains;
-		if ($ownDomains === null) {
-			$ownDomains = array();
+		static $matcher = null;
+		if ($matcher === null) {
+			$whitelist = explode("\n", StringUtil::unifyNewlines(IMAGE_EXTERNAL_SOURCE_WHITELIST));
+			
 			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
-				if (!in_array($application->domainName, $ownDomains)) {
-					$ownDomains[] = $application->domainName;
-				}
+				$host = mb_strtolower($application->domainName);
+				$whitelist[] = $host;
 			}
+			
+			$matcher = $this->getHostMatcher($whitelist);
 		}
 		
 		$host = Url::parse($src)['host'];
-		return !$host || in_array($host, $ownDomains);
+		return !$host || $matcher($host);
 	}
 }

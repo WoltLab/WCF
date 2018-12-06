@@ -198,6 +198,18 @@ class PageAddForm extends AbstractForm {
 	public $enableShareButtons = 0;
 	
 	/**
+	 * @var int
+	 * @since 3.2
+	 */
+	public $presetPageID = 0;
+	
+	/**
+	 * @var Page
+	 * @since 3.2
+	 */
+	public $presetPage;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -217,6 +229,14 @@ class PageAddForm extends AbstractForm {
 		$boxList->readObjects();
 		$this->availableBoxes = $boxList->getObjects();
 		
+		if (isset($_GET['presetPageID'])) $this->presetPageID = intval($_GET['presetPageID']);
+		if ($this->presetPageID) {
+			$this->presetPage = new Page($this->presetPageID);
+			if (!$this->presetPage->pageID) {
+				throw new IllegalLinkException();
+			}
+		}
+		
 		$this->readPageType();
 	}
 	
@@ -226,6 +246,12 @@ class PageAddForm extends AbstractForm {
 	 * @throws	IllegalLinkException
 	 */
 	protected function readPageType() {
+		if ($this->presetPage) {
+			$this->isMultilingual = $this->presetPage->isMultilingual;
+			$this->pageType = $this->presetPage->pageType;
+			return;
+		}
+		
 		if (!empty($_REQUEST['isMultilingual'])) $this->isMultilingual = 1;
 		if (!empty($_REQUEST['pageType'])) $this->pageType = $_REQUEST['pageType'];
 		
@@ -610,6 +636,45 @@ class PageAddForm extends AbstractForm {
 		// set default values
 		if (empty($_POST)) {
 			$this->boxIDs = $this->getDefaultBoxIDs();
+			
+			if ($this->presetPage) {
+				$this->name = $this->presetPage->name;
+				$this->parentPageID = $this->presetPage->parentPageID;
+				$this->pageType = $this->presetPage->pageType;
+				$this->applicationPackageID = $this->presetPage->overrideApplicationPackageID ?: $this->presetPage->applicationPackageID;
+				$this->cssClassName = $this->presetPage->cssClassName;
+				if ($this->presetPage->controllerCustomURL) $this->customURL[0] = $this->presetPage->controllerCustomURL;
+				$this->isLandingPage = 0;
+				$this->isDisabled = 1;
+				if ($this->presetPage->availableDuringOfflineMode) $this->availableDuringOfflineMode = 1;
+				if ($this->presetPage->allowSpidersToIndex) $this->allowSpidersToIndex = 1;
+				else $this->allowSpidersToIndex = 0;
+				$this->enableShareButtons = $this->presetPage->enableShareButtons;
+				
+				foreach ($this->presetPage->getPageContents() as $languageID => $content) {
+					$this->title[$languageID] = $content->title;
+					$this->content[$languageID] = $content->content;
+					$this->metaDescription[$languageID] = $content->metaDescription;
+					$this->metaKeywords[$languageID] = $content->metaKeywords;
+					$this->customURL[$languageID] = $content->customURL;
+				}
+				
+				$this->boxIDs = [];
+				foreach ($this->availableBoxes as $box) {
+					if ($box->visibleEverywhere) {
+						if (!in_array($box->boxID, $this->presetPage->getBoxIDs())) {
+							$this->boxIDs[] = $box->boxID;
+						}
+					}
+					else {
+						if (in_array($box->boxID, $this->presetPage->getBoxIDs())) {
+							$this->boxIDs[] = $box->boxID;
+						}
+					}
+				}
+				
+				$this->aclValues = SimpleAclHandler::getInstance()->getValues('com.woltlab.wcf.page', $this->presetPage->pageID);
+			}
 		}
 		
 		$this->menuItems = new MenuItemNodeTree(MenuCache::getInstance()->getMainMenuID(), null, false);

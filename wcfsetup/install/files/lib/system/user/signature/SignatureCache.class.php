@@ -2,6 +2,7 @@
 namespace wcf\system\user\signature;
 use wcf\data\user\User;
 use wcf\system\html\output\HtmlOutputProcessor;
+use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\SingletonFactory;
 
 /**
@@ -36,6 +37,9 @@ class SignatureCache extends SingletonFactory {
 				$this->htmlOutputProcessor = new HtmlOutputProcessor();
 			}
 			
+			MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.user.signature', [$user->userID]);
+			
+			$this->htmlOutputProcessor->setContext('com.woltlab.wcf.user.signature', $user->userID);
 			$this->htmlOutputProcessor->process($user->signature, 'com.woltlab.wcf.user.signature', $user->userID);
 			$this->signatures[$user->userID] = $this->htmlOutputProcessor->getHtml();
 		}

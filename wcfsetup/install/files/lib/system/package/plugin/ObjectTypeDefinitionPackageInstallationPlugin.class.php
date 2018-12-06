@@ -145,7 +145,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
+	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
 			'definitionName' => $element->getElementsByTagName('name')->item(0)->nodeValue,
 			'packageID' => $this->installation->getPackage()->packageID
@@ -154,6 +154,9 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 		$interfaceName = $element->getElementsByTagName('interfacename')->item(0);
 		if ($interfaceName) {
 			$data['interfaceName'] = $interfaceName->nodeValue;
+		}
+		else if ($saveData) {
+			$data['interfaceName'] = '';
 		}
 		
 		return $data;
@@ -182,7 +185,7 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$definition = $document->createElement($this->tagName);
 		
 		$this->appendElementChildren(

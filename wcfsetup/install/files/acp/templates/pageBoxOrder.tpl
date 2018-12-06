@@ -115,13 +115,14 @@
 <script data-relocate="true">
 	require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Page/BoxOrder'], function (Dictionary, Language, AcpUiPageBoxOrder) {
 		Language.addObject({
+			'wcf.acp.box.isDisabled': '{lang}wcf.acp.box.isDisabled{/lang}',
 			'wcf.acp.page.boxOrder.discard.confirmMessage': '{lang}wcf.acp.page.boxOrder.discard.confirmMessage{/lang}'
 		});
 		
 		var boxes = new Dictionary();
 		{foreach from=$boxes key=position item=boxData}
 			{if $position != 'mainMenu'}
-				boxes.set('{$position}', [{implode from=$boxData item=box}{ boxID: {@$box->boxID}, name: '{$box->name|encodeJS}' }{/implode}]);
+				boxes.set('{$position}', [{implode from=$boxData item=box}{ boxID: {@$box->boxID}, name: '{$box->name|encodeJS}', isDisabled: {if $box->isDisabled}true{else}false{/if} }{/implode}]);
 			{/if}
 		{/foreach}
 		

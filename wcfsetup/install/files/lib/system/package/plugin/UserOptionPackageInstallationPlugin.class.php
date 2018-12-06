@@ -238,6 +238,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 					->label('wcf.acp.pip.userOption.options.editable')
 					->description('wcf.acp.pip.userOption.options.editable.description')
 					->options([
+						0 => 'wcf.acp.user.option.editable.0',
 						1 => 'wcf.acp.user.option.editable.1',
 						2 => 'wcf.acp.user.option.editable.2',
 						3 => 'wcf.acp.user.option.editable.3',
@@ -334,8 +335,8 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
-		$data = parent::doGetElementData($element, $saveData);
+	protected function fetchElementData(\DOMElement $element, $saveData) {
+		$data = parent::fetchElementData($element, $saveData);
 		
 		switch ($this->entryType) {
 			case 'options':
@@ -360,6 +361,11 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 						else {
 							$data[$optionalPropertyName] = $optionalProperty->nodeValue;
 						}
+					}
+					else if ($saveData && $optionalPropertyName === 'selectOptions') {
+						// all of the other fields will be put in `additionalData`,
+						// thus empty values are not necessary 
+						$data['selectoptions'] = '';
 					}
 				}
 				
@@ -411,8 +417,8 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$option = parent::doCreateXmlElement($document, $form);
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
+		$option = parent::prepareXmlElement($document, $form);
 		
 		switch ($this->entryType) {
 			case 'options':
@@ -423,9 +429,9 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 						'outputclass' => '',
 						'required' => 0,
 						'askduringregistration' => 0,
-						'editable' => '0',
-						'visible' => '0',
 						'searchable' => 0,
+						'visible' => '0',
+						'editable' => '0',
 						'isdisabled' => 0,
 						'messageObjectType' => '',
 						'contentpattern' => ''

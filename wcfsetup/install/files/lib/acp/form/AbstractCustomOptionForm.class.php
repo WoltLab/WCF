@@ -65,6 +65,13 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 	public $showOrder = 0;
 	
 	/**
+	 * 1 if the option is disabled
+	 * @var	boolean
+	 * @since 3.2
+	 */
+	public $isDisabled = 0;
+	
+	/**
 	 * action class name
 	 * @var string
 	 */
@@ -160,6 +167,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 		if (isset($_POST['selectOptions'])) $this->selectOptions = $_POST['selectOptions'];
 		if (isset($_POST['required'])) $this->required = intval($_POST['required']);
 		if (isset($_POST['showOrder'])) $this->showOrder = intval($_POST['showOrder']);
+		if (isset($_POST['isDisabled'])) $this->isDisabled = 1;
 		
 		if ($this->optionType == 'boolean' || $this->optionType == 'integer') {
 			$this->defaultValue = intval($this->defaultValue);
@@ -201,6 +209,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 			$this->selectOptions = $this->option->selectOptions;
 			$this->required = $this->option->required;
 			$this->showOrder = $this->option->showOrder;
+			$this->isDisabled = $this->option->isDisabled;
 		}
 		
 		parent::readData();
@@ -218,6 +227,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 			'optionType' => $this->optionType,
 			'defaultValue' => $this->defaultValue,
 			'showOrder' => $this->showOrder,
+			'isDisabled' => $this->isDisabled,
 			'validationPattern' => $this->validationPattern,
 			'selectOptions' => $this->selectOptions,
 			'required' => $this->required
@@ -259,7 +269,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 		// reset values
 		$this->optionTitle = $this->optionDescription = $this->optionType = $this->defaultValue = $this->validationPattern = $this->selectOptions = '';
 		$this->optionType = 'text';
-		$this->required = $this->showOrder = 0;
+		$this->required = $this->showOrder = $this->isDisabled = 0;
 	}
 	
 	/**
@@ -275,6 +285,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 			'selectOptions' => $this->selectOptions,
 			'required' => $this->required,
 			'showOrder' => $this->showOrder,
+			'isDisabled' => $this->isDisabled,
 			'action' => $this->action,
 			'availableOptionTypes' => self::$availableOptionTypes,
 			'optionTypesUsingSelectOptions' => self::$optionTypesUsingSelectOptions

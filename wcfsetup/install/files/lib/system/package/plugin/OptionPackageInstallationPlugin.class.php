@@ -204,7 +204,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 						->description('wcf.acp.pip.option.options.requireI18n.description'),
 				]);
 				
-				/** @var SingleSelectionFormField $supportI18n */
+				/** @var SingleSelectionFormField $optionType */
 				$optionType = $form->getNodeById('optionType');
 				
 				/** @var BooleanFormField $supportI18n */
@@ -244,15 +244,23 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doGetElementData(\DOMElement $element, $saveData) {
-		$data = parent::doGetElementData($element, $saveData);
+	protected function fetchElementData(\DOMElement $element, $saveData) {
+		$data = parent::fetchElementData($element, $saveData);
 		
 		switch ($this->entryType) {
 			case 'options':
 				foreach (['selectOptions', 'hidden', 'supportI18n', 'requireI18n'] as $optionalPropertyName) {
 					$optionalProperty = $element->getElementsByTagName(strtolower($optionalPropertyName))->item(0);
 					if ($optionalProperty !== null) {
-						$data[$optionalPropertyName] = $optionalProperty->nodeValue;
+						$data[$saveData ? strtolower($optionalPropertyName) : $optionalPropertyName] = $optionalProperty->nodeValue;
+					}
+					else if ($saveData) {
+						if ($optionalPropertyName === 'selectOptions') {
+							$data['selectoptions'] = '';
+						}
+						else {
+							$data[strtolower($optionalPropertyName)] = 0;
+						}
 					}
 				}
 				
@@ -299,8 +307,8 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$option = parent::doCreateXmlElement($document, $form);
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
+		$option = parent::prepareXmlElement($document, $form);
 		
 		switch ($this->entryType) {
 			case 'options':
