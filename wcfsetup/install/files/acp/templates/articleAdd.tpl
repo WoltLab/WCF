@@ -39,7 +39,8 @@
 					defaultLanguageId: {@$defaultLanguageID},
 					isI18n: {if $article->isMultilingual}true{else}false{/if},
 					languages: { {implode from=$languages item=language glue=', '}{@$language->languageID}: '{$language|encodeJS}'{/implode} }
-				}
+				},
+				redirectUrl: '{link controller='ArticleList'}{/link}'
 			});
 		{/if}
 	});
