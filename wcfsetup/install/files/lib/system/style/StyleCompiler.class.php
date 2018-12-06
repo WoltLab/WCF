@@ -313,6 +313,8 @@ class StyleCompiler extends SingletonFactory {
 		if (!empty($variables['wcfFontFamilyGoogle'])) {
 			$variables['wcfFontFamily'] = '"' . $variables['wcfFontFamilyGoogle'] . '", ' . $variables['wcfFontFamily'];
 		}
+		unset($variables['wcfFontFamilyFallback']);
+		unset($variables['wcfFontFamilyGoogle']);
 		
 		// add options as SCSS variables
 		if (PACKAGE_ID) {
