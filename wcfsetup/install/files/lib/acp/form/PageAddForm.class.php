@@ -14,6 +14,7 @@ use wcf\data\page\Page;
 use wcf\data\page\PageAction;
 use wcf\data\page\PageEditor;
 use wcf\data\page\PageNodeTree;
+use wcf\data\smiley\SmileyCache;
 use wcf\form\AbstractForm;
 use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\exception\IllegalLinkException;
@@ -698,6 +699,8 @@ class PageAddForm extends AbstractForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
+		
+		SmileyCache::getInstance()->assignVariables();
 		
 		WCF::getTPL()->assign([
 			'action' => 'add',

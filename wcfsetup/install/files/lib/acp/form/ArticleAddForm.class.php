@@ -8,6 +8,7 @@ use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\language\Language;
 use wcf\data\media\Media;
 use wcf\data\media\ViewableMediaList;
+use wcf\data\smiley\SmileyCache;
 use wcf\data\user\User;
 use wcf\form\AbstractForm;
 use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
@@ -486,6 +487,8 @@ class ArticleAddForm extends AbstractForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
+		
+		SmileyCache::getInstance()->assignVariables();
 		
 		WCF::getTPL()->assign([
 			'action' => 'add',

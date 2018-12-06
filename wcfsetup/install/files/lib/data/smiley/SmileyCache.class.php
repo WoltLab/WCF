@@ -5,6 +5,7 @@ use wcf\data\smiley\category\SmileyCategory;
 use wcf\system\cache\builder\SmileyCacheBuilder;
 use wcf\system\category\CategoryHandler;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Manages the smiley cache.
@@ -127,5 +128,28 @@ class SmileyCache extends SingletonFactory {
 		if (isset($this->cachedSmilies[$categoryID])) return $this->cachedSmilies[$categoryID];
 		
 		return [];
+	}
+	
+	/**
+	 * Assigns the smilies and their categories to the template.
+	 * 
+	 * @since 3.2
+	 */
+	public function assignVariables() {
+		if (!MODULE_SMILEY) {
+			return;
+		}
+		
+		$smileyCategories = $this->getVisibleCategories();
+		$firstCategory = reset($smileyCategories);
+		$defaultSmilies = [];
+		if ($firstCategory) {
+			$defaultSmilies = $this->getCategorySmilies($firstCategory->categoryID ?: null);
+		}
+		
+		WCF::getTPL()->assign([
+			'defaultSmilies' => $defaultSmilies,
+			'smileyCategories' => $smileyCategories,
+		]);
 	}
 }

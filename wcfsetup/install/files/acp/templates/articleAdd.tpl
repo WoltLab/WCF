@@ -357,6 +357,8 @@
 			
 			{event name='messageFields'}
 		</div>
+		
+		{include file='messageFormTabs' wysiwygContainerID='content0'}
 	{else}
 		<div class="section tabMenuContainer">
 			<nav class="tabMenu">
@@ -511,6 +513,8 @@
 						
 						{event name='messageFieldsMultilingual'}
 					</div>
+					
+					{include file='messageFormTabs' wysiwygContainerID='content'|concat:$availableLanguage->languageID}
 				</div>
 			{/foreach}
 		</div>

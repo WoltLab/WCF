@@ -9,6 +9,7 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\Page;
 use wcf\data\page\PageNodeTree;
+use wcf\data\smiley\SmileyCache;
 use wcf\form\AbstractForm;
 use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\box\IBoxController;
@@ -621,6 +622,8 @@ class BoxAddForm extends AbstractForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
+		
+		SmileyCache::getInstance()->assignVariables();
 		
 		WCF::getTPL()->assign([
 			'action' => 'add',

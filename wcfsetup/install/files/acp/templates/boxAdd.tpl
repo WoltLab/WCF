@@ -350,6 +350,10 @@
 						</dd>
 					</dl>
 				</div>
+				
+				{if $boxType == 'text'}
+					{include file='messageFormTabs' wysiwygContainerID='content0'}
+				{/if}
 			{else}
 				<div class="tabMenuContainer">
 					<nav class="menu">
@@ -424,6 +428,10 @@
 											{/if}
 										</dd>
 									</dl>
+									
+									{if $boxType == 'text'}
+										{include file='messageFormTabs' wysiwygContainerID='content'|concat:$availableLanguage->languageID}
+									{/if}
 								{/if}
 							</div>
 						</div>
