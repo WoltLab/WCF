@@ -408,7 +408,6 @@ class SystemException extends \Exception implements IPrintableException {
 			$first = false;
 		} while ($e = $e->getPrevious());
 		?>
-		?>
 	</div>
 </body>
 </html>
