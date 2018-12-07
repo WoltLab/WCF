@@ -472,6 +472,68 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	}
 	
 	/**
+	 * Prepares the special trophies for the given user ids.
+	 * 
+	 * @param       int[]           $userIDs
+	 * @since       3.2
+	 */
+	public static function prepareSpecialTrophies(array $userIDs) {
+		UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
+		UserStorageHandler::getInstance()->loadStorage($userIDs);
+		$storageData = UserStorageHandler::getInstance()->getStorage($userIDs, 'specialTrophies');
+		
+		$rebuildUserIDs = $deleteSpecialTrophyIDs = [];
+		foreach ($storageData as $userID => $datum) {
+			if ($datum === null) {
+				$rebuildUserIDs[] = $userID;
+			}
+			else {
+				$specialTrophies = unserialize($datum);
+				
+				// check if the user has the permission to store these number of trophies,
+				// otherwise, delete the last trophies
+				if (count($specialTrophies) > UserProfileRuntimeCache::getInstance()->getObject($userID)->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
+					$deleteSpecialTrophyIDs[$userID] = [];
+					while (count($specialTrophies) > UserProfileRuntimeCache::getInstance()->getObject($userID)->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
+						$deleteSpecialTrophyIDs[$userID] = array_pop($specialTrophies);
+					}
+					
+					UserStorageHandler::getInstance()->update($userID, 'specialTrophies', serialize($specialTrophies));
+				}
+			}
+		}
+		
+		if (!empty($rebuildUserIDs)) {
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('userID IN (?)', [$rebuildUserIDs]);
+			
+			$sql = "SELECT userID, trophyID FROM wcf".WCF_N."_user_special_trophy ".$conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			
+			$data = array_combine($rebuildUserIDs, array_fill(0, count($rebuildUserIDs), []));
+			while ($row = $statement->fetchArray()) {
+				$data[$row['userID']][] = $row['trophyID'];
+			}
+			
+			foreach ($data as $userID => $trophyIDs) {
+				UserStorageHandler::getInstance()->update($userID, 'specialTrophies', serialize($trophyIDs));
+			}
+		}
+		
+		if (!empty($deleteSpecialTrophyIDs)) {
+			$conditionBuilder = new PreparedStatementConditionBuilder(true, 'OR');
+			foreach ($deleteSpecialTrophyIDs as $userID => $trophyIDs) {
+				$conditionBuilder->add('(userID = ? AND trophyID IN (?))', [$userID, $trophyIDs]);
+			}
+			
+			$sql = "DELETE FROM wcf".WCF_N."_user_special_trophy ".$conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+		}
+	}
+	
+	/**
 	 * Returns the last activity time.
 	 * 
 	 * @return	integer
