@@ -3652,7 +3652,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.user.gender.male"><![CDATA[Männlich]]></item>
 		<item name="wcf.user.gender.female"><![CDATA[Weiblich]]></item>
 		<item name="wcf.user.members"><![CDATA[Mitglieder]]></item>
-		<item name="wcf.user.members.noMembers"><![CDATA[Es wurden keine Mitglieder gefunden.]]></item>
+		<item name="wcf.user.members.noMembers"><![CDATA[Es wurden keine Mitglieder gefunden. <a href="{link controller='MembersList'}{/link}">Die aktiven Filter zurücksetzen.</a>]]></item>
 		<item name="wcf.user.members.sort"><![CDATA[Sortierung]]></item>
 		<item name="wcf.user.members.sort.letters"><![CDATA[Anfangsbuchstabe]]></item>
 		<item name="wcf.user.members.sort.letters.all"><![CDATA[Alle]]></item>
@@ -3841,6 +3841,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.sortField.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.user.sortField.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
+		<item name="wcf.user.sortField.reactionReputation"><![CDATA[Reputation aus Raktionen]]></item>
 		<item name="wcf.user.articles"><![CDATA[Artikel]]></item>
 	</category>
 	<category name="wcf.user.menu">

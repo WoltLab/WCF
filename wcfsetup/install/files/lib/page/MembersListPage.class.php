@@ -160,7 +160,8 @@ class MembersListPage extends SortablePage {
 		WCF::getTPL()->assign([
 			'letters' => str_split(self::$availableLetters),
 			'letter' => $this->letter,
-			'searchID' => $this->searchID
+			'searchID' => $this->searchID,
+			'validSortFields' => $this->validSortFields,
 		]);
 		
 		if (count($this->objectList) === 0) {
