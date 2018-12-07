@@ -15,6 +15,7 @@ use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
 use wcf\system\email\UserMailbox;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\RequestHandler;
@@ -878,6 +879,14 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function validateResendActivationMail() {
 		$this->readObjects();
+		
+		if (!WCF::getSession()->getPermission('admin.user.canEnableUser')) {
+			throw new PermissionDeniedException();
+		}
+		
+		if (REGISTER_ACTIVATION_METHOD != 1) {
+			throw new IllegalLinkException();
+		}  
 		
 		foreach ($this->objects as $object) {
 			if (!$object->activationCode) {
