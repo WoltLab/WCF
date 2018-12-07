@@ -904,7 +904,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		// get fresh user list with updated user objects
 		$newUserList = new UserList();
-		$newUserList->getConditionBuilder()->add('user.userID IN (?)', [$this->objectIDs]);
+		$newUserList->getConditionBuilder()->add('user_table.userID IN (?)', [$this->objectIDs]);
 		$newUserList->readObjects();
 		foreach ($newUserList->getObjects() as $object) {
 			$email = new Email();
