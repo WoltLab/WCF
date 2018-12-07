@@ -893,7 +893,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public function resendActivationMail() {
 		// update every selected user's activation code
 		foreach ($this->objects as $object) {
-			$action = new UserAction($object, 'update', [
+			$action = new UserAction([$object], 'update', [
 				'data' => [
 					'activationCode' => UserRegistrationUtil::getActivationCode()
 				]
