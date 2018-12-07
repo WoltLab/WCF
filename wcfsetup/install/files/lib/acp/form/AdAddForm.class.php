@@ -242,7 +242,6 @@ class AdAddForm extends AbstractForm {
 		}
 	}
 	
-	
 	/**
 	 * @inheritDoc
 	 */
