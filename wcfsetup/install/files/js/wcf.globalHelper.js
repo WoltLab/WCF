@@ -136,30 +136,28 @@
 	/**
 	 * Shorthand function to retrieve or set a 'data-' attribute.
 	 * 
-	 * @param	{Element}	element		target element
+	 * @param	{HTMLElement}	element		target element
 	 * @param	{string}	attribute	attribute name
 	 * @param	{?=}            value		attribute value, omit if attribute should be read
 	 * @return	{(string|undefined)}		attribute value, empty string if attribute is not set or undefined if `value` was omitted
 	 */
 	window.elData = function(element, attribute, value) {
-		attribute = 'data-' + attribute;
-		
 		if (value === undefined) {
-			return element.getAttribute(attribute) || '';
+			return element.dataset.attribute || '';
 		}
 		
-		element.setAttribute(attribute, value);
+		element.dataset.attribute = value;
 	};
 	
 	/**
 	 * Shorthand function to retrieve a boolean 'data-' attribute.
 	 * 
-	 * @param	{Element}	element		target element
+	 * @param	{HTMLElement}	element		target element
 	 * @param	{string}	attribute	attribute name
 	 * @return	{boolean}	true if value is either `1` or `true`
 	 */
 	window.elDataBool = function(element, attribute) {
-		var value = elData(element, attribute);
+		const value = elData(element, attribute);
 		
 		return (value === "1" || value === "true");
 	};
@@ -233,7 +231,7 @@
 	/**
 	 * Shorthand function to show an element previously hidden by using `elHide()`.
 	 * 
-	 * @param	{Element}	element		DOM element
+	 * @param	{HTMLElement}	element		DOM element
 	 */
 	window.elShow = function(element) {
 		element.style.removeProperty('display');
@@ -242,7 +240,7 @@
 	/**
 	 * Toggles visibility of an element using the display style.
 	 * 
-	 * @param       {Element}       element         DOM element
+	 * @param       {HTMLElement}       element         DOM element
 	 */
 	window.elToggle = function (element) {
 		if (element.style.getPropertyValue('display') === 'none') {
@@ -262,7 +260,7 @@
 	 * @param	{function}	callback	callback function
 	 */
 	window.forEach = function(list, callback) {
-		for (var i = 0, length = list.length; i < length; i++) {
+		for (let i = 0, length = list.length; i < length; i++) {
 			callback(list[i], i);
 		}
 	};
