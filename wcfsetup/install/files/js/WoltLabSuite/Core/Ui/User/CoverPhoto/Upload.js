@@ -12,13 +12,21 @@ define(['Core', 'EventHandler', 'Upload', 'Ui/Notification', 'Ui/Dialog'], funct
 	/**
 	 * @constructor
 	 */
-	function UiUserCoverPhotoUpload() {
+	function UiUserCoverPhotoUpload(userId) {
 		Upload.call(this, 'coverPhotoUploadButtonContainer', 'coverPhotoUploadPreview', {
 			action: 'uploadCoverPhoto',
 			className: 'wcf\\data\\user\\UserProfileAction'
 		});
+		
+		this._userId = userId;
 	}
 	Core.inherit(UiUserCoverPhotoUpload, Upload, {
+		_getParameters: function() {
+			return {
+				userID: this._userId
+			};
+		},
+		
 		/**
 		 * @see	WoltLabSuite/Core/Upload#_success
 		 */

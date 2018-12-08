@@ -2453,6 +2453,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Neues Passwort zusenden]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} diesem Benutzer wirklich ein neues Kennwort zusenden?]]></item>
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Persönliche Daten exportieren (DSGVO)]]></item>
+		<item name="wcf.acp.user.coverPhoto.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} ein Titelbild im Profil des Benutzers hochladen.]]></item>
 	</category>
 	<category name="wcf.acp.worker">
 		<item name="wcf.acp.worker.abort.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Ausführung wirklich abbrechen?]]></item>
@@ -3215,7 +3216,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.like.reaction.more"><![CDATA[Weitere Reaktionen]]></item>
 		<item name="wcf.like.reactionsReceived"><![CDATA[Erhaltene Reaktionen]]></item>
 		<item name="wcf.like.reactionsGiven"><![CDATA[Vergebene Reaktionen]]></item>
-		<item name="wcf.like.reactionReputation"><![CDATA[Reputation aus Raktionen]]></item>
+		<item name="wcf.like.reactionReputation"><![CDATA[Reputation aus Reaktionen]]></item>
 		<item name="wcf.like.reputation"><![CDATA[Reputation]]></item>
 	</category>
 	<category name="wcf.map">
@@ -3841,7 +3842,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.sortField.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.user.sortField.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
-		<item name="wcf.user.sortField.reactionReputation"><![CDATA[Reputation aus Raktionen]]></item>
+		<item name="wcf.user.sortField.reactionReputation"><![CDATA[Reputation aus Reaktionen]]></item>
 		<item name="wcf.user.articles"><![CDATA[Artikel]]></item>
 	</category>
 	<category name="wcf.user.menu">

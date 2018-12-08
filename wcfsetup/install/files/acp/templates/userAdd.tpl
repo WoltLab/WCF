@@ -497,7 +497,10 @@
 			
 			<div id="coverPhotoForm" class="tabMenuContent hidden">
 				<section class="section">
-					<h2 class="sectionTitle">{lang}wcf.user.coverPhoto{/lang}</h2>
+					<header class="sectionHeader">
+						<h2 class="sectionTitle">{lang}wcf.user.coverPhoto{/lang}</h2>
+						<p class="sectionDescription">{lang}wcf.acp.user.coverPhoto.description{/lang}</p>
+					</header>
 					
 					{if $userCoverPhoto}
 						<dl>

@@ -10,6 +10,7 @@ define(['Ajax', 'EventHandler', 'Language', 'Ui/Confirmation', 'Ui/Notification'
 	"use strict";
 	
 	var _button;
+	var _userId = 0;
 	
 	/**
 	 * @exports     WoltLabSuite/Core/Ui/User/CoverPhoto/Delete
@@ -18,9 +19,10 @@ define(['Ajax', 'EventHandler', 'Language', 'Ui/Confirmation', 'Ui/Notification'
 		/**
 		 * Initializes the delete handler and enables the delete button on upload.
 		 */
-		init: function () {
+		init: function (userId) {
 			_button = elBySel('.jsButtonDeleteCoverPhoto');
 			_button.addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+			_userId = userId;
 			
 			EventHandler.add('com.woltlab.wcf.user', 'coverPhoto', function (data) {
 				if (typeof data.url === 'string' && data.url.length > 0) {
@@ -32,9 +34,12 @@ define(['Ajax', 'EventHandler', 'Language', 'Ui/Confirmation', 'Ui/Notification'
 		/**
 		 * Handles clicks on the delete button.
 		 * 
+		 * @param {Event} event
 		 * @protected
 		 */
-		_click: function () {
+		_click: function (event) {
+			event.preventDefault();
+			
 			UiConfirmation.show({
 				confirm: Ajax.api.bind(Ajax, this),
 				message: Language.get('wcf.user.coverPhoto.delete.confirmMessage')
@@ -53,7 +58,10 @@ define(['Ajax', 'EventHandler', 'Language', 'Ui/Confirmation', 'Ui/Notification'
 			return {
 				data: {
 					actionName: 'deleteCoverPhoto',
-					className: 'wcf\\data\\user\\UserProfileAction'
+					className: 'wcf\\data\\user\\UserProfileAction',
+					parameters: {
+						userID: _userId
+					}
 				}
 			};
 		}

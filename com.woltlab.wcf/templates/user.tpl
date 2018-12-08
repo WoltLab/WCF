@@ -149,7 +149,7 @@
 		{/if}>
 		{if MODULE_USER_COVER_PHOTO}
 			<div class="userProfileCoverPhoto" style="background-image: url({$user->getCoverPhoto()->getURL()})">
-				{if $user->userID == $__wcf->user->userID && ($__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto') || $user->coverPhotoHash)}
+				{if ($user->userID == $__wcf->user->userID || $user->canEdit()) && ($__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto') || $user->coverPhotoHash)}
 					<div class="userProfileManageCoverPhoto dropdown jsOnly">
 						<a href="#" class="button small dropdownToggle"><span class="icon icon16 fa-pencil"></span> {lang}wcf.user.coverPhoto.edit{/lang}</a>
 						<ul class="dropdownMenu">
@@ -343,7 +343,7 @@
 	<p class="info">{lang}wcf.user.profile.protected{/lang}</p>
 {/if}
 
-{if MODULE_USER_COVER_PHOTO && $user->userID == $__wcf->user->userID}
+{if MODULE_USER_COVER_PHOTO && ($user->userID == $__wcf->user->userID || $user->canEdit())}
 	{if $__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto')}
 		<div id="userProfileCoverPhotoUpload" class="jsStaticDialogContent" data-title="{lang}wcf.user.coverPhoto.upload{/lang}">
 			{if $__wcf->user->disableCoverPhoto}
@@ -369,7 +369,7 @@
 				});
 				
 				{if !$__wcf->user->disableCoverPhoto}
-					new UiUserCoverPhotoUpload();
+					new UiUserCoverPhotoUpload({@$user->userID});
 				{/if}
 			});
 		</script>
@@ -380,7 +380,7 @@
 				'wcf.user.coverPhoto.delete.confirmMessage': '{lang}wcf.user.coverPhoto.delete.confirmMessage{/lang}'
 			});
 			
-			UiUserCoverPhotoDelete.init();
+			UiUserCoverPhotoDelete.init({@$user->userID});
 		});
 	</script>
 {/if}
