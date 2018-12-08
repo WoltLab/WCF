@@ -40,6 +40,7 @@
 	
 	/* message layout */
 	.messageFooterButtons,
+	.messageFooterButtonsExtra,
 	.messageQuickOptions,
 	.messageGroupEditLink,
 	#messageQuickReply,
@@ -57,7 +58,7 @@
 	
 	/** minor optimizations **/
 	.main {
-		padding: 30px 0;
+		padding: 20px 0;
 	}
 	
 	.content {
@@ -109,7 +110,8 @@
 	}
 	
 	/* see https://bugzilla.mozilla.org/show_bug.cgi?id=939897 */
-	.pageContainer {
-		display: block;
+	.pageContainer,
+	.main > div {
+		display: block !important;
 	}
 }

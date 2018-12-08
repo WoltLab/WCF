@@ -15,8 +15,21 @@
 	});
 	
 	$(function() {
-		new WCF.Action.Delete('wcf\\data\\menu\\item\\MenuItemAction', '.sortableNode', '> .sortableNodeLabel .jsDeleteButton');
 		new WCF.Action.Toggle('wcf\\data\\menu\\item\\MenuItemAction', '.sortableNode', '> .sortableNodeLabel .jsToggleButton');
+		
+		var deleteAction = new WCF.Action.Delete('wcf\\data\\menu\\item\\MenuItemAction', '.sortableNode', '> .sortableNodeLabel .jsDeleteButton');
+		var mpTriggerEffect = deleteAction.triggerEffect;
+		deleteAction.triggerEffect = function (objectIDs) {
+			// move children up by one
+			objectIDs.forEach(function (objectId) {
+				var item = elBySel('#menuItemList li[data-object-id="' + objectId + '"]');
+				elBySelAll('.sortableList[data-object-id="' + objectId + '"] > li', item, function(childItem) {
+					item.parentNode.insertBefore(childItem, item);
+				});
+			});
+			
+			mpTriggerEffect.call(deleteAction, objectIDs);
+		};
 	});
 </script>
 

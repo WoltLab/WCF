@@ -6,7 +6,7 @@
  * Major Contributors: Markus Bartz, Tim Duesterhus, Matthias Schmidt and Marcel Werk
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -21,6 +21,8 @@
 	 * @see	jQuery.fn.data()
 	 */
 	jQuery.fn.data = function(key, value) {
+		var args = [].slice.call(arguments)
+		
 		if (key) {
 			switch (typeof key) {
 				case 'object':
@@ -34,19 +36,19 @@
 						}
 					}
 					
-					arguments[0] = key;
+					args[0] = key;
 				break;
 				
 				case 'string':
 					if (key.match(/ID$/)) {
-						arguments[0] = key.replace(/ID$/, '-id');
+						args[0] = key.replace(/ID$/, '-id');
 					}
 				break;
 			}
 		}
 		
 		// call jQuery's own data method
-		var $data = $jQueryData.apply(this, arguments);
+		var $data = $jQueryData.apply(this, args);
 		
 		// handle .data() call without arguments
 		if (key === undefined) {
@@ -75,28 +77,6 @@
 		console.debug = function(string) { console.log(string); };
 	}
 })();
-
-
-
-/**
- * Provides a hashCode() method for strings, similar to Java's String.hashCode().
- * 
- * @see	http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
- */
-String.prototype.hashCode = function() {
-	var $char;
-	var $hash = 0;
-	
-	if (this.length) {
-		for (var $i = 0, $length = this.length; $i < $length; $i++) {
-			$char = this.charCodeAt($i);
-			$hash = (($hash << 5) - $hash) + $char;
-			$hash = $hash & $hash; // convert to 32bit integer
-		}
-	}
-	
-	return $hash;
-};
 
 /**
  * Adds a Fisher-Yates shuffle algorithm for arrays.
@@ -978,375 +958,418 @@ WCF.Dropdown = {
  */
 WCF.Dropdown.Interactive = { };
 
-/**
- * General interface to create and manage interactive dropdowns.
- */
-WCF.Dropdown.Interactive.Handler = {
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * global container for interactive dropdowns
-	 * @var	jQuery
+	 * General interface to create and manage interactive dropdowns.
 	 */
-	_dropdownContainer: null,
-	
-	/**
-	 * list of dropdown instances by identifier
-	 * @var	object<WCF.Dropdown.Interactive.Instance>
-	 */
-	_dropdownMenus: { },
-	
-	/**
-	 * Creates a new interactive dropdown instance.
-	 * 
-	 * @param	jQuery		triggerElement
-	 * @param	string		identifier
-	 * @param	object		options
-	 * @return	WCF.Dropdown.Interactive.Instance
-	 */
-	create: function(triggerElement, identifier, options) {
-		if (this._dropdownContainer === null) {
-			this._dropdownContainer = $('<div class="dropdownMenuContainer" />').appendTo(document.body);
-			WCF.CloseOverlayHandler.addCallback('WCF.Dropdown.Interactive.Handler', $.proxy(this.closeAll, this));
-		}
+	WCF.Dropdown.Interactive.Handler = {
+		/**
+		 * global container for interactive dropdowns
+		 * @var        jQuery
+		 */
+		_dropdownContainer: null,
 		
-		var $instance = new WCF.Dropdown.Interactive.Instance(this._dropdownContainer, triggerElement, identifier, options);
-		this._dropdownMenus[identifier] = $instance;
+		/**
+		 * list of dropdown instances by identifier
+		 * @var        object<WCF.Dropdown.Interactive.Instance>
+		 */
+		_dropdownMenus: {},
 		
-		return $instance;
-	},
-	
-	/**
-	 * Opens an interactive dropdown, returns false if identifier is unknown.
-	 * 
-	 * @param	string		identifier
-	 * @return	boolean
-	 */
-	open: function(identifier) {
-		if (this._dropdownMenus[identifier]) {
-			this._dropdownMenus[identifier].open();
-			
-			return true;
-		}
-		
-		return false;
-	},
-	
-	/**
-	 * Closes an interactive dropdown, returns false if identifier is unknown.
-	 * 
-	 * @param	string		identifier
-	 * @return	boolean
-	 */
-	close: function(identifier) {
-		if (this._dropdownMenus[identifier]) {
-			this._dropdownMenus[identifier].close();
-			
-			return true;
-		}
-		
-		return false;
-	},
-	
-	/**
-	 * Closes all interactive dropdowns.
-	 */
-	closeAll: function() {
-		for (var instance in this._dropdownMenus) {
-			if (this._dropdownMenus.hasOwnProperty(instance)) {
-				this._dropdownMenus[instance].close();
+		/**
+		 * Creates a new interactive dropdown instance.
+		 *
+		 * @param        jQuery                triggerElement
+		 * @param        string                identifier
+		 * @param        object                options
+		 * @return        WCF.Dropdown.Interactive.Instance
+		 */
+		create: function (triggerElement, identifier, options) {
+			if (this._dropdownContainer === null) {
+				this._dropdownContainer = $('<div class="dropdownMenuContainer" />').appendTo(document.body);
+				WCF.CloseOverlayHandler.addCallback('WCF.Dropdown.Interactive.Handler', $.proxy(this.closeAll, this));
 			}
-		}
-	},
-	
-	getOpenDropdown: function () {
-		for (var instance in this._dropdownMenus) {
-			if (this._dropdownMenus.hasOwnProperty(instance)) {
-				if (this._dropdownMenus[instance].isOpen()) {
-					return this._dropdownMenus[instance];
+			
+			var $instance = new WCF.Dropdown.Interactive.Instance(this._dropdownContainer, triggerElement, identifier, options);
+			this._dropdownMenus[identifier] = $instance;
+			
+			return $instance;
+		},
+		
+		/**
+		 * Opens an interactive dropdown, returns false if identifier is unknown.
+		 *
+		 * @param        string                identifier
+		 * @return        boolean
+		 */
+		open: function (identifier) {
+			if (this._dropdownMenus[identifier]) {
+				this._dropdownMenus[identifier].open();
+				
+				return true;
+			}
+			
+			return false;
+		},
+		
+		/**
+		 * Closes an interactive dropdown, returns false if identifier is unknown.
+		 *
+		 * @param        string                identifier
+		 * @return        boolean
+		 */
+		close: function (identifier) {
+			if (this._dropdownMenus[identifier]) {
+				this._dropdownMenus[identifier].close();
+				
+				return true;
+			}
+			
+			return false;
+		},
+		
+		/**
+		 * Closes all interactive dropdowns.
+		 */
+		closeAll: function () {
+			for (var instance in this._dropdownMenus) {
+				if (this._dropdownMenus.hasOwnProperty(instance)) {
+					this._dropdownMenus[instance].close();
 				}
 			}
-		}
+		},
 		
-		return null;
-	},
-	
-	/**
-	 * Returns the dropdown with given identifier or `undefined` if no such dropdown exists.
-	 * 
-	 * @param	string		identifier
-	 * @return	{WCF.Dropdown.Interactive.Instance?}
-	 */
-	getDropdown: function(identifier) {
-		return this._dropdownMenus[identifier];
-	}
-};
-
-/**
- * Represents and manages a single interactive dropdown instance.
- * 
- * @param	jQuery		dropdownContainer
- * @param	jQuery		triggerElement
- * @param	string		identifier
- * @param	object		options
- */
-WCF.Dropdown.Interactive.Instance = Class.extend({
-	/**
-	 * dropdown container
-	 * @var	jQuery
-	 */
-	_container: null,
-	
-	/**
-	 * inner item list
-	 * @var	jQuery
-	 */
-	_itemList: null,
-	
-	/**
-	 * header link list
-	 * @var	jQuery
-	 */
-	_linkList: null,
-	
-	/**
-	 * option list
-	 * @var	object
-	 */
-	_options: { },
-	
-	/**
-	 * arrow pointer
-	 * @var	jQuery
-	 */
-	_pointer: null,
-	
-	/**
-	 * trigger element
-	 * @var	jQuery
-	 */
-	_triggerElement: null,
+		getOpenDropdown: function () {
+			for (var instance in this._dropdownMenus) {
+				if (this._dropdownMenus.hasOwnProperty(instance)) {
+					if (this._dropdownMenus[instance].isOpen()) {
+						return this._dropdownMenus[instance];
+					}
+				}
+			}
+			
+			return null;
+		},
+		
+		/**
+		 * Returns the dropdown with given identifier or `undefined` if no such dropdown exists.
+		 *
+		 * @param        string                identifier
+		 * @return        {WCF.Dropdown.Interactive.Instance?}
+		 */
+		getDropdown: function (identifier) {
+			return this._dropdownMenus[identifier];
+		}
+	};
 	
 	/**
 	 * Represents and manages a single interactive dropdown instance.
-	 * 
-	 * @param	jQuery		dropdownContainer
-	 * @param	jQuery		triggerElement
-	 * @param	string		identifier
-	 * @param	object		options
+	 *
+	 * @param        jQuery                dropdownContainer
+	 * @param        jQuery                triggerElement
+	 * @param        string                identifier
+	 * @param        object                options
 	 */
-	init: function(dropdownContainer, triggerElement, identifier, options) {
-		this._options = options || { };
-		this._triggerElement = triggerElement;
+	WCF.Dropdown.Interactive.Instance = Class.extend({
+		/**
+		 * dropdown container
+		 * @var        jQuery
+		 */
+		_container: null,
 		
-		var $itemContainer = null;
-		if (options.staticDropdown === true) {
-			this._container = this._triggerElement.find('.interactiveDropdownStatic:eq(0)').data('source', identifier).click(function(event) { event.stopPropagation(); });
-		}
-		else {
-			this._container = $('<div class="interactiveDropdown" data-source="' + identifier + '" />').click(function(event) { event.stopPropagation(); });
-			
-			var $header = $('<div class="interactiveDropdownHeader" />').appendTo(this._container);
-			$('<span class="interactiveDropdownTitle">' + options.title + '</span>').appendTo($header);
-			this._linkList = $('<ul class="interactiveDropdownLinks inlineList"></ul>').appendTo($header);
-			
-			$itemContainer = $('<div class="interactiveDropdownItemsContainer" />').appendTo(this._container);
-			this._itemList = $('<ul class="interactiveDropdownItems" />').appendTo($itemContainer);
-			
-			$('<a href="' + options.showAllLink + '" class="interactiveDropdownShowAll">' + WCF.Language.get('wcf.user.panel.showAll') + '</a>').appendTo(this._container);
-		}
+		/**
+		 * inner item list
+		 * @var        jQuery
+		 */
+		_itemList: null,
 		
-		this._pointer = $('<span class="elementPointer"><span /></span>').appendTo(this._container);
+		/**
+		 * header link list
+		 * @var        jQuery
+		 */
+		_linkList: null,
 		
-		require(['Environment'], (function(Environment) {
-			if (Environment.platform() === 'desktop') {
-				if ($itemContainer !== null) {
-					// use jQuery scrollbar on desktop, mobile browsers have a similar display built-in
+		/**
+		 * option list
+		 * @var        object
+		 */
+		_options: {},
+		
+		/**
+		 * arrow pointer
+		 * @var        jQuery
+		 */
+		_pointer: null,
+		
+		/**
+		 * trigger element
+		 * @var        jQuery
+		 */
+		_triggerElement: null,
+		
+		/**
+		 * Represents and manages a single interactive dropdown instance.
+		 *
+		 * @param        jQuery                dropdownContainer
+		 * @param        jQuery                triggerElement
+		 * @param        string                identifier
+		 * @param        object                options
+		 */
+		init: function (dropdownContainer, triggerElement, identifier, options) {
+			this._options = options || {};
+			this._triggerElement = triggerElement;
+			
+			var $itemContainer = null;
+			if (options.staticDropdown === true) {
+				this._container = this._triggerElement.find('.interactiveDropdownStatic:eq(0)').data('source', identifier).click(function (event) {
+					event.stopPropagation();
+				});
+			}
+			else {
+				this._container = $('<div class="interactiveDropdown" data-source="' + identifier + '" />').click(function (event) {
+					event.stopPropagation();
+				});
+				
+				var $header = $('<div class="interactiveDropdownHeader" />').appendTo(this._container);
+				$('<span class="interactiveDropdownTitle">' + options.title + '</span>').appendTo($header);
+				this._linkList = $('<ul class="interactiveDropdownLinks inlineList"></ul>').appendTo($header);
+				
+				$itemContainer = $('<div class="interactiveDropdownItemsContainer" />').appendTo(this._container);
+				this._itemList = $('<ul class="interactiveDropdownItems" />').appendTo($itemContainer);
+				
+				$('<a href="' + options.showAllLink + '" class="interactiveDropdownShowAll">' + WCF.Language.get('wcf.user.panel.showAll') + '</a>').appendTo(this._container);
+			}
+			
+			this._pointer = $('<span class="elementPointer"><span /></span>').appendTo(this._container);
+			
+			require(['Environment'], (function (Environment) {
+				if (Environment.platform() === 'desktop') {
+					if ($itemContainer !== null) {
+						// use jQuery scrollbar on desktop, mobile browsers have a similar display built-in
+						$itemContainer.perfectScrollbar({
+							suppressScrollX: true
+						});
+					}
+				}
+			}).bind(this));
+			
+			this._container.appendTo(dropdownContainer);
+		},
+		
+		/**
+		 * Returns the dropdown container.
+		 *
+		 * @return        jQuery
+		 */
+		getContainer: function () {
+			return this._container;
+		},
+		
+		/**
+		 * Returns the inner item list.
+		 *
+		 * @return        jQuery
+		 */
+		getItemList: function () {
+			return this._itemList;
+		},
+		
+		/**
+		 * Returns the header link list.
+		 *
+		 * @return        jQuery
+		 */
+		getLinkList: function () {
+			return this._linkList;
+		},
+		
+		/**
+		 * Opens the dropdown.
+		 */
+		open: function () {
+			WCF.Dropdown._closeAll();
+			
+			this._triggerElement.addClass('open');
+			this._container.addClass('open');
+			
+			WCF.System.Event.fireEvent('com.woltlab.wcf.Search', 'close');
+			
+			this.render();
+		},
+		
+		/**
+		 * Closes the dropdown
+		 */
+		close: function () {
+			this._triggerElement.removeClass('open');
+			this._container.removeClass('open');
+		},
+		
+		/**
+		 * Returns true if dropdown instance is visible.
+		 *
+		 * @returns     {boolean}
+		 */
+		isOpen: function () {
+			return this._triggerElement.hasClass('open');
+		},
+		
+		/**
+		 * Toggles the dropdown state, returns true if dropdown is open afterwards, else false.
+		 *
+		 * @return        boolean
+		 */
+		toggle: function () {
+			if (this._container.hasClass('open')) {
+				this.close();
+				
+				return false;
+			}
+			else {
+				WCF.Dropdown.Interactive.Handler.closeAll();
+				
+				this.open();
+				
+				return true;
+			}
+		},
+		
+		/**
+		 * Resets the inner item list and closes the dropdown.
+		 */
+		resetItems: function () {
+			this._itemList.empty();
+			
+			this.close();
+		},
+		
+		/**
+		 * Renders the dropdown.
+		 */
+		render: function () {
+			require(['Ui/Alignment', 'Ui/Screen'], (function (UiAlignment, UiScreen) {
+				if (UiScreen.is('screen-lg')) {
+					UiAlignment.set(this._container[0], this._triggerElement[0], {
+						horizontal: 'right',
+						pointer: true
+					});
+				}
+				else {
+					this._container.css({
+						bottom: '',
+						left: '',
+						right: '',
+						top: elById('pageHeaderPanel').clientHeight + 'px'
+					});
+				}
+			}).bind(this));
+		},
+		
+		/**
+		 * Rebuilds the desktop scrollbar.
+		 */
+		rebuildScrollbar: function () {
+			require(['Environment'], function (Environment) {
+				if (Environment.platform() === 'desktop') {
+					var $itemContainer = this._itemList.parent();
+					
+					// do NOT use 'update', seems to be broken
+					$itemContainer.perfectScrollbar('destroy');
 					$itemContainer.perfectScrollbar({
 						suppressScrollX: true
 					});
 				}
-			}
-		}).bind(this));
-		
-		this._container.appendTo(dropdownContainer);
-	},
-	
-	/**
-	 * Returns the dropdown container.
-	 * 
-	 * @return	jQuery
-	 */
-	getContainer: function() {
-		return this._container;
-	},
-	
-	/**
-	 * Returns the inner item list.
-	 * 
-	 * @return	jQuery
-	 */
-	getItemList: function() {
-		return this._itemList;
-	},
-	
-	/**
-	 * Returns the header link list.
-	 * 
-	 * @return	jQuery
-	 */
-	getLinkList: function() {
-		return this._linkList;
-	},
-	
-	/**
-	 * Opens the dropdown.
-	 */
-	open: function() {
-		WCF.Dropdown._closeAll();
-		
-		this._triggerElement.addClass('open');
-		this._container.addClass('open');
-		
-		WCF.System.Event.fireEvent('com.woltlab.wcf.Search', 'close');
-		
-		this.render();
-	},
-	
-	/**
-	 * Closes the dropdown
-	 */
-	close: function() {
-		this._triggerElement.removeClass('open');
-		this._container.removeClass('open');
-	},
-	
-	/**
-	 * Returns true if dropdown instance is visible.
-	 * 
-	 * @returns     {boolean}
-	 */
-	isOpen: function() {
-		return this._triggerElement.hasClass('open');
-	},
-	
-	/**
-	 * Toggles the dropdown state, returns true if dropdown is open afterwards, else false.
-	 * 
-	 * @return	boolean
-	 */
-	toggle: function() {
-		if (this._container.hasClass('open')) {
-			this.close();
-			
-			return false;
+			}.bind(this));
 		}
-		else {
-			WCF.Dropdown.Interactive.Handler.closeAll();
-			
-			this.open();
-			
-			return true;
-		}
-	},
+	});
 	
 	/**
-	 * Resets the inner item list and closes the dropdown.
+	 * Clipboard API
+	 * 
+	 * @deprecated	3.0 - please use `WoltLabSuite/Core/Controller/Clipboard` instead
 	 */
-	resetItems: function() {
-		this._itemList.empty();
-		
-		this.close();
-	},
-	
-	/**
-	 * Renders the dropdown.
-	 */
-	render: function() {
-		require(['Ui/Alignment', 'Ui/Screen'], (function (UiAlignment, UiScreen) {
-			if (UiScreen.is('screen-lg')) {
-				UiAlignment.set(this._container[0], this._triggerElement[0], {
-					horizontal: 'right',
-					pointer: true
+	WCF.Clipboard = {
+		/**
+		 * Initializes the clipboard API.
+		 * 
+		 * @param	string		page
+		 * @param	integer		hasMarkedItems
+		 * @param	object		actionObjects
+		 * @param	integer		pageObjectID
+		 */
+		init: function(page, hasMarkedItems, actionObjects, pageObjectID) {
+			require(['EventHandler', 'WoltLabSuite/Core/Controller/Clipboard'], function(EventHandler, ControllerClipboard) {
+				ControllerClipboard.setup({
+					hasMarkedItems: (hasMarkedItems > 0),
+					pageClassName: page,
+					pageObjectId: pageObjectID
 				});
-			}
-			else {
-				this._container.css({
-					bottom: '',
-					left: '',
-					right: '',
-					top: elById('pageHeaderPanel').clientHeight + 'px'
-				});
-			}
-		}).bind(this));
-	},
-	
-	/**
-	 * Rebuilds the desktop scrollbar.
-	 */
-	rebuildScrollbar: function() {
-		require(['Environment'], function(Environment) {
-			if (Environment.platform() === 'desktop') {
-				var $itemContainer = this._itemList.parent();
 				
-				// do NOT use 'update', seems to be broken
-				$itemContainer.perfectScrollbar('destroy');
-				$itemContainer.perfectScrollbar({
-					suppressScrollX: true
-				});
-			}
-		}.bind(this));
-	}
-});
-
-/**
- * Clipboard API
- * 
- * @deprecated	3.0 - please use `WoltLabSuite/Core/Controller/Clipboard` instead
- */
-WCF.Clipboard = {
-	/**
-	 * Initializes the clipboard API.
-	 * 
-	 * @param	string		page
-	 * @param	integer		hasMarkedItems
-	 * @param	object		actionObjects
-	 * @param	integer		pageObjectID
-	 */
-	init: function(page, hasMarkedItems, actionObjects, pageObjectID) {
-		require(['EventHandler', 'WoltLabSuite/Core/Controller/Clipboard'], function(EventHandler, ControllerClipboard) {
-			ControllerClipboard.setup({
-				hasMarkedItems: (hasMarkedItems > 0),
-				pageClassName: page,
-				pageObjectId: pageObjectID
-			});
-			
-			for (var type in actionObjects) {
-				if (actionObjects.hasOwnProperty(type)) {
-					(function (type) {
-						EventHandler.add('com.woltlab.wcf.clipboard', type, function (data) {
-							// only consider events if the action has been executed
-							if (data.responseData === null) {
-								return;
-							}
-							
-							if (actionObjects[type].hasOwnProperty(data.responseData.actionName)) {
-								actionObjects[type][data.responseData.actionName].triggerEffect(data.responseData.objectIDs);
-							}
-						});
-					})(type);
+				for (var type in actionObjects) {
+					if (actionObjects.hasOwnProperty(type)) {
+						(function (type) {
+							EventHandler.add('com.woltlab.wcf.clipboard', type, function (data) {
+								// only consider events if the action has been executed
+								if (data.responseData === null) {
+									return;
+								}
+								
+								if (actionObjects[type].hasOwnProperty(data.responseData.actionName)) {
+									actionObjects[type][data.responseData.actionName].triggerEffect(data.responseData.objectIDs);
+								}
+							});
+						})(type);
+					}
 				}
-			}
-		});
-	},
+			});
+		},
+		
+		/**
+		 * Reloads the list of marked items.
+		 */
+		reload: function() {
+			require(['WoltLabSuite/Core/Controller/Clipboard'], function(ControllerClipboard) {
+				ControllerClipboard.reload();
+			});
+		}
+	};
+}
+else {
+	WCF.Dropdown.Interactive.Handler = {
+		_dropdownContainer: {},
+		_dropdownMenus: {},
+		create: function() {},
+		open: function() {},
+		close: function() {},
+		closeAll: function() {},
+		getOpenDropdown: function() {},
+		getDropdown: function() {}
+	};
 	
-	/**
-	 * Reloads the list of marked items.
-	 */
-	reload: function() {
-		require(['WoltLabSuite/Core/Controller/Clipboard'], function(ControllerClipboard) {
-			ControllerClipboard.reload();
-		});
-	}
-};
+	WCF.Dropdown.Interactive.Instance = Class.extend({
+		_container: {},
+		_itemList: {},
+		_linkList: {},
+		_options: {},
+		_pointer: {},
+		_triggerElement: {},
+		init: function() {},
+		getContainer: function() {},
+		getItemList: function() {},
+		getLinkList: function() {},
+		open: function() {},
+		close: function() {},
+		isOpen: function() {},
+		toggle: function() {},
+		resetItems: function() {},
+		render: function() {},
+		rebuildScrollbar: function() {}
+	});
+	
+	WCF.Clipboard = {
+		init: function() {},
+		reload: function() {}
+	};
+}
 
 /**
  * @deprecated Use WoltLabSuite/Core/Timer/Repeating
@@ -1674,412 +1697,464 @@ WCF.Action.SimpleProxy = Class.extend({
 	}
 });
 
-/**
- * Basic implementation for AJAXProxy-based deletion.
- * 
- * @param	string		className
- * @param	string		containerSelector
- * @param	string		buttonSelector
- */
-WCF.Action.Delete = Class.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * delete button selector
-	 * @var	string
+	 * Basic implementation for AJAXProxy-based deletion.
+	 *
+	 * @param        string                className
+	 * @param        string                containerSelector
+	 * @param        string                buttonSelector
 	 */
-	_buttonSelector: '',
-	
-	/**
-	 * callback function called prior to triggering the delete effect
-	 * @var	function
-	 */
-	_callback: null,
-	
-	/**
-	 * action class name
-	 * @var	string
-	 */
-	_className: '',
-	
-	/**
-	 * container selector
-	 * @var	string
-	 */
-	_containerSelector: '',
-	
-	/**
-	 * list of known container ids
-	 * @var	array<string>
-	 */
-	_containers: [ ],
-	
-	/**
-	 * Initializes 'delete'-Proxy.
-	 * 
-	 * @param	string		className
-	 * @param	string		containerSelector
-	 * @param	string		buttonSelector
-	 */
-	init: function(className, containerSelector, buttonSelector) {
-		this._containerSelector = containerSelector;
-		this._className = className;
-		this._buttonSelector = (buttonSelector) ? buttonSelector : '.jsDeleteButton';
-		this._callback = null;
+	WCF.Action.Delete = Class.extend({
+		/**
+		 * delete button selector
+		 * @var        string
+		 */
+		_buttonSelector: '',
 		
-		this.proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
+		/**
+		 * callback function called prior to triggering the delete effect
+		 * @var        function
+		 */
+		_callback: null,
 		
-		this._initElements();
+		/**
+		 * action class name
+		 * @var        string
+		 */
+		_className: '',
 		
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.Action.Delete' + this._className.hashCode(), $.proxy(this._initElements, this));
-	},
-	
-	/**
-	 * Initializes available element containers.
-	 */
-	_initElements: function() {
-		$(this._containerSelector).each((function(index, container) {
-			var $container = $(container);
-			var $containerID = $container.wcfIdentify();
+		/**
+		 * container selector
+		 * @var        string
+		 */
+		_containerSelector: '',
+		
+		/**
+		 * list of known container ids
+		 * @var        array<string>
+		 */
+		_containers: [],
+		
+		/**
+		 * Initializes 'delete'-Proxy.
+		 *
+		 * @param        string                className
+		 * @param        string                containerSelector
+		 * @param        string                buttonSelector
+		 */
+		init: function (className, containerSelector, buttonSelector) {
+			this._containerSelector = containerSelector;
+			this._className = className;
+			this._buttonSelector = (buttonSelector) ? buttonSelector : '.jsDeleteButton';
+			this._callback = null;
 			
-			if (!WCF.inArray($containerID, this._containers)) {
-				var $deleteButton = $container.find(this._buttonSelector);
+			this.proxy = new WCF.Action.Proxy({
+				success: $.proxy(this._success, this)
+			});
+			
+			this._initElements();
+			
+			WCF.DOMNodeInsertedHandler.addCallback('WCF.Action.Delete' + this._className.hashCode(), $.proxy(this._initElements, this));
+		},
+		
+		/**
+		 * Initializes available element containers.
+		 */
+		_initElements: function () {
+			$(this._containerSelector).each((function (index, container) {
+				var $container = $(container);
+				var $containerID = $container.wcfIdentify();
 				
-				if ($deleteButton.length) {
-					this._containers.push($containerID);
-					$deleteButton.click($.proxy(this._click, this));
-				}
-			}
-		}).bind(this));
-	},
-	
-	/**
-	 * Sends AJAX request.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		var $target = $(event.currentTarget);
-		event.preventDefault();
-		
-		if ($target.data('confirmMessageHtml') || $target.data('confirmMessage')) {
-			WCF.System.Confirmation.show($target.data('confirmMessageHtml') ? $target.data('confirmMessageHtml') : $target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target }, undefined, $target.data('confirmMessageHtml') ? true : false);
-		}
-		else {
-			WCF.LoadingOverlayHandler.updateIcon($target);
-			this._sendRequest($target);
-		}
-	},
-	
-	/**
-	 * Is called if the delete effect has been triggered on the given element.
-	 * 
-	 * @param	jQuery		element
-	 */
-	_didTriggerEffect: function(element) {
-		// does nothing
-	},
-	
-	/**
-	 * Executes deletion.
-	 * 
-	 * @param	string		action
-	 * @param	object		parameters
-	 */
-	_execute: function(action, parameters) {
-		if (action === 'cancel') {
-			return;
-		}
-		
-		WCF.LoadingOverlayHandler.updateIcon(parameters.target);
-		this._sendRequest(parameters.target);
-	},
-	
-	/**
-	 * Sends the request
-	 * 
-	 * @param	jQuery	object
-	 */
-	_sendRequest: function(object) {
-		this.proxy.setOption('data', {
-			actionName: 'delete',
-			className: this._className,
-			interfaceName: 'wcf\\data\\IDeleteAction',
-			objectIDs: [ $(object).data('objectID') ]
-		});
-		
-		this.proxy.sendRequest();
-	},
-	
-	/**
-	 * Deletes items from containers.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	object		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		if (this._callback) {
-			this._callback(data.objectIDs);
-		}
-		
-		this.triggerEffect(data.objectIDs);
-	},
-	
-	/**
-	 * Sets a callback function called prior to triggering the delete effect.
-	 * 
-	 * @param	{function}	callback
-	 */
-	setCallback: function(callback) {
-		if (typeof callback !== 'function') {
-			throw new TypeError("[WCF.Action.Delete] Expected a valid callback for '" + this._className + "'.");
-		}
-		
-		this._callback = callback;
-	},
-	
-	/**
-	 * Triggers the delete effect for the objects with the given ids.
-	 * 
-	 * @param	array		objectIDs
-	 */
-	triggerEffect: function(objectIDs) {
-		for (var $index in this._containers) {
-			var $container = $('#' + this._containers[$index]);
-			var $button = $container.find(this._buttonSelector);
-			if (WCF.inArray($button.data('objectID'), objectIDs)) {
-				var self = this;
-				$container.wcfBlindOut('up',function() {
-					var $container = $(this).remove();
-					self._containers.splice(self._containers.indexOf($container.wcfIdentify()), 1);
-					self._didTriggerEffect($container);
+				if (!WCF.inArray($containerID, this._containers)) {
+					var $deleteButton = $container.find(this._buttonSelector);
 					
-					if ($button.data('eventName')) {
-						WCF.System.Event.fireEvent('com.woltlab.wcf.action.delete', $button.data('eventName'), {
-							button: $button,
-							container: $container
-						});
+					if ($deleteButton.length) {
+						this._containers.push($containerID);
+						$deleteButton.click($.proxy(this._click, this));
 					}
-				});
-			}
-		}
-	}
-});
-
-/**
- * Basic implementation for deletion of nested elements.
- * 
- * The implementation requires the nested elements to be grouped as numbered lists
- * (ol lists). The child elements of the deleted elements are moved to the parent
- * element of the deleted element.
- * 
- * @see	WCF.Action.Delete
- */
-WCF.Action.NestedDelete = WCF.Action.Delete.extend({
-	/**
-	 * @see	WCF.Action.Delete.triggerEffect()
-	 */
-	triggerEffect: function(objectIDs) {
-		for (var $index in this._containers) {
-			var $container = $('#' + this._containers[$index]);
-			if (WCF.inArray($container.find(this._buttonSelector).data('objectID'), objectIDs)) {
-				// move children up
-				if ($container.has('ol').has('li').length) {
-					if ($container.is(':only-child')) {
-						$container.parent().replaceWith($container.find('> ol'));
-					}
-					else {
-						$container.replaceWith($container.find('> ol > li'));
-					}
-					
-					this._containers.splice(this._containers.indexOf($container.wcfIdentify()), 1);
-					this._didTriggerEffect($container);
 				}
-				else {
+			}).bind(this));
+		},
+		
+		/**
+		 * Sends AJAX request.
+		 *
+		 * @param        object                event
+		 */
+		_click: function (event) {
+			var $target = $(event.currentTarget);
+			event.preventDefault();
+			
+			if ($target.data('confirmMessageHtml') || $target.data('confirmMessage')) {
+				WCF.System.Confirmation.show($target.data('confirmMessageHtml') ? $target.data('confirmMessageHtml') : $target.data('confirmMessage'), $.proxy(this._execute, this), {target: $target}, undefined, $target.data('confirmMessageHtml') ? true : false);
+			}
+			else {
+				WCF.LoadingOverlayHandler.updateIcon($target);
+				this._sendRequest($target);
+			}
+		},
+		
+		/**
+		 * Is called if the delete effect has been triggered on the given element.
+		 *
+		 * @param        jQuery                element
+		 */
+		_didTriggerEffect: function (element) {
+			// does nothing
+		},
+		
+		/**
+		 * Executes deletion.
+		 *
+		 * @param        string                action
+		 * @param        object                parameters
+		 */
+		_execute: function (action, parameters) {
+			if (action === 'cancel') {
+				return;
+			}
+			
+			WCF.LoadingOverlayHandler.updateIcon(parameters.target);
+			this._sendRequest(parameters.target);
+		},
+		
+		/**
+		 * Sends the request
+		 *
+		 * @param        jQuery        object
+		 */
+		_sendRequest: function (object) {
+			this.proxy.setOption('data', {
+				actionName: 'delete',
+				className: this._className,
+				interfaceName: 'wcf\\data\\IDeleteAction',
+				objectIDs: [$(object).data('objectID')]
+			});
+			
+			this.proxy.sendRequest();
+		},
+		
+		/**
+		 * Deletes items from containers.
+		 *
+		 * @param        object                data
+		 * @param        string                textStatus
+		 * @param        object                jqXHR
+		 */
+		_success: function (data, textStatus, jqXHR) {
+			if (this._callback) {
+				this._callback(data.objectIDs);
+			}
+			
+			this.triggerEffect(data.objectIDs);
+		},
+		
+		/**
+		 * Sets a callback function called prior to triggering the delete effect.
+		 *
+		 * @param        {function}        callback
+		 */
+		setCallback: function (callback) {
+			if (typeof callback !== 'function') {
+				throw new TypeError("[WCF.Action.Delete] Expected a valid callback for '" + this._className + "'.");
+			}
+			
+			this._callback = callback;
+		},
+		
+		/**
+		 * Triggers the delete effect for the objects with the given ids.
+		 *
+		 * @param        array                objectIDs
+		 */
+		triggerEffect: function (objectIDs) {
+			for (var $index in this._containers) {
+				var $container = $('#' + this._containers[$index]);
+				var $button = $container.find(this._buttonSelector);
+				if (WCF.inArray($button.data('objectID'), objectIDs)) {
 					var self = this;
-					$container.wcfBlindOut('up', function() {
-						$(this).remove();
-						self._containers.splice(self._containers.indexOf($(this).wcfIdentify()), 1);
-						self._didTriggerEffect($(this));
+					$container.wcfBlindOut('up', function () {
+						var $container = $(this).remove();
+						self._containers.splice(self._containers.indexOf($container.wcfIdentify()), 1);
+						self._didTriggerEffect($container);
+						
+						if ($button.data('eventName')) {
+							WCF.System.Event.fireEvent('com.woltlab.wcf.action.delete', $button.data('eventName'), {
+								button: $button,
+								container: $container
+							});
+						}
 					});
 				}
 			}
 		}
-	}
-});
-
-/**
- * Basic implementation for AJAXProxy-based toggle actions.
- * 
- * @param	string		className
- * @param	jQuery		containerList
- * @param	string		buttonSelector
- */
-WCF.Action.Toggle = Class.extend({
-	/**
-	 * toogle button selector
-	 * @var	string
-	 */
-	_buttonSelector: '.jsToggleButton',
+	});
 	
 	/**
-	 * action class name
-	 * @var	string
+	 * Basic implementation for deletion of nested elements.
+	 *
+	 * The implementation requires the nested elements to be grouped as numbered lists
+	 * (ol lists). The child elements of the deleted elements are moved to the parent
+	 * element of the deleted element.
+	 *
+	 * @see        WCF.Action.Delete
 	 */
-	_className: '',
+	WCF.Action.NestedDelete = WCF.Action.Delete.extend({
+		/**
+		 * @see        WCF.Action.Delete.triggerEffect()
+		 */
+		triggerEffect: function (objectIDs) {
+			for (var $index in this._containers) {
+				var $container = $('#' + this._containers[$index]);
+				if (WCF.inArray($container.find(this._buttonSelector).data('objectID'), objectIDs)) {
+					// move children up
+					if ($container.has('ol').has('li').length) {
+						if ($container.is(':only-child')) {
+							$container.parent().replaceWith($container.find('> ol'));
+						}
+						else {
+							$container.replaceWith($container.find('> ol > li'));
+						}
+						
+						this._containers.splice(this._containers.indexOf($container.wcfIdentify()), 1);
+						this._didTriggerEffect($container);
+					}
+					else {
+						var self = this;
+						$container.wcfBlindOut('up', function () {
+							$(this).remove();
+							self._containers.splice(self._containers.indexOf($(this).wcfIdentify()), 1);
+							self._didTriggerEffect($(this));
+						});
+					}
+				}
+			}
+		}
+	});
 	
 	/**
-	 * container selector
-	 * @var	string
+	 * Basic implementation for AJAXProxy-based toggle actions.
+	 *
+	 * @param        string                className
+	 * @param        jQuery                containerList
+	 * @param        string                buttonSelector
 	 */
-	_containerSelector: '',
-	
-	/**
-	 * list of known container ids
-	 * @var	array<string>
-	 */
-	_containers: [ ],
-	
-	/**
-	 * Initializes 'toggle'-Proxy
-	 * 
-	 * @param	string		className
-	 * @param	string		containerSelector
-	 * @param	string		buttonSelector
-	 */
-	init: function(className, containerSelector, buttonSelector) {
-		this._containerSelector = containerSelector;
-		this._className = className;
-		this._buttonSelector = (buttonSelector) ? buttonSelector : '.jsToggleButton';
-		this._containers = [ ];
+	WCF.Action.Toggle = Class.extend({
+		/**
+		 * toogle button selector
+		 * @var        string
+		 */
+		_buttonSelector: '.jsToggleButton',
 		
-		// initialize proxy
-		var options = {
-			success: $.proxy(this._success, this)
-		};
-		this.proxy = new WCF.Action.Proxy(options);
+		/**
+		 * action class name
+		 * @var        string
+		 */
+		_className: '',
 		
-		// bind event listener
-		this._initElements();
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.Action.Toggle' + this._className.hashCode(), $.proxy(this._initElements, this));
-	},
-	
-	/**
-	 * Initializes available element containers.
-	 */
-	_initElements: function() {
-		$(this._containerSelector).each($.proxy(function(index, container) {
-			var $container = $(container);
-			var $containerID = $container.wcfIdentify();
+		/**
+		 * container selector
+		 * @var        string
+		 */
+		_containerSelector: '',
+		
+		/**
+		 * list of known container ids
+		 * @var        array<string>
+		 */
+		_containers: [],
+		
+		/**
+		 * Initializes 'toggle'-Proxy
+		 *
+		 * @param        string                className
+		 * @param        string                containerSelector
+		 * @param        string                buttonSelector
+		 */
+		init: function (className, containerSelector, buttonSelector) {
+			this._containerSelector = containerSelector;
+			this._className = className;
+			this._buttonSelector = (buttonSelector) ? buttonSelector : '.jsToggleButton';
+			this._containers = [];
 			
-			if (!WCF.inArray($containerID, this._containers)) {
-				this._containers.push($containerID);
-				$container.find(this._buttonSelector).click($.proxy(this._click, this));
+			// initialize proxy
+			var options = {
+				success: $.proxy(this._success, this)
+			};
+			this.proxy = new WCF.Action.Proxy(options);
+			
+			// bind event listener
+			this._initElements();
+			WCF.DOMNodeInsertedHandler.addCallback('WCF.Action.Toggle' + this._className.hashCode(), $.proxy(this._initElements, this));
+		},
+		
+		/**
+		 * Initializes available element containers.
+		 */
+		_initElements: function () {
+			$(this._containerSelector).each($.proxy(function (index, container) {
+				var $container = $(container);
+				var $containerID = $container.wcfIdentify();
+				
+				if (!WCF.inArray($containerID, this._containers)) {
+					this._containers.push($containerID);
+					$container.find(this._buttonSelector).click($.proxy(this._click, this));
+				}
+			}, this));
+		},
+		
+		/**
+		 * Sends AJAX request.
+		 *
+		 * @param        object                event
+		 */
+		_click: function (event) {
+			var $target = $(event.currentTarget);
+			event.preventDefault();
+			
+			if ($target.data('confirmMessageHtml') || $target.data('confirmMessage')) {
+				WCF.System.Confirmation.show($target.data('confirmMessageHtml') ? $target.data('confirmMessageHtml') : $target.data('confirmMessage'), $.proxy(this._execute, this), {target: $target}, undefined, $target.data('confirmMessageHtml') ? true : false);
 			}
-		}, this));
-	},
-	
-	/**
-	 * Sends AJAX request.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		var $target = $(event.currentTarget);
-		event.preventDefault();
-		
-		if ($target.data('confirmMessageHtml') || $target.data('confirmMessage')) {
-			WCF.System.Confirmation.show($target.data('confirmMessageHtml') ? $target.data('confirmMessageHtml') : $target.data('confirmMessage'), $.proxy(this._execute, this), { target: $target }, undefined, $target.data('confirmMessageHtml') ? true : false);
-		}
-		else {
-			WCF.LoadingOverlayHandler.updateIcon($target);
-			this._sendRequest($target);
-		}
-	},
-	
-	/**
-	 * Executes toggeling.
-	 * 
-	 * @param	string		action
-	 * @param	object		parameters
-	 */
-	_execute: function(action, parameters) {
-		if (action === 'cancel') {
-			return;
-		}
-		
-		WCF.LoadingOverlayHandler.updateIcon(parameters.target);
-		this._sendRequest(parameters.target);
-	},
-	
-	_sendRequest: function(object) {
-		this.proxy.setOption('data', {
-			actionName: 'toggle',
-			className: this._className,
-			interfaceName: 'wcf\\data\\IToggleAction',
-			objectIDs: [ $(object).data('objectID') ]
-		});
-		
-		this.proxy.sendRequest();
-	},
-	
-	/**
-	 * Toggles status icons.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	object		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		this.triggerEffect(data.objectIDs);
-	},
-	
-	/**
-	 * Triggers the toggle effect for the objects with the given ids.
-	 * 
-	 * @param	array		objectIDs
-	 */
-	triggerEffect: function(objectIDs) {
-		for (var $index in this._containers) {
-			var $container = $('#' + this._containers[$index]);
-			var $toggleButton = $container.find(this._buttonSelector);
-			if (WCF.inArray($toggleButton.data('objectID'), objectIDs)) {
-				$container.wcfHighlight();
-				this._toggleButton($container, $toggleButton);
+			else {
+				WCF.LoadingOverlayHandler.updateIcon($target);
+				this._sendRequest($target);
 			}
+		},
+		
+		/**
+		 * Executes toggeling.
+		 *
+		 * @param        string                action
+		 * @param        object                parameters
+		 */
+		_execute: function (action, parameters) {
+			if (action === 'cancel') {
+				return;
+			}
+			
+			WCF.LoadingOverlayHandler.updateIcon(parameters.target);
+			this._sendRequest(parameters.target);
+		},
+		
+		_sendRequest: function (object) {
+			this.proxy.setOption('data', {
+				actionName: 'toggle',
+				className: this._className,
+				interfaceName: 'wcf\\data\\IToggleAction',
+				objectIDs: [$(object).data('objectID')]
+			});
+			
+			this.proxy.sendRequest();
+		},
+		
+		/**
+		 * Toggles status icons.
+		 *
+		 * @param        object                data
+		 * @param        string                textStatus
+		 * @param        object                jqXHR
+		 */
+		_success: function (data, textStatus, jqXHR) {
+			this.triggerEffect(data.objectIDs);
+		},
+		
+		/**
+		 * Triggers the toggle effect for the objects with the given ids.
+		 *
+		 * @param        array                objectIDs
+		 */
+		triggerEffect: function (objectIDs) {
+			for (var $index in this._containers) {
+				var $container = $('#' + this._containers[$index]);
+				var $toggleButton = $container.find(this._buttonSelector);
+				if (WCF.inArray($toggleButton.data('objectID'), objectIDs)) {
+					$container.wcfHighlight();
+					this._toggleButton($container, $toggleButton);
+				}
+			}
+		},
+		
+		/**
+		 * Triggers the toggle effect on a button
+		 *
+		 * @param        jQuery        $container
+		 * @param        jQuery        $toggleButton
+		 */
+		_toggleButton: function ($container, $toggleButton) {
+			var $newTitle = '';
+			
+			// toggle icon source
+			WCF.LoadingOverlayHandler.updateIcon($toggleButton, false);
+			if ($toggleButton.hasClass('fa-square-o')) {
+				$toggleButton.removeClass('fa-square-o').addClass('fa-check-square-o');
+				$newTitle = ($toggleButton.data('disableTitle') ? $toggleButton.data('disableTitle') : WCF.Language.get('wcf.global.button.disable'));
+				$toggleButton.attr('title', $newTitle);
+			}
+			else {
+				$toggleButton.removeClass('fa-check-square-o').addClass('fa-square-o');
+				$newTitle = ($toggleButton.data('enableTitle') ? $toggleButton.data('enableTitle') : WCF.Language.get('wcf.global.button.enable'));
+				$toggleButton.attr('title', $newTitle);
+			}
+			
+			// toggle css class
+			$container.toggleClass('disabled');
 		}
-	},
+	});
+}
+else {
+	WCF.Action.Delete = Class.extend({
+		_buttonSelector: "",
+		_callback: {},
+		_className: "",
+		_containerSelector: "",
+		_containers: {},
+		init: function() {},
+		_initElements: function() {},
+		_click: function() {},
+		_didTriggerEffect: function() {},
+		_execute: function() {},
+		_sendRequest: function() {},
+		_success: function() {},
+		setCallback: function() {},
+		triggerEffect: function() {}
+	});
 	
-	/**
-	 * Tiggers the toggle effect on a button
-	 * 
-	 * @param	jQuery	$container
-	 * @param	jQuery	$toggleButton
-	 */
-	_toggleButton: function($container, $toggleButton) {
-		var $newTitle = '';
-		
-		// toggle icon source
-		WCF.LoadingOverlayHandler.updateIcon($toggleButton, false);
-		if ($toggleButton.hasClass('fa-square-o')) {
-			$toggleButton.removeClass('fa-square-o').addClass('fa-check-square-o');
-			$newTitle = ($toggleButton.data('disableTitle') ? $toggleButton.data('disableTitle') : WCF.Language.get('wcf.global.button.disable'));
-			$toggleButton.attr('title', $newTitle);
-		}
-		else {
-			$toggleButton.removeClass('fa-check-square-o').addClass('fa-square-o');
-			$newTitle = ($toggleButton.data('enableTitle') ? $toggleButton.data('enableTitle') : WCF.Language.get('wcf.global.button.enable'));
-			$toggleButton.attr('title', $newTitle);
-		}
-		
-		// toggle css class
-		$container.toggleClass('disabled');
-	}
-});
+	WCF.Action.NestedDelete = WCF.Action.Delete.extend({
+		triggerEffect: function() {},
+		_buttonSelector: "",
+		_callback: {},
+		_className: "",
+		_containerSelector: "",
+		_containers: {},
+		init: function() {},
+		_initElements: function() {},
+		_click: function() {},
+		_didTriggerEffect: function() {},
+		_execute: function() {},
+		_sendRequest: function() {},
+		_success: function() {},
+		setCallback: function() {}
+	});
+	
+	WCF.Action.Toggle = Class.extend({
+		_buttonSelector: "",
+		_className: "",
+		_containerSelector: "",
+		_containers: {},
+		init: function() {},
+		_initElements: function() {},
+		_click: function() {},
+		_execute: function() {},
+		_sendRequest: function() {},
+		_success: function() {},
+		triggerEffect: function() {},
+		_toggleButton: function() {}
+	});
+}
 
 /**
- * Executes provided callback if scroll threshold is reached. Usuable to determine
+ * Executes provided callback if scroll threshold is reached. Usable to determine
  * if user reached the bottom of an element to load new elements on the fly.
  * 
  * If you do not provide a value for 'reference' and 'target' it will assume you're
@@ -2217,7 +2292,7 @@ WCF.Date.Util = {
 	
 	/**
 	 * Returns a Date object with precise offset (including timezone and local timezone).
-	 * Parameters timestamp and offset must be in miliseconds!
+	 * Parameters timestamp and offset must be in milliseconds!
 	 * 
 	 * @param	integer		timestamp
 	 * @param	integer		offset
@@ -3069,8 +3144,15 @@ WCF.Collapsible.Remote = Class.extend({
 	 * @param	jQuery		buttonContainer
 	 */
 	_createButton: function(containerID, buttonContainer) {
-		var $isOpen = this._containers[containerID].data('isOpen');
-		var $button = $('<span class="collapsibleButton jsTooltip pointer icon icon16 fa-chevron-down" title="'+WCF.Language.get('wcf.global.button.collapsible')+'">').prependTo(buttonContainer);
+		var $button = elBySel('.jsStaticCollapsibleButton', buttonContainer[0]);
+		if ($button !== null && $button.parentNode === buttonContainer[0]) {
+			$button.classList.remove('jsStaticCollapsibleButton');
+			$button = $($button);
+		}
+		else {
+			$button = $('<span class="collapsibleButton jsTooltip pointer icon icon16 fa-chevron-down" title="' + WCF.Language.get('wcf.global.button.collapsible') + '">').prependTo(buttonContainer);
+		}
+		
 		$button.data('containerID', containerID).click($.proxy(this._toggleContainer, this));
 		
 		return $button;
@@ -3152,7 +3234,7 @@ WCF.Collapsible.Remote = Class.extend({
 	},
 	
 	/**
-	 * Sets content upon successfull AJAX request.
+	 * Sets content upon successful AJAX request.
 	 * 
 	 * @param	object		data
 	 * @param	string		textStatus
@@ -3501,211 +3583,248 @@ WCF.DOMNodeRemovedHandler = {
  */
 WCF.Option = { };
 
-/**
- * Handles option selection.
- */
-WCF.Option.Handler = Class.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * Initializes the WCF.Option.Handler class.
+	 * Handles option selection.
 	 */
-	init: function() {
-		this._initOptions();
+	WCF.Option.Handler = Class.extend({
+		/**
+		 * Initializes the WCF.Option.Handler class.
+		 */
+		init: function () {
+			this._initOptions();
+			
+			WCF.DOMNodeInsertedHandler.addCallback('WCF.Option.Handler', $.proxy(this._initOptions, this));
+		},
 		
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.Option.Handler', $.proxy(this._initOptions, this));
-	},
-	
-	/**
-	 * Initializes all options.
-	 */
-	_initOptions: function() {
-		$('.jsEnablesOptions').each($.proxy(this._initOption, this));
-	},
-	
-	/**
-	 * Initializes an option.
-	 * 
-	 * @param	integer		index
-	 * @param	object		option
-	 */
-	_initOption: function(index, option) {
-		// execute action on init
-		this._change(option);
+		/**
+		 * Initializes all options.
+		 */
+		_initOptions: function () {
+			$('.jsEnablesOptions').each($.proxy(this._initOption, this));
+		},
 		
-		// bind event listener
-		$(option).change($.proxy(this._handleChange, this));
-	},
-	
-	/**
-	 * Applies whenever an option is changed.
-	 * 
-	 * @param	object		event
-	 */
-	_handleChange: function(event) {
-		this._change($(event.target));
-	},
-	
-	/**
-	 * Enables or disables options on option value change.
-	 * 
-	 * @param	object		option
-	 */
-	_change: function(option) {
-		option = $(option);
+		/**
+		 * Initializes an option.
+		 *
+		 * @param        integer                index
+		 * @param        object                option
+		 */
+		_initOption: function (index, option) {
+			// execute action on init
+			this._change(option);
+			
+			// bind event listener
+			$(option).change($.proxy(this._handleChange, this));
+		},
 		
-		var disableOptions = eval(option.data('disableOptions'));
-		var enableOptions = eval(option.data('enableOptions'));
+		/**
+		 * Applies whenever an option is changed.
+		 *
+		 * @param        object                event
+		 */
+		_handleChange: function (event) {
+			this._change($(event.target));
+		},
 		
-		// determine action by type
-		switch(option.getTagName()) {
-			case 'input':
-				switch(option.attr('type')) {
-					case 'checkbox':
-						this._execute(option.prop('checked'), disableOptions, enableOptions);
-					break;
-					
-					case 'radio':
-						if (option.prop('checked')) {
-							var isActive = true;
-							if (option.data('isBoolean') && option.val() != 1) {
-								isActive = false;
+		/**
+		 * Enables or disables options on option value change.
+		 *
+		 * @param        object                option
+		 */
+		_change: function (option) {
+			option = $(option);
+			
+			var disableOptions = eval(option.data('disableOptions'));
+			var enableOptions = eval(option.data('enableOptions'));
+			
+			// determine action by type
+			switch (option.getTagName()) {
+				case 'input':
+					switch (option.attr('type')) {
+						case 'checkbox':
+							this._execute(option.prop('checked'), disableOptions, enableOptions);
+							break;
+						
+						case 'radio':
+							if (option.prop('checked')) {
+								var isActive = true;
+								if (option.data('isBoolean') && option.val() != 1) {
+									isActive = false;
+								}
+								
+								this._execute(isActive, disableOptions, enableOptions);
 							}
-							
-							this._execute(isActive, disableOptions, enableOptions);
-						}
+							break;
+					}
 					break;
+				
+				case 'select':
+					var $value = option.val();
+					var relevantDisableOptions = [];
+					var relevantEnableOptions = [];
+					
+					if (disableOptions.length > 0) {
+						for (var $index in disableOptions) {
+							var $item = disableOptions[$index];
+							
+							if ($item.value == $value) {
+								relevantDisableOptions.push($item.option);
+							}
+							else {
+								relevantEnableOptions.push($item.option);
+							}
+						}
+					}
+					
+					if (enableOptions.length > 0) {
+						for (var $index in enableOptions) {
+							var $item = enableOptions[$index];
+							
+							if ($item.value == $value) {
+								relevantEnableOptions.push($item.option);
+							}
+							else {
+								relevantDisableOptions.push($item.option);
+							}
+						}
+					}
+					
+					this._execute(true, relevantDisableOptions, relevantEnableOptions);
+					break;
+			}
+		},
+		
+		/**
+		 * Enables or disables options.
+		 *
+		 * @param        boolean                isActive
+		 * @param        array                disableOptions
+		 * @param        array                enableOptions
+		 */
+		_execute: function (isActive, disableOptions, enableOptions) {
+			if (disableOptions.length > 0) {
+				for (var $i = 0, $size = disableOptions.length; $i < $size; $i++) {
+					var $target = disableOptions[$i];
+					if ($.wcfIsset($target)) {
+						this._enableOption($target, !isActive);
+					}
+					else {
+						var $dl = $('.' + $target + 'Input');
+						if ($dl.length) {
+							this._enableOptions($dl.children('dd').find('input, select, textarea'), !isActive);
+						}
+					}
 				}
-			break;
+			}
 			
-			case 'select':
-				var $value = option.val();
-				var relevantDisableOptions = [];
-				var relevantEnableOptions = [];
-				
-				if (disableOptions.length > 0) {
-					for (var $index in disableOptions) {
-						var $item = disableOptions[$index];
-						
-						if ($item.value == $value) {
-							relevantDisableOptions.push($item.option);
-						}
-						else {
-							relevantEnableOptions.push($item.option);
+			if (enableOptions.length > 0) {
+				for (var $i = 0, $size = enableOptions.length; $i < $size; $i++) {
+					var $target = enableOptions[$i];
+					if ($.wcfIsset($target)) {
+						this._enableOption($target, isActive);
+					}
+					else {
+						var $dl = $('.' + $target + 'Input');
+						if ($dl.length) {
+							this._enableOptions($dl.children('dd').find('input, select, textarea'), isActive);
 						}
 					}
 				}
-				
-				if (enableOptions.length > 0) {
-					for (var $index in enableOptions) {
-						var $item = enableOptions[$index];
-						
-						if ($item.value == $value) {
-							relevantEnableOptions.push($item.option);
-						}
-						else {
-							relevantDisableOptions.push($item.option);
-						}
+			}
+		},
+		
+		/**
+		 * Enables/Disables an option.
+		 *
+		 * @param        string                target
+		 * @param        boolean                enable
+		 */
+		_enableOption: function (target, enable) {
+			this._enableOptionElement($('#' + $.wcfEscapeID(target)), enable);
+		},
+		
+		/**
+		 * Enables/Disables an option element.
+		 *
+		 * @param        string                target
+		 * @param        boolean                enable
+		 */
+		_enableOptionElement: function (element, enable) {
+			element = $(element);
+			var $tagName = element.getTagName();
+			
+			if ($tagName == 'select' || ($tagName == 'input' && (element.attr('type') == 'checkbox' || element.attr('type') == 'file' || element.attr('type') == 'radio'))) {
+				if ($tagName === 'input' && element[0].type === 'radio') {
+					if (!element[0].checked) {
+						if (enable) element.enable();
+						else element.disable();
 					}
-				}
-				
-				this._execute(true, relevantDisableOptions, relevantEnableOptions);
-			break;
-		}
-	},
-	
-	/**
-	 * Enables or disables options.
-	 * 
-	 * @param	boolean		isActive
-	 * @param	array		disableOptions
-	 * @param	array		enableOptions
-	 */
-	_execute: function(isActive, disableOptions, enableOptions) {
-		if (disableOptions.length > 0) {
-			for (var $i = 0, $size = disableOptions.length; $i < $size; $i++) {
-				var $target = disableOptions[$i];
-				if ($.wcfIsset($target)) {
-					this._enableOption($target, !isActive);
+					else {
+						// Skip active radio buttons, this preserves the value on submit,
+						// while the user is still unable to move the selection to the other,
+						// now disabled options.
+					}
 				}
 				else {
-					var $dl = $('.' + $target + 'Input');
-					if ($dl.length) {
-						this._enableOptions($dl.children('dd').find('input, select, textarea'), !isActive);
+					if (enable) element.enable();
+					else element.disable();
+				}
+				
+				if (element.parents('.optionTypeBoolean:eq(0)')) {
+					// escape dots so that they are not recognized as class selectors
+					var elementId = element.wcfIdentify().replace(/\./g, "\\.");
+					
+					var noElement = $('#' + elementId + '_no');
+					if (enable) noElement.enable();
+					else noElement.disable();
+					
+					var neverElement = $('#' + elementId + '_never');
+					if (neverElement.length) {
+						if (enable) neverElement.enable();
+						else neverElement.disable();
 					}
 				}
 			}
-		}
-		
-		if (enableOptions.length > 0) {
-			for (var $i = 0, $size = enableOptions.length; $i < $size; $i++) {
-				var $target = enableOptions[$i];
-				if ($.wcfIsset($target)) {
-					this._enableOption($target, isActive);
-				}
-				else {
-					var $dl = $('.' + $target + 'Input');
-					if ($dl.length) {
-						this._enableOptions($dl.children('dd').find('input, select, textarea'), isActive);
-					}
-				}
+			else {
+				if (enable) element.removeAttr('readonly');
+				else element.attr('readonly', true);
 			}
-		}
-	},
-	
-	/**
-	 * Enables/Disables an option.
-	 * 
-	 * @param	string		target
-	 * @param	boolean		enable
-	 */
-	_enableOption: function(target, enable) {
-		this._enableOptionElement($('#' + $.wcfEscapeID(target)), enable);
-	},
-	
-	/**
-	 * Enables/Disables an option element.
-	 * 
-	 * @param	string		target
-	 * @param	boolean		enable
-	 */
-	_enableOptionElement: function(element, enable) {
-		element = $(element);
-		var $tagName = element.getTagName();
-		
-		if ($tagName == 'select' || ($tagName == 'input' && (element.attr('type') == 'checkbox' || element.attr('type') == 'file' || element.attr('type') == 'radio'))) {
-			if (enable) element.enable();
-			else element.disable();
 			
-			if (element.parents('.optionTypeBoolean:eq(0)')) {
-				var noElement = $('#' + element.wcfIdentify() + '_no');
-				if (enable) noElement.enable();
-				else noElement.disable();
+			if (enable) {
+				element.closest('dl').removeClass('disabled');
+			}
+			else {
+				element.closest('dl').addClass('disabled');
+			}
+		},
+		
+		/**
+		 * Enables/Disables an option consisting of multiple form elements.
+		 *
+		 * @param        string                target
+		 * @param        boolean                enable
+		 */
+		_enableOptions: function (targets, enable) {
+			for (var $i = 0, $length = targets.length; $i < $length; $i++) {
+				this._enableOptionElement(targets[$i], enable);
 			}
 		}
-		else {
-			if (enable) element.removeAttr('readonly');
-			else element.attr('readonly', true);
-		}
-		
-		if (enable) {
-			element.closest('dl').removeClass('disabled');
-		}
-		else {
-			element.closest('dl').addClass('disabled');
-		}
-	},
-	
-	/**
-	 * Enables/Disables an option consisting of multiple form elements.
-	 * 
-	 * @param	string		target
-	 * @param	boolean		enable
-	 */
-	_enableOptions: function(targets, enable) {
-		for (var $i = 0, $length = targets.length; $i < $length; $i++) {
-			this._enableOptionElement(targets[$i], enable);
-		}
-	}
-});
+	});
+}
+else {
+	WCF.Option.Handler = Class.extend({
+		init: function() {},
+		_initOptions: function() {},
+		_initOption: function() {},
+		_handleChange: function() {},
+		_change: function() {},
+		_execute: function() {},
+		_enableOption: function() {},
+		_enableOptionElement: function() {},
+		_enableOptions: function() {}
+	});
+}
 
 WCF.PageVisibilityHandler = {
 	/**
@@ -3830,7 +3949,7 @@ WCF.Table.EmptyTableHandler = Class.extend({
 	_rowClassName: '',
 	
 	/**
-	 * Initalizes a new WCF.Table.EmptyTableHandler object.
+	 * Initializes a new WCF.Table.EmptyTableHandler object.
 	 * 
 	 * @param	jQuery		tableContainer
 	 * @param	string		rowClassName
@@ -3953,19 +4072,19 @@ WCF.Search.Base = Class.extend({
 	_className: '',
 	
 	/**
-	 * comma seperated list
+	 * comma separated list
 	 * @var	boolean
 	 */
 	_commaSeperated: false,
 	
 	/**
-	 * delay in miliseconds before a request is send to the server
+	 * delay in milliseconds before a request is send to the server
 	 * @var	integer
 	 */
 	_delay: 0,
 	
 	/**
-	 * list with values that are excluded from seaching
+	 * list with values that are excluded from searching
 	 * @var	array
 	 */
 	_excludedSearchValues: [],
@@ -4120,21 +4239,17 @@ WCF.Search.Base = Class.extend({
 			case 37: // arrow-left
 			case 39: // arrow-right
 				return;
-			break;
 			
 			case 38: // arrow up
 				this._selectPreviousItem();
 				return;
-			break;
 			
 			case 40: // arrow down
 				this._selectNextItem();
 				return;
-			break;
 			
 			case 13: // return key
 				return this._selectElement(event);
-			break;
 		}
 		
 		var $content = this._getSearchString(event);
@@ -4735,6 +4850,12 @@ WCF.System.ObjectStore = {
  */
 WCF.System.Captcha = {
 	/**
+	 * ids of registered captchas
+	 * @var	{string[]}
+	 */
+	_registeredCaptchas: [],
+	
+	/**
 	 * Adds a callback for a certain captcha.
 	 * 
 	 * @param	string		captchaID
@@ -4744,6 +4865,8 @@ WCF.System.Captcha = {
 		require(['WoltLabSuite/Core/Controller/Captcha'], function(ControllerCaptcha) {
 			try {
 				ControllerCaptcha.add(captchaID, callback);
+				
+				this._registeredCaptchas.push(captchaID);
 			}
 			catch (e) {
 				if (e instanceof TypeError) {
@@ -4753,7 +4876,7 @@ WCF.System.Captcha = {
 				
 				// ignore other errors
 			}
-		});
+		}.bind(this));
 	},
 	
 	/**
@@ -4763,6 +4886,10 @@ WCF.System.Captcha = {
 	 */
 	getData: function(captchaID) {
 		var returnValue;
+		
+		if (this._registeredCaptchas.indexOf(captchaID) === -1) {
+			return returnValue;
+		}
 		
 		var ControllerCaptcha = require('WoltLabSuite/Core/Controller/Captcha');
 		try {
@@ -4782,11 +4909,13 @@ WCF.System.Captcha = {
 		require(['WoltLabSuite/Core/Controller/Captcha'], function(ControllerCaptcha) {
 			try {
 				ControllerCaptcha.delete(captchaID);
+				
+				this._registeredCaptchas.splice(this._registeredCaptchas.indexOf(item), 1);
 			}
 			catch (e) {
 				// ignore errors for unknown captchas
 			}
-		});
+		}.bind(this));
 	}
 };
 
@@ -5104,7 +5233,7 @@ WCF.System.KeepAlive = Class.extend({
  */
 WCF.System.PushNotification = {
 	/**
-	 * list of callbacks groupped by type
+	 * list of callbacks grouped by type
 	 * @var	object<array>
 	 */
 	_callbacks: { },
@@ -5192,1265 +5321,1391 @@ WCF.System.Event = {
 	}
 };
 
-/**
- * Worker support for frontend based upon DatabaseObjectActions.
- * 
- * @param	string		className
- * @param	string		title
- * @param	object		parameters
- * @param	object		callback
- */
-WCF.System.Worker = Class.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * worker aborted
-	 * @var	boolean
+	 * Worker support for frontend based upon DatabaseObjectActions.
+	 *
+	 * @param        string                className
+	 * @param        string                title
+	 * @param        object                parameters
+	 * @param        object                callback
 	 */
-	_aborted: false,
-	
-	/**
-	 * DBOAction method name
-	 * @var	string
-	 */
-	_actionName: '',
-	
-	/**
-	 * callback invoked after worker completed
-	 * @var	object
-	 */
-	_callback: null,
-	
-	/**
-	 * DBOAction class name
-	 * @var	string
-	 */
-	_className: '',
-	
-	/**
-	 * dialog object
-	 * @var	jQuery
-	 */
-	_dialog: null,
-	
-	/**
-	 * action proxy
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * dialog title
-	 * @var	string
-	 */
-	_title: '',
-	
-	/**
-	 * Initializes a new worker instance.
-	 * 
-	 * @param	string		actionName
-	 * @param	string		className
-	 * @param	string		title
-	 * @param	object		parameters
-	 * @param	object		callback
-	 * @param	object		confirmMessage
-	 */
-	init: function(actionName, className, title, parameters, callback) {
-		this._aborted = false;
-		this._actionName = actionName;
-		this._callback = callback || null;
-		this._className = className;
-		this._dialog = null;
-		this._proxy = new WCF.Action.Proxy({
-			autoSend: true,
-			data: {
-				actionName: this._actionName,
-				className: this._className,
-				parameters: parameters || { }
-			},
-			showLoadingOverlay: false,
-			success: $.proxy(this._success, this)
-		});
-		this._title = title;
-	},
-	
-	/**
-	 * Handles response from server.
-	 * 
-	 * @param	object		data
-	 */
-	_success: function(data) {
-		// init binding
-		if (this._dialog === null) {
-			this._dialog = $('<div />').hide().appendTo(document.body);
-			this._dialog.wcfDialog({
-				closeConfirmMessage: WCF.Language.get('wcf.worker.abort.confirmMessage'),
-				closeViaModal: false,
-				onClose: $.proxy(function() {
-					this._aborted = true;
-					this._proxy.abortPrevious();
-					
-					window.location.reload();
-				}, this),
-				title: this._title
+	WCF.System.Worker = Class.extend({
+		/**
+		 * worker aborted
+		 * @var        boolean
+		 */
+		_aborted: false,
+		
+		/**
+		 * DBOAction method name
+		 * @var        string
+		 */
+		_actionName: '',
+		
+		/**
+		 * callback invoked after worker completed
+		 * @var        object
+		 */
+		_callback: null,
+		
+		/**
+		 * DBOAction class name
+		 * @var        string
+		 */
+		_className: '',
+		
+		/**
+		 * dialog object
+		 * @var        jQuery
+		 */
+		_dialog: null,
+		
+		/**
+		 * action proxy
+		 * @var        WCF.Action.Proxy
+		 */
+		_proxy: null,
+		
+		/**
+		 * dialog title
+		 * @var        string
+		 */
+		_title: '',
+		
+		/**
+		 * Initializes a new worker instance.
+		 *
+		 * @param        string                actionName
+		 * @param        string                className
+		 * @param        string                title
+		 * @param        object                parameters
+		 * @param        object                callback
+		 * @param        object                confirmMessage
+		 */
+		init: function (actionName, className, title, parameters, callback) {
+			this._aborted = false;
+			this._actionName = actionName;
+			this._callback = callback || null;
+			this._className = className;
+			this._dialog = null;
+			this._proxy = new WCF.Action.Proxy({
+				autoSend: true,
+				data: {
+					actionName: this._actionName,
+					className: this._className,
+					parameters: parameters || {}
+				},
+				showLoadingOverlay: false,
+				success: $.proxy(this._success, this)
 			});
-		}
+			this._title = title;
+		},
 		
-		if (this._aborted) {
-			return;
-		}
-		
-		if (data.returnValues.template) {
-			this._dialog.html(data.returnValues.template);
-		}
-		
-		// update progress
-		this._dialog.find('progress').attr('value', data.returnValues.progress).text(data.returnValues.progress + '%').next('span').text(data.returnValues.progress + '%');
-		
-		// worker is still busy with its business, carry on
-		if (data.returnValues.progress < 100) {
-			// send request for next loop
-			var $parameters = data.returnValues.parameters || { };
-			$parameters.loopCount = data.returnValues.loopCount;
-			
-			this._proxy.setOption('data', {
-				actionName: this._actionName,
-				className: this._className,
-				parameters: $parameters
-			});
-			this._proxy.sendRequest();
-		}
-		else if (this._callback !== null) {
-			this._callback(this, data);
-		}
-		else {
-			// exchange icon
-			this._dialog.find('.fa-spinner').removeClass('fa-spinner').addClass('fa-check green');
-			this._dialog.find('.contentHeader h1').text(WCF.Language.get('wcf.global.worker.completed'));
-			
-			// display continue button
-			var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
-			$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($formSubmit).focus().click(function() {
-				if (data.returnValues.redirectURL) {
-					window.location = data.returnValues.redirectURL;
-				}
-				else {
-					window.location.reload();
-				}
-			});
-			
-			this._dialog.wcfDialog('render');
-		}
-	}
-});
-
-/**
- * Default implementation for inline editors.
- * 
- * @param	string		elementSelector
- */
-WCF.InlineEditor = Class.extend({
-	/**
-	 * list of registered callbacks
-	 * @var	array<object>
-	 */
-	_callbacks: [ ],
-	
-	/**
-	 * list of dropdown selections
-	 * @var	object
-	 */
-	_dropdowns: { },
-	
-	/**
-	 * list of container elements
-	 * @var	object
-	 */
-	_elements: { },
-	
-	/**
-	 * notification object
-	 * @var	WCF.System.Notification
-	 */
-	_notification: null,
-	
-	/**
-	 * list of known options
-	 * @var	array<object>
-	 */
-	_options: [ ],
-	
-	/**
-	 * action proxy
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * list of trigger elements by element id
-	 * @var	object<object>
-	 */
-	_triggerElements: { },
-	
-	/**
-	 * list of data to update upon success
-	 * @var	array<object>
-	 */
-	_updateData: [ ],
-	
-	/**
-	 * Initializes a new inline editor.
-	 */
-	init: function(elementSelector) {
-		var $elements = $(elementSelector);
-		if (!$elements.length) {
-			return;
-		}
-		
-		this._setOptions();
-		var $quickOption = '';
-		for (var $i = 0, $length = this._options.length; $i < $length; $i++) {
-			if (this._options[$i].isQuickOption) {
-				$quickOption = this._options[$i].optionName;
-				break;
+		/**
+		 * Handles response from server.
+		 *
+		 * @param        object                data
+		 */
+		_success: function (data) {
+			// init binding
+			if (this._dialog === null) {
+				this._dialog = $('<div />').hide().appendTo(document.body);
+				this._dialog.wcfDialog({
+					closeConfirmMessage: WCF.Language.get('wcf.worker.abort.confirmMessage'),
+					closeViaModal: false,
+					onClose: $.proxy(function () {
+						this._aborted = true;
+						this._proxy.abortPrevious();
+						
+						window.location.reload();
+					}, this),
+					title: this._title
+				});
 			}
-		}
-		
-		var self = this;
-		$elements.each(function(index, element) {
-			var $element = $(element);
-			var $elementID = $element.wcfIdentify();
 			
-			// find trigger element
-			var $trigger = self._getTriggerElement($element);
-			if ($trigger === null || $trigger.length !== 1) {
+			if (this._aborted) {
 				return;
 			}
 			
-			$trigger.on(WCF_CLICK_EVENT, $.proxy(self._show, self)).data('elementID', $elementID);
-			if ($quickOption) {
-				// simulate click on target action
-				$trigger.disableSelection().data('optionName', $quickOption).dblclick($.proxy(self._click, self));
+			if (data.returnValues.template) {
+				this._dialog.html(data.returnValues.template);
 			}
 			
-			// store reference
-			self._elements[$elementID] = $element;
-		});
-		
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
-		
-		WCF.CloseOverlayHandler.addCallback('WCF.InlineEditor', $.proxy(this._closeAll, this));
-		
-		this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'), 'success');
-	},
-	
-	/**
-	 * Closes all inline editors.
-	 */
-	_closeAll: function() {
-		for (var $elementID in this._elements) {
-			this._hide($elementID);
-		}
-	},
-	
-	/**
-	 * Sets options for this inline editor.
-	 */
-	_setOptions: function() {
-		this._options = [ ];
-	},
-	
-	/**
-	 * Register an option callback for validation and execution.
-	 * 
-	 * @param	object		callback
-	 */
-	registerCallback: function(callback) {
-		if ($.isFunction(callback)) {
-			this._callbacks.push(callback);
-		}
-	},
-	
-	/**
-	 * Returns the triggering element.
-	 * 
-	 * @param	jQuery		element
-	 * @return	jQuery
-	 */
-	_getTriggerElement: function(element) {
-		return null;
-	},
-	
-	/**
-	 * Shows a dropdown menu if options are available.
-	 * 
-	 * @param	object		event
-	 */
-	_show: function(event) {
-		event.preventDefault();
-		var $elementID = $(event.currentTarget).data('elementID');
-		
-		// build dropdown
-		var $trigger = null;
-		if (!this._dropdowns[$elementID]) {
-			this._triggerElements[$elementID] = $trigger = this._getTriggerElement(this._elements[$elementID]).addClass('dropdownToggle');
-			var parent = $trigger[0].parentNode;
-			if (parent && parent.nodeName === 'LI' && parent.childElementCount === 1) {
-				// do not add a wrapper element if the trigger is the only child
-				parent.classList.add('dropdown');
+			// update progress
+			this._dialog.find('progress').attr('value', data.returnValues.progress).text(data.returnValues.progress + '%').next('span').text(data.returnValues.progress + '%');
+			
+			// worker is still busy with its business, carry on
+			if (data.returnValues.progress < 100) {
+				// send request for next loop
+				var $parameters = data.returnValues.parameters || {};
+				$parameters.loopCount = data.returnValues.loopCount;
+				
+				this._proxy.setOption('data', {
+					actionName: this._actionName,
+					className: this._className,
+					parameters: $parameters
+				});
+				this._proxy.sendRequest();
+			}
+			else if (this._callback !== null) {
+				this._callback(this, data);
 			}
 			else {
-				$trigger.wrap('<span class="dropdown" />');
-			}
-			
-			this._dropdowns[$elementID] = $('<ul class="dropdownMenu" />').insertAfter($trigger);
-		}
-		this._dropdowns[$elementID].empty();
-		
-		// validate options
-		var $hasOptions = false;
-		var $lastElementType = '';
-		for (var $i = 0, $length = this._options.length; $i < $length; $i++) {
-			var $option = this._options[$i];
-			
-			if ($option.optionName === 'divider') {
-				if ($lastElementType !== '' && $lastElementType !== 'divider') {
-					$('<li class="dropdownDivider" />').appendTo(this._dropdowns[$elementID]);
-					$lastElementType = $option.optionName;
-				}
-			}
-			else if (this._validate($elementID, $option.optionName) || this._validateCallbacks($elementID, $option.optionName)) {
-				var $listItem = $('<li><span>' + $option.label + '</span></li>').appendTo(this._dropdowns[$elementID]);
-				$listItem.data('elementID', $elementID).data('optionName', $option.optionName).data('isQuickOption', ($option.isQuickOption ? true : false)).click($.proxy(this._click, this));
+				// exchange icon
+				this._dialog.find('.fa-spinner').removeClass('fa-spinner').addClass('fa-check green');
+				this._dialog.find('.contentHeader h1').text(WCF.Language.get('wcf.global.worker.completed'));
 				
-				$hasOptions = true;
-				$lastElementType = $option.optionName;
-			}
-		}
-		
-		if ($hasOptions) {
-			// if last child is divider, remove it
-			var $lastChild = this._dropdowns[$elementID].children().last();
-			if ($lastChild.hasClass('dropdownDivider')) {
-				$lastChild.remove();
-			}
-			
-			// check if only element is a quick option
-			var $quickOption = null;
-			var $count = 0;
-			this._dropdowns[$elementID].children().each(function(index, child) {
-				var $child = $(child);
-				if (!$child.hasClass('dropdownDivider')) {
-					if ($child.data('isQuickOption')) {
-						$quickOption = $child;
+				// display continue button
+				var $formSubmit = $('<div class="formSubmit" />').appendTo(this._dialog);
+				$('<button class="buttonPrimary">' + WCF.Language.get('wcf.global.button.next') + '</button>').appendTo($formSubmit).focus().click(function () {
+					if (data.returnValues.redirectURL) {
+						window.location = data.returnValues.redirectURL;
 					}
 					else {
-						$count++;
+						window.location.reload();
 					}
-				}
-			});
-			
-			if (!$count) {
-				$quickOption.trigger('click');
+				});
 				
-				if (this._triggerElements[$elementID]) {
-					WCF.Dropdown.close(this._triggerElements[$elementID].parents('.dropdown').wcfIdentify());
-				}
-				
-				return false;
+				this._dialog.wcfDialog('render');
 			}
 		}
+	});
+	
+	/**
+	 * Default implementation for inline editors.
+	 *
+	 * @param        string                elementSelector
+	 */
+	WCF.InlineEditor = Class.extend({
+		/**
+		 * list of registered callbacks
+		 * @var        array<object>
+		 */
+		_callbacks: [],
 		
-		if ($trigger !== null) {
-			WCF.Dropdown.initDropdown($trigger, true);
-		}
+		/**
+		 * list of dropdown selections
+		 * @var        object
+		 */
+		_dropdowns: {},
 		
-		return false;
-	},
-	
-	/**
-	 * Validates an option.
-	 * 
-	 * @param	string		elementID
-	 * @param	string		optionName
-	 * @returns	boolean
-	 */
-	_validate: function(elementID, optionName) {
-		return false;
-	},
-	
-	/**
-	 * Validates an option provided by callbacks.
-	 * 
-	 * @param	string		elementID
-	 * @param	string		optionName
-	 * @return	boolean
-	 */
-	_validateCallbacks: function(elementID, optionName) {
-		var $length = this._callbacks.length;
-		if ($length) {
-			for (var $i = 0; $i < $length; $i++) {
-				if (this._callbacks[$i].validate(this._elements[elementID], optionName)) {
-					return true;
-				}
-			}
-		}
+		/**
+		 * list of container elements
+		 * @var        object
+		 */
+		_elements: {},
 		
-		return false;
-	},
-	
-	/**
-	 * Handles AJAX responses.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		var $length = this._updateData.length;
-		if (!$length) {
-			return;
-		}
+		/**
+		 * notification object
+		 * @var        WCF.System.Notification
+		 */
+		_notification: null,
 		
-		this._updateState(data);
+		/**
+		 * list of known options
+		 * @var        array<object>
+		 */
+		_options: [],
 		
-		this._updateData = [ ];
-	},
-	
-	/**
-	 * Update element states based upon update data.
-	 * 
-	 * @param	object		data
-	 */
-	_updateState: function(data) { },
-	
-	/**
-	 * Handles clicks within dropdown.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		var $listItem = $(event.currentTarget);
-		var $elementID = $listItem.data('elementID');
-		var $optionName = $listItem.data('optionName');
+		/**
+		 * action proxy
+		 * @var        WCF.Action.Proxy
+		 */
+		_proxy: null,
 		
-		if (!this._execute($elementID, $optionName)) {
-			this._executeCallback($elementID, $optionName);
-		}
+		/**
+		 * list of trigger elements by element id
+		 * @var        object<object>
+		 */
+		_triggerElements: {},
 		
-		this._hide($elementID);
-	},
-	
-	/**
-	 * Executes actions associated with an option.
-	 * 
-	 * @param	string		elementID
-	 * @param	string		optionName
-	 * @return	boolean
-	 */
-	_execute: function(elementID, optionName) {
-		return false;
-	},
-	
-	/**
-	 * Executes actions associated with an option provided by callbacks.
-	 * 
-	 * @param	string		elementID
-	 * @param	string		optionName
-	 * @return	boolean
-	 */
-	_executeCallback: function(elementID, optionName) {
-		var $length = this._callbacks.length;
-		if ($length) {
-			for (var $i = 0; $i < $length; $i++) {
-				if (this._callbacks[$i].execute(this._elements[elementID], optionName)) {
-					return true;
-				}
-			}
-		}
+		/**
+		 * list of data to update upon success
+		 * @var        array<object>
+		 */
+		_updateData: [],
 		
-		return false;
-	},
-	
-	/**
-	 * Hides a dropdown menu.
-	 * 
-	 * @param	string		elementID
-	 */
-	_hide: function(elementID) {
-		if (this._dropdowns[elementID]) {
-			this._dropdowns[elementID].empty().removeClass('dropdownOpen');
-		}
-	}
-});
-
-/**
- * Default implementation for ajax file uploads.
- * 
- * @deprecated	Use WoltLabSuite/Core/Upload
- * 
- * @param	jquery		buttonSelector
- * @param	jquery		fileListSelector
- * @param	string		className
- * @param	jquery		options
- */
-WCF.Upload = Class.extend({
-	/**
-	 * name of the upload field
-	 * @var	string
-	 */
-	_name: '__files[]',
-	
-	/**
-	 * button selector
-	 * @var	jQuery
-	 */
-	_buttonSelector: null,
-	
-	/**
-	 * file list selector
-	 * @var	jQuery
-	 */
-	_fileListSelector: null,
-	
-	/**
-	 * upload file
-	 * @var	jQuery
-	 */
-	_fileUpload: null,
-	
-	/**
-	 * class name
-	 * @var	string
-	 */
-	_className: '',
-	
-	/**
-	 * iframe for IE<10 fallback
-	 * @var	jQuery
-	 */
-	_iframe: null,
-	
-	/**
-	 * internal file id
-	 * @var	integer
-	 */
-	_internalFileID: 0,
-	
-	/**
-	 * additional options
-	 * @var	jQuery
-	 */
-	_options: {},
-	
-	/**
-	 * upload matrix
-	 * @var	array
-	 */
-	_uploadMatrix: [],
-	
-	/**
-	 * true, if the active user's browser supports ajax file uploads
-	 * @var	boolean
-	 */
-	_supportsAJAXUpload: true,
-	
-	/**
-	 * fallback overlay for stupid browsers
-	 * @var	jquery
-	 */
-	_overlay: null,
-	
-	/**
-	 * Initializes a new upload handler.
-	 * 
-	 * @param	string		buttonSelector
-	 * @param	string		fileListSelector
-	 * @param	string		className
-	 * @param	object		options
-	 */
-	init: function(buttonSelector, fileListSelector, className, options) {
-		this._buttonSelector = buttonSelector;
-		this._fileListSelector = fileListSelector;
-		this._className = className;
-		this._internalFileID = 0;
-		this._options = $.extend(true, {
-			action: 'upload',
-			multiple: false,
-			url: 'index.php?ajax-upload/&t=' + SECURITY_TOKEN
-		}, options || { });
-		
-		this._options.url = WCF.convertLegacyURL(this._options.url);
-		if (this._options.url.indexOf('index.php') === 0) {
-			this._options.url = WSC_API_URL + this._options.url;
-		}
-		
-		// check for ajax upload support
-		var $xhr = new XMLHttpRequest();
-		this._supportsAJAXUpload = ($xhr && ('upload' in $xhr) && ('onprogress' in $xhr.upload));
-		
-		// create upload button
-		this._createButton();
-	},
-	
-	/**
-	 * Creates the upload button.
-	 */
-	_createButton: function() {
-		if (this._supportsAJAXUpload) {
-			this._fileUpload = $('<input type="file" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/>');
-			this._fileUpload.change($.proxy(this._upload, this));
-			var $button = $('<p class="button uploadButton"><span>' + WCF.Language.get('wcf.global.button.upload') + '</span></p>');
-			$button.prepend(this._fileUpload);
-		}
-		else {
-			var $button = $('<p class="button uploadFallbackButton"><span>' + WCF.Language.get('wcf.global.button.upload') + '</span></p>');
-			$button.click($.proxy(this._showOverlay, this));
-		}
-		
-		this._insertButton($button);
-	},
-	
-	/**
-	 * Inserts the upload button.
-	 * 
-	 * @param	jQuery		button
-	 */
-	_insertButton: function(button) {
-		this._buttonSelector.prepend(button);
-	},
-	
-	/**
-	 * Removes the upload button.
-	 */
-	_removeButton: function() {
-		var $selector = '.uploadButton';
-		if (!this._supportsAJAXUpload) {
-			$selector = '.uploadFallbackButton';
-		}
-		
-		this._buttonSelector.find($selector).remove();
-	},
-	
-	/**
-	 * Callback for file uploads.
-	 * 
-	 * @param	object		event
-	 * @param	File		file
-	 * @param	Blob		blob
-	 * @return	integer
-	 */
-	_upload: function(event, file, blob) {
-		var $uploadID = null;
-		var $files = [ ];
-		if (file) {
-			$files.push(file);
-		}
-		else if (blob) {
-			var $ext = '';
-			switch (blob.type) {
-				case 'image/png':
-					$ext = '.png';
-				break;
-				
-				case 'image/jpeg':
-					$ext = '.jpg';
-				break;
-				
-				case 'image/gif':
-					$ext = '.gif';
-				break;
+		/**
+		 * Initializes a new inline editor.
+		 */
+		init: function (elementSelector) {
+			var $elements = $(elementSelector);
+			if (!$elements.length) {
+				return;
 			}
 			
-			$files.push({
-				name: 'pasted-from-clipboard' + $ext
-			});
-		}
-		else {
-			$files = this._fileUpload.prop('files');
-		}
-		
-		if ($files.length) {
-			var $fd = new FormData();
-			$uploadID = this._createUploadMatrix($files);
-			
-			// no more files left, abort
-			if (!this._uploadMatrix[$uploadID].length) {
-				return null;
-			}
-			
-			for (var $i = 0, $length = $files.length; $i < $length; $i++) {
-				if (this._uploadMatrix[$uploadID][$i]) {
-					var $internalFileID = this._uploadMatrix[$uploadID][$i].data('internalFileID');
-					
-					if (blob) {
-						$fd.append('__files[' + $internalFileID + ']', blob, $files[$i].name);
-					}
-					else {
-						$fd.append('__files[' + $internalFileID + ']', $files[$i]);
-					}
+			this._setOptions();
+			var $quickOption = '';
+			for (var $i = 0, $length = this._options.length; $i < $length; $i++) {
+				if (this._options[$i].isQuickOption) {
+					$quickOption = this._options[$i].optionName;
+					break;
 				}
-			}
-			
-			$fd.append('actionName', this._options.action);
-			$fd.append('className', this._className);
-			var $additionalParameters = this._getParameters();
-			for (var $name in $additionalParameters) {
-				$fd.append('parameters[' + $name + ']', $additionalParameters[$name]);
 			}
 			
 			var self = this;
-			$.ajax({
-				type: 'POST',
-				url: this._options.url,
-				enctype: 'multipart/form-data',
-				data: $fd,
-				contentType: false,
-				processData: false,
-				success: function(data, textStatus, jqXHR) {
-					self._success($uploadID, data);
-				},
-				error: $.proxy(this._error, this),
-				xhr: function() {
-					var $xhr = $.ajaxSettings.xhr();
-					if ($xhr) {
-						$xhr.upload.addEventListener('progress', function(event) {
-							self._progress($uploadID, event);
-						}, false);
-					}
-					return $xhr;
-				},
-				xhrFields: {
-					withCredentials: true
+			$elements.each(function (index, element) {
+				var $element = $(element);
+				var $elementID = $element.wcfIdentify();
+				
+				// find trigger element
+				var $trigger = self._getTriggerElement($element);
+				if ($trigger === null || $trigger.length !== 1) {
+					return;
 				}
+				
+				$trigger.on(WCF_CLICK_EVENT, $.proxy(self._show, self)).data('elementID', $elementID);
+				if ($quickOption) {
+					// simulate click on target action
+					$trigger.disableSelection().data('optionName', $quickOption).dblclick($.proxy(self._click, self));
+				}
+				
+				// store reference
+				self._elements[$elementID] = $element;
 			});
-		}
+			
+			this._proxy = new WCF.Action.Proxy({
+				success: $.proxy(this._success, this)
+			});
+			
+			WCF.CloseOverlayHandler.addCallback('WCF.InlineEditor', $.proxy(this._closeAll, this));
+			
+			this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'), 'success');
+		},
 		
-		return $uploadID;
-	},
+		/**
+		 * Closes all inline editors.
+		 */
+		_closeAll: function () {
+			for (var $elementID in this._elements) {
+				this._hide($elementID);
+			}
+		},
+		
+		/**
+		 * Sets options for this inline editor.
+		 */
+		_setOptions: function () {
+			this._options = [];
+		},
+		
+		/**
+		 * Register an option callback for validation and execution.
+		 *
+		 * @param        object                callback
+		 */
+		registerCallback: function (callback) {
+			if ($.isFunction(callback)) {
+				this._callbacks.push(callback);
+			}
+		},
+		
+		/**
+		 * Returns the triggering element.
+		 *
+		 * @param        jQuery                element
+		 * @return        jQuery
+		 */
+		_getTriggerElement: function (element) {
+			return null;
+		},
+		
+		/**
+		 * Shows a dropdown menu if options are available.
+		 *
+		 * @param        object                event
+		 */
+		_show: function (event) {
+			event.preventDefault();
+			var $elementID = $(event.currentTarget).data('elementID');
+			
+			// build dropdown
+			var $trigger = null;
+			if (!this._dropdowns[$elementID]) {
+				this._triggerElements[$elementID] = $trigger = this._getTriggerElement(this._elements[$elementID]).addClass('dropdownToggle');
+				var parent = $trigger[0].parentNode;
+				if (parent && parent.nodeName === 'LI' && parent.childElementCount === 1) {
+					// do not add a wrapper element if the trigger is the only child
+					parent.classList.add('dropdown');
+				}
+				else {
+					$trigger.wrap('<span class="dropdown" />');
+				}
+				
+				this._dropdowns[$elementID] = $('<ul class="dropdownMenu" />').insertAfter($trigger);
+			}
+			this._dropdowns[$elementID].empty();
+			
+			// validate options
+			var $hasOptions = false;
+			var $lastElementType = '';
+			for (var $i = 0, $length = this._options.length; $i < $length; $i++) {
+				var $option = this._options[$i];
+				
+				if ($option.optionName === 'divider') {
+					if ($lastElementType !== '' && $lastElementType !== 'divider') {
+						$('<li class="dropdownDivider" />').appendTo(this._dropdowns[$elementID]);
+						$lastElementType = $option.optionName;
+					}
+				}
+				else if (this._validate($elementID, $option.optionName) || this._validateCallbacks($elementID, $option.optionName)) {
+					var $listItem = $('<li><span>' + $option.label + '</span></li>').appendTo(this._dropdowns[$elementID]);
+					$listItem.data('elementID', $elementID).data('optionName', $option.optionName).data('isQuickOption', ($option.isQuickOption ? true : false)).click($.proxy(this._click, this));
+					
+					$hasOptions = true;
+					$lastElementType = $option.optionName;
+				}
+			}
+			
+			if ($hasOptions) {
+				// if last child is divider, remove it
+				var $lastChild = this._dropdowns[$elementID].children().last();
+				if ($lastChild.hasClass('dropdownDivider')) {
+					$lastChild.remove();
+				}
+				
+				// check if only element is a quick option
+				var $quickOption = null;
+				var $count = 0;
+				this._dropdowns[$elementID].children().each(function (index, child) {
+					var $child = $(child);
+					if (!$child.hasClass('dropdownDivider')) {
+						if ($child.data('isQuickOption')) {
+							$quickOption = $child;
+						}
+						else {
+							$count++;
+						}
+					}
+				});
+				
+				if (!$count) {
+					$quickOption.trigger('click');
+					
+					if (this._triggerElements[$elementID]) {
+						WCF.Dropdown.close(this._triggerElements[$elementID].parents('.dropdown').wcfIdentify());
+					}
+					
+					return false;
+				}
+			}
+			
+			if ($trigger !== null) {
+				WCF.Dropdown.initDropdown($trigger, true);
+			}
+			
+			return false;
+		},
+		
+		/**
+		 * Validates an option.
+		 *
+		 * @param        string                elementID
+		 * @param        string                optionName
+		 * @returns        boolean
+		 */
+		_validate: function (elementID, optionName) {
+			return false;
+		},
+		
+		/**
+		 * Validates an option provided by callbacks.
+		 *
+		 * @param        string                elementID
+		 * @param        string                optionName
+		 * @return        boolean
+		 */
+		_validateCallbacks: function (elementID, optionName) {
+			var $length = this._callbacks.length;
+			if ($length) {
+				for (var $i = 0; $i < $length; $i++) {
+					if (this._callbacks[$i].validate(this._elements[elementID], optionName)) {
+						return true;
+					}
+				}
+			}
+			
+			return false;
+		},
+		
+		/**
+		 * Handles AJAX responses.
+		 *
+		 * @param        object                data
+		 * @param        string                textStatus
+		 * @param        jQuery                jqXHR
+		 */
+		_success: function (data, textStatus, jqXHR) {
+			var $length = this._updateData.length;
+			if (!$length) {
+				return;
+			}
+			
+			this._updateState(data);
+			
+			this._updateData = [];
+		},
+		
+		/**
+		 * Update element states based upon update data.
+		 *
+		 * @param        object                data
+		 */
+		_updateState: function (data) {
+		},
+		
+		/**
+		 * Handles clicks within dropdown.
+		 *
+		 * @param        object                event
+		 */
+		_click: function (event) {
+			var $listItem = $(event.currentTarget);
+			var $elementID = $listItem.data('elementID');
+			var $optionName = $listItem.data('optionName');
+			
+			if (!this._execute($elementID, $optionName)) {
+				this._executeCallback($elementID, $optionName);
+			}
+			
+			this._hide($elementID);
+		},
+		
+		/**
+		 * Executes actions associated with an option.
+		 *
+		 * @param        string                elementID
+		 * @param        string                optionName
+		 * @return        boolean
+		 */
+		_execute: function (elementID, optionName) {
+			return false;
+		},
+		
+		/**
+		 * Executes actions associated with an option provided by callbacks.
+		 *
+		 * @param        string                elementID
+		 * @param        string                optionName
+		 * @return        boolean
+		 */
+		_executeCallback: function (elementID, optionName) {
+			var $length = this._callbacks.length;
+			if ($length) {
+				for (var $i = 0; $i < $length; $i++) {
+					if (this._callbacks[$i].execute(this._elements[elementID], optionName)) {
+						return true;
+					}
+				}
+			}
+			
+			return false;
+		},
+		
+		/**
+		 * Hides a dropdown menu.
+		 *
+		 * @param        string                elementID
+		 */
+		_hide: function (elementID) {
+			if (this._dropdowns[elementID]) {
+				this._dropdowns[elementID].empty().removeClass('dropdownOpen');
+			}
+		}
+	});
 	
 	/**
-	 * Creates upload matrix for provided files.
-	 * 
-	 * @param	array<object>		files
-	 * @return	integer
+	 * Default implementation for ajax file uploads.
+	 *
+	 * @deprecated        Use WoltLabSuite/Core/Upload
+	 *
+	 * @param        jquery                buttonSelector
+	 * @param        jquery                fileListSelector
+	 * @param        string                className
+	 * @param        jquery                options
 	 */
-	_createUploadMatrix: function(files) {
-		if (files.length) {
-			var $uploadID = this._uploadMatrix.length;
-			this._uploadMatrix[$uploadID] = [ ];
+	WCF.Upload = Class.extend({
+		/**
+		 * name of the upload field
+		 * @var        string
+		 */
+		_name: '__files[]',
+		
+		/**
+		 * button selector
+		 * @var        jQuery
+		 */
+		_buttonSelector: null,
+		
+		/**
+		 * file list selector
+		 * @var        jQuery
+		 */
+		_fileListSelector: null,
+		
+		/**
+		 * upload file
+		 * @var        jQuery
+		 */
+		_fileUpload: null,
+		
+		/**
+		 * class name
+		 * @var        string
+		 */
+		_className: '',
+		
+		/**
+		 * iframe for IE<10 fallback
+		 * @var        jQuery
+		 */
+		_iframe: null,
+		
+		/**
+		 * internal file id
+		 * @var        integer
+		 */
+		_internalFileID: 0,
+		
+		/**
+		 * additional options
+		 * @var        jQuery
+		 */
+		_options: {},
+		
+		/**
+		 * upload matrix
+		 * @var        array
+		 */
+		_uploadMatrix: [],
+		
+		/**
+		 * true, if the active user's browser supports ajax file uploads
+		 * @var        boolean
+		 */
+		_supportsAJAXUpload: true,
+		
+		/**
+		 * fallback overlay for stupid browsers
+		 * @var        jquery
+		 */
+		_overlay: null,
+		
+		/**
+		 * Initializes a new upload handler.
+		 *
+		 * @param        string                buttonSelector
+		 * @param        string                fileListSelector
+		 * @param        string                className
+		 * @param        object                options
+		 */
+		init: function (buttonSelector, fileListSelector, className, options) {
+			this._buttonSelector = buttonSelector;
+			this._fileListSelector = fileListSelector;
+			this._className = className;
+			this._internalFileID = 0;
+			this._options = $.extend(true, {
+				action: 'upload',
+				multiple: false,
+				url: 'index.php?ajax-upload/&t=' + SECURITY_TOKEN
+			}, options || {});
 			
-			for (var $i = 0, $length = files.length; $i < $length; $i++) {
-				var $file = files[$i];
-				var $li = this._initFile($file);
-				
-				if (!$li.hasClass('uploadFailed')) {
-					$li.data('filename', $file.name).data('internalFileID', this._internalFileID++);
-					this._uploadMatrix[$uploadID][$i] = $li;
+			this._options.url = WCF.convertLegacyURL(this._options.url);
+			if (this._options.url.indexOf('index.php') === 0) {
+				this._options.url = WSC_API_URL + this._options.url;
+			}
+			
+			// check for ajax upload support
+			var $xhr = new XMLHttpRequest();
+			this._supportsAJAXUpload = ($xhr && ('upload' in $xhr) && ('onprogress' in $xhr.upload));
+			
+			// create upload button
+			this._createButton();
+		},
+		
+		/**
+		 * Creates the upload button.
+		 */
+		_createButton: function () {
+			if (this._supportsAJAXUpload) {
+				this._fileUpload = $('<input type="file" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/>');
+				this._fileUpload.change($.proxy(this._upload, this));
+				var $button = $('<p class="button uploadButton"><span>' + WCF.Language.get('wcf.global.button.upload') + '</span></p>');
+				$button.prepend(this._fileUpload);
+			}
+			else {
+				var $button = $('<p class="button uploadFallbackButton"><span>' + WCF.Language.get('wcf.global.button.upload') + '</span></p>');
+				$button.click($.proxy(this._showOverlay, this));
+			}
+			
+			this._insertButton($button);
+		},
+		
+		/**
+		 * Inserts the upload button.
+		 *
+		 * @param        jQuery                button
+		 */
+		_insertButton: function (button) {
+			this._buttonSelector.prepend(button);
+		},
+		
+		/**
+		 * Removes the upload button.
+		 */
+		_removeButton: function () {
+			var $selector = '.uploadButton';
+			if (!this._supportsAJAXUpload) {
+				$selector = '.uploadFallbackButton';
+			}
+			
+			this._buttonSelector.find($selector).remove();
+		},
+		
+		/**
+		 * Callback for file uploads.
+		 *
+		 * @param        object                event
+		 * @param        File                file
+		 * @param        Blob                blob
+		 * @return        integer
+		 */
+		_upload: function (event, file, blob) {
+			var $uploadID = null;
+			var $files = [];
+			if (file) {
+				$files.push(file);
+			}
+			else if (blob) {
+				var $ext = '';
+				switch (blob.type) {
+					case 'image/png':
+						$ext = '.png';
+						break;
+					
+					case 'image/jpeg':
+						$ext = '.jpg';
+						break;
+					
+					case 'image/gif':
+						$ext = '.gif';
+						break;
 				}
+				
+				$files.push({
+					name: 'pasted-from-clipboard' + $ext
+				});
+			}
+			else {
+				$files = this._fileUpload.prop('files');
+			}
+			
+			if ($files.length) {
+				var $fd = new FormData();
+				$uploadID = this._createUploadMatrix($files);
+				
+				// no more files left, abort
+				if (!this._uploadMatrix[$uploadID].length) {
+					return null;
+				}
+				
+				for (var $i = 0, $length = $files.length; $i < $length; $i++) {
+					if (this._uploadMatrix[$uploadID][$i]) {
+						var $internalFileID = this._uploadMatrix[$uploadID][$i].data('internalFileID');
+						
+						if (blob) {
+							$fd.append('__files[' + $internalFileID + ']', blob, $files[$i].name);
+						}
+						else {
+							$fd.append('__files[' + $internalFileID + ']', $files[$i]);
+						}
+					}
+				}
+				
+				$fd.append('actionName', this._options.action);
+				$fd.append('className', this._className);
+				var $additionalParameters = this._getParameters();
+				for (var $name in $additionalParameters) {
+					$fd.append('parameters[' + $name + ']', $additionalParameters[$name]);
+				}
+				
+				var self = this;
+				$.ajax({
+					type: 'POST',
+					url: this._options.url,
+					enctype: 'multipart/form-data',
+					data: $fd,
+					contentType: false,
+					processData: false,
+					success: function (data, textStatus, jqXHR) {
+						self._success($uploadID, data);
+					},
+					error: $.proxy(this._error, this),
+					xhr: function () {
+						var $xhr = $.ajaxSettings.xhr();
+						if ($xhr) {
+							$xhr.upload.addEventListener('progress', function (event) {
+								self._progress($uploadID, event);
+							}, false);
+						}
+						return $xhr;
+					},
+					xhrFields: {
+						withCredentials: true
+					}
+				});
 			}
 			
 			return $uploadID;
-		}
+		},
 		
-		return null;
-	},
-	
-	/**
-	 * Callback for success event.
-	 * 
-	 * @param	integer		uploadID
-	 * @param	object		data
-	 */
-	_success: function(uploadID, data) { },
-	
-	/**
-	 * Callback for error event.
-	 * 
-	 * @param	jQuery		jqXHR
-	 * @param	string		textStatus
-	 * @param	string		errorThrown
-	 */
-	_error: function(jqXHR, textStatus, errorThrown) { },
-	
-	/**
-	 * Callback for progress event.
-	 * 
-	 * @param	integer		uploadID
-	 * @param	object		event
-	 */
-	_progress: function(uploadID, event) {
-		var $percentComplete = Math.round(event.loaded * 100 / event.total);
-		
-		for (var $i in this._uploadMatrix[uploadID]) {
-			this._uploadMatrix[uploadID][$i].find('progress').attr('value', $percentComplete);
-		}
-	},
-	
-	/**
-	 * Returns additional parameters.
-	 * 
-	 * @return	object
-	 */
-	_getParameters: function() {
-		return {};
-	},
-	
-	/**
-	 * Initializes list item for uploaded file.
-	 * 
-	 * @return	jQuery
-	 */
-	_initFile: function(file) {
-		return $('<li>' + file.name + ' (' + file.size + ')<progress max="100" /></li>').appendTo(this._fileListSelector);
-	},
-	
-	/**
-	 * Shows the fallback overlay (work in progress)
-	 */
-	_showOverlay: function() {
-		// create iframe
-		if (this._iframe === null) {
-			this._iframe = $('<iframe name="__fileUploadIFrame" />').hide().appendTo(document.body);
-		}
-		
-		// create overlay
-		if (!this._overlay) {
-			this._overlay = $('<div><form enctype="multipart/form-data" method="post" action="' + this._options.url + '" target="__fileUploadIFrame" /></div>').hide().appendTo(document.body);
-			
-			var $form = this._overlay.find('form');
-			$('<dl class="wide"><dd><input type="file" id="__fileUpload" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/></dd></dl>').appendTo($form);
-			$('<div class="formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form>').appendTo($form);
-			
-			$('<input type="hidden" name="isFallback" value="1" />').appendTo($form);
-			$('<input type="hidden" name="actionName" value="' + this._options.action + '" />').appendTo($form);
-			$('<input type="hidden" name="className" value="' + this._className + '" />').appendTo($form);
-			var $additionalParameters = this._getParameters();
-			for (var $name in $additionalParameters) {
-				$('<input type="hidden" name="' + $name + '" value="' + $additionalParameters[$name] + '" />').appendTo($form);
-			}
-			
-			$form.submit($.proxy(function() {
-				var $file = {
-					name: this._getFilename(),
-					size: ''
-				};
+		/**
+		 * Creates upload matrix for provided files.
+		 *
+		 * @param        array<object>                files
+		 * @return        integer
+		 */
+		_createUploadMatrix: function (files) {
+			if (files.length) {
+				var $uploadID = this._uploadMatrix.length;
+				this._uploadMatrix[$uploadID] = [];
 				
-				var $uploadID = this._createUploadMatrix([ $file ]);
-				var self = this;
-				this._iframe.data('loading', true).off('load').load(function() { self._evaluateResponse($uploadID); });
-				this._overlay.wcfDialog('close');
-			}, this));
-		}
-		
-		this._overlay.wcfDialog({
-			title: WCF.Language.get('wcf.global.button.upload')
-		});
-	},
-	
-	/**
-	 * Evaluates iframe response.
-	 * 
-	 * @param	integer		uploadID
-	 */
-	_evaluateResponse: function(uploadID) {
-		var $returnValues = $.parseJSON(this._iframe.contents().find('pre').html());
-		this._success(uploadID, $returnValues);
-	},
-	
-	/**
-	 * Returns name of selected file.
-	 * 
-	 * @return	string
-	 */
-	_getFilename: function() {
-		return $('#__fileUpload').val().split('\\').pop();
-	}
-});
-
-/**
- * Default implementation for parallel AJAX file uploads.
- * 
- * @deprecated	Use WoltLabSuite/Core/Upload
- */
-WCF.Upload.Parallel = WCF.Upload.extend({
-	/**
-	 * @see	WCF.Upload.init()
-	 */
-	init: function(buttonSelector, fileListSelector, className, options) {
-		// force multiple uploads
-		options = $.extend(true, options || { }, {
-			multiple: true
-		});
-		
-		this._super(buttonSelector, fileListSelector, className, options);
-	},
-	
-	/**
-	 * @see	WCF.Upload._upload()
-	 */
-	_upload: function() {
-		var $files = this._fileUpload.prop('files');
-		for (var $i = 0, $length = $files.length; $i < $length; $i++) {
-			var $file = $files[$i];
-			var $formData = new FormData();
-			var $internalFileID = this._createUploadMatrix($file);
-			
-			if (!this._uploadMatrix[$internalFileID].length) {
-				continue;
-			}
-			
-			$formData.append('__files[' + $internalFileID + ']', $file);
-			$formData.append('actionName', this._options.action);
-			$formData.append('className', this._className);
-			var $additionalParameters = this._getParameters();
-			for (var $name in $additionalParameters) {
-				$formData.append('parameters[' + $name + ']', $additionalParameters[$name]);
-			}
-			
-			this._sendRequest($internalFileID, $formData);
-		}
-	},
-	
-	/**
-	 * Sends an AJAX request to upload a file.
-	 * 
-	 * @param	integer		internalFileID
-	 * @param	FormData	formData
-	 */
-	_sendRequest: function(internalFileID, formData) {
-		var self = this;
-		$.ajax({
-			type: 'POST',
-			url: this._options.url,
-			enctype: 'multipart/form-data',
-			data: formData,
-			contentType: false,
-			processData: false,
-			success: function(data, textStatus, jqXHR) {
-				self._success(internalFileID, data);
-			},
-			error: $.proxy(this._error, this),
-			xhr: function() {
-				var $xhr = $.ajaxSettings.xhr();
-				if ($xhr) {
-					$xhr.upload.addEventListener('progress', function(event) {
-						self._progress(internalFileID, event);
-					}, false);
+				for (var $i = 0, $length = files.length; $i < $length; $i++) {
+					var $file = files[$i];
+					var $li = this._initFile($file);
+					
+					if (!$li.hasClass('uploadFailed')) {
+						$li.data('filename', $file.name).data('internalFileID', this._internalFileID++);
+						this._uploadMatrix[$uploadID][$i] = $li;
+					}
 				}
-				return $xhr;
-			}
-		});
-	},
-	
-	/**
-	 * Creates upload matrix for provided file and returns its internal file id.
-	 * 
-	 * @param	object		file
-	 * @return	integer
-	 */
-	_createUploadMatrix: function(file) {
-		var $li = this._initFile(file);
-		if (!$li.hasClass('uploadFailed')) {
-			$li.data('filename', file.name).data('internalFileID', this._internalFileID);
-			this._uploadMatrix[this._internalFileID++] = $li;
-			
-			return this._internalFileID - 1;
-		}
-		
-		return null;
-	},
-	
-	/**
-	 * Callback for success event.
-	 * 
-	 * @param	integer		internalFileID
-	 * @param	object		data
-	 */
-	_success: function(internalFileID, data) { },
-	
-	/**
-	 * Callback for progress event.
-	 * 
-	 * @param	integer		internalFileID
-	 * @param	object		event
-	 */
-	_progress: function(internalFileID, event) {
-		var $percentComplete = Math.round(event.loaded * 100 / event.total);
-		
-		this._uploadMatrix[internalFileID].find('progress').attr('value', $percentComplete);
-	},
-	
-	/**
-	 * @see	WCF.Upload._showOverlay()
-	 */
-	_showOverlay: function() {
-		// create iframe
-		if (this._iframe === null) {
-			this._iframe = $('<iframe name="__fileUploadIFrame" />').hide().appendTo(document.body);
-		}
-		
-		// create overlay
-		if (!this._overlay) {
-			this._overlay = $('<div><form enctype="multipart/form-data" method="post" action="' + this._options.url + '" target="__fileUploadIFrame" /></div>').hide().appendTo(document.body);
-			
-			var $form = this._overlay.find('form');
-			$('<dl class="wide"><dd><input type="file" id="__fileUpload" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/></dd></dl>').appendTo($form);
-			$('<div class="formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form>').appendTo($form);
-			
-			$('<input type="hidden" name="isFallback" value="1" />').appendTo($form);
-			$('<input type="hidden" name="actionName" value="' + this._options.action + '" />').appendTo($form);
-			$('<input type="hidden" name="className" value="' + this._className + '" />').appendTo($form);
-			var $additionalParameters = this._getParameters();
-			for (var $name in $additionalParameters) {
-				$('<input type="hidden" name="' + $name + '" value="' + $additionalParameters[$name] + '" />').appendTo($form);
-			}
-			
-			$form.submit($.proxy(function() {
-				var $file = {
-					name: this._getFilename(),
-					size: ''
-				};
 				
-				var $internalFileID = this._createUploadMatrix($file);
-				var self = this;
-				this._iframe.data('loading', true).off('load').load(function() { self._evaluateResponse($internalFileID); });
-				this._overlay.wcfDialog('close');
-			}, this));
-		}
+				return $uploadID;
+			}
+			
+			return null;
+		},
 		
-		this._overlay.wcfDialog({
-			title: WCF.Language.get('wcf.global.button.upload')
-		});
-	},
+		/**
+		 * Callback for success event.
+		 *
+		 * @param        integer                uploadID
+		 * @param        object                data
+		 */
+		_success: function (uploadID, data) {
+		},
+		
+		/**
+		 * Callback for error event.
+		 *
+		 * @param        jQuery                jqXHR
+		 * @param        string                textStatus
+		 * @param        string                errorThrown
+		 */
+		_error: function (jqXHR, textStatus, errorThrown) {
+		},
+		
+		/**
+		 * Callback for progress event.
+		 *
+		 * @param        integer                uploadID
+		 * @param        object                event
+		 */
+		_progress: function (uploadID, event) {
+			var $percentComplete = Math.round(event.loaded * 100 / event.total);
+			
+			for (var $i in this._uploadMatrix[uploadID]) {
+				this._uploadMatrix[uploadID][$i].find('progress').attr('value', $percentComplete);
+			}
+		},
+		
+		/**
+		 * Returns additional parameters.
+		 *
+		 * @return        object
+		 */
+		_getParameters: function () {
+			return {};
+		},
+		
+		/**
+		 * Initializes list item for uploaded file.
+		 *
+		 * @return        jQuery
+		 */
+		_initFile: function (file) {
+			return $('<li>' + file.name + ' (' + file.size + ')<progress max="100" /></li>').appendTo(this._fileListSelector);
+		},
+		
+		/**
+		 * Shows the fallback overlay (work in progress)
+		 */
+		_showOverlay: function () {
+			// create iframe
+			if (this._iframe === null) {
+				this._iframe = $('<iframe name="__fileUploadIFrame" />').hide().appendTo(document.body);
+			}
+			
+			// create overlay
+			if (!this._overlay) {
+				this._overlay = $('<div><form enctype="multipart/form-data" method="post" action="' + this._options.url + '" target="__fileUploadIFrame" /></div>').hide().appendTo(document.body);
+				
+				var $form = this._overlay.find('form');
+				$('<dl class="wide"><dd><input type="file" id="__fileUpload" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/></dd></dl>').appendTo($form);
+				$('<div class="formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form>').appendTo($form);
+				
+				$('<input type="hidden" name="isFallback" value="1" />').appendTo($form);
+				$('<input type="hidden" name="actionName" value="' + this._options.action + '" />').appendTo($form);
+				$('<input type="hidden" name="className" value="' + this._className + '" />').appendTo($form);
+				var $additionalParameters = this._getParameters();
+				for (var $name in $additionalParameters) {
+					$('<input type="hidden" name="' + $name + '" value="' + $additionalParameters[$name] + '" />').appendTo($form);
+				}
+				
+				$form.submit($.proxy(function () {
+					var $file = {
+						name: this._getFilename(),
+						size: ''
+					};
+					
+					var $uploadID = this._createUploadMatrix([$file]);
+					var self = this;
+					this._iframe.data('loading', true).off('load').load(function () {
+						self._evaluateResponse($uploadID);
+					});
+					this._overlay.wcfDialog('close');
+				}, this));
+			}
+			
+			this._overlay.wcfDialog({
+				title: WCF.Language.get('wcf.global.button.upload')
+			});
+		},
+		
+		/**
+		 * Evaluates iframe response.
+		 *
+		 * @param        integer                uploadID
+		 */
+		_evaluateResponse: function (uploadID) {
+			var $returnValues = $.parseJSON(this._iframe.contents().find('pre').html());
+			this._success(uploadID, $returnValues);
+		},
+		
+		/**
+		 * Returns name of selected file.
+		 *
+		 * @return        string
+		 */
+		_getFilename: function () {
+			return $('#__fileUpload').val().split('\\').pop();
+		}
+	});
 	
 	/**
-	 * Evaluates iframe response.
-	 * 
-	 * @param	integer		internalFileID
+	 * Default implementation for parallel AJAX file uploads.
+	 *
+	 * @deprecated        Use WoltLabSuite/Core/Upload
 	 */
-	_evaluateResponse: function(internalFileID) {
-		var $returnValues = $.parseJSON(this._iframe.contents().find('pre').html());
-		this._success(internalFileID, $returnValues);
-	}
-});
+	WCF.Upload.Parallel = WCF.Upload.extend({
+		/**
+		 * @see        WCF.Upload.init()
+		 */
+		init: function (buttonSelector, fileListSelector, className, options) {
+			// force multiple uploads
+			options = $.extend(true, options || {}, {
+				multiple: true
+			});
+			
+			this._super(buttonSelector, fileListSelector, className, options);
+		},
+		
+		/**
+		 * @see        WCF.Upload._upload()
+		 */
+		_upload: function () {
+			var $files = this._fileUpload.prop('files');
+			for (var $i = 0, $length = $files.length; $i < $length; $i++) {
+				var $file = $files[$i];
+				var $formData = new FormData();
+				var $internalFileID = this._createUploadMatrix($file);
+				
+				if (!this._uploadMatrix[$internalFileID].length) {
+					continue;
+				}
+				
+				$formData.append('__files[' + $internalFileID + ']', $file);
+				$formData.append('actionName', this._options.action);
+				$formData.append('className', this._className);
+				var $additionalParameters = this._getParameters();
+				for (var $name in $additionalParameters) {
+					$formData.append('parameters[' + $name + ']', $additionalParameters[$name]);
+				}
+				
+				this._sendRequest($internalFileID, $formData);
+			}
+		},
+		
+		/**
+		 * Sends an AJAX request to upload a file.
+		 *
+		 * @param        integer                internalFileID
+		 * @param        FormData        formData
+		 * @return       jqXHR
+		 */
+		_sendRequest: function (internalFileID, formData) {
+			var self = this;
+			
+			return $.ajax({
+				type: 'POST',
+				url: this._options.url,
+				enctype: 'multipart/form-data',
+				data: formData,
+				contentType: false,
+				processData: false,
+				success: function (data, textStatus, jqXHR) {
+					self._success(internalFileID, data);
+				},
+				error: $.proxy(this._error, this),
+				xhr: function () {
+					var $xhr = $.ajaxSettings.xhr();
+					if ($xhr) {
+						$xhr.upload.addEventListener('progress', function (event) {
+							self._progress(internalFileID, event);
+						}, false);
+					}
+					return $xhr;
+				}
+			});
+		},
+		
+		/**
+		 * Creates upload matrix for provided file and returns its internal file id.
+		 *
+		 * @param        object                file
+		 * @return        integer
+		 */
+		_createUploadMatrix: function (file) {
+			var $li = this._initFile(file);
+			if (!$li.hasClass('uploadFailed')) {
+				$li.data('filename', file.name).data('internalFileID', this._internalFileID);
+				this._uploadMatrix[this._internalFileID++] = $li;
+				
+				return this._internalFileID - 1;
+			}
+			
+			return null;
+		},
+		
+		/**
+		 * Callback for success event.
+		 *
+		 * @param        integer                internalFileID
+		 * @param        object                data
+		 */
+		_success: function (internalFileID, data) {
+		},
+		
+		/**
+		 * Callback for progress event.
+		 *
+		 * @param        integer                internalFileID
+		 * @param        object                event
+		 */
+		_progress: function (internalFileID, event) {
+			var $percentComplete = Math.round(event.loaded * 100 / event.total);
+			
+			this._uploadMatrix[internalFileID].find('progress').attr('value', $percentComplete);
+		},
+		
+		/**
+		 * @see        WCF.Upload._showOverlay()
+		 */
+		_showOverlay: function () {
+			// create iframe
+			if (this._iframe === null) {
+				this._iframe = $('<iframe name="__fileUploadIFrame" />').hide().appendTo(document.body);
+			}
+			
+			// create overlay
+			if (!this._overlay) {
+				this._overlay = $('<div><form enctype="multipart/form-data" method="post" action="' + this._options.url + '" target="__fileUploadIFrame" /></div>').hide().appendTo(document.body);
+				
+				var $form = this._overlay.find('form');
+				$('<dl class="wide"><dd><input type="file" id="__fileUpload" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/></dd></dl>').appendTo($form);
+				$('<div class="formSubmit"><input type="submit" value="Upload" accesskey="s" /></div></form>').appendTo($form);
+				
+				$('<input type="hidden" name="isFallback" value="1" />').appendTo($form);
+				$('<input type="hidden" name="actionName" value="' + this._options.action + '" />').appendTo($form);
+				$('<input type="hidden" name="className" value="' + this._className + '" />').appendTo($form);
+				var $additionalParameters = this._getParameters();
+				for (var $name in $additionalParameters) {
+					$('<input type="hidden" name="' + $name + '" value="' + $additionalParameters[$name] + '" />').appendTo($form);
+				}
+				
+				$form.submit($.proxy(function () {
+					var $file = {
+						name: this._getFilename(),
+						size: ''
+					};
+					
+					var $internalFileID = this._createUploadMatrix($file);
+					var self = this;
+					this._iframe.data('loading', true).off('load').load(function () {
+						self._evaluateResponse($internalFileID);
+					});
+					this._overlay.wcfDialog('close');
+				}, this));
+			}
+			
+			this._overlay.wcfDialog({
+				title: WCF.Language.get('wcf.global.button.upload')
+			});
+		},
+		
+		/**
+		 * Evaluates iframe response.
+		 *
+		 * @param        integer                internalFileID
+		 */
+		_evaluateResponse: function (internalFileID) {
+			var $returnValues = $.parseJSON(this._iframe.contents().find('pre').html());
+			this._success(internalFileID, $returnValues);
+		}
+	});
+}
+else {
+	WCF.System.Worker = Class.extend({
+		_aborted: false,
+		_actionName: "",
+		_callback: {},
+		_className: "",
+		_dialog: {},
+		_proxy: {},
+		_title: "",
+		init: function() {},
+		_success: function() {}
+	});
+	
+	WCF.InlineEditor = Class.extend({
+		_callbacks: {},
+		_dropdowns: {},
+		_elements: {},
+		_notification: {},
+		_options: {},
+		_proxy: {},
+		_triggerElements: {},
+		_updateData: {},
+		init: function() {},
+		_closeAll: function() {},
+		_setOptions: function() {},
+		registerCallback: function() {},
+		_getTriggerElement: function() {},
+		_show: function() {},
+		_validate: function() {},
+		_validateCallbacks: function() {},
+		_success: function() {},
+		_updateState: function() {},
+		_click: function() {},
+		_execute: function() {},
+		_executeCallback: function() {},
+		_hide: function() {}
+	});
+	
+	WCF.Upload = Class.extend({
+		_name: "",
+		_buttonSelector: {},
+		_fileListSelector: {},
+		_fileUpload: {},
+		_className: "",
+		_iframe: {},
+		_internalFileID: 0,
+		_options: {},
+		_uploadMatrix: {},
+		_supportsAJAXUpload: true,
+		_overlay: {},
+		init: function() {},
+		_createButton: function() {},
+		_insertButton: function() {},
+		_removeButton: function() {},
+		_upload: function() {},
+		_createUploadMatrix: function() {},
+		_success: function() {},
+		_error: function() {},
+		_progress: function() {},
+		_getParameters: function() {},
+		_initFile: function() {},
+		_showOverlay: function() {},
+		_evaluateResponse: function() {},
+		_getFilename: function() {}
+	});
+	
+	WCF.Upload.Parallel = WCF.Upload.extend({
+		init: function() {},
+		_upload: function() {},
+		_sendRequest: function() {},
+		_createUploadMatrix: function() {},
+		_success: function() {},
+		_progress: function() {},
+		_showOverlay: function() {},
+		_evaluateResponse: function() {},
+		_name: "",
+		_buttonSelector: {},
+		_fileListSelector: {},
+		_fileUpload: {},
+		_className: "",
+		_iframe: {},
+		_internalFileID: 0,
+		_options: {},
+		_uploadMatrix: {},
+		_supportsAJAXUpload: true,
+		_overlay: {},
+		_createButton: function() {},
+		_insertButton: function() {},
+		_removeButton: function() {},
+		_error: function() {},
+		_getParameters: function() {},
+		_initFile: function() {},
+		_getFilename: function() {}
+	});
+}
 
 /**
  * Namespace for sortables.
  */
 WCF.Sortable = { };
 
-/**
- * Sortable implementation for lists.
- * 
- * @param	string		containerID
- * @param	string		className
- * @param	integer		offset
- * @param	object		options
- */
-WCF.Sortable.List = Class.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * additional parameters for AJAX request
-	 * @var	object
+	 * Sortable implementation for lists.
+	 *
+	 * @param        string                containerID
+	 * @param        string                className
+	 * @param        integer                offset
+	 * @param        object                options
 	 */
-	_additionalParameters: { },
-	
-	/**
-	 * action class name
-	 * @var	string
-	 */
-	_className: '',
-	
-	/**
-	 * container id
-	 * @var	string
-	 */
-	_containerID: '',
-	
-	/**
-	 * container object
-	 * @var	jQuery
-	 */
-	_container: null,
-	
-	/**
-	 * notification object
-	 * @var	WCF.System.Notification
-	 */
-	_notification: null,
-	
-	/**
-	 * show order offset
-	 * @var	integer
-	 */
-	_offset: 0,
-	
-	/**
-	 * list of options
-	 * @var	object
-	 */
-	_options: { },
-	
-	/**
-	 * proxy object
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * object structure
-	 * @var	object
-	 */
-	_structure: { },
-	
-	/**
-	 * Creates a new sortable list.
-	 * 
-	 * @param	string		containerID
-	 * @param	string		className
-	 * @param	integer		offset
-	 * @param	object		options
-	 * @param	boolean		isSimpleSorting
-	 * @param	object		additionalParameters
-	 */
-	init: function(containerID, className, offset, options, isSimpleSorting, additionalParameters) {
-		this._additionalParameters = additionalParameters || { };
-		this._containerID = $.wcfEscapeID(containerID);
-		this._container = $('#' + this._containerID);
-		this._className = className;
-		this._offset = (offset) ? offset : 0;
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
-		this._structure = { };
+	WCF.Sortable.List = Class.extend({
+		/**
+		 * additional parameters for AJAX request
+		 * @var        object
+		 */
+		_additionalParameters: {},
 		
-		// init sortable
-		this._options = $.extend(true, {
-			axis: 'y',
-			connectWith: '#' + this._containerID + ' .sortableList',
-			disableNesting: 'sortableNoNesting',
-			doNotClear: true,
-			errorClass: 'sortableInvalidTarget',
-			forcePlaceholderSize: true,
-			handle: '',
-			helper: 'clone',
-			items: 'li:not(.sortableNoSorting)',
-			opacity: .6,
-			placeholder: 'sortablePlaceholder',
-			tolerance: 'pointer',
-			toleranceElement: '> span'
-		}, options || { });
+		/**
+		 * action class name
+		 * @var        string
+		 */
+		_className: '',
 		
-		var sortableList = $('#' + this._containerID + ' .sortableList');
-		if (sortableList.is('tbody') && this._options.helper === 'clone') {
-			this._options.helper = this._tableRowHelper.bind(this);
+		/**
+		 * container id
+		 * @var        string
+		 */
+		_containerID: '',
+		
+		/**
+		 * container object
+		 * @var        jQuery
+		 */
+		_container: null,
+		
+		/**
+		 * notification object
+		 * @var        WCF.System.Notification
+		 */
+		_notification: null,
+		
+		/**
+		 * show order offset
+		 * @var        integer
+		 */
+		_offset: 0,
+		
+		/**
+		 * list of options
+		 * @var        object
+		 */
+		_options: {},
+		
+		/**
+		 * proxy object
+		 * @var        WCF.Action.Proxy
+		 */
+		_proxy: null,
+		
+		/**
+		 * object structure
+		 * @var        object
+		 */
+		_structure: {},
+		
+		/**
+		 * Creates a new sortable list.
+		 *
+		 * @param        string                containerID
+		 * @param        string                className
+		 * @param        integer                offset
+		 * @param        object                options
+		 * @param        boolean                isSimpleSorting
+		 * @param        object                additionalParameters
+		 */
+		init: function (containerID, className, offset, options, isSimpleSorting, additionalParameters) {
+			this._additionalParameters = additionalParameters || {};
+			this._containerID = $.wcfEscapeID(containerID);
+			this._container = $('#' + this._containerID);
+			this._className = className;
+			this._offset = (offset) ? offset : 0;
+			this._proxy = new WCF.Action.Proxy({
+				success: $.proxy(this._success, this)
+			});
+			this._structure = {};
 			
-			// explicitly set column widths to avoid column resizing during dragging
-			var thead = sortableList.prev('thead');
-			if (thead) {
-				thead.find('th').each(function(index, element) {
-					element = $(element);
-					
-					element.width(element.width());
-				});
-			}
-		}
-		
-		if (isSimpleSorting) {
-			sortableList.sortable(this._options);
-		}
-		else {
-			sortableList.nestedSortable(this._options);
-		}
-		
-		if (this._className) {
-			var $formSubmit = this._container.find('.formSubmit');
-			if (!$formSubmit.length) {
-				$formSubmit = this._container.next('.formSubmit');
-				if (!$formSubmit.length) {
-					console.debug("[WCF.Sortable.Simple] Unable to find form submit for saving, aborting.");
-					return;
+			// init sortable
+			this._options = $.extend(true, {
+				axis: 'y',
+				connectWith: '#' + this._containerID + ' .sortableList',
+				disableNesting: 'sortableNoNesting',
+				doNotClear: true,
+				errorClass: 'sortableInvalidTarget',
+				forcePlaceholderSize: true,
+				handle: '',
+				helper: 'clone',
+				items: 'li:not(.sortableNoSorting)',
+				opacity: .6,
+				placeholder: 'sortablePlaceholder',
+				tolerance: 'pointer',
+				toleranceElement: '> span'
+			}, options || {});
+			
+			var sortableList = $('#' + this._containerID + ' .sortableList');
+			if (sortableList.is('tbody') && this._options.helper === 'clone') {
+				this._options.helper = this._tableRowHelper.bind(this);
+				
+				// explicitly set column widths to avoid column resizing during dragging
+				var thead = sortableList.prev('thead');
+				if (thead) {
+					thead.find('th').each(function (index, element) {
+						element = $(element);
+						
+						element.width(element.width());
+					});
 				}
 			}
 			
-			$formSubmit.children('button[data-type="submit"]').click($.proxy(this._submit, this));
-		}
-	},
-	
-	/**
-	 * Fixes the width of the cells of the dragged table row.
-	 * 
-	 * @param	{Event}		event
-	 * @param	{jQuery}	ui
-	 * @return	{jQuery}
-	 */
-	_tableRowHelper: function(event, ui) {
-		ui.children('td').each(function(index, element) {
-			element = $(element);
+			if (isSimpleSorting) {
+				sortableList.sortable(this._options);
+			}
+			else {
+				sortableList.nestedSortable(this._options);
+			}
 			
-			element.width(element.width());
-		});
-		
-		return ui;
-	},
-	
-	/**
-	 * Saves object structure.
-	 */
-	_submit: function() {
-		// reset structure
-		this._structure = { };
-		
-		// build structure
-		this._container.find('.sortableList').each($.proxy(function(index, list) {
-			var $list = $(list);
-			var $parentID = $list.data('objectID');
-			
-			if ($parentID !== undefined) {
-				$list.children(this._options.items).each($.proxy(function(index, listItem) {
-					var $objectID = $(listItem).data('objectID');
-					
-					if (!this._structure[$parentID]) {
-						this._structure[$parentID] = [ ];
+			if (this._className) {
+				var $formSubmit = this._container.find('.formSubmit');
+				if (!$formSubmit.length) {
+					$formSubmit = this._container.next('.formSubmit');
+					if (!$formSubmit.length) {
+						console.debug("[WCF.Sortable.Simple] Unable to find form submit for saving, aborting.");
+						return;
 					}
-					
-					this._structure[$parentID].push($objectID);
-				}, this));
+				}
+				
+				$formSubmit.children('button[data-type="submit"]').click($.proxy(this._submit, this));
 			}
-		}, this));
+		},
 		
-		// send request
-		var $parameters = $.extend(true, {
-			data: {
-				offset: this._offset,
-				structure: this._structure
+		/**
+		 * Fixes the width of the cells of the dragged table row.
+		 *
+		 * @param        {Event}                event
+		 * @param        {jQuery}        ui
+		 * @return        {jQuery}
+		 */
+		_tableRowHelper: function (event, ui) {
+			ui.children('td').each(function (index, element) {
+				element = $(element);
+				
+				element.width(element.width());
+			});
+			
+			return ui;
+		},
+		
+		/**
+		 * Saves object structure.
+		 */
+		_submit: function () {
+			// reset structure
+			this._structure = {};
+			
+			// build structure
+			this._container.find('.sortableList').each($.proxy(function (index, list) {
+				var $list = $(list);
+				var $parentID = $list.data('objectID');
+				
+				if ($parentID !== undefined) {
+					$list.children(this._options.items).each($.proxy(function (index, listItem) {
+						var $objectID = $(listItem).data('objectID');
+						
+						if (!this._structure[$parentID]) {
+							this._structure[$parentID] = [];
+						}
+						
+						this._structure[$parentID].push($objectID);
+					}, this));
+				}
+			}, this));
+			
+			// send request
+			var $parameters = $.extend(true, {
+				data: {
+					offset: this._offset,
+					structure: this._structure
+				}
+			}, this._additionalParameters);
+			
+			this._proxy.setOption('data', {
+				actionName: 'updatePosition',
+				className: this._className,
+				interfaceName: 'wcf\\data\\ISortableAction',
+				parameters: $parameters
+			});
+			this._proxy.sendRequest();
+		},
+		
+		/**
+		 * Shows notification upon success.
+		 *
+		 * @param        object                data
+		 * @param        string                textStatus
+		 * @param        jQuery                jqXHR
+		 */
+		_success: function (data, textStatus, jqXHR) {
+			if (this._notification === null) {
+				this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success.edit'));
 			}
-		}, this._additionalParameters);
-		
-		this._proxy.setOption('data', {
-			actionName: 'updatePosition',
-			className: this._className,
-			interfaceName: 'wcf\\data\\ISortableAction',
-			parameters: $parameters
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Shows notification upon success.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		if (this._notification === null) {
-			this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success.edit'));
+			
+			this._notification.show();
 		}
-		
-		this._notification.show();
-	}
-});
+	});
+}
+else {
+	WCF.Sortable.List = Class.extend({
+		_additionalParameters: {},
+		_className: "",
+		_containerID: "",
+		_container: {},
+		_notification: {},
+		_offset: 0,
+		_options: {},
+		_proxy: {},
+		_structure: {},
+		init: function() {},
+		_tableRowHelper: function() {},
+		_submit: function() {},
+		_success: function() {}
+	});
+}
 
 WCF.Popover = Class.extend({
 	/**
@@ -6833,7 +7088,7 @@ WCF.Language.Chooser = Class.extend({
 	/**
 	 * Initializes the language chooser.
 	 *
-	 * @param       {string}                                containerId             input element conainer id
+	 * @param       {string}                                containerId             input element container id
 	 * @param       {string}                                chooserId               input element id
 	 * @param       {int}                                   languageId              selected language id
 	 * @param       {object<int, object<string, string>>}   languages               data of available languages
@@ -6891,7 +7146,7 @@ WCF.UserPanel = Class.extend({
 	_revertOnEmpty: true,
 	
 	/**
-	 * Initialites the WCF.UserPanel class.
+	 * Initializes the WCF.UserPanel class.
 	 * 
 	 * @param	string		containerID
 	 */
@@ -6901,7 +7156,7 @@ WCF.UserPanel = Class.extend({
 		this._revertOnEmpty = true;
 		
 		if (this._container.length != 1) {
-			console.debug("[WCF.UserPanel] Unable to find container identfied by '" + containerID + "', aborting.");
+			console.debug("[WCF.UserPanel] Unable to find container identified by '" + containerID + "', aborting.");
 			return;
 		}
 		
@@ -7046,8 +7301,16 @@ jQuery.fn.extend({
 				UiDialog.rebuild(id);
 			}
 			else if (method === 'option') {
-				if (args.length === 3 && args[1] === 'title' && typeof args[2] === 'string') {
-					UiDialog.setTitle(id, args[2]);
+				if (args.length === 3) {
+					if (args[1] === 'title' && typeof args[2] === 'string') {
+						UiDialog.setTitle(id, args[2]);
+					}
+					else if (args[1].indexOf('on') === 0) {
+						UiDialog.setCallback(id, args[1], args[2]);
+					}
+					else if (args[1] === 'closeConfirmMessage' && args[2] === null) {
+						UiDialog.setCallback(id, 'onBeforeClose', null);
+					}
 				}
 			}
 			else {
@@ -7294,7 +7557,6 @@ jQuery.fn.extend({
 				
 			case 'getDate':
 				return window.__wcf_bc_datePicker.getDate(element);
-				break;
 			
 			case 'option':
 				if (parameters[0] === 'onClose') {
@@ -7429,185 +7691,202 @@ $.widget('ui.wcfPages', {
  */
 WCF.Category = { };
 
-/**
- * Handles selection of categories.
- */
-WCF.Category.NestedList = Class.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * list of categories
-	 * @var	object
+	 * Handles selection of categories.
 	 */
-	_categories: { },
-	
-	/**
-	 * Initializes the WCF.Category.NestedList object.
-	 */
-	init: function() {
-		var self = this;
-		$('.jsCategory').each(function(index, category) {
-			var $category = $(category).data('parentCategoryID', null).change($.proxy(self._updateSelection, self));
-			self._categories[$category.val()] = $category;
-			
-			// find child categories
-			var $childCategoryIDs = [ ];
-			$category.parents('li').find('.jsChildCategory').each(function(innerIndex, childCategory) {
-				var $childCategory = $(childCategory).data('parentCategoryID', $category.val()).change($.proxy(self._updateSelection, self));
-				self._categories[$childCategory.val()] = $childCategory;
-				$childCategoryIDs.push($childCategory.val());
-				
-				if ($childCategory.is(':checked')) {
-					$category.prop('checked', 'checked');
-				}
-			});
-			
-			$category.data('childCategoryIDs', $childCategoryIDs);
-		});
-	},
-	
-	/**
-	 * Updates selection of categories.
-	 * 
-	 * @param	object		event
-	 */
-	_updateSelection: function(event) {
-		var $category = $(event.currentTarget);
-		var $parentCategoryID = $category.data('parentCategoryID');
+	WCF.Category.NestedList = Class.extend({
+		/**
+		 * list of categories
+		 * @var        object
+		 */
+		_categories: {},
 		
-		if ($category.is(':checked')) {
-			// child category
-			if ($parentCategoryID !== null) {
-				// mark parent category as checked
-				this._categories[$parentCategoryID].prop('checked', 'checked');
-			}
-		}
-		else {
-			// top-level category
-			if ($parentCategoryID === null) {
-				// unmark all child categories
-				var $childCategoryIDs = $category.data('childCategoryIDs');
-				for (var $i = 0, $length = $childCategoryIDs.length; $i < $length; $i++) {
-					this._categories[$childCategoryIDs[$i]].prop('checked', false);
-				}
-			}
-		}
-	}
-});
-
-/**
- * Handles selection of categories.
- */
-WCF.Category.FlexibleCategoryList = Class.extend({
-	/**
-	 * category list container
-	 * @var	jQuery
-	 */
-	_list: null,
-	
-	/**
-	 * list of children per category id
-	 * @var	object<integer>
-	 */
-	_categories: { },
-	
-	init: function(elementID) {
-		this._list = $('#' + elementID);
-		
-		this._buildStructure();
-		
-		this._list.find('input:checked').each(function() {
-			$(this).trigger('change');
-		});
-		
-		if (this._list.children('li').length < 2) {
-			this._list.addClass('flexibleCategoryListDisabled');
-			return;
-		}
-	},
-	
-	_buildStructure: function() {
-		var self = this;
-		this._list.find('.jsCategory').each(function(i, category) {
-			var $category = $(category).change(self._updateSelection.bind(self));
-			var $categoryID = parseInt($category.val());
-			var $childCategories = [ ];
-			
-			$category.parents('li:eq(0)').find('.jsChildCategory').each(function(j, childCategory) {
-				var $childCategory = $(childCategory);
-				$childCategory.data('parentCategory', $category).change(self._updateSelection.bind(self));
+		/**
+		 * Initializes the WCF.Category.NestedList object.
+		 */
+		init: function () {
+			var self = this;
+			$('.jsCategory').each(function (index, category) {
+				var $category = $(category).data('parentCategoryID', null).change($.proxy(self._updateSelection, self));
+				self._categories[$category.val()] = $category;
 				
-				var $childCategoryID = parseInt($childCategory.val());
-				$childCategories.push($childCategory);
-				
-				var $subChildCategories = [ ];
-				
-				$childCategory.parents('li:eq(0)').find('.jsSubChildCategory').each(function(k, subChildCategory) {
-					var $subChildCategory = $(subChildCategory);
-					$subChildCategory.data('parentCategory', $childCategory).change(self._updateSelection.bind(self));
-					$subChildCategories.push($subChildCategory);
+				// find child categories
+				var $childCategoryIDs = [];
+				$category.parents('li').find('.jsChildCategory').each(function (innerIndex, childCategory) {
+					var $childCategory = $(childCategory).data('parentCategoryID', $category.val()).change($.proxy(self._updateSelection, self));
+					self._categories[$childCategory.val()] = $childCategory;
+					$childCategoryIDs.push($childCategory.val());
+					
+					if ($childCategory.is(':checked')) {
+						$category.prop('checked', 'checked');
+					}
 				});
 				
-				self._categories[$childCategoryID] = $subChildCategories;
+				$category.data('childCategoryIDs', $childCategoryIDs);
 			});
-			
-			self._categories[$categoryID] = $childCategories;
-		});
-	},
-	
-	_updateSelection: function(event) {
-		var $category = $(event.currentTarget);
-		var $categoryID = parseInt($category.val());
-		var $parentCategory = $category.data('parentCategory');
+		},
 		
-		if ($category.is(':checked')) {
-			if ($parentCategory) {
-				$parentCategory.prop('checked', 'checked');
-				
-				$parentCategory = $parentCategory.data('parentCategory');
-				if ($parentCategory) {
-					$parentCategory.prop('checked', 'checked');
+		/**
+		 * Updates selection of categories.
+		 *
+		 * @param        object                event
+		 */
+		_updateSelection: function (event) {
+			var $category = $(event.currentTarget);
+			var $parentCategoryID = $category.data('parentCategoryID');
+			
+			if ($category.is(':checked')) {
+				// child category
+				if ($parentCategoryID !== null) {
+					// mark parent category as checked
+					this._categories[$parentCategoryID].prop('checked', 'checked');
+				}
+			}
+			else {
+				// top-level category
+				if ($parentCategoryID === null) {
+					// unmark all child categories
+					var $childCategoryIDs = $category.data('childCategoryIDs');
+					for (var $i = 0, $length = $childCategoryIDs.length; $i < $length; $i++) {
+						this._categories[$childCategoryIDs[$i]].prop('checked', false);
+					}
 				}
 			}
 		}
-		else {
-			// uncheck child categories
-			if (this._categories[$categoryID]) {
-				for (var $i = 0, $length = this._categories[$categoryID].length; $i < $length; $i++) {
-					var $childCategory = this._categories[$categoryID][$i];
-					$childCategory.prop('checked', false);
+	});
+	
+	/**
+	 * Handles selection of categories.
+	 */
+	WCF.Category.FlexibleCategoryList = Class.extend({
+		/**
+		 * category list container
+		 * @var        jQuery
+		 */
+		_list: null,
+		
+		/**
+		 * list of children per category id
+		 * @var        object<integer>
+		 */
+		_categories: {},
+		
+		init: function (elementID) {
+			this._list = $('#' + elementID);
+			
+			this._buildStructure();
+			
+			this._list.find('input:checked').each(function () {
+				$(this).trigger('change');
+			});
+			
+			if (this._list.children('li').length < 2) {
+				this._list.addClass('flexibleCategoryListDisabled');
+				return;
+			}
+		},
+		
+		_buildStructure: function () {
+			var self = this;
+			this._list.find('.jsCategory').each(function (i, category) {
+				var $category = $(category).change(self._updateSelection.bind(self));
+				var $categoryID = parseInt($category.val());
+				var $childCategories = [];
+				
+				$category.parents('li:eq(0)').find('.jsChildCategory').each(function (j, childCategory) {
+					var $childCategory = $(childCategory);
+					$childCategory.data('parentCategory', $category).change(self._updateSelection.bind(self));
 					
 					var $childCategoryID = parseInt($childCategory.val());
-					if (this._categories[$childCategoryID]) {
-						for (var $j = 0, $innerLength = this._categories[$childCategoryID].length; $j < $innerLength; $j++) {
-							this._categories[$childCategoryID][$j].prop('checked', false);
+					$childCategories.push($childCategory);
+					
+					var $subChildCategories = [];
+					
+					$childCategory.parents('li:eq(0)').find('.jsSubChildCategory').each(function (k, subChildCategory) {
+						var $subChildCategory = $(subChildCategory);
+						$subChildCategory.data('parentCategory', $childCategory).change(self._updateSelection.bind(self));
+						$subChildCategories.push($subChildCategory);
+					});
+					
+					self._categories[$childCategoryID] = $subChildCategories;
+				});
+				
+				self._categories[$categoryID] = $childCategories;
+			});
+		},
+		
+		_updateSelection: function (event) {
+			var $category = $(event.currentTarget);
+			var $categoryID = parseInt($category.val());
+			var $parentCategory = $category.data('parentCategory');
+			
+			if ($category.is(':checked')) {
+				if ($parentCategory) {
+					$parentCategory.prop('checked', 'checked');
+					
+					$parentCategory = $parentCategory.data('parentCategory');
+					if ($parentCategory) {
+						$parentCategory.prop('checked', 'checked');
+					}
+				}
+			}
+			else {
+				// uncheck child categories
+				if (this._categories[$categoryID]) {
+					for (var $i = 0, $length = this._categories[$categoryID].length; $i < $length; $i++) {
+						var $childCategory = this._categories[$categoryID][$i];
+						$childCategory.prop('checked', false);
+						
+						var $childCategoryID = parseInt($childCategory.val());
+						if (this._categories[$childCategoryID]) {
+							for (var $j = 0, $innerLength = this._categories[$childCategoryID].length; $j < $innerLength; $j++) {
+								this._categories[$childCategoryID][$j].prop('checked', false);
+							}
 						}
 					}
 				}
-			}
-			
-			// uncheck direct parent if it has no more checked children
-			if ($parentCategory) {
-				var $parentCategoryID = parseInt($parentCategory.val());
-				for (var $i = 0, $length = this._categories[$parentCategoryID].length; $i < $length; $i++) {
-					if (this._categories[$parentCategoryID][$i].prop('checked')) {
-						// at least one child is checked, break
-						return;
-					}
-				}
 				
-				$parentCategory = $parentCategory.data('parentCategory');
+				// uncheck direct parent if it has no more checked children
 				if ($parentCategory) {
-					$parentCategoryID = parseInt($parentCategory.val());
+					var $parentCategoryID = parseInt($parentCategory.val());
 					for (var $i = 0, $length = this._categories[$parentCategoryID].length; $i < $length; $i++) {
 						if (this._categories[$parentCategoryID][$i].prop('checked')) {
 							// at least one child is checked, break
 							return;
 						}
 					}
+					
+					$parentCategory = $parentCategory.data('parentCategory');
+					if ($parentCategory) {
+						$parentCategoryID = parseInt($parentCategory.val());
+						for (var $i = 0, $length = this._categories[$parentCategoryID].length; $i < $length; $i++) {
+							if (this._categories[$parentCategoryID][$i].prop('checked')) {
+								// at least one child is checked, break
+								return;
+							}
+						}
+					}
 				}
 			}
 		}
-	}
-});
+	});
+}
+else {
+	WCF.Category.NestedList = Class.extend({
+		_categories: {},
+		init: function() {},
+		_updateSelection: function() {}
+	});
+	
+	WCF.Category.FlexibleCategoryList = Class.extend({
+		_list: {},
+		_categories: {},
+		init: function() {},
+		_buildStructure: function() {},
+		_updateSelection: function() {}
+	});
+}
 
 /**
  * Initializes WCF.Condition namespace.

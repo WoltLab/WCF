@@ -7,7 +7,7 @@ use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
  * This is the database implementation for MySQL 5.1 or higher using PDO.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Database
  */
@@ -39,8 +39,27 @@ class MySQLDatabase extends Database {
 			// throw PDOException instead of dumb false return values
 			$driverOptions[\PDO::ATTR_ERRMODE] = \PDO::ERRMODE_EXCEPTION;
 			
-			$this->pdo = new \PDO('mysql:host='.$this->host.';port='.$this->port.';dbname='.$this->database, $this->user, $this->password, $driverOptions);
+			$dsn = 'mysql:host='.$this->host.';port='.$this->port;
+			if (!$this->tryToCreateDatabase) $dsn .= ';dbname='.$this->database;
+			
+			$this->pdo = new \PDO($dsn, $this->user, $this->password, $driverOptions);
 			$this->setAttributes();
+			
+			if ($this->tryToCreateDatabase) {
+				try {
+					$this->pdo->exec("USE ".$this->database);
+				}
+				catch (\PDOException $e) {
+					// 1049 = Unknown database
+					if ($this->pdo->errorInfo()[1] == 1049) {
+						$this->pdo->exec("CREATE DATABASE " . $this->database);
+						$this->pdo->exec("USE " . $this->database);
+					}
+					else {
+						throw $e;
+					}
+				}
+			}
 		}
 		catch (\PDOException $e) {
 			throw new GenericDatabaseException("Connecting to MySQL server '".$this->host."' failed", $e);

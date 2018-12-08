@@ -6,7 +6,7 @@ use wcf\system\WCF;
  * Represents a list of viewable media files.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Media
  * @since	3.0
@@ -29,7 +29,7 @@ class ViewableMediaList extends MediaList {
 		parent::__construct();
 		
 		// fetch content data
-		$this->sqlSelects .= "media_content.*";
+		$this->sqlSelects .= "media_content.*, COALESCE(media.languageID, ".WCF::getLanguage()->languageID.") AS localizedLanguageID";
 		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_media_content media_content ON (media_content.mediaID = media.mediaID AND media_content.languageID = COALESCE(media.languageID, ".WCF::getLanguage()->languageID."))";
 	}
 }

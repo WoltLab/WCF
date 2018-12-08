@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
+use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\I18nHandler;
@@ -11,7 +12,7 @@ use wcf\system\WCF;
  * Shows the style edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -25,7 +26,7 @@ class StyleEditForm extends StyleAddForm {
 	 * style object
 	 * @var	Style
 	 */
-	public $style = null;
+	public $style;
 	
 	/**
 	 * style id
@@ -63,6 +64,18 @@ class StyleEditForm extends StyleAddForm {
 	protected function enforcePackageNameRestriction() {
 		if ($this->style->isTainted) {
 			parent::enforcePackageNameRestriction();
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function validateApiVersion() {
+		if ($this->style->isTainted) {
+			parent::validateApiVersion();
+		}
+		else {
+			$this->apiVersion = $this->style->apiVersion;
 		}
 	}
 	
@@ -112,6 +125,7 @@ class StyleEditForm extends StyleAddForm {
 		I18nHandler::getInstance()->setOptions('styleDescription', PACKAGE_ID, $this->style->styleDescription, 'wcf.style.styleDescription\d+');
 		
 		if (empty($_POST)) {
+			$this->apiVersion = $this->style->apiVersion;
 			$this->authorName = $this->style->authorName;
 			$this->authorURL = $this->style->authorURL;
 			$this->copyright = $this->style->copyright;
@@ -152,7 +166,8 @@ class StyleEditForm extends StyleAddForm {
 				'packageName' => $this->packageName,
 				'license' => $this->license,
 				'authorName' => $this->authorName,
-				'authorURL' => $this->authorURL
+				'authorURL' => $this->authorURL,
+				'apiVersion' => $this->apiVersion
 			]),
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
@@ -193,7 +208,9 @@ class StyleEditForm extends StyleAddForm {
 			'action' => 'edit',
 			'isTainted' => $this->style->isTainted,
 			'style' => $this->style,
-			'styleID' => $this->styleID
+			'styleID' => $this->styleID,
+			'coverPhotoMinHeight' => UserCoverPhoto::MIN_HEIGHT,
+			'coverPhotoMinWidth' => UserCoverPhoto::MIN_WIDTH
 		]);
 	}
 }

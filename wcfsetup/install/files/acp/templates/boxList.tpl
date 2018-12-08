@@ -8,7 +8,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.box.list{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.box.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
@@ -71,6 +71,13 @@
 				</dd>
 			</dl>
 			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" name="originIsNotSystem" value="1"{if $originIsNotSystem} checked{/if}> {lang}wcf.acp.box.originIsNotSystem{/lang}</label>
+				</dd>
+			</dl>
+			
 			{event name='filterFields'}
 		</div>
 		
@@ -90,6 +97,7 @@
 		{if $content}{capture append=linkParameters}&content={@$content|rawurlencode}{/capture}{/if}
 		{if $position}{capture append=linkParameters}&position={@$position}{/capture}{/if}
 		{if $boxType}{capture append=linkParameters}&boxType={@$boxType|rawurlencode}{/capture}{/if}
+		{if $originIsNotSystem}{capture append=linkParameters}&originIsNotSystem=1{/capture}{/if}
 		
 		{pages print=true assign=pagesLinks controller="BoxList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
 		{/content}
@@ -126,7 +134,7 @@
 						</td>
 						<td class="columnID columnBoxID">{@$box->boxID}</td>
 						<td class="columnTitle columnName"><a href="{link controller='BoxEdit' id=$box->boxID}{/link}">{$box->name}</a></td>
-						<td class="columnText columnBoxType">{$box->boxType}</td>
+						<td class="columnText columnBoxType">{lang}wcf.acp.box.type.{@$box->boxType}{/lang}</td>
 						<td class="columnText columnPosition">{lang}wcf.acp.box.position.{@$box->position}{/lang}</td>
 						<td class="columnDigits columnShowOrder">{#$box->showOrder}</td>
 						

@@ -9,6 +9,8 @@
 	
 	@include screen-sm-down {
 		padding: 20px 0;
+		
+		@include wcfFontSmall;
 	}
 	
 	> .layoutBoundary > div:not(:first-child) {

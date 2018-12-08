@@ -9,7 +9,7 @@ use wcf\util\FileUtil;
  * controller URLs, optionally recognizing id and title parameter.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  * @since	3.0
@@ -35,12 +35,13 @@ class LookupRequestRoute implements IRequestRoute {
 		$regex = '~^
 			(?P<controller>.+?)
 			(?:
+				/
 				(?P<id>[0-9]+)
 				(?:
 					-
 					(?P<title>[^/]+)
 				)?
-				/
+				/?
 			)?
 		$~x';
 		

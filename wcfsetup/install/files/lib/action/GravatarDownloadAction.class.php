@@ -13,7 +13,7 @@ use wcf\util\HTTPRequest;
  * Downloads and caches gravatars.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Action
  */
@@ -55,7 +55,7 @@ class GravatarDownloadAction extends AbstractAction {
 	public function execute() {
 		parent::execute();
 		
-		if ($this->user->enableGravatar) {
+		if ($this->user->enableGravatar && MODULE_GRAVATAR) {
 			$fileExtension = ($this->user->gravatarFileExtension ?: 'png');
 			
 			// try to use cached gravatar

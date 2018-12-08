@@ -16,7 +16,7 @@ use wcf\util\HTTPRequest;
  * Contains business logic related to preparation of package installations.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */
@@ -67,7 +67,7 @@ class PackageInstallationScheduler {
 	}
 	
 	/**
-	 * Trys to install a new package. Checks the virtual package version list.
+	 * Tries to install a new package. Checks the virtual package version list.
 	 * 
 	 * @param	string		$package		package identifier
 	 * @param	string		$minversion		preferred package version
@@ -142,7 +142,7 @@ class PackageInstallationScheduler {
 	}
 	
 	/**
-	 * Resolves the package requirements of an package uppdate.
+	 * Resolves the package requirements of an package update.
 	 * Starts the installation or update to higher version of required packages.
 	 * 
 	 * @param	integer		$packageUpdateVersionID

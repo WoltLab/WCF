@@ -76,6 +76,13 @@
 				<controller>wcf\acp\form\NotificationPresetSettingsForm</controller>
 				<permissions>admin.user.canEditUser</permissions>
 			</acpmenuitem>
+		
+			<acpmenuitem name="wcf.acp.menu.link.contact.settings">
+				<parent>wcf.acp.menu.link.other</parent>
+				<controller>wcf\acp\form\ContactSettingsPage</controller>
+				<options>module_contact_form</options>
+				<permissions>admin.contact.canManageContactForm</permissions>
+			</acpmenuitem>
 			
 			<acpmenuitem name="wcf.acp.menu.link.captcha.question.list">
 				<parent>wcf.acp.menu.link.other</parent>
@@ -89,6 +96,31 @@
 				<icon>fa-plus</icon>
 			</acpmenuitem>
 			<!-- /other -->
+			
+			<!-- devtools -->
+			<acpmenuitem name="wcf.acp.menu.link.devtools">
+				<parent>wcf.acp.menu.link.configuration</parent>
+				<showorder>99</showorder>
+				<options>enable_developer_tools</options>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.devtools.project.list">
+				<parent>wcf.acp.menu.link.devtools</parent>
+				<controller>wcf\acp\page\DevtoolsProjectListPage</controller>
+				<permissions>admin.configuration.package.canInstallPackage</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.devtools.project.add">
+				<parent>wcf.acp.menu.link.devtools.project.list</parent>
+				<controller>wcf\acp\form\DevtoolsProjectAddForm</controller>
+				<permissions>admin.configuration.package.canInstallPackage</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.devtools.notificationTest">
+				<parent>wcf.acp.menu.link.devtools</parent>
+				<controller>wcf\acp\page\DevtoolsNotificationTestPage</controller>
+			</acpmenuitem>
+			<!-- /devtools -->
 		
 		<!-- /configuration -->
 		
@@ -133,6 +165,12 @@
 				<link>action=all</link>
 				<parent>wcf.acp.menu.link.user.management</parent>
 				<permissions>admin.user.canMailUser</permissions>
+			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.user.profileMenu">
+				<controller>wcf\acp\page\UserProfileMenuPage</controller>
+				<parent>wcf.acp.menu.link.user.management</parent>
+				<permissions>admin.user.canManageUserOption</permissions>
 			</acpmenuitem>
 			<!-- /management -->
 			
@@ -281,6 +319,52 @@
 				<options>module_paid_subscription</options>
 			</acpmenuitem>
 			<!-- /paid subscription -->
+			
+			<!-- trophy -->
+			<acpmenuitem name="wcf.acp.menu.link.trophy">
+				<parent>wcf.acp.menu.link.user</parent>
+				<showorder>7</showorder>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.trophy.category.list">
+				<controller>wcf\acp\page\TrophyCategoryListPage</controller>
+				<parent>wcf.acp.menu.link.trophy</parent>
+				<permissions>admin.trophy.canManageTrophy</permissions>
+				<options>module_trophy</options>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.trophy.category.add">
+				<controller>wcf\acp\form\TrophyCategoryAddForm</controller>
+				<parent>wcf.acp.menu.link.trophy.category.list</parent>
+				<permissions>admin.trophy.canManageTrophy</permissions>
+				<options>module_trophy</options>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.trophy.list">
+				<controller>wcf\acp\page\TrophyListPage</controller>
+				<parent>wcf.acp.menu.link.trophy</parent>
+				<permissions>admin.trophy.canManageTrophy</permissions>
+				<options>module_trophy</options>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.trophy.add">
+				<controller>wcf\acp\form\TrophyAddForm</controller>
+				<parent>wcf.acp.menu.link.trophy.list</parent>
+				<permissions>admin.trophy.canManageTrophy</permissions>
+				<options>module_trophy</options>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.userTrophy.list">
+				<controller>wcf\acp\page\UserTrophyListPage</controller>
+				<parent>wcf.acp.menu.link.trophy</parent>
+				<permissions>admin.trophy.canAwardTrophy</permissions>
+				<options>module_trophy</options>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.userTrophy.add">
+				<controller>wcf\acp\form\UserTrophyAddForm</controller>
+				<parent>wcf.acp.menu.link.userTrophy.list</parent>
+				<permissions>admin.trophy.canAwardTrophy</permissions>
+				<options>module_trophy</options>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /trophy -->
 		
 		<!-- /user -->
 		
@@ -331,19 +415,36 @@
 				<permissions>admin.content.cms.canManageBox</permissions>
 				<icon>fa-plus</icon>
 			</acpmenuitem>
+			<!-- /cms -->
 			
-			<acpmenuitem name="wcf.acp.menu.link.cms.media.list">
+			<!-- media -->
+			<acpmenuitem name="wcf.acp.menu.link.media">
+				<parent>wcf.acp.menu.link.content</parent>
+				<showorder>2</showorder>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.media.list">
 				<controller>wcf\acp\page\MediaListPage</controller>
-				<parent>wcf.acp.menu.link.cms</parent>
+				<parent>wcf.acp.menu.link.media</parent>
 				<permissions>admin.content.cms.canManageMedia</permissions>
 			</acpmenuitem>
-			<!-- /cms -->
-		
+			<acpmenuitem name="wcf.acp.menu.link.media.category.list">
+				<controller>wcf\acp\page\MediaCategoryListPage</controller>
+				<parent>wcf.acp.menu.link.media</parent>
+				<permissions>admin.content.cms.canManageMedia</permissions>
+			</acpmenuitem>
+			<acpmenuitem name="wcf.acp.menu.link.media.category.add">
+				<controller>wcf\acp\form\MediaCategoryAddForm</controller>
+				<parent>wcf.acp.menu.link.media.category.list</parent>
+				<permissions>admin.content.cms.canManageMedia</permissions>
+				<icon>fa-plus</icon>
+			</acpmenuitem>
+			<!-- /media -->
+			
 			<!-- article -->
 			<acpmenuitem name="wcf.acp.menu.link.article">
 				<parent>wcf.acp.menu.link.content</parent>
 				<options>module_article</options>
-				<showorder>2</showorder>
+				<showorder>3</showorder>
 			</acpmenuitem>
 			
 			<acpmenuitem name="wcf.acp.menu.link.article.list">
@@ -375,7 +476,7 @@
 			<!-- label -->
 			<acpmenuitem name="wcf.acp.menu.link.label">
 				<parent>wcf.acp.menu.link.content</parent>
-				<showorder>3</showorder>
+				<showorder>4</showorder>
 			</acpmenuitem>
 			<acpmenuitem name="wcf.acp.menu.link.label.list">
 				<controller>wcf\acp\page\LabelListPage</controller>
@@ -405,7 +506,7 @@
 			<!-- bbcode -->
 			<acpmenuitem name="wcf.acp.menu.link.bbcode">
 				<parent>wcf.acp.menu.link.content</parent>
-				<showorder>4</showorder>
+				<showorder>5</showorder>
 			</acpmenuitem>
 			<acpmenuitem name="wcf.acp.menu.link.bbcode.list">
 				<controller>wcf\acp\page\BBCodeListPage</controller>
@@ -435,7 +536,7 @@
 			<acpmenuitem name="wcf.acp.menu.link.tag">
 				<parent>wcf.acp.menu.link.content</parent>
 				<options>module_tagging</options>
-				<showorder>5</showorder>
+				<showorder>6</showorder>
 			</acpmenuitem>
 			
 			<acpmenuitem name="wcf.acp.menu.link.tag.list">
@@ -454,13 +555,14 @@
 			<!-- attachment -->
 			<acpmenuitem name="wcf.acp.menu.link.attachment">
 				<parent>wcf.acp.menu.link.content</parent>
-				<showorder>6</showorder>
+				<showorder>7</showorder>
 			</acpmenuitem>
 			
 			<acpmenuitem name="wcf.acp.menu.link.attachment.list">
 				<controller>wcf\acp\page\AttachmentListPage</controller>
 				<parent>wcf.acp.menu.link.attachment</parent>
 				<permissions>admin.attachment.canManageAttachment</permissions>
+				<options>module_attachment</options>
 			</acpmenuitem>
 			<!-- /attachment -->
 		
@@ -501,6 +603,12 @@
 				<parent>wcf.acp.menu.link.style.list</parent>
 				<permissions>admin.style.canManageStyle</permissions>
 				<icon>fa-plus</icon>
+			</acpmenuitem>
+				
+			<acpmenuitem name="wcf.acp.menu.link.style.globalValues">
+				<controller>wcf\acp\form\StyleGlobalValuesForm</controller>
+				<parent>wcf.acp.menu.link.style</parent>
+				<permissions>admin.style.canManageStyle</permissions>
 			</acpmenuitem>
 			<!-- /style -->
 			
@@ -662,6 +770,12 @@
 				<parent>wcf.acp.menu.link.maintenance</parent>
 				<permissions>admin.management.canImportData</permissions>
 			</acpmenuitem>
+			
+			<acpmenuitem name="wcf.acp.menu.link.maintenance.sitemap">
+				<controller>wcf\acp\page\SitemapListPage</controller>
+				<parent>wcf.acp.menu.link.maintenance</parent>
+				<permissions>admin.management.canRebuildData</permissions>
+			</acpmenuitem>
 			<!-- /maintenance -->
 		
 			<!-- stat -->
@@ -712,19 +826,6 @@
 	</import>
 	
 	<delete>
-		<acpmenuitem name="wcf.acp.menu.link.system" />
-		<acpmenuitem name="wcf.acp.menu.link.option.management" />
-		<acpmenuitem name="wcf.acp.menu.link.option.importAndExport" />
-		<acpmenuitem name="wcf.acp.menu.link.captcha" />
-		<acpmenuitem name="wcf.acp.menu.link.log.stat" />
-		<acpmenuitem name="wcf.acp.menu.link.user.option.setDefaults" />
-		<acpmenuitem name="wcf.acp.menu.link.display" />
-		<acpmenuitem name="wcf.acp.menu.link.dashboard" />
-		<acpmenuitem name="wcf.acp.menu.link.dashboard.list" />
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu" />
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu.list" />
-		<acpmenuitem name="wcf.acp.menu.link.pageMenu.add" />
-		<acpmenuitem name="wcf.acp.menu.link.community" />
-		<acpmenuitem name="wcf.acp.menu.link.cronjob" />
+		<acpmenuitem name="wcf.acp.menu.link.cms.media.list" />
 	</delete>
 </data>

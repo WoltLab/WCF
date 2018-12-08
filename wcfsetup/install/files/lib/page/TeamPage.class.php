@@ -3,13 +3,12 @@ namespace wcf\page;
 use wcf\data\user\TeamList;
 use wcf\system\page\PageLocationManager;
 use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
 
 /**
  * Shows the team members list.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * 
@@ -63,16 +62,5 @@ class TeamPage extends MultipleLinkPage {
 		
 		// add breadcrumbs
 		if (MODULE_MEMBERS_LIST) PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.MembersList');
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function assignVariables() {
-		parent::assignVariables();
-		
-		WCF::getTPL()->assign([
-			'allowSpidersToIndexThisPage' => true
-		]);
 	}
 }

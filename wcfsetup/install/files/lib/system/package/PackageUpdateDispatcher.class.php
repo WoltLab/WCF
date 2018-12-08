@@ -10,6 +10,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\HTTPUnauthorizedException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;
+use wcf\system\package\validation\PackageValidationException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\HTTPRequest;
@@ -20,7 +21,7 @@ use wcf\util\XML;
  * Provides functions to manage package updates.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */
@@ -47,7 +48,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		$requirePurchasedVersions = false;
 		foreach ($tmp as $updateServer) {
 			if ($ignoreCache || $updateServer->lastUpdateTime < TIME_NOW - 600) {
-				if (preg_match('~^https?://(?:update|store)\.woltlab\.com~', $updateServer->serverURL)) {
+				if (preg_match('~^https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL)) {
 					$requirePurchasedVersions = true;
 					
 					// move a woltlab.com update server to the front of the queue to probe for SSL support
@@ -144,10 +145,14 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		
 		$request = new HTTPRequest($updateServer->getListURL($forceHTTP), $settings);
 		
-		if ($updateServer->apiVersion == '2.1') {
-			$metaData = $updateServer->getMetaData();
-			if (isset($metaData['list']['etag'])) $request->addHeader('if-none-match', $metaData['list']['etag']);
-			if (isset($metaData['list']['lastModified'])) $request->addHeader('if-modified-since', $metaData['list']['lastModified']);
+		$apiVersion = $updateServer->apiVersion;
+		if (in_array($apiVersion, ['2.1', '3.1'])) {
+			// skip etag check for WoltLab servers when an auth code is provided
+			if (!preg_match('~^https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL) || !PACKAGE_SERVER_AUTH_CODE) {
+				$metaData = $updateServer->getMetaData();
+				if (isset($metaData['list']['etag'])) $request->addHeader('if-none-match', $metaData['list']['etag']);
+				if (isset($metaData['list']['lastModified'])) $request->addHeader('if-modified-since', $metaData['list']['lastModified']);
+			}
 		}
 		
 		try {
@@ -163,7 +168,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			$statusCode = is_array($reply['statusCode']) ? reset($reply['statusCode']) : $reply['statusCode'];
 			// status code 0 is a connection timeout
 			if (!$statusCode && $secureConnection) {
-				if (preg_match('~https?://(?:update|store)\.woltlab\.com~', $updateServer->serverURL)) {
+				if (preg_match('~https?://(?:update|store)\.woltlab\.com\/~', $updateServer->serverURL)) {
 					// woltlab.com servers are most likely to be available, thus we assume that SSL connections are dropped
 					RemoteFile::disableSSL();
 				}
@@ -176,12 +181,6 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			throw new SystemException(WCF::getLanguage()->get('wcf.acp.package.update.error.listNotFound') . ' ('.$statusCode.')');
 		}
 		
-		// parse given package update xml
-		$allNewPackages = false;
-		if ($updateServer->apiVersion == '2.0' || $reply['statusCode'] != 304) {
-			$allNewPackages = $this->parsePackageUpdateXML($updateServer, $reply['body']);
-		}
-		
 		$data = [
 			'lastUpdateTime' => TIME_NOW,
 			'status' => 'online',
@@ -189,15 +188,24 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		];
 		
 		// check if server indicates support for a newer API
-		if ($updateServer->apiVersion == '2.0' && !empty($reply['httpHeaders']['wcf-update-server-api'])) {
+		if ($updateServer->apiVersion !== '3.1' && !empty($reply['httpHeaders']['wcf-update-server-api'])) {
 			$apiVersions = explode(' ', reset($reply['httpHeaders']['wcf-update-server-api']));
-			if (in_array('2.1', $apiVersions)) {
-				$data['apiVersion'] = '2.1';
+			if (in_array('3.1', $apiVersions)) {
+				$apiVersion = $data['apiVersion'] = '3.1';
+			}
+			else if (in_array('2.1', $apiVersions)) {
+				$apiVersion = $data['apiVersion'] = '2.1';
 			}
 		}
 		
+		// parse given package update xml
+		$allNewPackages = false;
+		if ($apiVersion === '2.0' || $reply['statusCode'] != 304) {
+			$allNewPackages = $this->parsePackageUpdateXML($updateServer, $reply['body'], $apiVersion);
+		}
+		
 		$metaData = [];
-		if ($updateServer->apiVersion == '2.1' || (isset($data['apiVersion']) && $data['apiVersion'] == '2.1')) {
+		if (in_array($apiVersion, ['2.1', '3.1'])) {
 			if (empty($reply['httpHeaders']['etag']) && empty($reply['httpHeaders']['last-modified'])) {
 				throw new SystemException("Missing required HTTP headers 'etag' and 'last-modified'.");
 			}
@@ -239,10 +247,13 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * 
 	 * @param       PackageUpdateServer     $updateServer
 	 * @param       string                  $content
+	 * @param       string                  $apiVersion
 	 * @return      array
 	 * @throws      SystemException
 	 */
-	protected function parsePackageUpdateXML(PackageUpdateServer $updateServer, $content) {
+	protected function parsePackageUpdateXML(PackageUpdateServer $updateServer, $content, $apiVersion) {
+		$isTrustedServer = $updateServer->isTrustedServer();
+		
 		// load xml document
 		$xml = new XML();
 		$xml->loadXML('packageUpdateServer.xml', $content);
@@ -256,7 +267,17 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				throw new SystemException("'".$package->getAttribute('name')."' is not a valid package name.");
 			}
 			
-			$allNewPackages[$package->getAttribute('name')] = $this->parsePackageUpdateXMLBlock($updateServer, $xpath, $package);
+			$name = $package->getAttribute('name');
+			if (strpos($name, 'com.woltlab.') === 0 && !$isTrustedServer) {
+				if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+					throw new SystemException("The server '".$updateServer->serverURL."' attempted to provide an official WoltLab package, but is not authorized.");
+				}
+				
+				// silently ignore this package to avoid unexpected errors for regular users
+				continue;
+			}
+			
+			$allNewPackages[$name] = $this->parsePackageUpdateXMLBlock($updateServer, $xpath, $package, $apiVersion);
 		}
 		
 		return $allNewPackages;
@@ -268,16 +289,19 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * @param       PackageUpdateServer     $updateServer
 	 * @param       \DOMXPath               $xpath
 	 * @param       \DOMElement             $package
+	 * @param       string                  $apiVersion
 	 * @return      array
+	 * @throws      PackageValidationException
 	 */
-	protected function parsePackageUpdateXMLBlock(PackageUpdateServer $updateServer, \DOMXPath $xpath, \DOMElement $package) {
+	protected function parsePackageUpdateXMLBlock(PackageUpdateServer $updateServer, \DOMXPath $xpath, \DOMElement $package, $apiVersion) {
 		// define default values
 		$packageInfo = [
 			'author' => '',
 			'authorURL' => '',
 			'isApplication' => 0,
 			'packageDescription' => '',
-			'versions' => []
+			'versions' => [],
+			'pluginStoreFileID' => 0
 		];
 		
 		// parse package information
@@ -295,6 +319,12 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				case 'isapplication':
 					$packageInfo['isApplication'] = intval($element->nodeValue);
 				break;
+				
+				case 'pluginStoreFileID':
+					if ($updateServer->isWoltLabStoreServer()) {
+						$packageInfo['pluginStoreFileID'] = intval($element->nodeValue);
+					}
+					break;
 			}
 		}
 		
@@ -314,12 +344,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		
 		$key = '';
 		if ($this->hasAuthCode) {
-			if (preg_match('~^https?://update\.woltlab\.com~', $updateServer->serverURL)) {
-				$key = 'woltlab';
-			}
-			else if (preg_match('~^https?://store\.woltlab\.com~', $updateServer->serverURL)) {
-				$key = 'pluginstore';
-			}
+			if ($updateServer->isWoltLabUpdateServer()) $key = 'woltlab';
+			else if ($updateServer->isWoltLabStoreServer()) $key = 'pluginstore';
 		}
 		
 		// parse versions
@@ -409,6 +435,29 @@ class PackageUpdateDispatcher extends SingletonFactory {
 							'licenseURL' => $child->hasAttribute('url') ? $child->getAttribute('url') : ''
 						];
 					break;
+					
+					case 'compatibility':
+						if ($apiVersion !== '3.1') continue 2;
+						
+						$packageInfo['versions'][$versionNo]['compatibility'] = [];
+						
+						/** @var \DOMElement $compatibleVersion */
+						foreach ($xpath->query('child::*', $child) as $compatibleVersion) {
+							if ($compatibleVersion->nodeName === 'api' && $compatibleVersion->hasAttribute('version')) {
+								$versionNumber = $compatibleVersion->getAttribute('version');
+								if (!preg_match('~^(?:201[7-9]|20[2-9][0-9])$~', $versionNumber)) {
+									if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+										throw new PackageValidationException(PackageValidationException::INVALID_API_VERSION, ['version' => $versionNumber]);
+									}
+									else {
+										continue;
+									}
+								}
+								
+								$packageInfo['versions'][$versionNo]['compatibility'][] = $versionNumber;
+							}
+						}
+					break;
 				}
 			}
 		}
@@ -424,7 +473,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 */
 	protected function savePackageUpdates(array &$allNewPackages, $packageUpdateServerID) {
 		// insert updates
-		$excludedPackagesParameters = $fromversionParameters = $insertParameters = $optionalInserts = $requirementInserts = [];
+		$excludedPackagesParameters = $fromversionParameters = $insertParameters = $optionalInserts = $requirementInserts = $compatibilityInserts = [];
 		WCF::getDB()->beginTransaction();
 		foreach ($allNewPackages as $identifier => $packageData) {
 			// create new database entry
@@ -435,7 +484,8 @@ class PackageUpdateDispatcher extends SingletonFactory {
 				'packageDescription' => $packageData['packageDescription'],
 				'author' => $packageData['author'],
 				'authorURL' => $packageData['authorURL'],
-				'isApplication' => $packageData['isApplication']
+				'isApplication' => $packageData['isApplication'],
+				'pluginStoreFileID' => $packageData['pluginStoreFileID']
 			]);
 			
 			$packageUpdateID = $packageUpdate->packageUpdateID;
@@ -497,6 +547,16 @@ class PackageUpdateDispatcher extends SingletonFactory {
 							$fromversionInserts[] = [
 								'packageUpdateVersionID' => $packageUpdateVersionID,
 								'fromversion' => $fromversion
+							];
+						}
+					}
+					
+					// register compatibility versions of this update package version.
+					if (isset($versionData['compatibility'])) {
+						foreach ($versionData['compatibility'] as $version) {
+							$compatibilityInserts[] = [
+								'packageUpdateVersionID' => $packageUpdateVersionID,
+								'version' => $version
 							];
 						}
 					}
@@ -571,6 +631,22 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			}
 			WCF::getDB()->commitTransaction();
 		}
+		
+		// insert compatibility versions
+		if (!empty($compatibilityInserts)) {
+			$sql = "INSERT INTO     wcf".WCF_N."_package_update_compatibility
+						(packageUpdateVersionID, version)
+				VALUES          (?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			WCF::getDB()->beginTransaction();
+			foreach ($compatibilityInserts as $versionData) {
+				$statement->execute([
+					$versionData['packageUpdateVersionID'],
+					$versionData['version']
+				]);
+			}
+			WCF::getDB()->commitTransaction();
+		}
 	}
 	
 	/**
@@ -579,6 +655,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 	 * @param	boolean		$removeRequirements
 	 * @param	boolean		$removeOlderMinorReleases
 	 * @return	array
+	 * @throws      SystemException
 	 */
 	public function getAvailableUpdates($removeRequirements = true, $removeOlderMinorReleases = false) {
 		$updates = [];
@@ -614,6 +691,15 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
+			if (!isset($existingPackages[$row['package']])) {
+				if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+					throw new SystemException("Invalid package update data, identifier '" . $row['package'] . "' does not match any installed package (case-mismatch).");
+				}
+				
+				// case-mismatch, skip the update
+				continue;
+			}
+			
 			// test version
 			foreach ($existingPackages[$row['package']] as $existingVersion) {
 				if (Package::compareVersion($existingVersion['packageVersion'], $row['packageVersion'], '<')) {
@@ -751,11 +837,13 @@ class PackageUpdateDispatcher extends SingletonFactory {
 			ON		(pus.packageUpdateServerID = pu.packageUpdateServerID)
 			WHERE		pu.package = ?
 					AND puv.packageVersion = ?
+					AND puv.isAccessible = ?
 					AND pus.isDisabled = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			$package,
 			$version,
+			1,
 			0
 		]);
 		$versions = $statement->fetchAll(\PDO::FETCH_ASSOC);

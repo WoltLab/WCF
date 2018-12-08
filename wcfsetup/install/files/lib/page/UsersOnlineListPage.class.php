@@ -13,7 +13,7 @@ use wcf\util\HeaderUtil;
  * Shows page which lists all users who are online.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * 
@@ -92,6 +92,9 @@ class UsersOnlineListPage extends SortablePage {
 				$this->objectList->getConditionBuilder()->add('session.userID IS NOT NULL');
 			}
 		}
+		
+		$this->objectList->sqlSelects .= ", CASE WHEN session.userID IS NULL THEN 1 ELSE 0 END AS userIsGuest";
+		$this->objectList->sqlSelects .= ", CASE WHEN session.spiderID IS NOT NULL THEN 1 ELSE 0 END AS userIsRobot";
 	}
 	
 	/**
@@ -122,19 +125,16 @@ class UsersOnlineListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public function assignVariables() {
-		parent::assignVariables();
-		
-		WCF::getTPL()->assign([
-			'allowSpidersToIndexThisPage' => true
-		]);
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	protected function readObjects() {
 		if ($this->sqlOrderBy) $this->sqlOrderBy = ($this->sortField == 'lastActivityTime' ? 'session.' : '').$this->sqlOrderBy;
+		
+		$originalSqlOrderBy = $this->sqlOrderBy;
+		// sort in this order: users -> guests -> robots
+		$this->sqlOrderBy = "userIsGuest ASC, userIsRobot DESC, " . $this->sqlOrderBy;
+		
 		parent::readObjects();
+		
+		// restore original order
+		$this->sqlOrderBy = $originalSqlOrderBy;
 	}
 }

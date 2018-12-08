@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Handles Paypal callbacks.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Action
  */
@@ -43,7 +43,7 @@ class PaypalCallbackAction extends AbstractAction {
 				throw new SystemException('connection to paypal.com failed: ' . $e->getMessage());
 			}
 			
-			if (strstr($content, "VERIFIED") === false) {
+			if (strpos($content, "VERIFIED") === false) {
 				throw new SystemException('request not validated');
 			}
 			
@@ -55,8 +55,8 @@ class PaypalCallbackAction extends AbstractAction {
 			}
 			
 			// Check that receiver_email is your Primary PayPal email
-			if (strtolower($_POST['business']) != strtolower(PAYPAL_EMAIL_ADDRESS) && (strtolower($_POST['receiver_email']) != strtolower(PAYPAL_EMAIL_ADDRESS))) {
-				throw new SystemException('invalid business or receiver_email');
+			if (strtolower($_POST['receiver_email']) != strtolower(PAYPAL_EMAIL_ADDRESS)) {
+				throw new SystemException('invalid receiver_email');
 			}
 			
 			// get token
@@ -94,6 +94,8 @@ class PaypalCallbackAction extends AbstractAction {
 			if ($status) {
 				$processor->processTransaction(ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.payment.method', 'com.woltlab.wcf.payment.method.paypal'), $tokenParts[1], $_POST['mc_gross'], $_POST['mc_currency'], $_POST['txn_id'], $status, $_POST);
 			}
+
+			$this->executed();
 		}
 		catch (SystemException $e) {
 			@header('HTTP/1.1 500 Internal Server Error');

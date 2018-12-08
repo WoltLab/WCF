@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Represents a user authentication failure.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Authentication\Failure
  *
@@ -44,7 +44,7 @@ class UserAuthenticationFailure extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$ipAddress, TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT]);
 		
-		return $statement->fetchColumn();
+		return $statement->fetchSingleColumn();
 	}
 	
 	/**
@@ -61,6 +61,6 @@ class UserAuthenticationFailure extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$userID, TIME_NOW - USER_AUTHENTICATION_FAILURE_TIMEOUT]);
 		
-		return $statement->fetchColumn();
+		return $statement->fetchSingleColumn();
 	}
 }

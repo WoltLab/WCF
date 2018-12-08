@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Shows the BBCode media provider edit form.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -60,7 +60,8 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 		$this->objectAction = new BBCodeMediaProviderAction([$this->providerID], 'update', ['data' => array_merge($this->additionalFields, [
 			'title' => $this->title,
 			'regex' => $this->regex,
-			'html' => $this->html
+			'html' => $this->html,
+			'className' => $this->className
 		])]);
 		$this->objectAction->executeAction();
 		
@@ -80,6 +81,7 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 			$this->title = $this->mediaProvider->title;
 			$this->regex = $this->mediaProvider->regex;
 			$this->html = $this->mediaProvider->html;
+			$this->className = $this->mediaProvider->className;
 		}
 	}
 	

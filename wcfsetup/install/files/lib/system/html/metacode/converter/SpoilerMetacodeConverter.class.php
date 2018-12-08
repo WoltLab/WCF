@@ -6,7 +6,7 @@ use wcf\util\StringUtil;
  * Converts spoiler bbcode into `<woltlab-spoiler>`.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Metacode\Converter
  * @since       3.0
@@ -17,7 +17,7 @@ class SpoilerMetacodeConverter extends AbstractMetacodeConverter {
 	 */
 	public function convert(\DOMDocumentFragment $fragment, array $attributes) {
 		$element = $fragment->ownerDocument->createElement('woltlab-spoiler');
-		$element->setAttribute('data-label', (!empty($attributes[0])) ? StringUtil::trim($attributes[0]) : '');
+		$element->setAttribute('data-label', (!empty($attributes[0])) ? StringUtil::trim(StringUtil::decodeHTML($attributes[0])) : '');
 		$element->appendChild($fragment);
 		
 		return $element;

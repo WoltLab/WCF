@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Caches options and option categories
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cache\Builder
  */
@@ -64,8 +64,13 @@ class OptionCacheBuilder extends AbstractCacheBuilder {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
 		
-		/** @var Option $option */
-		while ($option = $statement->fetchObject($this->optionClassName)) {
+		while ($row = $statement->fetchArray()) {
+			if ($row['optionType'] === 'BBCodeSelect') {
+				$row['defaultValue'] = (!empty($row['defaultValue']) ? ',' : '') . 'html';
+			}
+			
+			/** @var Option $option */
+			$option = new $this->optionClassName(null, $row);
 			$data['options'][$option->optionName] = $option;
 			if (!isset($data['optionToCategories'][$option->categoryName])) {
 				$data['optionToCategories'][$option->categoryName] = [];

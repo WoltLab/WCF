@@ -43,3 +43,26 @@
 .googleMapsUseLocationSuggestionLink {
 	font-size: $wcfFontSizeSmall;
 }
+
+.googleMapsDirectionsContainer {
+	@include screen-lg {
+		display: flex;
+		
+		.googleMap,
+		.googleMapsDirections {
+			flex: 0 0 50%;
+		}
+	}
+	
+	.googleMapsDirections {
+		height: 400px;
+		padding-left: 10px;
+		overflow-y: scroll;
+	}
+}
+
+.googleMapsDirectionsGoogleLinkContainer {
+	display: block;
+	margin-top: 5px;
+	text-align: right;
+}

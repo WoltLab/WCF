@@ -7,7 +7,7 @@ use wcf\util\JSON;
  * AJAXException provides JSON-encoded exceptions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Exception
  */
@@ -90,30 +90,33 @@ class AJAXException extends LoggedException {
 		$statusHeader = '';
 		switch ($errorType) {
 			case self::MISSING_PARAMETERS:
-				$statusHeader = 'HTTP/1.0 400 Bad Request';
+				$statusHeader = 'HTTP/1.1 400 Bad Request';
 				
 				$responseData['exceptionID'] = $exceptionID;
 				$responseData['message'] = WCF::getLanguage()->get('wcf.ajax.error.badRequest');
 			break;
 			
 			case self::SESSION_EXPIRED:
-				$statusHeader = 'HTTP/1.0 409 Conflict';
+				$statusHeader = 'HTTP/1.1 409 Conflict';
 			break;
 			
 			case self::INSUFFICIENT_PERMISSIONS:
-				$statusHeader = 'HTTP/1.0 403 Forbidden';
+				$statusHeader = 'HTTP/1.1 403 Forbidden';
 			break;
 			
 			case self::BAD_PARAMETERS:
-				$statusHeader = 'HTTP/1.0 431 Bad Parameters';
+				// see https://github.com/WoltLab/WCF/issues/2378
+				//$statusHeader = 'HTTP/1.1 431 Bad Parameters';
+				$statusHeader = 'HTTP/1.1 400 Bad Request';
 				
 				$responseData['exceptionID'] = $exceptionID;
 			break;
 			
 			default:
+			case self::ILLEGAL_LINK:
 			case self::INTERNAL_ERROR:
-				//header('HTTP/1.0 418 I\'m a Teapot');
-				header('HTTP/1.0 503 Service Unavailable');
+				//header('HTTP/1.1 418 I\'m a Teapot');
+				header('HTTP/1.1 503 Service Unavailable');
 				
 				$responseData['code'] = self::INTERNAL_ERROR;
 				$responseData['exceptionID'] = $exceptionID;

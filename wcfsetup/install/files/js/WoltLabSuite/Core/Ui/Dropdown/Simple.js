@@ -2,7 +2,7 @@
  * Simple dropdown implementation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Dropdown/Simple
  */
@@ -104,14 +104,14 @@ define(
 						if (menuHeight === null) menuHeight = menu.clientHeight;
 						if (menuRealHeight === null) menuRealHeight = menu.scrollHeight;
 						
-						// positive value: scrolling up
-						if (event.wheelDelta > 0 && menu.scrollTop === 0) {
+						// negative value: scrolling up
+						if (event.deltaY < 0 && menu.scrollTop === 0) {
 							event.preventDefault();
 						}
-						else if (event.wheelDelta < 0 && (menu.scrollTop + menuHeight === menuRealHeight)) {
+						else if (event.deltaY > 0 && (menu.scrollTop + menuHeight === menuRealHeight)) {
 							event.preventDefault();
 						}
-					});
+					}, { passive: false });
 				}
 			}
 			
@@ -205,7 +205,7 @@ define(
 		},
 		
 		/**
-		 * Calculats and sets the alignment of the dropdown identified by given id.
+		 * Calculates and sets the alignment of the dropdown identified by given id.
 		 * 
 		 * @param	{string}	containerId	dropdown wrapper id
 		 */

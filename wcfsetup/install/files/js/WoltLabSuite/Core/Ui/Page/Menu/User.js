@@ -2,11 +2,11 @@
  * Provides the touch-friendly fullscreen user menu.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Menu/User
  */
-define(['Core', 'EventHandler', './Abstract'], function(Core, EventHandler, UiPageMenuAbstract) {
+define(['Core', 'EventHandler', 'Language', './Abstract'], function(Core, EventHandler, Language, UiPageMenuAbstract) {
 	"use strict";
 	
 	/**
@@ -18,6 +18,13 @@ define(['Core', 'EventHandler', './Abstract'], function(Core, EventHandler, UiPa
 		 * Initializes the touch-friendly fullscreen user menu.
 		 */
 		init: function() {
+			// check if user menu is actually empty
+			var menu = elBySel('#pageUserMenuMobile > .menuOverlayItemList');
+			if (menu.childElementCount === 1 && menu.children[0].classList.contains('menuOverlayTitle')) {
+				elBySel('#pageHeader .userPanel').classList.add('hideUserPanel');
+				return;
+			}
+			
 			UiPageMenuUser._super.prototype.init.call(
 				this,
 				'com.woltlab.wcf.UserMenuMobile',
@@ -46,6 +53,9 @@ define(['Core', 'EventHandler', './Abstract'], function(Core, EventHandler, UiPa
 					}
 				}).bind(this));
 			}).bind(this));
+			
+			elAttr(this._button, 'aria-label', Language.get('wcf.menu.user'));
+			elAttr(this._button, 'role', 'button');
 		},
 		
 		close: function (event) {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html dir="ltr" lang="en">
 <head>
-	<title>WoltLab Suite 3.0 System Requirements</title>
+	<title>WoltLab Suite 3.1 System Requirements</title>
 </head>
 <body>
 <?php
@@ -10,7 +10,7 @@
  * ><p><b>Support for PHP is missing.<br>PHP Unterst&uuml;tzung nicht gefunden</b></p> <!--
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 // @codingStandardsIgnoreFile

@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  * Shows the result of a user search.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  */
@@ -52,7 +52,7 @@ class UserListPage extends SortablePage {
 	
 	/**
 	 * list of column values
-	 * @var	string[]
+	 * @var	string[][]
 	 */
 	public $columnValues = [];
 	
@@ -224,7 +224,7 @@ class UserListPage extends SortablePage {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($this->conditions->getParameters());
 		
-		return $statement->fetchColumn();
+		return $statement->fetchSingleColumn();
 	}
 	
 	/**

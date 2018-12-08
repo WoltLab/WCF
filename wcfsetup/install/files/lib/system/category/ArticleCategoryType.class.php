@@ -6,7 +6,7 @@ use wcf\system\WCF;
  * Category type implementation for article categories.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Category
  * @since	3.0
@@ -21,6 +21,11 @@ class ArticleCategoryType extends AbstractCategoryType {
 	 * @inheritDoc
 	 */
 	protected $hasDescription = false;
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $maximumNestingLevel = 2;
 	
 	/**
 	 * @inheritDoc

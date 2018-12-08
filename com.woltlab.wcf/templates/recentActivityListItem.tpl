@@ -13,7 +13,9 @@
 					<small class="containerContentType">{lang}wcf.user.recentActivity.{@$event->getObjectTypeName()}{/lang}</small>
 				</div>
 				
-				<div class="containerContent htmlContent">{@$event->getDescription()}</div>
+				{if $event->getDescription()}
+					<div class="containerContent{if !$event->isRawHtml()} htmlContent{/if}">{@$event->getDescription()}</div>
+				{/if}
 			</div>
 		</div>
 	</li>

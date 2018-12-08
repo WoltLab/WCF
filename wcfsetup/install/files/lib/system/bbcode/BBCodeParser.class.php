@@ -9,7 +9,7 @@ use wcf\system\SingletonFactory;
  * Parses bbcode tags in text.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  */
@@ -215,8 +215,29 @@ class BBCodeParser extends SingletonFactory {
 			return false;
 		}
 		
+		$tagAttributes = (isset($tag['attributes']) ? $tag['attributes'] : []);
+		
+		// right trim any attributes that are truly empty (= zero-length string) and are defined to be optional
+		$bbcodeAttributes = $this->bbcodes[$tag['name']]->getAttributes();
+		// reverse sort the bbcode attributes to start with the last attribute
+		usort($bbcodeAttributes, function(BBCodeAttribute $a, BBCodeAttribute $b) {
+			if ($a->attributeNo == $b->attributeNo) return 0;
+			return ($a->attributeNo < $b->attributeNo) ? 1 : -1;
+		});
+		foreach ($bbcodeAttributes as $attribute) {
+			if ($attribute->required) break;
+			
+			$i = $attribute->attributeNo;
+			if (isset($tagAttributes[$i]) && $tagAttributes[$i] === '' && !isset($tagAttributes[$i + 1])) {
+				unset($tagAttributes[$i]);
+			}
+			else {
+				break;
+			}
+		}
+		
 		foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
-			if (!$this->isValidTagAttribute((isset($tag['attributes']) ? $tag['attributes'] : []), $attribute)) {
+			if (!$this->isValidTagAttribute($tagAttributes, $attribute)) {
 				return false;
 			}
 		}
@@ -279,13 +300,13 @@ class BBCodeParser extends SingletonFactory {
 		$attributesString = '';
 		foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
 			if (isset($tag['attributes'][$attribute->attributeNo])) {
-				$atrributeString = '';
+				$attributeString = '';
 				if (!empty($attribute->attributeHtml)) {
-					$atrributeString = ' '.$attribute->attributeHtml;
+					$attributeString = ' '.$attribute->attributeHtml;
 				}
 				
-				if (!empty($atrributeString)) {
-					$attributesString .= sprintf($atrributeString, $tag['attributes'][$attribute->attributeNo]);
+				if (!empty($attributeString)) {
+					$attributesString .= sprintf($attributeString, $tag['attributes'][$attribute->attributeNo]);
 				}
 			}
 		}
@@ -428,12 +449,12 @@ class BBCodeParser extends SingletonFactory {
 	/**
 	 * Builds the tag array from the given text.
 	 * 
-	 * @param	boolean		$ignoreSoureCodes
+	 * @param	boolean		$ignoreSourceCodes
 	 */
-	public function buildTagArray($ignoreSoureCodes = true) {
+	public function buildTagArray($ignoreSourceCodes = true) {
 		// build tag pattern
 		$validTags = '';
-		if (!$ignoreSoureCodes) {
+		if (!$ignoreSourceCodes) {
 			$validTags = implode('|', array_keys($this->bbcodes));
 		}
 		else {

@@ -50,7 +50,7 @@
 {/foreach}
 
 <div class="formSubmit">
-	<button>{lang}wcf.global.button.submit{/lang}</button>
+	<button class="buttonPrimary">{lang}wcf.global.button.submit{/lang}</button>
 </div>
 
 {include file='footer'}

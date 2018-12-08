@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\data\user\group\option\UserGroupOption;
+use wcf\data\user\group\UserGroup;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
@@ -11,7 +13,7 @@ use wcf\util\StringUtil;
  * Caches the merged user group options for a certain user group combination.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cache\Builder
  */
@@ -26,7 +28,26 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 	 * @inheritDoc
 	 */
 	public function rebuild(array $parameters) {
-		$data = [];
+		$data = $excludedInTinyBuild = [];
+		
+		if (VISITOR_USE_TINY_BUILD) {
+			foreach ($parameters as $groupID) {
+				if (UserGroup::getGroupByID($groupID)->groupType == UserGroup::GUESTS) {
+					$sql = "SELECT  optionName, additionalData
+						FROM    wcf" . WCF_N . "_user_group_option
+						WHERE   optionType = 'boolean'";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute();
+					while ($option = $statement->fetchObject(UserGroupOption::class)) {
+						if ($option->excludedInTinyBuild) {
+							$excludedInTinyBuild[] = $option->optionName;
+						}
+					}
+					
+					break;
+				}
+			}
+		}
 		
 		// get option values
 		$conditions = new PreparedStatementConditionBuilder();
@@ -50,7 +71,11 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 		// merge values
 		$neverValues = [];
 		foreach ($data as $optionName => $option) {
-			if (count($option['values']) == 1) {
+			if (in_array($optionName, $excludedInTinyBuild)) {
+				// mimic the behavior of 'Never', regardless of what is actually set
+				$result = -1;
+			}
+			else if (count($option['values']) == 1) {
 				$result = $option['values'][0];
 			}
 			else {

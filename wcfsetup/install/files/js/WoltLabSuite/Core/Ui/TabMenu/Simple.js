@@ -2,7 +2,7 @@
  * Simple tab menu implementation with a straight-forward logic.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/TabMenu/Simple
  */
@@ -129,7 +129,8 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 			
 			var returnValue = null;
 			if (!oldTabs) {
-				var hash = window.location.hash.replace(/^#/, ''), selectTab = null;
+				var hash = TabMenuSimple.getIdentifierFromHash();
+				var selectTab = null;
 				if (hash !== '') {
 					selectTab = this._tabs.get(hash);
 					
@@ -272,11 +273,20 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 					});
 				}
 				
+				var location = window.location.href.replace(/#+[^#]*$/, '');
+				if (TabMenuSimple.getIdentifierFromHash() === name) {
+					location += window.location.hash;
+				}
+				else {
+					location += '#' + name;
+				}
+				
 				// update history
+				//noinspection JSCheckFunctionSignatures
 				window.history.replaceState(
 					undefined,
 					undefined,
-					window.location.href.replace(/#[^#]+$/, '') + '#' + name
+					location
 				);
 			}
 			
@@ -376,6 +386,14 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 		getTabs: function() {
 			return this._tabs;
 		}
+	};
+	
+	TabMenuSimple.getIdentifierFromHash = function () {
+		if (window.location.hash.match(/^#+([^\/]+)+(?:\/.+)?/)) {
+			return RegExp.$1;
+		}
+		
+		return '';
 	};
 	
 	return TabMenuSimple;

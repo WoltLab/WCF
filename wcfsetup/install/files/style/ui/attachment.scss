@@ -216,3 +216,9 @@
 		}
 	}
 }
+
+.popoverContent .embeddedAttachmentLink,
+.popoverContent .embeddedImageLink {
+	/* this will also suppress the link being displayed in the browser's "status bar" on hover */
+	pointer-events: none;
+}

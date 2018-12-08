@@ -1,16 +1,18 @@
 <?php
 namespace wcf\data\page\content;
 use wcf\data\DatabaseObject;
+use wcf\data\ILinkableObject;
 use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\html\simple\HtmlSimpleParser;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
  * Represents a page content.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Page\Content
  * @since	3.0
@@ -25,7 +27,7 @@ use wcf\system\WCF;
  * @property-read	string		$customURL		custom url of the page in the associated language
  * @property-read	integer		$hasEmbeddedObjects	is `1` if the page content contains embedded objects, otherwise `0`
  */
-class PageContent extends DatabaseObject {
+class PageContent extends DatabaseObject implements ILinkableObject {
 	/**
 	 * @inheritDoc
 	 */
@@ -110,5 +112,12 @@ class PageContent extends DatabaseObject {
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getLink() {
+		return LinkHandler::getInstance()->getCmsLink($this->pageID, $this->languageID);
 	}
 }

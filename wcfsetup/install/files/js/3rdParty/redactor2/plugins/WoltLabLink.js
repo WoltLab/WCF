@@ -10,7 +10,8 @@ $.Redactor.prototype.WoltLabLink = function() {
 				// WoltLab modification: prevent catastrophic backtracing
 				var pattern = '((xn--)?[\\W\\w\\D\\d]+(-(?!-[\\W\\w\\D\\d])+)*\\.)+[\\W\\w]{2,}';
 				
-				var re1 = new RegExp('^(http|ftp|https)://' + pattern, 'i');
+				// WoltLab modification: added `steam` and `ts3server`
+				var re1 = new RegExp('^(http|ftp|https|steam|ts3server)://' + pattern, 'i');
 				var re2 = new RegExp('^' + pattern, 'i');
 				var re3 = new RegExp('\.(html|php)$', 'i');
 				var re4 = new RegExp('^/', 'i');
@@ -31,6 +32,28 @@ $.Redactor.prototype.WoltLabLink = function() {
 			}).bind(this);
 			
 			this.link.show = this.WoltLabLink.show.bind(this);
+			
+			this.link.parse = (function(link) {
+				// mailto
+				if (this.link.isMailto(link.url))
+				{
+					link.url = 'mailto:' + link.url.replace('mailto:', '');
+				}
+				// url
+				else if (link.url.search('#') !== 0)
+				{
+					if (this.opts.linkValidation)
+					{
+						var url = this.link.isUrl(link.url);
+						if (url === false) url = 'http://' + link.url;
+						
+						link.url = url;
+					}
+				}
+				
+				// empty url or text or isn't url
+				return (this.link.isEmpty(link) || link.url === false) ? false : link;
+			}).bind(this);
 			
 			require(['WoltLabSuite/Core/Ui/Redactor/Link'], function(UiRedactorLink) {
 				_dialogApi = UiRedactorLink;

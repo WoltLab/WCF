@@ -67,7 +67,7 @@
 
 {hascontent}
 	<div class="paginationTop">
-		{content}{pages print=true controller="ExceptionLogView" link="pageNo=%d&logFile=$logFile"}{/content}
+		{content}{pages print=true assign=pagesLinks controller="ExceptionLogView" link="pageNo=%d&logFile=$logFile"}{/content}
 	</div>
 {/hascontent}
 
@@ -96,7 +96,7 @@
 				</dl>
 				<dl>
 					<dt>{lang}wcf.acp.exceptionLog.exception.memory{/lang}</dt>
-					<dd>{$exception[peakMemory]|filesizeBinary} / {$exception[maxMemory]|filesizeBinary}</dd>
+					<dd>{$exception[peakMemory]|filesizeBinary} / {if $exception[maxMemory] == -1}&infin;{else}{$exception[maxMemory]|filesizeBinary}{/if}</dd>
 				</dl>
 				{foreach from=$exception[chain] item=chain}
 				<dl>
@@ -128,6 +128,14 @@
 				</dl>
 			</section>
 		{/foreach}
+
+		<footer class="contentFooter">
+			{hascontent}
+				<div class="paginationBottom">
+					{content}{@$pagesLinks}{/content}
+				</div>
+			{/hascontent}
+		</footer>
 	{elseif $exceptionID}
 		<p class="error">{lang}wcf.acp.exceptionLog.exceptionNotFound{/lang}</p>
 	{/if}

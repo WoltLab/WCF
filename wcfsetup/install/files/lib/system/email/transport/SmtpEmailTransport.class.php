@@ -6,13 +6,14 @@ use wcf\system\email\Email;
 use wcf\system\email\Mailbox;
 use wcf\system\exception\SystemException;
 use wcf\system\io\RemoteFile;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
  * SmtpEmailTransport is an implementation of an email transport which sends emails via SMTP (RFC 5321, 3207 and 4954).
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Email\Transport
  * @since	3.0
@@ -84,10 +85,10 @@ class SmtpEmailTransport implements IEmailTransport {
 	 * @throws	\InvalidArgumentException
 	 */
 	public function __construct($host = MAIL_SMTP_HOST, $port = MAIL_SMTP_PORT, $username = MAIL_SMTP_USER, $password = MAIL_SMTP_PASSWORD, $starttls = MAIL_SMTP_STARTTLS) {
-		$this->host = $host;
-		$this->port = $port;
-		$this->username = $username;
-		$this->password = $password;
+		$this->host = StringUtil::trim($host);
+		$this->port = intval($port);
+		$this->username = StringUtil::trim($username);
+		$this->password = StringUtil::trim($password);
 		
 		switch ($starttls) {
 			case 'none':
@@ -108,6 +109,51 @@ class SmtpEmailTransport implements IEmailTransport {
 	}
 	
 	/**
+	 * Tests the connection by establishing a connection and optionally
+	 * providing user credentials. Returns the error message or an empty
+	 * string on success.
+	 * 
+	 * @return      string
+	 */
+	public function testConnection() {
+		try {
+			$this->connect(10);
+			$this->auth();
+		}
+		catch (SystemException $e) {
+			if (strpos($e->getMessage(), 'Can not connect to') === 0) {
+				return WCF::getLanguage()->get('wcf.acp.email.smtp.test.error.hostUnknown');
+			}
+			
+			return $e->getMessage();
+		}
+		catch (PermanentFailure $e) {
+			if (strpos($e->getMessage(), 'Remote SMTP server does not support EHLO') === 0) {
+				return WCF::getLanguage()->get('wcf.acp.email.smtp.test.error.notTlsSupport');
+			}
+			else if (strpos($e->getMessage(), 'Remote SMTP server does not advertise STARTTLS') === 0) {
+				return WCF::getLanguage()->get('wcf.acp.email.smtp.test.error.notTlsSupport');
+			}
+			else if (strpos($e->getMessage(), "Remote SMTP server reported permanent error code: 535 (") === 0) {
+				return WCF::getLanguage()->get('wcf.acp.email.smtp.test.error.badAuth');
+			}
+			
+			return $e->getMessage();
+		}
+		catch (TransientFailure $e) {
+			if (strpos($e->getMessage(), 'Enabling TLS failed') === 0) {
+				return WCF::getLanguage()->get('wcf.acp.email.smtp.test.error.tlsFailed');
+			}
+			
+			return $e->getMessage();
+		}
+		
+		$this->disconnect();
+		
+		return '';
+	}
+	
+	/**
 	 * Reads a server reply and validates it against the given expected status codes.
 	 * Returns a tuple [ status code, reply text ].
 	 * 
@@ -117,6 +163,10 @@ class SmtpEmailTransport implements IEmailTransport {
 	 * @throws	TransientFailure
 	 */
 	protected function read(array $expectedCodes) {
+		$truncateReply = function ($reply) {
+			return StringUtil::truncate(preg_replace('/[\x00-\x1F\x80-\xFF]/', '.', $reply), 80, StringUtil::HELLIP, true);
+		};
+		
 		$code = null;
 		$reply = '';
 		do {
@@ -128,15 +178,15 @@ class SmtpEmailTransport implements IEmailTransport {
 					if (!in_array($code, $expectedCodes)) {
 						// 4xx is a transient failure
 						if (400 <= $code && $code < 500) {
-							throw new TransientFailure("Remote SMTP server reported transient error code: ".$code." in reply to '".$this->lastWrite."'");
+							throw new TransientFailure("Remote SMTP server reported transient error code: ".$code." (".$truncateReply($matches[3]).") in reply to '".$this->lastWrite."'");
 						}
 						
 						// 5xx is a permanent failure
 						if (500 <= $code && $code < 600) {
-							throw new PermanentFailure("Remote SMTP server reported permanent error code: ".$code." in reply to '".$this->lastWrite."'");
+							throw new PermanentFailure("Remote SMTP server reported permanent error code: ".$code." (".$truncateReply($matches[3]).") in reply to '".$this->lastWrite."'");
 						}
 						
-						throw new TransientFailure("Remote SMTP server reported not expected code: ".$code." in reply to '".$this->lastWrite."'");
+						throw new TransientFailure("Remote SMTP server reported not expected code: ".$code." (".$truncateReply($matches[3]).") in reply to '".$this->lastWrite."'");
 					}
 				}
 				
@@ -173,10 +223,13 @@ class SmtpEmailTransport implements IEmailTransport {
 	 * Connects to the server and enables STARTTLS if available. Bails
 	 * out if STARTTLS is not available and connection is set to 'encrypt'.
 	 * 
+	 * @param       integer         $overrideTimeout
 	 * @throws	PermanentFailure
 	 */
-	protected function connect() {
-		$this->connection = new RemoteFile($this->host, $this->port);
+	protected function connect($overrideTimeout = null) {
+		if ($overrideTimeout === null) $this->connection = new RemoteFile($this->host, $this->port);
+		else $this->connection = new RemoteFile($this->host, $this->port, $overrideTimeout);
+		
 		$this->read([220]);
 		
 		try {
@@ -207,11 +260,16 @@ class SmtpEmailTransport implements IEmailTransport {
 				if (in_array('starttls', $this->features)) {
 					try {
 						$this->starttls();
-					}
-					catch (SystemException $e) { }
 					
-					$this->write('EHLO '.Email::getHost());
-					$this->features = array_map('strtolower', explode("\n", StringUtil::unifyNewlines($this->read([250])[1])));
+						$this->write('EHLO '.Email::getHost());
+						$this->features = array_map('strtolower', explode("\n", StringUtil::unifyNewlines($this->read([250])[1])));
+					}
+					catch (\Exception $e) {
+						\wcf\functions\exception\logThrowable($e);
+						$this->disconnect();
+						$this->starttls = 'none';
+						$this->connect();
+					}
 				}
 			break;
 			case 'none':
@@ -228,8 +286,13 @@ class SmtpEmailTransport implements IEmailTransport {
 		$this->write("STARTTLS");
 		$this->read([220]);
 		
-		if (!$this->connection->setTLS(true)) {
-			throw new TransientFailure('enabling TLS failed');
+		try {
+			if (!$this->connection->setTLS(true)) {
+				throw new TransientFailure('Enabling TLS failed');
+			}
+		}
+		catch (SystemException $e) {
+			throw new TransientFailure('Enabling TLS failed', 0, $e);
 		}
 	}
 	
@@ -316,7 +379,6 @@ class SmtpEmailTransport implements IEmailTransport {
 	 * @param	Mailbox		$envelopeTo
 	 * @throws	\Exception
 	 * @throws	PermanentFailure
-	 * @throws	TransientFailure
 	 * @throws	SystemException
 	 */
 	public function deliver(Email $email, Mailbox $envelopeFrom, Mailbox $envelopeTo) {
@@ -344,7 +406,7 @@ class SmtpEmailTransport implements IEmailTransport {
 		
 		$this->write('RSET');
 		$this->read([250]);
-		$this->write('MAIL FROM:<'.$email->getSender()->getAddress().'>');
+		$this->write('MAIL FROM:<'.$envelopeFrom->getAddress().'>');
 		$this->read([250]);
 		$this->write('RCPT TO:<'.$envelopeTo->getAddress().'>');
 		$this->read([250, 251]);

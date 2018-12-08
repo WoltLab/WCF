@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * Executes category-related actions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Category
  * 
@@ -41,13 +41,18 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 	 * @inheritDoc
 	 */
 	public function delete() {
+		// call category types
+		foreach ($this->getObjects() as $categoryEditor) {
+			$categoryEditor->getProcessor()->beforeDeletion($categoryEditor);
+		}
+		
 		$returnValue = parent::delete();
 		
 		// delete language items
 		if (!empty($this->objects)) {
 			// identify i18n labels
 			$languageVariables = [];
-			foreach ($this->objects as $category) {
+			foreach ($this->getObjects() as $category) {
 				if ($category->title === $category->getProcessor()->getI18nLangVarPrefix() . '.title.category' . $category->categoryID) {
 					$languageVariables[] = $category->title;
 				}

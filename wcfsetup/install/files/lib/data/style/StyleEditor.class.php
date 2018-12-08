@@ -6,6 +6,7 @@ use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\data\template\group\TemplateGroup;
 use wcf\data\template\group\TemplateGroupAction;
+use wcf\data\template\Template;
 use wcf\data\template\TemplateEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
@@ -31,7 +32,7 @@ use wcf\util\XMLWriter;
  * Provides functions to edit, import, export and delete a style.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Style
  * 
@@ -39,8 +40,17 @@ use wcf\util\XMLWriter;
  * @mixin	Style
  */
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
-	const EXCLUDE_WCF_VERSION = '3.1.0 Alpha 1';
+	/**
+	 * @deprecated 3.1 use the compatibility api versions instead
+	 */
+	const EXCLUDE_WCF_VERSION = '3.2.0 Alpha 1';
 	const INFO_FILE = 'style.xml';
+	
+	/**
+	 * list of compatible API versions
+	 * @var integer[]
+	 */
+	public static $compatibilityApiVersions = [2018];
 	
 	/**
 	 * @inheritDoc
@@ -124,6 +134,44 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	}
 	
 	/**
+	 * Deletes the style's default cover photo.
+	 */
+	public function deleteCoverPhoto() {
+		if ($this->coverPhotoExtension) {
+			@unlink(WCF_DIR.'images/coverPhotos/'.$this->styleID.'.'.$this->coverPhotoExtension);
+			
+			$this->update([
+				'coverPhotoExtension' => ''
+			]);
+		}
+	}
+	
+	/**
+	 * Returns the list of variables that exist, but have no explicit values for this style.
+	 * 
+	 * @return      string[]
+	 */
+	public function getImplicitVariables() {
+		$sql = "SELECT          variable.variableName
+			FROM            wcf".WCF_N."_style_variable variable
+			LEFT JOIN       wcf".WCF_N."_style_variable_value variable_value
+			ON              (variable_value.variableID = variable.variableID AND variable_value.styleID = ?)
+			WHERE           variable.variableName LIKE ?
+					AND variable_value.variableValue IS NULL";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$this->styleID,
+			'wcf%'
+		]);
+		$variableNames = [];
+		while ($variableName = $statement->fetchColumn()) {
+			$variableNames[] = $variableName;
+		}
+		
+		return $variableNames;
+	}
+	
+	/**
 	 * Reads the data of a style exchange format file.
 	 * 
 	 * @param	Tar	$tar
@@ -143,9 +191,9 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$xpath = $xml->xpath();
 		
 		$data = [
-			'name' => '', 'description' => [], 'version' => '', 'image' => '', 'copyright' => '', 'default' => false,
-			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '',
-			'variables' => '', 'date' => '0000-00-00', 'imagesPath' => '', 'packageName' => ''
+			'name' => '', 'description' => [], 'version' => '', 'image' => '', 'image2x' => '', 'copyright' => '', 'default' => false,
+			'license' => '', 'authorName' => '', 'authorURL' => '', 'templates' => '', 'images' => '', 'coverPhoto' => '',
+			'variables' => '', 'date' => '0000-00-00', 'imagesPath' => '', 'packageName' => '', 'apiVersion' => '3.0'
 		];
 		
 		$categories = $xpath->query('/ns:style/*');
@@ -216,9 +264,19 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 							
 							case 'copyright':
 							case 'image':
+							case 'image2x':
 							case 'license':
+							case 'coverPhoto':
 								$data[$element->tagName] = $element->nodeValue;
 							break;
+							
+							case 'apiVersion':
+								if (!in_array($element->nodeValue, Style::$supportedApiVersions)) {
+									throw new SystemException("Unknown api version '".$element->nodeValue."'");
+								}
+								
+								$data['apiVersion'] = $element->nodeValue;
+								break;
 						}
 					}
 				break;
@@ -319,7 +377,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			'license' => $data['license'],
 			'authorName' => $data['authorName'],
 			'authorURL' => $data['authorURL'],
-			'packageName' => $data['packageName']
+			'packageName' => $data['packageName'],
+			'apiVersion' => $data['apiVersion']
 		];
 		
 		// check if there is an untainted style with the same package name
@@ -490,33 +549,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$styleData['packageID'] = $packageID;
 			$style = new StyleEditor(self::create($styleData));
 			
-			// import preview image
-			if (!empty($data['image'])) {
-				$fileExtension = mb_substr($data['image'], mb_strrpos($data['image'], '.'));
-				$index = $tar->getIndexByFilename($data['image']);
-				if ($index !== false) {
-					$filename = WCF_DIR.'images/stylePreview-'.$style->styleID.$fileExtension;
-					$tar->extract($index, $filename);
-					FileUtil::makeWritable($filename);
-			
-					if (file_exists($filename)) {
-						try {
-							if (($imageData = getimagesize($filename)) !== false) {
-								switch ($imageData[2]) {
-									case IMAGETYPE_PNG:
-									case IMAGETYPE_JPEG:
-									case IMAGETYPE_GIF:
-										$style->update(['image' => 'stylePreview-'.$style->styleID.$fileExtension]);
-								}
-							}
-						}
-						catch (SystemException $e) {
-							// broken image
-						}
-					}
-				}
-			}
-			
 			// handle descriptions
 			if (!empty($data['description'])) {
 				self::saveLocalizedDescriptions($style, $data['description']);
@@ -536,13 +568,79 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			
 			$individualScss = Style::splitLessVariables($variables['individualScss']);
 			$variables['individualScss'] = Style::joinLessVariables($styleData['variables']['individualScss'], $individualScss['custom']);
+			unset($styleData['variables']['individualScss']);
 			
 			$overrideScss = Style::splitLessVariables($variables['overrideScss']);
 			$variables['overrideScss'] = Style::joinLessVariables($styleData['variables']['overrideScss'], $overrideScss['custom']);
+			unset($styleData['variables']['overrideScss']);
+			
+			// import variables that have not been explicitly defined before
+			$implicitVariables = $style->getImplicitVariables();
+			foreach ($styleData['variables'] as $variableName => $variableValue) {
+				if (in_array($variableName, $implicitVariables)) {
+					$variables[$variableName] = $variableValue;
+				}
+			}
 			
 			$styleData['variables'] = $variables;
 			
 			$style->update($styleData);
+		}
+		
+		// import preview image
+		foreach (['image', 'image2x'] as $type) {
+			if (!empty($data[$type])) {
+				$fileExtension = mb_substr($data[$type], mb_strrpos($data[$type], '.'));
+				$index = $tar->getIndexByFilename($data[$type]);
+				if ($index !== false) {
+					$filename = WCF_DIR . 'images/stylePreview-' . $style->styleID . ($type === 'image2x' ? '@2x' : '') . $fileExtension;
+					$tar->extract($index, $filename);
+					FileUtil::makeWritable($filename);
+					
+					if (file_exists($filename)) {
+						try {
+							if (($imageData = getimagesize($filename)) !== false) {
+								switch ($imageData[2]) {
+									case IMAGETYPE_PNG:
+									case IMAGETYPE_JPEG:
+									case IMAGETYPE_GIF:
+										$style->update([$type => 'stylePreview-' . $style->styleID . ($type === 'image2x' ? '@2x' : '') . $fileExtension]);
+								}
+							}
+						}
+						catch (SystemException $e) {
+							// broken image
+						}
+					}
+				}
+			}
+		}
+		
+		// import cover photo
+		if (!empty($data['coverPhoto'])) {
+			$fileExtension = mb_substr($data['coverPhoto'], mb_strrpos($data['coverPhoto'], '.'));
+			$index = $tar->getIndexByFilename($data['coverPhoto']);
+			if ($index !== false) {
+				$filename = WCF_DIR . 'images/coverPhotos/' . $style->styleID . $fileExtension;
+				$tar->extract($index, $filename);
+				FileUtil::makeWritable($filename);
+				
+				if (file_exists($filename)) {
+					try {
+						if (($imageData = getimagesize($filename)) !== false) {
+							switch ($imageData[2]) {
+								case IMAGETYPE_PNG:
+								case IMAGETYPE_JPEG:
+								case IMAGETYPE_GIF:
+									$style->update(['coverPhotoExtension' => mb_substr($fileExtension, 1)]);
+							}
+						}
+					}
+					catch (SystemException $e) {
+						// broken image
+					}
+				}
+			}
 		}
 		
 		$tar->close();
@@ -641,6 +739,15 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if ($this->image && @file_exists(WCF_DIR.'images/'.$this->image)) {
 			$styleTar->add(WCF_DIR.'images/'.$this->image, '', FileUtil::addTrailingSlash(dirname(WCF_DIR.'images/'.$this->image)));
 		}
+		if ($this->image2x && @file_exists(WCF_DIR.'images/'.$this->image2x)) {
+			$styleTar->add(WCF_DIR.'images/'.$this->image2x, '', FileUtil::addTrailingSlash(dirname(WCF_DIR.'images/'.$this->image2x)));
+		}
+		
+		// append cover photo
+		$coverPhoto = ($this->coverPhotoExtension) ? WCF_DIR.'images/coverPhotos/'.$this->styleID.'.'.$this->coverPhotoExtension : '';
+		if ($coverPhoto && @file_exists($coverPhoto)) {
+			$styleTar->add($coverPhoto, '', FileUtil::addTrailingSlash(dirname($coverPhoto)));
+		}
 		
 		// fetch style description
 		$sql = "SELECT		language.languageCode, language_item.languageItemValue
@@ -668,7 +775,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		$xml->writeElement('date', $this->styleDate);
 		$xml->writeElement('version', $this->styleVersion);
+		$xml->writeElement('apiVersion', $this->apiVersion);
 		if ($this->image) $xml->writeElement('image', $this->image);
+		if ($this->image2x) $xml->writeElement('image2x', $this->image2x);
+		if ($coverPhoto) $xml->writeElement('coverPhoto', basename(FileUtil::unifyDirSeparator($coverPhoto)));
 		if ($this->copyright) $xml->writeElement('copyright', $this->copyright);
 		if ($this->license) $xml->writeElement('license', $this->license);
 		$xml->endElement();
@@ -688,7 +798,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// append style info file to style tar
 		$styleTar->addString(self::INFO_FILE, $xml->endDocument());
-		unset($string);
 		
 		// create variable list
 		$xml->beginDocument('variables', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/vortex/styleVariables.xsd');
@@ -707,7 +816,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// append variable list to style tar
 		$styleTar->addString('variables.xml', $xml->endDocument());
-		unset($string);
 		
 		if ($templates && $this->templateGroupID) {
 			$templateGroup = new TemplateGroup($this->templateGroupID);
@@ -729,6 +837,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			while ($row = $statement->fetchArray()) {
 				$packageDir = 'com.woltlab.wcf';
 				$package = null;
+				
+				if (Template::isSystemCritical($row['templateName'])) {
+					continue;
+				}
 				
 				if ($row['application'] != 'wcf') {
 					$application = ApplicationHandler::getInstance()->getApplication($row['application']);
@@ -817,8 +929,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$xml->writeElement('requiredpackage', 'com.woltlab.wcf', ['minversion' => PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.wcf')->packageVersion]);
 			$xml->endElement();
 			
-			$xml->startElement('excludedpackages');
-			$xml->writeElement('excludedpackage', 'com.woltlab.wcf', ['version' => self::EXCLUDE_WCF_VERSION]);
+			$xml->startElement('compatibility');
+			foreach (self::$compatibilityApiVersions as $apiVersion) {
+				$xml->writeElement('api', '', ['version' => $apiVersion]);
+			}
 			$xml->endElement();
 			
 			$xml->startElement('instructions', ['type' => 'install']);

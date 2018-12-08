@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\stat;
 use wcf\system\comment\CommentHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -8,7 +9,7 @@ use wcf\system\WCF;
  * Abstract implementation of a comment stat handler.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Stat
  */
@@ -50,7 +51,7 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler 
 			$date,
 			$date + 86399
 		]);
-		$counter = $statement->fetchColumn();
+		$counter = $statement->fetchSingleColumn();
 		
 		$sql = "SELECT (
 				SELECT	COUNT(*)
@@ -72,11 +73,19 @@ abstract class AbstractCommentStatDailyHandler extends AbstractStatDailyHandler 
 			$objectTypeID,
 			$date + 86400
 		]);
-		$total = $statement->fetchColumn();
+		$total = $statement->fetchSingleColumn();
 		
 		return [
 			'counter' => $counter,
 			'total' => $total
 		];
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.1
+	 */
+	protected function addConditions(PreparedStatementConditionBuilder $conditionBuilder) {
+		throw new \BadMethodCallException(__CLASS__ . " does not support addConditions().");
 	}
 }

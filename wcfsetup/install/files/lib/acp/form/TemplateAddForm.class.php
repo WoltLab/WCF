@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * Shows the form for adding new templates.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -235,5 +235,16 @@ class TemplateAddForm extends AbstractForm {
 			'availableTemplateGroups' => $this->availableTemplateGroups,
 			'copy' => $this->copy
 		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function show() {
+		// work-around for a known Chrome bug that causes the XSS auditor
+		// to incorrectly detect JavaScript inside a textarea
+		@header('X-XSS-Protection: 0');
+		
+		parent::show();
 	}
 }

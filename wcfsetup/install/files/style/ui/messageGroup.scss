@@ -5,7 +5,7 @@
 		}
 		
 		.columnStats {
-			flex: 0 0 140px;
+			flex: 0 0 150px;
 			text-align: center;
 		}
 		
@@ -90,6 +90,21 @@
 		}
 	}
 	
+	.messageDisabled .columnAvatar::before {
+		color: rgb(0, 140, 0);
+		content: $fa-var-eye-slash;
+		
+		@include screen-md-up {
+			left: 13px;
+			top: -2px;
+		}
+		
+		@include screen-sm-down {
+			left: 3px;
+			top: -4px;
+		}
+	}
+	
 	.messageDeleted .columnAvatar::before {
 		color: rgb(180, 0, 0);
 		content: $fa-var-trash-o;
@@ -103,21 +118,6 @@
 		
 		@include screen-sm-down {
 			left: 7px;
-			top: -4px;
-		}
-	}
-	
-	.messageDisabled .columnAvatar::before {
-		color: rgb(0, 140, 0);
-		content: $fa-var-eye-slash;
-		
-		@include screen-md-up {
-			left: 13px;
-			top: -2px;
-		}
-		
-		@include screen-sm-down {
-			left: 3px;
 			top: -4px;
 		}
 	}
@@ -349,6 +349,37 @@
 			}
 		}
 	}
+	
+	.tabularListRowHead {
+		.columnSort {
+			flex: 1;
+			
+			@include wcfFontDefault;
+		}
+		
+		.columnFilter {
+			flex: 0 1 auto;
+			padding-left: 40px;
+			
+			@include wcfFontDefault;
+			
+			@include screen-xs {
+				display: none;
+			}
+		}
+		
+		.columnSort,
+		.columnFilter {
+			.inlineList > li:not(:last-child) {
+				margin-right: 10px;
+			}
+		}
+		
+		.columnApplyFilter {
+			flex: 0 1 auto;
+			padding-right: 0;
+		}
+	}
 }
 
 .messageGroupListStatsSimple {
@@ -358,6 +389,10 @@
 	position: absolute;
 	top: 50%;
 	transform: translateX(-50%) translateY(-50%);
+	
+	> .icon {
+		color: inherit;
+	}
 }
 
 @include screen-md-down {
@@ -390,22 +425,23 @@
 			position: absolute;
 		}
 		
-		> img {
+		> img,
+		> .icon:first-child {
 			visibility: hidden;
 		}
-	}
-	
-	&.messageDeleted > .contentHeaderIcon::before {
-		color: rgb(180, 0, 0);
-		content: $fa-var-trash-o;
-		left: 11px;
-		top: -12px;
 	}
 	
 	&.messageDisabled > .contentHeaderIcon::before {
 		color: rgb(0, 140, 0);
 		content: $fa-var-eye-slash;
 		left: 4px;
+		top: -12px;
+	}
+	
+	&.messageDeleted > .contentHeaderIcon::before {
+		color: rgb(180, 0, 0);
+		content: $fa-var-trash-o;
+		left: 11px;
 		top: -12px;
 	}
 }

@@ -2,7 +2,7 @@
  * Callback-based pagination.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Pagination
  */
@@ -24,7 +24,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
 		 * Initializes the pagination.
 		 * 
 		 * @param	{Element}	element		container element
-		 * @param	{object}	options		list of initilization options
+		 * @param	{object}	options		list of initialization options
 		 */
 		init: function(element, options) {
 			this._element = element;
@@ -204,6 +204,33 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
 		},
 		
 		/**
+		 * Returns the active page.
+		 *
+		 * @return	{integer}
+		 */
+		getActivePage: function() {
+			return this._options.activePage;
+		},
+		
+		/**
+		 * Returns the pagination Ui element.
+		 * 
+		 * @return	{HTMLElement}
+		 */
+		getElement: function() {
+			return this._element;
+		},
+		
+		/**
+		 * Returns the maximum page.
+		 * 
+		 * @return	{integer}
+		 */
+		getMaxPage: function() {
+			return this._options.maxPage;
+		},
+		
+		/**
 		 * Switches to given page number.
 		 * 
 		 * @param	{int}		pageNo		page number
@@ -212,6 +239,16 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
 		switchPage: function(pageNo, event) {
 			if (typeof event === 'object') {
 				event.preventDefault();
+				
+				// force tooltip to vanish and strip positioning
+				if (event.currentTarget && elData(event.currentTarget, 'tooltip')) {
+					var tooltip = elById('balloonTooltip');
+					if (tooltip) {
+						Core.triggerEvent(event.currentTarget, 'mouseleave');
+						tooltip.style.removeProperty('top');
+						tooltip.style.removeProperty('bottom');
+					}
+				}
 			}
 			
 			pageNo = ~~pageNo;

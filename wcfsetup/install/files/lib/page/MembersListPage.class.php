@@ -13,7 +13,7 @@ use wcf\util\HeaderUtil;
  * Shows members page.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * 
@@ -99,8 +99,10 @@ class MembersListPage extends SortablePage {
 		}
 		
 		if (!empty($_POST)) {
-			$parameters = http_build_query($_POST, '', '&');
-			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('MembersList', [], $parameters));
+			$parameters = [];
+			if ($this->searchID) $parameters['id'] = $this->searchID;
+			$url = http_build_query($_POST, '', '&');
+			HeaderUtil::redirect(LinkHandler::getInstance()->getLink('MembersList', $parameters, $url));
 			exit;
 		}
 	}
@@ -154,12 +156,11 @@ class MembersListPage extends SortablePage {
 		WCF::getTPL()->assign([
 			'letters' => str_split(self::$availableLetters),
 			'letter' => $this->letter,
-			'searchID' => $this->searchID,
-			'allowSpidersToIndexThisPage' => true
+			'searchID' => $this->searchID
 		]);
 		
 		if (count($this->objectList) === 0) {
-			@header('HTTP/1.0 404 Not Found');
+			@header('HTTP/1.1 404 Not Found');
 		}
 	}
 }

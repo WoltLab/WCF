@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\action;
 use wcf\action\AbstractAction;
+use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\system\cache\CacheHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
@@ -11,7 +12,7 @@ use wcf\util\HeaderUtil;
  * Clears the cache.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Action
  */
@@ -35,6 +36,9 @@ class CacheClearAction extends AbstractAction {
 		
 		// get package dirs
 		CacheHandler::getInstance()->flushAll();
+		
+		// reset package update servers and the package cache
+		PackageUpdateServer::resetAll();
 		
 		$this->executed();
 		

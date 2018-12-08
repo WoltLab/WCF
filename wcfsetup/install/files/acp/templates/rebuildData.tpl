@@ -1,9 +1,45 @@
 {include file='header' pageTitle='wcf.acp.rebuildData'}
 
 <script data-relocate="true">
-		$(function() {
-			WCF.Language.add('wcf.acp.worker.abort.confirmMessage', '{lang}wcf.acp.worker.abort.confirmMessage{/lang}');
+	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Worker'], function (Language, AcpUiWorker) {
+		Language.add('wcf.acp.worker.abort.confirmMessage', '{lang}wcf.acp.worker.abort.confirmMessage{/lang}');
+		
+		elBySelAll('.jsRebuildDataWorker', undefined, function (button) {
+			if (button.classList.contains('disabled')) return;
+			
+			button.addEventListener(WCF_CLICK_EVENT, function (event) {
+				event.preventDefault();
+				
+				new AcpUiWorker({
+					// dialog
+					dialogId: 'cache',
+					dialogTitle: button.textContent,
+					
+					// ajax
+					className: elData(button, 'class-name'),
+					loopCount: -1,
+					parameters: { },
+					
+					// callbacks
+					callbackAbort: null,
+					callbackFailure: null,
+					callbackSuccess: function() {
+						{if $convertEncoding}
+							var span = button.nextElementSibling;
+							if (span && span.nodeName === 'SPAN') elRemove(span);
+								
+							span = elCreate('span');
+							span.innerHTML = ' <span class="icon icon16 fa-check green"></span> {lang}wcf.acp.worker.success{/lang}';
+							button.parentNode.insertBefore(span, button.nextElementSibling);
+						{else}
+							// force reload after converting the database encoding
+							window.location.reload();
+						{/if}
+					}
+				});
+			});
 		});
+	});
 </script>
 
 <header class="contentHeader">
@@ -24,6 +60,8 @@
 	<p class="warning">{lang}wcf.acp.index.innoDBWarning{/lang}</p>
 {/if}
 
+{event name='afterContentHeader'}
+
 <section class="section">
 	<header class="sectionHeader">
 		<h2 class="sectionTitle">{lang}wcf.acp.rebuildData{/lang}</h2>
@@ -38,18 +76,11 @@
 		
 		<dl class="wide">
 			<dd>
-				<a class="button small{if !$_allowRebuild} disabled{/if}" id="rebuildData{@$objectType->objectTypeID}">{lang}wcf.acp.rebuildData.{@$objectType->objectType}{/lang}</a>
+				<a href="#"
+				   class="button small jsRebuildDataWorker{if !$_allowRebuild} disabled{/if}"
+				   data-class-name="{$objectType->className}" data-object-type="{$objectType->objectType}"
+				>{lang}wcf.acp.rebuildData.{@$objectType->objectType}{/lang}</a>
 				<small>{lang}wcf.acp.rebuildData.{@$objectType->objectType}.description{/lang}</small>
-				
-				{if $_allowRebuild}
-					<script data-relocate="true">
-						$(function() {
-							$('#rebuildData{@$objectType->objectTypeID}').click(function () {
-								new WCF.ACP.Worker('cache', '{@$objectType->className|encodeJS}', '{lang}wcf.acp.rebuildData.{@$objectType->objectType}{/lang}');
-							});
-						});
-					</script>
-				{/if}
 			</dd>
 		</dl>
 	{/foreach}

@@ -7,6 +7,17 @@
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle" itemprop="name headline">{$articleContent->title}</h1>
 			<ul class="inlineList contentHeaderMetaData articleMetaData">
+				{if $article->hasLabels()}
+					<li>
+						<span class="icon icon16 fa-tags"></span>
+						<ul class="labelList">
+							{foreach from=$article->getLabels() item=label}
+								<li><span class="label badge{if $label->getClassNames()} {$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></li>
+							{/foreach}
+						</ul>
+					</li>
+				{/if}
+				
 				<li itemprop="author" itemscope itemtype="http://schema.org/Person">
 					<span class="icon icon16 fa-user"></span>
 					{if $article->userID}
@@ -20,7 +31,7 @@
 				
 				<li>
 					<span class="icon icon16 fa-clock-o"></span>
-					<span>{@$article->time|time}</span>
+					<a href="{$article->getLink()}">{@$article->time|time}</a>
 					<meta itemprop="datePublished" content="{@$article->time|date:'c'}">
 					<meta itemprop="dateModified" content="{@$article->time|date:'c'}">
 				</li>
@@ -39,7 +50,13 @@
 					{lang}wcf.article.articleViews{/lang}
 				</li>
 				
+				{if ARTICLE_ENABLE_VISIT_TRACKING && $article->isNew()}<li><span class="badge label newMessageBadge">{lang}wcf.message.new{/lang}</span></li>{/if}
+				
+				{if $article->isDeleted}<li><span class="badge label red">{lang}wcf.message.status.deleted{/lang}</span></li>{/if}
+				
 				<li class="articleLikesBadge"></li>
+				
+				{event name='contentHeaderMetaData'}
 			</ul>
 			
 			<meta itemprop="mainEntityOfPage" content="{$canonicalURL}">
@@ -98,88 +115,100 @@
 
 {include file='header'}
 
-{if $articleContent->getImage() && $articleContent->getImage()->hasThumbnail('large')}
-	<div class="section" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
-		<figure class="articleImage">
-			<div class="articleImageWrapper">{@$articleContent->getImage()->getThumbnailTag('large')}</div>
-			{if $articleContent->getImage()->caption}
-				<figcaption itemprop="description">{$articleContent->getImage()->caption}</figcaption>
-			{/if}
-		</figure>
-		<meta itemprop="url" content="{$articleContent->getImage()->getThumbnailLink('large')}">
-		<meta itemprop="width" content="{@$articleContent->getImage()->getThumbnailWidth('large')}">
-		<meta itemprop="height" content="{@$articleContent->getImage()->getThumbnailHeight('large')}">
-	</div>
-{/if}
-
-<div class="section articleContent"
-         data-object-id="{@$article->articleID}"
-         data-object-type="com.woltlab.wcf.likeableArticle"
-         data-like-liked="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->liked}{/if}"
-         data-like-likes="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->likes}{else}0{/if}"
-         data-like-dislikes="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->dislikes}{else}0{/if}"
-         data-like-users='{ {if $articleLikeData[$article->articleID]|isset}{implode from=$articleLikeData[$article->articleID]->getUsers() item=likeUser}"{@$likeUser->userID}": "{$likeUser->username|encodeJSON}"{/implode}{/if} }'
-         data-user-id="{@$article->userID}"
->
-	<div class="htmlContent">
-		{if $articleContent->teaser}
-			<p class="articleTeaser">{@$articleContent->getFormattedTeaser()}</p>
-		{/if}
-	
-		{@$articleContent->getFormattedContent()}
-	</div>
-	
-	{if !$tags|empty}
-		<ul class="tagList articleTagList section">
-			{foreach from=$tags item=tag}
-				<li><a href="{link controller='Tagged' object=$tag}objectType=com.woltlab.wcf.article{/link}" class="tag">{$tag->name}</a></li>
-			{/foreach}
-		</ul>
+<div class="section">
+	{if $articleContent->getImage() && $articleContent->getImage()->hasThumbnail('large')}
+		<div class="section" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+			<figure class="articleImage">
+				<div class="articleImageWrapper">{@$articleContent->getImage()->getThumbnailTag('large')}</div>
+				{if $articleContent->getImage()->caption}
+					<figcaption itemprop="description">{$articleContent->getImage()->caption}</figcaption>
+				{/if}
+			</figure>
+			<meta itemprop="url" content="{$articleContent->getImage()->getThumbnailLink('large')}">
+			<meta itemprop="width" content="{@$articleContent->getImage()->getThumbnailWidth('large')}">
+			<meta itemprop="height" content="{@$articleContent->getImage()->getThumbnailHeight('large')}">
+		</div>
 	{/if}
 	
-	<div class="section row articleLikeSection">
-		<div class="col-xs-12 col-md-6">
-			<div class="articleLikesSummery"></div>
-		</div>
-		<div class="col-xs-12 col-md-6">
-			<ul class="articleLikeButtons buttonGroup"></ul>
-		</div>
-	</div>
-</div>
-
-{if ENABLE_SHARE_BUTTONS}
-	<section class="section jsOnly">
-		<h2 class="sectionTitle">{lang}wcf.message.share{/lang}</h2>
+	{event name='beforeArticleContent'}
+	
+	<div class="section articleContent"
+	         data-object-id="{@$article->articleID}"
+	         data-object-type="com.woltlab.wcf.likeableArticle"
+	         data-like-liked="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->liked}{/if}"
+	         data-like-likes="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->likes}{else}0{/if}"
+	         data-like-dislikes="{if $articleLikeData[$article->articleID]|isset}{@$articleLikeData[$article->articleID]->dislikes}{else}0{/if}"
+	         data-like-users='{ {if $articleLikeData[$article->articleID]|isset}{implode from=$articleLikeData[$article->articleID]->getUsers() item=likeUser}"{@$likeUser->userID}": "{$likeUser->username|encodeJSON}"{/implode}{/if} }'
+	         data-user-id="{@$article->userID}"
+	>
+		<div class="htmlContent">
+			{if $articleContent->teaser}
+				<p class="articleTeaser">{@$articleContent->getFormattedTeaser()}</p>
+			{/if}
 		
-		{include file='shareButtons'}
-	</section>
-{/if}
-
-{if ARTICLE_SHOW_ABOUT_AUTHOR && $article->getUserProfile()->aboutMe}
-	<div class="section articleAboutAuthor">
-		<h2 class="sectionTitle">{lang}wcf.article.aboutAuthor{/lang}</h2>
-		
-		<div class="box128">
-			<span class="articleAboutAuthorAvatar">{@$article->getUserProfile()->getAvatar()->getImageTag(128)}</span>
+			{@$articleContent->getFormattedContent()}
 			
-			<div>
-				<div class="articleAboutAuthorText">{@$article->getUserProfile()->getFormattedUserOption('aboutMe')}</div>
-				
-				<div class="articleAboutAuthorUsername">
-					<a href="{link controller='User' object=$article->getUserProfile()->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$article->getUserProfile()->userID}">{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$article->getUserProfile()->getFormattedUsername()}{else}{$article->getUserProfile()->username}{/if}</a>
-					
-					{if MODULE_USER_RANK}
-						{if $article->getUserProfile()->getUserTitle()}
-							<span class="badge userTitleBadge{if $article->getUserProfile()->getRank() && $article->getUserProfile()->getRank()->cssClassName} {@$article->getUserProfile()->getRank()->cssClassName}{/if}">{$article->getUserProfile()->getUserTitle()}</span>
-						{/if}
-						{if $article->getUserProfile()->getRank() && $article->getUserProfile()->getRank()->rankImage}
-							<span class="userRank">{@$article->getUserProfile()->getRank()->getImage()}</span>
-						{/if}
-					{/if}
-				</div>
+			{event name='htmlArticleContent'}
+		</div>
+		
+		{if !$tags|empty}
+			<ul class="tagList articleTagList">
+				{foreach from=$tags item=tag}
+					<li><a href="{link controller='Tagged' object=$tag}objectType=com.woltlab.wcf.article{/link}" class="tag">{$tag->name}</a></li>
+				{/foreach}
+			</ul>
+		{/if}
+		
+		<div class="row articleLikeSection">
+			<div class="col-xs-12 col-md-6">
+				<div class="articleLikesSummery"></div>
+			</div>
+			<div class="col-xs-12 col-md-6">
+				<ul class="articleLikeButtons buttonGroup"></ul>
 			</div>
 		</div>
 	</div>
+	
+	{event name='afterArticleContent'}
+	
+	{if ARTICLE_SHOW_ABOUT_AUTHOR && $article->getUserProfile()->aboutMe}
+		<div class="section articleAboutAuthor">
+			<h2 class="sectionTitle">{lang}wcf.article.aboutAuthor{/lang}</h2>
+			
+			<div class="box128">
+				<span class="articleAboutAuthorAvatar">{@$article->getUserProfile()->getAvatar()->getImageTag(128)}</span>
+				
+				<div>
+					<div class="articleAboutAuthorText">{@$article->getUserProfile()->getFormattedUserOption('aboutMe')}</div>
+					
+					<div class="articleAboutAuthorUsername">
+						<a href="{link controller='User' object=$article->getUserProfile()->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$article->getUserProfile()->userID}">{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$article->getUserProfile()->getFormattedUsername()}{else}{$article->getUserProfile()->username}{/if}</a>
+						
+						{if MODULE_USER_RANK}
+							{if $article->getUserProfile()->getUserTitle()}
+								<span class="badge userTitleBadge{if $article->getUserProfile()->getRank() && $article->getUserProfile()->getRank()->cssClassName} {@$article->getUserProfile()->getRank()->cssClassName}{/if}">{$article->getUserProfile()->getUserTitle()}</span>
+							{/if}
+							{if $article->getUserProfile()->getRank() && $article->getUserProfile()->getRank()->rankImage}
+								<span class="userRank">{@$article->getUserProfile()->getRank()->getImage()}</span>
+							{/if}
+						{/if}
+					</div>
+				</div>
+			</div>
+		</div>
+	{/if}
+</div>
+
+{if ENABLE_SHARE_BUTTONS}
+	{capture assign='footerBoxes'}
+		<section class="box boxFullWidth jsOnly">
+			<h2 class="boxTitle">{lang}wcf.message.share{/lang}</h2>
+			
+			<div class="boxContent">
+				{include file='shareButtons'}
+			</div>
+		</section>
+	{/capture}
 {/if}
 
 <footer class="contentFooter">
@@ -192,6 +221,8 @@
 	{/hascontent}
 </footer>
 
+{event name='afterFooter'}
+
 {if $previousArticle || $nextArticle}
 	<div class="section articleNavigation">
 		<nav>
@@ -199,9 +230,9 @@
 				{if $previousArticle}
 					<li class="previousArticleButton">
 						<a href="{$previousArticle->getLink()}" rel="prev">
-							{if $previousArticle->getImage()}
+							{if $previousArticle->getTeaserImage()}
 								<div class="box96">
-									<span class="articleNavigationArticleImage">{@$previousArticle->getImage()->getElementTag(96)}</span>
+									<span class="articleNavigationArticleImage">{@$previousArticle->getTeaserImage()->getElementTag(96)}</span>
 									
 									<div>
 										<span class="articleNavigationEntityName">{lang}wcf.article.previousArticle{/lang}</span>
@@ -221,9 +252,9 @@
 				{if $nextArticle}
 					<li class="nextArticleButton">
 						<a href="{$nextArticle->getLink()}" rel="next">
-							{if $nextArticle->getImage()}
+							{if $nextArticle->getTeaserImage()}
 								<div class="box96">
-									<span class="articleNavigationArticleImage">{@$nextArticle->getImage()->getElementTag(96)}</span>
+									<span class="articleNavigationArticleImage">{@$nextArticle->getTeaserImage()->getElementTag(96)}</span>
 									
 									<div>
 										<span class="articleNavigationEntityName">{lang}wcf.article.nextArticle{/lang}</span>
@@ -244,7 +275,7 @@
 	</div>
 {/if}
 
-{if $relatedArticles|count}
+{if $relatedArticles !== null && $relatedArticles|count}
 	<section class="section relatedArticles">
 		<h2 class="sectionTitle">{lang}wcf.article.relatedArticles{/lang}</h2>
 		
@@ -252,9 +283,9 @@
 			{foreach from=$relatedArticles item='relatedArticle'}
 				<li>
 					<a href="{$relatedArticle->getLink()}">
-						{if $relatedArticle->getImage() && $relatedArticle->getImage()->hasThumbnail('tiny')}
+						{if $relatedArticle->getTeaserImage() && $relatedArticle->getTeaserImage()->hasThumbnail('tiny')}
 							<div class="box128">
-								<div class="articleListImage">{@$relatedArticle->getImage()->getThumbnailTag('tiny')}</div>
+								<div class="articleListImage">{@$relatedArticle->getTeaserImage()->getThumbnailTag('tiny')}</div>
 						{/if}
 						
 						<div>
@@ -288,7 +319,7 @@
 							</div>
 						</div>
 								
-						{if $relatedArticle->getImage() && $relatedArticle->getImage()->hasThumbnail('tiny')}
+						{if $relatedArticle->getTeaserImage() && $relatedArticle->getTeaserImage()->hasThumbnail('tiny')}
 							</div>
 						{/if}
 					</a>
@@ -298,6 +329,8 @@
 	</section>
 {/if}
 
+{event name='beforeComments'}
+
 {if $article->enableComments}
 	{if $commentList|count || $commentCanAdd}
 		<section id="comments" class="section sectionContainerList">
@@ -306,6 +339,7 @@
 			{include file='__commentJavaScript' commentContainerID='articleCommentList'}
 			
 			<ul id="articleCommentList" class="commentList containerList" data-can-add="{if $commentCanAdd}true{else}false{/if}" data-object-id="{@$articleContentID}" data-object-type-id="{@$commentObjectTypeID}" data-comments="{@$commentList->countObjects()}" data-last-comment-time="{@$lastCommentTime}">
+				{if $commentCanAdd}{include file='commentListAddComment' wysiwygSelector='articleCommentListAddComment'}{/if}
 				{include file='commentList'}
 			</ul>
 		</section>

@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Provides functions to edit user groups.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Group
  * 
@@ -127,8 +127,7 @@ class UserGroupEditor extends DatabaseObjectEditor implements IEditableCachedObj
 			WHERE	optionName = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(['admin.user.accessibleGroups']);
-		$optionID = $statement->fetchColumn();
-		$statement->closeCursor();
+		$optionID = $statement->fetchSingleColumn();
 		
 		if (!$optionID) throw new SystemException("Unable to find 'admin.user.accessibleGroups' user option");
 		

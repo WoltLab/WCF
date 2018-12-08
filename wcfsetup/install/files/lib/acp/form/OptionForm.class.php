@@ -2,6 +2,7 @@
 namespace wcf\acp\form;
 use wcf\data\option\category\OptionCategory;
 use wcf\data\option\OptionAction;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\style\StyleHandler;
@@ -13,7 +14,7 @@ use wcf\util\StringUtil;
  * Shows the option edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -22,7 +23,7 @@ class OptionForm extends AbstractOptionListForm {
 	 * category option
 	 * @var	OptionCategory
 	 */
-	public $category = null;
+	public $category;
 	
 	/**
 	 * category id
@@ -108,7 +109,8 @@ class OptionForm extends AbstractOptionListForm {
 		WCF::getTPL()->assign([
 			'category' => $this->category,
 			'optionName' => $this->optionName,
-			'optionTree' => $this->optionTree
+			'optionTree' => $this->optionTree,
+			'rewriteTestApplications' => ApplicationHandler::getInstance()->getApplications()
 		]);
 	}
 	

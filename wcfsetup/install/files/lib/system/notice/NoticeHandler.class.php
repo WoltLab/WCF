@@ -8,7 +8,7 @@ use wcf\system\SingletonFactory;
  * Handles notice-related matters.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Notice
  */
@@ -18,6 +18,12 @@ class NoticeHandler extends SingletonFactory {
 	 * @var	Notice[]
 	 */
 	protected $notices = [];
+	
+	/**
+	 * suppresses display of notices
+	 * @var boolean
+	 */
+	protected static $disableNotices = false;
 	
 	/**
 	 * @inheritDoc
@@ -32,6 +38,10 @@ class NoticeHandler extends SingletonFactory {
 	 * @return	Notice[]
 	 */
 	public function getVisibleNotices() {
+		if (self::$disableNotices) {
+			return [];
+		}
+		
 		$notices = [];
 		foreach ($this->notices as $notice) {
 			if ($notice->isDismissed()) continue;
@@ -47,5 +57,12 @@ class NoticeHandler extends SingletonFactory {
 		}
 		
 		return $notices;
+	}
+	
+	/**
+	 * Disables the display of notices for the active page.
+	 */
+	public static function disableNotices() {
+		self::$disableNotices = true;
 	}
 }

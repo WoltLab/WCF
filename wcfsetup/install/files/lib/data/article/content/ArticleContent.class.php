@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * Represents an article content.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article\Content
  * @since	3.0
@@ -29,6 +29,7 @@ use wcf\util\StringUtil;
  * @property-read	string		$content		actual content of the article in the associated language
  * @property-read	string		$teaser			teaser of the article in the associated language or empty if no teaser exists
  * @property-read	integer|null	$imageID		id of the (image) media object used as article image for the associated language or `null` if no image is used
+ * @property-read	integer|null	$teaserImageID          id of the (image) media object used as article teaser image for the associated language or `null` if no image is used                                      
  * @property-read	integer		$hasEmbeddedObjects	is `1` if there are embedded objects in the article content, otherwise `0`
  */
 class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteController {
@@ -76,12 +77,14 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	 */
 	public function getFormattedTeaser() {
 		if ($this->teaser) {
-			return StringUtil::encodeHTML($this->teaser);
+			return nl2br(StringUtil::encodeHTML($this->teaser), false);
 		}
 		else {
-			$htmlInputProcessor = new HtmlInputProcessor();
-			$htmlInputProcessor->processIntermediate($this->content);
-			return StringUtil::encodeHTML(StringUtil::truncate($htmlInputProcessor->getTextContent(), 500));
+			$htmlOutputProcessor = new HtmlOutputProcessor();
+			$htmlOutputProcessor->setOutputType('text/plain');
+			$htmlOutputProcessor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID, false, $this->languageID);
+			
+			return nl2br(StringUtil::encodeHTML(StringUtil::truncate($htmlOutputProcessor->getHtml(), 500)), false);
 		}
 	}
 	
@@ -92,7 +95,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	 */
 	public function getFormattedContent() {
 		$processor = new HtmlOutputProcessor();
-		$processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID);
+		$processor->process($this->content, 'com.woltlab.wcf.article.content', $this->articleContentID, false, $this->languageID);
 		
 		return $processor->getHtml();
 	}

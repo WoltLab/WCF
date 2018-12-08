@@ -2,7 +2,7 @@
 	background-color: $wcfContentBackground;
 	position: relative;
 	
-	&:not(:first-child) {
+	&:not(:first-child):not(.redactorBoxFullscreen) {
 		margin-top: 20px;
 	}
 	
@@ -19,7 +19,7 @@
 	}
 	
 	> .innerError {
-		margin: -1px;
+		margin: -1px 0;
 	}
 }
 
@@ -104,10 +104,39 @@
 			padding: 5px;
 			vertical-align: top;
 			
-			&::before {
+			&:empty::before {
 				content: "";
 				display: inline-block;
 			}
+		}
+	}
+	
+	/* This is a rather hacky work-around for Safari that makes the bottom margin clickable
+	   in order to recognize clicks in between two block elements. See #2533 */
+	&.jsSafariMarginClickTarget {
+		pre,
+		woltlab-quote,
+		woltlab-spoiler {
+			&::after {
+				content: "";
+				height: 1em; // this is the value of `margin-bottom`
+				left: 0;
+				position: absolute;
+				right: 0;
+				
+				@include screen-md-up {
+					transform: translateY(20px); // this is the value of `padding-bottom`
+				}
+				
+				@include screen-sm-down {
+					transform: translateY(10px); // this is the value of `padding-bottom`
+				}
+			}
+		}
+		
+		pre::after {
+			/* parent is `position: relative` */
+			bottom: 0;
 		}
 	}
 }

@@ -123,12 +123,14 @@
 		{else}
 			{* guest *}
 			<li class="menuOverlayTitle">{lang}wcf.menu.user{/lang}</li>
-			<li class="menuOverlayItem" data-more="com.woltlab.wcf.login">
-				<a href="#" class="menuOverlayItemLink box24">
-					<span class="icon icon24 fa-sign-in"></span>
-					<span class="menuOverlayItemTitle">{lang}wcf.user.login{/lang}</span>
-				</a>
-			</li>
+			{if !$__disableLoginLink|isset}
+				<li class="menuOverlayItem" data-more="com.woltlab.wcf.login">
+					<a href="#" class="menuOverlayItemLink box24">
+						<span class="icon icon24 fa-sign-in"></span>
+						<span class="menuOverlayItemTitle">{lang}wcf.user.login{/lang}</span>
+					</a>
+				</li>
+			{/if}
 			{if !REGISTER_DISABLED}
 				<li class="menuOverlayItem">
 					<a href="{link controller='Register'}{/link}" class="menuOverlayItemLink box24">
@@ -150,7 +152,7 @@
 					</a>
 					<ol class="menuOverlayItemList" data-title="{lang}wcf.user.language{/lang}">
 						{foreach from=$__wcf->getLanguage()->getLanguages() item=_language}
-							<li class="menuOverlayItem" data-more="com.woltlab.wcf.language" data-language-id="{@$_language->languageID}">
+							<li class="menuOverlayItem" data-more="com.woltlab.wcf.language" data-language-code="{$_language->getFixedLanguageCode()}" data-language-id="{@$_language->languageID}">
 								<a href="#" class="menuOverlayItemLink box24">
 									<img src="{$_language->getIconPath()}" alt="">
 									<span class="menuOverlayItemTitle">{$_language}</span>

@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\bbcode;
-use wcf\data\media\Media;
+use wcf\data\media\ViewableMedia;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
  * Parses the [wsm] bbcode tag.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  * @since       3.0
@@ -24,9 +24,8 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode {
 			return '';
 		}
 		
-		/** @var Media $media */
+		/** @var ViewableMedia $media */
 		$media = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.media', $mediaID);
-		
 		if ($media !== null && $media->isAccessible()) {
 			if ($media->isImage) {
 				$thumbnailSize = (!empty($openingTag['attributes'][1])) ? $openingTag['attributes'][1] : 'original';
@@ -34,7 +33,7 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode {
 				
 				WCF::getTPL()->assign([
 					'float' => $float,
-					'media' => $media,
+					'media' => $media->getLocalizedVersion(MessageEmbeddedObjectManager::getInstance()->getActiveMessageLanguageID()),
 					'thumbnailSize' => $thumbnailSize
 				]);
 				

@@ -8,7 +8,7 @@ use wcf\system\SingletonFactory;
  * Handles BBCodes displayed as buttons within the WYSIWYG editor.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  */
@@ -104,27 +104,10 @@ class BBCodeHandler extends SingletonFactory {
 	 * Returns a list of BBCodes which contain raw code (disabled BBCode parsing)
 	 * 
 	 * @return	BBCode[]
+	 * @deprecated  3.1 - This method is no longer supported.
 	 */
 	public function getSourceBBCodes() {
-		if (empty($this->allowedBBCodes)) {
-			return [];
-		}
-		
-		if ($this->sourceBBCodes === null) {
-			$this->sourceBBCodes = [];
-			
-			foreach (BBCodeCache::getInstance()->getBBCodes() as $bbcode) {
-				if (!$bbcode->isSourceCode) {
-					continue;
-				}
-				
-				if ($this->isAvailableBBCode($bbcode->bbcodeTag)) {
-					$this->sourceBBCodes[] = $bbcode;
-				}
-			}
-		}
-		
-		return $this->sourceBBCodes;
+		return [];
 	}
 	
 	/**

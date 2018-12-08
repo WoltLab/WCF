@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\acl\option\ACLOptionEditor;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -8,11 +9,11 @@ use wcf\system\WCF;
  * This PIP installs, updates or deletes acl options.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
+class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -270,7 +271,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 					)";
 			$statement = WCF::getDB()->prepareStatement($sql, 1);
 			$statement->execute([$optionType]);
-			$objectTypeID = $statement->fetchColumn();
+			$objectTypeID = $statement->fetchSingleColumn();
 			if ($objectTypeID === false) {
 				throw new SystemException("unknown object type '".$optionType."' given");
 			}
@@ -287,5 +288,12 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	 */
 	public static function getDefaultFilename() {
 		return 'aclOption.xml';
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return ['objectType'];
 	}
 }

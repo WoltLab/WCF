@@ -18,7 +18,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.smiley.list{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.smiley.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
@@ -56,8 +56,8 @@
 									
 									<span class="statusDisplay sortableButtonContainer">
 										<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
-										<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></a>
-										<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon icon16 fa-times" data-object-id="{@$smiley->smileyID}" data-confirm-message-html="{lang __encode=true}wcf.acp.smiley.delete.sure{/lang}">
+										<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></span></a>
+										<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon icon16 fa-times" data-object-id="{@$smiley->smileyID}" data-confirm-message-html="{lang __encode=true}wcf.acp.smiley.delete.sure{/lang}"></span>
 										
 										{event name='itemButtons'}
 									</span>

@@ -14,7 +14,7 @@ use wcf\util\exception\HTTPException;
  * It supports POST, SSL, Basic Auth etc.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -144,9 +144,10 @@ final class HTTPRequest {
 		$this->setOptions($options);
 		
 		// set default headers
-		$this->addHeader('user-agent', "HTTP.PHP (HTTPRequest.class.php; WoltLab Suite/".WCF_VERSION."; ".WCF::getLanguage()->languageCode.")");
+		$language = WCF::getLanguage();
+		$this->addHeader('user-agent', "HTTP.PHP (HTTPRequest.class.php; WoltLab Suite/".WCF_VERSION."; ".($language ? $language->languageCode : 'en').")");
 		$this->addHeader('accept', '*/*');
-		$this->addHeader('accept-language', WCF::getLanguage()->getFixedLanguageCode());
+		if ($language) $this->addHeader('accept-language', $language->getFixedLanguageCode());
 		
 		if (isset($this->options['maxLength'])) {
 			$this->addHeader('Range', 'bytes=0-'.($this->options['maxLength'] - 1));
@@ -220,7 +221,7 @@ final class HTTPRequest {
 	 * @throws	SystemException
 	 */
 	private function setURL($url) {
-		$parsedUrl = $originUrl = parse_url($url);
+		$parsedUrl = $originUrl = Url::parse($url);
 		if (empty($originUrl['scheme']) || empty($originUrl['host'])) {
 			throw new SystemException("Invalid URL '{$url}' given");
 		}
@@ -238,8 +239,8 @@ final class HTTPRequest {
 			$this->query = isset($parsedUrl['query']) ? $parsedUrl['query'] : '';
 		}
 		
-		if (PROXY_SERVER_HTTP) {
-			$parsedUrl = parse_url(PROXY_SERVER_HTTP);
+		if (PROXY_SERVER_HTTP && Url::is(PROXY_SERVER_HTTP)) {
+			$parsedUrl = Url::parse(PROXY_SERVER_HTTP);
 		}
 		
 		$this->useSSL = $parsedUrl['scheme'] === 'https';
@@ -448,7 +449,13 @@ final class HTTPRequest {
 			case '303':
 			case '307':
 				// redirect
-				if ($this->options['maxDepth'] <= 0) throw new HTTPException($this, "Received status code '".$this->statusCode."' from server, but recursion level is exhausted", $this->statusCode);
+				if ($this->options['maxDepth'] <= 0) {
+					throw new HTTPException(
+						$this,
+						"Received status code '".$this->statusCode."' from server, but recursion level is exhausted",
+						$this->statusCode
+					);
+				}
 				
 				$newRequest = clone $this;
 				$newRequest->options['maxDepth']--;
@@ -466,7 +473,12 @@ final class HTTPRequest {
 					$newRequest->setURL(end($this->replyHeaders['location']));
 				}
 				catch (SystemException $e) {
-					throw new HTTPException($this, "Received 'Location: ".end($this->replyHeaders['location'])."' from server, which is invalid.", 0, $e);
+					throw new HTTPException(
+						$this,
+						"Received 'Location: ".end($this->replyHeaders['location'])."' from server, which is invalid.",
+						0,
+						$e
+					);
 				}
 				
 				try {
@@ -487,23 +499,59 @@ final class HTTPRequest {
 			case '206':
 				// check, if partial content was expected
 				if (!isset($this->headers['range'])) {
-					throw new HTTPServerErrorException("Received unexpected status code '206' from server", 0, '', new HTTPException($this, 'Received partial response, without sending a range header', 206));
+					throw new HTTPServerErrorException(
+						"Received unexpected status code '206' from server",
+						0,
+						'',
+						new HTTPException(
+							$this, 
+							'Received partial response, without sending a range header', 
+							206
+						)
+					);
 				}
 				else if (!isset($this->replyHeaders['content-range'])) {
-					throw new HTTPServerErrorException("Content-Range is missing in reply header", 0, '', new HTTPException($this, 'Server replied with 206 Partial Content, without sending a Content-Range header', 206));
+					throw new HTTPServerErrorException(
+						"Content-Range is missing in reply header",
+						0,
+						'',
+						new HTTPException(
+							$this,
+							'Server replied with 206 Partial Content, without sending a Content-Range header', 
+							206
+						)
+					);
 				}
 			break;
 			
 			case '401':
 			case '402':
 			case '403':
-				throw new HTTPUnauthorizedException("Received status code '".$this->statusCode."' from server", 0, '', new HTTPException($this, "Received status code '".$this->statusCode."' from server", $this->statusCode));
+				throw new HTTPUnauthorizedException(
+					"Received status code '".$this->statusCode."' from server",
+					0,
+					'',
+					new HTTPException(
+						$this,
+						"Received status code '".$this->statusCode."' from server",
+						$this->statusCode
+					)
+				);
 			break;
 			
 			case '404':
-				throw new HTTPNotFoundException("Received status code '404' from server", 0, '', new HTTPException($this, "Received status code '".$this->statusCode."' from server", $this->statusCode));
+				throw new HTTPNotFoundException(
+					"Received status code '404' from server",
+					0,
+					'',
+					new HTTPException(
+						$this,
+						"Received status code '".$this->statusCode."' from server",
+						$this->statusCode
+					)
+				);
 			break;
-				
+			
 			default:
 				// 6.1.1 However, applications MUST
 				// understand the class of any status code, as indicated by the first
@@ -516,10 +564,23 @@ final class HTTPRequest {
 						// we are fine
 					break;
 					case '5': // 500 and unknown 5XX
-						throw new HTTPServerErrorException("Received status code '".$this->statusCode."' from server", 0, '', new HTTPException($this, "Received status code '".$this->statusCode."' from server", $this->statusCode));
+						throw new HTTPServerErrorException(
+							"Received status code '".$this->statusCode."' from server",
+							0,
+							'',
+							new HTTPException(
+								$this,
+								"Received status code '".$this->statusCode."' from server",
+								$this->statusCode
+							)
+						);
 					break;
 					default:
-						throw new HTTPException($this, "Received unhandled status code '".$this->statusCode."' from server", $this->statusCode);
+						throw new HTTPException(
+							$this,
+							"Received unhandled status code '".$this->statusCode."' from server",
+							$this->statusCode
+						);
 					break;
 				}
 			break;

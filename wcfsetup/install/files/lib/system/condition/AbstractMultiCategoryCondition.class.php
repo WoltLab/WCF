@@ -8,7 +8,7 @@ use wcf\system\category\CategoryHandler;
  * Abstract implementation of a condition for selecting multiple categories.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  * @since	3.0
@@ -37,7 +37,7 @@ abstract class AbstractMultiCategoryCondition extends AbstractMultiSelectConditi
 		$fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple size="'.($categoryCount >= 10 ? 10 : $categoryCount).'">';
 		/** @var CategoryNode $categoryNode */
 		foreach ($categoryTree as $categoryNode) {
-			$fieldElement .= "<option value=\"{$categoryNode->categoryID}\"".(in_array($categoryNode->categoryID, $this->fieldValue) ? ' selected' : '').">".str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $categoryNode->getOpenParentNodes()).$categoryNode->getTitle()."</option>";
+			$fieldElement .= "<option value=\"{$categoryNode->categoryID}\"".(in_array($categoryNode->categoryID, $this->fieldValue) ? ' selected' : '').">".str_repeat("&nbsp;&nbsp;&nbsp;&nbsp;", $categoryNode->getDepth() - 1).$categoryNode->getTitle()."</option>";
 		}
 		$fieldElement .= '</select>';
 		

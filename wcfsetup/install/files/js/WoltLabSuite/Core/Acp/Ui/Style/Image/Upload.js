@@ -2,7 +2,7 @@
  * Handles uploading style preview images.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Style/Image/Upload
  */
@@ -12,11 +12,12 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Notification', 'Upload'], functi
 	/**
 	 * @constructor
 	 */
-	function AcpUiStyleImageUpload(styleId, tmpHash) {
+	function AcpUiStyleImageUpload(styleId, tmpHash, is2x) {
+		this._is2x = (is2x === true);
 		this._styleId = ~~styleId;
 		this._tmpHash = tmpHash;
 		
-		Upload.call(this, 'uploadImage', 'styleImage', {
+		Upload.call(this, 'uploadImage' + (this._is2x ? '2x' : ''), 'styleImage' + (this._is2x ? '2x' : ''), {
 			className: 'wcf\\data\\style\\StyleAction'
 		});
 	}
@@ -33,6 +34,7 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Notification', 'Upload'], functi
 		 */
 		_getParameters: function() {
 			return {
+				is2x: this._is2x,
 				styleId: this._styleId,
 				tmpHash: this._tmpHash
 			};
@@ -42,26 +44,17 @@ define(['Core', 'Dom/Traverse', 'Language', 'Ui/Notification', 'Upload'], functi
 		 * @see	WoltLabSuite/Core/Upload#_success
 		 */
 		_success: function(uploadId, data) {
-			var error = DomTraverse.childByClass(this._button.parentNode, 'innerError');
+			var errorMessage = '';
 			if (data.returnValues.url) {
 				elAttr(this._target, 'src', data.returnValues.url + '?timestamp=' + Date.now());
-				
-				if (error) {
-					elRemove(error);
-				}
 				
 				UiNotification.show();
 			}
 			else if (data.returnValues.errorType) {
-				if (!error) {
-					error = elCreate('small');
-					error.className = 'innerError';
-					
-					this._button.parentNode.appendChild(error);
-				}
-				
-				error.textContent = Language.get('wcf.acp.style.image.error.' + data.returnValues.errorType);
+				errorMessage = Language.get('wcf.acp.style.image.error.' + data.returnValues.errorType);
 			}
+			
+			elInnerError(this._button, errorMessage);
 		}
 	});
 	

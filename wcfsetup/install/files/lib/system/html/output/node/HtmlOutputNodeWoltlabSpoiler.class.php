@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\html\output\node;
+use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -8,7 +9,7 @@ use wcf\util\StringUtil;
  * Processes spoilers.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
@@ -48,6 +49,6 @@ class HtmlOutputNodeWoltlabSpoiler extends AbstractHtmlOutputNode {
 		WCF::getTPL()->assign([
 			'buttonLabel' => $data['label']
 		]);
-		return WCF::getTPL()->fetch('spoilerMetaCode');
+		return WCF::getTPL()->fetch((HtmlBBCodeParser::getInstance()->getIsGoogleAmp() ? 'spoilerAmpMetaCode' : 'spoilerMetaCode'));
 	}
 }

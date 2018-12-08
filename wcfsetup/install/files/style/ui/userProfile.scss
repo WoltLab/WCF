@@ -5,34 +5,6 @@
 		a {
 			display: block;
 		}
-		
-		.badgeOnline {
-			left: 0;
-			pointer-events: none;
-			position: absolute;
-			
-			@include screen-md-up {
-				bottom: 0;
-			}
-			
-			@include screen-sm-down {
-				color: transparent;
-				padding: 0;
-				top: 0;
-				width: 0;
-				
-				&::before {
-					background-color: inherit;
-					border: 1px solid rgba(255, 255, 255, 1);
-					border-radius: 50%;
-					content: "";
-					height: 16px;
-					left: 34px; /* 48px (avatar) - 16px (width) - 2px (border-left + border-right) */
-					position: absolute;
-					width: 16px;
-				}
-			}
-		}
 	}
 	
 	.contentHeaderIcon a {
@@ -57,6 +29,30 @@
 		display: flex;
 		flex-wrap: wrap;
 		
+		.contentHeaderNavigation {
+			flex: 0 0 100%;
+		}
+	}
+	
+	@include screen-sm {
+		.contentHeaderIcon {
+			display: block;
+			flex: 0 0 96px;
+			margin-right: 15px;
+			
+			img {
+				width: 96px !important;
+				height: 96px !important;
+			}
+		}
+		
+		.contentHeaderTitle {
+			flex: 0 0 calc(100% - 111px);
+			max-width: calc(100% - 11px);
+		}
+	}
+	
+	@include screen-xs {
 		.contentHeaderIcon {
 			display: block;
 			flex: 0 0 48px;
@@ -73,12 +69,6 @@
 			max-width: calc(100% - 58px);
 		}
 		
-		.contentHeaderNavigation {
-			flex: 0 0 100%;
-		}
-	}
-	
-	@include screen-xs {
 		.contentHeaderNavigation {
 			.userProfileButtonContainer {
 				display: flex;
@@ -103,6 +93,137 @@
 		.contentHeaderIcon {
 			flex: 0 0 128px;
 			margin-right: 20px;
+		}
+	}
+}
+
+/* user profile cover photo */
+.userProfileUserWithCoverPhoto {
+	padding-top: 165px;
+	position: relative;
+	
+	.userProfileCoverPhoto {
+		background: no-repeat center;
+		background-size: cover;
+		border-radius: 3px;
+		height: 200px;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		
+		&::after {
+			background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 70%, rgba(0, 0, 0, .5) 100%);
+			border-bottom-left-radius: 3px;
+			border-bottom-right-radius: 3px;
+			bottom: 0;
+			content: "";
+			display: block;
+			left: 0;
+			pointer-events: none;
+			position: absolute;
+			right: 0;
+			top: 0;
+		}
+		
+		.userProfileManageCoverPhoto {
+			position: absolute;
+			right: 10px;
+			top: 10px;
+		}
+	}
+	
+	.contentHeaderTitle {
+		/* avoid being covered by the photo */
+		z-index: 10;
+	}
+	
+	.userProfileUsername {
+		color: #fff;
+		text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+	}
+	
+	@include screen-md-up {
+		.contentHeaderIcon {
+			flex: 0 0 138px;
+			margin-top: -29px; /* 35px photo overlap - (128px height / 2) */
+			padding-left: 10px;
+		}
+		
+		.contentHeaderDescription {
+			margin-top: 15px !important;
+		}
+		
+		.contentHeaderNavigation {
+			padding-top: 45px;
+		}
+	}
+	
+	@include screen-sm-up {
+		.contentHeaderIcon .badgeOnline {
+			left: 10px !important;
+		}
+		
+		.userProfileUsername + .badge {
+			margin-left: 5px;
+		}
+	}
+	
+	@include screen-sm {
+		padding-top: 170px;
+		
+		.contentHeaderIcon {
+			margin-top: -18px; /* 30px photo overlap - (96px height / 2) */
+			padding-left: 5px;
+		}
+		
+		.contentHeaderDescription {
+			margin-top: 10px !important;
+		}
+	}
+	
+	@include screen-xs {
+		padding-top: 120px;
+		
+		.userProfileCoverPhoto {
+			height: 150px;
+		}
+		
+		.contentHeaderIcon {
+			margin-top: 6px; /* 30px photo overlap - (48px height / 2) */
+			padding-left: 5px;
+		}
+		
+		.contentTitle {
+			margin-bottom: 35px;
+			position: relative;
+		}
+		
+		.userProfileUsername {
+			display: block;
+		}
+		
+		.userProfileUsername + .badge {
+			margin-left: 0;
+			position: absolute;
+			top: 35px !important;
+		}
+		
+		.userProfileUsername + .userRankImage {
+			position: absolute;
+			top: 32px;
+		}
+		
+		.userProfileUsername + .badge + .userRankImage {
+			position: relative;
+			
+			> img {
+				transform: translateY(32px);
+			}
+		}
+		
+		.contentHeaderDescription {
+			margin-left: -58px;
 		}
 	}
 }
@@ -168,7 +289,7 @@
 	position: relative;
 	
 	.userInformation {
-		padding-bottom: 16px;
+		margin-bottom: 20px;
 	}
 	
 	.buttonGroupNavigation {
@@ -198,6 +319,41 @@
 		
 		> .notificationItemMarkAsConfirmed {
 			flex: 0 0 auto;
+		}
+	}
+}
+
+.userProfilePreviewAvatar {
+	align-self: flex-start;
+	display: block;
+	position: relative;
+}
+
+.userProfilePreviewAvatar .badgeOnline,
+.userProfileUser .contentHeaderIcon .badgeOnline {
+	left: 0;
+	pointer-events: none;
+	position: absolute;
+	
+	@include screen-md-up {
+		bottom: 0;
+	}
+	
+	@include screen-sm-down {
+		color: transparent;
+		padding: 0;
+		top: 0;
+		width: 0;
+		
+		&::before {
+			background-color: inherit;
+			border: 1px solid rgba(255, 255, 255, 1);
+			border-radius: 50%;
+			content: "";
+			height: 16px;
+			left: 34px; /* 48px (avatar) - 16px (width) - 2px (border-left + border-right) */
+			position: absolute;
+			width: 16px;
 		}
 	}
 }

@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * Shows the exception log.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  */
@@ -139,7 +139,7 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 "Request URI: (?P<requestURI>.*?)\s*\n".
 "Referrer: (?P<referrer>.*?)\s*\n".
 "User Agent: (?P<userAgent>.*?)\s*\n".
-"Peak Memory Usage: (?<peakMemory>\d+)/(?<maxMemory>\d+)\s*\n".
+"Peak Memory Usage: (?<peakMemory>\d+)/(?<maxMemory>(?:\d+|-1))\s*\n".
 "(?<chain>======\n".
 ".*)", Regex::DOT_ALL);
 		$chainRegex = new Regex("======\n".

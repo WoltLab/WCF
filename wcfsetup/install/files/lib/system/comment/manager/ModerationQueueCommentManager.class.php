@@ -8,7 +8,7 @@ use wcf\data\moderation\queue\ViewableModerationQueue;
  * Moderation queue comment manager implementation.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Comment\Manager
  */
@@ -19,6 +19,13 @@ class ModerationQueueCommentManager extends AbstractCommentManager {
 	public function isAccessible($objectID, $validateWritePermission = false) {
 		$entry = new ModerationQueue($objectID);
 		return $entry->canEdit();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function canAddWithoutApproval($objectID) {
+		return true;
 	}
 	
 	/**

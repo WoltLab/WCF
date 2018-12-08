@@ -7,7 +7,7 @@ use wcf\util\StringUtil;
  * Image adapter for bundled GD imaging library.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Image\Adapter
  */
@@ -95,7 +95,11 @@ class GDImageAdapter implements IImageAdapter {
 			break;
 			
 			case IMAGETYPE_PNG:
-				$this->image = imagecreatefrompng($file);
+				// suppress warnings and properly handle errors
+				$this->image = @imagecreatefrompng($file);
+				if ($this->image === false) {
+					throw new SystemException("Could not read png image '".$file."'.");
+				}
 			break;
 			
 			default:
@@ -112,6 +116,9 @@ class GDImageAdapter implements IImageAdapter {
 		$this->type = IMAGETYPE_PNG;
 		$this->setColor(0xFF, 0xFF, 0xFF);
 		$this->color = null;
+		
+		$this->width = $width;
+		$this->height = $height;
 	}
 	
 	/**

@@ -7,7 +7,7 @@ use wcf\system\request\RequestHandler;
  * Dynamic route implementation to resolve HTTP requests, handling controllers using a distinct pattern.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  * @since	3.0
@@ -63,8 +63,8 @@ class DynamicRequestRoute implements IRequestRoute {
 						(?:-[a-z][a-z0-9]+)*
 					)+
 				)
+				(?:/|$)
 				(?:
-					/
 					(?P<id>\d+)
 					(?:
 						-
@@ -204,7 +204,7 @@ class DynamicRequestRoute implements IRequestRoute {
 			}
 		}
 		
-		if ($this->isACP || !URL_OMIT_INDEX_PHP) {
+		if ($this->isACP() || !URL_OMIT_INDEX_PHP) {
 			if (!empty($link)) {
 				$link = 'index.php?' . $link;
 			}
@@ -265,6 +265,10 @@ class DynamicRequestRoute implements IRequestRoute {
 			}
 			
 			$this->routeData['isDefaultController'] = (!isset($this->routeData['controller']));
+			if ($this->routeData['isDefaultController'] && empty($requestURL)) {
+				// pretend that this controller has been renamed
+				$this->routeData['isRenamedController'] = true;
+			}
 			
 			return true;
 		}
@@ -280,6 +284,6 @@ class DynamicRequestRoute implements IRequestRoute {
 	 * @return	string
 	 */
 	protected function getControllerName($application, $controller) {
-		return ControllerMap::getInstance()->lookup($application, $controller);
+		return ControllerMap::getInstance()->lookup($application, $controller, !$this->isACP());
 	}
 }

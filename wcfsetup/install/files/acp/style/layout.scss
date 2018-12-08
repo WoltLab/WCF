@@ -1,4 +1,5 @@
 $wcfAcpMenuWidth: 150px;
+$wcfAcpSubMenuWidth: 300px;
 
 .layoutBoundary {
 	margin: 0;
@@ -137,7 +138,6 @@ $wcfAcpMenuWidth: 150px;
 
 
 .acpPageContentContainer {
-	display: flex;
 	flex: 1 0 auto;
 	
 	#content {
@@ -153,9 +153,13 @@ $wcfAcpMenuWidth: 150px;
 	
 	.acpPageMenu {
 		background-color: rgb(50, 92, 132);
-		flex: 0 0 $wcfAcpMenuWidth;
+		bottom: 0;
+		left: 0;
 		text-align: center;
 		overflow: hidden;
+		position: fixed;
+		top: 50px;
+		width: $wcfAcpMenuWidth;
 		
 		.acpPageMenuLink {
 			//background-color: rgb(43, 79, 113);
@@ -192,13 +196,16 @@ $wcfAcpMenuWidth: 150px;
 	
 	.acpPageSubMenu {
 		background-color: rgb(36, 66, 95);
-		flex: 0 0 auto;
+		bottom: 0;
+		left: $wcfAcpMenuWidth;
+		overflow: hidden;
+		position: fixed;
+		top: 50px;
 	}
 	
 	.acpPageSubMenuCategoryList {
-		flex: 0 0 300px;
 		overflow: hidden;
-		width: 300px;
+		width: $wcfAcpSubMenuWidth;
 		
 		&:not(.active) {
 			display: none;
@@ -254,6 +261,23 @@ $wcfAcpMenuWidth: 150px;
 		.acpPageSubMenuIcon.active {
 			background-color: rgb(250, 250, 250) !important;
 			color: rgb(44, 62, 80) !important;
+		}
+	}
+	
+	.pageContainer:not(.acpPageHiddenMenu) {
+		.acpPageContentContainer {
+			padding-left: $wcfAcpMenuWidth;
+		}
+		
+		.pageFooter {
+			padding-left: $wcfAcpMenuWidth;
+		}
+	}
+	
+	.pageContainer.acpPageSubMenuActive {
+		.acpPageContentContainer,
+		.pageFooter {
+			padding-left: $wcfAcpMenuWidth + $wcfAcpSubMenuWidth;
 		}
 	}
 }
@@ -341,8 +365,24 @@ $wcfAcpMenuWidth: 150px;
 	min-width: 20px;
 }
 
-.selectedImagePreview {
+.selectedImagePreview,
+.selectedFaviconPreview {
 	img {
 		margin-bottom: 5px;
 	}
+}
+
+#coverPhotoPreview {
+	background: no-repeat center center;
+	background-size: cover;
+	height: 200px;
+	margin-bottom: 5px;
+	
+	@include screen-xs {
+		height: 150px;
+	}
+}
+
+#uploadCoverPhoto > .button {
+	vertical-align: top;
 }

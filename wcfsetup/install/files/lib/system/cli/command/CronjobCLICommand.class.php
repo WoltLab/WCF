@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\cli\command;
+use wcf\data\user\User;
 use wcf\system\cronjob\CronjobScheduler;
+use wcf\system\WCF;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
 
@@ -8,7 +10,7 @@ use Zend\Console\Getopt as ArgvParser;
  * Executes cronjobs.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cli\Command
  */
@@ -38,7 +40,18 @@ class CronjobCLICommand implements IArgumentedCLICommand {
 			throw new ArgvException('', $this->getUsage());
 		}
 		
-		CronjobScheduler::getInstance()->executeCronjobs();
+		// switch session owner to 'system' during execution of cronjobs
+		$actualUser = WCF::getUser();
+		WCF::getSession()->changeUser(new User(null, ['userID' => 0, 'username' => 'System']), true);
+		WCF::getSession()->disableUpdate();
+		
+		try {
+			CronjobScheduler::getInstance()->executeCronjobs();
+		}
+		finally {
+			// switch session back to the actual user 
+			WCF::getSession()->changeUser($actualUser, true);
+		}
 	}
 	
 	/**

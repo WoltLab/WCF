@@ -2,10 +2,13 @@
 namespace wcf\system\package\plugin;
 use wcf\data\package\PackageCache;
 use wcf\data\page\Page;
+use wcf\data\page\PageAction;
 use wcf\data\page\PageEditor;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\RouteHandler;
+use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -13,21 +16,28 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes CMS pages.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
  */
-class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
 	public $className = PageEditor::class;
 	
 	/**
-	 * @inheritDoc
+	 * page content
+	 * @var mixed[]
 	 */
 	protected $content = [];
+	
+	/**
+	 * pages objects
+	 * @var Page[]
+	 */
+	protected $pages = [];
 	
 	/**
 	 * @inheritDoc
@@ -38,19 +48,16 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
-		$sql = "DELETE FROM	wcf".WCF_N."_page
-			WHERE		identifier = ?
-					AND packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
-		WCF::getDB()->beginTransaction();
+		$pages = [];
 		foreach ($items as $item) {
-			$statement->execute([
-				$item['attributes']['identifier'],
-				$this->installation->getPackageID()
-			]);
+			$page = Page::getPageByIdentifier($item['attributes']['identifier']);
+			if ($page !== null && $page->pageID && $page->packageID == $this->installation->getPackageID()) $pages[] = $page;
 		}
-		WCF::getDB()->commitTransaction();
+		
+		if (!empty($pages)) {
+			$pageAction = new PageAction($pages, 'delete');
+			$pageAction->executeAction();
+		}
 	}
 	
 	/**
@@ -118,9 +125,13 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			// use the value for English
 			$name = $data['elements']['name']['en'];
 		}
-		else {
+		else if (isset($data['elements']['name'][''])) {
 			// fallback to the display name without/empty language attribute
 			$name = $data['elements']['name'][''];
+		}
+		else {
+			// use whichever value is present, regardless of the language
+			$name = reset($data['elements']['name']);
 		}
 		
 		$parentPageID = null;
@@ -219,7 +230,11 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			'requireObjectID' => (!empty($data['elements']['requireObjectID'])) ? 1 : 0,
 			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
 			'permissions' => isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '',
-			'hasFixedParent' => ($pageType == 'system' && !empty($data['elements']['hasFixedParent'])) ? 1 : 0
+			'hasFixedParent' => ($pageType == 'system' && !empty($data['elements']['hasFixedParent'])) ? 1 : 0,
+			'cssClassName' => isset($data['elements']['cssClassName']) ? $data['elements']['cssClassName'] : '',
+			'availableDuringOfflineMode' => (!empty($data['elements']['availableDuringOfflineMode'])) ? 1 : 0,
+			'allowSpidersToIndex' => (!empty($data['elements']['allowSpidersToIndex'])) ? 1 : 0,
+			'excludeFromLandingPage' => (!empty($data['elements']['excludeFromLandingPage'])) ? 1 : 0
 		];
 	}
 	
@@ -252,11 +267,26 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		
 		/** @var Page $page */
 		if (!empty($row)) {
-			// allow only updating of controller and handler, everything else would overwrite user modifications
+			// allow update of `controller`, `handler` and `excludeFromLandingPage`
+			// only, prevents user modifications form being overwritten
 			if (!empty($data['controller'])) {
+				$allowSpidersToIndex = $row['allowSpidersToIndex'];
+				if ($allowSpidersToIndex == 2) {
+					// The value `2` resolves to be true-ish, eventually resulting in the same behavior
+					// when setting it to `1`. This value is special to the 3.0 -> 3.1 upgrade, because
+					// it force-enables the visibility, while also being some sort of indicator for non-
+					// user-modified values. The page edit form will set it to either `1` or `0`, there-
+					// fore `2` means that we can safely update the value w/o breaking the user's choice. 
+					$allowSpidersToIndex = $data['allowSpidersToIndex'];
+				}
+				
 				$page = parent::import($row, [
 					'controller' => $data['controller'],
-					'handler' => $data['handler']
+					'handler' => $data['handler'],
+					'options' => $data['options'],
+					'permissions' => $data['permissions'],
+					'excludeFromLandingPage' => $data['excludeFromLandingPage'],
+					'allowSpidersToIndex' => $allowSpidersToIndex
 				]);
 			}
 			else {
@@ -270,6 +300,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		}
 		
 		// store content for later import
+		$this->pages[$page->pageID] = $page;
 		$this->content[$page->pageID] = $content;
 		
 		return $page;
@@ -316,9 +347,43 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 						$content['metaKeywords'],
 						$content['customURL']
 					]);
+					
+					// generate template if page's type is 'tpl'
+					$page = new Page($pageID);
+					if ($page->pageType == 'tpl') {
+						(new PageEditor($page))->updateTemplate($languageID, $content['content']);
+					}
 				}
 			}
 			WCF::getDB()->commitTransaction();
+			
+			// create search index tables
+			SearchIndexManager::getInstance()->createSearchIndices();
+			
+			// update search index
+			foreach ($this->pages as $pageID => $page) {
+				if ($page->pageType == 'text' || $page->pageType == 'html') {
+					foreach ($page->getPageContents() as $languageID => $pageContent) {
+						SearchIndexManager::getInstance()->set(
+							'com.woltlab.wcf.page',
+							$pageContent->pageContentID,
+							$pageContent->content,
+							$pageContent->title,
+							0,
+							null,
+							'',
+							$languageID ?: null
+						);
+					}
+				}
+			}
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return ['language'];
 	}
 }

@@ -13,16 +13,22 @@ use wcf\util\FileUtil;
  * Handles multi-application environments.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Application
  */
 class ApplicationHandler extends SingletonFactory {
 	/**
 	 * application cache
-	 * @var	Application[]
+	 * @var	mixed[][]
 	 */
 	protected $cache;
+	
+	/**
+	 * true for multi-domain setups
+	 * @var boolean
+	 */
+	protected $isMultiDomain;
 	
 	/**
 	 * list of page URLs
@@ -163,6 +169,16 @@ class ApplicationHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns the list of application abbreviations.
+	 * 
+	 * @return      string[]
+	 * @since       3.1
+	 */
+	public function getAbbreviations() {
+		return array_keys($this->cache['abbreviation']);
+	}
+	
+	/**
 	 * Returns true if given $url is an internal URL.
 	 * 
 	 * @param	string		$url
@@ -188,6 +204,28 @@ class ApplicationHandler extends SingletonFactory {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Returns true if this is a multi-domain setup.
+	 * 
+	 * @return      boolean
+	 * @since       3.1
+	 */
+	public function isMultiDomainSetup() {
+		if ($this->isMultiDomain === null) {
+			$this->isMultiDomain = false;
+			
+			$domainName = $this->getApplicationByID(1)->domainName;
+			foreach ($this->getApplications() as $application) {
+				if ($application->domainName !== $domainName) {
+					$this->isMultiDomain = true;
+					break;
+				}
+			}
+		}
+		
+		return $this->isMultiDomain;
 	}
 	
 	/**

@@ -1,16 +1,16 @@
 <div class="jsOnly formAttachmentContent messageTabMenuContent" id="attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
-	<ul class="formAttachmentList clearfix"{if !$attachmentHandler->getAttachmentList()|count} style="display: none"{/if}>
+	<ul class="formAttachmentList clearfix"{if !$attachmentHandler->getAttachmentList()|count} style="display: none"{/if} data-enable-thumbnails="{if ATTACHMENT_ENABLE_THUMBNAILS}true{else}false{/if}">
 		{foreach from=$attachmentHandler->getAttachmentList() item=$attachment}
 			<li class="box64" data-object-id="{@$attachment->attachmentID}" data-height="{@$attachment->height}" data-width="{@$attachment->width}" data-is-image="{@$attachment->isImage}">
 				{if $attachment->tinyThumbnailType}
 					<img src="{link controller='Attachment' object=$attachment}tiny=1{/link}" alt="" class="attachmentTinyThumbnail">
 				{else}
-					<span class="icon icon64 fa-paperclip"></span>
+					<span class="icon icon64 fa-{@$attachment->getIconName()}"></span>
 				{/if}
 				
 				<div>
 					<div>
-						<p><a href="{link controller='Attachment' object=$attachment}{/link}"{if $attachment->isImage} title="{$attachment->filename}" class="jsImageViewer"{/if}>{$attachment->filename}</a></p>
+						<p><a href="{link controller='Attachment' object=$attachment}{/link}" target="_blank"{if $attachment->isImage} title="{$attachment->filename}" class="jsImageViewer"{/if}>{$attachment->filename}</a></p>
 						<small>{@$attachment->filesize|filesize}</small>
 					</div>
 					
@@ -47,6 +47,7 @@
 			'wcf.attachment.upload.error.reachedLimit': '{lang}wcf.attachment.upload.error.reachedLimit{/lang}',
 			'wcf.attachment.upload.error.reachedRemainingLimit': '{lang}wcf.attachment.upload.error.reachedRemainingLimit{/lang}',
 			'wcf.attachment.upload.error.uploadFailed': '{lang}wcf.attachment.upload.error.uploadFailed{/lang}',
+			'wcf.attachment.upload.error.uploadPhpLimit': '{lang}wcf.attachment.upload.error.uploadPhpLimit{/lang}',
 			'wcf.attachment.insert': '{lang}wcf.attachment.insert{/lang}',
 			'wcf.attachment.insertAll': '{lang}wcf.attachment.insertAll{/lang}',
 			'wcf.attachment.insertFull': '{lang}wcf.attachment.insertFull{/lang}',

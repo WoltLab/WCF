@@ -12,7 +12,7 @@ use wcf\util\DateUtil;
  * Executes paid subscription user-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Paid\Subscription\User
  * 
@@ -104,7 +104,8 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			
 			$subscriptionUser->update([
 				'endDate' => $endDate,
-				'isActive' => 1
+				'isActive' => 1,
+				'sentExpirationNotification' => 0
 			]);
 			
 			if (!$subscriptionUser->isActive) {
@@ -132,12 +133,28 @@ class PaidSubscriptionUserAction extends AbstractDatabaseObjectAction {
 			$this->readObjects();
 		}
 		
+		$userIDs = [];
 		foreach ($this->getObjects() as $subscriptionUser) {
+			$userIDs[] = $subscriptionUser->userID;
 			$subscriptionUser->update(['isActive' => 0]);
 			
 			// update group memberships
 			$action = new PaidSubscriptionUserAction([$subscriptionUser], 'removeGroupMemberships');
 			$action->executeAction();
+		}
+		
+		if (!empty($userIDs)) {
+			$userIDs = array_unique($userIDs);
+			
+			$subscriptionUserList = new PaidSubscriptionUserList();
+			$subscriptionUserList->getConditionBuilder()->add('isActive = ?', [1]);
+			$subscriptionUserList->getConditionBuilder()->add('userID IN (?)', [$userIDs]);
+			$subscriptionUserList->readObjects();
+			
+			if (count($subscriptionUserList->getObjects())) {
+				$action = new PaidSubscriptionUserAction($subscriptionUserList->getObjects(), 'addGroupMemberships');
+				$action->executeAction();
+			}
 		}
 	}
 	

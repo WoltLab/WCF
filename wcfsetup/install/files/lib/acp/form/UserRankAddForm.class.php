@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * Shows the user rank add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -83,6 +83,12 @@ class UserRankAddForm extends AbstractForm {
 	public $requiredGender = 0;
 	
 	/**
+	 * hide generic user title
+	 * @var integer
+	 */
+	public $hideTitle = 0;
+	
+	/**
 	 * list of pre-defined css class names
 	 * @var	string[]
 	 */
@@ -126,6 +132,7 @@ class UserRankAddForm extends AbstractForm {
 		if (isset($_POST['rankImage'])) $this->rankImage = StringUtil::trim($_POST['rankImage']);
 		if (isset($_POST['repeatImage'])) $this->repeatImage = intval($_POST['repeatImage']);
 		if (isset($_POST['requiredGender'])) $this->requiredGender = intval($_POST['requiredGender']);
+		if (isset($_POST['hideTitle'])) $this->hideTitle = intval($_POST['hideTitle']);
 	}
 	
 	/**
@@ -170,6 +177,10 @@ class UserRankAddForm extends AbstractForm {
 		if ($this->requiredGender < 0 || $this->requiredGender > 2) {
 			$this->requiredGender = 0;
 		}
+		
+		if ($this->hideTitle && !$this->rankImage) {
+			throw new UserInputException('hideTitle', 'rankImage');
+		}
 	}
 	
 	/**
@@ -186,7 +197,8 @@ class UserRankAddForm extends AbstractForm {
 			'requiredPoints' => $this->requiredPoints,
 			'rankImage' => $this->rankImage,
 			'repeatImage' => $this->repeatImage,
-			'requiredGender' => $this->requiredGender
+			'requiredGender' => $this->requiredGender,
+			'hideTitle' => ($this->hideTitle ? 1 : 0)
 		])]);
 		$this->objectAction->executeAction();
 		
@@ -205,7 +217,7 @@ class UserRankAddForm extends AbstractForm {
 		
 		// reset values
 		$this->rankTitle = $this->cssClassName = $this->customCssClassName = $this->rankImage = '';
-		$this->groupID = $this->requiredPoints = $this->requiredGender = 0;
+		$this->groupID = $this->requiredPoints = $this->requiredGender = $this->hideTitle = 0;
 		$this->repeatImage = 1;
 		
 		I18nHandler::getInstance()->reset();
@@ -233,7 +245,8 @@ class UserRankAddForm extends AbstractForm {
 			'requiredPoints' => $this->requiredPoints,
 			'rankImage' => $this->rankImage,
 			'repeatImage' => $this->repeatImage,
-			'requiredGender' => $this->requiredGender
+			'requiredGender' => $this->requiredGender,
+			'hideTitle' => $this->hideTitle
 		]);
 	}
 }

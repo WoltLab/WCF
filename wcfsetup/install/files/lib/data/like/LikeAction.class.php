@@ -18,7 +18,7 @@ use wcf\system\WCF;
  * Executes like-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Like
  * 
@@ -209,7 +209,12 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		$this->objectTypeProvider = $this->objectType->getProcessor();
 		$this->likeableObject = $this->objectTypeProvider->getObjectByID($this->parameters['data']['objectID']);
 		$this->likeableObject->setObjectType($this->objectType);
-		if (!$this->objectTypeProvider->checkPermissions($this->likeableObject)) {
+		if ($this->objectTypeProvider instanceof IRestrictedLikeObjectTypeProvider) {
+			if (!$this->objectTypeProvider->canViewLikes($this->likeableObject)) {
+				throw new PermissionDeniedException();
+			}
+		}
+		else if (!$this->objectTypeProvider->checkPermissions($this->likeableObject)) {
 			throw new PermissionDeniedException();
 		}
 	}
@@ -237,7 +242,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 			$this->parameters['data']['objectID'],
 			$this->objectType->objectTypeID
 		]);
-		$pageCount = ceil($statement->fetchColumn() / 20);
+		$pageCount = ceil($statement->fetchSingleColumn() / 20);
 		
 		$sql = "SELECT		userID, likeValue
 			FROM		wcf".WCF_N."_like

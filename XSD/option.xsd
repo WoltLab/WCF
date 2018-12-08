@@ -41,6 +41,7 @@
 					<xs:element name="showorder" type="xs:unsignedInt" minOccurs="0" />
 					<xs:element name="options" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="permissions" type="woltlab_varchar_nullable" minOccurs="0" />
+					<xs:element name="suffix" type="xs:string" minOccurs="0" />
 				</xs:all>
 			</xs:extension>
 		</xs:complexContent>

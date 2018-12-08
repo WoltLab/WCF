@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * Manages labels and label-to-object associations.
  * 
  * @author	Alexander Ebert, Joshua Ruesweg
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Label
  */
@@ -169,12 +169,12 @@ class LabelHandler extends SingletonFactory {
 		$accessibleLabelIDs = $this->getAccessibleLabelIDs();
 		
 		// delete previous labels
-		$conditions = new PreparedStatementConditionBuilder();
-		if ($validatePermissions) $conditions->add("labelID IN (?)", [$accessibleLabelIDs]);
-		$conditions->add("objectTypeID = ?", [$objectTypeID]);
-		$conditions->add("objectID = ?", [$objectID]);
-		
 		if (!$validatePermissions || ($validatePermissions && !empty($accessibleLabelIDs))) {
+			$conditions = new PreparedStatementConditionBuilder();
+			if ($validatePermissions) $conditions->add("labelID IN (?)", [$accessibleLabelIDs]);
+			$conditions->add("objectTypeID = ?", [$objectTypeID]);
+			$conditions->add("objectID = ?", [$objectID]);
+			
 			$sql = "DELETE FROM	wcf".WCF_N."_label_object
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);

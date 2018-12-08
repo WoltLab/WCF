@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Abstract implementation of a form for bulk processing objects of a certain type.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since	3.0
@@ -167,7 +167,9 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 		$this->objectList->readObjects();
 		
 		// execute action
-		$this->actions[$this->action]->getProcessor()->executeAction($this->objectList);
+		if (count($this->objectList)) {
+			$this->actions[$this->action]->getProcessor()->executeAction($this->objectList);
+		}
 		
 		$this->affectedObjectCount = count($this->objectList);
 		

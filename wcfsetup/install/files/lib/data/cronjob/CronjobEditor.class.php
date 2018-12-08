@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Provides functions to edit cronjobs.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Cronjob
  * 
@@ -46,7 +46,7 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 		// save cronjob description
 		if (!empty($descriptions)) {
 			$cronjobEditor = new self($cronjob);
-			$cronjobEditor->saveDescriptions($descriptions, false);
+			$cronjobEditor->saveDescriptions($descriptions);
 		}
 		
 		/** @noinspection PhpIncompatibleReturnTypeInspection */
@@ -57,10 +57,9 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 	 * Saves the descriptions of the cronjob in language items.
 	 * 
 	 * @param	string[]		$descriptions
-	 * @param	boolean			$deleteOldDescriptions
 	 * @since	3.0
 	 */
-	protected function saveDescriptions(array $descriptions, $deleteOldDescriptions = true) {
+	protected function saveDescriptions(array $descriptions) {
 		// set default value
 		if (isset($descriptions[''])) {
 			$defaultValue = $descriptions[''];
@@ -95,18 +94,12 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 			$languageCategory = LanguageFactory::getInstance()->getCategory('wcf.acp.cronjob');
 		}
 		
-		// delete old descriptions first
-		if ($deleteOldDescriptions) {
-			$sql = "DELETE FROM	wcf".WCF_N."_language_item
-				WHERE		languageItem = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(['wcf.acp.cronjob.description.cronjob'.$this->cronjobID]);
-		}
-		
 		// save new descriptions
-		$sql = "INSERT INTO	wcf".WCF_N."_language_item
-					(languageID, languageItem, languageItemValue, languageCategoryID, packageID)
-			VALUES		(?, ?, ?, ?, ?)";
+		$sql = "INSERT INTO             wcf".WCF_N."_language_item
+						(languageID, languageItem, languageItemValue, languageCategoryID, packageID)
+			VALUES                  (?, ?, ?, ?, ?)
+			ON DUPLICATE KEY UPDATE languageItemValue = VALUES(languageItemValue),
+						languageCategoryID = VALUES(languageCategoryID)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		foreach ($languages as $language) {

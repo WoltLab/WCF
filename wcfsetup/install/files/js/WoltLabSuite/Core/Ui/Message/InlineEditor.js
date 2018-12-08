@@ -2,7 +2,7 @@
  * Flexible message inline editor.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Message/InlineEditor
  */
@@ -19,6 +19,41 @@ define(
 	)
 {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			rebuild: function() {},
+			_click: function() {},
+			_clickDropdown: function() {},
+			_dropdownBuild: function() {},
+			_dropdownToggle: function() {},
+			_dropdownGetItems: function() {},
+			_dropdownOpen: function() {},
+			_dropdownSelect: function() {},
+			_clickDropdownItem: function() {},
+			_prepare: function() {},
+			_showEditor: function() {},
+			_restoreMessage: function() {},
+			_save: function() {},
+			_validate: function() {},
+			throwError: function() {},
+			_showMessage: function() {},
+			_hideEditor: function() {},
+			_restoreEditor: function() {},
+			_destroyEditor: function() {},
+			_getHash: function() {},
+			_updateHistory: function() {},
+			_getEditorId: function() {},
+			_getObjectId: function() {},
+			_ajaxFailure: function() {},
+			_ajaxSuccess: function() {},
+			_ajaxSetup: function() {},
+			legacyEdit: function() {}
+		};
+		return Fake;
+	}
 	
 	/**
 	 * @constructor
@@ -304,7 +339,20 @@ define(
 			event.preventDefault();
 			
 			//noinspection JSCheckFunctionSignatures
-			this._dropdownSelect(elData(event.currentTarget, 'item'));
+			var item = elData(event.currentTarget, 'item');
+			var data = {
+				cancel: false,
+				element: this._activeDropdownElement,
+				item: item
+			};
+			EventHandler.fire('com.woltlab.wcf.inlineEditor', 'dropdownItemClick_' + this._options.dropdownIdentifier, data);
+			
+			if (data.cancel === true) {
+				event.preventDefault();
+			}
+			else {
+				this._dropdownSelect(item);
+			}
 		},
 		
 		/**
@@ -470,10 +518,7 @@ define(
 		 */
 		_validate: function(parameters) {
 			// remove all existing error elements
-			var errorMessages = elByClass('innerError', this._activeElement);
-			while (errorMessages.length) {
-				elRemove(errorMessages[0]);
-			}
+			elBySelAll('.innerError', this._activeElement, elRemove);
 			
 			var data = {
 				api: this,
@@ -493,11 +538,7 @@ define(
 		 * @param       {string}        message         error message
 		 */
 		throwError: function(element, message) {
-			var error = elCreate('small');
-			error.className = 'innerError';
-			error.textContent = message;
-			
-			DomUtil.insertAfter(error, element);
+			elInnerError(element, message);
 		},
 		
 		/**
@@ -661,20 +702,12 @@ define(
 			this._restoreEditor();
 			
 			//noinspection JSUnresolvedVariable
-			if (!data || data.returnValues === undefined || data.returnValues.errorType === undefined) {
+			if (!data || data.returnValues === undefined || data.returnValues.realErrorMessage === undefined) {
 				return true;
 			}
 			
-			var innerError = elBySel('.innerError', elementData.messageBodyEditor);
-			if (innerError === null) {
-				innerError = elCreate('small');
-				innerError.className = 'innerError';
-				
-				DomUtil.insertAfter(innerError, editor);
-			}
-			
 			//noinspection JSUnresolvedVariable
-			innerError.textContent = data.returnValues.errorType;
+			elInnerError(editor, data.returnValues.realErrorMessage);
 			
 			return false;
 		},

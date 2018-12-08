@@ -4,7 +4,7 @@
  * Like support for WCF
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * 
  * @deprecated	3.0 - please use `WoltLabSuite/Core/Ui/Like/Handler` instead
@@ -161,7 +161,7 @@ WCF.Like = Class.extend({
 	_getWidgetContainer: function(containerID) { },
 	
 	/**
-	 * Returns object id for targer object container.
+	 * Returns object id for target object container.
 	 * 
 	 * @param	string		containerID
 	 * @return	integer

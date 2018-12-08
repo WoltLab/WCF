@@ -5,6 +5,7 @@ html[dir="ltr"] #spWindow { margin-right: 40px; }
 html[dir="rtl"] #spWindow { margin-left: 40px; }
 #spSidebar { flex: 0 0 300px; }
 .spBoundary { margin: 0 40px; }
+.spInlineWrapper { display: inline-block; }
 
 /* ### header ### */
 #spHeader > .spBoundary { display: flex; flex-wrap: wrap; padding: 30px 0; }
@@ -40,6 +41,7 @@ html[dir="rtl"] #spNavigation li:first-child::after { margin-right: 5px; }
 .spHeadline:first-child { margin-top: 10px; }
 #spContentBorder { border-bottom: 1px solid #000; margin: 10px 0; }
 #spContentBorderInner { border-bottom: 1px solid #000; margin: 10px 0; }
+.spContentContainer { background-color: #fff; border: 1px solid #000; margin: 10px 0; padding: 10px; }
 
 /* ### tabular box ### */
 #spTable { border-bottom: 1px solid #000; border-spacing: 0; width: 100%; }
@@ -55,6 +57,9 @@ html[dir="rtl"] #spTable th { text-align: right; }
 /* ### button ### */
 #spButton .button.disabled, #spButtonPrimary .button.disabled { cursor: default; }
 #spButtonPrimary { margin-top: 10px; }
+
+/* ### editor ### */
+#spEditorContent { border: 1px solid rgb(224, 224, 224); border-top-width: 0; height: 100px; }
 
 /* ### dropdown ### */
 #spDropdown { display: inline-block; float: none; position: relative; visibility: visible; z-index: 10; }
@@ -97,18 +102,74 @@ html[dir="rtl"] .spColorBox { margin-left: 10px !important; }
 .spColorBox > span { display: block; height: 24px; width: 24px; }
 .spVariable, .spDescription { display: block; font-size: 12px; }
 .spVariable { font-family: Consolas, Courier, monospace; }
+.spApiVersion { color: #E65100; font-family: Consolas, Courier, monospace; font-size: 12px; }
+#spSidebar .button { display: block; }
 @media (min-width: 769px) {
-	.spSidebarBox.pointer { position: relative; }
-	.spSidebarBox.pointer::before { border: 10px solid transparent;  content: ""; display: block; position: absolute; }
-	html[dir="ltr"] .spSidebarBox.pointer::before { border-right-color: rgb(217, 237, 247); left: -20px; }
-	html[dir="rtl"] .spSidebarBox.pointer::before { border-left-color: rgb(217, 237, 247); right: -20px; }
+	#spVariablesWrapper { position: -webkit-sticky; position: sticky; top: 60px; }
 }
 
 /* ### style region marker ### */
 #stylePreviewRegionMarker { border: 3px solid rgba(255, 0, 0, .4); position: absolute; pointer-events: none; }
+#stylePreviewRegionMarker.forceHide { display: none !important; }
 #stylePreviewRegionMarkerBottom { height: 100%; }
 #stylePreviewRegionMarkerBottom::after, #stylePreviewRegionMarkerBottom::before, #stylePreviewRegionMarker::after, #stylePreviewRegionMarker::before { border: 3px solid red; content: ""; display: block; height: 20px; position: absolute; width: 20px; }
 #stylePreviewRegionMarker::after { border-width: 0 0 3px 3px; right: -20px; top: -20px; }
 #stylePreviewRegionMarker::before { border-width: 0 3px 3px 0; left: -20px; top: -20px; }
 #stylePreviewRegionMarkerBottom::after { border-width: 3px 0 0 3px; right: -20px; bottom: -20px; }
 #stylePreviewRegionMarkerBottom::before { border-width: 3px 3px 0 0; left: -20px; bottom: -20px; }
+
+@media (max-width: 768px) {
+	#spSidebar .jsButtonSelectCategoryByClick, #spSidebar .jsButtonToggleColorPalette { display: none; }
+}
+@media (min-width: 769px) {
+	#spSidebar .jsButtonSelectCategoryByClick { margin-bottom: 5px; }
+	#spSidebar .jsButtonToggleColorPalette { margin-bottom: 10px; }
+        
+	/* ### click on area to select ### */
+	#spWindow.spShowRegions { pointer-events: none; z-index: 5; }
+	#spWindow.spShowRegions [data-region]:not(#spSubMenu) { position: relative; }
+	#spWindow.spShowRegions [data-region]::before {
+		background-color: rgba(242, 222, 222, .9);
+		border: 2px dashed rgb(235, 204, 204);
+		bottom: 0;
+		content: "";
+		cursor: pointer;
+		display: block;
+		left: 0;
+		pointer-events: all;
+		position: absolute;
+		right: 0;
+		top: 0;
+		transition: background-color .12s linear;
+		z-index: 10;
+	}
+	
+	#spWindow.spShowRegions [data-region]:hover::before { background-color: rgba(242, 222, 222, 1); }
+	
+	#spWindow.spShowRegions [data-region]::after {
+		color: rgb(169, 68, 66);
+		content: attr(data-region);
+		font-size: 12px !important;
+		font-weight: 400 !important;
+		left: 50%;
+		position: absolute;
+		top: 50%;
+		transform: translateX(-50%) translateY(-50%);
+		z-index: 40;
+	}
+	
+	#spWindow.spShowRegions [data-region="wcfHeader"]::after { left: 20px; transform: translateY(-50%); }
+	#spWindow.spShowRegions [data-region="wcfContent"]::after { top: 20px; transform: translateX(-50%); }
+	
+	#spWindow.spShowRegions [data-region] [data-region] { z-index: 20; }
+	#spWindow.spShowRegions [data-region] [data-region]::before { z-index: 30; }
+	#spWindow.spShowRegions + #spSidebar .jsButtonToggleColorPalette { pointer-events: none; }
+	#spWindow.spShowRegions + #spSidebar .spSidebarBox:not(#spSidebarButtons) > ul { opacity: .6; pointer-events: none; }
+        
+        #spWindow.spColorPalette { display: none; }
+	#spWindow.spColorPalette + #spSidebar { flex: 1; }
+	#spWindow.spColorPalette + #spSidebar #spVariablesWrapper { position: static !important; column-count: auto; column-width: 300px; }
+        #spWindow.spColorPalette + #spSidebar .spSidebarBox { break-inside: avoid; display: block !important; page-break-inside: avoid; position: relative; }
+	#spWindow.spColorPalette + #spSidebar .spSidebarBox[data-category="none"], #spWindow.spColorPalette + #spSidebar .spSidebarBox.spSidebarBoxCategorySelection { display: none !important; }
+	#spWindow.spColorPalette + #spSidebar .spSidebarBox::before { color: rgb(125, 130, 135); content: attr(data-category); display: block; font-family: Consolas, Courier, monospace; font-size: 1.2rem; margin-bottom: 10px; }
+}

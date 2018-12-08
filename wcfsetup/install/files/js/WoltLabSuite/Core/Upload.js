@@ -2,12 +2,30 @@
  * Uploads file via AJAX.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Upload
  */
 define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Dom/Traverse'], function(AjaxRequest, Core, DomChangeListener, Language, DomUtil, DomTraverse) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			_createButton: function() {},
+			_createFileElement: function() {},
+			_createFileElements: function() {},
+			_failure: function() {},
+			_getParameters: function() {},
+			_insertButton: function() {},
+			_progress: function() {},
+			_removeButton: function() {},
+			_success: function() {},
+			_upload: function() {},
+			_uploadFiles: function() {}
+		};
+		return Fake;
+	}
 	
 	/**
 	 * @constructor
@@ -47,8 +65,8 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		if (targetId === null) {
 			throw new Error("Element id '" + targetId + "' is unknown.");
 		}
-		if (options.multiple && this._target.nodeName !== 'UL' && this._target.nodeName !== 'OL') {
-			throw new Error("Target element has to be list when allowing upload of multiple files.");
+		if (options.multiple && this._target.nodeName !== 'UL' && this._target.nodeName !== 'OL' && this._target.nodeName !== 'TBODY') {
+			throw new Error("Target element has to be list or table body if uploading multiple files is supported.");
 		}
 		
 		this._fileElements = [];
@@ -87,6 +105,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		 * Creates the document element for an uploaded file.
 		 * 
 		 * @param	{File}		file		uploaded file
+		 * @return	{HTMLElement}
 		 */
 		_createFileElement: function(file) {
 			var progress = elCreate('progress');
@@ -100,6 +119,9 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 				this._target.appendChild(li);
 				
 				return li;
+			}
+			else if (this._target.nodeName === 'TBODY') {
+				return this._createFileTableRow(file);
 			}
 			else {
 				var p = elCreate('p');
@@ -138,6 +160,10 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			}
 			
 			return null;
+		},
+		
+		_createFileTableRow: function(file) {
+			throw new Error("Has to be implemented in subclass.");
 		},
 		
 		/**
@@ -306,7 +332,9 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			
 			formData.append('actionName', this._options.action);
 			formData.append('className', this._options.className);
-			formData.append('interfaceName', 'wcf\\data\\IUploadAction');
+			if (this._options.action === 'upload') {
+				formData.append('interfaceName', 'wcf\\data\\IUploadAction');
+			}
 			
 			// recursively append additional parameters to form data
 			var appendFormData = function(parameters, prefix) {
@@ -337,6 +365,26 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			request.sendRequest();
 			
 			return uploadId;
+		},
+		
+		/**
+		 * Uploads the given file blob.
+		 * 
+		 * @param	{Blob}		blob		file blob
+		 * @return	{int}		identifier for the uploaded file
+		 */
+		uploadBlob: function(blob) {
+			return this._upload(null, null, blob);
+		},
+		
+		/**
+		 * Uploads the given file.
+		 *
+		 * @param	{File}		file		uploaded file
+		 * @return	{int}		identifier(s) for the uploaded file
+		 */
+		uploadFile: function(file) {
+			return this._upload(null, file);
 		}
 	};
 	

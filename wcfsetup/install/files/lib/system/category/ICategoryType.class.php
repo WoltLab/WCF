@@ -6,7 +6,7 @@ use wcf\data\category\CategoryEditor;
  * Every category type has to implement this interface.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Category
  */
@@ -17,6 +17,14 @@ interface ICategoryType {
 	 * @param	CategoryEditor	$categoryEditor
 	 */
 	public function afterDeletion(CategoryEditor $categoryEditor);
+	
+	/**
+	 * Is called before the given category is deleted.
+	 * 
+	 * @param	CategoryEditor	$categoryEditor
+	 * @since	3.1
+	 */
+	public function beforeDeletion(CategoryEditor $categoryEditor);
 	
 	/**
 	 * Returns true if the active user can add a category of this type.

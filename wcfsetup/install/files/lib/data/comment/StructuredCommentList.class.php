@@ -11,7 +11,7 @@ use wcf\system\like\LikeHandler;
  * Provides a structured comment list fetching last responses for every comment.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Comment
  *
@@ -67,6 +67,12 @@ class StructuredCommentList extends CommentList {
 	public $sqlOrderBy = 'comment.time DESC';
 	
 	/**
+	 * enables/disables the loading of responses
+	 * @var	boolean
+	 */
+	public $responseLoading = true;
+	
+	/**
 	 * Creates a new structured comment list.
 	 * 
 	 * @param	ICommentManager		$commentManager
@@ -83,6 +89,10 @@ class StructuredCommentList extends CommentList {
 		$this->getConditionBuilder()->add("comment.objectTypeID = ?", [$objectTypeID]);
 		$this->getConditionBuilder()->add("comment.objectID = ?", [$objectID]);
 		$this->sqlLimit = $this->commentManager->getCommentsPerPage();
+		
+		if (!$this->commentManager->canModerate($objectTypeID, $objectID)) {
+			$this->getConditionBuilder()->add('comment.isDisabled = 0');
+		}
 	}
 	
 	/**
@@ -91,14 +101,20 @@ class StructuredCommentList extends CommentList {
 	public function readObjects() {
 		parent::readObjects();
 		
+		$canModerate = $this->commentManager->canModerate($this->objectTypeID, $this->objectID);
+		
 		// fetch response ids
 		$responseIDs = $userIDs = [];
+		/** @var Comment $comment */
 		foreach ($this->objects as $comment) {
 			if (!$this->minCommentTime || $comment->time < $this->minCommentTime) $this->minCommentTime = $comment->time;
-			$commentResponseIDs = $comment->getResponseIDs();
-			foreach ($commentResponseIDs as $responseID) {
-				$this->responseIDs[] = $responseID;
-				$responseIDs[$responseID] = $comment->commentID;
+			
+			if ($this->responseLoading) {
+				$commentResponseIDs = ($canModerate) ? $comment->getUnfilteredResponseIDs() : $comment->getResponseIDs();
+				foreach ($commentResponseIDs as $responseID) {
+					$this->responseIDs[] = $responseID;
+					$responseIDs[$responseID] = $comment->commentID;
+				}
 			}
 			
 			if ($comment->userID) {

@@ -2,6 +2,7 @@
 namespace wcf\system\attachment;
 use wcf\data\attachment\AttachmentAction;
 use wcf\data\attachment\AttachmentList;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
@@ -11,22 +12,22 @@ use wcf\system\WCF;
  * Handles uploaded attachments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Attachment
  */
 class AttachmentHandler implements \Countable {
 	/**
 	 * object type
-	 * @var	\wcf\data\object\type\ObjectType
+	 * @var	ObjectType
 	 */
-	protected $objectType = null;
+	protected $objectType;
 	
 	/**
 	 * object type
 	 * @var	IAttachmentObjectType
 	 */
-	protected $processor = null;
+	protected $processor;
 	
 	/**
 	 * object id
@@ -41,16 +42,16 @@ class AttachmentHandler implements \Countable {
 	protected $parentObjectID = 0;
 	
 	/**
-	 * temp hash
-	 * @var	string
+	 * list of temp hashes
+	 * @var	string[]
 	 */
-	protected $tmpHash = '';
+	protected $tmpHash = [];
 	
 	/**
 	 * list of attachments
 	 * @var	AttachmentList
 	 */
-	protected $attachmentList = null;
+	protected $attachmentList;
 	
 	/**
 	 * Creates a new AttachmentHandler object.
@@ -70,7 +71,13 @@ class AttachmentHandler implements \Countable {
 		$this->processor = $this->objectType->getProcessor();
 		$this->objectID = $objectID;
 		$this->parentObjectID = $parentObjectID;
-		$this->tmpHash = $tmpHash;
+		
+		if (strpos($tmpHash, ',') !== false) {
+			$this->tmpHash = explode(',', $tmpHash);
+		}
+		else {
+			$this->tmpHash = [$tmpHash];
+		}
 	}
 	
 	/**
@@ -87,7 +94,7 @@ class AttachmentHandler implements \Countable {
 				$this->attachmentList->getConditionBuilder()->add('objectID = ?', [$this->objectID]);
 			}
 			else {
-				$this->attachmentList->getConditionBuilder()->add('tmpHash = ?', [$this->tmpHash]);
+				$this->attachmentList->getConditionBuilder()->add('tmpHash IN (?)', [$this->tmpHash]);
 			}
 			$this->attachmentList->readObjects();
 		}
@@ -108,13 +115,21 @@ class AttachmentHandler implements \Countable {
 	 * @param	integer		$objectID
 	 */
 	public function updateObjectID($objectID) {
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("objectTypeID = ?", [$this->objectType->objectTypeID]);
+		$conditions->add("tmpHash IN (?)", [$this->tmpHash]);
+		$conditions->add("(objectID IS NULL OR objectID = 0)");
+		
 		$sql = "UPDATE	wcf".WCF_N."_attachment
 			SET	objectID = ?,
 				tmpHash = ''
-			WHERE	objectTypeID = ?
-				AND tmpHash = ?";
+			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$objectID, $this->objectType->objectTypeID, $this->tmpHash]);
+		
+		$parameters = $conditions->getParameters();
+		array_unshift($parameters, $objectID);
+		
+		$statement->execute($parameters);
 	}
 	
 	/**

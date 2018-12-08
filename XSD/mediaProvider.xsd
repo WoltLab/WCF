@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- This file is used for xml-files which install, update or delete media providers. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
+	<!-- include types -->
+	<xs:include schemaLocation="types.xsd" />
+	
+	<!-- data element -->
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="import" type="import" minOccurs="0" />
+				<xs:element name="delete" type="delete" minOccurs="0" />
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+	
+	<!-- import element -->
+	<xs:complexType name="import">
+		<xs:sequence>
+			<xs:element name="provider" type="provider_import" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- delete element -->
+	<xs:complexType name="delete">
+		<xs:sequence>
+			<xs:element name="provider" type="provider_delete" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- deleted media providers -->
+	<xs:complexType name="provider_delete">
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
+	</xs:complexType>
+	
+	<!-- imported/updated media providers -->
+	<xs:complexType name="provider_import">
+		<xs:all>
+			<xs:element name="title" type="xs:string" />
+			<xs:element name="regex" type="xs:string" />
+			<xs:element name="html" type="xs:string" minOccurs="0" />
+			<xs:element name="className" type="xs:string" minOccurs="0" />
+		</xs:all>
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
+	</xs:complexType>
+</xs:schema>

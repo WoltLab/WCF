@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Represents a user group.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Group
  *
@@ -178,6 +178,16 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	 */
 	public function isEveryone() {
 		return $this->groupType == self::EVERYONE;
+	}
+	
+	/**
+	 * Returns true if this is the 'Users' group.
+	 * 
+	 * @return      boolean
+	 * @since       3.1
+	 */
+	public function isUsers() {
+		return $this->groupType == self::USERS;
 	}
 	
 	/**

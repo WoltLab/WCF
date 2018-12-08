@@ -6,7 +6,7 @@
 	{include file='pageFooter'}
 </div>
 
-{include file='pageMenuMobile'}
+{if $__isRescueMode|empty}{include file='pageMenuMobile'}{/if}
 
 {event name='footer'}
 

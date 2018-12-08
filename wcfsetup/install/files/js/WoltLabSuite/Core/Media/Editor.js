@@ -2,7 +2,7 @@
  * Handles editing media files via dialog.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Media/Editor
  */
@@ -20,6 +20,20 @@ define(
 {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			_ajaxSetup: function() {},
+			_ajaxSuccess: function() {},
+			_close: function() {},
+			_keyPress: function() {},
+			_saveData: function() {},
+			_updateLanguageFields: function() {},
+			edit: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @constructor
 	 */
@@ -35,6 +49,8 @@ define(
 		
 		this._media = null;
 		this._availableLanguageCount = 1;
+		this._categoryIds = [];
+		this._oldCategoryId = 0;
 		
 		this._dialogs = new Dictionary();
 	}
@@ -62,7 +78,8 @@ define(
 			UiNotification.show();
 			
 			if (this._callbackObject._editorSuccess) {
-				this._callbackObject._editorSuccess(this._media);
+				this._callbackObject._editorSuccess(this._media, this._oldCategoryId);
+				this._oldCategoryId = 0;
 			}
 			
 			UiDialog.close('mediaEditor_' + this._media.mediaID);
@@ -100,6 +117,7 @@ define(
 		_saveData: function() {
 			var content = UiDialog.getDialog('mediaEditor_' + this._media.mediaID).content;
 			
+			var categoryId = elBySel('select[name=categoryID]', content);
 			var altText = elBySel('input[name=altText]', content);
 			var caption = elBySel('textarea[name=caption]', content);
 			var title = elBySel('input[name=title]', content);
@@ -109,14 +127,27 @@ define(
 			var captionError = (caption ? DomTraverse.childByClass(caption.parentNode.parentNode, 'innerError') : false);
 			var titleError = DomTraverse.childByClass(title.parentNode.parentNode, 'innerError');
 			
+			// category
+			this._oldCategoryId = this._media.categoryID;
+			if (this._categoryIds.length) {
+				this._media.categoryID = ~~categoryId.value;
+				
+				// if the selected category id not valid (manipulated DOM), ignore
+				if (this._categoryIds.indexOf(this._media.categoryID) === -1) {
+					this._media.categoryID = 0;
+				}
+			}
+			
+			// language and multilingualism
 			if (this._availableLanguageCount > 1) {
 				this._media.isMultilingual = ~~elBySel('input[name=isMultilingual]', content).checked;
-				this._media.languageID = this._media.isMultilingual ? null : LanguageChooser.getLanguageId('languageID');
+				this._media.languageID = this._media.isMultilingual ? null : LanguageChooser.getLanguageId('mediaEditor_' + this._media.mediaID + '_languageID');
 			}
 			else {
 				this._media.languageID = LANGUAGE_ID;
 			}
 			
+			// altText, caption and title
 			this._media.altText = {};
 			this._media.caption = {};
 			this._media.title = {};
@@ -188,6 +219,7 @@ define(
 						altText: this._media.altText,
 						caption: this._media.caption,
 						data: {
+							categoryID: this._media.categoryID,
 							isMultilingual: this._media.isMultilingual,
 							languageID: this._media.languageID
 						},
@@ -253,6 +285,9 @@ define(
 							source: {
 								after: (function(content, data) {
 									this._availableLanguageCount = ~~data.returnValues.availableLanguageCount;
+									this._categoryIds = data.returnValues.categoryIDs.map(function(number) {
+										return ~~number;
+									});
 									
 									var didLoadMediaData = false;
 									if (data.returnValues.mediaData) {
@@ -264,7 +299,11 @@ define(
 									// make sure that the language chooser is initialized first
 									setTimeout(function() {
 										if (this._availableLanguageCount > 1) {
-											LanguageChooser.setLanguageId('languageID', this._media.languageID || LANGUAGE_ID);
+											LanguageChooser.setLanguageId('mediaEditor_' + this._media.mediaID + '_languageID', this._media.languageID || LANGUAGE_ID);
+										}
+										
+										if (this._categoryIds.length) {
+											elBySel('select[name=categoryID]', content).value = ~~this._media.categoryID;
 										}
 										
 										var title = elBySel('input[name=title]', content);
@@ -277,9 +316,9 @@ define(
 											LanguageInput.setValues('title_' + this._media.mediaID, Dictionary.fromObject(this._media.title || { }));
 										}
 										else {
-											title.value = this._media.title ? this._media.title[LANGUAGE_ID] : ''; 
-											if (altText) altText.value = this._media.altText ? this._media.altText[LANGUAGE_ID] : '';
-											if (caption) caption.value = this._media.caption ? this._media.caption[LANGUAGE_ID] : '';
+											title.value = this._media.title ? this._media.title[this._media.languageID || LANGUAGE_ID] : ''; 
+											if (altText) altText.value = this._media.altText ? this._media.altText[this._media.languageID || LANGUAGE_ID] : '';
+											if (caption) caption.value = this._media.caption ? this._media.caption[this._media.languageID || LANGUAGE_ID] : '';
 										}
 										
 										if (this._availableLanguageCount > 1) {
@@ -300,7 +339,7 @@ define(
 										elById('mediaEditor_' + this._media.mediaID).parentNode.scrollTop = 0;
 										
 										DomChangeListener.trigger();
-									}.bind(this), 0);
+									}.bind(this), 200);
 								}).bind(this),
 								data: {
 									actionName: 'getEditorDialog',

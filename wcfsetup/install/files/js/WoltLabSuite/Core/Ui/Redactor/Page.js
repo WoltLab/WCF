@@ -2,12 +2,22 @@
  * Converts `<woltlab-metacode>` into the bbcode representation.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Ui/Redactor/Metacode
+ * @module	WoltLabSuite/Core/Ui/Redactor/Page
  */
 define(['WoltLabSuite/Core/Ui/Page/Search'], function(UiPageSearch) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_click: function() {},
+			_insert: function() {}
+		};
+		return Fake;
+	}
 	
 	function UiRedactorPage(editor, button) { this.init(editor, button); }
 	UiRedactorPage.prototype = {

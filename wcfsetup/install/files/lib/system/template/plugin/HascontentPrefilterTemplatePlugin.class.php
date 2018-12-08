@@ -4,7 +4,7 @@ use wcf\system\template\TemplateScriptingCompiler;
 use wcf\util\StringUtil;
 
 /**
- * Template prefiler plugin which allows inserting code dynamically upon the contents
+ * Template prefilter plugin which allows inserting code dynamically upon the contents
  * of 'content'.
  * 
  * Usage:
@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * 	{/hascontent}
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
  */

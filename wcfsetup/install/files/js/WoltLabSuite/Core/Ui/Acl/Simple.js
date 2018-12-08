@@ -1,6 +1,17 @@
 define(['Language', 'StringUtil', 'Dom/ChangeListener', 'WoltLabSuite/Core/Ui/User/Search/Input'], function(Language, StringUtil, DomChangeListener, UiUserSearchInput) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_build: function() {},
+			_select: function() {},
+			_removeItem: function() {}
+		};
+		return Fake;
+	}
+	
 	function UiAclSimple(prefix) { this.init(prefix); }
 	UiAclSimple.prototype = {
 		init: function(prefix) {

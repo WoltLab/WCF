@@ -30,7 +30,7 @@ use wcf\util\UserUtil;
  * Handles sessions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Session
  *
@@ -38,7 +38,7 @@ use wcf\util\UserUtil;
  * @property-read	integer|null	$userID			id of the user the session belongs to or `null` if the acp session belongs to a guest
  * @property-read	string		$ipAddress		id of the user whom the session belongs to
  * @property-read	string		$userAgent		user agent of the user whom the session belongs to
- * @property-read	integer		$lastActivityTime	timestamp at which the latest activity occured
+ * @property-read	integer		$lastActivityTime	timestamp at which the latest activity occurred
  * @property-read	string		$requestURI		uri of the latest request
  * @property-read	string		$requestMethod		used request method of the latest request (`GET`, `POST`)
  * @property-read	integer|null	$pageID			id of the latest page visited
@@ -263,6 +263,12 @@ class SessionHandler extends SingletonFactory {
 		
 		// init environment variables
 		$this->initEnvironment();
+		
+		// https://github.com/WoltLab/WCF/issues/2568
+		if ($this->getVar('__wcfIsFirstVisit') === true) {
+			$this->firstVisit = true;
+			$this->unregister('__wcfIsFirstVisit');
+		}
 	}
 	
 	/**
@@ -364,7 +370,7 @@ class SessionHandler extends SingletonFactory {
 	 * Registers a session variable.
 	 * 
 	 * @param	string		$key
-	 * @param	string		$value
+	 * @param	mixed		$value
 	 */
 	public function register($key, $value) {
 		$this->variables[$key] = $value;
@@ -382,7 +388,8 @@ class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the value of a session variable.
+	 * Returns the value of a session variable or `null` if the session
+	 * variable does not exist.
 	 * 
 	 * @param	string		$key
 	 * @return	mixed
@@ -736,6 +743,7 @@ class SessionHandler extends SingletonFactory {
 		
 		// update user reference
 		$this->user = $user;
+		$this->userID = $this->user->userID ?: 0;
 		
 		// reset caches
 		$this->groupData = null;

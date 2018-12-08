@@ -22,7 +22,7 @@ use wcf\util\CryptoUtil;
  * Sends daily mail notifications.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob
  */
@@ -182,12 +182,12 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 				$message = $class->getEmailMessage('daily');
 				if (is_array($message)) {
 					if (!isset($message['variables'])) $message['variables'] = [];
-					$variables = [
+					$variables = array_merge($message['variables'], [
 						'notificationContent' => $message,
 						'event' => $class,
 						'notificationType' => 'daily',
-						'variables' => $message['variables']
-					];
+						'variables' => $message['variables'] // deprecated, but is kept for backwards compatibility
+					]);
 					
 					return $variables;
 				}

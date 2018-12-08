@@ -8,13 +8,14 @@ use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 
 /**
  * Shows the page add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since	3.0
@@ -75,7 +76,7 @@ class PageEditForm extends PageAddForm {
 			}
 		}
 		
-		if ($this->page->requireObjectID) {
+		if ($this->page->requireObjectID || $this->page->excludeFromLandingPage) {
 			// pages that require an object id can never be set as landing page
 			$this->isLandingPage = 0;
 		}
@@ -149,10 +150,13 @@ class PageEditForm extends PageAddForm {
 		
 		$data = [
 			'name' => $this->name,
+			'cssClassName' => $this->cssClassName,
 			'isDisabled' => $this->isDisabled ? 1 : 0,
 			'lastUpdateTime' => TIME_NOW,
 			'parentPageID' => $this->parentPageID ?: null,
-			'applicationPackageID' => $this->applicationPackageID
+			'applicationPackageID' => $this->applicationPackageID,
+			'availableDuringOfflineMode' => $this->availableDuringOfflineMode,
+			'allowSpidersToIndex' => $this->allowSpidersToIndex
 		];
 		
 		if ($this->pageType == 'system') {
@@ -235,9 +239,13 @@ class PageEditForm extends PageAddForm {
 			$this->parentPageID = $this->page->parentPageID;
 			$this->pageType = $this->page->pageType;
 			$this->applicationPackageID = $this->page->applicationPackageID;
+			$this->cssClassName = $this->page->cssClassName;
 			if ($this->page->controllerCustomURL) $this->customURL[0] = $this->page->controllerCustomURL;
 			if ($this->page->isLandingPage) $this->isLandingPage = 1;
 			if ($this->page->isDisabled) $this->isDisabled = 1;
+			if ($this->page->availableDuringOfflineMode) $this->availableDuringOfflineMode = 1;
+			if ($this->page->allowSpidersToIndex) $this->allowSpidersToIndex = 1;
+			else $this->allowSpidersToIndex = 0;
 			
 			foreach ($this->page->getPageContents() as $languageID => $content) {
 				$this->title[$languageID] = $content->title;
@@ -274,7 +282,8 @@ class PageEditForm extends PageAddForm {
 		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'pageID' => $this->pageID,
-			'page' => $this->page
+			'page' => $this->page,
+			'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.page', $this->pageID)
 		]);
 	}
 }

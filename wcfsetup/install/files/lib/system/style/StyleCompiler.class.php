@@ -4,6 +4,8 @@ use Leafo\ScssPhp\Compiler;
 use wcf\data\application\Application;
 use wcf\data\option\Option;
 use wcf\data\style\Style;
+use wcf\system\application\ApplicationHandler;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -15,7 +17,7 @@ use wcf\util\StyleUtil;
  * Provides access to the SCSS PHP compiler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Style
  */
@@ -31,6 +33,18 @@ class StyleCompiler extends SingletonFactory {
 	 * @var	string[]
 	 */
 	public static $supportedOptionType = ['boolean', 'integer'];
+	
+	/**
+	 * file used to store global SCSS declarations, relative to `WCF_DIR`
+	 * @var string
+	 */
+	const FILE_GLOBAL_VALUES = 'style/ui/zzz_wsc_style_global_values.scss';
+	
+	/**
+	 * registry keys for data storage
+	 * @var string
+	 */
+	const REGISTRY_GLOBAL_VALUES = 'styleGlobalValues';
 	
 	/**
 	 * @inheritDoc
@@ -52,7 +66,7 @@ class StyleCompiler extends SingletonFactory {
 		// read stylesheets in dependency order
 		$sql = "SELECT		filename, application
 			FROM		wcf".WCF_N."_package_installation_file_log
-			WHERE           filename REGEXP ?
+			WHERE           CONVERT(filename using utf8) REGEXP ?
 					AND packageID <> ?
 			ORDER BY	packageID";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -61,7 +75,17 @@ class StyleCompiler extends SingletonFactory {
 			1
 		]);
 		while ($row = $statement->fetchArray()) {
+			// the global values will always be evaluated last
+			if ($row['filename'] === self::FILE_GLOBAL_VALUES) {
+				continue;
+			}
+			
 			$files[] = Application::getDirectory($row['application']).$row['filename'];
+		}
+		
+		// global SCSS
+		if (file_exists(WCF_DIR . self::FILE_GLOBAL_VALUES)) {
+			$files[] = WCF_DIR . self::FILE_GLOBAL_VALUES;
 		}
 		
 		// get style variables
@@ -91,11 +115,17 @@ class StyleCompiler extends SingletonFactory {
 			unset($variables['overrideScss']);
 		}
 		
+		// api version
+		$variables['apiVersion'] = $style->apiVersion;
+		
+		$parameters = ['scss' => ''];
+		EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
+		
 		$this->compileStylesheet(
 			WCF_DIR.'style/style-'.$style->styleID,
 			$files,
 			$variables,
-			$individualScss,
+			$individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
 			function($content) use ($style) {
 				return "/* stylesheet for '".$style->styleName."', generated on ".gmdate('r')." -- DO NOT EDIT */\n\n" . $content;
 			}
@@ -115,6 +145,13 @@ class StyleCompiler extends SingletonFactory {
 		
 		// ACP uses a slightly different layout
 		$files[] = WCF_DIR . 'acp/style/layout.scss';
+		
+		// include stylesheets from other apps in arbitrary order
+		if (PACKAGE_ID) {
+			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+				$files = array_merge($files, $this->getAcpStylesheets($application));
+			}
+		}
 		
 		// read default values
 		$sql = "SELECT		variableName, defaultValue
@@ -191,6 +228,28 @@ class StyleCompiler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns the list of SCSS stylesheets of an application.
+	 * 
+	 * @param       Application     $application
+	 * @return      string[]
+	 */
+	protected function getAcpStylesheets(Application $application) {
+		if ($application->packageID == 1) return [];
+		
+		$files = [];
+		
+		$basePath = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $application->getPackage()->packageDir)) . 'acp/style/';
+		$result = glob($basePath . '*.scss');
+		if (is_array($result)) {
+			foreach ($result as $file) {
+				$files[] = $file;
+			}
+		}
+		
+		return $files;
+	}
+	
+	/**
 	 * Prepares the style compiler by adding variables to environment.
 	 * 
 	 * @param	string[]		$variables
@@ -252,7 +311,11 @@ class StyleCompiler extends SingletonFactory {
 		
 		$variables['wcfFontFamily'] = $variables['wcfFontFamilyFallback'];
 		if (!empty($variables['wcfFontFamilyGoogle'])) {
-			$variables['wcfFontFamily'] = '"' . $variables['wcfFontFamilyGoogle'] . '", ' . $variables['wcfFontFamily'];
+			// The SCSS parser attempts to evaluate the variables, causing issues with font names that
+			// include logical operators such as "And" or "Or".
+			$variables['wcfFontFamilyGoogle'] = '"' . $variables['wcfFontFamilyGoogle'] . '"';
+			
+			$variables['wcfFontFamily'] = $variables['wcfFontFamilyGoogle'] . ', ' . $variables['wcfFontFamily'];
 		}
 		
 		// add options as SCSS variables
@@ -262,13 +325,21 @@ class StyleCompiler extends SingletonFactory {
 					$variables['wcf_option_'.mb_strtolower($constantName)] = is_int($option->optionValue) ? $option->optionValue : '"'.$option->optionValue.'"';
 				}
 			}
+			
+			// api version
+			if (!isset($variables['apiVersion'])) $variables['apiVersion'] = Style::API_VERSION;
 		}
 		else {
 			// workaround during setup
 			$variables['wcf_option_attachment_thumbnail_height'] = '~"210"';
 			$variables['wcf_option_attachment_thumbnail_width'] = '~"280"';
 			$variables['wcf_option_signature_max_image_height'] = '~"150"';
+			
+			$variables['apiVersion'] = Style::API_VERSION;
 		}
+		
+		// convert into numeric value for comparison, e.g. `3.1` -> `31`
+		$variables['apiVersion'] = str_replace('.', '', $variables['apiVersion']);
 		
 		// build SCSS bootstrap
 		$scss = $this->bootstrap($variables);

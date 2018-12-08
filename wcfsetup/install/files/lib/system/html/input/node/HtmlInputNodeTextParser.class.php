@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * Parses all text nodes searching for links, media, mentions or smilies.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Html\Input\Node
  * @since	3.0
@@ -44,12 +44,6 @@ class HtmlInputNodeTextParser {
 	protected $smileyCount = 0;
 	
 	/**
-	 * list of smilies by smiley code
-	 * @var Smiley[]
-	 */
-	protected $smilies = [];
-	
-	/**
 	 * @var string[]
 	 */
 	protected $sourceBBCodes = [];
@@ -61,6 +55,12 @@ class HtmlInputNodeTextParser {
 	protected static $illegalChars = '[^\x0-\x2C\x2E\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+';
 	
 	/**
+	 * list of smilies by smiley code
+	 * @var Smiley[]
+	 */
+	protected static $smilies;
+	
+	/**
 	 * regex for user mentions
 	 * @var string
 	 */
@@ -68,7 +68,7 @@ class HtmlInputNodeTextParser {
 		\\B                                             # any non-word character, whitespace, string start is fine
 		@
 		(
-			([^',\s][^,\s]{2,})(?:\s[^@,\s][^,\s]*)?	# either at most two strings,
+			([^',\s][^,\s]{1,})(?:\s[^@,\s][^,\s]*)?	# either at most two strings,
 									# not containing the whitespace or the comma,
 									# not starting with a single quote
 									# the second string not starting with the at sign
@@ -91,34 +91,40 @@ class HtmlInputNodeTextParser {
 		if (MODULE_SMILEY) {
 			$this->smileyCount = $smileyCount;
 			
-			// get smilies
-			$smilies = SmileyCache::getInstance()->getSmilies();
-			$categories = SmileyCache::getInstance()->getCategories();
-			
-			foreach ($smilies as $categoryID => $categorySmilies) {
-				if (!array_key_exists($categoryID ?: null, $categories) || $categories[$categoryID ?: null]->isDisabled) continue;
+			if (self::$smilies === null) {
+				self::$smilies = [];
 				
-				/** @var Smiley $smiley */
-				foreach ($categorySmilies as $smiley) {
-					foreach ($smiley->smileyCodes as $smileyCode) {
-						$this->smilies[$smileyCode] = $smiley;
+				// get smilies
+				$smilies = SmileyCache::getInstance()->getSmilies();
+				$categories = SmileyCache::getInstance()->getCategories();
+				
+				foreach ($smilies as $categoryID => $categorySmilies) {
+					if (!array_key_exists($categoryID ?: null, $categories) || $categories[$categoryID ?: null]->isDisabled) continue;
+					
+					/** @var Smiley $smiley */
+					foreach ($categorySmilies as $smiley) {
+						foreach ($smiley->smileyCodes as $smileyCode) {
+							self::$smilies[$smileyCode] = $smiley;
+						}
 					}
 				}
+				
+				uksort(self::$smilies, function ($a, $b) {
+					$lengthA = mb_strlen($a);
+					$lengthB = mb_strlen($b);
+					
+					if ($lengthA < $lengthB) {
+						return 1;
+					}
+					else {
+						if ($lengthA === $lengthB) {
+							return 0;
+						}
+					}
+					
+					return -1;
+				});
 			}
-			
-			uksort($this->smilies, function($a, $b) {
-				$lengthA = mb_strlen($a);
-				$lengthB = mb_strlen($b);
-				
-				if ($lengthA < $lengthB) {
-					return 1;
-				}
-				else if ($lengthA === $lengthB) {
-					return 0;
-				}
-				
-				return -1;
-			});
 		}
 	}
 	
@@ -194,7 +200,7 @@ class HtmlInputNodeTextParser {
 				$value = $this->parseEmail($node, $value);
 			}
 			
-			if ($this->smileyCount !== 50) {
+			if (MODULE_SMILEY && $this->smileyCount !== 50) {
 				$value = $this->parseSmiley($node, $value);
 			}
 			
@@ -232,7 +238,8 @@ class HtmlInputNodeTextParser {
 					$match = $matches[$i][$j];
 					$variants = $this->getUsernameVariants($match);
 					foreach ($variants as $username) {
-						if (!isset($usernames[$username])) {
+						$username = StringUtil::trim($username);
+						if (!empty($username) && !isset($usernames[$username])) {
 							$usernames[$username] = $username;
 						}
 					}
@@ -320,7 +327,7 @@ class HtmlInputNodeTextParser {
 				// username not found, maybe it is quoted
 				if ($pos === false) {
 					$needle = "@'" . str_ireplace("'", "''", $username) . "'";
-					$pos = mb_stripos($value, $needle);
+					$pos = mb_stripos($value, $needle, $offset);
 				}
 				
 				if ($pos !== false) {
@@ -334,9 +341,9 @@ class HtmlInputNodeTextParser {
 					// we use preg_replace() because the username could appear multiple times
 					// and we need to replace them one by one, also avoiding only replacing
 					// the non-quoted username even though both variants are present
-					$value = preg_replace('~' . preg_quote($needle, '~') . '~i', $marker, $value, 1);
+					$value = preg_replace('~' . preg_quote($needle, '~') . '~iu', $marker, $value, 1);
 					
-					$offset = $pos + 1;
+					$offset = $pos + mb_strlen($marker);
 				}
 			}
 			while ($pos);
@@ -380,27 +387,20 @@ class HtmlInputNodeTextParser {
 		return preg_replace_callback($urlPattern, function($matches) use ($text, $allowURL, $allowMedia) {
 			$link = $matches[0];
 			
-			if (BBCodeMediaProvider::isMediaURL($link)) {
-				if ($allowMedia) {
-					$element = $this->htmlInputNodeProcessor->createMetacodeElement($text, 'media', []);
-					$element->appendChild($element->ownerDocument->createTextNode($link));
-				}
-				else {
-					return $matches[0];
-				}
+			if ($allowMedia && BBCodeMediaProvider::isMediaURL($link)) {
+				$element = $this->htmlInputNodeProcessor->createMetacodeElement($text, 'media', []);
+				$element->appendChild($element->ownerDocument->createTextNode($link));
+			}
+			else if ($allowURL) {
+				// add protocol if necessary
+				if (!preg_match('/[a-z]:\/\//si', $link)) $link = 'http://'.$link;
+				
+				$element = $text->ownerDocument->createElement('a');
+				$element->setAttribute('href', $link);
+				$element->appendChild($element->ownerDocument->createTextNode($link));
 			}
 			else {
-				if ($allowURL) {
-					// add protocol if necessary
-					if (!preg_match('/[a-z]:\/\//si', $link)) $link = 'http://'.$link;
-					
-					$element = $text->ownerDocument->createElement('a');
-					$element->setAttribute('href', $link);
-					$element->appendChild($element->ownerDocument->createTextNode($link));
-				}
-				else {
-					return $matches[0];
-				}
+				return $matches[0];
 			}
 			
 			return $this->addReplacement($text, $element);
@@ -456,7 +456,7 @@ class HtmlInputNodeTextParser {
 				'difficult' => []
 			];
 			
-			foreach ($this->smilies as $smileyCode => $smiley) {
+			foreach (self::$smilies as $smileyCode => $smiley) {
 				$smileyCode = preg_quote($smileyCode, '~');
 				
 				if (preg_match('~^\\\:.+\\\:$~', $smileyCode)) {
@@ -543,7 +543,7 @@ class HtmlInputNodeTextParser {
 				}
 				
 				$this->smileyCount++;
-				$smiley = $this->smilies[$smileyCode];
+				$smiley = self::$smilies[$smileyCode];
 				$element = $text->ownerDocument->createElement('img');
 				$element->setAttribute('src', $smiley->getURL());
 				$element->setAttribute('class', 'smiley');

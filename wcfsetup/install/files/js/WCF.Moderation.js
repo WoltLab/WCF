@@ -4,414 +4,471 @@
  * Namespace for moderation related classes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Moderation = { };
 
-/**
- * Moderation queue management.
- * 
- * @param	integer		queueID
- * @param	string		redirectURL
- */
-WCF.Moderation.Management = Class.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * button selector
-	 * @var	string
+	 * Moderation queue management.
+	 *
+	 * @param        integer                queueID
+	 * @param        string                redirectURL
 	 */
-	_buttonSelector: '',
-	
-	/**
-	 * action class name
-	 * @var	string
-	 */
-	_className: '',
-	
-	/**
-	 * list of templates for confirmation message by action name
-	 * @var	object
-	 */
-	_confirmationTemplate: { },
-	
-	/**
-	 * dialog overlay
-	 * @var	jQuery
-	 */
-	_dialog: null,
-	
-	/**
-	 * language item pattern
-	 * @var	string
-	 */
-	_languageItem: '',
-	
-	/**
-	 * action proxy
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * queue id
-	 * @var	integer
-	 */
-	_queueID: 0,
-	
-	/**
-	 * redirect URL
-	 * @var	string
-	 */
-	_redirectURL: '',
-	
-	/**
-	 * Initializes the moderation report management.
-	 * 
-	 * @param	integer		queueID
-	 * @param	string		redirectURL
-	 * @param	string		languageItem
-	 */
-	init: function(queueID, redirectURL, languageItem) {
-		if (!this._buttonSelector) {
-			console.debug("[WCF.Moderation.Management] Missing button selector, aborting.");
-			return;
-		}
-		else if (!this._className) {
-			console.debug("[WCF.Moderation.Management] Missing class name, aborting.");
-			return;
-		}
+	WCF.Moderation.Management = Class.extend({
+		/**
+		 * button selector
+		 * @var        string
+		 */
+		_buttonSelector: '',
 		
-		this._dialog = null;
-		this._queueID = queueID;
-		this._redirectURL = redirectURL;
-		this._languageItem = languageItem;
+		/**
+		 * action class name
+		 * @var        string
+		 */
+		_className: '',
 		
-		this._proxy = new WCF.Action.Proxy({
-			failure: $.proxy(this._failure, this),
-			success: $.proxy(this._success, this)
-		});
+		/**
+		 * list of templates for confirmation message by action name
+		 * @var        object
+		 */
+		_confirmationTemplate: {},
 		
-		$(this._buttonSelector).click($.proxy(this._click, this));
+		/**
+		 * dialog overlay
+		 * @var        jQuery
+		 */
+		_dialog: null,
 		
-		$('#moderationAssignUser').click($.proxy(this._clickAssignedUser, this));
-	},
-	
-	/**
-	 * Handles clicks on the action buttons.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		var $actionName = $(event.currentTarget).wcfIdentify();
-		var $innerTemplate = '';
-		if (this._confirmationTemplate[$actionName]) {
-			$innerTemplate = this._confirmationTemplate[$actionName];
-		}
+		/**
+		 * language item pattern
+		 * @var        string
+		 */
+		_languageItem: '',
 		
-		WCF.System.Confirmation.show(WCF.Language.get(this._languageItem.replace(/{actionName}/, $actionName)), $.proxy(function(action, parameters, content) {
-			if (action === 'confirm') {
-				var $parameters = {
-					actionName: $actionName,
-					className: this._className,
-					objectIDs: [ this._queueID ]
-				};
-				if (this._confirmationTemplate[$actionName]) {
-					$parameters.parameters = { };
-					$(content).find('input, textarea').each(function(index, element) {
-						var $element = $(element);
-						var $value = $element.val();
-						if ($element.getTagName() === 'input' && $element.attr('type') === 'checkbox') {
-							if (!$element.is(':checked')) {
-								$value = null;
-							}
-						}
-						
-						if ($value !== null) {
-							$parameters.parameters[$element.attr('name')] = $value;
-						}
-					});
-				}
-				
-				this._proxy.setOption('data', $parameters);
-				this._proxy.sendRequest();
-				
-				$(this._buttonSelector).disable();
+		/**
+		 * action proxy
+		 * @var        WCF.Action.Proxy
+		 */
+		_proxy: null,
+		
+		/**
+		 * queue id
+		 * @var        integer
+		 */
+		_queueID: 0,
+		
+		/**
+		 * redirect URL
+		 * @var        string
+		 */
+		_redirectURL: '',
+		
+		/**
+		 * Initializes the moderation report management.
+		 *
+		 * @param        integer                queueID
+		 * @param        string                redirectURL
+		 * @param        string                languageItem
+		 */
+		init: function (queueID, redirectURL, languageItem) {
+			if (!this._buttonSelector) {
+				console.debug("[WCF.Moderation.Management] Missing button selector, aborting.");
+				return;
 			}
-		}, this), { }, $innerTemplate);
-	},
-	
-	/**
-	 * Handles clicks on the assign user link.
-	 */
-	_clickAssignedUser: function() {
-		this._proxy.setOption('data', {
-			actionName: 'getAssignUserForm',
-			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction',
-			objectIDs: [ this._queueID ]
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Handles successful AJAX requests.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		switch (data.actionName) {
-			case 'getAssignUserForm':
-				if (this._dialog === null) {
-					this._dialog = $('<div />').hide().appendTo(document.body);
-					this._dialog.html(data.returnValues.template).wcfDialog({
-						title: WCF.Language.get('wcf.moderation.assignedUser')
-					});
-				}
-				else {
-					this._dialog.html(data.returnValues.template).wcfDialog('open');
-				}
-				
-				this._dialog.find('button[data-type=submit]').click($.proxy(this._assignUser, this));
-			break;
+			else if (!this._className) {
+				console.debug("[WCF.Moderation.Management] Missing class name, aborting.");
+				return;
+			}
 			
-			case 'assignUser':
-				var $span = $('#moderationAssignedUserContainer > dd > span').empty();
-				if (data.returnValues.userID) {
-					$('<a href="' + data.returnValues.link + '" data-user-id="' + data.returnValues.userID + '" class="userLink">' + WCF.String.escapeHTML(data.returnValues.username) + '</a>').appendTo($span);
-				}
-				else {
-					$span.append(data.returnValues.username);
-				}
-				
-				$span.append(' ');
-				
-				if (data.returnValues.newStatus) {
-					$('#moderationStatusContainer > dd').text(WCF.Language.get('wcf.moderation.status.' + data.returnValues.newStatus));
-				}
-				
-				this._dialog.wcfDialog('close');
-				
-				new WCF.System.Notification().show();
-			break;
+			this._dialog = null;
+			this._queueID = queueID;
+			this._redirectURL = redirectURL;
+			this._languageItem = languageItem;
 			
-			default:
-				var $notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'));
-				var self = this;
-				$notification.show(function() {
-					window.location = self._redirectURL;
-				});
-			break;
-		}
-	},
-	
-	/**
-	 * Handles errorneus AJAX requests.
-	 * 
-	 * @param	object		data
-	 * @param	jQuery		jqXHR
-	 * @param	string		textStatus
-	 * @param	string		errorThrown
-	 */
-	_failure: function(data, jqXHR, textStatus, errorThrown) {
-		if (data.returnValues && data.returnValues.fieldName && data.returnValues.fieldName == 'assignedUsername') {
-			this._dialog.find('small.innerError').remove();
+			this._proxy = new WCF.Action.Proxy({
+				failure: $.proxy(this._failure, this),
+				success: $.proxy(this._success, this)
+			});
 			
-			var $errorString = '';
-			switch (data.returnValues.errorType) {
-				case 'empty':
-					$errorString = WCF.Language.get('wcf.global.form.error.empty');
-				break;
+			$(this._buttonSelector).click($.proxy(this._click, this));
+			
+			$('#moderationAssignUser').click($.proxy(this._clickAssignedUser, this));
+		},
+		
+		/**
+		 * Handles clicks on the action buttons.
+		 *
+		 * @param        object                event
+		 */
+		_click: function (event) {
+			var $actionName = $(event.currentTarget).wcfIdentify();
+			var $innerTemplate = '';
+			if (this._confirmationTemplate[$actionName]) {
+				$innerTemplate = this._confirmationTemplate[$actionName];
+			}
+			
+			WCF.System.Confirmation.show(WCF.Language.get(this._languageItem.replace(/{actionName}/, $actionName)), $.proxy(function (action, parameters, content) {
+				if (action === 'confirm') {
+					var $parameters = {
+						actionName: $actionName,
+						className: this._className,
+						objectIDs: [this._queueID]
+					};
+					if (this._confirmationTemplate[$actionName]) {
+						$parameters.parameters = {};
+						$(content).find('input, textarea').each(function (index, element) {
+							var $element = $(element);
+							var $value = $element.val();
+							if ($element.getTagName() === 'input' && $element.attr('type') === 'checkbox') {
+								if (!$element.is(':checked')) {
+									$value = null;
+								}
+							}
+							
+							if ($value !== null) {
+								$parameters.parameters[$element.attr('name')] = $value;
+							}
+						});
+					}
+					
+					this._proxy.setOption('data', $parameters);
+					this._proxy.sendRequest();
+					
+					$(this._buttonSelector).disable();
+				}
+			}, this), {}, $innerTemplate);
+		},
+		
+		/**
+		 * Handles clicks on the assign user link.
+		 */
+		_clickAssignedUser: function () {
+			this._proxy.setOption('data', {
+				actionName: 'getAssignUserForm',
+				className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction',
+				objectIDs: [this._queueID]
+			});
+			this._proxy.sendRequest();
+		},
+		
+		/**
+		 * Handles successful AJAX requests.
+		 *
+		 * @param        object                data
+		 * @param        string                textStatus
+		 * @param        jQuery                jqXHR
+		 */
+		_success: function (data, textStatus, jqXHR) {
+			switch (data.actionName) {
+				case 'getAssignUserForm':
+					if (this._dialog === null) {
+						this._dialog = $('<div />').hide().appendTo(document.body);
+						this._dialog.html(data.returnValues.template).wcfDialog({
+							title: WCF.Language.get('wcf.moderation.assignedUser')
+						});
+					}
+					else {
+						this._dialog.html(data.returnValues.template).wcfDialog('open');
+					}
+					
+					this._dialog.find('button[data-type=submit]').click($.proxy(this._assignUser, this));
+					break;
 				
-				case 'notAffected':
-					$errorString = WCF.Language.get('wcf.moderation.assignedUser.error.notAffected');
-				break;
+				case 'assignUser':
+					var $span = $('#moderationAssignedUserContainer > dd > span').empty();
+					if (data.returnValues.userID) {
+						$('<a href="' + data.returnValues.link + '" data-user-id="' + data.returnValues.userID + '" class="userLink">' + WCF.String.escapeHTML(data.returnValues.username) + '</a>').appendTo($span);
+					}
+					else {
+						$span.append(data.returnValues.username);
+					}
+					
+					$span.append(' ');
+					
+					if (data.returnValues.newStatus) {
+						$('#moderationStatusContainer > dd').text(WCF.Language.get('wcf.moderation.status.' + data.returnValues.newStatus));
+					}
+					
+					this._dialog.wcfDialog('close');
+					
+					new WCF.System.Notification().show();
+					break;
 				
 				default:
-					$errorString = WCF.Language.get('wcf.user.username.error.' + data.returnValues.errorType, { username: this._dialog.find('#assignedUsername').val() });
-				break;
+					var $notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'));
+					var self = this;
+					$notification.show(function () {
+						window.location = self._redirectURL;
+					});
+					break;
+			}
+		},
+		
+		/**
+		 * Handles erroneous AJAX requests.
+		 *
+		 * @param        object                data
+		 * @param        jQuery                jqXHR
+		 * @param        string                textStatus
+		 * @param        string                errorThrown
+		 */
+		_failure: function (data, jqXHR, textStatus, errorThrown) {
+			if (data.returnValues && data.returnValues.fieldName && data.returnValues.fieldName == 'assignedUsername') {
+				this._dialog.find('small.innerError').remove();
+				
+				var $errorString = '';
+				switch (data.returnValues.errorType) {
+					case 'empty':
+						$errorString = WCF.Language.get('wcf.global.form.error.empty');
+						break;
+					
+					case 'notAffected':
+						$errorString = WCF.Language.get('wcf.moderation.assignedUser.error.notAffected');
+						break;
+					
+					default:
+						$errorString = WCF.Language.get('wcf.user.username.error.' + data.returnValues.errorType, {username: this._dialog.find('#assignedUsername').val()});
+						break;
+				}
+				
+				$('<small class="innerError">' + $errorString + '</small>').insertAfter(this._dialog.find('#assignedUsername'));
+				
+				return false;
 			}
 			
-			$('<small class="innerError">' + $errorString + '</small>').insertAfter(this._dialog.find('#assignedUsername'));
-			
-			return false;
-		}
+			return true;
+		},
 		
-		return true;
-	},
-	
-	/**
-	 * Submits the assign user form.
-	 */
-	_assignUser: function() {
-		var $assignedUserID = this._dialog.find('input[name=assignedUserID]:checked').val();
-		var $assignedUsername = '';
-		if ($assignedUserID == -1) {
-			$assignedUsername = $.trim(this._dialog.find('#assignedUsername').val());
-		}
-		
-		if ($assignedUserID == -1 && $assignedUsername.length == 0) {
-			this._dialog.find('small.innerError').remove();
-			$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter(this._dialog.find('#assignedUsername'));
-			return;
-		}
-		
-		this._proxy.setOption('data', {
-			actionName: 'assignUser',
-			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction',
-			objectIDs: [ this._queueID ],
-			parameters: {
-				assignedUserID: $assignedUserID,
-				assignedUsername: $assignedUsername
+		/**
+		 * Submits the assign user form.
+		 */
+		_assignUser: function () {
+			var $assignedUserID = this._dialog.find('input[name=assignedUserID]:checked').val();
+			var $assignedUsername = '';
+			if ($assignedUserID == -1) {
+				$assignedUsername = $.trim(this._dialog.find('#assignedUsername').val());
 			}
-		});
-		this._proxy.sendRequest();
-	}
-});
+			
+			if ($assignedUserID == -1 && $assignedUsername.length == 0) {
+				this._dialog.find('small.innerError').remove();
+				$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter(this._dialog.find('#assignedUsername'));
+				return;
+			}
+			
+			this._proxy.setOption('data', {
+				actionName: 'assignUser',
+				className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction',
+				objectIDs: [this._queueID],
+				parameters: {
+					assignedUserID: $assignedUserID,
+					assignedUsername: $assignedUsername
+				}
+			});
+			this._proxy.sendRequest();
+		}
+	});
+}
+else {
+	WCF.Moderation.Management = Class.extend({
+		_buttonSelector: "",
+		_className: "",
+		_confirmationTemplate: {},
+		_dialog: {},
+		_languageItem: "",
+		_proxy: {},
+		_queueID: 0,
+		_redirectURL: "",
+		init: function() {},
+		_click: function() {},
+		_clickAssignedUser: function() {},
+		_success: function() {},
+		_failure: function() {},
+		_assignUser: function() {}
+	});
+}
 
 /**
  * Namespace for moderation queue related classes.
  */
 WCF.Moderation.Queue = { };
 
-/**
- * Marks one moderation queue entry as read.
- */
-WCF.Moderation.Queue.MarkAsRead = Class.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * action proxy
-	 * @var	WCF.Action.Proxy
+	 * Marks one moderation queue entry as read.
 	 */
-	_proxy: null,
-	
-	/**
-	 * Initializes the mark as read for queue entries.
-	 */
-	init: function() {
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
+	WCF.Moderation.Queue.MarkAsRead = Class.extend({
+		/**
+		 * action proxy
+		 * @var        WCF.Action.Proxy
+		 */
+		_proxy: null,
 		
-		$(document).on('dblclick', '.moderationList .new .columnAvatar', $.proxy(this._dblclick, this));
-	},
-	
-	/**
-	 * Handles double clicks on avatar.
-	 * 
-	 * @param	object		event
-	 */
-	_dblclick: function(event) {
-		this._proxy.setOption('data', {
-			actionName: 'markAsRead',
-			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction',
-			objectIDs: [ $(event.currentTarget).parents('tr:eq(0)').data('queueID') ]
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Handles successful AJAX requests.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		$('.moderationList .new').each(function(index, element) {
-			var $element = $(element);
-			if (WCF.inArray($element.data('queueID'), data.objectIDs)) {
-				// remove new class
-				$element.removeClass('new');
-				
-				// remove event
-				$element.find('.columnAvatar').off('dblclick');
-			}
-		});
-	}
-});
-
-/**
- * Marks all moderation queue entries as read.
- */
-WCF.Moderation.Queue.MarkAllAsRead = Class.extend({
-	/**
-	 * action proxy
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * Initializes the WCF.Moderation.Queue.MarkAllAsRead class.
-	 */
-	init: function() {
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
+		/**
+		 * Initializes the mark as read for queue entries.
+		 */
+		init: function () {
+			this._proxy = new WCF.Action.Proxy({
+				success: $.proxy(this._success, this)
+			});
+			
+			$(document).on('dblclick', '.moderationList .new .columnAvatar', $.proxy(this._dblclick, this));
+		},
 		
-		$('.markAllAsReadButton').click($.proxy(this._click, this));
-	},
-	
-	/**
-	 * Handles clicks.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		event.preventDefault();
+		/**
+		 * Handles double clicks on avatar.
+		 *
+		 * @param        object                event
+		 */
+		_dblclick: function (event) {
+			this._proxy.setOption('data', {
+				actionName: 'markAsRead',
+				className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction',
+				objectIDs: [$(event.currentTarget).parents('.moderationQueueEntry:eq(0)').data('queueID')]
+			});
+			this._proxy.sendRequest();
+		},
 		
-		this._proxy.setOption('data', {
-			actionName: 'markAllAsRead',
-			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction'
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Marks all queue entries as read.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		// update dropdown
-		var dropdown = WCF.Dropdown.Interactive.Handler.getDropdown('outstandingModeration');
-		if (dropdown) {
-			dropdown.getLinkList().find('.interactiveDropdownItemMarkAllAsRead').remove();
-			dropdown.getItemList().find('.interactiveDropdownItemMarkAsRead').remove();
+		/**
+		 * Handles successful AJAX requests.
+		 *
+		 * @param        object                data
+		 * @param        string                textStatus
+		 * @param        jQuery                jqXHR
+		 */
+		_success: function (data, textStatus, jqXHR) {
+			$('.moderationList .new').each(function (index, element) {
+				var $element = $(element);
+				if (WCF.inArray($element.data('queueID'), data.objectIDs)) {
+					// remove new class
+					$element.removeClass('new');
+					
+					// remove event
+					$element.find('.columnAvatar').off('dblclick');
+				}
+			});
 		}
+	});
+	
+	/**
+	 * Marks all moderation queue entries as read.
+	 */
+	WCF.Moderation.Queue.MarkAllAsRead = Class.extend({
+		/**
+		 * action proxy
+		 * @var        WCF.Action.Proxy
+		 */
+		_proxy: null,
 		
-		// remove badge in userpanel
-		$('#outstandingModeration .badgeUpdate').remove();
+		/**
+		 * Initializes the WCF.Moderation.Queue.MarkAllAsRead class.
+		 */
+		init: function () {
+			this._proxy = new WCF.Action.Proxy({
+				success: $.proxy(this._success, this)
+			});
+			
+			$('.markAllAsReadButton').click($.proxy(this._click, this));
+		},
 		
-		// fix moderation list
-		var $moderationList = $('.moderationList');
-		$moderationList.find('.new').removeClass('new');
-		$moderationList.find('.columnAvatar').off('dblclick');
-	}
-});
+		/**
+		 * Handles clicks.
+		 *
+		 * @param        object                event
+		 */
+		_click: function (event) {
+			event.preventDefault();
+			
+			this._proxy.setOption('data', {
+				actionName: 'markAllAsRead',
+				className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction'
+			});
+			this._proxy.sendRequest();
+		},
+		
+		/**
+		 * Marks all queue entries as read.
+		 *
+		 * @param        object                data
+		 * @param        string                textStatus
+		 * @param        jQuery                jqXHR
+		 */
+		_success: function (data, textStatus, jqXHR) {
+			// update dropdown
+			var dropdown = WCF.Dropdown.Interactive.Handler.getDropdown('outstandingModeration');
+			if (dropdown) {
+				dropdown.getLinkList().find('.interactiveDropdownItemMarkAllAsRead').remove();
+				dropdown.getItemList().find('.interactiveDropdownItemMarkAsRead').remove();
+			}
+			
+			// remove badge in userpanel
+			$('#outstandingModeration .badgeUpdate').remove();
+			
+			// fix moderation list
+			var $moderationList = $('.moderationList');
+			$moderationList.find('.new').removeClass('new');
+			$moderationList.find('.columnAvatar').off('dblclick');
+		}
+	});
+}
+else {
+	WCF.Moderation.Queue.MarkAsRead = Class.extend({
+		_proxy: {},
+		init: function() {},
+		_dblclick: function() {},
+		_success: function() {}
+	});
+	
+	WCF.Moderation.Queue.MarkAllAsRead = Class.extend({
+		_proxy: {},
+		init: function() {},
+		_click: function() {},
+		_success: function() {}
+	});
+}
 
 /**
  * Namespace for activation related classes.
  */
 WCF.Moderation.Activation = { };
 
-/**
- * Manages disabled content within moderation.
- * 
- * @see	WCF.Moderation.Management
- */
-WCF.Moderation.Activation.Management = WCF.Moderation.Management.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * @see	WCF.Moderation.Management.init()
+	 * Manages disabled content within moderation.
+	 *
+	 * @see        WCF.Moderation.Management
 	 */
-	init: function(queueID, redirectURL) {
-		this._buttonSelector = '#enableContent, #removeContent';
-		this._className = 'wcf\\data\\moderation\\queue\\ModerationQueueActivationAction';
-		
-		this._super(queueID, redirectURL, 'wcf.moderation.activation.{actionName}.confirmMessage');
-	}
-});
+	WCF.Moderation.Activation.Management = WCF.Moderation.Management.extend({
+		/**
+		 * @see        WCF.Moderation.Management.init()
+		 */
+		init: function (queueID, redirectURL) {
+			this._buttonSelector = '#enableContent, #removeContent';
+			this._className = 'wcf\\data\\moderation\\queue\\ModerationQueueActivationAction';
+			
+			this._super(queueID, redirectURL, 'wcf.moderation.activation.{actionName}.confirmMessage');
+		}
+	});
+}
+else {
+	WCF.Moderation.Activation.Management = WCF.Moderation.Management.extend({
+		init: function() {},
+		_buttonSelector: "",
+		_className: "",
+		_confirmationTemplate: {},
+		_dialog: {},
+		_languageItem: "",
+		_proxy: {},
+		_queueID: 0,
+		_redirectURL: "",
+		_click: function() {},
+		_clickAssignedUser: function() {},
+		_success: function() {},
+		_failure: function() {},
+		_assignUser: function() {}
+	});
+}
 
 /**
  * Namespace for report related classes.
@@ -600,99 +657,141 @@ WCF.Moderation.Report.Content = Class.extend({
 	}
 });
 
-/**
- * Manages reported content within moderation.
- * 
- * @see	WCF.Moderation.Management
- */
-WCF.Moderation.Report.Management = WCF.Moderation.Management.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * @see	WCF.Moderation.Management.init()
+	 * Manages reported content within moderation.
+	 *
+	 * @see        WCF.Moderation.Management
 	 */
-	init: function(queueID, redirectURL) {
-		this._buttonSelector = '#removeContent, #removeReport';
-		this._className = 'wcf\\data\\moderation\\queue\\ModerationQueueReportAction';
-		
-		this._super(queueID, redirectURL, 'wcf.moderation.report.{actionName}.confirmMessage');
-		
-		this._confirmationTemplate.removeContent = $('<div class="section"><dl><dt><label for="message">' + WCF.Language.get('wcf.moderation.report.removeContent.reason') + '</label></dt><dd><textarea name="message" id="message" cols="40" rows="3" /></dd></dl></div>');
-	}
-});
-
-/**
- * User Panel implementation for moderation queues.
- * 
- * @see	WCF.User.Panel.Abstract
- */
-WCF.User.Panel.Moderation = WCF.User.Panel.Abstract.extend({
+	WCF.Moderation.Report.Management = WCF.Moderation.Management.extend({
+		/**
+		 * @see        WCF.Moderation.Management.init()
+		 */
+		init: function (queueID, redirectURL) {
+			this._buttonSelector = '#removeContent, #removeReport';
+			this._className = 'wcf\\data\\moderation\\queue\\ModerationQueueReportAction';
+			
+			this._super(queueID, redirectURL, 'wcf.moderation.report.{actionName}.confirmMessage');
+			
+			this._confirmationTemplate.removeContent = $('<div class="section"><dl><dt><label for="message">' + WCF.Language.get('wcf.moderation.report.removeContent.reason') + '</label></dt><dd><textarea name="message" id="message" cols="40" rows="3" /></dd></dl></div>');
+			this._confirmationTemplate.removeReport = $('<div class="section"><dl><dt></dt><dd><label><input type="checkbox" name="markAsJustified" id="markAsJustified" value="1"> ' + WCF.Language.get('wcf.moderation.report.removeReport.markAsJustified') + '</label></dd></dl></div>');
+		}
+	});
+	
 	/**
-	 * @see	WCF.User.Panel.Abstract.init()
+	 * User Panel implementation for moderation queues.
+	 *
+	 * @see        WCF.User.Panel.Abstract
 	 */
-	init: function(options) {
-		options.enableMarkAsRead = true;
-		
-		this._super($('#outstandingModeration'), 'outstandingModeration', options);
-		
-		require(['EventHandler'], (function(EventHandler) {
-			EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', (function(data) {
-				if (data.identifier === 'com.woltlab.wcf.moderation') {
-					this.toggle();
-				}
+	WCF.User.Panel.Moderation = WCF.User.Panel.Abstract.extend({
+		/**
+		 * @see        WCF.User.Panel.Abstract.init()
+		 */
+		init: function (options) {
+			options.enableMarkAsRead = true;
+			
+			this._super($('#outstandingModeration'), 'outstandingModeration', options);
+			
+			require(['EventHandler'], (function (EventHandler) {
+				EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', (function (data) {
+					if (data.identifier === 'com.woltlab.wcf.moderation') {
+						this.toggle();
+					}
+				}).bind(this));
 			}).bind(this));
-		}).bind(this));
-	},
-	
-	/**
-	 * @see	WCF.User.Panel.Abstract._initDropdown()
-	 */
-	_initDropdown: function() {
-		var $dropdown = this._super();
+		},
 		
-		$('<li><a href="' + this._options.deletedContentLink + '" title="' + this._options.deletedContent + '" class="jsTooltip"><span class="icon icon24 fa-trash-o" /></a></li>').appendTo($dropdown.getLinkList());
+		/**
+		 * @see        WCF.User.Panel.Abstract._initDropdown()
+		 */
+		_initDropdown: function () {
+			var $dropdown = this._super();
+			
+			$('<li><a href="' + this._options.deletedContentLink + '" title="' + this._options.deletedContent + '" class="jsTooltip"><span class="icon icon24 fa-trash-o" /></a></li>').appendTo($dropdown.getLinkList());
+			
+			return $dropdown;
+		},
 		
-		return $dropdown;
-	},
-	
-	/**
-	 * @see	WCF.User.Panel.Abstract._load()
-	 */
-	_load: function() {
-		this._proxy.setOption('data', {
-			actionName: 'getOutstandingQueues',
-			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction'
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * @see	WCF.User.Panel.Abstract._markAsRead()
-	 */
-	_markAsRead: function(event, objectID) {
-		this._proxy.setOption('data', {
-			actionName: 'markAsRead',
-			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction',
-			objectIDs: [ objectID ]
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * @see	WCF.User.Panel.Abstract._markAllAsRead()
-	 */
-	_markAllAsRead: function(event) {
-		this._proxy.setOption('data', {
-			actionName: 'markAllAsRead',
-			className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction'
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * @see	WCF.User.Panel.Abstract.resetItems()
-	 */
-	resetItems: function() {
-		this._super();
+		/**
+		 * @see        WCF.User.Panel.Abstract._load()
+		 */
+		_load: function () {
+			this._proxy.setOption('data', {
+				actionName: 'getOutstandingQueues',
+				className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction'
+			});
+			this._proxy.sendRequest();
+		},
 		
-		this._loadData = true;
-	}
-});
+		/**
+		 * @see        WCF.User.Panel.Abstract._markAsRead()
+		 */
+		_markAsRead: function (event, objectID) {
+			this._proxy.setOption('data', {
+				actionName: 'markAsRead',
+				className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction',
+				objectIDs: [objectID]
+			});
+			this._proxy.sendRequest();
+		},
+		
+		/**
+		 * @see        WCF.User.Panel.Abstract._markAllAsRead()
+		 */
+		_markAllAsRead: function (event) {
+			this._proxy.setOption('data', {
+				actionName: 'markAllAsRead',
+				className: 'wcf\\data\\moderation\\queue\\ModerationQueueAction'
+			});
+			this._proxy.sendRequest();
+		},
+		
+		/**
+		 * @see        WCF.User.Panel.Abstract.resetItems()
+		 */
+		resetItems: function () {
+			this._super();
+			
+			this._loadData = true;
+		}
+	});
+}
+else {
+	WCF.Moderation.Report.Management = WCF.Moderation.Management.extend({
+		init: function() {},
+		_buttonSelector: "",
+		_className: "",
+		_confirmationTemplate: {},
+		_dialog: {},
+		_languageItem: "",
+		_proxy: {},
+		_queueID: 0,
+		_redirectURL: "",
+		_click: function() {},
+		_clickAssignedUser: function() {},
+		_success: function() {},
+		_failure: function() {},
+		_assignUser: function() {}
+	});
+	
+	WCF.User.Panel.Moderation = WCF.User.Panel.Abstract.extend({
+		init: function() {},
+		_initDropdown: function() {},
+		_load: function() {},
+		_markAsRead: function() {},
+		_markAllAsRead: function() {},
+		resetItems: function() {},
+		_badge: {},
+		_dropdown: {},
+		_identifier: "",
+		_loadData: true,
+		_markAllAsReadLink: {},
+		_options: {},
+		_proxy: {},
+		_triggerElement: {},
+		toggle: function() {},
+		_dblClick: function() {},
+		_success: function() {},
+		updateBadge: function() {}
+	});
+}

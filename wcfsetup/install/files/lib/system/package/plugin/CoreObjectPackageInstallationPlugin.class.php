@@ -2,17 +2,18 @@
 namespace wcf\system\package\plugin;
 use wcf\data\core\object\CoreObjectEditor;
 use wcf\system\cache\builder\CoreObjectCacheBuilder;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\WCF;
 
 /**
  * Installs, updates and deletes core objects.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -67,5 +68,12 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 */
 	protected function cleanup() {
 		CoreObjectCacheBuilder::getInstance()->reset();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
 	}
 }

@@ -33,7 +33,7 @@ use wcf\util\UserRegistrationUtil;
  * Shows the user registration form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -326,12 +326,21 @@ class RegisterForm extends UserAddForm {
 					// Twitter
 					if (WCF::getSession()->getVar('__twitterData')) {
 						$twitterData = WCF::getSession()->getVar('__twitterData');
-						$this->additionalFields['authData'] = 'twitter:'.$twitterData['user_id'];
+						$this->additionalFields['authData'] = 'twitter:'.(isset($twitterData['id']) ? $twitterData['id'] : $twitterData['user_id']);
 						
 						WCF::getSession()->unregister('__twitterData');
 						
+						if (WCF::getSession()->getVar('__email') && WCF::getSession()->getVar('__email') == $this->email) {
+							$registerVia3rdParty = true;
+						}
+						
 						if (isset($twitterData['description']) && User::getUserOptionID('aboutMe') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $twitterData['description'];
 						if (isset($twitterData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $twitterData['location'];
+						
+						// avatar
+						if (isset($twitterData['profile_image_url'])) {
+							$avatarURL = $twitterData['profile_image_url'];
+						}
 					}
 				break;
 				case 'facebook':
@@ -352,18 +361,7 @@ class RegisterForm extends UserAddForm {
 							list($month, $day, $year) = explode('/', $facebookData['birthday']);
 							$saveOptions[User::getUserOptionID('birthday')] = $year.'-'.$month.'-'.$day;
 						}
-						if (isset($facebookData['about']) && User::getUserOptionID('aboutMe') !== null) $saveOptions[User::getUserOptionID('aboutMe')] = $facebookData['about'];
 						if (isset($facebookData['location']) && User::getUserOptionID('location') !== null) $saveOptions[User::getUserOptionID('location')] = $facebookData['location']['name'];
-						if (isset($facebookData['website']) && User::getUserOptionID('website') !== null) {
-							$urls = preg_split('/[\s,;]/', $facebookData['website'], -1, PREG_SPLIT_NO_EMPTY);
-							if (!empty($urls)) {
-								if (!Regex::compile('^https?://')->match($urls[0])) {
-									$urls[0] = 'http://' . $urls[0];
-								}
-								
-								$saveOptions[User::getUserOptionID('homepage')] = $urls[0];
-							}
-						}
 						
 						// avatar
 						if (isset($facebookData['picture']) && !$facebookData['picture']['data']['is_silhouette']) {
@@ -404,7 +402,7 @@ class RegisterForm extends UserAddForm {
 						
 						// avatar
 						if (isset($googleData['image']['url'])) {
-							$avatarURL = $googleData['image']['url'];
+							$avatarURL = preg_replace('/\?sz=\d+/', '?sz=128', $googleData['image']['url']);
 						}
 					}
 				break;
@@ -488,7 +486,7 @@ class RegisterForm extends UserAddForm {
 		// notify admin
 		if (REGISTER_ADMIN_NOTIFICATION) {
 			// get default language
-			$language = LanguageFactory::getInstance()->getLanguage(LanguageFactory::getInstance()->getDefaultLanguageID());
+			$language = LanguageFactory::getInstance()->getDefaultLanguage();
 			
 			$email = new Email();
 			$email->addRecipient(new Mailbox(MAIL_ADMIN_ADDRESS, null, $language));

@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * Shows the group edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -38,7 +38,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	 * user group editor object
 	 * @var	UserGroupEditor
 	 */
-	public $group = null;
+	public $group;
 	
 	/**
 	 * @inheritDoc
@@ -101,7 +101,10 @@ class UserGroupEditForm extends UserGroupAddForm {
 			'groupID' => $this->group->groupID,
 			'group' => $this->group,
 			'action' => 'edit',
-			'availableUserGroups' => UserGroup::getAccessibleGroups()
+			'availableUserGroups' => UserGroup::getAccessibleGroups(),
+			'groupIsEveryone' => $this->group->groupType == UserGroup::EVERYONE,
+			'groupIsGuest' => $this->group->groupType == UserGroup::GUESTS,
+			'groupIsUsers' => $this->group->groupType == UserGroup::USERS
 		]);
 		
 		// add warning when the initiator is in the group

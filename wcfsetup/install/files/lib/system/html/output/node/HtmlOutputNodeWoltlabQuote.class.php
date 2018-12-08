@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Processes quotes.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
@@ -38,11 +38,16 @@ class HtmlOutputNodeWoltlabQuote extends AbstractHtmlOutputNode {
 						$collapse = true;
 					}
 					
+					$link = $element->getAttribute('data-link');
+					if (mb_strpos($link, 'index.php') === 0) {
+						$link = WCF::getPath() . $link;
+					}
+					
 					$nodeIdentifier = StringUtil::getRandomID();
 					$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
 						'author' => $element->getAttribute('data-author'),
 						'collapse' => $collapse,
-						'url' => $element->getAttribute('data-link')
+						'url' => $link
 					]);
 					
 					$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);

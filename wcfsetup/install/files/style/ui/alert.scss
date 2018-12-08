@@ -95,7 +95,7 @@
 		left: 10px;
 		position: absolute;
 		top: -6px;
-		z-index: 101;
+		z-index: 99;
 	}
 }
 
@@ -174,9 +174,9 @@
 .innerInfo {
 	background-color: $wcfStatusInfoBackground;
 	color: $wcfStatusInfoText;
-
+	
 	&::before {
-		border-bottom-color: $wcfStatusInfoBorder;
+		border-bottom-color: $wcfStatusInfoBackground;
 	}
 	
 	a {

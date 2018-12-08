@@ -6,7 +6,7 @@ use wcf\system\WCF;
  * Represents a list of ACP search results.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Search\Acp
  */
@@ -54,7 +54,7 @@ class ACPSearchResultList implements \Countable, \Iterator {
 	 * @param	integer		$count
 	 */
 	public function reduceResults($count) {
-		// more results than available should be whiped, just set it to 0
+		// more results than available should be wiped, just set it to 0
 		if ($count >= count($this->results)) {
 			$this->results = [];
 		}

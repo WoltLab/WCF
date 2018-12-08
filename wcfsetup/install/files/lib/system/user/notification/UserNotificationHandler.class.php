@@ -18,6 +18,7 @@ use wcf\system\email\Email;
 use wcf\system\email\UserMailbox;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
+use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\object\type\IUserNotificationObjectType;
 use wcf\system\user\notification\object\IUserNotificationObject;
@@ -30,7 +31,7 @@ use wcf\util\CryptoUtil;
  * Handles user notifications.
  * 
  * @author	Marcel Werk, Oliver Kliebisch
- * @copyright	2001-2017 WoltLab GmbH, Oliver Kliebisch
+ * @copyright	2001-2018 WoltLab GmbH, Oliver Kliebisch
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification
  */
@@ -187,6 +188,34 @@ class UserNotificationHandler extends SingletonFactory {
 		$recipientIDs = array_diff($recipientIDs, array_keys($notifications));
 		if (empty($recipientIDs)) {
 			return;
+		}
+		
+		// remove recipients that are blocking the current user
+		if ($userProfile->getUserID()) {
+			// we use a live query here to avoid offloading this to the UserProfile
+			// class, as we're potentially dealing with a lot of users and loading
+			// their user storage data can get really expensive
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add("userID IN (?)", [$recipientIDs]);
+			$conditions->add("ignoreUserID = ?", [$userProfile->getUserID()]);
+			
+			$sql = "SELECT  userID
+				FROM    wcf" . WCF_N . "_user_ignore
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			$userIDs = [];
+			while ($userID = $statement->fetchColumn()) {
+				$userIDs[] = $userID;
+			}
+			
+			if (!empty($userIDs)) {
+				$recipientIDs = array_diff($recipientIDs, $userIDs);
+			}
+			
+			if (empty($recipientIDs)) {
+				return;
+			}
 		}
 		
 		// get recipients
@@ -658,12 +687,12 @@ class UserNotificationHandler extends SingletonFactory {
 		$message = $event->getEmailMessage('instant');
 		if (is_array($message)) {
 			if (!isset($message['variables'])) $message['variables'] = [];
-			$variables = [
+			$variables = array_merge($message['variables'], [
 				'notificationContent' => $message,
 				'event' => $event,
 				'notificationType' => 'instant',
-				'variables' => $message['variables']
-			];
+				'variables' => $message['variables'] // deprecated, but is kept for backwards compatibility
+			]);
 			
 			if (isset($message['message-id'])) {
 				$email->setMessageID($message['message-id']);
@@ -870,5 +899,33 @@ class UserNotificationHandler extends SingletonFactory {
 		$row = $statement->fetchArray();
 		if ($row === false) return false;
 		return $row['mailNotificationType'];
+	}
+	
+	/**
+	 * Returns the title and text-only message body for the latest notification,
+	 * that is both unread and newer than `$lastRequestTimestamp`. May return an
+	 * empty array if there is no new notification.
+	 * 
+	 * @param       integer         $lastRequestTimestamp
+	 * @return      string[]
+	 */
+	public function getLatestNotification($lastRequestTimestamp) {
+		$notifications = $this->fetchNotifications(1, 0, 0);
+		if (!empty($notifications) && reset($notifications)->time > $lastRequestTimestamp) {
+			$notifications = $this->processNotifications($notifications);
+			
+			if (isset($notifications['notifications'][0])) {
+				/** @var IUserNotificationEvent $event */
+				$event = $notifications['notifications'][0]['event'];
+				
+				return [
+					'title' => strip_tags($event->getTitle()),
+					'message' => strip_tags($event->getMessage()),
+					'link' => LinkHandler::getInstance()->getLink('NotificationConfirm', ['id' => $event->getNotification()->notificationID])
+				];
+			}
+		}
+		
+		return [];
 	}
 }

@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * Shows a cms article.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * @since	3.0
@@ -109,7 +109,12 @@ class ArticlePage extends AbstractArticlePage {
 		MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'article', true);
 		MetaTagHandler::getInstance()->addTag('og:description', 'og:description', ($this->articleContent->teaser ?: StringUtil::decodeHTML(StringUtil::stripHTML($this->articleContent->getFormattedTeaser()))), true);
 		
-		if ($this->articleContent->getImage()) {
+		if ($this->articleContent->getTeaserImage() && $this->articleContent->getTeaserImage()->width >= 200 && $this->articleContent->getTeaserImage()->height >= 200) {
+			MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->articleContent->getTeaserImage()->getLink(), true);
+			MetaTagHandler::getInstance()->addTag('og:image:width', 'og:image:width', $this->articleContent->getTeaserImage()->width, true);
+			MetaTagHandler::getInstance()->addTag('og:image:height', 'og:image:height', $this->articleContent->getTeaserImage()->height, true);
+		}
+		else if ($this->articleContent->getImage()) {
 			MetaTagHandler::getInstance()->addTag('og:image', 'og:image', $this->articleContent->getImage()->getLink(), true);
 			MetaTagHandler::getInstance()->addTag('og:image:width', 'og:image:width', $this->articleContent->getImage()->width, true);
 			MetaTagHandler::getInstance()->addTag('og:image:height', 'og:image:height', $this->articleContent->getImage()->height, true);
@@ -140,8 +145,7 @@ class ArticlePage extends AbstractArticlePage {
 			'commentObjectTypeID' => $this->commentObjectTypeID,
 			'lastCommentTime' => $this->commentList ? $this->commentList->getMinCommentTime() : 0,
 			'likeData' => (MODULE_LIKE && $this->commentList) ? $this->commentList->getLikeData() : [],
-			'articleLikeData' => $this->articleLikeData,
-			'allowSpidersToIndexThisPage' => true
+			'articleLikeData' => $this->articleLikeData
 		]);
 	}
 }

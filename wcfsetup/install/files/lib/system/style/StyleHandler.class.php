@@ -7,12 +7,13 @@ use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\JSON;
 
 /**
  * Handles styles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Style
  */
@@ -22,6 +23,12 @@ class StyleHandler extends SingletonFactory {
 	 * @var	array
 	 */
 	protected $cache = [];
+	
+	/**
+	 * list of FontAwesome icons excluding the `fa-`-prefix
+	 * @var string[]
+	 */
+	protected $icons = [];
 	
 	/**
 	 * active style object
@@ -162,8 +169,10 @@ class StyleHandler extends SingletonFactory {
 	
 	/**
 	 * Resets all stylesheets.
+	 * 
+	 * @param       boolean         $resetACP
 	 */
-	public static function resetStylesheets() {
+	public static function resetStylesheets($resetACP = true) {
 		// frontend stylesheets
 		$stylesheets = glob(WCF_DIR.'style/style-*.css');
 		if ($stylesheets !== false) {
@@ -173,10 +182,12 @@ class StyleHandler extends SingletonFactory {
 		}
 		
 		// ACP stylesheets
-		$stylesheets = glob(WCF_DIR.'acp/style/style*.css');
-		if ($stylesheets !== false) {
-			foreach ($stylesheets as $stylesheet) {
-				@unlink($stylesheet);
+		if ($resetACP) {
+			$stylesheets = glob(WCF_DIR . 'acp/style/style*.css');
+			if ($stylesheets !== false) {
+				foreach ($stylesheets as $stylesheet) {
+					@unlink($stylesheet);
+				}
 			}
 		}
 	}
@@ -208,5 +219,34 @@ class StyleHandler extends SingletonFactory {
 	 */
 	public function showStyleChanger() {
 		return ($this->countStyles() && SHOW_STYLE_CHANGER);
+	}
+	
+	/**
+	 * Returns the list of FontAwesome icons excluding the `fa-`-prefix,
+	 * optionally encoding the list as JSON.
+	 * 
+	 * @param       boolean         $toJSON         encode array as a JSON string
+	 * @return      string|\string[]        JSON string or PHP array of strings
+	 */
+	public function getIcons($toJSON = false) {
+		if (empty($this->icons)) {
+			$this->parseVariables();
+		}
+		
+		if ($toJSON) {
+			return JSON::encode($this->icons);
+		}
+		
+		return $this->icons;
+	}
+	
+	/**
+	 * Reads the available icon names from the variable definition file.
+	 */
+	protected function parseVariables() {
+		$content = file_get_contents(WCF_DIR.'style/icon/_variables.scss');
+		preg_match_all('~\$fa-var-([a-z0-9\-]+)~', $content, $matches);
+		
+		$this->icons = $matches[1];
 	}
 }

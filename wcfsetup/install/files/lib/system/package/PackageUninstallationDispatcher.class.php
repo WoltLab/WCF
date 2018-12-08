@@ -19,7 +19,7 @@ use wcf\system\WCF;
  * Handles the whole uninstallation process.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */
@@ -156,7 +156,7 @@ class PackageUninstallationDispatcher extends PackageInstallationDispatcher {
 	 * Deletes the given list of files from the target dir.
 	 * 
 	 * @param	string		$targetDir
-	 * @param	string		$files
+	 * @param	string[]	$files
 	 * @param	boolean		$deleteEmptyDirectories
 	 * @param	boolean		$deleteEmptyTargetDir
 	 */

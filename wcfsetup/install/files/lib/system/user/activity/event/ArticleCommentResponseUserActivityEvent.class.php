@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * User activity event implementation for responses to article comments.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Activity\Event
  * @since	3.0
@@ -45,19 +45,25 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
 		}
 		
 		// fetch articles
-		$articleIDs = $articles = [];
+		$articleContentIDs = [];
 		foreach ($comments as $comment) {
-			$articleIDs[] = $comment->objectID;
+			$articleContentIDs[] = $comment->objectID;
 		}
-		if (!empty($articleIDs)) {
+		
+		$articles = $articleContentToArticle = [];
+		if (!empty($articleContentIDs)) {
 			$articleList = new ViewableArticleList();
-			$articleList->setObjectIDs($articleIDs);
+			$articleList->getConditionBuilder()->add("article.articleID IN (SELECT articleID FROM wcf".WCF_N."_article_content WHERE articleContentID IN (?))", [$articleContentIDs]);
 			$articleList->readObjects();
-			$articles = $articleList->getObjects();
+			foreach ($articleList as $article) {
+				$articles[$article->articleID] = $article;
+				
+				$articleContentToArticle[$article->getArticleContent()->articleContentID] = $article->articleID;
+			}
 		}
 		
 		// fetch users
-		$userIDs = $user = [];
+		$userIDs = $users = [];
 		foreach ($comments as $comment) {
 			$userIDs[] = $comment->userID;
 		}
@@ -73,8 +79,8 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
 			if (isset($responses[$event->objectID])) {
 				$response = $responses[$event->objectID];
 				$comment = $comments[$response->commentID];
-				if (isset($articles[$comment->objectID]) && isset($users[$comment->userID])) {
-					$article = $articles[$comment->objectID];
+				if (isset($articleContentToArticle[$comment->objectID]) && isset($users[$comment->userID])) {
+					$article = $articles[$articleContentToArticle[$comment->objectID]];
 					
 					// check permissions
 					if (!$article->canRead()) {
@@ -85,6 +91,8 @@ class ArticleCommentResponseUserActivityEvent extends SingletonFactory implement
 					// title
 					$text = WCF::getLanguage()->getDynamicVariable('wcf.article.recentActivity.articleCommentResponse', [
 						'commentAuthor' => $users[$comment->userID],
+						'commentID' => $comment->commentID,
+						'responseID' => $response->responseID,
 						'article' => $article
 					]);
 					$event->setTitle($text);

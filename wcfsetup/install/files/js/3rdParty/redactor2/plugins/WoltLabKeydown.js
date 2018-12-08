@@ -5,8 +5,160 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 	
 	return {
 		init: function () {
+			var selection = window.getSelection();
+			
 			var mpInit = this.keydown.init;
 			this.keydown.init = (function (e) {
+				var node;
+				
+				// remove empty whitespaces in front of an <img> when backspacing in Firefox
+				if (this.detect.isFirefox() && selection.isCollapsed && e.which === this.keyCode.BACKSPACE) {
+					node = selection.anchorNode;
+					if (node.nodeType === Node.ELEMENT_NODE && selection.anchorOffset > 0) {
+						node = node.childNodes[selection.anchorOffset - 1];
+					}
+					
+					if (node.nodeType === Node.TEXT_NODE && node.textContent === '\u200B') {
+						var emptyNodes = [];
+						var sibling = node;
+						while (sibling = sibling.previousSibling) {
+							if (sibling.nodeType === Node.ELEMENT_NODE) {
+								if (sibling.nodeName !== 'IMG') emptyNodes = [];
+								
+								break;
+							}
+							else if (sibling.nodeType === Node.TEXT_NODE) {
+								var text = sibling.textContent;
+								if (text === '' || text === '\u200B') {
+									emptyNodes.push(sibling);
+								}
+								else {
+									emptyNodes = [];
+									break;
+								}
+							}
+						}
+						
+						if (emptyNodes.length) {
+							emptyNodes.forEach(elRemove);
+						}
+					}
+				}
+				
+				// delete the current line on backspace and delete, if it is empty, and move
+				// the caret into the adjacent element, rather than pulling content out
+				if (e.originalEvent.which === this.keyCode.BACKSPACE || e.originalEvent.which === this.keyCode.DELETE) {
+					if (selection.isCollapsed) {
+						var container = this.selection.block();
+						if (container.nodeName === 'P') {
+							// check if we're merging "adjacent" lists
+							if (this.list.combineAfterAndBefore(container)) {
+								e.originalEvent.preventDefault();
+								return;
+							}
+							else if (this.utils.isEmpty(container.innerHTML)) {
+								// simple comparison to check that at least one sibling is not null
+								if (container.previousElementSibling !== container.nextElementSibling) {
+									var caretEnd = null, caretStart = null;
+									
+									if (e.originalEvent.which === this.keyCode.BACKSPACE) {
+										if (container.previousElementSibling === null) {
+											caretStart = container.nextElementSibling;
+										}
+										else {
+											caretEnd = container.previousElementSibling;
+										}
+									}
+									else {
+										if (container.nextElementSibling === null) {
+											caretEnd = container.previousElementSibling;
+										}
+										else {
+											caretStart = container.nextElementSibling;
+										}
+									}
+									
+									elRemove(container);
+									
+									if (caretStart === null) {
+										if (caretEnd.nodeName === 'OL' || caretEnd.nodeName === 'UL') {
+											caretEnd = caretEnd.lastElementChild;
+										}
+										
+										this.caret.end(caretEnd);
+									}
+									else {
+										if (caretStart.nodeName === 'OL' || caretStart.nodeName === 'UL') {
+											caretStart = caretStart.firstElementChild;
+										}
+										
+										this.caret.start(caretStart);
+									}
+									
+									e.originalEvent.preventDefault();
+									return;
+								}
+							}
+						}
+						else if (this.detect.isWebkit() && container.nodeName === 'LI' && e.which === this.keyCode.DELETE) {
+							// check if caret is at the end of the list item, and if there is an adjacent list item
+							var anchorNode = selection.anchorNode;
+							if (anchorNode.nodeType === Node.TEXT_NODE && anchorNode.textContent.length === selection.anchorOffset && anchorNode.parentNode.lastChild === anchorNode) {
+								var nextItem = container.nextElementSibling;
+								if (nextItem && nextItem.nodeName === 'LI') {
+									this.buffer.set();
+									
+									this.selection.save();
+									
+									while (nextItem.childNodes.length) {
+										container.appendChild(nextItem.childNodes[0]);
+									}
+									elRemove(nextItem);
+									
+									this.selection.restore();
+									
+									e.preventDefault();
+									return;
+								}
+							}
+						}
+					}
+				}
+				
+				// Redactor's own work-around for backspacing in Firefox at the start of a block
+				// is flawed when the previous element is a list. Their current implementation
+				// inserts the content straight into the list element, rather than appending it
+				// to the last possible location inside a <li>.
+				var br = null;
+				if (e.which === this.keyCode.BACKSPACE && this.detect.isFirefox()) {
+					var block = this.selection.block();
+					if (block && block.tagName === 'P' && this.utils.isStartOfElement(block)) {
+						var previousBlock = block.previousElementSibling;
+						if (previousBlock && (previousBlock.nodeName === 'OL' || previousBlock.nodeName === 'UL')) {
+							this.buffer.set();
+							this.selection.save();
+							
+							var listItem = previousBlock.lastElementChild;
+							while (block.childNodes.length) {
+								listItem.appendChild(block.childNodes[0]);
+							}
+							
+							elRemove(block);
+							this.selection.restore();
+							
+							e.preventDefault();
+							return;
+						}
+						else if (previousBlock && previousBlock.nodeName === 'P') {
+							// Firefox moves the <br> of a previous <p><br></p> into the current container instead of removing the <br> along with the <p>.
+							br = previousBlock.lastElementChild;
+							if (br !== null && br.nodeName !== 'BR') {
+								br = null;
+							}
+						}
+					}
+				}
+				
 				var returnValue = mpInit.call(this, e);
 				
 				if (returnValue !== false && !e.originalEvent.defaultPrevented) {
@@ -14,7 +166,6 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					
 					// 39 == right
 					if (e.which === 39 && !e.ctrlKey && !e.shiftKey && !e.metaKey && !e.altKey) {
-						var selection = window.getSelection();
 						if (!selection.isCollapsed) {
 							return;
 						}
@@ -33,7 +184,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 						
 						// check if there is absolutely nothing afterwards
 						var isAtTheVeryEnd = true;
-						var node = parent;
+						node = parent;
 						while (node && node !== this.core.editor()[0]) {
 							if (node.nextSibling !== null) {
 								// strip empty text nodes
@@ -55,6 +206,12 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 						}
 					}
 				}
+				else if (br !== null && this.detect.isFirefox()) {
+					var range = selection.getRangeAt(0);
+					if (range.startOffset === 1 && range.startContainer.firstElementChild === br) {
+						elRemove(br);
+					}
+				}
 			}).bind(this);
 			
 			var ua = window.navigator.userAgent.toLowerCase();
@@ -72,23 +229,47 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 			this.core.editor().on('keydown.redactor', this.keydown.init.bind(this));
 			
 			this.keydown.onArrowDown = (function() {
-				var tags = this.WoltLabKeydown._getBlocks();
+				var next, tag, tags = this.WoltLabKeydown._getBlocks();
 				
 				for (var i = 0; i < tags.length; i++) {
-					if (tags[i]) {
-						this.keydown.insertAfterLastElement(tags[i]);
-						return false;
+					tag = tags[i];
+					if (tag) {
+						if (!this.utils.isEndOfElement(tag)) {
+							continue;
+						}
+						
+						next = tag.nextElementSibling;
+						if (next !== null && next.nodeName === 'P') {
+							break;
+						}
+						
+						this.keydown.insertAfterLastElement(tag);
+						return;
 					}
 				}
 			}).bind(this);
 			
 			this.keydown.onArrowUp = (function() {
-				var tags = this.WoltLabKeydown._getBlocks();
+				var previous, tag, tags = this.WoltLabKeydown._getBlocks();
 				
 				for (var i = 0; i < tags.length; i++) {
-					if (tags[i]) {
-						this.keydown.insertBeforeFirstElement(tags[i]);
-						return false;
+					tag = tags[i];
+					if (tag) {
+						if (!this.utils.isStartOfElement()) {
+							break;
+						}
+						
+						previous = tag.previousElementSibling;
+						if (previous !== null && previous.nodeName !== 'P') {
+							var p = $(this.opts.emptyHtml)[0];
+							tag.parentNode.insertBefore(p, tag);
+							
+							this.caret.end(p);
+							break;
+						}
+						
+						this.keydown.insertBeforeFirstElement(tag);
+						return;
 					}
 				}
 			}).bind(this);
@@ -129,20 +310,20 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					
 					// empty list exit
 					if (this.keydown.block.tagName === 'LI') {
+						// WoltLab modification: own list handling
 						var current = this.selection.current();
-						var $parent = $(current).closest('li', this.$editor[0]);
-						// WoltLab modification: this was a call to $.parents() that did
-						// escape Redactor
-						var $list = $parent.parentsUntil(this.$editor[0], 'ul,ol').last();
+						var listItem = elClosest(current, 'li');
 						
-						if ($parent.length !== 0 && this.utils.isEmpty($parent.html()) && $list.next().length === 0 && this.utils.isEmpty($list.find("li").last().html())) {
-							$list.find("li").last().remove();
-							
-							var node = $(this.opts.emptyHtml);
-							$list.after(node);
-							this.caret.start(node);
-							
-							return false;
+						// We want to offload as much as possible to the browser, which already
+						// includes a handling of the enter key in an empty list item. Unfortunately,
+						// they do not recognize this at all times, in particular certain white-spaces
+						// and <br> may not always play well.
+						if (this.utils.isRedactorParent(listItem) && this.utils.isEmpty(listItem.innerHTML)) {
+							// the current item is empty and there is no adjacent one, force clear the
+							// contents to enable browser recognition
+							if (listItem.nextElementSibling === null) {
+								listItem.innerHTML = '';
+							}
 						}
 					}
 					
@@ -168,7 +349,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 								if (current.childNodes.length === 0) {
 									remove = true;
 								}
-								else if (current.textContent.replace(/\u200B/g, '') === '') {
+								else if (current.textContent.replace(/\u200B/g, '').trim() === '') {
 									remove = true;
 									
 									// check if there are only <span> elements
@@ -282,8 +463,67 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 			
 			var mpOnTab = this.keydown.onTab;
 			this.keydown.onTab = (function(e, key) {
-				if (!this.keydown.pre && $(this.selection.current()).closest('ul, ol', this.core.editor()[0]).length === 0) {
-					return true;
+				if (!this.keydown.pre) {
+					var closestRelevantBlock = $(this.selection.current()).closest('ul, ol, td', this.core.editor()[0]);
+					if (closestRelevantBlock.length === 0) {
+						// ignore tab, the browser's default action will be executed
+						return true;
+					}
+					
+					closestRelevantBlock = closestRelevantBlock[0];
+					if (closestRelevantBlock.nodeName === 'TD') {
+						var target = null;
+						
+						if (e.originalEvent.shiftKey) {
+							target = closestRelevantBlock.previousElementSibling;
+							
+							// first `<td>` of current `<tr>`
+							if (target === null) {
+								target = closestRelevantBlock.parentNode.previousElementSibling;
+								
+								if (target !== null) {
+									// set focus to last `<td>`
+									target = target.lastElementChild;
+								}
+							}
+						}
+						else {
+							target = closestRelevantBlock.nextElementSibling;
+							
+							// last `<td>` of current `<tr>`
+							if (target === null) {
+								target = closestRelevantBlock.parentNode.nextElementSibling;
+								
+								// last `<tr>`
+								if (target === null) {
+									this.table.addRowBelow();
+									
+									target = closestRelevantBlock.parentNode.nextElementSibling;
+								}
+								
+								// set focus to first `<td>`
+								target = target.firstElementChild;
+							}
+						}
+						
+						if (target !== null) {
+							if (this.utils.isEmpty(target.innerHTML)) {
+								// `<td>` is empty
+								this.caret.end(target);
+							}
+							else {
+								// select the entire content
+								var range = document.createRange();
+								range.selectNodeContents(target);
+								
+								selection.removeAllRanges();
+								selection.addRange(range);
+							}
+						}
+						
+						e.originalEvent.preventDefault();
+						return false;
+					}
 				}
 				
 				return mpOnTab.call(this, e, key);
@@ -376,6 +616,12 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				return (elBySel('img', element) === null && element.textContent.replace(/\u200B/g, '').trim() === '');
 			};
 			
+			// Firefox misbehaves when backspacing/deleting inside custom elements,
+			// causing the element to  be split into (at least) two separate blocks.
+			// The code below aims to solve this by detect these fragmented elements
+			// and merge them again.
+			// 
+			// See https://bugzilla.mozilla.org/show_bug.cgi?id=1329639
 			var firefoxHandleBackspace = (function(e) {
 				var parent;
 				var block = this.selection.block();
@@ -456,11 +702,24 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 								if (sibling.nodeName === 'P') {
 									sibling.appendChild(this.marker.get());
 									
+									var node;
 									while (block.childNodes.length) {
-										sibling.appendChild(block.childNodes[0]);
+										node = block.childNodes[0];
+										
+										// avoid moving contents that follows a `<br>`
+										if (node.nodeName === 'BR') {
+											elRemove(node);
+											break;
+										}
+										
+										sibling.appendChild(node);
 									}
 									
-									elRemove(block);
+									// blocks may be non-empty if they contained a `<br>` somehwere after the original caret position
+									if (block.childNodes.length === 0) {
+										elRemove(block);
+									}
+									
 									this.selection.restore();
 								}
 								else {
@@ -596,30 +855,127 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				}
 			}).bind(this);
 			
+			var getSelectorForCustomElements = (function() {
+				return this.opts.blockTags.filter(function(tagName) {
+					return tagName.indexOf('-') !== -1;
+				}).join(',');
+			}).bind(this);
+			
+			var firefoxKnownCustomElements = [];
+			var firefoxDetectSplitCustomElements = (function() {
+				elBySelAll(getSelectorForCustomElements(), this.core.editor()[0], function(element) {
+					if (element.parentNode === null) {
+						// ignore elements that have already been handled
+						return;
+					}
+					
+					if (firefoxKnownCustomElements.indexOf(element) === -1) {
+						// element did not exist prior to the backspace/delete action
+						return;
+					}
+					
+					['nextElementSibling', 'previousElementSibling'].forEach(function(elementSibling) {
+						var next, sibling = element[elementSibling];
+						while (sibling !== null && sibling.nodeName === element.nodeName && firefoxKnownCustomElements.indexOf(sibling) === -1) {
+							// move all child nodes into the "real" element
+							if (elementSibling === 'previousElementSibling') {
+								for (var i = sibling.childNodes.length - 1; i >= 0; i--) {
+									element.insertBefore(sibling.childNodes[i], element.firstChild);
+								}
+							}
+							else {
+								while (sibling.childNodes.length > 0) {
+									element.appendChild(sibling.childNodes[0]);
+								}
+							}
+							
+							// continue with the next sibling
+							next = sibling[elementSibling];
+							elRemove(sibling);
+							sibling = next;
+						}
+					});
+				});
+				
+				firefoxKnownCustomElements = [];
+			}).bind(this);
+			
 			this.keydown.onBackspaceAndDeleteAfter = (function (e) {
 				//noinspection JSValidateTypes
-				if (this.detect.isFirefox() && this.selection.isCollapsed()) {
-					if (e.which === this.keyCode.BACKSPACE) {
-						firefoxHandleBackspace(e);
+				if (this.detect.isFirefox()) {
+					if (this.selection.isCollapsed()) {
+						if (e.which === this.keyCode.BACKSPACE) {
+							firefoxHandleBackspace(e);
+						}
+						else if (e.which === this.keyCode.DELETE) {
+							firefoxHandleDelete(e);
+						}
 					}
-					else if (e.which === this.keyCode.DELETE) {
-						firefoxHandleDelete(e);
+					else {
+						if (e.which === this.keyCode.BACKSPACE || e.which === this.keyCode.DELETE) {
+							elBySelAll(getSelectorForCustomElements(), this.core.editor()[0], function(element) {
+								firefoxKnownCustomElements.push(element);	
+							});
+						}
+					}
+				}
+				
+				var isInsidePre = false;
+				if (e.which === this.keyCode.BACKSPACE && this.selection.isCollapsed() && this.detect.isWebkit()) {
+					var block = this.selection.block();
+					if (block !== false && block.nodeName === 'PRE') {
+						isInsidePre = true;
 					}
 				}
 				
 				// remove style tag
 				setTimeout($.proxy(function()
 				{
+					var current;
+					
+					if (firefoxKnownCustomElements.length > 0) {
+						firefoxDetectSplitCustomElements();
+					}
+					
+					// The caret was previously inside a `<pre>`, check if we have backspaced out
+					// of the code and are now left inside a `<span>` with a metric ton of styles. 
+					if (isInsidePre) {
+						var block = this.selection.block();
+						if (block === false || block.nodeName !== 'PRE') {
+							current = this.selection.current();
+							// If the keystroke caused the `<pre>` to vanish, then the caret has moved into the
+							// adjacent element, but the `current`'s next sibling is the newly added `<span>`.
+							if (current.nodeType === Node.TEXT_NODE && current.nextSibling && current.nextSibling.nodeName === 'SPAN') {
+								var sibling = current.nextSibling;
+								
+								// check for typical styles that are a remains of the `<pre>`'s styles
+								if (sibling.style.getPropertyValue('font-family').indexOf('monospace') !== -1 && sibling.style.getPropertyValue('white-space') === 'pre-wrap') {
+									// the sibling is a rogue `<span>`, remove it
+									while (sibling.childNodes.length) {
+										sibling.parentNode.insertBefore(sibling.childNodes[0], sibling);
+									}
+									elRemove(sibling);
+								}
+							}
+						}
+					}
+					
 					this.code.syncFire = false;
 					this.keydown.removeEmptyLists();
 					
+					var filter = '';
+					if (this.opts.keepStyleAttr.length !== 0) {
+						filter = ',' + this.opts.keepStyleAttr.join(',');
+					}
+					
 					// WoltLab modification: allow style tag on `<span>`
-					this.core.editor().find('*[style]').not('span, img, #redactor-image-box, #redactor-image-editter').removeAttr('style');
+					var $styleTags = this.core.editor().find('*[style]');
+					$styleTags.not('span, img, figure, iframe, #redactor-image-box, #redactor-image-editter, [data-redactor-style-cache], [data-redactor-span]' + filter).removeAttr('style');
 					
 					this.keydown.formatEmpty(e);
 					
 					// strip empty <kbd>
-					var current = this.selection.current();
+					current = this.selection.current();
 					if (current.nodeName === 'KBD' && current.innerHTML.length === 0) {
 						elRemove(current);
 					}

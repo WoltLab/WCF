@@ -2,6 +2,7 @@
 namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
+use wcf\data\user\UserList;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
@@ -16,7 +17,7 @@ use wcf\util\UserRegistrationUtil;
  * Shows the new email activation code form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -67,8 +68,13 @@ class EmailNewActivationCodeForm extends RegisterNewActivationCodeForm {
 		]);
 		$this->objectAction->executeAction();
 		
-		// reload user object
-		$this->user = new User($this->user->userID);
+		// use user list to allow overriding of the fields without duplicating logic
+		$userList = new UserList();
+		$userList->useQualifiedShorthand = false;
+		$userList->sqlSelects .= ", user_table.*, newEmail AS email";
+		$userList->getConditionBuilder()->add('user_table.userID = ?', [$this->user->userID]);
+		$userList->readObjects();
+		$this->user = $userList->getObjects()[$this->user->userID];
 		
 		// send activation mail
 		$email = new Email();

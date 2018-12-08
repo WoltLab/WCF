@@ -14,7 +14,7 @@ use wcf\util\UserUtil;
  * among them, while the individual clients are tracked within wcf1_session_virtual.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Acp\Session\Virtual
  * 
@@ -65,6 +65,6 @@ class ACPSessionVirtual extends DatabaseObject {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$sessionID]);
 		
-		return $statement->fetchColumn();
+		return $statement->fetchSingleColumn();
 	}
 }

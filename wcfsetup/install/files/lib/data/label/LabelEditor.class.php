@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Provides functions to edit labels.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Label
  * 
@@ -63,7 +63,7 @@ class LabelEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			WHERE	groupID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$groupID]);
-		$maxShowOrder = $statement->fetchColumn() ?: 0;
+		$maxShowOrder = $statement->fetchSingleColumn() ?: 0;
 		
 		if (!$showOrder || $showOrder > $maxShowOrder) {
 			$showOrder = $maxShowOrder + 1;

@@ -30,7 +30,7 @@ use wcf\util\StringUtil;
  * Shows the box add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since	3.0
@@ -215,6 +215,14 @@ class BoxAddForm extends AbstractForm {
 		}
 		
 		$this->availableBoxControllers = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.boxController');
+		
+		uasort($this->availableBoxControllers, function(ObjectType $a, ObjectType $b) {
+			return strcmp(
+				WCF::getLanguage()->get('wcf.acp.box.boxController.' . $a->objectType),
+				WCF::getLanguage()->get('wcf.acp.box.boxController.' . $b->objectType)
+			);
+		});
+		
 		$this->readBoxPositions();
 	}
 	
@@ -332,7 +340,7 @@ class BoxAddForm extends AbstractForm {
 		$this->validateBoxPosition();
 		
 		// validate link
-		if ($this->linkType == 'internal') {
+		if ($this->boxType !== 'system' && $this->linkType == 'internal') {
 			$this->externalURL = '';
 			
 			if (!$this->linkPageID) {
@@ -356,7 +364,7 @@ class BoxAddForm extends AbstractForm {
 				}
 			}
 		}
-		else if ($this->linkType == 'external') {
+		else if ($this->boxType !== 'system' && $this->linkType == 'external') {
 			$this->linkPageID = $this->linkPageObjectID = null;
 			
 			if (empty($this->externalURL)) {
@@ -480,6 +488,7 @@ class BoxAddForm extends AbstractForm {
 			'position' => $this->position,
 			'showOrder' => $this->showOrder,
 			'visibleEverywhere' => $this->visibleEverywhere,
+			'lastUpdateTime' => TIME_NOW,
 			'cssClassName' => $this->cssClassName,
 			'showHeader' => $this->showHeader,
 			'linkPageID' => $this->linkPageID,

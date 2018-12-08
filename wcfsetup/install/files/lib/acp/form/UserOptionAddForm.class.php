@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Shows the user option add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -137,7 +137,6 @@ class UserOptionAddForm extends AbstractForm {
 	 * @var	string[]
 	 */
 	public static $availableOptionTypes = [
-		'aboutMe',
 		'birthday',
 		'boolean',
 		'checkboxes',
@@ -282,7 +281,7 @@ class UserOptionAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$additionalData = array();
+		$additionalData = [];
 		if ($this->optionType == 'select') $additionalData['allowEmptyValue'] = true;
 		if ($this->optionType == 'message') $additionalData['messageObjectType'] = 'com.woltlab.wcf.user.option.generic';
 		

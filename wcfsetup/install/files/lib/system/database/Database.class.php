@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Abstract implementation of a database access class using PDO.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Database
  */
@@ -90,7 +90,13 @@ abstract class Database {
 	protected $activeTransactions = 0;
 	
 	/**
-	 * Creates a Dabatase Object.
+	 * attempts to create the database after the connection has been established
+	 * @var boolean
+	 */
+	protected $tryToCreateDatabase = false;
+	
+	/**
+	 * Creates a Database Object.
 	 * 
 	 * @param	string		$host			SQL database server host address
 	 * @param	string		$user			SQL database server username
@@ -98,14 +104,16 @@ abstract class Database {
 	 * @param	string		$database		SQL database server database name
 	 * @param	integer		$port			SQL database server port
 	 * @param	boolean		$failsafeTest
+	 * @param       boolean         $tryToCreateDatabase
 	 */
-	public function __construct($host, $user, $password, $database, $port, $failsafeTest = false) {
+	public function __construct($host, $user, $password, $database, $port, $failsafeTest = false, $tryToCreateDatabase = false) {
 		$this->host = $host;
 		$this->port = $port;
 		$this->user = $user;
 		$this->password = $password;
 		$this->database = $database;
 		$this->failsafeTest = $failsafeTest;
+		$this->tryToCreateDatabase = $tryToCreateDatabase;
 		
 		// connect database
 		$this->connect();

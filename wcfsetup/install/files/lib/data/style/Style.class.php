@@ -1,13 +1,14 @@
 <?php
 namespace wcf\data\style;
 use wcf\data\DatabaseObject;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\WCF;
 
 /**
  * Represents a style.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Style
  *
@@ -21,6 +22,7 @@ use wcf\system\WCF;
  * @property-read	string		$styleVersion		version number of the style
  * @property-read	string		$styleDate		date when the used version of the style has been published
  * @property-read	string		$image			link or path (relative to `WCF_DIR`) to the preview image of the style
+ * @property-read	string		$image2x		link or path (relative to `WCF_DIR`) to the preview image of the style (2x version)
  * @property-read	string		$copyright		copyright text of the style
  * @property-read	string		$license		name of the style's license 
  * @property-read	string		$authorName		name(s) of the style's author(s)
@@ -28,6 +30,9 @@ use wcf\system\WCF;
  * @property-read	string		$imagePath		path (relative to `WCF_DIR`) to the images used by the style or empty if style has no special image path
  * @property-read	string		$packageName		package identifier used to export the style as a package or empty (thus style cannot be exported as package)
  * @property-read	integer		$isTainted		is `0` if the original declarations of an imported or installed style are not and cannot be altered, otherwise `1`
+ * @property-read	integer		$hasFavicon		is `0` if the default favicon data should be used
+ * @property-read	integer		$coverPhotoExtension	extension of the style's cover photo file
+ * @property-read       string          $apiVersion             the style's compatibility version, possible values: '3.0' or '3.1'
  */
 class Style extends DatabaseObject {
 	/**
@@ -36,8 +41,19 @@ class Style extends DatabaseObject {
 	 */
 	protected $variables = [];
 	
+	/**
+	 * list of supported API versions
+	 * @var string[]
+	 */
+	public static $supportedApiVersions = ['3.0', '3.1'];
+	
+	const API_VERSION = '3.1';
+	
 	const PREVIEW_IMAGE_MAX_HEIGHT = 64;
 	const PREVIEW_IMAGE_MAX_WIDTH = 102;
+	
+	const FAVICON_IMAGE_HEIGHT = 256;
+	const FAVICON_IMAGE_WIDTH = 256;
 	
 	/**
 	 * Returns the name of this style.
@@ -76,8 +92,29 @@ class Style extends DatabaseObject {
 				return '';
 			}
 			
-			if ($toHex && preg_match('/^rgba\((\d+), (\d+), (\d+), 1\)$/', $this->variables[$variableName], $matches)) {
-				return sprintf('#%02x%02x%02x', $matches[1], $matches[2], $matches[3]);
+			if ($toHex && preg_match('/^rgba\((\d+), (\d+), (\d+), (1|0\.\d+)\)$/', $this->variables[$variableName], $matches)) {
+				$r = $matches[1];
+				$g = $matches[2];
+				$b = $matches[3];
+				$a = floatval($matches[4]);
+				
+				// calculate alpha value assuming a white canvas, source rgb will be (255,255,255) or #fff
+				// see https://stackoverflow.com/a/2049362
+				if ($a < 1) {
+					$r = ((1 - $a) * 255) + ($a * $r);
+					$g = ((1 - $a) * 255) + ($a * $g);
+					$b = ((1 - $a) * 255) + ($a * $b);
+					
+					$clamp = function($v) {
+						return max(0, min(255, intval($v)));
+					};
+					
+					$r = $clamp($r);
+					$g = $clamp($g);
+					$b = $clamp($b);
+				}
+				
+				return sprintf('#%02x%02x%02x', $r, $g, $b);
 			}
 			
 			return $this->variables[$variableName];
@@ -120,6 +157,90 @@ class Style extends DatabaseObject {
 		}
 		
 		return WCF::getPath().'images/stylePreview.png';
+	}
+	
+	/**
+	 * Returns the style preview image path (2x version).
+	 * 
+	 * @return	string
+	 */
+	public function getPreviewImage2x() {
+		if ($this->image2x && file_exists(WCF_DIR.'images/'.$this->image2x)) {
+			return WCF::getPath().'images/'.$this->image2x;
+		}
+		
+		return WCF::getPath().'images/stylePreview@2x.png';
+	}
+	
+	/**
+	 * Returns the absolute path to the apple touch icon.
+	 * 
+	 * @return	string
+	 */
+	public function getFaviconAppleTouchIcon() {
+		return $this->getFaviconPath('apple-touch-icon.png');
+	}
+	
+	/**
+	 * Returns the absolute path to the `manifest.json` file.
+	 * 
+	 * @return	string
+	 */
+	public function getFaviconManifest() {
+		return $this->getFaviconPath('manifest.json');
+	}
+	
+	/**
+	 * Returns the absolute path to the `browserconfig.xml` file.
+	 *
+	 * @return	string
+	 */
+	public function getFaviconBrowserconfig() {
+		return $this->getFaviconPath('browserconfig.xml');
+	}
+	
+	/**
+	 * Returns the relative path to the favicon.
+	 * 
+	 * @return	string
+	 */
+	public function getRelativeFavicon() {
+		return $this->getFaviconPath('favicon.ico', false);
+	}
+	
+	/**
+	 * Returns the cover photo filename.
+	 * 
+	 * @return      string
+	 */
+	public function getCoverPhoto() {
+		if ($this->coverPhotoExtension) {
+			return $this->styleID . '.' . $this->coverPhotoExtension;
+		}
+		
+		return 'default.jpg';
+	}
+	
+	/**
+	 * Returns the path to a favicon-related file.
+	 * 
+	 * @param	string		$filename	name of the file
+	 * @param	boolean		$absolutePath	if `true`, the absolute path is returned, otherwise the path relative to WCF is returned
+	 * @return	string
+	 */
+	protected function getFaviconPath($filename, $absolutePath = true) {
+		if ($filename === 'manifest.json') {
+			if (ApplicationHandler::getInstance()->getActiveApplication()->domainName !== ApplicationHandler::getInstance()->getApplicationByID(1)->domainName) {
+				return WCF::getPath() . 'images/favicon/corsProxy.php?type=manifest' . ($this->hasFavicon ? '&amp;styleID=' . $this->styleID : '');
+			}
+		}
+		
+		$path = 'images/favicon/'. ($this->hasFavicon ? $this->styleID : 'default') . ".{$filename}";
+		if ($absolutePath) {
+			return WCF::getPath() . $path;
+		}
+		
+		return $path;
 	}
 	
 	/**

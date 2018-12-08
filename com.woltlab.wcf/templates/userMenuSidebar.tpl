@@ -10,7 +10,7 @@
 		});
 	</script>
 	
-	<section class="box">
+	<section class="box" data-static-box-identifier="com.woltlab.wcf.UserMenu">
 		{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
 			<h2 class="boxTitle">{lang}{$menuCategory->menuItem}{/lang}</h2>
 			

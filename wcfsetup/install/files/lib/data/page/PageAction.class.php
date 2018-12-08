@@ -1,22 +1,28 @@
 <?php
 namespace wcf\data\page;
+use wcf\data\box\Box;
 use wcf\data\page\content\PageContent;
 use wcf\data\page\content\PageContentEditor;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
+use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
+use wcf\system\comment\CommentHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\simple\HtmlSimpleParser;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\page\handler\ILookupPageHandler;
+use wcf\system\search\SearchIndexManager;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 
 /**
  * Executes page related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Page
  * @since	3.0
@@ -24,7 +30,7 @@ use wcf\system\WCF;
  * @method	PageEditor[]	getObjects()
  * @method	PageEditor	getSingleObject()
  */
-class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, IToggleAction {
+class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, ISortableAction, IToggleAction {
 	/**
 	 * @inheritDoc
 	 */
@@ -53,7 +59,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete', 'getSearchResultList', 'search', 'toggle', 'update'];
+	protected $requireACP = ['create', 'delete', 'getSearchResultList', 'resetPosition', 'search', 'toggle', 'update', 'updatePosition'];
 	
 	/**
 	 * @inheritDoc
@@ -82,6 +88,20 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 					'customURL' => $content['customURL']
 				]);
 				$pageContentEditor = new PageContentEditor($pageContent);
+				
+				// update search index
+				if ($page->pageType == 'text' || $page->pageType == 'html') {
+					SearchIndexManager::getInstance()->set(
+						'com.woltlab.wcf.page',
+						$pageContent->pageContentID,
+						$pageContent->content,
+						$pageContent->title,
+						0,
+						null,
+						'',
+						$languageID ?: null
+					);
+				}
 				
 				// save embedded objects
 				if (!empty($content['htmlInputProcessor'])) {
@@ -116,8 +136,9 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 		// save template
 		if ($page->pageType == 'tpl') {
 			if (!empty($this->parameters['content'])) {
+				$pageEditor = new PageEditor($page);
 				foreach ($this->parameters['content'] as $languageID => $content) {
-					file_put_contents(WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl', $content['content']);
+					$pageEditor->updateTemplate($languageID ?: null, $content['content']);
 				}
 			}
 		}
@@ -130,10 +151,13 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	 */
 	public function update() {
 		parent::update();
-	
+		
 		// update page content
 		if (!empty($this->parameters['content'])) {
 			foreach ($this->getObjects() as $page) {
+				$versionData = [];
+				$hasChanges = false;
+				
 				foreach ($this->parameters['content'] as $languageID => $content) {
 					if (!empty($content['htmlInputProcessor'])) {
 						/** @noinspection PhpUndefinedMethodInspection */
@@ -152,6 +176,15 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 							'metaKeywords' => $content['metaKeywords'],
 							'customURL' => $content['customURL']
 						]);
+						
+						$versionData[] = $pageContent;
+						foreach (['title', 'content', 'metaDescription', 'metaKeywords', 'customURL'] as $property) {
+							if ($pageContent->{$property} != $content[$property]) {
+								$hasChanges = true;
+								break;
+							}
+						}
+						
 						$pageContent = PageContent::getPageContent($page->pageID, ($languageID ?: null));
 					}
 					else {
@@ -166,6 +199,23 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 							'customURL' => $content['customURL']
 						]);
 						$pageContentEditor = new PageContentEditor($pageContent);
+						
+						$versionData[] = $pageContent;
+						$hasChanges = true;
+					}
+					
+					// update search index
+					if ($page->pageType == 'text' || $page->pageType == 'html') {
+						SearchIndexManager::getInstance()->set(
+							'com.woltlab.wcf.page',
+							$pageContent->pageContentID,
+							$pageContent->content,
+							$pageContent->title,
+							0,
+							null,
+							'',
+							$languageID ?: null
+						);
 					}
 					
 					// save embedded objects
@@ -184,8 +234,14 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 				// save template
 				if ($page->pageType == 'tpl') {
 					foreach ($this->parameters['content'] as $languageID => $content) {
-						file_put_contents(WCF_DIR . 'templates/' . $page->getTplName(($languageID ?: null)) . '.tpl', $content['content']);
+						$page->updateTemplate($languageID ?: null, $content['content']);
 					}
+				}
+				
+				if ($hasChanges) {
+					$pageObj = new PageVersionTracker($page->getDecoratedObject());
+					$pageObj->setContent($versionData);
+					VersionTracker::getInstance()->add('com.woltlab.wcf.page', $pageObj);
 				}
 			}
 		}
@@ -313,6 +369,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	 * @inheritDoc
 	 */
 	public function delete() {
+		$pageContentIDs = [];
 		foreach ($this->getObjects() as $page) {
 			if ($page->pageType == 'tpl') {
 				foreach ($page->getPageContents() as $languageID => $content) {
@@ -322,8 +379,120 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 					}
 				}
 			}
+			
+			foreach ($page->getPageContents() as $pageContent) {
+				$pageContentIDs[] = $pageContent->pageContentID;
+			}
 		}
 		
 		parent::delete();
+		
+		if (!empty($this->getObjectIDs())) {
+			// delete page comments
+			CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.page', $this->getObjectIDs());
+		}
+		
+		if (!empty($pageContentIDs)) {
+			// delete entry from search index
+			SearchIndexManager::getInstance()->delete('com.woltlab.wcf.page', $pageContentIDs);
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateUpdatePosition() {
+		WCF::getSession()->checkPermissions(['admin.content.cms.canManagePage']);
+		
+		$this->pageEditor = $this->getSingleObject();
+		
+		if (empty($this->parameters['position']) || !is_array($this->parameters['position'])) {
+			throw new UserInputException('position');
+		}
+		
+		$seenBoxIDs = [];
+		foreach ($this->parameters['position'] as $position => $boxIDs) {
+			// validate each position for both existence and the supplied box ids
+			if (!in_array($position, Box::$availablePositions) || !is_array($boxIDs)) {
+				throw new UserInputException('position');
+			}
+			
+			foreach ($boxIDs as $boxID) {
+				// check for duplicate box ids
+				if (in_array($boxID, $seenBoxIDs)) {
+					throw new UserInputException('position');
+				}
+				
+				$seenBoxIDs[] = $boxID;
+			}
+		}
+		
+		// validates box ids
+		$conditions = new PreparedStatementConditionBuilder();
+		$conditions->add("boxID IN (?)", [$seenBoxIDs]);
+		
+		$sql = "SELECT  boxID
+			FROM    wcf".WCF_N."_box
+			".$conditions;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditions->getParameters());
+		$validBoxIDs = [];
+		while ($boxID = $statement->fetchColumn()) {
+			$validBoxIDs[] = $boxID;
+		}
+		
+		foreach ($seenBoxIDs as $boxID) {
+			if (!in_array($boxID, $validBoxIDs)) {
+				throw new UserInputException('position');
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function updatePosition() {
+		$pageID = $this->pageEditor->getDecoratedObject()->pageID;
+		
+		$sql = "DELETE FROM     wcf".WCF_N."_page_box_order
+			WHERE           pageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$pageID]);
+		
+		$sql = "INSERT INTO     wcf".WCF_N."_page_box_order
+					(pageID, boxID, showOrder)
+			VALUES          (?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
+		foreach ($this->parameters['position'] as $boxIDs) {
+			for ($i = 0, $length = count($boxIDs); $i < $length; $i++) {
+				$statement->execute([
+					$pageID,
+					$boxIDs[$i],
+					$i
+				]);
+			}
+		}
+		WCF::getDB()->commitTransaction();
+	}
+	
+	/**
+	 * Validates parameters to reset the custom box positions for provided page.
+	 */
+	public function validateResetPosition() {
+		WCF::getSession()->checkPermissions(['admin.content.cms.canManagePage']);
+		
+		$this->pageEditor = $this->getSingleObject();
+	}
+	
+	/**
+	 * Resets the custom box positions for provided page.
+	 */
+	public function resetPosition() {
+		$sql = "DELETE FROM     wcf".WCF_N."_page_box_order
+			WHERE           pageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$this->pageEditor->getDecoratedObject()->pageID]);
 	}
 }

@@ -2,7 +2,7 @@
  * Object-based user list.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/User/List
  */
@@ -65,6 +65,12 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'Ui/Dialog', 'WoltLabSuite/Cor
 							
 							callbackSwitch: this._showPage.bind(this)
 						});
+					}
+					
+					// scroll to the list start
+					var container = dialog.content.parentNode;
+					if (container.scrollTop > 0) {
+						container.scrollTop = 0;
 					}
 				}
 			}

@@ -23,7 +23,7 @@ use wcf\util\UserRegistrationUtil;
  * Executes user-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
  * 
@@ -509,8 +509,13 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}
 		
 		// find users
+		$searchString = addcslashes($searchString, '_%');
+		$parameters = [
+			'searchString' => $searchString
+		];
+		EventHandler::getInstance()->fireAction($this, 'beforeFindUsers', $parameters);
 		$userProfileList = new UserProfileList();
-		$userProfileList->getConditionBuilder()->add("username LIKE ?", [$searchString.'%']);
+		$userProfileList->getConditionBuilder()->add("username LIKE ?", [$parameters['searchString'].'%']);
 		if (!empty($excludedSearchValues)) {
 			$userProfileList->getConditionBuilder()->add("username NOT IN (?)", [$excludedSearchValues]);
 		}

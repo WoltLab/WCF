@@ -1,13 +1,24 @@
 <?php
 namespace wcf\page;
+use wcf\form\DisclaimerForm;
+use wcf\form\EmailActivationForm;
+use wcf\form\EmailNewActivationCodeForm;
+use wcf\form\LoginForm;
+use wcf\form\LostPasswordForm;
+use wcf\form\NewPasswordForm;
+use wcf\form\RegisterActivationForm;
+use wcf\form\RegisterForm;
+use wcf\form\RegisterNewActivationCodeForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\menu\acp\ACPMenu;
+use wcf\system\request\LinkHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
+use wcf\util\Url;
 
 /**
  * Abstract implementation of a page which fires the default event actions of a
@@ -18,7 +29,7 @@ use wcf\util\StringUtil;
  *	- show
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  */
@@ -180,6 +191,10 @@ abstract class AbstractPage implements IPage {
 	 * @inheritDoc
 	 */
 	public function show() {
+		if (FORCE_LOGIN && !RequestHandler::getInstance()->isACPRequest() && !WCF::getUser()->userID) {
+			$this->forceLogin();
+		}
+		
 		// check if active user is logged in
 		if ($this->loginRequired && !WCF::getUser()->userID) {
 			throw new PermissionDeniedException();
@@ -187,7 +202,7 @@ abstract class AbstractPage implements IPage {
 		
 		// check if current request URL matches the canonical URL
 		if ($this->canonicalURL && (empty($_POST) || $this->forceCanonicalURL)) {
-			$canonicalURL = parse_url(preg_replace('~[?&]s=[a-f0-9]{40}~', '', $this->canonicalURL));
+			$canonicalURL = Url::parse(preg_replace('~[?&]s=[a-f0-9]{40}~', '', $this->canonicalURL));
 			
 			// use $_SERVER['REQUEST_URI'] because it represents the URL used to access the site and not the internally rewritten one
 			// IIS Rewrite-Module has a bug causing the REQUEST_URI to be ISO-encoded
@@ -206,7 +221,7 @@ abstract class AbstractPage implements IPage {
 			// reduce successive forwarded slashes into a single one
 			$requestURI = preg_replace('~/{2,}~', '/', $requestURI);
 			
-			$requestURL = parse_url($requestURI);
+			$requestURL = Url::parse($requestURI);
 			$redirect = false;
 			if ($canonicalURL['path'] != $requestURL['path']) {
 				$redirect = true;
@@ -318,5 +333,40 @@ abstract class AbstractPage implements IPage {
 				ACPMenu::getInstance()->setActiveMenuItem($this->activeMenuItem);
 			}
 		}
+	}
+	
+	/**
+	 * Forces visitors to log-in themselves to access the site.
+	 */
+	protected function forceLogin() {
+		$allowedControllers = [
+			DisclaimerForm::class,
+			EmailActivationForm::class,
+			EmailNewActivationCodeForm::class,
+			LoginForm::class,
+			LostPasswordForm::class,
+			NewPasswordForm::class,
+			RegisterActivationForm::class,
+			RegisterForm::class,
+			RegisterNewActivationCodeForm::class
+		];
+		if (in_array(get_class($this), $allowedControllers)) {
+			// controller is allowed
+			return;
+		}
+		
+		if (WCF::getActiveRequest()->isAvailableDuringOfflineMode()) {
+			// allow access to those pages that should be always available
+			return;
+		}
+		
+		// force redirect to login form
+		WCF::getSession()->register('__wsc_forceLoginRedirect', true);
+		HeaderUtil::redirect(
+			LinkHandler::getInstance()->getLink('Login', [
+				'url' => WCF::getRequestURI()
+			])
+		);
+		exit;
 	}
 }

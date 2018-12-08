@@ -8,7 +8,7 @@ use wcf\data\paid\subscription\user\PaidSubscriptionUserList;
  * Cronjob for a hourly system cleanup.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob
  */

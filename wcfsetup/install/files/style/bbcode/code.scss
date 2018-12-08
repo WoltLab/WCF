@@ -11,7 +11,8 @@
 	word-break: break-all;
 	word-wrap: break-word;
 	
-	&:not(.redactorCalcHeight)::before {
+	&:not(.redactorCalcHeight)::before,
+	&.woltlabHtml::before {
 		color: $wcfContentLink;
 		content: attr(data-title);
 		cursor: pointer;
@@ -20,6 +21,24 @@
 		margin-bottom: 20px;
 		
 		@include wcfFontHeadline;
+	}
+	
+	&.woltlabHtml {
+		&::before {
+			margin-bottom: 30px;
+		}
+		
+		&::after {
+			color: $wcfContentDimmedText;
+			content: attr(data-description);
+			cursor: pointer;
+			display: block;
+			font-family: $wcfFontFamily;
+			position: absolute;
+			top: 32px;
+			
+			@include wcfFontSmall;
+		}
 	}
 }
 
@@ -51,6 +70,9 @@
 		> .codeBoxHeader {
 			align-items: center;
 			display: flex;
+			
+			/* required to avoid layout jumping caused by the dynamically added 24px button */
+			min-height: 24px;
 			
 			> .codeBoxHeadline {
 				flex: 1 1 auto;

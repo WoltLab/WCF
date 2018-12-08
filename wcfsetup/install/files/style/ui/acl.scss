@@ -1,5 +1,13 @@
 /* object list, e.g. users and groups */
 .aclList {
+	max-height: 400px;
+	overflow: auto;
+	
+	&:not(:empty) {
+		border-bottom: 1px solid $wcfContentBorder;
+		border-top: 1px solid $wcfContentBorder;
+	}
+	
 	> li {
 		align-items: center;
 		display: flex;
@@ -21,6 +29,14 @@
 		> .aclLabel {
 			flex: 1 1 auto;
 			margin: 0 5px;
+		}
+		
+		&:first-child {
+			border-top: none;
+		}
+		
+		&:last-child {
+			border-bottom: none;
 		}
 	}
 	

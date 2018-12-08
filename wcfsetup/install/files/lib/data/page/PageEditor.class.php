@@ -14,7 +14,7 @@ use wcf\util\FileUtil;
  * Provides functions to edit pages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Page
  * @since	3.0
@@ -28,6 +28,22 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	 * @inheritDoc
 	 */
 	protected static $baseClass = Page::class;
+	
+	/**
+	 * Creates or updates the page's template file.
+	 * 
+	 * @param       integer         $languageID     language id or `null`
+	 * @param       string          $content        template content
+	 */
+	public function updateTemplate($languageID, $content) {
+		if ($this->pageType !== 'tpl') {
+			throw new \RuntimeException("Only tpl-type pages support template files.");
+		}
+		
+		$filename = WCF_DIR . 'templates/' . $this->getTplName(($languageID ?: null)) . '.tpl';
+		file_put_contents($filename, $content);
+		WCF::resetZendOpcache($filename);
+	}
 	
 	/**
 	 * @inheritDoc
@@ -66,7 +82,7 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 				AND applicationPackageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$customURL, $packageID]);
-		if ($statement->fetchColumn()) {
+		if ($statement->fetchSingleColumn()) {
 			return false;
 		}
 		
@@ -81,7 +97,7 @@ class PageEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 				)";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$customURL, $packageID]);
-		if ($statement->fetchColumn()) {
+		if ($statement->fetchSingleColumn()) {
 			return false;
 		}
 		

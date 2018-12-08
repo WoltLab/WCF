@@ -11,7 +11,7 @@ use wcf\util\JSON;
  * Processes `<img>` to handle embedded attachments.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Input\Node
  * @since       3.0
@@ -133,7 +133,7 @@ class HtmlInputNodeImg extends AbstractHtmlInputNode {
 		}
 		
 		$float = 'none';
-		$thumbnail = null;
+		$thumbnail = 'original';
 		
 		if (preg_match('~thumbnail=(?P<thumbnail>tiny|small|large|medium)\b~', $element->getAttribute('src'), $matches)) {
 			$thumbnail = $matches['thumbnail'];

@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Handles ads.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Ads
  */
@@ -45,8 +45,16 @@ class AdHandler extends SingletonFactory {
 			return '';
 		}
 		
-		$output = '';
+		/** @var Ad[] $ads */
+		$ads = [];
 		foreach ($this->ads[$this->objectTypes[$adLocation]->objectTypeID] as $ad) {
+			$ads[] = $ad;
+		}
+		
+		if (ENABLE_AD_ROTATION) shuffle($ads);
+		
+		$output = '';
+		foreach ($ads as $ad) {
 			$conditions = $ad->getConditions();
 			foreach ($conditions as $condition) {
 				if (!$condition->getObjectType()->getProcessor()->showContent($condition)) {
@@ -55,6 +63,7 @@ class AdHandler extends SingletonFactory {
 			}
 			
 			$output .= '<div>' . $ad->ad . '</div>';
+			if (ENABLE_AD_ROTATION) break;
 		}
 		
 		if (!empty($output)) {

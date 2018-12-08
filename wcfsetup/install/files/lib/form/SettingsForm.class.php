@@ -2,8 +2,13 @@
 namespace wcf\form;
 use wcf\data\language\Language;
 use wcf\data\style\Style;
+use wcf\data\trophy\Trophy;
+use wcf\data\trophy\TrophyCache;
 use wcf\data\user\option\category\UserOptionCategory;
+use wcf\data\user\trophy\UserTrophyList;
 use wcf\data\user\UserAction;
+use wcf\data\user\UserProfile;
+use wcf\data\user\UserProfileAction;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
@@ -18,7 +23,7 @@ use wcf\util\ArrayUtil;
  * Shows the dynamic options edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -64,6 +69,12 @@ class SettingsForm extends AbstractForm {
 	public $availableStyles = [];
 	
 	/**
+	 * list of available trophies
+	 * @var	Trophy[]
+	 */
+	public $availableTrophies = [];
+	
+	/**
 	 * list of content language ids
 	 * @var	integer[]
 	 */
@@ -80,6 +91,12 @@ class SettingsForm extends AbstractForm {
 	 * @var	integer
 	 */
 	public $styleID = 0;
+	
+	/**
+	 * special trophies
+	 * @var integer[]
+	 */
+	public $specialTrophies = [];
 	
 	/**
 	 * @inheritDoc
@@ -103,6 +120,13 @@ class SettingsForm extends AbstractForm {
 			$this->availableContentLanguages = LanguageFactory::getInstance()->getContentLanguages();
 			$this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
 			$this->availableStyles = StyleHandler::getInstance()->getAvailableStyles();
+			
+			// read available trophies
+			$trophyIDs = array_unique(array_map(function ($userTrophy) {
+				return $userTrophy->trophyID;
+			}, UserTrophyList::getUserTrophies([WCF::getUser()->userID])[WCF::getUser()->userID]));
+			
+			$this->availableTrophies = TrophyCache::getInstance()->getTrophiesByID($trophyIDs);
 		}
 	}
 	
@@ -119,6 +143,7 @@ class SettingsForm extends AbstractForm {
 			if (isset($_POST['contentLanguageIDs']) && is_array($_POST['contentLanguageIDs'])) $this->contentLanguageIDs = ArrayUtil::toIntegerArray($_POST['contentLanguageIDs']);
 			if (isset($_POST['languageID'])) $this->languageID = intval($_POST['languageID']);
 			if (isset($_POST['styleID'])) $this->styleID = intval($_POST['styleID']);
+			if (isset($_POST['specialTrophies'])) $this->specialTrophies = ArrayUtil::toIntegerArray($_POST['specialTrophies']);
 		}
 	}
 	
@@ -157,6 +182,19 @@ class SettingsForm extends AbstractForm {
 			if (!isset($this->availableStyles[$this->styleID])) {
 				$this->styleID = 0;
 			}
+			
+			// validate special trophies
+			if (count($this->specialTrophies) > WCF::getSession()->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
+				throw new UserInputException('specialTrophies', 'tooMany');
+			}
+			
+			foreach ($this->specialTrophies as $trophyID) {
+				if (!in_array($trophyID, array_map(function ($trophy) {
+					return $trophy->trophyID; 
+				}, $this->availableTrophies))) {
+					throw new UserInputException('specialTrophies', 'invalid');
+				}
+			}
 		}
 	}
 	
@@ -175,6 +213,10 @@ class SettingsForm extends AbstractForm {
 					$this->languageID = WCF::getUser()->languageID;
 				}
 				$this->styleID = WCF::getUser()->styleID;
+				
+				$this->specialTrophies = array_unique(array_map(function ($trophy) {
+					return $trophy->trophyID;
+				}, (new UserProfile(WCF::getUser()))->getSpecialTrophies()));
 			}
 		}
 	}
@@ -203,6 +245,11 @@ class SettingsForm extends AbstractForm {
 		if ($this->category == 'general') {
 			// reset user language ids cache
 			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'languageIDs');
+			
+			$userProfileAction = new UserProfileAction([WCF::getUser()->userID], 'updateSpecialTrophies', [
+				'trophyIDs' => $this->specialTrophies
+			]);
+			$userProfileAction->executeAction();
 		}
 		$this->saved();
 		
@@ -225,9 +272,11 @@ class SettingsForm extends AbstractForm {
 				'availableContentLanguages' => $this->availableContentLanguages,
 				'availableLanguages' => $this->availableLanguages,
 				'availableStyles' => $this->availableStyles,
+				'availableTrophies' => $this->availableTrophies,
 				'contentLanguageIDs' => $this->contentLanguageIDs,
 				'languageID' => $this->languageID,
-				'styleID' => $this->styleID
+				'styleID' => $this->styleID,
+				'specialTrophies' => $this->specialTrophies
 			]);
 		}
 	}

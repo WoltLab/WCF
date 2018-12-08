@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Processes a HTML string and renders the final output for display.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
@@ -39,6 +39,13 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * @var string[]
 	 */
 	protected $sourceBBCodes = [];
+	
+	/**
+	 * list of HTML tags that should have a trailing newline when converted
+	 * to text/plain content
+	 * @var string[]
+	 */
+	public static $plainTextNewlineTags = ['br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'td', 'tr'];
 	
 	/**
 	 * HtmlOutputNodeProcessor constructor.
@@ -112,7 +119,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 							$element = $element->nextSibling;
 						}
 						
-						if ($element && $element->nodeName === 'br') {
+						if ($paragraph->childNodes->length === 0 || ($element && $element->nodeName === 'br')) {
 							DOMUtil::removeNode($paragraph, true);
 							continue;
 						}
@@ -142,14 +149,16 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 					$node->parentNode->removeChild($node);
 				}
 				
-				// convert `<br>` into `\n`
-				$brs = $this->getDocument()->getElementsByTagName('br');
-				while ($brs->length) {
-					$br = $brs->item(0);
-					
-					$newline = $this->getDocument()->createTextNode("\n");
-					$br->parentNode->insertBefore($newline, $br);
-					DOMUtil::removeNode($br);
+				// insert a trailing newline for certain elements, such as `<br>` or `<li>`
+				foreach (self::$plainTextNewlineTags as $tagName) {
+					$elements = $this->getDocument()->getElementsByTagName($tagName);
+					while ($elements->length) {
+						$element = $elements->item(0);
+						
+						$newline = $this->getDocument()->createTextNode("\n");
+						$element->parentNode->insertBefore($newline, $element->nextSibling);
+						DOMUtil::removeNode($element, true);
+					}
 				}
 				
 				// remove all other elements
@@ -210,7 +219,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 		foreach ($nodes as $node) {
 			$split = preg_split('+'.$keywordPattern.'+i', $node->textContent, -1, PREG_SPLIT_DELIM_CAPTURE);
 			$count = count($split);
-			if ($count == 1) return;
+			if ($count == 1) continue;
 			
 			for ($i = 0; $i < $count; $i++) {
 				// text
@@ -232,7 +241,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	}
 	
 	/**
-	 * Returns true if text node is inside a code element, suppresing any
+	 * Returns true if text node is inside a code element, suppressing any
 	 * auto-detection of content.
 	 *
 	 * @param       \DOMText        $text           text node

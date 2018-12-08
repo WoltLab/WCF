@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\html\input\node;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
@@ -10,7 +11,7 @@ use wcf\util\DOMUtil;
  * outputs well-formed markup with proper element nesting.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Html\Input\Node
  * @since	3.0
@@ -94,7 +95,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		EventHandler::getInstance()->fireAction($this, 'filterGroups', $data);
 		
 		foreach ($groups as $name => $pairs) {
-			if (!in_array($name, $data['bbcodes'])) {
+			if (!in_array($name, $data['bbcodes']) || !BBCodeHandler::getInstance()->isAvailableBBCode($name)) {
 				foreach ($pairs as $pair) {
 					$pair['attributes'] = $htmlNodeProcessor->parseAttributes($pair['attributes']);
 					$this->convertToBBCode($name, $pair);
@@ -195,6 +196,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 				$pairs[$uuid]['name'] = $name;
 				$pairs[$uuid]['open'] = $element;
 				$pairs[$uuid]['openSource'] = $source;
+				$pairs[$uuid]['useText'] = ($element->hasAttribute('data-use-text')) ? $element->getAttribute('data-use-text') : false;
 			}
 			else {
 				$pairs[$uuid]['close'] = $element;
@@ -249,7 +251,8 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 				'close' => $data['close'],
 				'closeSource' => $data['closeSource'],
 				'open' => $data['open'],
-				'openSource' => $data['openSource']
+				'openSource' => $data['openSource'],
+				'useText' => $data['useText']
 			];
 		}
 		
@@ -334,10 +337,42 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		// be placed inside paragraphs, but being a direct child of another block
 		// element is completely fine
 		$parent = $start;
+		$foundLi = false;
 		do {
 			$parent = $parent->parentNode;
+			if (!$foundLi && $parent->nodeName === 'li') {
+				// allow <li> if both the start and end have the same <li> as parent
+				$parentEnd = $end;
+				do {
+					$parentEnd = $parentEnd->parentNode;
+					if ($parentEnd === null) {
+						break;
+					}
+					
+					if ($parentEnd->nodeName === 'li') {
+						if ($parent === $parentEnd) {
+							// same ancestor, exit both loops
+							break 2;
+						}
+						
+						// mismatch
+						break;
+					}
+				}
+				while ($parentEnd);
+				
+				$foundLi = true;
+			}
 		}
 		while ($parent->nodeName === 'p' || !$this->isBlockElement($parent));
+		
+		// block elements can sometimes contain a line break after the end tag
+		// which needs to be removed to avoid it being split into a separate p
+		if ($node = $end->nextSibling) {
+			if ($node->nodeType === XML_TEXT_NODE && $node->textContent === "\n" || $node->textContent === "\r\n") {
+				DOMUtil::removeNode($node);
+			}
+		}
 		
 		$element = DOMUtil::splitParentsUntil($start, $parent);
 		if ($start !== $element) DOMUtil::insertBefore($start, $element);
@@ -380,9 +415,13 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 			DOMUtil::removeNode($start);
 			
 			$element = DOMUtil::getParentBefore($element, $commonAncestor);
+<<<<<<< HEAD
 			if ($element === null) {
 				return;
 			}
+=======
+			if ($element === null) $element = $commonAncestor;
+>>>>>>> 13f846c94227422a6692a6b18a25042054a8dc25
 			
 			while ($element = $element->nextSibling) {
 				if ($element->nodeType === XML_TEXT_NODE) {
@@ -392,7 +431,11 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 				
 				if ($element !== $endAncestor) {
 					if ($this->isBlockElement($element)) {
-						$this->wrapContent($name, $attributes, $element->firstChild, null);
+						if ($element->childNodes->length === 0) {
+							$element->appendChild($element->ownerDocument->createTextNode(''));
+						}
+						
+						$this->wrapContent($name, $attributes, $element->childNodes->item(0), null);
 					}
 					else {
 						$this->wrapContent($name, $attributes, $element, null);
@@ -467,6 +510,7 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 			case 'code':
 			case 'div':
 			case 'p':
+			case 'td':
 			case 'woltlab-quote':
 			case 'woltlab-spoiler':
 				return true;
@@ -496,8 +540,13 @@ class HtmlInputNodeWoltlabMetacodeMarker extends AbstractHtmlInputNode {
 		/** @var \DOMElement $end */
 		$end = $pair['close'];
 		
-		$attributes = isset($pair['attributes']) ? $pair['attributes'] : '';
-		$textNode = $start->ownerDocument->createTextNode($pair['openSource'] ?: HtmlBBCodeParser::getInstance()->buildBBCodeTag($name, $attributes, true));
+		$attributes = isset($pair['attributes']) ? $pair['attributes'] : [];
+		$content = '';
+		if (isset($pair['useText']) && $pair['useText'] !== false && isset($attributes[$pair['useText']])) {
+			$content = array_splice($attributes, $pair['useText'])[0];
+		}
+		
+		$textNode = $start->ownerDocument->createTextNode(($pair['openSource'] ?: HtmlBBCodeParser::getInstance()->buildBBCodeTag($name, $attributes, true)) . $content);
 		DOMUtil::insertBefore($textNode, $start);
 		DOMUtil::removeNode($start);
 		

@@ -6,6 +6,7 @@ use wcf\system\exception\AJAXException;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
+use wcf\system\notice\NoticeHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -15,7 +16,7 @@ use wcf\util\HeaderUtil;
  * Handles http requests.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  */
@@ -79,6 +80,7 @@ class RequestHandler extends SingletonFactory {
 					else {
 						@header('HTTP/1.1 503 Service Unavailable');
 						BoxHandler::disablePageLayout();
+						NoticeHandler::disableNotices();
 						WCF::getTPL()->assign([
 							'templateName' => 'offline',
 							'templateNameApplication' => 'wcf'
@@ -104,6 +106,7 @@ class RequestHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$application
 	 * @throws	IllegalLinkException
+	 * @throws	SystemException
 	 */
 	protected function buildRequest($application) {
 		try {
@@ -157,7 +160,7 @@ class RequestHandler extends SingletonFactory {
 					exit;
 				}
 				
-				$classData = ControllerMap::getInstance()->resolve($application, $controller, $this->isACPRequest());
+				$classData = ControllerMap::getInstance()->resolve($application, $controller, $this->isACPRequest(), RouteHandler::getInstance()->isRenamedController());
 				if (is_string($classData)) {
 					$this->redirect($routeData, $application, $classData);
 				}
@@ -189,6 +192,10 @@ class RequestHandler extends SingletonFactory {
 			}
 		}
 		catch (SystemException $e) {
+			if (defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE && defined('ENABLE_DEVELOPER_TOOLS') && ENABLE_DEVELOPER_TOOLS) {
+				throw $e;
+			}
+			
 			throw new IllegalLinkException();
 		}
 	}

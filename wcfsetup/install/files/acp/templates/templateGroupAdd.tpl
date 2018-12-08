@@ -1,5 +1,22 @@
 {include file='header' pageTitle='wcf.acp.template.group.'|concat:$action}
 
+{if $action === 'edit'}
+	<script data-relocate="true">
+		require(['Language', 'WoltLabSuite/Core/Acp/Ui/Template/Group/Copy'], function (Language, AcpUiTemplateGroupCopy) {
+			Language.addObject({
+				'wcf.acp.template.group.copy': '{lang}wcf.acp.template.group.copy{/lang}',
+				'wcf.acp.template.group.name.error.notUnique': '{lang}wcf.acp.template.group.name.error.notUnique{/lang}',
+				'wcf.acp.template.group.folderName': '{lang}wcf.acp.template.group.folderName{/lang}',
+				'wcf.acp.template.group.folderName.error.invalid': '{lang}wcf.acp.template.group.folderName.error.invalid{/lang}',
+				'wcf.acp.template.group.folderName.error.notUnique': '{lang}wcf.acp.template.group.folderName.error.notUnique{/lang}',
+				'wcf.global.name': '{lang}wcf.global.name{/lang}'
+			});
+			
+			AcpUiTemplateGroupCopy.init({$templateGroupID});
+		});
+	</script>
+{/if}
+
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.template.group.{$action}{/lang}</h1>
@@ -7,6 +24,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
+			{if $action === 'edit'}<li><a href="#" class="jsButtonCopy button"><span class="icon icon16 fa-files-o"></span> <span>{lang}wcf.acp.template.group.copy{/lang}</span></a></li>{/if}
 			<li><a href="{link controller='TemplateGroupList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.template.group.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
@@ -33,9 +51,9 @@
 					{if $errorField == 'parentTemplateGroupID'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
+								{lang}wcf.global.form.error.empty{/lang}
 							{else}
-							{lang}wcf.acp.template.group.parentTemplateGroupID.error.{@$errorType}{/lang}
+								{lang}wcf.acp.template.group.parentTemplateGroupID.error.{@$errorType}{/lang}
 							{/if}
 						</small>
 					{/if}

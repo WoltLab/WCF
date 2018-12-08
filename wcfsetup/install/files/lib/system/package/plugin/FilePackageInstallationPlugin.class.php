@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\application\Application;
 use wcf\data\package\Package;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\package\FilesFileHandler;
 use wcf\system\package\PackageArchive;
@@ -13,11 +14,11 @@ use wcf\util\StyleUtil;
  * Installs, updates and deletes files.
  * 
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
+class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -135,5 +136,12 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
 	}
 }

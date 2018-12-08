@@ -9,13 +9,14 @@ use wcf\util\DateUtil;
  * indicates if the full difference is returned or just a rounded difference.
  * 
  * Usage:
- *	{$timestamp|dateDiff}
- *	{"123456789"|dateDiff:$timestamp:$fullInverval}
+ *	{$endTimestamp|dateDiff}
+ *	{$endTimestamp|dateDiff:$startTimestamp:$fullInterval}
  * 
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
+ * @deprecated	since 3.1, use `DateIntervalFunctionTemplatePlugin`
  */
 class DateDiffModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**

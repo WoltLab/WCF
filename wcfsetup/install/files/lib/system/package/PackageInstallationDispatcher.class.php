@@ -2,6 +2,7 @@
 namespace wcf\system\package;
 use wcf\data\application\Application;
 use wcf\data\application\ApplicationEditor;
+use wcf\data\devtools\project\DevtoolsProjectAction;
 use wcf\data\language\category\LanguageCategory;
 use wcf\data\language\LanguageEditor;
 use wcf\data\language\LanguageList;
@@ -11,11 +12,13 @@ use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\data\package\PackageEditor;
 use wcf\data\user\User;
+use wcf\data\user\UserAction;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\cache\CacheHandler;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
@@ -43,7 +46,7 @@ use wcf\util\StringUtil;
  * PackageInstallationDispatcher handles the whole installation process.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */
@@ -196,6 +199,15 @@ class PackageInstallationDispatcher {
 						'wcf_uuid'
 					]);
 					
+					if (file_exists(WCF_DIR . 'cookiePrefix.txt')) {
+						$statement->execute([
+							COOKIE_PREFIX,
+							'cookie_prefix'
+						]);
+						
+						@unlink(WCF_DIR . 'cookiePrefix.txt');
+					}
+					
 					$user = new User(1);
 					$statement->execute([
 						$user->username,
@@ -234,6 +246,43 @@ class PackageInstallationDispatcher {
 							'debug',
 							'mail_send_method'
 						]);
+						$statement->execute([
+							1,
+							'enable_developer_tools'
+						]);
+						
+						foreach (DevtoolsSetup::getInstance()->getOptionOverrides() as $optionName => $optionValue) {
+							$statement->execute([
+								$optionValue,
+								$optionName
+							]);
+						}
+						
+						foreach (DevtoolsSetup::getInstance()->getUsers() as $newUser) {
+							try {
+								(new UserAction([], 'create', [
+									'data' => [
+										'email' => $newUser['email'],
+										'password' => $newUser['password'],
+										'username' => $newUser['username']
+									],
+									'groups' => [
+										1,
+										3
+									]
+								]))->executeAction();
+							}
+							catch (SystemException $e) {
+								// ignore errors due to event listeners missing at this
+								// point during installation
+							}
+						}
+						
+						if (($importPath = DevtoolsSetup::getInstance()->getDevtoolsImportPath()) !== '') {
+							(new DevtoolsProjectAction([], 'quickSetup', [
+								'path' => $importPath
+							]))->executeAction();
+						}
 					}
 					
 					// update options.inc.php
@@ -384,6 +433,12 @@ class PackageInstallationDispatcher {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->queue->packageID]);
 			
+			// delete old compatibility versions
+			$sql = "DELETE FROM	wcf".WCF_N."_package_compatibility
+				WHERE		packageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$this->queue->packageID]);
+			
 			// delete old requirements and dependencies
 			$sql = "DELETE FROM	wcf".WCF_N."_package_requirement
 				WHERE		packageID = ?";
@@ -428,6 +483,21 @@ class PackageInstallationDispatcher {
 					$this->queue->packageID,
 					$excludedPackage['name'],
 					!empty($excludedPackage['version']) ? $excludedPackage['version'] : ''
+				]);
+			}
+		}
+		
+		// save compatible versions
+		if (!empty($this->getArchive()->getCompatibleVersions())) {
+			$sql = "INSERT INTO     wcf".WCF_N."_package_compatibility
+						(packageID, version)
+				VALUES          (?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($this->getArchive()->getCompatibleVersions() as $version) {
+				$statement->execute([
+					$this->queue->packageID,
+					$version
 				]);
 			}
 		}

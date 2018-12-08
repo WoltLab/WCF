@@ -4,13 +4,16 @@ use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\Article;
 use wcf\data\article\ArticleAction;
 use wcf\data\category\CategoryNodeTree;
+use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\language\Language;
 use wcf\data\media\Media;
 use wcf\data\media\ViewableMediaList;
 use wcf\data\user\User;
 use wcf\form\AbstractForm;
+use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\label\object\ArticleLabelObjectHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -23,7 +26,7 @@ use wcf\util\StringUtil;
  * Shows the article add form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since	3.0
@@ -140,16 +143,46 @@ class ArticleAddForm extends AbstractForm {
 	public $imageID = [];
 	
 	/**
+	 * thumbnail image ids
+	 * @var	integer[]
+	 */
+	public $teaserImageID = [];
+	
+	/**
 	 * images
 	 * @var	Media[]
 	 */
 	public $images = [];
 	
 	/**
+	 * thumbnail images
+	 * @var	Media[]
+	 */
+	public $teaserImages = [];
+	
+	/**
 	 * list of available languages
 	 * @var	Language[]
 	 */
 	public $availableLanguages = [];
+	
+	/**
+	 * label group list
+	 * @var	ViewableLabelGroup[]
+	 */
+	public $labelGroups;
+	
+	/**
+	 * list of label ids
+	 * @var	integer[]
+	 */
+	public $labelIDs = [];
+	
+	/**
+	 * maps the label group ids to the article category ids
+	 * @var	array
+	 */
+	public $labelGroupsToCategories = [];
 	
 	/**
 	 * @inheritDoc
@@ -163,6 +196,9 @@ class ArticleAddForm extends AbstractForm {
 		$this->availableLanguages = LanguageFactory::getInstance()->getLanguages();
 		
 		$this->readMultilingualSetting();
+		
+		// labels
+		ArticleLabelObjectHandler::getInstance()->setCategoryIDs(ArticleCategory::getAccessibleCategoryIDs());
 	}
 	
 	/**
@@ -187,6 +223,7 @@ class ArticleAddForm extends AbstractForm {
 		parent::readFormParameters();
 		
 		$this->enableComments = 0;
+		if (isset($_POST['labelIDs']) && is_array($_POST['labelIDs'])) $this->labelIDs = $_POST['labelIDs'];
 		if (isset($_POST['username'])) $this->username = StringUtil::trim($_POST['username']);
 		if (isset($_POST['time'])) {
 			$this->time = $_POST['time'];
@@ -212,8 +249,17 @@ class ArticleAddForm extends AbstractForm {
 		
 		if (WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
 			if (isset($_POST['imageID']) && is_array($_POST['imageID'])) $this->imageID = ArrayUtil::toIntegerArray($_POST['imageID']);
+			if (isset($_POST['teaserImageID']) && is_array($_POST['teaserImageID'])) $this->teaserImageID = ArrayUtil::toIntegerArray($_POST['teaserImageID']);
 			
 			$this->readImages();
+		}
+		
+		if ($this->publicationStatus === Article::PUBLISHED && $this->timeObj && $this->timeObj->getTimestamp() == $_POST['timeNowReference']) {
+			// supplied timestamp matches the time at which the form was initially requested,
+			// use the current time instead as publication timestamp, otherwise the article
+			// would be published in the past rather than "now"
+			$this->timeObj->setTimestamp(TIME_NOW);
+			$this->time = $this->timeObj->format('Y-m-d\TH:i:sP');
 		}
 	}
 	
@@ -221,15 +267,21 @@ class ArticleAddForm extends AbstractForm {
 	 * Reads the box images.
 	 */
 	protected function readImages() {
-		if (!empty($this->imageID)) {
+		if (!empty($this->imageID) || !empty($this->teaserImageID)) {
 			$mediaList = new ViewableMediaList();
-			$mediaList->setObjectIDs($this->imageID);
+			$mediaList->setObjectIDs(array_merge($this->imageID, $this->teaserImageID));
 			$mediaList->readObjects();
 			
 			foreach ($this->imageID as $languageID => $imageID) {
 				$image = $mediaList->search($imageID);
 				if ($image !== null && $image->isImage) {
 					$this->images[$languageID] = $image;
+				}
+			}
+			foreach ($this->teaserImageID as $languageID => $imageID) {
+				$image = $mediaList->search($imageID);
+				if ($image !== null && $image->isImage) {
+					$this->teaserImages[$languageID] = $image;
 				}
 			}
 		}
@@ -309,6 +361,29 @@ class ArticleAddForm extends AbstractForm {
 			$this->htmlInputProcessors[0] = new HtmlInputProcessor();
 			$this->htmlInputProcessors[0]->process($this->content[0], 'com.woltlab.wcf.article.content', 0);
 		}
+		
+		$this->validateLabelIDs();
+	}
+	
+	/**
+	 * Validates the selected labels.
+	 */
+	protected function validateLabelIDs() {
+		// set category ids to selected category ids for validation
+		ArticleLabelObjectHandler::getInstance()->setCategoryIDs([$this->categoryID]);
+		
+		$validationResult = ArticleLabelObjectHandler::getInstance()->validateLabelIDs($this->labelIDs, 'canSetLabel', false);
+		
+		// reset category ids to accessible category ids
+		ArticleLabelObjectHandler::getInstance()->setCategoryIDs(ArticleCategory::getAccessibleCategoryIDs());
+		
+		if (!empty($validationResult[0])) {
+			throw new UserInputException('labelIDs');
+		}
+		
+		if (!empty($validationResult)) {
+			throw new UserInputException('label', $validationResult);
+		}
 	}
 	
 	/**
@@ -326,7 +401,8 @@ class ArticleAddForm extends AbstractForm {
 					'teaser' => !empty($this->teaser[$language->languageID]) ? $this->teaser[$language->languageID] : '',
 					'content' => !empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : '',
 					'htmlInputProcessor' => isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null,
-					'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null
+					'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null,
+					'teaserImageID' => !empty($this->teaserImageID[$language->languageID]) ? $this->teaserImageID[$language->languageID] : null
 				];
 			}
 		}
@@ -337,7 +413,8 @@ class ArticleAddForm extends AbstractForm {
 				'teaser' => !empty($this->teaser[0]) ? $this->teaser[0] : '',
 				'content' => !empty($this->content[0]) ? $this->content[0] : '',
 				'htmlInputProcessor' => isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null,
-				'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null
+				'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null,
+				'teaserImageID' => !empty($this->teaserImageID[0]) ? $this->teaserImageID[0] : null
 			];
 		}
 		
@@ -349,11 +426,16 @@ class ArticleAddForm extends AbstractForm {
 			'enableComments' => $this->enableComments,
 			'userID' => $this->author->userID,
 			'username' => $this->author->username,
-			'isMultilingual' => $this->isMultilingual
+			'isMultilingual' => $this->isMultilingual,
+			'hasLabels' => empty($this->labelIDs) ? 0 : 1
 		];
 		
 		$this->objectAction = new ArticleAction([], 'create', ['data' => array_merge($this->additionalFields, $data), 'content' => $content]);
-		$this->objectAction->executeAction();
+		$article = $this->objectAction->executeAction()['returnValues'];
+		// save labels
+		if (!empty($this->labelIDs)) {
+			ArticleLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $article->articleID);
+		}
 		
 		// call saved event
 		$this->saved();
@@ -366,7 +448,7 @@ class ArticleAddForm extends AbstractForm {
 		$this->categoryID = 0;
 		$this->publicationStatus = Article::PUBLISHED;
 		$this->enableComments = ARTICLE_ENABLE_COMMENTS_DEFAULT_VALUE;
-		$this->title = $this->teaser = $this->content = $this->images = $this->imageID = $this->tags = [];
+		$this->title = $this->teaser = $this->content = $this->images = $this->imageID = $this->teaserImages = $this->teaserImageID == $this->tags = [];
 		
 		$this->setDefaultValues();
 	}
@@ -377,6 +459,9 @@ class ArticleAddForm extends AbstractForm {
 	public function readData() {
 		parent::readData();
 		
+		$this->labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
+		$this->labelGroups = ArticleCategory::getAccessibleLabelGroups();
+				
 		if (empty($_POST)) {
 			$this->setDefaultValues();
 		}
@@ -413,12 +498,17 @@ class ArticleAddForm extends AbstractForm {
 			'publicationDate' => $this->publicationDate,
 			'imageID' => $this->imageID,
 			'images' => $this->images,
+			'teaserImageID' => $this->teaserImageID,
+			'teaserImages' => $this->teaserImages,
 			'tags' => $this->tags,
 			'title' => $this->title,
 			'teaser' => $this->teaser,
 			'content' => $this->content,
 			'availableLanguages' => $this->availableLanguages,
-			'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator()
+			'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
+			'labelIDs' => $this->labelIDs,
+			'labelGroups' => $this->labelGroups,
+			'labelGroupsToCategories' => $this->labelGroupsToCategories
 		]);
 	}
 }

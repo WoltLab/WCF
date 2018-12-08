@@ -1,9 +1,14 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\trophy\Trophy;
+use wcf\data\trophy\TrophyCache;
 use wcf\data\user\avatar\DefaultAvatar;
 use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\IUserAvatar;
 use wcf\data\user\avatar\UserAvatar;
+use wcf\data\user\cover\photo\DefaultUserCoverPhoto;
+use wcf\data\user\cover\photo\IUserCoverPhoto;
+use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\online\UserOnline;
 use wcf\data\user\option\ViewableUserOption;
@@ -12,7 +17,9 @@ use wcf\data\DatabaseObjectDecorator;
 use wcf\data\ITitledLinkObject;
 use wcf\system\cache\builder\UserGroupPermissionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\ImplementationException;
 use wcf\system\user\signature\SignatureCache;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
@@ -23,7 +30,7 @@ use wcf\util\StringUtil;
  * Decorates the user object and provides functions to retrieve data for user profiles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
  * 
@@ -37,58 +44,64 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	protected static $baseClass = User::class;
 	
 	/**
-	 * cached list of user profiles
-	 * @var	UserProfile[]
-	 */
-	protected static $userProfiles = [];
-	
-	/**
 	 * list of ignored user ids
 	 * @var	integer[]
 	 */
-	protected $ignoredUserIDs = null;
+	protected $ignoredUserIDs;
+	
+	/**
+	 * list of user ids that are ignoring this user
+	 * @var integer[]
+	 */
+	protected $ignoredByUserIDs;
 	
 	/**
 	 * list of follower user ids
 	 * @var	integer[]
 	 */
-	protected $followerUserIDs = null;
+	protected $followerUserIDs;
 	
 	/**
 	 * list of following user ids
 	 * @var	integer[]
 	 */
-	protected $followingUserIDs = null;
+	protected $followingUserIDs;
 	
 	/**
 	 * user avatar
 	 * @var	IUserAvatar
 	 */
-	protected $avatar = null;
+	protected $avatar;
 	
 	/**
 	 * user rank object
 	 * @var	UserRank
 	 */
-	protected $rank = null;
+	protected $rank;
 	
 	/**
 	 * age of this user
 	 * @var	integer
 	 */
-	protected $__age = null;
+	protected $__age;
 	
 	/**
 	 * group data and permissions
 	 * @var	mixed[][]
 	 */
-	protected $groupData = null;
+	protected $groupData;
 	
 	/**
 	 * current location of this user.
 	 * @var	string
 	 */
-	protected $currentLocation = null;
+	protected $currentLocation;
+	
+	/**
+	 * user cover photo
+	 * @var UserCoverPhoto
+	 */
+	protected $coverPhoto;
 	
 	const GENDER_MALE = 1;
 	const GENDER_FEMALE = 2;
@@ -208,6 +221,40 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	}
 	
 	/**
+	 * Returns a list of user ids that are ignoring this user.
+	 * 
+	 * @return	integer[]
+	 */
+	public function getIgnoredByUsers() {
+		if ($this->ignoredByUserIDs === null) {
+			$this->ignoredByUserIDs = [];
+			
+			if ($this->userID) {
+				// get ids
+				$data = UserStorageHandler::getInstance()->getField('ignoredByUserIDs', $this->userID);
+				
+				// cache does not exist or is outdated
+				if ($data === null) {
+					$sql = "SELECT	userID
+						FROM	wcf".WCF_N."_user_ignore
+						WHERE	ignoreUserID = ?";
+					$statement = WCF::getDB()->prepareStatement($sql);
+					$statement->execute([$this->userID]);
+					$this->ignoredByUserIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+					
+					// update storage data
+					UserStorageHandler::getInstance()->update($this->userID, 'ignoredByUserIDs', serialize($this->ignoredByUserIDs));
+				}
+				else {
+					$this->ignoredByUserIDs = unserialize($data);
+				}
+			}
+		}
+		
+		return $this->ignoredByUserIDs;
+	}
+	
+	/**
 	 * Returns true if current user is following given user id.
 	 * 
 	 * @param	integer		$userID
@@ -229,12 +276,22 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	
 	/**
 	 * Returns true if given user is ignored.
-	 * 
+	 *
 	 * @param	integer		$userID
 	 * @return	boolean
 	 */
 	public function isIgnoredUser($userID) {
 		return in_array($userID, $this->getIgnoredUsers());
+	}
+	
+	/**
+	 * Returns true if the given user ignores the current user.
+	 * 
+	 * @param	integer		$userID
+	 * @return	boolean
+	 */
+	public function isIgnoredByUser($userID) {
+		return in_array($userID, $this->getIgnoredByUsers());
 	}
 	
 	/**
@@ -264,12 +321,24 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 					else if (MODULE_GRAVATAR && $this->enableGravatar) {
 						$this->avatar = new Gravatar($this->userID, $this->email, ($this->gravatarFileExtension ?: 'png'));
 					}
+					else {
+						$parameters = ['avatar' => null];
+						EventHandler::getInstance()->fireAction($this, 'getAvatar', $parameters);
+						
+						if ($parameters['avatar'] !== null) {
+							if (!($parameters['avatar'] instanceof IUserAvatar)) {
+								throw new ImplementationException(get_class($parameters['avatar']), IUserAvatar::class);
+							}
+							
+							$this->avatar = $parameters['avatar'];
+						}
+					}
 				}
 			}
 			
 			// use default avatar
 			if ($this->avatar === null) {
-				$this->avatar = new DefaultAvatar();
+				$this->avatar = new DefaultAvatar($this->username ?: '');
 			}
 		}
 		
@@ -283,6 +352,40 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 */
 	public function canSeeAvatar() {
 		return (WCF::getUser()->userID == $this->userID || WCF::getSession()->getPermission('user.profile.avatar.canSeeAvatars'));
+	}
+	
+	/**
+	 * Returns the user's cover photo.
+	 * 
+	 * @param       boolean         $isACP          override ban on cover photo
+	 * @return      IUserCoverPhoto
+	 */
+	public function getCoverPhoto($isACP = false) {
+		if ($this->coverPhoto === null) {
+			if ($this->coverPhotoHash) {
+				if ($isACP || !$this->disableCoverPhoto) {
+					if ($this->canSeeCoverPhoto()) {
+						$this->coverPhoto = new UserCoverPhoto($this->userID, $this->coverPhotoHash, $this->coverPhotoExtension);
+					}
+				}
+			}
+			
+			// use default cover photo
+			if ($this->coverPhoto === null) {
+				$this->coverPhoto = new DefaultUserCoverPhoto();
+			}
+		}
+		
+		return $this->coverPhoto;
+	}
+	
+	/**
+	 * Returns true if the active user can view the cover photo of this user.
+	 *
+	 * @return      boolean
+	 */
+	public function canSeeCoverPhoto() {
+		return (WCF::getUser()->userID == $this->userID || WCF::getSession()->getPermission('user.profile.coverPhoto.canSeeCoverPhotos'));
 	}
 	
 	/**
@@ -320,6 +423,50 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 		}
 		
 		return $this->currentLocation;
+	}
+	
+	/**
+	 * Returns the special trophies for the user. 
+	 *
+	 * @return	Trophy[]
+	 */
+	public function getSpecialTrophies() {
+		$specialTrophies = UserStorageHandler::getInstance()->getField('specialTrophies', $this->userID);
+		
+		if ($specialTrophies === null) {
+			// load special trophies for the user
+			$sql = "SELECT trophyID FROM wcf".WCF_N."_user_special_trophy WHERE userID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$this->userID]);
+			$specialTrophies = $statement->fetchAll(\PDO::FETCH_COLUMN);
+			
+			UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', serialize($specialTrophies));
+		}
+		else {
+			$specialTrophies = unserialize($specialTrophies);
+		}
+		
+		// check if the user has the permission to store these number of trophies,
+		// otherwise, delete the last trophies
+		if (count($specialTrophies) > $this->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
+			$trophyDeleteIDs = [];
+			while (count($specialTrophies) > $this->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
+				$trophyDeleteIDs[] = array_pop($specialTrophies);
+			}
+			
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('userID = ?', [$this->userID]);
+			$conditionBuilder->add('trophyID IN (?)', [$trophyDeleteIDs]);
+			
+			// reset the user special trophies 
+			$sql = "DELETE FROM wcf".WCF_N."_user_special_trophy ".$conditionBuilder; 
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			
+			UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', serialize($specialTrophies));
+		}
+		
+		return TrophyCache::getInstance()->getTrophiesByID($specialTrophies); 
 	}
 	
 	/**
@@ -410,7 +557,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 			
 			foreach ($userList as $user) {
 				$users[mb_strtolower($user->username)] = $user;
-				self::$userProfiles[$user->userID] = $user;
+				UserProfileRuntimeCache::getInstance()->addUserProfile($user);
 			}
 			
 			foreach ($usernames as $username) {
@@ -451,7 +598,17 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 			break;
 			
 			case self::ACCESS_FOLLOWING:
-				$data['result'] = ($this->isFollowing(WCF::getUser()->userID) ? true : false);
+				$result = false;
+				if (WCF::getUser()->userID) {
+					if (WCF::getUser()->userID == $this->userID) {
+						$result = true;
+					}
+					else if ($this->isFollowing(WCF::getUser()->userID)) {
+						$result = true;
+					}
+				}
+				
+				$data['result'] = $result;
 			break;
 			
 			case self::ACCESS_NOBODY:
@@ -561,13 +718,26 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	}
 	
 	/**
+	 * Returns true if a permission was set to 'Never'. This is required to preserve
+	 * compatibility, while preventing ACLs from overruling a 'Never' setting.
+	 * 
+	 * @param       string          $permission
+	 * @return      boolean
+	 */
+	 public function getNeverPermission($permission) {
+		$this->loadGroupData();
+		
+		return (isset($this->groupData['__never'][$permission]));
+	}
+	
+	/**
 	 * Returns the user title of this user.
 	 * 
 	 * @return	string
 	 */
 	public function getUserTitle() {
 		if ($this->userTitle) return $this->userTitle;
-		if ($this->getRank()) return WCF::getLanguage()->get($this->getRank()->rankTitle);
+		if ($this->getRank() && $this->getRank()->showTitle()) return WCF::getLanguage()->get($this->getRank()->rankTitle);
 		
 		return '';
 	}
@@ -589,7 +759,8 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 						'cssClassName' => $this->cssClassName,
 						'rankImage' => $this->rankImage,
 						'repeatImage' => $this->repeatImage,
-						'requiredGender' => $this->requiredGender
+						'requiredGender' => $this->requiredGender,
+						'hideTitle' => $this->hideTitle
 					]);
 				}
 				else {
@@ -712,6 +883,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 		if (!MODULE_USER_SIGNATURE) return false;
 		if (!$this->signature) return false;
 		if ($this->disableSignature) return false;
+		if ($this->banned) return false;
 		if (WCF::getUser()->userID && !WCF::getUser()->showSignature) return false;
 		
 		return true;

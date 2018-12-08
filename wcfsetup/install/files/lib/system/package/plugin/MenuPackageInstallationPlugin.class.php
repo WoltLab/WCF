@@ -6,6 +6,7 @@ use wcf\data\menu\Menu;
 use wcf\data\menu\MenuEditor;
 use wcf\data\menu\MenuList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -13,15 +14,15 @@ use wcf\system\WCF;
  * Installs, updates and deletes menus.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
  */
-class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * box meta data per menu
-	 * @var	string[]
+	 * @var	array
 	 */
 	public $boxData = [];
 	
@@ -263,5 +264,12 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				}
 			}
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return ['language'];
 	}
 }

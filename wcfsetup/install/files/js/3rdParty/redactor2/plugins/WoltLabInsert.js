@@ -9,8 +9,27 @@ $.Redactor.prototype.WoltLabInsert = function() {
 			this.insert.html = (function (html, data) {
 				if (callback) callback = callback();
 				
+				var selection = window.getSelection();
+				if (selection.rangeCount && selection.anchorNode.nodeName === 'IMG') {
+					this.caret.after(selection.anchorNode);
+				}
+				
 				this.placeholder.hide();
 				this.core.editor().focus();
+				
+				// Firefox may have an incorrect selection if pasting into the editor using the contextual menu
+				if (this.detect.isFirefox()) {
+					var anchorNode = (selection.anchorNode.nodeType === Node.TEXT_NODE) ? selection.anchorNode.parentNode : selection.anchorNode;
+					if (anchorNode.closest('.redactor-layer') === null) {
+						this.selection.restore();
+						
+						anchorNode = (selection.anchorNode.nodeType === Node.TEXT_NODE) ? selection.anchorNode.parentNode : selection.anchorNode;
+						if (anchorNode.closest('.redactor-layer') === null) {
+							this.WoltLabCaret.endOfEditor();
+							this.selection.save();
+						}
+					}
+				}
 				
 				/** @var Element */
 				var block = this.selection.block();
@@ -38,13 +57,45 @@ $.Redactor.prototype.WoltLabInsert = function() {
 						elRemove(block);
 					}
 				}
+				
+				if (selection.rangeCount && selection.anchorNode.nodeName === 'IMG') {
+					this.caret.after(selection.anchorNode);
+				}
 			}).bind(this);
 			
 			var mpText = this.insert.text;
 			this.insert.text = (function (text) {
 				if (callback) callback = callback();
 				
+				this.core.editor().focus();
+				this.selection.restore();
+				if (elClosest(window.getSelection().anchorNode, '.redactor-layer') !== this.core.editor()[0]) {
+					this.WoltLabCaret.endOfEditor();
+				}
+				
 				mpText.call(this, text);
+				
+				this.selection.saveInstant();
+			}).bind(this);
+			
+			this.insert.placeHtml = (function(html) {
+				var hasBbcodeMarker = false;
+				html.forEach(function(fragment) {
+					if (fragment instanceof Element && fragment.classList.contains('woltlab-bbcode-marker')) {
+						hasBbcodeMarker = true;
+					}
+				});
+				
+				var marker = document.createElement('span');
+				marker.id = 'redactor-insert-marker';
+				marker = this.insert.node(marker);
+				
+				$(marker).before(html);
+				if (!hasBbcodeMarker) {
+					this.selection.restore();
+					this.caret.after(marker);
+				}
+				$(marker).remove();
 			}).bind(this);
 		}
 	};

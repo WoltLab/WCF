@@ -6,7 +6,7 @@ use wcf\data\acl\option\category\ACLOptionCategoryList;
  * Caches the acl categories for a certain package.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cache\Builder
  */

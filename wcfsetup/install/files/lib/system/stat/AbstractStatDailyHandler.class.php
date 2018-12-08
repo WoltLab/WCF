@@ -1,12 +1,13 @@
 <?php
 namespace wcf\system\stat;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**
  * Abstract implementation of a stat handler.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Stat
  */
@@ -20,12 +21,18 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler {
 	 * @return	integer
 	 */
 	protected function getCounter($date, $tableName, $dateColumnName) {
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add($dateColumnName . ' BETWEEN ? AND ?', [$date, $date + 86399]);
+		
+		$this->addConditions($conditionBuilder);
+		
 		$sql = "SELECT	COUNT(*)
 			FROM	" . $tableName . "
-			WHERE	" . $dateColumnName . " BETWEEN ? AND ?";
+			" . $conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$date, $date + 86399]);
-		return $statement->fetchColumn();
+		$statement->execute($conditionBuilder->getParameters());
+		
+		return $statement->fetchSingleColumn();
 	}
 	
 	/**
@@ -37,12 +44,18 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler {
 	 * @return	integer
 	 */
 	protected function getTotal($date, $tableName, $dateColumnName) {
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add($dateColumnName . ' < ?', [$date + 86399]);
+		
+		$this->addConditions($conditionBuilder);
+		
 		$sql = "SELECT	COUNT(*)
 			FROM	" . $tableName . "
-			WHERE	" . $dateColumnName . " < ?";
+			" . $conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$date + 86400]);
-		return $statement->fetchColumn();
+		$statement->execute($conditionBuilder->getParameters());
+		
+		return $statement->fetchSingleColumn();
 	}
 	
 	/**
@@ -50,5 +63,15 @@ abstract class AbstractStatDailyHandler implements IStatDailyHandler {
 	 */
 	public function getFormattedCounter($counter) {
 		return $counter;
+	}
+	
+	/**
+	 * Adds additional conditions to the given condition builder.
+	 * 
+	 * @param	PreparedStatementConditionBuilder	$conditionBuilder
+	 * @since	3.1
+	 */
+	protected function addConditions(PreparedStatementConditionBuilder $conditionBuilder) {
+		// does nothing
 	}
 }

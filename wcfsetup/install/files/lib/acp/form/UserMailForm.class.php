@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * Shows the user mail form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -28,10 +28,16 @@ class UserMailForm extends AbstractForm {
 	public $enableHTML = false;
 	
 	/**
-	 * sender name
+	 * sender address
 	 * @var	string
 	 */
 	public $from = '';
+	
+	/**
+	 * sender name
+	 * @var	string
+	 */
+	public $fromName = '';
 	
 	/**
 	 * list of group ids
@@ -63,6 +69,12 @@ class UserMailForm extends AbstractForm {
 	public $text = '';
 	
 	/**
+	 * single user id
+	 * @var integer
+	 */
+	public $userID = 0;
+	
+	/**
 	 * list of user ids
 	 * @var	integer[]
 	 */
@@ -80,6 +92,8 @@ class UserMailForm extends AbstractForm {
 	public function readParameters() {
 		parent::readParameters();
 		
+		if (isset($_GET['id'])) $this->userID = intval($_GET['id']);
+		
 		$this->activeMenuItem = ($this->action == 'all' ? 'wcf.acp.menu.link.user.mail' : ($this->action == 'group' ? 'wcf.acp.menu.link.group.mail' : 'wcf.acp.menu.link.user.management'));
 	}
 	
@@ -94,6 +108,7 @@ class UserMailForm extends AbstractForm {
 		if (isset($_POST['subject'])) $this->subject = StringUtil::trim($_POST['subject']);
 		if (isset($_POST['text'])) $this->text = StringUtil::trim($_POST['text']);
 		if (isset($_POST['from'])) $this->from = StringUtil::trim($_POST['from']);
+		if (isset($_POST['fromName'])) $this->fromName = StringUtil::trim($_POST['fromName']);
 		if (isset($_POST['enableHTML'])) $this->enableHTML = true;
 	}
 	
@@ -143,6 +158,7 @@ class UserMailForm extends AbstractForm {
 			'subject' => $this->subject,
 			'text' => $this->text,
 			'from' => $this->from,
+			'fromName' => $this->fromName,
 			'enableHTML' => $this->enableHTML
 		];
 		WCF::getSession()->register('userMailData', $userMailData);
@@ -160,23 +176,30 @@ class UserMailForm extends AbstractForm {
 		if (empty($_POST)) {
 			// get marked user ids
 			if (empty($this->action)) {
-				// get type id
-				$objectTypeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
-				if ($objectTypeID === null) {
-					throw new SystemException("Unknown clipboard item type 'com.woltlab.wcf.user'");
+				if ($this->userID) {
+					// single user mail form
+					$this->userIDs = [$this->userID];
 				}
-				
-				// get user ids
-				$users = ClipboardHandler::getInstance()->getMarkedItems($objectTypeID);
-				if (empty($users)) {
-					throw new IllegalLinkException();
+				else {
+					// get type id
+					$objectTypeID = ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user');
+					if ($objectTypeID === null) {
+						throw new SystemException("Unknown clipboard item type 'com.woltlab.wcf.user'");
+					}
+					
+					// get user ids
+					$users = ClipboardHandler::getInstance()->getMarkedItems($objectTypeID);
+					if (empty($users)) {
+						throw new IllegalLinkException();
+					}
+					
+					// load users
+					$this->userIDs = array_keys($users);
 				}
-				
-				// load users
-				$this->userIDs = array_keys($users);
 			}
 			
 			$this->from = MAIL_FROM_ADDRESS;
+			$this->fromName = MAIL_FROM_NAME;
 		}
 		
 		if (!empty($this->userIDs)) {
@@ -198,6 +221,7 @@ class UserMailForm extends AbstractForm {
 		WCF::getTPL()->assign([
 			'enableHTML' => $this->enableHTML,
 			'from' => $this->from,
+			'fromName' => $this->fromName,
 			'groupIDs' => $this->groupIDs,
 			'groups' => $this->groups,
 			'subject' => $this->subject,
@@ -205,5 +229,16 @@ class UserMailForm extends AbstractForm {
 			'userIDs' => $this->userIDs,
 			'userList' => $this->userList
 		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function show() {
+		// work-around for a known Chrome bug that causes the XSS auditor
+		// to incorrectly detect JavaScript inside a textarea
+		@header('X-XSS-Protection: 0');
+		
+		parent::show();
 	}
 }

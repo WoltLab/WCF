@@ -5,7 +5,7 @@ namespace wcf\util;
  * Contains math-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -23,7 +23,7 @@ final class MathUtil {
 	}
 	
 	/**
-	 * Transforms the given latitude and longitude into cartesion coordinates
+	 * Transforms the given latitude and longitude into cartesian coordinates
 	 * (x, y, z).
 	 * 
 	 * @param	float		$latitude

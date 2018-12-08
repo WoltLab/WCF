@@ -5,7 +5,7 @@ namespace wcf\system\setup;
  * Deletes files and directories.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Setup
  */
@@ -38,7 +38,7 @@ class Uninstaller {
 	 * Creates a new Uninstaller object.
 	 * 
 	 * @param	string		$targetDir
-	 * @param	array		$files
+	 * @param	string[]	$files
 	 * @param	boolean		$deleteEmptyTargetDir
 	 * @param	boolean		$deleteEmptyDirectories
 	 */
@@ -120,9 +120,9 @@ class Uninstaller {
 				}
 			}
 			
-			// delete direcotries
+			// delete directories
 			if ($this->deleteEmptyDirectories) {
-				// the deepest diretories first
+				// the deepest directories first
 				krsort($directories, SORT_NUMERIC);
 				foreach ($directories as $depth) {
 					foreach ($depth as $dir) {

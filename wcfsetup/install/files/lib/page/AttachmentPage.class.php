@@ -12,7 +12,7 @@ use wcf\util\FileReader;
  * Shows an attachment.
  * 
  * @author	Joshua Ruesweg, Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  */
@@ -139,6 +139,9 @@ class AttachmentPage extends AbstractPage {
 			$this->eTag = $this->attachmentID;
 		}
 		
+		// unsaved attachments may be cached by the browser for up to 5 minutes only
+		$cacheDuration = ($this->attachment->tmpHash) ? 300 : 31536000;
+		
 		// init file reader
 		$this->fileReader = new FileReader($location, [
 			'filename' => $this->attachment->filename,
@@ -147,8 +150,8 @@ class AttachmentPage extends AbstractPage {
 			'showInline' => in_array($mimeType, self::$inlineMimeTypes),
 			'enableRangeSupport' => !$this->tiny && !$this->thumbnail,
 			'lastModificationTime' => $this->attachment->uploadTime,
-			'expirationDate' => TIME_NOW + 31536000,
-			'maxAge' => 31536000
+			'expirationDate' => TIME_NOW + $cacheDuration,
+			'maxAge' => $cacheDuration
 		]);
 		
 		if ($this->eTag !== null) {

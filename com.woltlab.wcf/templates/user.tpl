@@ -133,8 +133,7 @@
 {/capture}
 
 {capture assign='contentHeader'}
-	<header class="contentHeader userProfileUser"{if $isAccessible}
-		data-object-id="{@$user->userID}"
+	<header class="contentHeader userProfileUser{if MODULE_USER_COVER_PHOTO} userProfileUserWithCoverPhoto{/if}" data-object-id="{@$user->userID}"{if $isAccessible}
 		{if $__wcf->session->getPermission('admin.user.canBanUser')}
 			data-banned="{@$user->banned}"
 		{/if}
@@ -148,6 +147,21 @@
 			data-is-disabled="{if $user->activationCode}true{else}false{/if}"
 		{/if}
 		{/if}>
+		{if MODULE_USER_COVER_PHOTO}
+			<div class="userProfileCoverPhoto" style="background-image: url({$user->getCoverPhoto()->getURL()})">
+				{if $user->userID == $__wcf->user->userID && ($__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto') || $user->coverPhotoHash)}
+					<div class="userProfileManageCoverPhoto dropdown jsOnly">
+						<a href="#" class="button small dropdownToggle"><span class="icon icon16 fa-pencil"></span> {lang}wcf.user.coverPhoto.edit{/lang}</a>
+						<ul class="dropdownMenu">
+							{if $__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto')}
+								<li><a href="#" class="jsButtonUploadCoverPhoto jsStaticDialog" data-dialog-id="userProfileCoverPhotoUpload">{lang}wcf.user.coverPhoto.upload{/lang}</a></li>
+							{/if}
+							<li{if !$user->coverPhotoHash} style="display:none;"{/if}><a href="#" class="jsButtonDeleteCoverPhoto">{lang}wcf.user.coverPhoto.delete{/lang}</a></li>
+						</ul>
+					</div>
+				{/if}
+			</div>
+		{/if}
 		<div class="contentHeaderIcon">
 			{if $user->userID == $__wcf->user->userID}
 				<a href="{link controller='AvatarEdit'}{/link}" class="jsTooltip" title="{lang}wcf.user.avatar.edit{/lang}">{@$user->getAvatar()->getImageTag(128)}</a>
@@ -159,7 +173,7 @@
 		
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">
-				{$user->username}
+				<span class="userProfileUsername">{$user->username}</span>
 				{if $user->banned}<span class="icon icon24 fa-lock jsTooltip jsUserBanned" title="{lang}wcf.user.banned{/lang}"></span>{/if}
 				{if MODULE_USER_RANK}
 					{if $user->getUserTitle()}
@@ -172,9 +186,18 @@
 			</h1>
 			
 			<div class="contentHeaderDescription">
+				{if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies') && ($user->isAccessible('canViewTrophies') || $user->userID == $__wcf->session->userID) && $user->getSpecialTrophies()|count}
+					<div class="specialTrophyUserContainer">
+						<ul>
+							{foreach from=$user->getSpecialTrophies() item=trophy}
+								<li><a href="{@$trophy->getLink()}">{@$trophy->renderTrophy(32, true)}</a></li>
+							{/foreach}
+						</ul>
+					</div>
+				{/if}
 				<ul class="inlineList commaSeparated">
 					{if !$user->isProtected()}
-						{if $user->isVisibleOption('gender') && $user->gender}<li>{lang}wcf.user.gender.{if $user->gender == 1}male{else}female{/if}{/lang}</li>{/if}
+						{if $user->isVisibleOption('gender') && $user->gender}<li>{$user->getFormattedUserOption('gender')}</li>{/if}
 						{if $user->isVisibleOption('birthday') && $user->getAge()}<li>{@$user->getAge()}</li>{/if}
 						{if $user->isVisibleOption('location') && $user->location}<li>{lang}wcf.user.membersList.location{/lang}</li>{/if}
 					{/if}
@@ -183,12 +206,19 @@
 					{event name='userDataRow1'}
 				</ul>
 				
-				{if $user->canViewOnlineStatus() && $user->getLastActivityTime()}
+				{hascontent}
 					<ul class="inlineList commaSeparated">
-						<li>{lang}wcf.user.usersOnline.lastActivity{/lang}: {@$user->getLastActivityTime()|time}</li>
-						{if $user->getCurrentLocation()}<li>{@$user->getCurrentLocation()}</li>{/if}
+						{content}
+							{if $user->canViewOnlineStatus() && $user->getLastActivityTime()}
+								<li>{lang}wcf.user.usersOnline.lastActivity{/lang}: {@$user->getLastActivityTime()|time}</li>
+								{if $user->getCurrentLocation()}<li>{@$user->getCurrentLocation()}</li>{/if}
+							{/if}
+							{if $__wcf->session->getPermission('admin.user.canViewIpAddress') && $user->registrationIpAddress}
+								<li>{lang}wcf.user.registrationIpAddress{/lang}: <span class="userRegistrationIpAddress">{$user->getRegistrationIpAddress()}</span></li>
+							{/if}
+						{/content}
 					</ul>
-				{/if}
+				{/hascontent}
 				
 				<dl class="plain inlineDataList">
 					{include file='userInformationStatistics'}
@@ -261,7 +291,7 @@
 							{content}
 								{event name='menuManagement'}
 								
-								{if $isAccessible && $__wcf->user->userID != $user->userID && ($__wcf->session->getPermission('admin.user.canBanUser') || $__wcf->session->getPermission('admin.user.canDisableAvatar') || $__wcf->session->getPermission('admin.user.canDisableSignature') || ($__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')){event name='moderationDropdownPermissions'})}
+								{if $isAccessible && $__wcf->user->userID != $user->userID && ($__wcf->session->getPermission('admin.user.canBanUser') || $__wcf->session->getPermission('admin.user.canDisableAvatar') || $__wcf->session->getPermission('admin.user.canDisableSignature') || $__wcf->session->getPermission('admin.user.canEnableUser') || ($__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')){event name='moderationDropdownPermissions'})}
 									{if $__wcf->session->getPermission('admin.user.canBanUser')}<li><a href="#" class="jsButtonUserBan">{lang}wcf.user.{if $user->banned}un{/if}ban{/lang}</a></li>{/if}
 									{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}<li><a href="#" class="jsButtonUserDisableAvatar">{lang}wcf.user.{if $user->disableAvatar}enable{else}disable{/if}Avatar{/lang}</a></li>{/if}
 									{if $__wcf->session->getPermission('admin.user.canDisableSignature')}<li><a href="#" class="jsButtonUserDisableSignature">{lang}wcf.user.{if $user->disableSignature}enable{else}disable{/if}Signature{/lang}</a></li>{/if}
@@ -291,7 +321,7 @@
 			<ul>
 				{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
 					{if $menuItem->getContentManager()->isVisible($userID)}
-						<li><a href="{$__wcf->getAnchor($menuItem->getIdentifier())}">{lang}wcf.user.profile.menu.{@$menuItem->menuItem}{/lang}</a></li>
+						<li><a href="{$__wcf->getAnchor($menuItem->getIdentifier())}">{$menuItem}</a></li>
 					{/if}
 				{/foreach}
 			</ul>
@@ -309,6 +339,48 @@
 	</div>
 {else}
 	<p class="info">{lang}wcf.user.profile.protected{/lang}</p>
+{/if}
+
+{if MODULE_USER_COVER_PHOTO && $user->userID == $__wcf->user->userID}
+	{if $__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto')}
+		<div id="userProfileCoverPhotoUpload" class="jsStaticDialogContent" data-title="{lang}wcf.user.coverPhoto.upload{/lang}">
+			{if $__wcf->user->disableCoverPhoto}
+				<p class="error">{lang}wcf.user.coverPhoto.error.disabled{/lang}</p>
+			{else}
+				<div id="coverPhotoUploadPreview"></div>
+				
+				{* placeholder for the upload button *}
+				<div id="coverPhotoUploadButtonContainer"></div>
+				<small>{lang}wcf.user.coverPhoto.upload.description{/lang}</small>
+			{/if}
+		</div>
+		<script data-relocate="true">
+			require(['Language', 'WoltLabSuite/Core/Ui/User/CoverPhoto/Upload'], function (Language, UiUserCoverPhotoUpload) {
+				Language.addObject({
+					'wcf.user.coverPhoto.delete.confirmMessage': '{lang}wcf.user.coverPhoto.delete.confirmMessage{/lang}',
+					'wcf.user.coverPhoto.upload.error.fileExtension': '{lang}wcf.user.coverPhoto.upload.error.fileExtension{/lang}',
+					'wcf.user.coverPhoto.upload.error.tooSmall': '{lang}wcf.user.coverPhoto.upload.error.tooSmall{/lang}',
+					'wcf.user.coverPhoto.upload.error.tooLarge': '{lang}wcf.user.coverPhoto.upload.error.tooLarge{/lang}',
+					'wcf.user.coverPhoto.upload.error.uploadFailed': '{lang}wcf.user.coverPhoto.upload.error.uploadFailed{/lang}',
+					'wcf.user.coverPhoto.upload.error.badImage': '{lang}wcf.user.coverPhoto.upload.error.badImage{/lang}',
+					'wcf.user.coverPhoto.upload.success': '{lang}wcf.user.coverPhoto.upload.success{/lang}'
+				});
+				
+				{if !$__wcf->user->disableCoverPhoto}
+					new UiUserCoverPhotoUpload();
+				{/if}
+			});
+		</script>
+	{/if}
+	<script data-relocate="true">
+		require(['Language', 'WoltLabSuite/Core/Ui/User/CoverPhoto/Delete'], function (Language, UiUserCoverPhotoDelete) {
+			Language.addObject({
+				'wcf.user.coverPhoto.delete.confirmMessage': '{lang}wcf.user.coverPhoto.delete.confirmMessage{/lang}'
+			});
+			
+			UiUserCoverPhotoDelete.init();
+		});
+	</script>
 {/if}
 
 {include file='footer'}

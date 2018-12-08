@@ -16,7 +16,7 @@ use wcf\system\WCF;
  * Provides methods to manage moderated content and reports.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Moderation\Queue
  */
@@ -162,7 +162,7 @@ class ModerationQueueManager extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns a list of object type ids for given definiton ids.
+	 * Returns a list of object type ids for given definition ids.
 	 * 
 	 * @param	integer[]		$definitionIDs
 	 * @return	integer[]

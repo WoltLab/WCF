@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Worker implementation for updating polls.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Worker
  * 
@@ -64,7 +64,7 @@ class PollRebuildDataWorker extends AbstractRebuildDataWorker {
 			$conditionBuilder->add('poll.pollID IN (?)', [$pollIDs]);
 			$sql = "UPDATE	wcf" . WCF_N . "_poll poll
 				SET	votes = (
-						SELECT	COUNT(*)
+						SELECT	COUNT(DISTINCT userID)
 						FROM	wcf" . WCF_N . "_poll_option_vote
 						WHERE	pollID = poll.pollID
 					)

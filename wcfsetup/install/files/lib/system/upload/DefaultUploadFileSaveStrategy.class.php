@@ -17,7 +17,7 @@ use wcf\util\FileUtil;
  * Default implementation for saving uploaded files.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Upload
  * @since	3.0
@@ -63,7 +63,8 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 	 * @param	string		$actionClassName
 	 * @param	array		$options
 	 * @param	array		$data
-	 * @throws	SystemException
+	 * @throws	ImplementationException
+	 * @throws	ParentClassException
 	 */
 	public function __construct($actionClassName, array $options = [], array $data = []) {
 		$this->actionClassName = $actionClassName;
@@ -180,6 +181,13 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 										$editor->update([
 											'height' => $object->width,
 											'width' => $object->height,
+											'filesize' => filesize($object->getLocation())
+										]);
+									}
+									else if ($newImage !== null && $orientation == ExifUtil::ORIENTATION_180_ROTATE) {
+										/** @var DatabaseObjectEditor $editor */
+										$editor = new $this->editorClassName($object);
+										$editor->update([
 											'filesize' => filesize($object->getLocation())
 										]);
 									}

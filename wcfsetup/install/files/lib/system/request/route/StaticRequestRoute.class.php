@@ -6,7 +6,7 @@ use wcf\system\request\ControllerMap;
  * Static route implementation to resolve HTTP requests, handling a single controller.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  * @since	3.0
@@ -94,14 +94,15 @@ class StaticRequestRoute extends DynamicRequestRoute {
 	 */
 	public function matches($requestURL) {
 		if (parent::matches($requestURL)) {
-			$controller = ControllerMap::getInstance()->lookup($this->staticApplication, $this->staticController);
+			$controller = ControllerMap::getInstance()->lookup($this->staticApplication, $this->staticController, !$this->isACP());
 			if ($this->matchController && $this->routeData['controller'] !== $controller) {
 				return false;
 			}
 			
 			$this->routeData['application'] = $this->staticApplication;
-			$this->routeData['controller'] = $controller;
+			$this->routeData['controller'] = ControllerMap::transformController($this->staticController);
 			$this->routeData['isDefaultController'] = false;
+			$this->routeData['isRenamedController'] = (strcasecmp($controller, $this->staticController) !== 0);
 			
 			return true;
 		}

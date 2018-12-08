@@ -7,14 +7,14 @@ use wcf\data\DatabaseObjectDecorator;
  * Represents a following user as a notification object.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Object
  * 
  * @method	UserFollow	getDecoratedObject()
  * @mixin	UserFollow
  */
-class UserFollowUserNotificationObject extends DatabaseObjectDecorator implements IStackableUserNotificationObject {
+class UserFollowUserNotificationObject extends DatabaseObjectDecorator implements IUserNotificationObject {
 	/**
 	 * @inheritDoc
 	 */
@@ -39,12 +39,5 @@ class UserFollowUserNotificationObject extends DatabaseObjectDecorator implement
 	 */
 	public function getAuthorID() {
 		return $this->userID;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getRelatedObjectID() {
-		return $this->followUserID;
 	}
 }

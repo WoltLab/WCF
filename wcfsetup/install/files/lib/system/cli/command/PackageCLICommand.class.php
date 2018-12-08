@@ -23,7 +23,7 @@ use Zend\ProgressBar\ProgressBar;
  * Executes package installation.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cli\Command
  */
@@ -319,7 +319,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 							$progress = 100;
 							$currentAction = CLIWCF::getLanguage()->get('wcf.acp.package.installation.step.install.success');
 							$finished = true;
-							continue;
+							continue 2;
 						}
 						else {
 							// continue with next node
@@ -418,7 +418,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 						$progress = 100;
 						$step = 'success';
 						$finished = true;
-						continue;
+						continue 2;
 					}
 					
 					// continue with next node

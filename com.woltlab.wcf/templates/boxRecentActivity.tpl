@@ -18,6 +18,10 @@
 					<li><a href="#" class="button small{if !$filteredByFollowedUsers} active{/if}">{lang}wcf.user.recentActivity.scope.all{/lang}</a></li>
 					<li><a href="#" class="button small{if $filteredByFollowedUsers} active{/if}">{lang}wcf.user.recentActivity.scope.followedUsers{/lang}</a></li>
 				</ul>
+				
+				{if $filteredByFollowedUsersOverride}
+					<p class="info recentActivityFollowedNoResults">{lang}wcf.user.recentActivity.scope.followedUsers.noResults{/lang}</p>
+				{/if}
 			</li>
 		{/if}
 		

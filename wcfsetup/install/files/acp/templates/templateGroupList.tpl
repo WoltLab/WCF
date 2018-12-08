@@ -20,7 +20,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.template.group.list{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.template.group.list{/lang} <span class="badge badgeInverse">{#$items}</span></h1>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
@@ -56,12 +56,18 @@
 				{foreach from=$objects item=templateGroup}
 					<tr class="jsTemplateGroupRow">
 						<td class="columnIcon">
-							{if !$templateGroup->isImmutable()}
-								<a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$templateGroup->templateGroupID}" data-confirm-message-html="{lang __encode=true}wcf.acp.template.group.delete.sure{/lang}"></span>
-							{else}
+							{if $templateGroup->isImmutable()}
 								<span class="icon icon16 fa-pencil disabled" title="{lang}wcf.global.button.edit{/lang}"></span>
+							{else}
+								<a href="{link controller='TemplateGroupEdit' id=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							{/if}
+							
+							<a href="{link controller='TemplateList' templateGroupID=$templateGroup->templateGroupID}{/link}" title="{lang}wcf.acp.template.list{/lang}" class="jsTooltip"><span class="icon icon16 fa-list"></span></a>
+							
+							{if $templateGroup->isImmutable()}
 								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+							{else}
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$templateGroup->templateGroupID}" data-confirm-message-html="{lang __encode=true}wcf.acp.template.group.delete.sure{/lang}"></span>
 							{/if}
 							
 							{event name='rowButtons'}

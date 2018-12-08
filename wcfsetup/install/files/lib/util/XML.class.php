@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * Reads and validates xml documents.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -58,10 +58,14 @@ class XML {
 			throw new SystemException("Could not read xml document located at '".$this->path."'.");
 		}
 		
+		// flush the error buffer in case someone used global xml functions
+		// without polling / clearing the buffer after use
+		libxml_clear_errors();
+		
 		// load xml document
 		$this->document->load($path);
 		
-		// check for errors occured in libxml
+		// check for errors occurred in libxml
 		$errors = $this->pollErrors();
 		if (!empty($errors)) {
 			$this->throwException("XML document '".$this->path."' is not valid XML.", $errors);
@@ -69,7 +73,7 @@ class XML {
 	}
 	
 	/**
-	 * Loads a xml string, specifying $path is mandatory to provide detailied error handling.
+	 * Loads a xml string, specifying $path is mandatory to provide detailed error handling.
 	 * 
 	 * @param	string		$path
 	 * @param	string		$xml
@@ -77,10 +81,14 @@ class XML {
 	public function loadXML($path, $xml) {
 		$this->path = $path;
 		
+		// flush the error buffer in case someone used global xml functions
+		// without polling / clearing the buffer after use
+		libxml_clear_errors();
+		
 		// load xml document
 		$this->document->loadXML($xml);
 		
-		// check for errors occured in libxml
+		// check for errors occurred in libxml
 		$errors = $this->pollErrors();
 		if (!empty($errors)) {
 			$this->throwException("XML document '".$this->path."' is not valid XML.", $errors);
@@ -97,7 +105,7 @@ class XML {
 		// validate document against schema
 		$this->document->schemaValidate($this->schema);
 		
-		// check for errors occured in libxml
+		// check for errors occurred in libxml
 		$errors = $this->pollErrors();
 		if (!empty($errors)) {
 			$this->throwException("XML document '".$this->path."' violates XML schema definition.", $errors);

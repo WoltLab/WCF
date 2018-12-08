@@ -1,13 +1,14 @@
 <?php
 namespace wcf\data\style;
 use wcf\data\DatabaseObjectDecorator;
+use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 
 /**
  * Represents the active user style.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Style
  *
@@ -27,7 +28,12 @@ class ActiveStyle extends DatabaseObjectDecorator {
 	 * @return	string
 	 */
 	public function getImage($image) {
-		if (preg_match('~^https?://~', $image)) {
+		if (preg_match('~^(https?)://~', $image, $matches)) {
+			// rewrite protocol
+			if ($matches[1] === 'http' && RouteHandler::secureConnection()) {
+				return 'https' . mb_substr($image, 4);
+			}
+			
 			return $image;
 		}
 		

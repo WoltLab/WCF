@@ -2,7 +2,7 @@
  * Provides the media manager dialog.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Media/Manager/Base
  */
@@ -11,16 +11,45 @@ define(
 		'Core',                     'Dictionary',               'Dom/ChangeListener',              'Dom/Traverse',
 		'Dom/Util',                 'EventHandler',             'Language',                        'List',
 		'Permission',               'Ui/Dialog',                'Ui/Notification',                 'WoltLabSuite/Core/Controller/Clipboard',
-		'WoltLabSuite/Core/Media/Editor', 'WoltLabSuite/Core/Media/Upload', 'WoltLabSuite/Core/Media/Manager/Search', 'StringUtil'
+		'WoltLabSuite/Core/Media/Editor', 'WoltLabSuite/Core/Media/Upload', 'WoltLabSuite/Core/Media/Manager/Search', 'StringUtil',
+		'WoltLabSuite/Core/Ui/Pagination'
 	],
 	function(
 		Core,                        Dictionary,                 DomChangeListener,                 DomTraverse,
 		DomUtil,                     EventHandler,               Language,                          List,
 		Permission,                  UiDialog,                   UiNotification,                    Clipboard,
-		MediaEditor,                 MediaUpload,                MediaManagerSearch,                StringUtil
+		MediaEditor,                 MediaUpload,                MediaManagerSearch,                StringUtil,
+		UiPagination
 	)
 {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			_addButtonEventListeners: function() {},
+			_click: function() {},
+			_clipboardAction: function() {},
+			_dialogClose: function() {},
+			_dialogInit: function() {},
+			_dialogSetup: function() {},
+			_dialogShow: function() {},
+			_editMedia: function() {},
+			_editorClose: function() {},
+			_editorSuccess: function() {},
+			_removeClipboardCheckboxes: function() {},
+			_setMedia: function() {},
+			addMedia: function() {},
+			getDialog: function() {},
+			getMode: function() {},
+			getOption: function() {},
+			removeMedia: function() {},
+			resetMedia: function() {},
+			setMedia: function() {},
+			setupMediaElement: function() {}
+		};
+		return Fake;
+	}
 	
 	var _mediaManagerCounter = 0;
 	
@@ -37,11 +66,12 @@ define(
 		this._id = 'mediaManager' + _mediaManagerCounter++;
 		this._listItems = new Dictionary();
 		this._media = new Dictionary();
-		this._mediaCache = null;
 		this._mediaManagerMediaList = null;
 		this._search = null;
+		this._upload = null;
 		this._forceClipboard = false;
 		this._hadInitiallyMarkedItems = false;
+		this._pagination = null;
 		
 		if (Permission.get('admin.content.cms.canManageMedia')) {
 			this._mediaEditor = new MediaEditor(this);
@@ -68,6 +98,13 @@ define(
 					}
 				}
 			}
+		},
+		
+		/**
+		 * Is called when a new category is selected.
+		 */
+		_categoryChange: function() {
+			this._search.search();
 		},
 		
 		/**
@@ -123,6 +160,8 @@ define(
 				}
 			}
 			
+			this._initPagination(~~data.returnValues.pageCount);
+			
 			this._hadInitiallyMarkedItems = data.returnValues.hasMarkedItems;
 		},
 		
@@ -158,7 +197,14 @@ define(
 		 */
 		_dialogShow: function() {
 			if (!this._mediaManagerMediaList) {
-				this._mediaManagerMediaList = elByClass('mediaManagerMediaList', UiDialog.getDialog(this).dialog)[0];
+				var dialog = this.getDialog();
+				
+				this._mediaManagerMediaList = elByClass('mediaManagerMediaList', dialog)[0];
+				
+				this._mediaCategorySelect = elBySel('.mediaManagerCategoryList > select', dialog);
+				if (this._mediaCategorySelect) {
+					this._mediaCategorySelect.addEventListener('change', this._categoryChange.bind(this));
+				}
 				
 				// store list items locally
 				var listItems = DomTraverse.childrenByTag(this._mediaManagerMediaList, 'LI');
@@ -170,13 +216,13 @@ define(
 				
 				if (Permission.get('admin.content.cms.canManageMedia')) {
 					var uploadButton = elByClass('mediaManagerMediaUploadButton', UiDialog.getDialog(this).dialog)[0];
-					new MediaUpload(DomUtil.identify(uploadButton), DomUtil.identify(this._mediaManagerMediaList), {
+					this._upload = new MediaUpload(DomUtil.identify(uploadButton), DomUtil.identify(this._mediaManagerMediaList), {
 						mediaManager: this
 					});
 					
 					var deleteAction = new WCF.Action.Delete('wcf\\data\\media\\MediaAction', '.mediaFile');
 					deleteAction._didTriggerEffect = function(element) {
-						this.removeMedia(elData(element[0], 'object-id'), true);
+						this.removeMedia(elData(element[0], 'object-id'));
 					}.bind(this);
 				}
 				
@@ -232,8 +278,23 @@ define(
 		 * successfully editing a media file.
 		 * 
 		 * @param	{object}	media		updated media file data
+		 * @param	{integer}	oldCategoryId	old category id
 		 */
-		_editorSuccess: function(media) {
+		_editorSuccess: function(media, oldCategoryId) {
+			// if the category changed of media changed and category
+			// is selected, check if media list needs to be refreshed
+			if (this._mediaCategorySelect) {
+				var selectedCategoryId = ~~this._mediaCategorySelect.value;
+				
+				if (selectedCategoryId) {
+					var newCategoryId = ~~media.categoryID;
+					
+					if (oldCategoryId != newCategoryId && (oldCategoryId == selectedCategoryId || newCategoryId == selectedCategoryId)) {
+						this._search.search();
+					}
+				}
+			}
+			
 			UiDialog.open(this);
 			
 			this._media.set(~~media.mediaID, media);
@@ -245,6 +306,31 @@ define(
 			}
 			else {
 				p.textContent = media.title[media.languageID] || media.filename;
+			}
+		},
+		
+		/**
+		 * Initializes the dialog pagination.
+		 *
+		 * @param	{integer}	pageCount
+		 * @param	{integer}	pageNo
+		 */
+		_initPagination: function(pageCount, pageNo) {
+			if (pageNo === undefined) pageNo = 1;
+			
+			if (pageCount > 1) {
+				var newPagination = elCreate('div');
+				newPagination.className = 'paginationBottom jsPagination';
+				DomUtil.replaceElement(elBySel('.jsPagination', UiDialog.getDialog(this).content), newPagination);
+				
+				this._pagination = new UiPagination(newPagination, {
+					activePage: pageNo,
+					callbackSwitch: this._search.search.bind(this._search),
+					maxPage: pageCount
+				});
+			}
+			else if (this._pagination) {
+				elHide(this._pagination.getElement());
 			}
 		},
 		
@@ -329,6 +415,19 @@ define(
 		},
 		
 		/**
+		 * Returns the id of the currently selected category or `0` if no category is selected.
+		 * 
+		 * @return	{integer}
+		 */
+		getCategoryId: function() {
+			if (this._mediaCategorySelect) {
+				return this._mediaCategorySelect.value;
+			}
+			
+			return 0;
+		},
+		
+		/**
 		 * Returns the media manager dialog element.
 		 * 
 		 * @return	{Element}	media manager dialog
@@ -364,9 +463,8 @@ define(
 		 * Removes a media file.
 		 *
 		 * @param	{int}			mediaId		id of the removed media file
-		 * @param	{boolean|undefined}	checkCache	media file will also be removed from the local cache if true
 	 	 */
-		removeMedia: function(mediaId, checkCache) {
+		removeMedia: function(mediaId) {
 			if (this._listItems.has(mediaId)) {
 				// remove list item
 				try {
@@ -379,23 +477,14 @@ define(
 				this._listItems.delete(mediaId);
 				this._media.delete(mediaId);
 			}
-			
-			if (checkCache && this._mediaCache && this._mediaCache.has(mediaId)) {
-				this._mediaCache.delete(mediaId);
-			}
 		},
 		
 		/**
 		 * Changes the displayed media to the previously displayed media.
 		 */
 		resetMedia: function() {
-			if (this._mediaCache !== null) {
-				this._setMedia(this._mediaCache);
-				
-				this._mediaCache = null;
-				
-				this._search.resetSearch();
-			}
+			// calling WoltLabSuite/Core/Media/Manager/Search.search() reloads the first page of the dialog
+			this._search.search();
 		},
 		
 		/**
@@ -403,12 +492,9 @@ define(
 		 * 
 		 * @param	{object}	media		media data
 		 * @param	{string}	template	
+		 * @param	{object}	additionalData
 		 */
-		setMedia: function(media, template) {
-			if (!this._mediaCache) {
-				this._mediaCache = this._media;
-			}
-			
+		setMedia: function(media, template, additionalData) {
 			var hasMedia = false;
 			for (var mediaId in media) {
 				if (objOwns(media, mediaId)) {
@@ -431,6 +517,8 @@ define(
 					}
 				}
 			}
+			
+			this._initPagination(additionalData.pageCount, additionalData.pageNo);
 			
 			this._setMedia(media);
 		},

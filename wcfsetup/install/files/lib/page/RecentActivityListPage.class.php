@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Shows the global recent activity list page.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  */
@@ -61,8 +61,7 @@ class RecentActivityListPage extends AbstractPage {
 		
 		WCF::getTPL()->assign([
 			'eventList' => $this->eventList,
-			'lastEventTime' => $this->eventList->getLastEventTime(),
-			'allowSpidersToIndexThisPage' => true
+			'lastEventTime' => $this->eventList->getLastEventTime()
 		]);
 	}
 }

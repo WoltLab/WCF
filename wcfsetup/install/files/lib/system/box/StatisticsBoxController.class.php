@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Box that shows global statistics.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
@@ -22,6 +22,8 @@ class StatisticsBoxController extends AbstractBoxController {
 	 * @inheritDoc
 	 */
 	protected function loadContent() {
-		$this->content = WCF::getTPL()->fetch('boxStatistics', 'wcf', ['statistics' => UserStatsCacheBuilder::getInstance()->getData()], true);
+		if (WCF::getSession()->getPermission('user.profile.canViewStatistics')) {
+			$this->content = WCF::getTPL()->fetch('boxStatistics', 'wcf', ['statistics' => UserStatsCacheBuilder::getInstance()->getData()], true);
+		}
 	}
 }

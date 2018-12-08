@@ -1,12 +1,14 @@
 {include file='header' __disableLoginLink=true __disableAds=true}
 
+{if $forceLoginRedirect}<p class="info">{lang}wcf.user.login.forceLogin{/lang}</p>{/if}
+
 {if !$errorField|empty && $errorField == 'cookie'}
 	<p class="error">{lang}wcf.user.login.error.cookieRequired{/lang}</p>
 {else}
 	{include file='formError'}
 {/if}
 
-<div id="loginForm" class="loginForm{if REGISTER_DISABLED} loginFormLoginOnly{/if}">
+<div id="loginForm" class="section loginForm{if REGISTER_DISABLED} loginFormLoginOnly{/if}">
 	<form method="post" action="{@$loginController}">
 		<section class="section loginFormLogin">
 			<h2 class="sectionTitle">{lang}wcf.user.login.login{/lang}</h2>
@@ -55,7 +57,7 @@
 			
 			{event name='fields'}
 			
-			{include file='captcha'}
+			{include file='captcha' supportsAsyncCaptcha=true}
 			
 			<div class="userLoginButtons">
 				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">

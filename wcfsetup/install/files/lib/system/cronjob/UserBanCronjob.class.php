@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Unbans users and enables disabled avatars and disabled signatures.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob
  */
@@ -57,6 +57,22 @@ class UserBanCronjob extends AbstractCronjob {
 			WHERE	disableSignature = ?
 				AND disableSignatureExpires <> ?
 				AND disableSignatureExpires <= ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			0,
+			0,
+			1,
+			0,
+			TIME_NOW
+		]);
+		
+		// enable cover photos
+		$sql = "UPDATE	wcf".WCF_N."_user
+			SET	disableCoverPhoto = ?,
+				disableCoverPhotoExpires = ?
+			WHERE	disableCoverPhoto = ?
+				AND disableCoverPhotoExpires <> ?
+				AND disableCoverPhotoExpires <= ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			0,

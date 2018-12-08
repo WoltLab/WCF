@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
  * Parses the [attach] bbcode tag.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  */
@@ -79,6 +79,9 @@ class AttachmentBBCode extends AbstractBBCode {
 						$thumbnail = ($attachment->thumbnailWidth >= $thumbnail) ? true : false;
 					}
 				}
+				else if ($thumbnail === 'false') {
+					$thumbnail = false;
+				}
 				else if ($thumbnail !== false) {
 					$thumbnail = true;
 				}
@@ -102,7 +105,13 @@ class AttachmentBBCode extends AbstractBBCode {
 					$source = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment]));
 					$title = StringUtil::encodeHTML($attachment->filename);
 					
-					$result = '<img src="' . $source . '" alt="">';
+					if ($parser instanceof HtmlBBCodeParser && $parser->getIsGoogleAmp()) {
+						$result = '<amp-img src="' . $source . '" width="'.$attachment->width.'" height="'.$attachment->height.'" layout="responsive" alt="">';
+					}
+					else {
+						$result = '<img src="' . $source . '" alt="">';
+					}
+					
 					if (!$hasParentLink && ($attachment->width > ATTACHMENT_THUMBNAIL_WIDTH || $attachment->height > ATTACHMENT_THUMBNAIL_HEIGHT)) {
 						$result = '<a href="' . $source . '" title="' . $title . '" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '">' . $result . '</a>';
 					}
@@ -130,7 +139,12 @@ class AttachmentBBCode extends AbstractBBCode {
 						$imageClasses .= ' '.$class;
 					}
 					
-					$result = '<img src="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', $linkParameters)).'"'.($imageClasses ? ' class="'.$imageClasses.'"' : '').' style="width: '.($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width).'px; height: '.($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height).'px;" alt="">';
+					if ($parser instanceof HtmlBBCodeParser && $parser->getIsGoogleAmp()) {
+						$result = '<amp-img src="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', $linkParameters)) . '"' . ($imageClasses ? ' class="' . $imageClasses . '"' : '') . ' width="' . ($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width) . '" height="' . ($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height) . '" layout="flex-item" alt="">';
+					}
+					else {
+						$result = '<img src="' . StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', $linkParameters)) . '"' . ($imageClasses ? ' class="' . $imageClasses . '"' : '') . ' style="width: ' . ($attachment->hasThumbnail() ? $attachment->thumbnailWidth : $attachment->width) . 'px; height: ' . ($attachment->hasThumbnail() ? $attachment->thumbnailHeight : $attachment->height) . 'px;" alt="">';
+					}
 					if (!$hasParentLink && $attachment->hasThumbnail() && $attachment->canDownload()) {
 						$result = '<a href="'.StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment])).'" title="'.StringUtil::encodeHTML($attachment->filename).'" class="embeddedAttachmentLink jsImageViewer' . ($class ? ' '.$class : '') . '">'.$result.'</a>';
 					}

@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * Handles ACL permissions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Acl
  */
@@ -42,7 +42,7 @@ class ACLHandler extends SingletonFactory {
 	protected $categories = [];
 	
 	/**
-	 * Assignes the acl values to the template.
+	 * Assigns the acl values to the template.
 	 * 
 	 * @param	integer		$objectTypeID
 	 */
@@ -250,7 +250,7 @@ class ACLHandler extends SingletonFactory {
 				foreach ($optionList as $option) {
 					$data['options'][$option->optionID] = [
 						'categoryName' => $option->categoryName,
-						'label' => WCF::getLanguage()->get('wcf.acl.option.'.$objectType->objectType.'.'.$option->optionName),
+						'label' => WCF::getLanguage()->getDynamicVariable('wcf.acl.option.'.$objectType->objectType.'.'.$option->optionName),
 						'optionName' => $option->optionName
 					];
 					
@@ -323,7 +323,7 @@ class ACLHandler extends SingletonFactory {
 				$data[$type][$objectID] = [];
 			}
 			
-			// build JS-compilant structure
+			// build JS-compliant structure
 			$data[$type] = [
 				'label' => [],
 				'option' => $data[$type][$objectID]

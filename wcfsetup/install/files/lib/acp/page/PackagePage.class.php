@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Shows all information about an installed package.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  */
@@ -18,6 +18,12 @@ class PackagePage extends AbstractPage {
 	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.package';
+	
+	/**
+	 * list of compatible API versions
+	 * @var integer[]
+	 */
+	public $compatibleVersions = [];
 	
 	/**
 	 * @inheritDoc
@@ -34,7 +40,13 @@ class PackagePage extends AbstractPage {
 	 * package object
 	 * @var	Package
 	 */
-	public $package = null;
+	public $package;
+	
+	/**
+	 * Plugin-Store fileID
+	 * @var integer
+	 */
+	public $pluginStoreFileID = 0;
 	
 	/**
 	 * @inheritDoc
@@ -52,9 +64,42 @@ class PackagePage extends AbstractPage {
 	/**
 	 * @inheritDoc
 	 */
+	public function readData() {
+		parent::readData();
+		
+		$sql = "SELECT  pluginStoreFileID
+			FROM    wcf".WCF_N."_package_update
+			WHERE   package = ?
+				AND pluginStoreFileID <> 0";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$this->package->package]);
+		$this->pluginStoreFileID = intval($statement->fetchSingleColumn());
+		
+		$sql = "SELECT          version
+			FROM            wcf".WCF_N."_package_compatibility
+			WHERE           packageID = ?
+					AND version >= ?
+			ORDER BY        version";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$this->package->packageID,
+			WSC_API_VERSION
+		]);
+		while ($version = $statement->fetchColumn()) {
+			$this->compatibleVersions[] = $version;
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		WCF::getTPL()->assign('package', $this->package);
+		WCF::getTPL()->assign([
+			'compatibleVersions' => $this->compatibleVersions,
+			'package' => $this->package,
+			'pluginStoreFileID' => $this->pluginStoreFileID
+		]);
 	}
 }

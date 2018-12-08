@@ -3,6 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\data\language\Language;
 use wcf\data\language\LanguageEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
@@ -12,11 +13,11 @@ use wcf\util\XML;
  * Installs, updates and deletes languages, their categories and items.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -192,7 +193,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	}
 	
 	/**
-	 * Deletes categories which where changed by an update or deinstallation
+	 * Deletes categories which where changed by an update or uninstallation
 	 * in case they are now empty.
 	 * 
 	 * @param	array		$categoryIDs
@@ -260,5 +261,12 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 */
 	public static function isValid(PackageArchive $archive, $instruction) {
 		return true;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
 	}
 }

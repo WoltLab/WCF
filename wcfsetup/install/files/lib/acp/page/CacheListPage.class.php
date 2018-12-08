@@ -12,7 +12,7 @@ use wcf\util\FileUtil;
  * Shows a list of all cache resources.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  */
@@ -78,13 +78,14 @@ class CacheListPage extends AbstractPage {
 			
 			case 'wcf\system\cache\source\MemcachedCacheSource':
 				// set version
-				$this->cacheData['version'] = WCF_VERSION;
+				/** @noinspection PhpUndefinedMethodInspection */
+				$this->cacheData['version'] = CacheHandler::getInstance()->getCacheSource()->getMemcachedVersion();
 			break;
 			
 			case 'wcf\system\cache\source\RedisCacheSource':
 				// set version
 				/** @noinspection PhpUndefinedMethodInspection */
-				$this->cacheData['version'] = 'Redis '.CacheHandler::getInstance()->getCacheSource()->getRedisVersion();
+				$this->cacheData['version'] = CacheHandler::getInstance()->getCacheSource()->getRedisVersion();
 			break;
 		}
 		

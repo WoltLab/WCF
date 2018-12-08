@@ -39,8 +39,9 @@
 					<li><a href="{@$__wcf->getAnchor('signatureManagement')}">{lang}wcf.user.signature{/lang}</a></li>
 				{/if}
 				
-				{if $action == 'edit'}
+				{if $action === 'edit'}
 					<li><a href="{@$__wcf->getAnchor('avatarForm')}">{lang}wcf.user.avatar{/lang}</a></li>
+					<li><a href="{@$__wcf->getAnchor('coverPhotoForm')}">{lang}wcf.user.coverPhoto{/lang}</a></li>
 				{/if}
 				
 				{event name='tabMenuTabs'}
@@ -361,17 +362,17 @@
 		
 		{if $action == 'edit'}
 			<div id="avatarForm" class="tabMenuContent hidden">
-				<section class="section">
+				<section class="section avatarEdit">
 					<h2 class="sectionTitle">{lang}wcf.user.avatar{/lang}</h2>
 					
-					<dl>
+					<dl class="avatarType">
 						<dt></dt>
 						<dd>
 							<label><input type="radio" name="avatarType" value="none"{if $avatarType == 'none'} checked{/if}> {lang}wcf.user.avatar.type.none{/lang}</label>
 						</dd>
 					</dl>
 					
-					<dl class="jsOnly{if $errorType[customAvatar]|isset} formError{/if}" id="avatarUpload">
+					<dl class="avatarType jsOnly{if $errorType[customAvatar]|isset} formError{/if}" id="avatarUpload">
 						<dt>
 							{if $avatarType == 'custom'}
 								{@$userAvatar->getImageTag(96)}
@@ -383,7 +384,7 @@
 							<label><input type="radio" name="avatarType" value="custom"{if $avatarType == 'custom'} checked{/if}> {lang}wcf.user.avatar.type.custom{/lang}</label>
 							
 							{* placeholder for upload button: *}
-							<div></div>
+							<div class="avatarUploadButtonContainer"></div>
 							
 							{if $errorType[customAvatar]|isset}
 								<small class="innerError">
@@ -394,7 +395,7 @@
 					</dl>
 					
 					{if MODULE_GRAVATAR}
-						<dl{if $errorType[gravatar]|isset} class="formError"{/if}>
+						<dl class="avatarType{if $errorType[gravatar]|isset} formError{/if}">
 							<dt><img src="https://secure.gravatar.com/avatar/{@$user->email|strtolower|md5}?s=96{if GRAVATAR_DEFAULT_TYPE != '404'}&amp;d={@GRAVATAR_DEFAULT_TYPE}{/if}" alt="" class="userAvatarImage icon96"></dt>
 							<dd>
 								<label><input type="radio" name="avatarType" value="gravatar"{if $avatarType == 'gravatar'} checked{/if}> {lang}wcf.user.avatar.type.gravatar{/lang}</label>
@@ -492,6 +493,99 @@
 				</script>
 				
 				{event name='avatarFieldsets'}
+			</div>
+			
+			<div id="coverPhotoForm" class="tabMenuContent hidden">
+				<section class="section">
+					<h2 class="sectionTitle">{lang}wcf.user.coverPhoto{/lang}</h2>
+					
+					{if $userCoverPhoto}
+						<dl>
+							<dt></dt>
+							<dd>
+								<div id="coverPhotoPreview" style="background-image: url({$userCoverPhoto->getURL()})"></div>
+							</dd>
+						</dl>
+					
+						{if $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}
+							<dl>
+								<dt></dt>
+								<dd>
+									<label><input type="checkbox" id="deleteCoverPhoto" name="deleteCoverPhoto" value="1"{if $deleteCoverPhoto == 1} checked{/if}> {lang}wcf.acp.user.deleteCoverPhoto{/lang}</label>
+								</dd>
+							</dl>
+						{/if}
+					{else}
+						<p class="info">{lang}wcf.user.coverPhoto.noImage{/lang}</p>
+					{/if}
+					
+					{event name='coverPhotoFields'}
+				</section>
+				
+				{if $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}
+					<section class="section">
+						<h2 class="sectionTitle">{lang}wcf.acp.user.disableCoverPhoto{/lang}</h2>
+						
+						<dl>
+							<dt></dt>
+							<dd>
+								<label><input type="checkbox" id="disableCoverPhoto" name="disableCoverPhoto" value="1"{if $disableCoverPhoto == 1} checked{/if}> {lang}wcf.acp.user.disableCoverPhoto{/lang}</label>
+							</dd>
+						</dl>
+						
+						<dl>
+							<dt><label for="disableCoverPhotoReason">{lang}wcf.acp.user.disableCoverPhoto.reason{/lang}</label></dt>
+							<dd>
+								<textarea name="disableCoverPhotoReason" id="disableCoverPhotoReason" cols="40" rows="10">{$disableCoverPhotoReason}</textarea>
+							</dd>
+						</dl>
+						
+						<dl>
+							<dt></dt>
+							<dd><label><input type="checkbox" id="disableCoverPhotoNeverExpires" name="disableCoverPhotoNeverExpires" value="1"{if !$disableCoverPhotoExpires} checked{/if}> {lang}wcf.acp.user.disableCoverPhoto.neverExpires{/lang}</label></dd>
+						</dl>
+						
+						<dl id="disableCoverPhotoExpiresSetting">
+							<dt><label for="disableCoverPhotoExpires">{lang}wcf.acp.user.disableCoverPhoto.expires{/lang}</label></dt>
+							<dd>
+								<input type="date" name="disableCoverPhotoExpires" id="disableCoverPhotoExpires" min="{TIME_NOW|date:'Y-m-d'}" {if $disableCoverPhotoExpires} value="{$disableCoverPhotoExpires|date:'Y-m-d'}"{/if} class="medium">
+								<small>{lang}wcf.acp.user.disableCoverPhoto.expires.description{/lang}</small>
+							</dd>
+						</dl>
+						
+						{event name='disableAvatarFields'}
+					</section>
+					
+					<script data-relocate="true">
+						$('#disableCoverPhoto').change(function() {
+							if ($('#disableCoverPhoto').is(':checked')) {
+								$('#disableCoverPhotoReason').attr('readonly', false);
+								$('#disableCoverPhotoNeverExpires, #disableCoverPhotoExpires').enable();
+								$('#disableCoverPhotoReason, #disableCoverPhotoNeverExpires, #disableCoverPhotoExpires').parents('dl').removeClass('disabled');
+							}
+							else {
+								$('#disableCoverPhotoReason').attr('readonly', true);
+								$('#disableCoverPhotoNeverExpires, #disableCoverPhotoExpires').disable();
+								$('#disableCoverPhotoReason, #disableCoverPhotoNeverExpires, #disableCoverPhotoExpires').parents('dl').addClass('disabled');
+							}
+						});
+						
+						$('#disableCoverPhoto').change();
+						
+						$('#disableCoverPhotoNeverExpires').change(function() {
+							if ($('#disableCoverPhotoNeverExpires').is(':checked')) {
+								$('#disableCoverPhotoExpiresSetting').hide();
+							}
+							else {
+								$('#disableCoverPhotoExpiresSetting').show();
+							}
+						});
+						
+						$('#disableCoverPhotoNeverExpires').change();
+					</script>
+				{/if}
+				
+				{event name='coverPhotoFieldsets'}
 			</div>
 		{/if}
 		

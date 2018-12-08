@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\option;
+use wcf\data\user\group\UserGroupEditor;
 use wcf\data\DatabaseObjectEditor;
 use wcf\data\IEditableCachedObject;
 use wcf\system\cache\builder\OptionCacheBuilder;
@@ -13,7 +14,7 @@ use wcf\util\FileUtil;
  * Provides functions to edit options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Option
  * 
@@ -62,12 +63,15 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 	 * @param	array		$options	id to value
 	 */
 	public static function updateAll(array $options) {
-		$sql = "SELECT	optionID, optionValue
+		$sql = "SELECT	optionID, optionName, optionValue
 			FROM	wcf".WCF_N."_option
-			WHERE	optionName = ?";
+			WHERE	optionName IN (?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute(['cache_source_type']);
-		$row = $statement->fetchArray();
+		$statement->execute(['cache_source_type', 'visitor_use_tiny_build']);
+		$oldValues = [];
+		while ($row = $statement->fetchArray()) {
+			$oldValues[$row['optionID']] = $row;
+		}
 		
 		$sql = "UPDATE	wcf".WCF_N."_option
 			SET	optionValue = ?
@@ -75,10 +79,18 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
 		$flushCache = false;
+		$flushPermissions = false;
 		WCF::getDB()->beginTransaction();
 		foreach ($options as $id => $value) {
-			if ($id == $row['optionID'] && ($value != $row['optionValue'] || $value != CACHE_SOURCE_TYPE)) {
-				$flushCache = true;
+			if (isset($oldValues[$id])) {
+				if ($value != $oldValues[$id]['optionValue']) {
+					if ($oldValues[$id]['optionName'] === 'cache_source_type') {
+						$flushCache = true;
+					}
+					else {
+						$flushPermissions = true;
+					}
+				}
 			}
 			
 			$statement->execute([
@@ -102,6 +114,10 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 				CacheHandler::getInstance()->flushAll();
 				UserStorageHandler::getInstance()->clear();
 			});
+		}
+		else if ($flushPermissions) {
+			// flush permissions if accelerated visitor mode was toggled
+			UserGroupEditor::resetCache();
 		}
 	}
 	

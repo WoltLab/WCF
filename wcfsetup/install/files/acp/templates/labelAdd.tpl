@@ -63,7 +63,7 @@
 			<dl{if $errorField == 'label'} class="formError"{/if}>
 				<dt><label for="label">{lang}wcf.acp.label.label{/lang}</label></dt>
 				<dd>
-					<input type="text" id="label" name="label" value="{$i18nPlainValues['label']}" autofocus class="long">
+					<input type="text" id="label" name="label" value="{$i18nPlainValues['label']}" autofocus class="long" maxlength="80">
 					{if $errorField == 'label'}
 						<small class="innerError">
 							{if $errorType == 'empty'}

@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * User profile comment manager implementation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Comment\Manager
  */
@@ -23,6 +23,11 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	 * @inheritDoc
 	 */
 	protected $permissionAdd = 'user.profileComment.canAddComment';
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $permissionAddWithoutModeration = 'user.profileComment.canAddCommentWithoutModeration';
 	
 	/**
 	 * @inheritDoc
@@ -83,6 +88,21 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 	 */
 	public function getLink($objectTypeID, $objectID) {
 		return LinkHandler::getInstance()->getLink('User', ['id' => $objectID]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getCommentLink(Comment $comment) {
+		return $this->getLink($comment->objectTypeID, $comment->objectID) . '#wall/comment' . $comment->commentID;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getResponseLink(CommentResponse $response) {
+		return $this->getLink($response->getComment()->objectTypeID, $response->getComment()->objectID)
+			. '#wall/comment' . $response->commentID . '/response' . $response->responseID;
 	}
 	
 	/**
@@ -190,6 +210,7 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 						// short output
 						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.user.profileComment', [
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+							'comment' => $comment,
 							'user' => $users[$comment->objectID],
 							'like' => $like
 						]);
@@ -214,7 +235,8 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 							'responseAuthor' => $response->userID ? $users[$response->userID] : null,
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'user' => $users[$comment->objectID],
-							'like' => $like
+							'like' => $like,
+							'response' => $response
 						]);
 						$like->setTitle($text);
 						

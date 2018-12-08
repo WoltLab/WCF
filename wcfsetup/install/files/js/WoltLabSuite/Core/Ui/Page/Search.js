@@ -1,6 +1,19 @@
 define(['Ajax', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog'], function(Ajax, EventKey, Language, StringUtil, DomUtil, UiDialog) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			open: function() {},
+			_search: function() {},
+			_click: function() {},
+			_ajaxSuccess: function() {},
+			_ajaxSetup: function() {},
+			_dialogSetup: function() {}
+		};
+		return Fake;
+	}
+	
 	var _callbackSelect, _resultContainer, _resultList, _searchInput = null;
 	
 	return {
@@ -14,16 +27,14 @@ define(['Ajax', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog'], 
 			event.preventDefault();
 			
 			var inputContainer = _searchInput.parentNode;
-			var innerError = inputContainer.nextSibling;
-			if (innerError && innerError.nodeName === 'SMALL') elRemove(innerError);
 			
 			var value = _searchInput.value.trim();
 			if (value.length < 3) {
-				innerError = elCreate('small');
-				innerError.className = 'innerError';
-				innerError.textContent = Language.get('wcf.page.search.error.tooShort');
-				DomUtil.insertAfter(innerError, inputContainer);
+				elInnerError(inputContainer, Language.get('wcf.page.search.error.tooShort'));
 				return;
+			}
+			else {
+				elInnerError(inputContainer, false);
 			}
 			
 			Ajax.api(this, {
@@ -66,10 +77,7 @@ define(['Ajax', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog'], 
 				}).bind(this));
 			}
 			else {
-				var innerError = elCreate('small');
-				innerError.className = 'innerError';
-				innerError.textContent = Language.get('wcf.page.search.error.noResults');
-				DomUtil.insertAfter(innerError, _searchInput.parentNode);
+				elInnerError(_searchInput.parentNode, Language.get('wcf.page.search.error.noResults'));
 			}
 		},
 		

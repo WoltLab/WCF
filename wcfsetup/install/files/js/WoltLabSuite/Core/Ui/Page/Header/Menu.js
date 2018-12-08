@@ -2,11 +2,11 @@
  * Handles main menu overflow.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Header/Menu
  */
-define(['Ui/Screen'], function(UiScreen) {
+define(['Environment', 'Ui/Screen'], function(Environment, UiScreen) {
 	"use strict";
 	
 	var _enabled = false;
@@ -46,10 +46,22 @@ define(['Ui/Screen'], function(UiScreen) {
 		_enable: function () {
 			_enabled = true;
 			
-			this._rebuildVisibility();
-			
-			// IE11 sometimes suffers from a timing issue
-			window.setTimeout(this._rebuildVisibility.bind(this), 1000);
+			// Safari waits three seconds for a font to be loaded which causes the header menu items
+			// to be extremely wide while waiting for the font to be loaded. The extremely wide menu
+			// items in turn can cause the overflow controls to be shown even if the width of the header
+			// menu, after the font has been loaded successfully, does not require them. This width
+			// issue results in the next button being shown for a short time. To circumvent this issue,
+			// we wait a second before showing the obverflow controls in Safari.
+			// see https://webkit.org/blog/6643/improved-font-loading/
+			if (Environment.browser() === 'safari') {
+				window.setTimeout(this._rebuildVisibility.bind(this), 1000);
+			}
+			else {
+				this._rebuildVisibility();
+				
+				// IE11 sometimes suffers from a timing issue
+				window.setTimeout(this._rebuildVisibility.bind(this), 1000);
+			}
 		},
 		
 		/**

@@ -90,6 +90,11 @@
 		</definition>
 		
 		<definition>
+			<name>com.woltlab.wcf.versionTracker.objectType</name>
+			<interfacename>wcf\system\version\IVersionTrackerProvider</interfacename>
+		</definition>
+		
+		<definition>
 			<name>com.woltlab.wcf.comment.commentableContent</name>
 			<interfacename>wcf\system\comment\manager\ICommentManager</interfacename>
 		</definition>
@@ -146,6 +151,11 @@
 		
 		<definition>
 			<name>com.woltlab.wcf.condition.userGroupAssignment</name>
+			<interfacename>wcf\system\condition\IUserCondition</interfacename>
+		</definition>
+		
+		<definition>
+			<name>com.woltlab.wcf.condition.trophy</name>
 			<interfacename>wcf\system\condition\IUserCondition</interfacename>
 		</definition>
 		
@@ -221,7 +231,16 @@
 			<name>com.woltlab.wcf.box.recentActivityList.condition</name>
 			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
 		</definition>
+		<definition>
+			<name>com.woltlab.wcf.box.userTrophyList.condition</name>
+			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
+		</definition>
 		<!-- /box conditions -->
+		
+		<definition>
+			<name>com.woltlab.wcf.sitemap.object</name>
+			<interfacename>wcf\system\sitemap\object\ISitemapObjectObjectType</interfacename>
+		</definition>
 	</import>
 	
 	<delete>

@@ -2,12 +2,27 @@
  * Manages code blocks.
  *
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Redactor/Code
  */
 define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './PseudoHeader'], function (EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog, UiRedactorPseudoHeader) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_bbcodeCode: function() {},
+			_observeLoad: function() {},
+			_edit: function() {},
+			_setTitle: function() {},
+			_delete: function() {},
+			_dialogSetup: function() {},
+			_dialogSubmit: function() {}
+		};
+		return Fake;
+	}
 	
 	var _headerHeight = 0;
 	
@@ -49,10 +64,15 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 		_bbcodeCode: function(data) {
 			data.cancel = true;
 			
+			var pre = this._editor.selection.block();
+			if (pre && pre.nodeName === 'PRE' && pre.classList.contains('woltlabHtml')) {
+				return;
+			}
+			
 			this._editor.button.toggle({}, 'pre', 'func', 'block.format');
 			
-			var pre = this._editor.selection.block();
-			if (pre && pre.nodeName === 'PRE') {
+			pre = this._editor.selection.block();
+			if (pre && pre.nodeName === 'PRE' && !pre.classList.contains('woltlabHtml')) {
 				if (pre.childElementCount === 1 && pre.children[0].nodeName === 'BR') {
 					// drop superfluous linebreak
 					pre.removeChild(pre.children[0]);
@@ -74,7 +94,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 		 * @protected
 		 */
 		_observeLoad: function() {
-			elBySelAll('pre', this._editor.$editor[0], (function(pre) {
+			elBySelAll('pre:not(.woltlabHtml)', this._editor.$editor[0], (function(pre) {
 				pre.addEventListener('mousedown', this._callbackEdit);
 				this._setTitle(pre);
 			}).bind(this));
@@ -108,12 +128,9 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 		/**
 		 * Saves the changes to the code's properties.
 		 * 
-		 * @param       {Event}         event           event object
 		 * @protected
 		 */
-		_save: function(event) {
-			event.preventDefault();
-			
+		_dialogSubmit: function() {
 			var id = 'redactor-code-' + this._elementId;
 			
 			['file', 'highlighter', 'line'].forEach((function (attr) {
@@ -187,13 +204,12 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 					}).bind(this),
 					
 					onSetup: (function() {
-						elById(idButtonSave).addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
 						elById(idButtonDelete).addEventListener(WCF_CLICK_EVENT, this._delete.bind(this));
 						
 						// set highlighters
 						var highlighters = '<option value="">' + Language.get('wcf.editor.code.highlighter.detect') + '</option>';
 						
-						var value, values = [];
+						var values = [];
 						//noinspection JSUnresolvedVariable
 						for (var highlighter in this._editor.opts.woltlab.highlighters) {
 							//noinspection JSUnresolvedVariable
@@ -242,20 +258,20 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 					+ '<dl>'
 						+ '<dt><label for="' + idLine + '">' + Language.get('wcf.editor.code.line') + '</label></dt>'
 						+ '<dd>'
-							+ '<input type="number" id="' + idLine + '" min="0" value="1" class="long">'
+							+ '<input type="number" id="' + idLine + '" min="0" value="1" class="long" data-dialog-submit-on-enter="true">'
 							+ '<small>' + Language.get('wcf.editor.code.line.description') + '</small>'
 						+ '</dd>'
 					+ '</dl>'
 					+ '<dl>'
 						+ '<dt><label for="' + idFile + '">' + Language.get('wcf.editor.code.file') + '</label></dt>'
 						+ '<dd>'
-							+ '<input type="text" id="' + idFile + '" class="long">'
+							+ '<input type="text" id="' + idFile + '" class="long" data-dialog-submit-on-enter="true">'
 							+ '<small>' + Language.get('wcf.editor.code.file.description') + '</small>'
 						+ '</dd>'
 					+ '</dl>'
 				+ '</div>'
 				+ '<div class="formSubmit">'
-					+ '<button id="' + idButtonSave + '" class="buttonPrimary">' + Language.get('wcf.global.button.save') + '</button>'
+					+ '<button id="' + idButtonSave + '" class="buttonPrimary" data-type="submit">' + Language.get('wcf.global.button.save') + '</button>'
 					+ '<button id="' + idButtonDelete + '">' + Language.get('wcf.global.button.delete') + '</button>'
 				+ '</div>'
 			};

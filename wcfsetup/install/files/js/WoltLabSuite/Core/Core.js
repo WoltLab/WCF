@@ -2,7 +2,7 @@
  * Provides the basic core functionality.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Core
  */
@@ -28,13 +28,16 @@ define([], function() {
 		
 		var newObj = {};
 		for (var key in obj) {
-			if (objOwns(obj, key) && typeof obj[key] !== 'undefined') {
+			if (obj.hasOwnProperty(key) && typeof obj[key] !== 'undefined') {
 				newObj[key] = _clone(obj[key]);
 			}
 		}
 		
 		return newObj;
 	};
+	
+	//noinspection JSUnresolvedVariable
+	var _prefix = 'wsc' + window.WCF_PATH.hashCode() + '-';
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Core
@@ -196,7 +199,7 @@ define([], function() {
 		 *  
 		 * @param	{object}	obj	target object
 		 * @param	{string=}	prefix	parameter prefix
-		 * @return	encoded parameter string
+		 * @return	{string}        encoded parameter string
 		 */
 		serialize: function(obj, prefix) {
 			var parameters = [];
@@ -239,6 +242,15 @@ define([], function() {
 			}
 			
 			element.dispatchEvent(event);
+		},
+		
+		/**
+		 * Returns the unique prefix for the localStorage.
+		 * 
+		 * @return      {string}        prefix for the localStorage
+		 */
+		getStoragePrefix: function() {
+			return _prefix;
 		}
 	};
 	

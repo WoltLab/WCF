@@ -8,33 +8,33 @@
 			return orgRequire.apply(window, arguments);
 		}
 		
-		var i = counter++;
-		queue.push(i);
+		var promise = new Promise(function (resolve, reject) {
+			var i = counter++;
+			queue.push(i);
+			
+			orgRequire(dependencies, function () {
+				var args = arguments;
+				
+				queue[queue.indexOf(i)] = function() { resolve(args); };
+				
+				executeCallbacks();
+			}, function (err) {
+				queue[queue.indexOf(i)] = function() { reject(err); };
+				
+				executeCallbacks();
+			});
+		});
 		
+		if (callback) {
+			promise.then(function (objects) {
+				callback.apply(window, objects);
+			});
+		}
 		if (errBack) {
-			orgRequire(dependencies, function() {
-				var args = arguments;
-				
-				queue[queue.indexOf(i)] = function() { callback.apply(window, args); };
-				
-				executeCallbacks();
-			}, function() {
-				var args = arguments;
-				
-				queue[queue.indexOf(i)] = function() { errBack.apply(window, args); };
-				
-				executeCallbacks();
-			});
+			promise.catch(errBack);
 		}
-		else {
-			orgRequire(dependencies, function() {
-				var args = arguments;
-				
-				queue[queue.indexOf(i)] = function() { callback.apply(window, args); };
-				
-				executeCallbacks();
-			});
-		}
+		
+		return promise;
 	};
 	window.require.config = orgRequire.config;
 	

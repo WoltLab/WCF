@@ -1,0 +1,98 @@
+#trophyIconEditor .colorBoxValue {
+	display: block;
+	height: 24px;
+	width: 24px;
+}
+
+#trophyIconEditor .colorBox {
+	background-color: rgb(255, 255, 255);
+	border: 1px solid rgb(204, 204, 204);
+	display: inline-block;
+	padding: 1px;
+	vertical-align: middle;
+}
+
+#badgeContainer .icon {
+	vertical-align: middle;
+}
+
+.trophyIcon {
+	display: inline-block;
+	border-radius: 50%;
+	font-size: 27px;
+	
+	/* Factor: 0.5625 */
+	&.icon16 {
+		font-size: 9px;
+	}
+	
+	&.icon32 {
+		font-size: 18px;
+	}
+	
+	&.icon64 {
+		font-size: 36px;
+	}
+	
+	&.icon144 {
+		font-size: 81px;
+	}
+}
+
+.specialTrophyList {
+	display: flex;
+	flex-wrap: wrap;
+	
+	> li {
+		width: 300px; 
+		padding-bottom: 5px;
+		
+		> label {
+			display: flex; 
+			align-items: center;
+			
+			.trophyIcon,
+			> span:last-child {
+				margin-left: 5px;
+			}
+		}
+	}
+}
+
+.specialTrophyContainer {
+	margin-top: 10px;
+	
+	> ul {
+		display: flex;
+		justify-content: center;
+		
+		> li:not(:last-child) {
+			margin-right: 5px;
+		}
+	}
+}
+
+@include screen-sm-down {
+	.specialTrophyContainer {
+		display: none;
+	}
+}
+
+.specialTrophyUserContainer > ul {
+	display: flex;
+	margin-top: -15px;
+	margin-bottom: 5px;
+	
+	> li:not(:last-child) {
+		margin-right: 5px;
+	}
+}
+
+.userProfileUserWithCoverPhoto .specialTrophyUserContainer > ul {
+	margin-top: 0;
+}
+
+.userProfilePreview .specialTrophyUserContainer > ul {
+	margin-top: 5px;
+	margin-bottom: 5px;
+}

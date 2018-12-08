@@ -2,6 +2,7 @@
 namespace wcf\system\comment\manager;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\Comment;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -9,7 +10,7 @@ use wcf\system\WCF;
  * Default implementation for comment managers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Comment\Manager
  */
@@ -25,6 +26,12 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	 * @var	string
 	 */
 	protected $permissionAdd = '';
+	
+	/**
+	 * permission name for comment/response creation without approval
+	 * @var string
+	 */
+	protected $permissionAddWithoutModeration = '';
 	
 	/**
 	 * permission name for comment/response moderation
@@ -57,14 +64,51 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	protected $permissionModEdit = '';
 	
 	/**
+	 * permission name for the list of disallowed bbcodes
+	 * @var string
+	 */
+	protected $permissionDisallowedBBCodes = 'user.comment.disallowedBBCodes';
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function canAdd($objectID) {
+		if (VISITOR_USE_TINY_BUILD && !WCF::getUser()->userID) {
+			return false;
+		}
+		
 		if (!$this->isAccessible($objectID, true)) {
 			return false;
 		}
 		
 		return (WCF::getSession()->getPermission($this->permissionAdd) ? true : false);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function canAddWithoutApproval($objectID) {
+		if (VISITOR_USE_TINY_BUILD && !WCF::getUser()->userID) {
+			return false;
+		}
+		
+		if (empty($this->permissionAddWithoutModeration)) {
+			if (ENABLE_DEBUG_MODE) {
+				throw new \RuntimeException("Missing permission name to create comments without approval.");
+			}
+			
+			// backwards-compatibility in production mode
+			return true;
+		}
+		
+		return (WCF::getSession()->getPermission($this->permissionAddWithoutModeration) ? true : false);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function setDisallowedBBCodes() {
+		BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', WCF::getSession()->getPermission($this->permissionDisallowedBBCodes)));
 	}
 	
 	/**
@@ -171,5 +215,20 @@ abstract class AbstractCommentManager extends SingletonFactory implements IComme
 	 */
 	public function supportsReport() {
 		return true;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getCommentLink(Comment $comment) {
+		return $this->getLink($comment->objectTypeID, $comment->objectID) . '#comment' . $comment->commentID;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getResponseLink(CommentResponse $response) {
+		return $this->getLink($response->getComment()->objectTypeID, $response->getComment()->objectID)
+			. '#comment' . $response->commentID . '/response' . $response->responseID;
 	}
 }

@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  * Processes code listings.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
@@ -45,6 +45,14 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 	public function process(array $elements, AbstractHtmlNodeProcessor $htmlNodeProcessor) {
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
+			if ($element->getAttribute('class') === 'woltlabHtml') {
+				$nodeIdentifier = StringUtil::getRandomID();
+				$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, ['rawHTML' => $element->textContent]);
+				
+				$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
+				continue;
+			}
+			
 			switch ($this->outputType) {
 				case 'text/html':
 					$nodeIdentifier = StringUtil::getRandomID();
@@ -52,7 +60,8 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 						'content' => $element->textContent,
 						'file' => $element->getAttribute('data-file'),
 						'highlighter' => $element->getAttribute('data-highlighter'),
-						'line' => $element->hasAttribute('data-line') ? $element->getAttribute('data-line') : 1
+						'line' => $element->hasAttribute('data-line') ? $element->getAttribute('data-line') : 1,
+						'skipInnerContent' => true
 					]);
 					
 					$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
@@ -74,6 +83,11 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 	 * @inheritDoc
 	 */
 	public function replaceTag(array $data) {
+		// HTML bbcode
+		if (isset($data['rawHTML'])) {
+			return $data['rawHTML'];
+		}
+		
 		$content = preg_replace('/^\s*\n/', '', $data['content']);
 		$content = preg_replace('/\n\s*$/', '', $content);
 		
@@ -178,7 +192,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 	 * @param	string		$code
 	 * @param	integer		$start
 	 * @param	string		$split
-	 * @return	string
+	 * @return	string[]
 	 */
 	protected function makeLineNumbers($code, $start, $split = "\n") {
 		$lines = explode($split, $code);

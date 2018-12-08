@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Manages the tagging of objects.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Tagging
  */
@@ -200,5 +200,33 @@ class TagEngine extends SingletonFactory {
 		}
 		
 		return $objectTypeObj->objectTypeID;
+	}
+	
+	/**
+	 * Returns the implicit language id based on the language id of existing tags.
+	 * 
+	 * NULL indicates that there are no tags, otherwise the language id with the most
+	 * associated tags for that object is returned, but can still be arbitrary if
+	 * there are two or more top language ids with the same amount of tags.
+	 * 
+	 * @param       string          $objectType
+	 * @param       integer         $objectID
+	 * @return      integer|null
+	 */
+	public function getImplicitLanguageID($objectType, $objectID) {
+		$existingTags = $this->getObjectTags($objectType, $objectID);
+		if (empty($existingTags)) {
+			return null;
+		}
+		
+		$languageIDs = [];
+		foreach ($existingTags as $tag) {
+			if (!isset($languageIDs[$tag->languageID])) $languageIDs[$tag->languageID] = 0;
+			$languageIDs[$tag->languageID]++;
+		}
+		
+		arsort($languageIDs, SORT_NUMERIC);
+		
+		return key($languageIDs);
 	}
 }

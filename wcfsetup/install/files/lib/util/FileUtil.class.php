@@ -8,7 +8,7 @@ use wcf\system\io\GZipFile;
  * Contains file-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -383,7 +383,7 @@ final class FileUtil {
 	/**
 	 * Formats a filesize with binary prefix.
 	 * 
-	 * For more informations: <http://en.wikipedia.org/wiki/Binary_prefix>
+	 * For more information: <http://en.wikipedia.org/wiki/Binary_prefix>
 	 * 
 	 * @param	integer		$byte
 	 * @param	integer		$precision
@@ -510,7 +510,10 @@ final class FileUtil {
 			self::$finfo = new \finfo(FILEINFO_MIME_TYPE);
 		}
 		
-		return self::$finfo->file($filename) ?: 'application/octet-stream';
+		// \finfo->file() can fail for files that contain only 1 byte, because libmagic expects at least
+		// a few bytes in order to determine the type. See https://bugs.php.net/bug.php?id=64684
+		$mimeType = @self::$finfo->file($filename);
+		return $mimeType ?: 'application/octet-stream';
 	}
 	
 	/**
@@ -608,8 +611,8 @@ final class FileUtil {
 			}
 			
 			// PHP supports 'K', 'M' and 'G' shorthand notation
-			if (preg_match('~^(\d+)([KMG])$~', $memoryLimit, $matches)) {
-				switch ($matches[2]) {
+			if (preg_match('~^(\d+)\s*([KMG])$~i', $memoryLimit, $matches)) {
+				switch (strtoupper($matches[2])) {
 					case 'K':
 						self::$memoryLimit = $matches[1] * 1024;
 					break;
@@ -636,6 +639,47 @@ final class FileUtil {
 	 */
 	public static function checkMemoryLimit($neededMemory) {
 		return self::getMemoryLimit() == -1 || self::getMemoryLimit() > (memory_get_usage() + $neededMemory);
+	}
+	
+	/**
+	 * Returns icon name for given filename.
+	 * 
+	 * @param       string          $filename
+	 * @return      string
+	 */
+	public static function getIconNameByFilename($filename) {
+		static $mapping = [
+			// archive
+			'zip' => 'archive', 'rar' => 'archive', 'tar' => 'archive', 'gz' => 'archive',
+			// audio
+			'mp3' => 'audio', 'ogg' => 'audio', 'wav' => 'audio',
+			// code
+			'php' => 'code', 'html' => 'code', 'htm' => 'code', 'tpl' => 'code', 'js' => 'code',
+			// excel
+			'xls' => 'excel', 'ods' => 'excel', 'xlsx' => 'excel',
+			// image
+			'gif' => 'image', 'jpg' => 'image', 'jpeg' => 'image', 'png' => 'image', 'bmp' => 'image',
+			// video
+			'avi' => 'video', 'wmv' => 'video', 'mov' => 'video', 'mp4' => 'video', 'mpg' => 'video', 'mpeg' => 'video', 'flv' => 'video',
+			// pdf
+			'pdf' => 'pdf',
+			// powerpoint
+			'ppt' => 'powerpoint', 'pptx' => 'powerpoint',
+			// text
+			'txt' => 'text',
+			// word
+			'doc' => 'word', 'docx' => 'word', 'odt' => 'word'
+		];
+		
+		$lastDotPosition = strrpos($filename, '.');
+		if ($lastDotPosition !== false) {
+			$extension = substr($filename, $lastDotPosition + 1);
+			if (isset($mapping[$extension])) {
+				return $mapping[$extension];
+			}
+		}
+		
+		return '';
 	}
 	
 	/**

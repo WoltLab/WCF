@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * Contains Array-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -14,9 +14,9 @@ final class ArrayUtil {
 	/**
 	 * Applies StringUtil::trim() to all elements of the given array.
 	 * 
-	 * @param	array		$array
+	 * @param	array|string	$array
 	 * @param	boolean		$removeEmptyElements
-	 * @return	array
+	 * @return	array|string
 	 */
 	public static function trim($array, $removeEmptyElements = true) {
 		if (!is_array($array)) {
@@ -35,8 +35,8 @@ final class ArrayUtil {
 	/**
 	 * Applies intval() to all elements of the given array.
 	 * 
-	 * @param	array		$array
-	 * @return	array
+	 * @param	array|string	$array
+	 * @return	array|string
 	 */
 	public static function toIntegerArray($array) {
 		if (!is_array($array)) {
@@ -53,8 +53,8 @@ final class ArrayUtil {
 	/**
 	 * Converts html special characters in the given array.
 	 * 
-	 * @param	array		$array
-	 * @return	array
+	 * @param	array|string	$array
+	 * @return	array|string
 	 */
 	public static function encodeHTML($array) {
 		if (!is_array($array)) {
@@ -104,8 +104,8 @@ final class ArrayUtil {
 	/**
 	 * Converts dos to unix newlines.
 	 * 
-	 * @param	array		$array
-	 * @return	array
+	 * @param	array|string	$array
+	 * @return	array|string
 	 */
 	public static function unifyNewlines($array) {
 		if (!is_array($array)) {
@@ -125,8 +125,8 @@ final class ArrayUtil {
 	 * 
 	 * @param	string		$inCharset
 	 * @param	string		$outCharset
-	 * @param	array		$array
-	 * @return	string
+	 * @param	array|string	$array
+	 * @return	array|string
 	 */
 	public static function convertEncoding($inCharset, $outCharset, $array) {
 		if (!is_array($array)) {

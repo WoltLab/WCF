@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\template;
+use wcf\data\template\Template;
 use wcf\system\cache\builder\TemplateGroupCacheBuilder;
 use wcf\system\cache\builder\TemplateListenerCodeCacheBuilder;
 use wcf\system\event\EventHandler;
@@ -14,7 +15,7 @@ use wcf\util\StringUtil;
  * Loads and displays template.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template
  */
@@ -47,7 +48,7 @@ class TemplateEngine extends SingletonFactory {
 	 * active template compiler
 	 * @var	TemplateCompiler
 	 */
-	protected $compilerObj = null;
+	protected $compilerObj;
 	
 	/**
 	 * forces the template engine to recompile all included templates
@@ -358,17 +359,19 @@ class TemplateEngine extends SingletonFactory {
 	 * @return	string
 	 */
 	protected function getPath($templatePath, $templateName) {
-		$templateGroupID = $this->getTemplateGroupID();
-		
-		while ($templateGroupID != 0) {
-			$templateGroup = $this->templateGroupCache[$templateGroupID];
+		if (!Template::isSystemCritical($templateName)) {
+			$templateGroupID = $this->getTemplateGroupID();
 			
-			$path = $templatePath.$templateGroup->templateGroupFolderName.$templateName.'.tpl';
-			if (file_exists($path)) {
-				return $path;
+			while ($templateGroupID != 0) {
+				$templateGroup = $this->templateGroupCache[$templateGroupID];
+				
+				$path = $templatePath . $templateGroup->templateGroupFolderName . $templateName . '.tpl';
+				if (file_exists($path)) {
+					return $path;
+				}
+				
+				$templateGroupID = $templateGroup->parentTemplateGroupID;
 			}
-			
-			$templateGroupID = $templateGroup->parentTemplateGroupID;
 		}
 		
 		// use default template

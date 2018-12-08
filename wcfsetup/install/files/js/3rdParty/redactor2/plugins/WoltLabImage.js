@@ -3,8 +3,10 @@ $.Redactor.prototype.WoltLabImage = function() {
 	
 	return {
 		init: function() {
-			var button = this.button.add('woltlabImage', '');
-			this.button.addCallback(button, this.WoltLabImage.add);
+			if (this.opts.woltlab.allowImages) {
+				var button = this.button.add('woltlabImage', '');
+				this.button.addCallback(button, this.WoltLabImage.add);
+			}
 			
 			// add support for image source when editing
 			var mpShowEdit = this.image.showEdit;
@@ -51,6 +53,9 @@ $.Redactor.prototype.WoltLabImage = function() {
 					}
 					else if (!source.match(this.opts.regexps.url)) {
 						return showError(sourceInput, WCF.Language.get('wcf.editor.image.source.error.invalid'));
+					}
+					else if (this.opts.woltlab.forceSecureImages && source.indexOf('http://') === 0) {
+						return showError(sourceInput, WCF.Language.get('wcf.editor.image.source.error.insecure'));
 					}
 					
 					// update image source
@@ -137,6 +142,9 @@ $.Redactor.prototype.WoltLabImage = function() {
 			else if (!source.match(this.opts.regexps.url)) {
 				return showError(sourceInput, WCF.Language.get('wcf.editor.image.source.error.invalid'));
 			}
+			else if (this.opts.woltlab.forceSecureImages && source.indexOf('http://') === 0) {
+				return showError(sourceInput, WCF.Language.get('wcf.editor.image.source.error.insecure'));
+			}
 			
 			// check if link is valid
 			var linkInput = elById('redactor-image-link');
@@ -152,8 +160,10 @@ $.Redactor.prototype.WoltLabImage = function() {
 			}
 			
 			var html = '<img src="' + WCF.String.escapeHTML(source) + '"' + (className ? ' class="' + className + '"' : '') + '>';
+			var linkUuid;
 			if (link) {
-				html = '<a href="' + WCF.String.escapeHTML(link) + '">' + html + '</a>';
+				linkUuid = WCF.getUUID();
+				html = '<a href="' + WCF.String.escapeHTML(link) + '" data-uuid="' + linkUuid + '">' + html + '</a>';
 			}
 			
 			this.modal.close();
@@ -161,6 +171,16 @@ $.Redactor.prototype.WoltLabImage = function() {
 			this.buffer.set();
 			
 			this.insert.html(html);
+			
+			if (linkUuid) {
+				window.setTimeout((function() {
+					var link = elBySel('a[data-uuid="' + linkUuid + '"]', this.core.editor()[0]);
+					if (link) {
+						link.removeAttribute('data-uuid');
+						this.caret.after(link);
+					}
+				}).bind(this), 1);
+			}
 		}
 	};
 };

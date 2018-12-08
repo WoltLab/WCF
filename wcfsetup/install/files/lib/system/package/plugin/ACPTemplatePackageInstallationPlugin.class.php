@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\application\Application;
 use wcf\data\package\Package;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\package\ACPTemplatesFileHandler;
 use wcf\system\package\PackageArchive;
@@ -11,11 +12,11 @@ use wcf\system\WCF;
  * Installs, updates and deletes ACP templates.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
+class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -111,5 +112,12 @@ class ACPTemplatePackageInstallationPlugin extends AbstractPackageInstallationPl
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
 	}
 }

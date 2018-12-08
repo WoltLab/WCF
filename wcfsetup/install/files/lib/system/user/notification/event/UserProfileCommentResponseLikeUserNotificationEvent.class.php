@@ -1,18 +1,25 @@
 <?php
 namespace wcf\system\user\notification\event;
+use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\comment\CommentHandler;
 use wcf\system\request\LinkHandler;
+use wcf\system\user\notification\object\LikeUserNotificationObject;
 use wcf\system\WCF;
 
 /**
  * User notification event for profile comment response likes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
+ * 
+ * @method	LikeUserNotificationObject	getUserNotificationObject()
  */
-class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractSharedUserNotificationEvent {
+class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent {
+	use TTestableCommentResponseLikeUserNotificationEvent;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -59,16 +66,20 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.like.message.stacked', [
 				'author' => $this->author,
 				'authors' => $authors,
+				'commentID' => $this->additionalData['commentID'],
 				'commentUser' => $commentUser,
 				'count' => $count,
 				'others' => $count - 1,
-				'owner' => $owner
+				'owner' => $owner,
+				'responseID' => $this->getResponseID()
 			]);
 		}
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.like.message', [
 			'author' => $this->author,
-			'owner' => $owner
+			'commentID' => $this->additionalData['commentID'],
+			'owner' => $owner,
+			'responseID' => $this->getResponseID()
 		]);
 	}
 	
@@ -88,14 +99,18 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 			$owner = UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
 		}
 		
-		return LinkHandler::getInstance()->getLink('User', ['object' => $owner], '#wall');
+		return LinkHandler::getInstance()->getLink(
+			'User',
+			['object' => $owner],
+			'#wall/comment' . $this->additionalData['commentID'] . '/response' . $this->getResponseID()
+		);
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getEventHash() {
-		return sha1($this->eventID . '-' . $this->additionalData['commentID']);
+		return sha1($this->eventID . '-' . $this->getUserNotificationObject()->objectID);
 	}
 	
 	/**
@@ -103,5 +118,26 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 	 */
 	public function supportsEmailNotification() {
 		return false;
+	}
+	
+	/**
+	 * Returns the liked response's id.
+	 *
+	 * @return      integer
+	 */
+	protected function getResponseID() {
+		// this is the `wcfN_like.objectID` value
+		return $this->getUserNotificationObject()->objectID;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.1
+	 */
+	protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author) {
+		return [
+			'objectID' => $recipient->userID,
+			'objectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user.profileComment')
+		];
 	}
 }

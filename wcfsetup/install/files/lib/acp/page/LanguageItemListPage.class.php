@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Shows a list of language items.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  */
@@ -78,6 +78,12 @@ class LanguageItemListPage extends SortablePage {
 	public $hasDisabledCustomValue = 0;
 	
 	/**
+	 * search for disabled custom values that have been automatically disabled in the past 7 days
+	 * @var	boolean
+	 */
+	public $hasRecentlyDisabledCustomValue = 0;
+	
+	/**
 	 * available languages
 	 * @var	array
 	 */
@@ -101,6 +107,7 @@ class LanguageItemListPage extends SortablePage {
 		if (isset($_REQUEST['languageItemValue'])) $this->languageItemValue = $_REQUEST['languageItemValue'];
 		if (!empty($_REQUEST['hasCustomValue'])) $this->hasCustomValue = 1;
 		if (!empty($_REQUEST['hasDisabledCustomValue'])) $this->hasDisabledCustomValue = 1;
+		if (!empty($_REQUEST['hasRecentlyDisabledCustomValue'])) $this->hasRecentlyDisabledCustomValue = 1;
 	}
 	
 	/**
@@ -112,8 +119,9 @@ class LanguageItemListPage extends SortablePage {
 		if ($this->languageCategoryID) $this->objectList->getConditionBuilder()->add('languageCategoryID = ?', [$this->languageCategoryID]);
 		if ($this->languageItem) $this->objectList->getConditionBuilder()->add('languageItem LIKE ?', ['%'.$this->languageItem.'%']);
 		if ($this->languageItemValue) $this->objectList->getConditionBuilder()->add('((languageUseCustomValue = 0 AND languageItemValue LIKE ?) OR languageCustomItemValue LIKE ?)', ['%'.$this->languageItemValue.'%', '%'.$this->languageItemValue.'%']);
-		if ($this->hasCustomValue || $this->hasDisabledCustomValue) $this->objectList->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
-		if ($this->hasDisabledCustomValue) $this->objectList->getConditionBuilder()->add("languageUseCustomValue = ?", [0]);
+		if ($this->hasCustomValue || $this->hasDisabledCustomValue || $this->hasRecentlyDisabledCustomValue) $this->objectList->getConditionBuilder()->add("languageCustomItemValue IS NOT NULL");
+		if ($this->hasDisabledCustomValue || $this->hasRecentlyDisabledCustomValue) $this->objectList->getConditionBuilder()->add("languageUseCustomValue = ?", [0]);
+		if ($this->hasRecentlyDisabledCustomValue) $this->objectList->getConditionBuilder()->add("languageCustomItemDisableTime >= ?", [TIME_NOW - 86400 * 7]);
 	}
 	
 	/**
@@ -152,6 +160,7 @@ class LanguageItemListPage extends SortablePage {
 			'languageItemValue' => $this->languageItemValue,
 			'hasCustomValue' => $this->hasCustomValue,
 			'hasDisabledCustomValue' => $this->hasDisabledCustomValue,
+			'hasRecentlyDisabledCustomValue' => $this->hasRecentlyDisabledCustomValue,
 			'availableLanguages' => $this->availableLanguages,
 			'availableLanguageCategories' => $this->availableLanguageCategories
 		]);

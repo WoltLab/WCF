@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * The merge of option values returns true if at least one value is true.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option\User\Group
  */
@@ -56,5 +56,20 @@ class BooleanUserGroupOptionType extends BooleanOptionType implements IUserGroup
 		}
 		
 		return $groupValue;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function compare($value1, $value2) {
+		if ($value1 == $value2) {
+			return 0;
+		}
+		else if ($value1 == -1) {
+			// this is the `never` permission
+			return -1;
+		}
+		
+		return $value1 ? 1 : -1;
 	}
 }

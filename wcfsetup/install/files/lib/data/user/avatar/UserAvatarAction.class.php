@@ -15,12 +15,13 @@ use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HTTPRequest;
 use wcf\util\ImageUtil;
+use wcf\util\Url;
 
 /**
  * Executes avatar-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Avatar
  * 
@@ -152,6 +153,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 		$filename = '';
 		
 		// fetch avatar from URL
+		$imageData = null;
 		try {
 			$request = new HTTPRequest($this->parameters['url']);
 			$request->execute();
@@ -163,6 +165,11 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			if ($imageData === false) throw new SystemException('Downloaded file is not an image');
 		}
 		catch (\Exception $e) {
+			// log exception unless this was caused by a non-image file being supplied
+			if ($imageData !== false) {
+				\wcf\functions\exception\logThrowable($e);
+			}
+			
 			if (!empty($filename)) {
 				@unlink($filename);
 			}
@@ -183,7 +190,7 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			return;
 		}
 		
-		$tmp = parse_url($this->parameters['url']);
+		$tmp = Url::parse($this->parameters['url']);
 		if (!isset($tmp['path'])) {
 			@unlink($filename);
 			return;

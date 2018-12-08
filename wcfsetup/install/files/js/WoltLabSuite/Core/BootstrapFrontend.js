@@ -2,23 +2,21 @@
  * Bootstraps WCF's JavaScript with additions for the frontend usage.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/BootstrapFrontend
  */
 define(
 	[
-	 	'Ajax',                           'WoltLabSuite/Core/Bootstrap',      'WoltLabSuite/Core/Controller/Style/Changer',
+	 	'WoltLabSuite/Core/BackgroundQueue', 'WoltLabSuite/Core/Bootstrap', 'WoltLabSuite/Core/Controller/Style/Changer',
 	 	'WoltLabSuite/Core/Controller/Popover', 'WoltLabSuite/Core/Ui/User/Ignore', 'WoltLabSuite/Core/Ui/Page/Header/Menu'
 	],
 	function(
-		Ajax,                              Bootstrap,                    ControllerStyleChanger,
-		ControllerPopover,                 UiUserIgnore, UiPageHeaderMenu
+		BackgroundQueue, Bootstrap, ControllerStyleChanger,
+		ControllerPopover, UiUserIgnore, UiPageHeaderMenu
 	)
 {
 	"use strict";
-	
-	var queueInvocations = 0;
 	
 	/**
 	 * @exports	WoltLabSuite/Core/BootstrapFrontend
@@ -41,10 +39,19 @@ define(
 				ControllerStyleChanger.setup();
 			}
 			
-			this._initUserPopover();
-			this._invokeBackgroundQueue(options.backgroundQueue.url, options.backgroundQueue.force);
+			if (options.enableUserPopover) {
+				this._initUserPopover();
+			}
 			
-			UiUserIgnore.init();
+			BackgroundQueue.setUrl(options.backgroundQueue.url);
+			if (Math.random() < 0.1 || options.backgroundQueue.force) {
+				// invoke the queue roughly every 10th request or on demand
+				BackgroundQueue.invoke();
+			}
+			
+			if (COMPILER_TARGET_DEFAULT) {
+				UiUserIgnore.init();
+			}
 		},
 		
 		/**
@@ -67,31 +74,6 @@ define(
 					}, callback, callback);
 				}
 			});
-		},
-		
-		/**
-		 * Invokes the background queue roughly every 10th request.
-		 * 
-		 * @param	{string}	url	background queue url
-		 * @param	{boolean}	force	whether execution should be forced
-		 */
-		_invokeBackgroundQueue: function(url, force) {
-			var again = this._invokeBackgroundQueue.bind(this, url, true);
-			
-			if (Math.random() < 0.1 || force) {
-				// 'fire and forget' background queue perform task
-				Ajax.apiOnce({
-					url: url,
-					ignoreError: true,
-					silent: true,
-					success: (function(data) {
-						queueInvocations++;
-						
-						// process up to 5 queue items per page load
-						if (data > 0 && queueInvocations < 5) setTimeout(again, 1000);
-					}).bind(this)
-				});
-			}
 		}
 	};
 });

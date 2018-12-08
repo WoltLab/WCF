@@ -3,7 +3,6 @@ namespace wcf\system\user\collapsible\content;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\InvalidObjectTypeException;
-use wcf\system\exception\SystemException;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -12,7 +11,7 @@ use wcf\system\WCF;
  * Provides methods for handling collapsible containers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Collapsible\Content
  */
@@ -253,7 +252,7 @@ class UserCollapsibleContentHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$objectType
 	 * @param	integer		$objectID
-	 * @throws	SystemException
+	 * @throws	InvalidObjectTypeException
 	 */
 	public function resetAll($objectType, $objectID = null) {
 		$objectTypeID = $this->getObjectTypeID($objectType);

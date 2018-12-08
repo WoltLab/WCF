@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Manages transparent cache access.
  * 
  * @author	Alexander Ebert, Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cache
  */
@@ -124,7 +124,7 @@ class CacheHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Unifys parameter order, numeric indizes will be discarded.
+	 * Unifies parameter order, numeric indices will be discarded.
 	 * 
 	 * @param	array		$parameters
 	 * @return	array

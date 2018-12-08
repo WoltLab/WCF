@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * Executes ignored user-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Ignore
  * 
@@ -56,6 +56,7 @@ class UserIgnoreAction extends AbstractDatabaseObjectAction {
 			]);
 			
 			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'ignoredUserIDs');
+			UserStorageHandler::getInstance()->reset([$this->parameters['data']['userID']], 'ignoredByUserIDs');
 			
 			// check if target user is following the current user
 			$sql = "SELECT	*

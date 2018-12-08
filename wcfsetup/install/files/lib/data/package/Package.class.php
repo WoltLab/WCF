@@ -9,7 +9,7 @@ use wcf\util\FileUtil;
  * Represents a package.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package
  *
@@ -192,6 +192,15 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns the absolute path to the package directory with a trailing slash.
+	 * 
+	 * @return	string
+	 */
+	public function getAbsolutePackageDir() {
+		return FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR . $this->packageDir));
+	}
+	
+	/**
 	 * Loads package requirements.
 	 */
 	protected static function loadRequirements() {
@@ -371,8 +380,9 @@ class Package extends DatabaseObject {
 		
 		file_put_contents($packageDir . PackageInstallationDispatcher::CONFIG_FILE, $content);
 		
-		// add legacy config.inc.php file for backward compatibility
-		if ($packageID != 1 && !file_exists($packageDir.'config.inc.php')) {
+		// add legacy config.inc.php file for backwards compatibility
+		if ($packageID != 1) {
+			// force overwriting the `config.inc.php` unless it is the core itself
 			file_put_contents($packageDir.'config.inc.php', "<?php" . "\n" . "require_once(__DIR__ . '/".PackageInstallationDispatcher::CONFIG_FILE."');\n");
 		}
 	}

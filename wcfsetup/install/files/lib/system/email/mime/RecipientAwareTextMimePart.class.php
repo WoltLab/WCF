@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * before evaluating the template.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Email\Mime
  * @since	3.0
@@ -45,7 +45,7 @@ class RecipientAwareTextMimePart extends TextMimePart implements IRecipientAware
 	 * @param	string	$mimeType	Mime type to provide in the email. You *must* not provide a charset. UTF-8 will be used automatically.
 	 * @param	string	$template	Template to evaluate
 	 * @param	string	$application	Application of the template to evaluate (default: wcf)
-	 * @param	mixed	$content	Content of this text part. Passend as 'content' to the template. If it is an array it will additionally be merged with the template variables.
+	 * @param	mixed	$content	Content of this text part. Passed as 'content' to the template. If it is an array it will additionally be merged with the template variables.
 	 */
 	public function __construct($mimeType, $template, $application = 'wcf', $content = null) {
 		parent::__construct($content, $mimeType);

@@ -4,14 +4,13 @@ use wcf\data\acp\search\provider\ACPSearchProvider;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\exception\ImplementationException;
-use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 
 /**
  * Handles ACP Search.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Search\Acp
  */
@@ -42,7 +41,7 @@ class ACPSearchHandler extends SingletonFactory {
 	 * @param	integer		$limit
 	 * @param       string          $providerName
 	 * @return	ACPSearchResultList[]
-	 * @throws	SystemException
+	 * @throws	ImplementationException
 	 */
 	public function search($query, $limit = 10, $providerName = '') {
 		$data = [];

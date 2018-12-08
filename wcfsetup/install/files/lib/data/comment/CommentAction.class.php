@@ -8,13 +8,17 @@ use wcf\data\comment\response\StructuredCommentResponse;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IMessageInlineEditorAction;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\captcha\CaptchaHandler;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\comment\CommentHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\like\LikeHandler;
+use wcf\system\moderation\queue\ModerationQueueActivationManager;
 use wcf\system\user\activity\event\UserActivityEventHandler;
 use wcf\system\user\notification\object\type\ICommentUserNotificationObjectType;
 use wcf\system\user\notification\object\type\IMultiRecipientCommentUserNotificationObjectType;
@@ -30,7 +34,7 @@ use wcf\util\UserUtil;
  * Executes comment-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Comment
  * 
@@ -38,17 +42,17 @@ use wcf\util\UserUtil;
  * @method	CommentEditor[]		getObjects()
  * @method	CommentEditor		getSingleObject()
  */
-class CommentAction extends AbstractDatabaseObjectAction {
+class CommentAction extends AbstractDatabaseObjectAction implements IMessageInlineEditorAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = ['addComment', 'addResponse', 'loadComments', 'getGuestDialog'];
+	protected $allowGuestAccess = ['addComment', 'addResponse', 'loadComment', 'loadComments', 'loadResponse', 'getGuestDialog'];
 	
 	/**
 	 * captcha object type used for comments
 	 * @var	ObjectType
 	 */
-	public $captchaObjectType = null;
+	public $captchaObjectType;
 	
 	/**
 	 * @inheritDoc
@@ -59,31 +63,36 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * comment object
 	 * @var	Comment
 	 */
-	protected $comment = null;
+	protected $comment;
 	
 	/**
 	 * comment processor
 	 * @var	ICommentManager
 	 */
-	protected $commentProcessor = null;
+	protected $commentProcessor;
+	
+	/**
+	 * @var HtmlInputProcessor
+	 */
+	protected $htmlInputProcessor;
 	
 	/**
 	 * response object
 	 * @var	CommentResponse
 	 */
-	protected $response = null;
+	protected $response;
 	
 	/**
 	 * comment object created by addComment()
 	 * @var	Comment
 	 */
-	public $createdComment = null;
+	public $createdComment;
 	
 	/**
 	 * response object created by addResponse()
 	 * @var	CommentResponse
 	 */
-	public $createdResponse = null;
+	public $createdResponse;
 	
 	/**
 	 * errors occurring through the validation of addComment or addResponse
@@ -100,6 +109,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		}
 		
 		// update counters
+		/** @var ICommentManager[] $processors */
 		$processors = [];
 		$groupCommentIDs = $commentIDs = [];
 		foreach ($this->getObjects() as $comment) {
@@ -110,7 +120,10 @@ class CommentAction extends AbstractDatabaseObjectAction {
 				$groupCommentIDs[$comment->objectTypeID] = [];
 			}
 			
-			$processors[$comment->objectTypeID]->updateCounter($comment->objectID, -1 * ($comment->responses + 1));
+			if (!$comment->isDisabled) {
+				$processors[$comment->objectTypeID]->updateCounter($comment->objectID, -1 * ($comment->responses + 1));
+			}
+			
 			$groupCommentIDs[$comment->objectTypeID][] = $comment->commentID;
 			$commentIDs[] = $comment->commentID;
 		}
@@ -160,6 +173,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * Validates parameters to load comments.
+	 * 
+	 * @throws	PermissionDeniedException
 	 */
 	public function validateLoadComments() {
 		$this->readInteger('lastCommentTime', false, 'data');
@@ -194,15 +209,92 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
+	 * Validates the `loadComment` action.
+	 * 
+	 * @throws	PermissionDeniedException
+	 */
+	public function validateLoadComment() {
+		$this->readInteger('objectID', false, 'data');
+		$this->readInteger('responseID', true, 'data');
+		
+		try {
+			$this->comment = $this->getSingleObject()->getDecoratedObject();
+		}
+		catch (UserInputException $e) {
+			/* unknown comment id, error handling takes place in `loadComment()` */
+		}
+		
+		$objectType = $this->validateObjectType();
+		$this->commentProcessor = $objectType->getProcessor();
+		if (!$this->commentProcessor->isAccessible($this->parameters['data']['objectID'])) {
+			throw new PermissionDeniedException();
+		}
+		
+		if (!empty($this->parameters['data']['responseID'])) {
+			$this->response = new CommentResponse($this->parameters['data']['responseID']);
+			if (!$this->response->responseID) {
+				$this->response = null;
+			}
+		}
+	}
+	
+	/**
+	 * Returns a rendered comment.
+	 * 
+	 * @return	string[]
+	 */
+	public function loadComment() {
+		if ($this->comment === null) {
+			return ['template' => ''];
+		}
+		else if ($this->comment->objectTypeID != $this->parameters['data']['objectTypeID'] || $this->comment->objectID != $this->parameters['data']['objectID']) {
+			return ['template' => ''];
+		}
+		
+		$returnValues = $this->renderComment($this->comment, $this->response);
+		return (is_array($returnValues)) ? $returnValues : ['template' => $returnValues];
+	}
+	
+	/**
+	 * Validates the `loadResponse` action.
+	 */
+	public function validateLoadResponse() {
+		$this->validateLoadComment();
+	}
+	
+	/**
+	 * Returns a rendered comment.
+	 *
+	 * @return	string[]
+	 */
+	public function loadResponse() {
+		if ($this->comment === null || $this->response === null) {
+			return ['template' => ''];
+		}
+		else if ($this->comment->objectTypeID != $this->parameters['data']['objectTypeID'] || $this->comment->objectID != $this->parameters['data']['objectID']) {
+			return ['template' => ''];
+		}
+		
+		return [
+			'template' => $this->renderResponse($this->response)
+		];
+	}
+	
+	/**
 	 * Validates parameters to add a comment.
+	 * 
+	 * @throws	PermissionDeniedException
 	 */
 	public function validateAddComment() {
 		CommentHandler::enforceFloodControl();
 		
 		$this->readInteger('objectID', false, 'data');
+		$this->readBoolean('requireGuestDialog', true);
 		
-		$this->validateUsername();
-		$this->validateCaptcha();
+		if (!$this->parameters['requireGuestDialog']) {
+			$this->validateUsername();
+			$this->validateCaptcha();
+		}
 		
 		$this->validateMessage();
 		$objectType = $this->validateObjectType();
@@ -220,11 +312,13 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @return	string[]
 	 */
 	public function addComment() {
-		if (!empty($this->validationErrors)) {
-			if (!empty($this->parameters['data']['username'])) {
-				WCF::getSession()->register('username', $this->parameters['data']['username']);
+		if ($this->parameters['requireGuestDialog'] || !empty($this->validationErrors)) {
+			if (!empty($this->validationErrors)) {
+				if (!empty($this->parameters['data']['username'])) {
+					WCF::getSession()->register('username', $this->parameters['data']['username']);
+				}
+				WCF::getTPL()->assign('errorType', $this->validationErrors);
 			}
-			WCF::getTPL()->assign('errorType', $this->validationErrors);
 			
 			$guestDialog = $this->getGuestDialog();
 			return [
@@ -233,6 +327,9 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			];
 		}
 		
+		/** @var HtmlInputProcessor $htmlInputProcessor */
+		$htmlInputProcessor = $this->parameters['htmlInputProcessor'];
+		
 		// create comment
 		$this->createdComment = CommentEditor::create([
 			'objectTypeID' => $this->parameters['data']['objectTypeID'],
@@ -240,54 +337,22 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			'time' => TIME_NOW,
 			'userID' => WCF::getUser()->userID ?: null,
 			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
-			'message' => $this->parameters['data']['message'],
+			'message' => $htmlInputProcessor->getHtml(),
 			'responses' => 0,
-			'responseIDs' => serialize([])
+			'responseIDs' => serialize([]),
+			'enableHtml' => 1,
+			'isDisabled' => $this->commentProcessor->canAddWithoutApproval($this->parameters['data']['objectID']) ? 0 : 1
 		]);
 		
-		// update counter
-		$this->commentProcessor->updateCounter($this->parameters['data']['objectID'], 1);
-		
-		// fire activity event
-		$objectType = ObjectTypeCache::getInstance()->getObjectType($this->parameters['data']['objectTypeID']);
-		if ($this->createdComment->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType.'.recentActivityEvent')) {
-			UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType.'.recentActivityEvent', $this->createdComment->commentID);
+		if (!$this->createdComment->isDisabled) {
+			$action = new CommentAction([$this->createdComment], 'triggerPublication', [
+				'commentProcessor' => $this->commentProcessor
+			]);
+			$action->executeAction();
 		}
-		
-		// fire notification event
-		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
-			$notificationObject = new CommentUserNotificationObject($this->createdComment);
-			$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.notification');
-			
-			if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
-				$recipientIDs = $notificationObjectType->getRecipientIDs($this->createdComment);
-				
-				// make sure that the active user gets no notification
-				$recipientIDs = array_diff($recipientIDs, [WCF::getUser()->userID]);
-				
-				if (!empty($recipientIDs)) {
-					UserNotificationHandler::getInstance()->fireEvent(
-						'comment',
-						$objectType->objectType . '.notification',
-						$notificationObject,
-						$recipientIDs
-					);
-				}
-			}
-			else {
-				/** @var ICommentUserNotificationObjectType $notificationObjectType */
-				
-				$userID = $notificationObjectType->getOwnerID($this->createdComment->commentID);
-				if ($userID != WCF::getUser()->userID) {
-					UserNotificationHandler::getInstance()->fireEvent(
-						'comment',
-						$objectType->objectType . '.notification',
-						$notificationObject,
-						[$userID],
-						['objectUserID' => $userID]
-					);
-				}
-			}
+		else {
+			// mark comment for moderated content
+			ModerationQueueActivationManager::getInstance()->addModeratedContent('com.woltlab.wcf.comment.comment', $this->createdComment->commentID);
 		}
 		
 		if (!$this->createdComment->userID) {
@@ -308,20 +373,85 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		];
 	}
 	
+	public function triggerPublication() {
+		if (!empty($this->parameters['commentProcessor'])) {
+			$objectType = null;
+			if (!empty($this->objects)) {
+				/** @var Comment $comment */
+				$comment = reset($this->objects);
+				$objectType = $this->validateObjectType($comment->objectTypeID);
+			}
+			
+			$this->commentProcessor = $this->parameters['commentProcessor'];
+		}
+		else {
+			$objectType = $this->validateObjectType($this->parameters['objectTypeID']);
+			$this->commentProcessor = $objectType->getProcessor();
+		}
+		
+		/** @var CommentEditor $comment */
+		foreach ($this->objects as $comment) {
+			// update counter
+			$comment->update(['isDisabled' => 0]);
+			$this->commentProcessor->updateCounter($comment->objectID, 1);
+			
+			// fire activity event
+			if ($comment->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType . '.recentActivityEvent')) {
+				UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType . '.recentActivityEvent', $comment->commentID, null, $comment->userID, $comment->time);
+			}
+			
+			// fire notification event
+			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType . '.notification')) {
+				$notificationObject = new CommentUserNotificationObject($comment->getDecoratedObject());
+				$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType . '.notification');
+				
+				if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
+					$recipientIDs = $notificationObjectType->getRecipientIDs($comment->getDecoratedObject());
+					
+					// make sure that the active user gets no notification
+					$recipientIDs = array_diff($recipientIDs, [WCF::getUser()->userID]);
+					
+					if (!empty($recipientIDs)) {
+						UserNotificationHandler::getInstance()->fireEvent('comment', $objectType->objectType . '.notification', $notificationObject, $recipientIDs);
+					}
+				}
+				else {
+					/** @var ICommentUserNotificationObjectType $notificationObjectType */
+					
+					$userID = $notificationObjectType->getOwnerID($comment->commentID);
+					if ($userID != WCF::getUser()->userID) {
+						UserNotificationHandler::getInstance()->fireEvent('comment', $objectType->objectType . '.notification', $notificationObject, [$userID], ['objectUserID' => $userID]);
+					}
+				}
+			}
+		}
+	}
+	
 	/**
 	 * Validates parameters to add a response.
+	 * 
+	 * @throws	PermissionDeniedException
 	 */
 	public function validateAddResponse() {
 		CommentHandler::enforceFloodControl();
 		
 		$this->readInteger('objectID', false, 'data');
-		$this->validateMessage();
+		$this->readBoolean('requireGuestDialog', true);
 		
-		$this->validateUsername();
-		$this->validateCaptcha();
+		if (!$this->parameters['requireGuestDialog']) {
+			$this->validateUsername();
+			$this->validateCaptcha();
+		}
+		
+		$this->validateMessage();
 		
 		// validate comment id
 		$this->validateCommentID();
+		
+		// disallow responses on disabled comments
+		if ($this->comment->isDisabled) {
+			throw new PermissionDeniedException();
+		}
 		
 		$objectType = $this->validateObjectType();
 		
@@ -338,7 +468,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function addResponse() {
-		if (!empty($this->validationErrors)) {
+		if ($this->parameters['requireGuestDialog'] || !empty($this->validationErrors)) {
 			if (!empty($this->parameters['data']['username'])) {
 				WCF::getSession()->register('username', $this->parameters['data']['username']);
 			}
@@ -351,100 +481,45 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			];
 		}
 		
+		/** @var HtmlInputProcessor $htmlInputProcessor */
+		$htmlInputProcessor = $this->parameters['htmlInputProcessor'];
+		
 		// create response
 		$this->createdResponse = CommentResponseEditor::create([
 			'commentID' => $this->comment->commentID,
 			'time' => TIME_NOW,
 			'userID' => WCF::getUser()->userID ?: null,
 			'username' => WCF::getUser()->userID ? WCF::getUser()->username : $this->parameters['data']['username'],
-			'message' => $this->parameters['data']['message']
+			'message' => $htmlInputProcessor->getHtml(),
+			'enableHtml' => 1,
+			'isDisabled' => $this->commentProcessor->canAddWithoutApproval($this->parameters['data']['objectID']) ? 0 : 1
 		]);
+		$this->createdResponse->setComment($this->comment);
 		
 		// update response data
-		$responseIDs = $this->comment->getResponseIDs();
-		if (count($responseIDs) < 5) {
-			$responseIDs[] = $this->createdResponse->responseID;
+		$unfilteredResponseIDs = $this->comment->getUnfilteredResponseIDs();
+		if (count($unfilteredResponseIDs) < 5) {
+			$unfilteredResponseIDs[] = $this->createdResponse->responseID;
 		}
-		$responses = $this->comment->responses + 1;
+		$unfilteredResponses = $this->comment->unfilteredResponses + 1;
 		
 		// update comment
 		$commentEditor = new CommentEditor($this->comment);
 		$commentEditor->update([
-			'responseIDs' => serialize($responseIDs),
-			'responses' => $responses
+			'unfilteredResponseIDs' => serialize($unfilteredResponseIDs),
+			'unfilteredResponses' => $unfilteredResponses
 		]);
 		
-		// update counter
-		$this->commentProcessor->updateCounter($this->parameters['data']['objectID'], 1);
-		
-		// fire activity event
-		$objectType = ObjectTypeCache::getInstance()->getObjectType($this->comment->objectTypeID);
-		if ($this->createdResponse->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.recentActivityEvent')) {
-			UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType.'.response.recentActivityEvent', $this->createdResponse->responseID);
+		if (!$this->createdResponse->isDisabled) {
+			$action = new CommentAction([], 'triggerPublicationResponse', [
+				'commentProcessor' => $this->commentProcessor,
+				'responses' => [$this->createdResponse]
+			]);
+			$action->executeAction();
 		}
-		
-		// fire notification event
-		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.notification') && UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
-			$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.notification');
-			$notificationObject = new CommentResponseUserNotificationObject($this->createdResponse);
-			
-			if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
-				$recipientIDs = $notificationObjectType->getRecipientIDs($this->comment);
-				
-				// make sure that the active user gets no notification
-				$recipientIDs = array_diff($recipientIDs, [WCF::getUser()->userID]);
-				
-				if (!empty($recipientIDs)) {
-					UserNotificationHandler::getInstance()->fireEvent(
-						'commentResponse',
-						$objectType->objectType . '.response.notification',
-						$notificationObject,
-						$recipientIDs,
-						[
-							'commentID' => $this->comment->commentID,
-							'objectID' => $this->comment->objectID,
-							'userID' => $this->comment->userID
-						]
-					);
-				}
-			}
-			else {
-				/** @var ICommentUserNotificationObjectType $notificationObjectType */
-				
-				$userID = $notificationObjectType->getOwnerID($this->comment->commentID);
-				
-				if ($this->comment->userID != WCF::getUser()->userID) {
-					UserNotificationHandler::getInstance()->fireEvent(
-						'commentResponse',
-						$objectType->objectType . '.response.notification',
-						$notificationObject,
-						[$this->comment->userID],
-						[
-							'commentID' => $this->comment->commentID,
-							'objectID' => $this->comment->objectID,
-							'objectUserID' => $userID,
-							'userID' => $this->comment->userID
-						]
-					);
-				}
-				
-				// notify the container owner
-				if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
-					if ($userID != $this->comment->userID && $userID != WCF::getUser()->userID) {
-						UserNotificationHandler::getInstance()->fireEvent(
-							'commentResponseOwner',
-							$objectType->objectType . '.response.notification',
-							$notificationObject,
-							[$userID], [
-								'commentID' => $this->comment->commentID,
-								'objectID' => $this->comment->objectID,
-								'objectUserID' => $userID,
-								'userID' => $this->comment->userID
-							]
-						);
-					}
-				}
-			}
+		else {
+			// mark response for moderated content
+			ModerationQueueActivationManager::getInstance()->addModeratedContent('com.woltlab.wcf.comment.response', $this->createdResponse->responseID);
 		}
 		
 		if (!$this->createdResponse->userID) {
@@ -460,28 +535,217 @@ class CommentAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		
+		$responses = $this->comment->responses;
+		if ($this->commentProcessor->canModerate($this->parameters['data']['objectTypeID'], $this->parameters['data']['objectID'])) {
+			$responses = $this->comment->unfilteredResponses;
+		}
+		
 		return [
 			'commentID' => $this->comment->commentID,
 			'template' => $this->renderResponse($this->createdResponse),
-			'responses' => $responses
+			'responses' => $responses + 1
 		];
 	}
 	
 	/**
+	 * Publishes a response.
+	 */
+	public function triggerPublicationResponse() {
+		if (!empty($this->parameters['commentProcessor'])) {
+			$objectType = null;
+			if (!empty($this->parameters['responses'])) {
+				/** @var CommentResponse $response */
+				$response = reset($this->parameters['responses']);
+				$objectType = $this->validateObjectType($response->getComment()->objectTypeID);
+			}
+			
+			$this->commentProcessor = $this->parameters['commentProcessor'];
+		}
+		else {
+			$objectType = $this->validateObjectType($this->parameters['objectTypeID']);
+			$this->commentProcessor = $objectType->getProcessor();
+		}
+		
+		/** @var CommentResponse $response */
+		foreach ($this->parameters['responses'] as $response) {
+			(new CommentResponseEditor($response))->update(['isDisabled' => 0]);
+			
+			$comment = $response->getComment();
+			
+			// update response count
+			$commentEditor = new CommentEditor($comment);
+			$commentEditor->updateCounters(['responses' => 1]);
+			
+			// do not prepend the response id as the approved response can appear anywhere
+			$commentEditor->updateResponseIDs();
+			
+			// update counter
+			$this->commentProcessor->updateCounter($comment->objectID, 1);
+			
+			// fire activity event
+			if ($response->userID && UserActivityEventHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.recentActivityEvent')) {
+				UserActivityEventHandler::getInstance()->fireEvent($objectType->objectType.'.response.recentActivityEvent', $response->responseID, null, $response->userID, $response->time);
+			}
+			
+			// fire notification event
+			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.response.notification') && UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
+				$notificationObjectType = UserNotificationHandler::getInstance()->getObjectTypeProcessor($objectType->objectType.'.notification');
+				$notificationObject = new CommentResponseUserNotificationObject($response);
+				
+				if ($notificationObjectType instanceof IMultiRecipientCommentUserNotificationObjectType) {
+					$recipientIDs = $notificationObjectType->getRecipientIDs($comment);
+					
+					// make sure that the active user gets no notification
+					$recipientIDs = array_diff($recipientIDs, [WCF::getUser()->userID]);
+					
+					if (!empty($recipientIDs)) {
+						UserNotificationHandler::getInstance()->fireEvent(
+							'commentResponse',
+							$objectType->objectType . '.response.notification',
+							$notificationObject,
+							$recipientIDs,
+							[
+								'commentID' => $comment->commentID,
+								'objectID' => $comment->objectID,
+								'userID' => $comment->userID
+							]
+						);
+					}
+				}
+				else {
+					/** @var ICommentUserNotificationObjectType $notificationObjectType */
+					$userID = $notificationObjectType->getOwnerID($comment->commentID);
+					
+					if ($comment->userID != WCF::getUser()->userID) {
+						UserNotificationHandler::getInstance()->fireEvent(
+							'commentResponse',
+							$objectType->objectType . '.response.notification',
+							$notificationObject,
+							[$comment->userID],
+							[
+								'commentID' => $comment->commentID,
+								'objectID' => $comment->objectID,
+								'objectUserID' => $userID,
+								'userID' => $comment->userID
+							]
+						);
+					}
+					
+					// notify the container owner
+					if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType->objectType.'.notification')) {
+						if ($userID != $comment->userID && $userID != WCF::getUser()->userID) {
+							UserNotificationHandler::getInstance()->fireEvent(
+								'commentResponseOwner',
+								$objectType->objectType . '.response.notification',
+								$notificationObject,
+								[$userID], [
+									'commentID' => $comment->commentID,
+									'objectID' => $comment->objectID,
+									'objectUserID' => $userID,
+									'userID' => $comment->userID
+								]
+							);
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Validates the `enable` action.
+	 * 
+	 * @throws	PermissionDeniedException
+	 */
+	public function validateEnable() {
+		$this->comment = $this->getSingleObject()->getDecoratedObject();
+		
+		$objectType = $this->validateObjectType($this->comment->objectTypeID);
+		$this->commentProcessor = $objectType->getProcessor();
+		if (!$this->commentProcessor->canModerate($this->comment->objectTypeID, $this->comment->objectID)) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	/**
+	 * Enables a comment.
+	 * 
+	 * @return	integer[]
+	 */
+	public function enable() {
+		if ($this->comment === null) $this->comment = reset($this->objects);
+		
+		if ($this->comment->isDisabled) {
+			$action = new CommentAction([$this->comment], 'triggerPublication', [
+				'commentProcessor' => $this->commentProcessor,
+				'objectTypeID' => $this->comment->objectTypeID
+			]);
+			$action->executeAction();
+		}
+		
+		ModerationQueueActivationManager::getInstance()->removeModeratedContent('com.woltlab.wcf.comment.comment', [$this->comment->commentID]);
+		
+		return ['commentID' => $this->comment->commentID];
+	}
+	
+	/**
+	 * Validates the `enableResponse` action.
+	 * 
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
+	 */
+	public function validateEnableResponse() {
+		$this->readInteger('responseID', false, 'data');
+		$this->response = new CommentResponse($this->parameters['data']['responseID']);
+		if (!$this->response->responseID) {
+			throw new UserInputException('responseID');
+		}
+		
+		$this->comment = $this->response->getComment();
+		
+		$objectType = $this->validateObjectType($this->comment->objectTypeID);
+		$this->commentProcessor = $objectType->getProcessor();
+		if (!$this->commentProcessor->canModerate($this->comment->objectTypeID, $this->comment->objectID)) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	/**
+	 * Enables a response.
+	 * 
+	 * @return	integer[]
+	 */
+	public function enableResponse() {
+		if ($this->comment === null) $this->comment = reset($this->objects);
+		if ($this->response === null) $this->response = reset($this->parameters['responses']);
+		
+		if ($this->response->isDisabled) {
+			$action = new CommentAction([], 'triggerPublicationResponse', [
+				'commentProcessor' => $this->commentProcessor,
+				'objectTypeID' => $this->comment->objectTypeID,
+				'responses' => [$this->response]
+			]);
+			$action->executeAction();
+		}
+		
+		ModerationQueueActivationManager::getInstance()->removeModeratedContent('com.woltlab.wcf.comment.response', [$this->response->responseID]);
+		
+		return ['responseID' => $this->response->responseID];
+	}
+	
+	/**
 	 * Validates parameters to edit a comment or a response.
+	 * 
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
 	 */
 	public function validatePrepareEdit() {
-		// validate comment id or response id
+		// validate response id
 		try {
-			$this->validateCommentID();
+			$this->validateResponseID();
 		}
 		catch (UserInputException $e) {
-			try {
-				$this->validateResponseID();
-			}
-			catch (UserInputException $e) {
-				throw new UserInputException('objectIDs');
-			}
+			throw new UserInputException('objectIDs');
 		}
 		
 		// validate object type id
@@ -489,15 +753,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		
 		// validate object id and permissions
 		$this->commentProcessor = $objectType->getProcessor();
-		if ($this->comment !== null) {
-			if (!$this->commentProcessor->canEditComment($this->comment)) {
-				throw new PermissionDeniedException();
-			}
-		}
-		else {
-			if (!$this->commentProcessor->canEditResponse($this->response)) {
-				throw new PermissionDeniedException();
-			}
+		if (!$this->commentProcessor->canEditResponse($this->response)) {
+			throw new PermissionDeniedException();
 		}
 	}
 	
@@ -507,25 +764,11 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function prepareEdit() {
-		if ($this->comment !== null) {
-			$message = $this->comment->message;
-		}
-		else {
-			$message = $this->response->message;
-		}
-		
-		$returnValues = [
+		return [
 			'action' => 'prepare',
-			'message' => $message
+			'message' => $this->response->message,
+			'responseID' => $this->response->responseID
 		];
-		if ($this->comment !== null) {
-			$returnValues['commentID'] = $this->comment->commentID;
-		}
-		else {
-			$returnValues['responseID'] = $this->response->responseID;
-		}
-		
-		return $returnValues;
 	}
 	
 	/**
@@ -534,7 +777,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	public function validateEdit() {
 		$this->validatePrepareEdit();
 		
-		$this->validateMessage();
+		$this->validateMessage($this->comment !== null);
 	}
 	
 	/**
@@ -543,32 +786,86 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function edit() {
-		$returnValues = ['action' => 'saved'];
+		$editor = new CommentResponseEditor($this->response);
+		$editor->update([
+			'message' => $this->parameters['data']['message']
+		]);
+		$response = new CommentResponse($this->response->responseID);
 		
-		if ($this->response === null) {
-			$editor = new CommentEditor($this->comment);
-			$editor->update([
-				'message' => $this->parameters['data']['message']
-			]);
-			$comment = new Comment($this->comment->commentID);
-			$returnValues['commentID'] = $this->comment->commentID;
-			$returnValues['message'] = $comment->getFormattedMessage();
-		}
-		else {
-			$editor = new CommentResponseEditor($this->response);
-			$editor->update([
-				'message' => $this->parameters['data']['message']
-			]);
-			$response = new CommentResponse($this->response->responseID);
-			$returnValues['responseID'] = $this->response->responseID;
-			$returnValues['message'] = $response->getFormattedMessage();
+		return [
+			'action' => 'saved',
+			'message' => $response->getFormattedMessage(),
+			'responseID' => $this->response->responseID
+		];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateBeginEdit() {
+		$this->comment = $this->getSingleObject();
+		
+		// validate object type id
+		$objectType = $this->validateObjectType();
+		
+		// validate object id and permissions
+		$this->commentProcessor = $objectType->getProcessor();
+		if (!$this->commentProcessor->canEditComment($this->comment->getDecoratedObject())) {
+			throw new PermissionDeniedException();
 		}
 		
-		return $returnValues;
+		$this->setDisallowedBBCodes();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function beginEdit() {
+		WCF::getTPL()->assign([
+			'comment' => $this->comment,
+			'wysiwygSelector' => 'commentEditor'.$this->comment->commentID
+		]);
+		
+		return [
+			'actionName' => 'beginEdit',
+			'template' => WCF::getTPL()->fetch('commentEditor', 'wcf')
+		];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateSave() {
+		$this->validateBeginEdit();
+		
+		$this->validateMessage(true);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function save() {
+		/** @var HtmlInputProcessor $htmlInputProcessor */
+		$htmlInputProcessor = $this->parameters['htmlInputProcessor'];
+		
+		$action = new CommentAction([$this->comment], 'update', [
+			'data' => [
+				'message' => $htmlInputProcessor->getHtml()
+			]
+		]);
+		$action->executeAction();
+		
+		return [
+			'actionName' => 'save',
+			'message' => (new Comment($this->comment->commentID))->getFormattedMessage()
+		];
 	}
 	
 	/**
 	 * Validates parameters to remove a comment or response.
+	 * 
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
 	 */
 	public function validateRemove() {
 		// validate comment id or response id
@@ -623,6 +920,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * Validates the 'getGuestDialog' action.
+	 * 
+	 * @throws	PermissionDeniedException
 	 */
 	public function validateGetGuestDialog() {
 		if (WCF::getUser()->userID) {
@@ -673,6 +972,7 @@ class CommentAction extends AbstractDatabaseObjectAction {
 				'ajaxCaptcha' => true,
 				'captchaID' => 'commentAdd',
 				'captchaObjectType' => $captchaObjectType,
+				'supportsAsyncCaptcha' => true,
 				'username' => WCF::getSession()->getVar('username')
 			])
 		];
@@ -682,18 +982,54 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	 * Renders a comment.
 	 * 
 	 * @param	Comment		$comment
-	 * @return	string
+	 * @param       CommentResponse $response
+	 * @return	string|string[]
 	 */
-	protected function renderComment(Comment $comment) {
+	protected function renderComment(Comment $comment, CommentResponse $response = null) {
 		$comment = new StructuredComment($comment);
 		$comment->setIsDeletable($this->commentProcessor->canDeleteComment($comment->getDecoratedObject()));
 		$comment->setIsEditable($this->commentProcessor->canEditComment($comment->getDecoratedObject()));
 		
+		if ($response !== null) {
+			// check if response is not visible
+			/** @var CommentResponse $visibleResponse */
+			foreach ($comment as $visibleResponse) {
+				if ($visibleResponse->responseID == $response->responseID) {
+					$response = null;
+					break;
+				}
+			}
+		}
+		
+		// load last response time
+		if ($comment->getDecoratedObject()->responses) {
+			$sql = "SELECT          time
+				FROM            wcf".WCF_N."_comment_response
+				WHERE           commentID = ?
+				ORDER BY        time";
+			$statement = WCF::getDB()->prepareStatement($sql, 1);
+			$statement->execute([$comment->commentID]);
+			$lastResponseTime = $statement->fetchSingleColumn();
+			if ($lastResponseTime && $lastResponseTime > 1) {
+				WCF::getTPL()->assign('commentLastResponseTime', ($lastResponseTime - 1));
+			}
+		}
+		
 		WCF::getTPL()->assign([
+			'commentCanModerate' => $this->commentProcessor->canModerate($comment->getDecoratedObject()->objectTypeID, $comment->getDecoratedObject()->objectID),
 			'commentList' => [$comment],
 			'commentManager' => $this->commentProcessor
 		]);
-		return WCF::getTPL()->fetch('commentList');
+		
+		$template = WCF::getTPL()->fetch('commentList');
+		if ($response === null) {
+			return $template;
+		}
+		
+		return [
+			'template' => $template,
+			'response' => $this->renderResponse($response)
+		];
 	}
 	
 	/**
@@ -710,13 +1046,16 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		// render response
 		WCF::getTPL()->assign([
 			'responseList' => [$response],
+			'commentCanModerate' => $this->commentProcessor->canModerate($response->getComment()->objectTypeID, $response->getComment()->objectID),
 			'commentManager' => $this->commentProcessor
 		]);
 		return WCF::getTPL()->fetch('commentResponseList');
 	}
 	
 	/**
-	 * Validates message parameter.
+	 * Validates message parameters.
+	 * 
+	 * @throws      UserInputException
 	 */
 	protected function validateMessage() {
 		$this->readString('message', false, 'data');
@@ -727,18 +1066,37 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		}
 		
 		CommentHandler::enforceCensorship($this->parameters['data']['message']);
+		
+		$this->setDisallowedBBCodes();
+		$htmlInputProcessor = $this->getHtmlInputProcessor($this->parameters['data']['message'], ($this->comment !== null ? $this->comment->commentID : 0));
+		
+		// search for disallowed bbcodes
+		$disallowedBBCodes = $htmlInputProcessor->validate();
+		if (!empty($disallowedBBCodes)) {
+			throw new UserInputException('text', WCF::getLanguage()->getDynamicVariable('wcf.message.error.disallowedBBCodes', ['disallowedBBCodes' => $disallowedBBCodes]));
+		}
+		
+		if ($htmlInputProcessor->appearsToBeEmpty()) {
+			throw new UserInputException('message');
+		}
+		
+		$this->parameters['htmlInputProcessor'] = $htmlInputProcessor;
 	}
 	
 	/**
 	 * Validates object type id parameter.
 	 * 
+	 * @param       integer         $objectTypeID
 	 * @return	ObjectType
 	 * @throws	UserInputException
 	 */
-	protected function validateObjectType() {
-		$this->readInteger('objectTypeID', false, 'data');
+	protected function validateObjectType($objectTypeID = null) {
+		if ($objectTypeID === null) {
+			$this->readInteger('objectTypeID', false, 'data');
+			$objectTypeID = $this->parameters['data']['objectTypeID'];
+		}
 		
-		$objectType = ObjectTypeCache::getInstance()->getObjectType($this->parameters['data']['objectTypeID']);
+		$objectType = ObjectTypeCache::getInstance()->getObjectType($objectTypeID);
 		if ($objectType === null) {
 			throw new UserInputException('objectTypeID');
 		}
@@ -748,6 +1106,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * Validates comment id parameter.
+	 * 
+	 * @throws	UserInputException
 	 */
 	protected function validateCommentID() {
 		$this->readInteger('commentID', false, 'data');
@@ -760,6 +1120,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * Validates response id parameter.
+	 * 
+	 * @throws	UserInputException
 	 */
 	protected function validateResponseID() {
 		if (isset($this->parameters['data']['responseID'])) {
@@ -793,6 +1155,8 @@ class CommentAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * Validates the captcha challenge.
+	 * 
+	 * @throws	SystemException
 	 */
 	protected function validateCaptcha() {
 		if (WCF::getUser()->userID) return;
@@ -817,6 +1181,31 @@ class CommentAction extends AbstractDatabaseObjectAction {
 		catch (UserInputException $e) {
 			$this->validationErrors = array_merge($this->validationErrors, [$e->getField() => $e->getType()]);
 		}
+	}
+	
+	/**
+	 * Sets the list of disallowed bbcodes for comments.
+	 */
+	protected function setDisallowedBBCodes() {
+		BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(',', WCF::getSession()->getPermission('user.comment.disallowedBBCodes')));
+	}
+	
+	/**
+	 * Returns the current html input processor or a new one if `$message` is not null.
+	 * 
+	 * @param       string|null     $message        source message
+	 * @param       integer         $objectID       object id
+	 * @return      HtmlInputProcessor
+	 */
+	public function getHtmlInputProcessor($message = null, $objectID = 0) {
+		if ($message === null) {
+			return $this->htmlInputProcessor;
+		}
+		
+		$this->htmlInputProcessor = new HtmlInputProcessor();
+		$this->htmlInputProcessor->process($message, 'com.woltlab.wcf.comment', $objectID);
+		
+		return $this->htmlInputProcessor;
 	}
 	
 	/**

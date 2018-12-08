@@ -3,15 +3,16 @@ namespace wcf\data\comment;
 use wcf\data\DatabaseObject;
 use wcf\data\IMessage;
 use wcf\data\TUserContent;
-use wcf\system\bbcode\SimpleMessageParser;
+use wcf\system\comment\manager\ICommentManager;
 use wcf\system\comment\CommentHandler;
+use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\util\StringUtil;
 
 /**
  * Represents a comment.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Comment
  *
@@ -24,6 +25,10 @@ use wcf\util\StringUtil;
  * @property-read	string		$message		comment message
  * @property-read	integer		$responses		number of responses on the comment
  * @property-read	string		$responseIDs		serialized array with the ids of the five latest comment responses
+ * @property-read	integer		$unfilteredResponses	number of all responses on the comment, including disabled ones
+ * @property-read	string		$unfilteredResponseIDs	serialized array with the ids of the five latest comment responses, including disabled ones
+ * @property-read       integer         $enableHtml             is 1 if HTML will rendered in the comment, otherwise 0
+ * @property-read	integer		$isDisabled		is 1 if the comment is disabled, otherwise 0
  */
 class Comment extends DatabaseObject implements IMessage {
 	use TUserContent;
@@ -47,17 +52,72 @@ class Comment extends DatabaseObject implements IMessage {
 	}
 	
 	/**
+	 * Returns a list of unfiltered response ids, including those that are still disabled.
+	 *
+	 * @return	integer[]
+	 */
+	public function getUnfilteredResponseIDs() {
+		if ($this->unfilteredResponseIDs === null || $this->unfilteredResponseIDs == '') {
+			return [];
+		}
+		
+		$responseIDs = @unserialize($this->unfilteredResponseIDs);
+		if ($responseIDs === false) {
+			return [];
+		}
+		
+		return $responseIDs;
+	} 
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function getFormattedMessage() {
-		return SimpleMessageParser::getInstance()->parse($this->message);
+		$processor = new HtmlOutputProcessor();
+		$processor->process($this->message, 'com.woltlab.wcf.comment', $this->commentID);
+		
+		return $processor->getHtml();
+	}
+	
+	/**
+	 * Returns a simplified version of the formatted message.
+	 * 
+	 * @return	string
+	 */
+	public function getSimplifiedFormattedMessage() {
+		$processor = new HtmlOutputProcessor();
+		$processor->setOutputType('text/simplified-html');
+		$processor->process($this->message, 'com.woltlab.wcf.comment', $this->commentID);
+		
+		return $processor->getHtml();
+	}
+	
+	/**
+	 * Returns a version of this message optimized for use in emails.
+	 *
+	 * @param	string	$mimeType	Either 'text/plain' or 'text/html'
+	 * @return	string
+	 */
+	public function getMailText($mimeType = 'text/plain') {
+		switch ($mimeType) {
+			case 'text/plain':
+				$processor = new HtmlOutputProcessor();
+				$processor->setOutputType('text/plain');
+				$processor->process($this->message, 'com.woltlab.wcf.comment', $this->commentID);
+				
+				return $processor->getHtml();
+			case 'text/html':
+				return $this->getSimplifiedFormattedMessage();
+		}
+		
+		throw new \LogicException('Unreachable');
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getExcerpt($maxLength = 255) {
-		return StringUtil::truncateHTML($this->getFormattedMessage(), $maxLength);
+		return StringUtil::truncateHTML($this->getSimplifiedFormattedMessage(), $maxLength);
 	}
 	
 	/**
@@ -71,7 +131,10 @@ class Comment extends DatabaseObject implements IMessage {
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return CommentHandler::getInstance()->getObjectType($this->objectTypeID)->getProcessor()->getLink($this->objectTypeID, $this->objectID);
+		/** @var ICommentManager $processor */
+		$processor = CommentHandler::getInstance()->getObjectType($this->objectTypeID)->getProcessor();
+		
+		return $processor->getCommentLink($this);
 	}
 	
 	/**

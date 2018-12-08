@@ -114,6 +114,19 @@
 			</dl>
 		{/if}
 		
+		<dl{if $errorField == 'hideTitle'} class="formError"{/if}>
+			<dt></dt>
+			<dd>
+				<label><input type="checkbox" id="hideTitle" name="hideTitle" value="1"{if $hideTitle} checked{/if}> {lang}wcf.acp.user.rank.hideTitle{/lang}</label>
+				{if $errorField == 'hideTitle'}
+					<small class="innerError">
+						{lang}wcf.acp.user.rank.hideTitle.error.{@$errorType}{/lang}
+					</small>
+				{/if}
+				<small>{lang}wcf.acp.user.rank.hideTitle.description{/lang}</small>
+			</dd>
+		</dl>
+		
 		{event name='imageFields'}
 	</section>
 	

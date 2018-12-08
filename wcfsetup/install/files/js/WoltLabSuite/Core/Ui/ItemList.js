@@ -2,7 +2,7 @@
  * Flexible UI element featuring both a list of items and an input field with suggestion support.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/ItemList
  */
@@ -16,6 +16,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 	var _callbackKeyDown = null;
 	var _callbackKeyPress = null;
 	var _callbackKeyUp = null;
+	var _callbackPaste = null;
 	var _callbackRemoveItem = null;
 	var _callbackBlur = null;
 	
@@ -157,17 +158,13 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			}
 			
 			var data = _data.get(elementId);
-			var items = DomTraverse.childrenByClass(data.list, 'item');
-			var values = [], value, item;
-			for (var i = 0, length = items.length; i < length; i++) {
-				item = items[i];
-				value = {
-					objectId: elData(item, 'object-id'),
-					value: DomTraverse.childByTag(item, 'SPAN').textContent
-				};
-				
-				values.push(value);
-			}
+			var values = [];
+			elBySelAll('.item > span', data.list, function(span) {
+				values.push({
+					objectId: ~~elData(span, 'object-id'),
+					value: span.textContent
+				});
+			});
 			
 			return values;
 		},
@@ -211,6 +208,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			_callbackKeyDown = this._keyDown.bind(this);
 			_callbackKeyPress = this._keyPress.bind(this);
 			_callbackKeyUp = this._keyUp.bind(this);
+			_callbackPaste = this._paste.bind(this);
 			_callbackRemoveItem = this._removeItem.bind(this);
 			_callbackBlur = this._blur.bind(this);
 		},
@@ -240,6 +238,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			element.addEventListener('keydown', _callbackKeyDown);
 			element.addEventListener('keypress', _callbackKeyPress);
 			element.addEventListener('keyup', _callbackKeyUp);
+			element.addEventListener('paste', _callbackPaste);
 			element.addEventListener('blur', _callbackBlur);
 			
 			element.parentNode.insertBefore(list, element);
@@ -289,17 +288,29 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 		},
 		
 		/**
+		 * Returns true if the input accepts new items.
+		 * 
+		 * @param       {string}        elementId       input element id
+		 * @return      {boolean}       true if at least one more item can be added
+		 * @protected
+		 */
+		_acceptsNewItems: function (elementId) {
+			var data = _data.get(elementId);
+			if (data.options.maxItems === -1) {
+				return true;
+			}
+			
+			return (data.list.childElementCount - 1 < data.options.maxItems);
+		},
+		
+		/**
 		 * Enforces the maximum number of items.
 		 * 
 		 * @param	{string}	elementId	input element id
 		 */
 		_handleLimit: function(elementId) {
 			var data = _data.get(elementId);
-			if (data.options.maxItems === -1) {
-				return;
-			}
-			
-			if (data.list.childElementCount - 1 < data.options.maxItems) {
+			if (this._acceptsNewItems(elementId)) {
 				if (data.element.disabled) {
 					data.element.disabled = false;
 					data.element.removeAttribute('placeholder');
@@ -346,7 +357,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 		/**
 		 * Handles the `[ENTER]` and `[,]` key to add an item to the list unless it is restricted.
 		 * 
-		 * @param	{object}	event		event object
+		 * @param	{Event}         event		event object
 		 */
 		_keyPress: function(event) {
 			if (EventKey.Enter(event) || EventKey.Comma(event)) {
@@ -362,6 +373,41 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 					this._addItem(event.currentTarget.id, { objectId: 0, value: value });
 				}
 			}
+		},
+		
+		/**
+		 * Splits comma-separated values being pasted into the input field.
+		 * 
+		 * @param       {Event}         event
+		 * @protected
+		 */
+		_paste: function (event) {
+			var text = '';
+			if (typeof window.clipboardData === 'object') {
+				// IE11
+				text = window.clipboardData.getData('Text');
+			}
+			else {
+				text = event.clipboardData.getData('text/plain');
+			}
+			
+			var element = event.currentTarget;
+			var elementId = element.id;
+			var maxLength = ~~elAttr(element, 'maxLength');
+			
+			text.split(/,/).forEach((function(item) {
+				item = item.trim();
+				if (maxLength && item.length > maxLength) {
+					// truncating items provides a better UX than throwing an error or silently discarding it
+					item = item.substr(0, maxLength);
+				}
+				
+				if (item.length > 0 && this._acceptsNewItems(elementId)) {
+					this._addItem(elementId, {objectId: 0, value: item});
+				}
+			}).bind(this));
+			
+			event.preventDefault();
 		},
 		
 		/**

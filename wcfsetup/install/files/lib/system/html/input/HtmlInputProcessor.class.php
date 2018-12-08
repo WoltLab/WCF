@@ -5,13 +5,14 @@ use wcf\system\html\input\filter\IHtmlInputFilter;
 use wcf\system\html\input\filter\MessageHtmlInputFilter;
 use wcf\system\html\input\node\HtmlInputNodeProcessor;
 use wcf\system\html\AbstractHtmlProcessor;
+use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
 
 /**
  * Reads a HTML string, applies filters and parses all nodes including bbcodes.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Input
  * @since       3.0
@@ -32,6 +33,12 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	 * @var HtmlInputNodeProcessor
 	 */
 	protected $htmlInputNodeProcessor;
+	
+	/**
+	 * skip the HTML filter during message reprocessing
+	 * @var boolean
+	 */
+	protected $skipFilter = false;
 	
 	/**
 	 * Processes the input html string.
@@ -58,7 +65,9 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 		$html = HtmlBBCodeParser::getInstance()->parse($html);
 		
 		// filter HTML
-		$html = $this->getHtmlInputFilter()->apply($html);
+		if (!$this->skipFilter) {
+			$html = $this->getHtmlInputFilter()->apply($html);
+		}
 		
 		// pre-parse HTML
 		$this->getHtmlInputNodeProcessor()->load($this, $html);
@@ -75,6 +84,57 @@ class HtmlInputProcessor extends AbstractHtmlProcessor {
 	 */
 	public function processIntermediate($html) {
 		$this->getHtmlInputNodeProcessor()->load($this, $html);
+	}
+	
+	/**
+	 * Reprocesses a message by transforming the message into an editor-like
+	 * state using plain bbcodes instead of metacode elements.
+	 * 
+	 * @param       string          $html           html string
+	 * @param       string          $objectType     object type identifier
+	 * @param       integer         $objectID       object id
+	 * @since       3.1
+	 */
+	public function reprocess($html, $objectType, $objectID) {
+		$this->processIntermediate($html);
+		
+		// revert embedded bbcodes for re-evaluation
+		$metacodes = DOMUtil::getElements($this->getHtmlInputNodeProcessor()->getDocument(), 'woltlab-metacode');
+		foreach ($metacodes as $metacode) {
+			$name = $metacode->getAttribute('data-name');
+			$attributes = $this->getHtmlInputNodeProcessor()->parseAttributes($metacode->getAttribute('data-attributes'));
+			
+			$bbcodeAttributes = '';
+			foreach ($attributes as $attribute) {
+				if (!empty($bbcodeAttributes)) $bbcodeAttributes .= ',';
+				
+				if ($attribute === true) $bbcodeAttributes .= 'true';
+				else if ($attribute === false) $bbcodeAttributes .= 'false';
+				else if (is_string($attribute) || is_numeric($attribute)) {
+					$bbcodeAttributes .= "'" . addcslashes($attribute, "'") . "'";
+				}
+				else {
+					// discard anything that is not string-like
+					$bbcodeAttributes .= "''";
+				}
+			}
+			
+			$text = $metacode->ownerDocument->createTextNode('[' . $name . (!empty($bbcodeAttributes) ? '=' . $bbcodeAttributes : '') . ']');
+			$metacode->insertBefore($text, $metacode->firstChild);
+			
+			$text = $metacode->ownerDocument->createTextNode('[/' . $name . ']');
+			$metacode->appendChild($text);
+			
+			DOMUtil::removeNode($metacode, true);
+		}
+		
+		try {
+			$this->skipFilter = true;
+			$this->process($this->getHtml(), $objectType, $objectID, false);
+		}
+		finally {
+			$this->skipFilter = false;
+		}
 	}
 	
 	/**

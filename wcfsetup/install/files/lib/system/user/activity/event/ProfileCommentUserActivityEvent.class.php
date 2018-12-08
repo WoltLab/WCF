@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * User activity event implementation for profile comments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Activity\Event
  */
@@ -52,7 +52,10 @@ class ProfileCommentUserActivityEvent extends SingletonFactory implements IUserA
 						$event->setIsAccessible();
 						
 						$user = $users[$comment->objectID];
-						$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.profileComment', ['user' => $user]);
+						$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.profileComment', [
+							'commentID' => $comment->commentID,
+							'user' => $user
+						]);
 						$event->setTitle($text);
 						
 						// output

@@ -3,6 +3,7 @@ namespace wcf\data\article\category;
 use wcf\data\article\Article;
 use wcf\data\category\Category;
 use wcf\system\category\CategoryHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -10,7 +11,7 @@ use wcf\system\WCF;
  * Manages the article category cache.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article\Category
  * @since	3.0
@@ -28,12 +29,18 @@ class ArticleCategoryCache extends SingletonFactory {
 	protected function initArticles() {
 		$this->articles = [];
 		
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('publicationStatus = ?', [Article::PUBLISHED]);
+		if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+			$conditionBuilder->add('isDeleted = ?', [0]);
+		}
+		
 		$sql = "SELECT		COUNT(*) AS count, categoryID
 			FROM		wcf" . WCF_N . "_article
-			WHERE           publicationStatus = ?
+			".$conditionBuilder."           
 			GROUP BY	categoryID";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([Article::PUBLISHED]);
+		$statement->execute($conditionBuilder->getParameters());
 		$articles = $statement->fetchMap('categoryID', 'count');
 		
 		$categoryToParent = [];

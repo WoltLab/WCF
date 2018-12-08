@@ -14,7 +14,7 @@ use wcf\util\ArrayUtil;
  * Manages message quotes.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Message\Quote
  */
@@ -45,7 +45,7 @@ class MessageQuoteManager extends SingletonFactory {
 	
 	/**
 	 * list of quote messages by quote id
-	 * @var	string[]
+	 * @var	array
 	 */
 	protected $quoteData = [];
 	
@@ -424,7 +424,7 @@ class MessageQuoteManager extends SingletonFactory {
 	 * @param	IMessage	$message
 	 * @param	string		$text
 	 * @param	boolean		$renderAsString
-	 * @return	string
+	 * @return	array|string
 	 */
 	public function renderQuote(IMessage $message, $text, $renderAsString = true) {
 		$parameters = [

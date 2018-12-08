@@ -1,5 +1,6 @@
 <?php
 namespace wcf\util;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\Regex;
 
@@ -7,7 +8,7 @@ use wcf\system\Regex;
  * Contains message-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -70,13 +71,31 @@ class MessageUtil {
 	 * @return      string[]                quoted usernames
 	 */
 	public static function getQuotedUsers(HtmlInputProcessor $htmlInputProcessor) {
+		static $ownHosts;
+		if ($ownHosts === null) {
+			$ownHosts = [];
+			foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+				if (!in_array($application->domainName, $ownHosts)) $ownHosts[] = $application->domainName;
+			}
+		}
+		
 		$usernames = [];
 		
 		$elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('woltlab-quote');
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
 			$username = $element->getAttribute('data-author');
-			if (!empty($username)) $usernames[] = $username;
+			if (!empty($username)) {
+				// check if there is a link set and if it points to any of the apps
+				$link = $element->getAttribute('data-link');
+				$host = ($link) ? Url::parse($link)['host'] : '';
+				if ($host && !in_array($host, $ownHosts)) {
+					// links mismatch, do not treat this occurrence as a username
+					continue;
+				}
+				
+				$usernames[] = $username;
+			}
 		}
 		
 		return $usernames;

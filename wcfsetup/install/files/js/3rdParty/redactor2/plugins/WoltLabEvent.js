@@ -41,10 +41,13 @@ $.Redactor.prototype.WoltLabEvent = function() {
 				
 				// target
 				// WoltLab modification: do not suppress event if nodes have been added
+				// WoltLab modification 2: suppress broken MutationRecords in Vivaldi 1.13 that yield attribute changes without the attribute name
+				// WoltLab modification 3: do not suppres event if nodes have been removed
 				if (((this.opts.type === 'textarea' || this.opts.type === 'div')
-					&& (!this.detect.isFirefox() && mutation.target === this.core.editor()[0]) && (mutation.type === 'childList' && !mutation.addedNodes.length))
+					&& (!this.detect.isFirefox() && mutation.target === this.core.editor()[0]) && (mutation.type === 'childList' && !mutation.addedNodes.length && !mutation.removedNodes.length))
 					|| (mutation.attributeName === 'class' && mutation.target === this.core.editor()[0]
-					|| (mutation.attributeName === 'data-vivaldi-spatnav-clickable'))
+					|| (mutation.attributeName === 'data-vivaldi-spatnav-clickable')
+					|| (mutation.type === 'attributes' && mutation.attributeName === null))
 				)
 				{
 					stop = true;

@@ -2,7 +2,7 @@
  * Transforms <time> elements to display the elapsed time relative to the current time.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Date/Time/Relative
  */
@@ -10,6 +10,8 @@ define(['Dom/ChangeListener', 'Language', 'WoltLabSuite/Core/Date/Util', 'WoltLa
 	"use strict";
 	
 	var _elements = elByTag('time');
+	var _isActive = true;
+	var _isPending = false;
 	var _offset = null;
 	
 	/**
@@ -20,17 +22,40 @@ define(['Dom/ChangeListener', 'Language', 'WoltLabSuite/Core/Date/Util', 'WoltLa
 		 * Transforms <time> elements on init and binds event listeners.
 		 */
 		setup: function() {
-			this._refresh();
-			
 			new Repeating(this._refresh.bind(this), 60000);
 			
 			DomChangeListener.add('WoltLabSuite/Core/Date/Time/Relative', this._refresh.bind(this));
+			
+			document.addEventListener('visibilitychange', this._onVisibilityChange.bind(this));
+		},
+		
+		_onVisibilityChange: function () {
+			if (document.hidden) {
+				_isActive = false;
+				_isPending = false;
+			}
+			else {
+				_isActive = true;
+				
+				// force immediate refresh
+				if (_isPending) {
+					this._refresh();
+					_isPending = false;
+				}
+			}
 		},
 		
 		_refresh: function() {
+			// activity is suspended while the tab is hidden, but force an
+			// immediate refresh once the page is active again
+			if (!_isActive) {
+				if (!_isPending) _isPending = true;
+				return;
+			}
+			
 			var date = new Date();
 			var timestamp = (date.getTime() - date.getMilliseconds()) / 1000;
-			if (_offset === null) _offset = timestamp - TIME_NOW;
+			if (_offset === null) _offset = timestamp - window.TIME_NOW;
 			
 			for (var i = 0, length = _elements.length; i < length; i++) {
 				var element = _elements[i];

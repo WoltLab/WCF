@@ -56,7 +56,7 @@
 					<dd>
 						<span class="badge {if !$system.sql.result}red{else}green{/if}">
 						{if !$system.sql.result}{lang}wcf.global.systemRequirements.sql.notFound{/lang}{else}
-							MySQL 5.5.35+ / MariaDB 10.0.22+
+							pdo_mysql
 						{/if}</span>
 						{if !$system.sql.result}<small>{lang}wcf.global.systemRequirements.sql.description{/lang}</small>{/if}
 					</dd>

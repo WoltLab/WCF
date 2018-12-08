@@ -5,6 +5,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\comment\CommentHandler;
 use wcf\system\email\Email;
 use wcf\system\moderation\queue\report\IModerationQueueReportHandler;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
@@ -14,14 +15,17 @@ use wcf\system\WCF;
  * User notification event for moderation queue comments.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  * @since	3.0
  *
  * @method	CommentResponseUserNotificationObject	getUserNotificationObject()
  */
-class ModerationQueueCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent {
+class ModerationQueueCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent {
+	use TTestableCommentResponseUserNotificationEvent;
+	use TTestableModerationQueueUserNotificationEvent;
+	
 	/**
 	 * language item prefix for the notification texts
 	 * @var	string
@@ -97,7 +101,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return $this->getModerationQueue()->getLink() . '#comments';
+		return $this->getModerationQueue()->getLink() . '#comment' . $this->getUserNotificationObject()->commentID;
 	}
 	
 	/**
@@ -113,6 +117,7 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 			
 			return $this->getLanguage()->getDynamicVariable($this->getLanguageItemPrefix().'.commentResponse.message.stacked', [
 				'authors' => array_values($authors),
+				'commentID' => $this->getUserNotificationObject()->commentID,
 				'count' => $count,
 				'others' => $count - 1,
 				'moderationQueue' => $this->getModerationQueue()
@@ -130,6 +135,8 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 		return $this->getLanguage()->getDynamicVariable($this->getLanguageItemPrefix().'.commentResponse.message', [
 			'author' => $this->author,
 			'commentAuthor' => $commentAuthor,
+			'commentID' => $this->getUserNotificationObject()->commentID,
+			'responseID' => $this->getUserNotificationObject()->responseID,
 			'moderationQueue' => $this->getModerationQueue()
 		]);
 	}
@@ -187,5 +194,24 @@ class ModerationQueueCommentResponseUserNotificationEvent extends AbstractShared
 	protected function prepare() {
 		CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
 		UserProfileRuntimeCache::getInstance()->cacheObjectID($this->additionalData['userID']);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.1
+	 */
+	public static function canBeTriggeredByGuests() {
+		return false;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.1
+	 */
+	protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author) {
+		return [
+			'objectID' => self::getTestUserModerationQueueEntry($author, $recipient)->queueID,
+			'objectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.moderation.queue')
+		];
 	}
 }

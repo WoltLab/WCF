@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Represents a user's avatar.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Avatar
  * 
@@ -79,7 +79,7 @@ class UserAvatar extends DatabaseObject implements IUserAvatar {
 	 * @inheritDoc
 	 */
 	public function getImageTag($size = null) {
-		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" style="width: '.$size.'px; height: '.$size.'px" alt="" class="userAvatarImage">';
+		return '<img src="'.StringUtil::encodeHTML($this->getURL($size)).'" width="'.$size.'" height="'.$size.'" alt="" class="userAvatarImage">';
 	}
 	
 	/**

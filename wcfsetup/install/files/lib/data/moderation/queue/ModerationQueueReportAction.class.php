@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Executes actions for reports.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Moderation\Queue
  */
@@ -53,13 +53,15 @@ class ModerationQueueReportAction extends ModerationQueueAction {
 		if (!$this->queue->canEdit()) {
 			throw new PermissionDeniedException();
 		}
+		
+		$this->readBoolean('markAsJustified', true);
 	}
 	
 	/**
 	 * Removes this report by marking it as done without further processing.
 	 */
 	public function removeReport() {
-		$this->queue->markAsRejected();
+		$this->queue->markAsRejected((isset($this->parameters['markAsJustified']) ? $this->parameters['markAsJustified'] : false));
 	}
 	
 	/**

@@ -8,12 +8,13 @@ use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 
 /**
  * Represents an user profile menu item.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Profile\Menu\Item
  *
@@ -23,7 +24,7 @@ use wcf\system\SingletonFactory;
  * @property-read	integer		$showOrder		position of the user profile menu item in relation to its siblings
  * @property-read	string		$permissions		comma separated list of user group permissions of which the active user needs to have at least one to see the user profile menu item
  * @property-read	string		$options		comma separated list of options of which at least one needs to be enabled for the user profile menu item to be shown
- * @property-read	string		$className		name of the PHP class implementing `wcf\system\menu\user\profile\content\IUserProfileMenuContent` handling outputing the content of the user profile tab
+ * @property-read	string		$className		name of the PHP class implementing `wcf\system\menu\user\profile\content\IUserProfileMenuContent` handling outputting the content of the user profile tab
  */
 class UserProfileMenuItem extends DatabaseObject {
 	use TDatabaseObjectOptions;
@@ -73,5 +74,12 @@ class UserProfileMenuItem extends DatabaseObject {
 		}
 		
 		return $this->contentManager;
+	}
+	
+	/**
+	 * @return string
+	 */
+	public function __toString() {
+		return WCF::getLanguage()->get('wcf.user.profile.menu.' . $this->menuItem);
 	}
 }

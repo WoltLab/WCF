@@ -3,17 +3,20 @@ namespace wcf\system\package\plugin;
 use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\option\UserGroupOptionEditor;
 use wcf\data\user\group\UserGroup;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
+use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes user group options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
+class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * list of group ids by type
 	 * @var	integer[][]
@@ -50,10 +53,22 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 		if (isset($option['validationpattern'])) $validationPattern = $option['validationpattern'];
 		if (!empty($option['showorder'])) $showOrder = intval($option['showorder']);
 		$showOrder = $this->getShowOrder($showOrder, $categoryName, 'categoryName');
-		if (isset($option['enableoptions'])) $enableOptions = $option['enableoptions'];
-		if (isset($option['permissions'])) $permissions = $option['permissions'];
-		if (isset($option['options'])) $options = $option['options'];
+		if (isset($option['enableoptions'])) $enableOptions = StringUtil::normalizeCsv($option['enableoptions']);
+		if (isset($option['permissions'])) $permissions = StringUtil::normalizeCsv($option['permissions']);
+		if (isset($option['options'])) $options = StringUtil::normalizeCsv($option['options']);
 		if (isset($option['usersonly'])) $usersOnly = $option['usersonly'];
+		
+		if (empty($optionType)) {
+			throw new SystemException("Expected a non-empty 'optiontype' value for the option  '".$optionName."'.");
+		}
+		
+		// force the `html` bbcode to be disabled by default
+		if ($optionType === 'BBCodeSelect') {
+			$defaultValue .= (empty($defaultValue) ? '' : ',') . 'html';
+			$adminDefaultValue .= (empty($adminDefaultValue) ? '' : ',') . 'html';
+			$modDefaultValue .= (empty($modDefaultValue) ? '' : ',') . 'html';
+			$userDefaultValue .= (empty($userDefaultValue) ? '' : ',') . 'html';
+		}
 		
 		// collect additional tags and their values
 		$additionalData = [];

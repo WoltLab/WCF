@@ -6,10 +6,10 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * Handels form documents associated with a queue.
+ * Handles form documents associated with a queue.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Form
  */

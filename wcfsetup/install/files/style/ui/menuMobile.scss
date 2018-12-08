@@ -195,7 +195,7 @@
 	white-space: nowrap;
 	
 	.icon::before {
-		color: #fff;
+		color: $wcfHeaderMenuLink;
 	}
 	
 	&:hover {
@@ -227,7 +227,7 @@
 	}
 	
 	&.menuOverlayItemLinkMore::after {
-		color: #fff;
+		color: $wcfHeaderMenuLink;
 		content: $fa-var-angle-right;
 		display: block;
 		font-family: FontAwesome;
@@ -256,6 +256,11 @@ html[dir="rtl"] .menuOverlayItemLink.menuOverlayItemLinkMore::after {
 .menuOverlayItemLink.active,
 .menuOverlayItemLinkIcon.active {
 	background-color: $wcfHeaderMenuLinkBackgroundActive;
+	color: $wcfHeaderMenuLinkActive;
+}
+
+.menuOverlayItemLinkIcon.active > .icon::before {
+	color: $wcfHeaderMenuLinkActive;
 }
 
 .menuOverlayTitle {
@@ -281,7 +286,7 @@ html[dir="rtl"] .menuOverlayItemLink.menuOverlayItemLinkMore::after {
 	width: 44px;
 	
 	> .icon::before {
-		color: #fff;
+		color: $wcfHeaderMenuLink;
 	}
 }
 

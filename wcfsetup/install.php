@@ -3,7 +3,7 @@
  * This script tries to find the temp folder and unzip all setup files into.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 // @codingStandardsIgnoreFile
@@ -293,7 +293,7 @@ class SystemException extends \Exception implements IPrintableException {
 	<div class="exceptionContainer">
 		<div class="exceptionHeader">
 			<div class="exceptionBoundary">
-				<p class="exceptionTitle">An error has occured</p>
+				<p class="exceptionTitle">An error has occurred</p>
 			</div>
 		</div>
 		
@@ -306,7 +306,7 @@ class SystemException extends \Exception implements IPrintableException {
 				</li>
 				<li class="exceptionSystemInformation3">
 					<p class="exceptionFieldTitle">WoltLab Suite Core<span class="exceptionColon">:</span></p>
-					<p class="exceptionFieldValue">3.0</p>
+					<p class="exceptionFieldValue">3.1</p>
 				</li>
 				<li class="exceptionSystemInformation5">
 					<p class="exceptionFieldTitle">Peak Memory Usage<span class="exceptionColon">:</span></p>
@@ -340,7 +340,7 @@ class SystemException extends \Exception implements IPrintableException {
 			?>
 			<div class="exceptionBoundary">
 				<p class="exceptionSubtitle"><?php if (!$e->getPrevious() && !$first) { echo "Original "; } else if ($e->getPrevious() && $first) { echo "Final "; } ?>Error</p>
-				<?php if ($e instanceof SystemException && $e->getDescription()) { ?>
+				<?php if (($e instanceof SystemException || $e instanceof \wcf\system\exception\SystemException) && $e->getDescription()) { ?>
 					<p class="exceptionText"><?php echo $e->getDescription(); ?></p>
 				<?php } ?>
 				<ul class="exceptionErrorDetails">
@@ -407,7 +407,6 @@ class SystemException extends \Exception implements IPrintableException {
 			<?php
 			$first = false;
 		} while ($e = $e->getPrevious());
-		?>
 		?>
 	</div>
 </body>

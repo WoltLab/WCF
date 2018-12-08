@@ -3,11 +3,11 @@ CONTRIBUTING
 
 First of all: Thanks for your interest in contributing to WoltLab Suite Core! However, you have to meet some requirements in order to get your changes accepted.
 
-**Notice:** This is the stable tree of WSC 3.0.x, if you wish to submit pull requests for WCF 2.1.x, please select the branch "2.1". 
+**Notice:** This is the development tree of WoltLab Suite Core representing the upcoming version of WoltLab Suite, if you wish to submit pull requests for WSC 3.0.x, please select the branch "3.0". 
 
 General requirements
 --------------------
-- **API changes are undesirable**, we want to maintain full backwards compatibility to WCF 2.1.x
+- **API changes are undesirable**, we want to maintain full backwards compatibility to WSC 3.0.x
 - Testing is the key, you MUST try out your changes before submitting pull requests. It saves us and yourself a lot of time.
 - The code SHOULD be written by yourself, otherwise you have to check the license beforehand with regard to compatibility and give the proper credit to the original author.
 

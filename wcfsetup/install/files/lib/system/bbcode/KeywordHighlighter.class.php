@@ -3,12 +3,13 @@ namespace wcf\system\bbcode;
 use wcf\system\SingletonFactory;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
+use wcf\util\Url;
 
 /**
  * Highlights keywords in text messages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  */
@@ -65,7 +66,7 @@ class KeywordHighlighter extends SingletonFactory {
 		}
 		// take keywords from referer
 		else if (!empty($_SERVER['HTTP_REFERER'])) {
-			$url = parse_url($_SERVER['HTTP_REFERER']);
+			$url = Url::parse($_SERVER['HTTP_REFERER']);
 			if (!empty($url['query'])) {
 				$query = explode('&', $url['query']);
 				foreach ($query as $element) {

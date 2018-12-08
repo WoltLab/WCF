@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
+use wcf\data\category\Category;
 use wcf\system\acl\ACLHandler;
 use wcf\system\category\CategoryHandler;
 
@@ -7,7 +8,7 @@ use wcf\system\category\CategoryHandler;
  * Caches the acl options of categories.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cache\Builder
  */
@@ -17,6 +18,7 @@ class CategoryACLOptionCacheBuilder extends AbstractCacheBuilder {
 	 */
 	public function rebuild(array $parameters) {
 		$data = [];
+		/** @var Category[] $categories */
 		foreach (CategoryHandler::getInstance()->getCategories() as $objectTypeName => $categories) {
 			$objectType = CategoryHandler::getInstance()->getObjectTypeByName($objectTypeName);
 			$aclObjectType = $objectType->getProcessor()->getObjectTypeName('com.woltlab.wcf.acl');

@@ -252,7 +252,7 @@
 		
 		{if !$__hideUserMenu|isset}
 			{if $__wcf->user->userID && $__wcf->session->getPermission('mod.general.canUseModeration')}
-				<li id="outstandingModeration" data-count="{#$__wcf->getModerationQueueManager()->getOutstandingModerationCount()}">
+				<li id="outstandingModeration" data-count="{#$__wcf->getModerationQueueManager()->getUnreadModerationCount()}">
 					<a class="jsTooltip" href="{link controller='ModerationList'}{/link}" title="{lang}wcf.moderation.moderation{/lang}">
 						<span class="icon icon32 fa-exclamation-triangle"></span>
 						<span>{lang}wcf.moderation.moderation{/lang}</span>

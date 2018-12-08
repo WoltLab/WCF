@@ -21,7 +21,10 @@
 	{/if}
 </head>
 
-<body id="tpl_{$templateNameApplication}_{$templateName}" itemscope itemtype="http://schema.org/WebPage"{if !$canonicalURL|empty} itemid="{$canonicalURL}"{/if} data-template="{$templateName}" data-application="{$templateNameApplication}"{if $__wcf->getActivePage() != null} data-page-id="{@$__wcf->getActivePage()->pageID}" data-page-identifier="{$__wcf->getActivePage()->identifier}"{/if}>
+<body id="tpl_{$templateNameApplication}_{$templateName}"
+	itemscope itemtype="http://schema.org/WebPage"{if !$canonicalURL|empty} itemid="{$canonicalURL}"{/if}
+	data-template="{$templateName}" data-application="{$templateNameApplication}"{if $__wcf->getActivePage() != null} data-page-id="{@$__wcf->getActivePage()->pageID}" data-page-identifier="{$__wcf->getActivePage()->identifier}"{/if}
+	class="{if $__wcf->getActivePage() != null && $__wcf->getActivePage()->cssClassName}{$__wcf->getActivePage()->cssClassName}{/if}{if !$__pageCssClassName|empty} {$__pageCssClassName}{/if}">
 
 <a id="top"></a>
 
@@ -37,6 +40,10 @@
 			<div class="layoutBoundary">
 				<div class="boxContainer">
 					{content}
+						{if !$headerBoxes|empty}
+							{@$headerBoxes}
+						{/if}
+						
 						{foreach from=$__wcf->getBoxHandler()->getBoxes('headerBoxes') item=box}
 							{@$box->render()}
 						{/foreach}
@@ -67,7 +74,10 @@
 	<section id="main" class="main" role="main"{if !$__mainItemScope|empty} {@$__mainItemScope}{/if}>
 		<div class="layoutBoundary">
 			{hascontent}
-				<aside class="sidebar boxesSidebarLeft">
+				{if !$__sidebarLeftShow|isset}{assign var='__sidebarLeftShow' value='wcf.global.button.showSidebar'|language}{/if}
+				{if !$__sidebarLeftHide|isset}{assign var='__sidebarLeftHide' value='wcf.global.button.hideSidebar'|language}{/if}
+				
+				<aside class="sidebar boxesSidebarLeft{if !$__sidebarLeftHasMenu|empty || $__wcf->getBoxHandler()->sidebarLeftHasMenu()} boxesSidebarLeftHasMenu{/if}" data-show-sidebar="{$__sidebarLeftShow}" data-hide-sidebar="{$__sidebarLeftHide}" data-show-navigation="{lang}wcf.global.button.showNavigation{/lang}" data-hide-navigation="{lang}wcf.global.button.hideNavigation{/lang}">
 					<div class="boxContainer">
 						{content}
 							{event name='boxesSidebarLeftTop'}
@@ -138,6 +148,10 @@
 					<div class="boxesContentTop">
 						<div class="boxContainer">
 							{content}
+								{if !$boxesContentTop|empty}
+									{@$boxesContentTop}
+								{/if}
+								
 								{foreach from=$__wcf->getBoxHandler()->getBoxes('contentTop') item=box}
 									{@$box->render()}
 								{/foreach}

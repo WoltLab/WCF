@@ -2,7 +2,7 @@
  * Clipboard API Handler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Controller/Clipboard
  */
@@ -21,6 +21,27 @@ define(
 	)
 {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		return {
+			setup: function() {},
+			reload: function() {},
+			_initContainers: function() {},
+			_loadMarkedItems: function() {},
+			_markAll: function() {},
+			_mark: function() {},
+			_saveState: function() {},
+			_executeAction: function() {},
+			_executeProxyAction: function() {},
+			_unmarkAll: function() {},
+			_ajaxSetup: function() {},
+			_ajaxSuccess: function() {},
+			_rebuildMarkings: function() {},
+			hideEditor: function() {},
+			showEditor: function() {},
+			unmark: function() {}
+		};
+	}
 	
 	var _containers = new Dictionary();
 	var _editors = new Dictionary();

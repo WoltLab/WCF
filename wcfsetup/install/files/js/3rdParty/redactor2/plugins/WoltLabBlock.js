@@ -57,8 +57,18 @@ $.Redactor.prototype.WoltLabBlock = function() {
 				
 				var replaced = mpFormatCollapsed.call(this, tag, attr, value, type);
 				
-				for (var i = 0, length = replaced.length; i < length; i++) {
-					this.WoltLabBlock._paragraphize(replaced[i]);
+				var length = replaced.length;
+				if (length === 1 && replaced[0].nodeName.match(/^H[1-6]$/)) {
+					var hX = replaced[0];
+					// <hX><br></hX> behaves weird
+					if (hX.childElementCount === 1 && hX.children[0].nodeName === 'BR' && this.utils.isEmpty(hX.innerHTML)) {
+						hX.innerHTML = '\u200B';
+					}
+				}
+				else {
+					for (var i = 0; i < length; i++) {
+						this.WoltLabBlock._paragraphize(replaced[i]);
+					}
 				}
 				
 				this.caret.end(replaced);
@@ -68,6 +78,22 @@ $.Redactor.prototype.WoltLabBlock = function() {
 			
 			var mpFormatUncollapsed = this.block.formatUncollapsed;
 			this.block.formatUncollapsed = (function(tag, attr, value, type) {
+				this.selection.save();
+				
+				this.selection.blocks().forEach(function(block) {
+					if (block.nodeName === 'OL' || block.nodeName === 'UL') {
+						if (block.parentNode.nodeName.toLowerCase() === tag) {
+							//return;
+						}
+						
+						var div = elCreate('div');
+						block.parentNode.insertBefore(div, block);
+						div.appendChild(block);
+					}
+				});
+				
+				this.selection.restore();
+				
 				var replaced = mpFormatUncollapsed.call(this, tag, attr, value, type);
 				
 				var block, firstBlock = null;
@@ -89,6 +115,48 @@ $.Redactor.prototype.WoltLabBlock = function() {
 				}
 				
 				return $(firstBlock);
+			}).bind(this);
+			
+			this.block.removeAllAttr = (function(block) {
+				block = this.block.getBlocks(block);
+				
+				var returned = [];
+				$.each(block, function(i,s)
+				{
+					if (typeof s.attributes === 'undefined')
+					{
+						returned.push(s);
+					}
+					
+					// WoltLab fix: `attributes` is a live collection
+					while (s.attributes.length) {
+						s.removeAttribute(s.attributes[0].name);
+					}
+					
+					returned.push(s);
+				});
+				
+				return returned;
+			}).bind(this);
+			
+			this.block.getBlocks = (function(block) {
+				block = (typeof block === 'undefined') ? this.selection.blocks() : block;
+				
+				// Firefox may add the editor itself to the selection
+				if ($(block).hasClass('redactor-box') || $(block).hasClass('redactor-layer')) {
+					var blocks = [];
+					var nodes = this.core.editor().children();
+					$.each(nodes, $.proxy(function (i, node) {
+						if (this.utils.isBlock(node)) {
+							blocks.push(node);
+						}
+						
+					}, this));
+					
+					return blocks;
+				}
+				
+				return block
 			}).bind(this);
 		},
 		

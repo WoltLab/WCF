@@ -1,6 +1,8 @@
 $.Redactor.prototype.WoltLabPaste = function() {
 	"use strict";
 	
+	var _environment = null;
+	
 	return {
 		init: function () {
 			var clipboardData = null;
@@ -9,8 +11,47 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			// IE 11
 			var isIe = (document.documentMode && typeof window.clipboardData === 'object');
 			
+			var pastedHtml = null, pastedPlainText = null;
+			
+			// special `init()` implementation for Chrome on Android which seems to have
+			// some serious issues with `setTimeout()` during a `paste` event
+			var mpInitChromeOnAndroid = (function (e) {
+				this.rtePaste = true;
+				var pre = !!(this.opts.type === 'pre' || this.utils.isCurrentOrParent('pre'));
+				
+				this.utils.saveScroll();
+				this.selection.save();
+				this.paste.createPasteBox(pre);
+				
+				var html = this.paste.getPasteBoxCode(pre);
+				
+				// buffer
+				this.buffer.set();
+				this.selection.restore();
+				
+				this.utils.restoreScroll();
+				
+				// paste info
+				var data = this.clean.getCurrentType(html);
+				
+				// clean
+				html = this.clean.onPaste(html, data);
+				
+				// callback
+				var returned = this.core.callback('paste', html);
+				html = (typeof returned === 'undefined') ? html : returned;
+				
+				this.paste.insert(html, data);
+				this.rtePaste = false;
+				
+				// clean pre breaklines
+				if (pre) this.clean.cleanPre();
+			}).bind(this);
+			
 			var mpInit = this.paste.init;
 			this.paste.init = (function (e) {
+				pastedPlainText = pastedHtml = null;
+				
 				var isCode = (this.opts.type === 'pre' || this.utils.isCurrentOrParent('pre'));
 				isKbd = (!isCode && this.utils.isCurrentOrParent('kbd'));
 				if (isCode || isKbd) {
@@ -29,12 +70,96 @@ $.Redactor.prototype.WoltLabPaste = function() {
 						return WCF.String.escapeHTML(str);
 					}).bind(this);
 				}
+				else if (!isIe) {
+					var types = e.originalEvent.clipboardData.types;
+					var hasContent = false;
+					if (types.indexOf('text/html') !== -1) {
+						// handles all major browsers except iOS Safari which does not expose `text/html`,
+						// but instead gives us `public.rtf` (which of course is completely useless)
+						// https://bugs.webkit.org/show_bug.cgi?id=19893
+						pastedHtml = e.originalEvent.clipboardData.getData('text/html');
+						
+						// remove document fragments
+						if (pastedHtml.trim().match(/^<html[^>]*>[\s\S]*?<body[^>]*>([\s\S]+)<\/body>[\s\S]*?<\/html>$/)) {
+							pastedHtml = RegExp.$1.replace(/^\s*(?:<!--StartFragment-->)(.+)(?:<!--EndFragment-->)?\s*$/, '$1');
+						}
+						
+						hasContent = (pastedHtml.trim().length !== 0);
+					}
+					
+					if (!hasContent && types.indexOf('text/plain') !== -1) {
+						var tmp = WCF.String.escapeHTML(e.originalEvent.clipboardData.getData('text/plain'));
+						
+						pastedPlainText = '';
+						var lines = tmp.split("\n");
+						if (lines.length === 1) {
+							// paste single-line content as real plain text
+							pastedPlainText = tmp;
+						}
+						else {
+							// plain newline characters do not work out well, mimic HTML instead
+							lines.forEach(function (line) {
+								line = line.trim();
+								if (line === '') line = '<br>';
+								
+								pastedPlainText += '<p>' + line + '</p>';
+							});
+						}
+					} 
+				}
 				
-				mpInit.call(this, e);
+				if (pastedPlainText !== null || pastedHtml !== null) {
+					e.preventDefault();
+				}
+				
+				if (_environment.platform() === 'android' && _environment.browser() === 'chrome') {
+					mpInitChromeOnAndroid(e);
+				}
+				else {
+					mpInit.call(this, e);
+				}
+			}).bind(this);
+			
+			require(['Environment'], (function(Environment) {
+				_environment = Environment;
+				
+				if (_environment.platform() === 'ios') {
+					var mpAppendPasteBox = this.paste.appendPasteBox;
+					this.paste.appendPasteBox = (function() {
+						// iOS doesn't like `position: fixed` and font-sizes below 16px that much
+						this.$pasteBox.css({
+							fontSize: '16px',
+							height: '1px',
+							left: '1px',
+							overflow: 'hidden',
+							position: 'absolute',
+							top: (~~(window.innerHeight / 4) + window.pageYOffset) + 'px',
+							width: '1px'
+						});
+						
+						mpAppendPasteBox.call(this);
+					}).bind(this);
+				}
+			}).bind(this));
+			
+			var mpCreatePasteBox = this.paste.createPasteBox;
+			this.paste.createPasteBox = (function (pre) {
+				if (pastedHtml === null && pastedPlainText === null) {
+					mpCreatePasteBox.call(this, pre);
+				}
+				
+				// do nothing
 			}).bind(this);
 			
 			var mpGetPasteBoxCode = this.paste.getPasteBoxCode;
 			this.paste.getPasteBoxCode = (function (pre) {
+				if (pastedHtml !== null || pastedPlainText !== null) {
+					// prevent page scrolling
+					this.tmpScrollTop = undefined;
+					
+					return pastedHtml || pastedPlainText;
+				}
+				
 				var returnValue = mpGetPasteBoxCode.call(this, pre);
 				
 				if (isKbd) {
@@ -56,7 +181,7 @@ $.Redactor.prototype.WoltLabPaste = function() {
 			this.paste.detectClipboardUpload = (function (e) {
 				e = e.originalEvent || e;
 				
-				var file;
+				var file = null;
 				if (isIe) {
 					if (!window.clipboardData.files.length) {
 						return false;
@@ -70,31 +195,70 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				else {
 					var clipboard = e.clipboardData;
 					
-					// prevent safari fake url
+					// Safari
 					var types = clipboard.types;
 					if (Array.isArray(types) && types.indexOf('public.tiff') !== -1) {
-						e.preventDefault();
-						return false;
-					}
-					
-					if (!clipboard.items || !clipboard.items.length) {
-						return;
-					}
-					
-					var cancelPaste = false;
-					file = clipboard.items[0].getAsFile();
-					if (file === null) {
-						if (this.detect.isWebkit() && clipboard.items.length > 1) {
-							file = clipboard.items[1].getAsFile();
+						if (clipboard.files.length === 0) {
+							// pasted an `<img>` element from clipboard
+							return;
+						}
+						else if (clipboard.files.length === 1) {
+							// This may not work if the file was copied from Finder for whatever
+							// reasons and it is not possible to try/catch this error (wow!).
+							// 
+							// It does not have any side-effects when failing other than canceling
+							// out the `paste` event, which is pretty much what we're looking for
+							// anyway. It does work from certain apps, but Safari exposes too little
+							// information to tell them apart, so we just have to try it.
+							// 
+							// See https://bugs.webkit.org/show_bug.cgi?id=171504
+							file = clipboard.files[0];
 							cancelPaste = true;
 							
 							if (file !== null) {
 								e.preventDefault();
 							}
 						}
-						
-						if (file === null) {
+						else {
+							e.preventDefault();
 							return false;
+						}
+					}
+					
+					if (file === null) {
+						if (!clipboard.items || !clipboard.items.length) {
+							return;
+						}
+						
+						if (this.detect.isWebkit()) {
+							var item, hasFile = false, hasHtml = false;
+							for (var i = 0, length = clipboard.items.length; i < length; i++) {
+								item = clipboard.items[i];
+								if (item.kind === 'string' && item.type === 'text/html') hasHtml = true;
+								else if (item.kind === 'file') hasFile = true;
+							}
+							
+							// pasted an `<img>` element from clipboard
+							if (hasFile && hasHtml) {
+								return false;
+							}
+						}
+						
+						var cancelPaste = false;
+						file = clipboard.items[0].getAsFile();
+						if (file === null) {
+							if (this.detect.isWebkit() && clipboard.items.length > 1) {
+								file = clipboard.items[1].getAsFile();
+								cancelPaste = true;
+								
+								if (file !== null) {
+									e.preventDefault();
+								}
+							}
+							
+							if (file === null) {
+								return false;
+							}
 						}
 					}
 				}
@@ -182,23 +346,22 @@ $.Redactor.prototype.WoltLabPaste = function() {
 					}).bind(this));
 				}
 				
-				// fix selection marker
-				elBySelAll('.redactor-selection-marker', div, elRemove);
-				div.appendChild(elCreate('woltlab-selection-marker'));
+				// Convert <br> inside <pre> into plain newline characters.
+				elBySelAll('pre', div, function (pre) {
+					elBySelAll('br', pre, function (br) {
+						var parent = br.parentNode;
+						parent.insertBefore(document.createTextNode("\n"), br);
+						parent.removeChild(br);
+					});
+				});
 				
 				mpInsert.call(this, div.innerHTML, data);
 				
-				var marker = elBySel('woltlab-selection-marker', this.$editor[0]);
-				if (marker) {
-					var range = document.createRange();
-					range.setStartBefore(marker);
-					range.setEndBefore(marker);
-					
-					var selection = window.getSelection();
-					selection.removeAllRanges();
-					selection.addRange(range);
-					
-					elRemove(marker);
+				// check if the caret is now inside an <a> element, but at
+				// the very last position
+				var selection = window.getSelection();
+				if (selection.rangeCount && selection.anchorNode.nodeName === 'A' && selection.anchorOffset === selection.anchorNode.childNodes.length) {
+					this.caret.after(selection.anchorNode);
 				}
 				
 				if (pastedImages.length) {
@@ -223,6 +386,18 @@ $.Redactor.prototype.WoltLabPaste = function() {
 						}
 					}).bind(this), 50);
 				}
+				
+				// cleanup any stray text fragments caused by paragraphs
+				// being replaced by the clipboard contents
+				var node, badNodes = [];
+				var editor = this.core.editor()[0];
+				for (i = 0, length = editor.childNodes.length; i < length; i++) {
+					node = editor.childNodes[i];
+					if (node.nodeType === Node.TEXT_NODE && node.textContent === '\u200B') {
+						badNodes.push(node);
+					}
+				}
+				badNodes.forEach(elRemove);
 				
 				this.rtePaste = false;
 			}).bind(this);

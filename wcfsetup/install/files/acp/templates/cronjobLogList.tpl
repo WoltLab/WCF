@@ -13,7 +13,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.cronjob.log{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.cronjob.log{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
 	</div>
 	
 	{hascontent}

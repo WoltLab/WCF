@@ -33,3 +33,66 @@
 		text-align: left;
 	}
 }
+
+/* placeholder sizes, required for Google AdSense */
+@include screen-lg {
+	.wcfAdLocationLogo .adsbygoogle {
+		// banner
+		height: 60px;
+		width: 468px;
+	}
+}
+
+.wcfAdLocationHeaderContent,
+.wcfAdLocationFooterContent {
+	.adsbygoogle {
+		@include screen-xs {
+			// mobile leaderboard
+			height: 50px;
+			width: 320px;
+		}
+		
+		@include screen-sm-up {
+			// banner
+			height: 60px;
+			width: 468px;
+		}
+	}
+}
+
+.wcfAdLocationFooterBottom .adsbygoogle {
+	@include screen-sm {
+		// banner
+		height: 60px;
+		width: 468px;
+	}
+	
+	@include screen-md {
+		// leaderboard
+		height: 90px;
+		width: 728px;
+	}
+	
+	@include screen-lg {
+		// large leaderboard
+		height: 90px;
+		width: 970px;
+	}
+}
+
+.wcfAdLocationSidebarTop,
+.wcfAdLocationSidebarBottom {
+	.adsbygoogle {
+		@include screen-md-down {
+			// medium rectangle
+			height: 250px;
+			width: 300px;
+		}
+		
+		@include screen-lg {
+			// wide skyscraper
+			height: 600px;
+			width: 160px;
+		}
+	}
+}

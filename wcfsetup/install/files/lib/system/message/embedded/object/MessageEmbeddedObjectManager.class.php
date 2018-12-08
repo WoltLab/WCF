@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Default interface of embedded object handler.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Message\Embedded\Object
  */
@@ -41,18 +41,40 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	protected $activeMessageID;
 	
 	/**
+	 * language id of the active message
+	 * @var integer
+	 */
+	protected $activeMessageLanguageID;
+	
+	/**
 	 * list of embedded object handlers
 	 * @var	array
 	 */
 	protected $embeddedObjectHandlers;
 	
 	/**
+	 * content language id
+	 * @var integer
+	 */
+	protected $contentLanguageID;
+	
+	/**
+	 * local cache for bulk operations
+	 * @var mixed[][]
+	 */
+	protected $bulkData = [
+		'insert' => [],
+		'remove' => []
+	];
+	
+	/**
 	 * Registers the embedded objects found in given message.
 	 * 
 	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance holding embedded object data
+	 * @param       boolean                 $isBulk                 true for bulk operations
 	 * @return      boolean                 true if at least one embedded object was found
 	 */
-	public function registerObjects(HtmlInputProcessor $htmlInputProcessor) {
+	public function registerObjects(HtmlInputProcessor $htmlInputProcessor, $isBulk = false) {
 		$context = $htmlInputProcessor->getContext();
 		
 		$messageObjectType = $context['objectType'];
@@ -60,16 +82,24 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 		$messageID = $context['objectID'];
 		
 		// delete existing assignments
-		$this->removeObjects($messageObjectType, [$messageID]);
+		if ($isBulk) {
+			if (!isset($this->bulkData['remove'][$messageObjectType])) $this->bulkData['remove'][$messageObjectType] = [];
+			$this->bulkData['remove'][$messageObjectType][] = $messageID;
+		}
+		else {
+			$this->removeObjects($messageObjectType, [$messageID]);
+		}
 		
-		// prepare statement
-		$sql = "INSERT INTO	wcf".WCF_N."_message_embedded_object
-					(messageObjectTypeID, messageID, embeddedObjectTypeID, embeddedObjectID)
-			VALUES		(?, ?, ?, ?)";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
-		// call embedded object handlers
-		WCF::getDB()->beginTransaction();
+		$statement = null;
+		if (!$isBulk) {
+			// prepare statement
+			$sql = "INSERT INTO	wcf".WCF_N."_message_embedded_object
+						(messageObjectTypeID, messageID, embeddedObjectTypeID, embeddedObjectID)
+				VALUES		(?, ?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			WCF::getDB()->beginTransaction();
+		}
 		
 		$embeddedData = $htmlInputProcessor->getEmbeddedContent();
 		$returnValue = false;
@@ -80,15 +110,55 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 			
 			if (!empty($objectIDs)) {
 				foreach ($objectIDs as $objectID) {
-					$statement->execute([$messageObjectTypeID, $messageID, $handler->objectTypeID, $objectID]);
+					$parameters = [$messageObjectTypeID, $messageID, $handler->objectTypeID, $objectID];
+					if ($isBulk) {
+						$this->bulkData['insert'][] = $parameters;
+					}
+					else {
+						$statement->execute($parameters);
+					}
 				}
 				
 				$returnValue = true;
 			}
 		}
-		WCF::getDB()->commitTransaction();
+		
+		if (!$isBulk) {
+			WCF::getDB()->commitTransaction();
+		}
 		
 		return $returnValue;
+	}
+	
+	/**
+	 * Commits the bulk operation by performing all deletes and inserts
+	 * in one big transaction to save performance.
+	 */
+	public function commitBulkOperation() {
+		// delete existing data
+		WCF::getDB()->beginTransaction();
+		foreach ($this->bulkData['remove'] as $objectType => $objectIDs) {
+			$this->removeObjects($objectType, $objectIDs);
+		}
+		WCF::getDB()->commitTransaction();
+		
+		// prepare statement
+		$sql = "INSERT INTO	wcf".WCF_N."_message_embedded_object
+					(messageObjectTypeID, messageID, embeddedObjectTypeID, embeddedObjectID)
+			VALUES		(?, ?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
+		foreach ($this->bulkData['insert'] as $parameters) {
+			$statement->execute($parameters);
+		}
+		WCF::getDB()->commitTransaction();
+		
+		// reset cache
+		$this->bulkData = [
+			'insert' => [],
+			'remove' => []
+		];
 	}
 	
 	/**
@@ -149,9 +219,10 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * 
 	 * @param	string		$messageObjectType
 	 * @param	integer[]	$messageIDs
+	 * @param       integer         $contentLanguageID
 	 * @throws	InvalidObjectTypeException
 	 */
-	public function loadObjects($messageObjectType, array $messageIDs) {
+	public function loadObjects($messageObjectType, array $messageIDs, $contentLanguageID = null) {
 		$messageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
 		if ($messageObjectTypeID === null) {
 			throw new InvalidObjectTypeException($messageObjectType, 'com.woltlab.wcf.message');
@@ -182,6 +253,8 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 			$this->messageEmbeddedObjects[$row['messageObjectTypeID']][$row['messageID']][$row['embeddedObjectTypeID']][] = $row['embeddedObjectID'];
 		}
 		
+		$this->contentLanguageID = $contentLanguageID;
+		
 		// load objects
 		foreach ($embeddedObjects as $embeddedObjectTypeID => $objectIDs) {
 			if (!isset($this->embeddedObjects[$embeddedObjectTypeID])) $this->embeddedObjects[$embeddedObjectTypeID] = [];
@@ -189,6 +262,17 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 				$this->embeddedObjects[$embeddedObjectTypeID][$objectID] = $object;
 			}
 		}
+		
+		$this->contentLanguageID = null;
+	}
+	
+	/**
+	 * Returns the content language id or null.
+	 * 
+	 * @return      integer
+	 */
+	public function getContentLanguageID() {
+		return $this->contentLanguageID;
 	}
 	
 	/**
@@ -196,10 +280,21 @@ class MessageEmbeddedObjectManager extends SingletonFactory {
 	 * 
 	 * @param	string		$messageObjectType
 	 * @param	integer		$messageID
+	 * @param	integer		$languageID
 	 */
-	public function setActiveMessage($messageObjectType, $messageID) {
+	public function setActiveMessage($messageObjectType, $messageID, $languageID = null) {
 		$this->activeMessageObjectTypeID = ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.message', $messageObjectType);
 		$this->activeMessageID = $messageID;
+		$this->activeMessageLanguageID = $languageID;
+	}
+	
+	/**
+	 * Returns the language id of the active message.
+	 * 
+	 * @return      integer
+	 */
+	public function getActiveMessageLanguageID() {
+		return $this->activeMessageLanguageID;
 	}
 	
 	/**

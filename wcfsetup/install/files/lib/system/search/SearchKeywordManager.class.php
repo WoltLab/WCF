@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Manages the search keywords.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Search
  */
@@ -20,6 +20,8 @@ class SearchKeywordManager extends SingletonFactory {
 	 * @param	string		$keyword
 	 */
 	public function add($keyword) {
+		$keyword = mb_substr($keyword, 0, 191);
+		
 		// search existing entry
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_search_keyword
@@ -35,7 +37,7 @@ class SearchKeywordManager extends SingletonFactory {
 		}
 		else {
 			$action = new SearchKeywordAction([], 'create', ['data' => [
-				'keyword' => mb_substr($keyword, 0, 191),
+				'keyword' => $keyword,
 				'searches' => 1,
 				'lastSearchTime' => TIME_NOW
 			]]);

@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Moderation queue implementation for reports.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Moderation\Queue
  */
@@ -68,7 +68,7 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 			ModerationQueue::STATUS_PROCESSING
 		]);
 		
-		return $statement->fetchColumn() > 0;
+		return $statement->fetchSingleColumn() > 0;
 	}
 	
 	/**

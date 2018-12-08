@@ -1,8 +1,9 @@
-{assign var='serverAuthData' value=$updateServer->getAuthData()}
-{assign var='serverReply' value=$request->getReply()}
-
 {if !$serverAuthData|empty}
-	<p class="{if $serverReply[statusCode] == 401}error{else}warning{/if}">{lang}wcf.acp.package.update.errorCode.{@$serverReply[statusCode]}{/lang}</p>
+	{if $authInsufficient}
+		<p class="warning">{lang}wcf.acp.package.update.authInsufficient{/lang}</p>
+	{else}
+		<p class="{if $serverReply[statusCode] == 401}error{else}warning{/if}">{lang}wcf.acp.package.update.errorCode.{@$serverReply[statusCode]}{/lang}</p>
+	{/if}
 {/if}
 
 <section class="section">

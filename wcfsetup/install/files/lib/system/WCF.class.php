@@ -25,6 +25,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\registry\RegistryHandler;
 use wcf\system\request\Request;
 use wcf\system\request\RequestHandler;
 use wcf\system\session\SessionFactory;
@@ -47,7 +48,10 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-define('WCF_VERSION', '3.0.5');
+define('WCF_VERSION', '3.1.6 pl 1');
+
+// define current API version
+define('WSC_API_VERSION', 2018);
 
 // define current unix timestamp
 define('TIME_NOW', time());
@@ -63,11 +67,17 @@ if (!defined('NO_IMPORTS')) {
  * It holds the database connection, access to template and language engine.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
 class WCF {
+	/**
+	 * list of supported legacy API versions
+	 * @var integer[]
+	 */
+	private static $supportedLegacyApiVersions = [2017];
+	
 	/**
 	 * list of currently loaded applications
 	 * @var	Application[]
@@ -196,7 +206,8 @@ class WCF {
 				}
 			}
 			
-			// execute shutdown actions of user storage handler
+			// execute shutdown actions of storage handlers
+			RegistryHandler::getInstance()->shutdown();
 			UserStorageHandler::getInstance()->shutdown();
 		}
 		catch (\Exception $exception) {
@@ -255,22 +266,46 @@ class WCF {
 	 * @param	\Exception	$e
 	 */
 	public static final function handleException($e) {
-		if (ob_get_level()) {
-			// discard any output generated before the exception occured, prevents exception
-			// being hidden inside HTML elements and therefore not visible in browser output
-			ob_end_clean();
-			
-			// `identity` is the default "encoding" and basically means that the client
-			// must treat the content as if the header did not appear in first place, this
-			// also overrules the gzip header if present
-			@header('Content-Encoding: identity');
-			HeaderUtil::exceptionDisableGzip();
-		}
-		
 		// backwards compatibility
 		if ($e instanceof IPrintableException) {
 			$e->show();
 			exit;
+		}
+		
+		if (ob_get_level()) {
+			// discard any output generated before the exception occurred, prevents exception
+			// being hidden inside HTML elements and therefore not visible in browser output
+			// 
+			// ob_get_level() can return values > 1, if the PHP setting `output_buffering` is on
+			while (ob_get_level()) ob_end_clean();
+			
+			// Some webservers are broken and will apply gzip encoding at all cost, but they fail
+			// to set a proper `Content-Encoding` HTTP header and mess things up even more.
+			// Especially the `identity` value appears to be unrecognized by some of them, hence
+			// we'll just gzip the output of the exception to prevent them from tampering.
+			// This part is copied from `HeaderUtil` in order to isolate the exception handler!
+			if (defined('HTTP_ENABLE_GZIP') && HTTP_ENABLE_GZIP && !defined('HTTP_DISABLE_GZIP')) {
+				if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
+					if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== false) {
+						@header('Content-Encoding: x-gzip');
+					}
+					else {
+						@header('Content-Encoding: gzip');
+					}
+					
+					ob_start(function($output) {
+						$size = strlen($output);
+						$crc = crc32($output);
+						
+						$newOutput = "\x1f\x8b\x08\x00\x00\x00\x00\x00\x00\xff";
+						$newOutput .= substr(gzcompress($output, 1), 2, -4);
+						$newOutput .= pack('V', $crc);
+						$newOutput .= pack('V', $size);
+						
+						return $newOutput;
+					});
+				}
+			}
 		}
 		
 		@header('HTTP/1.1 503 Service Unavailable');
@@ -334,7 +369,7 @@ class WCF {
 		if (!file_exists($filename) || filemtime($filename) <= 1) {
 			OptionEditor::rebuild();
 		}
-		require_once($filename);
+		require($filename);
 		
 		// check if option file is complete and writable
 		if (PACKAGE_ID) {
@@ -350,7 +385,7 @@ class WCF {
 			if (!defined('WCF_OPTION_INC_PHP_SUCCESS')) {
 				OptionEditor::rebuild();
 				
-				require_once($filename);
+				require($filename);
 			}
 		}
 	}
@@ -552,6 +587,26 @@ class WCF {
 		self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
 		
 		$className = $abbreviation.'\system\\'.strtoupper($abbreviation).'Core';
+		
+		// class was not found, possibly the app was moved, but `packageDir` has not been adjusted
+		if (!class_exists($className)) {
+			// check if both the Core and the app are on the same domain
+			$coreApp = ApplicationHandler::getInstance()->getApplicationByID(1);
+			if ($coreApp->domainName === $application->domainName) {
+				// resolve the relative path and use it to construct the autoload directory
+				$relativePath = FileUtil::getRelativePath($coreApp->domainPath, $application->domainPath);
+				if ($relativePath !== './') {
+					$packageDir = FileUtil::getRealPath(WCF_DIR.$relativePath);
+					self::$autoloadDirectories[$abbreviation] = $packageDir . 'lib/';
+					
+					if (class_exists($className)) {
+						// the class can now be found, update the `packageDir` value
+						(new PackageEditor($package))->update(['packageDir' => $relativePath]);
+					}
+				}
+			}
+		}
+		
 		if (class_exists($className) && is_subclass_of($className, IApplication::class)) {
 			// include config file
 			$configPath = $packageDir . PackageInstallationDispatcher::CONFIG_FILE;
@@ -613,6 +668,16 @@ class WCF {
 	}
 	
 	/**
+	 * Returns the invoked application.
+	 * 
+	 * @return      Application
+	 * @since	3.1
+	 */
+	public static function getActiveApplication() {
+		return ApplicationHandler::getInstance()->getActiveApplication();
+	}
+	
+	/**
 	 * Loads an application on runtime, do not use this outside the package installation.
 	 * 
 	 * @param	integer		$packageID
@@ -649,6 +714,19 @@ class WCF {
 			'__wcf' => $this,
 			'__wcfVersion' => LAST_UPDATE_TIME // @deprecated 2.1, use LAST_UPDATE_TIME directly
 		]);
+		
+		$isAjax = isset($_SERVER['HTTP_X_REQUESTED_WITH']) && ($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest');
+		// Execute background queue in this request, if it was requested and AJAX isn't used.
+		if (!$isAjax) {
+			if (self::getSession()->getVar('forceBackgroundQueuePerform')) {
+				self::getTPL()->assign([
+					'forceBackgroundQueuePerform' => true
+				]);
+				
+				self::getSession()->unregister('forceBackgroundQueuePerform');
+			}
+		}
+		
 		EmailTemplateEngine::getInstance()->registerPrefilter(['event', 'hascontent', 'lang']);
 		EmailTemplateEngine::getInstance()->assign([
 			'__wcf' => $this
@@ -691,8 +769,13 @@ class WCF {
 		}
 		
 		self::$languageObj = LanguageFactory::getInstance()->getLanguage($languageID);
-		self::getTPL()->setLanguageID(self::getLanguage()->languageID);
-		EmailTemplateEngine::getInstance()->setLanguageID(self::getLanguage()->languageID);
+		
+		// the template engine may not be available yet, usually happens when
+		// changing the user (and thus the language id) during session init
+		if (self::$tplObj !== null) {
+			self::getTPL()->setLanguageID(self::getLanguage()->languageID);
+			EmailTemplateEngine::getInstance()->setLanguageID(self::getLanguage()->languageID);
+		}
 	}
 	
 	/**
@@ -956,16 +1039,41 @@ class WCF {
 	public function getFavicon() {
 		$activeApplication = ApplicationHandler::getInstance()->getActiveApplication();
 		$wcf = ApplicationHandler::getInstance()->getWCF();
+		$favicon = StyleHandler::getInstance()->getStyle()->getRelativeFavicon();
 		
 		if ($activeApplication->domainName !== $wcf->domainName) {
-			if (file_exists(WCF_DIR.'images/favicon.ico')) {
-				$favicon = file_get_contents(WCF_DIR.'images/favicon.ico');
+			if (file_exists(WCF_DIR.$favicon)) {
+				$favicon = file_get_contents(WCF_DIR.$favicon);
 				
 				return 'data:image/x-icon;base64,' . base64_encode($favicon);
 			}
 		}
 		
-		return self::getPath() . 'images/favicon.ico';
+		return self::getPath() . $favicon;
+	}
+	
+	/**
+	 * Returns true if the desktop notifications should be enabled.
+	 * 
+	 * @return      boolean
+	 */
+	public function useDesktopNotifications() {
+		if (!ENABLE_DESKTOP_NOTIFICATIONS) {
+			return false;
+		}
+		else if (ApplicationHandler::getInstance()->isMultiDomainSetup()) {
+			$application = ApplicationHandler::getInstance()->getApplicationByID(DESKTOP_NOTIFICATION_PACKAGE_ID);
+			// mismatch, default to Core
+			if ($application === null) $application = ApplicationHandler::getInstance()->getApplicationByID(1);
+			
+			$currentApplication = ApplicationHandler::getInstance()->getActiveApplication();
+			if ($currentApplication->domainName != $application->domainName) {
+				// different domain
+				return false;
+			}
+		}
+		
+		return true;
 	}
 	
 	/**
@@ -979,6 +1087,25 @@ class WCF {
 		}
 		
 		return self::getActiveRequest()->isLandingPage();
+	}
+	
+	/**
+	 * Returns true if the given API version is currently supported.
+	 * 
+	 * @param       integer         $apiVersion
+	 * @return      boolean
+	 */
+	public static function isSupportedApiVersion($apiVersion) {
+		return ($apiVersion == WSC_API_VERSION) || in_array($apiVersion, self::$supportedLegacyApiVersions);
+	}
+	
+	/**
+	 * Returns the list of supported legacy API versions.
+	 * 
+	 * @return      integer[]
+	 */
+	public static function getSupportedLegacyApiVersions() {
+		return self::$supportedLegacyApiVersions;
 	}
 	
 	/**

@@ -1,5 +1,15 @@
-define(['Language', 'Ui/Dialog'], function(Language, UiDialog) {
+define(['Core', 'EventKey', 'Language', 'Ui/Dialog'], function(Core, EventKey, Language, UiDialog) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			showDialog: function() {},
+			_submit: function() {},
+			_dialogSetup: function() {}
+		};
+		return Fake;
+	}
 	
 	var _boundListener = false;
 	var _callback = null;
@@ -28,15 +38,7 @@ define(['Language', 'Ui/Dialog'], function(Language, UiDialog) {
 			}
 			else {
 				var url = elById('redactor-link-url');
-				var small = (url.nextElementSibling && url.nextElementSibling.nodeName === 'SMALL') ? url.nextElementSibling : null;
-				
-				if (small === null) {
-					small = elCreate('small');
-					small.className = 'innerError';
-					url.parentNode.appendChild(small);
-				}
-				
-				small.textContent = Language.get((url.value.trim() === '' ? 'wcf.global.form.error.empty' : 'wcf.editor.link.error.invalid'));
+				elInnerError(url, Language.get((url.value.trim() === '' ? 'wcf.global.form.error.empty' : 'wcf.editor.link.error.invalid')));
 			}
 		},
 		
@@ -50,6 +52,22 @@ define(['Language', 'Ui/Dialog'], function(Language, UiDialog) {
 						if (small !== null) {
 							elRemove(small);
 						}
+					},
+					onSetup: function (content) {
+						var submitButton = elBySel('.formSubmit > .buttonPrimary', content);
+						
+						if (submitButton !== null) {
+							elBySelAll('input[type="url"], input[type="text"]', content, function (input) {
+								input.addEventListener('keyup', function (event) {
+									if (EventKey.Enter(event)) {
+										Core.triggerEvent(submitButton, 'click');
+									}
+								});
+							});
+						}
+					},
+					onShow: function () {
+						elById('redactor-link-url').focus();
 					}
 				},
 				source: '<dl>'

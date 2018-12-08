@@ -2,7 +2,7 @@
  * Provides the style editor.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Style/Editor
  */
@@ -46,7 +46,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 			window.addEventListener('resize', callbackRegionMarker);
 			EventHandler.add('com.woltlab.wcf.AcpMenu', 'resize', callbackRegionMarker);
 			EventHandler.add('com.woltlab.wcf.simpleTabMenu_styleTabMenuContainer', 'select', function (data) {
-				_isVisible = (data.activeName == 'colors');
+				_isVisible = (data.activeName === 'colors');
 				callbackRegionMarker();
 			});
 		},
@@ -146,8 +146,6 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 				
 				if (lastValue === 'none') {
 					elHide(_stylePreviewRegionMarker);
-					updateWrapperPosition(null);
-					scrollToRegion(null);
 					return;
 				}
 				
@@ -165,56 +163,28 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 				
 				elShow(_stylePreviewRegionMarker);
 				
-				updateWrapperPosition(region);
-				scrollToRegion(top);
+				top = DomUtil.offset(region).top;
+				// `+ 80` = account for sticky header + selection markers (20px)
+				var firstVisiblePixel = (window.pageYOffset || window.scrollY) + 80;
+				if (firstVisiblePixel > top) {
+					window.scrollTo(0, Math.max(top - 80, 0));
+				}
+				else {
+					var lastVisiblePixel = window.innerHeight + (window.pageYOffset || window.scrollY);
+					if (lastVisiblePixel < top) {
+						window.scrollTo(0, top);
+					}
+					else {
+						var bottom = top + region.offsetHeight + 20;
+						if (lastVisiblePixel < bottom) {
+							window.scrollBy(0, bottom - top);
+						}
+					}
+				}
 			};
 			
-			var variablesWrapper = elById('spVariablesWrapper');
-			function updateWrapperPosition(region) {
-				var fromTop = 0;
-				if (region !== null) {
-					fromTop = (region.offsetTop - variablesWrapper.offsetTop) - 10;
-					
-					var styles = window.getComputedStyle(region);
-					if (styles.getPropertyValue('position') === 'absolute' || styles.getPropertyValue('position') === 'relative') {
-						fromTop += region.offsetParent.offsetTop;
-					}
-				}
-				
-				if (fromTop <= 0) {
-					variablesWrapper.style.removeProperty('transform');
-				}
-				else {
-					// ensure that the wrapper does not exceed the bottom boundary
-					var maxHeight = variablesWrapper.parentNode.clientHeight;
-					var wrapperHeight = variablesWrapper.clientHeight;
-					if (wrapperHeight + fromTop > maxHeight) {
-						fromTop = maxHeight - wrapperHeight;
-					}
-					
-					variablesWrapper.style.setProperty('transform', 'translateY(' + fromTop + 'px)', '');
-				}
-			}
-			
-			var pageHeader = elById('pageHeader');
-			function scrollToRegion(top) {
-				if (top === null) {
-					top = variablesWrapper.offsetTop - 60;
-				}
-				else {
-					// use the region marker as an offset
-					top -= 60;
-				}
-				
-				// account for sticky header
-				top -= 60;
-				
-				window.scrollTo(0, top);
-			}
-			
-			var selectContainer = elBySel('.spSidebarBox:first-child');
 			var element;
-			select.addEventListener('change', function() {
+			var callbackChange = function() {
 				element = elBySel('.spSidebarBox[data-category="' + lastValue + '"]', container);
 				elHide(element);
 				
@@ -224,10 +194,8 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 				
 				// set region marker
 				_updateRegionMarker();
-				
-				selectContainer.classList[(lastValue === 'none' ? 'remove' : 'add')]('pointer');
-			});
-			
+			};
+			select.addEventListener('change', callbackChange);
 			
 			// apply CSS rules
 			var style = elCreate('style');
@@ -266,7 +234,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 				}
 			}
 			
-			var elements = elByClass('styleVariableColor', variablesWrapper);
+			var elements = elByClass('styleVariableColor', elById('spVariablesWrapper'));
 			[].forEach.call(elements, function(colorField) {
 				var variableName = elData(colorField, 'store').replace(/_value$/, '');
 				
@@ -283,6 +251,56 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Ui/Screen'], 
 				});
 				
 				updateCSSRule(variableName, colorField.style.getPropertyValue('background-color'));
+			});
+			
+			// category selection by clicking on the area
+			var buttonToggleColorPalette = elBySel('.jsButtonToggleColorPalette');
+			var buttonSelectCategoryByClick = elBySel('.jsButtonSelectCategoryByClick');
+			var toggleSelectionMode = function() {
+				buttonSelectCategoryByClick.classList.toggle('active');
+				buttonToggleColorPalette.classList.toggle('disabled');
+				_stylePreviewWindow.classList.toggle('spShowRegions');
+				_stylePreviewRegionMarker.classList.toggle('forceHide');
+				select.disabled = !select.disabled;
+			};
+			
+			buttonSelectCategoryByClick.addEventListener(WCF_CLICK_EVENT, function (event) {
+				event.preventDefault();
+				
+				toggleSelectionMode();
+			});
+			
+			elBySelAll('[data-region]', _stylePreviewWindow, function (region) {
+				region.addEventListener(WCF_CLICK_EVENT, function (event) {
+					if (!_stylePreviewWindow.classList.contains('spShowRegions')) {
+						return;
+					}
+					
+					event.preventDefault();
+					event.stopPropagation();
+					
+					toggleSelectionMode();
+					
+					select.value = elData(region, 'region');
+					
+					// Programmatically trigger the change event handler, rather than dispatching an event,
+					// because Firefox fails to execute the event if it has previously been disabled.
+					// See https://bugzilla.mozilla.org/show_bug.cgi?id=1426856
+					callbackChange();
+				});
+			});
+			
+			// toggle view
+			var spSelectCategory = elById('spSelectCategory');
+			buttonToggleColorPalette.addEventListener(WCF_CLICK_EVENT, function (event) {
+				event.preventDefault();
+				
+				buttonSelectCategoryByClick.classList.toggle('disabled');
+				elToggle(spSelectCategory);
+				buttonToggleColorPalette.classList.toggle('active');
+				_stylePreviewWindow.classList.toggle('spColorPalette');
+				_stylePreviewRegionMarker.classList.toggle('forceHide');
+				select.disabled = !select.disabled;
 			});
 		},
 		

@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\box;
-use wcf\data\box\Box;
 use wcf\data\user\activity\event\ViewableUserActivityEventList;
 use wcf\system\condition\IObjectListCondition;
 use wcf\system\request\LinkHandler;
@@ -11,7 +10,7 @@ use wcf\system\WCF;
  * Box controller for a list of recent activities.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
@@ -37,6 +36,12 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 	 * @var	boolean
 	 */
 	public $filteredByFollowedUsers = false;
+	
+	/**
+	 * is true if filtering by followed users yielded no results
+	 * @var boolean
+	 */
+	public $filteredByFollowedUsersOverride = false;
 	
 	/**
 	 * @inheritDoc
@@ -99,7 +104,8 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 				'canFilterByFollowedUsers' => $this->canFilterByFollowedUsers,
 				'eventList' => $this->objectList,
 				'lastEventTime' => $this->objectList->getLastEventTime(),
-				'filteredByFollowedUsers' => $this->filteredByFollowedUsers
+				'filteredByFollowedUsers' => $this->filteredByFollowedUsers,
+				'filteredByFollowedUsersOverride' => $this->filteredByFollowedUsersOverride
 			], true);
 		}
 		else {
@@ -120,11 +126,32 @@ class RecentActivityListBoxController extends AbstractDatabaseObjectListBoxContr
 	/**
 	 * @inheritDoc
 	 */
+	public function hasContent() {
+		$hasContent = parent::hasContent();
+		
+		if (!$hasContent) {
+			if (($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') && $this->filteredByFollowedUsers) {
+				$this->filteredByFollowedUsersOverride = true;
+				
+				$this->loadContent();
+				
+				return count($this->objectList) > 0;
+			}
+		}
+		
+		return $hasContent;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected function readObjects() {
 		// apply filter
 		if (($this->getBox()->position == 'contentTop' || $this->getBox()->position == 'contentBottom') && $this->filteredByFollowedUsers) {
-			/** @noinspection PhpUndefinedMethodInspection */
-			$this->objectList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
+			if (!$this->filteredByFollowedUsersOverride) {
+				/** @noinspection PhpUndefinedMethodInspection */
+				$this->objectList->getConditionBuilder()->add('user_activity_event.userID IN (?)', [WCF::getUserProfileHandler()->getFollowingUsers()]);
+			}
 		}
 		
 		// load more items than necessary to avoid empty list if some items are invisible for current user

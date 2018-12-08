@@ -6,6 +6,7 @@ use wcf\data\article\ViewableArticleList;
 use wcf\data\category\CategoryNodeTree;
 use wcf\data\user\User;
 use wcf\page\SortablePage;
+use wcf\system\clipboard\ClipboardHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -14,7 +15,7 @@ use wcf\util\StringUtil;
  * Shows a list of cms articles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  * @since	3.0
@@ -159,7 +160,8 @@ class ArticleListPage extends SortablePage {
 			'showArticleAddDialog' => $this->showArticleAddDialog,
 			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 			'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
-			'publicationStatus' => $this->publicationStatus
+			'publicationStatus' => $this->publicationStatus,
+			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article')),
 		]);
 	}
 }

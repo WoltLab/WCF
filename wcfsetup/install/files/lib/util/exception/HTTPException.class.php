@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
  * Denotes failure to perform a HTTP request.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util\Exception
  * @since	3.0
@@ -36,7 +36,7 @@ class HTTPException extends SystemException implements IExtraInformationExceptio
 	 */
 	public function getExtraInformation() {
 		$reply = $this->http->getReply();
-		$body = StringUtil::truncate(preg_replace('/[\x00-\x1F\x80-\xFF]/', '.', $reply['body']), 80, StringUtil::HELLIP, true);
+		$body = StringUtil::truncate(preg_replace('/[\x00-\x1F\x80-\xFF]/', '.', $reply['body']), 512, StringUtil::HELLIP, true);
 		
 		return [
 			['Body', $body],

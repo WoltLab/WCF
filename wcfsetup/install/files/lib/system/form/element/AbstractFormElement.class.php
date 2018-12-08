@@ -8,7 +8,7 @@ use wcf\util\StringUtil;
  * Basic implementation for form elements.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Element
  */
@@ -94,7 +94,7 @@ abstract class AbstractFormElement implements IFormElement {
 	}
 	
 	/**
-	 * Returns class attribute if an error occured.
+	 * Returns class attribute if an error occurred.
 	 * 
 	 * @return	string
 	 */
@@ -103,7 +103,7 @@ abstract class AbstractFormElement implements IFormElement {
 	}
 	
 	/**
-	 * Returns an error message if occured.
+	 * Returns an error message if occurred.
 	 * 
 	 * @return	string
 	 */

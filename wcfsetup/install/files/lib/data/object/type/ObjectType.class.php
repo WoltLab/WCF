@@ -12,7 +12,7 @@ use wcf\system\SingletonFactory;
  * Represents an object type.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Object\Type
  * 
@@ -80,8 +80,16 @@ class ObjectType extends ProcessibleDatabaseObject {
 				if (!class_exists($this->className)) {
 					throw new SystemException("Unable to find class '".$this->className."'");
 				}
-				if (($definitionInterface = ObjectTypeCache::getInstance()->getDefinition($this->definitionID)->interfaceName) && !is_subclass_of($this->className, $definitionInterface)) {
-					throw new ImplementationException($this->className, $definitionInterface);
+				
+				$definitionInterface = ObjectTypeCache::getInstance()->getDefinition($this->definitionID)->interfaceName;
+				if ($definitionInterface) {
+					if (!interface_exists($definitionInterface)) {
+						throw new SystemException("Unable to find interface '".$definitionInterface."'");
+					}
+					
+					if (!is_subclass_of($this->className, $definitionInterface)) {
+						throw new ImplementationException($this->className, $definitionInterface);
+					}
 				}
 				
 				if (is_subclass_of($this->className, SingletonFactory::class)) {

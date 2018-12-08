@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Processes `<woltlab-metacode>` and converts them if appropriate.
  *
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Input\Node
  * @since       3.0
@@ -115,6 +115,10 @@ class HtmlInputNodeWoltlabMetacode extends AbstractHtmlInputNode {
 				}
 				
 				// no available converter, metacode will be handled during output generation
+				continue;
+			}
+			else if (!BBCodeHandler::getInstance()->isAvailableBBCode($name)) {
+				// skip conversion of disallowed bbcodes
 				continue;
 			}
 			

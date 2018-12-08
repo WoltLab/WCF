@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Option type implementation for radio buttons.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -22,6 +22,12 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	 * @var	string
 	 */
 	public $templateName = 'radioButtonOptionType';
+	
+	/**
+	 * if `true`, the option is considered as being searched when generating the form element
+	 * @var	bool
+	 */
+	public $forceSearchOption = false;
 	
 	/**
 	 * @inheritDoc
@@ -67,7 +73,10 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	 */
 	public function getSearchFormElement(Option $option, $value) {
 		$this->templateName = 'radioButtonSearchableOptionType';
-		WCF::getTPL()->assign('searchOption', $value !== null && ($value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName])));
+		WCF::getTPL()->assign(
+			'searchOption',
+			$this->forceSearchOption || ($value !== null && $value !== $option->defaultValue) || isset($_POST['searchOptions'][$option->optionName])
+		);
 		
 		return $this->getFormElement($option, $value);
 	}

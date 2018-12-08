@@ -1,4 +1,4 @@
-{capture assign='pageTitle'}{lang}wcf.tagging.taggedObjects.{@$objectType}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/lang}{/capture}
+{capture assign='pageTitle'}{lang}wcf.tagging.taggedObjects.{@$objectType}{/lang}{if $pageNo > 1} - {lang}wcf.page.pageNo{/lang}{/if}{/capture}
 
 {capture assign='contentTitle'}{lang}wcf.tagging.taggedObjects.{@$objectType}{/lang}{/capture}
 
@@ -13,7 +13,7 @@
 {/capture}
 
 {capture assign='sidebarLeft'}
-	<section class="box">
+	<section class="box" data-static-box-identifier="com.woltlab.wcf.TaggedMenu">
 		<h2 class="boxTitle">{lang}wcf.tagging.objectTypes{/lang}</h2>
 		
 		<nav class="boxContent">
@@ -25,7 +25,7 @@
 		</nav>
 	</section>
 	
-	<section class="box">
+	<section class="box" data-static-box-identifier="com.woltlab.wcf.TaggedTagCloud">
 		<h2 class="boxTitle">{lang}wcf.tagging.tags{/lang}</h2>
 		
 		<div class="boxContent">

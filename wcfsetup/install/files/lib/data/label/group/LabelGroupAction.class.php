@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\label\group;
+use wcf\data\label\LabelAction;
 use wcf\data\language\item\LanguageItemAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
@@ -10,7 +11,7 @@ use wcf\system\WCF;
  * Executes label group-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Label\Group
  * 
@@ -48,6 +49,24 @@ class LabelGroupAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	public function delete() {
+		// remove labels and their potential language variables
+		if (!empty($this->objectIDs)) {
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add('groupID IN (?)', [$this->objectIDs]);
+			
+			$sql = "SELECT	labelID
+					FROM	wcf".WCF_N."_label
+					".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			$labelIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+			
+			if (!empty($labelIDs)) {
+				$objectAction = new LabelAction($labelIDs, 'delete');
+				$objectAction->executeAction();
+			}
+		}
+		
 		$count = parent::delete();
 		
 		if (!empty($this->objects)) {

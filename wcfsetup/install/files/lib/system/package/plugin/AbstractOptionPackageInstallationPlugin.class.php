@@ -1,18 +1,20 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\package\Package;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Abstract implementation of a package installation plugin for options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -120,9 +122,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 			// build data block with defaults
 			$data = [
 				'categoryName' => $element->getAttribute('name'),
-				'options' => isset($data['options']) ? $data['options'] : '',
+				'options' => isset($data['options']) ? StringUtil::normalizeCsv($data['options']) : '',
 				'parentCategoryName' => isset($data['parent']) ? $data['parent'] : '',
-				'permissions' => isset($data['permissions']) ? $data['permissions'] : '',
+				'permissions' => isset($data['permissions']) ? StringUtil::normalizeCsv($data['permissions']) : '',
 				'showOrder' => isset($data['showorder']) ? intval($data['showorder']) : null
 			];
 			
@@ -153,7 +155,6 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * Imports options.
 	 * 
 	 * @param	\DOMXPath	$xpath
-	 * @throws	SystemException
 	 */
 	protected function importOptions(\DOMXPath $xpath) {
 		$elements = $xpath->query('/ns:data/ns:import/ns:options/ns:option');
@@ -285,7 +286,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @inheritDoc
 	 */
 	protected function validateOption(array $data) {
-		if (!preg_match("/^[\w-\.]+$/", $data['name'])) {
+		if (!preg_match("/^[\w\-\.]+$/", $data['name'])) {
 			$matches = [];
 			preg_match_all("/(\W)/", $data['name'], $matches);
 			throw new SystemException("The option '".$data['name']."' has at least one non-alphanumeric character (underscore is permitted): (".implode("), ( ", $matches[1]).").");
@@ -320,4 +321,11 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * @inheritDoc
 	 */
 	protected function findExistingItem(array $data) { }
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
 }

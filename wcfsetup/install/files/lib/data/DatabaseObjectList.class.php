@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Abstract class for a list of database objects.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data
  */
@@ -205,7 +205,7 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		}
 		
 		// use table index as array index
-		$objects = [];
+		$objects = $this->indexToObject = [];
 		foreach ($this->objects as $object) {
 			$objectID = $object->getObjectID();
 			$objects[$objectID] = $object;

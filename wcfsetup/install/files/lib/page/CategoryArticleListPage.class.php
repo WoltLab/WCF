@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Shows a list of cms articles in a certain category.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * @since	3.0 
@@ -33,14 +33,19 @@ class CategoryArticleListPage extends ArticleListPage {
 	/**
 	 * @inheritDoc
 	 */
+	public $controllerName = 'CategoryArticleList';
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function readParameters() {
-		parent::readParameters();
-		
 		if (isset($_REQUEST['id'])) $this->categoryID = intval($_REQUEST['id']);
 		$this->category = ArticleCategory::getCategory($this->categoryID);
 		if ($this->category === null) {
 			throw new IllegalLinkException();
 		}
+		$this->controllerParameters['object'] = $this->category;
+		parent::readParameters();
 		
 		$this->canonicalURL = LinkHandler::getInstance()->getLink('CategoryArticleList', [
 			'object' => $this->category
@@ -64,6 +69,8 @@ class CategoryArticleListPage extends ArticleListPage {
 	 */
 	protected function initObjectList() {
 		$this->objectList = new CategoryArticleList($this->categoryID, true);
+		
+		$this->applyFilters();
 	}
 	
 	/**
@@ -87,7 +94,7 @@ class CategoryArticleListPage extends ArticleListPage {
 		WCF::getTPL()->assign([
 			'categoryID' => $this->categoryID,
 			'category' => $this->category,
-			'allowSpidersToIndexThisPage' => true
+			'controllerObject' => $this->category
 		]);
 	}
 }

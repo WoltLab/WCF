@@ -1,0 +1,253 @@
+/*
+ * Special styles for changes introduced in WoltLab Suite 3.1 that
+ * are not compatible with styles created for earlier versions.
+ */
+@include requireApiVersion(31) {
+	.main {
+		@include screen-lg {
+			padding: 30px 0;
+		}
+	}
+	
+	// reduced margin-top
+	.paginationTop {
+		margin-top: 30px;
+	}
+	
+	// sheet-like presentation of content containers
+	.content > .section,
+	.content > form,
+	.sectionContainer {
+		border: 1px solid $wcfContentContainerBorder;
+		background-color: $wcfContentContainerBackground;
+		padding: 20px;
+		
+		@include screen-sm-down {
+			border-left-width: 0;
+			border-right-width: 0;
+			margin-left: -10px;
+			margin-right: -10px;
+			padding: 10px;
+		}
+		
+		> .section:first-child {
+			margin-top: 0;
+		}
+		
+		.section {
+			&:not(:first-child) {
+				margin-top: 0;
+			}
+			
+			& + .section {
+				margin-top: 40px;
+			}
+		}
+	}
+	
+	.content > .section + .sectionContainer,
+	.content > form + .sectionContainer {
+		margin-top: 40px;
+	}
+	
+	.content > form {
+		margin-top: 40px;
+	}
+	
+	.contentHeader + .section,
+	.contentHeader + form,
+	.contentHeader + .sectionContainer {
+		margin-top: 30px;
+	}
+	
+	.content > .section .tabMenuContent > .section:first-child,
+	.content > .section .tabMenuContent > form > .section:first-child {
+		margin-top: 20px;
+	}
+	
+	// borders used to visually separate lists from adjacent containers
+	.content > .section {
+		> .messageList {
+			border-top-width: 0;
+			
+			@include screen-sm-down {
+				&:first-child {
+					margin-top: -11px;
+				}
+			}
+			
+			> :first-child {
+				padding-top: 0;
+				
+				// 30px added to account for `padding-top: 0` above
+				&.anchorFixedHeader:target {
+					margin-top: -79px;
+					
+					&::after {
+						height: 80px;
+					}
+					
+					> .message {
+						transform: translateY(79px);
+					}
+				}
+			}
+			
+			> :last-child {
+				border-bottom-width: 0;
+				padding-bottom: 0;
+			}
+		}
+		
+		> .tabularList:last-child {
+			border-bottom-width: 0;
+		}
+		
+		> .containerList {
+			> :first-child {
+				border-top-width: 0
+			}
+			
+			> :last-child {
+				border-bottom-width: 0;
+			}
+		}
+	}
+	
+	// drop-shadow for submenu lists
+	.mainMenu .boxMenu .boxMenuDepth1 {
+		box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 4px 6px rgba(0, 0, 0, 0.23);
+	}
+	
+	// individual variables for the editor toolbar
+	.redactor-toolbar {
+		background-color: $wcfEditorButtonBackground;
+		
+		> li {
+			> a {
+				color: $wcfEditorButtonText;
+				
+				&.redactor-button-disabled {
+					color: $wcfEditorButtonTextDisabled !important;
+				}
+				
+				&.redactor-act,
+				&.dropact {
+					background-color: $wcfEditorButtonBackgroundActive;
+					color: $wcfEditorButtonTextActive;
+				}
+				
+				@include screen-lg {
+					&:hover {
+						background-color: $wcfEditorButtonBackgroundActive;
+						color: $wcfEditorButtonTextActive;
+					}
+				}
+			}
+			
+			@include screen-sm-up {
+				&.redactor-toolbar-separator::before {
+					border-left: 1px solid $wcfEditorButtonText;
+				}
+			}
+		}
+		
+		@include screen-xs {
+			&.redactorToolbarOverride > .redactor-toolbar-separator::before {
+				border-left: 1px solid $wcfEditorButtonText;
+			}
+			
+			.redactorToolbarToggle::before {
+				border-left: 1px solid $wcfEditorButtonText;
+			}
+		}
+	}
+	
+	// adjust editor and message tab menu background color
+	.redactor-box,
+	.messageTabMenuNavigation > ul,
+	.messageTabMenu > .messageTabMenuContent.active,
+	.messageContent.loading > .messageContentLoadingOverlay {
+		background-color: $wcfContentContainerBackground;
+	}
+	
+	.messageTabMenuNavigation > ul > li.active > a::after {
+		border-bottom-color: $wcfContentContainerBackground;
+	}
+	
+	// use the `alert` variables rather than fixed values 
+	.innerError {
+		background-color: $wcfStatusErrorBackground;
+		color: $wcfStatusErrorText;
+		
+		&::before {
+			border-bottom-color: $wcfStatusErrorBackground;
+		}
+	}
+	
+	// adjust color values to account for a significant darker sidebar background
+	.interactiveDropdownHeader .icon {
+		color: inherit;
+	}
+	.sidebar,
+	.messageSidebar {
+		dl:not(.plain) > dt,
+		dl.dataList > dt,
+		.separatorLeft::before {
+			color: $wcfSidebarDimmedText;
+		}
+	}
+	.messageReduced  {
+		.messageTitle a {
+			color: $wcfSidebarText;
+		}
+		
+		.messageHeaderMetaData {
+			.messagePublicationTime,
+			> li:not(:last-child)::after {
+				color: $wcfSidebarDimmedText;
+			}
+		}
+	}
+	.userMention {
+		color: $wcfSidebarLink;
+		
+		&:hover {
+			color: $wcfSidebarLinkActive;
+		}
+	}
+	.boxesSidebarLeft .box,
+	.boxesSidebarRight .box {
+		&.boxError,
+		&.boxInfo,
+		&.boxSuccess,
+		&.boxWarning {
+			.boxTitle {
+				color: inherit;
+			}
+		}
+	}
+	
+	// message clipboard checkbox
+	@include screen-sm-down {
+		.messageQuickOptions > .jsMessageClipboardCheckbox {
+			display: initial;
+			position: relative;
+			right: 30px;
+			top: -1px;
+		}
+	}
+	
+	// tab menu overflow
+	.tabMenuOverlayLeft {
+		background: linear-gradient(to left, transparentize($wcfContentContainerBackground, 100%) 0%, $wcfContentContainerBackground 50%);
+	}
+	.tabMenuOverlayRight {
+		background: linear-gradient(to right, transparentize($wcfContentContainerBackground, 100%) 0%, $wcfContentContainerBackground 50%);
+	}
+	
+	// background-color when saving messages
+	.messageContent.loading > .messageContentLoadingOverlay {
+		background-color: $wcfContentContainerBackground;
+	}
+}

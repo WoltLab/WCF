@@ -21,6 +21,9 @@
 				<category name="module.community">
 					<parent>module</parent>
 				</category>
+				<category name="module.development">
+					<parent>module</parent>
+				</category>
 			<!-- /modules -->
 			
 			<!-- general -->
@@ -32,6 +35,9 @@
 					<showorder>1</showorder>
 				</category>
 					<category name="general.page.seo">
+						<parent>general.page</parent>
+					</category>
+					<category name="general.page.sitemap">
 						<parent>general.page</parent>
 					</category>
 				<category name="general.offline">
@@ -64,9 +70,6 @@
 						<parent>general.system</parent>
 					</category>
 					<category name="general.system.date">
-						<parent>general.system</parent>
-					</category>
-					<category name="general.system.jquery">
 						<parent>general.system</parent>
 					</category>
 					<category name="general.system.googleMaps">
@@ -264,7 +267,7 @@
 			
 			<option name="wcf_uuid">
 				<categoryname>general</categoryname>
-				<optiontype>string</optiontype>
+				<optiontype>text</optiontype>
 				<defaultvalue>bd096261-15f4-5dc1-9767-01ce08d7c80b</defaultvalue> <!-- automatically replaced during WCFSetup -->
 				<hidden>1</hidden>
 			</option>
@@ -282,13 +285,13 @@
 				<defaultvalue>0</defaultvalue>
 			</option>
 			
-			<option name="enable_debug_mode">
+			<option name="visitor_use_tiny_build">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
 			
-			<option name="enable_benchmark">
+			<option name="module_contact_form">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
@@ -297,7 +300,7 @@
 			<option name="log_ip_address">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			
 			<option name="enable_woltlab_news">
@@ -305,14 +308,6 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
-			
-			<!--
-			<option name="enable_pluginstore_widget">
-				<categoryname>module.system</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-			</option>
-			 -->
 			
 			<option name="module_system_recaptcha"><!-- @deprecated -->
 				<categoryname>module.system</categoryname>
@@ -348,7 +343,7 @@
 			<option name="module_gravatar">
 				<categoryname>module.user</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="module_users_online">
 				<categoryname>module.user</categoryname>
@@ -375,6 +370,11 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="module_user_cover_photo">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			
 			<option name="module_like">
 				<categoryname>module.community</categoryname>
@@ -383,6 +383,12 @@
 			</option>
 			
 			<option name="module_user_profile_wall">
+				<categoryname>module.user</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			
+			<option name="module_trophy">
 				<categoryname>module.user</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
@@ -402,6 +408,22 @@
 			
 			<option name="module_wcf_ad">
 				<categoryname>module.customization</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			
+			<option name="enable_debug_mode">
+				<categoryname>module.development</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="enable_benchmark">
+				<categoryname>module.development</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="enable_developer_tools">
+				<categoryname>module.development</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
@@ -433,6 +455,15 @@
 				<optiontype>textI18n</optiontype>
 				<supporti18n>1</supporti18n>
 			</option>
+			<option name="og_image">
+				<categoryname>general.page</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<option name="fb_share_app_id">
+				<categoryname>general.page</categoryname>
+				<optiontype>text</optiontype>
+				<defaultvalue></defaultvalue>
+			</option>
 			<option name="show_version_number">
 				<categoryname>general.page</categoryname>
 				<optiontype>boolean</optiontype>
@@ -463,6 +494,38 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
 			</option>
+			<option name="enable_ad_rotation">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_wcf_ad</options>
+			</option>
+			<option name="enable_polling">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions>enable_desktop_notifications,desktop_notification_package_id</enableoptions>
+			</option>
+			<option name="enable_desktop_notifications">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions>desktop_notification_package_id</enableoptions>
+			</option>
+			<option name="desktop_notification_package_id">
+				<categoryname>general.page</categoryname>
+				<optiontype>desktopNotificationApplicationSelect</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="page_logo_link_to_app_default">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="head_code">
+				<categoryname>general.page</categoryname>
+				<optiontype>textarea</optiontype>
+			</option>
 			<option name="footer_code">
 				<categoryname>general.page</categoryname>
 				<optiontype>textarea</optiontype>
@@ -484,6 +547,14 @@
 			<option name="url_title_component_replacement">
 				<categoryname>general.page.seo</categoryname>
 				<optiontype>textarea</optiontype>
+			</option>
+			
+			<option name="sitemap_index_time_frame">
+				<categoryname>general.page.sitemap</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>365</defaultvalue>
+				<minvalue>0</minvalue>
+				<suffix>days</suffix>
 			</option>
 			<!-- /general.page -->
 			
@@ -539,8 +610,8 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 			<option name="cookie_prefix">
 				<categoryname>general.system.cookie</categoryname>
 				<optiontype>text</optiontype>
-				<defaultvalue>wsc30_</defaultvalue>
-				<validationpattern>.+</validationpattern>
+				<defaultvalue>wsc31_</defaultvalue>
+				<validationpattern>^[a-zA-Z0-9_]+$</validationpattern>
 			</option>
 			<!-- /general.system.cookie-->
 			
@@ -714,6 +785,18 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<validationpattern>^[^/]*$</validationpattern>
 				<showorder>2</showorder>
 			</option>
+			<option name="recaptcha_publickey_invisible">
+				<categoryname>security.antispam.recaptcha</categoryname>
+				<optiontype>text</optiontype>
+				<validationpattern>^[^/]*$</validationpattern>
+				<showorder>3</showorder>
+			</option>
+			<option name="recaptcha_privatekey_invisible">
+				<categoryname>security.antispam.recaptcha</categoryname>
+				<optiontype>text</optiontype>
+				<validationpattern>^[^/]*$</validationpattern>
+				<showorder>4</showorder>
+			</option>
 			<!-- /security.antispam.recaptcha -->
 			
 			<!-- general.system.date -->
@@ -723,18 +806,6 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<defaultvalue>Europe/London</defaultvalue>
 			</option>
 			<!-- /general.system.date -->
-			
-			<!-- general.system.jquery -->
-			<option name="jquery_source">
-				<categoryname>general.system.jquery</categoryname>
-				<optiontype>radioButton</optiontype>
-				<defaultvalue>google</defaultvalue>
-				<selectoptions>local:wcf.acp.option.jquery_source.local
-google:wcf.acp.option.jquery_source.google
-microsoft:wcf.acp.option.jquery_source.microsoft
-cloudflare:wcf.acp.option.jquery_source.cloudflare</selectoptions>
-			</option>
-			<!-- /general.system.jquery -->
 			
 			<!-- general.system.googleMaps -->
 			<option name="google_maps_api_key">
@@ -866,6 +937,7 @@ encrypt:wcf.acp.option.mail_smtp_starttls.encrypt</selectoptions>
 			<option name="mail_smtp_user">
 				<categoryname>general.mail.send</categoryname>
 				<optiontype>text</optiontype>
+				<disableAutocomplete>1</disableAutocomplete>
 			</option>
 			<option name="mail_smtp_password">
 				<categoryname>general.mail.send</categoryname>
@@ -1003,7 +1075,23 @@ Pinterest</defaultvalue>
 			<!-- /message.general.share -->
 			
 			<!-- message.general.image -->
+			<option name="image_allow_external_source">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="message_force_secure_images">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
 			<option name="module_image_proxy">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<enableoptions>image_proxy_insecure_only,image_proxy_expiration,image_proxy_host_whitelist</enableoptions>
+			</option>
+			<option name="image_proxy_insecure_only">
 				<categoryname>message.general.image</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
@@ -1015,6 +1103,10 @@ Pinterest</defaultvalue>
 				<maxvalue>30</maxvalue>
 				<minvalue>7</minvalue>
 				<suffix>days</suffix>
+			</option>
+			<option name="image_proxy_host_whitelist">
+				<categoryname>message.general.image</categoryname>
+				<optiontype>textarea</optiontype>
 			</option>
 			<!-- /message.general.image -->
 			
@@ -1040,6 +1132,7 @@ Pinterest</defaultvalue>
 				<optiontype>integer</optiontype>
 				<defaultvalue>8</defaultvalue>
 				<minvalue>0</minvalue>
+				<suffix>chars</suffix>
 			</option>
 			<option name="register_password_must_contain_lower_case">
 				<categoryname>user.password</categoryname>
@@ -1079,6 +1172,10 @@ Pinterest</defaultvalue>
 			<!-- /user.ban -->
 			
 			<!-- user.register -->
+			<option name="force_login">
+				<categoryname>user.register</categoryname>
+				<optiontype>boolean</optiontype>
+			</option>
 			<option name="register_disabled">
 				<categoryname>user.register</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1107,6 +1204,7 @@ Pinterest</defaultvalue>
 				<defaultvalue>3</defaultvalue>
 				<minvalue>3</minvalue>
 				<maxvalue>100</maxvalue>
+				<suffix>chars</suffix>
 			</option>
 			<option name="register_username_max_length">
 				<categoryname>user.register</categoryname>
@@ -1114,6 +1212,7 @@ Pinterest</defaultvalue>
 				<defaultvalue>25</defaultvalue>
 				<minvalue>3</minvalue>
 				<maxvalue>100</maxvalue>
+				<suffix>chars</suffix>
 			</option>
 			<option name="register_username_force_ascii">
 				<categoryname>user.register</categoryname>
@@ -1165,6 +1264,13 @@ Pinterest</defaultvalue>
 			<!-- /user.3rdPartyAuth -->
 			
 			<!-- user.avatar -->
+			<option name="avatar_default_type">
+				<categoryname>user.avatar</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue>initials</defaultvalue>
+				<selectoptions>initials:wcf.acp.option.avatar_default_type.initials
+silhouette:wcf.acp.option.avatar_default_type.silhouette</selectoptions>
+			</option>
 			<option name="gravatar_default_type">
 				<categoryname>user.avatar</categoryname>
 				<optiontype>select</optiontype>
@@ -1196,6 +1302,7 @@ retro:wcf.acp.option.gravatar_default_type.retro</selectoptions>
 				<defaultvalue>25</defaultvalue>
 				<options>module_user_rank</options>
 				<minvalue>0</minvalue>
+				<suffix>chars</suffix>
 			</option>
 			<option name="user_forbidden_titles">
 				<categoryname>user.title</categoryname>
@@ -1370,6 +1477,12 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<defaultvalue>1</defaultvalue>
 				<options>module_users_online</options>
 			</option>
+			<option name="message_sidebar_enable_trophy_points">
+				<categoryname>message.sidebar</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_trophy</options>
+			</option>
 			<option name="message_sidebar_user_options">
 				<categoryname>message.sidebar</categoryname>
 				<optiontype>useroptions</optiontype>
@@ -1383,6 +1496,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<defaultvalue>30</defaultvalue>
 				<minvalue>1</minvalue>
 				<maxvalue>255</maxvalue>
+				<suffix>chars</suffix>
 				<options>module_tagging</options>
 			</option>
 			
@@ -1427,6 +1541,11 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<defaultvalue>20</defaultvalue>
 				<minvalue>2</minvalue>
 				<maxvalue>100</maxvalue>
+			</option>
+			<option name="poll_full_width">
+				<categoryname>message.general.poll</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<!-- /message.general.poll -->
 			
@@ -1513,6 +1632,12 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<defaultvalue>1</defaultvalue>
 				<options>module_article</options>
 			</option>
+			<option name="article_enable_visit_tracking">
+				<categoryname>cms.article</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_article</options>
+			</option>
 			<option name="articles_per_page">
 				<categoryname>cms.article</categoryname>
 				<optiontype>integer</optiontype>
@@ -1572,9 +1697,11 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		<option name="message_sidebar_enable_rank" /> 
 		<option name="message_sidebar_enable_avatar" />
 		<option name="message_sidebar_enable_message_group_starter_icon" />
+		<option name="jquery_source" />
 		
 		<optioncategory name="dashboard.content.recentActivities" />
 		<optioncategory name="dashboard.sidebar.recentActivities" />
 		<optioncategory name="module.display" />
+		<optioncategory name="general.system.jquery" />
 	</delete>
 </data>

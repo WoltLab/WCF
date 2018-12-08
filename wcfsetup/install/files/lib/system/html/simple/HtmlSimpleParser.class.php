@@ -8,7 +8,7 @@ use wcf\system\SingletonFactory;
  * Parses content for simple placeholders.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Message\Embedded\Object
  * @since       3.0
@@ -106,7 +106,7 @@ class HtmlSimpleParser extends SingletonFactory {
 		MessageEmbeddedObjectManager::getInstance()->setActiveMessage($objectType, $objectID);
 		$this->setContext($objectType, $objectID);
 		
-		return preg_replace_callback($this->regexHandlers, function ($matches) use ($objectType, $objectID) {
+		return preg_replace_callback($this->regexHandlers, function ($matches) {
 			$data = $this->parseAttributes($matches[1]);
 			
 			return $this->replaceTag($data);

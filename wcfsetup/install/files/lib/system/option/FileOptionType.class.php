@@ -7,13 +7,12 @@ use wcf\system\exception\UserInputException;
 use wcf\system\upload\IUploadFileValidationStrategy;
 use wcf\system\upload\UploadHandler;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * Option type implementation for uploading a file.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -65,14 +64,15 @@ class FileOptionType extends AbstractOptionType {
 		}
 		
 		// determine location the file will be stored at
-		$package = PackageCache::getInstance()->getPackage($option->packageID);
-		$fileLocation = FileUtil::addTrailingSlash(FileUtil::getRealPath(WCF_DIR.$package->packageDir)).$option->filelocation.'.'.$file->getFileExtension();
+		$relativeFileLocation = $option->filelocation . '.' . $file->getFileExtension();
+		
+		$fileLocation = PackageCache::getInstance()->getPackage($option->packageID)->getAbsolutePackageDir() . $relativeFileLocation;
 		
 		// save file
 		$file->moveUploadedFile($fileLocation);
 		
-		// return file location as the value to store in the database
-		return $fileLocation;
+		// return relative file location as the value to store in the database
+		return $relativeFileLocation;
 	}
 	
 	/**

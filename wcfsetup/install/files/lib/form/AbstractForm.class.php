@@ -1,5 +1,6 @@
 <?php
 namespace wcf\form;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\page\AbstractPage;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
@@ -11,7 +12,7 @@ use wcf\util\StringUtil;
  * This includes the default event listener for a form: readFormParameters, validate, save.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -36,9 +37,9 @@ abstract class AbstractForm extends AbstractPage implements IForm {
 	
 	/**
 	 * database object action
-	 * @var	\wcf\data\AbstractDatabaseObjectAction
+	 * @var	AbstractDatabaseObjectAction
 	 */
-	public $objectAction = null;
+	public $objectAction;
 	
 	/**
 	 * additional fields

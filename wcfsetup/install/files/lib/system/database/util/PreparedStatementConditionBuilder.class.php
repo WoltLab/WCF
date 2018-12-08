@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * Builds a sql query 'where' condition for prepared statements.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Database\Util
  */
@@ -26,9 +26,19 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 	public function add($condition, array $parameters = []) {
 		if (!empty($parameters)) {
 			$count = 0;
-			$callback = function ($matches) use (&$count, $parameters, $condition) {
+			$callback = function () use (&$count, $parameters, $condition) {
 				if (!array_key_exists($count, $parameters)) {
 					throw new SystemException("missing parameter for token number " . ($count + 1) . " in condition '".$condition."'");
+				}
+				else if (is_array($parameters[$count]) && empty($parameters[$count])) {
+					// Only throw an exception if the developer tools are active, preventing this
+					// from triggering an error for queries that are never actually executed.
+					// 
+					// This is done to preserve backwards-compatibility with earlier releases that
+					// allowed this kind of issue, effectively relying on the database to bail out.
+					if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+						throw new \RuntimeException("An empty array was passed for token number " . ($count + 1) . " in condition '" . $condition . "'");
+					}
 				}
 				
 				$result = '?';
@@ -43,7 +53,7 @@ class PreparedStatementConditionBuilder extends ConditionBuilder {
 			$condition = preg_replace_callback('/\?/', $callback, $condition);
 		}
 		
-		// add condtion
+		// add condition
 		if (!empty($this->conditions)) $this->conditions .= $this->concat;
 		$this->conditions .= $condition;
 		

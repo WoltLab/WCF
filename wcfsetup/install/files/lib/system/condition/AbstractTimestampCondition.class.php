@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * interval.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  * @since	3.0
@@ -50,7 +50,10 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 			throw new \InvalidArgumentException("Object list is no instance of '{$className}', instance of '".get_class($objectList)."' given.");
 		}
 		
-		$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' <> ?', [0]);
+		/** @noinspection PhpUndefinedFieldInspection */
+		if ($this->object->ignoreZeroTime) {
+			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias() . '.' . $this->getPropertyName() . ' <> ?', [0]);
+		}
 		if (isset($conditionData['endTime'])) {
 			$objectList->getConditionBuilder()->add($objectList->getDatabaseTableAlias().'.'.$this->getPropertyName().' < ?', [strtotime($conditionData['endTime']) + 86400]);
 		}
@@ -71,7 +74,7 @@ abstract class AbstractTimestampCondition extends AbstractSingleFieldCondition i
 		if (isset($conditionData['startTime']) && $object->{$this->getPropertyName()} < strtotime($conditionData['startTime'])) {
 			return false;
 		}
-		if (isset($conditionData['endTimeTime']) && $object->{$this->getPropertyName()} >= strtotime($conditionData['endTime']) + 86400) {
+		if (isset($conditionData['endTime']) && $object->{$this->getPropertyName()} >= strtotime($conditionData['endTime']) + 86400) {
 			return false;
 		}
 		

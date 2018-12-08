@@ -3,7 +3,7 @@
  * select page object ids.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Search/Handler
  */
@@ -56,10 +56,7 @@ define(['Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(
 			
 			// no matches
 			if (!Array.isArray(data.returnValues) || data.returnValues.length === 0) {
-				var innerError = elCreate('small');
-				innerError.className = 'innerError';
-				innerError.textContent = Language.get('wcf.page.pageObjectID.search.noResults');
-				DomUtil.insertAfter(innerError, _searchInput);
+				elInnerError(_searchInput, Language.get('wcf.page.pageObjectID.search.noResults'));
 				
 				return;
 			}
@@ -99,8 +96,7 @@ define(['Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(
 		 * @protected
 		 */
 		_resetList: function() {
-			var innerError = _searchInput.nextElementSibling;
-			if (innerError && innerError.classList.contains('innerError')) elRemove(innerError);
+			elInnerError(_searchInput, false);
 			
 			_resultList.innerHTML = '';
 			
@@ -125,7 +121,7 @@ define(['Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Input'], function(
 		},
 		
 		/**
-		 * Handles clicks on the item unless the click occured directly on a link.
+		 * Handles clicks on the item unless the click occurred directly on a link.
 		 * 
 		 * @param       {Event}         event           event object
 		 * @protected

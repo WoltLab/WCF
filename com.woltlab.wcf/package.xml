@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package name="com.woltlab.wcf" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/package.xsd">
+<package name="com.woltlab.wcf" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/tornado/package.xsd">
 	<packageinformation>
 		<packagename>WoltLab Suite Core</packagename>
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>3.0.5</version> <!-- codename: vortex -->
-		<date>2017-05-15</date>
+		<version>3.1.6 pl 1</version> <!-- codename: tornado -->
+		<date>2018-10-17</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -19,7 +19,9 @@
 		<instruction type="acpMenu" />
 		<instruction type="userGroupOption" />
 		<instruction type="option" />
-		<instruction type="template" />
+		
+		<instruction type="template" run="standalone" />
+		
 		<instruction type="eventListener" />
 		<instruction type="script">acp/install.php</instruction>
 		<instruction type="cronjob" />
@@ -29,7 +31,9 @@
 		<instruction type="objectType" />
 		<instruction type="acpSearchProvider" />
 		<instruction type="style">defaultStyle.tar</instruction>
-		<instruction type="userOption" />
+		
+		<instruction type="userOption" run="standalone" />
+		
 		<instruction type="bbcode" />
 		<instruction type="smiley" />
 		<instruction type="userProfileMenu" />
@@ -40,65 +44,60 @@
 		<instruction type="menu" />
 		<instruction type="menuItem" />
 		<instruction type="box" />
+		<instruction type="mediaProvider" />
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="2.1.15">
-		<instruction type="file">files_pre_update.tar</instruction>
-		<instruction type="script">acp/update_com.woltlab.wcf_3.0_pre_sql.php</instruction>
-		<instruction type="sql">update_part1.sql</instruction>
+	<instructions type="update" fromversion="3.0.*">
+		<instruction type="file">files_pre_sql.tar</instruction>
 		
-		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.0_noop.php</instruction>
+		<!-- version guard -->
+		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_3.1_preUpdate.php</instruction>
 		
-		<instruction type="file">files.tar</instruction>
-		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_3.0_appConfig.php</instruction>
+		<!-- prevent issues caused by early flushes of the `options.inc.php` -->
+		<instruction type="option" />
 		
-		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.0_columnLength.php</instruction>
-		<instruction type="sql" run="standalone">update_1.sql</instruction>
-		<instruction type="sql" run="standalone">update_2.sql</instruction>
-		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.0_dropColumns.php</instruction>
-		<instruction type="sql" run="standalone">update_3.sql</instruction>
-		<instruction type="sql" run="standalone">update_4.sql</instruction>
-		<instruction type="sql" run="standalone">update_5.sql</instruction>
+		<instruction type="acpTemplate" />
+		<instruction type="template" />
 		
-		<instruction type="acpTemplate">acptemplates.tar</instruction>
-		<instruction type="template">templates.tar</instruction>
-		<instruction type="language" run="standalone">language/*.xml</instruction>
+		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_addColumn.php</instruction>
 		
-		<instruction type="packageInstallationPlugin">packageInstallationPlugin.xml</instruction>
-		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
-		<instruction type="objectType">objectType.xml</instruction>
-		<instruction type="aclOption">aclOption.xml</instruction>
-		<instruction type="acpMenu">acpMenu.xml</instruction>
-		<instruction type="acpSearchProvider">acpSearchProvider.xml</instruction>
-		<instruction type="bbcode">bbcode.xml</instruction>
-		<instruction type="clipboardAction">clipboardAction.xml</instruction>
-		<instruction type="coreObject">coreObject.xml</instruction>
-		<instruction type="cronjob">cronjob.xml</instruction>
-		<instruction type="eventListener">eventListener.xml</instruction>
-		<instruction type="option">option.xml</instruction>
-		<instruction type="smiley">smiley.xml</instruction>
-		<instruction type="userGroupOption">userGroupOption.xml</instruction>
-		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
-		<instruction type="userOption">userOption.xml</instruction>
+		<instruction type="sql" run="standalone">update_3.1_1.sql</instruction>
+		<instruction type="sql" run="standalone">update_3.1_2.sql</instruction>
+		<instruction type="sql" run="standalone">update_3.1_3.sql</instruction>
+		<instruction type="sql" run="standalone">update_3.1_4.sql</instruction>
 		
-		<instruction type="page">page.xml</instruction>
-		<instruction type="menu">menu.xml</instruction>
-		<instruction type="menuItem">menuItem.xml</instruction>
-		<instruction type="box">box.xml</instruction>
+		<instruction type="file" run="standalone" />
+		
+		<instruction type="language" run="standalone" />
+		
+		<instruction type="acpMenu" />
+		<instruction type="bbcode" />
+		<instruction type="clipboardAction" />
+		<instruction type="cronjob" />
+		<instruction type="eventListener" />
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+		<instruction type="userGroupOption" />
+		<instruction type="userNotificationEvent" />
+		<instruction type="userOption" />
+		
+		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_pageSearchIndex.php</instruction>
+		
+		<instruction type="page" />
+		<!-- contains a reference to a new page -->
+		<instruction type="menuItem" />
+		
+		<instruction type="packageInstallationPlugin" />
+		<!-- new pip -->
+		<instruction type="mediaProvider" />
+		
+		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_postUpgrade.php</instruction>
 		
 		<instruction type="style">defaultStyle.tar</instruction>
-		
-		<instruction type="script">acp/update_com.woltlab.wcf_3.0_post_sql.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="3.0.4">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+	<instructions type="update" fromversion="3.1.6">
 		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
-		<instruction type="language" />
-		
-		<instruction type="objectType" />
 	</instructions>
 </package>

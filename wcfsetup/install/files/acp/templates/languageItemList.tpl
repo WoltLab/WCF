@@ -9,7 +9,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.language.item.list{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.language.item.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
 	</div>
 	
 	{hascontent}
@@ -65,6 +65,7 @@
 					<input type="text" id="languageItemValue" name="languageItemValue" value="{$languageItemValue}" placeholder="{lang}wcf.acp.language.item.value{/lang}" class="long">
 					<label><input type="checkbox" name="hasCustomValue" value="1"{if $hasCustomValue == 1} checked{/if}> {lang}wcf.acp.language.item.customValues{/lang}</label>
 					<label><input type="checkbox" name="hasDisabledCustomValue" value="1"{if $hasDisabledCustomValue == 1} checked{/if}> {lang}wcf.acp.language.item.disabledCustomValues{/lang}</label>
+					<label><input type="checkbox" name="hasRecentlyDisabledCustomValue" value="1"{if $hasRecentlyDisabledCustomValue == 1} checked{/if}> {lang}wcf.acp.language.item.recentlyDisabledCustomValues{/lang}</label>
 				</dd>
 			</dl>
 			

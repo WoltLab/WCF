@@ -167,6 +167,12 @@
 			padding: 10px;
 			position: absolute;
 			right: 0;
+			
+			@include screen-sm-up {
+				/* this reverts the negative margin introduced by `.formSubmit` */
+				margin-bottom: 0;
+				padding-bottom: 0;
+			}
 		}
 		
 		.section {
@@ -190,6 +196,12 @@
 					margin-top: 0;
 				}
 			}
+		}
+		
+		/* Chrome and Safari use heavy anti-aliasing when the dialog's width
+		   cannot be evenly divided, causing the whole text to become blurry */
+		&.jsWebKitFractionalPixel {
+			border-left: 1px solid transparent;
 		}
 	}
 }

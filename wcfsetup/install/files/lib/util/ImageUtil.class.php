@@ -5,7 +5,7 @@ namespace wcf\util;
  * Contains image-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -26,7 +26,7 @@ final class ImageUtil {
 		$content = str_replace('description', '', $content);
 		
 		// search for javascript
-		if (strstr($content, 'script') || strstr($content, 'javascript') || strstr($content, 'expression(')) return false;
+		if (strpos($content, 'script') !== false || strpos($content, 'javascript') !== false || strpos($content, 'expression(') !== false) return false;
 		
 		return true;
 	}

@@ -21,7 +21,7 @@ use wcf\util\FileUtil;
  * Executes attachment-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Attachment
  * 
@@ -176,7 +176,8 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 					'thumbnailURL' => $attachment->thumbnailType ? LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment], 'thumbnail=1') : '',
 					'url' => LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment]),
 					'height' => $attachment->height,
-					'width' => $attachment->width
+					'width' => $attachment->width,
+					'iconName' => $attachment->getIconName()
 				];
 			}
 		}
@@ -189,7 +190,8 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 				$result['errors'][$file->getInternalFileID()] = [
 					'filename' => $file->getFilename(),
 					'filesize' => $file->getFilesize(),
-					'errorType' => $file->getValidationErrorType()
+					'errorType' => $file->getValidationErrorType(),
+					'additionalData' => $file->getValidationErrorAdditionalData()
 				];
 			}
 		}

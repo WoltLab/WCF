@@ -12,13 +12,15 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\option\user\group\IUserGroupGroupOptionType;
+use wcf\system\option\user\group\IUserGroupOptionType;
 use wcf\system\WCF;
 
 /**
  * Shows the user group option form to edit a single option.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -47,9 +49,9 @@ class UserGroupOptionForm extends AbstractForm {
 	
 	/**
 	 * user group option type object
-	 * @var	\wcf\system\option\user\group\IUserGroupOptionType
+	 * @var	IUserGroupOptionType
 	 */
-	public $optionType = null;
+	public $optionType;
 	
 	/**
 	 * list of parent categories
@@ -67,7 +69,7 @@ class UserGroupOptionForm extends AbstractForm {
 	 * user group option object
 	 * @var	UserGroupOption
 	 */
-	public $userGroupOption = null;
+	public $userGroupOption;
 	
 	/**
 	 * user group option id
@@ -220,6 +222,10 @@ class UserGroupOptionForm extends AbstractForm {
 		// create form elements for each group
 		foreach ($this->groups as $group) {
 			$optionValue = isset($this->values[$group->groupID]) ? $this->values[$group->groupID] : '';
+			if ($this->optionType instanceof IUserGroupGroupOptionType) {
+				$this->optionType->setUserGroup($group);
+			}
+			
 			$this->formElements[$group->groupID] = $this->optionType->getFormElement($this->userGroupOption, $optionValue);
 		}
 	}
@@ -245,12 +251,28 @@ class UserGroupOptionForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
+		$everyoneGroupID = $guestGroupID = $userGroupID = 0;
+		foreach ($this->groups as $group) {
+			if ($group->groupType == UserGroup::EVERYONE) {
+				$everyoneGroupID = $group->groupID;
+			}
+			else if ($group->groupType == UserGroup::GUESTS) {
+				$guestGroupID = $group->groupID;
+			}
+			else if ($group->groupType == UserGroup::USERS) {
+				$userGroupID = $group->groupID;
+			}
+		}
+		
 		WCF::getTPL()->assign([
 			'formElements' => $this->formElements,
 			'groups' => $this->groups,
 			'parentCategories' => $this->parentCategories,
 			'userGroupOption' => $this->userGroupOption,
-			'values' => $this->values
+			'values' => $this->values,
+			'everyoneGroupID' => $everyoneGroupID,
+			'guestGroupID' => $guestGroupID,
+			'userGroupID' => $userGroupID
 		]);
 	}
 	

@@ -2,6 +2,7 @@
 namespace wcf\system\search\acp;
 use wcf\data\option\category\OptionCategoryList;
 use wcf\data\option\Option;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
@@ -11,7 +12,7 @@ use wcf\system\WCF;
  * ACP search provider implementation for options (and option categories).
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Search\Acp
  */
@@ -72,6 +73,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 		
 		$optionCategories = OptionCacheBuilder::getInstance()->getData([], 'categories');
 		
+		/** @var Option $option */
 		while ($option = $statement->fetchObject(Option::class)) {
 			// category is not accessible
 			if (!$this->isValid($option->categoryName)) {
@@ -80,6 +82,11 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 			
 			// option is not accessible
 			if (!$this->validate($option) || $option->hidden) {
+				continue;
+			}
+			
+			// hide special option for multi-domain setups if not applicable
+			if ($option->optionName === 'desktop_notification_package_id' && !ApplicationHandler::getInstance()->isMultiDomainSetup()) {
 				continue;
 			}
 			

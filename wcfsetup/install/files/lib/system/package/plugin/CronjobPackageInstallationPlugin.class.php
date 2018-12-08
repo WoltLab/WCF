@@ -2,18 +2,20 @@
 namespace wcf\system\package\plugin;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\WCF;
 use wcf\util\CronjobUtil;
+use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes cronjobs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */
-class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -76,7 +78,7 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 			'cronjobName' => isset($data['attributes']['name']) ? $data['attributes']['name'] : '',
 			'description' => isset($data['elements']['description']) ? $data['elements']['description'] : '',
 			'isDisabled' => isset($data['elements']['isdisabled']) ? intval($data['elements']['isdisabled']) : 0,
-			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
+			'options' => isset($data['elements']['options']) ? StringUtil::normalizeCsv($data['elements']['options']) : '',
 			'startDom' => $data['elements']['startdom'],
 			'startDow' => $data['elements']['startdow'],
 			'startHour' => $data['elements']['starthour'],
@@ -146,5 +148,12 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 		parent::prepareCreate($data);
 		
 		$data['nextExec'] = TIME_NOW;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
 	}
 }

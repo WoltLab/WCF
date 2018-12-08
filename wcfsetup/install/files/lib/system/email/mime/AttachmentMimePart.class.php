@@ -1,13 +1,13 @@
 <?php
 namespace wcf\system\email\mime;
-use wcf\system\email\EmailGrammar;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Represents an email attachment.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Email\Mime
  * @since	3.0
@@ -76,8 +76,23 @@ class AttachmentMimePart extends AbstractMimePart {
 	 * @see	\wcf\system\email\mime\AbstractMimePart::getAdditionalHeaders()
 	 */
 	public function getAdditionalHeaders() {
+		if (StringUtil::isASCII($this->filename)) {
+			$encodedFilename = 'filename="'.$this->filename.'"';
+		}
+		else {
+			// Encode according to RFC 2184
+			$chunks = str_split($this->filename, 20);
+			$encodedFilename = "filename".(count($chunks) > 1 ? "*0" : "")."*=utf-8''".rawurlencode($chunks[0]).";";
+			for ($i = 1, $max = count($chunks); $i < $max; $i++) {
+				$encodedFilename .= "\r\n    filename*".$i.'*='.rawurlencode($chunks[$i]);
+				if ($i < ($max - 1)) {
+					$encodedFilename .= ";";
+				}
+			}
+		}
+		
 		return [ 
-			['Content-Disposition', 'attachment; filename='.EmailGrammar::encodeHeader($this->filename)]
+			['Content-Disposition', "attachment;\r\n    ".$encodedFilename]
 		];
 	}
 	

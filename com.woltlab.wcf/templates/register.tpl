@@ -143,13 +143,34 @@
 			
 			<dl>
 				<dt><label for="languageID">{lang}wcf.user.language{/lang}</label></dt>
-				<dd>
-					<select id="languageID" name="languageID">
-						{foreach from=$availableLanguages item=language}
-							<option value="{@$language->languageID}"{if $language->languageID == $languageID} selected{/if}>{$language}</option>
-						{/foreach}
-					</select>
-					<small>{lang}wcf.user.language.description{/lang}</small>
+				<dd id="languageIDContainer">
+					<script data-relocate="true">
+						$(function() {
+							var $languages = {
+								{implode from=$availableLanguages item=language}
+								'{@$language->languageID}': {
+									iconPath: '{@$language->getIconPath()|encodeJS}',
+									languageName: '{@$language|encodeJS}'
+								}
+								{/implode}
+							};
+							
+							require(['WoltLabSuite/Core/Language/Chooser'], function(LanguageChooser) {
+								LanguageChooser.init('languageIDContainer', 'languageID', {@$languageID}, $languages);
+								
+								var small = elCreate('small');
+								small.innerHTML = '{lang}wcf.user.language.description{/lang}';
+								elById('languageIDContainer').appendChild(small);
+							});
+						});
+					</script>
+					<noscript>
+						<select name="languageID" id="languageID">
+							{foreach from=$availableLanguages item=language}
+								<option value="{@$language->languageID}"{if $language->languageID == $languageID} selected{/if}>{$language}</option>
+							{/foreach}
+						</select>
+					</noscript>
 				</dd>
 			</dl>
 			
@@ -180,7 +201,7 @@
 	
 	{event name='sections'}
 	
-	{include file='captcha'}
+	{include file='captcha' supportsAsyncCaptcha=true}
 	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">

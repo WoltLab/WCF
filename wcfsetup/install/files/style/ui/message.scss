@@ -24,6 +24,10 @@
 				padding: 20px 10px;
 			}
 		}
+		
+		> .messageListNotice > .info {
+			margin-top: 0;
+		}
 	}
 	
 	&.messageReducedList {
@@ -142,6 +146,8 @@
 		
 		.messageAuthor {
 			flex: 0 0 auto;
+			/* equals the height of the avatar */
+			min-height: 48px;
 			position: relative;
 			
 			.userAvatar {
@@ -161,6 +167,14 @@
 			.userTitle,
 			.userRank {
 				margin-left: 58px;
+			}
+			
+			/* force username to be vertically centered for quick reply */
+			.messageAuthorContainer:last-child {
+				align-items: center;
+				display: flex;
+				height: 100%;
+				position: absolute;
 			}
 		}
 		
@@ -287,7 +301,7 @@
 		> .messageContentLoadingOverlay {
 			align-items: center;
 			background-color: $wcfContentBackground;
-			bottom: 0;
+			bottom: -1px;
 			display: flex;
 			justify-content: center;
 			left: 0;
@@ -491,7 +505,8 @@
 	
 	&:not(:first-child) {
 		> .likesSummary,
-		> .messageFooterButtons {
+		> .messageFooterButtons,
+		> .messageFooterButtonsExtra {
 			margin-top: 20px;
 		}
 	}
@@ -508,42 +523,35 @@
 		}
 		
 		@include screen-sm-down {
-			&:not(.open) {
-				display: none;
-			}
+			display: block;
+			margin-top: 0 !important;
+			pointer-events: none;
+			position: absolute;
+			right: -1px;
+			top: 9px;
 			
-			// uses pointless additional classes to increase selector specificity :(
-			&.buttonList.open {
-				@include dropdownMenu;
+			> li {
+				height: 0;
+				overflow: hidden;
+			}
+		}
+	}
+	
+	> .messageFooterButtonsExtra {
+		@include screen-md-up {
+			flex: 1 1 auto;
+			
+			& + .messageFooterButtons {
+				flex: 0 auto;
 				
-				display: block;
-				position: absolute;
-				visibility: visible;
-				right: 10px;
-				top: 10px;
-				
-				.button {
-					// these three are required to work around the .button default styling
-					background-color: transparent;
-					color: $wcfDropdownLink;
-					
-					@include wcfFontDefault;
-					
-					&.active {
-						background-color: $wcfDropdownBackgroundActive;
-						color: $wcfDropdownLinkActive;
-						
-						> a {
-							color: $wcfDropdownLinkActive;
-						}
-					}
-					
-					> .invisible {
-						display: inline;
-						margin-left: 5px;
-					}
+				> li:first-child {
+					margin-left: 20px;
 				}
 			}
+		}
+		
+		@include screen-sm-down {
+			display: none;
 		}
 	}
 }
@@ -581,7 +589,8 @@
 	}
 }
 	
-.messageFooterButtons {
+.messageFooterButtons,
+.messageFooterButtonsExtra {
 	@extend .buttonGroup;
 	
 	justify-content: flex-end;
@@ -622,12 +631,29 @@
 		}
 	}
 	
+	.messageTitle {
+		color: $wcfSidebarHeadlineText;
+		
+		a {
+			color: $wcfSidebarHeadlineLink;
+			
+			&:hover {
+				color: $wcfSidebarHeadlineLinkActive;
+			}
+		}
+	}
+	
 	@include screen-md-up {
 		.messageBody,
 		.messageFooter {
 			padding: 0 20px;
 		}
 	}
+}
+
+/* margin between items in the list of quoted messages */
+#messageQuoteList .messageReduced + .messageReduced {
+	margin-top: 20px;
 }
 
 .messageQuoteItemList {

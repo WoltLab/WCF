@@ -7,7 +7,7 @@ use wcf\system\moderation\queue\ModerationQueueManager;
  * Extends the moderation queue object with functions to create, update and delete queue entries.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Moderation\Queue
  * 
@@ -46,9 +46,20 @@ class ModerationQueueEditor extends DatabaseObjectEditor {
 	
 	/**
 	 * Marks this entry as rejected, e.g. report was unjustified or content approval was denied.
+	 * 
+	 * @param       boolean         $markAsJustified
 	 */
-	public function markAsRejected() {
-		$this->update(['status' => ModerationQueue::STATUS_REJECTED]);
+	public function markAsRejected($markAsJustified = false) {
+		$data = ['status' => ModerationQueue::STATUS_REJECTED];
+		if ($markAsJustified) {
+			$additionalData = $this->getDecoratedObject()->additionalData;
+			if (!is_array($additionalData)) $additionalData = [];
+			$additionalData['markAsJustified'] = true;
+			
+			$data['additionalData'] = serialize($additionalData);
+		}
+		
+		$this->update($data);
 		
 		// reset moderation count
 		ModerationQueueManager::getInstance()->resetModerationCount();

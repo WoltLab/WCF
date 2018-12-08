@@ -4,12 +4,25 @@
  * the editor is not recommended.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Redactor/Format
  */
 define(['Dom/Util'], function(DomUtil) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			format: function() {},
+			removeFormat: function() {},
+			_handleParentNodes: function() {},
+			_getLastMatchingParent: function() {},
+			_isBoundaryElement: function() {},
+			_getSelectionMarker: function() {}
+		};
+		return Fake;
+	}
 	
 	var _isValidSelection = function(editorElement) {
 		var element = window.getSelection().anchorNode;
@@ -377,20 +390,22 @@ define(['Dom/Util'], function(DomUtil) {
 		 * @protected
 		 */
 		_getSelectionMarker: function (editorElement, selection) {
-			var node = selection.anchorNode;
-			
-			var tag, tags = ['DEL', 'SUB', 'SUP'];
+			var hasNode, node, tag, tags = ['DEL', 'SUB', 'SUP'];
 			for (var i = 0, length = tags.length; i < length; i++) {
 				tag = tags[i];
 				
-				var hasNode = false;
-				while (node && node !== editorElement) {
-					if (node.nodeName === tag) {
-						hasNode = true;
-						break;
+				node = elClosest(selection.anchorNode);
+				hasNode = (elBySel(tag.toLowerCase(), node) !== null);
+				
+				if (!hasNode) {
+					while (node && node !== editorElement) {
+						if (node.nodeName === tag) {
+							hasNode = true;
+							break;
+						}
+						
+						node = node.parentNode;
 					}
-					
-					node = node.parentNode;
 				}
 				
 				if (hasNode) {

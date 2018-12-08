@@ -2,7 +2,7 @@
  * Provides the confirmation dialog overlay.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Confirmation
  */
@@ -20,7 +20,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 	 * 
 	 * @exports	WoltLabSuite/Core/Ui/Confirmation
 	 */
-	var UiConfirmation = {
+	return {
 		/**
 		 * Shows the confirmation dialog.
 		 * 
@@ -134,7 +134,7 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 				_options.legacyCallback('confirm', _options.parameters, _content);
 			}
 			else {
-				_options.confirm(_options.parameters);
+				_options.confirm(_options.parameters, _content);
 			}
 			
 			_active = false;
@@ -166,6 +166,4 @@ define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {
 			_confirmButton.focus();
 		}
 	};
-	
-	return UiConfirmation;
 });

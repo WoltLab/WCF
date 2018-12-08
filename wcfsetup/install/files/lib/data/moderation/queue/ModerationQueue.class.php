@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Represents a moderation queue entry.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Moderation\Queue
  *
@@ -23,6 +23,7 @@ use wcf\system\WCF;
  * @property-read	integer		$comments		number of comments on the moderation queue entry
  * @property-read	integer		$lastChangeTime		timestamp at which the moderation queue entry has been changed the last time
  * @property-read	array		$additionalData		array with additional data of the moderation queue entry
+ * @property-read	boolean		$markAsJustified	true if the report was closed, but it was actually justified and other actions may have been taken
  */
 class ModerationQueue extends DatabaseObject {
 	// states of column 'status'
@@ -115,7 +116,12 @@ class ModerationQueue extends DatabaseObject {
 				$objectType = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
 				$definition = ObjectTypeCache::getInstance()->getDefinition($objectType->definitionID);
 				
-				return WCF::getLanguage()->get('wcf.moderation.status.' . ($status == self::STATUS_REJECTED ? 'rejected' : 'confirmed') . '.' . $definition->definitionName);
+				$phrase = 'confirmed';
+				if ($status == self::STATUS_REJECTED) {
+					$phrase = ($this->markAsJustified) ? 'rejectedButJustified' : 'rejected';
+				}
+				
+				return WCF::getLanguage()->get('wcf.moderation.status.' . $phrase . '.' . $definition->definitionName);
 			break;
 		}
 	}

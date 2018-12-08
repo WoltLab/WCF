@@ -2,14 +2,14 @@
 
 <script data-relocate="true">
 	{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}{include file='mediaJavaScript'}{/if}
-
+	
 	{if $boxType == 'system'}
 		require(['WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler'], function(AcpUiBoxControllerHandler) {
 			AcpUiBoxControllerHandler.init({if $boxController}{@$boxController->objectTypeID}{/if});
 		});
 	{/if}
-
-	require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Box/Handler', 'WoltLabSuite/Core/Media/Manager/Select'], function(Dictionary, Language, AcpUiBoxHandler, MediaManagerSelect) {
+	
+	require(['Dictionary', 'Language', 'WoltLabSuite/Core/Acp/Ui/Box/Handler'], function(Dictionary, Language, AcpUiBoxHandler) {
 		Language.addObject({
 			'wcf.page.pageObjectID': '{lang}wcf.page.pageObjectID{/lang}',
 			{foreach from=$pageNodeList item=pageNode}
@@ -26,21 +26,23 @@
 			'wcf.page.pageObjectID.search.results': '{lang}wcf.page.pageObjectID.search.results{/lang}',
 			'wcf.page.pageObjectID.search.terms': '{lang}wcf.page.pageObjectID.search.terms{/lang}'
 		});
-
+		
 		var handlers = new Dictionary();
 		{foreach from=$pageHandlers key=handlerPageID item=requireObjectID}
 			handlers.set({@$handlerPageID}, {if $requireObjectID}true{else}false{/if});
 		{/foreach}
-
-		AcpUiBoxHandler.init(handlers);
 		
-		{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+		AcpUiBoxHandler.init(handlers, '{$boxType}');
+	});
+	
+	{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+		require(['WoltLabSuite/Core/Media/Manager/Select'], function(MediaManagerSelect) {
 			new MediaManagerSelect({
 				dialogTitle: '{lang}wcf.media.chooseImage{/lang}',
 				imagesOnly: 1
 			});
-		{/if}
-	});
+		});
+	{/if}
 </script>
 
 <header class="contentHeader">
@@ -63,7 +65,11 @@
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
 
-<form method="post" action="{if $action == 'add'}{link controller='BoxAdd'}{/link}{else}{link controller='BoxEdit' id=$boxID}{/link}{/if}">
+{if $action == 'edit' && !$lastVersion|empty}
+	<p class="info">{lang}wcf.acp.box.lastVersion{/lang}</p>
+{/if}
+
+<form id="formContainer" method="post" action="{if $action == 'add'}{link controller='BoxAdd'}{/link}{else}{link controller='BoxEdit' id=$boxID}{/link}{/if}">
 	<div class="section tabMenuContainer" data-active="{$activeTabMenuItem}" data-store="activeTabMenuItem" id="pageTabMenuContainer">
 		<nav class="tabMenu">
 			<ul>
@@ -169,77 +175,81 @@
 				</dl>
 			</div>
 			
-			<section class="section">
-				<h2 class="sectionTitle">{lang}wcf.acp.box.link{/lang}</h2>
-				
-				<dl>
-					<dt></dt>
-					<dd class="floated">
-						<label><input type="radio" name="linkType" value="none"{if $linkType == 'none'} checked{/if}> {lang}wcf.acp.box.linkType.none{/lang}</label>
-						<label><input type="radio" name="linkType" value="internal"{if $linkType == 'internal'} checked{/if}> {lang}wcf.acp.box.linkType.internal{/lang}</label>
-						<label><input type="radio" name="linkType" value="external"{if $linkType == 'external'} checked{/if}> {lang}wcf.acp.box.linkType.external{/lang}</label>
-					</dd>
-				</dl>
-				
-				<dl id="linkPageIDContainer"{if $errorField == 'linkPageID'} class="formError"{/if}{if $linkType != 'internal'} style="display: none;"{/if}>
-					<dt><label for="linkPageID">{lang}wcf.acp.page.page{/lang}</label></dt>
-					<dd>
-						<select name="linkPageID" id="linkPageID">
-							<option value="0">{lang}wcf.global.noSelection{/lang}</option>
-							
-							{foreach from=$pageNodeList item=pageNode}
-								<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $linkPageID} selected{/if} data-identifier="{@$pageNode->identifier}">{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
-							{/foreach}
-						</select>
-						{if $errorField == 'linkPageID'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.box.linkPageID.error.{@$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
-				
-				<dl id="linkPageObjectIDContainer"{if $errorField == 'linkPageObjectID'} class="formError"{/if}{if !$linkPageID || !$pageHandler[$linkPageID]|isset} style="display: none;"{/if}>
-					<dt><label for="linkPageObjectID">{lang}wcf.page.pageObjectID{/lang}</label></dt>
-					<dd>
-						<div class="inputAddon">
-							<input type="text" id="linkPageObjectID" name="linkPageObjectID" value="{$linkPageObjectID}" class="short">
-							<a href="#" id="searchLinkPageObjectID" class="inputSuffix button jsTooltip" title="{lang}wcf.page.pageObjectID.search{/lang}"><span class="icon icon16 fa-search"></span></a>
-						</div>
-						{if $errorField == 'linkPageObjectID'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.box.linkPageObjectID.error.{@$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
-				
-				<dl id="externalURLContainer"{if $errorField == 'externalURL'} class="formError"{/if}{if $linkType != 'external'} style="display: none;"{/if}>
-					<dt><label for="externalURL">{lang}wcf.acp.box.link.externalURL{/lang}</label></dt>
-					<dd>
-						<input type="text" name="externalURL" id="externalURL" value="{$externalURL}" class="long" maxlength="255" placeholder="http://">
-						{if $errorField == 'externalURL'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.box.link.externalURL.error.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-					</dd>
-				</dl>
-				
-				{event name='linkFields'}
-			</section>
+			{if $boxType === 'system'}
+				<input type="hidden" name="linkType" value="none">
+			{else}
+				<section class="section">
+					<h2 class="sectionTitle">{lang}wcf.acp.box.link{/lang}</h2>
+					
+					<dl>
+						<dt></dt>
+						<dd class="floated">
+							<label><input type="radio" name="linkType" value="none"{if $linkType == 'none'} checked{/if}> {lang}wcf.acp.box.linkType.none{/lang}</label>
+							<label><input type="radio" name="linkType" value="internal"{if $linkType == 'internal'} checked{/if}> {lang}wcf.acp.box.linkType.internal{/lang}</label>
+							<label><input type="radio" name="linkType" value="external"{if $linkType == 'external'} checked{/if}> {lang}wcf.acp.box.linkType.external{/lang}</label>
+						</dd>
+					</dl>
+					
+					<dl id="linkPageIDContainer"{if $errorField == 'linkPageID'} class="formError"{/if}{if $linkType != 'internal'} style="display: none;"{/if}>
+						<dt><label for="linkPageID">{lang}wcf.acp.page.page{/lang}</label></dt>
+						<dd>
+							<select name="linkPageID" id="linkPageID">
+								<option value="0">{lang}wcf.global.noSelection{/lang}</option>
+								
+								{foreach from=$pageNodeList item=pageNode}
+									<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $linkPageID} selected{/if} data-identifier="{@$pageNode->identifier}">{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+								{/foreach}
+							</select>
+							{if $errorField == 'linkPageID'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.box.linkPageID.error.{@$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					
+					<dl id="linkPageObjectIDContainer"{if $errorField == 'linkPageObjectID'} class="formError"{/if}{if !$linkPageID || !$pageHandler[$linkPageID]|isset} style="display: none;"{/if}>
+						<dt><label for="linkPageObjectID">{lang}wcf.page.pageObjectID{/lang}</label></dt>
+						<dd>
+							<div class="inputAddon">
+								<input type="text" id="linkPageObjectID" name="linkPageObjectID" value="{$linkPageObjectID}" class="short">
+								<a href="#" id="searchLinkPageObjectID" class="inputSuffix button jsTooltip" title="{lang}wcf.page.pageObjectID.search{/lang}"><span class="icon icon16 fa-search"></span></a>
+							</div>
+							{if $errorField == 'linkPageObjectID'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.box.linkPageObjectID.error.{@$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					
+					<dl id="externalURLContainer"{if $errorField == 'externalURL'} class="formError"{/if}{if $linkType != 'external'} style="display: none;"{/if}>
+						<dt><label for="externalURL">{lang}wcf.acp.box.link.externalURL{/lang}</label></dt>
+						<dd>
+							<input type="text" name="externalURL" id="externalURL" value="{$externalURL}" class="long" maxlength="255" placeholder="http://">
+							{if $errorField == 'externalURL'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.box.link.externalURL.error.{$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+					
+					{event name='linkFields'}
+				</section>
+			{/if}
 			
 			<div id="boxConditions">
 				{if $boxController && $boxController->getProcessor()|is_subclass_of:'wcf\system\box\IConditionBoxController'}
@@ -398,15 +408,7 @@
 					<dd>
 						<label><input type="checkbox" id="visibleEverywhere" name="visibleEverywhere" value="1"{if $visibleEverywhere} checked{/if}> {lang}wcf.acp.box.visibleEverywhere{/lang}</label>
 						<script data-relocate="true">
-							require(['Language', 'WoltLabSuite/Core/Ui/ItemList/Filter'], function(Language, UiItemListFilter) {
-								Language.addObject({
-									'wcf.global.filter.button.clear': '{lang}wcf.global.filter.button.clear{/lang}',
-									'wcf.global.filter.error.noMatches': '{lang}wcf.global.filter.error.noMatches{/lang}',
-									'wcf.global.filter.placeholder': '{lang}wcf.global.filter.placeholder{/lang}'
-								});
-								
-								new UiItemListFilter('boxVisibilitySettings');
-								
+							require([], function() {
 								// visibility toggle
 								var visibilityExceptionHidden = elById('visibilityExceptionHidden');
 								var visibilityExceptionVisible = elById('visibilityExceptionVisible');
@@ -426,13 +428,7 @@
 						<span id="visibilityExceptionHidden"{if !$visibleEverywhere} style="display: none"{/if}>{lang}wcf.acp.box.visibilityException.hidden{/lang}</span>
 					</dt>
 					<dd>
-						<ul class="scrollableCheckboxList" id="boxVisibilitySettings">
-							{foreach from=$pageNodeList item=pageNode}
-								<li{if $pageNode->getDepth() > 1} style="padding-left: {$pageNode->getDepth()*20-20}px"{/if}>
-									<label><input type="checkbox" name="pageIDs[]" value="{@$pageNode->pageID}"{if $pageNode->pageID|in_array:$pageIDs} checked{/if}> {$pageNode->name}</label>
-								</li>
-							{/foreach}
-						</ul>
+						{include file='scrollablePageCheckboxList' pageCheckboxListContainerID='boxVisibilitySettings' pageCheckboxID='pageIDs'}
 					</dd>
 				</dl>
 			</div>

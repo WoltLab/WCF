@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * Page comment manager implementation.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Comment\Manager
  */
@@ -23,6 +23,11 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
 	 * @inheritDoc
 	 */
 	protected $permissionAdd = 'user.page.canAddComment';
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $permissionAddWithoutModeration = 'user.page.canAddCommentWithoutModeration';
 	
 	/**
 	 * @inheritDoc
@@ -156,6 +161,7 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
 						// short output
 						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.pageComment', [
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+							'comment' => $comment,
 							'page' => $pages[$comment->objectID],
 							'like' => $like
 						]);
@@ -180,7 +186,8 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
 							'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'page' => $pages[$comment->objectID],
-							'like' => $like
+							'like' => $like,
+							'response' => $response
 						]);
 						$like->setTitle($text);
 						

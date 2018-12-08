@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Provides functions to edit notices.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Notice
  * 
@@ -35,7 +35,7 @@ class NoticeEditor extends DatabaseObjectEditor implements IEditableCachedObject
 			FROM	wcf".WCF_N."_notice";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$maxShowOrder = $statement->fetchColumn();
+		$maxShowOrder = $statement->fetchSingleColumn();
 		if (!$maxShowOrder) $maxShowOrder = 0;
 		
 		if (!$showOrder || $showOrder > $maxShowOrder) {

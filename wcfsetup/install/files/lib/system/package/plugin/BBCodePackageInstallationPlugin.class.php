@@ -5,6 +5,7 @@ use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeEditor;
 use wcf\data\package\PackageCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -13,11 +14,11 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes bbcodes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */
-class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -143,6 +144,13 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		$attributes = $data['attributes'];
 		unset($data['attributes']);
 		
+		if (!empty($row)) {
+			// allow updating of all values except for those controlling the editor button
+			unset($data['wysiwygIcon']);
+			unset($data['buttonLabel']);
+			unset($data['showButton']);
+		}
+		
 		/** @var BBCode $bbcode */
 		$bbcode = parent::import($row, $data);
 		
@@ -187,5 +195,12 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	 */
 	public static function getDefaultFilename() {
 		return 'bbcode.xml';
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
 	}
 }

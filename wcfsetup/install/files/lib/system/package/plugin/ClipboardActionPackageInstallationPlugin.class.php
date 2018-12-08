@@ -2,17 +2,18 @@
 namespace wcf\system\package\plugin;
 use wcf\data\clipboard\action\ClipboardAction;
 use wcf\data\clipboard\action\ClipboardActionEditor;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\WCF;
 
 /**
  * Installs, updates and deletes clipboard actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */
-class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -145,5 +146,12 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 				}
 			}
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
 	}
 }

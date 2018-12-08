@@ -2,11 +2,11 @@
  * Manages the sticky page header.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Header/Fixed
  */
-define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen'], function(Core, EventHandler, UiAlignment, UiCloseOverlay, UiScreen) {
+define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/SimpleDropdown', 'Ui/Screen'], function(Core, EventHandler, UiAlignment, UiCloseOverlay, UiSimpleDropdown, UiScreen) {
 	"use strict";
 	
 	var _pageHeader, _pageHeaderContainer, _pageHeaderPanel, _pageHeaderSearch, _searchInput, _topMenu, _userPanelSearchButton;
@@ -111,6 +111,10 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen'],
 			});
 			
 			_searchInput.blur();
+			
+			// close the scope selection
+			var scope = elBySel('.pageHeaderSearchType', _pageHeaderSearch);
+			UiSimpleDropdown.close(scope.id);
 		}
 	};
 });

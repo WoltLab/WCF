@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Handles object visit tracking.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\VisitTracker
  */
@@ -94,15 +94,19 @@ class VisitTracker extends SingletonFactory {
 			}
 		}
 		
+		$lifetime = ($this->availableObjectTypes[$objectType]->lifetime) ?: self::DEFAULT_LIFETIME;
+		$minimum = TIME_NOW - $lifetime;
+		
 		if (isset($this->userVisits[$objectTypeID])) {
-			return $this->userVisits[$objectTypeID];
+			// double times the lifetime period for existing visit data;
+			// equals 2 weeks for the default lifetime of 7 days
+			$minimum -= $lifetime;
+			
+			// using `max()` here will yield the most recent point in time
+			return max($this->userVisits[$objectTypeID], $minimum);
 		}
 		
-		if ($this->availableObjectTypes[$objectType]->lifetime) {
-			return TIME_NOW - $this->availableObjectTypes[$objectType]->lifetime;
-		}
-		
-		return TIME_NOW - self::DEFAULT_LIFETIME;
+		return $minimum;
 	}
 	
 	/**

@@ -8,7 +8,7 @@ use wcf\util\StringUtil;
  * Option type implementation for textareas.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -30,7 +30,7 @@ class TextareaOptionType extends TextOptionType {
 	public function getSearchFormElement(Option $option, $value) {
 		WCF::getTPL()->assign([
 			'option' => $option,
-			'searchOption' => $value !== null && ($value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName])),
+			'searchOption' => $this->forceSearchOption || ($value !== null && $value !== $option->defaultValue) || isset($_POST['searchOptions'][$option->optionName]),
 			'value' => $value
 		]);
 		return WCF::getTPL()->fetch('textareaSearchableOptionType');

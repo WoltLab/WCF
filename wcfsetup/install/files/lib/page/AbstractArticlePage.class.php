@@ -3,6 +3,7 @@ namespace wcf\page;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\content\ViewableArticleContent;
 use wcf\data\article\AccessibleArticleList;
+use wcf\data\article\ArticleAction;
 use wcf\data\article\ArticleEditor;
 use wcf\data\article\ViewableArticle;
 use wcf\data\tag\Tag;
@@ -18,7 +19,7 @@ use wcf\system\WCF;
  * Abstract implementation of the article page.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * @since	3.0
@@ -76,6 +77,12 @@ abstract class AbstractArticlePage extends AbstractPage {
 		if ($this->articleContent === null) {
 			throw new IllegalLinkException();
 		}
+		
+		// check if the language has been disabled
+		if ($this->articleContent->languageID && LanguageFactory::getInstance()->getLanguage($this->articleContent->languageID) === null) {
+			throw new IllegalLinkException();
+		}
+		
 		$this->article = ViewableArticle::getArticle($this->articleContent->articleID, false);
 		$this->category = $this->article->getCategory();
 		
@@ -107,6 +114,14 @@ abstract class AbstractArticlePage extends AbstractPage {
 		$articleEditor->updateCounters([
 			'views' => 1
 		]);
+		
+		// update article visit
+		if (ARTICLE_ENABLE_VISIT_TRACKING && $this->article->isNew()) {
+			$articleAction = new ArticleAction([$this->article->getDecoratedObject()], 'markAsRead', [
+				'viewableArticle' => $this->article
+			]);
+			$articleAction->executeAction();
+		}
 		
 		// get tags
 		if (MODULE_TAGGING && WCF::getSession()->getPermission('user.tag.canViewTag')) {
@@ -154,7 +169,7 @@ abstract class AbstractArticlePage extends AbstractPage {
 		
 		// set location
 		PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.CategoryArticleList', $this->article->categoryID, $this->article->getCategory());
-		foreach ($this->article->getCategory()->getParentCategories() as $parentCategory) {
+		foreach (array_reverse($this->article->getCategory()->getParentCategories()) as $parentCategory) {
 			PageLocationManager::getInstance()->addParentLocation('com.woltlab.wcf.CategoryArticleList', $parentCategory->categoryID, $parentCategory);
 		}
 	}

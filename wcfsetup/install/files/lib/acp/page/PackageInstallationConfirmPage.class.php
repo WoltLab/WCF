@@ -12,7 +12,7 @@ use wcf\system\WCFACP;
  * Shows a confirmation page prior to start installing.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  */
@@ -26,13 +26,13 @@ class PackageInstallationConfirmPage extends AbstractPage {
 	 * package installation dispatcher object
 	 * @var	PackageInstallationDispatcher
 	 */
-	public $packageInstallationDispatcher = null;
+	public $packageInstallationDispatcher;
 	
 	/**
 	 * package installation queue object
 	 * @var	PackageInstallationQueue
 	 */
-	public $queue = null;
+	public $queue;
 	
 	/**
 	 * queue id

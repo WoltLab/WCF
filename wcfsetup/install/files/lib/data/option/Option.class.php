@@ -4,13 +4,14 @@ use wcf\data\DatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
  * Represents an option.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Option
  *
@@ -28,7 +29,7 @@ use wcf\util\StringUtil;
  * @property-read	string		$permissions		comma separated list of user group permissions of which the active user needs to have at least one to set the option value
  * @property-read	string		$options		comma separated list of options of which at least one needs to be enabled for the option to be editable
  * @property-read	integer		$supportI18n		is `1` if the option supports different values for all available languages, otherwise `0`
- * @property-read	integer		$requireI18n		is `1` if `$supportI18n = 1` and the option's value has to explicily set for all values so that the `monolingual` option is not available, otherwise `0`
+ * @property-read	integer		$requireI18n		is `1` if `$supportI18n = 1` and the option's value has to explicitly set for all values so that the `monolingual` option is not available, otherwise `0`
  * @property-read	array		$additionalData		array with additional data of the option
  */
 class Option extends DatabaseObject {
@@ -82,6 +83,22 @@ class Option extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns the option with the given name or `null` if no such option exists.
+	 * 
+	 * @param	string		$optionName	name of the requested option
+	 * @return	Option|null	requested option
+	 */
+	public static function getOptionByName($optionName) {
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_option
+			WHERE	optionName = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$optionName]);
+		
+		return $statement->fetchObject(self::class);
+	}
+	
+	/**
 	 * Parses enableOptions.
 	 * 
 	 * @param	string		$optionData
@@ -91,7 +108,7 @@ class Option extends DatabaseObject {
 		$disableOptions = $enableOptions = '';
 		
 		if (!empty($optionData)) {
-			$options = explode(',', $optionData);
+			$options = ArrayUtil::trim(explode(',', $optionData));
 			
 			foreach ($options as $item) {
 				if ($item{0} == '!') {

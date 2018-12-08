@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\user\authentication\failure\UserAuthenticationFailure;
 use wcf\data\user\authentication\failure\UserAuthenticationFailureAction;
 use wcf\data\user\User;
+use wcf\data\user\UserProfile;
 use wcf\form\AbstractCaptchaForm;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\exception\NamedUserException;
@@ -21,7 +22,7 @@ use wcf\util\UserUtil;
  * Shows the acp login form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -56,21 +57,14 @@ class LoginForm extends AbstractCaptchaForm {
 	public $useCaptcha = false;
 	
 	/**
-	 * Creates a new LoginForm object.
-	 */
-	public function __run() {
-		if (WCF::getUser()->userID) {
-			throw new PermissionDeniedException();
-		}
-		
-		parent::__run();
-	}
-	
-	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
+		
+		if (WCF::getUser()->userID) {
+			throw new PermissionDeniedException();
+		}
 		
 		if (!empty($_REQUEST['url'])) {
 			$this->url = StringUtil::trim($_REQUEST['url']);
@@ -190,6 +184,13 @@ class LoginForm extends AbstractCaptchaForm {
 		}
 		
 		$this->validateUser();
+		
+		if (RequestHandler::getInstance()->isACPRequest() && $this->user !== null) {
+			$userProfile = new UserProfile($this->user);
+			if (!$userProfile->getPermission('admin.general.canUseAcp')) {
+				throw new UserInputException('username', 'acpNotAuthorized');
+			}
+		}
 	}
 	
 	/**

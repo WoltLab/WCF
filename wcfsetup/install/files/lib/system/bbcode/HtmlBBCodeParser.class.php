@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\bbcode;
+use wcf\data\bbcode\attribute\BBCodeAttribute;
 use wcf\system\exception\SystemException;
 use wcf\util\DOMUtil;
 use wcf\util\JSON;
@@ -15,7 +16,7 @@ use wcf\util\StringUtil;
  * not allowed to be directly provided by a user. 
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  * @since	3.0
@@ -32,6 +33,12 @@ class HtmlBBCodeParser extends BBCodeParser {
 	 * @var string[]
 	 */
 	public static $codeTagNames = ['kbd', 'pre'];
+	
+	/**
+	 * Google AMP support
+	 * @var boolean
+	 */
+	protected $isGoogleAmp = false;
 	
 	/**
 	 * list of open tags with name and uuid
@@ -75,6 +82,26 @@ class HtmlBBCodeParser extends BBCodeParser {
 		}
 		
 		return $this->parsedText;
+	}
+	
+	/**
+	 * Enables or disables Google AMP support.
+	 * 
+	 * @param       boolean         $isGoogleAmp
+	 * @since       3.1
+	 */
+	public function setIsGoogleAmp($isGoogleAmp) {
+		$this->isGoogleAmp = $isGoogleAmp;
+	}
+	
+	/**
+	 * Returns true if Google AMP support is enabled.
+	 * 
+	 * @return      boolean
+	 * @since       3.1
+	 */
+	public function getIsGoogleAmp() {
+		return $this->isGoogleAmp;
 	}
 	
 	/**
@@ -231,11 +258,14 @@ class HtmlBBCodeParser extends BBCodeParser {
 				if ($openingTag && $openingTag['name'] == $tag['name']) {
 					$hideBuffer = false;
 					// insert buffered content as attribute value
-					foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
-						if ($attribute->useText && !isset($openingTag['attributes'][$attribute->attributeNo])) {
-							$openingTag['attributes'][$attribute->attributeNo] = $buffer;
-							$hideBuffer = true;
-							break;
+					if (!empty($buffer)) {
+						foreach ($this->bbcodes[$tag['name']]->getAttributes() as $attribute) {
+							if ($attribute->useText && !isset($openingTag['attributes'][$attribute->attributeNo])) {
+								$openingTag['attributes'][$attribute->attributeNo] = $buffer;
+								$openingTag['useText'] = $attribute->attributeNo;
+								$hideBuffer = true;
+								break;
+							}
 						}
 					}
 					
@@ -243,13 +273,13 @@ class HtmlBBCodeParser extends BBCodeParser {
 					if ($this->isValidTag($openingTag)) {
 						if ($this->bbcodes[$tag['name']]->className) {
 							// difference to the original implementation: use the custom HTML element than to process them directly
-							$parsedTag = $this->compileTag($openingTag, $buffer, $tag);
+							$parsedTag = $this->compileTag($openingTag, ($hideBuffer ? '' : $buffer), $tag);
 						}
 						else {
 							// build tag
 							$parsedTag = $this->buildOpeningTag($openingTag);
 							$closingTag = $this->buildClosingTag($tag);
-							if (!empty($closingTag) && $hideBuffer) $parsedTag .= $buffer.$closingTag;
+							if (!empty($closingTag) && $hideBuffer) $parsedTag .= $closingTag;
 						}
 					}
 					else {
@@ -426,6 +456,10 @@ class HtmlBBCodeParser extends BBCodeParser {
 			
 			// uses base64 encoding to avoid an "escape" nightmare
 			$attributes = ' data-attributes="' . base64_encode(JSON::encode($tag['attributes'])) . '"';
+			
+			if (isset($tag['useText'])) {
+				$attributes .= ' data-use-text="' . $tag['useText'] . '"';
+			}
 		}
 		
 		return '<woltlab-metacode-marker data-name="' . $name . '" data-uuid="' . $uuid . '" data-source="' . base64_encode($tag['source']) . '"' . $attributes . ' />';
@@ -462,5 +496,36 @@ class HtmlBBCodeParser extends BBCodeParser {
 	 */
 	protected function isValidBBCodeName($name) {
 		return preg_match($this->validBBCodePattern, $name) === 1;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function isValidTagAttribute(array $tagAttributes, BBCodeAttribute $definedTagAttribute) {
+		// work-around for the broken `[wsm]` conversion in earlier versions
+		static $targetAttribute;
+		if ($targetAttribute === null) {
+			$bbcodes = BBCodeHandler::getInstance()->getBBCodes();
+			foreach ($bbcodes as $bbcode) {
+				if ($bbcode->bbcodeTag === 'wsm') {
+					$targetAttribute = false;
+					foreach ($bbcode->getAttributes() as $attribute) {
+						if ($attribute->attributeNo == 1) {
+							$targetAttribute = $attribute;
+						}
+					}
+					
+					break;
+				}
+			}
+		}
+		if ($targetAttribute && $definedTagAttribute === $targetAttribute) {
+			if (isset($tagAttributes[1]) && $tagAttributes[1] === '') {
+				// allow the 2nd attribute of `[wsm]` to be empty for compatibility reasons
+				return true;
+			}
+		}
+		
+		return parent::isValidTagAttribute($tagAttributes, $definedTagAttribute);
 	}
 }

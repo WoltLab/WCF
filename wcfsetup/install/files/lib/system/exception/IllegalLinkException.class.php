@@ -6,7 +6,7 @@ use wcf\system\WCF;
  * IllegalLinkException shows the unknown link error page.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Exception
  */
@@ -22,7 +22,7 @@ class IllegalLinkException extends NamedUserException {
 	 * @inheritDoc
 	 */
 	public function show() {
-		@header('HTTP/1.0 404 Not Found');
+		@header('HTTP/1.1 404 Not Found');
 		
 		WCF::getTPL()->assign([
 			'title' => WCF::getLanguage()->getDynamicVariable('wcf.page.error.illegalLink.title')

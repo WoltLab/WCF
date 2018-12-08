@@ -1,4 +1,4 @@
-@include screen-lg {
+@include screen-md-up {
 	.pageNavigation {
 		background-color: $wcfNavigationBackground;
 		color: $wcfNavigationText;
@@ -28,7 +28,9 @@
 	.boxesHeaderBoxes + .pageNavigation {
 		margin-top: 1px;
 	}
-	
+}
+
+@include screen-lg {
 	.pageNavigationIcons {
 		display: flex;
 		flex: 0 0 auto;
@@ -45,8 +47,44 @@
 	}
 }
 
+@include screen-sm-down {
+	.breadcrumbs {
+		margin-bottom: -5px;
+		margin-top: 5px;
+	}
+	
+	.breadcrumbs > ol > li {
+		display: none;
+		
+		&:last-child {
+			align-items: center;
+			color: $wcfContentDimmedText;
+			display: flex;
+			flex: 1;
+			
+			@include wcfFontDefault;
+			
+			&::before {
+				content: $fa-var-long-arrow-left;
+				flex: 0 auto;
+				font-family: FontAwesome;
+			}
+			
+			> a {
+				color: $wcfContentDimmedLink;
+				display: block;
+				flex: 1;
+				overflow: hidden;
+				padding: 5px 0 5px 10px;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+			}
+		}
+	}
+}
+
 @include screen-md-down {
-	.pageNavigation {
+	.pageNavigationIcons {
 		display: none;
 	}
 }

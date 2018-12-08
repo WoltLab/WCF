@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Abstract implementation of a category type.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Category
  */
@@ -45,7 +45,7 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	protected $permissionPrefix = '';
 	
 	/**
-	 * maximum category nesting lebel
+	 * maximum category nesting label
 	 * @var	integer
 	 */
 	protected $maximumNestingLevel = -1;
@@ -73,6 +73,13 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute(array_merge([$categoryEditor->parentCategoryID], $conditionBuilder->getParameters()));
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function beforeDeletion(CategoryEditor $categoryEditor) {
+		// does nothing
 	}
 	
 	/**

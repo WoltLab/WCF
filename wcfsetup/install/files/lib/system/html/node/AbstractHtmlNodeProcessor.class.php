@@ -8,7 +8,7 @@ use wcf\util\JSON;
  * Default implementation for html node processors.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Node
  * @since       3.0
@@ -76,6 +76,10 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		// would conflict with already existing entities when reverting them.
 		@$this->document->loadHTML('<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /></head><body>' . $html . '</body></html>');
 		
+		// flush libxml's error buffer, after all we don't care for any errors caused
+		// by the `loadHTML()` call above anyway
+		libxml_clear_errors();
+		
 		// fix the `<pre>` linebreaks again
 		$pres = $this->document->getElementsByTagName('pre');
 		for ($i = 0, $length = $pres->length; $i < $length; $i++) {
@@ -109,11 +113,15 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 				$obj = $data['object'];
 				$string = $obj->replaceTag($data['data']);
 				
-				if (mb_strpos($string, '<!-- META_CODE_INNER_CONTENT -->') !== false) {
-					return str_replace('<!-- META_CODE_INNER_CONTENT -->', $matches['content'], $string);
-				}
-				else if (mb_strpos($string, '&lt;!-- META_CODE_INNER_CONTENT --&gt;') !== false) {
-					return str_replace('&lt;!-- META_CODE_INNER_CONTENT --&gt;', $matches['content'], $string);
+				if (!isset($data['data']['skipInnerContent']) || $data['data']['skipInnerContent'] !== true) {
+					if (mb_strpos($string, '<!-- META_CODE_INNER_CONTENT -->') !== false) {
+						return str_replace('<!-- META_CODE_INNER_CONTENT -->', $matches['content'], $string);
+					}
+					else {
+						if (mb_strpos($string, '&lt;!-- META_CODE_INNER_CONTENT --&gt;') !== false) {
+							return str_replace('&lt;!-- META_CODE_INNER_CONTENT --&gt;', $matches['content'], $string);
+						}
+					}
 				}
 				
 				return $string;
@@ -124,6 +132,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		// work-around for a libxml bug that causes a single space between
 		// some inline elements to be dropped
 		$html = str_replace('&nbsp;', ' ', $html);
+		$html = preg_replace('~>\x{00A0}<~u', '> <', $html);
 		
 		return $html;
 	}

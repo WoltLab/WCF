@@ -27,9 +27,15 @@
 	padding: 10px 0;
 	
 	@include screen-sm-up {
-		float: left;
-		margin-right: 20px;
-		max-width: 50%;
+		&.pollContainerFullWidth {
+			margin-bottom: 20px;
+		}
+		
+		&:not(.pollContainerFullWidth) {
+			float: left;
+			margin-right: 20px;
+			max-width: 50%;
+		}
 	}
 	
 	h2 {

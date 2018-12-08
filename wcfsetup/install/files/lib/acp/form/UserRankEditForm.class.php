@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the user rank edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -69,12 +69,13 @@ class UserRankEditForm extends UserRankAddForm {
 			'requiredPoints' => $this->requiredPoints,
 			'rankImage' => $this->rankImage,
 			'repeatImage' => $this->repeatImage,
-			'requiredGender' => $this->requiredGender
+			'requiredGender' => $this->requiredGender,
+			'hideTitle' => $this->hideTitle
 		])]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
-		// reset values if non-custom value was choosen
+		// reset values if non-custom value was chosen
 		if ($this->cssClassName != 'custom') $this->customCssClassName = '';
 		
 		// show success message
@@ -100,6 +101,7 @@ class UserRankEditForm extends UserRankAddForm {
 			$this->requiredGender = $this->rank->requiredGender;
 			$this->repeatImage = $this->rank->repeatImage;
 			$this->rankImage = $this->rank->rankImage;
+			$this->hideTitle = $this->rank->hideTitle;
 		}
 	}
 	

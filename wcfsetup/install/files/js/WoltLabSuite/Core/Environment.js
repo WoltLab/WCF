@@ -2,7 +2,7 @@
  * Provides basic details on the JavaScript environment.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Environment
  */
@@ -15,7 +15,7 @@ define([], function() {
 	var _touch = false;
 	
 	/**
-	 * @exports	WoltLabSuite/Core/Enviroment
+	 * @exports	WoltLabSuite/Core/Environment
 	 */
 	return {
 		/**
@@ -38,7 +38,7 @@ define([], function() {
 					else if (property.indexOf('-moz-') === 0) {
 						_browser = 'firefox';
 					}
-					else if (property.indexOf('-webkit-') === 0) {
+					else if (_browser !== 'firefox' && property.indexOf('-webkit-') === 0) {
 						_browser = 'safari';
 					}
 				}

@@ -3,22 +3,24 @@ namespace wcf\system\user\notification\event;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\comment\CommentHandler;
 use wcf\system\email\Email;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
-use wcf\system\WCF;
 
 /**
  * User notification event for profile's owner for comment responses.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  *
  * @method	CommentResponseUserNotificationObject	getUserNotificationObject()
  */
-class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractSharedUserNotificationEvent {
+class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent {
+	use TTestableCommentResponseUserNotificationEvent;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -29,7 +31,10 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 	 */
 	protected function prepare() {
 		CommentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->commentID);
-		UserProfileRuntimeCache::getInstance()->cacheObjectID($this->additionalData['userID']);
+		UserProfileRuntimeCache::getInstance()->cacheObjectIDs([
+			$this->additionalData['userID'],
+			$this->additionalData['objectID']
+		]);
 	}
 	
 	/**
@@ -71,13 +76,16 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 				'authors' => array_values($authors),
 				'count' => $count,
 				'others' => $count - 1,
-				'guestTimesTriggered' => $this->notification->guestTimesTriggered
+				'guestTimesTriggered' => $this->notification->guestTimesTriggered,
+				'commentID' => $this->getUserNotificationObject()->commentID
 			]);
 		}
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponseOwner.message', [
 			'author' => $this->author,
-			'commentAuthor' => $commentAuthor
+			'commentAuthor' => $commentAuthor,
+			'commentID' => $this->getUserNotificationObject()->commentID,
+			'responseID' => $this->getUserNotificationObject()->responseID
 		]);
 	}
 	
@@ -97,13 +105,16 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 		$messageID = '<com.woltlab.wcf.user.profileComment.notification/'.$comment->commentID.'@'.Email::getHost().'>';
 		
 		return [
-			'template' => 'email_notification_userProfileCommentResponseOwner',
+			'template' => 'email_notification_commentResponseOwner',
 			'application' => 'wcf',
 			'in-reply-to' => [$messageID],
 			'references' => [$messageID],
 			'variables' => [
 				'commentAuthor' => $commentAuthor,
-				'owner' => $owner
+				'commentID' => $this->getUserNotificationObject()->commentID,
+				'owner' => $owner,
+				'responseID' => $this->getUserNotificationObject()->responseID,
+				'languageVariablePrefix' => 'wcf.user.notification.commentResponseOwner'
 			]
 		];
 	}
@@ -112,7 +123,11 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('User', ['object' => WCF::getUser()], '#wall');
+		return LinkHandler::getInstance()->getLink(
+			'User',
+			['object' => UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])],
+			'#wall/comment' . $this->getUserNotificationObject()->commentID
+		);
 	}
 	
 	/**
@@ -120,5 +135,16 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 	 */
 	public function getEventHash() {
 		return sha1($this->eventID . '-' . $this->getUserNotificationObject()->commentID);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.1
+	 */
+	protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author) {
+		return [
+			'objectID' => $recipient->userID,
+			'objectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user.profileComment')
+		];
 	}
 }

@@ -10,6 +10,7 @@ use wcf\system\cache\builder\LanguageCacheBuilder;
 use wcf\system\database\exception\DatabaseException;
 use wcf\system\database\util\SQLParser;
 use wcf\system\database\MySQLDatabase;
+use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\io\File;
@@ -42,7 +43,7 @@ define('ENABLE_BENCHMARK', 0);
  * Executes the installation of the basic WCF systems.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
@@ -209,7 +210,7 @@ class WCFSetup extends WCF {
 	 */
 	protected function calcProgress($currentStep) {
 		// calculate progress
-		$progress = round((100 / 18) * ++$currentStep, 0);
+		$progress = round((100 / 25) * ++$currentStep, 0);
 		self::getTPL()->assign(['progress' => $progress]);
 	}
 	
@@ -278,22 +279,22 @@ class WCFSetup extends WCF {
 			break;
 			
 			case 'logFiles':
-				$this->calcProgress(14);
+				$this->calcProgress(21);
 				$this->logFiles();
 			break;
 			
 			case 'installLanguage':
-				$this->calcProgress(15);
+				$this->calcProgress(22);
 				$this->installLanguage();
 			break;
 			
 			case 'createUser':
-				$this->calcProgress(16);
+				$this->calcProgress(23);
 				$this->createUser();
 			break;
 			
 			case 'installPackages':
-				$this->calcProgress(17);
+				$this->calcProgress(24);
 				$this->installPackages();
 			break;
 		}
@@ -458,7 +459,7 @@ class WCFSetup extends WCF {
 		}
 		
 		$documentRoot = FileUtil::unifyDirSeparator(realpath($_SERVER['DOCUMENT_ROOT']));
-		if (self::$developerMode && isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR'])) {
+		if (self::$developerMode && (isset($_ENV['WCFSETUP_USEDEFAULTWCFDIR']) || DevtoolsSetup::getInstance()->useDefaultInstallPath())) {
 			// resolve path relative to document root
 			$relativePath = FileUtil::getRelativePath($documentRoot, INSTALL_SCRIPT_DIR);
 			foreach ($packages as $application => $packageData) {
@@ -616,12 +617,25 @@ class WCFSetup extends WCF {
 	 * Shows the page for configuring the database connection.
 	 */
 	protected function configureDB() {
+		$attemptConnection = isset($_POST['send']);
+		
 		if (self::$developerMode && isset($_ENV['WCFSETUP_DBHOST'])) {
 			$dbHost = $_ENV['WCFSETUP_DBHOST'];
 			$dbUser = $_ENV['WCFSETUP_DBUSER'];
 			$dbPassword = $_ENV['WCFSETUP_DBPASSWORD'];
 			$dbName = $_ENV['WCFSETUP_DBNAME'];
 			$dbNumber = 1;
+			
+			$attemptConnection = true;
+		}
+		else if (self::$developerMode && ($config = DevtoolsSetup::getInstance()->getDatabaseConfig()) !== null) {
+			$dbHost = $config['host'];
+			$dbUser = $config['username'];
+			$dbPassword = $config['password'];
+			$dbName = $config['dbName'];
+			$dbNumber = $config['dbNumber'];
+			
+			if ($config['auto']) $attemptConnection = true;
 		}
 		else {
 			$dbHost = 'localhost';
@@ -631,7 +645,7 @@ class WCFSetup extends WCF {
 			$dbNumber = 1;
 		}
 		
-		if (isset($_POST['send']) || (self::$developerMode && isset($_ENV['WCFSETUP_DBHOST']))) {
+		if ($attemptConnection) {
 			if (isset($_POST['dbHost'])) $dbHost = $_POST['dbHost'];
 			if (isset($_POST['dbUser'])) $dbUser = $_POST['dbUser'];
 			if (isset($_POST['dbPassword'])) $dbPassword = $_POST['dbPassword'];
@@ -641,9 +655,10 @@ class WCFSetup extends WCF {
 			if (isset($_POST['dbNumber'])) $dbNumber = max(0, intval($_POST['dbNumber']));
 			
 			// get port
+			$dbHostWithoutPort = $dbHost;
 			$dbPort = 0;
 			if (preg_match('/^(.+?):(\d+)$/', $dbHost, $match)) {
-				$dbHost = $match[1];
+				$dbHostWithoutPort = $match[1];
 				$dbPort = intval($match[2]);
 			}
 			
@@ -652,7 +667,7 @@ class WCFSetup extends WCF {
 				// check connection data
 				/** @var \wcf\system\database\Database $db */
 				try {
-					$db = new MySQLDatabase($dbHost, $dbUser, $dbPassword, $dbName, $dbPort, true);
+					$db = new MySQLDatabase($dbHostWithoutPort, $dbUser, $dbPassword, $dbName, $dbPort, true, !!(self::$developerMode));
 				}
 				catch (DatabaseException $e) {
 					// work-around for older MySQL versions that don't know utf8mb4
@@ -667,9 +682,17 @@ class WCFSetup extends WCF {
 				$sqlVersion = $db->getVersion();
 				$compareSQLVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
 				if (stripos($sqlVersion, 'MariaDB')) {
-					// MariaDB 10.0.22+
-					if (!(version_compare($compareSQLVersion, '10.0.22') >= 0)) {
-						throw new SystemException("Insufficient MariaDB version '".$compareSQLVersion."'. Version '10.0.22' or greater is needed.");
+					// MariaDB 5.5.47+ or 10.0.22+ are required
+					// https://jira.mariadb.org/browse/MDEV-8756
+					if ($compareSQLVersion[0] === '5') {
+						// MariaDB 5.5.47+
+						if (!(version_compare($compareSQLVersion, '5.5.47') >= 0)) {
+							throw new SystemException("Insufficient MariaDB version '".$compareSQLVersion."'. Version '5.5.47' or greater, or version '10.0.22' or greater is needed.");
+						}
+					}
+					else if (!(version_compare($compareSQLVersion, '10.0.22') >= 0)) {
+						// MariaDB 10.0.22+
+						throw new SystemException("Insufficient MariaDB version '".$compareSQLVersion."'. Version '5.5.47' or greater, or version '10.0.22' or greater is needed.");
 					}
 				}
 				else {
@@ -695,6 +718,17 @@ class WCFSetup extends WCF {
 					throw new SystemException("Support for InnoDB is missing.");
 				}
 				
+				// check for PHP's MySQL native driver
+				/*
+				$sql = "SELECT 1";
+				$statement = $db->prepareStatement($sql);
+				$statement->execute();
+				// MySQL native driver understands data types, libmysqlclient does not
+				if ($statement->fetchSingleColumn() !== 1) {
+					throw new SystemException("MySQLnd is not being used for database communication.");
+				}
+				*/
+				
 				// check for table conflicts
 				$conflictedTables = $this->getConflictedTables($db, $dbNumber);
 				
@@ -704,7 +738,7 @@ class WCFSetup extends WCF {
 					// write configuration to config.inc.php
 					$file = new File(WCF_DIR.'config.inc.php');
 					$file->write("<?php\n");
-					$file->write("\$dbHost = '".str_replace("'", "\\'", $dbHost)."';\n");
+					$file->write("\$dbHost = '".str_replace("'", "\\'", $dbHostWithoutPort)."';\n");
 					$file->write("\$dbPort = ".$dbPort.";\n");
 					$file->write("\$dbUser = '".str_replace("'", "\\'", $dbUser)."';\n");
 					$file->write("\$dbPassword = '".str_replace("'", "\\'", $dbPassword)."';\n");
@@ -1016,7 +1050,8 @@ class WCFSetup extends WCF {
 						'email' => $email,
 						'languageID' => $languageID,
 						'password' => $password,
-						'username' => $username
+						'username' => $username,
+						'signatureEnableHtml' => 1
 					],
 					'groups' => [
 						1,
@@ -1198,8 +1233,36 @@ class WCFSetup extends WCF {
 			]);
 		}
 		
+		// determine the (randomized) cookie prefix
+		$useRandomCookiePrefix = true;
+		if (self::$developerMode && DevtoolsSetup::getInstance()->forceStaticCookiePrefix()) {
+			$useRandomCookiePrefix = false;
+		}
+		
+		$prefix = 'wsc31_';
+		if ($useRandomCookiePrefix) {
+			$cookieNames = array_keys($_COOKIE);
+			while (true) {
+				$prefix = 'wsc_' . substr(sha1(mt_rand()), 0, 6) . '_';
+				$isValid = true;
+				foreach ($cookieNames as $cookieName) {
+					if (strpos($cookieName, $prefix) === 0) {
+						$isValid = false;
+						break;
+					}
+				}
+				
+				if ($isValid) {
+					break;
+				}
+			}
+			
+			// the options have not been imported yet
+			file_put_contents(WCF_DIR . 'cookiePrefix.txt', $prefix);
+		}
+		
 		// login as admin
-		define('COOKIE_PREFIX', 'wsc30_');
+		define('COOKIE_PREFIX', $prefix);
 		
 		$factory = new ACPSessionFactory();
 		$factory->load();

@@ -6,7 +6,7 @@ use wcf\data\page\PageCache;
  * Represents a page request.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  */
@@ -156,6 +156,10 @@ class Request {
 	public function isAvailableDuringOfflineMode() {
 		if (defined($this->className . '::AVAILABLE_DURING_OFFLINE_MODE') && constant($this->className . '::AVAILABLE_DURING_OFFLINE_MODE')) {
 			return true;
+		}
+		
+		if ($this->getPageID() && ($page = PageCache::getInstance()->getPage($this->getPageID()))) {
+			if ($page->availableDuringOfflineMode) return true;
 		}
 		
 		return false;

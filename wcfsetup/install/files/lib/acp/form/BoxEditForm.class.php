@@ -9,13 +9,14 @@ use wcf\system\box\IConditionBoxController;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\language\LanguageFactory;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 
 /**
  * Shows the box edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since	3.0
@@ -105,6 +106,7 @@ class BoxEditForm extends BoxAddForm {
 			'position' => $this->position,
 			'showOrder' => $this->showOrder,
 			'visibleEverywhere' => $this->visibleEverywhere,
+			'lastUpdateTime' => TIME_NOW,
 			'cssClassName' => $this->cssClassName,
 			'showHeader' => $this->showHeader,
 			'linkPageID' => $this->linkPageID,
@@ -213,7 +215,8 @@ class BoxEditForm extends BoxAddForm {
 		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'boxID' => $this->boxID,
-			'box' => $this->box
+			'box' => $this->box,
+			'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.box', $this->boxID)
 		]);
 	}
 }

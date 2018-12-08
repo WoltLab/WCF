@@ -58,7 +58,12 @@ a {
 .main {
 	flex: 1 0 auto;
 	
-	@include screen-md-down {
+	@include screen-xs {
+		padding: 20px 0;
+		width: 100%;
+	}
+	
+	@include screen-sm-md {
 		padding: 40px 0;
 		width: 100%;
 	}
@@ -141,6 +146,7 @@ a {
 		
 		> .section {
 			display: table-cell;
+			vertical-align: top;
 			width: 49%;
 			
 			& + .section {

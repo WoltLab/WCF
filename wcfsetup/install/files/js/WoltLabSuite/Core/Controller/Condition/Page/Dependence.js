@@ -2,12 +2,23 @@
  * Shows and hides an element that depends on certain selected pages when setting up conditions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Controller/Condition/Page/Dependence
  */
 define(['Dom/ChangeListener', 'Dom/Traverse', 'EventHandler', 'ObjectMap'], function(DomChangeListener, DomTraverse, EventHandler, ObjectMap) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			register: function() {},
+			_checkVisibility: function() {},
+			_hideDependentElement: function() {},
+			_showDependentElement: function() {}
+		};
+		return Fake;
+	}
 	
 	var _pages = elBySelAll('input[name="pageIDs[]"]');
 	var _dependentElements = [];

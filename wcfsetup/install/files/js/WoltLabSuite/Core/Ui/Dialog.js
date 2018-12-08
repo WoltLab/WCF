@@ -2,7 +2,7 @@
  * Modal dialog handler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Dialog
  */
@@ -10,12 +10,14 @@ define(
 	[
 		'enquire',      'Ajax',       'Core',      'Dictionary',
 		'Environment',  'Language',   'ObjectMap', 'Dom/ChangeListener',
-		'Dom/Traverse', 'Dom/Util',   'Ui/Confirmation', 'Ui/Screen', 'Ui/SimpleDropdown'
+		'Dom/Traverse', 'Dom/Util',   'Ui/Confirmation', 'Ui/Screen', 'Ui/SimpleDropdown',
+		'EventHandler', 'List',       'EventKey'
 	],
 	function(
 		enquire,        Ajax,         Core,        Dictionary,
 		Environment,    Language,     ObjectMap,   DomChangeListener,
-		DomTraverse,    DomUtil,      UiConfirmation, UiScreen, UiSimpleDropdown
+		DomTraverse,    DomUtil,      UiConfirmation, UiScreen, UiSimpleDropdown,
+		EventHandler,   List,         EventKey
 	)
 {
 	"use strict";
@@ -23,10 +25,15 @@ define(
 	var _activeDialog = null;
 	var _container = null;
 	var _dialogs = new Dictionary();
-	var _dialogObjects = new ObjectMap();
 	var _dialogFullHeight = false;
+	var _dialogObjects = new ObjectMap();
+	var _dialogToObject = new Dictionary();
 	var _keyupListener = null;
 	var _staticDialogs = elByClass('jsStaticDialog');
+	var _validCallbacks = ['onBeforeClose', 'onClose', 'onShow'];
+	
+	// list of supported `input[type]` values for dialog submit
+	var _validInputTypes = ['number', 'password', 'search', 'tel', 'text', 'url'];
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Ui/Dialog
@@ -47,7 +54,7 @@ define(
 				if (event.target === _container) {
 					event.preventDefault();
 				}
-			});
+			}, { passive: false });
 			
 			elById('content').appendChild(_container);
 			
@@ -97,6 +104,7 @@ define(
 				if (id && (container = elById(id))) {
 					((function(button, container) {
 						container.classList.remove('jsStaticDialogContent');
+						elData(container, 'is-static-dialog', true);
 						elHide(container);
 						button.addEventListener(WCF_CLICK_EVENT, this.openStatic.bind(this, container.id, null, { title: elData(container, 'title') }));
 					}).bind(this))(button, container);
@@ -134,7 +142,7 @@ define(
 			if (setupData.source === undefined) {
 				var dialogElement = elById(setupData.id);
 				if (dialogElement === null) {
-					throw new Error("Element id '" + setupData.id + "' is invalid and no source attribute was given.");
+					throw new Error("Element id '" + setupData.id + "' is invalid and no source attribute was given. If you want to use the `html` argument instead, please add `source: null` to your dialog configuration.");
 				}
 				
 				setupData.source = document.createDocumentFragment();
@@ -189,6 +197,7 @@ define(
 			}
 			
 			_dialogObjects.set(callbackObject, dialogData);
+			_dialogToObject.set(setupData.id, callbackObject);
 			
 			return this.openStatic(setupData.id, setupData.source, setupData.options, createOnly);
 		},
@@ -208,6 +217,12 @@ define(
 		 */
 		openStatic: function(id, html, options, createOnly) {
 			document.documentElement.classList.add('pageOverlayActive');
+			
+			if (Environment.platform() !== 'desktop') {
+				if (!this.isOpen(id)) {
+					UiScreen.scrollDisable();
+				}
+			}
 			
 			if (_dialogs.has(id)) {
 				this._updateDialog(id, html);
@@ -246,17 +261,12 @@ define(
 			// are focused, this will freeze the screen and force Safari to scroll
 			// to the input field
 			if (Environment.platform() === 'ios') {
-				UiScreen.scrollDisable();
-				
 				window.setTimeout((function () {
 					var input = elBySel('input, textarea', data.content);
 					if (input !== null) {
 						input.focus();
 					}
 				}).bind(this), 200);
-			}
-			else if (Environment.platform() !== 'desktop') {
-				UiScreen.scrollDisable();
 			}
 			
 			return data;
@@ -269,6 +279,27 @@ define(
 		 * @param	{string}	        title		dialog title
 		 */
 		setTitle: function(id, title) {
+			id = this._getDialogId(id);
+			
+			var data = _dialogs.get(id);
+			if (data === undefined) {
+				throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
+			}
+			
+			var dialogTitle = elByClass('dialogTitle', data.dialog);
+			if (dialogTitle.length) {
+				dialogTitle[0].textContent = title;
+			}
+		},
+		
+		/**
+		 * Sets a callback function on runtime.
+		 * 
+		 * @param       {(string|object)}       id              element id
+		 * @param       {string}                key             callback identifier
+		 * @param       {?function}             value           callback function or `null`
+		 */
+		setCallback: function(id, key, value) {
 			if (typeof id === 'object') {
 				var dialogData = _dialogObjects.get(id);
 				if (dialogData !== undefined) {
@@ -281,10 +312,15 @@ define(
 				throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
 			}
 			
-			var dialogTitle = elByClass('dialogTitle', data.dialog);
-			if (dialogTitle.length) {
-				dialogTitle[0].textContent = title;
+			if (_validCallbacks.indexOf(key) === -1) {
+				throw new Error("Invalid callback identifier, '" + key + "' is not recognized.");
 			}
+			
+			if (typeof value !== 'function' && value !== null) {
+				throw new Error("Only functions or the 'null' value are acceptable callback values ('" + typeof value+ "' given).");
+			}
+			
+			data[key] = value;
 		},
 		
 		/**
@@ -341,14 +377,37 @@ define(
 			dialog.appendChild(contentContainer);
 			
 			contentContainer.addEventListener('wheel', function (event) {
-				// positive value: scrolling up
-				if (event.wheelDelta > 0 && contentContainer.scrollTop === 0) {
+				var allowScroll = false;
+				var element = event.target, clientHeight, scrollHeight, scrollTop;
+				while (true) {
+					clientHeight = element.clientHeight;
+					scrollHeight = element.scrollHeight;
+					
+					if (clientHeight < scrollHeight) {
+						scrollTop = element.scrollTop;
+						
+						// negative value: scrolling up
+						if (event.deltaY < 0 && scrollTop > 0) {
+							allowScroll = true;
+							break;
+						}
+						else if (event.deltaY > 0 && (scrollTop + clientHeight < scrollHeight)) {
+							allowScroll = true;
+							break;
+						}
+					}
+					
+					if (!element || element === contentContainer) {
+						break;
+					}
+					
+					element = element.parentNode;
+				}
+				
+				if (allowScroll === false) {
 					event.preventDefault();
 				}
-				else if (event.wheelDelta < 0 && (contentContainer.scrollTop + contentContainer.clientHeight === contentContainer.scrollHeight)) {
-					event.preventDefault();
-				}
-			});
+			}, { passive: false });
 			
 			var content;
 			if (element === null) {
@@ -367,14 +426,17 @@ define(
 						}
 					}
 					
-					if (children[0].nodeName !== 'div' || children.length > 1) {
+					if (children[0].nodeName !== 'DIV' || children.length > 1) {
 						content = elCreate('div');
 						content.id = id;
 						content.appendChild(html);
 					}
 					else {
-						content = html;
+						content = children[0];
 					}
+				}
+				else {
+					throw new TypeError("'html' must either be a string or a DocumentFragment");
 				}
 			}
 			else {
@@ -389,12 +451,16 @@ define(
 			
 			_dialogs.set(id, {
 				backdropCloseOnClick: options.backdropCloseOnClick,
+				closable: options.closable,
 				content: content,
 				dialog: dialog,
 				header: header,
 				onBeforeClose: options.onBeforeClose,
 				onClose: options.onClose,
-				onShow: options.onShow
+				onShow: options.onShow,
+				
+				submitButton: null,
+				inputFields: new List()
 			});
 			
 			DomUtil.prepend(dialog, _container);
@@ -425,7 +491,7 @@ define(
 			}
 			
 			if (elAttr(data.dialog, 'aria-hidden') === 'true') {
-				if (elAttr(_container, 'aria-hidden') === 'true') {
+				if (data.closable && elAttr(_container, 'aria-hidden') === 'true') {
 					window.addEventListener('keyup', _keyupListener);
 				}
 				
@@ -437,11 +503,25 @@ define(
 				// set focus on first applicable element
 				var focusElement = elBySel('.jsDialogAutoFocus', data.dialog);
 				if (focusElement !== null && focusElement.offsetParent !== null) {
-					focusElement.focus();
+					if (focusElement.id === 'username' || focusElement.name === 'username') {
+						if (Environment.browser() === 'safari' && Environment.platform() === 'ios') {
+							// iOS Safari's username/password autofill breaks if the input field is focused 
+							focusElement = null;
+						}
+					}
+					
+					if (focusElement) focusElement.focus();
 				}
 				
 				if (typeof data.onShow === 'function') {
 					data.onShow(data.content);
+				}
+				
+				if (elDataBool(data.content, 'is-static-dialog')) {
+					EventHandler.fire('com.woltlab.wcf.dialog', 'openStatic', {
+						content: data.content,
+						id: id
+					});
 				}
 				
 				// close existing dropdowns
@@ -460,6 +540,8 @@ define(
 		 * @param	{string}	id	element id
 		 */
 		rebuild: function(id) {
+			id = this._getDialogId(id);
+			
 			var data = _dialogs.get(id);
 			if (data === undefined) {
 				throw new Error("Expected a valid dialog id, '" + id + "' does not match any active dialog.");
@@ -506,6 +588,98 @@ define(
 					data.content.style.removeProperty('margin-right');
 				}
 			}
+			
+			// Chrome and Safari use heavy anti-aliasing when the dialog's width
+			// cannot be evenly divided, causing the whole text to become blurry
+			if (Environment.browser() === 'chrome' || Environment.browser() === 'safari') {
+				// `clientWidth` will report an integer value that isn't rounded properly (e.g. 0.59 -> 0)
+				var floatWidth = parseFloat(window.getComputedStyle(data.content).width);
+				var needsFix = (Math.round(floatWidth) % 2) !== 0;
+				
+				data.content.parentNode.classList[(needsFix ? 'add' : 'remove')]('jsWebKitFractionalPixel');
+			}
+			
+			var callbackObject = _dialogToObject.get(id);
+			//noinspection JSUnresolvedVariable
+			if (callbackObject !== undefined && typeof callbackObject._dialogSubmit === 'function') {
+				var inputFields = elBySelAll('input[data-dialog-submit-on-enter="true"]', data.content);
+				
+				var submitButton = elBySel('.formSubmit > input[type="submit"], .formSubmit > button[data-type="submit"]', data.content);
+				if (submitButton === null) {
+					// check if there is at least one input field with submit handling,
+					// otherwise we'll assume the dialog has not been populated yet
+					if (inputFields.length === 0) {
+						console.warn("Broken dialog, expected a submit button.", data.content);
+					}
+					
+					return;
+				}
+				
+				if (data.submitButton !== submitButton) {
+					data.submitButton = submitButton;
+					
+					submitButton.addEventListener(WCF_CLICK_EVENT, (function (event) {
+						event.preventDefault();
+						
+						this._submit(id);
+					}).bind(this));
+					
+					// bind input fields
+					var inputField, _callbackKeydown = null;
+					for (var i = 0, length = inputFields.length; i < length; i++) {
+						inputField = inputFields[i];
+						
+						if (data.inputFields.has(inputField)) continue;
+						
+						if (_validInputTypes.indexOf(inputField.type) === -1) {
+							console.warn("Unsupported input type.", inputField);
+							continue;
+						}
+						
+						data.inputFields.add(inputField);
+						
+						if (_callbackKeydown === null) {
+							_callbackKeydown = (function (event) {
+								if (EventKey.Enter(event)) {
+									event.preventDefault();
+									
+									this._submit(id);
+								}
+							}).bind(this);
+						}
+						inputField.addEventListener('keydown', _callbackKeydown);
+					}
+				}
+			}
+		},
+		
+		/**
+		 * Submits the dialog.
+		 * 
+		 * @param       {string}        id      dialog id
+		 * @protected
+		 */
+		_submit: function (id) {
+			var data = _dialogs.get(id);
+			
+			var isValid = true;
+			data.inputFields.forEach(function (inputField) {
+				if (inputField.required) {
+					if (inputField.value.trim() === '') {
+						elInnerError(inputField, Language.get('wcf.global.form.error.empty'));
+						
+						isValid = false;
+					}
+					else {
+						elInnerError(inputField, false);
+					}
+				}
+			});
+			
+			if (isValid) {
+				//noinspection JSUnresolvedFunction
+				_dialogToObject.get(id)._dialogSubmit();
+			}
 		},
 		
 		/**
@@ -551,12 +725,7 @@ define(
 		 * @param	{(string|object)}	id	element id or callback object
 		 */
 		close: function(id) {
-			if (typeof id === 'object') {
-				var dialogData = _dialogObjects.get(id);
-				if (dialogData !== undefined) {
-					id = dialogData.id;
-				}
-			}
+			id = this._getDialogId(id);
 			
 			var data = _dialogs.get(id);
 			if (data === undefined) {
@@ -564,6 +733,11 @@ define(
 			}
 			
 			elAttr(data.dialog, 'aria-hidden', 'true');
+			
+			// avoid keyboard focus on a now hidden element 
+			if (document.activeElement.closest('.dialogContainer') === data.dialog) {
+				document.activeElement.blur();
+			}
 			
 			if (typeof data.onClose === 'function') {
 				data.onClose(id);
@@ -583,7 +757,9 @@ define(
 				elAttr(_container, 'aria-hidden', 'true');
 				elData(_container, 'close-on-click', 'false');
 				
-				window.removeEventListener('keyup', _keyupListener);
+				if (data.closable) {
+					window.removeEventListener('keyup', _keyupListener);
+				}
 				document.documentElement.classList.remove('pageOverlayActive');
 			}
 			else {
@@ -620,15 +796,22 @@ define(
 		/**
 		 * Destroys a dialog instance.
 		 * 
-		 * @param	{(string|object)}	id	element id or callback object
+		 * @param	{Object}	callbackObject  the same object that was used to invoke `_dialogSetup()` on first call
 		 */
-		destroy: function(id) {
-			id = this._getDialogId(id);
-			if (this.isOpen(id)) {
-				this.close(id);
+		destroy: function(callbackObject) {
+			if (typeof callbackObject !== 'object' || callbackObject instanceof String) {
+				throw new TypeError("Expected the callback object as parameter.");
 			}
 			
-			_dialogs.delete(id);
+			if (_dialogObjects.has(callbackObject)) {
+				var id = _dialogObjects.get(callbackObject).id;
+				if (this.isOpen(id)) {
+					this.close(id);
+				}
+				
+				_dialogs.delete(id);
+				_dialogObjects.delete(callbackObject);
+			}
 		},
 		
 		/**

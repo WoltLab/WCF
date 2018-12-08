@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * Shows the form to create a new ad notice.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -240,5 +240,16 @@ class AdAddForm extends AbstractForm {
 				}
 			}
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function show() {
+		// work-around for a known Chrome bug that causes the XSS auditor
+		// to incorrectly detect JavaScript inside a textarea
+		@header('X-XSS-Protection: 0');
+		
+		parent::show();
 	}
 }

@@ -8,6 +8,14 @@
 	<p class="error">{lang}wcf.acp.index.tmpBroken{/lang}</p>
 {/if}
 
+{if $recaptchaWithoutKey}
+	<p class="error">{lang}wcf.acp.index.recaptchaWithoutKey{/lang}</p>
+{/if}
+
+{if !VISITOR_USE_TINY_BUILD}
+	<p class="info">{lang}wcf.acp.index.tinyBuild{/lang}</p>
+{/if}
+
 {if $usersAwaitingApproval}
 	<p class="info">{lang}wcf.acp.user.usersAwaitingApprovalInfo{/lang}</p>
 {/if}
@@ -60,12 +68,16 @@
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.acp.index.system.software{/lang}</h2>
 			
-			{event name='softwareVersions'}
-			
 			<dl>
-				<dt>{lang}wcf.acp.index.system.software.wcfVersion{/lang}</dt>
-				<dd>{@WCF_VERSION}</dd>
+				<dt>{lang}wcf.acp.index.system.software.apiVersion{/lang}</dt>
+				<dd>{@WSC_API_VERSION}</dd>
 			</dl>
+			{if !$__wcf->getSupportedLegacyApiVersions()|empty}
+				<dl>
+					<dt>{lang}wcf.acp.index.system.software.legacyApiVersions{/lang}</dt>
+					<dd><small>{implode from=$__wcf->getSupportedLegacyApiVersions() item=version glue=', '}{$version}{/implode}</small></dd>
+				</dl>
+			{/if}
 			
 			{event name='softwareFields'}
 		</section>
@@ -134,6 +146,7 @@
 					<ul class="inlineList commaSeparated">
 						<li>Tim D&uuml;sterhus</li>
 						<li>Alexander Ebert</li>
+						<li>Joshua R&uuml;sweg</li>
 						<li>Matthias Schmidt</li>
 						<li>Marcel Werk</li>
 					</ul>
@@ -165,7 +178,7 @@
 			
 			<dl>
 				<dt></dt>
-				<dd>Copyright &copy; 2001-2017 WoltLab&reg; GmbH. All rights reserved.</dd>
+				<dd>Copyright &copy; 2001-2018 WoltLab&reg; GmbH. All rights reserved.</dd>
 			</dl>
 			
 			<dl>

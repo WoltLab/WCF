@@ -7,7 +7,7 @@ use wcf\data\moderation\queue\ViewableModerationQueue;
  * Default interface for moderation queue handlers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Moderation\Queue
  */
@@ -86,7 +86,7 @@ interface IModerationQueueHandler {
 	
 	/**
 	 * Returns the prefix of language items for notifications for comments
-	 * and comment reponses on moderation queues of this type. 
+	 * and comment responses on moderation queues of this type.
 	 * 
 	 * @return	string
 	 * @since	3.0

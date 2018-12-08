@@ -41,8 +41,10 @@
 					<xs:element name="pageType" minOccurs="1">
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
-								<xs:enumeration value="system" />
+								<xs:enumeration value="html" />
 								<xs:enumeration value="text" />
+								<xs:enumeration value="tpl" />
+								<xs:enumeration value="system" />
 							</xs:restriction>
 						</xs:simpleType>
 					</xs:element>
@@ -55,6 +57,11 @@
 					<xs:element name="parent" type="woltlab_varchar" minOccurs="0" />
 					<xs:element name="hasFixedParent" type="woltlab_boolean" minOccurs="0" />
 					<xs:element name="requireObjectID" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="availableDuringOfflineMode" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="allowSpidersToIndex" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="excludeFromLandingPage" type="woltlab_boolean" minOccurs="0" />
+					<xs:element name="cssClassName" type="woltlab_varchar" minOccurs="0" />
+					<xs:element name="controllerCustomURL" type="xs:string" minOccurs="0" />
 				</xs:choice>
 			</xs:extension>
 		</xs:complexContent>

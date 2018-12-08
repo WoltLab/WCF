@@ -2,15 +2,36 @@
  * Provides access and editing of message properties.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Message/Manager
  */
 define(['Ajax', 'Core', 'Dictionary', 'Language', 'Dom/ChangeListener', 'Dom/Util'], function(Ajax, Core, Dictionary, Language, DomChangeListener, DomUtil) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			rebuild: function() {},
+			getPermission: function() {},
+			getPropertyValue: function() {},
+			update: function() {},
+			updateItems: function() {},
+			updateAllItems: function() {},
+			setNote: function() {},
+			_update: function() {},
+			_updateState: function() {},
+			_toggleMessageStatus: function() {},
+			_getAttributeName: function() {},
+			_ajaxSuccess: function() {},
+			_ajaxSetup: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
-	 * @param       {Object}        options         initilization options
+	 * @param       {Object}        options         initialization options
 	 * @constructor
 	 */
 	function UiMessageManager(options) { this.init(options); }
@@ -18,7 +39,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Language', 'Dom/ChangeListener', 'Dom/Uti
 		/**
 		 * Initializes a new manager instance.
 		 * 
-		 * @param       {Object}        options         initilization options
+		 * @param       {Object}        options         initialization options
 		 */
 		init: function(options) {
 			this._elements = null;

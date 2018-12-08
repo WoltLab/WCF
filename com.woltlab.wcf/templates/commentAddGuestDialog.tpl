@@ -22,4 +22,5 @@
 
 <div class="formSubmit">
 	<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+	<button data-type="cancel">{lang}wcf.global.button.cancel{/lang}</button>
 </div>

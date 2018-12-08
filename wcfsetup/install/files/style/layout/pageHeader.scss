@@ -318,6 +318,9 @@
 		
 		.pageHeaderLogoSmall {
 			max-height: 30px;
+			
+			/* prevent over-sized logos from overlapping the user panel buttons */
+			max-width: 100%;
 		}
 	}
 }
@@ -501,6 +504,10 @@
 		&::before {
 			content: $fa-var-user;
 		}
+	}
+	
+	.userPanel.hideUserPanel::before {
+		visibility: hidden !important;
 	}
 	
 	.pageHeaderSearch {

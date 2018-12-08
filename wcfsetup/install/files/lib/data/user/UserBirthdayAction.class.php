@@ -3,6 +3,7 @@ namespace wcf\data\user;
 use wcf\data\user\option\UserOption;
 use wcf\data\IGroupedUserListAction;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\UserBirthdayCache;
 use wcf\system\WCF;
@@ -11,7 +12,7 @@ use wcf\system\WCF;
  * Shows a list of user birthdays.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
  */
@@ -50,11 +51,9 @@ class UserBirthdayAction extends UserProfileAction implements IGroupedUserListAc
 			$birthdayUserOption = $userOptions['birthday'];
 			
 			$userIDs = UserBirthdayCache::getInstance()->getBirthdays($month, $day);
-			$userList = new UserProfileList();
-			$userList->setObjectIDs($userIDs);
-			$userList->readObjects();
+			$userProfiles = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
 			
-			foreach ($userList->getObjects() as $user) {
+			foreach ($userProfiles as $user) {
 				$birthdayUserOption->setUser($user->getDecoratedObject());
 				
 				if (!$user->isProtected() && $birthdayUserOption->isVisible() && $user->getAge($year) >= 0) {

@@ -2,6 +2,7 @@
 namespace wcf\system\package\plugin;
 use wcf\data\menu\item\MenuItem;
 use wcf\data\menu\item\MenuItemEditor;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -9,12 +10,12 @@ use wcf\system\WCF;
  * Installs, updates and deletes menu items.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
  */
-class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -187,7 +188,6 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 * @param	integer		$menuID
 	 * @param	integer		$parentItemID
 	 * @return	integer
-	 * @throws	\wcf\system\database\DatabaseException
 	 */
 	protected function getItemOrder($menuID, $parentItemID = null) {
 		$sql = "SELECT	MAX(showOrder) AS showOrder
@@ -201,5 +201,12 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		$row = $statement->fetchSingleRow();
 		
 		return (!$row['showOrder']) ? 1 : $row['showOrder'] + 1;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return ['language', 'menu', 'page'];
 	}
 }

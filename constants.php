@@ -3,7 +3,7 @@
  * Defines constants for autocompletion in IDEs. This file is not meant to be actively used anywhere! 
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core
  */
@@ -29,6 +29,7 @@ define('LAST_UPDATE_TIME', 0);
 define('WCF_UUID', 'bd096261-15f4-5dc1-9767-01ce08d7c80b');
 define('WOLTLAB_BRANDING', 1);
 define('MODULE_MASTER_PASSWORD', 0);
+define('VISITOR_USE_TINY_BUILD', 0);
 define('ENABLE_DEBUG_MODE', 1);
 define('ENABLE_BENCHMARK', 0);
 define('LOG_IP_ADDRESS', 1);
@@ -92,8 +93,8 @@ define('PROFILE_MAIL_USE_CAPTCHA', 1);
 define('SEARCH_USE_CAPTCHA', 1);
 define('RECAPTCHA_PUBLICKEY', '');
 define('RECAPTCHA_PRIVATEKEY', '');
+define('RECAPTCHA_PRIVATEKEY_INVISIBLE', '');
 define('TIMEZONE', 'Europe/London');
-define('JQUERY_SOURCE', 'google');
 define('GOOGLE_MAPS_ZOOM', '13');
 define('GOOGLE_MAPS_TYPE', 'hybrid');
 define('GOOGLE_MAPS_ENABLE_SCALE_CONTROL', 0);
@@ -131,8 +132,11 @@ define('MODULE_EDIT_HISTORY', 1);
 define('EDIT_HISTORY_EXPIRATION', 90);
 define('ENABLE_SHARE_BUTTONS', 1);
 define('SHARE_BUTTONS_PROVIDERS', '');
+define('MESSAGE_FORCE_SECURE_IMAGES', 0);
 define('MODULE_IMAGE_PROXY', 0);
+define('IMAGE_PROXY_INSECURE_ONLY', 0);
 define('IMAGE_PROXY_EXPIRATION', 14);
+define('IMAGE_PROXY_HOST_WHITELIST', '');
 define('ENABLE_CENSORSHIP', 0);
 define('CENSORED_WORDS', '');
 define('REGISTER_ENABLE_PASSWORD_SECURITY_CHECK', 0);
@@ -195,6 +199,7 @@ define('SEARCH_RESULTS_PER_PAGE', 20);
 define('SEARCH_DEFAULT_SORT_FIELD', 'time');
 define('SEARCH_DEFAULT_SORT_ORDER', 'DESC');
 define('POLL_MAX_OPTIONS', 20);
+define('POLL_FULL_WIDTH', 0);
 define('MEDIA_SMALL_THUMBNAIL_WIDTH', 280);
 define('MEDIA_SMALL_THUMBNAIL_HEIGHT', 210);
 define('MEDIA_SMALL_THUMBNAIL_RETAIN_DIMENSIONS', 1);
@@ -216,3 +221,20 @@ define('LANGUAGE_USE_INFORMAL_VARIANT', 0);
 define('SHOW_STYLE_CHANGER', 0);
 define('ARTICLE_SORT_ORDER', 'DESC');
 define('USE_PAGE_TITLE_ON_LANDING_PAGE', 1);
+define('OG_IMAGE', '');
+define('HEAD_CODE', '');
+define('AVATAR_DEFAULT_TYPE', 'initials');
+define('ARTICLE_ENABLE_VISIT_TRACKING', 1);
+define('ENABLE_AD_ROTATION', 1);
+define('ENABLE_POLLING', 1);
+define('ENABLE_DESKTOP_NOTIFICATIONS', 1);
+define('FB_SHARE_APP_ID', '');
+define('MODULE_CONTACT_FORM', 0);
+define('SITEMAP_INDEX_TIME_FRAME', 365);
+define('MODULE_TROPHY', 1);
+define('ENABLE_DEVELOPER_TOOLS', 0);
+define('FORCE_LOGIN', 0);
+define('DESKTOP_NOTIFICATION_PACKAGE_ID', 1);
+define('PAGE_LOGO_LINK_TO_APP_DEFAULT', 1);
+define('MODULE_USER_COVER_PHOTO', 1);
+define('IMAGE_ALLOW_EXTERNAL_SOURCE', 0);

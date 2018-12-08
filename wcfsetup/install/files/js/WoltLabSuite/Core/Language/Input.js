@@ -2,7 +2,7 @@
  * I18n interface for input and textarea fields.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Language/Input
  */
@@ -52,6 +52,21 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			_values.set(elementId, unescapedValues);
 			
 			this._initElement(elementId, element, unescapedValues, availableLanguages, forceSelection);
+		},
+		
+		/**
+		 * Registers a callback for an element.
+		 * 
+		 * @param       {string}        elementId
+		 * @param       {string}        eventName
+		 * @param       {function}      callback
+		 */
+		registerCallback: function (elementId, eventName, callback) {
+			if (!_values.has(elementId)) {
+				throw new Error("Unknown element id '" + elementId + "'.");
+			}
+			
+			_elements.get(elementId).callbacks.set(eventName, callback);
 		},
 		
 		/**
@@ -157,6 +172,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			
 			_elements.set(elementId, {
 				buttonLabel: button.children[0],
+				callbacks: new Dictionary(),
 				element: element,
 				languageId: 0,
 				isEnabled: true,
@@ -192,7 +208,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		_select: function(elementId, languageId, isInit) {
 			var data = _elements.get(elementId);
 			
-			var dropdownMenu = UiSimpleDropdown.getDropdownMenu(data.element.parentNode.id);
+			var dropdownMenu = UiSimpleDropdown.getDropdownMenu(data.element.closest('.inputAddon').id);
 			var item, label = '';
 			for (var i = 0, length = dropdownMenu.childElementCount; i < length; i++) {
 				item = dropdownMenu.children[i];
@@ -228,6 +244,10 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			if (!isInit) {
 				data.element.blur();
 				data.element.focus();
+			}
+			
+			if (data.callbacks.has('select')) {
+				data.callbacks.get('select')(data.element);
 			}
 		},
 		
@@ -282,6 +302,10 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 				data = _elements.get(elementId);
 				if (data.isEnabled) {
 					values = _values.get(elementId);
+					
+					if (data.callbacks.has('submit')) {
+						data.callbacks.get('submit')(data.element);
+					}
 					
 					// update with current value
 					if (data.languageId) {
@@ -346,6 +370,9 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 			if (values.has(0)) {
 				element.element.value = values.get(0);
 				values['delete'](0);
+				_values.set(elementId, values);
+				this._select(elementId, 0, true);
+				return;
 			}
 			
 			_values.set(elementId, values);
@@ -363,7 +390,7 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		disable: function(elementId) {
 			var element = _elements.get(elementId);
 			if (element === undefined) {
-				throw new Error("Expected a valid i18n input element, '" + elementId + "' is not i18n input field.");
+				throw new Error("Expected a valid element, '" + elementId + "' is not an i18n input field.");
 			}
 			
 			if (!element.isEnabled) return;

@@ -4,7 +4,7 @@
  * and runs modules that are needed on page load.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Bootstrap
  */
@@ -13,13 +13,15 @@ define(
 		'favico',                  'enquire',                'perfect-scrollbar',      'WoltLabSuite/Core/Date/Time/Relative',
 		'Ui/SimpleDropdown',       'WoltLabSuite/Core/Ui/Mobile',  'WoltLabSuite/Core/Ui/TabMenu', 'WoltLabSuite/Core/Ui/FlexibleMenu',
 		'Ui/Dialog',               'WoltLabSuite/Core/Ui/Tooltip', 'WoltLabSuite/Core/Language',   'WoltLabSuite/Core/Environment',
-		'WoltLabSuite/Core/Date/Picker', 'EventHandler',           'Core',                   'WoltLabSuite/Core/Ui/Page/JumpToTop'
+		'WoltLabSuite/Core/Date/Picker', 'EventHandler',           'Core',                   'WoltLabSuite/Core/Ui/Page/JumpToTop',
+		'Devtools'
 	], 
 	function(
 		 favico,                   enquire,                  perfectScrollbar,         DateTimeRelative,
 		 UiSimpleDropdown,         UiMobile,                 UiTabMenu,                UiFlexibleMenu,
 		 UiDialog,                 UiTooltip,                Language,                 Environment,
-		 DatePicker,               EventHandler,             Core,                     UiPageJumpToTop
+		 DatePicker,               EventHandler,             Core,                     UiPageJumpToTop,
+	         Devtools
 	)
 {
 	"use strict";
@@ -51,6 +53,9 @@ define(
 				enableMobileMenu: true
 			}, options);
 			
+			//noinspection JSUnresolvedVariable
+			if (window.ENABLE_DEVELOPER_TOOLS) Devtools._internal_.enable();
+			
 			Environment.setup();
 			
 			DateTimeRelative.setup();
@@ -65,8 +70,6 @@ define(
 			UiDialog.setup();
 			UiTooltip.setup();
 			
-			new UiPageJumpToTop();
-			
 			// convert method=get into method=post
 			var forms = elBySelAll('form[method=get]');
 			for (var i = 0, length = forms.length; i < length; i++) {
@@ -79,11 +82,17 @@ define(
 				};
 			}
 			
-			// DEBUG ONLY
 			var interval = 0;
 			interval = window.setInterval(function() {
 				if (typeof window.jQuery === 'function') {
 					window.clearInterval(interval);
+					
+					// the 'jump to top' button triggers style recalculation/layout,
+					// putting it at the end of the jQuery queue avoids trashing the
+					// layout too early and thus delaying the page initialization
+					window.jQuery(function() {
+						new UiPageJumpToTop();
+					});
 					
 					window.jQuery.holdReady(false);
 				}

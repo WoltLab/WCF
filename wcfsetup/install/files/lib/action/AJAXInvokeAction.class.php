@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * Default implementation for AJAX-based method calls.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Action
  */
@@ -35,7 +35,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 * action object
 	 * @var	SingletonFactory
 	 */
-	public $actionObject = null;
+	public $actionObject;
 	
 	/**
 	 * class name
@@ -53,7 +53,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	 * results of the executed action
 	 * @var	mixed
 	 */
-	protected $response = null;
+	protected $response;
 	
 	/**
 	 * @inheritDoc
@@ -162,7 +162,7 @@ class AJAXInvokeAction extends AbstractSecureAction {
 	}
 	
 	/**
-	 * Throws an previously catched exception while maintaining the propriate stacktrace.
+	 * Throws an previously caught exception while maintaining the propriate stacktrace.
 	 * 
 	 * @param	\Exception|\Throwable	$e
 	 * @throws	AJAXException
@@ -189,13 +189,15 @@ class AJAXInvokeAction extends AbstractSecureAction {
 			throw new AJAXException($exception->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), [
 				'errorMessage' => $exception->getMessage(),
 				'errorType' => $e->getType(),
-				'fieldName' => $exception->getFieldName()
+				'fieldName' => $exception->getFieldName(),
+				'realErrorMessage' => $exception->getErrorMessage()
 			]);
 		}
 		else if ($e instanceof ValidateActionException) {
 			throw new AJAXException($e->getMessage(), AJAXException::BAD_PARAMETERS, $e->getTraceAsString(), [
 				'errorMessage' => $e->getMessage(),
-				'fieldName' => $e->getFieldName()
+				'fieldName' => $e->getFieldName(),
+				'realErrorMessage' => $e->getErrorMessage()
 			]);
 		}
 		else if ($e instanceof NamedUserException) {

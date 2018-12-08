@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Basis class for a tree menu.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Menu
  */
@@ -27,7 +27,7 @@ abstract class TreeMenu extends SingletonFactory {
 	
 	/**
 	 * list of all menu items
-	 * @var	ITreeMenuItem[]
+	 * @var	ITreeMenuItem[][]
 	 */
 	public $menuItems = null;
 	

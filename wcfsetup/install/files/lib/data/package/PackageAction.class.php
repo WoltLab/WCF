@@ -13,7 +13,7 @@ use wcf\util\JSON;
  * Executes package-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package
  * 
@@ -58,7 +58,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 		
 		if (empty($this->parameters['username'])) {
 			$conditions = new PreparedStatementConditionBuilder();
-			$conditions->add("serverURL IN (?)", [['http://store.woltlab.com/maelstrom/', 'http://store.woltlab.com/typhoon/']]);
+			$conditions->add("serverURL REGEXP ?", ['https?://store\.woltlab\.com/[a-z]+/']);
 			$conditions->add("loginUsername <> ''");
 			$conditions->add("loginPassword <> ''");
 			
@@ -95,7 +95,7 @@ class PackageAction extends AbstractDatabaseObjectAction {
 			];
 		}
 		
-		$request = new HTTPRequest('https://api.woltlab.com/1.0/customer/purchases/list.json', [
+		$request = new HTTPRequest('https://api.woltlab.com/1.1/customer/purchases/list.json', [
 			'method' => 'POST'
 		], [
 			'username' => $this->parameters['username'],

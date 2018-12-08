@@ -1,6 +1,6 @@
 {include file='userMenuSidebar'}
 
-{include file='header'}
+{include file='header' __disableAds=true __sidebarLeftHasMenu=true}
 
 {if $__wcf->user->disableAvatar}
 	<p class="error">{lang}wcf.user.avatar.error.disabled{/lang}</p>

@@ -36,7 +36,6 @@
 	<rule ref="Squiz.ControlStructures.LowercaseDeclaration" />
 	<rule ref="Squiz.Operators.IncrementDecrementUsage" />
 	<rule ref="Squiz.Operators.ValidLogicalOperators" />
-	<rule ref="Squiz.PHP.ForbiddenFunctions" />
 	<rule ref="Squiz.Scope.MethodScope" />
 	<rule ref="Squiz.Strings.EchoedStrings" />
 	<rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace" />
@@ -46,11 +45,9 @@
 	<rule ref="WCF.Functions.OpeningFunctionBraceKernighanRitchie" />
 	<rule ref="WCF.Methods.MethodDeclaration" />
 	<rule ref="WCF.Namespaces.ClassMustBeImported" />
-	<rule ref="WCF.Namespaces.SortedUseDeclaration" />
 	<rule ref="WCF.Namespaces.UseDeclaration" />
 	<rule ref="WCF.WhiteSpace.SuperfluousWhitespace" />
 	<rule ref="Zend.Files.ClosingTag" />
-	
 	
 	<!-- Use Unix newlines -->
 	<rule ref="Generic.Files.LineEndings">

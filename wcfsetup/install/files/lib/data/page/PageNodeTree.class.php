@@ -5,7 +5,7 @@ namespace wcf\data\page;
  * Represents a page node tree.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Page
  * @since	3.0
@@ -103,7 +103,7 @@ class PageNodeTree {
 	}
 	
 	/**
-	 * Returns the iteratable node list.
+	 * Returns the iterable node list.
 	 *
 	 * @return	\RecursiveIteratorIterator
 	 */

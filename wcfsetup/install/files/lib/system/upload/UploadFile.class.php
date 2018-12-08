@@ -5,7 +5,7 @@ namespace wcf\system\upload;
  * Represents a file upload.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Upload
  */
@@ -51,6 +51,12 @@ class UploadFile {
 	 * @var	string
 	 */
 	protected $validationErrorType = '';
+	
+	/**
+	 * additional data for validation errors
+	 * @var array
+	 */
+	protected $validationErrorAdditionalData = [];
 	
 	/**
 	 * Creates a new UploadFile object.
@@ -145,9 +151,11 @@ class UploadFile {
 	 * Sets the validation error type.
 	 * 
 	 * @param	string		$validationErrorType
+	 * @param       array           $additionalData
 	 */
-	public function setValidationErrorType($validationErrorType) {
+	public function setValidationErrorType($validationErrorType, array $additionalData = []) {
 		$this->validationErrorType = $validationErrorType;
+		$this->validationErrorAdditionalData = $additionalData;
 	}
 	
 	/**
@@ -157,6 +165,15 @@ class UploadFile {
 	 */
 	public function getValidationErrorType() {
 		return $this->validationErrorType;
+	}
+	
+	/**
+	 * Returns the validation error additional data array.
+	 * 
+	 * @return	array
+	 */
+	public function getValidationErrorAdditionalData() {
+		return $this->validationErrorAdditionalData;
 	}
 	
 	/**

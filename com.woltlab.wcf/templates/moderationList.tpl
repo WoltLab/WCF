@@ -2,8 +2,8 @@
 
 {capture assign='contentTitle'}{if $status == 2}{lang}wcf.moderation.doneItems{/lang}{else}{lang}wcf.moderation.outstandingItems{/lang}{/if} <span class="badge">{#$items}</span>{/capture}
 
-{capture assign='sidebarLeft'}
-	<section class="box">
+{capture assign='sidebarRight'}
+	<section class="box" data-static-box-identifier="com.woltlab.wcf.ModerationListFilters">
 		{* moderation type *}
 		<h2 class="boxTitle">{lang}wcf.moderation.filterByType{/lang}</h2>
 		
@@ -60,31 +60,40 @@
 {/hascontent}
 
 {if $objects|count}
-	<div class="section tabularBox messageGroupList moderationList">
-		<table class="table">
-			<thead>
-				<tr>
-					<th class="columnText columnTitle" colspan="2">{lang}wcf.moderation.title{/lang}</th>
-					<th class="columnText columnAssignedUserID{if $sortField == 'assignedUsername'} active {@$sortOrder}{/if}"><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField=assignedUsername&sortOrder={if $sortField == 'assignedUsername' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.moderation.assignedUser{/lang}</a></th>
-					<th class="columnDigits columnComments{if $sortField == 'comments'} active {@$sortOrder}{/if}"><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField=comments&sortOrder={if $sortField == 'comments' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.comments{/lang}</a></th>
-					<th class="columnDate columnLastChangeTime{if $sortField == 'lastChangeTime'} active {@$sortOrder}{/if}"><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField=lastChangeTime&sortOrder={if $sortField == 'lastChangeTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.moderation.lastChangeTime{/lang}</a></th>
+	<div class="section tabularBox messageGroupList moderationList moderationQueueEntryList">
+		<ol class="tabularList">
+			<li class="tabularListRow tabularListRowHead">
+				<ol class="tabularListColumns">
+					<li class="columnSubject">{lang}wcf.moderation.title{/lang}</li>
+					<li class="columnStats{if $sortField == 'comments'} active {@$sortOrder}{/if}"><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField=comments&sortOrder={if $sortField == 'comments' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.comments{/lang}</a></li>
+					<li class="columnLastPost{if $sortField === 'lastChangeTime'} active {@$sortOrder}{/if}"><a href="{link controller='ModerationList'}definitionID={@$definitionID}&assignedUserID={@$assignedUserID}&status={@$status}&pageNo={@$pageNo}&sortField=lastChangeTime&sortOrder={if $sortField == 'lastChangeTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.moderation.lastChangeTime{/lang}</a></li>
 					
 					{event name='columnHeads'}
-				</tr>
-			</thead>
+				</ol>
+			</li>
 			
-			<tbody>
-				{foreach from=$objects item=entry}
-					<tr class="moderationQueueEntry{if $entry->isNew()} new{/if}" data-queue-id="{@$entry->queueID}">
-						<td class="columnIcon columnAvatar">
+			{foreach from=$objects item=entry}
+				<li class="tabularListRow">
+					<ol class="tabularListColumns messageGroup moderationQueueEntry{if $entry->isNew()} new{/if}" data-queue-id="{@$entry->queueID}">
+						<li class="columnIcon columnAvatar">
 							<div>
 								<p{if $entry->isNew()} title="{lang}wcf.moderation.markAsRead.doubleClick{/lang}"{/if}>{@$entry->getUserProfile()->getAvatar()->getImageTag(48)}</p>
+								
+								{if $entry->assignedUserID}
+									<small class="myAvatar jsTooltip" title="{lang}wcf.moderation.assignedUser{/lang}">{@$entry->getAssignedUserProfile()->getAvatar()->getImageTag(24)}</small>
+								{/if}
 							</div>
-						</td>
-						<td class="columnText columnSubject">
+						</li>
+						<li class="columnSubject">
+							<ul class="labelList">
+								<li><span class="badge label">{$entry->getLabel()}</span></li>
+							</ul>
+							
 							<h3>
-								<span class="badge label">{$entry->getLabel()}</span>
-								<a href="{$entry->getLink()}" class="messageGroupLink">{$entry->getTitle()|tableWordwrap}</a>
+								<a href="{$entry->getLink()}" class="messageGroupLink">{$entry->getTitle()}</a>
+								{if $entry->comments}
+									<span class="badge messageGroupCounterMobile">{@$entry->comments|shortUnit}</span>
+								{/if}
 							</h3>
 							
 							<ul class="inlineList dotSeparated small messageGroupInfo">
@@ -94,16 +103,30 @@
 								
 								{event name='messageGroupInfo'}
 							</ul>
-						</td>
-						<td class="columnText columnAssignedUserID">{if $entry->assignedUserID}<a href="{link controller='User' id=$entry->assignedUserID}{/link}" class="userLink" data-user-id="{@$entry->assignedUserID}">{$entry->assignedUsername}</a>{/if}</td>
-						<td class="columnDigits columnComments">{#$entry->comments}</td>
-						<td class="columnDate columnLastChangeTime">{if $entry->lastChangeTime}{@$entry->lastChangeTime|time}{/if}</td>
+							
+							<ul class="messageGroupInfoMobile">
+								<li class="messageGroupAuthorMobile">{$entry->getAffectedObject()->getUsername()}</li>
+								<li class="messageGroupLastPostTimeMobile">{if $entry->lastChangeTime}{@$entry->lastChangeTime|time}{/if}</li>
+							</ul>
+							
+							{if $entry->assignedUserID}
+								<small class="moderationQueueEntryAssignedUser">
+									{lang}wcf.moderation.assignedUser{/lang}: <a href="{link controller='User' id=$entry->assignedUserID}{/link}" class="userLink" data-user-id="{@$entry->assignedUserID}">{$entry->assignedUsername}</a>
+								</small>
+							{/if}
+							
+							{event name='moderationQueueEntryData'}
+						</li>
+						<li class="columnStats">{@$entry->comments|shortUnit}</li>
+						<li class="columnLastPost">
+							{if $entry->lastChangeTime}{@$entry->lastChangeTime|time}{/if}
+						</li>
 						
 						{event name='columns'}
-					</tr>
-				{/foreach}
-			</tbody>
-		</table>
+					</ol>
+				</li>
+			{/foreach}
+		</ol>
 	</div>
 	
 	<footer class="contentFooter">

@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Shows a media file.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * @since	3.0
@@ -117,6 +117,10 @@ class MediaPage extends AbstractPage {
 		}
 		
 		if (isset($_REQUEST['thumbnail'])) $this->thumbnail = StringUtil::trim($_REQUEST['thumbnail']);
+		if ($this->thumbnail === 'original') {
+			// The 'original' size is required by the editor, but is not a valid thumbnail size.  
+			$this->thumbnail = '';
+		}
 		if ($this->thumbnail && !isset(Media::getThumbnailSizes()[$this->thumbnail])) {
 			throw new IllegalLinkException();
 		}

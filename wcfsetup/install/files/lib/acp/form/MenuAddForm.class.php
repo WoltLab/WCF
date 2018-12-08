@@ -5,6 +5,7 @@ use wcf\data\menu\MenuAction;
 use wcf\data\menu\MenuEditor;
 use wcf\data\page\PageNodeTree;
 use wcf\form\AbstractForm;
+use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
@@ -17,7 +18,7 @@ use wcf\util\StringUtil;
  * Shows the menu add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since	3.0
@@ -76,6 +77,12 @@ class MenuAddForm extends AbstractForm {
 	public $pageIDs = [];
 	
 	/**
+	 * acl values
+	 * @var array
+	 */
+	public $aclValues = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -101,6 +108,7 @@ class MenuAddForm extends AbstractForm {
 		if (isset($_POST['cssClassName'])) $this->cssClassName = StringUtil::trim($_POST['cssClassName']);
 		if (isset($_POST['showHeader'])) $this->showHeader = intval($_POST['showHeader']);
 		if (isset($_POST['pageIDs']) && is_array($_POST['pageIDs'])) $this->pageIDs = ArrayUtil::toIntegerArray($_POST['pageIDs']);
+		if (isset($_POST['aclValues']) && is_array($_POST['aclValues'])) $this->aclValues = $_POST['aclValues'];
 	}
 	
 	/**
@@ -188,10 +196,18 @@ class MenuAddForm extends AbstractForm {
 				'title' => 'wcf.menu.com.woltlab.wcf.genericMenu'.$menuEditor->menuID
 			]);
 		}
+		
+		// save acl
+		SimpleAclHandler::getInstance()->setValues('com.woltlab.wcf.box', $menuEditor->getDecoratedObject()->getBox()->boxID, $this->aclValues);
+		
 		$this->saved();
 		
 		// reset values
-		$this->title = '';
+		$this->cssClassName = $this->title = '';
+		$this->position = 'contentTop';
+		$this->showOrder = 0;
+		$this->visibleEverywhere = $this->showHeader = 1;
+		$this->pageIDs = $this->aclValues = [];
 		
 		// show success message
 		WCF::getTPL()->assign('success', true);
@@ -217,7 +233,8 @@ class MenuAddForm extends AbstractForm {
 			'showHeader' => $this->showHeader,
 			'pageIDs' => $this->pageIDs,
 			'availablePositions' => Box::$availableMenuPositions,
-			'pageNodeList' => (new PageNodeTree())->getNodeList()
+			'pageNodeList' => (new PageNodeTree())->getNodeList(),
+			'aclValues' => SimpleAclHandler::getInstance()->getOutputValues($this->aclValues)
 		]);
 	}
 }

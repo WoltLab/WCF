@@ -2,12 +2,24 @@
  * Handles email notification type for user notification settings.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Controller/User/Notification/Settings
  */
 define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function(Dictionary, Language, DomTraverse, UiSimpleDropdown) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			setup: function() {},
+			_initGroup: function() {},
+			_click: function() {},
+			_createDropdown: function() {},
+			_selectType: function() {}
+		};
+		return Fake;
+	}
 	
 	var _data = new Dictionary();
 	

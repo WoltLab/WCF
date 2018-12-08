@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Shows the a list of tagged objects.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  */
@@ -128,7 +128,7 @@ class TaggedPage extends MultipleLinkPage {
 		]);
 		
 		if (count($this->objectList) === 0) {
-			@header('HTTP/1.0 404 Not Found');
+			@header('HTTP/1.1 404 Not Found');
 		}
 	}
 }

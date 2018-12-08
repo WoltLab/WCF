@@ -4,6 +4,7 @@ use wcf\data\page\PageCache;
 use wcf\data\spider\Spider;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\builder\SpiderCacheBuilder;
+use wcf\system\event\EventHandler;
 use wcf\system\page\handler\IOnlineLocationPageHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -13,7 +14,7 @@ use wcf\util\UserUtil;
  * Represents a user who is online.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Online
  *
@@ -72,7 +73,7 @@ class UserOnline extends UserProfile {
 						$this->location = $page->getHandler()->getOnlineLocation($page, $this);
 						return true;
 					}
-					else if ($page->isAccessible()) {
+					else if ($page->isVisible() && $page->isAccessible()) {
 						$title = $page->getTitle();
 						if (!empty($title)) {
 							if ($page->pageType != 'system') {
@@ -124,6 +125,12 @@ class UserOnline extends UserProfile {
 	 * @return	string
 	 */
 	public function getBrowser() {
+		$parameters = ['browser' => '', 'userAgent' => $this->userAgent];
+		EventHandler::getInstance()->fireAction($this, 'getBrowser', $parameters);
+		if (!empty($parameters['browser'])) {
+			return $parameters['browser'];
+		}
+		
 		// lunascape
 		if (preg_match('~lunascape[ /]([\d\.]+)~i', $this->userAgent, $match)) {
 			return 'Lunascape '.$match[1];

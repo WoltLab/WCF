@@ -7,8 +7,12 @@ use wcf\system\exception\SystemException;
  * As against the official cron-documentation, this implementation
  * does not support using nicknames (prefixed by the '@' character).
  * 
+ * Notice: This class used `gmdate()`/`gmmktime()` in previous versions,
+ * but now utilized the `date()`/`mktime()` counter-parts, but with the
+ * timezone set to the value of the `TIMEZONE` option.
+ * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -62,6 +66,13 @@ final class CronjobUtil {
 	 * @return	integer
 	 */
 	public static function calculateNextExec($minute, $hour, $dom, $month, $dow, $timeBase = TIME_NOW) {
+		// using the native `date()` and `mktime()` functions is dangerous
+		// unless we explicitly set the correct timezone
+		$originalTimezone = date_default_timezone_get();
+		if ($originalTimezone !== TIMEZONE) {
+			date_default_timezone_set(TIMEZONE);
+		}
+		
 		// initialize fields
 		self::$timeBase = $timeBase;
 		self::$result = [
@@ -98,8 +109,8 @@ final class CronjobUtil {
 			
 			switch ($fieldName) {
 				case 'dow':
-					if (strlen($fieldValue) == 3 && in_array($fieldName, $dayNames)) {
-						$fieldValue = $dayNames[$fieldValue];
+					if (strlen($fieldValue) == 3 && in_array($fieldValue, $dayNames)) {
+						$fieldValue = array_search($fieldValue, $dayNames);
 					}
 					// When specifying day of week, both day 0 and day 7
 					// will be considered Sunday. -- crontab(5) 
@@ -110,7 +121,7 @@ final class CronjobUtil {
 				
 				case 'month':
 					if (strlen($fieldValue) == 3 && in_array($fieldValue, $monthNames)) {
-						$fieldValue = $monthNames[$fieldValue] + 1;
+						$fieldValue = array_search($fieldValue, $monthNames) + 1;
 					}
 				break;
 			}
@@ -122,7 +133,7 @@ final class CronjobUtil {
 		self::calculateTime($values);
 		
 		// return timestamp
-		return gmmktime(
+		$timestamp = mktime(
 			self::$result['hour'],
 			self::$result['minute'],
 			1,
@@ -130,6 +141,13 @@ final class CronjobUtil {
 			self::$result['day'],
 			self::$result['year']
 		);
+		
+		// restore the original timezone
+		if ($originalTimezone !== TIMEZONE) {
+			date_default_timezone_set($originalTimezone);
+		}
+		
+		return $timestamp;
 	}
 	
 	/**
@@ -138,19 +156,36 @@ final class CronjobUtil {
 	 * @param	array		$values
 	 */
 	protected static function calculateTime(array &$values) {
-		// calculation starts with month, thus start with
-		// month of $time (if within values)
-		$currentMonth = gmdate('n', self::$timeBase);
-		self::findKey($currentMonth, $values['month']);
-		
 		self::calculateDay($values);
+	}
+	
+	/**
+	 * Calculates the next month and year to match given criteria.
+	 * 
+	 * @param	integer		$month
+	 * @param	integer		$year
+	 * @param	array		$values
+	 * @return      array
+	 */
+	protected static function calculateMonth($month, $year, array &$values) {
+		$index = self::findKey($month, $values['month']);
+		
+		// swap to the next year if the next execution month is before the current month
+		if ($values['month'][$index] < $month) {
+			$year++;
+		}
+		
+		return [
+			'month' => $values['month'][$index],
+			'year' => $year
+		];
 	}
 	
 	/**
 	 * Calculates the day while adjusting month and year to match given criteria.
 	 * 
 	 * Note: The day of a command's execution can be specified by two fields - day
-	 * of month, and day of week. If both fields are restricted (ie, aren't *), the
+	 * of month, and day of week. If both fields are restricted , that is not '*', the
 	 * command will be run when either field matches the current time. -- crontab(5)
 	 * 
 	 * @param	array		$values
@@ -161,21 +196,35 @@ final class CronjobUtil {
 		$timeBase = self::$timeBase;
 		
 		if ($addAnDay) {
-			$date = explode('.', gmdate("d.m.Y", $timeBase));
-			$timeBase = gmmktime(0, 0, 1, $date[1], $date[0] + 1, $date[2]);
+			$date = explode('.', date("d.m.Y", $timeBase));
+			$timeBase = mktime(0, 0, 1, $date[1], $date[0] + 1, $date[2]);
 		}
 		
-		$day = gmdate('j', $timeBase);
-		$month = gmdate('n', $timeBase);
-		$year = gmdate('Y', $timeBase);
+		$day = date('j', $timeBase);
+		$month = date('n', $timeBase);
+		$year = date('Y', $timeBase);
+		
+		// calculate month of next execution and if its not the current one reset previous calculations
+		$dateMonth = self::calculateMonth($month, $year, $values);
+		if ($month != $dateMonth['month'] || $year != $dateMonth['year']) {
+			$day = 1;
+			$month = $dateMonth['month'];
+			$year = $dateMonth['year'];
+			
+			$timeBase = mktime(0, 0, 1, $month, $day, $year);
+			
+			if (!$addAnDay) {
+				self::calculateHour($values, $timeBase);
+			}
+		}
 		
 		// calculate date of next execution based upon day of week
 		$dateDow = self::calculateDow($month, $year, $values, $day);
-		$dateDowTimestamp = gmmktime(0, 0, 1, $dateDow['month'], $dateDow['day'], $dateDow['year']);
+		$dateDowTimestamp = mktime(0, 0, 1, $dateDow['month'], $dateDow['day'], $dateDow['year']);
 		
 		// calculate date of next execution based upon day of month
 		$dateDom = self::calculateDom($month, $year, $values, $day);
-		$dateDomTimestamp = gmmktime(0, 0, 1, $dateDom['month'], $dateDom['day'], $dateDom['year']);
+		$dateDomTimestamp = mktime(0, 0, 1, $dateDom['month'], $dateDom['day'], $dateDom['year']);
 		
 		// pick the earlier date if both dom and dow are restricted
 		if (self::$domRestricted && self::$dowRestricted) {
@@ -213,7 +262,7 @@ final class CronjobUtil {
 		// compare day, month and year whether we have to recalculate hour and minute
 		if (($day != self::$result['day']) || ($month != self::$result['month']) || ($year != self::$result['year'])) {
 			// calculate new time base
-			$timeBase = gmmktime(0, 0, 1, self::$result['month'], self::$result['day'], self::$result['year']);
+			$timeBase = mktime(0, 0, 1, self::$result['month'], self::$result['day'], self::$result['year']);
 			
 			self::calculateHour($values, $timeBase);
 		}
@@ -229,11 +278,11 @@ final class CronjobUtil {
 	 * @return	array
 	 */
 	protected static function calculateDow($month, $year, array &$values, $day = 1) {
-		$days = gmdate('t', gmmktime(0, 0, 1, $month, $day, $year));
+		$days = date('t', mktime(0, 0, 1, $month, $day, $year));
 		
 		for ($i = $day; $i <= $days; $i++) {
 			// get dow
-			$dow = gmdate('w', gmmktime(0, 0, 1, $month, $i, $year));
+			$dow = date('w', mktime(0, 0, 1, $month, $i, $year));
 			
 			if (in_array($dow, $values['dow'])) {
 				return [
@@ -245,7 +294,8 @@ final class CronjobUtil {
 		}
 		
 		// try next month
-		return self::calculateDow(++$month, $year, $values);
+		$nextMonth = self::calculateMonth(++$month, $year, $values);
+		return self::calculateDow($nextMonth['month'], $nextMonth['year'], $values);
 	}
 	
 	/**
@@ -258,7 +308,7 @@ final class CronjobUtil {
 	 * @return	array
 	 */
 	protected static function calculateDom($month, $year, array &$values, $day = 1) {
-		$days = gmdate('t', gmmktime(0, 0, 1, $month, $day, $year));
+		$days = date('t', mktime(0, 0, 1, $month, $day, $year));
 		
 		for ($i = $day; $i <= $days; $i++) {
 			if (in_array($i, $values['dom'])) {
@@ -271,7 +321,8 @@ final class CronjobUtil {
 		}
 		
 		// try next month
-		return self::calculateDom(++$month, $year, $values);
+		$nextMonth = self::calculateMonth(++$month, $year, $values);
+		return self::calculateDom($nextMonth['month'], $nextMonth['year'], $values);
 	}
 	
 	/**
@@ -286,7 +337,7 @@ final class CronjobUtil {
 		$addAnDay = false;
 		
 		// compare hour
-		$hour = intval(gmdate('G', $timeBase));
+		$hour = intval(date('G', $timeBase));
 		$index = self::findKey($hour, $values['hour'], false);
 		if ($index === false) {
 			$index = self::findKey($hour, $values['hour']);
@@ -330,7 +381,7 @@ final class CronjobUtil {
 			$minute = 0;
 		}
 		else {
-			$minute = gmdate('i', $timeBase);
+			$minute = date('i', $timeBase);
 		}
 		
 		$index = self::findKey($minute, $values['minute'], false);
@@ -386,7 +437,7 @@ final class CronjobUtil {
 	protected static function calculateValue($fieldName, $fieldValue) {
 		$values = [];
 		
-		// examinate first char
+		// examine first char
 		$char = mb_substr($fieldValue, 0, 1);
 		
 		// could be a single value, range or list

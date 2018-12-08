@@ -5,7 +5,7 @@ namespace wcf\system\email\mime;
  * Represents a RFC 2045 / 2046 mime part of an email.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Email\Mime
  * @since	3.0

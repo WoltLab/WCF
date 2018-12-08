@@ -11,7 +11,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.attachment.list{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.attachment.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
 		<p class="contentHeaderDescription">{lang}wcf.acp.attachment.stats{/lang}</p>
 	</div>
 	
@@ -100,7 +100,7 @@
 				{foreach from=$objects item=attachment}
 					<tr class="jsAttachmentRow">
 						<td class="columnIcon">
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$attachment->attachmentID}" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}"></span>
+							<span class="icon icon24 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$attachment->attachmentID}" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}"></span>
 							
 							{event name='rowButtons'}
 						</td>
@@ -111,7 +111,7 @@
 									{if $attachment->tinyThumbnailType}
 										<img src="{link controller='Attachment' id=$attachment->attachmentID}tiny=1{/link}" class="attachmentTinyThumbnail" alt="">
 									{else}
-										<span class="icon icon64 fa-paperclip"></span>
+										<span class="icon icon64 fa-{@$attachment->getIconName()}"></span>
 									{/if}
 								</a>
 								

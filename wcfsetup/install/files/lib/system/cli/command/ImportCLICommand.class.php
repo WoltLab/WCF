@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * Imports data.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cli\Command
  */
@@ -139,9 +139,9 @@ class ImportCLICommand implements ICLICommand {
 			FROM	wcf".WCF_N."_import_mapping";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		if ($statement->fetchColumn()) {
-			CLIWCF::getReader()->println(StringUtil::stripHTML(WCF::getLanguage()->get('wcf.acp.dataImport.existingMapping.notice')));
-			CLIWCF::getReader()->println(WCF::getLanguage()->get('wcf.acp.dataImport.existingMapping.confirmMessage') . ' [YN]');
+		if ($statement->fetchSingleColumn()) {
+			CLIWCF::getReader()->println(StringUtil::stripHTML(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.existingMapping.notice')));
+			CLIWCF::getReader()->println(WCF::getLanguage()->getDynamicVariable('wcf.acp.dataImport.existingMapping.confirmMessage') . ' [YN]');
 			
 			$answer = CLIWCF::getReader()->readLine('> ');
 			if ($answer === null) exit;

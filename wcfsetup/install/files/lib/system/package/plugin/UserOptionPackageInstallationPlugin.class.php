@@ -4,18 +4,20 @@ use wcf\data\user\option\category\UserOptionCategory;
 use wcf\data\user\option\category\UserOptionCategoryEditor;
 use wcf\data\user\option\UserOption;
 use wcf\data\user\option\UserOptionEditor;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes user options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin {
+class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -80,11 +82,11 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 		if (isset($option['showorder'])) $showOrder = intval($option['showorder']);
 		if (isset($option['outputclass'])) $outputClass = $option['outputclass'];
 		if (isset($option['selectoptions'])) $selectOptions = $option['selectoptions'];
-		if (isset($option['enableoptions'])) $enableOptions = $option['enableoptions'];
+		if (isset($option['enableoptions'])) $enableOptions = StringUtil::normalizeCsv($option['enableoptions']);
 		if (isset($option['isdisabled'])) $isDisabled = intval($option['isdisabled']);
 		$showOrder = $this->getShowOrder($showOrder, $categoryName, 'categoryName');
-		if (isset($option['permissions'])) $permissions = $option['permissions'];
-		if (isset($option['options'])) $options = $option['options'];
+		if (isset($option['permissions'])) $permissions = StringUtil::normalizeCsv($option['permissions']);
+		if (isset($option['options'])) $options = StringUtil::normalizeCsv($option['options']);
 		
 		// collect additional tags and their values
 		$additionalData = [];

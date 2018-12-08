@@ -3,17 +3,19 @@ namespace wcf\system\package\plugin;
 use wcf\data\event\listener\EventListener;
 use wcf\data\event\listener\EventListenerEditor;
 use wcf\system\cache\builder\EventListenerCacheBuilder;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes event listeners.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -73,13 +75,13 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		return [
 			'environment' => isset($data['elements']['environment']) ? $data['elements']['environment'] : 'user',
 			'eventClassName' => $data['elements']['eventclassname'],
-			'eventName' => $data['elements']['eventname'],
+			'eventName' => StringUtil::normalizeCsv($data['elements']['eventname']),
 			'inherit' => isset($data['elements']['inherit']) ? intval($data['elements']['inherit']) : 0,
 			'listenerClassName' => $data['elements']['listenerclassname'],
 			'listenerName' => isset($data['attributes']['name']) ? $data['attributes']['name'] : '',
 			'niceValue' => $nice,
-			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
-			'permissions' => isset($data['elements']['permissions']) ? $data['elements']['permissions'] : ''
+			'options' => isset($data['elements']['options']) ? StringUtil::normalizeCsv($data['elements']['options']) : '',
+			'permissions' => isset($data['elements']['permissions']) ? StringUtil::normalizeCsv($data['elements']['permissions']) : ''
 		];
 	}
 	
@@ -155,4 +157,12 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 		// clear cache immediately
 		EventListenerCacheBuilder::getInstance()->reset();
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
+	}
+	
 }

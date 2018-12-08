@@ -1,6 +1,6 @@
 {if !$usersOnlineShowRecord|isset}{assign var='usersOnlineShowRecord' value=true}{/if}
 {if MODULE_USERS_ONLINE && $__wcf->session->getPermission('user.profile.canViewUsersOnlineList') && $usersOnlineList->stats[total]}
-	<section class="box">
+	<section class="box" data-static-box-identifier="com.woltlab.wcf.UsersOnlineInfo">
 		<h2 class="boxTitle"><a href="{link controller='UsersOnlineList'}{/link}">{lang}wcf.user.usersOnline{/lang}</a> <span class="badge">{#$usersOnlineList->stats[total]}</span></h2>
 		
 		<div class="boxContent">

@@ -2,13 +2,34 @@
  * Handles user interaction with the quick reply feature.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Message/Reply
  */
 define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Dom/Traverse', 'Ui/Dialog', 'Ui/Notification', 'WoltLabSuite/Core/Ui/Scroll', 'EventKey', 'User', 'WoltLabSuite/Core/Controller/Captcha'],
 	function(Ajax, Core, EventHandler, Language, DomChangeListener, DomUtil, DomTraverse, UiDialog, UiNotification, UiScroll, EventKey, User, ControllerCaptcha) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_submitGuestDialog: function() {},
+			_submit: function() {},
+			_validate: function() {},
+			throwError: function() {},
+			_showLoadingOverlay: function() {},
+			_hideLoadingOverlay: function() {},
+			_reset: function() {},
+			_handleError: function() {},
+			_getEditor: function() {},
+			_insertMessage: function() {},
+			_ajaxSuccess: function() {},
+			_ajaxFailure: function() {},
+			_ajaxSetup: function() {}
+		};
+		return Fake;
+	}
 	
 	/**
 	 * @constructor
@@ -33,6 +54,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			this._content = elBySel('.messageContent', this._container);
 			this._textarea = elById('text');
 			this._editor = null;
+			this._guestDialogId = '';
 			this._loadingOverlay = null;
 			
 			// prevent marking of text for quoting
@@ -72,16 +94,8 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			
 			var usernameInput = elBySel('input[name=username]', event.currentTarget.closest('.dialogContent'));
 			if (usernameInput.value === '') {
-				var error = DomTraverse.nextByClass(usernameInput, 'innerError');
-				if (!error) {
-					error = elCreate('small');
-					error.className = 'innerError';
-					error.innerText = Language.get('wcf.global.form.error.empty');
-					
-					DomUtil.insertAfter(error, usernameInput);
-					
-					usernameInput.closest('dl').classList.add('formError');
-				}
+				elInnerError(usernameInput, Language.get('wcf.global.form.error.empty'));
+				usernameInput.closest('dl').classList.add('formError');
 				
 				return;
 			}
@@ -97,10 +111,21 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			//noinspection JSCheckFunctionSignatures
 			var captchaId = elData(event.currentTarget, 'captcha-id');
 			if (ControllerCaptcha.has(captchaId)) {
-				parameters = Core.extend(parameters, ControllerCaptcha.getData(captchaId));
+				var data = ControllerCaptcha.getData(captchaId);
+				if (data instanceof Promise) {
+					data.then((function (data) {
+						parameters = Core.extend(parameters, data);
+						this._submit(undefined, parameters);
+					}).bind(this));
+				}
+				else {
+					parameters = Core.extend(parameters, ControllerCaptcha.getData(captchaId));
+					this._submit(undefined, parameters);
+				}
 			}
-			
-			this._submit(undefined, parameters);
+			else {
+				this._submit(undefined, parameters);
+			}
 		},
 		
 		/**
@@ -113,6 +138,13 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		_submit: function(event, additionalParameters) {
 			if (event) {
 				event.preventDefault();
+			}
+			
+			// Ignore requests to submit the message while a previous request is still pending.
+			if (this._content.classList.contains('loading')) {
+				if (!this._guestDialogId || !UiDialog.isOpen(this._guestDialogId)) {
+					return;
+				}
 			}
 			
 			if (!this._validate()) {
@@ -165,10 +197,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		 */
 		_validate: function() {
 			// remove all existing error elements
-			var errorMessages = elByClass('innerError', this._container);
-			while (errorMessages.length) {
-				elRemove(errorMessages[0]);
-			}
+			elBySelAll('.innerError', this._container, elRemove);
 			
 			// check if editor contains actual content
 			if (this._getEditor().utils.isEmpty()) {
@@ -195,11 +224,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		 * @param       {string}        message         error message
 		 */
 		throwError: function(element, message) {
-			var error = elCreate('small');
-			error.className = 'innerError';
-			error.textContent = (message === 'empty' ? Language.get('wcf.global.form.error.empty') : message);
-			
-			DomUtil.insertAfter(error, element);
+			elInnerError(element, (message === 'empty' ? Language.get('wcf.global.form.error.empty') : message));
 		},
 		
 		/**
@@ -244,14 +269,23 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 		},
 		
 		/**
-		 * Handles errors occured during server processing.
+		 * Handles errors occurred during server processing.
 		 * 
 		 * @param       {Object}        data    response data
 		 * @protected
 		 */
 		_handleError: function(data) {
-			//noinspection JSUnresolvedVariable
-			this.throwError(this._textarea, data.returnValues.errorType);
+			var parameters = {
+				api: this,
+				cancel: false,
+				returnValues: data.returnValues
+			};
+			EventHandler.fire('com.woltlab.wcf.redactor2', 'handleError_text', parameters);
+			
+			if (parameters.cancel !== true) {
+				//noinspection JSUnresolvedVariable
+				this.throwError(this._textarea, data.returnValues.realErrorMessage);
+			}
 		},
 		
 		/**
@@ -347,6 +381,8 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 				var dialog = UiDialog.getDialog(data.returnValues.guestDialogID);
 				elBySel('input[type=submit]', dialog.content).addEventListener(WCF_CLICK_EVENT, this._submitGuestDialog.bind(this));
 				elBySel('input[type=text]', dialog.content).addEventListener('keypress', this._submitGuestDialog.bind(this));
+				
+				this._guestDialogId = data.returnValues.guestDialogID;
 			}
 			else {
 				this._insertMessage(data);
@@ -365,7 +401,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			this._hideLoadingOverlay();
 			
 			//noinspection JSUnresolvedVariable
-			if (data === null || data.returnValues === undefined || data.returnValues.errorType === undefined) {
+			if (data === null || data.returnValues === undefined || data.returnValues.realErrorMessage === undefined) {
 				return true;
 			}
 			

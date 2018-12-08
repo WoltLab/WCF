@@ -1,5 +1,70 @@
 /* edit history */
 .editHistoryDiff {
+	@include screen-md-down {
+		overflow: auto;
+	}
+	
+	
+	> .table {
+		@include screen-lg {
+			table-layout: fixed;
+		}
+		
+		width: 100%;
+		
+		th {
+			text-align: center;
+		}
+		
+		td {
+			background-color: rgb(250, 250, 250);
+			color: rgb(44, 62, 80);
+			padding: 5px;
+			
+			&:not(.diffSection) {
+				border-bottom-width: 0 !important;
+			}
+			
+			&:first-child:last-child:empty {
+				display: none;
+			}
+			
+			&:last-child:not(:first-child) {
+				border-left: 1px solid $wcfContentBorderInner;
+			}
+			
+			&.diffAdded {
+				background-color: rgb(223, 240, 216);
+				color: rgb(60, 118, 61);
+			}
+			
+			&.diffRemoved {
+				background-color: rgb(242, 222, 222);
+				color: rgb(169, 68, 66);
+			}
+			
+			&.diffSection {
+				background-clip: padding-box;
+				background-color: rgb(236, 239, 241);
+				border-bottom: 20px solid transparent;
+				color: rgb(44, 62, 80);
+				padding: 10px;
+				text-align: center;
+				
+				@include wcfFontHeadline;
+			}
+		}
+		
+		tr:not(:first-child) > .diffSection {
+			border-top: 20px solid transparent;
+		}
+		
+		& + form {
+			/* Out of the way, Lydia! */
+			margin-top: 40px;
+		}
+	}
+	
 	> .sideBySide:first-child {
 		margin-bottom: 20px;
 		text-align: center;

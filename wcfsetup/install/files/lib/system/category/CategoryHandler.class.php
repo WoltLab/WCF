@@ -11,7 +11,7 @@ use wcf\system\SingletonFactory;
  * Handles the categories.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Category
  */
@@ -29,7 +29,7 @@ class CategoryHandler extends SingletonFactory {
 	protected $objectTypeCategoryIDs = [];
 	
 	/**
-	 * mapes the names of the category object types to the object type ids
+	 * maps the names of the category object types to the object type ids
 	 * @var	integer[]
 	 */
 	protected $objectTypeIDs = [];
@@ -45,7 +45,7 @@ class CategoryHandler extends SingletonFactory {
 	 * type is given, all categories grouped by object type are returned.
 	 * 
 	 * @param	string		$objectType
-	 * @return	mixed[]
+	 * @return	Category[]|Category[][]
 	 */
 	public function getCategories($objectType = null) {
 		$categories = [];
@@ -64,7 +64,7 @@ class CategoryHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the category with the given id or `null` if no such category ecists.
+	 * Returns the category with the given id or `null` if no such category exists.
 	 * 
 	 * @param	integer		$categoryID
 	 * @return	Category|null

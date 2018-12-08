@@ -1,18 +1,17 @@
 /**
- * Provides the interface logic to add and edit menu items.
- *
+ * Provides the interface logic to add and edit boxes.
+ * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler
  */
-define(['Ajax', 'Dictionary', 'Dom/Util'], function(Ajax, Dictionary, DomUtil) {
+define(['Ajax', 'Dom/Util', 'EventHandler'], function(Ajax, DomUtil, EventHandler) {
 	"use strict";
 	
 	var _boxControllerContainer = elById('boxControllerContainer');
 	var _boxController = elById('boxControllerID');
 	var _boxConditions = elById('boxConditions');
-	var _templates = new Dictionary();
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Acp/Ui/Box/Controller/Handler
@@ -21,13 +20,11 @@ define(['Ajax', 'Dictionary', 'Dom/Util'], function(Ajax, Dictionary, DomUtil) {
 		init: function(initialObjectTypeId) {
 			_boxController.addEventListener('change', this._updateConditions.bind(this));
 			
-			if (initialObjectTypeId) {
-				_templates.set(~~initialObjectTypeId, _boxConditions.innerHTML);
-			}
-			
 			elShow(_boxControllerContainer);
 			
-			this._updateConditions();
+			if (initialObjectTypeId === undefined) {
+				this._updateConditions();
+			}
 		},
 		
 		/**
@@ -50,8 +47,6 @@ define(['Ajax', 'Dictionary', 'Dom/Util'], function(Ajax, Dictionary, DomUtil) {
 		 * @param	{object}	data	response data
 		 */
 		_ajaxSuccess: function(data) {
-			_templates.set(~~data.returnValues.objectTypeID, data.returnValues.template);
-			
 			DomUtil.setInnerHtml(_boxConditions, data.returnValues.template);
 		},
 		
@@ -61,22 +56,13 @@ define(['Ajax', 'Dictionary', 'Dom/Util'], function(Ajax, Dictionary, DomUtil) {
 		 * @protected
 		 */
 		_updateConditions: function() {
-			var objectTypeId = ~~_boxController.value;
+			EventHandler.fire('com.woltlab.wcf.boxControllerHandler', 'updateConditions');
 			
-			if (_templates.has(objectTypeId)) {
-				if (_templates.get(objectTypeId) !== null) {
-					_boxConditions.innerHTML = _templates.get(objectTypeId);
+			Ajax.api(this, {
+				parameters: {
+					objectTypeID: ~~_boxController.value
 				}
-			}
-			else {
-				_templates.set(objectTypeId, null);
-				
-				Ajax.api(this, {
-					parameters: {
-						objectTypeID: objectTypeId
-					}
-				});
-			}
+			});
 		}
 	};
 });

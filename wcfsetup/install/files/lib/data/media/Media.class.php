@@ -12,12 +12,13 @@ use wcf\system\WCF;
  * Represents a media file.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Media
  * @since	3.0
  * 
  * @property-read	integer		$mediaID		unique id of the media file
+ * @property-read	integer		$categoryID		id of the category the media file belongs to or `null` if it belongs to no category
  * @property-read	string		$filename		name of the physical media file
  * @property-read	integer		$filesize		size of the physical media file
  * @property-read	string		$fileType		type of the physical media file

@@ -7,7 +7,7 @@ use wcf\data\comment\Comment;
  * Default interface for comment managers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Comment\Manager
  */
@@ -19,6 +19,14 @@ interface ICommentManager {
 	 * @return	boolean
 	 */
 	public function canAdd($objectID);
+	
+	/**
+	 * Returns true if a comment requires approval.
+	 * 
+	 * @param       integer         $objectID
+	 * @return      boolean
+	 */
+	public function canAddWithoutApproval($objectID);
 	
 	/**
 	 * Returns true if the current user may edit given comment.
@@ -69,13 +77,29 @@ interface ICommentManager {
 	public function getCommentsPerPage();
 	
 	/**
-	 * Returns a link to given object type id and object id.
+	 * Returns a link to the commented object with the given object type id and object id.
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @param	integer		$objectID
 	 * @return	string
 	 */
 	public function getLink($objectTypeID, $objectID);
+	
+	/**
+	 * Returns the link to the given comment.
+	 *
+	 * @param	Comment		$comment
+	 * @return	string
+	 */
+	public function getCommentLink(Comment $comment);
+	
+	/**
+	 * Returns the link to the given comment response.
+	 *
+	 * @param	CommentResponse		$response
+	 * @return	string
+	 */
+	public function getResponseLink(CommentResponse $response);
 	
 	/**
 	 * Returns the title for a comment or response.
@@ -118,4 +142,9 @@ interface ICommentManager {
 	 * @return	boolean
 	 */
 	public function supportsReport();
+	
+	/**
+	 * Sets the list of disallowed bbcodes.
+	 */
+	public function setDisallowedBBCodes();
 }

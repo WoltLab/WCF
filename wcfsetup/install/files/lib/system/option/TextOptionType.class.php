@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Option type implementation for textual input fields.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -28,6 +28,12 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 	 * @var	string
 	 */
 	protected $inputClass = 'long';
+	
+	/**
+	 * if `true`, the option is considered as being searched when generating the form element
+	 * @var	bool
+	 */
+	public $forceSearchOption = false;
 	
 	/**
 	 * @inheritDoc
@@ -50,7 +56,7 @@ class TextOptionType extends AbstractOptionType implements ISearchableConditionU
 			'option' => $option,
 			'inputType' => $this->inputType,
 			'inputClass' => $this->inputClass,
-			'searchOption' => $value !== null && ($value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName])),
+			'searchOption' => $this->forceSearchOption || ($value !== null && $value !== $option->defaultValue) || isset($_POST['searchOptions'][$option->optionName]),
 			'value' => $value
 		]);
 		return WCF::getTPL()->fetch('textSearchableOptionType');

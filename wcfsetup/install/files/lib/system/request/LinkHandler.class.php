@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * Handles relative links within the wcf.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  */
@@ -41,7 +41,7 @@ class LinkHandler extends SingletonFactory {
 	 * @inheritDoc
 	 */
 	protected function init() {
-		$this->titleRegex = new Regex('[\x0-\x2F\x3A-\x40\x5B-\x60\x7B-\x7F]+');
+		$this->titleRegex = new Regex('[^\p{L}\p{N}]+', Regex::UTF_8);
 		
 		if (defined('URL_TITLE_COMPONENT_REPLACEMENT') && URL_TITLE_COMPONENT_REPLACEMENT) {
 			$replacements = explode("\n", StringUtil::unifyNewlines(StringUtil::trim(URL_TITLE_COMPONENT_REPLACEMENT)));
@@ -123,6 +123,22 @@ class LinkHandler extends SingletonFactory {
 				$controller = 'Index';
 			}
 			else {
+				if (!empty($parameters['application']) && $abbreviation !== 'wcf') {
+					$application = ApplicationHandler::getInstance()->getApplication($abbreviation);
+					if ($application === null) {
+						throw new \RuntimeException("Unknown abbreviation '" . $abbreviation . "'.");
+					}
+					
+					$landingPage = PageCache::getInstance()->getPage($application->landingPageID);
+					if ($landingPage === null) {
+						$landingPage = PageCache::getInstance()->getPageByController(WCF::getApplicationObject($application)->getPrimaryController());
+					}
+					
+					if ($landingPage !== null) {
+						return $landingPage->getLink();
+					}
+				}
+				
 				return PageCache::getInstance()->getLandingPage()->getLink();
 			}
 		}
@@ -179,7 +195,12 @@ class LinkHandler extends SingletonFactory {
 				$pageURL = RouteHandler::getHost() . str_replace('//', '/', RouteHandler::getPath(['acp']));
 			}
 			else {
-				$pageURL = ApplicationHandler::getInstance()->getApplication($abbreviation)->getPageURL();
+				$application = ApplicationHandler::getInstance()->getApplication($abbreviation);
+				if ($application === null) {
+					throw new \InvalidArgumentException("Unknown application identifier '{$abbreviation}'.");
+				}
+				
+				$pageURL = $application->getPageURL();
 			}
 			
 			$url = $pageURL . ($isACP ? 'acp/' : '') . $url;

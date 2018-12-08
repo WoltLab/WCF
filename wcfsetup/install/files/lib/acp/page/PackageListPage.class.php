@@ -2,13 +2,14 @@
 namespace wcf\acp\page;
 use wcf\data\package\PackageList;
 use wcf\page\SortablePage;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 /**
  * Shows a list of all installed packages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  * 
@@ -72,6 +73,7 @@ class PackageListPage extends SortablePage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
+			'recentlyDisabledCustomValues' => LanguageFactory::getInstance()->countRecentlyDisabledCustomValues(),
 			'packageID' => $this->packageID
 		]);
 	}

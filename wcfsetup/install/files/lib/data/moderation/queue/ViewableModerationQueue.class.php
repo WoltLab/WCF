@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * Represents a viewable moderation queue entry.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Moderation\Queue
  * 
@@ -108,6 +108,19 @@ class ViewableModerationQueue extends DatabaseObjectDecorator implements ILinkab
 		}
 		
 		return $this->userProfile;
+	}
+	
+	/**
+	 * Returns assigned user profile object.
+	 *
+	 * @return	UserProfile|null
+	 */
+	public function getAssignedUserProfile() {
+		if ($this->assignedUserID) {
+			return UserProfileRuntimeCache::getInstance()->getObject($this->assignedUserID);
+		}
+		
+		return null;
 	}
 	
 	/**

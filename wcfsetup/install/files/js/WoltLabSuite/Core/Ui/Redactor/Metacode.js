@@ -2,12 +2,26 @@
  * Converts `<woltlab-metacode>` into the bbcode representation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Redactor/Metacode
  */
 define(['EventHandler', 'Dom/Util'], function(EventHandler, DomUtil) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			convert: function() {},
+			convertFromHtml: function() {},
+			_getOpeningTag: function() {},
+			_getClosingTag: function() {},
+			_getFirstParagraph: function() {},
+			_getLastParagraph: function() {},
+			_parseAttributes: function() {}
+		};
+		return Fake;
+	}
 	
 	/**
 	 * @exports     WoltLabSuite/Core/Ui/Redactor/Metacode
@@ -56,6 +70,17 @@ define(['EventHandler', 'Dom/Util'], function(EventHandler, DomUtil) {
 				}
 				
 				DomUtil.unwrapChildNodes(metacode);
+			}
+			
+			// convert `<kbd>…</kbd>` to `[tt]…[/tt]`
+			var inlineCode, inlineCodes = elByTag('kbd', div);
+			while (inlineCodes.length) {
+				inlineCode = inlineCodes[0];
+				
+				inlineCode.insertBefore(document.createTextNode('[tt]'), inlineCode.firstChild);
+				inlineCode.appendChild(document.createTextNode('[/tt]'));
+				
+				DomUtil.unwrapChildNodes(inlineCode);
 			}
 			
 			return div.innerHTML;

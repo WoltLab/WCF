@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\html\output;
+use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\util\DOMUtil;
 
 /**
@@ -9,7 +10,7 @@ use wcf\util\DOMUtil;
  * See https://github.com/ampproject/amphtml/blob/master/spec/amp-html-format.md#html-tags
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output
  * @since       3.0
@@ -18,8 +19,8 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor {
 	/**
 	 * @inheritDoc
 	 */
-	public function process($html, $objectType, $objectID, $doKeywordHighlighting = true) {
-		parent::process($html, $objectType, $objectID, $doKeywordHighlighting);
+	public function process($html, $objectType, $objectID, $doKeywordHighlighting = true, $languageID = null) {
+		parent::process($html, $objectType, $objectID, $doKeywordHighlighting, $languageID);
 		
 		$document = $this->getHtmlOutputNodeProcessor()->getDocument();
 			
@@ -101,7 +102,28 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor {
 	 * @inheritDoc
 	 */
 	public function getHtml() {
-		return str_ireplace('<img', '<amp-img layout="flex-item"', $this->getHtmlOutputNodeProcessor()->getHtml());
+		// temporarily enable AMP output mode for bbcodes
+		HtmlBBCodeParser::getInstance()->setIsGoogleAmp(true);
+		
+		try {
+			$html = $this->getHtmlOutputNodeProcessor()->getHtml();
+		}
+		finally {
+			// disable AMP output again in order to prevent interference with other
+			// content types that may be processed in the same request
+			HtmlBBCodeParser::getInstance()->setIsGoogleAmp(false);
+		}
+		
+		$html = preg_replace_callback('/<img([^>]+)>/i', function($match) {
+			$attributes = str_replace('data-width="', 'width="', $match[1]);
+			$attributes = str_replace('data-height="', 'height="', $attributes);
+			return '<amp-img layout="flex-item"'.$attributes.'>';
+		}, $html);
+		
+		$html = str_ireplace('<iframe', '<amp-iframe layout="responsive" width="480" height="300" sizes="(min-width: 480px) 480px, 100vw" ', $html);
+		$html = str_ireplace('</iframe>', '<div class="wscIframePlaceholder" placeholder=""></div></amp-iframe>', $html);
+		
+		return $html;
 	}
 	
 	/**

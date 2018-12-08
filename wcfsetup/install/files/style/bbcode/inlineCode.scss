@@ -1,21 +1,53 @@
 .inlineCode, /* deprecated, legacy class */
 kbd {
+	/* do not use inline-block, it breaks arrow key navigation in Firefox and Internet Explorer 11 */
+	
+	/* update: `inline` styling breaks even more things, in particular the caret position is way off */
+	/* this reverts 8d381dc61e8183adcb770457f9fba25c29c00bd2 */
+	
+	/* new update: `display: inline` + `box-decoration-break` deliver the proper visual appearance,
+	               and the `::after` element in the editor is used to fix the caret position at the end */
+	
 	background-color: rgba(255, 255, 255, 1) !important;
 	border: 1px solid rgba(196, 196, 196, 1) !important;
 	border-radius: 2px;
+	box-decoration-break: clone;
+	-webkit-box-decoration-break: clone;
 	color: rgba(68, 68, 68, 1) !important;
-	/* do not use inline-block, it breaks arrow key navigation in Firefox and Internet Explorer 11 */
-	/* update: `inline` styling breaks even more things, in particular the caret position is way off */
-	/* this reverts 8d381dc61e8183adcb770457f9fba25c29c00bd2 */
-	display: inline-block;
+	display: inline;
 	font-family: Consolas, 'Courier New', monospace;
 	font-style: normal;
 	font-weight: normal;
-	margin: 1px 2px;
+	margin: 0 2px;
 	overflow: auto;
 	padding: 0 4px;
 	text-decoration: none;
 	vertical-align: middle;
 	word-break: break-all;
 	word-wrap: break-word;
+}
+
+@supports (-webkit-overflow-scrolling: touch) {
+	.inlineCode,
+	kbd {
+		-webkit-box-decoration-break: initial;
+	}
+}
+
+/* This pseudo element will cause a trailing caret to be displayed inside the element, right after
+   the last character in the `<kbd>`. Without it, browsers may render the caret either on top or
+   slightly after the right border. */
+.redactor-layer kbd::after {
+	content: " ";
+	display: inline-block;
+	pointer-events: none;
+}
+
+/* Similar to the `::after` pseudo element above, but also features an absolute positioning. This
+   has no impact on the visual appearance, but avoids the caret being displayed shifted to the bottom. */
+.redactor-layer kbd::before {
+	content: " ";
+	display: inline-block;
+	pointer-events: none;
+	position: absolute;
 }

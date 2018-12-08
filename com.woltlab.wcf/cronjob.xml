@@ -202,6 +202,45 @@
 			<canbeedited>1</canbeedited>
 			<canbedisabled>1</canbedisabled>
 		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.expiringPaidSubscriptionUser">
+			<classname>wcf\system\cronjob\ExpiringPaidSubscriptionUserCronjob</classname>
+			<description>Sends notifications about expiring paid subscriptions</description>
+			<description language="de">Sendet Benachrichtigungen über ablaufende bezahlte Mitgliedschaften</description>
+			<startminute>0</startminute>
+			<starthour>2</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.rebuildSitemap">
+			<classname>wcf\system\cronjob\RebuildSitemapCronjob</classname>
+			<description>Rebuilds the sitemap</description>
+			<description language="de">Aktualisiert die Sitemap</description>
+			<startminute>0</startminute>
+			<starthour>3</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
+		
+		<cronjob name="com.woltlab.wcf.assignTrophies">
+			<classname>wcf\system\cronjob\AssignTrophiesCronjob</classname>
+			<description>Assign trophies based on rules</description>
+			<description language="de">Ordnet Trophäen aufgrund der Regeln zu</description>
+			<startminute>*/5</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbeedited>1</canbeedited>
+			<canbedisabled>1</canbedisabled>
+		</cronjob>
 	</import>
 	
 	<delete>

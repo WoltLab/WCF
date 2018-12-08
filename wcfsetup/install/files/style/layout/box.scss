@@ -257,33 +257,43 @@
 				.boxImage {
 					float: left;
 				}
-				
-				.boxTitle,
-				.boxContent {
-					@include screen-md-down {
-						margin-left: calc(30% + 15px);
-					}
-					
-					@include screen-lg {
-						margin-left: calc(30% + 30px);
-					}
-				}
 			}
 			
 			&:nth-child(even) {
 				.boxImage {
 					float: right;
 				}
-				
-				.boxTitle,
-				.boxContent {
-					@include screen-md-down {
-						margin-right: calc(30% + 15px);
-					}
-					
-					@include screen-lg {
-						margin-right: calc(30% + 30px);
-					}
+			}
+		}
+	}
+	
+	@include screen-sm-md {
+		.boxWithImage {
+			&:nth-child(odd) {
+				.boxImage {
+					margin: 0 10px 10px 0;
+				}
+			}
+			
+			&:nth-child(even) {
+				.boxImage {
+					margin: 0 0 10px 10px;
+				}
+			}
+		}
+	}
+	
+	@include screen-lg {
+		.boxWithImage {
+			&:nth-child(odd) {
+				.boxImage {
+					margin: 0 20px 20px 0;
+				}
+			}
+			
+			&:nth-child(even) {
+				.boxImage {
+					margin: 0 0 20px 20px;
 				}
 			}
 		}
@@ -492,6 +502,11 @@
 			
 			li.active > .boxMenuLink {
 				background-color: $wcfContentBackground;
+				color: $wcfContentLink;
+				
+				&:hover {
+					color: $wcfContentLinkActive;
+				}
 			}
 			
 			.boxMenuDepth1 .boxMenuLink {
@@ -500,69 +515,6 @@
 			
 			.boxMenuDepth2 .boxMenuLink {
 				padding-left: 60px;
-			}
-			
-			@include screen-md-down {
-				position: relative;
-				
-				.boxMenuLink,
-				.boxMenuLinkTitle {
-					overflow: hidden;
-					text-overflow: ellipsis;
-					white-space: nowrap;
-				}
-				
-				&:not(.open):not(.forceOpen) {
-					> li:first-child,
-					> li.active:not(:first-child) {
-						pointer-events: none;
-						
-						> a::after {
-							content: $fa-var-caret-down;
-							font-family: FontAwesome;
-							font-size: 14px;
-							margin-left: 7px;
-						}
-						
-						.boxMenuDepth1,
-						.boxMenuDepth2 {
-							position: relative;
-							
-							> li {
-								&:not(.active) {
-									display: none;
-								}
-								
-								&.active {
-									left: 0;
-									position: absolute;
-									right: 0;
-									top: 0;
-									transform: translateY(-100%);
-									
-									> a::after {
-										content: $fa-var-caret-down;
-										font-family: FontAwesome;
-										font-size: 14px;
-										margin-left: 7px;
-									}
-								}
-							}
-						}
-					}
-					
-					> li:first-child ~ li {
-						display: none;
-					}
-					
-					> li.active:not(:first-child) {
-						display: block;
-						position: absolute;
-						left: 0;
-						right: 0;
-						top: 0;
-					}
-				}
 			}
 		}
 	}
@@ -626,6 +578,80 @@
 	padding-right: 10px;
 }
 
+@include screen-xs {
+	.main > .layoutBoundary {
+		display: flex;
+		flex-wrap: wrap;
+		
+		> .content {
+			flex: 0 0 100%;
+			order: 3;
+		}
+		
+		> .boxesSidebarLeft {
+			order: 1;
+		}
+		
+		> .boxesSidebarRight {
+			order: 2;
+		}
+	}
+	
+	.boxesSidebarLeft,
+	.boxesSidebarRight {
+		flex: 1 0 100%;
+		pointer-events: none;
+		
+		> .boxContainer {
+			pointer-events: all;
+		}
+		
+		&:not(.open) {
+			flex: 1 50%;
+			
+			> .boxContainer {
+				display: none;
+			}
+		}
+		
+		&::before {
+			background-color: $wcfSidebarBackground;
+			color: $wcfSidebarLink;
+			content: attr(data-show-sidebar);
+			display: block;
+			padding: 10px 0;
+			pointer-events: all;
+			text-align: center;
+		}
+		
+		&.open::before {
+			content: attr(data-hide-sidebar);
+			margin-bottom: 20px;
+		}
+	}
+	
+	.boxesSidebarLeft.boxesSidebarLeftHasMenu {
+		&::before {
+			content: attr(data-show-navigation);
+		}
+		
+		&.open::before {
+			content: attr(data-hide-navigation);
+		}
+	}
+	
+	.boxesSidebarLeft:not(.open) + .content + .boxesSidebarRight:not(.open) {
+		border-left: 1px solid $wcfContentBackground;
+		margin-left: 10px;
+		margin-top: 0;
+	}
+	
+	.content:first-child + .boxesSidebarRight {
+		margin-bottom: 20px;
+		margin-top: 0;
+	}
+}
+
 /* styling for boxes in <contentTop>/<contentBottom> position */
 .boxesContentTop,
 .boxesContentBottom {
@@ -663,22 +689,23 @@
 	@include screen-sm-up {
 		.boxWithImage {
 			@include clearfix;
-			
-			.boxTitle,
-			.boxContent {
-				@include screen-md-down {
-					margin-left: calc(30% + 15px);
-				}
-				
-				@include screen-lg {
-					margin-left: calc(30% + 30px);
-				}
-			}
 		}
 		
 		.boxImage {
 			float: left;
 			width: 30%;
+		}
+	}
+	
+	@include screen-sm-md {
+		.boxImage {
+			margin: 0 10px 10px 0;
+		}
+	}
+	
+	@include screen-lg {
+		.boxImage {
+			margin: 0 20px 20px 0;
 		}
 	}
 }
@@ -827,22 +854,23 @@
 	@include screen-sm-up {
 		.boxWithImage {
 			@include clearfix;
-			
-			.boxTitle,
-			.boxContent {
-				@include screen-md-down {
-					margin-left: calc(30% + 15px);
-				}
-				
-				@include screen-lg {
-					margin-left: calc(30% + 30px);
-				}
-			}
 		}
 		
 		.boxImage {
 			float: left;
 			width: 30%;
+		}
+	}
+	
+	@include screen-sm-md {
+		.boxImage {
+			margin: 0 10px 10px 0;
+		}
+	}
+	
+	@include screen-lg {
+		.boxImage {
+			margin: 0 20px 20px 0;
 		}
 	}
 	

@@ -4,6 +4,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -16,7 +17,7 @@ use wcf\util\UserRegistrationUtil;
  * Shows the new password form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -59,14 +60,14 @@ class NewPasswordForm extends AbstractForm {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_GET['id'])) $this->userID = intval($_GET['id']);
-		else if (WCF::getSession()->getVar('lostPasswordRequest')) $this->userID = intval(WCF::getSession()->getVar('lostPasswordRequest'));
-		if (isset($_GET['k'])) $this->lostPasswordKey = StringUtil::trim($_GET['k']);
-		
-		$this->user = new User($this->userID);
-		if (!$this->user->userID) throw new IllegalLinkException();
-		
-		if ($this->lostPasswordKey) {
+		if (isset($_GET['id']) && isset($_GET['k'])) {
+			$this->userID = intval($_GET['id']);
+			$this->lostPasswordKey = StringUtil::trim($_GET['k']);
+			if (!$this->userID || !$this->lostPasswordKey) throw new IllegalLinkException();
+			
+			$this->user = new User($this->userID);
+			if (!$this->user->userID) throw new IllegalLinkException();
+			
 			if (!$this->user->lostPasswordKey) throw new IllegalLinkException();
 			if (!CryptoUtil::secureCompare($this->user->lostPasswordKey, $this->lostPasswordKey)) {
 				throw new IllegalLinkException();
@@ -79,6 +80,13 @@ class NewPasswordForm extends AbstractForm {
 				'lostPasswordKey' => null
 			]);
 			WCF::getSession()->register('lostPasswordRequest', $this->user->userID);
+		}
+		else {
+			if (!WCF::getSession()->getVar('lostPasswordRequest')) throw new PermissionDeniedException();
+			$this->userID = intval(WCF::getSession()->getVar('lostPasswordRequest'));
+			
+			$this->user = new User($this->userID);
+			if (!$this->user->userID) throw new IllegalLinkException();
 		}
 	}
 	

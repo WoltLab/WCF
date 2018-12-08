@@ -7,6 +7,10 @@
 				opacity: 0;
 			}
 		}
+		
+		&.jsCommentAdd {
+			padding-right: 0;
+		}
 	}
 	
 	.commentContent {
@@ -26,6 +30,19 @@
 		
 		.wcfLikeCounter {
 			@include wcfFontSmall;
+		}
+		
+		> .userMessage {
+			margin-top: 10px;
+			padding-bottom: 5px;
+			
+			/* slightly indent code and quote boxes at the root of the
+			   message container, allows some space for shadows */
+			> .codeBox,
+			> .quoteBox {
+				margin-left: 5px;
+				margin-right: 5px;
+			}
 		}
 	}
 	
@@ -53,4 +70,193 @@
 	textarea + button {
 		margin-top: 2px;
 	}
+	
+	.comment[data-is-disabled="1"] .jsCommentShowAddResponse {
+		display: none;
+	}
+	
+	/* prevents the author avatar link to be stretched downwards */
+	.comment > .box48 > a:first-child {
+		align-self: flex-start;
+	}
+	
+	@include screen-sm-up {
+		.jsCommentResponseAdd {
+			padding-left: 20px;
+		}
+	}
+	
+	/* hide avatar on smartphones to give more room to the editor */
+	@include screen-xs {
+		.jsCommentAdd > .userAvatarImage,
+		.jsCommentResponseAdd > .userAvatarImage {
+			display: none;
+		}
+	}
+	
+	/* mobile drop-down menus are sometimes cut off due to the overflow */
+	@include screen-md-down {
+		.commentContentContainer {
+			overflow: visible;
+		}
+	}
+}
+
+.commentListAddComment {
+	&.collapsed {
+		background-color: $wcfSidebarBackground;
+		cursor: pointer;
+		overflow: hidden;
+		padding: 10px 20px;
+		position: relative;
+		
+		&::before {
+			color: $wcfSidebarText;
+			content: $fa-var-reply;
+			font-family: FontAwesome;
+			font-size: 28px;
+			height: 32px;
+			line-height: 32px;
+			margin-right: 10px;
+			width: 32px;
+			vertical-align: -5px;
+		}
+		
+		&::after {
+			color: $wcfSidebarText;
+			content: attr(data-placeholder);
+			position: relative;
+			top: 2px;
+			
+			@include screen-sm-up {
+				@include wcfFontSection;
+			}
+		}
+		
+		> .commentListAddCommentEditorContainer {
+			left: 200%;
+			position: absolute;
+			top: -100%;
+		}
+	}
+	
+	&.loading {
+		height: 150px;
+		position: relative;
+		
+		> .commentListAddCommentEditorContainer {
+			display: none;
+		}
+		
+		> .commentLoadingOverlay {
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			transform: translateX(-50%) translateY(-50%);
+		}
+	}
+}
+
+.commentListAddCommentResponse {
+	&.loading {
+		height: 150px;
+		position: relative;
+		
+		> .commentListAddCommentResponseEditorContainer {
+			display: none;
+		}
+		
+		> .commentLoadingOverlay {
+			left: 50%;
+			position: absolute;
+			top: 50%;
+			transform: translateX(-50%) translateY(-50%);
+		}
+	}
+}
+
+.commentListAddCommentEditorContainer > .jsCommentAddRequiresApproval {
+	margin-top: 0;
+}
+
+.commentResponseAdd > div > .jsCommentAddRequiresApproval {
+	margin-top: 0;
+	
+	& + textarea {
+		margin-top: 20px;
+	}
+}
+
+.commentEditorContainer {
+	> .icon {
+		left: calc(50% - 24px);
+		position: relative;
+	}
+	
+	~ .commentContent,
+	~ .commentOptionContainer {
+		display: none;
+	}
+}
+
+.commentResponse .commentEditorContainer {
+	~ .containerHeadline,
+	~ .userMessage,
+	~ .buttonGroupNavigation {
+		display: none;
+	}
+}
+
+.commentListAddComment,
+.commentEditorContainer {
+	.formSubmit {
+		/* reduced margin, now in sync with the container padding */
+		margin-top: 20px;
+	}
+}
+
+@keyframes wcfCommentHighlight {
+	0%   { opacity: 1;  }
+	50%  { opacity: .3; }
+	100% { opacity: 1;  }
+}
+
+.commentPermalinkContainer,
+.commentResponsePermalinkContainer{
+	border-bottom-color: $wcfContentBorder !important;
+	
+	&.loading > .icon {
+		left: calc(50% - 24px);
+		position: relative;
+	}
+	
+	&:not(.loading) {
+		//opacity: 0;
+	}
+	
+	&.fadeIn {
+		
+		/*opacity: 1;
+		transition: opacity .24s linear;*/
+	}
+}
+
+.comment.commentHighlightTarget .commentContent:not(.commentResponseContent),
+.commentResponse.commentHighlightTarget .commentResponseContent {
+	animation: wcfCommentHighlight .96s linear;
+}
+
+.commentScrollTarget {
+	display: block;
+	height: 0;
+	position: absolute;
+}
+
+.jsEnableComment > .invisible,
+.jsEnableResponse > .invisible {
+	display: inline;
+}
+
+.commentModerationDisabledComment {
+	margin: 0 -20px;
 }

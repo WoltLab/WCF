@@ -57,7 +57,7 @@ WCF.Search.Message.KeywordList = WCF.Search.Base.extend({
 		this._divider = $('<li class="dropdownDivider" />').hide().insertBefore($lastDivider);
 		this._list = $('<li class="dropdownList"><ul /></li>').hide().insertBefore($lastDivider).children('ul');
 		
-		// supress clicks on checkboxes
+		// suppress clicks on checkboxes
 		$dropdownMenu.find('input, label').on('click', function(event) { event.stopPropagation(); });
 		
 		this._proxy = new WCF.Action.Proxy({

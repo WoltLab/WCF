@@ -7,7 +7,7 @@ use wcf\system\cache\builder\TypedTagCloudCacheBuilder;
  * This class provides the function to filter the tag cloud by object types.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Tagging
  */
@@ -19,7 +19,7 @@ class TypedTagCloud extends TagCloud {
 	protected $objectTypeIDs = [];
 	
 	/**
-	 * Contructs a new TypedTagCloud object.
+	 * Constructs a new TypedTagCloud object.
 	 * 
 	 * @param	string		$objectType
 	 * @param	integer[]	$languageIDs

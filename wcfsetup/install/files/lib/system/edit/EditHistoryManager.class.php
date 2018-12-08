@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Manages the edit history.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Search
  */
@@ -121,12 +121,14 @@ class EditHistoryManager extends SingletonFactory {
 			WHERE		revertTo.objectID = vandalizedEntries2.objectID
 				AND	revertTo.objectTypeID = vandalizedEntries2.objectTypeID
 				AND	(	revertTo.obsoletedAt <= ?
+					OR	revertTo.time <= ?
 					OR	revertTo.userID NOT IN(".$userIDPlaceholders."))
 			GROUP BY revertTo.objectTypeID, revertTo.objectID";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute(array_merge(
 			[TIME_NOW - $timeframe],
 			$userIDs,
+			[TIME_NOW - $timeframe],
 			[TIME_NOW - $timeframe],
 			$userIDs
 		));

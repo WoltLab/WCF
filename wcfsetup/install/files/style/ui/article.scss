@@ -17,7 +17,7 @@
 	
 	figcaption {
 		color: $wcfContentDimmedText;
-		flex: 1 0 auto;
+		flex: 1 0 100%;
 		margin-top: 5px;
 		text-align: center;
 		
@@ -32,8 +32,7 @@
 		margin-bottom: 20px;
 	}
 	
-	.articleTagList,
-	.articleLikeSection {
+	.articleTagList {
 		margin-top: 20px;
 	}
 	
@@ -47,6 +46,11 @@
 		.invisible {
 			display: inline;
 		}
+	}
+	
+	.articleLikesSummery:not(:empty),
+	.articleLikeButtons:not(:empty) {
+		margin-top: 20px;
 	}
 }
 

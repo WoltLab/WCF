@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\condition;
+use wcf\data\condition\Condition;
 use wcf\data\DatabaseObject;
 use wcf\data\DatabaseObjectList;
 
@@ -8,7 +9,7 @@ use wcf\data\DatabaseObjectList;
  * object.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  * @since	3.0
@@ -101,5 +102,17 @@ abstract class AbstractObjectTextPropertyCondition extends AbstractTextCondition
 	 */
 	protected function getPropertyName() {
 		return $this->propertyName;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function setData(Condition $condition) {
+		parent::setData($condition);
+		
+		if ($this->supportsMultipleValues) {
+			/** @noinspection PhpParamsInspection */
+			$this->fieldValue = implode(',', $this->fieldValue);
+		}
 	}
 }

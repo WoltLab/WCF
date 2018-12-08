@@ -1,17 +1,19 @@
 <?php
 namespace wcf\system\package\plugin;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Abstract implementation of a package installation plugin for menu items.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -42,9 +44,9 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 			'menuItem' => $data['attributes']['name'],
 			'menuItemController' => isset($data['elements']['controller']) ? $data['elements']['controller'] : '',
 			'menuItemLink' => isset($data['elements']['link']) ? $data['elements']['link'] : '',
-			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
+			'options' => isset($data['elements']['options']) ? StringUtil::normalizeCsv($data['elements']['options']) : '',
 			'parentMenuItem' => isset($data['elements']['parent']) ? $data['elements']['parent'] : '',
-			'permissions' => isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '',
+			'permissions' => isset($data['elements']['permissions']) ? StringUtil::normalizeCsv($data['elements']['permissions']) : '',
 			'showOrder' => $showOrder
 		];
 	}
@@ -85,5 +87,12 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 			'sql' => $sql,
 			'parameters' => $parameters
 		];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
 	}
 }

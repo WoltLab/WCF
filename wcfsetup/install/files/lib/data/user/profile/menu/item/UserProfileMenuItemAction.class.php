@@ -1,15 +1,19 @@
 <?php
 namespace wcf\data\user\profile\menu\item;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\ISortableAction;
+use wcf\system\cache\builder\UserProfileMenuCacheBuilder;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\menu\user\profile\UserProfileMenu;
+use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 
 /**
  * Executes user profile menu item-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Profile\Menu\Item
  * 
@@ -17,7 +21,7 @@ use wcf\system\menu\user\profile\UserProfileMenu;
  * @method	UserProfileMenuItemEditor[]	getObjects()
  * @method	UserProfileMenuItemEditor	getSingleObject()
  */
-class UserProfileMenuItemAction extends AbstractDatabaseObjectAction {
+class UserProfileMenuItemAction extends AbstractDatabaseObjectAction implements ISortableAction {
 	/**
 	 * @inheritDoc
 	 */
@@ -27,7 +31,12 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction {
 	 * menu item
 	 * @var	UserProfileMenuItem
 	 */
-	protected $menuItem = null;
+	protected $menuItem;
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $requireACP = ['updatePosition'];
 	
 	/**
 	 * Validates menu item.
@@ -56,5 +65,60 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction {
 			'containerID' => $this->parameters['data']['containerID'],
 			'template' => $contentManager->getContent($this->parameters['data']['userID'])
 		];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateUpdatePosition() {
+		WCF::getSession()->checkPermissions(['admin.user.canManageUserOption']);
+		
+		if (!isset($this->parameters['data']['structure'][0])) {
+			throw new UserInputException('structure');
+		}
+		
+		$sql = "SELECT  menuItemID
+			FROM    wcf".WCF_N."_user_profile_menu_item";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		$menuItemIDs = [];
+		while ($menuItemID = $statement->fetchColumn()) {
+			$menuItemIDs[$menuItemID] = $menuItemID;
+		}
+		
+		$this->parameters['data']['structure'][0] = ArrayUtil::toIntegerArray($this->parameters['data']['structure'][0]);
+		foreach ($this->parameters['data']['structure'][0] as $menuItemID) {
+			if (!isset($menuItemIDs[$menuItemID])) {
+				throw new UserInputException('structure');
+			}
+			
+			unset($menuItemIDs[$menuItemID]);
+		}
+		
+		if (!empty($menuItemIDs)) {
+			throw new UserInputException('structure');
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function updatePosition() {
+		$sql = "UPDATE  wcf".WCF_N."_user_profile_menu_item
+			SET     showOrder = ?
+			WHERE   menuItemID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		WCF::getDB()->beginTransaction();
+		for ($i = 0, $length = count($this->parameters['data']['structure'][0]); $i < $length; $i++) {
+			$statement->execute([
+				$i,
+				$this->parameters['data']['structure'][0][$i]
+			]);
+		}
+		WCF::getDB()->commitTransaction();
+		
+		// reset cache
+		UserProfileMenuCacheBuilder::getInstance()->reset();
 	}
 }

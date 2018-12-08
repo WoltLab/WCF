@@ -5,11 +5,11 @@ use wcf\data\IAttachmentMessageQuickReplyAction;
 use wcf\data\IDatabaseObjectAction;
 use wcf\data\IMessage;
 use wcf\data\IMessageQuickReplyAction;
+use wcf\data\IMessageQuickReplyParametersAction;
 use wcf\data\IVisitableObjectAction;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\ParentClassException;
-use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  * Manages quick replies and stored messages.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Message
  */
@@ -99,7 +99,7 @@ class QuickReplyManager extends SingletonFactory {
 	 * @param	mixed[][]			$parameters
 	 * @param	string				$containerClassName
 	 * @param	string				$containerDecoratorClassName
-	 * @throws	SystemException
+	 * @throws	ParentClassException
 	 * @throws	UserInputException
 	 */
 	public function validateParameters(IMessageQuickReplyAction $object, array &$parameters, $containerClassName, $containerDecoratorClassName = '') {
@@ -157,6 +157,24 @@ class QuickReplyManager extends SingletonFactory {
 		if (isset($parameters['data']['tmpHash'])) {
 			$parameters['tmpHash'] = StringUtil::trim($parameters['data']['tmpHash']);
 			unset($parameters['data']['tmpHash']);
+		}
+		
+		$allowedDataParameters = ['message'];
+		if (!WCF::getUser()->userID) $allowedDataParameters[] = 'username';
+		if ($object instanceof IMessageQuickReplyParametersAction) {
+			$allowedDataParameters = array_merge($allowedDataParameters, $object->getAllowedQuickReplyParameters());
+		}
+		$eventParameters = [
+			'allowedDataParameters' => $allowedDataParameters,
+			'object' => $object
+		];
+		EventHandler::getInstance()->fireAction($this, 'allowedDataParameters', $eventParameters);
+		$allowedDataParameters = $eventParameters['allowedDataParameters'];
+		
+		foreach ($parameters['data'] as $key => $value) {
+			if (!in_array($key, $allowedDataParameters)) {
+				unset($parameters['data'][$key]);
+			}
 		}
 		
 		EventHandler::getInstance()->fireAction($this, 'validateParameters', $parameters);

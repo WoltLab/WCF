@@ -2,29 +2,42 @@
  * Uploads media files.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Media/List/Upload
  */
 define(
 	[
-		'Core', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 'Language', 'Ui/Confirmation', 'Ui/Notification', '../Upload'
+		'Core', 'Dom/Util', '../Upload'
 	],
 	function(
-		Core, DomChangeListener, DomTraverse, DomUtil, Language, UiConfirmation, UiNotification, MediaUpload
+		Core, DomUtil, MediaUpload
 	)
 {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			_createButton: function() {},
+			_success: function() {},
+			_upload: function() {},
+			_createFileElement: function() {},
+			_getParameters: function() {},
+			_uploadFiles: function() {},
+			_createFileElements: function() {},
+			_failure: function() {},
+			_insertButton: function() {},
+			_progress: function() {},
+			_removeButton: function() {}
+		};
+		return Fake;
+	}
 	
 	/**
 	 * @constructor
 	 */
 	function MediaListUpload(buttonContainerId, targetId, options) {
-		options = options || {};
-		
-		// only one file may be uploaded file list upload for proper error display
-		options.multiple = false;
-		
 		MediaUpload.call(this, buttonContainerId, targetId, options);
 	}
 	Core.inherit(MediaListUpload, MediaUpload, {
@@ -32,74 +45,29 @@ define(
 		 * Creates the upload button.
 		 */
 		_createButton: function() {
-			this._fileUpload = elCreate('input');
-			elAttr(this._fileUpload, 'type', 'file');
-			elAttr(this._fileUpload, 'name', this._options.name);
-			this._fileUpload.addEventListener('change', this._upload.bind(this));
+			MediaListUpload._super.prototype._createButton.call(this);
 			
-			this._button = elCreate('p');
-			this._button.className = 'button uploadButton';
+			var span = elBySel('span', this._button);
 			
-			this._button.innerHTML = '<span class="icon icon16 fa-upload"></span> <span>' + Language.get('wcf.global.button.upload') + '</span>';
+			var space = document.createTextNode(' ');
+			DomUtil.prepend(space, span);
 			
-			DomUtil.prepend(this._fileUpload, this._button);
-			
-			this._insertButton();
-			
-			DomChangeListener.trigger();
+			var icon = elCreate('span');
+			icon.className = 'icon icon16 fa-upload';
+			DomUtil.prepend(icon, span);
 		},
 		
 		/**
-		 * @see	WoltLabSuite/Core/Upload#_success
+		 * @see	WoltLabSuite/Core/Upload#_getParameters
 		 */
-		_success: function(uploadId, data) {
-			var icon = DomTraverse.childByClass(this._button, 'icon');
-			icon.classList.remove('fa-spinner');
-			icon.classList.add('fa-upload');
-			
-			var file = this._fileElements[uploadId][0];
-			
-			var internalFileId = elData(file, 'internal-file-id');
-			var media = data.returnValues.media[internalFileId];
-			
-			if (media) {
-				UiNotification.show(Language.get('wcf.media.upload.success'), function() {
-					window.location.reload();
+		_getParameters: function() {
+			if (this._options.categoryId) {
+				return Core.extend(MediaListUpload._super.prototype._getParameters.call(this), {
+					categoryID: this._options.categoryId
 				});
 			}
-			else {
-				var error = data.returnValues.errors[internalFileId];
-				if (!error) {
-					error = {
-						errorType: 'uploadFailed',
-						filename: elData(file, 'filename')
-					};
-				}
-				
-				UiConfirmation.show({
-					confirm: function() {
-						// do nothing
-					},
-					message: Language.get('wcf.media.upload.error.' + error.errorType, {
-						filename: error.filename
-					})
-				});
-			}
-		},
-		
-		/**
-		 * @see	WoltLabSuite/Core/Upload#_success
-		 */
-		_upload: function(event, file, blob) {
-			var uploadId = MediaListUpload._super.prototype._upload.call(this, event, file, blob);
 			
-			var icon = DomTraverse.childByClass(this._button, 'icon');
-			window.setTimeout(function() {
-				icon.classList.remove('fa-upload');
-				icon.classList.add('fa-spinner');
-			}, 500);
-			
-			return uploadId;
+			return MediaListUpload._super.prototype._getParameters.call(this);
 		}
 	});
 	

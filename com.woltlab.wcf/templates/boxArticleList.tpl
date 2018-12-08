@@ -3,7 +3,7 @@
 		{foreach from=$boxArticleList item=boxArticle}
 			<li>
 				<a href="{$boxArticle->getLink()}" class="box64">
-					<span>{if $boxArticle->getImage()}{@$boxArticle->getImage()->getElementTag(64)}{/if}</span>
+					<span>{if $boxArticle->getTeaserImage()}{@$boxArticle->getTeaserImage()->getElementTag(64)}{/if}</span>
 					
 					<div>
 						<h3>{$boxArticle->getTitle()}</h3>
@@ -32,8 +32,8 @@
 		{foreach from=$boxArticleList item=boxArticle}
 			<li>
 				<a href="{$boxArticle->getLink()}">
-					{if $boxArticle->getImage() && $boxArticle->getImage()->hasThumbnail('small')}
-						<div class="articleListImage">{@$boxArticle->getImage()->getThumbnailTag('small')}</div>
+					{if $boxArticle->getTeaserImage() && $boxArticle->getTeaserImage()->hasThumbnail('small')}
+						<div class="articleListImage">{@$boxArticle->getTeaserImage()->getThumbnailTag('small')}</div>
 					{/if}
 					
 					<h3 class="articleListTitle">{$boxArticle->getTitle()}</h3>

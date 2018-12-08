@@ -1,5 +1,3 @@
-<input type="hidden" name="captchaQuestion" value="{$captchaQuestion}">
-
 {if !$captchaQuestionAnswered}
 	<section class="section">
 		<header class="sectionHeader">
@@ -26,6 +24,8 @@
 				{/if}
 			</dd>
 		</dl>
+		
+		<input type="hidden" name="captchaQuestion" value="{$captchaQuestion}">
 	</section>
 	
 	{if !$ajaxCaptcha|empty}
@@ -40,4 +40,8 @@
 			});
 		</script>
 	{/if}
+{else}
+	<div class="section">
+		<input type="hidden" name="captchaQuestion" value="{$captchaQuestion}">
+	</div>
 {/if}

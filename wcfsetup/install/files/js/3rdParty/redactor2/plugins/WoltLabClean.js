@@ -8,12 +8,16 @@ $.Redactor.prototype.WoltLabClean = function() {
 				html = html.replace(/\u200B/g, '');
 				
 				// fix ampersands being replaced
-				html = html.replace(/&amp;/g, '@@@WCF_AMPERSAND@@@');
+				//html = html.replace(/&amp;/g, '@@@WCF_AMPERSAND@@@');
+				html = html.replace(/&amp;amp;/g, '@@@WCF_LITERAL_AMP@@@');
+				html = html.replace(/&amp;/g, '&amp;WCF_AMPERSAND&amp;');
 				
 				html = mpOnSet.call(this, html);
 				
 				// restore ampersands
-				html = html.replace(/@@@WCF_AMPERSAND@@@/g, '&amp;');
+				//html = html.replace(/@@@WCF_AMPERSAND@@@/g, '&amp;');
+				html = html.replace(/&amp;WCF_AMPERSAND&(amp;)?/g, '&amp;');
+				html = html.replace(/@@@WCF_LITERAL_AMP@@@/, '&amp;amp;');
 				
 				var div = elCreate('div');
 				div.innerHTML = html;
@@ -35,6 +39,13 @@ $.Redactor.prototype.WoltLabClean = function() {
 				elBySelAll('td', div, function (td) {
 					if (td.childNodes.length === 0) {
 						td.innerHTML = '\u200B';
+					}
+				});
+				
+				// enforce at least a single whitespace inside certain block elements
+				elBySelAll('pre, woltlab-quote, woltlab-spoiler', div, function (element) {
+					if (element.childElementCount === 0 && (element.textContent.length === 0 || element.textContent.match(/^\r?\n$/))) {
+						element.textContent = '\u200B';
 					}
 				});
 				
@@ -77,12 +88,14 @@ $.Redactor.prototype.WoltLabClean = function() {
 				html = html.replace(/<p>\u200B<\/p>/g, '<p><br></p>');
 				
 				// fix ampersands being replaced
-				html = html.replace(/&amp;/g, '@@@WCF_AMPERSAND@@@');
+				//html = html.replace(/&amp;/g, '@@@WCF_AMPERSAND@@@');
+				html = html.replace(/&amp;/g, '&amp;WCF_AMPERSAND&amp;');
 				
 				html = mpOnSync.call(this, html);
 				
 				// restore ampersands
-				html = html.replace(/@@@WCF_AMPERSAND@@@/g, '&amp;');
+				//html = html.replace(/@@@WCF_AMPERSAND@@@/g, '&amp;');
+				html = html.replace(/&WCF_AMPERSAND&/g, '&amp;');
 				
 				div.innerHTML = html;
 				
@@ -115,15 +128,13 @@ $.Redactor.prototype.WoltLabClean = function() {
 			var mpOnPaste = this.clean.onPaste;
 			this.clean.onPaste = (function (html, data, insert) {
 				if (data.pre || this.utils.isCurrentOrParent('kbd')) {
-					// prevent method call when data.pre is true
-					var mpRemoveEmptyInlineTags = this.clean.removeEmptyInlineTags;
-					this.clean.removeEmptyInlineTags = function(html) { return html; };
+					// instead of calling the original method, we'll use a subset of the cleaning
+					// tasks in order to avoid malformed HTML being sanitized by Redactor
+					if (data.pre && this.opts.preSpaces) {
+						html = html.replace(/\t/g, new Array(this.opts.preSpaces + 1).join(' '));
+					}
 					
-					html = mpOnPaste.call(this, html, data, insert);
-					
-					this.clean.removeEmptyInlineTags = mpRemoveEmptyInlineTags;
-					
-					return html;
+					return WCF.String.escapeHTML(html);
 				}
 				
 				var div = elCreate('div');
@@ -166,6 +177,8 @@ $.Redactor.prototype.WoltLabClean = function() {
 					});
 				}
 				
+				var isOffice = (elBySel('.MsoNormal', div) !== null);
+				
 				var elements = elBySelAll('[style]', div), property, removeStyles, strong, styleValue;
 				for (i = 0, length = elements.length; i < length; i++) {
 					element = elements[i];
@@ -176,7 +189,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 						
 						//noinspection JSUnresolvedVariable
 						if (this.opts.woltlab.allowedInlineStyles.indexOf(property) === -1) {
-							if (property === 'font-weight') {
+							if (property === 'font-weight' && element.nodeName !== 'STRONG') {
 								styleValue = element.style.getPropertyValue(property);
 								if (styleValue === 'bold' || styleValue === 'bolder') {
 									styleValue = 600;
@@ -190,6 +203,15 @@ $.Redactor.prototype.WoltLabClean = function() {
 									strong.appendChild(element);
 								}
 							}
+							else if (isOffice && property === 'margin-bottom' && element.nodeName === 'P') {
+								// office sometimes uses a margin-bottom value of exactly 12pt to create spacing between paragraphs
+								styleValue = element.style.getPropertyValue(property);
+								if (styleValue.match(/^12(?:\.0)?pt$/)) {
+									var p = elCreate('p');
+									p.innerHTML = '<br>';
+									element.parentNode.insertBefore(p, element.nextSibling);
+								}
+							}
 							
 							removeStyles.push(property);
 						}
@@ -201,6 +223,8 @@ $.Redactor.prototype.WoltLabClean = function() {
 				}
 				
 				elBySelAll('span', div, function (span) {
+					if (span.classList.contains('redactor-selection-marker')) return;
+					
 					if (!span.hasAttribute('style') || !span.style.length) {
 						while (span.childNodes.length) {
 							span.parentNode.insertBefore(span.childNodes[0], span);
@@ -234,9 +258,20 @@ $.Redactor.prototype.WoltLabClean = function() {
 					br.parentNode.insertBefore(document.createTextNode('@@@WOLTLAB-BR-MARKER@@@'), br.nextSibling);
 				});
 				
+				// convert `<kbd>…</kbd>` to `[tt]…[/tt]`
+				elBySelAll('kbd', div, function(kbd) {
+					kbd.insertBefore(document.createTextNode('[tt]'), kbd.firstChild);
+					kbd.appendChild(document.createTextNode('[/tt]'));
+					
+					while (kbd.childNodes.length) {
+						kbd.parentNode.insertBefore(kbd.childNodes[0], kbd);
+					}
+					elRemove(kbd);
+				});
+				
 				html = mpOnPaste.call(this, div.innerHTML, data, insert);
 				
-				html = html.replace(/@@@WOLTLAB-BR-MARKER@@@/g, '<woltlab-br-marker></woltlab-br-marker>');
+				html = html.replace(/\n*@@@WOLTLAB-BR-MARKER@@@\n*/g, '<woltlab-br-marker></woltlab-br-marker>');
 				html = html.replace(/(<p>)?\s*@@@WOLTLAB-P-ALIGN-(left|right|center|justify)@@@/g, function (match, p, alignment) {
 					if (p) {
 						return '<p class="text-' + alignment + '">';
@@ -249,13 +284,34 @@ $.Redactor.prototype.WoltLabClean = function() {
 				
 				elBySelAll('woltlab-br-marker', div, function (marker) {
 					var parent = marker.parentNode;
+					if (parent === null) {
+						// marker was already removed, ignore it
+						return;
+					}
 					
 					if (parent.nodeName === 'P') {
 						var p = elCreate('p');
 						p.innerHTML = '<br>';
 						
+						var isDoubleBr = false;
+						var sibling = marker.nextSibling;
+						if (sibling && sibling.nodeName === 'WOLTLAB-BR-MARKER') {
+							// equals <br><br> and should be converted into an empty line, splitting the ancestors
+							isDoubleBr = true;
+						}
+						
+						var emptySiblings = !isDoubleBr;
 						while (marker.nextSibling) {
+							if (emptySiblings && marker.nextSibling.textContent.replace(/\u200B/g, '').trim().length !== 0) {
+								emptySiblings = false;
+							}
+							
 							p.appendChild(marker.nextSibling);
+						}
+						
+						if (!emptySiblings) {
+							// the <br> is not required when there is text afterwards, or if this is a <br><br> match
+							elRemove(p.firstElementChild);
 						}
 						
 						var previous = marker.previousSibling;
@@ -264,6 +320,12 @@ $.Redactor.prototype.WoltLabClean = function() {
 						}
 						
 						parent.parentNode.insertBefore(p, parent.nextSibling);
+						
+						if (isDoubleBr) {
+							p = elCreate('p');
+							p.innerHTML = '<br>';
+							parent.parentNode.insertBefore(p, parent.nextSibling);
+						}
 					}
 					else {
 						parent.insertBefore(elCreate('br'), marker);
@@ -287,6 +349,22 @@ $.Redactor.prototype.WoltLabClean = function() {
 								remove = false;
 							}
 						});
+					}
+					else if (p.textContent.trim().length === 0) {
+						elBySelAll('span', p, function (span) {
+							if (!span.hasAttribute('style') || !span.style.length) {
+								while (span.childNodes.length) {
+									span.parentNode.insertBefore(span.childNodes[0], span);
+								}
+								
+								elRemove(span);
+							}
+						});
+						
+						if (p.children.length === 0) {
+							// fix <p>&nbsp;</p> pasted from Office
+							p.innerHTML = '<br>';
+						}
 					}
 					
 					if (remove) {
@@ -354,7 +432,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 				if (data.links && this.opts.pasteLinks) {
 					elBySelAll('a', div, function(link) {
 						if (link.href) {
-							link.outerHTML = '##%a href="' + link.href + '"%##' + link.innerHTML + '##%/a%##';
+							link.outerHTML = '#####[a href="' + link.href + '"]#####' + link.innerHTML + '#####[/a]#####';
 						}
 					});
 					
@@ -366,7 +444,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 				if (data.images && this.opts.pasteImages) {
 					elBySelAll('img', div, function(image) {
 						if (image.src) {
-							var tmp = '##%img src="' + image.src + '"';
+							var tmp = '#####[img src="' + image.src + '"';
 							var attr;
 							for (var j = 0, length = image.attributes.length; j < length; j++) {
 								attr = image.attributes.item(j);
@@ -375,7 +453,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 								}
 							}
 							
-							image.outerHTML = tmp + '%##';
+							image.outerHTML = tmp + ']#####';
 						}
 					});
 					

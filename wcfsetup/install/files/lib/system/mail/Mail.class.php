@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
  * This class represents an e-mail.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Mail
  * @deprecated	The Community Framework 2.x mail API is deprecated in favor of \wcf\system\email\*.
@@ -251,7 +251,7 @@ class Mail {
 	}
 	
 	/**
-	 * Sets the recpients of this mail.
+	 * Sets the recipients of this mail.
 	 * 
 	 * @param	mixed		$to
 	 */

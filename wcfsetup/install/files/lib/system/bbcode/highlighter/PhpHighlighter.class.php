@@ -6,7 +6,7 @@ use wcf\system\Regex;
  * Highlights syntax of PHP sourcecode.
  * 
  * @author	Tim Duesterhus, Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  */
@@ -48,7 +48,7 @@ class PhpHighlighter extends Highlighter {
 		// remove added php tags
 		if ($phpTagsAdded) {
 			// the opening and closing PHP tags were added previously, hence we actually do
-			// know that the first (last for the closing tag) occurence is the one inserted
+			// know that the first (last for the closing tag) occurrence is the one inserted
 			// by us. The previously used regex was bad because it was significantly slower
 			// and could easily hit the backtrace limit for larger inputs
 			$openingTag = mb_strpos($highlightedCode, '&lt;?php&nbsp;');

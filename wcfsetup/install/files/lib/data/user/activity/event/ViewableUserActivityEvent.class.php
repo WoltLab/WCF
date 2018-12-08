@@ -9,7 +9,7 @@ use wcf\system\user\activity\event\UserActivityEventHandler;
  * Provides methods for viewable user activity events.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Activity\Event
  * 
@@ -51,6 +51,12 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	 * @var	UserProfile
 	 */
 	protected $userProfile = null;
+	
+	/**
+	 * true if event description contains raw html
+	 * @var boolean
+	 */
+	protected $isRawHtml = false;
 	
 	/**
 	 * Marks this event as accessible for current user.
@@ -111,9 +117,11 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	 * Sets event text.
 	 * 
 	 * @param	string		$description
+	 * @param       boolean         $isRawHtml
 	 */
-	public function setDescription($description) {
+	public function setDescription($description, $isRawHtml = false) {
 		$this->description = $description;
+		$this->isRawHtml = $isRawHtml;
 	}
 	
 	/**
@@ -150,5 +158,15 @@ class ViewableUserActivityEvent extends DatabaseObjectDecorator {
 	 */
 	public function getObjectTypeName() {
 		return UserActivityEventHandler::getInstance()->getObjectType($this->objectTypeID)->objectType;
+	}
+	
+	/**
+	 * Returns true if event description contains raw html.
+	 * 
+	 * @return      boolean
+	 * @since       3.1
+	 */
+	public function isRawHtml() {
+		return $this->isRawHtml;
 	}
 }

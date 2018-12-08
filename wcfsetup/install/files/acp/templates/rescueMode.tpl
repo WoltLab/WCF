@@ -12,7 +12,7 @@
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="wcfAcp">
 <a id="top"></a>
 
-<div id="pageContainer" class="pageContainer">
+<div id="pageContainer" class="pageContainer acpPageHiddenMenu">
 	<div class="pageHeaderContainer">
 		<header id="pageHeaderFacade" class="pageHeaderFacade">
 			<div class="layoutBoundary">
@@ -25,9 +25,10 @@
 		</header>
 	</div>
 	
-	<section id="main" class="main" role="main">
-		<div class="layoutBoundary">
-			<div id="content" class="content">
+	<div id="acpPageContentContainer" class="acpPageContentContainer">
+		<section id="main" class="main" role="main">
+			<div class="layoutBoundary">
+				<div id="content" class="content">
 
 {* content above was taken from 'header.tpl' *}
 				
@@ -81,7 +82,7 @@
 		</dl>
 	</section>
 	
-	{include file='captcha'}
+	{include file='captcha' supportsAsyncCaptcha=true}
 	
 	<section class="section">
 		<header class="sectionHeader">
@@ -136,4 +137,4 @@
 	</div>
 </form>
 
-{include file='footer'}
+{include file='footer' __isRescueMode=true}

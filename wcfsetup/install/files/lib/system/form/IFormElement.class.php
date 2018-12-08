@@ -5,7 +5,7 @@ namespace wcf\system\form;
  * Interface for form elements.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form
  */
@@ -68,7 +68,7 @@ interface IFormElement {
 	public function setError($error);
 	
 	/**
-	 * Returns localized error message, empty if no error occured.
+	 * Returns localized error message, empty if no error occurred.
 	 * 
 	 * @return	string
 	 */

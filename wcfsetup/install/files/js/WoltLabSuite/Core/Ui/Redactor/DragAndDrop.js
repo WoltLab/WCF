@@ -2,12 +2,24 @@
  * Drag and Drop file uploads.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Redactor/DragAndDrop
  */
 define(['Dictionary', 'EventHandler', 'Language'], function (Dictionary, EventHandler, Language) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_dragOver: function() {},
+			_drop: function() {},
+			_dragLeave: function() {},
+			_setup: function() {}
+		};
+		return Fake;
+	}
 	
 	var _didInit = false;
 	var _dragArea = new Dictionary();
@@ -182,6 +194,20 @@ define(['Dictionary', 'EventHandler', 'Language'], function (Dictionary, EventHa
 		},
 		
 		/**
+		 * Handles the global drop event.
+		 * 
+		 * @param       {Event}         event
+		 * @protected
+		 */
+		_globalDrop: function (event) {
+			if (event.target.closest('.redactor-layer') === null) {
+				event.preventDefault();
+			}
+			
+			this._dragLeave(event);
+		},
+		
+		/**
 		 * Binds listeners to global events.
 		 * 
 		 * @protected
@@ -192,7 +218,7 @@ define(['Dictionary', 'EventHandler', 'Language'], function (Dictionary, EventHa
 			
 			window.addEventListener('dragover', this._dragOver.bind(this));
 			window.addEventListener('dragleave', this._dragLeave.bind(this));
-			window.addEventListener('drop', this._dragLeave.bind(this));
+			window.addEventListener('drop', this._globalDrop.bind(this));
 			
 			_didInit = true;
 		}

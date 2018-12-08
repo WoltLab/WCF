@@ -10,7 +10,7 @@ use wcf\data\cronjob\Cronjob;
  * Publishes delayed articles.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob
  * @since	3.0
@@ -26,6 +26,7 @@ class ArticlePublicationCronjob extends AbstractCronjob {
 		$articleList->getConditionBuilder()->add('article.publicationStatus = ?', [Article::DELAYED_PUBLICATION]);
 		$articleList->getConditionBuilder()->add('article.publicationDate > ?', [0]);
 		$articleList->getConditionBuilder()->add('article.publicationDate <= ?', [TIME_NOW]);
+		$articleList->getConditionBuilder()->add('article.isDeleted = ?', [0]);
 		$articleList->decoratorClassName = ArticleEditor::class;
 		$articleList->readObjects();
 		

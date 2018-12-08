@@ -10,13 +10,14 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\simple\HtmlSimpleParser;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 
 /**
  * Executes box related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Box
  * @since	3.0
@@ -132,9 +133,14 @@ class BoxAction extends AbstractDatabaseObjectAction {
 	public function update() {
 		parent::update();
 		
+		$isRevert = (!empty($this->parameters['isRevert']));
+		
 		// update box content
 		if (!empty($this->parameters['content'])) {
 			foreach ($this->getObjects() as $box) {
+				$versionData = [];
+				$hasChanges = false;
+				
 				foreach ($this->parameters['content'] as $languageID => $content) {
 					if (!empty($content['htmlInputProcessor'])) {
 						/** @noinspection PhpUndefinedMethodInspection */
@@ -149,8 +155,14 @@ class BoxAction extends AbstractDatabaseObjectAction {
 						$boxContentEditor->update([
 							'title' => $content['title'],
 							'content' => $content['content'],
-							'imageID' => $content['imageID']
+							'imageID' => ($isRevert) ? $boxContent->imageID : $content['imageID']
 						]);
+						
+						$versionData[] = $boxContent;
+						if ($boxContent->content != $content['content'] || $boxContent->title != $content['title']) {
+							$hasChanges = true;
+						}
+						
 						$boxContent = BoxContent::getBoxContent($box->boxID, ($languageID ?: null));
 					}
 					else {
@@ -160,9 +172,12 @@ class BoxAction extends AbstractDatabaseObjectAction {
 							'languageID' => $languageID ?: null,
 							'title' => $content['title'],
 							'content' => $content['content'],
-							'imageID' => $content['imageID']
+							'imageID' => ($isRevert) ? $content['imageID'] : null
 						]);
 						$boxContentEditor = new BoxContentEditor($boxContent);
+						
+						$versionData[] = $boxContent;
+						$hasChanges = true;
 					}
 					
 					// save embedded objects
@@ -185,6 +200,12 @@ class BoxAction extends AbstractDatabaseObjectAction {
 					foreach ($this->parameters['content'] as $languageID => $content) {
 						$box->writeTemplate($languageID, $content['content']);
 					}
+				}
+				
+				if ($hasChanges) {
+					$boxObj = new BoxVersionTracker($box->getDecoratedObject());
+					$boxObj->setContent($versionData);
+					VersionTracker::getInstance()->add('com.woltlab.wcf.box', $boxObj);
 				}
 			}
 		}
@@ -228,15 +249,23 @@ class BoxAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	public function delete() {
+		$boxContentIDs = [];
 		foreach ($this->getObjects() as $box) {
-			if ($box->boxType == 'tpl') {
-				foreach ($box->getBoxContents() as $languageID => $content) {
+			foreach ($box->getBoxContents() as $languageID => $content) {
+				if ($box->boxType == 'tpl') {
 					$file = WCF_DIR . 'templates/' . $box->getTplName(($languageID ?: null)) . '.tpl';
 					if (file_exists($file)) {
 						@unlink($file);
 					}
 				}
+				
+				$boxContentIDs[] = $content->boxContentID;
 			}
+		}
+		
+		if (!empty($boxContentIDs)) {
+			// update embedded objects
+			MessageEmbeddedObjectManager::getInstance()->removeObjects('com.woltlab.wcf.box.content', $boxContentIDs);
 		}
 		
 		parent::delete();

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\search\mysql;
 use wcf\data\object\type\ObjectType;
+use wcf\system\database\exception\DatabaseQueryExecutionException;
 use wcf\system\search\AbstractSearchIndexManager;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
@@ -9,7 +10,7 @@ use wcf\system\WCF;
  * Search engine using MySQL's FULLTEXT index.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Search
  */
@@ -99,7 +100,15 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 			['name' => 'user', 'data' => ['columns' => 'userID, time', 'type'=> 'KEY']]
 		];
 		
-		WCF::getDB()->getEditor()->createTable($tableName, $columns, $indices);
+		try {
+			WCF::getDB()->getEditor()->createTable($tableName, $columns, $indices);
+		}
+		catch (DatabaseQueryExecutionException $e) {
+			// SQLSTATE[42S01]: Base table or view already exists: 1050 Table '%s' already exists
+			if ($e->getCode() !== '42S01') {
+				throw $e;
+			}
+		}
 		
 		// add comment
 		$sql = "ALTER TABLE	".$tableName."

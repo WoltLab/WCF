@@ -9,7 +9,7 @@ use wcf\util\DateUtil;
  * Worker implementation for updating daily statistics.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Worker
  */
@@ -90,6 +90,6 @@ class StatDailyRebuildDataWorker extends AbstractRebuildDataWorker {
 			FROM	wcf".WCF_N."_user";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$this->startDate = $statement->fetchColumn();
+		$this->startDate = $statement->fetchSingleColumn();
 	}
 }

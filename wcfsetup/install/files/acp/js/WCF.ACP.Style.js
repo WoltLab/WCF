@@ -2,7 +2,7 @@
  * ACP Style related classes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.ACP.Style = { };
@@ -362,7 +362,7 @@ WCF.ACP.Style.LogoUploadMobile = WCF.Upload.extend({
 		
 		this._button = $('#uploadLogoMobile');
 		this._image = $('#styleLogoMobile');
-		this._imagePath = $('#imagePathMobile');
+		this._imagePath = $('#imagePath');
 		this._pageLogo = $('#pageLogoMobile');
 		
 		this._super(this._button, undefined, 'wcf\\data\\style\\StyleAction', { action: 'uploadLogoMobile' });

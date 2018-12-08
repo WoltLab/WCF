@@ -2,7 +2,6 @@
 namespace wcf\data;
 use wcf\data\category\AbstractDecoratedCategory;
 use wcf\system\exception\ParentClassException;
-use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
 /**
@@ -17,7 +16,7 @@ use wcf\system\WCF;
  * 		see IStorableObject::getDatabaseTableIndexName()
  *
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data
  */
@@ -53,7 +52,7 @@ trait TMultiCategoryObject {
 	 * Returns the categories of the object.
 	 *
 	 * @return	AbstractDecoratedCategory[]
-	 * @throws	SystemException
+	 * @throws	ParentClassException
 	 */
 	public function getCategories() {
 		if ($this->categories === null) {

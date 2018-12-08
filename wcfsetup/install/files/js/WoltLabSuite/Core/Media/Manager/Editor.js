@@ -2,13 +2,48 @@
  * Provides the media manager dialog for selecting media for Redactor editors.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Media/Manager/Editor
  */
-define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Controller/Clipboard', 'WoltLabSuite/Core/Media/Manager/Base'],
-	function(Core, Dictionary, DomTraverse, Language, UiDialog, ControllerClipboard, MediaManagerBase) {
+define(['Core', 'Dictionary', 'Dom/Traverse', 'EventHandler', 'Language', 'Permission', 'Ui/Dialog', 'WoltLabSuite/Core/Controller/Clipboard', 'WoltLabSuite/Core/Media/Manager/Base'],
+	function(Core, Dictionary, DomTraverse, EventHandler, Language, Permission, UiDialog, ControllerClipboard, MediaManagerBase) {
 	"use strict";
+		
+		if (!COMPILER_TARGET_DEFAULT) {
+			var Fake = function() {};
+			Fake.prototype = {
+				_addButtonEventListeners: function() {},
+				_buildInsertDialog: function() {},
+				_click: function() {},
+				_clipboardAction: function() {},
+				_getInsertDialogId: function() {},
+				_getThumbnailSizes: function() {},
+				_insertMedia: function() {},
+				_insertMediaGallery: function() {},
+				_insertMediaItem: function() {},
+				_openInsertDialog: function() {},
+				insertMedia: function() {},
+				getMode: function() {},
+				setupMediaElement: function() {},
+				_dialogClose: function() {},
+				_dialogInit: function() {},
+				_dialogSetup: function() {},
+				_dialogShow: function() {},
+				_editMedia: function() {},
+				_editorClose: function() {},
+				_editorSuccess: function() {},
+				_removeClipboardCheckboxes: function() {},
+				_setMedia: function() {},
+				addMedia: function() {},
+				getDialog: function() {},
+				getOption: function() {},
+				removeMedia: function() {},
+				resetMedia: function() {},
+				setMedia: function() {}
+			};
+			return Fake;
+		}
 	
 	/**
 	 * @constructor
@@ -29,6 +64,22 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 		}
 		this._mediaToInsert = new Dictionary();
 		this._mediaToInsertByClipboard = false;
+		this._uploadData = null;
+		this._uploadId = null;
+		
+		if (this._options.editor && !this._options.editor.opts.woltlab.attachments) {
+			var editorId = elData(this._options.editor.$editor[0], 'element-id');
+			
+			var uuid1 = EventHandler.add('com.woltlab.wcf.redactor2', 'dragAndDrop_' + editorId, this._editorUpload.bind(this));
+			var uuid2 = EventHandler.add('com.woltlab.wcf.redactor2', 'pasteFromClipboard_' + editorId, this._editorUpload.bind(this));
+			
+			EventHandler.add('com.woltlab.wcf.redactor2', 'destory_' + editorId, function() {
+				EventHandler.remove('com.woltlab.wcf.redactor2', 'dragAndDrop_' + editorId, uuid1);
+				EventHandler.remove('com.woltlab.wcf.redactor2', 'dragAndDrop_' + editorId, uuid2);
+			});
+			
+			EventHandler.add('com.woltlab.wcf.media.upload', 'success', this._mediaUploaded.bind(this));
+		}
 	}
 	Core.inherit(MediaManagerEditor, MediaManagerBase, {
 		/**
@@ -140,6 +191,36 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 		},
 		
 		/**
+		 * @see	WoltLabSuite/Core/Media/Manager/Base#_dialogShow
+		 */
+		_dialogShow: function() {
+			MediaManagerEditor._super.prototype._dialogShow.call(this);
+			
+			// check if data needs to be uploaded
+			if (this._uploadData) {
+				if (this._uploadData.file) {
+					this._upload.uploadFile(this._uploadData.file);
+				}
+				else {
+					this._uploadId = this._upload.uploadBlob(this._uploadData.blob);
+				}
+				
+				this._uploadData = null;
+			}
+		},
+		
+		/**
+		 * Handles pasting and dragging and dropping files into the editor. 
+		 * 
+		 * @param	{object}	data	data of the uploaded file
+		 */
+		_editorUpload: function(data) {
+			this._uploadData = data;
+			
+			UiDialog.open(this);
+		},
+		
+		/**
 		 * Returns the id of the insert dialog based on the media files to be inserted.
 		 * 
 		 * @return	{string}	insert dialog id
@@ -187,8 +268,11 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 		 * 
 		 * @param	{Event?}	event
 		 * @param	{string?}	thumbnailSize
+		 * @param	{boolean?}	closeEditor
 		 */
-		_insertMedia: function(event, thumbnailSize) {
+		_insertMedia: function(event, thumbnailSize, closeEditor) {
+			if (closeEditor === undefined) closeEditor = true;
+			
 			var insertType = 'separate';
 			
 			// update insert options with selected values if method is called by clicking on 'insert' button
@@ -231,7 +315,9 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 			this._mediaToInsertByClipboard = false;
 			
 			// close manager dialog
-			UiDialog.close(this);
+			if (closeEditor) {
+				UiDialog.close(this);
+			}
 		},
 		
 		/**
@@ -287,6 +373,22 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 			}
 			else {
 				this._options.editor.insert.text("[wsm='" + item.mediaID + "'][/wsm]");
+			}
+		},
+		
+		/**
+		 * Is called after media files are successfully uploaded to insert copied media.
+		 * 
+		 * @param	{object}	data		upload data
+		 */
+		_mediaUploaded: function(data) {
+			if (this._uploadId !== null && this._upload === data.upload) {
+				if (this._uploadId === data.uploadId || (Array.isArray(this._uploadId) && this._uploadId.indexOf(data.uploadId) !== -1)) {
+					this._mediaToInsert = Dictionary.fromObject(data.media);
+					this._insertMedia(null, 'medium', false);
+					
+					this._uploadId = null;
+				}
 			}
 		},
 		
@@ -358,9 +460,11 @@ define(['Core', 'Dictionary', 'Dom/Traverse', 'Language', 'Ui/Dialog', 'WoltLabS
 			var buttons = elBySel('nav.buttonGroupNavigation > ul', mediaElement);
 			
 			var listItem = elCreate('li');
+			listItem.className = 'jsMediaInsertButton';
+			elData(listItem, 'object-id', media.mediaID);
 			buttons.appendChild(listItem);
 			
-			listItem.innerHTML = '<a><span class="icon icon16 fa-plus jsTooltip jsMediaInsertButton" data-object-id="' + media.mediaID + '" title="' + Language.get('wcf.media.button.insert') + '"></span> <span class="invisible">' + Language.get('wcf.media.button.insert') + '</span></a>';
+			listItem.innerHTML = '<a><span class="icon icon16 fa-plus jsTooltip" title="' + Language.get('wcf.media.button.insert') + '"></span> <span class="invisible">' + Language.get('wcf.media.button.insert') + '</span></a>';
 		}
 	});
 	

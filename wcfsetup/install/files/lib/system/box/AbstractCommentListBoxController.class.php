@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Abstract box controller implementation for a list of comments for a certain type of objects.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
@@ -79,6 +79,7 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
 	 */
 	protected function getObjectList() {
 		$commentList = new ViewableCommentList();
+		$commentList->getConditionBuilder()->add('comment.isDisabled = ?', [0]);
 		$commentList->getConditionBuilder()->add('comment.objectTypeID = ?', [$this->objectType->objectTypeID]);
 		
 		$this->applyObjectTypeFilters($commentList);

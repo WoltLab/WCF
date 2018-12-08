@@ -5,7 +5,7 @@ namespace wcf\system\option;
  * Every option handler has to implement this interface.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -27,7 +27,7 @@ interface IOptionHandler {
 	public function readUserInput(array &$source);
 	
 	/**
-	 * Validates user input, returns an array with all occured errors.
+	 * Validates user input, returns an array with all occurred errors.
 	 * 
 	 * @return	array
 	 */

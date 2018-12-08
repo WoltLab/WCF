@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * User activity event implementation for profile comment responses.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Activity\Event
  */
@@ -68,6 +68,8 @@ class ProfileCommentResponseUserActivityEvent extends SingletonFactory implement
 						// title
 						$text = WCF::getLanguage()->getDynamicVariable('wcf.user.profile.recentActivity.profileCommentResponse', [
 							'commentAuthor' => $users[$comment->userID],
+							'commentID' => $comment->commentID,
+							'responseID' => $response->responseID,
 							'user' => $users[$comment->objectID]
 						]);
 						$event->setTitle($text);

@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Compiles template sources into valid PHP code.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template
  */
@@ -166,7 +166,7 @@ class TemplateScriptingCompiler {
 	
 	/**
 	 * list of static includes per template
-	 * @var	string[]
+	 * @var	string[][]
 	 */
 	protected $staticIncludes = [];
 	
@@ -193,7 +193,7 @@ class TemplateScriptingCompiler {
 	 * @param	string		$sourceContent
 	 * @param	array		$metaData
 	 * @param	boolean		$isolated
-	 * @return	string
+	 * @return	array|boolean
 	 * @throws	SystemException
 	 */
 	public function compileString($identifier, $sourceContent, array $metaData = [], $isolated = false) {
@@ -689,19 +689,27 @@ class TemplateScriptingCompiler {
 			$foreachProp = "\$this->v['tpl']['foreach'][".$args['name']."]";
 		}
 		
+		$foreachHash = "\$_foreach_".StringUtil::getRandomID();
+		
 		$phpCode = "<?php\n";
+		$phpCode .= $foreachHash." = ".$args['from'].";\n";
+		$phpCode .= $foreachHash."_cnt = (".$foreachHash." !== null ? 1 : 0);\n";
+		$phpCode .= "if (is_array(".$foreachHash.") || (".$foreachHash." instanceof \\Countable)) {\n";
+		$phpCode .= $foreachHash."_cnt = count(".$foreachHash.");\n";
+		$phpCode .= "}\n";
+		
 		if (!empty($foreachProp)) {
-			$phpCode .= $foreachProp."['total'] = count(".$args['from'].");\n";
+			$phpCode .= $foreachProp."['total'] = ".$foreachHash."_cnt;\n";
 			$phpCode .= $foreachProp."['show'] = (".$foreachProp."['total'] > 0 ? true : false);\n";
 			$phpCode .= $foreachProp."['iteration'] = 0;\n";
 		}
-		$phpCode .= "if (count(".$args['from'].") > 0) {\n";
+		$phpCode .= "if (".$foreachHash."_cnt > 0) {\n";
 		
 		if (isset($args['key'])) {
-			$phpCode .= "foreach (".$args['from']." as ".(mb_substr($args['key'], 0, 1) != '$' ? "\$this->v[".$args['key']."]" : $args['key'])." => ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
+			$phpCode .= "foreach (".$foreachHash." as ".(mb_substr($args['key'], 0, 1) != '$' ? "\$this->v[".$args['key']."]" : $args['key'])." => ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
 		}
 		else {
-			$phpCode .= "foreach (".$args['from']." as ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
+			$phpCode .= "foreach (".$foreachHash." as ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
 		}
 		
 		if (!empty($foreachProp)) {

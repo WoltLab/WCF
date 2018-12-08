@@ -4,7 +4,7 @@
  * In case you want to issue JSONP requests, please use `AjaxJsonp` instead.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ajax/Request
  */
@@ -46,6 +46,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 				ignoreError: false,
 				pinData: false,
 				silent: false,
+				includeRequestedWith: true,
 				
 				// callbacks
 				failure: null,
@@ -67,7 +68,8 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			}
 			
 			if (this._options.url.indexOf(WSC_API_URL) === 0) {
-				// allows allow credentials when querying the very own server
+				this._options.includeRequestedWith = true;
+				// always include credentials when querying the very own server
 				this._options.withCredentials = true;
 			}
 			
@@ -113,7 +115,9 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			if (this._options.contentType) {
 				this._xhr.setRequestHeader('Content-Type', this._options.contentType);
 			}
-			this._xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+			if (this._options.withCredentials || this._options.includeRequestedWith) {
+				this._xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+			}
 			if (this._options.withCredentials) {
 				this._xhr.withCredentials = true;
 			}
@@ -241,6 +245,13 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 					if (data && data.returnValues && data.returnValues.template !== undefined) {
 						data.returnValues.template = data.returnValues.template.trim();
 					}
+					
+					// force-invoke the background queue
+					if (data && data.forceBackgroundQueuePerform) {
+						require(['WoltLabSuite/Core/BackgroundQueue'], function(BackgroundQueue) {
+							BackgroundQueue.invoke();
+						});
+					}
 				}
 				
 				options.success(data, xhr.responseText, xhr, options.data);
@@ -277,37 +288,52 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			}
 			
 			if (options.ignoreError !== true && showError !== false) {
-				var details = '';
-				var message = '';
+				var html = this.getErrorHtml(data, xhr);
 				
-				if (data !== null) {
-					if (data.stacktrace) details = '<br><p>Stacktrace:</p><p>' + data.stacktrace + '</p>';
-					else if (data.exceptionID) details = '<br><p>Exception ID: <code>' + data.exceptionID + '</code></p>';
-					
-					message = data.message;
-					
-					data.previous.forEach(function(previous) {
-						details += '<hr><p>' + previous.message + '</p>';
-						details += '<br><p>Stacktrace</p><p>' + previous.stacktrace + '</p>';
+				if (html) {
+					if (UiDialog === undefined) UiDialog = require('Ui/Dialog');
+					UiDialog.openStatic(DomUtil.getUniqueId(), html, {
+						title: Language.get('wcf.global.error.title')
 					});
 				}
-				else {
-					message = xhr.responseText;
-				}
-				
-				if (!message || message === 'undefined') {
-					return;
-				}
-				
-				var html = '<div class="ajaxDebugMessage"><p>' + message + '</p>' + details + '</div>';
-				
-				if (UiDialog === undefined) UiDialog = require('Ui/Dialog');
-				UiDialog.openStatic(DomUtil.getUniqueId(), html, {
-					title: Language.get('wcf.global.error.title')
-				});
 			}
 			
 			this._finalize(options);
+		},
+		
+		/**
+		 * Returns the inner HTML for an error/exception display.
+		 * 
+		 * @param       {Object}                data
+		 * @param       {XMLHttpRequest}        xhr
+		 * @return      {string}
+		 */
+		getErrorHtml: function(data, xhr) {
+			var details = '';
+			var message = '';
+			
+			if (data !== null) {
+				if (data.stacktrace) details = '<br><p>Stacktrace:</p><p>' + data.stacktrace + '</p>';
+				else if (data.exceptionID) details = '<br><p>Exception ID: <code>' + data.exceptionID + '</code></p>';
+				
+				message = data.message;
+				
+				data.previous.forEach(function(previous) {
+					details += '<hr><p>' + previous.message + '</p>';
+					details += '<br><p>Stacktrace</p><p>' + previous.stacktrace + '</p>';
+				});
+			}
+			else {
+				message = xhr.responseText;
+			}
+			
+			if (!message || message === 'undefined') {
+				if (!ENABLE_DEBUG_MODE) return null;
+				
+				message = 'XMLHttpRequest failed without a responseText. Check your browser console.'
+			}
+			
+			return '<div class="ajaxDebugMessage"><p>' + message + '</p>' + details + '</div>';
 		},
 		
 		/**

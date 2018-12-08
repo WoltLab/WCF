@@ -4,6 +4,7 @@ input[type="email"],
 input[type="number"],
 input[type="password"],
 input[type="search"],
+input[type="tel"],
 input[type="text"],
 input[type="url"],
 select,
@@ -19,6 +20,7 @@ input[type="email"],
 input[type="number"],
 input[type="password"],
 input[type="search"],
+input[type="tel"],
 input[type="text"],
 input[type="url"] {
 	&::-webkit-input-placeholder { /* WebKit browsers */
@@ -65,6 +67,7 @@ input[type="text"] {
 	input[type="number"],
 	input[type="password"],
 	input[type="search"],
+	input[type="tel"],
 	input[type="text"],
 	input[type="url"],
 	select,
@@ -102,6 +105,10 @@ select {
 	// scrollbar instead. Setting a `max-width` will cause the browser to respect the page
 	// boundaries and nicely wrap the displayed value instead.
 	max-width: 100%;
+	
+	&.fullWidth {
+		width: 100%;
+	}
 }
 
 .formSubmit {
@@ -126,6 +133,19 @@ select {
 	}
 	
 	@include screen-sm-up {
+		/* the `margin-bottom` styles are required to deal with buttons wrapping
+		   into the next row, also requires some changes to `.dialogFormSubmit`! */
+		margin-bottom: -10px;
+		
+		> button,
+		> input[type="button"],
+		> input[type="reset"],
+		> input[type="submit"],
+		> .button,
+		> a.button {
+			margin-bottom: 10px;
+		}
+		
 		> :not(:first-child) {
 			margin-left: 10px;
 		}
@@ -192,6 +212,11 @@ select {
 	> textarea {
 		flex: 0 0 100%;
 	}
+	
+	> .redactor-box {
+		flex: 0 0 100%;
+		margin-top: 0 !important;
+	}
 }
 
 .inputAddon input,
@@ -252,4 +277,8 @@ input {
 	select {
 		width: 100%;
 	}
+}
+
+.customOptionRequired {
+	color: rgba(204, 0, 1, 1) !important;
 }

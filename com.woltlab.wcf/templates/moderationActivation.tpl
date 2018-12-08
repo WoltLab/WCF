@@ -72,6 +72,7 @@
 	</header>
 	
 	<ul id="moderationQueueCommentList" class="commentList containerList" data-can-add="true" data-object-id="{@$queueID}" data-object-type-id="{@$commentObjectTypeID}" data-comments="{@$commentList->countObjects()}" data-last-comment-time="{@$lastCommentTime}">
+		{include file='commentListAddComment' wysiwygSelector='moderationQueueCommentListAddComment'}
 		{include file='commentList'}
 	</ul>
 </section>

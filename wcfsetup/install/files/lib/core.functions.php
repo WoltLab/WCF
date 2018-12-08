@@ -1,7 +1,7 @@
 <?php
 /**
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core
  */
@@ -135,6 +135,8 @@ namespace wcf\functions\exception {
 							return array_map(function () {
 								return '[redacted]';
 							}, $item);
+						case 'resource':
+							return 'resource('.get_resource_type($item).')';
 						default:
 							return $item;
 					}
@@ -185,7 +187,7 @@ namespace wcf\functions\exception {
 		
 		if (!$exceptionTitle || !$exceptionSubtitle || !$exceptionExplanation) {
 			// one or more failed, fallback to english
-			$exceptionTitle = 'An error has occured';
+			$exceptionTitle = 'An error has occurred';
 			$exceptionSubtitle = 'Internal error code: <span class="exceptionInlineCodeWrapper"><span class="exceptionInlineCode">'.$exceptionID.'</span></span>';
 			$exceptionExplanation = <<<EXPLANATION
 <p class="exceptionSubtitle">What happened?</p>
@@ -454,10 +456,18 @@ EXPLANATION;
 					
 					<?php
 					$first = true;
+					$exceptions = [];
+					$current = $e;
+					do {
+						$exceptions[] = $current;
+					}
+					while ($current = $current->getPrevious());
+					
+					$e = array_pop($exceptions);
 					do {
 					?>
 					<div class="exceptionBoundary">
-						<p class="exceptionSubtitle"><?php if (!$e->getPrevious() && !$first) { echo "Original "; } else if ($e->getPrevious() && $first) { echo "Final "; } ?>Error</p>
+						<p class="exceptionSubtitle"><?php if (!empty($exceptions) && $first) { echo "Original "; } else if (empty($exceptions) && !$first) { echo "Final "; } ?>Error</p>
 						<?php if ($e instanceof SystemException && $e->getDescription()) { ?>
 							<p class="exceptionText"><?php echo $e->getDescription(); ?></p>
 						<?php } ?>
@@ -535,6 +545,8 @@ EXPLANATION;
 														}, $keys)).']';
 													case 'object':
 														return get_class($item);
+													case 'resource':
+														return 'resource('.get_resource_type($item).')';
 												}
 												
 												throw new \LogicException('Unreachable');
@@ -548,7 +560,7 @@ EXPLANATION;
 					</div>
 					<?php
 					$first = false;
-					} while ($e = $e->getPrevious());
+					} while ($e = array_pop($exceptions));
 					?>
 				<?php } ?>
 			</div>

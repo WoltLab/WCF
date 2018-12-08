@@ -2,7 +2,7 @@
  * Manages language items.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Language
  */
@@ -51,6 +51,9 @@ define(['Dictionary', './Template'], function(Dictionary, Template) {
 			if (value === undefined) {
 				return key;
 			}
+			
+			// fetch Template, as it cannot be provided because of a circular dependency
+			if (Template === undefined) Template = require('WoltLabSuite/Core/Template');
 			
 			if (typeof value === 'string') {
 				// lazily convert to WCF.Template

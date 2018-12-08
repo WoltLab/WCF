@@ -67,6 +67,7 @@ $.Redactor.prototype.WoltLabSource = function() {
 				// use jQuery to parse, its parser is much more graceful
 				var div = $('<div />').html(this.source.$textarea.val());
 				stripIcons(div[0]);
+				
 				this.source.$textarea.val(div[0].innerHTML);
 				
 				mpHide.call(this);
@@ -90,8 +91,14 @@ $.Redactor.prototype.WoltLabSource = function() {
 				// fix height
 				var height = this.$editor[0].offsetHeight;
 				
+				// the `code.show()` method trashes successive newlines
+				var code = this.code.get();
+				
 				mpShow.call(this);
 				
+				this.source.$textarea.val(code);
+				
+				// noinspection JSSuspiciousNameCombination
 				textarea.style.setProperty('height', Math.ceil(height) + 'px', '');
 				textarea.style.setProperty('display', 'block', '');
 				
@@ -153,12 +160,15 @@ $.Redactor.prototype.WoltLabSource = function() {
 			// lists have additional whitespace inside
 			html = html.replace(new RegExp('<(ol|ul)(' + patternTagAttributes + ')>\\s*', 'g'), '<$1$2>\n');
 			
+			// closing lists may have an adjacent closing list item, causing a depth mismatch
+			html = html.replace(/(<\/[ou]l>)<\/li>/g, '$1\n</li>');
+			
 			// split by line break
 			var parts = html.split(/\n/);
 			var depth = 0;
 			var i, length, line;
 			var reIsBlockStart = new RegExp('^<(' + blockTags + ')');
-			var reIsBlockEnd = new RegExp('^</(?:' + blockTags + ')>$');
+			var reIsBlockEnd = new RegExp('^</(' + blockTags + ')>$');
 			var increaseDepth = false;
 			for (i = 0, length = parts.length; i < length; i++) {
 				line = parts[i];
@@ -170,7 +180,9 @@ $.Redactor.prototype.WoltLabSource = function() {
 					}
 				}
 				else if (line.match(reIsBlockEnd)) {
-					depth--;
+					if (blocksAsInline.indexOf(RegExp.$1) === -1) {
+						depth--;
+					}
 				}
 				
 				if (depth > 0) {
@@ -192,6 +204,9 @@ $.Redactor.prototype.WoltLabSource = function() {
 			for (i = 0, length = backup.length; i < length; i++) {
 				html = html.replace('@@@WCF_PRE_BACKUP_' + i + '@@@', backup[i]);
 			}
+			
+			// remove the trailing newline in front of <pre>
+			html = html.replace(/\r?\n<\/pre>/g, '</pre>');
 			
 			return html.trim();
 		}

@@ -2,7 +2,7 @@
  * Collection of global short hand functions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 (function(window, document) {
@@ -72,7 +72,7 @@
 	 * 
 	 * @param	{string}	selector	CSS selector
 	 * @param	{Element=}	context		target element, assuming `document` if omitted
-	 * @param       {function=}     callback        callback function pased to forEach()
+	 * @param       {function=}     callback        callback function passed to forEach()
 	 * @return	{NodeList}	matching elements
 	 */
 	window.elBySelAll = function(selector, context, callback) {
@@ -103,6 +103,34 @@
 	 */
 	window.elCreate = function(tagName) {
 		return document.createElement(tagName);
+	};
+	
+	/**
+	 * Returns the closest element (parent for text nodes), optionally matching
+	 * the provided selector.
+	 * 
+	 * @param       {Node}          node            start node
+	 * @param       {string=}       selector        optional CSS selector
+	 * @return      {Element}       closest matching element
+	 */
+	window.elClosest = function (node, selector) {
+		if (!(node instanceof Node)) {
+			throw new TypeError('Provided element is not a Node.');
+		}
+		
+		// retrieve the parent element for text nodes
+		if (node.nodeType === Node.TEXT_NODE) {
+			node = node.parentNode;
+			
+			// text node had no parent
+			if (node === null) return null;
+		}
+		
+		if (typeof selector !== 'string') selector = '';
+		
+		if (selector.length === 0) return node;
+		
+		return node.closest(selector);
 	};
 	
 	/**
@@ -143,6 +171,54 @@
 	 */
 	window.elHide = function(element) {
 		element.style.setProperty('display', 'none', '');
+	};
+	
+	/**
+	 * Displays or removes an error message below the provided element.
+	 * 
+	 * @param       {Element}       element         DOM element
+	 * @param       {string?}       errorMessage    error message; `false`, `null` and `undefined` are treated as an empty string
+	 * @param       {boolean?}      isHtml          defaults to false, causes `errorMessage` to be treated as text only
+	 * @return      {?Element}      the inner error element or null if it was removed
+	 */
+	window.elInnerError = function (element, errorMessage, isHtml) {
+		var parent = element.parentNode;
+		if (parent === null) {
+			throw new Error('Only elements that have a parent element or document are valid.');
+		}
+		
+		if (typeof errorMessage !== 'string') {
+			if (errorMessage === undefined || errorMessage === null || errorMessage === false) {
+				errorMessage = '';
+			}
+			else {
+				throw new TypeError('The error message must be a string; `false`, `null` or `undefined` can be used as a substitute for an empty string.');
+			}
+		}
+		
+		var innerError = element.nextElementSibling;
+		if (innerError === null || innerError.nodeName !== 'SMALL' || !innerError.classList.contains('innerError')) {
+			if (errorMessage === '') {
+				innerError = null;
+			}
+			else {
+				innerError = elCreate('small');
+				innerError.className = 'innerError';
+				parent.insertBefore(innerError, element.nextSibling);
+			}
+		}
+		
+		if (errorMessage === '') {
+			if (innerError !== null) {
+				parent.removeChild(innerError);
+				innerError = null;
+			}
+		}
+		else {
+			innerError[(isHtml ? 'innerHTML' : 'textContent')] = errorMessage;
+		}
+		
+		return innerError;
 	};
 	
 	/**
@@ -246,4 +322,24 @@
 			}
 		});
 	})();
+	
+	/**
+	 * Provides a hashCode() method for strings, similar to Java's String.hashCode().
+	 *
+	 * @see	http://werxltd.com/wp/2010/05/13/javascript-implementation-of-javas-string-hashcode-method/
+	 */
+	window.String.prototype.hashCode = function() {
+		var $char;
+		var $hash = 0;
+		
+		if (this.length) {
+			for (var $i = 0, $length = this.length; $i < $length; $i++) {
+				$char = this.charCodeAt($i);
+				$hash = (($hash << 5) - $hash) + $char;
+				$hash = $hash & $hash; // convert to 32bit integer
+			}
+		}
+		
+		return $hash;
+	};
 })(window, document);

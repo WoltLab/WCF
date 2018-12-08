@@ -16,6 +16,8 @@
 
 {include file='formError'}
 
+<p class="warning">{lang}wcf.acp.user.merge.warning{/lang}</p>
+
 <form method="post" action="{link controller='UserMerge'}{/link}">
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.acp.user.merge.markedUsers{/lang}</h2>

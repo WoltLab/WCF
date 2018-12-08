@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Processes HTML nodes and handles bbcodes.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Input\Node
  * @since       3.0
@@ -34,7 +34,21 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		],
 		'li' => ['text-center', 'text-justify', 'text-right'],
 		'p' => ['text-center', 'text-justify', 'text-right'],
+		'pre' => ['woltlabHtml'],
 		'td' => ['text-center', 'text-justify', 'text-right']
+	];
+	
+	/**
+	 * List of HTML elements that should allow for custom CSS using
+	 * the `style`-attribute.
+	 * 
+	 * Unfortunately, HTMLPurifier offers no *sane* way to limit this
+	 * attribute to some elements only.
+	 * 
+	 * @var string[]
+	 */
+	public static $allowedStyleElements = [
+		'span'
 	];
 	
 	/**
@@ -104,6 +118,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		$textParser = new HtmlInputNodeTextParser($this, $smileyCount);
 		$textParser->parse();
 		
+		// handle HTML bbcode
+		$allowHtml = BBCodeHandler::getInstance()->isAvailableBBCode('html');
+		
 		// strip invalid class names
 		/** @var \DOMElement $element */
 		foreach ($this->getXPath()->query('//*[@class]') as $element) {
@@ -114,7 +131,11 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 				}
 				
 				$classNames = explode(' ', $element->getAttribute('class'));
-				$classNames = array_filter($classNames, function ($className) use ($nodeName) {
+				$classNames = array_filter($classNames, function ($className) use ($allowHtml, $nodeName) {
+					if (!$allowHtml && $nodeName === 'pre' && $className === 'woltlabHtml') {
+						return false;
+					}
+					
 					return ($className && in_array($className, self::$allowedClassNames[$nodeName]));
 				});
 				
@@ -216,10 +237,28 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 				$node = $appendToPreviousParagraph($node);
 			}
 			else if ($node->nodeType === XML_TEXT_NODE) {
+				// text node contains only a line break
+				if ($node->textContent === "\n" || $node->textContent === "\r\n") {
+					// check if the previous node is a <p>, otherwise ignore this node entirely
+					if ($node->previousSibling === null || $node->previousSibling->nodeName !== 'p') {
+						$node = $node->nextSibling;
+						continue;
+					}
+				}
+				
 				$node = $appendToPreviousParagraph($node);
 			}
 			
 			$node = $node->nextSibling;
+		}
+		
+		// remove style attributes from non-whitelisted elements
+		$elements = $this->getDocument()->getElementsByTagName('*');
+		for ($i = 0, $length = $elements->length; $i < $length; $i++) {
+			$element = $elements->item($i);
+			if ($element->hasAttribute('style') && !in_array($element->nodeName, self::$allowedStyleElements)) {
+				$element->removeAttribute('style');
+			}
 		}
 	}
 	
@@ -398,7 +437,14 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * @return      string          raw text content
 	 */
 	public function getTextContent() {
-		return StringUtil::trim($this->getDocument()->getElementsByTagName('body')->item(0)->textContent);
+		// cloning the body allows custom event handlers to alter the contents
+		// without making permanent changes to the document, avoids side-effects
+		$body = $this->getDocument()->getElementsByTagName('body')->item(0)->cloneNode(true);
+		
+		$parameters = ['body' => $body];
+		EventHandler::getInstance()->fireAction($this, 'getTextContent', $parameters);
+		
+		return StringUtil::trim($parameters['body']->textContent);
 	}
 	
 	/**

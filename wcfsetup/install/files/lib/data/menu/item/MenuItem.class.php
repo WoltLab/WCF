@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * Represents a menu item.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Menu\Item
  * @since	3.0
@@ -118,7 +118,12 @@ class MenuItem extends DatabaseObject {
 		}
 		
 		if ($this->getMenuPageHandler() !== null) {
-			return $this->getMenuPageHandler()->isVisible($this->pageObjectID ?: null);
+			$menuPageHandler = $this->getMenuPageHandler();
+			if ($menuPageHandler instanceof ILookupPageHandler && !$menuPageHandler->isValid($this->pageObjectID ?: null)) {
+				return false;
+			}
+			
+			return $menuPageHandler->isVisible($this->pageObjectID ?: null);
 		}
 		
 		return true;

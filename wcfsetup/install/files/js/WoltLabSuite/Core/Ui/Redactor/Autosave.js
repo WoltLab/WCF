@@ -3,18 +3,32 @@
  * storage to recover it on browser crash or accidental navigation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Redactor/Autosave
  */
-define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(EventHandler, Language, DomTraverse, UiRedactorMetacode) {
+define(['Core', 'Devtools', 'EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Core, Devtools, EventHandler, Language, DomTraverse, UiRedactorMetacode) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			getInitialValue: function() {},
+			getMetaData: function () {},
+			watch: function() {},
+			destroy: function() {},
+			clear: function() {},
+			createOverlay: function() {},
+			hideOverlay: function() {},
+			_saveToStorage: function() {},
+			_cleanup: function() {}
+		};
+		return Fake;
+	}
 	
 	// time between save requests in seconds
 	var _frequency = 15;
-	
-	//noinspection JSUnresolvedVariable
-	var _prefix = 'wsc' + window.WCF_PATH.hashCode() + '-';
 	
 	/**
 	 * @param       {Element}       element         textarea element
@@ -29,9 +43,12 @@ define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Even
 		 */
 		init: function (element) {
 			this._container = null;
+			this._metaData = {};
 			this._editor = null;
 			this._element = element;
-			this._key = _prefix + elData(this._element, 'autosave');
+			this._isActive = true;
+			this._isPending = false;
+			this._key = Core.getStoragePrefix() + elData(this._element, 'autosave');
 			this._lastMessage = '';
 			this._originalMessage = '';
 			this._overlay = null;
@@ -48,8 +65,30 @@ define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Even
 				form.addEventListener('submit', this.destroy.bind(this));
 			}
 			
+			// export meta data
+			EventHandler.add('com.woltlab.wcf.redactor2', 'getMetaData_' + this._element.id, (function (data) {
+				for (var key in this._metaData) {
+					if (this._metaData.hasOwnProperty(key)) {
+						data[key] = this._metaData[key];
+					}
+				}
+			}).bind(this));
+			
 			// clear editor content on reset
 			EventHandler.add('com.woltlab.wcf.redactor2', 'reset_' + this._element.id, this.hideOverlay.bind(this));
+			
+			document.addEventListener('visibilitychange', this._onVisibilityChange.bind(this));
+		},
+		
+		_onVisibilityChange: function () {
+			if (document.hidden) {
+				this._isActive = false;
+				this._isPending = true;
+			}
+			else {
+				this._isActive = true;
+				this._isPending = false;
+			}
 		},
 		
 		/**
@@ -59,6 +98,12 @@ define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Even
 		 * @return      {string}        message content
 		 */
 		getInitialValue: function() {
+			//noinspection JSUnresolvedVariable
+			if (window.ENABLE_DEVELOPER_TOOLS && Devtools._internal_.editorAutosave() === false) {
+				//noinspection JSUnresolvedVariable
+				return this._element.value;
+			}
+			
 			var value = '';
 			try {
 				value = window.localStorage.getItem(this._key);
@@ -82,12 +127,23 @@ define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Even
 					this._originalMessage = this._element.value;
 					this._restored = true;
 					
+					this._metaData = value.meta || {};
+					
 					return value.content;
 				}
 			}
 			
 			//noinspection JSUnresolvedVariable
 			return this._element.value;
+		},
+		
+		/**
+		 * Returns the stored meta data.
+		 * 
+		 * @return      {Object}
+		 */
+		getMetaData: function () {
+			return this._metaData;
 		},
 		
 		/**
@@ -105,6 +161,8 @@ define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Even
 			this._timer = window.setInterval(this._saveToStorage.bind(this), _frequency * 1000);
 			
 			this._saveToStorage();
+			
+			this._isPending = false;
 		},
 		
 		/**
@@ -117,12 +175,14 @@ define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Even
 			
 			window.clearInterval(this._timer);
 			this._timer = null;
+			this._isPending = false;
 		},
 		
 		/**
 		 * Removed the stored message, for use after a message has been submitted.
 		 */
 		clear: function () {
+			this._metaData = {};
 			this._lastMessage = '';
 			
 			try {
@@ -218,6 +278,19 @@ define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Even
 		 * @protected
 		 */
 		_saveToStorage: function() {
+			if (!this._isActive) {
+				if (!this._isPending) return;
+				
+				// save one last time before suspending
+				this._isPending = false;
+			}
+			
+			//noinspection JSUnresolvedVariable
+			if (window.ENABLE_DEVELOPER_TOOLS && Devtools._internal_.editorAutosave() === false) {
+				//noinspection JSUnresolvedVariable
+				return;
+			}
+			
 			var content = this._editor.code.get();
 			if (this._editor.utils.isEmpty(content)) {
 				content = '';
@@ -233,8 +306,11 @@ define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Even
 			}
 			
 			try {
+				EventHandler.fire('com.woltlab.wcf.redactor2', 'autosaveMetaData_' + this._element.id, this._metaData);
+				
 				window.localStorage.setItem(this._key, JSON.stringify({
 					content: content,
+					meta: this._metaData,
 					timestamp: Date.now()
 				}));
 				
@@ -257,7 +333,7 @@ define(['EventHandler', 'Language', 'Dom/Traverse', './Metacode'], function(Even
 				key = window.localStorage.key(i);
 				
 				// check if key matches our prefix
-				if (key.indexOf(_prefix) !== 0) {
+				if (key.indexOf(Core.getStoragePrefix()) !== 0) {
 					continue;
 				}
 				

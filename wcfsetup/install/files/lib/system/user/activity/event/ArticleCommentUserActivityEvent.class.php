@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * User activity event implementation for article comments.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Activity\Event
  * @since	3.0
@@ -31,15 +31,21 @@ class ArticleCommentUserActivityEvent extends SingletonFactory implements IUserA
 		$comments = $commentList->getObjects();
 		
 		// fetch articles
-		$articleIDs = $articles = [];
+		$articleContentIDs = [];
 		foreach ($comments as $comment) {
-			$articleIDs[] = $comment->objectID;
+			$articleContentIDs[] = $comment->objectID;
 		}
-		if (!empty($articleIDs)) {
+		
+		$articles = $articleContentToArticle = [];
+		if (!empty($articleContentIDs)) {
 			$articleList = new ViewableArticleList();
-			$articleList->setObjectIDs($articleIDs);
+			$articleList->getConditionBuilder()->add("article.articleID IN (SELECT articleID FROM wcf".WCF_N."_article_content WHERE articleContentID IN (?))", [$articleContentIDs]);
 			$articleList->readObjects();
-			$articles = $articleList->getObjects();
+			foreach ($articleList as $article) {
+				$articles[$article->articleID] = $article;
+				
+				$articleContentToArticle[$article->getArticleContent()->articleContentID] = $article->articleID;
+			}
 		}
 		
 		// set message
@@ -47,8 +53,8 @@ class ArticleCommentUserActivityEvent extends SingletonFactory implements IUserA
 			if (isset($comments[$event->objectID])) {
 				// short output
 				$comment = $comments[$event->objectID];
-				if (isset($articles[$comment->objectID])) {
-					$article = $articles[$comment->objectID];
+				if (isset($articleContentToArticle[$comment->objectID])) {
+					$article = $articles[$articleContentToArticle[$comment->objectID]];
 					
 					// check permissions
 					if (!$article->canRead()) {
@@ -57,7 +63,10 @@ class ArticleCommentUserActivityEvent extends SingletonFactory implements IUserA
 					$event->setIsAccessible();
 					
 					// add title
-					$text = WCF::getLanguage()->getDynamicVariable('wcf.article.recentActivity.articleComment', ['article' => $article]);
+					$text = WCF::getLanguage()->getDynamicVariable('wcf.article.recentActivity.articleComment', [
+						'article' => $article,
+						'commentID' => $comment->commentID
+					]);
 					$event->setTitle($text);
 					
 					// add text

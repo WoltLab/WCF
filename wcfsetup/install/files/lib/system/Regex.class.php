@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * Represents a regular expression.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
@@ -124,7 +124,6 @@ final class Regex {
 	 * 
 	 * @param	string		$regex
 	 * @param	integer		$modifier
-	 * @throws	SystemException
 	 */
 	public function __construct($regex, $modifier = self::MODIFIER_NONE) {
 		// escape delimiter

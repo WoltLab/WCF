@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Represents a bbcode.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Bbcode
  * 
@@ -19,7 +19,7 @@ use wcf\system\WCF;
  * @property-read	integer		$packageID		id of the package which delivers the bbcode or `1` if it has been created in the acp
  * @property-read	string		$htmlOpen		html code of the opening tag (without the less-than sign and greater-than sign) or empty if no such html code exists
  * @property-read	string		$htmlClose		html code of the closing tag (without the less-than sign and greater-than sign) or empty if no such html code exists
- * @property-read	string		$className		name of the PHP class impementing `wcf\system\bbcode\IBBCode` or empty if no such class exists
+ * @property-read	string		$className		name of the PHP class implementing `wcf\system\bbcode\IBBCode` or empty if no such class exists
  * @property-read	integer		$isBlockElement		is `1` if the bbcode represents a block element and thus can contain multiple lines, otherwise `0`
  * @property-read	string		$wysiwygIcon		css class name used as icon for the bbcode in the editor toolbar
  * @property-read	string		$buttonLabel		name of the language item used as button label for the bbcode in the editor toolbar

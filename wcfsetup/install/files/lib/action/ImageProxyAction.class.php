@@ -15,12 +15,17 @@ use wcf\util\StringUtil;
  * Proxies requests for embedded images.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Action
  * @since	3.0
  */
 class ImageProxyAction extends AbstractAction {
+	/**
+	 * @inheritDoc
+	 */
+	public $neededModules = ['MODULE_IMAGE_PROXY'];
+	
 	/**
 	 * The image key created by CryptoUtil::createSignedString()
 	 * @var	string
@@ -67,6 +72,17 @@ class ImageProxyAction extends AbstractAction {
 			
 			if ($fileLocation === null) {
 				try {
+					// rewrite schemaless URLs to https
+					$scheme = parse_url($url, PHP_URL_SCHEME);
+					if (!$scheme) {
+						if (StringUtil::startsWith($url, '//')) {
+							$url = 'https:'.$url;
+						}
+						else {
+							throw new \DomainException();
+						}
+					}
+					
 					// download image
 					try {
 						$request = new HTTPRequest($url, [

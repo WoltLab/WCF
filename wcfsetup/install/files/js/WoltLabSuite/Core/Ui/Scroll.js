@@ -2,7 +2,7 @@
  * Smoothly scrolls to an element while accounting for potential sticky headers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Scroll
  */
@@ -11,6 +11,7 @@ define(['Dom/Util'], function(DomUtil) {
 	
 	var _callback = null;
 	var _callbackScroll = null;
+	var _offset = null;
 	var _timeoutScroll = null;
 	
 	/**
@@ -48,13 +49,28 @@ define(['Dom/Util'], function(DomUtil) {
 			}
 			
 			var y = DomUtil.offset(element).top;
-			
-			if (y <= 50) {
-				y = 0;
+			if (_offset === null) {
+				_offset = 50;
+				var pageHeader = elById('pageHeaderPanel');
+				if (pageHeader !== null) {
+					var position = window.getComputedStyle(pageHeader).position;
+					if (position === 'fixed' || position === 'static') {
+						_offset = pageHeader.offsetHeight;
+					}
+					else {
+						_offset = 0;
+					}
+				}
 			}
-			else {
-				// add an offset of 50 pixel to account for a sticky header
-				y -= 50;
+			
+			if (_offset > 0) {
+				if (y <= _offset) {
+					y = 0;
+				}
+				else {
+					// add an offset to account for a sticky header
+					y -= _offset;
+				}
 			}
 			
 			var offset = window.pageYOffset;

@@ -2,7 +2,7 @@
  * Dropdown language chooser.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Language/Chooser
  */
@@ -22,7 +22,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 		/**
 		 * Initializes a language chooser.
 		 * 
-		 * @param       {string}                                containerId             input element conainer id
+		 * @param       {string}                                containerId             input element container id
 		 * @param       {string}                                chooserId               input element id
 		 * @param       {int}                                   languageId              selected language id
 		 * @param       {object<int, object<string, string>>}   languages               data of available languages

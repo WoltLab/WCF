@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\object\type\ObjectTypeEditor;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 
@@ -8,11 +9,11 @@ use wcf\system\WCF;
  * Installs, updates and deletes object types.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */
-class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -102,5 +103,12 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 			'sql' => $sql,
 			'parameters' => $parameters
 		];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return ['objectTypeDefinition'];
 	}
 }

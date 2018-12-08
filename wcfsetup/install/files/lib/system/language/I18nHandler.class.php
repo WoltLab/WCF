@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Provides internationalization support for input fields.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Language
  */
@@ -142,7 +142,7 @@ class I18nHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the values for the given element. If the element is multilingual,
-	 * the multilingual values are returned, otherweise the plain value is
+	 * the multilingual values are returned, otherwise the plain value is
 	 * returned for each language id.
 	 * 
 	 * @param	string		$elementID

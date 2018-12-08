@@ -1,19 +1,27 @@
 <?php
 namespace wcf\data\user;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\cover\photo\UserCoverPhoto;
+use wcf\data\user\group\UserGroup;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\html\output\HtmlOutputProcessor;
+use wcf\system\image\ImageHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\option\user\UserOptionHandler;
+use wcf\system\upload\UploadFile;
+use wcf\system\upload\UploadHandler;
+use wcf\system\upload\UserCoverPhotoUploadFileValidationStrategy;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\FileUtil;
 use wcf\util\MessageUtil;
 use wcf\util\StringUtil;
 
@@ -21,7 +29,7 @@ use wcf\util\StringUtil;
  * Executes user profile-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
  */
@@ -35,7 +43,13 @@ class UserProfileAction extends UserAction {
 	 * user profile object
 	 * @var	UserProfile
 	 */
-	public $userProfile = null;
+	public $userProfile;
+	
+	/**
+	 * uploaded file
+	 * @var	UploadFile
+	 */
+	public $uploadFile;
 	
 	/**
 	 * Validates parameters for signature preview.
@@ -75,8 +89,12 @@ class UserProfileAction extends UserAction {
 	
 	/**
 	 * Validates user profile preview.
+	 * 
+	 * @throws	UserInputException
 	 */
 	public function validateGetUserProfile() {
+		WCF::getSession()->checkPermissions(['user.profile.canViewUserProfile']);
+		
 		if (count($this->objectIDs) != 1) {
 			throw new UserInputException('objectIDs');
 		}
@@ -115,6 +133,8 @@ class UserProfileAction extends UserAction {
 	
 	/**
 	 * Validates detailed activity point list
+	 * 
+	 * @throws	UserInputException
 	 */
 	public function validateGetDetailedActivityPointList() {
 		if (count($this->objectIDs) != 1) {
@@ -164,6 +184,9 @@ class UserProfileAction extends UserAction {
 	
 	/**
 	 * Validates parameters to begin profile inline editing.
+	 * 
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
 	 */
 	public function validateBeginEdit() {
 		if (!empty($this->objectIDs) && count($this->objectIDs) == 1) {
@@ -205,6 +228,8 @@ class UserProfileAction extends UserAction {
 	
 	/**
 	 * Validates parameters to save changes to user profile.
+	 * 
+	 * @throws	PermissionDeniedException
 	 */
 	public function validateSave() {
 		$this->validateBeginEdit();
@@ -311,7 +336,7 @@ class UserProfileAction extends UserAction {
 			$this->readObjects();
 		}
 		
-		$resetUserIDs = [];
+		$resetUserIDs = $userToRank = [];
 		foreach ($this->getObjects() as $user) {
 			$conditionBuilder = new PreparedStatementConditionBuilder();
 			$conditionBuilder->add('user_rank.groupID IN (?)', [$user->getGroupIDs()]);
@@ -330,16 +355,32 @@ class UserProfileAction extends UserAction {
 			$row = $statement->fetchArray();
 			if ($row === false) {
 				if ($user->rankID) {
-					$user->update(['rankID' => null]);
+					$userToRank[$user->userID] = null;
 					$resetUserIDs[] = $user->userID;
 				}
 			}
 			else {
 				if ($row['rankID'] != $user->rankID) {
-					$user->update(['rankID' => $row['rankID']]);
+					$userToRank[$user->userID] = $row['rankID'];
 					$resetUserIDs[] = $user->userID;
 				}
 			}
+		}
+		
+		if (!empty($userToRank)) {
+			$sql = "UPDATE	wcf".WCF_N."_user
+				SET	rankID = ?
+				WHERE	userID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			WCF::getDB()->beginTransaction();
+			foreach ($userToRank as $userID => $rankID) {
+				$statement->execute([
+					$rankID,
+					$userID
+				]);
+			}
+			WCF::getDB()->commitTransaction();
 		}
 		
 		if (!empty($resetUserIDs)) {
@@ -355,10 +396,32 @@ class UserProfileAction extends UserAction {
 			$this->readObjects();
 		}
 		
-		$userToGroup = [];
+		$fixUserGroupIDs = $userToGroup = [];
+		$newGroupIDs = [];
 		foreach ($this->getObjects() as $user) {
+			$groupIDs = $user->getGroupIDs();
+			if (!in_array(UserGroup::EVERYONE, $groupIDs)) {
+				$fixUserGroupIDs[$user->userID] = [UserGroup::EVERYONE];
+				$groupIDs[] = UserGroup::EVERYONE;
+			}
+			if ($user->activationCode) {
+				if (!in_array(UserGroup::GUESTS, $groupIDs)) {
+					if (!isset($fixUserGroupIDs[$user->userID])) $fixUserGroupIDs[$user->userID] = [];
+					$fixUserGroupIDs[$user->userID][] = UserGroup::GUESTS;
+					$groupIDs[] = UserGroup::GUESTS;
+				}
+			}
+			else {
+				if (!in_array(UserGroup::USERS, $groupIDs)) {
+					if (!isset($fixUserGroupIDs[$user->userID])) $fixUserGroupIDs[$user->userID] = [];
+					$fixUserGroupIDs[$user->userID][] = UserGroup::USERS;
+					$groupIDs[] = UserGroup::USERS;
+				}
+			}
+			$newGroupIDs[$user->userID] = $groupIDs;
+			
 			$conditionBuilder = new PreparedStatementConditionBuilder();
-			$conditionBuilder->add('groupID IN (?)', [$user->getGroupIDs()]);
+			$conditionBuilder->add('groupID IN (?)', [$groupIDs]);
 			
 			$sql = "SELECT		groupID
 				FROM		wcf".WCF_N."_user_group
@@ -370,6 +433,24 @@ class UserProfileAction extends UserAction {
 			if ($row['groupID'] != $user->userOnlineGroupID) {
 				$userToGroup[$user->userID] = $row['groupID'];
 			}
+		}
+		
+		// add users to missing default user groups
+		if (!empty($fixUserGroupIDs)) {
+			$sql = "INSERT INTO     wcf".WCF_N."_user_to_group
+						(userID, groupID)
+				VALUES          (?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			WCF::getDB()->beginTransaction();
+			foreach ($fixUserGroupIDs as $userID => $groupIDs) {
+				foreach ($groupIDs as $groupID) {
+					$statement->execute([$userID, $groupID]);
+				}
+				
+				UserStorageHandler::getInstance()->update($userID, 'groupIDs', serialize($newGroupIDs[$userID]));
+			}
+			WCF::getDB()->commitTransaction();
 		}
 		
 		if (!empty($userToGroup)) {
@@ -390,6 +471,173 @@ class UserProfileAction extends UserAction {
 	}
 	
 	/**
+	 * Updates the special trophies.
+	 */
+	public function updateSpecialTrophies() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		$sql = "DELETE FROM wcf".WCF_N."_user_special_trophy WHERE userID = ?";
+		$deleteStatement = WCF::getDB()->prepareStatement($sql);
+		
+		$sql = "INSERT INTO wcf".WCF_N."_user_special_trophy (userID, trophyID) VALUES (?, ?)";
+		$insertStatement = WCF::getDB()->prepareStatement($sql);
+		
+		foreach ($this->getObjects() as $user) {
+			WCF::getDB()->beginTransaction();
+			
+			// delete all user special trophies for the user
+			$deleteStatement->execute([$user->userID]);
+			
+			if (!empty($this->parameters['trophyIDs'])) {
+				foreach ($this->parameters['trophyIDs'] as $trophyID) {
+					$insertStatement->execute([
+						$user->userID, 
+						$trophyID
+					]);
+				}
+			}
+			
+			WCF::getDB()->commitTransaction();
+			
+			UserStorageHandler::getInstance()->reset([$user->userID], 'specialTrophies');
+		}
+	}
+	
+	/**
+	 * Validates the 'uploadCoverPhoto' method.
+	 *
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
+	 * @since	3.1
+	 */
+	public function validateUploadCoverPhoto() {
+		if (!MODULE_USER_COVER_PHOTO) {
+			throw new PermissionDeniedException();
+		}
+		
+		WCF::getSession()->checkPermissions(['user.profile.coverPhoto.canUploadCoverPhoto']);
+		
+		// validate uploaded file
+		if (!isset($this->parameters['__files']) || count($this->parameters['__files']->getFiles()) != 1) {
+			throw new UserInputException('files');
+		}
+		
+		/** @var UploadHandler $uploadHandler */
+		$uploadHandler = $this->parameters['__files'];
+		
+		$this->uploadFile = $uploadHandler->getFiles()[0];
+		
+		$uploadHandler->validateFiles(new UserCoverPhotoUploadFileValidationStrategy());
+	}
+	
+	/**
+	 * Uploads a cover photo.
+	 * 
+	 * @since	3.1
+	 */
+	public function uploadCoverPhoto() {
+		if ($this->uploadFile->getValidationErrorType()) {
+			return [
+				'filesize' => $this->uploadFile->getFilesize(),
+				'errorMessage' => WCF::getLanguage()->getDynamicVariable('wcf.user.coverPhoto.upload.error.' . $this->uploadFile->getValidationErrorType(), [
+					'file' => $this->uploadFile
+				]),
+				'errorType' => $this->uploadFile->getValidationErrorType()
+			];
+		}
+		
+		try {
+			// shrink cover photo if necessary
+			$fileLocation = $this->enforceCoverPhotoDimensions($this->uploadFile->getLocation());
+		}
+		catch (UserInputException $e) {
+			return [
+				'filesize' => $this->uploadFile->getFilesize(),
+				'errorMessage' => WCF::getLanguage()->getDynamicVariable('wcf.user.coverPhoto.upload.error.' . $e->getType(), [
+					'file' => $this->uploadFile
+				]),
+				'errorType' => $e->getType()
+			];
+		}
+		
+		// delete old cover photo
+		if (WCF::getUser()->coverPhotoHash) {
+			UserProfileRuntimeCache::getInstance()->getObject(WCF::getUser()->userID)->getCoverPhoto()->delete();
+		}
+		
+		// update user
+		(new UserEditor(WCF::getUser()))->update([
+			// always generate a new hash to invalidate the browser cache and to avoid filename guessing
+			'coverPhotoHash' => StringUtil::getRandomID(),
+			'coverPhotoExtension' => $this->uploadFile->getFileExtension()
+		]);
+		
+		// force-reload the user profile to use a predictable code-path to fetch the cover photo
+		UserProfileRuntimeCache::getInstance()->removeObject(WCF::getUser()->userID);
+		$userProfile = UserProfileRuntimeCache::getInstance()->getObject(WCF::getUser()->userID);
+		$coverPhoto = $userProfile->getCoverPhoto();
+		
+		// check images directory and create subdirectory if necessary
+		$dir = dirname($coverPhoto->getLocation());
+		if (!@file_exists($dir)) {
+			FileUtil::makePath($dir);
+		}
+		
+		if (@copy($fileLocation, $coverPhoto->getLocation())) {
+			@unlink($fileLocation);
+			
+			return [
+				'url' => $coverPhoto->getURL()
+			];
+		}
+		else {
+			return [
+				'filesize' => $this->uploadFile->getFilesize(),
+				'errorMessage' => WCF::getLanguage()->getDynamicVariable('wcf.user.coverPhoto.upload.error.uploadFailed', [
+					'file' => $this->uploadFile
+				]),
+				'errorType' => 'uploadFailed'
+			];
+		}
+	}
+	
+	/**
+	 * Validates the `deleteCoverPhoto` action.
+	 * 
+	 * @throws	PermissionDeniedException
+	 */
+	public function validateDeleteCoverPhoto() {
+		if (!MODULE_USER_COVER_PHOTO) {
+			throw new PermissionDeniedException();
+		}
+	}
+	
+	/**
+	 * Deletes the cover photo of the active user.
+	 * 
+	 * @return	string[]	link to the new cover photo
+	 */
+	public function deleteCoverPhoto() {
+		if (WCF::getUser()->coverPhotoHash) {
+			UserProfileRuntimeCache::getInstance()->getObject(WCF::getUser()->userID)->getCoverPhoto()->delete();
+			
+			(new UserEditor(WCF::getUser()))->update([
+				'coverPhotoHash' => null,
+				'coverPhotoExtension' => ''
+			]);
+		}
+		
+		// force-reload the user profile to use a predictable code-path to fetch the cover photo
+		UserProfileRuntimeCache::getInstance()->removeObject(WCF::getUser()->userID);
+		
+		return [
+			'url' => UserProfileRuntimeCache::getInstance()->getObject(WCF::getUser()->userID)->getCoverPhoto()->getURL()
+		];
+	}
+	
+	/**
 	 * Returns the user option handler object.
 	 * 
 	 * @param	User		$user
@@ -405,5 +653,41 @@ class UserProfileAction extends UserAction {
 		$optionHandler->setUser($user);
 		
 		return $optionHandler;
+	}
+	
+	/**
+	 * Enforces dimensions for given cover photo.
+	 *
+	 * @param	string		$filename
+	 * @return	string
+	 * @throws	UserInputException
+	 */
+	protected function enforceCoverPhotoDimensions($filename) {
+		$imageData = getimagesize($filename);
+		if ($imageData[0] > UserCoverPhoto::MAX_WIDTH || $imageData[1] > UserCoverPhoto::MAX_HEIGHT) {
+			try {
+				$adapter = ImageHandler::getInstance()->getAdapter();
+				$adapter->loadFile($filename);
+				$filename = FileUtil::getTemporaryFilename();
+				$thumbnail = $adapter->createThumbnail(UserCoverPhoto::MAX_WIDTH, UserCoverPhoto::MAX_HEIGHT);
+				$adapter->writeImage($thumbnail, $filename);
+			}
+			catch (SystemException $e) {
+				throw new UserInputException('coverPhoto', 'maxSize');
+			}
+			
+			// check dimensions (after shrink)
+			$imageData = getimagesize($filename);
+			if ($imageData[0] < UserCoverPhoto::MIN_WIDTH || $imageData[1] < UserCoverPhoto::MIN_HEIGHT) {
+				throw new UserInputException('coverPhoto', 'maxSize');
+			}
+			
+			// check filesize (after shrink)
+			if (@filesize($filename) > WCF::getSession()->getPermission('user.profile.coverPhoto.maxSize')) {
+				throw new UserInputException('coverPhoto', 'maxSize');
+			}
+		}
+		
+		return $filename;
 	}
 }

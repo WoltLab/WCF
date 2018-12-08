@@ -13,7 +13,7 @@ use wcf\util\XML;
  * Represents the archive of a package.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */
@@ -22,19 +22,19 @@ class PackageArchive {
 	 * path to package archive
 	 * @var	string
 	 */
-	protected $archive = null;
+	protected $archive;
 	
 	/**
 	 * package object of an existing package
 	 * @var	Package
 	 */
-	protected $package = null;
+	protected $package;
 	
 	/**
 	 * tar archive object
 	 * @var	Tar
 	 */
-	protected $tar = null;
+	protected $tar;
 	
 	/**
 	 * general package information
@@ -65,6 +65,12 @@ class PackageArchive {
 	 * @var	array
 	 */
 	protected $excludedPackages = [];
+	
+	/**
+	 * list of compatible API versions
+	 * @var integer[]
+	 */
+	protected $compatibility = [];
 	
 	/**
 	 * list of instructions
@@ -280,6 +286,19 @@ class PackageArchive {
 			}
 			
 			$this->excludedPackages[] = $data;
+		}
+		
+		// get api compatibility
+		$elements = $xpath->query('child::ns:compatibility/ns:api', $package);
+		foreach ($elements as $element) {
+			if (!$element->hasAttribute('version')) continue;
+			
+			$version = $element->getAttribute('version');
+			if (!preg_match('~^(?:201[7-9]|20[2-9][0-9])$~', $version)) {
+				throw new PackageValidationException(PackageValidationException::INVALID_API_VERSION, ['version' => $version]);
+			}
+			
+			$this->compatibility[] = $version;
 		}
 		
 		// get instructions
@@ -526,6 +545,15 @@ class PackageArchive {
 	 */
 	public function getExcludedPackages() {
 		return $this->excludedPackages;
+	}
+	
+	/**
+	 * Returns the list of compatible API versions.
+	 * 
+	 * @return      integer[]
+	 */
+	public function getCompatibleVersions() {
+		return $this->compatibility;
 	}
 	
 	/**

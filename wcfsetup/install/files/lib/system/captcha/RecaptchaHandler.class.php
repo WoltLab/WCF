@@ -8,7 +8,7 @@ use wcf\util\StringUtil;
  * Captcha handler for reCAPTCHA.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Captcha
  */
@@ -24,6 +24,12 @@ class RecaptchaHandler implements ICaptchaHandler {
 	 * @var	string
 	 */
 	public $response = '';
+	
+	/**
+	 * ACP option override
+	 * @var boolean
+	 */
+	public static $forceIsAvailable = false;
 	
 	/**
 	 * @inheritDoc
@@ -49,6 +55,16 @@ class RecaptchaHandler implements ICaptchaHandler {
 	 * @inheritDoc
 	 */
 	public function isAvailable() {
+		if (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY) {
+			// OEM keys are no longer supported, disable reCAPTCHA
+			if (self::$forceIsAvailable) {
+				// work-around for the ACP option selection
+				return true;
+			}
+			
+			return false;
+		}
+		
 		return true;
 	}
 	
@@ -63,6 +79,7 @@ class RecaptchaHandler implements ICaptchaHandler {
 		}
 		else {
 			// V2
+			if (isset($_POST['recaptcha-type'])) $this->challenge = $_POST['recaptcha-type'];
 			if (isset($_POST['g-recaptcha-response'])) $this->response = $_POST['g-recaptcha-response'];
 		}
 	}
@@ -86,7 +103,7 @@ class RecaptchaHandler implements ICaptchaHandler {
 		}
 		else {
 			// V2
-			RecaptchaHandlerV2::getInstance()->validate($this->response);
+			RecaptchaHandlerV2::getInstance()->validate($this->response, $this->challenge ?: 'v2');
 		}
 	}
 }

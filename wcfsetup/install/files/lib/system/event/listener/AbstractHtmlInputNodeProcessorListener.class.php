@@ -13,14 +13,14 @@ use wcf\util\JSON;
  * with links with the name of the linked object or with bbcodes.
  * 
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Event\Listener
  * @since	3.0
  */
 abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedEventListener {
 	/**
-	 * Returns the ids of the objects linked in the text proccessed by the given
+	 * Returns the ids of the objects linked in the text processed by the given
 	 * processor matching the given regular expression.
 	 * 
 	 * @param	HtmlInputNodeProcessor		$processor
@@ -46,10 +46,11 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
 	 * followed by an object id.
 	 * 
 	 * @param	string		$link
+	 * @param       string          $defaultAnchor
 	 * @return	Regex
 	 */
-	protected function getRegexFromLink($link) {
-		return new Regex('^(' . preg_replace('~^https?~', 'https?', preg_quote($link)) . '(\d+)-.*?)$');
+	protected function getRegexFromLink($link, $defaultAnchor = '') {
+		return new Regex('^(' . preg_replace('~^https?~', 'https?', preg_quote($link)) . '(\d+)-[^#]*?)' . ($defaultAnchor ? '(?:#' . $defaultAnchor . ')?' : '') . '$');
 	}
 	
 	/**

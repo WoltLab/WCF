@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * Lists available labels
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  * 
@@ -70,13 +70,13 @@ class LabelListPage extends SortablePage {
 	 * label group to which the displayed labels belong
 	 * @var	LabelGroup
 	 */
-	public $labelGroup = null;
+	public $labelGroup;
 	
 	/**
 	 * list with available label groups
 	 * @var	LabelGroupList
 	 */
-	public $labelGroupList = null;
+	public $labelGroupList;
 	
 	/**
 	 * @inheritDoc
@@ -103,6 +103,12 @@ class LabelListPage extends SortablePage {
 		$this->objectList->sqlJoins = "LEFT JOIN wcf".WCF_N."_label_group label_group ON (label_group.groupID = label.groupID)";
 		if ($this->labelGroup) {
 			$this->objectList->getConditionBuilder()->add('label.groupID = ?', [$this->labelGroup->groupID]);
+			
+			// Ramp up the limit to display all labels at once for easier
+			// drag & drop sorting. This isn't exactly infinite, but if
+			// you have a label group with more than 1k labels, being able
+			// to sort them is the least of your problems.
+			$this->itemsPerPage = 1000;
 		}
 		if ($this->cssClassName) {
 			$this->objectList->getConditionBuilder()->add('label.cssClassName LIKE ?', ['%'.addcslashes($this->cssClassName, '_%').'%']);

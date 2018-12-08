@@ -17,7 +17,7 @@ use wcf\util\UserUtil;
  * Shows the user add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -111,9 +111,9 @@ class UserAddForm extends UserOptionListForm {
 	
 	/**
 	 * date when the signature will be enabled again
-	 * @var	string
+	 * @var	integer
 	 */
-	public $disableSignatureExpires = '';
+	public $disableSignatureExpires = 0;
 	
 	/**
 	 * tree of available user options
@@ -143,10 +143,7 @@ class UserAddForm extends UserOptionListForm {
 			if (isset($_POST['disableSignatureReason'])) $this->disableSignatureReason = StringUtil::trim($_POST['disableSignatureReason']);
 			if (!empty($_POST['disableSignature'])) $this->disableSignature = 1;
 			if ($this->disableSignature && !isset($_POST['disableSignatureNeverExpires'])) {
-				if (isset($_POST['disableSignatureExpires'])) $this->disableSignatureExpires = StringUtil::trim($_POST['disableSignatureExpires']);
-			}
-			else {
-				$this->disableSignatureExpires = '';
+				if (isset($_POST['disableSignatureExpires'])) $this->disableSignatureExpires = @strtotime(StringUtil::trim($_POST['disableSignatureExpires']));
 			}
 		}
 	}
@@ -265,14 +262,9 @@ class UserAddForm extends UserOptionListForm {
 		];
 		
 		if (WCF::getSession()->getPermission('admin.user.canDisableSignature')) {
-			$disableSignatureExpires = 0;
-			if ($this->disableSignatureExpires) {
-				$disableSignatureExpires = strtotime($this->disableSignatureExpires);
-			}
-			
 			$data['data']['disableSignature'] = $this->disableSignature;
 			$data['data']['disableSignatureReason'] = $this->disableSignatureReason;
-			$data['data']['disableSignatureExpires'] = $disableSignatureExpires;
+			$data['data']['disableSignatureExpires'] = $this->disableSignatureExpires;
 		}
 		
 		$this->objectAction = new UserAction([], 'create', $data);
@@ -285,9 +277,9 @@ class UserAddForm extends UserOptionListForm {
 		]);
 		
 		// reset values
-		$this->disableSignature = 0;
+		$this->disableSignature = $this->disableSignatureExpires = 0;
 		$this->username = $this->email = $this->confirmEmail = $this->password = $this->confirmPassword = $this->userTitle = '';
-		$this->signature = $this->disableSignatureReason = $this->disableSignatureExpires = '';
+		$this->signature = $this->disableSignatureReason = '';
 		$this->groupIDs = [];
 		$this->languageID = $this->getDefaultFormLanguageID();
 		/** @noinspection PhpUndefinedMethodInspection */

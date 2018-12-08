@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * Writes XML documents.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -129,7 +129,7 @@ class XMLWriter {
 		}
 		
 		// content
-		$this->xml->writeCdata(StringUtil::escapeCDATA($cdata));
+		if ($cdata !== '') $this->xml->writeCdata(StringUtil::escapeCDATA($cdata));
 		
 		$this->endElement();
 	}

@@ -3,7 +3,7 @@ $.Redactor.prototype.WoltLabDragAndDrop = function() {
 	
 	return {
 		init: function() {
-			if (!this.opts.woltlab.attachments) {
+			if (!this.opts.woltlab.attachments && !this.opts.woltlab.media) {
 				return;
 			}
 			

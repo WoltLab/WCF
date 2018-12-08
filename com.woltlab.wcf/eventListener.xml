@@ -22,6 +22,18 @@
 			<inherit>1</inherit>
 			<listenerclassname>wcf\system\event\listener\SessionAccessLogListener</listenerclassname>
 		</eventlistener>
+		
+		<eventlistener name="articleLinkhtmlInputNodeProcessor">
+			<eventclassname>wcf\system\html\input\node\HtmlInputNodeProcessor</eventclassname>
+			<eventname>afterProcess</eventname>
+			<listenerclassname>wcf\system\event\listener\ArticleLinkHtmlInputNodeProcessorListener</listenerclassname>
+		</eventlistener>
+		<eventlistener name="articleLinkhtmlInputNodeProcessorAdmin">
+			<eventclassname>wcf\system\html\input\node\HtmlInputNodeProcessor</eventclassname>
+			<eventname>afterProcess</eventname>
+			<listenerclassname>wcf\system\event\listener\ArticleLinkHtmlInputNodeProcessorListener</listenerclassname>
+			<environment>admin</environment>
+		</eventlistener>
 	</import>
 	
 	<delete>

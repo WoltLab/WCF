@@ -59,8 +59,12 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			{if $action == 'edit' && !$page->requireObjectID}
-				<li><a href="{$page->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.page.button.viewPage{/lang}</span></a></li>
+			{if $action == 'edit'}
+				{if !$page->requireObjectID}
+					<li><a href="{$page->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.page.button.viewPage{/lang}</span></a></li>
+				{/if}
+				
+				<li><a href="{link controller='PageBoxOrder' id=$page->pageID}{/link}" class="button"><span class="icon icon16 fa-sort-amount-asc"></span> <span>{lang}wcf.acp.page.button.boxOrder{/lang}</span></a></li>
 			{/if}
 			<li><a href="{link controller='PageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.cms.page.list{/lang}</span></a></li>
 			
@@ -73,6 +77,10 @@
 
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
+{/if}
+
+{if $action == 'edit' && !$lastVersion|empty}
+	<p class="info">{lang}wcf.acp.page.lastVersion{/lang}</p>
 {/if}
 
 <form method="post" action="{if $action == 'add'}{link controller='PageAdd'}{/link}{else}{link controller='PageEdit' id=$pageID}{/link}{/if}">
@@ -116,7 +124,7 @@
 							<option value="0">{lang}wcf.acp.page.parentPage.none{/lang}</option>
 							
 							{foreach from=$pageNodeList item=pageNode}
-								<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $parentPageID} selected{/if}{if $pageNode->requireObjectID} disabled{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
+								<option value="{@$pageNode->pageID}"{if $pageNode->pageID == $parentPageID} selected{/if}{if $pageNode->requireObjectID || ($action === 'edit' && $pageNode->pageID == $page->pageID)} disabled{/if}>{if $pageNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($pageNode->getDepth() - 1)}{/if}{$pageNode->name}</option>
 							{/foreach}
 						</select>
 						{if $errorField == 'parentPageID'}
@@ -188,7 +196,23 @@
 					{/foreach}
 				{/if}
 				
-				{if $action != 'edit' || !$page->requireObjectID}
+				<dl{if $errorField == 'cssClassName'} class="formError"{/if}>
+					<dt><label for="cssClassName">{lang}wcf.acp.page.cssClassName{/lang}</label></dt>
+					<dd>
+						<input type="text" id="cssClassName" name="cssClassName" value="{$cssClassName}" class="long" maxlength="255">
+						{if $errorField == 'cssClassName'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.page.cssClassName.error.{@$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
+					</dd>
+				</dl>
+				
+				{if $action != 'edit' || (!$page->requireObjectID && !$page->excludeFromLandingPage)}
 					<dl>
 						<dt></dt>
 						<dd>
@@ -202,6 +226,62 @@
 						<dt></dt>
 						<dd>
 							<label><input type="checkbox" id="isDisabled" name="isDisabled" value="1"{if $isDisabled} checked{/if}> {lang}wcf.acp.page.isDisabled{/lang}</label>
+						</dd>
+					</dl>
+				{/if}
+				
+				<dl>
+					<dt></dt>
+					<dd>
+						<label><input type="checkbox" id="availableDuringOfflineMode" name="availableDuringOfflineMode" value="1"{if $availableDuringOfflineMode} checked{/if}> {lang}wcf.acp.page.availableDuringOfflineMode{/lang}</label>
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt></dt>
+					<dd>
+						<label><input type="checkbox" id="allowSpidersToIndex" name="allowSpidersToIndex" value="1"{if $allowSpidersToIndex} checked{/if}> {lang}wcf.acp.page.allowSpidersToIndex{/lang}</label>
+					</dd>
+				</dl>
+				
+				{if $action == 'add'}
+					<dl>
+						<dt></dt>
+						<dd>
+							<label><input type="checkbox" id="addPageToMainMenu" name="addPageToMainMenu" value="1"{if $addPageToMainMenu} checked{/if}> {lang}wcf.acp.page.addPageToMainMenu{/lang}</label>
+							
+							<script data-relocate="true">
+								elById('addPageToMainMenu').addEventListener('change', function() {
+									if (this.checked) {
+										elShow(elById('parentMenuItemDl'));
+									}
+									else {
+										elHide(elById('parentMenuItemDl'));
+									}
+								});
+							</script>
+						</dd>
+					</dl>
+					
+					<dl id="parentMenuItemDl"{if $errorField == 'parentMenuItemID'} class="formError"{/if}{if !$addPageToMainMenu} style="display: none"{/if}>
+						<dt><label for="parentMenuItemID">{lang}wcf.acp.menu.item.parentItem{/lang}</label></dt>
+						<dd>
+							<select name="parentMenuItemID" id="parentMenuItemID">
+								<option value="0">{lang}wcf.global.noSelection{/lang}</option>
+								
+								{foreach from=$menuItemNodeList item=menuItemNode}
+									<option value="{@$menuItemNode->itemID}"{if $menuItemNode->itemID == $parentMenuItemID} selected{/if}>{if $menuItemNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{lang}{$menuItemNode->title}{/lang}</option>
+								{/foreach}
+							</select>
+							{if $errorField == 'parentMenuItemID'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{else}
+										{lang}wcf.acp.page.parentMenuItem.error.{@$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
 						</dd>
 					</dl>
 				{/if}
@@ -292,11 +372,12 @@
 					{foreach from=$availableLanguages item=availableLanguage}
 						<div id="language{@$availableLanguage->languageID}" class="tabMenuContent">
 							<div class="section">
-								<dl{if $errorField == 'title'} class="formError"{/if}>
+								{assign var='__errorFieldName' value='title_'|concat:$availableLanguage->languageID}
+								<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
 									<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.global.title{/lang}</label></dt>
 									<dd>
 										<input type="text" id="title{@$availableLanguage->languageID}" name="title[{@$availableLanguage->languageID}]" value="{if !$title[$availableLanguage->languageID]|empty}{$title[$availableLanguage->languageID]}{/if}" class="long" maxlength="255">
-										{if $errorField == 'title'}
+										{if $errorField == $__errorFieldName}
 											<small class="innerError">
 												{if $errorType == 'empty'}
 													{lang}wcf.global.form.error.empty{/lang}
@@ -309,12 +390,13 @@
 								</dl>
 								
 								{if $pageType != 'system'}
-									<dl{if $errorField == 'content'} class="formError"{/if}>
+									{assign var='__errorFieldName' value='content_'|concat:$availableLanguage->languageID}
+									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
 										<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.page.content{/lang}</label></dt>
 										<dd>
 											{include file='__pageAddContent' languageID=$availableLanguage->languageID}
 											
-											{if $errorField == 'content'}
+											{if $errorField == $__errorFieldName}
 												<small class="innerError">
 													{if $errorType == 'empty'}
 														{lang}wcf.global.form.error.empty{/lang}
@@ -326,11 +408,12 @@
 										</dd>
 									</dl>
 									
-									<dl{if $errorField == 'metaDescription'} class="formError"{/if}>
+									{assign var='__errorFieldName' value='metaDescription_'|concat:$availableLanguage->languageID}
+									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
 										<dt><label for="metaDescription{@$availableLanguage->languageID}">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
 										<dd>
 											<input type="text" class="long" name="metaDescription[{@$availableLanguage->languageID}]" id="metaDescription{@$availableLanguage->languageID}" value="{if !$metaDescription[$availableLanguage->languageID]|empty}{$metaDescription[$availableLanguage->languageID]}{/if}">
-											{if $errorField == 'metaDescription'}
+											{if $errorField == $__errorFieldName}
 												<small class="innerError">
 													{if $errorType == 'empty'}
 														{lang}wcf.global.form.error.empty{/lang}
@@ -342,11 +425,12 @@
 										</dd>
 									</dl>
 									
-									<dl{if $errorField == 'metaKeywords'} class="formError"{/if}>
+									{assign var='__errorFieldName' value='metaKeywords_'|concat:$availableLanguage->languageID}
+									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>
 										<dt><label for="metaKeywords{@$availableLanguage->languageID}">{lang}wcf.acp.page.metaKeywords{/lang}</label></dt>
 										<dd>
 											<input type="text" class="long" name="metaKeywords[{@$availableLanguage->languageID}]" id="metaKeywords{@$availableLanguage->languageID}" value="{if !$metaKeywords[$availableLanguage->languageID]|empty}{$metaKeywords[$availableLanguage->languageID]}{/if}">
-											{if $errorField == 'metaKeywords'}
+											{if $errorField == $__errorFieldName}
 												<small class="innerError">
 													{if $errorType == 'empty'}
 														{lang}wcf.global.form.error.empty{/lang}
@@ -367,6 +451,8 @@
 		
 		<div id="boxes" class="tabMenuContent">
 			<div class="section">
+				<p class="info">{lang}wcf.acp.page.boxOrder.page{@$action|ucfirst}{/lang}</p>
+				
 				<dl{if $errorField == 'boxIDs'} class="formError"{/if}>
 					<dt>{lang}wcf.acp.page.boxes{/lang}</dt>
 					<dd>
@@ -389,9 +475,13 @@
 						<script data-relocate="true">
 							require(['Language', 'WoltLabSuite/Core/Ui/ItemList/Filter'], function(Language, UiItemListFilter) {
 								Language.addObject({
+									'wcf.global.filter.button.visibility': '{lang}wcf.global.filter.button.visibility{/lang}',
 									'wcf.global.filter.button.clear': '{lang}wcf.global.filter.button.clear{/lang}',
 									'wcf.global.filter.error.noMatches': '{lang}wcf.global.filter.error.noMatches{/lang}',
-									'wcf.global.filter.placeholder': '{lang}wcf.global.filter.placeholder{/lang}'
+									'wcf.global.filter.placeholder': '{lang}wcf.global.filter.placeholder{/lang}',
+									'wcf.global.filter.visibility.activeOnly': '{lang}wcf.global.filter.visibility.activeOnly{/lang}',
+									'wcf.global.filter.visibility.highlightActive': '{lang}wcf.global.filter.visibility.highlightActive{/lang}',
+									'wcf.global.filter.visibility.showAll': '{lang}wcf.global.filter.visibility.showAll{/lang}'
 								});
 								
 								new UiItemListFilter('boxVisibilitySettings');

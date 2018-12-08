@@ -32,7 +32,7 @@
 	<xs:complexType name="cronjob_import">
 		<xs:complexContent>
 			<xs:extension base="cronjob_delete">
-				 <xs:choice maxOccurs="unbounded" minOccurs="0">
+				<xs:choice maxOccurs="unbounded" minOccurs="0">
 					<xs:element name="description" type="description_element" minOccurs="0" maxOccurs="unbounded" />
 					<xs:element name="startminute" type="woltlab_varchar" minOccurs="1" />
 					<xs:element name="starthour" type="woltlab_varchar" minOccurs="1" />
@@ -44,6 +44,7 @@
 					<xs:element name="canbedisabled" type="woltlab_boolean" minOccurs="0" default="1" />
 					<xs:element name="isdisabled" type="woltlab_boolean" minOccurs="0" default="0" />
 					<xs:element name="active" type="woltlab_boolean" minOccurs="0" default="1" />
+					<xs:element name="options" type="xs:string" minOccurs="0" />
 				</xs:choice>
 			</xs:extension>
 		</xs:complexContent>

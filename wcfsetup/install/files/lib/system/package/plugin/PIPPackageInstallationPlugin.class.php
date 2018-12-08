@@ -1,17 +1,18 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\package\installation\plugin\PackageInstallationPluginEditor;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\WCF;
 
 /**
  * Installs, updates and deletes package installation plugins.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -74,5 +75,12 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			'sql' => $sql,
 			'parameters' => $parameters
 		];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
 	}
 }

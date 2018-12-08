@@ -15,12 +15,65 @@ $.Redactor.prototype.WoltLabInlineCode = function() {
 		},
 		
 		_toggle: function (data) {
+			var node;
+			
 			data.cancel = true;
+			
+			var selection = window.getSelection();
+			
+			// check if the caret is at the front position of a non-empty `<kbd>`
+			if (selection.isCollapsed) {
+				node = null;
+				
+				var kbd = selection.anchorNode;
+				if (kbd.nodeType === Node.TEXT_NODE) kbd = kbd.parentNode;
+				
+				var isAtStart = false;
+				if (kbd.nodeName === 'KBD' && kbd.textContent.replace(/\u200b/g, '') !== '') {
+					var anchorNode = selection.anchorNode;
+					var anchorOffset = selection.anchorOffset;
+					if (anchorNode.nodeType === Node.TEXT_NODE && anchorOffset === 0) {
+						node = anchorNode;
+					}
+					else if (anchorNode === kbd) {
+						if (anchorOffset === 0) {
+							isAtStart = true;
+						}
+						else {
+							node = kbd.childNodes[anchorOffset - 1];
+						}
+					}
+				}
+				
+				if (isAtStart === false && node !== null) {
+					var childNode;
+					for (var i = 0, length = kbd.childNodes.length; i < length; i++) {
+						childNode = kbd.childNodes[i];
+						if (childNode === node) {
+							isAtStart = true;
+							break;
+						}
+						else if (childNode.nodeType !== Node.TEXT_NODE || childNode.textContent.replace(/\u200b/g, '') !== '') {
+							break;
+						}
+					}
+				}
+				
+				if (isAtStart) {
+					var sibling = kbd.previousSibling;
+					if (sibling === null || sibling.nodeType !== Node.TEXT_NODE || sibling.textContent !== '\u200b') {
+						sibling = document.createTextNode('\u200b');
+						kbd.parentNode.insertBefore(sibling, kbd);
+					}
+					
+					this.caret.before(kbd);
+					return;
+				}
+			}
 			
 			this.button.toggle({}, 'kbd', 'func', 'inline.format');
 			
-			var selection = window.getSelection();
-			var node = selection.anchorNode;
+			node = selection.anchorNode;
 			if (node.nodeType === Node.TEXT_NODE) node = node.parentNode;
 			
 			if (node.nodeName === 'KBD') {
@@ -33,7 +86,7 @@ $.Redactor.prototype.WoltLabInlineCode = function() {
 					}
 					
 					// fix selection position
-					if (node.innerHTML === '\u200B') {
+					/*if (node.innerHTML === '\u200B') {
 						// the caret must be at offset 0 (before the whitespace)
 						var range = selection.getRangeAt(0);
 						if (range.collapsed && range.startOffset === 1) {
@@ -41,7 +94,7 @@ $.Redactor.prototype.WoltLabInlineCode = function() {
 							
 							this.selection.restore();
 						}
-					}
+					}*/
 					
 					return;
 				}

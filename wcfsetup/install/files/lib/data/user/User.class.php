@@ -12,12 +12,13 @@ use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\CryptoUtil;
 use wcf\util\PasswordUtil;
+use wcf\util\UserUtil;
 
 /**
  * Represents a user.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
  * 
@@ -63,6 +64,11 @@ use wcf\util\PasswordUtil;
  * @property-read	string		$notificationMailToken		token used for authenticating requests by the user to disable notification emails
  * @property-read	string		$authData			data of the third party used for authentication
  * @property-read	integer		$likesReceived			cumulative result of likes (counting +1) and dislikes (counting -1) the user's contents have received
+ * @property-read       string          $coverPhotoHash                 hash of the user's cover photo
+ * @property-read	string		$coverPhotoExtension		extension of the user's cover photo file
+ * @property-read       integer         $disableCoverPhoto              is `1` if the user's cover photo has been disabled, otherwise `0`
+ * @property-read	string		$disableCoverPhotoReason	reason why the user's cover photo is disabled
+ * @property-read	integer		$disableCoverPhotoExpires	timestamp at which the user's cover photo will automatically be enabled again
  */
 final class User extends DatabaseObject implements IRouteController, IUserContent {
 	/**
@@ -415,7 +421,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * @return	string
 	 */
 	public function __toString() {
-		return $this->username;
+		return ($this->username ?: '');
 	}
 	
 	/**
@@ -523,5 +529,18 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 			'reddit' => false,
 			'twitter' => false
 		];
+	}
+	
+	/**
+	 * Returns the registration ip address, attempts to convert to IPv4.
+	 * 
+	 * @return      string
+	 */
+	public function getRegistrationIpAddress() {
+		if ($this->registrationIpAddress) {
+			return UserUtil::convertIPv6To4($this->registrationIpAddress);
+		}
+		
+		return '';
 	}
 }

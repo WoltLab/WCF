@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * Shows the search form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -295,7 +295,7 @@ class SearchForm extends AbstractCaptchaForm {
 	 * Throws a NamedUserException on search failure.
 	 */
 	public function throwNoMatchesException() {
-		@header('HTTP/1.0 404 Not Found');
+		@header('HTTP/1.1 404 Not Found');
 		
 		if (empty($this->query)) {
 			throw new NamedUserException(WCF::getLanguage()->get('wcf.search.error.user.noMatches'));
@@ -388,6 +388,9 @@ class SearchForm extends AbstractCaptchaForm {
 		// init form
 		foreach (SearchEngine::getInstance()->getAvailableObjectTypes() as $objectType) $objectType->show($this);
 		
+		$searchPreselectObjectType = 'everywhere';
+		if (count($this->selectedObjectTypes) === 1) $searchPreselectObjectType = reset($this->selectedObjectTypes);
+		
 		WCF::getTPL()->assign([
 			'query' => $this->query,
 			'subjectOnly' => $this->subjectOnly,
@@ -398,7 +401,8 @@ class SearchForm extends AbstractCaptchaForm {
 			'sortField' => $this->sortField,
 			'sortOrder' => $this->sortOrder,
 			'selectedObjectTypes' => $this->selectedObjectTypes,
-			'objectTypes' => SearchEngine::getInstance()->getAvailableObjectTypes()
+			'objectTypes' => SearchEngine::getInstance()->getAvailableObjectTypes(),
+			'searchPreselectObjectType' => $searchPreselectObjectType
 		]);
 	}
 	

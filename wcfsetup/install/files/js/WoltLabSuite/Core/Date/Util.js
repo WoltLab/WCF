@@ -2,7 +2,7 @@
  * Provides utility functions for date operations.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Date/Util
  */
@@ -218,6 +218,39 @@ define(['Language'], function(Language) {
 				date.getUTCMinutes(),
 				date.getUTCSeconds()
 			) / 1000);
+		},
+		
+		/**
+		 * Returns a `time` element based on the given date just like a `time`
+		 * element created by `wcf\system\template\plugin\TimeModifierTemplatePlugin`.
+		 * 
+		 * Note: The actual content of the element is empty and is expected
+		 * to be automatically updated by `WoltLabSuite/Core/Date/Time/Relative`
+		 * (for dates not in the future) after the DOM change listener has been triggered.
+		 * 
+		 * @param	{Date}		date	displayed date
+		 * @return	{HTMLElement}	`time` element
+		 */
+		getTimeElement: function(date) {
+			var time = elCreate('time');
+			time.className = 'datetime';
+			
+			var formattedDate = this.formatDate(date);
+			var formattedTime = this.formatTime(date);
+			
+			elAttr(time, 'datetime', this.format(date, 'c'));
+			elData(time, 'timestamp', (date.getTime() - date.getMilliseconds()) / 1000);
+			elData(time, 'date', formattedDate);
+			elData(time, 'time', formattedTime);
+			elData(time, 'offset', date.getTimezoneOffset() * 60); // PHP returns minutes, JavaScript returns seconds
+			
+			if (date.getTime() > Date.now()) {
+				elData(time, 'is-future-date', 'true');
+				
+				time.textContent = Language.get('wcf.date.dateTimeFormat').replace('%time%', formattedTime).replace('%date%', formattedDate);
+			}
+			
+			return time;
 		},
 		
 		/**

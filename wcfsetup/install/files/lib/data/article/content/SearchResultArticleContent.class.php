@@ -8,7 +8,7 @@ use wcf\system\search\SearchResultTextParser;
  * Represents an article content as a search result.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article\Content
  * @since	3.0
@@ -64,8 +64,8 @@ class SearchResultArticleContent extends ViewableArticleContent implements ISear
 	public function getFormattedMessage() {
 		$message = SearchResultTextParser::getInstance()->parse($this->getDecoratedObject()->getFormattedContent());
 		
-		if ($this->getImage()) {
-			return '<div class="box96">'.$this->getImage()->getElementTag(96).'<div>'.$message.'</div></div>';
+		if ($this->getTeaserImage()) {
+			return '<div class="box96">'.$this->getTeaserImage()->getElementTag(96).'<div>'.$message.'</div></div>';
 		}
 		
 		return $message;

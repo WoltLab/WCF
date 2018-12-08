@@ -9,10 +9,10 @@ use wcf\util\UserRegistrationUtil;
 use wcf\util\UserUtil;
 
 /**
- * Provdes methods related to the guest dialog of message quick reply.
+ * Provides methods related to the guest dialog of message quick reply.
  * 
  * @author	Matthias Schmudt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data
  * @since	3.0
@@ -51,16 +51,18 @@ trait TMessageQuickReplyGuestDialogAction {
 	 * Needs to be called before all other methods in this trait.
 	 */
 	protected function setGuestDialogCaptcha() {
-		$this->guestDialogCaptchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(CAPTCHA_TYPE);
-		if ($this->guestDialogCaptchaObjectType === null) {
-			throw new \LogicException("Unknown captcha object type with name '".CAPTCHA_TYPE."'");
-		}
-		
-		/** @var ICaptchaHandler $processor */
-		$processor = $this->guestDialogCaptchaObjectType->getProcessor();
-		
-		if (!$processor->isAvailable()) {
-			$this->guestDialogCaptchaObjectType = null;
+		if (CAPTCHA_TYPE) {
+			$this->guestDialogCaptchaObjectType = CaptchaHandler::getInstance()->getObjectTypeByName(CAPTCHA_TYPE);
+			if ($this->guestDialogCaptchaObjectType === null) {
+				throw new \LogicException("Unknown captcha object type with name '" . CAPTCHA_TYPE . "'");
+			}
+			
+			/** @var ICaptchaHandler $processor */
+			$processor = $this->guestDialogCaptchaObjectType->getProcessor();
+			
+			if (!$processor->isAvailable()) {
+				$this->guestDialogCaptchaObjectType = null;
+			}
 		}
 	}
 	
@@ -76,7 +78,7 @@ trait TMessageQuickReplyGuestDialogAction {
 			throw new \BadMethodCallException("Guest dialogs are only relevant for guests");
 		}
 		
-		if (CAPTCHA_TYPE) {
+		if (CAPTCHA_TYPE && $this->guestDialogCaptchaObjectType) {
 			/** @var ICaptchaHandler $processor */
 			$processor = $this->guestDialogCaptchaObjectType->getProcessor();
 			
@@ -95,7 +97,7 @@ trait TMessageQuickReplyGuestDialogAction {
 	/**
 	 * Validates the entered username in the guest dialog.
 	 * 
-	 * @return	string		type of the validation error or empty if no error occured
+	 * @return	string		type of the validation error or empty if no error occurred
 	 * @throws	\BadMethodCallException
 	 */
 	protected function validateGuestDialogUsername() {

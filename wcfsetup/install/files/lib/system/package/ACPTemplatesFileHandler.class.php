@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * File handler implementation for the installation of ACP template files.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */

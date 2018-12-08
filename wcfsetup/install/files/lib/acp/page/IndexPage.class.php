@@ -1,14 +1,16 @@
 <?php
 namespace wcf\acp\page;
 use wcf\page\AbstractPage;
+use wcf\system\cache\builder\OptionCacheBuilder;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
  * Shows the welcome page in admin control panel.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  */
@@ -57,7 +59,25 @@ class IndexPage extends AbstractPage {
 			$usersAwaitingApproval = $statement->fetchSingleColumn();
 		}
 		
+		$recaptchaWithoutKey = false;
+		$recaptchaKeyLink = '';
+		if (CAPTCHA_TYPE == 'com.woltlab.wcf.recaptcha' && (!RECAPTCHA_PUBLICKEY || !RECAPTCHA_PRIVATEKEY)) {
+			$recaptchaWithoutKey = true;
+			
+			$optionCategories = OptionCacheBuilder::getInstance()->getData([], 'categories');
+			$categorySecurity = $optionCategories['security'];
+			$recaptchaKeyLink = LinkHandler::getInstance()->getLink(
+				'Option',
+				[
+					'id' => $categorySecurity->categoryID,
+					'optionName' => 'recaptcha_publickey'
+				], '#category_security.antispam'
+			);
+		}
+		
 		WCF::getTPL()->assign([
+			'recaptchaWithoutKey' => $recaptchaWithoutKey,
+			'recaptchaKeyLink' => $recaptchaKeyLink,
 			'server' => $this->server,
 			'usersAwaitingApproval' => $usersAwaitingApproval
 		]);

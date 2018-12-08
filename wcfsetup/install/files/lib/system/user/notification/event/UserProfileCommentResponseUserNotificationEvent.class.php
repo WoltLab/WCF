@@ -1,7 +1,9 @@
 <?php
 namespace wcf\system\user\notification\event;
+use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\comment\CommentHandler;
 use wcf\system\email\Email;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 
@@ -9,13 +11,15 @@ use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
  * User notification event for profile comment responses.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  * 
  * @method	CommentResponseUserNotificationObject	getUserNotificationObject()
  */
-class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent {
+class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent {
+	use TTestableCommentResponseUserNotificationEvent;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -59,6 +63,7 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 			
 			return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.message.stacked', [
 				'authors' => array_values($authors),
+				'commentID' => $this->getUserNotificationObject()->commentID,
 				'count' => $count,
 				'others' => $count - 1,
 				'owner' => $owner,
@@ -68,7 +73,9 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 		
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.commentResponse.message', [
 			'author' => $this->author,
-			'owner' => $owner
+			'commentID' => $this->getUserNotificationObject()->commentID,
+			'owner' => $owner,
+			'responseID' => $this->getUserNotificationObject()->responseID
 		]);
 	}
 	
@@ -82,12 +89,15 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 		$messageID = '<com.woltlab.wcf.user.profileComment.notification/'.$comment->commentID.'@'.Email::getHost().'>';
 		
 		return [
-			'template' => 'email_notification_userProfileCommentResponse',
+			'template' => 'email_notification_commentResponse',
 			'application' => 'wcf',
 			'in-reply-to' => [$messageID],
 			'references' => [$messageID],
 			'variables' => [
-				'owner' => $owner
+				'commentID' => $this->getUserNotificationObject()->commentID,
+				'owner' => $owner,
+				'responseID' => $this->getUserNotificationObject()->responseID,
+				'languageVariablePrefix' => 'wcf.user.notification.commentResponse'
 			]
 		];
 	}
@@ -96,7 +106,7 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#wall';
+		return UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#wall/comment' . $this->getUserNotificationObject()->commentID;
 	}
 	
 	/**
@@ -104,5 +114,16 @@ class UserProfileCommentResponseUserNotificationEvent extends AbstractSharedUser
 	 */
 	public function getEventHash() {
 		return sha1($this->eventID . '-' . $this->getUserNotificationObject()->commentID);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.1
+	 */
+	protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author) {
+		return [
+			'objectID' => $author->userID,
+			'objectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.user.profileComment')
+		];
 	}
 }

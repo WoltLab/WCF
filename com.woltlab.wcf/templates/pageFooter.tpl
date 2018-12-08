@@ -1,4 +1,15 @@
 <footer id="pageFooter" class="pageFooter">
+	{if !$errorField|empty || !$errorType|empty}
+		<!--
+			DEBUG: FORM_VALIDATION_FAILED
+			
+			errorField: {if $errorField|empty}(empty){else}{$errorField|print_r:true}{/if}
+			
+			errorType: {if $errorType|empty}(empty){else}{$errorType|print_r:true}{/if}
+		
+		-->
+	{/if}
+	
 	{assign var=__boxesFooter value=$__wcf->getBoxHandler()->getBoxes('footer')}
 	{if $__wcf->getStyleHandler()->showStyleChanger() && $__wcf->getStyleHandler()->countStyles() > 1}
 		{assign var=__showStyleChanger value=true}
@@ -6,21 +17,27 @@
 		{assign var=__showStyleChanger value=false}
 	{/if}
 	
-	{if $__boxesFooter|count || $__showStyleChanger}
+	{if $__boxesFooter|count || !$boxesFooter|empty || $__showStyleChanger}
 		<div class="boxesFooter">
 			<div class="layoutBoundary{if $__showStyleChanger} clearfix{/if}">
 				{if $__showStyleChanger}
-					<span class="styleChanger">
+					<span class="styleChanger jsOnly">
 						<a href="#" class="jsButtonStyleChanger">{lang}wcf.style.changeStyle{/lang}</a>
 					</span>
 				{/if}
-				{if $__boxesFooter|count}
+				{hascontent}
 					<div class="boxContainer">
-						{foreach from=$__boxesFooter item=box}
-							{@$box->render()}
-						{/foreach}
+						{content}
+							{if !$boxesFooter|empty}
+								{@$boxesFooter}
+							{/if}
+
+							{foreach from=$__boxesFooter item=box}
+								{@$box->render()}
+							{/foreach}
+						{/content}
 					</div>
-				{/if}
+				{/hascontent}
 			</div>
 		</div>
 	{/if}

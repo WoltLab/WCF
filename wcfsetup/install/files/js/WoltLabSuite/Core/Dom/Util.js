@@ -2,7 +2,7 @@
  * Provides helper functions to work with DOM nodes.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Dom/Util
  */
@@ -181,8 +181,8 @@ define(['Environment', 'StringUtil'], function(Environment, StringUtil) {
 		 * @param	{Element}	el		reference element
 		 */
 		insertAfter: function(newEl, el) {
-			if (el.nextElementSibling !== null) {
-				el.parentNode.insertBefore(newEl, el.nextElementSibling);
+			if (el.nextSibling !== null) {
+				el.parentNode.insertBefore(newEl, el.nextSibling);
 			}
 			else {
 				el.parentNode.appendChild(newEl);

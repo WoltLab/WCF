@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * Shows the group add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -185,6 +185,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		
 		// reset values
 		$this->groupName = '';
+		$this->priority = 0;
 		
 		I18nHandler::getInstance()->reset();
 	}
@@ -216,7 +217,9 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			'action' => 'add',
 			'priority' => $this->priority,
 			'userOnlineMarking' => $this->userOnlineMarking,
-			'showOnTeamPage' => $this->showOnTeamPage
+			'showOnTeamPage' => $this->showOnTeamPage,
+			'groupIsGuest' => false,
+			'isBlankForm' => empty($_POST)
 		]);
 	}
 	

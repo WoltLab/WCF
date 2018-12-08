@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
  * MemcachedCacheSource is an implementation of CacheSource that uses a Memcached server to store cached variables.
  * 
  * @author	Tim Duesterhus, Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cache\Source
  */
@@ -197,5 +197,16 @@ class MemcachedCacheSource implements ICacheSource {
 		}
 		
 		return $flush.'_'.$cacheName;
+	}
+	
+	/**
+	 * Returns the Memcached server version
+	 * 
+	 * @return	string
+	 */
+	public function getMemcachedVersion() {
+		$versions = $this->memcached->getVersion();
+		
+		return reset($versions);
 	}
 }

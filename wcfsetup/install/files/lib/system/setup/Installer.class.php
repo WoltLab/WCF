@@ -8,7 +8,7 @@ use wcf\util\FileUtil;
  * Extracts files and directories from a tar archive.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Setup
  */
@@ -118,7 +118,7 @@ class Installer {
 		$this->createTargetDir();
 		
 		// open source archive
-		$tar = new Tar($this->source);
+		$tar = $this->getTar($this->source);
 		
 		// distinct directories and files
 		$directories = [];
@@ -174,7 +174,17 @@ class Installer {
 	}
 	
 	/**
-	 * Checkes whether the given files overwriting locked existing files.
+	 * Opens a new tar archive.
+	 * 
+	 * @param       string          $source
+	 * @return      Tar
+	 */
+	protected function getTar($source) {
+		return new Tar($source);
+	}
+	
+	/**
+	 * Checks whether the given files overwriting locked existing files.
 	 * 
 	 * @param	array		$files
 	 */

@@ -6,14 +6,20 @@
 	<meta name="robots" content="noindex">
 	<title>{if $pageTitle|isset}{@$pageTitle|language} - {/if}{lang}wcf.global.acp{/lang}{if PACKAGE_ID} - {PAGE_TITLE|language}{/if}</title>
 	
+	{* work-around for Microsoft Edge that sometimes does not apply this style, if it was set via an external stylesheet *}
+	<style>ol, ul { list-style: none; }</style>
+	
 	<!-- Stylesheets -->
 	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet">
 	{@$__wcf->getStyleHandler()->getStylesheet(true)}
 	{event name='stylesheets'}
 	
 	<!-- Icons -->
-	<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon.ico">
-	<link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="{@$__wcf->getPath()}images/favicon/default.apple-touch-icon.png">
+	<link rel="manifest" href="{@$__wcf->getPath()}images/favicon/default.manifest.json">
+	<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon/default.favicon.ico">
+	<meta name="msapplication-config" content="{@$__wcf->getPath()}images/favicon/default.browserconfig.xml">
+	<meta name="theme-color" content="#3a6d9c">
 	
 	<script>
 		var SID_ARG_2ND = '';
@@ -23,9 +29,18 @@
 		var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 		var LANGUAGE_USE_INFORMAL_VARIANT = {if LANGUAGE_USE_INFORMAL_VARIANT}true{else}false{/if};
 		var TIME_NOW = {@TIME_NOW};
+		var LAST_UPDATE_TIME = {@LAST_UPDATE_TIME};
 		var URL_LEGACY_MODE = false;
+		var ENABLE_DEBUG_MODE = {if ENABLE_DEBUG_MODE}true{else}false{/if};
+		var ENABLE_DEVELOPER_TOOLS = {if ENABLE_DEVELOPER_TOOLS}true{else}false{/if};
+		var WSC_API_VERSION = {@WSC_API_VERSION};
+		
+		{* This constant is a compiler option, it does not exist in production. *}
+		{* Unlike the frontend, this option must be defined in the ACP at all times. *}
+		var COMPILER_TARGET_DEFAULT = true;
 	</script>
 	
+	{js application='wcf' lib='polyfill' file='promise' bundle='WoltLabSuite.Core' core='true'}
 	{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}
 	{js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true'}
 	{js application='wcf' file='require.linearExecution' bundle='WoltLabSuite.Core' core='true'}
@@ -33,7 +48,8 @@
 	{js application='wcf' file='closest' bundle='WoltLabSuite.Core' core='true'}
 	<script>
 		requirejs.config({
-			baseUrl: '{@$__wcf->getPath()}js'
+			baseUrl: '{@$__wcf->getPath()}js',
+			urlArgs: 't={@LAST_UPDATE_TIME}'
 			{hascontent}
 			, paths: {
 				{content}{event name='requirePaths'}{/content}
@@ -90,6 +106,7 @@
 				'wcf.global.form.error.greaterThan': '{lang __literal=true}wcf.global.form.error.greaterThan{/lang}',
 				'wcf.global.form.error.lessThan': '{lang __literal=true}wcf.global.form.error.lessThan{/lang}',
 				'wcf.global.form.error.multilingual': '{lang}wcf.global.form.error.multilingual{/lang}',
+				'wcf.global.form.input.maxItems': '{lang}wcf.global.form.input.maxItems{/lang}',
 				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 				'wcf.global.noSelection': '{lang}wcf.global.noSelection{/lang}',
 				'wcf.global.select': '{lang}wcf.global.select{/lang}',
@@ -105,26 +122,28 @@
 				'wcf.global.success.add': '{lang}wcf.global.success.add{/lang}',
 				'wcf.global.success.edit': '{lang}wcf.global.success.edit{/lang}',
 				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
-				'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}'
+				'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}',
+				'wcf.menu.page': '{lang}wcf.menu.page{/lang}',
+				'wcf.menu.user': '{lang}wcf.menu.user{/lang}'
 				{event name='javascriptLanguageImport'}
 			});
 			
 			AcpBootstrap.setup({
 				bootstrap: {
-					enableMobileMenu: {if $__isLogin|empty}true{else}false{/if}
+					enableMobileMenu: {if PACKAGE_ID && $__isLogin|empty}true{else}false{/if}
 				}
 			});
 			
-			User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
+			User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}', {if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if});
 		});
 	</script>
-	{js application='wcf' lib='jquery'}
 	
 	<script>
 		// prevent jQuery and other libraries from utilizing define()
 		__require_define_amd = define.amd;
 		define.amd = undefined;
 	</script>
+	{js application='wcf' lib='jquery'}
 	{js application='wcf' lib='jquery-ui'}
 	{js application='wcf' lib='jquery-ui' file='touchPunch' bundle='WCF.Combined'}
 	{js application='wcf' lib='jquery-ui' file='nestedSortable' bundle='WCF.Combined'}
@@ -157,7 +176,14 @@
 <body id="tpl{$templateName|ucfirst}" data-template="{$templateName}" data-application="{$templateNameApplication}" class="wcfAcp">
 	<a id="top"></a>
 	
-	<div id="pageContainer" class="pageContainer">
+	{assign var=_acpPageSubMenuActive value=false}
+	{if PACKAGE_ID}
+		{assign var=_activeMenuItems value=$__wcf->getACPMenu()->getActiveMenuItems()}
+		{foreach from=$__wcf->getACPMenu()->getMenuItems('') item=_sectionMenuItem}
+			{if $_sectionMenuItem->menuItem|in_array:$_activeMenuItems}{assign var=_acpPageSubMenuActive value=true}{/if}
+		{/foreach}
+	{/if}
+	<div id="pageContainer" class="pageContainer{if !PACKAGE_ID || !$__wcf->user->userID} acpPageHiddenMenu{elseif $_acpPageSubMenuActive} acpPageSubMenuActive{/if}">
 		{event name='beforePageHeader'}
 		
 		{include file='pageHeader'}

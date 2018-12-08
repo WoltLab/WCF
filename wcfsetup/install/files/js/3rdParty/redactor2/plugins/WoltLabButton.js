@@ -99,7 +99,7 @@ $.Redactor.prototype.WoltLabButton = function() {
 			}
 			
 			var toolbar = this.core.toolbar()[0];
-			elBySelAll('.re-button-tooltip', toolbar, elRemove);
+			elBySelAll('.re-button-tooltip', toolbar.parentNode, elRemove);
 			
 			// enforce button order as provided with `opts.buttons`
 			var listItem, toolbarButtons = {}, toolbarOrder = [];
@@ -152,6 +152,11 @@ $.Redactor.prototype.WoltLabButton = function() {
 					setup: this.WoltLabButton._setupToggleButton.bind(this)
 				});
 			}).bind(this));
+			
+			// prevent drag & drop of toolbar buttons
+			this.$toolbar[0].addEventListener('dragstart', function (event) {
+				event.preventDefault();
+			});
 		},
 		
 		_handleCustomButton: function (bbcode) {
@@ -161,7 +166,9 @@ $.Redactor.prototype.WoltLabButton = function() {
 			if (data.cancel !== true) {
 				this.buffer.set();
 				
-				var html = '[' + bbcode + ']' + this.selection.html() + (this.selection.is() ? '' : this.marker.html()) + '[/' + bbcode + ']';
+				var marker = this.marker.get();
+				marker.classList.add('woltlab-bbcode-marker');
+				var html = '[' + bbcode + ']' + this.selection.html() + marker.outerHTML + '[/' + bbcode + ']';
 				this.insert.html(html);
 				this.selection.restore();
 			}

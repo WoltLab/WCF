@@ -2,12 +2,29 @@
  * Manages quotes.
  *
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Redactor/Quote
  */
 define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', './Metacode', './PseudoHeader'], function (Core, EventHandler, EventKey, Language, StringUtil, DomUtil, UiDialog, UiRedactorMetacode, UiRedactorPseudoHeader) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_insertQuote: function() {},
+			_click: function() {},
+			_observeLoad: function() {},
+			_edit: function() {},
+			_save: function() {},
+			_setTitle: function() {},
+			_delete: function() {},
+			_dialogSetup: function() {},
+			_dialogSubmit: function() {}
+		};
+		return Fake;
+	}
 	
 	var _headerHeight = 0;
 	
@@ -98,6 +115,14 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 				block.parentNode.removeChild(block);
 			}
 			
+			// avoid adjacent blocks that are not paragraphs
+			var sibling = quote.previousElementSibling;
+			if (sibling && sibling.nodeName !== 'P') {
+				sibling = elCreate('p');
+				sibling.textContent = '\u200B';
+				quote.parentNode.insertBefore(sibling, quote);
+			}
+			
 			this._editor.WoltLabCaret.paragraphAfterBlock(quote);
 			
 			this._editor.buffer.set();
@@ -166,25 +191,20 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 		/**
 		 * Saves the changes to the quote's properties.
 		 * 
-		 * @param       {Event}         event           event object
 		 * @protected
 		 */
-		_save: function(event) {
-			event.preventDefault();
-			
+		_dialogSubmit: function() {
 			var id = 'redactor-quote-' + this._elementId;
 			var urlInput = elById(id + '-url');
-			var innerError = elBySel('.innerError', urlInput.parentNode);
-			if (innerError !== null) elRemove(innerError);
 			
 			var url = urlInput.value.replace(/\u200B/g, '').trim();
 			// simple test to check if it at least looks like it could be a valid url
 			if (url.length && !/^https?:\/\/[^\/]+/.test(url)) {
-				innerError = elCreate('small');
-				innerError.className = 'innerError';
-				innerError.textContent = Language.get('wcf.editor.quote.url.error.invalid');
-				urlInput.parentNode.insertBefore(innerError, urlInput.nextElementSibling);
+				elInnerError(urlInput, Language.get('wcf.editor.quote.url.error.invalid'));
 				return;
+			}
+			else {
+				elInnerError(urlInput, false);
 			}
 			
 			// set author
@@ -253,7 +273,6 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 					}).bind(this),
 					
 					onSetup: (function() {
-						elById(idButtonSave).addEventListener(WCF_CLICK_EVENT, this._save.bind(this));
 						elById(idButtonDelete).addEventListener(WCF_CLICK_EVENT, this._delete.bind(this));
 					}).bind(this),
 					
@@ -268,19 +287,19 @@ define(['Core', 'EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util'
 					+ '<dl>'
 						+ '<dt><label for="' + idAuthor + '">' + Language.get('wcf.editor.quote.author') + '</label></dt>'
 						+ '<dd>'
-							+ '<input type="text" id="' + idAuthor + '" class="long">'
+							+ '<input type="text" id="' + idAuthor + '" class="long" data-dialog-submit-on-enter="true">'
 						+ '</dd>'
 					+ '</dl>'
 					+ '<dl>'
 						+ '<dt><label for="' + idUrl + '">' + Language.get('wcf.editor.quote.url') + '</label></dt>'
 						+ '<dd>'
-							+ '<input type="text" id="' + idUrl + '" class="long">'
+							+ '<input type="text" id="' + idUrl + '" class="long" data-dialog-submit-on-enter="true">'
 							+ '<small>' + Language.get('wcf.editor.quote.url.description') + '</small>'
 						+ '</dd>'
 					+ '</dl>'
 				+ '</div>'
 				+ '<div class="formSubmit">'
-					+ '<button id="' + idButtonSave + '" class="buttonPrimary">' + Language.get('wcf.global.button.save') + '</button>'
+					+ '<button id="' + idButtonSave + '" class="buttonPrimary" data-type="submit">' + Language.get('wcf.global.button.save') + '</button>'
 					+ '<button id="' + idButtonDelete + '">' + Language.get('wcf.global.button.delete') + '</button>'
 				+ '</div>'
 			};

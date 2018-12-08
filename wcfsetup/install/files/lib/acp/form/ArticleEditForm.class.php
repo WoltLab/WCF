@@ -5,8 +5,10 @@ use wcf\data\article\ArticleAction;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\label\object\ArticleLabelObjectHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\tagging\TagEngine;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 
@@ -14,7 +16,7 @@ use wcf\util\DateUtil;
  * Shows the article edit form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since	3.0
@@ -70,6 +72,10 @@ class ArticleEditForm extends ArticleAddForm {
 	public function save() {
 		AbstractForm::save();
 		
+		// save labels
+		ArticleLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $this->article->articleID);
+		$labelIDs = ArticleLabelObjectHandler::getInstance()->getAssignedLabels([$this->article->articleID], false);
+				
 		$content = [];
 		if ($this->isMultilingual) {
 			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
@@ -79,7 +85,8 @@ class ArticleEditForm extends ArticleAddForm {
 					'teaser' => !empty($this->teaser[$language->languageID]) ? $this->teaser[$language->languageID] : '',
 					'content' => !empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : '',
 					'htmlInputProcessor' => isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null,
-					'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null
+					'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null,
+					'teaserImageID' => !empty($this->teaserImageID[$language->languageID]) ? $this->teaserImageID[$language->languageID] : null
 				];
 			}
 		}
@@ -90,7 +97,8 @@ class ArticleEditForm extends ArticleAddForm {
 				'teaser' => !empty($this->teaser[0]) ? $this->teaser[0] : '',
 				'content' => !empty($this->content[0]) ? $this->content[0] : '',
 				'htmlInputProcessor' => isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null,
-				'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null
+				'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null,
+				'teaserImageID' => !empty($this->teaserImageID[0]) ? $this->teaserImageID[0] : null
 			];
 		}
 		
@@ -101,7 +109,8 @@ class ArticleEditForm extends ArticleAddForm {
 			'enableComments' => $this->enableComments,
 			'userID' => $this->author->userID,
 			'username' => $this->author->username,
-			'time' => $this->timeObj->getTimestamp()
+			'time' => $this->timeObj->getTimestamp(),
+			'hasLabels' => (isset($labelIDs[$this->article->articleID]) && !empty($labelIDs[$this->article->articleID])) ? 1 : 0
 		];
 		
 		$this->objectAction = new ArticleAction([$this->article], 'update', ['data' => array_merge($this->additionalFields, $data), 'content' => $content]);
@@ -121,6 +130,7 @@ class ArticleEditForm extends ArticleAddForm {
 		if (!empty($_POST) && !WCF::getSession()->getPermission('admin.content.cms.canUseMedia')) {
 			foreach ($this->article->getArticleContents() as $languageID => $content) {
 				$this->imageID[$languageID] = $content->imageID;
+				$this->teaserImageID[$languageID] = $content->teaserImageID;
 			}
 			
 			$this->readImages();
@@ -147,6 +157,7 @@ class ArticleEditForm extends ArticleAddForm {
 				$this->teaser[$languageID] = $content->teaser;
 				$this->content[$languageID] = $content->content;
 				$this->imageID[$languageID] = $content->imageID;
+				$this->teaserImageID[$languageID] = $content->teaserImageID;
 				
 				// get tags
 				if (MODULE_TAGGING) {
@@ -159,6 +170,14 @@ class ArticleEditForm extends ArticleAddForm {
 			}
 			
 			$this->readImages();
+			
+			// labels
+			$assignedLabels = ArticleLabelObjectHandler::getInstance()->getAssignedLabels([$this->article->articleID], true);
+			if (isset($assignedLabels[$this->article->articleID])) {
+				foreach ($assignedLabels[$this->article->articleID] as $label) {
+					$this->labelIDs[$label->groupID] = $label->labelID;
+				}
+			}
 		}
 	}
 	
@@ -171,7 +190,10 @@ class ArticleEditForm extends ArticleAddForm {
 		WCF::getTPL()->assign([
 			'action' => 'edit',
 			'articleID' => $this->articleID,
-			'article' => $this->article
+			'article' => $this->article,
+			'defaultLanguageID' => LanguageFactory::getInstance()->getDefaultLanguageID(),
+			'languages' => LanguageFactory::getInstance()->getLanguages(),
+			'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.article', $this->articleID)
 		]);
 	}
 }

@@ -1,4 +1,4 @@
-{include file='header'}
+{include file='header' pageTitle='wcf.acp.group.option.'|concat:$userGroupOption->optionName}
 
 <script data-relocate="true">
 	(function() {
@@ -9,7 +9,7 @@
 		var fragment = document.createDocumentFragment();
 		fragment.appendChild(container);
 		
-		var dd, groupId, id, inputElements, isBoolean, label, labels = container.getElementsByTagName('label');
+		var dd, groupId, id, inputElement, inputElements, isBoolean, label, labels = container.getElementsByTagName('label');
 		for (var i = 0, length = labels.length; i < length; i++) {
 			label = labels[i];
 			id = label.getAttribute('for') || '';
@@ -18,7 +18,7 @@
 				dd = label.parentNode.nextElementSibling;
 				if (dd !== null && dd.nodeName === 'DD') {
 					inputElements = dd.querySelectorAll('input, select, textarea');
-					isBoolean = (dd.childElementCount === 1 && dd.children[0].classList.contains('optionTypeBoolean'));
+					isBoolean = (dd.childElementCount > 0 && dd.children[0].classList.contains('optionTypeBoolean'));
 					for (var j = 0, innerLength = inputElements.length; j < innerLength; j++) {
 						inputElement = inputElements[j];
 						inputElement.name = 'values[' + groupId + ']' + (inputElement.name.slice(-2) === '[]' ? '[]' : '');
@@ -42,6 +42,14 @@
 		else {
 			parent.appendChild(fragment);
 		}
+		
+		[{@$everyoneGroupID}, {@$guestGroupID}, {@$userGroupID}].forEach(function(groupID) {
+			elBySelAll('dl[data-group-id="' + groupID + '"] .jsBbcodeSelectOptionHtml', undefined, function (bbcodeHtml) {
+				elBySel('input[type="checkbox"]', bbcodeHtml).checked = true;
+				
+				elHide(bbcodeHtml);
+			});
+		});
 	})();
 </script>
 
@@ -61,6 +69,10 @@
 
 {include file='formError'}
 
+{if VISITOR_USE_TINY_BUILD && $guestGroupID}
+	<p class="warning">{lang}wcf.acp.group.excludedInTinyBuild.notice{/lang}</p>
+{/if}
+
 {if $success|isset}
 	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
@@ -73,8 +85,8 @@
 		</header>
 		
 		{foreach from=$groups item=group}
-			<dl>
-				<dt><label for="userGroupOption{@$group->groupID}">{lang}{$group->groupName}{/lang}</label></dt>
+			<dl data-group-id="{@$group->groupID}">
+				<dt>{if VISITOR_USE_TINY_BUILD && $guestGroupID == $group->groupID && $userGroupOption->excludedInTinyBuild}<span class="icon icon16 fa-bolt red jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}"></span> {/if}<label for="userGroupOption{@$group->groupID}">{lang}{$group->groupName}{/lang}</label></dt>
 				<dd>
 					{@$formElements[$group->groupID]}
 					

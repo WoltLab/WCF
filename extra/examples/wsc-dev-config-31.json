@@ -1,0 +1,34 @@
+{
+    "setup": {
+        "database": {
+            "auto": true,
+            "host": "localhost",
+            "password": "root",
+            "username": "root",
+            "dbNumber": "2"
+        },
+        "useDefaultInstallPath": true,
+        "forceStaticCookiePrefix": true
+    },
+    "configuration": {
+        "option": {
+            "captcha_type": "",
+            "module_cookie_policy_page": "0"
+        },
+        "devtools": {
+            "importFromPath": "C:/inetpub/wwwroot/wcf/"
+        }
+    },
+    "user": [
+        {
+            "username": "test",
+            "password": "test",
+            "email": "test@example.com"
+        },
+        {
+            "username": "test2",
+            "password": "test",
+            "email": "test2@example.com"
+        }
+    ]
+}

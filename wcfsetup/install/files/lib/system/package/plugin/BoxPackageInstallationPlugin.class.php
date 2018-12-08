@@ -3,6 +3,7 @@ namespace wcf\system\package\plugin;
 use wcf\data\box\Box;
 use wcf\data\box\BoxEditor;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
@@ -11,12 +12,12 @@ use wcf\system\WCF;
  * Installs, updates and deletes boxes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
  */
-class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -316,6 +317,20 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			foreach ($this->content as $boxID => $contentData) {
 				$boxEditor = $this->boxes[$boxID];
 				
+				// expand non-i18n value
+				if ($boxEditor->boxType === 'system' && count($contentData) === 1 && isset($contentData[''])) {
+					foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+						$insertStatement->execute([
+							$boxID,
+							$language->languageID,
+							$contentData['']['title'],
+							''
+						]);
+					}
+					
+					continue;
+				}
+				
 				foreach ($contentData as $languageCode => $content) {
 					$languageID = null;
 					if ($languageCode != '') {
@@ -327,7 +342,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 					
 					if ($languageID === null) {
 						$statement->execute([$boxID]);
-						if ($statement->fetchColumn()) continue;
+						if ($statement->fetchSingleColumn()) continue;
 					}
 					
 					$boxContent = isset($content['content']) ? $content['content'] : '';
@@ -389,5 +404,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				$insertStatement->execute([$boxes[$boxIdentifier]->boxID, $pageID, $boxes[$boxIdentifier]->visibleEverywhere ? 0 : 1]);
 			}
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return ['language', 'objectType'];
 	}
 }

@@ -72,10 +72,10 @@
 		<amp-carousel width="400" height="300" layout="responsive" type="slides" autoplay delay="5000">
 			{content}
 				{foreach from=$additionalArticles item='additionalArticle'}
-					{if $additionalArticle->getImage()}
+					{if $additionalArticle->getTeaserImage()}
 						<a href="{link controller='ArticleAmp' object=$additionalArticle->getArticleContent()}{/link}">
 							<figure>
-								<amp-img src="{$additionalArticle->getImage()->getThumbnailLink('large')}" layout="fill"></amp-img>
+								<amp-img src="{$additionalArticle->getTeaserImage()->getThumbnailLink('large')}" layout="fill"></amp-img>
 								<figcaption>{$additionalArticle->getTitle()}</figcaption>
 							</figure>
 						</a>
@@ -86,7 +86,7 @@
 	</section>
 {/hascontent}
 
-{if $relatedArticles|count}
+{if $relatedArticles !== null && $relatedArticles|count}
 	{hascontent}
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.article.relatedArticles{/lang}</h2>
@@ -94,10 +94,10 @@
 			<amp-carousel width="400" height="300" layout="responsive" type="slides" autoplay delay="5000">
 				{content}
 					{foreach from=$relatedArticles item='relatedArticle'}
-						{if $relatedArticle->getImage()}
+						{if $relatedArticle->getTeaserImage()}
 							<a href="{link controller='ArticleAmp' object=$relatedArticle->getArticleContent()}{/link}">
 								<figure>
-									<amp-img src="{$relatedArticle->getImage()->getThumbnailLink('large')}" layout="fill"></amp-img>
+									<amp-img src="{$relatedArticle->getTeaserImage()->getThumbnailLink('large')}" layout="fill"></amp-img>
 									<figcaption>{$relatedArticle->getTitle()}</figcaption>
 								</figure>
 							</a>

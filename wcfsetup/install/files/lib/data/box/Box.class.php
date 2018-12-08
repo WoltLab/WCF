@@ -22,7 +22,7 @@ use wcf\system\WCF;
  * Represents a box.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Box
  * @since	3.0
@@ -36,6 +36,7 @@ use wcf\system\WCF;
  * @property-read	integer		$showOrder		position of the box in relation to its siblings
  * @property-read	integer		$visibleEverywhere	is `1` if the box is visible on every page, otherwise `0`
  * @property-read	integer		$isMultilingual		is `1` if the box content is available in multiple languages, otherwise `0`
+ * @property-read	integer		$lastUpdateTime		timestamp at which the box has been updated the last time
  * @property-read	string		$cssClassName		css class name(s) of the box
  * @property-read	integer		$showHeader		is `1` if the box header will be shown, otherwise `0`
  * @property-read	integer		$originIsSystem		is `1` if the box has been delivered by a package, otherwise `0` (i.e. the box has been created in the ACP)
@@ -108,6 +109,12 @@ class Box extends DatabaseObject {
 	 * @var	Page
 	 */
 	protected $linkPage;
+	
+	/**
+	 * virtual show order of this box
+	 * @var integer
+	 */
+	public $virtualShowOrder = -1;
 	
 	/**
 	 * @inheritDoc
@@ -486,6 +493,15 @@ class Box extends DatabaseObject {
 	 */
 	public function isAccessible() {
 		return SimpleAclResolver::getInstance()->canAccess('com.woltlab.wcf.box', $this->boxID);
+	}
+	
+	/**
+	 * Sets the virtual show order of this box.
+	 * 
+	 * @param       integer         $virtualShowOrder
+	 */
+	public function setVirtualShowOrder($virtualShowOrder) {
+		$this->virtualShowOrder = $virtualShowOrder;
 	}
 	
 	/**

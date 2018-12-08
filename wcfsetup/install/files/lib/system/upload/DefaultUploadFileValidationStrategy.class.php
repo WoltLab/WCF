@@ -5,7 +5,7 @@ namespace wcf\system\upload;
  * Default implementation of a file validation strategy for uploaded files.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Upload
  */
@@ -45,7 +45,10 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 	 */
 	public function validate(UploadFile $uploadFile) {
 		if ($uploadFile->getErrorCode() != 0) {
-			$uploadFile->setValidationErrorType('uploadFailed');
+			$additionalData = [];
+			if ($uploadFile->getErrorCode() === UPLOAD_ERR_INI_SIZE) $additionalData['phpLimitExceeded'] = true;
+			
+			$uploadFile->setValidationErrorType('uploadFailed', $additionalData);
 			return false;
 		}
 		

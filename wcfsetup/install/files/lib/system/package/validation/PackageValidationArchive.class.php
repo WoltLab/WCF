@@ -2,6 +2,7 @@
 namespace wcf\system\package\validation;
 use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
+use wcf\data\package\PackageList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
@@ -10,14 +11,14 @@ use wcf\system\WCF;
  * Recursively validates the package archive and it's delivered requirements.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Validation
  */
 class PackageValidationArchive implements \RecursiveIterator {
 	/**
 	 * list of excluded packages grouped by package
-	 * @var	string[]
+	 * @var	string[][]
 	 */
 	protected static $excludedPackages = [];
 	
@@ -25,7 +26,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 * package archive object
 	 * @var	PackageArchive
 	 */
-	protected $archive = null;
+	protected $archive;
 	
 	/**
 	 * list of direct requirements delivered by this package
@@ -40,22 +41,22 @@ class PackageValidationArchive implements \RecursiveIterator {
 	protected $depth = 0;
 	
 	/**
-	 * exception occured during validation
+	 * exception occurred during validation
 	 * @var	\Exception
 	 */
-	protected $exception = null;
+	protected $exception;
 	
 	/**
 	 * associated package object
 	 * @var	Package
 	 */
-	protected $package = null;
+	protected $package;
 	
 	/**
 	 * parent package validation archive object
 	 * @var	PackageValidationArchive
 	 */
-	protected $parent = null;
+	protected $parent;
 	
 	/**
 	 * children pointer
@@ -192,10 +193,32 @@ class PackageValidationArchive implements \RecursiveIterator {
 		// delivered package does not provide the minimum required version
 		if (Package::compareVersion($requiredVersion, $this->archive->getPackageInfo('version'), '>')) {
 			throw new PackageValidationException(PackageValidationException::INSUFFICIENT_VERSION, [
-				'packageName' => $package->packageName,
-				'packageVersion' => $package->packageVersion,
+				'packageName' => $this->archive->getPackageInfo('name'),
+				'packageVersion' => $requiredVersion,
 				'deliveredPackageVersion' => $this->archive->getPackageInfo('version')
 			]);
+		}
+		
+		// check if this package exposes compatible api versions
+		$compatibleVersions = $this->archive->getCompatibleVersions();
+		if (!empty($compatibleVersions)) {
+			$isCompatible = $isOlderVersion = false;
+			foreach ($compatibleVersions as $version) {
+				if (WCF::isSupportedApiVersion($version)) {
+					$isCompatible = true;
+					break;
+				}
+				else if ($version < WSC_API_VERSION) {
+					$isOlderVersion = true;
+				}
+			}
+			
+			if (!$isCompatible) {
+				throw new PackageValidationException(PackageValidationException::INCOMPATIBLE_API_VERSION, ['isOlderVersion' => $isOlderVersion]);
+			}
+		}
+		else if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS && ($package === null || $package->package !== 'com.woltlab.wcf')) {
+			throw new PackageValidationException(PackageValidationException::MISSING_API_VERSION);
 		}
 		
 		// package is not installed yet
@@ -212,11 +235,22 @@ class PackageValidationArchive implements \RecursiveIterator {
 		else {
 			// package is already installed, check update path
 			if (!$this->archive->isValidUpdate($package)) {
-				throw new PackageValidationException(PackageValidationException::NO_UPDATE_PATH, [
-					'packageName' => $package->packageName,
-					'packageVersion' => $package->packageVersion,
-					'deliveredPackageVersion' => $this->archive->getPackageInfo('version')
-				]);
+				$deliveredPackageVersion = $this->archive->getPackageInfo('version');
+				
+				// check if the package is already installed with the same exact version
+				if ($package->packageVersion === $deliveredPackageVersion) {
+					throw new PackageValidationException(PackageValidationException::ALREADY_INSTALLED, [
+						'packageName' => $package->packageName,
+						'packageVersion' => $package->packageVersion
+					]);
+				}
+				else {
+					throw new PackageValidationException(PackageValidationException::NO_UPDATE_PATH, [
+						'packageName' => $package->packageName,
+						'packageVersion' => $package->packageVersion,
+						'deliveredPackageVersion' => $deliveredPackageVersion
+					]);
+				}
 			}
 			
 			if ($validationMode === PackageValidationManager::VALIDATION_RECURSIVE) {
@@ -236,10 +270,12 @@ class PackageValidationArchive implements \RecursiveIterator {
 		for ($i = 0, $length = count($instructions); $i < $length; $i++) {
 			$instruction = $instructions[$i];
 			if (!PackageValidationManager::getInstance()->validatePackageInstallationPluginInstruction($this->archive, $instruction['pip'], $instruction['value'])) {
+				$defaultFilename = PackageValidationManager::getInstance()->getDefaultFilenameForPackageInstallationPlugin($instruction['pip']);
+				
 				throw new PackageValidationException(PackageValidationException::MISSING_INSTRUCTION_FILE, [
 					'pip' => $instruction['pip'],
 					'type' => $type,
-					'value' => $instruction['value']
+					'value' => $instruction['value'] ?: $defaultFilename
 				]);
 			}
 		}
@@ -331,7 +367,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 	}
 	
 	/**
-	 * Returns the occured exception.
+	 * Returns the occurred exception.
 	 * 
 	 * @return	\Exception
 	 */
@@ -373,7 +409,23 @@ class PackageValidationArchive implements \RecursiveIterator {
 	 */
 	public function getPackage() {
 		if ($this->package === null) {
-			$this->package = PackageCache::getInstance()->getPackageByIdentifier($this->archive->getPackageInfo('name'));
+			static $packages;
+			if ($packages === null) {
+				$packages = [];
+				
+				// Do not rely on PackageCache here, it may be outdated if a previous installation of a package has failed
+				// and the user attempts to install it again in a secondary browser tab!
+				$packageList = new PackageList();
+				$packageList->readObjects();
+				foreach ($packageList as $package) {
+					$packages[$package->package] = $package;
+				}
+			}
+			
+			$identifier = $this->archive->getPackageInfo('name');
+			if (isset($packages[$identifier])) {
+				$this->package = $packages[$identifier];
+			}
 		}
 		
 		return $this->package;

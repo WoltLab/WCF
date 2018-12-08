@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- This file is used for xml-files which install, update or delete pages. -->
+<!-- This file is used for xml-files which install, update or delete boxes. -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
 	<!-- include types -->
 	<xs:include schemaLocation="types.xsd" />
@@ -41,6 +41,9 @@
 					<xs:element name="boxType" minOccurs="1">
 						<xs:simpleType>
 							<xs:restriction base="xs:string">
+								<xs:enumeration value="html" />
+								<xs:enumeration value="text" />
+								<xs:enumeration value="tpl" />
 								<xs:enumeration value="system" />
 							</xs:restriction>
 						</xs:simpleType>
@@ -69,16 +72,17 @@
 	</xs:complexType>
 	
 	<xs:complexType name="content_element">
-			<xs:all>
-				<xs:element name="title" type="woltlab_varchar" minOccurs="1" />
-			</xs:all>
-			<xs:attribute name="language" type="woltlab_varchar" use="optional" />
+		<xs:all>
+			<xs:element name="title" type="woltlab_varchar" minOccurs="1" />
+			<xs:element name="content" type="xs:string" minOccurs="0" />
+		</xs:all>
+		<xs:attribute name="language" type="woltlab_varchar" use="optional" />
 	</xs:complexType>
 	
 	<xs:complexType name="visibilityExceptions_element">
-			<xs:choice maxOccurs="unbounded">
-				<xs:element name="page" type="xs:string" minOccurs="1" />
-			</xs:choice>
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="page" type="xs:string" minOccurs="1" />
+		</xs:choice>
 	</xs:complexType>
 	
 	<xs:complexType name="name_element">

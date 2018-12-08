@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * Box controller for a list of users.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
@@ -29,6 +29,11 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController {
 		'likesReceived' => MostLikedMembersCacheBuilder::class,
 		'registrationDate' => NewestMembersCacheBuilder::class
 	];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $defaultLimit = 5;
 	
 	/**
 	 * @inheritDoc

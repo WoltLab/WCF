@@ -2,6 +2,8 @@
 namespace wcf\data\paid\subscription;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
+use wcf\data\ITitledObject;
+use wcf\system\html\output\HtmlOutputProcessor;
 use wcf\system\payment\method\PaymentMethodHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -10,7 +12,7 @@ use wcf\system\WCF;
  * Represents a paid subscription.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Paid\Subscription
  *
@@ -27,7 +29,7 @@ use wcf\system\WCF;
  * @property-read	string		$groupIDs			comma-separated list with the ids of the user groups for which the subscription pays membership
  * @property-read	string		$excludedSubscriptionIDs	comma-separated list with the ids of paid subscriptions which prohibit purchase of this paid subscription
  */
-class PaidSubscription extends DatabaseObject {
+class PaidSubscription extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns list of purchase buttons.
 	 * 
@@ -56,5 +58,43 @@ class PaidSubscription extends DatabaseObject {
 	 */
 	public function getDateInterval() {
 		return new \DateInterval('P' . $this->subscriptionLength . $this->subscriptionLengthUnit);
+	}
+	
+	/**
+	 * Returns the formatted description, with support for legacy descriptions without HTML.
+	 * 
+	 * @return      string
+	 */
+	public function getFormattedDescription() {
+		$description = $this->getDescription();
+		if (preg_match('~^<[a-z]+~', $description)) {
+			$processor = new HtmlOutputProcessor();
+			$processor->process($description, 'com.woltlab.wcf.paidSubscription', $this->subscriptionID);
+			
+			return $processor->getHtml();
+		}
+		
+		return nl2br($description, false);
+	}
+	
+	/**
+	 * Returns the description with transparent handling of phrases.
+	 * 
+	 * @return      string
+	 */
+	protected function getDescription() {
+		if (preg_match('~^wcf.paidSubscription.subscription\d+.description$~', $this->description)) {
+			return WCF::getLanguage()->get($this->description);
+		}
+		
+		return $this->description;
+	}
+	
+	/**
+	 * @see		ITitledObject::getTitle()
+	 * @since	3.1
+	 */
+	public function getTitle() {
+		return WCF::getLanguage()->get($this->title);
 	}
 }

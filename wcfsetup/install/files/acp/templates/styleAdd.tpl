@@ -5,18 +5,42 @@
 {js application='wcf' acp='true' file='WCF.ACP.Style'}
 {js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Acp/Ui/Style/Image/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Editor', 'WoltLabSuite/Core/Ui/Toggle/Input'], function(AcpUiStyleImageUpload, AcpUiStyleEditor, UiToggleInput) {
+	require([
+		'WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Delete', 'WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Favicon/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Image/Upload',
+		'WoltLabSuite/Core/Acp/Ui/Style/Editor', 'WoltLabSuite/Core/Ui/Toggle/Input', 'Language'
+	], function(
+		AcpUiStyleCoverPhotoDelete, AcpUiStyleCoverPhotoUpload, AcpUiStyleFaviconUpload, AcpUiStyleImageUpload,
+		AcpUiStyleEditor, UiToggleInput, Language
+	) {
 		AcpUiStyleEditor.setup({
 			isTainted: {if $isTainted}true{else}false{/if},
 			styleId: {if $action === 'edit'}{@$style->styleID}{else}0{/if},
 			styleRuleMap: styleRuleMap
 		});
 		
-		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}');
+		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}', false);
+		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}', true);
 		
 		new UiToggleInput('input[name="useGoogleFont"]', {
 			show: ['#wcfFontFamilyGoogleContainer']
 		});
+		
+		{if $action === 'edit'}
+			new AcpUiStyleFaviconUpload({@$style->styleID});
+			
+			{if MODULE_USER_COVER_PHOTO}
+				Language.addObject({
+					'wcf.acp.style.coverPhoto.delete.confirmMessage': '{lang}wcf.acp.style.coverPhoto.delete.confirmMessage{/lang}',
+					'wcf.user.coverPhoto.upload.error.invalidExtension': '{lang}wcf.user.coverPhoto.upload.error.invalidExtension{/lang}',
+					'wcf.user.coverPhoto.upload.error.minHeight': '{lang}wcf.user.coverPhoto.upload.error.minHeight{/lang}',
+					'wcf.user.coverPhoto.upload.error.minWidth': '{lang}wcf.user.coverPhoto.upload.error.minWidth{/lang}',
+					'wcf.user.coverPhoto.upload.error.uploadFailed': '{lang}wcf.user.coverPhoto.upload.error.uploadFailed{/lang}'
+				});
+				
+				AcpUiStyleCoverPhotoDelete.init({@$style->styleID});
+				new AcpUiStyleCoverPhotoUpload({@$style->styleID});
+			{/if}
+		{/if}
 	});
 	
 	$(function() {
@@ -27,6 +51,8 @@
 			'wcf.style.colorPicker.new': '{lang}wcf.style.colorPicker.new{/lang}',
 			'wcf.style.colorPicker.current': '{lang}wcf.style.colorPicker.current{/lang}',
 			'wcf.style.colorPicker.button.apply': '{lang}wcf.style.colorPicker.button.apply{/lang}',
+			'wcf.acp.style.favicon.error.dimensions': '{lang}wcf.acp.style.favicon.error.dimensions{/lang}',
+			'wcf.acp.style.favicon.error.invalidExtension': '{lang}wcf.acp.style.favicon.error.invalidExtension{/lang}',
 			'wcf.acp.style.image.error.invalidExtension': '{lang}wcf.acp.style.image.error.invalidExtension{/lang}'
 		});
 		new WCF.ACP.Style.LogoUpload('{$tmpHash}', '{@$__wcf->getPath()}images/');
@@ -42,7 +68,7 @@
 		
 		$('.jsUnitSelect').change(function(event) {
 			var $target = $(event.currentTarget);
-			$target.prev().attr('step', (($target.val() == 'em' || $target.val() == 'rem') ? '0.01' : '1'));
+			$target.prev().attr('step', (($target.val() === 'em' || $target.val() === 'rem') ? '0.01' : '1'));
 		}).trigger('change');
 	});
 </script>
@@ -153,6 +179,17 @@
 						{/if}
 					</dd>
 				</dl>
+				<dl{if $errorField == 'apiVersion'} class="formError"{/if}>
+					<dt><label for="apiVersion">{lang}wcf.acp.style.apiVersion{/lang}</label></dt>
+					<dd>
+						<select name="apiVersion" id="apiVersion"{if !$isTainted} disabled{/if}>
+							{foreach from=$supportedApiVersions item=supportedApiVersion}
+								<option value="{$supportedApiVersion}"{if $supportedApiVersion === $apiVersion} selected{/if}>{$supportedApiVersion} ({lang}wcf.acp.style.apiVersion.{if $supportedApiVersion === $recommendedApiVersion}recommended{else}deprecated{/if}{/lang})</option>
+							{/foreach}
+						</select>
+						<small>{lang}wcf.acp.style.apiVersion.description{/lang}</small>
+					</dd>
+				</dl>
 				<dl{if $errorField == 'styleDate'} class="formError"{/if}>
 					<dt><label for="styleDate">{lang}wcf.acp.style.styleDate{/lang}</label></dt>
 					<dd>
@@ -241,6 +278,16 @@
 						<small>{lang}wcf.acp.style.image.description{/lang}</small>
 					</dd>
 				</dl>
+				<dl{if $errorField == 'image'} class="formError"{/if}>
+					<dt><label for="image2x">{lang}wcf.acp.style.image2x{/lang}</label></dt>
+					<dd>
+						<div class="selectedImagePreview">
+							<img src="{if $action == 'add'}{@$__wcf->getPath()}images/stylePreview@2x.png{else}{@$style->getPreviewImage2x()}{/if}" alt="" id="styleImage2x">
+						</div>
+						<div id="uploadImage2x"></div>
+						<small>{lang}wcf.acp.style.image2x.description{/lang}</small>
+					</dd>
+				</dl>
 				{if $availableTemplateGroups|count}
 					<dl{if $errorField == 'templateGroupID'} class="formError"{/if}>
 						<dt><label for="templateGroupID">{lang}wcf.acp.style.templateGroupID{/lang}</label></dt>
@@ -282,6 +329,44 @@
 				
 				{event name='fileFields'}
 			</section>
+			
+			{if $action === 'edit'}
+				<section class="section">
+					<h2 class="sectionTitle">{lang}wcf.acp.style.general.favicon{/lang}</h2>
+					
+					<dl>
+						<dt><label for="favicon">{lang}wcf.acp.style.favicon{/lang}</label></dt>
+						<dd>
+							<div class="selectedFaviconPreview">
+								<img src="{@$style->getFaviconAppleTouchIcon()}" alt="" id="faviconImage" style="height: 32px; width: 32px;">
+							</div>
+							<div id="uploadFavicon"></div>
+							<small>{lang}wcf.acp.style.favicon.description{/lang}</small>
+						</dd>
+					</dl>
+					
+					{event name='faviconFields'}
+				</section>
+			
+				{if MODULE_USER_COVER_PHOTO}
+					<section class="section">
+						<h2 class="sectionTitle">{lang}wcf.acp.style.general.coverPhoto{/lang}</h2>
+						
+						<dl>
+							<dt><label for="coverPhoto">{lang}wcf.acp.style.coverPhoto{/lang}</label></dt>
+							<dd>
+								<div id="coverPhotoPreview" style="background-image: url({@$__wcf->getPath()}images/coverPhotos/{@$style->getCoverPhoto()})"></div>
+								<div id="uploadCoverPhoto">
+									<a href="#" class="button jsButtonDeleteCoverPhoto"{if !$style->coverPhotoExtension} style="display:none"{/if}>{lang}wcf.global.button.delete{/lang}</a>
+								</div>
+								<small>{lang}wcf.acp.style.coverPhoto.description{/lang}</small>
+							</dd>
+						</dl>
+						
+						{event name='coverPhotoFields'}
+					</section>
+				{/if}
+			{/if}
 			
 			{event name='generalFieldsets'}
 		</div>
@@ -505,7 +590,7 @@
 						<div id="spHeader" data-region="wcfHeader">
 							<div class="spBoundary">
 								<div id="spLogo"><img src="{@$__wcf->getPath()}acp/images/woltlabSuite.png"></div>
-								<div id="spSearch"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off" data-region="wcfHeaderSearchBox"></div>
+								<div id="spSearch"><div class="spInlineWrapper" data-region="wcfHeaderSearchBox"><input type="search" id="spSearchBox" placeholder="{lang}wcf.global.search.enterSearchTerm{/lang}" autocomplete="off"></div></div>
 							</div>
 						</div>
 						
@@ -526,9 +611,15 @@
 									<div data-region="wcfContent">
 										Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. <a>At vero eos</a> et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
 									
-										<div id="spContentBorderInner"></div>
-										
-										Stet clita kasd gubergren, no sea <a>takimata</a> sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor <a>invidunt</a> ut labore et dolore magna aliquyam erat, sed diam voluptua.
+										<div data-region="wcfContentContainer">
+											<div class="spContentContainer">
+												Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+												
+												<div id="spContentBorderInner"></div>
+												
+												Stet clita kasd gubergren, no sea <a>takimata</a> sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor <a>invidunt</a> ut labore et dolore magna aliquyam erat, sed diam voluptua.
+											</div>
+										</div>
 										
 										<div id="spContentBorder"></div>
 										
@@ -574,17 +665,48 @@
 									
 									<div class="spHeadline">Button</div>
 									
-									<ol id="spButton" class="inlineList" data-region="wcfButton">
-										<li><a class="button">Button</a></li>
-										<li><a class="button active">Button (Active)</a></li>
-										<li><a class="button disabled" data-region="wcfButtonDisabled">Button (Disabled)</a></li>
-									</ol>
+									<div id="spButton">
+										<div class="spInlineWrapper" data-region="wcfButton">
+											<ol class="inlineList">
+												<li><a class="button">Button</a></li>
+												<li><a class="button active">Button (Active)</a></li>
+											</ol>
+										</div>
+										<div class="spInlineWrapper" data-region="wcfButtonDisabled">
+											<ol class="inlineList">
+												<li><a class="button disabled">Button (Disabled)</a></li>
+											</ol>
+										</div>
+									</div>
 									
-									<ol id="spButtonPrimary" class="inlineList" data-region="wcfButtonPrimary">
-										<li><a class="button buttonPrimary">Primary Button</a></li>
-										<li><a class="button buttonPrimary active">Primary Button (Active)</a></li>
-										<li><a class="button disabled">Primary Button (Disabled)</a></li>
-									</ol>
+									<div id="spButtonPrimary">
+										<div class="spInlineWrapper" data-region="wcfButtonPrimary">
+											<ol class="inlineList">
+												<li><a class="button buttonPrimary">Primary Button</a></li>
+												<li><a class="button buttonPrimary active">Primary Button (Active)</a></li>
+												<li><a class="button disabled">Primary Button (Disabled)</a></li>
+											</ol>
+										</div>
+									</div>
+									
+									<div class="spHeadline">Editor</div>
+									
+									<div id="spEditor">
+										<div id="spEditorToolbar" data-region="wcfEditorButton">
+											<ul class="redactor-toolbar">
+												<li><a class="redactor-button-disabled"><span class="icon icon16 fa-file-code-o"></span></a></li>
+												<li><a><span class="icon icon16 fa-undo"></span></a></li>
+												<li><a><span class="icon icon16 fa-repeat"></span></a></li>
+												<li><a><span class="icon icon16 fa-expand"></span></a></li>
+												<li class="redactor-toolbar-separator"><a><span class="icon icon16 fa-header"></span></a></li>
+												<li class="redactor-toolbar-separator"><a><span class="icon icon16 fa-bold"></span></a></li>
+												<li><a class="dropact"><span class="icon icon16 fa-italic"></span></a></li>
+												<li><a><span class="icon icon16 fa-underline"></span></a></li>
+												<li><a><span class="icon icon16 fa-strikethrough"></span></a></li>
+											</ul>
+										</div>
+										<div id="spEditorContent"></div>
+									</div>
 									
 									<div class="spHeadline">Dropdown</div>
 									
@@ -680,7 +802,13 @@
 					</div>
 					<div id="spSidebar">
 						<div id="spVariablesWrapper">
-							<div class="spSidebarBox">
+							<div id="spSidebarButtons">
+								<ul>
+									<li id="spSelectCategory"><a href="#" class="button jsButtonSelectCategoryByClick">{lang}wcf.acp.style.colors.selectCategoryByClick{/lang}</a></li>
+									<li><a href="#" class="button jsButtonToggleColorPalette">{lang}wcf.acp.style.colors.toggleColorPalette{/lang}</a></li>
+								</ul>
+							</div>
+							<div class="spSidebarBox spSidebarBoxCategorySelection">
 								<select id="spCategories">
 									<option value="none" selected>{lang}wcf.global.noSelection{/lang}</option>
 									{foreach from=$colorCategories key=spName item=spCategory}
@@ -698,7 +826,9 @@
 							</div>
 							
 							<div class="spSidebarBox" data-category="none">
-								{lang}wcf.acp.style.colors.description{/lang}
+								<p>{lang}wcf.acp.style.colors.description{/lang}</p>
+								<p><br></p>
+								<p><sup class="spApiVersion">3.1</sup> <small>{lang version='3.1'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
 							</div>
 							
 							{foreach from=$colors key=spCategory item=spColors}
@@ -712,7 +842,7 @@
 													<input type="hidden" id="{$spColor}_value" name="{$spColor}" value="{$variables[$spColor]}">
 												</div>
 												<div>
-													<span class="spVariable">${$spColor}</span>
+													<span class="spVariable">${$spColor}{if $newVariables[$spColor]|isset} <sup class="spApiVersion">{$newVariables[$spColor]}</sup>{/if}</span>
 													<span class="spDescription">{$spType}</span>
 												</div>
 											</li>
@@ -754,6 +884,8 @@
 				'wcfContentBackground': '#spContent { background-color: VALUE; }',
 				'wcfContentBorder': '#spContentBorder { border-color: VALUE; }',
 				'wcfContentBorderInner': '#spContentBorderInner { border-color: VALUE; }',
+				'wcfContentContainerBackground': '.spContentContainer { background-color: VALUE; }',
+				'wcfContentContainerBorder': '.spContentContainer { border-color: VALUE; }',
 				'wcfContentText': '#spContent { color: VALUE; }',
 				'wcfContentLink': '#spContent a { color: VALUE; }',
 				'wcfContentLinkActive': '#spContent a:hover { color: VALUE; }',
@@ -790,6 +922,11 @@
 				'wcfButtonPrimaryTextActive': '#spButtonPrimary .button.active, #spButtonPrimary .button:hover { color: VALUE; }',
 				'wcfButtonDisabledBackground': '#spButton .button.disabled, #spButtonPrimary .button.disabled { background-color: VALUE; }',
 				'wcfButtonDisabledText': '#spButton .button.disabled, #spButtonPrimary .button.disabled { color: VALUE; }',
+				'wcfEditorButtonBackground': '#spEditor .redactor-toolbar, #spEditor .redactor-toolbar a { background-color: VALUE; }',
+				'wcfEditorButtonBackgroundActive': '#spEditor .redactor-toolbar a:hover, #spEditor .redactor-toolbar a.dropact { background-color: VALUE; }',
+				'wcfEditorButtonText': '#spEditor .redactor-toolbar a { color: VALUE; }',
+				'wcfEditorButtonTextActive': '#spEditor .redactor-toolbar a:hover, #spEditor .redactor-toolbar a.dropact { color: VALUE; }',
+				'wcfEditorButtonTextDisabled': '#spEditor .redactor-toolbar a.redactor-button-disabled { color: VALUE; }',
 				'wcfDropdownBackground': '#spDropdown { background-color: VALUE; } __COMBO_RULE__ #spDropdown::before { border-bottom-color: VALUE; }',
 				'wcfDropdownBorderInner': '#spDropdown .dropdownDivider { border-color: VALUE; }',
 				'wcfDropdownText': '#spDropdown li { color: VALUE; }',

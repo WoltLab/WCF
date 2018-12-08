@@ -1,6 +1,8 @@
 <?php
 namespace wcf\page;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\follow\UserFollowerList;
 use wcf\data\user\follow\UserFollowingList;
 use wcf\data\user\group\UserGroup;
@@ -22,7 +24,7 @@ use wcf\system\WCF;
  * Shows the user profile page.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  */
@@ -35,7 +37,7 @@ class UserPage extends AbstractPage {
 	
 	/**
 	 * overview editable content object type
-	 * @var	\wcf\data\object\type\ObjectType
+	 * @var	ObjectType
 	 */
 	public $objectType;
 	
@@ -161,8 +163,8 @@ class UserPage extends AbstractPage {
 			'followingCount' => $this->followingList->countObjects(),
 			'visitors' => $this->visitorList !== null ? $this->visitorList->getObjects() : [],
 			'visitorCount' => $this->visitorList !== null ? $this->visitorList->countObjects() : 0,
-			'allowSpidersToIndexThisPage' => true,
-			'isAccessible' => UserGroup::isAccessibleGroup($this->user->getGroupIDs())
+			'isAccessible' => UserGroup::isAccessibleGroup($this->user->getGroupIDs()),
+			'coverPhotoDimensions' => UserCoverPhoto::getCoverPhotoDimensions()
 		]);
 	}
 	

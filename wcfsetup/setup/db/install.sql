@@ -1,3 +1,17 @@
+/*
+	This table was moved up here, because it must be created during the first iteration
+	
+	DO *NOT* MOVE IT BACK!
+*/
+DROP TABLE IF EXISTS wcf1_package_installation_sql_log;
+CREATE TABLE wcf1_package_installation_sql_log ( 
+	packageID INT(10), 
+	sqlTable VARCHAR(100) NOT NULL DEFAULT '', 
+	sqlColumn VARCHAR(100) NOT NULL DEFAULT '', 
+	sqlIndex VARCHAR(100) NOT NULL DEFAULT '',
+	UNIQUE KEY packageID (packageID, sqlTable, sqlColumn, sqlIndex) 
+);
+
 /* tables */
 DROP TABLE IF EXISTS wcf1_acl_option;
 CREATE TABLE wcf1_acl_option (
@@ -167,6 +181,8 @@ CREATE TABLE wcf1_article (
 	comments SMALLINT(5) NOT NULL DEFAULT 0,
 	views MEDIUMINT(7) NOT NULL DEFAULT 0,
 	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
+	isDeleted TINYINT(1) NOT NULL DEFAULT 0,
+	hasLabels TINYINT(1) NOT NULL DEFAULT 0,
 	
 	KEY (time)
 );
@@ -180,6 +196,7 @@ CREATE TABLE wcf1_article_content (
 	teaser TEXT,
 	content MEDIUMTEXT,
 	imageID INT(10),
+	teaserImageID INT(10),
 	hasEmbeddedObjects TINYINT(1) NOT NULL DEFAULT 0,
 	
 	UNIQUE KEY (articleID, languageID)
@@ -261,9 +278,13 @@ CREATE TABLE wcf1_bbcode_attribute (
 DROP TABLE IF EXISTS wcf1_bbcode_media_provider;
 CREATE TABLE wcf1_bbcode_media_provider (
 	providerID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(80) NOT NULL,
+	packageID INT(10) NOT NULL,
 	title VARCHAR(255) NOT NULL,
 	regex TEXT NOT NULL,
-	html TEXT NOT NULL
+	html TEXT NOT NULL,
+	className varchar(255) NOT NULL DEFAULT '',
+	UNIQUE KEY name (name, packageID)
 );
 
 DROP TABLE IF EXISTS wcf1_box;
@@ -277,6 +298,7 @@ CREATE TABLE wcf1_box (
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	visibleEverywhere TINYINT(1) NOT NULL DEFAULT 1,
 	isMultilingual TINYINT(1) NOT NULL DEFAULT 0,
+	lastUpdateTime INT(10) NOT NULL DEFAULT 0,
 	cssClassName VARCHAR(255) NOT NULL DEFAULT '',
 	showHeader TINYINT(1) NOT NULL DEFAULT 1,
 	originIsSystem TINYINT(1) NOT NULL DEFAULT 0,
@@ -377,8 +399,12 @@ CREATE TABLE wcf1_comment (
 	message TEXT NOT NULL,
 	responses MEDIUMINT(7) NOT NULL DEFAULT '0',
 	responseIDs VARCHAR(255) NOT NULL DEFAULT '',
+	unfilteredResponses MEDIUMINT(7) NOT NULL DEFAULT '0',
+	unfilteredResponseIDs VARCHAR(255) NOT NULL DEFAULT '',
+	enableHtml TINYINT(1) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	
-	KEY (objectTypeID, objectID, time),
+	KEY (objectTypeID, objectID, isDisabled, time),
 	KEY lastCommentTime (userID, time)
 );
 
@@ -390,8 +416,10 @@ CREATE TABLE wcf1_comment_response (
 	userID INT(10),
 	username VARCHAR(255) NOT NULL,
 	message TEXT NOT NULL,
+	enableHtml TINYINT(1) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	
-	KEY (commentID, time),
+	KEY (commentID, isDisabled, time),
 	KEY lastResponseTime (userID, time)
 );
 
@@ -402,6 +430,34 @@ CREATE TABLE wcf1_condition (
 	objectID INT(10) NOT NULL,
 	conditionData MEDIUMTEXT
 );
+
+DROP TABLE IF EXISTS wcf1_contact_option;
+CREATE TABLE wcf1_contact_option (
+	optionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	optionTitle VARCHAR(255) NOT NULL DEFAULT '',
+	optionDescription TEXT,
+	optionType VARCHAR(255) NOT NULL DEFAULT '',
+	defaultValue MEDIUMTEXT,
+	validationPattern TEXT,
+	selectOptions MEDIUMTEXT,
+	required TINYINT(1) NOT NULL DEFAULT 0,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	originIsSystem TINYINT(1) NOT NULL DEFAULT 0
+);
+
+DROP TABLE IF EXISTS wcf1_contact_recipient;
+CREATE TABLE wcf1_contact_recipient (
+	recipientID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(255) NOT NULL,
+	email VARCHAR(255) NOT NULL,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	isAdministrator TINYINT(1) NOT NULL DEFAULT 0,
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	originIsSystem TINYINT(1) NOT NULL DEFAULT 0
+);
+
+/* SQL_PARSER_OFFSET */
 
 DROP TABLE IF EXISTS wcf1_core_object;
 CREATE TABLE wcf1_core_object (
@@ -445,6 +501,15 @@ CREATE TABLE wcf1_cronjob_log (
 	error TEXT
 );
 
+DROP TABLE IF EXISTS wcf1_devtools_project;
+CREATE TABLE wcf1_devtools_project (
+	projectID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(191) NOT NULL,
+	path TEXT,
+	
+	UNIQUE KEY name (name)
+);
+
 DROP TABLE IF EXISTS wcf1_edit_history_entry;
 CREATE TABLE wcf1_edit_history_entry (
 	entryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -468,7 +533,7 @@ CREATE TABLE wcf1_event_listener (
 	packageID INT(10) NOT NULL,
 	environment ENUM('user', 'admin') NOT NULL DEFAULT 'user',
 	listenerName VARCHAR(191) NOT NULL,
-	eventClassName VARCHAR(80) NOT NULL DEFAULT '',
+	eventClassName VARCHAR(255) NOT NULL DEFAULT '',
 	eventName TEXT,
 	listenerClassName VARCHAR(200) NOT NULL DEFAULT '',
 	inherit TINYINT(1) NOT NULL DEFAULT 0,
@@ -553,6 +618,8 @@ CREATE TABLE wcf1_language_item (
 	languageItemOriginIsSystem TINYINT(1) NOT NULL DEFAULT 1,
 	languageCategoryID INT(10) NOT NULL,
 	packageID INT(10),
+	languageItemOldValue MEDIUMTEXT,
+	languageCustomItemDisableTime INT(10),
 	UNIQUE KEY languageItem (languageItem, languageID),
 	KEY languageItemOriginIsSystem (languageItemOriginIsSystem)
 );
@@ -585,6 +652,7 @@ CREATE TABLE wcf1_like_object (
 DROP TABLE IF EXISTS wcf1_media;
 CREATE TABLE wcf1_media (
 	mediaID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	categoryID INT(10),
 	
 	filename VARCHAR(255) NOT NULL DEFAULT '',
 	filesize INT(10) NOT NULL DEFAULT 0,
@@ -707,6 +775,7 @@ CREATE TABLE wcf1_modification_log (
 	username VARCHAR(255) NOT NULL DEFAULT '',
 	time INT(10) NOT NULL DEFAULT 0,
 	action VARCHAR(80) NOT NULL,
+	hidden TINYINT(1) NOT NULL DEFAULT 1,
 	additionalData MEDIUMTEXT,
 	
 	KEY objectTypeAndID (objectTypeID, objectID)
@@ -804,6 +873,13 @@ CREATE TABLE wcf1_package (
 	KEY package (package)
 );
 
+DROP TABLE IF EXISTS wcf1_package_compatibility;
+CREATE TABLE wcf1_package_compatibility (
+	packageID INT(10) NOT NULL,
+	version SMALLINT(4) NOT NULL,
+	UNIQUE KEY compatibleVersion (packageID, version)
+);
+
 DROP TABLE IF EXISTS wcf1_package_exclusion;
 CREATE TABLE wcf1_package_exclusion (
 	packageID INT(10) NOT NULL,
@@ -863,14 +939,7 @@ CREATE TABLE wcf1_package_installation_queue (
 	isApplication TINYINT(1) NOT NULL DEFAULT 0
 );
 
-DROP TABLE IF EXISTS wcf1_package_installation_sql_log;
-CREATE TABLE wcf1_package_installation_sql_log ( 
-	packageID INT(10), 
-	sqlTable VARCHAR(100) NOT NULL DEFAULT '', 
-	sqlColumn VARCHAR(100) NOT NULL DEFAULT '', 
-	sqlIndex VARCHAR(100) NOT NULL DEFAULT '',
-	UNIQUE KEY packageID (packageID, sqlTable, sqlColumn, sqlIndex) 
-);
+/* The table `wcf1_package_installation_sql_log` can be found at the very top! */
 
 /* SQL_PARSER_OFFSET */
 
@@ -891,7 +960,15 @@ CREATE TABLE wcf1_package_update (
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
 	isApplication TINYINT(1) NOT NULL DEFAULT 0,
+	pluginStoreFileID INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY packageUpdateServerID (packageUpdateServerID, package)
+);
+
+DROP TABLE IF EXISTS wcf1_package_update_compatibility;
+CREATE TABLE wcf1_package_update_compatibility (
+	packageUpdateVersionID INT(10) NOT NULL,
+	version SMALLINT(4) NOT NULL,
+	UNIQUE KEY compatibleVersion (packageUpdateVersionID, version)
 );
 
 DROP TABLE IF EXISTS wcf1_package_update_exclusion;
@@ -933,7 +1010,7 @@ CREATE TABLE wcf1_package_update_server (
 	lastUpdateTime INT(10) NOT NULL DEFAULT 0,
 	status ENUM('online', 'offline') NOT NULL DEFAULT 'online',
 	errorMessage TEXT,
-	apiVersion ENUM('2.0', '2.1') NOT NULL DEFAULT '2.0',
+	apiVersion ENUM('2.0', '2.1', '3.1') NOT NULL DEFAULT '2.0',
 	metaData TEXT
 );
 
@@ -969,8 +1046,20 @@ CREATE TABLE wcf1_page (
 	requireObjectID TINYINT(1) NOT NULL DEFAULT 0,
 	hasFixedParent TINYINT(1) NOT NULL DEFAULT 0,
 	lastUpdateTime INT(10) NOT NULL DEFAULT 0,
+	cssClassName VARCHAR(255) NOT NULL DEFAULT '',
+	availableDuringOfflineMode TINYINT(1) NOT NULL DEFAULT 0,
+	allowSpidersToIndex TINYINT(1) NOT NULL DEFAULT 0,
+	excludeFromLandingPage TINYINT(1) NOT NULL DEFAULT 0,
 	permissions TEXT NULL,
 	options TEXT NULL
+);
+
+DROP TABLE IF EXISTS wcf1_page_box_order;
+CREATE TABLE wcf1_page_box_order (
+	pageID INT(10) NOT NULL,
+	boxID INT(10) NOT NULL,
+	showOrder INT(10) NOT NULL DEFAULT 0,
+	UNIQUE KEY pageToBox (pageID, boxID)
 );
 
 DROP TABLE IF EXISTS wcf1_page_content;
@@ -1012,6 +1101,7 @@ CREATE TABLE wcf1_paid_subscription_user (
 	startDate INT(10) NOT NULL DEFAULT 0,
 	endDate INT(10) NOT NULL DEFAULT 0,
 	isActive TINYINT(1) NOT NULL DEFAULT 1,
+	sentExpirationNotification TINYINT(1) NOT NULL DEFAULT 0,
 	
 	UNIQUE KEY (subscriptionID, userID),
 	KEY (isActive)
@@ -1063,6 +1153,15 @@ CREATE TABLE wcf1_poll_option_vote (
 	
 	KEY (optionID, userID),
 	UNIQUE KEY vote (pollID, optionID, userID)
+);
+
+DROP TABLE IF EXISTS wcf1_registry;
+CREATE TABLE wcf1_registry (
+	packageID INT(10) NOT NULL,
+	field VARCHAR(191) NOT NULL,
+	fieldValue MEDIUMTEXT,
+	
+	UNIQUE KEY uniqueField (packageID, field)
 );
 
 DROP TABLE IF EXISTS wcf1_search;
@@ -1163,13 +1262,17 @@ CREATE TABLE wcf1_style (
 	styleVersion VARCHAR(255) NOT NULL DEFAULT '',
 	styleDate CHAR(10) NOT NULL DEFAULT '0000-00-00',
 	image VARCHAR(255) NOT NULL DEFAULT '',
+	image2x VARCHAR(255) NOT NULL DEFAULT '',
 	copyright VARCHAR(255) NOT NULL DEFAULT '',
 	license VARCHAR(255) NOT NULL DEFAULT '',
 	authorName VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
 	imagePath VARCHAR(255) NOT NULL DEFAULT '',
 	packageName VARCHAR(255) NOT NULL DEFAULT '',
-	isTainted TINYINT(1) NOT NULL DEFAULT 0
+	isTainted TINYINT(1) NOT NULL DEFAULT 0,
+	hasFavicon TINYINT(1) NOT NULL DEFAULT 0,
+	coverPhotoExtension VARCHAR(4) NOT NULL DEFAULT '',
+	apiVersion ENUM('3.0', '3.1') NOT NULL DEFAULT '3.0' 
 );
 
 DROP TABLE IF EXISTS wcf1_style_variable;
@@ -1244,6 +1347,8 @@ CREATE TABLE wcf1_template_listener (
 	KEY templateName (environment, templateName)
 );
 
+/* SQL_PARSER_OFFSET */
+
 DROP TABLE IF EXISTS wcf1_tracked_visit;
 CREATE TABLE wcf1_tracked_visit (
 	objectTypeID INT(10) NOT NULL,
@@ -1261,6 +1366,22 @@ CREATE TABLE wcf1_tracked_visit_type (
 	visitTime INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY (objectTypeID, userID),
 	KEY (userID, visitTime)
+);
+
+DROP TABLE IF EXISTS wcf1_trophy;
+CREATE TABLE wcf1_trophy(
+	trophyID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	title VARCHAR(255),
+	description MEDIUMTEXT,	
+	categoryID INT(10) NOT NULL,
+	type SMALLINT(1) DEFAULT 1,
+	iconFile MEDIUMTEXT, 
+	iconName VARCHAR(255),
+	iconColor VARCHAR(255),
+	badgeColor VARCHAR(255),
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
+	awardAutomatically TINYINT(1) NOT NULL DEFAULT 0,
+	KEY(categoryID)
 );
 
 DROP TABLE IF EXISTS wcf1_user;
@@ -1305,6 +1426,12 @@ CREATE TABLE wcf1_user (
 	notificationMailToken VARCHAR(20) NOT NULL DEFAULT '',
 	authData VARCHAR(191) NOT NULL DEFAULT '',
 	likesReceived MEDIUMINT(7) NOT NULL DEFAULT 0,
+	trophyPoints INT(10) NOT NULL DEFAULT 0,
+	coverPhotoHash CHAR(40) DEFAULT NULL,
+	coverPhotoExtension VARCHAR(4) NOT NULL DEFAULT '',
+	disableCoverPhoto TINYINT(1) NOT NULL DEFAULT 0,
+	disableCoverPhotoReason TEXT,
+	disableCoverPhotoExpires INT(10) NOT NULL DEFAULT 0,
 	
 	KEY username (username),
 	KEY email (email),
@@ -1314,7 +1441,8 @@ CREATE TABLE wcf1_user (
 	KEY registrationData (registrationIpAddress, registrationDate),
 	KEY activityPoints (activityPoints),
 	KEY likesReceived (likesReceived),
-	KEY authData (authData)
+	KEY authData (authData),
+	KEY trophyPoints (trophyPoints)
 );
 
 DROP TABLE IF EXISTS wcf1_user_activity_event;
@@ -1447,6 +1575,24 @@ CREATE TABLE wcf1_user_ignore (
 	ignoreUserID INT(10) NOT NULL,
 	time INT(10) NOT NULL DEFAULT 0,
 	UNIQUE KEY (userID, ignoreUserID)
+);
+
+DROP TABLE IF EXISTS wcf1_user_special_trophy;
+CREATE TABLE wcf1_user_special_trophy(
+	trophyID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	UNIQUE KEY (trophyID, userID)
+);
+
+DROP TABLE IF EXISTS wcf1_user_trophy;
+CREATE TABLE wcf1_user_trophy(
+	userTrophyID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	trophyID INT(10) NOT NULL,
+	userID INT(10) NOT NULL,
+	time INT(10) NOT NULL DEFAULT 0,
+	description MEDIUMTEXT,
+	useCustomDescription TINYINT(1) NOT NULL DEFAULT 0,
+	KEY(trophyID, time)
 );
 
 DROP TABLE IF EXISTS wcf1_user_menu_item;
@@ -1616,7 +1762,8 @@ CREATE TABLE wcf1_user_rank (
 	cssClassName VARCHAR(255) NOT NULL DEFAULT '',
 	rankImage VARCHAR(255) NOT NULL DEFAULT '',
 	repeatImage TINYINT(3) NOT NULL DEFAULT 1,
-	requiredGender TINYINT(1) NOT NULL DEFAULT 0
+	requiredGender TINYINT(1) NOT NULL DEFAULT 0,
+	hideTitle TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_user_storage;
@@ -1688,6 +1835,7 @@ ALTER TABLE wcf1_article ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (
 ALTER TABLE wcf1_article_content ADD FOREIGN KEY (articleID) REFERENCES wcf1_article (articleID) ON DELETE CASCADE;
 ALTER TABLE wcf1_article_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE SET NULL;
 ALTER TABLE wcf1_article_content ADD FOREIGN KEY (imageID) REFERENCES wcf1_media (mediaID) ON DELETE SET NULL;
+ALTER TABLE wcf1_article_content ADD FOREIGN KEY (teaserImageID) REFERENCES wcf1_media (mediaID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_attachment ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
@@ -1696,10 +1844,14 @@ ALTER TABLE wcf1_bbcode ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (pac
 
 ALTER TABLE wcf1_bbcode_attribute ADD FOREIGN KEY (bbcodeID) REFERENCES wcf1_bbcode (bbcodeID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_bbcode_media_provider ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_box ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box ADD FOREIGN KEY (menuID) REFERENCES wcf1_menu (menuID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box ADD FOREIGN KEY (linkPageID) REFERENCES wcf1_page (pageID) ON DELETE SET NULL;
+
+/* SQL_PARSER_OFFSET */
 
 ALTER TABLE wcf1_box_content ADD FOREIGN KEY (boxID) REFERENCES wcf1_box (boxID) ON DELETE CASCADE;
 ALTER TABLE wcf1_box_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
@@ -1737,6 +1889,9 @@ ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageID) REFERENCES wcf1_lang
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (languageCategoryID) REFERENCES wcf1_language_category (languageCategoryID) ON DELETE CASCADE;
 ALTER TABLE wcf1_language_item ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
+/* SQL_PARSER_OFFSET */
+
+ALTER TABLE wcf1_media ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE SET NULL;
 ALTER TABLE wcf1_media ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 ALTER TABLE wcf1_media ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE SET NULL;
 
@@ -1762,6 +1917,8 @@ ALTER TABLE wcf1_option ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (pac
 
 ALTER TABLE wcf1_option_category ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_package_compatibility ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_package_exclusion ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_installation_file_log ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
@@ -1783,6 +1940,8 @@ ALTER TABLE wcf1_package_requirement ADD FOREIGN KEY (packageID) REFERENCES wcf1
 ALTER TABLE wcf1_package_requirement ADD FOREIGN KEY (requirement) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_update ADD FOREIGN KEY (packageUpdateServerID) REFERENCES wcf1_package_update_server (packageUpdateServerID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_package_update_compatibility ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_package_update_exclusion ADD FOREIGN KEY (packageUpdateVersionID) REFERENCES wcf1_package_update_version (packageUpdateVersionID) ON DELETE CASCADE;
 
@@ -1806,10 +1965,17 @@ ALTER TABLE wcf1_page ADD FOREIGN KEY (parentPageID) REFERENCES wcf1_page (pageI
 ALTER TABLE wcf1_page ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_page ADD FOREIGN KEY (applicationPackageID) REFERENCES wcf1_package (packageID) ON DELETE SET NULL;
 
+ALTER TABLE wcf1_page_box_order ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE CASCADE;
+ALTER TABLE wcf1_page_box_order ADD FOREIGN KEY (boxID) REFERENCES wcf1_box (boxID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_page_content ADD FOREIGN KEY (pageID) REFERENCES wcf1_page (pageID) ON DELETE CASCADE;
 ALTER TABLE wcf1_page_content ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_registry ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_search ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
+/* SQL_PARSER_OFFSET */
 
 ALTER TABLE wcf1_session ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_session ADD FOREIGN KEY (spiderID) REFERENCES wcf1_spider (spiderID) ON DELETE CASCADE;
@@ -1834,6 +2000,8 @@ ALTER TABLE wcf1_template ADD FOREIGN KEY (templateGroupID) REFERENCES wcf1_temp
 ALTER TABLE wcf1_template_group ADD FOREIGN KEY (parentTemplateGroupID) REFERENCES wcf1_template_group (templateGroupID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_template_listener ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_trophy ADD FOREIGN KEY (categoryID) REFERENCES wcf1_category (categoryID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_user_collapsible_content ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_collapsible_content ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
@@ -1861,6 +2029,9 @@ ALTER TABLE wcf1_user_to_group ADD FOREIGN KEY (groupID) REFERENCES wcf1_user_gr
 ALTER TABLE wcf1_user_to_language ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_to_language ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_user_trophy ADD FOREIGN KEY (trophyID) REFERENCES wcf1_trophy (trophyID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_trophy ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_import_mapping ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_tracked_visit ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
@@ -1872,6 +2043,8 @@ ALTER TABLE wcf1_tracked_visit_type ADD FOREIGN KEY (userID) REFERENCES wcf1_use
 ALTER TABLE wcf1_user ADD FOREIGN KEY (avatarID) REFERENCES wcf1_user_avatar (avatarID) ON DELETE SET NULL;
 ALTER TABLE wcf1_user ADD FOREIGN KEY (rankID) REFERENCES wcf1_user_rank (rankID) ON DELETE SET NULL;
 ALTER TABLE wcf1_user ADD FOREIGN KEY (userOnlineGroupID) REFERENCES wcf1_user_group (groupID) ON DELETE SET NULL;
+
+/* SQL_PARSER_OFFSET */
 
 ALTER TABLE wcf1_user_avatar ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 
@@ -1920,6 +2093,9 @@ ALTER TABLE wcf1_user_profile_visitor ADD FOREIGN KEY (userID) REFERENCES wcf1_u
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
 ALTER TABLE wcf1_user_object_watch ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_user_special_trophy ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE CASCADE;
+ALTER TABLE wcf1_user_special_trophy ADD FOREIGN KEY (trophyID) REFERENCES wcf1_trophy (trophyID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_message_embedded_object ADD FOREIGN KEY (messageObjectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_message_embedded_object ADD FOREIGN KEY (embeddedObjectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
@@ -1936,6 +2112,8 @@ ALTER TABLE wcf1_like ADD FOREIGN KEY (objectUserID) REFERENCES wcf1_user (userI
 
 ALTER TABLE wcf1_like_object ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_like_object ADD FOREIGN KEY (objectUserID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
+
+/* SQL_PARSER_OFFSET */
 
 ALTER TABLE wcf1_comment ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_comment ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
@@ -1995,7 +2173,9 @@ INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES
 
 -- default update servers
 INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/vortex/', 'online', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/tornado/', 'online', 0, NULL, 0, '', '');
 INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/vortex/', 'online', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/tornado/', 'online', 0, NULL, 0, '', '');
 
 -- style default values
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('individualScss', '');
@@ -2020,6 +2200,8 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfButtonT
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentBackground', 'rgba(250, 250, 250, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentBorder', 'rgba(65, 121, 173, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentBorderInner', 'rgba(224, 224, 224, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentContainerBackground', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentContainerBorder', 'rgba(236, 241, 247, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentDimmedLink', 'rgba(52, 73, 94, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentDimmedLinkActive', 'rgba(52, 73, 94, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfContentDimmedText', 'rgba(125, 130, 135, 1)');
@@ -2036,6 +2218,11 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdow
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownLink', 'rgba(33, 33, 33, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownLinkActive', 'rgba(33, 33, 33, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfDropdownText', 'rgba(33, 33, 33, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonBackground', 'rgba(58, 109, 156, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonBackgroundActive', 'rgba(36, 66, 95, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonText', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonTextActive', 'rgba(255, 255, 255, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonTextDisabled', 'rgba(165, 165, 165, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontFamilyFallback', '"Segoe UI", "DejaVu Sans", "Lucida Grande", "Helvetica", sans-serif');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontFamilyGoogle', 'Open Sans');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontLineHeight', '1.48');
@@ -2141,28 +2328,6 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfTooltip
 
 -- Email template group
 INSERT INTO wcf1_template_group (parentTemplateGroupID, templateGroupName, templateGroupFolderName) VALUES (NULL, 'wcf.acp.template.group.email', '_wcf_email/');
-
--- media providers
--- Videos
-	-- Youtube
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('YouTube', 'https?://(?:.+?\\.)?youtu(?:\\.be/|be\\.com/(?:#/)?watch\\?(?:.*?&)?v=)(?P<ID>[a-zA-Z0-9_-]+)(?:(?:\\?|&)t=(?P<start>\\d+)$)?', '<div class="videoContainer"><iframe src="https://www.youtube.com/embed/{$ID}?wmode=transparent&amp;start={$start}" allowfullscreen></iframe></div>');
-	-- Youtube playlist
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('YouTube Playlist', 'https?://(?:.+?\\.)?youtu(?:\\.be/|be\\.com/)playlist\\?(?:.*?&)?list=(?P<ID>[a-zA-Z0-9_-]+)', '<div class="videoContainer"><iframe src="https://www.youtube.com/embed/videoseries?list={$ID}" allowfullscreen></iframe></div>');
-	-- Vimeo
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Vimeo', 'https?://vimeo\\.com/(?:channels/[^/]+/)?(?P<ID>\\d+)', '<iframe src="https://player.vimeo.com/video/{$ID}" width="400" height="225" webkitAllowFullScreen mozallowfullscreen allowFullScreen></iframe>');
-	-- Clipfish
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Clipfish', 'http://(?:www\\.)?clipfish\\.de/(?:.*?/)?video/(?P<ID>\\d+)/', '<div style="width:464px; height:404px;"><div style="width:464px; height:384px;"><iframe src="http://www.clipfish.de/embed_video/?vid={$ID}&amp;as=0&amp;col=990000" name="Clipfish Embedded Video" width="464" height="384" align="left" marginheight="0" marginwidth="0" scrolling="no"></iframe></div></div>');
-	-- Veoh
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Veoh', 'http://(?:www\\.)?veoh\\.com/watch/v(?P<ID>\\d+[a-zA-Z0-9]+)', '<object width="410" height="341" id="veohFlashPlayer" name="veohFlashPlayer" type="application/x-shockwave-flash" data="http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1308&amp;permalinkId=v{$ID}&amp;player=videodetailsembedded&amp;videoAutoPlay=0&amp;id=anonymous"><param name="movie" value="http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1308&amp;permalinkId=v{$ID}&amp;player=videodetailsembedded&amp;videoAutoPlay=0&amp;id=anonymous" /><param name="allowFullScreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="wmode" value="transparent" /></object>');
-	-- DailyMotion
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('DailyMotion', 'https?://(?:www\\.)?dailymotion\\.com/video/(?P<ID>[a-zA-Z0-9_-]+)', '<iframe width="480" height="270" src="//www.dailymotion.com/embed/video/{$ID}"></iframe>');
--- Misc
-	-- github gist
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('github gist', 'https://gist.github.com/(?P<ID>[^/]+/[0-9a-zA-Z]+)', '<script src="https://gist.github.com/{$ID}.js"> </script>');
-	-- soundcloud
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Soundcloud', 'https?://soundcloud.com/(?P<artist>[a-zA-Z0-9_-]+)/(?!sets/)(?P<song>[a-zA-Z0-9_-]+)', '<iframe width="100%" height="166" scrolling="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fsoundcloud.com%2F{$artist}%2F{$song}"></iframe>');
-	-- soundcloud set
-	INSERT INTO wcf1_bbcode_media_provider (title, regex, html) VALUES ('Soundcloud set', 'https?://soundcloud.com/(?P<artist>[a-zA-Z0-9_-]+)/sets/(?P<name>[a-zA-Z0-9_-]+)', '<iframe width="100%" height="450" scrolling="no" src="https://w.soundcloud.com/player/?url=http%3A%2F%2Fsoundcloud.com%2F{$artist}%2Fsets%2F{$name}"></iframe>');
 	
 -- default priorities
 UPDATE wcf1_user_group SET priority = 10 WHERE groupID = 3;
@@ -2182,3 +2347,10 @@ INSERT INTO wcf1_user_rank (groupID, requiredPoints, rankTitle, cssClassName) VA
 	(3, 3000, 'wcf.user.rank.user3', ''),
 	(3, 9000, 'wcf.user.rank.user4', ''),
 	(3, 15000, 'wcf.user.rank.user5', '');
+
+-- default options: subject and message
+INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optionType, required, showOrder, originIsSystem) VALUES (1, 'wcf.contact.option1', 'wcf.contact.optionDescription1', 'text', 1, 1, 1);
+INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optionType, required, showOrder, originIsSystem) VALUES (2, 'wcf.contact.option2', '', 'textarea', 1, 1, 1);
+
+-- default recipient: site administrator
+INSERT INTO wcf1_contact_recipient (recipientID, name, email, isAdministrator, originIsSystem) VALUES (1, 'wcf.contact.recipient.name1', '', 1, 1);

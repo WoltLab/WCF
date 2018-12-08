@@ -1,17 +1,18 @@
 <?php
 namespace wcf\system\package\plugin;
 use wcf\data\smiley\SmileyEditor;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\WCF;
 
 /**
  * Installs, updates and deletes smilies.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */
-class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -76,5 +77,12 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			'sql' => $sql,
 			'parameters' => $parameters
 		];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return [];
 	}
 }

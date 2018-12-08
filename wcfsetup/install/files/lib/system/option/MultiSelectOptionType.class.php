@@ -12,7 +12,7 @@ use wcf\util\ArrayUtil;
  * Option type implementation for multiple select lists.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -47,7 +47,7 @@ class MultiSelectOptionType extends SelectOptionType {
 	public function getSearchFormElement(Option $option, $value) {
 		WCF::getTPL()->assign([
 			'option' => $option,
-			'searchOption' => $value !== null && ($value !== $option->defaultValue || isset($_POST['searchOptions'][$option->optionName])),
+			'searchOption' => $this->forceSearchOption || ($value !== null && $value !== $option->defaultValue) || isset($_POST['searchOptions'][$option->optionName]),
 			'selectOptions' => $this->getSelectOptions($option),
 			'value' => !is_array($value) ? explode("\n", $value) : $value
 		]);
@@ -82,9 +82,13 @@ class MultiSelectOptionType extends SelectOptionType {
 		if (!isset($_POST['searchOptions'][$option->optionName])) return false;
 		
 		if (!is_array($value) || empty($value)) return false;
-		$value = ArrayUtil::trim($value);
+		$value = ArrayUtil::trim($value, false);
 		
-		$conditions->add("option_value.userOption".$option->optionID." REGEXP '".'(^|\n)'.implode('\n([^\n]*\n)*', array_map('escapeString', $value)).'($|\n)'."'");
+		$value = array_map(function($value) {
+			return escapeString(preg_quote($value));
+		}, $value);
+		
+		$conditions->add("option_value.userOption".$option->optionID." REGEXP '".'(^|\n)'.implode('\n([^\n]*\n)*', $value).'($|\n)'."'");
 		return true;
 	}
 	
@@ -93,9 +97,13 @@ class MultiSelectOptionType extends SelectOptionType {
 	 */
 	public function addCondition(UserList $userList, Option $option, $value) {
 		if (!is_array($value) || empty($value)) return false;
-		$value = ArrayUtil::trim($value);
+		$value = ArrayUtil::trim($value, false);
 		
-		$userList->getConditionBuilder()->add("user_option_value.userOption".$option->optionID." REGEXP '".'(^|\n)'.implode('\n([^\n]*\n)*', array_map('escapeString', $value)).'($|\n)'."'");
+		$value = array_map(function($value) {
+			return escapeString(preg_quote($value));
+		}, $value);
+		
+		$userList->getConditionBuilder()->add("user_option_value.userOption".$option->optionID." REGEXP '".'(^|\n)'.implode('\n([^\n]*\n)*', $value).'($|\n)'."'");
 	}
 	
 	/**

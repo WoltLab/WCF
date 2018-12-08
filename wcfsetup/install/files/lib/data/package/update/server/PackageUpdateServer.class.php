@@ -1,16 +1,18 @@
 <?php
 namespace wcf\data\package\update\server;
 use wcf\data\DatabaseObject;
+use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\io\RemoteFile;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\Url;
 
 /**
  * Represents a package update server.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package\Update\Server
  *
@@ -76,18 +78,9 @@ class PackageUpdateServer extends DatabaseObject {
 	 * @return	boolean
 	 */
 	public static function isValidServerURL($serverURL) {
-		if (trim($serverURL)) {
-			if (!$parsedURL = @parse_url($serverURL))
-				return false;
-			if (!isset($parsedURL['scheme']) || ($parsedURL['scheme'] != 'http' && $parsedURL['scheme'] != 'https'))
-				return false;
-			if (!isset($parsedURL['host']))
-				return false;
-			return true;
-		}
-		else {
-			return false;
-		}
+		$parsedURL = Url::parse($serverURL);
+		
+		return (in_array($parsedURL['scheme'], ['http', 'https']) && $parsedURL['host'] !== '');
 	}
 	
 	/**
@@ -159,7 +152,7 @@ class PackageUpdateServer extends DatabaseObject {
 	 * @return	string
 	 */
 	public function getHighlightedURL() {
-		$host = parse_url($this->serverURL, PHP_URL_HOST);
+		$host = Url::parse($this->serverURL)['host'];
 		return str_replace($host, '<strong>'.$host.'</strong>', $this->serverURL);
 	}
 	
@@ -227,5 +220,79 @@ class PackageUpdateServer extends DatabaseObject {
 		}
 		
 		return false;
+	}
+	
+	/**
+	 * Returns true if the host is `update.woltlab.com`.
+	 * 
+	 * @return      boolean
+	 */
+	public function isWoltLabUpdateServer() {
+		return Url::parse($this->serverURL)['host'] === 'update.woltlab.com';
+	}
+	
+	/**
+	 * Returns true if the host is `store.woltlab.com`.
+	 * 
+	 * @return      boolean
+	 */
+	public function isWoltLabStoreServer() {
+		return Url::parse($this->serverURL)['host'] === 'store.woltlab.com';
+	}
+	
+	/**
+	 * Returns true if this server is trusted and is therefore allowed to distribute
+	 * official updates for packages whose identifier starts with "com.woltlab.".
+	 * 
+	 * Internal mirrors in enterprise environments are supported through the optional
+	 * PHP constant `UPDATE_SERVER_TRUSTED_MIRROR`, adding it to the `config.inc.php`
+	 * of the Core is considered to be a safe practice.
+	 * 
+	 * Example:
+	 *   define('UPDATE_SERVER_TRUSTED_MIRROR', 'mirror.example.com');
+	 * 
+	 * @return      boolean
+	 */
+	public final function isTrustedServer() {
+		$host = Url::parse($this->serverURL)['host'];
+		
+		// the official server is always considered to be trusted
+		if ($host === 'update.woltlab.com') {
+			return true;
+		}
+		
+		// custom override to allow testing and mirrors in enterprise environments
+		if (defined('UPDATE_SERVER_TRUSTED_MIRROR') && $host === UPDATE_SERVER_TRUSTED_MIRROR) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Resets all update servers into their original state and purges
+	 * the package cache.
+	 */
+	public static function resetAll() {
+		// purge package cache
+		WCF::getDB()->prepareStatement("DELETE FROM wcf".WCF_N."_package_update")->execute();
+		
+		PackageUpdateCacheBuilder::getInstance()->reset();
+		
+		// reset servers into their original state
+		$sql = "UPDATE  wcf".WCF_N."_package_update_server
+			SET     lastUpdateTime = ?,
+				status = ?,
+				errorMessage = ?,
+				apiVersion = ?,
+				metaData = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			0,
+			'online',
+			'',
+			'2.0',
+			null
+		]);
 	}
 }

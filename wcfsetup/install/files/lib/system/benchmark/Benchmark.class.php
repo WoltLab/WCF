@@ -7,7 +7,7 @@ use wcf\util\FileUtil;
  * Provides functions to do a benchmark.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Benchmark
  */
@@ -65,7 +65,7 @@ class Benchmark extends SingletonFactory {
 	
 	/**
 	 * Stops the benchmark with the given index. If no index is given, the
-	 * latest benchmark is stoped.
+	 * latest benchmark is stopped.
 	 * 
 	 * @param	integer		$index
 	 */

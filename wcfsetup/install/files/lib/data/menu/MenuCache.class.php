@@ -8,7 +8,7 @@ use wcf\system\SingletonFactory;
  * Manages the menu cache.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Menu
  * @since	3.0
@@ -66,6 +66,15 @@ class MenuCache extends SingletonFactory {
 	 * @return	Menu|null	menu object
 	 */
 	public function getMainMenu() {
-		return $this->getMenuByID(MenuCacheBuilder::getInstance()->getData([], 'mainMenuID'));
+		return $this->getMenuByID($this->getMainMenuID());
+	}
+	
+	/**
+	 * Returns the id of the main menu.
+	 * 
+	 * @return      integer
+	 */
+	public function getMainMenuID() {
+		return MenuCacheBuilder::getInstance()->getData([], 'mainMenuID');
 	}
 }

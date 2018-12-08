@@ -2,12 +2,22 @@
  * Provides global helper methods to interact with ignored content.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/User/Ignore
  */
 define(['List', 'Dom/ChangeListener'], function(List, DomChangeListener) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_rebuild: function() {},
+			_removeClass: function() {}
+		};
+		return Fake;
+	}
 	
 	var _availableMessages = elByClass('ignoredUserMessage');
 	var _callback = null;

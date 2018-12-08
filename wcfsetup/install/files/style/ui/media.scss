@@ -1,3 +1,7 @@
+.innerInfo + .mediaManagerMediaUploadButton {
+	margin-top: 5px;
+}
+
 .mediaManagerMediaUploadButton > .button {
 	margin: 0;
 	text-align: center;
@@ -62,6 +66,11 @@
 			> .mediaInformation {
 				background-color: $wcfStatusErrorBackground;
 				color: $wcfStatusErrorText;
+				
+				.mediaTitle {
+					max-height: 144px;
+					white-space: normal;
+				}
 			}
 		}
 		
@@ -177,4 +186,12 @@
 			font-size: $wcfFontSizeSmall;
 		}
 	}
+}
+
+.mediaManagerCategoryList {
+	margin-bottom: 5px;
+}
+
+.button.jsMediaSelectButton + .button {
+	margin-left: 5px;
 }

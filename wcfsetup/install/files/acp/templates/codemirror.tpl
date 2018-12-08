@@ -10,10 +10,13 @@
 	<script data-relocate="true">window.define.amd = undefined;</script>
 	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/{if $codemirrorMode == 'text/x-less'}css/css{else}{$codemirrorMode}/{$codemirrorMode}{/if}.js"></script>
 	
-	{if $codemirrorMode == 'htmlmixed' || $codemirrorMode == 'smartymixed'}
+	{if $codemirrorMode == 'htmlmixed' || $codemirrorMode == 'smartymixed' || $codemirrorMode == 'php'}
 		{if $codemirrorMode == 'smartymixed'}
 			<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 			<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/smarty/smarty.js"></script>
+		{elseif $codemirrorMode == 'php'}
+			<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/htmlmixed/htmlmixed.js"></script>
+			<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/clike/clike.js"></script>
 		{/if}
 		
 		<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/css/css.js"></script>

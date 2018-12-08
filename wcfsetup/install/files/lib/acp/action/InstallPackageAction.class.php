@@ -7,6 +7,7 @@ use wcf\system\cache\CacheHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\search\SearchIndexManager;
+use wcf\system\version\VersionTracker;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -14,7 +15,7 @@ use wcf\util\StringUtil;
  * Handles an AJAX-based package installation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Action
  */
@@ -29,13 +30,13 @@ class InstallPackageAction extends AbstractDialogAction {
 	 * PackageInstallationDispatcher object
 	 * @var	PackageInstallationDispatcher
 	 */
-	public $installation = null;
+	public $installation;
 	
 	/**
 	 * PackageInstallationQueue object
 	 * @var	PackageInstallationQueue
 	 */
-	public $queue = null;
+	public $queue;
 	
 	/**
 	 * current queue id
@@ -177,7 +178,6 @@ class InstallPackageAction extends AbstractDialogAction {
 			case 'install':
 			case 'prepare':
 			case 'rollback':
-				continue;
 			break;
 			
 			default:
@@ -213,6 +213,8 @@ class InstallPackageAction extends AbstractDialogAction {
 	protected function finalize() {
 		// create search index tables
 		SearchIndexManager::getInstance()->createSearchIndices();
+		
+		VersionTracker::getInstance()->createStorageTables();
 		
 		CacheHandler::getInstance()->flushAll();
 	}

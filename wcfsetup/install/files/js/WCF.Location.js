@@ -4,7 +4,7 @@
  * Location-related classes for WCF
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Location = { };
@@ -42,6 +42,14 @@ WCF.Location.Util = {
  * Namespace for Google Maps-related classes.
  */
 WCF.Location.GoogleMaps = { };
+
+/**
+ * After an authentican error, Google Maps tries to call the `gm_authFailure` function.
+ * (see https://developers.google.com/maps/documentation/javascript/events#auth-errors)
+ */
+function gm_authFailure() {
+	WCF.System.Event.fireEvent('com.woltlab.wcf.googleMaps', 'authenticationFailure');
+};
 
 /**
  * Handles the global Google Maps settings.
@@ -108,7 +116,7 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 	_markers: [ ],
 	
 	/**
-	 * Initalizes a new WCF.Location.Map object.
+	 * Initializes a new WCF.Location.Map object.
 	 * 
 	 * @param	string		mapContainerID
 	 * @param	object		mapOptions
@@ -443,9 +451,23 @@ WCF.Location.GoogleMaps.LargeMap = WCF.Location.GoogleMaps.Map.extend({
 	_previousSouthWest: null,
 	
 	/**
+	 * if `true`, the `exludedObjectIds` array will be sent as a JSON string,
+	 * otherwise as an array (default)
+	 * note: be prepared that in the future, only JSON strings might be supported
+	 * @var	boolean
+	 */
+	_stringifyExcludedObjectIds: false,
+	
+	/**
 	 * @see	WCF.Location.GoogleMaps.Map.init()
 	 */
 	init: function(mapContainerID, mapOptions, actionClassName, locationSearchInputSelector, additionalParameters) {
+		this._stringifyExcludedObjectIds = false;
+		if (mapOptions && mapOptions.stringifyExcludedObjectIds) {
+			this._stringifyExcludedObjectIds = mapOptions.stringifyExcludedObjectIds;
+			delete mapOptions.stringifyExcludedObjectIds;
+		}
+		
 		this._super(mapContainerID, mapOptions);
 		
 		this._actionClassName = actionClassName;
@@ -526,7 +548,7 @@ WCF.Location.GoogleMaps.LargeMap = WCF.Location.GoogleMaps.Map.extend({
 			actionName: 'getMapMarkers',
 			className: this._actionClassName,
 			parameters: $.extend(this._additionalParameters, {
-				excludedObjectIDs: this._objectIDs,
+				excludedObjectIDs: this._stringifyExcludedObjectIds ? JSON.stringify(this._objectIDs) : this._objectIDs,
 				eastLongitude: $northEast.lng(),
 				northLatitude: $northEast.lat(),
 				southLatitude: $southWest.lat(),
@@ -737,21 +759,17 @@ WCF.Location.GoogleMaps.LocationSearch = WCF.Search.Base.extend({
 			case $.ui.keyCode.LEFT:
 			case $.ui.keyCode.RIGHT:
 				return;
-			break;
 			
 			case $.ui.keyCode.UP:
 				this._selectPreviousItem();
 				return;
-			break;
 			
 			case $.ui.keyCode.DOWN:
 				this._selectNextItem();
 				return;
-			break;
 			
 			case $.ui.keyCode.ENTER:
 				return this._selectElement(event);
-			break;
 		}
 		
 		var $content = this._getSearchString(event);
@@ -786,7 +804,7 @@ WCF.Location.GoogleMaps.LocationSearch = WCF.Search.Base.extend({
 	},
 	
 	/**
-	 * Handles a successfull geocoder request.
+	 * Handles a successful geocoder request.
 	 * 
 	 * @param	array		results
 	 * @param	integer		status

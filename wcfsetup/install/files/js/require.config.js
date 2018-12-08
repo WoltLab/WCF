@@ -1,3 +1,4 @@
+//noinspection JSUnresolvedVariable
 requirejs.config({
 	paths: {
 		enquire: '3rdParty/enquire',
@@ -15,8 +16,10 @@ requirejs.config({
 			'AjaxJsonp': 'WoltLabSuite/Core/Ajax/Jsonp',
 			'AjaxRequest': 'WoltLabSuite/Core/Ajax/Request',
 			'CallbackList': 'WoltLabSuite/Core/CallbackList',
+			'ColorUtil': 'WoltLabSuite/Core/ColorUtil',
 			'Core': 'WoltLabSuite/Core/Core',
 			'DateUtil': 'WoltLabSuite/Core/Date/Util',
+			'Devtools': 'WoltLabSuite/Core/Devtools',
 			'Dictionary': 'WoltLabSuite/Core/Dictionary',
 			'Dom/ChangeListener': 'WoltLabSuite/Core/Dom/Change/Listener',
 			'Dom/Traverse': 'WoltLabSuite/Core/Dom/Traverse',
@@ -42,7 +45,8 @@ requirejs.config({
 			'Upload': 'WoltLabSuite/Core/Upload',
 			'User': 'WoltLabSuite/Core/User'
 		}
-	}
+	},
+	waitSeconds: 0
 });
 
 /* Define jQuery shim. We cannot use the shim object in the configuration above,

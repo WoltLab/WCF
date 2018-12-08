@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Highlights syntax of source code.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  */
@@ -176,7 +176,7 @@ abstract class Highlighter extends SingletonFactory {
 			$closing = preg_quote($closing);
 			
 			if ($quotedEscapeSequence) {
-				$quotesRegEx .= $opening.'(?>[^'.$closing.$quotedEscapeSequence.']|'.$quotedEscapeSequence.'.)*'.$closing;
+				$quotesRegEx .= $opening.'(?>[^'.$closing.$quotedEscapeSequence.']+|(?:'.$quotedEscapeSequence.'.)+)*'.$closing;
 			}
 			else {
 				$quotesRegEx .= $opening.'(?>[^'.$closing.$quotedEscapeSequence.'])*'.$closing;

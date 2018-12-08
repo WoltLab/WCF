@@ -1,7 +1,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="format-detection" content="telephone=no">
-{if $allowSpidersToIndexThisPage|empty}<meta name="robots" content="noindex,nofollow">{/if}
+{if $allowSpidersToIndexThisPage|empty && ($__wcf->getActivePage() == null || !$__wcf->getActivePage()->allowSpidersToIndex)}<meta name="robots" content="noindex,nofollow">{/if}
 {implode from=$__wcf->getMetaTagHandler() item=__metaTag glue="\n"}{@$__metaTag}{/implode}
 {event name='metaTags'}
 
@@ -28,11 +28,11 @@
 {event name='javascriptInclude'}
 
 <!-- Icons -->
-<link rel="icon" href="{@$__wcf->getFavicon()}" type="image/x-icon">
-<link rel="apple-touch-icon" href="{@$__wcf->getPath()}images/apple-touch-icon.png">
-
-<!-- thema color (mobile Chrome) -->
-<meta name="theme-color" content="{$__wcf->getStyleHandler()->getStyle()->getVariable('wcfHeaderBackground')}">
+<link rel="apple-touch-icon" sizes="180x180" href="{$__wcf->getStyleHandler()->getStyle()->getFaviconAppleTouchIcon()}">
+<link rel="manifest" href="{@$__wcf->getStyleHandler()->getStyle()->getFaviconManifest()}">
+<link rel="shortcut icon" href="{@$__wcf->getFavicon()}">
+<meta name="msapplication-config" content="{@$__wcf->getStyleHandler()->getStyle()->getFaviconBrowserconfig()}">
+<meta name="theme-color" content="{$__wcf->getStyleHandler()->getStyle()->getVariable('wcfHeaderBackground', true)}">
 
 <script data-relocate="true">
 	$(function() {
@@ -40,3 +40,5 @@
 		{event name='javascriptInit'}
 	});
 </script>
+
+{@HEAD_CODE}

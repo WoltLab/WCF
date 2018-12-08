@@ -2,7 +2,7 @@
  * Common interface for tab menu access.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/TabMenu
  */
@@ -41,7 +41,7 @@ define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Clos
 			});
 			
 			window.addEventListener('hashchange', function () {
-				var hash = window.location.hash.replace(/^#/, '');
+				var hash = SimpleTabMenu.getIdentifierFromHash();
 				var element = (hash) ? elById(hash) : null;
 				if (element !== null && element.classList.contains('tabMenuContent')) {
 					_tabMenus.forEach(function (tabMenu) {
@@ -52,8 +52,8 @@ define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Clos
 				}
 			});
 			
-			if (window.location.hash.match(/^#(.*)$/)) {
-				var hash = RegExp.$1;
+			var hash = SimpleTabMenu.getIdentifierFromHash();
+			if (hash) {
 				window.setTimeout(function () {
 					// check if page was initially scrolled using a tab id
 					var tabMenuContent = elById(hash);
@@ -223,46 +223,50 @@ define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Clos
 			}
 			
 			if (shouldScroll) {
-				// allow some padding to indicate overflow
-				if (paddingRight) {
-					left -= 15;
-				}
-				else if (left > 0) {
-					left -= 15;
-				}
-				
-				if (left < 0) {
-					left = 0;
-				}
-				else {
-					// ensure that our left value is always within the boundaries
-					left = Math.min(left, scrollWidth - width);
-				}
-				
-				if (scrollLeft === left) {
-					return;
-				}
-				
-				list.classList.add('enableAnimation');
-				
-				// new value is larger, we're scrolling towards the end
-				if (scrollLeft < left) {
-					list.firstElementChild.style.setProperty('margin-left', (scrollLeft - left) + 'px', '');
-				}
-				else {
-					// new value is smaller, we're scrolling towards the start
-					list.style.setProperty('padding-left', (scrollLeft - left) + 'px', '');
-				}
-				
-				setTimeout(function () {
-					list.classList.remove('enableAnimation');
-					
-					list.firstElementChild.style.removeProperty('margin-left');
-					list.style.removeProperty('padding-left');
-					
-					list.scrollLeft = left;
-				}, 300);
+				this._scrollMenu(list, left, scrollLeft, scrollWidth, width, paddingRight);
 			}
+		},
+		
+		_scrollMenu: function (list, left, scrollLeft, scrollWidth, width, paddingRight) {
+			// allow some padding to indicate overflow
+			if (paddingRight) {
+				left -= 15;
+			}
+			else if (left > 0) {
+				left -= 15;
+			}
+			
+			if (left < 0) {
+				left = 0;
+			}
+			else {
+				// ensure that our left value is always within the boundaries
+				left = Math.min(left, scrollWidth - width);
+			}
+			
+			if (scrollLeft === left) {
+				return;
+			}
+			
+			list.classList.add('enableAnimation');
+			
+			// new value is larger, we're scrolling towards the end
+			if (scrollLeft < left) {
+				list.firstElementChild.style.setProperty('margin-left', (scrollLeft - left) + 'px', '');
+			}
+			else {
+				// new value is smaller, we're scrolling towards the start
+				list.style.setProperty('padding-left', (scrollLeft - left) + 'px', '');
+			}
+			
+			setTimeout(function () {
+				list.classList.remove('enableAnimation');
+				
+				list.firstElementChild.style.removeProperty('margin-left');
+				list.style.removeProperty('padding-left');
+				
+				list.scrollLeft = left;
+			}, 300);
 		},
 		
 		_rebuildMenuOverflow: function (menu) {
@@ -281,6 +285,19 @@ define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Clos
 				if (overlayLeft === null) {
 					overlayLeft = elCreate('span');
 					overlayLeft.className = 'tabMenuOverlayLeft icon icon24 fa-angle-left';
+					overlayLeft.addEventListener(WCF_CLICK_EVENT, (function () {
+						var listWidth = list.clientWidth;
+						
+						this._scrollMenu(
+							list,
+							list.scrollLeft - ~~(listWidth / 2),
+							list.scrollLeft,
+							list.scrollWidth,
+							listWidth,
+							0
+						);
+					}).bind(this));
+					
 					menu.insertBefore(overlayLeft, menu.firstChild);
 				}
 				
@@ -296,6 +313,19 @@ define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Clos
 				if (overlayRight === null) {
 					overlayRight = elCreate('span');
 					overlayRight.className = 'tabMenuOverlayRight icon icon24 fa-angle-right';
+					overlayRight.addEventListener(WCF_CLICK_EVENT, (function () {
+						var listWidth = list.clientWidth;
+						
+						this._scrollMenu(
+							list,
+							list.scrollLeft + ~~(listWidth / 2),
+							list.scrollLeft,
+							list.scrollWidth,
+							listWidth,
+							0
+						);
+					}).bind(this));
+					
 					menu.appendChild(overlayRight);
 				}
 				

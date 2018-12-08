@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * 	    would not work (MySQL is retarded).
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Moderation\Queue
  *
@@ -22,12 +22,6 @@ use wcf\system\WCF;
  * @property	ViewableModerationQueue[]	$objects
  */
 class ViewableModerationQueueList extends ModerationQueueList {
-	/**
-	 * true, if objects should be populated with associated user profiles
-	 * @var	boolean
-	 */
-	public $loadUserProfiles = false;
-	
 	/**
 	 * @inheritDoc
 	 */
@@ -90,14 +84,13 @@ class ViewableModerationQueueList extends ModerationQueueList {
 				ModerationQueueManager::getInstance()->removeOrphans($queueIDs);
 			}
 			
-			if ($this->loadUserProfiles) {
-				$userIDs = [];
-				foreach ($this->objects as $object) {
-					$userIDs[] = $object->getAffectedObject()->getUserID();
-				}
-				
-				UserProfileRuntimeCache::getInstance()->cacheObjectIDs(array_unique($userIDs));
+			$userIDs = [];
+			foreach ($this->objects as $object) {
+				$userIDs[] = $object->getAffectedObject()->getUserID();
+				if ($object->assignedUserID) $userIDs[] = $object->assignedUserID;
 			}
+				
+			UserProfileRuntimeCache::getInstance()->cacheObjectIDs(array_unique($userIDs));
 		}
 	}
 	

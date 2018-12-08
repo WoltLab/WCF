@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * User group option type implementation for BBCode select lists.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -58,8 +58,6 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 	
 	/**
 	 * Loads the list of BBCodes for the HTML select element.
-	 * 
-	 * @return	string[]
 	 */
 	protected function loadBBCodeSelection() {
 		$this->bbCodes = array_keys(BBCodeCache::getInstance()->getBBCodes());
@@ -125,7 +123,7 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 				return 0;
 			}
 			
-			return -1;
+			return 1;
 		}
 		else if (empty($value2)) {
 			return 1;
@@ -137,13 +135,13 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 		// check if value1 disallows more BBCodes than value2
 		$diff = array_diff($value1, $value2);
 		if (!empty($diff)) {
-			return 1;
+			return -1;
 		}
 		
 		// check if value1 disallows less BBCodes than value2
 		$diff = array_diff($value2, $value1);
 		if (!empty($diff)) {
-			return -1;
+			return 1;
 		}
 		
 		// both lists of BBCodes are equal

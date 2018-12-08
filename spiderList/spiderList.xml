@@ -490,6 +490,10 @@
 		<name>Googlebot-Mobile</name>
 		<url>http://www.google.com/bot.html</url>
 	</spider>
+	<spider ident="GoogleStackdriverMonitoring-UptimeChecks">
+		<name>Google Stackdriver Monitoring</name>
+		<url>https://cloud.google.com/monitoring/alerts/uptime-checks</url>
+	</spider>
 	<spider ident="Gpostbot">
 		<name>Gpostbot</name>
 		<url>http://www.gpost.info/help.php?c=bot</url>
@@ -627,7 +631,6 @@
 	</spider>
 	<spider ident="itchBot">
 		<name>itch</name>
-		<url>http://www.itch.com/infoforwebmasters.html</url>
 	</spider>
 	<spider ident="JavaBee">
 		<name>JavaBee</name>
@@ -1401,7 +1404,7 @@
 	</spider>
 	<spider ident="yacybot">
 		<name>YaCy-Bot</name>
-		<url>http://yacy.net/yacy/bot.html</url>
+		<url>https://yacy.net/bot.html</url>
 	</spider>
 	<spider ident="YahooYSMcm">
 		<name>Yahoo Publisher Network</name>

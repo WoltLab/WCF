@@ -1,12 +1,15 @@
 <?php
 namespace wcf\data\article\category;
 use wcf\data\category\AbstractDecoratedCategory;
+use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserProfile;
 use wcf\data\IAccessibleObject;
 use wcf\data\ITitledLinkObject;
+use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
 use wcf\system\category\CategoryHandler;
 use wcf\system\category\CategoryPermissionHandler;
+use wcf\system\label\LabelHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -14,7 +17,7 @@ use wcf\system\WCF;
  * Represents an article category.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article\Category
  * @since	3.0
@@ -117,5 +120,26 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 		}
 		
 		return $categoryIDs;
+	}
+	
+	/**
+	 * Returns the label groups for all accessible categories.
+	 *
+	 * @param	string	        $permission
+	 * @return	ViewableLabelGroup[]
+	 */
+	public static function getAccessibleLabelGroups($permission = 'canSetLabel') {
+		$labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
+		$accessibleCategoryIDs = self::getAccessibleCategoryIDs();
+		
+		$groupIDs = [];
+		foreach ($labelGroupsToCategories as $categoryID => $__groupIDs) {
+			if (in_array($categoryID, $accessibleCategoryIDs)) {
+				$groupIDs = array_merge($groupIDs, $__groupIDs);
+			}
+		}
+		if (empty($groupIDs)) return [];
+		
+		return LabelHandler::getInstance()->getLabelGroups(array_unique($groupIDs), true, $permission);
 	}
 }

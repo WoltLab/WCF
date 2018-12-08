@@ -10,17 +10,28 @@
 	var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
 	var LANGUAGE_USE_INFORMAL_VARIANT = {if LANGUAGE_USE_INFORMAL_VARIANT}true{else}false{/if};
 	var TIME_NOW = {@TIME_NOW};
+	var LAST_UPDATE_TIME = {@LAST_UPDATE_TIME};
 	var URL_LEGACY_MODE = false;
+	var ENABLE_DEBUG_MODE = {if ENABLE_DEBUG_MODE}true{else}false{/if};
+	var ENABLE_DEVELOPER_TOOLS = {if ENABLE_DEVELOPER_TOOLS}true{else}false{/if};
+	var WSC_API_VERSION = {@WSC_API_VERSION};
+	
+	{if ENABLE_DEBUG_MODE}
+		{* This constant is a compiler option, it does not exist in production. *}
+		var COMPILER_TARGET_DEFAULT = {if !VISITOR_USE_TINY_BUILD || $__wcf->user->userID}true{else}false{/if};
+	{/if}
 </script>
 
-{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true'}
-{js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true'}
-{js application='wcf' file='require.linearExecution' bundle='WoltLabSuite.Core' core='true'}
-{js application='wcf' file='wcf.globalHelper' bundle='WoltLabSuite.Core' core='true'}
-{js application='wcf' file='closest' bundle='WoltLabSuite.Core' core='true'}
+{js application='wcf' lib='polyfill' file='promise' bundle='WoltLabSuite.Core' core='true'}
+{js application='wcf' file='require' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
+{js application='wcf' file='require.config' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
+{js application='wcf' file='require.linearExecution' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
+{js application='wcf' file='wcf.globalHelper' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
+{js application='wcf' file='closest' bundle='WoltLabSuite.Core' core='true' hasTiny=true}
 <script>
 requirejs.config({
-	baseUrl: '{@$__wcf->getPath()}js'
+	baseUrl: '{@$__wcf->getPath()}js', 
+	urlArgs: 't={@LAST_UPDATE_TIME}'
 	{hascontent}
 	, paths: {
 		{content}{event name='requirePaths'}{/content}
@@ -98,7 +109,9 @@ requirejs.config({
 			'wcf.user.panel.markAllAsRead': '{lang}wcf.user.panel.markAllAsRead{/lang}',
 			'wcf.user.panel.markAsRead': '{lang}wcf.user.panel.markAsRead{/lang}',
 			'wcf.user.panel.settings': '{lang}wcf.user.panel.settings{/lang}',
-			'wcf.user.panel.showAll': '{lang}wcf.user.panel.showAll{/lang}'
+			'wcf.user.panel.showAll': '{lang}wcf.user.panel.showAll{/lang}',
+			'wcf.menu.page': '{lang}wcf.menu.page{/lang}',
+			'wcf.menu.user': '{lang}wcf.menu.user{/lang}'
 			{if MODULE_LIKE}
 				,'wcf.like.button.like': '{lang}wcf.like.button.like{/lang}',
 				'wcf.like.button.dislike': '{lang}wcf.like.button.dislike{/lang}',
@@ -115,10 +128,11 @@ requirejs.config({
 				url: '{link controller="BackgroundQueuePerform"}{/link}',
 				force: {if $forceBackgroundQueuePerform|isset}true{else}false{/if}
 			},
+			enableUserPopover: {if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile')}true{else}false{/if},
 			styleChanger: {if $__wcf->getStyleHandler()->showStyleChanger()}true{else}false{/if}
 		});
 		
-		User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
+		User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}', {if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if});
 	});
 	
 	// prevent jQuery and other libraries from utilizing define()
@@ -126,28 +140,12 @@ requirejs.config({
 	define.amd = undefined;
 </script>
 
-{if JQUERY_SOURCE == 'google'}
-<script data-relocate="true" src="//ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-{elseif JQUERY_SOURCE == 'microsoft'}
-<script data-relocate="true" src="//ajax.aspnetcdn.com/ajax/jQuery/jquery-3.1.1{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-{elseif JQUERY_SOURCE == 'cloudflare'}
-<script data-relocate="true" src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery{if !ENABLE_DEBUG_MODE}.min{/if}.js"></script>
-{else}
-{js application='wcf' lib='jquery'}
-{/if}
-{if JQUERY_SOURCE != 'local'}
-<script data-relocate="true">
-	if (!window.jQuery) {
-		document.write('{js application='wcf' lib='jquery' encodeJs='true'}');
-	}
-</script>
-{/if}
-
-{js application='wcf' lib='jquery-ui'}
-{js application='wcf' lib='jquery-ui' file='touchPunch' bundle='WCF.Combined'}
-{js application='wcf' lib='jquery-ui' file='nestedSortable' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Assets' bundle='WCF.Combined'}
-{js application='wcf' file='WCF' bundle='WCF.Combined'}
+{js application='wcf' lib='jquery' hasTiny=true}
+{js application='wcf' lib='jquery-ui' hasTiny=true}
+{js application='wcf' lib='jquery-ui' file='touchPunch' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' lib='jquery-ui' file='nestedSortable' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Assets' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF' bundle='WCF.Combined' hasTiny=true}
 
 <script data-relocate="true">
 	define.amd = __require_define_amd;
@@ -156,19 +154,19 @@ requirejs.config({
 	WCF.User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 </script>
 
-{js application='wcf' file='WCF.Like' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.ACL' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Attachment' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Comment' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.ImageViewer' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Label' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Location' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Message' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Poll' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Search.Message' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.User' bundle='WCF.Combined'}
-{js application='wcf' file='WCF.Moderation' bundle='WCF.Combined'}
+{js application='wcf' file='WCF.Like' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.ACL' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Attachment' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Comment' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.ImageViewer' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Label' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Location' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Message' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Poll' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Search.Message' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.User' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' file='WCF.Moderation' bundle='WCF.Combined' hasTiny=true}
 
 {event name='javascriptInclude'}
 
@@ -189,6 +187,12 @@ requirejs.config({
 		WCF.System.PageNavigation.init('.pagination');
 		WCF.User.Profile.ActivityPointList.init();
 		
+		{if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies')}
+			require(['WoltLabSuite/Core/Ui/User/Trophy/List'], function (UserTrophyList) {
+				new UserTrophyList();
+			});
+		{/if}
+		
 		{event name='javascriptInit'}
 		
 		{if $executeCronjobs}
@@ -207,6 +211,16 @@ requirejs.config({
 		
 		{if $__sessionKeepAlive|isset}
 			new WCF.System.KeepAlive({@$__sessionKeepAlive});
+			
+			{if ENABLE_POLLING && $__wcf->user->userID}
+				require(['WoltLabSuite/Core/Notification/Handler'], function(NotificationHandler) {
+					NotificationHandler.setup({
+						enableNotifications: {if $__wcf->useDesktopNotifications()}true{else}false{/if},
+						icon: '{$__wcf->getStyleHandler()->getStyle()->getFaviconAppleTouchIcon()}',
+						sessionKeepAlive: {@$__sessionKeepAlive}
+					});
+				});
+			{/if}
 		{/if}
 	});
 </script>

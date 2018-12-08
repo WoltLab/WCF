@@ -102,6 +102,26 @@
 			padding-left: 15px;
 		}
 		
+		.box48 {
+			border-top: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			border-bottom: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			padding: 12px;
+		}
+		
+		.box48 td.boxContent {
+			padding-left: 12px;
+		}
+		
+		.box32 {
+			border-top: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			border-bottom: 1px solid {$style->getVariable('wcfContentBorder', true)};
+			padding: 10px;
+		}
+		
+		.box32 td.boxContent {
+			padding-left: 10px;
+		}
+		
 		.containerHeadline h3 {
 			margin: 0;
 			padding: 0;
@@ -131,7 +151,7 @@
 	{hascontent}
 	<span style="font-size: 0;">-- <br></span>
 	{content}
-	{@MAIL_SIGNATURE|language|nl2br}
+	{@MAIL_SIGNATURE|language|newlineToBreak}
 	{/content}
 	{/hascontent}
 	{/capture}

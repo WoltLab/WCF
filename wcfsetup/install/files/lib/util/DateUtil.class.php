@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Contains date-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -25,6 +25,24 @@ final class DateUtil {
 	 * @var	string
 	 */
 	const TIME_FORMAT = 'wcf.date.timeFormat';
+	
+	/**
+	 * format the interval to be used as a standalone phrase
+	 * @var	integer
+	 */
+	const FORMAT_DEFAULT = 1;
+	
+	/**
+	 * format the interval to be used as a phrase in a sentence
+	 * @var	integer
+	 */
+	const FORMAT_SENTENCE = 2;
+	
+	/**
+	 * format the interval without direction
+	 * @var	integer
+	 */
+	const FORMAT_PLAIN = 3; 
 	
 	/**
 	 * list of available time zones
@@ -177,14 +195,14 @@ final class DateUtil {
 	}
 	
 	/**
-	 * Returns a formatted date interval. If $fullInterval is set true, the
-	 * complete interval is returned, otherwise a rounded interval is used.
+	 * Returns a formatted date interval.
 	 * 
-	 * @param	\DateInterval	$interval
-	 * @param	boolean		$fullInterval
+	 * @param	\DateInterval	$interval	interval to be formatted
+	 * @param	boolean		$fullInterval	if `true`, the complete interval is returned, otherwise a rounded interval is used
+	 * @param	integer		$formatType	format type for the interval, use the class constant FORMAT_DEFAULT, FORMAT_SENTENCE or FORMAT_PLAIN
 	 * @return	string
 	 */
-	public static function formatInterval(\DateInterval $interval, $fullInterval = false) {
+	public static function formatInterval(\DateInterval $interval, $fullInterval = false, $formatType = self::FORMAT_DEFAULT) {
 		$years = $interval->format('%y');
 		$months = $interval->format('%m');
 		$days = $interval->format('%d');
@@ -202,8 +220,25 @@ final class DateUtil {
 			break;
 		}
 		
+		switch ($formatType) {
+			case self::FORMAT_DEFAULT:
+				$languageItemSuffix = $direction;
+			break; 
+			
+			case self::FORMAT_SENTENCE:
+				$languageItemSuffix = $direction . '.inSentence';
+			break;
+			
+			case self::FORMAT_PLAIN:
+				$languageItemSuffix = 'plain';
+			break; 
+			
+			default: 
+				throw new \InvalidArgumentException('Invalid $formatType value');
+		}
+		
 		if ($fullInterval) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.full.'.$direction, [
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.full.' . $languageItemSuffix, [
 				'days' => $days - 7 * $weeks,
 				'firstElement' => $years ? 'years' : ($months ? 'months' : ($weeks ? 'weeks' : ($days ? 'days' : ($hours ? 'hours' : 'minutes')))),
 				'hours' => $hours,
@@ -216,36 +251,36 @@ final class DateUtil {
 		}
 		
 		if ($years) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.years.'.$direction, [
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.years.' . $languageItemSuffix, [
 				'years' => $years
 			]);
 		}
 		
 		if ($months) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.months.'.$direction, [
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.months.' . $languageItemSuffix, [
 				'months' => $months
 			]);
 		}
 		
 		if ($weeks) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.weeks.'.$direction, [
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.weeks.' . $languageItemSuffix, [
 				'weeks' => $weeks
 			]);
 		}
 		
 		if ($days) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.days.'.$direction, [
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.days.' . $languageItemSuffix, [
 				'days' => $days
 			]);
 		}
 		
 		if ($hours) {
-			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.hours.'.$direction, [
+			return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.hours.' . $languageItemSuffix, [
 				'hours' => $hours
 			]);
 		}
 		
-		return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.minutes.'.$direction, [
+		return WCF::getLanguage()->getDynamicVariable('wcf.date.interval.minutes.' . $languageItemSuffix, [
 			'minutes' => $minutes
 		]);
 	}

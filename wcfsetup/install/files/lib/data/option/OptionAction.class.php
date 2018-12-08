@@ -1,14 +1,18 @@
 <?php
 namespace wcf\data\option;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\email\transport\SmtpEmailTransport;
+use wcf\system\exception\UserInputException;
+use wcf\system\WCF;
 
 /**
  * Executes option-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\Data$2 * 
+ * @package	WoltLabSuite\Core\Data\Option
+ *  
  * @method	Option		create()
  * @method	OptionEditor[]	getObjects()
  * @method	OptionEditor	getSingleObject()
@@ -37,7 +41,7 @@ class OptionAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete', 'import', 'update', 'updateAll'];
+	protected $requireACP = ['create', 'delete', 'emailSmtpTest', 'import', 'update', 'updateAll'];
 	
 	/**
 	 * Validates permissions and parameters.
@@ -67,5 +71,44 @@ class OptionAction extends AbstractDatabaseObjectAction {
 	public function updateAll() {
 		// create data
 		call_user_func([$this->className, 'updateAll'], $this->parameters['data']);
+	}
+	
+	/**
+	 * Validates the basic SMTP connection parameters.
+	 * 
+	 * @throws      UserInputException
+	 */
+	public function validateEmailSmtpTest() {
+		WCF::getSession()->checkPermissions($this->permissionsUpdate);
+		
+		$this->readString('host');
+		$this->readInteger('port');
+		$this->readString('startTls');
+		
+		$this->readString('user', true);
+		$this->readString('password', true);
+		if (!empty($this->parameters['user']) && empty($this->parameters['password'])) {
+			throw new UserInputException('password');
+		}
+		else if (empty($this->parameters['user']) && !empty($this->parameters['password'])) {
+			throw new UserInputException('user');
+		}
+	}
+	
+	/**
+	 * Runs a simple test of the SMTP connection.
+	 * 
+	 * @return      string[]
+	 */
+	public function emailSmtpTest() {
+		$smtp = new SmtpEmailTransport(
+			$this->parameters['host'],
+			$this->parameters['port'],
+			$this->parameters['user'],
+			$this->parameters['password'],
+			$this->parameters['startTls']
+		);
+		
+		return ['validationResult' => $smtp->testConnection()];
 	}
 }

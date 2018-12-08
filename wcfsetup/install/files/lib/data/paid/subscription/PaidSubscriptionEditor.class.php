@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Provides functions to edit paid subscriptions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Paid\Subscription
  * 
@@ -33,7 +33,7 @@ class PaidSubscriptionEditor extends DatabaseObjectEditor implements IEditableCa
 			FROM	wcf".WCF_N."_paid_subscription";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute();
-		$maxShowOrder = $statement->fetchColumn();
+		$maxShowOrder = $statement->fetchSingleColumn();
 		if (!$maxShowOrder) $maxShowOrder = 0;
 		
 		if (!$showOrder || $showOrder > $maxShowOrder) {

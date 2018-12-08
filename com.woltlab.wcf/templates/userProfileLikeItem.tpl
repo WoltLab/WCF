@@ -10,7 +10,7 @@
 						<small class="separatorLeft">{@$like->time|time}</small>
 					</h3>
 					<div>{@$like->getTitle()}</div>
-					<small class="containerContentType">{lang}wcf.like.objectType.{@$like->getObjectTypeName()}{/lang}</small>
+					<small class="containerContentType">{$like->getObjectTypeDescription()}</small>
 				</div>
 				
 				<div class="containerContent">{@$like->getDescription()}</div>

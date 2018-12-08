@@ -73,7 +73,7 @@
 			<htmlclose>div</htmlclose>
 			<attributes>
 				<attribute name="0">
-					<html>style="text-align: %s"</html>
+					<html>class="text-%s"</html>
 					<validationpattern>^(left|right|center|justify)$</validationpattern>
 					<required>1</required>
 				</attribute>
@@ -213,6 +213,9 @@
 					<validationpattern>^\d+$</validationpattern>
 					<required>1</required>
 				</attribute>
+				<attribute name="1">
+					<usetext>1</usetext>
+				</attribute>
 			</attributes>
 		</bbcode>
 		
@@ -224,6 +227,13 @@
 					<required>1</required>
 				</attribute>
 			</attributes>
+		</bbcode>
+		
+		<bbcode name="html">
+			<isBlockElement>1</isBlockElement>
+			<sourcecode>1</sourcecode>
+			<wysiwygicon>fa-html5</wysiwygicon>
+			<buttonlabel>wcf.editor.button.woltlabHtml</buttonlabel>
 		</bbcode>
 	</import>
 </data>

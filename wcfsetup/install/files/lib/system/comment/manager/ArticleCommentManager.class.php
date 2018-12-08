@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * Article comment manager implementation.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Comment\Manager
  */
@@ -23,6 +23,11 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 	 * @inheritDoc
 	 */
 	protected $permissionAdd = 'user.article.canAddComment';
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $permissionAddWithoutModeration = 'user.article.canAddCommentWithoutModeration';
 	
 	/**
 	 * @inheritDoc
@@ -162,6 +167,7 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 						// short output
 						$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.articleComment', [
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
+							'comment' => $comment,
 							'articleContent' => $articleContents[$comment->objectID],
 							'like' => $like
 						]);
@@ -186,7 +192,8 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 							'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'articleContent' => $articleContents[$comment->objectID],
-							'like' => $like
+							'like' => $like,
+							'response' => $response
 						]);
 						$like->setTitle($text);
 						

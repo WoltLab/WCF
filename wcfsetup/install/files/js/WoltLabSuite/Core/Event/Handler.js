@@ -2,11 +2,11 @@
  * Versatile event system similar to the WCF-PHP counter part.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Event/Handler
  */
-define(['Core', 'Dictionary'], function(Core, Dictionary) {
+define(['Core', 'Devtools', 'Dictionary'], function(Core, Devtools, Dictionary) {
 	"use strict";
 	
 	var _listeners = new Dictionary();
@@ -54,6 +54,8 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 		 * @param	{object=}	data		event data
 		 */
 		fire: function(identifier, action, data) {
+			Devtools._internal_.eventLog(identifier, action);
+			
 			data = data || {};
 			
 			var actions = _listeners.get(identifier);
@@ -112,7 +114,7 @@ define(['Core', 'Dictionary'], function(Core, Dictionary) {
 		},
 		
 		/**
-		 * Removes all listeners registered for an identifer and ending with a special suffix.
+		 * Removes all listeners registered for an identifier and ending with a special suffix.
 		 * This is commonly used to unbound event handlers for the editor.
 		 * 
 		 * @param       {string}        identifier      event identifier

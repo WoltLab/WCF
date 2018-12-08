@@ -235,7 +235,26 @@
 			text-align: left;
 			
 			@include wcfFontSmall;
-			
+		}
+		
+		&.columnTitle,
+		&.columnText,
+		&.columnURL,
+		&.columnSmallText {
+			@include screen-sm-down {
+				min-width: 200px;
+			}
+		}
+		
+		&.columnIcon {
+			@include screen-md-down {
+				:not(.button) > .icon16 {
+					font-size: 18px;
+					height: 24px;
+					line-height: 24px;
+					width: 24px;
+				}
+			}
 		}
 	}
 	

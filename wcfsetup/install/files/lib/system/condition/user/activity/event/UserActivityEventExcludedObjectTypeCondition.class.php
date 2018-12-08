@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Condition implementation for the excluded object types of user activity events.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition\User\Activity\Event
  * @since	3.0
@@ -51,7 +51,7 @@ class UserActivityEventExcludedObjectTypeCondition extends AbstractMultiSelectCo
 		
 		$options = [];
 		foreach ($objectTypes as $objectType) {
-			$options[$objectType->objectTypeID] = WCF::getLanguage()->get('wcf.user.recentActivity.' . $objectType->objectType);
+			$options[$objectType->objectTypeID] = WCF::getLanguage()->getDynamicVariable('wcf.user.recentActivity.' . $objectType->objectType);
 		}
 		
 		return $options;

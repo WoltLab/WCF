@@ -2,18 +2,20 @@
 namespace wcf\system\package\plugin;
 use wcf\data\user\notification\event\UserNotificationEvent;
 use wcf\data\user\notification\event\UserNotificationEventEditor;
+use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Installs, updates and deletes user notification events.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
-class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin {
+class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin implements IIdempotentPackageInstallationPlugin {
 	/**
 	 * @inheritDoc
 	 */
@@ -66,8 +68,8 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 			'eventName' => $data['elements']['name'],
 			'className' => $data['elements']['classname'],
 			'objectTypeID' => $this->getObjectTypeID($data['elements']['objecttype']),
-			'permissions' => isset($data['elements']['permissions']) ? $data['elements']['permissions'] : '',
-			'options' => isset($data['elements']['options']) ? $data['elements']['options'] : '',
+			'permissions' => isset($data['elements']['permissions']) ? StringUtil::normalizeCsv($data['elements']['permissions']) : '',
+			'options' => isset($data['elements']['options']) ? StringUtil::normalizeCsv($data['elements']['options']) : '',
 			'preset' => !empty($data['elements']['preset']) ? 1 : 0,
 			'presetMailNotificationType' => $presetMailNotificationType
 		];
@@ -129,6 +131,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	 *
 	 * @param       string          $objectType
 	 * @return      integer
+	 * @throws      SystemException
 	 */
 	protected function getObjectTypeID($objectType) {
 		// get object type id
@@ -145,5 +148,12 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 		$row = $statement->fetchArray();
 		if (empty($row['objectTypeID'])) throw new SystemException("unknown notification object type '".$objectType."' given");
 		return $row['objectTypeID'];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function getSyncDependencies() {
+		return ['objectType'];
 	}
 }

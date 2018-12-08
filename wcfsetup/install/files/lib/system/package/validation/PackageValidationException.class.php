@@ -5,11 +5,11 @@ use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
 
 /**
- * Represents exceptions occured during validation of a package archive. This exception
+ * Represents exceptions occurred during validation of a package archive. This exception
  * does not cause the details to be logged.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Validation
  */
@@ -86,6 +86,30 @@ class PackageValidationException extends SystemException {
 	 * @var	integer
 	 */
 	const MISSING_INSTRUCTION_FILE = 11;
+	
+	/**
+	 * the uploaded version is already installed, expects the details 'packageName' and 'packageVersion'
+	 * @var integer
+	 */
+	const ALREADY_INSTALLED = 12;
+	
+	/**
+	 * the provided API version string is invalid and does not fall into the range from `2017` through `2099`
+	 * @var integer
+	 */
+	const INVALID_API_VERSION = 13;
+	
+	/**
+	 * the package is not compatible with the current API version or any other of the supported ones
+	 * @var integer
+	 */
+	const INCOMPATIBLE_API_VERSION = 14;
+	
+	/**
+	 * the package lacks any sort of API compatibility data
+	 * @var integer
+	 */
+	const MISSING_API_VERSION = 15;
 	
 	/**
 	 * Creates a new PackageArchiveValidationException.

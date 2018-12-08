@@ -9,7 +9,7 @@ use wcf\system\SingletonFactory;
  * Manages recursive validation of package archives.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Validation
  */
@@ -62,7 +62,7 @@ class PackageValidationManager extends SingletonFactory {
 	}
 	
 	/**
-	 * Validates given archive for existance and ability to be installed/updated. If you set the
+	 * Validates given archive for existence and ability to be installed/updated. If you set the
 	 * second parameter $deepInspection to "false", the system will only check if the archive
 	 * looks fine, this is useful for a rough check during upload when a more detailed check will
 	 * be performed afterwards.
@@ -130,7 +130,7 @@ class PackageValidationManager extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the iteratable package archive list.
+	 * Returns the iterable package archive list.
 	 * 
 	 * @return	\RecursiveIteratorIterator
 	 */
@@ -187,5 +187,21 @@ class PackageValidationManager extends SingletonFactory {
 		}
 		
 		return true;
+	}
+	
+	/**
+	 * Returns the default filename for the given pip name. If no default filename
+	 * exists `null` is returned.
+	 * 
+	 * @param	string			$pip
+	 * @return	string|null
+	 * @since	3.1
+	 */
+	public function getDefaultFilenameForPackageInstallationPlugin($pip) {
+		if (isset($this->packageInstallationPlugins[$pip])) {
+			return call_user_func([$this->packageInstallationPlugins[$pip], 'getDefaultFilename']);
+		}
+		
+		return null;
 	}
 }

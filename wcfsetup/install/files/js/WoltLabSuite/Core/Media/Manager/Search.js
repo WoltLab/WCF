@@ -2,12 +2,27 @@
  * Provides the media search for the media manager.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Media/Manager/Search
  */
 define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/SimpleDropdown'], function(Ajax, Core, DomTraverse, DomUtil, EventKey, Language, UiSimpleDropdown) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			_ajaxSetup: function() {},
+			_ajaxSuccess: function() {},
+			_cancelSearch: function() {},
+			_keyPress: function() {},
+			_search: function() {},
+			hideSearch: function() {},
+			resetSearch: function() {},
+			showSearch: function() {}
+		};
+		return Fake;
+	}
 	
 	/**
 	 * @constructor
@@ -45,7 +60,12 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 		 * @param	{object}	data	response data
 		 */
 		_ajaxSuccess: function(data) {
-			this._mediaManager.setMedia(data.returnValues.media || { }, data.returnValues.template || '');
+			this._mediaManager.setMedia(data.returnValues.media || { }, data.returnValues.template || '', {
+				pageCount: data.returnValues.pageCount || 0,
+				pageNo: data.returnValues.pageNo || 0
+			});
+			
+			elByClass('dialogContent', this._mediaManager.getDialog())[0].scrollTop = 0;
 		},
 		
 		/**
@@ -55,8 +75,18 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 			if (this._searchMode) {
 				this._searchMode = false;
 				
-				this._mediaManager.resetMedia();
 				this.resetSearch();
+				this._mediaManager.resetMedia();
+			}
+		},
+		
+		/**
+		 * Hides the search string threshold error.
+		 */
+		_hideStringThresholdError: function() {
+			var innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, 'innerInfo');
+			if (innerInfo) {
+				elHide(innerInfo);
 			}
 		},
 		
@@ -69,43 +99,34 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 			if (EventKey.Enter(event)) {
 				event.preventDefault();
 				
-				var innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, 'innerInfo');
-				
 				if (this._input.value.length >= this._mediaManager.getOption('minSearchLength')) {
-					if (innerInfo) {
-						elHide(innerInfo);
-					}
+					this._hideStringThresholdError();
 					
-					this._search();
+					this.search();
 				}
 				else {
-					if (innerInfo) {
-						elShow(innerInfo);
-					}
-					else {
-						innerInfo = elCreate('p');
-						innerInfo.className = 'innerInfo';
-						innerInfo.textContent = Language.get('wcf.media.search.info.searchStringThreshold');
-						
-						DomUtil.insertAfter(innerInfo, this._input.parentNode);
-					}
+					this._showStringThresholdError();
 				}
 			}
 		},
 		
 		/**
-		 * Sends an AJAX request to fetch search results.
+		 * Shows the search string threshold error.
 		 */
-		_search: function() {
-			this._searchMode = true;
-			
-			Ajax.api(this, {
-				parameters: {
-					imagesOnly: this._mediaManager.getOption('imagesOnly'),
-					mode: this._mediaManager.getMode(),
-					searchString: this._input.value
-				}
-			});
+		_showStringThresholdError: function() {
+			var innerInfo = DomTraverse.childByClass(this._input.parentNode.parentNode, 'innerInfo');
+			if (innerInfo) {
+				elShow(innerInfo);
+			}
+			else {
+				innerInfo = elCreate('p');
+				innerInfo.className = 'innerInfo';
+				innerInfo.textContent = Language.get('wcf.media.search.info.searchStringThreshold', {
+					minSearchLength: this._mediaManager.getOption('minSearchLength')
+				});
+				
+				DomUtil.insertAfter(innerInfo, this._input.parentNode);
+			}
 		},
 		
 		/**
@@ -127,7 +148,40 @@ define(['Ajax', 'Core', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language', 'Ui/
 		 */
 		showSearch: function() {
 			elShow(this._searchContainer);
-		}
+		},
+		
+		/**
+		 * Sends an AJAX request to fetch search results.
+		 * 
+		 * @param	{integer}	pageNo
+		 */
+		search: function(pageNo) {
+			if (typeof pageNo !== "number") {
+				pageNo = 1;
+			}
+			
+			var searchString = this._input.value;
+			if (searchString && this._input.value.length < this._mediaManager.getOption('minSearchLength')) {
+				this._showStringThresholdError();
+				
+				searchString = '';
+			}
+			else {
+				this._hideStringThresholdError();
+			}
+			
+			this._searchMode = true;
+			
+			Ajax.api(this, {
+				parameters: {
+					categoryID: this._mediaManager.getCategoryId(),
+					imagesOnly: this._mediaManager.getOption('imagesOnly'),
+					mode: this._mediaManager.getMode(),
+					pageNo: pageNo,
+					searchString: searchString
+				}
+			});
+		},
 	};
 	
 	return MediaManagerSearch;

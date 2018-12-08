@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Handles language related functions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Language
  */
@@ -281,6 +281,23 @@ class LanguageFactory extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns the list of content language ids.
+	 * 
+	 * @return      integer[]
+	 * @since       3.1
+	 */
+	public function getContentLanguageIDs() {
+		$languageIDs = [];
+		foreach ($this->getLanguages() as $language) {
+			if ($language->hasContent) {
+				$languageIDs[] = $language->languageID;
+			}
+		}
+		
+		return $languageIDs;
+	}
+	
+	/**
 	 * Makes given language the default language.
 	 * 
 	 * @param	integer		$languageID
@@ -323,5 +340,20 @@ class LanguageFactory extends SingletonFactory {
 	 */
 	public function multilingualismEnabled() {
 		return $this->cache['multilingualismEnabled'];
+	}
+	
+	/**
+	 * Returns the number of phrases that have been automatically disabled in the past 7 days.
+	 * 
+	 * @return      integer
+	 */
+	public function countRecentlyDisabledCustomValues() {
+		$sql = "SELECT  COUNT(*) AS count
+			FROM    wcf".WCF_N."_language_item
+			WHERE   languageCustomItemDisableTime >= ?";
+		$statement = WCF::getDB()->prepareStatement($sql, 1);
+		$statement->execute([TIME_NOW - 86400 * 7]);
+		
+		return $statement->fetchSingleColumn();
 	}
 }

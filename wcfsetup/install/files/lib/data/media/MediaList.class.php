@@ -7,7 +7,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
  * Represents a list of media files.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Media
  * @since	3.0
@@ -29,6 +29,8 @@ class MediaList extends DatabaseObjectList {
 	 * @param	string		$searchString
 	 */
 	public function addSearchConditions($searchString) {
+		if ($searchString === '') return;
+		
 		$searchString = '%'.addcslashes($searchString, '_%').'%';
 		
 		$this->sqlConditionJoins .= ' LEFT JOIN wcf'.WCF_N.'_media_content media_content ON (media_content.mediaID = media.mediaID)';

@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Handles boxes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
@@ -53,20 +53,10 @@ class BoxHandler extends SingletonFactory {
 			}
 		}
 		
-		// load box layout for active page
-		$boxList = new BoxList();
-		$boxList->enableContentLoading();
-		if ($pageID) $boxList->getConditionBuilder()->add('(box.visibleEverywhere = ? AND boxID NOT IN (SELECT boxID FROM wcf'.WCF_N.'_box_to_page WHERE pageID = ? AND visible = ?)) OR boxID IN (SELECT boxID FROM wcf'.WCF_N.'_box_to_page WHERE pageID = ? AND visible = ?)', [1, $pageID, 0, $pageID, 1]);
-		else $boxList->getConditionBuilder()->add('box.visibleEverywhere = ?', [1]);
-		$boxList->sqlOrderBy = 'showOrder';
-		$boxList->readObjects();
-		
-		$this->boxes = $boxList->getObjects();
-		foreach ($boxList as $box) {
-			if ($box->isAccessible()) {
-				if (!isset($this->boxesByPosition[$box->position])) $this->boxesByPosition[$box->position] = [];
-				$this->boxesByPosition[$box->position][] = $box;
-				
+		$this->boxesByPosition = self::loadBoxes($pageID, true);
+		foreach ($this->boxesByPosition as $boxes) {
+			foreach ($boxes as $box) {
+				$this->boxes[$box->boxID] = $box;
 				$this->boxesByIdentifier[$box->identifier] = $box;
 			}
 		}
@@ -201,9 +191,95 @@ class BoxHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns true if the left sidebar contains at least one visible menu.
+	 * 
+	 * @return      boolean
+	 * @since       3.1
+	 */
+	public function sidebarLeftHasMenu() {
+		foreach ($this->getBoxes('sidebarLeft') as $box) {
+			if ($box->getMenu() && $box->getMenu()->hasContent()) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
 	 * Disables the loading of the box layout for the active page.
 	 */
 	public static function disablePageLayout() {
 		self::$disablePageLayout = true;
+	}
+	
+	/**
+	 * Returns the list of boxes sorted by their global and page-local show order.
+	 * 
+	 * @param       integer         $pageID         page id
+	 * @param       boolean         $forDisplay     enables content loading and removes inaccessible boxes from view
+	 * @return      Box[][]
+	 */
+	public static function loadBoxes($pageID, $forDisplay) {
+		// load box layout for active page
+		$boxList = new BoxList();
+		if ($pageID) $boxList->getConditionBuilder()->add('(box.visibleEverywhere = ? AND boxID NOT IN (SELECT boxID FROM wcf'.WCF_N.'_box_to_page WHERE pageID = ? AND visible = ?)) OR boxID IN (SELECT boxID FROM wcf'.WCF_N.'_box_to_page WHERE pageID = ? AND visible = ?)', [1, $pageID, 0, $pageID, 1]);
+		else $boxList->getConditionBuilder()->add('box.visibleEverywhere = ?', [1]);
+		
+		if ($forDisplay) $boxList->enableContentLoading();
+		
+		$boxList->readObjects();
+		
+		$showOrders = [];
+		if ($pageID) {
+			$sql = "SELECT  boxID, showOrder
+				FROM    wcf" . WCF_N . "_page_box_order
+				WHERE   pageID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$pageID]);
+			while ($row = $statement->fetchArray()) {
+				$showOrders[$row['boxID']] = $row['showOrder'];
+			}
+		}
+		
+		$boxes = [];
+		foreach ($boxList as $box) {
+			if (!$forDisplay || $box->isAccessible()) {
+				$virtualShowOrder = (isset($showOrders[$box->boxID])) ? $showOrders[$box->boxID] : ($box->showOrder + 1000);
+				$box->setVirtualShowOrder($virtualShowOrder);
+				
+				if (!isset($boxes[$box->position])) $boxes[$box->position] = [];
+				$boxes[$box->position][] = $box;
+			}
+		}
+		
+		foreach ($boxes as &$positionBoxes) {
+			usort($positionBoxes, function($a, $b) {
+				if ($a->virtualShowOrder == $b->virtualShowOrder) {
+					return 0;
+				}
+				
+				return ($a->virtualShowOrder < $b->virtualShowOrder) ? -1 : 1;
+			});
+		}
+		unset($positionBoxes);
+		
+		return $boxes;
+	}
+	
+	/**
+	 * Returns true if provided page id uses a custom box show order.
+	 * 
+	 * @param       integer         $pageID         page id
+	 * @return      boolean         true if there is a custom show order for boxes
+	 */
+	public static function hasCustomShowOrder($pageID) {
+		$sql = "SELECT  COUNT(*) AS count
+			FROM    wcf".WCF_N."_page_box_order
+			WHERE   pageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$pageID]);
+		
+		return $statement->fetchSingleColumn() > 0;
 	}
 }

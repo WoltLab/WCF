@@ -2,17 +2,26 @@
  * Provides an item list for users and groups.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/ItemList/User
  */
 define(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 	"use strict";
 	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			getValues: function() {}
+		};
+		return Fake;
+	}
+	
 	/**
 	 * @exports	WoltLabSuite/Core/Ui/ItemList/User
 	 */
-	var UiItemListUser = {
+	return {
 		/**
 		 * Initializes user suggestion support for an element.
 		 * 
@@ -44,6 +53,4 @@ define(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 			return UiItemList.getValues(elementId);
 		}
 	};
-	
-	return UiItemListUser;
 });

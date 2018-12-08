@@ -8,7 +8,7 @@ use wcf\util\StringUtil;
  * Parses the [wsp] bbcode tag.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  * @since       3.0
@@ -23,10 +23,12 @@ class WoltLabSuitePageBBCode extends AbstractBBCode {
 			return '';
 		}
 		
+		$title = (!empty($openingTag['attributes'][1])) ? StringUtil::trim($openingTag['attributes'][1]) : '';
+		
 		/** @var Page $page */
 		$page = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.page', $pageID);
 		if ($page !== null) {
-			return StringUtil::getAnchorTag($page->getLink(), $page->getTitle());
+			return StringUtil::getAnchorTag($page->getLink(), $title ?: $page->getTitle());
 		}
 		
 		return '';

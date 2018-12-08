@@ -20,4 +20,14 @@
 	> .inputAddon {
 		margin-top: 5px;
 	}
+	
+	.scrollableCheckboxList {
+		&[data-filter="highlightActive"] > li:not(.active) {
+			opacity: .6;
+		}
+		
+		&[data-filter="activeOnly"] > li:not(.active) {
+			display: none;
+		}
+	}
 }

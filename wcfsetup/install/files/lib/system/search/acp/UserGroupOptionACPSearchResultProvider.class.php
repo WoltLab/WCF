@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * ACP search provider implementation for user group options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Search\Acp
  */
@@ -33,21 +33,21 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
 		$conditions->add("languageItem LIKE ?", ['wcf.acp.group.option.%']);
 		$conditions->add("languageItemValue LIKE ?", ['%'.$query.'%']);
 		
-		$sql = "SELECT		languageItem, languageItemValue
+		$sql = "SELECT		languageItem
 			FROM		wcf".WCF_N."_language_item
 			".$conditions."
 			ORDER BY	languageItemValue ASC";
 		$statement = WCF::getDB()->prepareStatement($sql); // don't use a limit here
 		$statement->execute($conditions->getParameters());
 		$languageItems = [];
-		while ($row = $statement->fetchArray()) {
+		while ($languageItem = $statement->fetchColumn()) {
 			// ignore descriptions
-			if (substr($row['languageItem'], -12) == '.description') {
+			if (substr($languageItem, -12) == '.description') {
 				continue;
 			}
 			
-			$itemName = preg_replace('~^([a-z]+)\.acp\.group\.option\.~', '', $row['languageItem']);
-			$languageItems[$itemName] = $row['languageItemValue'];
+			$itemName = preg_replace('~^([a-z]+)\.acp\.group\.option\.~', '', $languageItem);
+			$languageItems[$itemName] = $languageItem;
 		}
 		
 		if (empty($languageItems)) {
@@ -85,9 +85,11 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
 				$categoryName = $optionCategories[$categoryName]->parentCategoryName;
 			}
 			
-			$results[] = new ACPSearchResult($languageItems[$userGroupOption->optionName], $link, WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', [
-				'pieces' => $parentCategories
-			]));
+			$results[] = new ACPSearchResult(
+				WCF::getLanguage()->getDynamicVariable($languageItems[$userGroupOption->optionName]),
+				$link,
+				WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', ['pieces' => $parentCategories])
+			);
 		}
 		
 		return $results;

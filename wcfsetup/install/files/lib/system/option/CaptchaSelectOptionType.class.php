@@ -2,6 +2,7 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\captcha\CaptchaHandler;
+use wcf\system\captcha\RecaptchaHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
@@ -9,7 +10,7 @@ use wcf\system\WCF;
  * Option type implementation for selecting a captcha type.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -18,6 +19,7 @@ class CaptchaSelectOptionType extends AbstractOptionType {
 	 * @inheritDoc
 	 */
 	public function getFormElement(Option $option, $value) {
+		RecaptchaHandler::$forceIsAvailable = true;
 		$selectOptions = CaptchaHandler::getInstance()->getCaptchaSelection();
 		/** @noinspection PhpUndefinedFieldInspection */
 		if ($option->allowemptyvalue) {
@@ -79,6 +81,7 @@ class CaptchaSelectOptionType extends AbstractOptionType {
 	public function validate(Option $option, $newValue) {
 		if (!$newValue) return;
 		
+		RecaptchaHandler::$forceIsAvailable = true;
 		$selection = CaptchaHandler::getInstance()->getCaptchaSelection();
 		if (!isset($selection[$newValue])) {
 			throw new UserInputException($option->optionName);

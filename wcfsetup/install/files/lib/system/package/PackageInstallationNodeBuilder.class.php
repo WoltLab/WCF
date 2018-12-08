@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Creates a logical node-based installation tree.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */
@@ -623,7 +623,7 @@ class PackageInstallationNodeBuilder {
 	
 	/**
 	 * Builds nodes for optional packages, whereas each package exists within
-	 * one node with the same parent node, seperated by sequence no (which does
+	 * one node with the same parent node, separated by sequence no (which does
 	 * not really matter at this point).
 	 */
 	protected function buildOptionalNodes() {

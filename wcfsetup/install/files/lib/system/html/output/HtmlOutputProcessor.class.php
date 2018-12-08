@@ -8,7 +8,7 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
  * Processes stored HTML for final display.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2017 WoltLab GmbH
+ * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output
  * @since       3.0
@@ -19,6 +19,12 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	 * @var	HtmlOutputNodeProcessor
 	 */
 	protected $htmlOutputNodeProcessor;
+	
+	/**
+	 * content language id
+	 * @var integer
+	 */
+	protected $languageID;
 	
 	/**
 	 * desired output type
@@ -32,9 +38,11 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	 * @param       string          $html                           html string
 	 * @param       string          $objectType                     object type identifier
 	 * @param       integer         $objectID                       object id
-	 * @param	boolean		$doKeywordHighlighting                                   
+	 * @param	boolean		$doKeywordHighlighting          enable keyword highlighting
+	 * @param       integer         $languageID                     content language id
 	 */
-	public function process($html, $objectType, $objectID, $doKeywordHighlighting = true) {
+	public function process($html, $objectType, $objectID, $doKeywordHighlighting = true, $languageID = null) {
+		$this->languageID = $languageID;
 		$this->setContext($objectType, $objectID);
 		
 		$this->getHtmlOutputNodeProcessor()->setOutputType($this->outputType);
@@ -71,7 +79,7 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	public function setContext($objectType, $objectID) {
 		parent::setContext($objectType, $objectID);
 		
-		MessageEmbeddedObjectManager::getInstance()->setActiveMessage($objectType, $objectID);
+		MessageEmbeddedObjectManager::getInstance()->setActiveMessage($objectType, $objectID, $this->languageID);
 	}
 	
 	/**

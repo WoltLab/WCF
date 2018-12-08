@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Represents a cms article.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
@@ -27,6 +27,8 @@ use wcf\system\WCF;
  * @property-read	integer		$comments		number of comments on the article
  * @property-read	integer		$views			number of times the article has been viewed
  * @property-read	integer		$cumulativeLikes	cumulative result of likes (counting `+1`) and dislikes (counting `-1`) for the article
+ * @property-read	integer		$isDeleted		is 1 if the article is in trash bin, otherwise 0
+ * @property-read	integer		$hasLabels		is `1` if labels are assigned to the article
  */
 class Article extends DatabaseObject implements ILinkableObject {
 	/**
@@ -81,6 +83,10 @@ class Article extends DatabaseObject implements ILinkableObject {
 	 * @return	boolean
 	 */
 	public function canRead() {
+		if ($this->isDeleted && !WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
+			return false;
+		}
+		
 		if ($this->publicationStatus != self::PUBLISHED) {
 			if (!WCF::getSession()->getPermission('admin.content.article.canManageArticle') && (!WCF::getSession()->getPermission('admin.content.article.canContributeArticle') || $this->userID != WCF::getUser()->userID)) {
 				return false;

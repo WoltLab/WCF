@@ -2,12 +2,25 @@
  * Simple notification overlay.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/User/Editor
  */
 define(['Ajax', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', 'Ui/Notification'], function(Ajax, Language, StringUtil, DomUtil, UiDialog, UiNotification) {
 	"use strict";
+	
+	if (!COMPILER_TARGET_DEFAULT) {
+		var Fake = function() {};
+		Fake.prototype = {
+			init: function() {},
+			_click: function() {},
+			_submit: function() {},
+			_ajaxSuccess: function() {},
+			_ajaxSetup: function() {},
+			_dialogSetup: function() {}
+		};
+		return Fake;
+	}
 	
 	var _actionName = '';
 	var _userHeader = null;
@@ -92,19 +105,17 @@ define(['Ajax', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', 'Ui/Notificat
 			event.preventDefault();
 			
 			var label = elById('wcfUiUserEditorExpiresLabel');
-			var innerError = label.previousElementSibling;
-			if (innerError.classList.contains('innerError')) elRemove(innerError);
 			
 			var expires = '';
+			var errorMessage = '';
 			if (!elById('wcfUiUserEditorNeverExpires').checked) {
 				expires = elById('wcfUiUserEditorExpiresDatePicker').value;
 				if (expires === '') {
-					innerError = elCreate('small');
-					innerError.className = 'innerError';
-					innerError.textContent = Language.get('wcf.global.form.error.empty');
-					label.parentNode.insertBefore(innerError, label);
+					errorMessage = Language.get('wcf.global.form.error.empty');
 				}
 			}
+			
+			elInnerError(label, errorMessage);
 			
 			var parameters = {};
 			parameters[_actionName + 'Expires'] = expires;

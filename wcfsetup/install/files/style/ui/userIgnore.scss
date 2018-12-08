@@ -11,19 +11,31 @@
 }
 
 .ignoredUserMessage {
-	background-color: $wcfStatusInfoBackground !important;
-	border-left: 5px solid $wcfStatusInfoBorder !important;
-	color: $wcfStatusInfoText !important;
-	cursor: pointer !important;
-	
-	&::before {
-		content: attr(data-ignored-user-message);
+	@include screen-md-up {
+		background-color: $wcfStatusInfoBackground !important;
+		border-left: 5px solid $wcfStatusInfoBorder !important;
+		color: $wcfStatusInfoText !important;
+		cursor: pointer !important;
 		
-		@include screen-md-up {
+		&::before {
+			content: attr(data-ignored-user-message);
 			padding: 10px 20px;
+			
 		}
+	}	
+	
+	@include screen-sm-down {
+		border-top: 1px solid $wcfContentBorder;
+		margin: 0 -10px;
+		padding-top: 30px;
 		
-		@include screen-sm-down {
+		&::before {
+			background-color: $wcfStatusInfoBackground !important;
+			border-left: 5px solid $wcfStatusInfoBorder !important;
+			color: $wcfStatusInfoText !important;
+			content: attr(data-ignored-user-message);
+			cursor: pointer !important;
+			display: block;
 			padding: 10px;
 		}
 	}

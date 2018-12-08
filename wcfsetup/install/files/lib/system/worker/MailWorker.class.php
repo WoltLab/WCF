@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * Worker implementation for sending mails.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Worker
  */
@@ -109,7 +109,7 @@ class MailWorker extends AbstractWorker {
 	public function execute() {
 		$email = new Email();
 		$email->setSubject($this->mailData['subject']);
-		$from = new Mailbox($this->mailData['from']);
+		$from = new Mailbox($this->mailData['from'], (!empty($this->mailData['fromName']) ? $this->mailData['fromName'] : null));
 		$email->setSender($from);
 		$email->setReplyTo($from);
 		$variables = [

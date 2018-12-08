@@ -10,7 +10,7 @@ use wcf\system\SingletonFactory;
  * Abstract implementation of a label object handler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Label\Object
  */
@@ -116,7 +116,7 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 		foreach ($this->labelGroups as $labelGroup) {
 			if ($labelGroup->forceSelection && !in_array($labelGroup->groupID, $satisfiedGroups)) {
 				// check if group wasn't set, but is not accessible for this user anyway
-				if (!$labelGroup->getPermission($optionID)) {
+				if ($labelGroup->hasPermissions() && !$labelGroup->getPermission($optionID)) {
 					continue;
 				}
 				
@@ -146,7 +146,8 @@ abstract class AbstractLabelObjectHandler extends SingletonFactory implements IL
 	 * @inheritDoc
 	 */
 	public function removeLabels($objectID, $validatePermissions = true) {
-		LabelHandler::getInstance()->removeLabels($this->objectTypeID, $objectID);
+		$objectIDs = (is_array($objectID)) ? $objectID : [$objectID];
+		LabelHandler::getInstance()->removeLabels($this->objectTypeID, $objectIDs);
 	}
 	
 	/**

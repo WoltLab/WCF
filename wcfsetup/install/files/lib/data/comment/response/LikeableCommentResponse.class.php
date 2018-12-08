@@ -3,7 +3,6 @@ namespace wcf\data\comment\response;
 use wcf\data\comment\Comment;
 use wcf\data\like\object\AbstractLikeObject;
 use wcf\data\like\Like;
-use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\comment\CommentHandler;
 use wcf\system\user\notification\object\LikeUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
@@ -13,7 +12,7 @@ use wcf\system\WCF;
  * Likeable object implementation for comment responses.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Comment\Response
  * 
@@ -25,17 +24,6 @@ class LikeableCommentResponse extends AbstractLikeObject {
 	 * @inheritDoc
 	 */
 	protected static $baseClass = CommentResponse::class;
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getObjectType() {
-		if ($this->objectType === null) {
-			$this->objectType = ObjectTypeCache::getInstance()->getObjectType($this->getDecoratedObject()->objectTypeID);
-		}
-		
-		return $this->objectType;
-	}
 	
 	/**
 	 * @inheritDoc

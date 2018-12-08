@@ -17,6 +17,18 @@
 			
 			new WCF.ACP.User.Group.Copy({@$groupID});
 		{/if}
+		
+		{if $action === 'add' && $isBlankForm}
+			elBySelAll('.jsBbcodeSelectOptionHtml input[type="checkbox"]', undefined, function (checkbox) {
+				checkbox.checked = true;
+			});
+		{elseif $action == 'edit' && ($groupIsEveryone || $groupIsGuest || $groupIsUsers)}
+			elBySelAll('.jsBbcodeSelectOptionHtml', undefined, function (bbcodeHtml) {
+				elBySel('input[type="checkbox"]', bbcodeHtml).checked = true;
+				
+				elHide(bbcodeHtml);
+			});
+		{/if}
 	});
 </script>
 
@@ -54,6 +66,10 @@
 </header>
 
 {include file='formError'}
+
+{if VISITOR_USE_TINY_BUILD && $groupIsGuest}
+	<p class="warning">{lang}wcf.acp.group.excludedInTinyBuild.notice{/lang}</p>
+{/if}
 
 {if $warningSelfEdit|isset}
 	<p class="warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</p>
@@ -165,7 +181,7 @@
 					<div id="{@$categoryLevel1[object]->categoryName}-{@$categoryLevel2[object]->categoryName}" class="tabMenuContent hidden">
 						{if $categoryLevel2[options]|count}
 							<div class="section">
-								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.'}
+								{include file='optionFieldList' options=$categoryLevel2[options] langPrefix='wcf.acp.group.option.' isGuestGroup=$groupIsGuest}
 							</div>
 						{/if}
 						
@@ -177,7 +193,7 @@
 										{hascontent}<p class="sectionDescription">{content}{lang __optional=true}wcf.acp.group.option.category.{@$categoryLevel3[object]->categoryName}.description{/lang}{/content}</p>{/hascontent}
 									</header>
 										
-									{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.acp.group.option.'}
+									{include file='optionFieldList' options=$categoryLevel3[options] langPrefix='wcf.acp.group.option.' isGuestGroup=$groupIsGuest}
 								</section>
 							{/foreach}
 						{/if}

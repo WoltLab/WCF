@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Represents an ACP session.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Acp\Session
  *
@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @property-read	integer|null	$userID			id of the user the acp session belongs to or `null` if the acp session belongs to a guest
  * @property-read	string		$ipAddress		id of the user whom the acp session belongs to
  * @property-read	string		$userAgent		user agent of the user whom the acp session belongs to
- * @property-read	integer		$lastActivityTime	timestamp at which the latest activity occured
+ * @property-read	integer		$lastActivityTime	timestamp at which the latest activity occurred
  * @property-read	string		$requestURI		uri of the latest request
  * @property-read	string		$requestMethod		used request method of the latest request (`GET`, `POST`)
  * @property-read	string		$sessionVariables	serialized array with variables stored on a session-basis

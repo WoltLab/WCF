@@ -19,8 +19,30 @@
 {/if}
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Ui/User/Search/Input'], function(UiUserSearchInput) {
+	require(['Language', 'WoltLabSuite/Core/Ui/User/Search/Input', 'WoltLabSuite/Core/Acp/Ui/Article/InlineEditor'], function(Language, UiUserSearchInput, AcpUiArticleInlineEditor) {
+		Language.addObject({
+			'wcf.acp.article.i18n.source': '{lang}wcf.acp.article.i18n.source{/lang}',
+			'wcf.acp.article.i18n.toI18n.confirmMessage': '{lang}wcf.acp.article.i18n.toI18n.confirmMessage{/lang}',
+			'wcf.acp.article.i18n.fromI18n.confirmMessage': '{lang}wcf.acp.article.i18n.fromI18n.confirmMessage{/lang}',
+			'wcf.message.status.deleted': '{lang}wcf.message.status.deleted{/lang}',
+			'wcf.page.search': '{lang}wcf.page.search{/lang}',
+			'wcf.page.search.error.tooShort': '{lang}wcf.page.search.error.tooShort{/lang}',
+			'wcf.page.search.error.noResults': '{lang}wcf.page.search.error.noResults{/lang}',
+			'wcf.page.search.name': '{lang}wcf.page.search.name{/lang}',
+			'wcf.page.search.results': '{lang}wcf.page.search.results{/lang}'
+		});
+		
 		new UiUserSearchInput(elBySel('input[name="username"]'));
+		{if $action == 'edit'}
+			new AcpUiArticleInlineEditor({@$article->articleID}, {
+				i18n: {
+					defaultLanguageId: {@$defaultLanguageID},
+					isI18n: {if $article->isMultilingual}true{else}false{/if},
+					languages: { {implode from=$languages item=language glue=', '}{@$language->languageID}: '{$language|encodeJS}'{/implode} }
+				},
+				redirectUrl: '{link controller='ArticleList'}{/link}'
+			});
+		{/if}
 	});
 </script>
 
@@ -45,6 +67,14 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
+				{if $article->canDelete()}
+					<li><a href="#" class="button jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.global.button.restore{/lang}</span></a></li>
+					<li><a href="#" class="button jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.delete{/lang}</span></a></li>
+					<li><a href="#" class="button jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.trash{/lang}</span></a></li>
+				{/if}
+				{if $languages|count > 1 || $article->isMultilingual}
+					<li><a href="#" class="button jsButtonToggleI18n"><span class="icon icon16 fa-flag"></span> <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></a></li>
+				{/if}
 				<li><a href="{$article->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.article.button.viewArticle{/lang}</span></a></li>
 			{/if}
 			<li><a href="{link controller='ArticleList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.article.list{/lang}</span></a></li>
@@ -60,7 +90,13 @@
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
 
-<form method="post" action="{if $action == 'add'}{link controller='ArticleAdd'}{/link}{else}{link controller='ArticleEdit' id=$articleID}{/link}{/if}">
+{if $action == 'edit'}
+	<p class="info jsArticleNoticeTrash"{if !$article->isDeleted} style="display: none;"{/if}>{lang}wcf.acp.article.trash.notice{/lang}</p>
+	
+	{if $lastVersion}<p class="info">{lang}wcf.acp.article.lastVersion{/lang}</p>{/if}
+{/if}
+
+<form class="articleAddForm" method="post" action="{if $action == 'add'}{link controller='ArticleAdd'}{/link}{else}{link controller='ArticleEdit' id=$articleID}{/link}{/if}">
 	<div class="section">
 		<dl{if $errorField == 'categoryID'} class="formError"{/if}>
 			<dt><label for="categoryID">{lang}wcf.acp.article.category{/lang}</label></dt>
@@ -83,6 +119,48 @@
 				{/if}
 			</dd>
 		</dl>
+		
+		{event name='categoryFields'}
+		
+		{if $labelGroups|count}
+			{foreach from=$labelGroups item=labelGroup}
+				{if $labelGroup|count}
+					<dl{if $errorField == 'label' && $errorType[$labelGroup->groupID]|isset} class="formError"{/if}>
+						<dt><label>{$labelGroup->getTitle()}</label></dt>
+						<dd>
+							<ul class="labelList jsOnly" data-object-id="{@$labelGroup->groupID}">
+								<li class="dropdown labelChooser" id="labelGroup{@$labelGroup->groupID}" data-group-id="{@$labelGroup->groupID}" data-force-selection="{if $labelGroup->forceSelection}true{else}false{/if}">
+									<div class="dropdownToggle" data-toggle="labelGroup{@$labelGroup->groupID}"><span class="badge label">{lang}wcf.label.none{/lang}</span></div>
+									<div class="dropdownMenu">
+										<ul class="scrollableDropdownMenu">
+											{foreach from=$labelGroup item=label}
+												<li data-label-id="{@$label->labelID}"><span><span class="badge label{if $label->getClassNames()} {@$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></span></li>
+											{/foreach}
+										</ul>
+									</div>
+								</li>
+							</ul>
+							<noscript>
+								<select name="labelIDs[{@$labelGroup->groupID}]">
+									{foreach from=$labelGroup item=label}
+										<option value="{@$label->labelID}">{lang}{$label->label}{/lang}</option>
+									{/foreach}
+								</select>
+							</noscript>
+							{if $errorField == 'label' && $errorType[$labelGroup->groupID]|isset}
+								<small class="innerError">
+									{if $errorType[$labelGroup->groupID] == 'missing'}
+										{lang}wcf.label.error.missing{/lang}
+									{else}
+										{lang}wcf.label.error.invalid{/lang}
+									{/if}
+								</small>
+							{/if}
+						</dd>
+					</dl>
+				{/if}
+			{/foreach}
+		{/if}
 		
 		<dl{if $errorField == 'username'} class="formError"{/if}>
 			<dt><label for="username">{lang}wcf.acp.article.author{/lang}</label></dt>
@@ -178,6 +256,31 @@
 				</dl>
 			{/if}
 			
+			{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+				<dl{if $errorField == 'teaserImage'} class="formError"{/if}>
+					<dt><label for="teaserImage">{lang}wcf.acp.article.teaserImage{/lang}</label></dt>
+					<dd>
+						<div id="teaserImageDisplay" class="selectedImagePreview">
+							{if $teaserImages[0]|isset && $teaserImages[0]->hasThumbnail('small')}
+								{@$teaserImages[0]->getThumbnailTag('small')}
+							{/if}
+						</div>
+						<p class="button jsMediaSelectButton" data-store="teaserImageID0" data-display="teaserImageDisplay">{lang}wcf.media.chooseImage{/lang}</p>
+						<input type="hidden" name="teaserImageID[0]" id="teaserImageID0"{if $teaserImageID[0]|isset} value="{@$teaserImageID[0]}"{/if}>
+						{if $errorField == 'teaserImage'}
+							<small class="innerError">{lang}wcf.acp.article.image.error.{@$errorType}{/lang}</small>
+						{/if}
+					</dd>
+				</dl>
+			{elseif $action == 'edit' && $teaserImages[0]|isset && $teaserImages[0]->hasThumbnail('small')}
+				<dl>
+					<dt>{lang}wcf.acp.article.teaserImage{/lang}</dt>
+					<dd>
+						<div id="teaserImageDisplay">{@$teaserImages[0]->getThumbnailTag('small')}</div>
+					</dd>
+				</dl>
+			{/if}
+			
 			<dl{if $errorField == 'title'} class="formError"{/if}>
 				<dt><label for="title0">{lang}wcf.global.title{/lang}</label></dt>
 				<dd>
@@ -207,7 +310,7 @@
 					require(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 						UiItemList.init(
 							'tagSearchInput',
-							[{if !$tags[0]|empty}{implode from=$tags[0] item=tag}'{$tag|encodeJS}'{/implode}{/if}],
+							[{if !$tags[0]|empty}{implode from=$tags[0] item=tag}'{@$tag|encodeJS}'{/implode}{/if}],
 							{
 								ajax: {
 									className: 'wcf\\data\\tag\\TagAction'
@@ -219,6 +322,8 @@
 					});
 				</script>
 			{/if}
+			
+			{event name='informationFields'}
 			
 			<dl{if $errorField == 'teaser'} class="formError"{/if}>
 				<dt><label for="teaser0">{lang}wcf.acp.article.teaser{/lang}</label></dt>
@@ -240,7 +345,18 @@
 				<dt><label for="content0">{lang}wcf.acp.article.content{/lang}</label></dt>
 				<dd>
 					<textarea name="content[0]" id="content0" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-0">{if !$content[0]|empty}{$content[0]}{/if}</textarea>
+					
+					{capture append='__redactorJavaScript'}, '{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabPage.js?v={@LAST_UPDATE_TIME}'{/capture}
+					{capture append='__redactorConfig'}
+						buttonOptions.woltlabPage = { icon: 'fa-file-text-o', title: '{lang}wcf.editor.button.page{/lang}' };
+						
+						buttons.push('woltlabPage');
+						
+						config.plugins.push('WoltLabPage');
+					{/capture}
+					
 					{include file='wysiwyg' wysiwygSelector='content0'}
+					
 					{if $errorField == 'content'}
 						<small class="innerError">
 							{if $errorType == 'empty'}
@@ -252,6 +368,8 @@
 					{/if}
 				</dd>
 			</dl>
+			
+			{event name='messageFields'}
 		</div>
 	{else}
 		<div class="section tabMenuContainer">
@@ -292,6 +410,31 @@
 							</dl>
 						{/if}
 						
+						{if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}
+							<dl{if $errorField == 'image'|concat:$availableLanguage->languageID} class="formError"{/if}>
+								<dt><label for="teaserImage{@$availableLanguage->languageID}">{lang}wcf.acp.article.teaserImage{/lang}</label></dt>
+								<dd>
+									<div id="teaserImageDisplay{@$availableLanguage->languageID}">
+										{if $teaserImages[$availableLanguage->languageID]|isset && $teaserImages[$availableLanguage->languageID]->hasThumbnail('small')}
+											{@$teaserImages[$availableLanguage->languageID]->getThumbnailTag('small')}
+										{/if}
+									</div>
+									<p class="button jsMediaSelectButton" data-store="teaserImageID{@$availableLanguage->languageID}" data-display="teaserImageDisplay{@$availableLanguage->languageID}">{lang}wcf.media.chooseImage{/lang}</p>
+									<input type="hidden" name="teaserImageID[{@$availableLanguage->languageID}]" id="teaserImageID{@$availableLanguage->languageID}"{if $teaserImageID[$availableLanguage->languageID]|isset} value="{@$teaserImageID[$availableLanguage->languageID]}"{/if}>
+									{if $errorField == 'teaserImage'|concat:$availableLanguage->languageID}
+										<small class="innerError">{lang}wcf.acp.article.image.error.{@$errorType}{/lang}</small>
+									{/if}
+								</dd>
+							</dl>
+						{elseif $action == 'edit' && $teaserImages[$availableLanguage->languageID]|isset && $teaserImages[$availableLanguage->languageID]->hasThumbnail('small')}
+							<dl>
+								<dt>{lang}wcf.acp.article.teaserImage{/lang}</dt>
+								<dd>
+									<div id="imageDisplay">{@$teaserImages[$availableLanguage->languageID]->getThumbnailTag('small')}</div>
+								</dd>
+							</dl>
+						{/if}
+						
 						<dl{if $errorField == 'title'|concat:$availableLanguage->languageID} class="formError"{/if}>
 							<dt><label for="title{@$availableLanguage->languageID}">{lang}wcf.global.title{/lang}</label></dt>
 							<dd>
@@ -321,7 +464,7 @@
 								require(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 									UiItemList.init(
 										'tagSearchInput{@$availableLanguage->languageID}',
-										[{if !$tags[$availableLanguage->languageID]|empty}{implode from=$tags[$availableLanguage->languageID] item=tag}'{$tag|encodeJS}'{/implode}{/if}],
+										[{if !$tags[$availableLanguage->languageID]|empty}{implode from=$tags[$availableLanguage->languageID] item=tag}'{@$tag|encodeJS}'{/implode}{/if}],
 										{
 											ajax: {
 												className: 'wcf\\data\\tag\\TagAction'
@@ -333,6 +476,8 @@
 								});
 							</script>
 						{/if}
+						
+						{event name='informationFieldsMultilingual'}
 						
 						<dl{if $errorField == 'teaser'|concat:$availableLanguage->languageID} class="formError"{/if}>
 							<dt><label for="teaser{@$availableLanguage->languageID}">{lang}wcf.acp.article.teaser{/lang}</label></dt>
@@ -354,7 +499,18 @@
 							<dt><label for="content{@$availableLanguage->languageID}">{lang}wcf.acp.article.content{/lang}</label></dt>
 							<dd>
 								<textarea name="content[{@$availableLanguage->languageID}]" id="content{@$availableLanguage->languageID}" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-{@$availableLanguage->languageID}">{if !$content[$availableLanguage->languageID]|empty}{$content[$availableLanguage->languageID]}{/if}</textarea>
+								
+								{capture append='__redactorJavaScript'}, '{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabPage.js?v={@LAST_UPDATE_TIME}'{/capture}
+								{capture append='__redactorConfig'}
+									buttonOptions.woltlabPage = { icon: 'fa-file-text-o', title: '{lang}wcf.editor.button.page{/lang}' };
+									
+									buttons.push('woltlabPage');
+									
+									config.plugins.push('WoltLabPage');
+								{/capture}
+								
 								{include file='wysiwyg' wysiwygSelector='content'|concat:$availableLanguage->languageID}
+								
 								{if $errorField == 'content'|concat:$availableLanguage->languageID}
 									<small class="innerError">
 										{if $errorType == 'empty'}
@@ -366,17 +522,35 @@
 								{/if}
 							</dd>
 						</dl>
+						
+						{event name='messageFieldsMultilingual'}
 					</div>
 				</div>
 			{/foreach}
 		</div>
 	{/if}
 	
+	{event name='sections'}
+	
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		<input type="hidden" name="isMultilingual" value="{@$isMultilingual}">
+		<input type="hidden" name="timeNowReference" value="{@TIME_NOW}">
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
+
+{js application='wcf' file='WCF.Label' bundle='WCF.Combined'}
+<script data-relocate="true">
+	$(function() {
+		WCF.Language.addObject({
+			'wcf.label.none': '{lang}wcf.label.none{/lang}',
+		});
+		
+		{if !$labelGroups|empty}
+			new WCF.Label.ArticleLabelChooser({ {implode from=$labelGroupsToCategories key=__labelCategoryID item=labelGroupIDs}{@$__labelCategoryID}: [ {implode from=$labelGroupIDs item=labelGroupID}{@$labelGroupID}{/implode} ] {/implode} }, { {implode from=$labelIDs key=groupID item=labelID}{@$groupID}: {@$labelID}{/implode} }, '.articleAddForm');
+		{/if}
+	});
+</script>
 
 {include file='footer'}

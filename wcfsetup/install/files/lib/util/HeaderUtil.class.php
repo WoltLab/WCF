@@ -4,13 +4,14 @@ use wcf\system\application\ApplicationHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
+use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
 
 /**
  * Contains header-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -43,8 +44,12 @@ final class HeaderUtil {
 	public static function setCookie($name, $value = '', $expire = 0) {
 		$application = ApplicationHandler::getInstance()->getActiveApplication();
 		$addDomain = (mb_strpos($application->cookieDomain, '.') === false || StringUtil::endsWith($application->cookieDomain, '.lan') || StringUtil::endsWith($application->cookieDomain, '.local')) ? false : true;
+		$cookieDomain = $application->cookieDomain;
+		if ($addDomain && strpos($cookieDomain, ':') !== false) {
+			$cookieDomain = explode(':', $cookieDomain, 2)[0];
+		}
 		
-		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT; max-age='.($expire - TIME_NOW) : '').'; path=/'.($addDomain ? '; domain='.$application->cookieDomain : '').(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly', false);
+		@header('Set-Cookie: '.rawurlencode(COOKIE_PREFIX.$name).'='.rawurlencode($value).($expire ? '; expires='.gmdate('D, d-M-Y H:i:s', $expire).' GMT; max-age='.($expire - TIME_NOW) : '').'; path=/'.($addDomain ? '; domain='.$cookieDomain : '').(RouteHandler::secureConnection() ? '; secure' : '').'; HttpOnly', false);
 	}
 	
 	/**
@@ -60,10 +65,10 @@ final class HeaderUtil {
 		}
 		
 		if (HTTP_ENABLE_GZIP && !defined('HTTP_DISABLE_GZIP')) {
-			if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip')) {
+			if (function_exists('gzcompress') && !@ini_get('zlib.output_compression') && !@ini_get('output_handler') && isset($_SERVER['HTTP_ACCEPT_ENCODING']) && strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') !== false) {
 				self::$enableGzipCompression = true;
 				
-				if (strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip')) {
+				if (strpos($_SERVER['HTTP_ACCEPT_ENCODING'], 'x-gzip') !== false) {
 					@header('Content-Encoding: x-gzip');
 				}
 				else {
@@ -158,9 +163,14 @@ final class HeaderUtil {
 	 * @param	boolean		$temporaryRedirect 
 	 */
 	public static function redirect($location, $sendStatusCode = false, $temporaryRedirect = true) {
+		// https://github.com/WoltLab/WCF/issues/2568
+		if (SessionHandler::getInstance()->isFirstVisit()) {
+			SessionHandler::getInstance()->register('__wcfIsFirstVisit', true);
+		}
+		
 		if ($sendStatusCode) {
 			if ($temporaryRedirect) @header('HTTP/1.1 307 Temporary Redirect');
-			else @header('HTTP/1.0 301 Moved Permanently');
+			else @header('HTTP/1.1 301 Moved Permanently');
 		}
 		
 		header('Location: '.$location);

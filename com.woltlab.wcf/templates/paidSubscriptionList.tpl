@@ -42,7 +42,7 @@
 				<li>
 					<div class="containerHeadline">
 						<h3>{$subscription->title|language} <span class="badge label">{lang}wcf.paidSubscription.formattedCost{/lang}</span></h3>
-						<p>{@$subscription->description|language|newlineToBreak}</p>
+						<div class="htmlContent">{@$subscription->getFormattedDescription()}</div>
 					</div>
 					
 					<div class="containerContent">
@@ -67,7 +67,7 @@
 				<li>
 					<div class="containerHeadline">
 						<h3>{$userSubscription->getSubscription()->title|language}</h3>
-						<p>{@$userSubscription->getSubscription()->description|language|newlineToBreak}</p>
+						<div class="htmlContent">{@$userSubscription->getSubscription()->getFormattedDescription()}</div>
 					</div>
 					
 					{if $userSubscription->endDate}

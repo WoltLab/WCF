@@ -2,7 +2,7 @@
  * Provides the interface logic to add and edit boxes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Box/Handler
  */
@@ -28,43 +28,46 @@ define(['Dictionary', 'Language', 'WoltLabSuite/Core/Ui/Page/Search/Handler'], f
 		 * Initializes the interface logic.
 		 * 
 		 * @param       {Dictionary}    handlers        list of handlers by page id supporting page object ids
+		 * @param       {string}        boxType         box type
 		 */
-		init: function(handlers) {
+		init: function(handlers, boxType) {
 			_handlers = handlers;
 			
 			_boxController = elById('boxControllerID');
 			
-			_containerPageID = elById('linkPageIDContainer');
-			_containerExternalLink = elById('externalURLContainer');
-			_containerPageObjectId = elById('linkPageObjectIDContainer');
-			
-			if (_handlers.size) {
-				_pageId = elById('linkPageID');
-				_pageId.addEventListener('change', this._togglePageId.bind(this));
+			if (boxType !== 'system') {
+				_containerPageID = elById('linkPageIDContainer');
+				_containerExternalLink = elById('externalURLContainer');
+				_containerPageObjectId = elById('linkPageObjectIDContainer');
 				
-				_pageObjectId = elById('linkPageObjectID');
-				
-				_cache = new Dictionary();
-				_activePageId = ~~_pageId.value;
-				if (_activePageId && _handlers.has(_activePageId)) {
-					_cache.set(_activePageId, ~~_pageObjectId.value);
+				if (_handlers.size) {
+					_pageId = elById('linkPageID');
+					_pageId.addEventListener('change', this._togglePageId.bind(this));
+					
+					_pageObjectId = elById('linkPageObjectID');
+					
+					_cache = new Dictionary();
+					_activePageId = ~~_pageId.value;
+					if (_activePageId && _handlers.has(_activePageId)) {
+						_cache.set(_activePageId, ~~_pageObjectId.value);
+					}
+					
+					elById('searchLinkPageObjectID').addEventListener(WCF_CLICK_EVENT, this._openSearch.bind(this));
+					
+					// toggle page object id container on init
+					if (_handlers.has(~~_pageId.value)) {
+						elShow(_containerPageObjectId);
+					}
 				}
 				
-				elById('searchLinkPageObjectID').addEventListener(WCF_CLICK_EVENT, this._openSearch.bind(this));
-				
-				// toggle page object id container on init
-				if (_handlers.has(~~_pageId.value)) {
-					elShow(_containerPageObjectId);
-				}
+				elBySelAll('input[name="linkType"]', null, (function (input) {
+					input.addEventListener('change', this._toggleLinkType.bind(this, input.value));
+					
+					if (input.checked) {
+						this._toggleLinkType(input.value);
+					}
+				}).bind(this));
 			}
-			
-			elBySelAll('input[name="linkType"]', null, (function(input) {
-				input.addEventListener('change', this._toggleLinkType.bind(this, input.value));
-				
-				if (input.checked) {
-					this._toggleLinkType(input.value);
-				}
-			}).bind(this));
 			
 			if (_boxController !== null) {
 				_position = elById('position');
@@ -82,20 +85,24 @@ define(['Dictionary', 'Language', 'WoltLabSuite/Core/Ui/Page/Search/Handler'], f
 		 * @protected
 		 */
 		_toggleLinkType: function(value) {
-			if (value == 'none') {
-				elHide(_containerPageID);
-				elHide(_containerPageObjectId);
-				elHide(_containerExternalLink);
-			}
-			if (value == 'internal') {
-				elShow(_containerPageID);
-				elHide(_containerExternalLink);
-				if (_handlers.size) this._togglePageId();
-			}
-			if (value == 'external') {
-				elHide(_containerPageID);
-				elHide(_containerPageObjectId);
-				elShow(_containerExternalLink);
+			switch (value) {
+				case 'none':
+					elHide(_containerPageID);
+					elHide(_containerPageObjectId);
+					elHide(_containerExternalLink);
+					break;
+					
+				case 'internal':
+					elShow(_containerPageID);
+					elHide(_containerExternalLink);
+					if (_handlers.size) this._togglePageId();
+					break;
+					
+				case 'external':
+					elHide(_containerPageID);
+					elHide(_containerPageObjectId);
+					elShow(_containerExternalLink);
+					break;
 			}
 		},
 		

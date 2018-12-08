@@ -8,7 +8,7 @@
 
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.transactionLog.list{/lang}</h1>
+		<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.transactionLog.list{/lang}{if $items} <span class="badge badgeInverse">{#$items}</span>{/if}</h1>
 	</div>
 	
 	{hascontent}

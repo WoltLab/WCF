@@ -6,7 +6,7 @@ use wcf\util\StringUtil;
  * Handles meta tags.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Message
  */
@@ -43,6 +43,12 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 		if ($value = WCF::getLanguage()->get(PAGE_TITLE)) {
 			$this->addTag('og:site_name', 'og:site_name', $value, true);
 		}
+		if (OG_IMAGE) {
+			$this->addTag('og:image', 'og:image', (preg_match('~^https?://~', OG_IMAGE) ? OG_IMAGE : WCF::getPath() . OG_IMAGE), true);
+		}
+		if (FB_SHARE_APP_ID) {
+			$this->addTag('fb:app_id', 'fb:app_id', FB_SHARE_APP_ID, true);
+		}
 	}
 	
 	/**
@@ -65,7 +71,7 @@ class MetaTagHandler extends SingletonFactory implements \Countable, \Iterator {
 		];
 		
 		// replace description if Open Graph Protocol tag was given
-		if ($name == 'og:description') {
+		if ($name == 'og:description' && $value) {
 			$this->addTag('description', 'description', $value);
 		}
 	}

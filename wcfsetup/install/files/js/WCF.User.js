@@ -4,7 +4,7 @@
  * User-related classes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -107,469 +107,538 @@ WCF.User.Login = Class.extend({
  */
 WCF.User.Panel = { };
 
-/**
- * Abstract implementation for user panel items providing an interactive dropdown.
- * 
- * @param	jQuery		triggerElement
- * @param	string		identifier
- * @param	object		options
- */
-WCF.User.Panel.Abstract = Class.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * counter badge
-	 * @var	jQuery
+	 * Abstract implementation for user panel items providing an interactive dropdown.
+	 *
+	 * @param        jQuery                triggerElement
+	 * @param        string                identifier
+	 * @param        object                options
 	 */
-	_badge: null,
-	
-	/**
-	 * interactive dropdown instance
-	 * @var	WCF.Dropdown.Interactive.Instance
-	 */
-	_dropdown: null,
-	
-	/**
-	 * dropdown identifier
-	 * @var	string
-	 */
-	_identifier: '',
-	
-	/**
-	 * true if data should be loaded using an AJAX request
-	 * @var	boolean
-	 */
-	_loadData: true,
-	
-	/**
-	 * header icon to mark all items belonging to this user panel item as read
-	 * @var	jQuery
-	 */
-	_markAllAsReadLink: null,
-	
-	/**
-	 * list of options required to dropdown initialization and UI features
-	 * @var	object
-	 */
-	_options: { },
-	
-	/**
-	 * action proxy
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * trigger element
-	 * @var	jQuery
-	 */
-	_triggerElement: null,
-	
-	/**
-	 * Initializes the WCF.User.Panel.Abstract class.
-	 * 
-	 * @param	jQuery		triggerElement
-	 * @param	string		identifier
-	 * @param	object		options
-	 */
-	init: function(triggerElement, identifier, options) {
-		this._dropdown = null;
-		this._loadData = true;
-		this._identifier = identifier;
-		this._triggerElement = triggerElement;
-		this._options = options;
+	WCF.User.Panel.Abstract = Class.extend({
+		/**
+		 * counter badge
+		 * @var        jQuery
+		 */
+		_badge: null,
 		
-		this._proxy = new WCF.Action.Proxy({
-			showLoadingOverlay: false,
-			success: $.proxy(this._success, this)
-		});
+		/**
+		 * interactive dropdown instance
+		 * @var        WCF.Dropdown.Interactive.Instance
+		 */
+		_dropdown: null,
 		
-		this._triggerElement.click($.proxy(this.toggle, this));
+		/**
+		 * dropdown identifier
+		 * @var        string
+		 */
+		_identifier: '',
 		
-		if (this._options.showAllLink) {
-			this._triggerElement.dblclick($.proxy(this._dblClick, this));
-		}
+		/**
+		 * true if data should be loaded using an AJAX request
+		 * @var        boolean
+		 */
+		_loadData: true,
 		
-		if (this._options.staticDropdown === true) {
-			this._loadData = false;
-		}
-		else {
-			var $badge = this._triggerElement.find('span.badge');
-			if ($badge.length) {
-				this._badge = $badge;
+		/**
+		 * header icon to mark all items belonging to this user panel item as read
+		 * @var        jQuery
+		 */
+		_markAllAsReadLink: null,
+		
+		/**
+		 * list of options required to dropdown initialization and UI features
+		 * @var        object
+		 */
+		_options: {},
+		
+		/**
+		 * action proxy
+		 * @var        WCF.Action.Proxy
+		 */
+		_proxy: null,
+		
+		/**
+		 * trigger element
+		 * @var        jQuery
+		 */
+		_triggerElement: null,
+		
+		/**
+		 * Initializes the WCF.User.Panel.Abstract class.
+		 *
+		 * @param        jQuery                triggerElement
+		 * @param        string                identifier
+		 * @param        object                options
+		 */
+		init: function (triggerElement, identifier, options) {
+			this._dropdown = null;
+			this._loadData = true;
+			this._identifier = identifier;
+			this._triggerElement = triggerElement;
+			this._options = options;
+			
+			this._proxy = new WCF.Action.Proxy({
+				showLoadingOverlay: false,
+				success: $.proxy(this._success, this)
+			});
+			
+			this._triggerElement.click($.proxy(this.toggle, this));
+			
+			if (this._options.showAllLink) {
+				this._triggerElement.dblclick($.proxy(this._dblClick, this));
 			}
-		}
-	},
-	
-	/**
-	 * Toggles the interactive dropdown.
-	 * 
-	 * @param	{Event?}	event
-	 * @return	{boolean}
-	 */
-	toggle: function(event) {
-		if (event instanceof Event) {
-			event.preventDefault();
-		}
+			
+			if (this._options.staticDropdown === true) {
+				this._loadData = false;
+			}
+			else {
+				var $badge = this._triggerElement.find('span.badge');
+				if ($badge.length) {
+					this._badge = $badge;
+				}
+			}
+		},
 		
-		if (this._dropdown === null) {
-			this._dropdown = this._initDropdown();
-		}
-		
-		if (this._dropdown.toggle()) {
-			if (!this._loadData) {
-				// check if there are outstanding items but there are no outstanding ones in the current list
-				if (this._badge !== null) {
-					var $count = parseInt(this._badge.text()) || 0;
-					if ($count && !this._dropdown.getItemList().children('.interactiveDropdownItemOutstanding').length) {
-						this._loadData = true;
+		/**
+		 * Toggles the interactive dropdown.
+		 *
+		 * @param        {Event?}        event
+		 * @return        {boolean}
+		 */
+		toggle: function (event) {
+			if (event instanceof Event) {
+				event.preventDefault();
+			}
+			
+			if (this._dropdown === null) {
+				this._dropdown = this._initDropdown();
+			}
+			
+			if (this._dropdown.toggle()) {
+				if (!this._loadData) {
+					// check if there are outstanding items but there are no outstanding ones in the current list
+					if (this._badge !== null) {
+						var $count = parseInt(this._badge.text()) || 0;
+						if ($count && !this._dropdown.getItemList().children('.interactiveDropdownItemOutstanding').length) {
+							this._loadData = true;
+						}
 					}
+				}
+				
+				if (this._loadData) {
+					this._loadData = false;
+					this._load();
 				}
 			}
 			
-			if (this._loadData) {
-				this._loadData = false;
-				this._load();
-			}
-		}
+			return false;
+		},
 		
-		return false;
-	},
-	
-	/**
-	 * Forward to original URL by double clicking the trigger element.
-	 * 
-	 * @param	object		event
-	 * @return	boolean
-	 */
-	_dblClick: function(event) {
-		event.preventDefault();
-		
-		window.location = this._options.showAllLink;
-		
-		return false;
-	},
-	
-	/**
-	 * Initializes the dropdown on first usage.
-	 * 
-	 * @return	WCF.Dropdown.Interactive.Instance
-	 */
-	_initDropdown: function() {
-		var $dropdown = WCF.Dropdown.Interactive.Handler.create(this._triggerElement, this._identifier, this._options);
-		$('<li class="loading"><span class="icon icon24 fa-spinner" /> <span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').appendTo($dropdown.getItemList());
-		
-		return $dropdown;
-	},
-	
-	/**
-	 * Loads item list data via AJAX.
-	 */
-	_load: function() {
-		// override this in your own implementation to fetch display data
-	},
-	
-	/**
-	 * Handles successful AJAX requests.
-	 * 
-	 * @param	object		data
-	 */
-	_success: function(data) {
-		if (data.returnValues.template !== undefined) {
-			var $itemList = this._dropdown.getItemList().empty();
-			$(data.returnValues.template).appendTo($itemList);
+		/**
+		 * Forward to original URL by double clicking the trigger element.
+		 *
+		 * @param        object                event
+		 * @return        boolean
+		 */
+		_dblClick: function (event) {
+			event.preventDefault();
 			
-			if (!$itemList.children().length) {
-				$('<li class="noItems">' + this._options.noItems + '</li>').appendTo($itemList);
+			window.location = this._options.showAllLink;
+			
+			return false;
+		},
+		
+		/**
+		 * Initializes the dropdown on first usage.
+		 *
+		 * @return        WCF.Dropdown.Interactive.Instance
+		 */
+		_initDropdown: function () {
+			var $dropdown = WCF.Dropdown.Interactive.Handler.create(this._triggerElement, this._identifier, this._options);
+			$('<li class="loading"><span class="icon icon24 fa-spinner" /> <span>' + WCF.Language.get('wcf.global.loading') + '</span></li>').appendTo($dropdown.getItemList());
+			
+			return $dropdown;
+		},
+		
+		/**
+		 * Loads item list data via AJAX.
+		 */
+		_load: function () {
+			// override this in your own implementation to fetch display data
+		},
+		
+		/**
+		 * Handles successful AJAX requests.
+		 *
+		 * @param        object                data
+		 */
+		_success: function (data) {
+			if (data.returnValues.template !== undefined) {
+				var $itemList = this._dropdown.getItemList().empty();
+				$(data.returnValues.template).appendTo($itemList);
+				
+				if (!$itemList.children().length) {
+					$('<li class="noItems">' + this._options.noItems + '</li>').appendTo($itemList);
+				}
+				
+				if (this._options.enableMarkAsRead) {
+					var $outstandingItems = this._dropdown.getItemList().children('.interactiveDropdownItemOutstanding');
+					if (this._markAllAsReadLink === null && $outstandingItems.length && this._options.markAllAsReadConfirmMessage) {
+						var $button = this._markAllAsReadLink = $('<li class="interactiveDropdownItemMarkAllAsRead"><a href="#" title="' + WCF.Language.get('wcf.user.panel.markAllAsRead') + '" class="jsTooltip"><span class="icon icon24 fa-check" /></a></li>').appendTo(this._dropdown.getLinkList());
+						$button.click((function (event) {
+							this._dropdown.close();
+							
+							WCF.System.Confirmation.show(this._options.markAllAsReadConfirmMessage, (function (action) {
+								if (action === 'confirm') {
+									this._markAllAsRead();
+								}
+							}).bind(this));
+							
+							return false;
+						}).bind(this));
+					}
+					
+					$outstandingItems.each((function (index, item) {
+						var $item = $(item).addClass('interactiveDropdownItemOutstandingIcon');
+						var $objectID = $item.data('objectID');
+						
+						var $button = $('<div class="interactiveDropdownItemMarkAsRead"><a href="#" title="' + WCF.Language.get('wcf.user.panel.markAsRead') + '" class="jsTooltip"><span class="icon icon16 fa-check" /></a></div>').appendTo($item);
+						$button.click((function (event) {
+							this._markAsRead(event, $objectID);
+							
+							return false;
+						}).bind(this));
+					}).bind(this));
+				}
+				
+				this._dropdown.getItemList().children().each(function (index, item) {
+					var $item = $(item);
+					var $link = $item.data('link');
+					
+					if ($link) {
+						if ($.browser.msie) {
+							$item.click(function (event) {
+								if (event.target.tagName !== 'A') {
+									window.location = $link;
+									
+									return false;
+								}
+							});
+						}
+						else {
+							$item.addClass('interactiveDropdownItemShadow');
+							$('<a href="' + $link + '" class="interactiveDropdownItemShadowLink" />').appendTo($item);
+						}
+						
+						if ($item.data('linkReplaceAll')) {
+							$item.find('> .box48 a:not(.userLink)').prop('href', $link);
+						}
+					}
+				});
+				
+				this._dropdown.rebuildScrollbar();
+			}
+			
+			if (data.returnValues.totalCount !== undefined) {
+				this.updateBadge(data.returnValues.totalCount);
 			}
 			
 			if (this._options.enableMarkAsRead) {
-				var $outstandingItems = this._dropdown.getItemList().children('.interactiveDropdownItemOutstanding');
-				if (this._markAllAsReadLink === null && $outstandingItems.length && this._options.markAllAsReadConfirmMessage) {
-					var $button = this._markAllAsReadLink = $('<li class="interactiveDropdownItemMarkAllAsRead"><a href="#" title="' + WCF.Language.get('wcf.user.panel.markAllAsRead') + '" class="jsTooltip"><span class="icon icon24 fa-check" /></a></li>').appendTo(this._dropdown.getLinkList());
-					$button.click((function(event) {
-						this._dropdown.close();
-						
-						WCF.System.Confirmation.show(this._options.markAllAsReadConfirmMessage, (function(action) {
-							if (action === 'confirm') {
-								this._markAllAsRead();
-							}
-						}).bind(this));
-						
-						return false;
-					}).bind(this));
+				if (data.returnValues.markAsRead) {
+					var $item = this._dropdown.getItemList().children('li[data-object-id=' + data.returnValues.markAsRead + ']');
+					if ($item.length) {
+						$item.removeClass('interactiveDropdownItemOutstanding').data('isRead', true);
+						$item.children('.interactiveDropdownItemMarkAsRead').remove();
+					}
+				}
+				else if (data.returnValues.markAllAsRead) {
+					this.resetItems();
+					this.updateBadge(0);
+				}
+			}
+		},
+		
+		/**
+		 * Marks an item as read.
+		 *
+		 * @param        object                event
+		 * @param        integer                objectID
+		 */
+		_markAsRead: function (event, objectID) {
+			// override this in your own implementation to mark an item as read
+		},
+		
+		/**
+		 * Marks all items as read.
+		 */
+		_markAllAsRead: function () {
+			// override this in your own implementation to mark all items as read
+		},
+		
+		/**
+		 * Updates the badge's count or removes it if count reaches zero. Passing a negative number is undefined.
+		 *
+		 * @param        integer                count
+		 */
+		updateBadge: function (count) {
+			count = parseInt(count) || 0;
+			
+			if (count) {
+				if (this._badge === null) {
+					this._badge = $('<span class="badge badgeUpdate" />').appendTo(this._triggerElement.children('a'));
+					this._badge.before(' ');
 				}
 				
-				$outstandingItems.each((function(index, item) {
-					var $item = $(item).addClass('interactiveDropdownItemOutstandingIcon');
-					var $objectID = $item.data('objectID');
-					
-					var $button = $('<div class="interactiveDropdownItemMarkAsRead"><a href="#" title="' + WCF.Language.get('wcf.user.panel.markAsRead') + '" class="jsTooltip"><span class="icon icon16 fa-check" /></a></div>').appendTo($item);
-					$button.click((function(event) {
-						this._markAsRead(event, $objectID);
-						
-						return false;
-					}).bind(this));
-				}).bind(this));
+				this._badge.text(count);
+			}
+			else if (this._badge !== null) {
+				this._badge.remove();
+				this._badge = null;
 			}
 			
-			this._dropdown.getItemList().children().each(function(index, item) {
-				var $item = $(item);
-				var $link = $item.data('link');
-				
-				if ($link) {
-					if ($.browser.msie) {
-						$item.click(function(event) {
-							if (event.target.tagName !== 'A') {
-								window.location = $link;
-								
-								return false;
-							}
-						});
-					}
-					else {
-						$item.addClass('interactiveDropdownItemShadow');
-						$('<a href="' + $link + '" class="interactiveDropdownItemShadowLink" />').appendTo($item);
-					}
-					
-					if ($item.data('linkReplaceAll')) {
-						$item.find('> .box48 a:not(.userLink)').prop('href', $link);
-					}
+			if (this._options.enableMarkAsRead) {
+				if (!count && this._markAllAsReadLink !== null) {
+					this._markAllAsReadLink.remove();
+					this._markAllAsReadLink = null;
 				}
+			}
+			
+			WCF.System.Event.fireEvent('com.woltlab.wcf.userMenu', 'updateBadge', {
+				count: count,
+				identifier: this._identifier
 			});
+		},
+		
+		/**
+		 * Resets the dropdown's inner item list.
+		 */
+		resetItems: function () {
+			// this method could be called from outside, but the dropdown was never
+			// toggled and thus never initialized
+			if (this._dropdown !== null) {
+				this._dropdown.resetItems();
+				this._loadData = true;
+			}
+		}
+	});
+	
+	/**
+	 * User Panel implementation for user notifications.
+	 *
+	 * @see        WCF.User.Panel.Abstract
+	 */
+	WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
+		/**
+		 * favico instance
+		 * @var        Favico
+		 */
+		_favico: null,
+		
+		/**
+		 * @see        WCF.User.Panel.Abstract.init()
+		 */
+		init: function (options) {
+			options.enableMarkAsRead = true;
 			
-			this._dropdown.rebuildScrollbar();
-		}
-		
-		if (data.returnValues.totalCount !== undefined) {
-			this.updateBadge(data.returnValues.totalCount);
-		}
-		
-		if (this._options.enableMarkAsRead) {
-			if (data.returnValues.markAsRead) {
-				var $item = this._dropdown.getItemList().children('li[data-object-id=' + data.returnValues.markAsRead + ']');
-				if ($item.length) {
-					$item.removeClass('interactiveDropdownItemOutstanding').data('isRead', true);
-					$item.children('.interactiveDropdownItemMarkAsRead').remove();
+			this._super($('#userNotifications'), 'userNotifications', options);
+			
+			try {
+				this._favico = new Favico({
+					animation: 'none',
+					type: 'circle'
+				});
+				
+				if (this._badge !== null) {
+					var $count = parseInt(this._badge.text()) || 0;
+					this._favico.badge($count);
 				}
 			}
-			else if (data.returnValues.markAllAsRead) {
-				this.resetItems();
-				this.updateBadge(0);
-			}
-		}
-	},
-	
-	/**
-	 * Marks an item as read.
-	 * 
-	 * @param	object		event
-	 * @param	integer		objectID
-	 */
-	_markAsRead: function(event, objectID) {
-		// override this in your own implementation to mark an item as read
-	},
-	
-	/**
-	 * Marks all items as read.
-	 */
-	_markAllAsRead: function() {
-		// override this in your own implementation to mark all items as read
-	},
-	
-	/**
-	 * Updates the badge's count or removes it if count reaches zero. Passing a negative number is undefined.
-	 * 
-	 * @param	integer		count
-	 */
-	updateBadge: function(count) {
-		count = parseInt(count) || 0;
-		
-		if (count) {
-			if (this._badge === null) {
-				this._badge = $('<span class="badge badgeUpdate" />').appendTo(this._triggerElement.children('a'));
-				this._badge.before(' ');
+			catch (e) {
+				console.debug("[WCF.User.Panel.Notification] Failed to initialized Favico: " + e.message);
 			}
 			
-			this._badge.text(count);
-		}
-		else if (this._badge !== null) {
-			this._badge.remove();
-			this._badge = null;
-		}
+			WCF.System.PushNotification.addCallback('userNotificationCount', $.proxy(this.updateUserNotificationCount, this));
+			
+			require(['EventHandler'], (function (EventHandler) {
+				EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', (function (data) {
+					if (data.identifier === 'com.woltlab.wcf.notifications') {
+						this.toggle();
+					}
+				}).bind(this));
+			}).bind(this));
+		},
 		
-		if (this._options.enableMarkAsRead) {
-			if (!count && this._markAllAsReadLink !== null) {
+		/**
+		 * @see        WCF.User.Panel.Abstract._initDropdown()
+		 */
+		_initDropdown: function () {
+			var $dropdown = this._super();
+			
+			$('<li><a href="' + this._options.settingsLink + '" title="' + WCF.Language.get('wcf.user.panel.settings') + '" class="jsTooltip"><span class="icon icon24 fa-cog" /></a></li>').appendTo($dropdown.getLinkList());
+			
+			return $dropdown;
+		},
+		
+		/**
+		 * @see        WCF.User.Panel.Abstract._load()
+		 */
+		_load: function () {
+			this._proxy.setOption('data', {
+				actionName: 'getOutstandingNotifications',
+				className: 'wcf\\data\\user\\notification\\UserNotificationAction'
+			});
+			this._proxy.sendRequest();
+		},
+		
+		/**
+		 * @see        WCF.User.Panel.Abstract._markAsRead()
+		 */
+		_markAsRead: function (event, objectID) {
+			this._proxy.setOption('data', {
+				actionName: 'markAsConfirmed',
+				className: 'wcf\\data\\user\\notification\\UserNotificationAction',
+				objectIDs: [objectID]
+			});
+			this._proxy.sendRequest();
+		},
+		
+		/**
+		 * @see        WCF.User.Panel.Abstract._markAllAsRead()
+		 */
+		_markAllAsRead: function (event) {
+			this._proxy.setOption('data', {
+				actionName: 'markAllAsConfirmed',
+				className: 'wcf\\data\\user\\notification\\UserNotificationAction'
+			});
+			this._proxy.sendRequest();
+		},
+		
+		/**
+		 * @see        WCF.User.Panel.Abstract.resetItems()
+		 */
+		resetItems: function () {
+			this._super();
+			
+			if (this._markAllAsReadLink) {
 				this._markAllAsReadLink.remove();
 				this._markAllAsReadLink = null;
 			}
-		}
+		},
 		
-		WCF.System.Event.fireEvent('com.woltlab.wcf.userMenu', 'updateBadge', {
-			count: count,
-			identifier: this._identifier
-		});
-	},
-	
-	/**
-	 * Resets the dropdown's inner item list.
-	 */
-	resetItems: function() {
-		// this method could be called from outside, but the dropdown was never
-		// toggled and thus never initialized
-		if (this._dropdown !== null) {
-			this._dropdown.resetItems();
-		}
-	}
-});
-
-/**
- * User Panel implementation for user notifications.
- * 
- * @see	WCF.User.Panel.Abstract
- */
-WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
-	/**
-	 * favico instance
-	 * @var	Favico
-	 */
-	_favico: null,
-	
-	/**
-	 * @see	WCF.User.Panel.Abstract.init()
-	 */
-	init: function(options) {
-		options.enableMarkAsRead = true;
-		
-		this._super($('#userNotifications'), 'userNotifications', options);
-		
-		try {
-			this._favico = new Favico({
-				animation: 'none',
-				type: 'circle'
-			});
+		/**
+		 * @see        WCF.User.Panel.Abstract.updateBadge()
+		 */
+		updateBadge: function (count) {
+			count = parseInt(count) || 0;
 			
-			if (this._badge !== null) {
-				var $count = parseInt(this._badge.text()) || 0;
-				this._favico.badge($count);
+			// update data attribute
+			$('#userNotifications').attr('data-count', count);
+			
+			if (this._favico !== null) {
+				this._favico.badge(count);
 			}
+			
+			this._super(count);
+		},
+		
+		/**
+		 * Updates the badge counter and resets the dropdown's item list.
+		 *
+		 * @param        integer                count
+		 */
+		updateUserNotificationCount: function (count) {
+			if (this._dropdown !== null) {
+				this._dropdown.resetItems();
+			}
+			
+			this.updateBadge(count);
 		}
-		catch (e) {
-			console.debug("[WCF.User.Panel.Notification] Failed to initialized Favico: " + e.message);
+	});
+	
+	/**
+	 * User Panel implementation for user menu dropdown.
+	 *
+	 * @see        WCF.User.Panel.Abstract
+	 */
+	WCF.User.Panel.UserMenu = WCF.User.Panel.Abstract.extend({
+		/**
+		 * @see        WCF.User.Panel.Abstract.init()
+		 */
+		init: function () {
+			this._super($('#userMenu'), 'userMenu', {
+				pointerOffset: '13px',
+				staticDropdown: true
+			});
 		}
-		
-		WCF.System.PushNotification.addCallback('userNotificationCount', $.proxy(this.updateUserNotificationCount, this));
-		
-		require(['EventHandler'], (function(EventHandler) {
-			EventHandler.add('com.woltlab.wcf.UserMenuMobile', 'more', (function(data) {
-				if (data.identifier === 'com.woltlab.wcf.notifications') {
-					this.toggle();
-				}
-			}).bind(this));
-		}).bind(this));
-	},
+	});
+}
+else {
+	WCF.User.Panel.Abstract = Class.extend({
+		_badge: {},
+		_dropdown: {},
+		_identifier: "",
+		_loadData: true,
+		_markAllAsReadLink: {},
+		_options: {},
+		_proxy: {},
+		_triggerElement: {},
+		init: function() {},
+		toggle: function() {},
+		_dblClick: function() {},
+		_initDropdown: function() {},
+		_load: function() {},
+		_success: function() {},
+		_markAsRead: function() {},
+		_markAllAsRead: function() {},
+		updateBadge: function() {},
+		resetItems: function() {}
+	});
 	
-	/**
-	 * @see	WCF.User.Panel.Abstract._initDropdown()
-	 */
-	_initDropdown: function() {
-		var $dropdown = this._super();
-		
-		$('<li><a href="' + this._options.settingsLink + '" title="' + WCF.Language.get('wcf.user.panel.settings') + '" class="jsTooltip"><span class="icon icon24 fa-cog" /></a></li>').appendTo($dropdown.getLinkList());
-		
-		return $dropdown;
-	},
+	WCF.User.Panel.Notification = WCF.User.Panel.Abstract.extend({
+		_favico: {},
+		init: function() {},
+		_initDropdown: function() {},
+		_load: function() {},
+		_markAsRead: function() {},
+		_markAllAsRead: function() {},
+		resetItems: function() {},
+		updateBadge: function() {},
+		updateUserNotificationCount: function() {},
+		_badge: {},
+		_dropdown: {},
+		_identifier: "",
+		_loadData: true,
+		_markAllAsReadLink: {},
+		_options: {},
+		_proxy: {},
+		_triggerElement: {},
+		toggle: function() {},
+		_dblClick: function() {},
+		_success: function() {}
+	});
 	
-	/**
-	 * @see	WCF.User.Panel.Abstract._load()
-	 */
-	_load: function() {
-		this._proxy.setOption('data', {
-			actionName: 'getOutstandingNotifications',
-			className: 'wcf\\data\\user\\notification\\UserNotificationAction'
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * @see	WCF.User.Panel.Abstract._markAsRead()
-	 */
-	_markAsRead: function(event, objectID) {
-		this._proxy.setOption('data', {
-			actionName: 'markAsConfirmed',
-			className: 'wcf\\data\\user\\notification\\UserNotificationAction',
-			objectIDs: [ objectID ]
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * @see	WCF.User.Panel.Abstract._markAllAsRead()
-	 */
-	_markAllAsRead: function(event) {
-		this._proxy.setOption('data', {
-			actionName: 'markAllAsConfirmed',
-			className: 'wcf\\data\\user\\notification\\UserNotificationAction'
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * @see	WCF.User.Panel.Abstract.resetItems()
-	 */
-	resetItems: function() {
-		this._super();
-		
-		if (this._markAllAsReadLink) {
-			this._markAllAsReadLink.remove();
-			this._markAllAsReadLink = null;
-		}
-	},
-	
-	/**
-	 * @see	WCF.User.Panel.Abstract.updateBadge()
-	 */
-	updateBadge: function(count) {
-		count = parseInt(count) || 0;
-		
-		// update data attribute
-		$('#userNotifications').attr('data-count', count);
-		
-		if (this._favico !== null) {
-			this._favico.badge(count);
-		}
-		
-		this._super(count);
-	},
-	
-	/**
-	 * Updates the badge counter and resets the dropdown's item list.
-	 * 
-	 * @param	integer		count
-	 */
-	updateUserNotificationCount: function(count) {
-		if (this._dropdown !== null) {
-			this._dropdown.resetItems();
-		}
-		
-		this.updateBadge(count);
-	}
-});
-
-/**
- * User Panel implementation for user menu dropdown.
- * 
- * @see	WCF.User.Panel.Abstract
- */
-WCF.User.Panel.UserMenu = WCF.User.Panel.Abstract.extend({
-	/**
-	 * @see	WCF.User.Panel.Abstract.init()
-	 */
-	init: function() {
-		this._super($('#userMenu'), 'userMenu', {
-			pointerOffset: '13px',
-			staticDropdown: true
-		});
-	}
-});
+	WCF.User.Panel.UserMenu = WCF.User.Panel.Abstract.extend({
+		init: function() {},
+		_badge: {},
+		_dropdown: {},
+		_identifier: "",
+		_loadData: true,
+		_markAllAsReadLink: {},
+		_options: {},
+		_proxy: {},
+		_triggerElement: {},
+		toggle: function() {},
+		_dblClick: function() {},
+		_initDropdown: function() {},
+		_load: function() {},
+		_success: function() {},
+		_markAsRead: function() {},
+		_markAllAsRead: function() {},
+		updateBadge: function() {},
+		resetItems: function() {}
+	});
+}
 
 /**
  * Quick login box
@@ -884,255 +953,297 @@ WCF.User.Profile.TabMenu = Class.extend({
 	}
 });
 
-/**
- * User profile inline editor.
- * 
- * @param	integer		userID
- * @param	boolean		editOnInit
- */
-WCF.User.Profile.Editor = Class.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * current action
-	 * @var	string
+	 * User profile inline editor.
+	 *
+	 * @param        integer                userID
+	 * @param        boolean                editOnInit
 	 */
-	_actionName: '',
-	
-	_active: false,
-	
-	/**
-	 * list of interface buttons
-	 * @var	object
-	 */
-	_buttons: { },
-	
-	/**
-	 * cached tab content
-	 * @var	string
-	 */
-	_cachedTemplate: '',
-	
-	/**
-	 * action proxy
-	 * @var	WCF.Action.Proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * tab object
-	 * @var	jQuery
-	 */
-	_tab: null,
-	
-	/**
-	 * target user id
-	 * @var	integer
-	 */
-	_userID: 0,
-	
-	/**
-	 * Initializes the WCF.User.Profile.Editor object.
-	 * 
-	 * @param	integer		userID
-	 * @param	boolean		editOnInit
-	 */
-	init: function(userID, editOnInit) {
-		this._actionName = '';
-		this._active = false;
-		this._cachedTemplate = '';
-		this._tab = $('#about');
-		this._userID = userID;
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
+	WCF.User.Profile.Editor = Class.extend({
+		/**
+		 * current action
+		 * @var        string
+		 */
+		_actionName: '',
 		
-		this._initButtons();
+		_active: false,
 		
-		// begin editing on page load
-		if (editOnInit) {
-			this._beginEdit();
-		}
-	},
-	
-	/**
-	 * Initializes interface buttons.
-	 */
-	_initButtons: function() {
-		// create buttons
-		this._buttons = {
-			beginEdit: $('.jsButtonEditProfile:eq(0)').click(this._beginEdit.bind(this))
-		};
-	},
-	
-	/**
-	 * Begins editing.
-	 * 
-	 * @param       {Event?}         event   event object
-	 */
-	_beginEdit: function(event) {
-		if (event) event.preventDefault();
+		/**
+		 * list of interface buttons
+		 * @var        object
+		 */
+		_buttons: {},
 		
-		if (this._active) return;
-		this._active = true;
+		/**
+		 * cached tab content
+		 * @var        string
+		 */
+		_cachedTemplate: '',
 		
-		this._actionName = 'beginEdit';
-		this._buttons.beginEdit.parent().addClass('active');
-		$('#profileContent').wcfTabs('select', 'about');
+		/**
+		 * action proxy
+		 * @var        WCF.Action.Proxy
+		 */
+		_proxy: null,
 		
-		// load form
-		this._proxy.setOption('data', {
-			actionName: 'beginEdit',
-			className: 'wcf\\data\\user\\UserProfileAction',
-			objectIDs: [ this._userID ]
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Saves input values.
-	 */
-	_save: function() {
-		this._actionName = 'save';
+		/**
+		 * tab object
+		 * @var        jQuery
+		 */
+		_tab: null,
 		
-		// collect values
-		var $regExp = /values\[([a-zA-Z0-9._-]+)\]/;
-		var $values = { };
-		this._tab.find('input, textarea, select').each(function(index, element) {
-			var $element = $(element);
-			var $value = null;
+		/**
+		 * target user id
+		 * @var        integer
+		 */
+		_userID: 0,
+		
+		/**
+		 * Initializes the WCF.User.Profile.Editor object.
+		 *
+		 * @param        integer                userID
+		 * @param        boolean                editOnInit
+		 */
+		init: function (userID, editOnInit) {
+			this._actionName = '';
+			this._active = false;
+			this._cachedTemplate = '';
+			this._tab = $('#about');
+			this._userID = userID;
+			this._proxy = new WCF.Action.Proxy({
+				success: $.proxy(this._success, this)
+			});
 			
-			switch ($element.getTagName()) {
-				case 'input':
-					var $type = $element.attr('type');
+			this._initButtons();
+			
+			// begin editing on page load
+			if (editOnInit) {
+				this._beginEdit();
+			}
+		},
+		
+		/**
+		 * Initializes interface buttons.
+		 */
+		_initButtons: function () {
+			// create buttons
+			this._buttons = {
+				beginEdit: $('.jsButtonEditProfile:eq(0)').click(this._beginEdit.bind(this))
+			};
+		},
+		
+		/**
+		 * Begins editing.
+		 *
+		 * @param       {Event?}         event   event object
+		 */
+		_beginEdit: function (event) {
+			if (event) event.preventDefault();
+			
+			if (this._active) return;
+			this._active = true;
+			
+			this._actionName = 'beginEdit';
+			this._buttons.beginEdit.parent().addClass('active');
+			$('#profileContent').wcfTabs('select', 'about');
+			
+			// load form
+			this._proxy.setOption('data', {
+				actionName: 'beginEdit',
+				className: 'wcf\\data\\user\\UserProfileAction',
+				objectIDs: [this._userID]
+			});
+			this._proxy.sendRequest();
+		},
+		
+		/**
+		 * Saves input values.
+		 */
+		_save: function () {
+			// check if there is an editor and if it is in WYSIWYG mode
+			var scrollToEditor = null;
+			elBySelAll('.redactor-layer', this._tab[0], function(redactorLayer) {
+				var data = {
+					api: {
+						throwError: elInnerError
+					},
+					valid: true
+				};
+				WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'validate_' + elData(redactorLayer, 'element-id'), data);
+				
+				if (!data.valid && scrollToEditor === null) {
+					scrollToEditor = redactorLayer.parentNode;
+				}
+			});
+			
+			if (scrollToEditor) {
+				scrollToEditor.scrollIntoView({ behavior: 'smooth' });
+				return;
+			}
+			
+			this._actionName = 'save';
+			
+			// collect values
+			var $regExp = /values\[([a-zA-Z0-9._-]+)\]/;
+			var $values = {};
+			this._tab.find('input, textarea, select').each(function (index, element) {
+				var $element = $(element);
+				var $value = null;
+				
+				switch ($element.getTagName()) {
+					case 'input':
+						var $type = $element.attr('type');
+						
+						if (($type === 'radio' || $type === 'checkbox') && !$element.prop('checked')) {
+							return;
+						}
+						break;
 					
-					if (($type === 'radio' || $type === 'checkbox') && !$element.prop('checked')) {
-						return;
-					}
-				break;
+					case 'textarea':
+						if ($element.data('redactor')) {
+							$value = $element.redactor('code.get');
+						}
+						break;
+				}
 				
-				case 'textarea':
-					if ($element.data('redactor')) {
-						$value = $element.redactor('code.get');
-					}
-				break;
-			}
-			
-			var $name = $element.attr('name');
-			if ($regExp.test($name)) {
-				var $fieldName = RegExp.$1;
-				if ($value === null) $value = $element.val();
-				
-				// check for checkboxes
-				if ($element.attr('type') === 'checkbox' && /\[\]$/.test($name)) {
-					if (!Array.isArray($values[$fieldName])) {
-						$values[$fieldName] = [];
-					}
+				var $name = $element.attr('name');
+				if ($regExp.test($name)) {
+					var $fieldName = RegExp.$1;
+					if ($value === null) $value = $element.val();
 					
-					$values[$fieldName].push($value);
+					// check for checkboxes
+					if ($element.attr('type') === 'checkbox' && /\[\]$/.test($name)) {
+						if (!Array.isArray($values[$fieldName])) {
+							$values[$fieldName] = [];
+						}
+						
+						$values[$fieldName].push($value);
+					}
+					else {
+						$values[$fieldName] = $value;
+					}
 				}
-				else {
-					$values[$fieldName] = $value;
-				}
-			}
-		});
-		
-		this._proxy.setOption('data', {
-			actionName: 'save',
-			className: 'wcf\\data\\user\\UserProfileAction',
-			objectIDs: [ this._userID ],
-			parameters: {
-				values: $values
-			}
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Restores back to default view.
-	 */
-	_restore: function() {
-		this._actionName = 'restore';
-		this._active = false;
-		this._buttons.beginEdit.parent().removeClass('active');
-		
-		this._destroyEditor();
-		
-		this._tab.html(this._cachedTemplate).children().css({ height: 'auto' });
-	},
-	
-	/**
-	 * Handles successful AJAX requests.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		switch (this._actionName) {
-			case 'beginEdit':
-				this._prepareEdit(data);
-			break;
+			});
 			
-			case 'save':
-				// save was successful, show parsed template
-				if (data.returnValues.success) {
-					this._cachedTemplate = data.returnValues.template;
-					this._restore();
+			this._proxy.setOption('data', {
+				actionName: 'save',
+				className: 'wcf\\data\\user\\UserProfileAction',
+				objectIDs: [this._userID],
+				parameters: {
+					values: $values
 				}
-				else {
-					this._prepareEdit(data, true);
-				}
-			break;
-		}
-	},
-	
-	/**
-	 * Prepares editing mode.
-	 * 
-	 * @param	object		data
-	 * @param	boolean		disableCache
-	 */
-	_prepareEdit: function(data, disableCache) {
-		this._destroyEditor();
+			});
+			this._proxy.sendRequest();
+		},
 		
-		// update template
-		var self = this;
-		this._tab.html(function(index, oldHTML) {
-			if (disableCache !== true) {
-				self._cachedTemplate = oldHTML;
-			}
+		/**
+		 * Restores back to default view.
+		 */
+		_restore: function () {
+			this._actionName = 'restore';
+			this._active = false;
+			this._buttons.beginEdit.parent().removeClass('active');
 			
-			return data.returnValues.template;
-		});
+			this._destroyEditor();
+			
+			this._tab.html(this._cachedTemplate).children().css({height: 'auto'});
+		},
 		
-		// block autocomplete
-		this._tab.find('input[type=text]').attr('autocomplete', 'off');
-		
-		// bind event listener
-		this._tab.find('.formSubmit > button[data-type=save]').click($.proxy(this._save, this));
-		this._tab.find('.formSubmit > button[data-type=restore]').click($.proxy(this._restore, this));
-		this._tab.find('input').keyup(function(event) {
-			if (event.which === $.ui.keyCode.ENTER) {
-				self._save();
+		/**
+		 * Handles successful AJAX requests.
+		 *
+		 * @param        object                data
+		 * @param        string                textStatus
+		 * @param        jQuery                jqXHR
+		 */
+		_success: function (data, textStatus, jqXHR) {
+			switch (this._actionName) {
+				case 'beginEdit':
+					this._prepareEdit(data);
+					break;
 				
-				event.preventDefault();
-				return false;
+				case 'save':
+					// save was successful, show parsed template
+					if (data.returnValues.success) {
+						this._cachedTemplate = data.returnValues.template;
+						this._restore();
+					}
+					else {
+						this._prepareEdit(data, true);
+					}
+					break;
 			}
-		});
-	},
-	
-	/**
-	 * Destroys all editor instances within current tab.
-	 */
-	_destroyEditor: function() {
-		// destroy all editor instances
-		this._tab.find('textarea').each(function(index, container) {
-			var $container = $(container);
-			if ($container.data('redactor')) {
-				$container.redactor('core.destroy');
-			}
-		});
-	}
-});
+		},
+		
+		/**
+		 * Prepares editing mode.
+		 *
+		 * @param        object                data
+		 * @param        boolean                disableCache
+		 */
+		_prepareEdit: function (data, disableCache) {
+			this._destroyEditor();
+			
+			// update template
+			var self = this;
+			this._tab.html(function (index, oldHTML) {
+				if (disableCache !== true) {
+					self._cachedTemplate = oldHTML;
+				}
+				
+				return data.returnValues.template;
+			});
+			
+			// block autocomplete
+			this._tab.find('input[type=text]').attr('autocomplete', 'off');
+			
+			// bind event listener
+			this._tab.find('.formSubmit > button[data-type=save]').click($.proxy(this._save, this));
+			this._tab.find('.formSubmit > button[data-type=restore]').click($.proxy(this._restore, this));
+			this._tab.find('input').keyup(function (event) {
+				if (event.which === $.ui.keyCode.ENTER) {
+					self._save();
+					
+					event.preventDefault();
+					return false;
+				}
+			});
+		},
+		
+		/**
+		 * Destroys all editor instances within current tab.
+		 */
+		_destroyEditor: function () {
+			// destroy all editor instances
+			this._tab.find('textarea').each(function (index, container) {
+				var $container = $(container);
+				if ($container.data('redactor')) {
+					$container.redactor('core.destroy');
+				}
+			});
+		}
+	});
+}
+else {
+	WCF.User.Profile.Editor = Class.extend({
+		_actionName: "",
+		_active: false,
+		_buttons: {},
+		_cachedTemplate: "",
+		_proxy: {},
+		_tab: {},
+		_userID: 0,
+		init: function() {},
+		_initButtons: function() {},
+		_beginEdit: function() {},
+		_save: function() {},
+		_restore: function() {},
+		_success: function() {},
+		_prepareEdit: function() {},
+		_destroyEditor: function() {}
+	});
+}
 
 /**
  * Namespace for registration functions.
@@ -1543,130 +1654,159 @@ WCF.User.Registration.LostPassword = Class.extend({
  * Notification system for WCF.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Notification = { };
 
-/**
- * Handles the notification list.
- */
-WCF.Notification.List = Class.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * action proxy
-	 * @var	WCF.Action.Proxy
+	 * Handles the notification list.
 	 */
-	_proxy: null,
-	
-	/**
-	 * Initializes the WCF.Notification.List object.
-	 */
-	init: function() {
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
+	WCF.Notification.List = Class.extend({
+		/**
+		 * action proxy
+		 * @var        WCF.Action.Proxy
+		 */
+		_proxy: null,
 		
-		// handle 'mark all as confirmed' buttons
-		$('.contentHeaderNavigation .jsMarkAllAsConfirmed').click(function() {
-			WCF.System.Confirmation.show(WCF.Language.get('wcf.user.notification.markAllAsConfirmed.confirmMessage'), function(action) {
-				if (action === 'confirm') {
-					new WCF.Action.Proxy({
-						autoSend: true,
-						data: {
-							actionName: 'markAllAsConfirmed',
-							className: 'wcf\\data\\user\\notification\\UserNotificationAction'
-						},
-						success: function() { window.location.reload(); }
+		/**
+		 * Initializes the WCF.Notification.List object.
+		 */
+		init: function () {
+			this._proxy = new WCF.Action.Proxy({
+				success: $.proxy(this._success, this)
+			});
+			
+			// handle 'mark all as confirmed' buttons
+			$('.contentHeaderNavigation .jsMarkAllAsConfirmed').click(function () {
+				WCF.System.Confirmation.show(WCF.Language.get('wcf.user.notification.markAllAsConfirmed.confirmMessage'), function (action) {
+					if (action === 'confirm') {
+						new WCF.Action.Proxy({
+							autoSend: true,
+							data: {
+								actionName: 'markAllAsConfirmed',
+								className: 'wcf\\data\\user\\notification\\UserNotificationAction'
+							},
+							success: function () {
+								window.location.reload();
+							}
+						});
+					}
+				});
+			});
+			
+			// handle regular items
+			this._convertList();
+		},
+		
+		/**
+		 * Converts the notification item list to be in sync with the notification dropdown.
+		 */
+		_convertList: function () {
+			$('.userNotificationItemList > .notificationItem').each((function (index, item) {
+				var $item = $(item);
+				
+				if (!$item.data('isRead')) {
+					$item.find('a:not(.userLink)').prop('href', $item.data('link'));
+					
+					var $markAsConfirmed = $('<a href="#" class="icon icon24 fa-check notificationItemMarkAsConfirmed jsTooltip" title="' + WCF.Language.get('wcf.user.notification.markAsConfirmed') + '" />').appendTo($item);
+					$markAsConfirmed.click($.proxy(this._markAsConfirmed, this));
+				}
+				
+				// work-around for legacy notifications
+				if (!$item.find('a:not(.notificationItemMarkAsConfirmed)').length) {
+					$item.find('.details > p:eq(0)').html(function (index, oldHTML) {
+						return '<a href="' + $item.data('link') + '">' + oldHTML + '</a>';
 					});
 				}
+			}).bind(this));
+			
+			WCF.DOMNodeInsertedHandler.execute();
+		},
+		
+		/**
+		 * Marks a single notification as confirmed.
+		 *
+		 * @param        object                event
+		 */
+		_markAsConfirmed: function (event) {
+			event.preventDefault();
+			
+			var $notificationID = $(event.currentTarget).parents('.notificationItem:eq(0)').data('objectID');
+			
+			this._proxy.setOption('data', {
+				actionName: 'markAsConfirmed',
+				className: 'wcf\\data\\user\\notification\\UserNotificationAction',
+				objectIDs: [$notificationID]
 			});
-		});
-		
-		// handle regular items
-		this._convertList();
-	},
-	
-	/**
-	 * Converts the notification item list to be in sync with the notification dropdown.
-	 */
-	_convertList: function() {
-		$('.userNotificationItemList > .notificationItem').each((function(index, item) {
-			var $item = $(item);
+			this._proxy.sendRequest();
 			
-			if (!$item.data('isRead')) {
-				$item.find('a:not(.userLink)').prop('href', $item.data('link'));
-				
-				var $markAsConfirmed = $('<a href="#" class="icon icon24 fa-check notificationItemMarkAsConfirmed jsTooltip" title="' + WCF.Language.get('wcf.user.notification.markAsConfirmed') + '" />').appendTo($item);
-				$markAsConfirmed.click($.proxy(this._markAsConfirmed, this));
-			}
+			return false;
+		},
+		
+		/**
+		 * Handles successful AJAX requests.
+		 *
+		 * @param        object                data
+		 * @param        string                textStatus
+		 * @param        jQuery                jqXHR
+		 */
+		_success: function (data, textStatus, jqXHR) {
+			var $item = $('.userNotificationItemList > .notificationItem[data-object-id=' + data.returnValues.markAsRead + ']');
 			
-			// work-around for legacy notifications
-			if (!$item.find('a:not(.notificationItemMarkAsConfirmed)').length) {
-				$item.find('.details > p:eq(0)').html(function(index, oldHTML) {
-					return '<a href="' + $item.data('link') + '">' + oldHTML + '</a>';
-				});
-			}
-		}).bind(this));
-		
-		WCF.DOMNodeInsertedHandler.execute();
-	},
-	
-	/**
-	 * Marks a single notification as confirmed.
-	 * 
-	 * @param	object		event
-	 */
-	_markAsConfirmed: function(event) {
-		event.preventDefault();
-		
-		var $notificationID = $(event.currentTarget).parents('.notificationItem:eq(0)').data('objectID');
-		
-		this._proxy.setOption('data', {
-			actionName: 'markAsConfirmed',
-			className: 'wcf\\data\\user\\notification\\UserNotificationAction',
-			objectIDs: [ $notificationID ]
-		});
-		this._proxy.sendRequest();
-		
-		return false;
-	},
-	
-	/**
-	 * Handles successful AJAX requests.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		var $item = $('.userNotificationItemList > .notificationItem[data-object-id=' + data.returnValues.markAsRead + ']');
-		
-		$item.data('isRead', true);
-		$item.find('.newContentBadge').remove();
-		$item.find('.notificationItemMarkAsConfirmed').remove();
-		$item.removeClass('notificationUnconfirmed');
-	}
-});
-
-/**
- * Signature preview.
- * 
- * @see	WCF.Message.Preview
- */
-WCF.User.SignaturePreview = WCF.Message.Preview.extend({
-	/**
-	 * @see	WCF.Message.Preview._handleResponse()
-	 */
-	_handleResponse: function(data) {
-		// get preview container
-		var $preview = $('#previewContainer');
-		if (!$preview.length) {
-			$preview = $('<section class="section" id="previewContainer"><h2 class="sectionTitle">' + WCF.Language.get('wcf.global.preview') + '</h2><div class="htmlContent"></div></section>').insertBefore($('#signatureContainer')).wcfFadeIn();
+			$item.data('isRead', true);
+			$item.find('.newContentBadge').remove();
+			$item.find('.notificationItemMarkAsConfirmed').remove();
+			$item.removeClass('notificationUnconfirmed');
 		}
-		
-		$preview.children('div').first().html(data.returnValues.message);
-	}
-});
+	});
+	
+	/**
+	 * Signature preview.
+	 *
+	 * @see        WCF.Message.Preview
+	 */
+	WCF.User.SignaturePreview = WCF.Message.Preview.extend({
+		/**
+		 * @see        WCF.Message.Preview._handleResponse()
+		 */
+		_handleResponse: function (data) {
+			// get preview container
+			var $preview = $('#previewContainer');
+			if (!$preview.length) {
+				$preview = $('<section class="section" id="previewContainer"><h2 class="sectionTitle">' + WCF.Language.get('wcf.global.preview') + '</h2><div class="htmlContent"></div></section>').insertBefore($('#signatureContainer')).wcfFadeIn();
+			}
+			
+			$preview.children('div').first().html(data.returnValues.message);
+		}
+	});
+}
+else {
+	WCF.Notification.List = Class.extend({
+		_proxy: {},
+		init: function() {},
+		_convertList: function() {},
+		_markAsConfirmed: function() {},
+		_success: function() {}
+	});
+	
+	WCF.User.SignaturePreview = WCF.Message.Preview.extend({
+		_handleResponse: function() {},
+		_className: "",
+		_messageFieldID: "",
+		_messageField: {},
+		_proxy: {},
+		_previewButton: {},
+		_previewButtonLabel: "",
+		init: function() {},
+		_click: function() {},
+		_getParameters: function() {},
+		_getMessage: function() {},
+		_success: function() {},
+		_failure: function() {}
+	});
+}
 
 /**
  * Loads recent activity events once the user scrolls to the very bottom.
@@ -2057,343 +2197,398 @@ WCF.User.ProfilePreview = WCF.Popover.extend({
 });
 
 /**
- * Initalizes WCF.User.Action namespace.
+ * Initializes WCF.User.Action namespace.
  */
 WCF.User.Action = {};
 
-/**
- * Handles user follow and unfollow links.
- */
-WCF.User.Action.Follow = Class.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * list with elements containing follow and unfollow buttons
-	 * @var	array
+	 * Handles user follow and unfollow links.
 	 */
-	_containerList: null,
-	
-	/**
-	 * CSS selector for follow buttons
-	 * @var	string
-	 */
-	_followButtonSelector: '.jsFollowButton',
-	
-	/**
-	 * id of the user that is currently being followed/unfollowed
-	 * @var	integer
-	 */
-	_userID: 0,
-	
-	/**
-	 * Initializes new WCF.User.Action.Follow object.
-	 * 
-	 * @param	array		containerList
-	 * @param	string		followButtonSelector
-	 */
-	init: function(containerList, followButtonSelector) {
-		if (!containerList.length) {
-			return;
-		}
-		this._containerList = containerList;
+	WCF.User.Action.Follow = Class.extend({
+		/**
+		 * list with elements containing follow and unfollow buttons
+		 * @var        array
+		 */
+		_containerList: null,
 		
-		if (followButtonSelector) {
-			this._followButtonSelector = followButtonSelector;
-		}
+		/**
+		 * CSS selector for follow buttons
+		 * @var        string
+		 */
+		_followButtonSelector: '.jsFollowButton',
 		
-		// initialize proxy
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
+		/**
+		 * id of the user that is currently being followed/unfollowed
+		 * @var        integer
+		 */
+		_userID: 0,
 		
-		// bind event listeners
-		this._containerList.each($.proxy(function(index, container) {
-			$(container).find(this._followButtonSelector).click($.proxy(this._click, this));
-		}, this));
-	},
-	
-	/**
-	 * Handles a click on a follow or unfollow button.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		event.preventDefault();
-		var link = $(event.target);
-		if (!link.is('a')) {
-			link = link.closest('a');
-		}
-		this._userID = link.data('objectID');
-		
-		this._proxy.setOption('data', {
-			'actionName': link.data('following') ? 'unfollow' : 'follow',
-			'className': 'wcf\\data\\user\\follow\\UserFollowAction',
-			'parameters': {
-				data: {
-					userID: this._userID
-				}
+		/**
+		 * Initializes new WCF.User.Action.Follow object.
+		 *
+		 * @param        array                containerList
+		 * @param        string                followButtonSelector
+		 */
+		init: function (containerList, followButtonSelector) {
+			if (!containerList.length) {
+				return;
 			}
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Handles the successful (un)following of a user.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		this._containerList.each($.proxy(function(index, container) {
-			var button = $(container).find(this._followButtonSelector).get(0);
+			this._containerList = containerList;
 			
-			if (button && $(button).data('objectID') == this._userID) {
-				button = $(button);
-				
-				// toogle icon title
-				if (data.returnValues.following) {
-					button.attr('data-tooltip', WCF.Language.get('wcf.user.button.unfollow')).children('.icon').removeClass('fa-plus').addClass('fa-minus');
-					button.children('.invisible').text(WCF.Language.get('wcf.user.button.unfollow'));
-				}
-				else {
-					button.attr('data-tooltip', WCF.Language.get('wcf.user.button.follow')).children('.icon').removeClass('fa-minus').addClass('fa-plus');
-					button.children('.invisible').text(WCF.Language.get('wcf.user.button.follow'));
-				}
-				
-				button.data('following', data.returnValues.following);
-				
-				return false;
+			if (followButtonSelector) {
+				this._followButtonSelector = followButtonSelector;
 			}
-		}, this));
-		
-		var $notification = new WCF.System.Notification();
-		$notification.show();
-	}
-});
-
-/**
- * Handles user ignore and unignore links.
- */
-WCF.User.Action.Ignore = Class.extend({
-	/**
-	 * list with elements containing ignore and unignore buttons
-	 * @var	array
-	 */
-	_containerList: null,
-	
-	/**
-	 * CSS selector for ignore buttons
-	 * @var	string
-	 */
-	_ignoreButtonSelector: '.jsIgnoreButton',
-	
-	/**
-	 * id of the user that is currently being ignored/unignored
-	 * @var	integer
-	 */
-	_userID: 0,
-	
-	/**
-	 * Initializes new WCF.User.Action.Ignore object.
-	 * 
-	 * @param	array		containerList
-	 * @param	string		ignoreButtonSelector
-	 */
-	init: function(containerList, ignoreButtonSelector) {
-		if (!containerList.length) {
-			return;
-		}
-		this._containerList = containerList;
-		
-		if (ignoreButtonSelector) {
-			this._ignoreButtonSelector = ignoreButtonSelector;
-		}
-		
-		// initialize proxy
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
-		
-		// bind event listeners
-		this._containerList.each($.proxy(function(index, container) {
-			$(container).find(this._ignoreButtonSelector).click($.proxy(this._click, this));
-		}, this));
-	},
-	
-	/**
-	 * Handles a click on a ignore or unignore button.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		event.preventDefault();
-		var link = $(event.target);
-		if (!link.is('a')) {
-			link = link.closest('a');
-		}
-		this._userID = link.data('objectID');
-		
-		this._proxy.setOption('data', {
-			'actionName': link.data('ignored') ? 'unignore' : 'ignore',
-			'className': 'wcf\\data\\user\\ignore\\UserIgnoreAction',
-			'parameters': {
-				data: {
-					userID: this._userID
-				}
-			}
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Handles the successful (un)ignoring of a user.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		this._containerList.each($.proxy(function(index, container) {
-			var button = $(container).find(this._ignoreButtonSelector).get(0);
 			
-			if (button && $(button).data('objectID') == this._userID) {
-				button = $(button);
-				
-				// toogle icon title
-				if (data.returnValues.isIgnoredUser) {
-					button.attr('data-tooltip', WCF.Language.get('wcf.user.button.unignore')).children('.icon').removeClass('fa-ban').addClass('fa-circle-o');
-					button.children('.invisible').text(WCF.Language.get('wcf.user.button.unignore'));
-				}
-				else {
-					button.attr('data-tooltip', WCF.Language.get('wcf.user.button.ignore')).children('.icon').removeClass('fa-circle-o').addClass('fa-ban');
-					button.children('.invisible').text(WCF.Language.get('wcf.user.button.ignore'));
-				}
-				
-				button.data('ignored', data.returnValues.isIgnoredUser);
-				
-				return false;
+			// initialize proxy
+			this._proxy = new WCF.Action.Proxy({
+				success: $.proxy(this._success, this)
+			});
+			
+			// bind event listeners
+			this._containerList.each($.proxy(function (index, container) {
+				$(container).find(this._followButtonSelector).click($.proxy(this._click, this));
+			}, this));
+		},
+		
+		/**
+		 * Handles a click on a follow or unfollow button.
+		 *
+		 * @param        object                event
+		 */
+		_click: function (event) {
+			event.preventDefault();
+			var link = $(event.target);
+			if (!link.is('a')) {
+				link = link.closest('a');
 			}
-		}, this));
+			this._userID = link.data('objectID');
+			
+			this._proxy.setOption('data', {
+				'actionName': link.data('following') ? 'unfollow' : 'follow',
+				'className': 'wcf\\data\\user\\follow\\UserFollowAction',
+				'parameters': {
+					data: {
+						userID: this._userID
+					}
+				}
+			});
+			this._proxy.sendRequest();
+		},
 		
-		var $notification = new WCF.System.Notification();
-		$notification.show();
+		/**
+		 * Handles the successful (un)following of a user.
+		 *
+		 * @param        object                data
+		 * @param        string                textStatus
+		 * @param        jQuery                jqXHR
+		 */
+		_success: function (data, textStatus, jqXHR) {
+			this._containerList.each($.proxy(function (index, container) {
+				var button = $(container).find(this._followButtonSelector).get(0);
+				
+				if (button && $(button).data('objectID') == this._userID) {
+					button = $(button);
+					
+					// toogle icon title
+					if (data.returnValues.following) {
+						button.attr('data-tooltip', WCF.Language.get('wcf.user.button.unfollow')).children('.icon').removeClass('fa-plus').addClass('fa-minus');
+						button.children('.invisible').text(WCF.Language.get('wcf.user.button.unfollow'));
+					}
+					else {
+						button.attr('data-tooltip', WCF.Language.get('wcf.user.button.follow')).children('.icon').removeClass('fa-minus').addClass('fa-plus');
+						button.children('.invisible').text(WCF.Language.get('wcf.user.button.follow'));
+					}
+					
+					button.data('following', data.returnValues.following);
+					
+					return false;
+				}
+			}, this));
+			
+			var $notification = new WCF.System.Notification();
+			$notification.show();
+		}
+	});
+	
+	/**
+	 * Handles user ignore and unignore links.
+	 */
+	WCF.User.Action.Ignore = Class.extend({
+		/**
+		 * list with elements containing ignore and unignore buttons
+		 * @var        array
+		 */
+		_containerList: null,
 		
-		// force rebuilding of popover cache
-		var self = this;
-		WCF.System.ObjectStore.invoke('WCF.User.ProfilePreview', function(profilePreview) {
-			profilePreview.purge(self._userID);
-		});
-	}
-});
+		/**
+		 * CSS selector for ignore buttons
+		 * @var        string
+		 */
+		_ignoreButtonSelector: '.jsIgnoreButton',
+		
+		/**
+		 * id of the user that is currently being ignored/unignored
+		 * @var        integer
+		 */
+		_userID: 0,
+		
+		/**
+		 * Initializes new WCF.User.Action.Ignore object.
+		 *
+		 * @param        array                containerList
+		 * @param        string                ignoreButtonSelector
+		 */
+		init: function (containerList, ignoreButtonSelector) {
+			if (!containerList.length) {
+				return;
+			}
+			this._containerList = containerList;
+			
+			if (ignoreButtonSelector) {
+				this._ignoreButtonSelector = ignoreButtonSelector;
+			}
+			
+			// initialize proxy
+			this._proxy = new WCF.Action.Proxy({
+				success: $.proxy(this._success, this)
+			});
+			
+			// bind event listeners
+			this._containerList.each($.proxy(function (index, container) {
+				$(container).find(this._ignoreButtonSelector).click($.proxy(this._click, this));
+			}, this));
+		},
+		
+		/**
+		 * Handles a click on a ignore or unignore button.
+		 *
+		 * @param        object                event
+		 */
+		_click: function (event) {
+			event.preventDefault();
+			var link = $(event.target);
+			if (!link.is('a')) {
+				link = link.closest('a');
+			}
+			this._userID = link.data('objectID');
+			
+			this._proxy.setOption('data', {
+				'actionName': link.data('ignored') ? 'unignore' : 'ignore',
+				'className': 'wcf\\data\\user\\ignore\\UserIgnoreAction',
+				'parameters': {
+					data: {
+						userID: this._userID
+					}
+				}
+			});
+			this._proxy.sendRequest();
+		},
+		
+		/**
+		 * Handles the successful (un)ignoring of a user.
+		 *
+		 * @param        object                data
+		 * @param        string                textStatus
+		 * @param        jQuery                jqXHR
+		 */
+		_success: function (data, textStatus, jqXHR) {
+			this._containerList.each($.proxy(function (index, container) {
+				var button = $(container).find(this._ignoreButtonSelector).get(0);
+				
+				if (button && $(button).data('objectID') == this._userID) {
+					button = $(button);
+					
+					// toogle icon title
+					if (data.returnValues.isIgnoredUser) {
+						button.attr('data-tooltip', WCF.Language.get('wcf.user.button.unignore')).children('.icon').removeClass('fa-ban').addClass('fa-circle-o');
+						button.children('.invisible').text(WCF.Language.get('wcf.user.button.unignore'));
+					}
+					else {
+						button.attr('data-tooltip', WCF.Language.get('wcf.user.button.ignore')).children('.icon').removeClass('fa-circle-o').addClass('fa-ban');
+						button.children('.invisible').text(WCF.Language.get('wcf.user.button.ignore'));
+					}
+					
+					button.data('ignored', data.returnValues.isIgnoredUser);
+					
+					return false;
+				}
+			}, this));
+			
+			var $notification = new WCF.System.Notification();
+			$notification.show();
+			
+			// force rebuilding of popover cache
+			var self = this;
+			WCF.System.ObjectStore.invoke('WCF.User.ProfilePreview', function (profilePreview) {
+				profilePreview.purge(self._userID);
+			});
+		}
+	});
+}
+else {
+	WCF.User.Action.Follow = Class.extend({
+		_containerList: {},
+		_followButtonSelector: "",
+		_userID: 0,
+		init: function() {},
+		_click: function() {},
+		_success: function() {}
+	});
+	
+	WCF.User.Action.Ignore = Class.extend({
+		_containerList: {},
+		_ignoreButtonSelector: "",
+		_userID: 0,
+		init: function() {},
+		_click: function() {},
+		_success: function() {}
+	});
+}
 
 /**
  * Namespace for avatar functions.
  */
 WCF.User.Avatar = {};
 
-/**
- * Avatar upload function
- * 
- * @see	WCF.Upload
- */
-WCF.User.Avatar.Upload = WCF.Upload.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * user id of avatar owner
-	 * @var	integer
+	 * Avatar upload function
+	 *
+	 * @see        WCF.Upload
 	 */
-	_userID: 0,
-	
-	/**
-	 * Initalizes a new WCF.User.Avatar.Upload object.
-	 * 
-	 * @param	integer			userID
-	 */
-	init: function(userID) {
-		this._super($('#avatarUpload > dd > div'), undefined, 'wcf\\data\\user\\avatar\\UserAvatarAction');
-		this._userID = userID || 0;
+	WCF.User.Avatar.Upload = WCF.Upload.extend({
+		/**
+		 * user id of avatar owner
+		 * @var        integer
+		 */
+		_userID: 0,
 		
-		$('#avatarForm input[type=radio]').change(function() {
-			if ($(this).val() == 'custom') {
-				$('#avatarUpload > dd > div').show();
-			}
-			else {
+		/**
+		 * Initializes a new WCF.User.Avatar.Upload object.
+		 *
+		 * @param        integer                        userID
+		 */
+		init: function (userID) {
+			this._super($('#avatarUpload > dd > div'), undefined, 'wcf\\data\\user\\avatar\\UserAvatarAction');
+			this._userID = userID || 0;
+			
+			$('#avatarForm input[type=radio]').change(function () {
+				if ($(this).val() == 'custom') {
+					$('#avatarUpload > dd > div').show();
+				}
+				else {
+					$('#avatarUpload > dd > div').hide();
+				}
+			});
+			if (!$('#avatarForm input[type=radio][value=custom]:checked').length) {
 				$('#avatarUpload > dd > div').hide();
 			}
-		});
-		if (!$('#avatarForm input[type=radio][value=custom]:checked').length) {
-			$('#avatarUpload > dd > div').hide();
-		}
-	},
-	
-	/**
-	 * @see	WCF.Upload._initFile()
-	 */
-	_initFile: function(file) {
-		return $('#avatarUpload > dt > img');
-	},
-	
-	/**
-	 * @see	WCF.Upload._success()
-	 */
-	_success: function(uploadID, data) {
-		if (data.returnValues.url) {
-			this._updateImage(data.returnValues.url);
+		},
+		
+		/**
+		 * @see        WCF.Upload._initFile()
+		 */
+		_initFile: function (file) {
+			return $('#avatarUpload > dt > img');
+		},
+		
+		/**
+		 * @see        WCF.Upload._success()
+		 */
+		_success: function (uploadID, data) {
+			if (data.returnValues.url) {
+				this._updateImage(data.returnValues.url);
+				
+				// hide error
+				$('#avatarUpload > dd > .innerError').remove();
+				
+				// show success message
+				var $notification = new WCF.System.Notification(WCF.Language.get('wcf.user.avatar.upload.success'));
+				$notification.show();
+			}
+			else if (data.returnValues.errorType) {
+				// show error
+				this._getInnerErrorElement().text(WCF.Language.get('wcf.user.avatar.upload.error.' + data.returnValues.errorType));
+			}
+		},
+		
+		/**
+		 * Updates the displayed avatar image.
+		 *
+		 * @param        string                url
+		 */
+		_updateImage: function (url) {
+			$('#avatarUpload > dt > img').remove();
+			var $image = $('<img src="' + url + '" class="userAvatarImage" alt="" />').css({
+				'height': 'auto',
+				'max-height': '96px',
+				'max-width': '96px',
+				'width': 'auto'
+			});
 			
-			// hide error
-			$('#avatarUpload > dd > .innerError').remove();
+			$('#avatarUpload > dt').prepend($image);
 			
-			// show success message
-			var $notification = new WCF.System.Notification(WCF.Language.get('wcf.user.avatar.upload.success'));
-			$notification.show();
-		}
-		else if (data.returnValues.errorType) {
-			// show error
-			this._getInnerErrorElement().text(WCF.Language.get('wcf.user.avatar.upload.error.' + data.returnValues.errorType));
-		}
-	},
-	
-	/**
-	 * Updates the displayed avatar image.
-	 * 
-	 * @param	string		url
-	 */
-	_updateImage: function(url) {
-		$('#avatarUpload > dt > img').remove();
-		var $image = $('<img src="' + url + '" class="userAvatarImage" alt="" />').css({
-			'height': 'auto',
-			'max-height': '96px',
-			'max-width': '96px',
-			'width': 'auto'
-		});
+			WCF.DOMNodeInsertedHandler.execute();
+		},
 		
-		$('#avatarUpload > dt').prepend($image);
+		/**
+		 * Returns the inner error element.
+		 *
+		 * @return        jQuery
+		 */
+		_getInnerErrorElement: function () {
+			var $span = $('#avatarUpload > dd > .innerError');
+			if (!$span.length) {
+				$span = $('<small class="innerError"></span>');
+				$('#avatarUpload > dd').append($span);
+			}
+			
+			return $span;
+		},
 		
-		WCF.DOMNodeInsertedHandler.execute();
-	},
-	
-	/**
-	 * Returns the inner error element.
-	 * 
-	 * @return	jQuery
-	 */
-	_getInnerErrorElement: function() {
-		var $span = $('#avatarUpload > dd > .innerError');
-		if (!$span.length) {
-			$span = $('<small class="innerError"></span>');
-			$('#avatarUpload > dd').append($span);
+		/**
+		 * @see        WCF.Upload._getParameters()
+		 */
+		_getParameters: function () {
+			return {
+				userID: this._userID
+			};
 		}
-		
-		return $span;
-	},
-	
-	/**
-	 * @see	WCF.Upload._getParameters()
-	 */
-	_getParameters: function() {
-		return {
-			userID: this._userID
-		};
-	}
-});
+	});
+}
+else {
+	WCF.User.Avatar.Upload = WCF.Upload.extend({
+		_userID: 0,
+		init: function() {},
+		_initFile: function() {},
+		_success: function() {},
+		_updateImage: function() {},
+		_getInnerErrorElement: function() {},
+		_getParameters: function() {},
+		_name: "",
+		_buttonSelector: {},
+		_fileListSelector: {},
+		_fileUpload: {},
+		_className: "",
+		_iframe: {},
+		_internalFileID: 0,
+		_options: {},
+		_uploadMatrix: {},
+		_supportsAJAXUpload: true,
+		_overlay: {},
+		_createButton: function() {},
+		_insertButton: function() {},
+		_removeButton: function() {},
+		_upload: function() {},
+		_createUploadMatrix: function() {},
+		_error: function() {},
+		_progress: function() {},
+		_showOverlay: function() {},
+		_evaluateResponse: function() {},
+		_getFilename: function() {}
+	});
+}
 
 /**
  * Generic implementation for grouped user lists.
@@ -2572,201 +2767,217 @@ WCF.User.List = Class.extend({
  */
 WCF.User.ObjectWatch = {};
 
-/**
- * Handles subscribe/unsubscribe links.
- */
-WCF.User.ObjectWatch.Subscribe = Class.extend({
+if (COMPILER_TARGET_DEFAULT) {
 	/**
-	 * CSS selector for subscribe buttons
-	 * @var	string
+	 * Handles subscribe/unsubscribe links.
 	 */
-	_buttonSelector: '.jsSubscribeButton',
-	
-	/**
-	 * list of buttons
-	 * @var	object
-	 */
-	_buttons: { },
-	
-	/**
-	 * dialog overlay
-	 * @var	object
-	 */
-	_dialog: null,
-	
-	/**
-	 * system notification
-	 * @var	WCF.System.Notification
-	 */
-	_notification: null,
-	
-	/**
-	 * reload page on unsubscribe
-	 * @var	boolean
-	 */
-	_reloadOnUnsubscribe: false,
-	
-	/**
-	 * WCF.User.ObjectWatch.Subscribe object.
-	 * 
-	 * @param	boolean		reloadOnUnsubscribe
-	 */
-	init: function(reloadOnUnsubscribe) {
-		this._buttons = { };
-		this._notification = null;
-		this._reloadOnUnsubscribe = (reloadOnUnsubscribe === true);
+	WCF.User.ObjectWatch.Subscribe = Class.extend({
+		/**
+		 * CSS selector for subscribe buttons
+		 * @var        string
+		 */
+		_buttonSelector: '.jsSubscribeButton',
 		
-		// initialize proxy
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
+		/**
+		 * list of buttons
+		 * @var        object
+		 */
+		_buttons: {},
 		
-		// bind event listeners
-		$(this._buttonSelector).each($.proxy(function(index, button) {
-			var $button = $(button);
-			$button.addClass('pointer');
-			var $objectType = $button.data('objectType');
-			var $objectID = $button.data('objectID');
-			
-			if (this._buttons[$objectType] === undefined) {
-				this._buttons[$objectType] = {};
-			}
-			
-			this._buttons[$objectType][$objectID] = $button.click($.proxy(this._click, this));
-		}, this));
+		/**
+		 * dialog overlay
+		 * @var        object
+		 */
+		_dialog: null,
 		
-		WCF.System.Event.addListener('com.woltlab.wcf.objectWatch', 'update', $.proxy(this._updateSubscriptionStatus, this));
-	},
-	
-	/**
-	 * Handles a click on a subscribe button.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		event.preventDefault();
-		var $button = $(event.currentTarget);
+		/**
+		 * system notification
+		 * @var        WCF.System.Notification
+		 */
+		_notification: null,
 		
-		this._proxy.setOption('data', {
-			actionName: 'manageSubscription',
-			className: 'wcf\\data\\user\\object\\watch\\UserObjectWatchAction',
-			parameters: {
-				objectID: $button.data('objectID'),
-				objectType: $button.data('objectType')
-			}
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Handles successful AJAX requests.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		if (data.actionName === 'manageSubscription') {
-			if (this._dialog === null) {
-				this._dialog = $('<div>' + data.returnValues.template + '</div>').hide().appendTo(document.body);
-				this._dialog.wcfDialog({
-					title: WCF.Language.get('wcf.user.objectWatch.manageSubscription')
-				});
-			}
-			else {
-				this._dialog.html(data.returnValues.template);
-				this._dialog.wcfDialog('open');
-			}
+		/**
+		 * reload page on unsubscribe
+		 * @var        boolean
+		 */
+		_reloadOnUnsubscribe: false,
+		
+		/**
+		 * WCF.User.ObjectWatch.Subscribe object.
+		 *
+		 * @param        boolean                reloadOnUnsubscribe
+		 */
+		init: function (reloadOnUnsubscribe) {
+			this._buttons = {};
+			this._notification = null;
+			this._reloadOnUnsubscribe = (reloadOnUnsubscribe === true);
 			
-			// bind event listener
-			this._dialog.find('.formSubmit > .jsButtonSave').data('objectID', data.returnValues.objectID).data('objectType', data.returnValues.objectType).click($.proxy(this._save, this));
-			var $enableNotification = this._dialog.find('input[name=enableNotification]').disable();
+			// initialize proxy
+			this._proxy = new WCF.Action.Proxy({
+				success: $.proxy(this._success, this)
+			});
 			
-			// toggle subscription
-			this._dialog.find('input[name=subscribe]').change(function(event) {
-				var $input = $(event.currentTarget);
-				if ($input.val() == 1) {
-					$enableNotification.enable();
+			// bind event listeners
+			$(this._buttonSelector).each($.proxy(function (index, button) {
+				var $button = $(button);
+				$button.addClass('pointer');
+				var $objectType = $button.data('objectType');
+				var $objectID = $button.data('objectID');
+				
+				if (this._buttons[$objectType] === undefined) {
+					this._buttons[$objectType] = {};
+				}
+				
+				this._buttons[$objectType][$objectID] = $button.click($.proxy(this._click, this));
+			}, this));
+			
+			WCF.System.Event.addListener('com.woltlab.wcf.objectWatch', 'update', $.proxy(this._updateSubscriptionStatus, this));
+		},
+		
+		/**
+		 * Handles a click on a subscribe button.
+		 *
+		 * @param        object                event
+		 */
+		_click: function (event) {
+			event.preventDefault();
+			var $button = $(event.currentTarget);
+			
+			this._proxy.setOption('data', {
+				actionName: 'manageSubscription',
+				className: 'wcf\\data\\user\\object\\watch\\UserObjectWatchAction',
+				parameters: {
+					objectID: $button.data('objectID'),
+					objectType: $button.data('objectType')
+				}
+			});
+			this._proxy.sendRequest();
+		},
+		
+		/**
+		 * Handles successful AJAX requests.
+		 *
+		 * @param        object                data
+		 * @param        string                textStatus
+		 * @param        jQuery                jqXHR
+		 */
+		_success: function (data, textStatus, jqXHR) {
+			if (data.actionName === 'manageSubscription') {
+				if (this._dialog === null) {
+					this._dialog = $('<div>' + data.returnValues.template + '</div>').hide().appendTo(document.body);
+					this._dialog.wcfDialog({
+						title: WCF.Language.get('wcf.user.objectWatch.manageSubscription')
+					});
 				}
 				else {
-					$enableNotification.disable();
+					this._dialog.html(data.returnValues.template);
+					this._dialog.wcfDialog('open');
+				}
+				
+				// bind event listener
+				this._dialog.find('.formSubmit > .jsButtonSave').data('objectID', data.returnValues.objectID).data('objectType', data.returnValues.objectType).click($.proxy(this._save, this));
+				var $enableNotification = this._dialog.find('input[name=enableNotification]').disable();
+				
+				// toggle subscription
+				this._dialog.find('input[name=subscribe]').change(function (event) {
+					var $input = $(event.currentTarget);
+					if ($input.val() == 1) {
+						$enableNotification.enable();
+					}
+					else {
+						$enableNotification.disable();
+					}
+				});
+				
+				// setup
+				var $selectedOption = this._dialog.find('input[name=subscribe]:checked');
+				if ($selectedOption.length && $selectedOption.val() == 1) {
+					$enableNotification.enable();
+				}
+			}
+			else if (data.actionName === 'saveSubscription' && this._dialog.is(':visible')) {
+				this._dialog.wcfDialog('close');
+				
+				this._updateSubscriptionStatus({
+					isSubscribed: data.returnValues.subscribe,
+					objectID: data.returnValues.objectID
+				});
+				
+				
+				// show notification
+				if (this._notification === null) {
+					this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success.edit'));
+				}
+				
+				this._notification.show();
+			}
+		},
+		
+		/**
+		 * Saves the subscription.
+		 *
+		 * @param        object                event
+		 */
+		_save: function (event) {
+			var $button = this._buttons[$(event.currentTarget).data('objectType')][$(event.currentTarget).data('objectID')];
+			var $subscribe = this._dialog.find('input[name=subscribe]:checked').val();
+			var $enableNotification = (this._dialog.find('input[name=enableNotification]').is(':checked')) ? 1 : 0;
+			
+			this._proxy.setOption('data', {
+				actionName: 'saveSubscription',
+				className: 'wcf\\data\\user\\object\\watch\\UserObjectWatchAction',
+				parameters: {
+					enableNotification: $enableNotification,
+					objectID: $button.data('objectID'),
+					objectType: $button.data('objectType'),
+					subscribe: $subscribe
 				}
 			});
-			
-			// setup
-			var $selectedOption = this._dialog.find('input[name=subscribe]:checked');
-			if ($selectedOption.length && $selectedOption.val() == 1) {
-				$enableNotification.enable();
-			}
-		}
-		else if (data.actionName === 'saveSubscription' && this._dialog.is(':visible')) {
-			this._dialog.wcfDialog('close');
-			
-			this._updateSubscriptionStatus({
-				isSubscribed: data.returnValues.subscribe,
-				objectID: data.returnValues.objectID
-			});
-			
-			
-			// show notification
-			if (this._notification === null) {
-				this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success.edit'));
-			}
-			
-			this._notification.show();
-		}
-	},
-	
-	/**
-	 * Saves the subscription.
-	 * 
-	 * @param	object		event
-	 */
-	_save: function(event) {
-		var $button = this._buttons[$(event.currentTarget).data('objectType')][$(event.currentTarget).data('objectID')];
-		var $subscribe = this._dialog.find('input[name=subscribe]:checked').val();
-		var $enableNotification = (this._dialog.find('input[name=enableNotification]').is(':checked')) ? 1 : 0;
+			this._proxy.sendRequest();
+		},
 		
-		this._proxy.setOption('data', {
-			actionName: 'saveSubscription',
-			className: 'wcf\\data\\user\\object\\watch\\UserObjectWatchAction',
-			parameters: {
-				enableNotification: $enableNotification,
-				objectID: $button.data('objectID'),
-				objectType: $button.data('objectType'),
-				subscribe: $subscribe
-			}
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Updates subscription status and icon.
-	 * 
-	 * @param	object		data
-	 */
-	_updateSubscriptionStatus: function(data) {
-		var $button = $(this._buttonSelector + '[data-object-id=' + data.objectID + ']');
-		var $icon = $button.children('.icon');
-		if (data.isSubscribed) {
-			$icon.removeClass('fa-bookmark-o').addClass('fa-bookmark');
-			$button.data('isSubscribed', true);
-		}
-		else {
-			if ($button.data('removeOnUnsubscribe')) {
-				$button.parent().remove();
+		/**
+		 * Updates subscription status and icon.
+		 *
+		 * @param        object                data
+		 */
+		_updateSubscriptionStatus: function (data) {
+			var $button = $(this._buttonSelector + '[data-object-id=' + data.objectID + ']');
+			var $icon = $button.children('.icon');
+			if (data.isSubscribed) {
+				$icon.removeClass('fa-bookmark-o').addClass('fa-bookmark');
+				$button.data('isSubscribed', true);
 			}
 			else {
-				$icon.removeClass('fa-bookmark').addClass('fa-bookmark-o');
-				$button.data('isSubscribed', false);
+				if ($button.data('removeOnUnsubscribe')) {
+					$button.parent().remove();
+				}
+				else {
+					$icon.removeClass('fa-bookmark').addClass('fa-bookmark-o');
+					$button.data('isSubscribed', false);
+				}
+				
+				if (this._reloadOnUnsubscribe) {
+					window.location.reload();
+					return;
+				}
 			}
 			
-			if (this._reloadOnUnsubscribe) {
-				window.location.reload();
-				return;
-			}
+			WCF.System.Event.fireEvent('com.woltlab.wcf.objectWatch', 'updatedSubscription', data);
 		}
-		
-		WCF.System.Event.fireEvent('com.woltlab.wcf.objectWatch', 'updatedSubscription', data);
-	}
-});
+	});
+}
+else {
+	WCF.User.ObjectWatch.Subscribe = Class.extend({
+		_buttonSelector: "",
+		_buttons: {},
+		_dialog: {},
+		_notification: {},
+		_reloadOnUnsubscribe: false,
+		init: function() {},
+		_click: function() {},
+		_success: function() {},
+		_save: function() {},
+		_updateSubscriptionStatus: function() {}
+	});
+}

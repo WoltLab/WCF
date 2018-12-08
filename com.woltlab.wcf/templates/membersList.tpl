@@ -32,7 +32,7 @@
 		</form>
 	</section>
 	
-	<section class="box">
+	<section class="box" data-static-box-identifier="com.woltlab.wcf.MembersListLetters">
 		<h2 class="boxTitle">{lang}wcf.user.members.sort.letters{/lang}</h2>
 		
 		<div class="boxContent">
@@ -45,7 +45,7 @@
 		</div>
 	</section>
 	
-	<section class="box">
+	<section class="box" data-static-box-identifier="com.woltlab.wcf.MembersListSorting">
 		<form method="post" action="{if $searchID}{link controller='MembersList' id=$searchID}{/link}{else}{link controller='MembersList'}{/link}{/if}">
 			<h2 class="boxTitle">{lang}wcf.user.members.sort{/lang}</h2>
 			

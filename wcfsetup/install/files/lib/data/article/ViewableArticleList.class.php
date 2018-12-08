@@ -2,14 +2,16 @@
 namespace wcf\data\article;
 use wcf\data\article\content\ViewableArticleContentList;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\label\object\ArticleLabelObjectHandler;
 use wcf\system\like\LikeHandler;
+use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
 
 /**
  * Represents a list of articles.
  *
  * @author	Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
@@ -37,6 +39,13 @@ class ViewableArticleList extends ArticleList {
 	public function __construct() {
 		parent::__construct();
 		
+		if (WCF::getUser()->userID != 0) {
+			// last visit time
+			if (!empty($this->sqlSelects)) $this->sqlSelects .= ',';
+			$this->sqlSelects .= 'tracked_visit.visitTime';
+			$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_tracked_visit tracked_visit ON (tracked_visit.objectTypeID = ".VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article')." AND tracked_visit.objectID = article.articleID AND tracked_visit.userID = ".WCF::getUser()->userID.")";
+		}
+		
 		// get like status
 		if (!empty($this->sqlSelects)) $this->sqlSelects .= ',';
 		$this->sqlSelects .= "like_object.likes, like_object.dislikes";
@@ -49,10 +58,13 @@ class ViewableArticleList extends ArticleList {
 	public function readObjects() {
 		parent::readObjects();
 		
-		$userIDs = [];
+		$userIDs = $articleIDs = [];
 		foreach ($this->getObjects() as $article) {
 			if ($article->userID) {
 				$userIDs[] = $article->userID;
+			}
+			if ($article->hasLabels) {
+				$articleIDs[] = $article->articleID;
 			}
 		}
 		
@@ -69,6 +81,16 @@ class ViewableArticleList extends ArticleList {
 			$contentList->readObjects();
 			foreach ($contentList as $articleContent) {
 				$this->objects[$articleContent->articleID]->setArticleContent($articleContent);
+			}
+		}
+		
+		// get labels
+		if (!empty($articleIDs)) {
+			$assignedLabels = ArticleLabelObjectHandler::getInstance()->getAssignedLabels($articleIDs);
+			foreach ($assignedLabels as $articleID => $labels) {
+				foreach ($labels as $label) {
+					$this->objects[$articleID]->addLabel($label);
+				}
 			}
 		}
 	}

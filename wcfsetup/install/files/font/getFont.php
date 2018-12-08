@@ -7,7 +7,7 @@
  *  - Chrome sometimes does not properly cache fonts, resulting in strange rendering bugs
  * 
  * @author	Alexander Ebert, Sascha Greuel
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -19,11 +19,11 @@ $types = [
 	'woff2' => 'font/woff2' // the specs at http://dev.w3.org/webfonts/WOFF2/spec/ are not perfectly clear, but font/woff2 seems to be the most sane one and is currently used by Google Fonts
 ];
 
-// get parameters
-$type = $_GET['type'];
-$font = (!empty($_GET['font']) ? basename($_GET['font']) : 'fontawesome-webfont');
-
-if (!empty($type)) {
+if (!empty($_GET['type'])) {
+	// get parameters
+	$type = $_GET['type'];
+	$font = (!empty($_GET['font']) ? basename($_GET['font']) : 'fontawesome-webfont');
+	
 	if (isset($types[$type])) {
 		if (file_exists($font . '.' . $type)) {
 			$filename = $font . '.' . $type;

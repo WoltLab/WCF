@@ -2,10 +2,24 @@
 	<p>{lang}wcf.user.unknownUser{/lang}</p>
 {else}
 	<div class="box128 userProfilePreview">
-		<a href="{link controller='User' object=$user}{/link}" title="{$user->username}">{@$user->getAvatar()->getImageTag(128)}</a>
+		<a href="{link controller='User' object=$user}{/link}" title="{$user->username}" class="userProfilePreviewAvatar">
+			{@$user->getAvatar()->getImageTag(128)}
+			
+			{if $user->isOnline()}<span class="badge green badgeOnline">{lang}wcf.user.online{/lang}</span>{/if}
+		</a>
 		
 		<div class="userInformation">
 			{include file='userInformation'}
+
+			{if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies') && ($user->isAccessible('canViewTrophies') || $user->userID == $__wcf->session->userID) && $user->getSpecialTrophies()|count}
+				<div class="specialTrophyUserContainer">
+					<ul>
+						{foreach from=$user->getSpecialTrophies() item=trophy}
+							<li><a href="{@$trophy->getLink()}">{@$trophy->renderTrophy(32, true)}</a></li>
+						{/foreach}
+					</ul>
+				</div>
+			{/if}
 			
 			{if $user->canViewOnlineStatus() && $user->getLastActivityTime()}
 				<dl class="plain inlineDataList">

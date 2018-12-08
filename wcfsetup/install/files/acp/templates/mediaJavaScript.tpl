@@ -13,8 +13,10 @@
 			'wcf.media.manager': '{lang}wcf.media.manager{/lang}',
 			'wcf.media.edit': '{lang}wcf.media.edit{/lang}',
 			'wcf.media.button.insert': '{lang}wcf.media.button.insert{/lang}',
+			'wcf.media.search.info.searchStringThreshold': '{lang __literal=true}wcf.media.search.info.searchStringThreshold{/lang}',
 			'wcf.media.search.noResults': '{lang}wcf.media.search.noResults{/lang}',
 			'wcf.media.upload.error.noImage': '{lang}wcf.media.upload.error.noImage{/lang}',
+			'wcf.media.upload.error.uploadFailed': '{lang}wcf.media.upload.error.uploadFailed{/lang}',
 			'wcf.media.upload.success': '{lang}wcf.media.upload.success{/lang}'
 		});
 		

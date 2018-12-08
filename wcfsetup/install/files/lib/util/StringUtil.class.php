@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Contains string-related functions.
  * 
  * @author	Oliver Kliebisch, Marcel Werk
- * @copyright	2001-2017 WoltLab GmbH
+ * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -198,7 +198,7 @@ final class StringUtil {
 	 */
 	public static function formatDouble($double, $maxDecimals = 0) {
 		// round
-		$double = round($double, ($maxDecimals > 2 ? $maxDecimals : 2));
+		$double = round($double, ($maxDecimals > 0 ? $maxDecimals : 2));
 		
 		// consider as integer, if no decimal places found
 		if (!$maxDecimals && preg_match('~^(-?\d+)(?:\.(?:0*|00[0-4]\d*))?$~', $double, $match)) {
@@ -520,6 +520,10 @@ final class StringUtil {
 		if ($filter != '') {
 			$forbiddenNames = explode("\n", mb_strtolower(self::unifyNewlines($filter)));
 			foreach ($forbiddenNames as $forbiddenName) {
+				// ignore empty lines in between actual values
+				$forbiddenName = self::trim($forbiddenName);
+				if (empty($forbiddenName)) continue;
+				
 				if (mb_strpos($forbiddenName, '*') !== false) {
 					$forbiddenName = str_replace('\*', '.*', preg_quote($forbiddenName, '/'));
 					if (preg_match('/^'.$forbiddenName.'$/s', $word)) {
@@ -762,6 +766,19 @@ final class StringUtil {
 		}
 		
 		return self::formatNumeric($number) . $unitPrefix;
+	}
+	
+	/**
+	 * Normalizes a string representing comma-separated values by making sure
+	 * that the separator is just a comma, not a combination of whitespace and
+	 * a comma.
+	 * 
+	 * @param	string		$string
+	 * @return	string
+	 * @since	3.1
+	 */
+	public static function normalizeCsv($string) {
+		return implode(',', ArrayUtil::trim(explode(',', $string)));
 	}
 	
 	/**
