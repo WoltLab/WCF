@@ -15,7 +15,7 @@ class XML {
 	 * DOMDocument object
 	 * @var	\DOMDocument
 	 */
-	protected $document = null;
+	protected $document;
 	
 	/**
 	 * document path
@@ -33,7 +33,7 @@ class XML {
 	 * DOMXPath object
 	 * @var	\DOMXPath
 	 */
-	protected $xpath = null;
+	protected $xpath;
 	
 	/**
 	 * Prepares a new instance of DOMDocument and enables own error handler for libxml.
@@ -97,6 +97,8 @@ class XML {
 	
 	/**
 	 * Validate the loaded document against the specified xml schema definition.
+	 * 
+	 * @deprecated 3.2
 	 */
 	public function validate() {
 		// determine schema
@@ -114,23 +116,41 @@ class XML {
 	
 	/**
 	 * Determines schema for given document.
+	 * 
+	 * @deprecated 3.2
 	 */
 	protected function getSchema() {
-		// determine schema by looking for xsi:schemaLocation
-		$this->schema = $this->document->documentElement->getAttributeNS($this->document->documentElement->lookupNamespaceUri('xsi'), 'schemaLocation');
-		
-		// no valid schema found or it's lacking a valid namespace
-		if (strpos($this->schema, ' ') === false) {
-			throw new SystemException("XML document '".$this->path."' does not provide a valid schema.");
-		}
+		$tmp = $this->getSchemaLocation();
+		$this->schema = "{$tmp[0]} {$tmp[1]}";
 		
 		// build file path upon namespace and filename
-		$tmp = explode(' ', $this->schema);
 		$this->schema = WCF_DIR.'xsd/'.mb_substr(sha1($tmp[0]), 0, 8) . '_' . basename($tmp[1]);
 		
 		if (!file_exists($this->schema) || !is_readable($this->schema)) {
 			throw new SystemException("Could not read XML schema definition located at '".$this->schema."'.");
 		}
+	}
+	
+	/**
+	 * Reads the schema location and returns an array containing ['namespace', 'uri']. 
+	 * 
+	 * @return string[]
+	 * @since 3.2
+	 */
+	public function getSchemaLocation() {
+		$schema = $this->document->documentElement->getAttributeNS(
+			$this->document->documentElement->lookupNamespaceUri('xsi'),
+			'schemaLocation'
+		);
+		
+		$parts = explode(' ', $schema, 2);
+		
+		// Schemas must include a namespace.
+		if (count($parts) !== 2) {
+			throw new SystemException("XML document '".$this->path."' does not provide a valid schema.");
+		}
+		
+		return $parts;
 	}
 	
 	/**
@@ -157,7 +177,7 @@ class XML {
 	 * @see		\wcf\util\XML::__construct()
 	 * @return	string[][]
 	 */
-	protected function pollErrors() {
+	public function pollErrors() {
 		$errors = [];
 		$errorList = libxml_get_errors();
 		
@@ -272,7 +292,7 @@ class XML {
 	 * @return	array				attributes
 	 * @since	3.2
 	 */
-	protected function getAttributes(\DOMElement $element) {
+	public function getAttributes(\DOMElement $element) {
 		$attributes = [];
 		/** @var \DOMNode $attribute */
 		foreach ($element->attributes as $attribute) {
