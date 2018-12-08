@@ -143,10 +143,10 @@
 	 */
 	window.elData = function(element, attribute, value) {
 		if (value === undefined) {
-			return element.dataset.attribute || '';
+			return element.dataset[attribute] || '';
 		}
 		
-		element.dataset.attribute = value;
+		element.dataset[attribute] = value;
 	};
 	
 	/**
