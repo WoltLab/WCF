@@ -122,7 +122,11 @@ define(
 						container.classList.remove('jsStaticDialogContent');
 						elData(container, 'is-static-dialog', true);
 						elHide(container);
-						button.addEventListener(WCF_CLICK_EVENT, this.openStatic.bind(this, container.id, null, { title: elData(container, 'title') }));
+						button.addEventListener(WCF_CLICK_EVENT, (function(event) {
+							event.preventDefault();
+							
+							this.openStatic(container.id, null, { title: elData(container, 'title') });
+						}).bind(this));
 					}).bind(this))(button, container);
 				}
 			}
