@@ -2378,8 +2378,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user.description"><![CDATA[Rebuilds the user counters and ranks.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like"><![CDATA[Rebuild Likes]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.description"><![CDATA[Recalculates the likes.]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.user"><![CDATA[Rebuild Likes-Users]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.user.description"><![CDATA[Rebuilds the users using the Likes System.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[Rebuild Attachments]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment.description"><![CDATA[Rebuilds the attachment preview images.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.media"><![CDATA[Rebuild Media]]></item>
