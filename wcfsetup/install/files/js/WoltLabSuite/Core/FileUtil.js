@@ -204,8 +204,27 @@ define(['Dictionary', 'StringUtil'], function(Dictionary, StringUtil) {
 		 */
 		blobToFile: function (blob, filename) {
 			var ext = this.getExtensionByMimeType(blob.type);
+			var File = window.File;
 			
-			return new File([ blob ], filename + ext, { type: blob.type });
+			try {
+				// IE11 does not support the file constructor
+				new File([], 'ie11-check');
+			}
+			catch (error) {
+				// Create a good enough File object based on the Blob prototype
+				File = function File(chunks, filename, options) {
+					var self = Blob.call(this, chunks, options);
+					
+					self.name = filename;
+					self.lastModifiedDate = new Date();
+					
+					return self;
+				};
+				
+				File.prototype = Object.create(window.File.prototype);
+			}
+			
+			return new File([blob], filename + ext, {type: blob.type});
 		},
 	};
 });

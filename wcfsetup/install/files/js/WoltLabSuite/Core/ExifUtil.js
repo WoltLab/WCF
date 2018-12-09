@@ -78,7 +78,7 @@ define([], function() {
 							// Only copy Exif and XMP data
 							if (signature === _signatureEXIF || signature === _signatureXMP) {
 								// append the found EXIF sequence, usually only a single EXIF (APP1) sequence should be defined
-								var sequence = bytes.slice(i, length + i);
+								var sequence = Array.prototype.slice.call(bytes, i, length + i); // IE11 does not have slice in the Uint8Array prototype
 								var concat = new Uint8Array(exif.length + sequence.length);
 								concat.set(exif);
 								concat.set(sequence, exif.length);
@@ -139,8 +139,8 @@ define([], function() {
 							
 							// Only remove Exif and XMP data
 							if (signature === _signatureEXIF || signature === _signatureXMP) {
-								var start = bytes.slice(0, i);
-								var end = bytes.slice(i + length);
+								var start = Array.prototype.slice.call(bytes, 0, i);
+								var end = Array.prototype.slice.call(bytes, i + length);
 								bytes = new Uint8Array(start.length + end.length);
 								bytes.set(start, 0);
 								bytes.set(end, start.length);
@@ -151,7 +151,7 @@ define([], function() {
 						}
 					}
 					
-					resolve(new Blob([ bytes ], { type: blob.type }));
+					resolve(new Blob([bytes], { type: blob.type }));
 				});
 				
 				reader.readAsArrayBuffer(blob);
@@ -185,15 +185,15 @@ define([], function() {
 							offset += 2 + ((bytes[4] << 8) | bytes[5]);
 						}
 						
-						var start = bytes.slice(0, offset);
-						var end = bytes.slice(offset);
+						var start = Array.prototype.slice.call(bytes, 0, offset);
+						var end = Array.prototype.slice.call(bytes, offset);
 						
 						bytes = new Uint8Array(start.length + exif.length + end.length);
 						bytes.set(start);
 						bytes.set(exif, offset);
 						bytes.set(end, offset + exif.length);
 						
-						resolve(new Blob([ bytes ], { type: blob.type }));
+						resolve(new Blob([bytes], { type: blob.type }));
 					});
 					
 					reader.readAsArrayBuffer(blob);

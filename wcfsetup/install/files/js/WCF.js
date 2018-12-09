@@ -6025,7 +6025,7 @@ if (COMPILER_TARGET_DEFAULT) {
 							$fd.append('__files[' + $internalFileID + ']', blob, $files[$i].name);
 						}
 						else {
-							$fd.append('__files[' + $internalFileID + ']', $files[$i]);
+							$fd.append('__files[' + $internalFileID + ']', $files[$i], $files[$i].name);
 						}
 					}
 				}
