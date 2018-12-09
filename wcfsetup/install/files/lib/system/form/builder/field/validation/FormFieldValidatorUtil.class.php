@@ -75,10 +75,12 @@ abstract class FormFieldValidatorUtil {
 	
 	/**
 	 * Returns a form field validator to check the form field value against
-	 * the given regular expression.
+	 * the given regular expression. The regex is not checked if the form
+	 * field is empty and not required. 
 	 * 
 	 * @param	string		$regularExpression	regular expression used to validate form field value
 	 * @param	string		$languageItemPrefix	language item prefix used for error language item `{$languageItemPrefix}.error.format`
+	 *
 	 * @return	IFormFieldValidator
 	 * 
 	 * @throws	\InvalidArgumentException		if regular expression is invalid
@@ -92,7 +94,14 @@ abstract class FormFieldValidatorUtil {
 		return new FormFieldValidator(
 			'format',
 			function(IFormField $formField) use ($regex, $languageItemPrefix) {
-				if (!$regex->match($formField->getSaveValue())) {
+				$value = $formField->getSaveValue();
+				
+				// ignore empty non-required form fields
+				if ($value === '' && !$formField->isRequired()) {
+					return;
+				}
+				
+				if (!$regex->match($value)) {
 					$formField->addValidationError(
 						new FormFieldValidationError(
 							'format',
