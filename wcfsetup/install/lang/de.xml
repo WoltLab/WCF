@@ -101,6 +101,7 @@
 		<item name="wcf.acp.article.trash.notice"><![CDATA[Dieser Artikel befindet sich im Papierkorb und wird gegenwärtig nicht angezeigt.]]></item>
 		<item name="wcf.acp.article.views"><![CDATA[Zugriffe]]></item>
 		<item name="wcf.acp.article.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.article' objectID=$article->articleID}{/link}">vorherige Versionen</a> dieses Artikels, die letzte Änderung erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
+		<item name="wcf.acp.article.isDeleted"><![CDATA[Gelöscht]]></item>
 	</category>
 	<category name="wcf.acp.attachment">
 		<item name="wcf.acp.attachment.list"><![CDATA[Dateianhänge]]></item>

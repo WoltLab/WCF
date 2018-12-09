@@ -100,6 +100,11 @@ class ArticleListPage extends SortablePage {
 	public $publicationStatus = -1;
 	
 	/**
+	 * @var int
+	 */
+	public $isDeleted = -1;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -111,6 +116,7 @@ class ArticleListPage extends SortablePage {
 		if (!empty($_REQUEST['content'])) $this->content = StringUtil::trim($_REQUEST['content']);
 		if (!empty($_REQUEST['showArticleAddDialog'])) $this->showArticleAddDialog = 1;
 		if (isset($_REQUEST['publicationStatus'])) $this->publicationStatus = intval($_REQUEST['publicationStatus']);
+		if (!empty($_REQUEST['isDeleted'])) $this->isDeleted = intval($_REQUEST['isDeleted']);
 	}
 	
 	/**
@@ -148,6 +154,10 @@ class ArticleListPage extends SortablePage {
 		if ($this->publicationStatus != -1) {
 			$this->objectList->getConditionBuilder()->add('article.publicationStatus = ?', [$this->publicationStatus]);
 		}
+		
+		if ($this->isDeleted !== -1) {
+			$this->objectList->getConditionBuilder()->add('article.isDeleted = ?', [$this->isDeleted]);
+		}
 	}
 	
 	/**
@@ -166,6 +176,7 @@ class ArticleListPage extends SortablePage {
 			'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
 			'publicationStatus' => $this->publicationStatus,
 			'hasMarkedItems' => ClipboardHandler::getInstance()->hasMarkedItems(ClipboardHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article')),
+			'isDeleted' => $this->isDeleted,
 		]);
 	}
 }

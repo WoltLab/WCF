@@ -88,6 +88,12 @@
 					</select>
 				</dd>
 			</dl>
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" name="isDeleted" id="isDeleted" value="1"{if $isDeleted === 1} checked{/if}> {lang}wcf.acp.article.isDeleted{/lang}</label>
+				</dd>
+			</dl>
 			
 			{event name='filterFields'}
 		</div>
