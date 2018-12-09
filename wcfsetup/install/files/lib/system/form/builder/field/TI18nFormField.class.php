@@ -336,7 +336,7 @@ trait TI18nFormField {
 	 */
 	public function value($value) {
 		if ($this->isI18n()) {
-			if (is_string($value)) {
+			if (is_string($value) || is_numeric($value)) {
 				$this->setStringValue($value);
 			}
 			else if (is_array($value)) {
@@ -349,7 +349,7 @@ trait TI18nFormField {
 			}
 		}
 		else {
-			if (!is_string($value)) {
+			if (!is_string($value) && !is_numeric($value)) {
 				throw new \InvalidArgumentException("Given value is no string, " . gettype($value) . " given.");
 			}
 			
