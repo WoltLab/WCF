@@ -3536,6 +3536,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.form.field.username.error.invalid"><![CDATA[The entered username is invalid.]]></item>
 		<item name="wcf.form.field.username.error.notUnique"><![CDATA[The entered username is already in use.]]></item>
 		<item name="wcf.form.fieldValidator.dotSeparatedString.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
+		<item name="wcf.form.field.url.error.invalid"><![CDATA[The entered link is invalid.]]></item>
 	</category>
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Full Screen Mode]]></item>

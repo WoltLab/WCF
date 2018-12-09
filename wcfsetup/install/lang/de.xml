@@ -3162,6 +3162,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.form.field.userGroupOption.error.nonExistent"><![CDATA[Die folgenden Berechtigungen existieren nicht: {implode from=$options item=option}<code>{$option}</code>{/implode}.]]></item>
 		<item name="wcf.form.field.username.error.invalid"><![CDATA[Der angegebene Benutzername ist ungültig.]]></item>
 		<item name="wcf.form.field.username.error.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
+		<item name="wcf.form.field.url.error.invalid"><![CDATA[Der angegebene Verweis ist ungültig.]]></item>
 	</category>
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Vollbild-Modus]]></item>
