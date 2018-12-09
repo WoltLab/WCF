@@ -43,7 +43,7 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ISo
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete', 'update'];
+	protected $requireACP = ['create', 'delete', 'toggle', 'update', 'updatePosition'];
 	
 	/**
 	 * @inheritDoc
