@@ -27,7 +27,6 @@ class DevtoolsPackageArchive extends PackageArchive {
 		$this->packageXmlPath = $packageXmlPath;
 	}
 	
-	
 	/**
 	 * @inheritDoc
 	 */
