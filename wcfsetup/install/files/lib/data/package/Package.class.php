@@ -287,7 +287,7 @@ class Package extends DatabaseObject {
 	 * 	com.woltlab.wcf
 	 * 
 	 * Reminder: The package name being examined here contains the 'name' attribute
-	 * of the 'package' tag noted in the 'packages.xml' file delivered inside
+	 * of the 'package' tag noted in the 'package.xml' file delivered inside
 	 * the respective package.
 	 * 
 	 * @param	string		$packageName
