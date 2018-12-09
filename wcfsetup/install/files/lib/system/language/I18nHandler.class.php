@@ -186,13 +186,15 @@ class I18nHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$elementID
 	 * @param	string		$plainValue
+	 * @param	boolean		$forceAsPlainValue	if `true`, the value is added as a plain value in any case
 	 * @throws	SystemException
 	 */
-	public function setValue($elementID, $plainValue) {
+	public function setValue($elementID, $plainValue, $forceAsPlainValue = false) {
 		if (!is_string($plainValue)) {
 			throw new SystemException('Invalid argument for parameter $plainValue', 0, 'Expected string. '.ucfirst(gettype($plainValue)).' given.');
 		}
-		if (!$this->isPlainValue($elementID)) {
+		
+		if (!$this->isPlainValue($elementID) && !$forceAsPlainValue) {
 			$i18nValues = [];
 			foreach ($this->availableLanguages as $language) {
 				$i18nValues[$language->languageID] = StringUtil::trim($plainValue);

@@ -322,7 +322,7 @@ trait TI18nFormField {
 			I18nHandler::getInstance()->setValues($this->getPrefixedId(), $values);
 		}
 		else {
-			I18nHandler::getInstance()->setValue($this->getPrefixedId(), $value);
+			I18nHandler::getInstance()->setValue($this->getPrefixedId(), $value, !$this->isI18nRequired());
 		}
 	}
 	
