@@ -71,6 +71,16 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 			elHide(node);
 			_dependencyHiddenNodes.add(node);
 			
+			// also hide tab menu entry
+			if (node.classList.contains('tabMenuContent')) {
+				for (var tabLink of elBySelAll('li', DomTraverse.prevByClass(node, 'tabMenu'))) {
+					if (elData(tabLink, 'name') === elData(node, 'name')) {
+						elHide(tabLink);
+						break;
+					}
+				}
+			}
+			
 			elBySelAll('[max], [maxlength], [min], [required]', node, function(validatedField) {
 				var properties = new Dictionary();
 				
@@ -110,6 +120,16 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 		_show: function(node) {
 			elShow(node);
 			_dependencyHiddenNodes.delete(node);
+			
+			// also show tab menu entry
+			if (node.classList.contains('tabMenuContent')) {
+				for (var tabLink of elBySelAll('li', DomTraverse.prevByClass(node, 'tabMenu'))) {
+					if (elData(tabLink, 'name') === elData(node, 'name')) {
+						elShow(tabLink);
+						break;
+					}
+				}
+			}
 			
 			elBySelAll('input, select', node, function(validatedField) {
 				// if a container is shown, ignore all fields that
