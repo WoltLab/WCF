@@ -97,12 +97,22 @@ class DevtoolsProject extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns the path to the project's `package.xml` file.
+	 * 
+	 * @return	string
+	 * @since	3.2
+	 */
+	public function getPackageXmlPath() {
+		return $this->path . ($this->isCore() ? 'com.woltlab.wcf/' : '') . 'package.xml';
+	}
+	
+	/**
 	 * Validates the package.xml and checks if the package is already installed.
 	 * 
 	 * @return      string
 	 */
 	public function validatePackageXml() {
-		$packageXml = $this->path . ($this->isCore() ? 'com.woltlab.wcf/' : '') . 'package.xml';
+		$packageXml = $this->getPackageXmlPath();
 		$this->packageArchive = new DevtoolsPackageArchive($packageXml);
 		try {
 			$this->packageArchive->openArchive();
