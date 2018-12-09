@@ -770,6 +770,45 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
+	 * Validates the 'disableCoverPhoto' action.
+	 * 
+	 * @since 3.2
+	 */
+	public function validateDisableCoverPhoto() {
+		$this->validateEnableCoverPhoto();
+		
+		$this->readString('disableCoverPhotoReason', true);
+		$this->readString('disableCoverPhotoExpires', true);
+	}
+	
+	/**
+	 * Disables the cover photo of the handled users.
+	 * 
+	 * @since 3.2
+	 */
+	public function disableCoverPhoto() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		$disableCoverPhotoExpires = $this->parameters['disableCoverPhotoExpires'];
+		if ($disableCoverPhotoExpires) {
+			$disableCoverPhotoExpires = strtotime($disableCoverPhotoExpires);
+		}
+		else {
+			$disableCoverPhotoExpires = 0;
+		}
+		
+		foreach ($this->getObjects() as $userEditor) {
+			$userEditor->update([
+				'disableCoverPhoto' => 1,
+				'disableCoverPhotoReason' => $this->parameters['disableCoverPhotoReason'],
+				'disableCoverPhotoExpires' => $disableCoverPhotoExpires
+			]);
+		}
+	}
+	
+	/**
 	 * Validates the 'enableAvatar' action.
 	 */
 	public function validateEnableAvatar() {
@@ -797,6 +836,42 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		foreach ($this->getObjects() as $userEditor) {
 			$userEditor->update([
 				'disableAvatar' => 0
+			]);
+		}
+	}
+	
+	/**
+	 * Validates the 'enableCoverPhoto' action.
+	 * 
+	 * @since 3.2
+	 */
+	public function validateEnableCoverPhoto() {
+		WCF::getSession()->checkPermissions(['admin.user.canDisableCoverPhoto']);
+		
+		$this->__validateAccessibleGroups();
+		
+		if (empty($this->objects)) {
+			$this->readObjects();
+			
+			if (empty($this->objects)) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Enables the cover photo of the handled users.
+	 * 
+	 * @since 3.2
+	 */
+	public function enableCoverPhoto() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		foreach ($this->getObjects() as $userEditor) {
+			$userEditor->update([
+				'disableCoverPhoto' => 0
 			]);
 		}
 	}

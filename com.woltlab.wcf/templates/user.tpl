@@ -24,6 +24,11 @@
 					'wcf.user.disableAvatar.expires': '{lang}wcf.user.disableAvatar.expires{/lang}',
 					'wcf.user.disableAvatar.expires.description': '{lang}wcf.user.disableAvatar.expires.description{/lang}',
 					'wcf.user.disableAvatar.neverExpires': '{lang}wcf.user.disableAvatar.neverExpires{/lang}',
+					'wcf.user.disableCoverPhoto': '{lang}wcf.user.disableCoverPhoto{/lang}',
+					'wcf.user.disableCoverPhoto.confirmMessage': '{lang}wcf.user.disableCoverPhoto.confirmMessage{/lang}',
+					'wcf.user.disableCoverPhoto.expires': '{lang}wcf.user.disableCoverPhoto.expires{/lang}',
+					'wcf.user.disableCoverPhoto.expires.description': '{lang}wcf.user.disableCoverPhoto.expires.description{/lang}',
+					'wcf.user.disableCoverPhoto.neverExpires': '{lang}wcf.user.disableCoverPhoto.neverExpires{/lang}',
 					'wcf.user.disableSignature': '{lang}wcf.user.disableSignature{/lang}',
 					'wcf.user.disableSignature.confirmMessage': '{lang}wcf.user.disableSignature.confirmMessage{/lang}',
 					'wcf.user.disableSignature.expires': '{lang}wcf.user.disableSignature.expires{/lang}',
@@ -31,6 +36,7 @@
 					'wcf.user.disableSignature.neverExpires': '{lang}wcf.user.disableSignature.neverExpires{/lang}',
 					'wcf.user.edit': '{lang}wcf.user.edit{/lang}',
 					'wcf.user.enableAvatar': '{lang}wcf.user.enableAvatar{/lang}',
+					'wcf.user.enableCoverPhoto': '{lang}wcf.user.enableCoverPhoto{/lang}',
 					'wcf.user.enableSignature': '{lang}wcf.user.enableSignature{/lang}',
 					'wcf.user.unban': '{lang}wcf.user.unban{/lang}'
 				});
@@ -142,6 +148,9 @@
 		{/if}
 		{if $__wcf->session->getPermission('admin.user.canDisableSignature')}
 			data-disable-signature="{@$user->disableSignature}"
+		{/if}
+		{if MODULE_USER_COVER_PHOTO && $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}
+			data-disable-cover-photo="{@$user->disableCoverPhoto}"
 		{/if}
 		{if $__wcf->session->getPermission('admin.user.canEnableUser')}
 			data-is-disabled="{if $user->activationCode}true{else}false{/if}"
@@ -297,6 +306,7 @@
 									{if $__wcf->session->getPermission('admin.user.canBanUser')}<li><a href="#" class="jsButtonUserBan">{lang}wcf.user.{if $user->banned}un{/if}ban{/lang}</a></li>{/if}
 									{if $__wcf->session->getPermission('admin.user.canDisableAvatar')}<li><a href="#" class="jsButtonUserDisableAvatar">{lang}wcf.user.{if $user->disableAvatar}enable{else}disable{/if}Avatar{/lang}</a></li>{/if}
 									{if $__wcf->session->getPermission('admin.user.canDisableSignature')}<li><a href="#" class="jsButtonUserDisableSignature">{lang}wcf.user.{if $user->disableSignature}enable{else}disable{/if}Signature{/lang}</a></li>{/if}
+									{if MODULE_USER_COVER_PHOTO && $__wcf->session->getPermission('admin.user.canDisableCoverPhoto')}<li><a href="#" class="jsButtonUserDisableCoverPhoto">{lang}wcf.user.{if $user->disableCoverPhoto}enable{else}disable{/if}CoverPhoto{/lang}</a></li>{/if}
 									{if $__wcf->session->getPermission('admin.user.canEnableUser')}<li><a href="#" class="jsButtonUserEnable">{lang}wcf.acp.user.{if $user->activationCode}enable{else}disable{/if}{/lang}</a></li>{/if}
 									
 									{if $__wcf->session->getPermission('admin.general.canUseAcp') && $__wcf->session->getPermission('admin.user.canEditUser')}<li><a href="{link controller='UserEdit' object=$user isACP=true}{/link}" class="jsUserInlineEditor">{lang}wcf.user.edit{/lang}</a></li>{/if}

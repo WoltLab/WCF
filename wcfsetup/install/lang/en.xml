@@ -4371,6 +4371,12 @@ not register with us.]]></item>
 		<item name="wcf.user.disableAvatar.expires.description"><![CDATA[The avatar of the user will automatically be unblocked at the set time.]]></item>
 		<item name="wcf.user.disableAvatar.neverExpires"><![CDATA[Permanently Block]]></item>
 		<item name="wcf.user.enableAvatar"><![CDATA[Unblock Avatar]]></item>
+		<item name="wcf.user.disableCoverPhoto"><![CDATA[Block Cover Photo]]></item>
+		<item name="wcf.user.disableCoverPhoto.confirmMessage"><![CDATA[Do you really want to block the cover photo of this user?]]></item>
+		<item name="wcf.user.disableCoverPhoto.expires"><![CDATA[Unblocking]]></item>
+		<item name="wcf.user.disableCoverPhoto.expires.description"><![CDATA[The cover photo of the user will automatically be unblocked at the set time.]]></item>
+		<item name="wcf.user.disableCoverPhoto.neverExpires"><![CDATA[Permanently Block]]></item>
+		<item name="wcf.user.enableCoverPhoto"><![CDATA[Unblock Cover Photo]]></item>
 		<item name="wcf.user.disableSignature"><![CDATA[Block Signature]]></item>
 		<item name="wcf.user.disableSignature.confirmMessage"><![CDATA[Do you really want to block the signature of this user?]]></item>
 		<item name="wcf.user.disableSignature.expires"><![CDATA[Unblocking]]></item>

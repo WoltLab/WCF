@@ -3946,6 +3946,12 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.disableAvatar.expires.description"><![CDATA[Der Avatar des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
 		<item name="wcf.user.disableAvatar.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
 		<item name="wcf.user.enableAvatar"><![CDATA[Avatar entsperren]]></item>
+		<item name="wcf.user.disableCoverPhoto"><![CDATA[Titelbild sperren]]></item>
+		<item name="wcf.user.disableCoverPhoto.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Titelbild des Benutzers wirklich sperren?]]></item>
+		<item name="wcf.user.disableCoverPhoto.expires"><![CDATA[Entsperrung]]></item>
+		<item name="wcf.user.disableCoverPhoto.expires.description"><![CDATA[Das Titelbild des Benutzer wird zum festgelegten Zeitpunkt automatisch entsperrt.]]></item>
+		<item name="wcf.user.disableCoverPhoto.neverExpires"><![CDATA[Dauerhafte Sperrung]]></item>
+		<item name="wcf.user.enableCoverPhoto"><![CDATA[Titelbild entsperren]]></item>
 		<item name="wcf.user.disableSignature"><![CDATA[Signatur sperren]]></item>
 		<item name="wcf.user.disableSignature.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Signatur des Benutzers wirklich sperren?]]></item>
 		<item name="wcf.user.disableSignature.expires"><![CDATA[Entsperrung]]></item>
