@@ -298,11 +298,7 @@ if (COMPILER_TARGET_DEFAULT) {
 				'WoltLabSuite/Core/FileUtil',
 				'WoltLabSuite/Core/ImageResizer',
 				'WoltLabSuite/Core/Ajax/Status'
-			]).then((function (modules) {
-				var FileUtil = modules[0];
-				var ImageResizer = modules[1];
-				var AjaxStatus = modules[2];
-				
+			], (function (FileUtil, ImageResizer, AjaxStatus) {
 				AjaxStatus.show();
 				
 				var $files = [];
@@ -317,13 +313,12 @@ if (COMPILER_TARGET_DEFAULT) {
 					$files = this._fileUpload.prop('files');
 				}
 				
-				// Default action is to resolve with the unaltered list of files
+				// We resolve with the unaltered list of files in case auto scaling is disabled.
 				var $promise = Promise.resolve($files);
 				
 				if (this._options.autoScale && this._options.autoScale.enable) {
 					var $maxSize = this._buttonSelector.data('maxSize');
 					
-					// Create an ImageResizer instance
 					var $resizer = new ImageResizer();
 					var $maxWidth = this._options.autoScale.maxWidth;
 					var $maxHeight = this._options.autoScale.maxHeight;
@@ -338,37 +333,39 @@ if (COMPILER_TARGET_DEFAULT) {
 					$promise = Array.prototype.reduce.call($files, (function (acc, file) {
 						return acc.then((function (arr) {
 							var $timeout = new Promise(function (resolve, reject) {
+								// We issue one timeout per image, thus multiple timeout
+								// handlers will run in parallel
 								setTimeout(function () {
 									resolve(file);
-								}, 10e3); // Timeout per image
+								}, 10000);
 							});
 							
 							var $promise = $resizer.resize(file, $maxWidth, $maxHeight, $quality, file.size > $maxSize, $timeout)
-							.then((function (result) {
-								if (result.image instanceof File) {
-									return result.image;
-								}
-								
-								var $fileType = undefined;
-								
-								if (this._options.autoScale.fileType === 'keep') {
-									$fileType = file.type;
-								}
-								
-								return $resizer.getFile(result, file.name, $fileType, $quality);
-							}).bind(this))
-							.then(function (resizedFile) {
-								if (resizedFile.size > file.size) {
-									console.debug('[WCF.Attachment] File size of "' + file.name + '" increased, uploading untouched image.');
+								.then((function (result) {
+									if (result.image instanceof File) {
+										return result.image;
+									}
+									
+									var $fileType = undefined;
+									
+									if (this._options.autoScale.fileType === 'keep') {
+										$fileType = file.type;
+									}
+									
+									return $resizer.getFile(result, file.name, $fileType, $quality);
+								}).bind(this))
+								.then(function (resizedFile) {
+									if (resizedFile.size > file.size) {
+										console.debug('[WCF.Attachment] File size of "' + file.name + '" increased, uploading untouched image.');
+										return file;
+									}
+									
+									return resizedFile;
+								})
+								.catch(function (error) {
+									console.debug('[WCF.Attachment] Failed to resize image "' + file.name + '":', error);
 									return file;
-								}
-								
-								return resizedFile;
-							})
-							.catch(function (error) {
-								console.debug('[WCF.Attachment] Failed to resize image "' + file.name + '":', error);
-								return file;
-							});
+								});
 							
 							return Promise.race([$timeout, $promise])
 								.then(function (file) {
@@ -379,7 +376,7 @@ if (COMPILER_TARGET_DEFAULT) {
 					}).bind(this), Promise.resolve([]));
 				}
 				
-				return $promise.then((function (files) {
+				$promise.then((function (files) {
 					var $uploadID = undefined;
 					
 					if (this._validateLimit()) {
@@ -394,9 +391,13 @@ if (COMPILER_TARGET_DEFAULT) {
 					}
 					
 					return $uploadID;
-				}).bind(this)).finally(AjaxStatus.hide);
-			}).bind(this)).catch(function (error) {
-				console.debug('[WCF.Attachment] Failed to upload attachments:', error);
+				}).bind(this))
+				.catch(function (error) {
+					console.debug('[WCF.Attachment] Failed to upload attachments:', error);
+				})
+				.finally(AjaxStatus.hide);
+			}).bind(this), function (error) {
+				console.debug('[WCF.Attachment] Failed to load modules:', error);
 			});
 		},
 		

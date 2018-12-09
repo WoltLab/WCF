@@ -13,7 +13,7 @@ define([
 ], function(FileUtil, ExifUtil, Pica) {
 	"use strict";
 	
-	var pica = new Pica({ features: [ 'js', 'wasm', 'ww' ] });
+	var pica = new Pica({features: ['js', 'wasm', 'ww']});
 	
 	/**
 	 * @constructor
@@ -187,9 +187,9 @@ define([
 			});
 			
 			return Promise.all([ exif, resizer ])
-			.then(function (result) {
-				return { exif: result[0], image: result[1] };
-			});
+				.then(function (result) {
+					return { exif: result[0], image: result[1] };
+				});
 		}
 	};
 	

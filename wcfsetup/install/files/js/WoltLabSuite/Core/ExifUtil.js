@@ -151,7 +151,7 @@ define([], function() {
 						}
 					}
 					
-					resolve(new Blob([bytes], { type: blob.type }));
+					resolve(new Blob([bytes], {type: blob.type}));
 				});
 				
 				reader.readAsArrayBuffer(blob);
@@ -193,7 +193,7 @@ define([], function() {
 						bytes.set(exif, offset);
 						bytes.set(end, offset + exif.length);
 						
-						resolve(new Blob([bytes], { type: blob.type }));
+						resolve(new Blob([bytes], {type: blob.type}));
 					});
 					
 					reader.readAsArrayBuffer(blob);
