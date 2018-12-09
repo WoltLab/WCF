@@ -919,7 +919,7 @@
 		<item name="wcf.acp.language.item.languageCategoryID.mode.selection"><![CDATA[Manual Selection]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.description"><![CDATA[The phrase will be added to the selected language category.]]></item>
 		<item name="wcf.acp.language.item.languageItem"><![CDATA[Phrase Identifier]]></item>
-		<item name="wcf.acp.language.item.languageItem.description"><![CDATA[The phrase identifier consists of at least three segments that are separated by dots. Each segment may only contain the following characters: <code>[A-z0-9-_]</code>.]]></item>
+		<item name="wcf.acp.language.item.languageItem.description"><![CDATA[The phrase identifier consists of at least three segments that are separated by dots. Each segment may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.language.item.languageItem.error.format"><![CDATA[The entered identifier is invalid.]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.mode.error.automaticImpossible"><![CDATA[The language category cannot be determined automatically for the entered phrase identifier. You have to either change the phrase identifier or manually select a language category.]]></item>
 		<item name="wcf.acp.language.item.languageItem.error.prefixMismatch"><![CDATA[The entered identifier does not begin with the selected language category.]]></item>
@@ -1136,7 +1136,7 @@
 		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[If a user dismisses a notice, it will not display for them again.]]></item>
 		<item name="wcf.acp.notice.list"><![CDATA[Notices]]></item>
 		<item name="wcf.acp.notice.notice"><![CDATA[Notice]]></item>
-		<item name="wcf.acp.notice.notice.description"><![CDATA[<code>{literal}{$username}{/literal}</code> will be replaced by the name and <code>{literal}{$email}{/literal}</code> by the mail address of the active user.]]></item>
+		<item name="wcf.acp.notice.notice.description"><![CDATA[<kbd>{literal}{$username}{/literal}</kbd> will be replaced by the name and <kbd>{literal}{$email}{/literal}</kbd> by the mail address of the active user.]]></item>
 		<item name="wcf.acp.notice.noticeUseHtml"><![CDATA[Enable HTML code in notice]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed"><![CDATA[Dismissed notices will be displayed again.]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[The notice will be displayed again to users who dismissed the previous version. Guests who dismissed the notice will only view it in a new session.]]></item>
@@ -1621,7 +1621,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.search_enable_pages"><![CDATA[Pages are searchable]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_articles"><![CDATA[Display author’s article count]]></item>
 		<item name="wcf.acp.option.log_missing_language_items"><![CDATA[Log Missing Language Items]]></item>
-		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[The missing language items are logged in the log file <code>{'WCF_DIR'|constant}log/missingLanguageItems.txt</code>.]]></item>
+		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[The missing language items are logged in the log file <kbd>{'WCF_DIR'|constant}log/missingLanguageItems.txt</kbd>.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>
@@ -1865,11 +1865,11 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	<category name="wcf.acp.pip">
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.data.title"><![CDATA[Ad Location Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName"><![CDATA[Category]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName.description"><![CDATA[Ad locations are grouped by their category in the ad location selection when creating and editing ads. The category consists of at least four segments that are separated by dots. Each segment may only contain the following characters: <code>[A-z0-9-_]</code>.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName.description"><![CDATA[Ad locations are grouped by their category in the ad location selection when creating and editing ads. The category consists of at least four segments that are separated by dots. Each segment may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName.error.tooFewSegments"><![CDATA[The entered category only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.cssClassName"><![CDATA[CSS Classes]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.cssClassName.description"><![CDATA[The entered comma-separated CSS classes are assigned to the element that wraps all ads at the specific location. ]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.cssClassName.error.invalid"><![CDATA[The following CSS classes are invalid: {implode from=$invalidClasses item=invalidClass}<code>{$invalidClass}</code>{/implode}.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.cssClassName.error.invalid"><![CDATA[The following CSS classes are invalid: {implode from=$invalidClasses item=invalidClass}<kbd>{$invalidClass}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.page"><![CDATA[Page]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.page.description"><![CDATA[Page on which the ad location is positioned.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.attachment.objectType.data.title"><![CDATA[Attachment Type Data]]></item>
@@ -1887,7 +1887,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.category.defaultPermission.description"><![CDATA[This value is used for users for which no category-specific permission value has been set (either directly for the users or indirectly for their user groups).]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.data.title"><![CDATA[Clipboard Item Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName"><![CDATA[Database Object List Class Name]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName.description"><![CDATA[The entered class must extend <code>wcf\data\DatabaseObjectList</code> and is used for fetching the selected objects on which a clipboard action will be executed.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.clipboardItem.listClassName.description"><![CDATA[The entered class must extend <kbd>wcf\data\DatabaseObjectList</kbd> and is used for fetching the selected objects on which a clipboard action will be executed.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.condition.ad.data.title"><![CDATA[Ad Condition Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.condition.notice.data.title"><![CDATA[Notice Condition Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.condition.trophy.data.title"><![CDATA[Trophy Condition Data]]></item>
@@ -1900,7 +1900,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.hidden.description"><![CDATA[If "Yes" is selected, the content provider cannot be actively selected or deselected in the Content Remove dialog.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType"><![CDATA[Required Object Types]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType.description"><![CDATA[These object types are automatically executed when the User Content Remove Worker is executed and this object type is processed. Heads up: If a special order must be kept, nicevalue should be specified.]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.error.unknownObjectType"><![CDATA[The object type <code>{$objectType}</code> is unknown.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.error.unknownObjectType"><![CDATA[The object type <kbd>{$objectType}</kbd> is unknown.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.data.title"><![CDATA[Notification Object Type Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category"><![CDATA[Category]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.description"><![CDATA[The category is used to group events on the notification settings page. The category consists of at least three segments that are separated by dots. Each segment may only contain the following characters: [A-z0-9-_].]]></item>
@@ -1910,9 +1910,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.niceValue.description"><![CDATA[The nice value is used to determine the order in which the rebuild data workers are shown and thus in which order they should be executed. Workers with lower nice value are shown first.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.data.title"><![CDATA[Searchable Object Type Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex"><![CDATA[Search Index Database Table]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex.description"><![CDATA[Name of the database table containing the search index. The database table will be automatically created by the system. For all applications, <code>app1_</code> will be replaced with <code>appN_</code> in which <code>app</code> is the abbreviation of the relevant application and <code>N</code> is the value of <code>WCF_N</code>.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex.description"><![CDATA[Name of the database table containing the search index. The database table will be automatically created by the system. For all applications, <kbd>app1_</kbd> will be replaced with <kbd>appN_</kbd> in which <kbd>app</kbd> is the abbreviation of the relevant application and <kbd>N</kbd> is the value of <kbd>WCF_N</kbd>.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex.error.invalid"><![CDATA[The entered database table name is invalid.]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex.error.unknownApp"><![CDATA[No app with the abbreviation <code>{@$app}</code> is installed.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.searchableObjectType.searchIndex.error.unknownApp"><![CDATA[No app with the abbreviation <kbd>{@$app}</kbd> is installed.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.data.title"><![CDATA[Sitemap Object Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.priority"><![CDATA[Priority]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.priority.description"><![CDATA[The priority tells crawlers which of your website’s pages you consider more important than the rest.]]></item>
@@ -1922,7 +1922,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime.description"><![CDATA[After the entered time interval, the sitemap will be rebuilt by the system.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.data.title"><![CDATA[Daily Statistics Handler Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName"><![CDATA[Category]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName.description"><![CDATA[Daily statistics handler are grouped by their category on the stats page. The category consists of at least three segments that are separated by dots. Each segment may only contain the following characters: <code>[A-z0-9-_]</code>.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName.description"><![CDATA[Daily statistics handler are grouped by their category on the stats page. The category consists of at least three segments that are separated by dots. Each segment may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName.error.tooFewSegments"><![CDATA[The entered category only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.isDefault"><![CDATA[Default Daily Statistics Handler]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.isDefault.description"><![CDATA[Default daily statistics handler are pre-selected when loading the stats page.]]></item>
@@ -1934,8 +1934,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.activityPointEvent.points.description"><![CDATA[Number of points the user is awarded for the event.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.data.title"><![CDATA[Version Tracker Object Type Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tableName"><![CDATA[Database Table With Original Data]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tableName.description"><![CDATA[Name of the database table containg the original data whose different version will be tracked. For all applications, <code>app1_</code> will be replaced with <code>appN_</code> in which <code>app</code> is the abbreviation of the relevant application and <code>N</code> is the value of <code>WCF_N</code>.]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tableName.error.nonExistent"><![CDATA[The database table <code>{$tableName}</code> does not exist.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tableName.description"><![CDATA[Name of the database table containg the original data whose different version will be tracked. For all applications, <kbd>app1_</kbd> will be replaced with <kbd>appN_</kbd> in which <kbd>app</kbd> is the abbreviation of the relevant application and <kbd>N</kbd> is the value of <kbd>WCF_N</kbd>.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tableName.error.nonExistent"><![CDATA[The database table <kbd>{$tableName}</kbd> does not exist.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tablePrimaryKey"><![CDATA[Database Table Primary Key Column]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tablePrimaryKey.description"><![CDATA[Name of the column containing the primary key of the database table containg the original data whose different version will be tracked.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tablePrimaryKey.error.nonExistent"><![CDATA[The entered column does not exist in the database table entered above.]]></item>
@@ -2005,18 +2005,18 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.visitTracker.objectType.description"><![CDATA[This object type definition is used to register types of objects for which it can be tracked if and when users have already seen or accessed them (the last time).]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.article.discussionProvider.description"><![CDATA[This object type definition is used to register different providers for where discussions on articles take place.]]></item>
 		<item name="wcf.acp.pip.objectType.objectType"><![CDATA[Object Type Identifier]]></item>
-		<item name="wcf.acp.pip.objectType.objectType.description"><![CDATA[Textual identifier of the object type that is primarily used in PHP code. The identifier consists of at least four segments that are separated by dots. Each segment may only contain the following characters: <code>[A-z0-9-_]</code>.]]></item>
+		<item name="wcf.acp.pip.objectType.objectType.description"><![CDATA[Textual identifier of the object type that is primarily used in PHP code. The identifier consists of at least four segments that are separated by dots. Each segment may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.pip.objectType.objectType.error.notUnique"><![CDATA[The entered name is already used by another object type of the same object type definition.]]></item>
 		<item name="wcf.acp.pip.objectType.objectType.error.tooFewSegments"><![CDATA[The entered identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName"><![CDATA[Definition Name]]></item>
-		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.description"><![CDATA[The name of an object type definitions consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the definition name matches the package identifier. Example: <code>{$project->getPackage()->package}.type</code>]]></item>
+		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.description"><![CDATA[The name of an object type definitions consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the definition name matches the package identifier. Example: <kbd>{$project->getPackage()->package}.type</kbd>]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.notUnique"><![CDATA[The entered name is already used by another definition.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.tooFewSegments"><![CDATA[The entered name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.interfaceName"><![CDATA[PHP Interface]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.interfaceName.description"><![CDATA[If a PHP interface is entered, every object type of this definition must provide the name of a PHP class that implements the interface.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.interfaceName.error.nonExistent"><![CDATA[The entered interface does not exist.]]></item>
 		<item name="wcf.acp.pip.pip.pluginName"><![CDATA[Package Installation Plugin Name]]></item>
-		<item name="wcf.acp.pip.pip.pluginName.description"><![CDATA[The name of the package installation plugin is used as the value of the <code>type</code> attribute of an <code>instruction</code> element in a <code>package.xml</code> file. The name may only consist of letters and must begin with a lowercase letter.]]></item>
+		<item name="wcf.acp.pip.pip.pluginName.description"><![CDATA[The name of the package installation plugin is used as the value of the <kbd>type</kbd> attribute of an <kbd>instruction</kbd> element in a <kbd>package.xml</kbd> file. The name may only consist of letters and must begin with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.pip.pluginName.error.format"><![CDATA[The entered name is invalid.]]></item>
 		<item name="wcf.acp.pip.pip.pluginName.error.notUnique"><![CDATA[The entered name is already used by another package installation plugin.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.menuItem"><![CDATA[Menu Item Name]]></item>
@@ -2040,7 +2040,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.userNotificationEvent.presetMailNotificationType"><![CDATA[Default Mail Notification Type]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.presetMailNotificationType.description"><![CDATA[If a notification type is selected, users’ mail setting for this event will have the selected value by default.]]></item>
 		<item name="wcf.acp.pip.templateListener.environment"><![CDATA[Environment]]></item>
-		<item name="wcf.acp.pip.templateListener.environment.description"><![CDATA[The environment determines whether the template listener is executed in the frontend (<code>user</code>) or the ACP (<code>admin</code>).]]></item>
+		<item name="wcf.acp.pip.templateListener.environment.description"><![CDATA[The environment determines whether the template listener is executed in the frontend (<kbd>user</kbd>) or the ACP (<kbd>admin</kbd>).]]></item>
 		<item name="wcf.acp.pip.templateListener.eventName"><![CDATA[Event]]></item>
 		<item name="wcf.acp.pip.templateListener.eventName.description"><![CDATA[The selected event determines at which location in the template the template listeners’ code is inserted.]]></item>
 		<item name="wcf.acp.pip.templateListener.name"><![CDATA[Template Listener Name]]></item>
@@ -2053,7 +2053,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.templateListener.templateName.description"><![CDATA[The template listeners’ code will be inserted into the selected template.]]></item>
 		<item name="wcf.acp.pip.coreObject.objectName.error.notUnique"><![CDATA[The entered class is already registered as a core object.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName"><![CDATA[Provider Name]]></item>
-		<item name="wcf.acp.pip.acpSearchProvider.providerName.description"><![CDATA[The name of an ACP search result provider consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the definition name matches the package identifier. Example: <code>{$project->getPackage()->package}.searchedObject</code>]]></item>
+		<item name="wcf.acp.pip.acpSearchProvider.providerName.description"><![CDATA[The name of an ACP search result provider consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the definition name matches the package identifier. Example: <kbd>{$project->getPackage()->package}.searchedObject</kbd>]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.notUnique"><![CDATA[The entered name is already used by another acp search result provider.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.tooFewSegments"><![CDATA[The entered provider name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.showOrder"><![CDATA[Position]]></item>
@@ -2064,7 +2064,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.mediaProvider.regex"><![CDATA[Regular Expressions]]></item>
 		<item name="wcf.acp.pip.mediaProvider.regex.description"><![CDATA[The entered regular expressions (without delimiters) are used to check if this media provider is responsible for a given link. Each line is treated as its own regular expression.]]></item>
 		<item name="wcf.acp.pip.mediaProvider.html"><![CDATA[HTML Code]]></item>
-		<item name="wcf.acp.pip.mediaProvider.html.description"><![CDATA[The html code is used to produce the rendered output of the linked media content. Every named group of the regular expression is accessible as <code>{literal}{$name}{/literal}</code> where <code>name</code> is the name of the group.]]></item>
+		<item name="wcf.acp.pip.mediaProvider.html.description"><![CDATA[The html code is used to produce the rendered output of the linked media content. Every named group of the regular expression is accessible as <kbd>{literal}{$name}{/literal}</kbd> where <kbd>name</kbd> is the name of the group.]]></item>
 		<item name="wcf.acp.pip.mediaProvider.html.error.className"><![CDATA[You cannot enter HTML code if you have already provided a class that handles the output.]]></item>
 		<item name="wcf.acp.pip.mediaProvider.html.error.noClassName"><![CDATA[You have to provide either HTML code or a class that handles the output.]]></item>
 		<item name="wcf.acp.pip.aclOption.categories.name"><![CDATA[Category Name]]></item>
@@ -2096,15 +2096,15 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.abstractMenu.showOrder.description"><![CDATA[The entered value determines in which order the menu items with the same parent are shown.]]></item>
 		<item name="wcf.acp.pip.acpMenu.icon"><![CDATA[Menu Item Icon]]></item>
 		<item name="wcf.acp.pip.acpMenu.icon.description"><![CDATA[The menu item icon is only available for menu items on the first level (without any parent) and for menu items on the fourth level. For first level menu items, the icon is shown in addition to the menu item title while for fourth level menu items, only the icon is shown and the menu item title becomes a tooltip.]]></item>
-		<item name="wcf.acp.pip.acpMenu.menuItem.description"><![CDATA[The menu item identifier must have the format <code>{literal}{app}.acp.menu.link.{additionalIdentifiers}{/literal}</code> where <code>{literal}{app}{/literal}</code> and <code>{literal}{additionalIdentifiers}{/literal}</code> have to be replaced with the appropriate values. <code>{literal}{additionalIdentifiers}{/literal}</code> may only contain letters, numbers, and dots.]]></item>
+		<item name="wcf.acp.pip.acpMenu.menuItem.description"><![CDATA[The menu item identifier must have the format <kbd>{literal}{app}.acp.menu.link.{additionalIdentifiers}{/literal}</kbd> where <kbd>{literal}{app}{/literal}</kbd> and <kbd>{literal}{additionalIdentifiers}{/literal}</kbd> have to be replaced with the appropriate values. <kbd>{literal}{additionalIdentifiers}{/literal}</kbd> may only contain letters, numbers, and dots.]]></item>
 		<item name="wcf.acp.pip.acpMenu.menuItem.error.format"><![CDATA[The entered identifier is invalid.]]></item>
-		<item name="wcf.acp.pip.acpMenu.menuItemController.error.noAcpController"><![CDATA[The entered controller is no ACP controller. An ACP controller begins with <code>{literal}{app}{/literal}\acp\</code> where <code>{literal}{app}{/literal}</code> is the abbreviation of the relevant app.]]></item>
+		<item name="wcf.acp.pip.acpMenu.menuItemController.error.noAcpController"><![CDATA[The entered controller is no ACP controller. An ACP controller begins with <kbd>{literal}{app}{/literal}\acp\</kbd> where <kbd>{literal}{app}{/literal}</kbd> is the abbreviation of the relevant app.]]></item>
 		<item name="wcf.acp.pip.userMenu.iconClassName"><![CDATA[Menu Item Icon]]></item>
 		<item name="wcf.acp.pip.userMenu.iconClassName.description"><![CDATA[The menu item icon is only available for menu items on the first level.]]></item>
-		<item name="wcf.acp.pip.userMenu.menuItem.description"><![CDATA[The menu item identifier must have the format <code>{literal}{app}.user.menu.{additionalIdentifiers}{/literal}</code> where <code>{literal}{app}{/literal}</code> and <code>{literal}{additionalIdentifiers}{/literal}</code> have to be replaced with the appropriate values. <code>{literal}{additionalIdentifiers}{/literal}</code> may only contain letters, numbers, and dots.]]></item>
+		<item name="wcf.acp.pip.userMenu.menuItem.description"><![CDATA[The menu item identifier must have the format <kbd>{literal}{app}.user.menu.{additionalIdentifiers}{/literal}</kbd> where <kbd>{literal}{app}{/literal}</kbd> and <kbd>{literal}{additionalIdentifiers}{/literal}</kbd> have to be replaced with the appropriate values. <kbd>{literal}{additionalIdentifiers}{/literal}</kbd> may only contain letters, numbers, and dots.]]></item>
 		<item name="wcf.acp.pip.userMenu.menuItem.error.format"><![CDATA[The entered identifier is invalid.]]></item>
 		<item name="wcf.acp.pip.cronjob.cronjobName"><![CDATA[Cronjob Identifier]]></item>
-		<item name="wcf.acp.pip.cronjob.cronjobName.description"><![CDATA[The cronjob identifier generally consists of the package identifier and the unqualified class name beginning with a lowercase letter and without the “Cronjob” suffix (example: <code>com.woltlab.wcf.example.doStuff</code> is the identifier for the cronjob <code>wcf\system\cronjob\DoStuffCronjob</code> from the <code>com.woltlab.wcf.example</code> package).]]></item>
+		<item name="wcf.acp.pip.cronjob.cronjobName.description"><![CDATA[The cronjob identifier generally consists of the package identifier and the unqualified class name beginning with a lowercase letter and without the “Cronjob” suffix (example: <kbd>com.woltlab.wcf.example.doStuff</kbd> is the identifier for the cronjob <kbd>wcf\system\cronjob\DoStuffCronjob</kbd> from the <kbd>com.woltlab.wcf.example</kbd> package).]]></item>
 		<item name="wcf.acp.pip.cronjob.description.description"><![CDATA[The description explains the functionality of the cronjob.]]></item>
 		<item name="wcf.acp.pip.cronjob.options.description"><![CDATA[At least one of the entered options has to be enabled for the cronjob to be executed. Options of non-required packages will be reported as non-existing.]]></item>
 		<item name="wcf.acp.pip.cronjob.isDisabled"><![CDATA[Disable Cronjob]]></item>
@@ -2119,7 +2119,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.cronjob.startMinute.error.format"><![CDATA[The entered format is invalid. You have to entered a valid minute or a list of valid minutes.]]></item>
 		<item name="wcf.acp.pip.cronjob.startMonth.error.format"><![CDATA[The entered format is invalid. You have to entered a valid month or a list of valid months.]]></item>
 		<item name="wcf.acp.pip.menu.identifier"><![CDATA[Menu Identifier]]></item>
-		<item name="wcf.acp.pip.menu.identifier.description"><![CDATA[The menu identifier is used to update menus and for menu-related language item names. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier. Example: <code>com.foo.bar.menu</code>]]></item>
+		<item name="wcf.acp.pip.menu.identifier.description"><![CDATA[The menu identifier is used to update menus and for menu-related language item names. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier. Example: <kbd>com.foo.bar.menu</kbd>]]></item>
 		<item name="wcf.acp.pip.menu.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another menu.]]></item>
 		<item name="wcf.acp.pip.menu.identifier.error.tooFewSegments"><![CDATA[The entered menu identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.menu.createBox"><![CDATA[Automatically Create Box for Menu]]></item>
@@ -2134,7 +2134,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.menu.boxCssClassName"><![CDATA[Box CSS Classes]]></item>
 		<item name="wcf.acp.pip.menu.boxCssClassName.description"><![CDATA[The entered comma-separated CSS classes are assigned to the box containing the menu.]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier"><![CDATA[Menu Item Identifier]]></item>
-		<item name="wcf.acp.pip.menuItem.identifier.description"><![CDATA[The menu item identifier is used to update menu items and for menu item-related language item names. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier. Example: <code>com.foo.bar.menu</code>]]></item>
+		<item name="wcf.acp.pip.menuItem.identifier.description"><![CDATA[The menu item identifier is used to update menu items and for menu item-related language item names. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier. Example: <kbd>com.foo.bar.menu</kbd>]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another menu item.]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier.error.tooFewSegments"><![CDATA[The identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.menuItem.menu"><![CDATA[Menu]]></item>
@@ -2150,7 +2150,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.menuItem.externalURL"><![CDATA[External URL]]></item>
 		<item name="wcf.acp.pip.menuItem.externalURL.description"><![CDATA[When clicking on the menu item, the user is redirected to the entered website.]]></item>
 		<item name="wcf.acp.pip.page.identifier"><![CDATA[Page Identifier]]></item>
-		<item name="wcf.acp.pip.page.identifier.description"><![CDATA[The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier and the second part is the unqualified controller class without the controller type suffixes <code>Form</code> and <code>Page</code>. Example: <code>com.foo.bar.Baz</code>]]></item>
+		<item name="wcf.acp.pip.page.identifier.description"><![CDATA[The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier and the second part is the unqualified controller class without the controller type suffixes <kbd>Form</kbd> and <kbd>Page</kbd>. Example: <kbd>com.foo.bar.Baz</kbd>]]></item>
 		<item name="wcf.acp.pip.page.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another page.]]></item>
 		<item name="wcf.acp.pip.page.identifier.error.tooFewSegments"><![CDATA[The identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.page.pageType"><![CDATA[Page Type]]></item>
@@ -2170,7 +2170,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.page.options.description"><![CDATA[At least one of the entered options has to be enabled for <strong>menu items</strong> linking to this page to be visible. This option does control the accessibility of the page itself. Options of non-required packages will be reported as non-existing.]]></item>
 		<item name="wcf.acp.pip.page.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions in order to see <strong>menu items</strong> linking to this page. This option does control the accessibility of the page itself. Permissions of non-required packages will be reported as non-existing.]]></item>
 		<item name="wcf.acp.pip.page.cssClassName"><![CDATA[CSS Classes]]></item>
-		<item name="wcf.acp.pip.page.cssClassName.description"><![CDATA[The entered comma-separated CSS classes are assigned to the <code>body</code> element.]]></item>
+		<item name="wcf.acp.pip.page.cssClassName.description"><![CDATA[The entered comma-separated CSS classes are assigned to the <kbd>body</kbd> element.]]></item>
 		<item name="wcf.acp.pip.page.allowSpidersToIndex"><![CDATA[Allow search spiders to index this page]]></item>
 		<item name="wcf.acp.pip.page.excludeFromLandingPage"><![CDATA[Page cannot be set as landing page]]></item>
 		<item name="wcf.acp.pip.page.availableDuringOfflineMode"><![CDATA[Page is available during maintenance mode]]></item>
@@ -2190,7 +2190,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.eventListener.eventName.description"><![CDATA[Name of the event of the relevant class the event listener is listening to.]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerClassName"><![CDATA[PHP Event Listener Class]]></item>
 		<item name="wcf.acp.pip.eventListener.environment"><![CDATA[Environment]]></item>
-		<item name="wcf.acp.pip.eventListener.environment.description"><![CDATA[The environment determines whether the event listener is executed in the frontend (<code>user</code>) or the ACP (<code>admin</code>).]]></item>
+		<item name="wcf.acp.pip.eventListener.environment.description"><![CDATA[The environment determines whether the event listener is executed in the frontend (<kbd>user</kbd>) or the ACP (<kbd>admin</kbd>).]]></item>
 		<item name="wcf.acp.pip.eventListener.inherit"><![CDATA[Inherit Event Listener]]></item>
 		<item name="wcf.acp.pip.eventListener.inherit.description"><![CDATA[If an event listener is inherited, it is not only triggered if the event is fired by the class entered above, but it is also fired by classes inheriting from the entered class.]]></item>
 		<item name="wcf.acp.pip.eventListener.niceValue"><![CDATA[Nice Value]]></item>
@@ -2212,7 +2212,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.box.objectType"><![CDATA[Box Controller]]></item>
 		<item name="wcf.acp.pip.box.objectType.description"><![CDATA[The box controller provides the content of the box.]]></item>
 		<item name="wcf.acp.pip.box.identifier"><![CDATA[Box Identifier]]></item>
-		<item name="wcf.acp.pip.box.identifier.description"><![CDATA[The box identifier is used to update boxes. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier. Example: <code>com.foo.bar.Box</code>]]></item>
+		<item name="wcf.acp.pip.box.identifier.description"><![CDATA[The box identifier is used to update boxes. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier. Example: <kbd>com.foo.bar.Box</kbd>]]></item>
 		<item name="wcf.acp.pip.box.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another box.]]></item>
 		<item name="wcf.acp.pip.box.identifier.error.tooFewSegments"><![CDATA[The identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.box.name"><![CDATA[Name]]></item>
@@ -2246,9 +2246,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.abstractOption.options.validationPattern.description"><![CDATA[The entered validation pattern is used to validate the entered value when editing the option’s value.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.validationPattern.error.invalid"><![CDATA[The entered validation pattern is invalid.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.selectOptions"><![CDATA[Selectable Options]]></item>
-		<item name="wcf.acp.pip.abstractOption.options.selectOptions.description"><![CDATA[Each option has to be written in a new line using the format <code>value:description</code> where <code>description</code> may be the identifier of a phrase.]]></item>
+		<item name="wcf.acp.pip.abstractOption.options.selectOptions.description"><![CDATA[Each option has to be written in a new line using the format <kbd>value:description</kbd> where <kbd>description</kbd> may be the identifier of a phrase.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.enableOptions"><![CDATA[Enabled Options]]></item>
-		<item name="wcf.acp.pip.abstractOption.options.enableOptions.description"><![CDATA[Each enable options setting has to be written in a new line using the format <code>key:otherOptions</code> where <code>key:</code> is optional. If a key is present, the setting is only relevant if this option has the specified key as value. <code>otherOptions</code> is a comma-separated list refering to the other options that will either be enabled or disabled depending on this option’s value. If an exclamation mark is in front of an option name, the logic is inversed: If this option has the specified key as value, the referenced option will be disabled instead of enabled.]]></item>
+		<item name="wcf.acp.pip.abstractOption.options.enableOptions.description"><![CDATA[Each enable options setting has to be written in a new line using the format <kbd>key:otherOptions</kbd> where <kbd>key:</kbd> is optional. If a key is present, the setting is only relevant if this option has the specified key as value. <kbd>otherOptions</kbd> is a comma-separated list refering to the other options that will either be enabled or disabled depending on this option’s value. If an exclamation mark is in front of an option name, the logic is inversed: If this option has the specified key as value, the referenced option will be disabled instead of enabled.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.showOrder.description"><![CDATA[The entered value determines in which order the options in the same category are shown.]]></item>
 		<item name="wcf.acp.pip.option.optionName.error.notUnique"><![CDATA[The entered option name is already used by another option.]]></item>
@@ -2266,12 +2266,12 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.abstractOption.options.optionType.integer.maxValue"><![CDATA[Maximum Value]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.integer.minValue"><![CDATA[Minimum Value]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.integer.suffix"><![CDATA[Suffix]]></item>
-		<item name="wcf.acp.pip.abstractOption.options.optionType.integer.suffix.description"><![CDATA[When setting the option value, the entered suffix (using the language item <code>wcf.acp.option.suffix.{literal}{$suffix}{/literal}</code>) is shown behind the input field.]]></item>
+		<item name="wcf.acp.pip.abstractOption.options.optionType.integer.suffix.description"><![CDATA[When setting the option value, the entered suffix (using the language item <kbd>wcf.acp.option.suffix.{literal}{$suffix}{/literal}</kbd>) is shown behind the input field.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.text.minLength"><![CDATA[Minimum Length]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.text.maxLength"><![CDATA[Maximum Length]]></item>
 		<item name="wcf.acp.pip.bbcode.bbcodeTag"><![CDATA[BBCode Identifier]]></item>
 		<item name="wcf.acp.pip.bbcode.bbcodeTag.description"><![CDATA[The textual BBCode identifier is used to identify BBCodes, for example when updating BBCodes. The identifier may only contain lowercase letters and numbers.]]></item>
-		<item name="wcf.acp.pip.bbcode.bbcodeTag.error.allNone"><![CDATA[The identifier may neither be <code>all</code> nor <code>none</code>.]]></item>
+		<item name="wcf.acp.pip.bbcode.bbcodeTag.error.allNone"><![CDATA[The identifier may neither be <kbd>all</kbd> nor <kbd>none</kbd>.]]></item>
 		<item name="wcf.acp.pip.bbcode.bbcodeTag.error.format"><![CDATA[The identifier may only contain lowercase letters and numbers.]]></item>
 		<item name="wcf.acp.pip.bbcode.bbcodeTag.error.notUnique"><![CDATA[The entered identifier is already used by another BBCode.]]></item>
 		<item name="wcf.acp.pip.bbcode.htmlOpen"><![CDATA[Opening HTML tag]]></item>
@@ -2293,7 +2293,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.bbcode.iconType.filePath"><![CDATA[Image]]></item>
 		<item name="wcf.acp.pip.bbcode.iconType.fontAwesome"><![CDATA[FontAwesome Icon]]></item>
 		<item name="wcf.acp.pip.bbcode.iconPath"><![CDATA[Path to icon file]]></item>
-		<item name="wcf.acp.pip.bbcode.iconPath.description"><![CDATA[The entered path has to be relative to <code>{'WCF_DIR'|constant}icon/</code>.]]></item>
+		<item name="wcf.acp.pip.bbcode.iconPath.description"><![CDATA[The entered path has to be relative to <kbd>{'WCF_DIR'|constant}icon/</kbd>.]]></item>
 		<item name="wcf.acp.pip.bbcode.iconPath.error.fileDoesNotExist"><![CDATA[The entered file does not exist.]]></item>
 		<item name="wcf.acp.pip.bbcode.wysiwygIcon"><![CDATA[Icon]]></item>
 		<item name="wcf.acp.pip.smiley.smileyCode"><![CDATA[Primary Smiley Code]]></item>
@@ -2301,14 +2301,14 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.smiley.smileyCode.error.notUnique"><![CDATA[The entered identifier is already used by another smiley.]]></item>
 		<item name="wcf.acp.pip.smiley.aliases"><![CDATA[Secondary Smiley Codes]]></item>
 		<item name="wcf.acp.pip.smiley.aliases.description"><![CDATA[Secondary codes that are converted into this smiley.]]></item>
-		<item name="wcf.acp.pip.smiley.aliases.error.notUnique"><![CDATA[The following aliases are already used by another smiley: {implode from=$notUniqueCodes item=notUniqueCode}<code>{$notUniqueCode}</code>{/implode}.]]></item>
+		<item name="wcf.acp.pip.smiley.aliases.error.notUnique"><![CDATA[The following aliases are already used by another smiley: {implode from=$notUniqueCodes item=notUniqueCode}<kbd>{$notUniqueCode}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.pip.smiley.showOrder"><![CDATA[Display Order]]></item>
 		<item name="wcf.acp.pip.smiley.showOrder.description"><![CDATA[The entered value determines in which order the smilies are shown.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
-		<item name="wcf.acp.pip.smiley.smileyPath.description"><![CDATA[The entered path has to be relative to <code>{'WCF_DIR'|constant}</code>.]]></item>
+		<item name="wcf.acp.pip.smiley.smileyPath.description"><![CDATA[The entered path has to be relative to <kbd>{'WCF_DIR'|constant}</kbd>.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath.error.fileDoesNotExist"><![CDATA[The entered file does not exist.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath2x"><![CDATA[HD Smiley Path]]></item>
-		<item name="wcf.acp.pip.smiley.smileyPath2x.description"><![CDATA[The entered path has to be relative to <code>{'WCF_DIR'|constant}</code>.]]></item>
+		<item name="wcf.acp.pip.smiley.smileyPath2x.description"><![CDATA[The entered path has to be relative to <kbd>{'WCF_DIR'|constant}</kbd>.]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.usersOnly"><![CDATA[Members Only]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.usersOnly.description"><![CDATA[The user group option is only available for registered members-only user groups.]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.optionType.description"><![CDATA[The option type determines the interface with which the value of the user group option is set and which (types of) values the option may have. Additionally, the option type also determines how the final option value is determined if a user is in multiple user groups with different option values.]]></item>
@@ -2338,7 +2338,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.userOption.options.isDisabled.description"><![CDATA[The user option is not visible for users and its value cannot be set.]]></item>
 		<item name="wcf.acp.pip.userOption.options.optionType.description"><![CDATA[The option type determines the interface with which the value of the user group option is set and which (types of) values the option may have.]]></item>
 		<item name="wcf.acp.pip.userOption.options.messageObjectType"><![CDATA[Message Object Type]]></item>
-		<item name="wcf.acp.pip.userOption.options.messageObjectType.description"><![CDATA[The message object type is passed to the <code>wcf\system\html\input\HtmlInputProcessor</code> object used to process the user option value.]]></item>
+		<item name="wcf.acp.pip.userOption.options.messageObjectType.description"><![CDATA[The message object type is passed to the <kbd>wcf\system\html\input\HtmlInputProcessor</kbd> object used to process the user option value.]]></item>
 		<item name="wcf.acp.pip.userOption.options.contentPattern"><![CDATA[Content Pattern]]></item>
 		<item name="wcf.acp.pip.userOption.options.contentPattern.description"><![CDATA[The entered content pattern is used to extract specific parts of the user-entered value to be stored as the option value.]]></item>
 		<item name="wcf.acp.pip.userOption.options.contentPattern.error.invalid"><![CDATA[The entered regular expression is invalid.]]></item>
@@ -2349,9 +2349,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.data.title"><![CDATA[Recent Activity Event Data]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.text.disableAutocomplete"><![CDATA[Disable Autocomplete]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.text.disableAutocomplete.description"><![CDATA[Disables the browser’s autocomplete support for the input field.]]></item>
-		<item name="wcf.acp.pip.objectType.integerCondition.propertyName.error.noIntegerColumn"><![CDATA[The entered column name of the <code>{$tableName}</code> database table is no <code>INT</code> column.]]></item>
-		<item name="wcf.acp.pip.objectType.integerCondition.propertyName.error.nonExistent"><![CDATA[The entered column does not exist in the <code>{$tableName}</code> database table.]]></item>
-		<item name="wcf.acp.pip.objectType.integerCondition.propertyName.description"><![CDATA[Name of the property and column of <code>{$tableName}</code> database table used for the condition.]]></item>
+		<item name="wcf.acp.pip.objectType.integerCondition.propertyName.error.noIntegerColumn"><![CDATA[The entered column name of the <kbd>{$tableName}</kbd> database table is no <kbd>INT</kbd> column.]]></item>
+		<item name="wcf.acp.pip.objectType.integerCondition.propertyName.error.nonExistent"><![CDATA[The entered column does not exist in the <kbd>{$tableName}</kbd> database table.]]></item>
+		<item name="wcf.acp.pip.objectType.integerCondition.propertyName.description"><![CDATA[Name of the property and column of <kbd>{$tableName}</kbd> database table used for the condition.]]></item>
 		<item name="wcf.acp.pip.objectType.integerCondition.propertyName"><![CDATA[Property Name]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.data.title"><![CDATA[Message Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc"><![CDATA[Generate Table of Contents]]></item>
@@ -3637,18 +3637,18 @@ Email: {@$emailAddress} {* this line ends with a space *}
 </category>
 	<category name="wcf.form">
 		<item name="wcf.form.field.className"><![CDATA[Class]]></item>
-		<item name="wcf.form.field.className.description.interface"><![CDATA[The entered class (without leading backslash) must implement the interface <code>{$interface}</code>.]]></item>
-		<item name="wcf.form.field.className.description.parentClass"><![CDATA[The entered class (without leading backslash) must extend the class <code>{$parentClass}</code>.]]></item>
-		<item name="wcf.form.field.className.error.interface"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not implement the interface <code>{$interface}</code>.]]></item>
+		<item name="wcf.form.field.className.description.interface"><![CDATA[The entered class (without leading backslash) must implement the interface <kbd>{$interface}</kbd>.]]></item>
+		<item name="wcf.form.field.className.description.parentClass"><![CDATA[The entered class (without leading backslash) must extend the class <kbd>{$parentClass}</kbd>.]]></item>
+		<item name="wcf.form.field.className.error.interface"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not implement the interface <kbd>{$interface}</kbd>.]]></item>
 		<item name="wcf.form.field.className.error.isInstantiable"><![CDATA[The entered class{if $language|isset} ({$language}){/if} is not instantiable.]]></item>
 		<item name="wcf.form.field.className.error.leadingBackslash"><![CDATA[The entered class name{if $language|isset} ({$language}){/if} must not have a leading backslash.]]></item>
 		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not exist.]]></item>
-		<item name="wcf.form.field.className.error.parentClass"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not extend <code>{$parentClass}</code>.]]></item>
+		<item name="wcf.form.field.className.error.parentClass"><![CDATA[The entered class{if $language|isset} ({$language}){/if} does not extend <kbd>{$parentClass}</kbd>.]]></item>
 		<item name="wcf.form.field.itemList.error.separator"><![CDATA[The following items may contain no {if $separator === ','}comma{else if $separator === "\n"}newline{else}space{/if}: {implode from=$invalidItems item=item}“{$item}”{/implode}.]]></item>
 		<item name="wcf.form.field.numeric.error.maximum"><![CDATA[The entered value may not be less than {#$maximum}.]]></item>
 		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[The entered value may not be greater than {#$minimum}.]]></item>
 		<item name="wcf.form.field.option"><![CDATA[Options]]></item>
-		<item name="wcf.form.field.option.error.nonExistent"><![CDATA[The following options do not exist: {implode from=$options item=option}<code>{$option}</code>{/implode}.]]></item>
+		<item name="wcf.form.field.option.error.nonExistent"><![CDATA[The following options do not exist: {implode from=$options item=option}<kbd>{$option}</kbd>{/implode}.]]></item>
 		<item name="wcf.form.field.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.form.field.showOrder.firstPosition"><![CDATA[(first position)]]></item>
 		<item name="wcf.form.field.text.error.maximumLength"><![CDATA[The entered text{if $language|isset} for language “{$language}”{/if} contains {#$length} characters but it may not be longer than {#$maximumLength} characters.]]></item>
@@ -3657,10 +3657,10 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.form.field.user.error.minimumMultiples"><![CDATA[You have to entered at least {#$minimumCount} users but only {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
 		<item name="wcf.form.field.user.error.nonExistent"><![CDATA[{if $nonExistentUsernames|isset}The following users do not exist: {implode from=$nonExistentUsernames item=nonExistentUsername}“{$nonExistentUsername}”{/implode}.{else}The entered user does not exists.{/if}]]></item>
 		<item name="wcf.form.field.userGroupOption"><![CDATA[Permissions]]></item>
-		<item name="wcf.form.field.userGroupOption.error.nonExistent"><![CDATA[The following permissions do not exist: {implode from=$options item=option}<code>{$option}</code>{/implode}.]]></item>
+		<item name="wcf.form.field.userGroupOption.error.nonExistent"><![CDATA[The following permissions do not exist: {implode from=$options item=option}<kbd>{$option}</kbd>{/implode}.]]></item>
 		<item name="wcf.form.field.username.error.invalid"><![CDATA[The entered username is invalid.]]></item>
 		<item name="wcf.form.field.username.error.notUnique"><![CDATA[The entered username is already in use.]]></item>
-		<item name="wcf.form.fieldValidator.dotSeparatedString.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<code>{$segment}</code>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
+		<item name="wcf.form.fieldValidator.dotSeparatedString.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<kbd>{$segment}</kbd>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
 		<item name="wcf.form.field.url.error.invalid"><![CDATA[The entered link is invalid.]]></item>
 	</category>
 	<category name="wcf.imageViewer">
@@ -4295,7 +4295,7 @@ the website <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a>.</p>
 this change it is required to confirm your new email address once:</p>]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.html.activate"><![CDATA[Confirm my email address]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.html.outro"><![CDATA[
-<p>Your activation code is: <code>{$mailbox->getUser()->reactivationCode}</code>.</p>
+<p>Your activation code is: <kbd>{$mailbox->getUser()->reactivationCode}</kbd>.</p>
 <p>If you have troubles confirming your email address, please contact the administrator at:
 <a href="mailto:{MAIL_ADMIN_ADDRESS}">{MAIL_ADMIN_ADDRESS}</a>. Please ignore this email if
 you did not register an account with us.</p>]]></item>
@@ -4420,7 +4420,7 @@ not register with us.]]></item>
 user account to it’s full extent it is required that you confirm validity of your email address once:</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Confirm my email address]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
-<p>Your activation code is: <code>{$mailbox->getUser()->activationCode}</code>.</p>
+<p>Your activation code is: <kbd>{$mailbox->getUser()->activationCode}</kbd>.</p>
 <p>If you have trouble confirming your email address, please contact the administrator at:
 <a href="mailto:{MAIL_ADMIN_ADDRESS}">{MAIL_ADMIN_ADDRESS}</a>. Please ignore this email if
 you did not register an account with us.</p>]]></item>

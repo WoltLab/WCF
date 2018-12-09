@@ -940,7 +940,7 @@
 		<item name="wcf.acp.language.item.languageCategoryID.mode.selection"><![CDATA[Manuelle Auswahl]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.description"><![CDATA[Der Text wird zur ausgewählten Text-Kategorie hinzugefügt.]]></item>
 		<item name="wcf.acp.language.item.languageItem"><![CDATA[Text-Bezeichner]]></item>
-		<item name="wcf.acp.language.item.languageItem.description"><![CDATA[Der Text-Bezeichner besteht aus mindestens drei durch Punkte getrennte Abschnitte. Jeder Abschnitt darf nur die folgenden Zeichen enthalten: <code>[A-z0-9-_]</code>.]]></item>
+		<item name="wcf.acp.language.item.languageItem.description"><![CDATA[Der Text-Bezeichner besteht aus mindestens drei durch Punkte getrennte Abschnitte. Jeder Abschnitt darf nur die folgenden Zeichen enthalten: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.language.item.languageItem.error.format"><![CDATA[Der angegebene Bezeichner ist ungültig.]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.mode.error.automaticImpossible"><![CDATA[Die Text-Kategorie kann für den angegebenen Bezeichner nicht automatisch bestimmt werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} entweder den Text-Bezeichner ändern oder manuell eine Text-Kategorie auswählen.]]></item>
 		<item name="wcf.acp.language.item.languageItem.error.prefixMismatch"><![CDATA[Der angegebene Bezeichner beginnt nicht mit der ausgewählten Text-Kategorie.]]></item>
@@ -1153,7 +1153,7 @@
 		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[Ein einmal von einem Benutzer ausgeblendeter Hinweis wird bei erneutem Seitenaufruf nicht mehr angezeigt.]]></item>
 		<item name="wcf.acp.notice.list"><![CDATA[Hinweise]]></item>
 		<item name="wcf.acp.notice.notice"><![CDATA[Hinweis]]></item>
-		<item name="wcf.acp.notice.notice.description"><![CDATA[<code>{literal}{$username}{/literal}</code> wird durch den Namen und <code>{literal}{$email}{/literal}</code> durch die Email-Adresse des aktuellen Benutzers ersetzt.]]></item>
+		<item name="wcf.acp.notice.notice.description"><![CDATA[<kbd>{literal}{$username}{/literal}</kbd> wird durch den Namen und <kbd>{literal}{$email}{/literal}</kbd> durch die Email-Adresse des aktuellen Benutzers ersetzt.]]></item>
 		<item name="wcf.acp.notice.noticeUseHtml"><![CDATA[HTML im Hinweis verwenden]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed"><![CDATA[Ausgeblendete Hinweise erneut anzeigen]]></item>
 		<item name="wcf.acp.notice.resetIsDismissed.description"><![CDATA[Der Hinweis wird jenen Benutzern wieder angezeigt, die die ursprüngliche Version bereits ausgeblendet haben. Gästen, die den Hinweis bereits ausgeblendet haben, wird dieser nur in einer neuen Session erneut angezeigt.]]></item>
@@ -1631,7 +1631,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.search_enable_pages"><![CDATA[Seiten sind durchsuchbar]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_articles"><![CDATA[Artikelanzahl der Autoren anzeigen]]></item>
 		<item name="wcf.acp.option.log_missing_language_items"><![CDATA[Fehlende Sprachvariablen protokollieren]]></item>
-		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[Die fehlenden Sprachvariablen werden in der Datei <code>{'WCF_DIR'|constant}log/missingLanguageItems.txt</code> protokolliert.]]></item>
+		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[Die fehlenden Sprachvariablen werden in der Datei <kbd>{'WCF_DIR'|constant}log/missingLanguageItems.txt</kbd> protokolliert.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Eingabefelder]]></item>
@@ -1931,7 +1931,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 	<category name="wcf.acp.pip">
 		<item name="wcf.acp.pip.objectType.className.error.leadingBackslash"><![CDATA[Der angegebene Klassenname hat ein Backslash als erstes Zeichen.]]></item>
 		<item name="wcf.acp.pip.objectType.className.error.nonExistent"><![CDATA[Die angebene Klasse existiert nicht.]]></item>
-		<item name="wcf.acp.pip.objectType.className.error.interface"><![CDATA[Die angebene Klasse implementiert nicht das Interface <code>{$interfaceName}</code>.]]></item>
+		<item name="wcf.acp.pip.objectType.className.error.interface"><![CDATA[Die angebene Klasse implementiert nicht das Interface <kbd>{$interfaceName}</kbd>.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.attachment.objectType.data.title"><![CDATA[Daten des Dateianhangtyps]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.attachment.objectType.private.description"><![CDATA[Private Dateianhänge werden in der Dateianhangsverwaltung im ACP ignoriert.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.bulkProcessing.user.action.data.title"><![CDATA[Daten der Benutzermassenverarbeitungsaktion]]></item>
@@ -2002,7 +2002,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.objectType.objectType.error.notUnique"><![CDATA[Der angegebene Name wird bereits von einem anderen Objekttypen derselben Objekttyp-Definition verwendet.]]></item>
 		<item name="wcf.acp.pip.objectType.objectType.error.tooFewSegments"><![CDATA[Der angegebene Bezeichner enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName"><![CDATA[Definition-Name]]></item>
-		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.description"><![CDATA[Der Name einer Objekttyp-Definition besteht aus mindestens vier durch Punkte abgetrennte Abschnitte. Jeder Abschnitt darf nicht leer sein und darf nur aus Buchstaben, Zahlen, Unterstrichen und Bindestrichen bestehen. Normalerweise stimmt der erste Teil des Namens mit dem Bezeichner des Paketes überein. Example: <code>{$project->getPackage()->package}.type</code>]]></item>
+		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.description"><![CDATA[Der Name einer Objekttyp-Definition besteht aus mindestens vier durch Punkte abgetrennte Abschnitte. Jeder Abschnitt darf nicht leer sein und darf nur aus Buchstaben, Zahlen, Unterstrichen und Bindestrichen bestehen. Normalerweise stimmt der erste Teil des Namens mit dem Bezeichner des Paketes überein. Example: <kbd>{$project->getPackage()->package}.type</kbd>]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.notUnique"><![CDATA[Der angegebene Name wird bereits von einer anderen Definition verwendet.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.tooFewSegments"><![CDATA[Der angegebene Name enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.interfaceName"><![CDATA[PHP-Interface]]></item>
@@ -3265,17 +3265,17 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 </category>
 	<category name="wcf.form">
 		<item name="wcf.form.field.className"><![CDATA[Klasse]]></item>
-		<item name="wcf.form.field.className.description.interface"><![CDATA[Die angegebene Klasse (ohne Backslash als erstes Zeichen) muss das Interface <code>{$interface}</code> implementieren.]]></item>
-		<item name="wcf.form.field.className.error.interface"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} implementiert nicht das Interface <code>{$interface}</code>.]]></item>
+		<item name="wcf.form.field.className.description.interface"><![CDATA[Die angegebene Klasse (ohne Backslash als erstes Zeichen) muss das Interface <kbd>{$interface}</kbd> implementieren.]]></item>
+		<item name="wcf.form.field.className.error.interface"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} implementiert nicht das Interface <kbd>{$interface}</kbd>.]]></item>
 		<item name="wcf.form.field.className.error.isInstantiable"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} ist nicht instanziierbar.]]></item>
 		<item name="wcf.form.field.className.error.leadingBackslash"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} darf keinen führenden Backslash besitzen.]]></item>
 		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} existiert nicht.]]></item>
-		<item name="wcf.form.field.className.error.parentClass"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} erbt nicht von <code>{$parentClass}</code>.]]></item>
+		<item name="wcf.form.field.className.error.parentClass"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} erbt nicht von <kbd>{$parentClass}</kbd>.]]></item>
 		<item name="wcf.form.field.itemList.error.separator"><![CDATA[Die folgenden Elemente dürfen kein {if $separator === ','}Komma{else}Leerzeichen{/if} enthalten: {implode from=$invalidItems item=item}„{$item}“{/implode}.]]></item>
 		<item name="wcf.form.field.numeric.error.maximum"><![CDATA[Der angegebene Wert darf nicht kleiner als {#$maximum} sein.]]></item>
 		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[Der angegebene Wert darf nicht größer als {#$minimum} sein.]]></item>
 		<item name="wcf.form.field.option"><![CDATA[Einstellungen]]></item>
-		<item name="wcf.form.field.option.error.nonExistent"><![CDATA[Die folgenden Einstellungen existieren nicht: {implode from=$options item=option}<code>{$option}</code>{/implode}.]]></item>
+		<item name="wcf.form.field.option.error.nonExistent"><![CDATA[Die folgenden Einstellungen existieren nicht: {implode from=$options item=option}<kbd>{$option}</kbd>{/implode}.]]></item>
 		<item name="wcf.form.field.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.form.field.showOrder.firstPosition"><![CDATA[(an erster Stelle)]]></item>
 		<item name="wcf.form.field.text.error.maximumLength"><![CDATA[Der angegebene Text{if $language} für die Sprache „{$language}“{/if} umfasst {#$length} Zeichen, er darf aber nicht länger als {#$maximumLength} Zeichen sein.]]></item>
@@ -3284,7 +3284,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.form.field.user.error.minimumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du darfst{else}Sie dürfen{/if} nicht mehr als {#$minimumCount} Benutzer angeben, es wurde{if $count != 1}n{else} aber {#$count} Benutzer angegeben.]]></item>
 		<item name="wcf.form.field.user.error.nonExistent"><![CDATA[{if $nonExistentUsernames|isset}Die folgenden Benutzer existieren nicht: {implode from=$nonExistentUsernames item=nonExistentUsername}„{$nonExistentUsername}“{/implode}.{else}Der angegebene Benutzer existiert nicht.{/if}]]></item>
 		<item name="wcf.form.field.userGroupOption"><![CDATA[Berechtigungen]]></item>
-		<item name="wcf.form.field.userGroupOption.error.nonExistent"><![CDATA[Die folgenden Berechtigungen existieren nicht: {implode from=$options item=option}<code>{$option}</code>{/implode}.]]></item>
+		<item name="wcf.form.field.userGroupOption.error.nonExistent"><![CDATA[Die folgenden Berechtigungen existieren nicht: {implode from=$options item=option}<kbd>{$option}</kbd>{/implode}.]]></item>
 		<item name="wcf.form.field.username.error.invalid"><![CDATA[Der angegebene Benutzername ist ungültig.]]></item>
 		<item name="wcf.form.field.username.error.notUnique"><![CDATA[Dieser Benutzername ist bereits vergeben.]]></item>
 		<item name="wcf.form.field.url.error.invalid"><![CDATA[Der angegebene Verweis ist ungültig.]]></item>
@@ -3870,7 +3870,7 @@ dann wird diese Anfrage am {$mailbox->getUser()->lastLostPasswordRequestTime+864
 Zum Abschließen dieser Änderung {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} einmalig die Gültigkeit der neuen E-Mail-Adresse bestätigen:</p>]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.html.activate"><![CDATA[Neue E-Mail-Adresse aktivieren]]></item>
 		<item name="wcf.user.changeEmail.needReactivation.mail.html.outro"><![CDATA[
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: <code>{$mailbox->getUser()->reactivationCode}</code>.</p>
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: <kbd>{$mailbox->getUser()->reactivationCode}</kbd>.</p>
 <p>{if LANGUAGE_USE_INFORMAL_VARIANT}Wenn du Probleme mit der Aktivierung haben solltest, wende dich{else}Wenn Sie Probleme mit der Aktivierung haben, wenden Sie sich{/if} bitte an den Administrator:
 <a href="mailto:{MAIL_ADMIN_ADDRESS}">{MAIL_ADMIN_ADDRESS}</a>. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dich{else}Sie sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if},
 dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.</p>]]></item>
@@ -3995,7 +3995,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 Benutzerkonto vollständig verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, ist es notwendig, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/if}:</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Benutzerkonto aktivieren]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: <code>{$mailbox->getUser()->activationCode}</code>.</p>
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: <kbd>{$mailbox->getUser()->activationCode}</kbd>.</p>
 <p>Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Probleme mit der Aktivierung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} bitte an den Administrator
 unter: <a href="mailto:{MAIL_ADMIN_ADDRESS}">{MAIL_ADMIN_ADDRESS}</a>. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dich{else}Sie sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if},
 dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.</p>]]></item>
