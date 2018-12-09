@@ -519,7 +519,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 							}
 						}
 					}))
-					->addValidator(new FormFieldValidator('requirmentExclusion', function (DevtoolsProjectExcludedPackagesFormField $formField) {
+					->addValidator(new FormFieldValidator('requirementExclusion', function (DevtoolsProjectExcludedPackagesFormField $formField) {
 						/** @var DevtoolsProjectRequiredPackagesFormField $requiredPackagesField */
 						$requiredPackagesField = $formField->getDocument()->getNodeById('requiredPackages');
 						$requiredPackageVersions = [];
