@@ -709,7 +709,7 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 							}
 							// the associated directory with the source fles
 							// has to exist ...
-							elseif (!is_dir($path . substr($value, 0, -4))) {
+							else if (!is_dir($path . substr($value, 0, -4))) {
 								// ... unless it is an update and an archive
 								// with updated files only
 								if ($instructions['type'] === 'update' && preg_match('~^(.+)_update\.tar$~', $value, $match)) {
