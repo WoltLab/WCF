@@ -4209,7 +4209,8 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.user.gender.male"><![CDATA[Male]]></item>
 		<item name="wcf.user.gender.female"><![CDATA[Female]]></item>
 		<item name="wcf.user.members"><![CDATA[Members]]></item>
-		<item name="wcf.user.members.noMembers"><![CDATA[No members matched your criteria. <a href="{link controller='MembersList'}{/link}">Reset the applied filters.</a>{/if}]]></item>
+		<item name="wcf.user.members.filter"><![CDATA[Filter Members]]></item>
+		<item name="wcf.user.members.noMembers"><![CDATA[No members matched your criteria. <a href="{link controller='MembersList'}{/link}">Reset the applied filters.</a>]]></item>
 		<item name="wcf.user.members.sort"><![CDATA[Sort by]]></item>
 		<item name="wcf.user.members.sort.letters"><![CDATA[First Letter]]></item>
 		<item name="wcf.user.members.sort.letters.all"><![CDATA[All]]></item>
