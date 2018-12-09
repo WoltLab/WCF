@@ -301,38 +301,38 @@ if (COMPILER_TARGET_DEFAULT) {
 			], (function (FileUtil, ImageResizer, AjaxStatus) {
 				AjaxStatus.show();
 				
-				var $files = [];
+				var files = [];
 				
 				if (file) {
-					$files.push(file);
+					files.push(file);
 				}
 				else if (blob) {
-					$files.push(FileUtil.blobToFile(blob, 'pasted-from-clipboard'));
+					files.push(FileUtil.blobToFile(blob, 'pasted-from-clipboard'));
 				}
 				else {
-					$files = this._fileUpload.prop('files');
+					files = this._fileUpload.prop('files');
 				}
 				
 				// We resolve with the unaltered list of files in case auto scaling is disabled.
-				var $promise = Promise.resolve($files);
+				var promise = Promise.resolve(files);
 				
 				if (this._options.autoScale && this._options.autoScale.enable) {
-					var $maxSize = this._buttonSelector.data('maxSize');
+					var maxSize = this._buttonSelector.data('maxSize');
 					
-					var $resizer = new ImageResizer();
-					var $maxWidth = this._options.autoScale.maxWidth;
-					var $maxHeight = this._options.autoScale.maxHeight;
-					var $quality = this._options.autoScale.quality;
+					var resizer = new ImageResizer();
+					var maxWidth = this._options.autoScale.maxWidth;
+					var maxHeight = this._options.autoScale.maxHeight;
+					var quality = this._options.autoScale.quality;
 					
 					if (this._options.autoScale.fileType !== 'keep') {
-						$resizer.setFileType(this._options.autoScale.fileType);
+						resizer.setFileType(this._options.autoScale.fileType);
 					}
 					
 					// Resize the images in series.
 					// As our resizer is based on Pica it will use multiple workers per image if possible.
-					$promise = Array.prototype.reduce.call($files, (function (acc, file) {
+					promise = Array.prototype.reduce.call(files, (function (acc, file) {
 						return acc.then((function (arr) {
-							var $timeout = new Promise(function (resolve, reject) {
+							var timeout = new Promise(function (resolve, reject) {
 								// We issue one timeout per image, thus multiple timeout
 								// handlers will run in parallel
 								setTimeout(function () {
@@ -340,19 +340,19 @@ if (COMPILER_TARGET_DEFAULT) {
 								}, 10000);
 							});
 							
-							var $promise = $resizer.resize(file, $maxWidth, $maxHeight, $quality, file.size > $maxSize, $timeout)
+							var promise = resizer.resize(file, maxWidth, maxHeight, quality, file.size > maxSize, timeout)
 								.then((function (result) {
 									if (result.image instanceof File) {
 										return result.image;
 									}
 									
-									var $fileType = undefined;
+									var fileType = undefined;
 									
 									if (this._options.autoScale.fileType === 'keep') {
-										$fileType = file.type;
+										fileType = file.type;
 									}
 									
-									return $resizer.getFile(result, file.name, $fileType, $quality);
+									return resizer.getFile(result, file.name, fileType, quality);
 								}).bind(this))
 								.then(function (resizedFile) {
 									if (resizedFile.size > file.size) {
@@ -367,7 +367,7 @@ if (COMPILER_TARGET_DEFAULT) {
 									return file;
 								});
 							
-							return Promise.race([$timeout, $promise])
+							return Promise.race([timeout, promise])
 								.then(function (file) {
 									arr.push(file);
 									return arr;
@@ -376,11 +376,11 @@ if (COMPILER_TARGET_DEFAULT) {
 					}).bind(this), Promise.resolve([]));
 				}
 				
-				$promise.then((function (files) {
-					var $uploadID = undefined;
+				promise.then((function (files) {
+					var uploadID = undefined;
 					
 					if (this._validateLimit()) {
-						$uploadID = _super(event, undefined, undefined, files);
+						uploadID = _super(event, undefined, undefined, files);
 					}
 					
 					if (this._fileUpload) {
@@ -390,7 +390,7 @@ if (COMPILER_TARGET_DEFAULT) {
 						this._createButton();
 					}
 					
-					return $uploadID;
+					return uploadID;
 				}).bind(this))
 				.catch(function (error) {
 					console.debug('[WCF.Attachment] Failed to upload attachments:', error);
