@@ -45,6 +45,23 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * @inheritDoc
+	 * @return	DevtoolsProject
+	 * @since	3.2
+	 */
+	public function create() {
+		$this->parameters['data']['path'] = FileUtil::addTrailingSlash($this->parameters['data']['path']);
+		
+		/** @var DevtoolsProject $project */
+		$project = parent::create();
+		
+		// ensure that the project directory exists
+		FileUtil::makePath($project->path);
+		
+		return $project;
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function validateDelete() {
 		if (!ENABLE_DEVELOPER_TOOLS) {
