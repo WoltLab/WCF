@@ -50,55 +50,6 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="3.0.*">
-		<instruction type="file">files_pre_sql.tar</instruction>
-		
-		<!-- version guard -->
-		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_3.1_preUpdate.php</instruction>
-		
-		<!-- prevent issues caused by early flushes of the `options.inc.php` -->
-		<instruction type="option" />
-		
-		<instruction type="acpTemplate" />
-		<instruction type="template" />
-		
-		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_addColumn.php</instruction>
-		
-		<instruction type="sql" run="standalone">update_3.1_1.sql</instruction>
-		<instruction type="sql" run="standalone">update_3.1_2.sql</instruction>
-		<instruction type="sql" run="standalone">update_3.1_3.sql</instruction>
-		<instruction type="sql" run="standalone">update_3.1_4.sql</instruction>
-		
-		<instruction type="file" run="standalone" />
-		
-		<instruction type="language" run="standalone" />
-		
-		<instruction type="acpMenu" />
-		<instruction type="bbcode" />
-		<instruction type="clipboardAction" />
-		<instruction type="cronjob" />
-		<instruction type="eventListener" />
-		<instruction type="objectTypeDefinition" />
-		<instruction type="objectType" />
-		<instruction type="userGroupOption" />
-		<instruction type="userNotificationEvent" />
-		<instruction type="userOption" />
-		
-		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_pageSearchIndex.php</instruction>
-		
-		<instruction type="page" />
-		<!-- contains a reference to a new page -->
-		<instruction type="menuItem" />
-		
-		<instruction type="packageInstallationPlugin" />
-		<!-- new pip -->
-		<instruction type="mediaProvider" />
-		
-		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_postUpgrade.php</instruction>
-		
-		<instruction type="style">defaultStyle.tar</instruction>
-	</instructions>
-	
 	<instructions type="update" fromversion="3.1.6">
 		<instruction type="file">files_update.tar</instruction>
 	</instructions>
