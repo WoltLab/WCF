@@ -4846,6 +4846,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.notification.commentResponseOwner"><![CDATA[Notify me of new replies to comments on my articles]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.notification.commentResponse"><![CDATA[Notify me of new replies to my comments]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.notification.comment"><![CDATA[Notify me of new comments on my articles]]></item>
+		<item name="wcf.user.notification.pageComment.responseOwner.title"><![CDATA[New reply (Page)]]></item>
 	</category>
 	<category name="wcf.user.profile">
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You have not provided any details yet.{else}There are not any details visible to you.{/if}]]></item>
