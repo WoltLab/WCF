@@ -14,7 +14,11 @@
 	</nav>
 </header>
 
-<p class="info">{lang}wcf.acp.devtools.project.introduction{/lang}</p>
+{if $action === 'add'}
+	<p class="info">{lang}wcf.acp.devtools.project.add.info{/lang}</p>
+{elseif $action === 'edit'}
+	<p class="warning">{lang}wcf.acp.devtools.project.edit.warning{/lang}</p>
+{/if}
 
 {include file='formError'}
 
@@ -22,49 +26,6 @@
 	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
 
-<form method="post" action="{if $action == 'add'}{link controller='DevtoolsProjectAdd'}{/link}{else}{link controller='DevtoolsProjectEdit' id=$objectID}{/link}{/if}">
-	<div class="section">
-		<dl{if $errorField == 'name'} class="formError"{/if}>
-			<dt><label for="name">{lang}wcf.acp.devtools.project.name{/lang}</label></dt>
-			<dd>
-				<input type="text" id="name" name="name" value="{$name}" required autofocus class="long">
-				{if $errorField == 'name'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.empty{/lang}
-						{else}
-							{lang}wcf.acp.devtools.project.name.error.{@$errorType}{/lang}
-						{/if}
-					</small>
-				{/if}
-			</dd>
-		</dl>
-		
-		<dl{if $errorField == 'path'} class="formError"{/if}>
-			<dt><label for="path">{lang}wcf.acp.devtools.project.path{/lang}</label></dt>
-			<dd>
-				<input type="text" id="path" name="path" value="{$path}" class="long">
-				{if $errorField == 'path'}
-					<small class="innerError">
-						{if $errorType == 'empty'}
-							{lang}wcf.global.form.error.{@$errorType}{/lang}
-						{else}
-							{lang}wcf.acp.devtools.project.path.error.{@$errorType}{/lang}
-						{/if}
-					</small>
-				{/if}
-			</dd>
-		</dl>
-		
-		{event name='dataFields'}
-	</div>
-	
-	{event name='sections'}
-	
-	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-		{@SECURITY_TOKEN_INPUT_TAG}
-	</div>
-</form>
+{@$form->getHtml()}
 
 {include file='footer'}

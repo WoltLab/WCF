@@ -452,6 +452,132 @@
 		<item name="wcf.acp.devtools.project.installPackage.error.openRequirements"><![CDATA[Das Projekt kann nicht installiert werden, weil die folgenden Paketen fehlen:]]></item>
 		<item name="wcf.acp.devtools.project.installPackage.openRequirement"><![CDATA[{$openPackage} (Version {$openRequirement[minversion]})]]></item>
 		<item name="wcf.acp.devtools.project.installPackage.error.openRequirements.title"><![CDATA[Fehlende Pakete]]></item>
+		<item name="wcf.acp.devtools.project.packageIdentifier"><![CDATA[Paketbezeichner]]></item>
+		<item name="wcf.acp.devtools.project.requiredPackage.requiredPackage"><![CDATA[<kbd>{$packageIdentifier}</kbd>
+<dl class="plain inlineDataList small">
+	{if $minVersion}
+		<dt>Mindestversion</dt>
+		<dd><kbd>{$minVersion}</kbd></dd>
+	{/if}
+	<dt>Paketdatei im Paket enthalten</dt>
+	<dd><span class="icon icon16 fa-{if $file}check{else}times{/if}"></span></dd>
+</dl>]]></item>
+		<item name="wcf.acp.devtools.project.packageIdentifier.error.maximumLength"><![CDATA[Der Paketbezeichner darf nicht länger als 191 Zeichen sein.]]></item>
+		<item name="wcf.acp.devtools.project.packageIdentifier.error.minimumLength"><![CDATA[Der Paketbezeichner muss länger als drei Zeichen sein.]]></item>
+		<item name="wcf.acp.devtools.project.packageIdentifier.error.format"><![CDATA[Der angegebene Paketbezeichner ist ungültig.]]></item>
+		<item name="wcf.acp.devtools.project.requiredPackage.minVersion"><![CDATA[Mindestversion]]></item>
+		<item name="wcf.acp.devtools.project.packageVersion.error.format"><![CDATA[Die angegebene Version ist ungültig.]]></item>
+		<item name="wcf.acp.devtools.project.requiredPackages"><![CDATA[Benötigte Pakete]]></item>
+		<item name="wcf.acp.devtools.project.requiredPackage.file"><![CDATA[Paketdatei im Paket enthalten]]></item>
+		<item name="wcf.acp.devtools.project.requiredPackage.file.description"><![CDATA[Der Pfad zur Paketdatei muss <kbd>requirements/{literal}{$packageIdentifier}{/literal}.tar</kbd> lauten.]]></item>
+		<item name="wcf.acp.devtools.project.packageIdentifier.error.duplicate"><![CDATA[Das angegebene Paket wird bereits benötigt.]]></item>
+		<item name="wcf.acp.devtools.project.packageVersion.error.maximumLength"><![CDATA[Die Version darf nicht länger als 255 Zeichen sein.]]></item>
+		<item name="wcf.acp.devtools.project.requiredPackage.error.selfRequirement"><![CDATA[Ein Paket kann sich nicht selbst benötigen.]]></item>
+		<item name="wcf.acp.devtools.project.add.mode"><![CDATA[Modus]]></item>
+		<item name="wcf.acp.devtools.project.add.mode.import"><![CDATA[Vorhandenes Paket importieren]]></item>
+		<item name="wcf.acp.devtools.project.add.mode.setup"><![CDATA[Neues Projekt erstellen]]></item>
+		<item name="wcf.acp.devtools.project.packageInformation"><![CDATA[Paket-Informationen]]></item>
+		<item name="wcf.acp.devtools.project.packageName"><![CDATA[Paketname]]></item>
+		<item name="wcf.acp.devtools.project.isApplication"><![CDATA[Paket enthält App]]></item>
+		<item name="wcf.acp.devtools.project.packageVersion"><![CDATA[Paketversion]]></item>
+		<item name="wcf.acp.devtools.project.packageDate"><![CDATA[Erstellungsdatum]]></item>
+		<item name="wcf.acp.devtools.project.requiredPackages.description"><![CDATA[Um dieses Paket installieren zu können, müssen die folgenden Paketen bereits installiert sein oder die mitgelieferten Versionen müssen vorher installiert werden.]]></item>
+		<item name="wcf.acp.devtools.project.excludedPackages"><![CDATA[Inkompatible Pakete]]></item>
+		<item name="wcf.acp.devtools.project.excludedPackages.description"><![CDATA[Dieses Paket kann nicht installiert werden, wenn eines der folgenden Pakete (in der angegebenen <strong>oder neueren</strong> Version) bereits installiert ist.]]></item>
+		<item name="wcf.acp.devtools.project.compatibility"><![CDATA[API-Kompatibilität]]></item>
+		<item name="wcf.acp.devtools.project.excludedPackage.excludedPackage"><![CDATA[<kbd>{$packageIdentifier}</kbd>
+{if $version}
+	<dl class="plain inlineDataList small">
+		<dt>Version</dt>
+		<dd><kbd>{$version}</kbd></dd>
+	</dl>
+{/if}]]></item>
+		<item name="wcf.acp.devtools.project.excludedPackage.error.requirementExclusion"><![CDATA[Wenn benötigte Pakete als inkompatible Pakete hinzugefügt werden, muss sollwohl die benötigte, als auch die inkompatible Version explizit angegeben werden und die inkompatible Version neuer sein als die benötigte Version. Betroffene Pakete: {implode from=$affectedPackages item=affectedPackage}{$affectedPackage}{/implode}.]]></item>
+		<item name="wcf.acp.devtools.project.excludedPackage.version"><![CDATA[Inkompatible Version]]></item>
+		<item name="wcf.acp.devtools.project.excludedPackage.error.selfExclusion"><![CDATA[Ein Paket kann nicht inkompatibel zu sich selbst sein.]]></item>
+		<item name="wcf.acp.devtools.project.optionalPackage.optionalPackage"><![CDATA[{$packageIdentifier}]]></item>
+		<item name="wcf.acp.devtools.project.optionalPackage.packageIdentifier.description"><![CDATA[Der Pfad zur Paketdatei muss <kbd>optionals/{literal}{$packageIdentifier}{/literal}.tar</kbd> lauten.]]></item>
+		<item name="wcf.acp.devtools.project.optionalPackages"><![CDATA[Optionale Pakete]]></item>
+		<item name="wcf.acp.devtools.project.optionalPackages.description"><![CDATA[Nach der Installation dieses Pakets werden folgende Pakete als optionale Pakete angeboten.]]></item>
+		<item name="wcf.acp.devtools.project.apiVersions"><![CDATA[Kompatible API-Versionen]]></item>
+		<item name="wcf.acp.devtools.project.apiVersions.description"><![CDATA[Das Paket ist mit allen ausgewählen API-Versionen von WoltLab Suite Core kompatibel.]]></item>
+		<item name="wcf.acp.devtools.project.requiredPackages.shortTitle"><![CDATA[Voraussetzungen]]></item>
+		<item name="wcf.acp.devtools.project.excludedPackages.shortTitle"><![CDATA[Inkompatibilität]]></item>
+		<item name="wcf.acp.devtools.project.optionalPackages.shortTitle"><![CDATA[Optionales]]></item>
+		<item name="wcf.acp.devtools.project.instructions"><![CDATA[Anweisungen]]></item>
+		<item name="wcf.acp.devtools.project.instructions.type"><![CDATA[Anweisungstyp]]></item>
+		<item name="wcf.acp.devtools.project.instructions.type.install"><![CDATA[Installation]]></item>
+		<item name="wcf.acp.devtools.project.instructions.type.update"><![CDATA[Aktualisierung]]></item>
+		<item name="wcf.acp.devtools.project.instructions.update.fromVersion"><![CDATA[Aktualisierte Version]]></item>
+		<item name="wcf.acp.devtools.project.instructions.type.install.title"><![CDATA[Anweisungen zur Installation]]></item>
+		<item name="wcf.acp.devtools.project.instructions.type.update.title"><![CDATA[Anweisungen zur Aktualisierung von Version {$fromVersion}]]></item>
+		<item name="wcf.acp.devtools.project.instructions.instructions.description"><![CDATA[Die Anweisungen werden in der angezeigten Reihenfolge ausgeführt. Sie können durch Ziehen und Loslassen sortiert werden.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.packageInstallationPlugin"><![CDATA[Paket-Komponente]]></item>
+		<item name="wcf.acp.devtools.project.instruction.value.description.defaultFilename"><![CDATA[Wenn keine Datei angegeben wird, wird folgende Datei verwendet: <kbd>{$defaultFilename}</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.instruction"><![CDATA[<kbd>{$pip}</kbd>
+{if $value || $runStandalone || $application}
+	<dl class="plain inlineDataList small">
+		{if $value}
+			<dt>Wert</dt>
+			<dd><kbd>{$value}</kbd></dd>
+		{/if}
+		{if $application}
+			<dt>App</dt>
+			<dd>{$application}</dd>
+		{/if}
+		{if $runStandalone}
+			<dt>In eigenem Schritt</dt>
+			<dd><span class="icon icon16 fa-check"></span></dd>
+		{/if}
+	</dl>
+{/if}]]></item>
+		<item name="wcf.acp.devtools.project.instruction.runStandalone"><![CDATA[In eigenem Schritt ausführen]]></item>
+		<item name="wcf.acp.devtools.project.instruction.runStandalone.description"><![CDATA[Für zeitaufwändig Komponenten empfiehlt es sich, diese in einem eigenen Schritt zu installation.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.application"><![CDATA[App]]></item>
+		<item name="wcf.acp.devtools.project.authorInformation"><![CDATA[Entwickler-Informationen]]></item>
+		<item name="wcf.acp.devtools.project.author"><![CDATA[Entwickler]]></item>
+		<item name="wcf.acp.devtools.project.authorUrl"><![CDATA[Entwickler-Website]]></item>
+		<item name="wcf.acp.devtools.project.instructions.delete.confirmMessages"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Anweisungen wirklich löschen?]]></item>
+		<item name="wcf.acp.devtools.project.instructions.type.install.error.duplicate"><![CDATA[Es gibt bereits Installationsanweisungen.]]></item>
+		<item name="wcf.acp.devtools.project.optionalPackage.error.exclusionOptional"><![CDATA[Optionale Pakete können nicht gleichzeitig inkompatible sein. Betroffene Pakete: {implode from=$affectedPackages item=affectedPackage}{$affectedPackage}{/implode}.]]></item>
+		<item name="wcf.acp.devtools.project.optionalPackage.error.requirementOptional"><![CDATA[Optional Pakete können nicht gleichzeitig benötigt werden. Betroffene Pakete: {implode from=$affectedPackages item=affectedPackage}{$affectedPackage}{/implode}.]]></item>
+		<item name="wcf.acp.devtools.project.optionalPackage.error.selfOptional"><![CDATA[Ein Paket kann kein optionales Paket für sich selbst sein.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.value"><![CDATA[Datei(en)]]></item>
+		<item name="wcf.acp.devtools.project.instruction.value.description"><![CDATA[Die angegebene Datei wird während der Installation/des Updates verarbeitet werden.]]></item>
+		<item name="wcf.acp.devtools.project.instructions.description"><![CDATA[Die Anweisungen erklären der Installations- und Updateroutine, was gemacht werden muss, damit das Paket erfolgreich installiert/aktualisiert werden kann.]]></item>
+		<item name="wcf.acp.devtools.project.packageIdentifier.description"><![CDATA[Der Paketbezeichner identifiziert das Paket eindeutig. Der Bezeichner besteht aus mindestens drei durch Punkte getrennte Abschnitt. Der Abschnitt darf nur folgende Zeichen einhalten: <kbd>[A-z0-9-_]</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.isApplication.description"><![CDATA[(TODO) Der letzte Abschnitt des Paketbezeichners entspricht der Abkürzung der App im System. App-Abkürzungen müssen innerhalb einer Installation eindeutig sein.]]></item>
+		<item name="wcf.acp.devtools.project.packageDate.description"><![CDATA[Das Erstellungsdatum ist das Datum, an dem diese Version des Pakets veröffentlicht wurde. Format: <kbd>YYYY-MM-DD</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.packageUrl.description"><![CDATA[Die Paket-Website liefert detailierte Informationen zum Paket.]]></item>
+		<item name="wcf.acp.devtools.project.packageUrl"><![CDATA[Paket-Website]]></item>
+		<item name="wcf.acp.devtools.project.packageVersion.description"><![CDATA[Die Paketversion besteht aus drei durch Punkte abgetrennte Zahlen und einem optionalen, durch ein Leerzeichen abgetrennten Zusatz <kbd>Dev</kbd>, <kbd>Alpha</kbd>, <kbd>Beta</kbd>, <kbd>RC</kbd> oder <kbd>pl</kbd>, dem eine weietre Zahl folgt. Beispiele: <kbd>1.0.0</kbd>, <kbd>2.1.0 Beta 3</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.pathExists"><![CDATA[Der angegebene Pfad existiert bereits.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.parentDoesNotExist"><![CDATA[Der übergeordnete Order existiert nicht.]]></item>
+		<item name="wcf.acp.devtools.project.path.error.cannotMakeDirectory"><![CDATA[Der angegebene Paketordner kann nicht erstellt werden.]]></item>
+		<item name="wcf.acp.devtools.project.instructions.error.noInstallationInstructions"><![CDATA[Es gibt keine Installationsanweisungen.]]></item>
+		<item name="wcf.acp.devtools.project.add.mode.edit"><![CDATA[Projekt bearbeiten]]></item>
+		<item name="wcf.acp.devtools.project.applicationDirectory"><![CDATA[Vorgeschlagenes Appverzeichnis]]></item>
+		<item name="wcf.acp.devtools.project.applicationDirectory.description"><![CDATA[Während der App-Installation wird das eingegebene Verzeichnis für die App vorgeschlagen. Das Verzeichnis darf nur folgende Zeichen einhalten: <kbd>A-z0-9_-</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.applicationDirectory.error.format"><![CDATA[Das angegebene Appverzeichnis ist ungültig.]]></item>
+		<item name="wcf.acp.devtools.project.instructions.type.update.error.updateForFutureVersion"><![CDATA[Aktualisierungen müssen als Ausgangsversion immer eine ältere Version haben. Die angegebene Ausgangsversion <kbd>{$fromVersion}</kbd> ist neuer als die aktuell angegebene Paketversion <kbd>{$version}</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.instructions.type.update.error.duplicate"><![CDATA[Es kann nicht mehrere Installationsanweisungen geben.]]></item>
+		<item name="wcf.acp.devtools.project.edit.warning"><![CDATA[Nach dem Abwenden des Formulars wird die vorhandene <kbd>package.xml</kbd>-Datei überschrieben!]]></item>
+		<item name="wcf.acp.devtools.project.instructions.update.fromVersion.description"><![CDATA[Die aktualisierte Version kann entweder eine konkrete Version wie beispielsweise <kbd>1.0.3</kbd> sein oder eine Menge von Versionen, die durch ein Sternchen gekennzeichnet wird (Beispiel: <kbd>1.0.*</kbd>).]]></item>
+		<item name="wcf.acp.devtools.project.instruction.error.missingFile"><![CDATA[Die Datei <kbd>{$file}</kbd> existiert nicht.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.error.missingDirectory"><![CDATA[Der zugehörige Ordner mit den entpackten Dateien, <kbd>{$directory}</kbd>, existiert nicht.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.error.noArchive"><![CDATA[Die angegebene Datei ist kein Archiv, das mit <kbd>.tar</kbd> endet.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.error.missingDirectoryForUpdatedFiles"><![CDATA[Bei Archiven, deren Dateiname mit <kbd>_update.tar</kbd> endet, wird angenommen, dass diese nur die Dateien enthalten, die seit der letzten Version verändert wurden. Für solche Archive muss der Name des zugehörige Ordner mit den entpackten Dateien der Dateiname des Archives ohne die <kbd>_update.tar</kbd>-Endung sein. Dieses Verzeichnis, <kbd>{$directory}</kbd>, existiert jedoch nicht.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.script.error.missingFile"><![CDATA[Die angegebene Skript-Datei konnte an keiner der folgenden Stellen gefunden werden: {implode from=$checkedFileLocations item=checkedFileLocation}<kbd>{$checkedFileLocation}</kbd>{/implode}.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.script.error.noPhpFile"><![CDATA[Die angegebene Datei ist keine PHP-Datei, die mit <kbd>.phpkbd> endet.]]></item>
+		<item name="wcf.acp.devtools.project.instructions.error.missingInstructions"><![CDATA[Es wurden keine Anweisungen angegeben.]]></item>
+		<item name="wcf.acp.devtools.project.instructions.edit"><![CDATA[Anweisungen bearbeiten]]></item>
+		<item name="wcf.acp.devtools.project.instruction.edit"><![CDATA[Anweisung bearbeiten]]></item>
+		<item name="wcf.acp.devtools.project.instruction.language.error.missingFiles"><![CDATA[Das Verzeichnis <kbd>{$directory}<kdb> enthält keine XML-Dateien.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.error.noXmlFile"><![CDATA[Die angegebene Datei ist keine XML-Datei.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.delete.confirmMessages"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Anweisung wirklich löschen?]]></item>
+		<item name="wcf.acp.devtools.project.add.info"><![CDATA[Inkompatible Pakete, Installations- und Aktualisierungsanweisungen können erst beim Bearbeiten eines vorhandenen Projekts hinzugefügt werden.]]></item>
+		<item name="wcf.acp.devtools.project.optionalPackage.error.missingFiles"><![CDATA[Die folgenden Paketdateien fehlen: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>
+		<item name="wcf.acp.devtools.project.requiredPackage.error.missingFiles"><![CDATA[Die folgenden Paketdateien fehlen: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP-Verbindungstest]]></item>
@@ -1930,14 +2056,12 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.rescueMode.description"><![CDATA[Die eingestellte Domains und/oder Pfade stimmen nicht mit der für den Aufruf verwendeten Adresse überein; Dies kann in Folge eines Umzugs auf eine andere Domain oder Veränderung der Verzeichnisstruktur auftreten. Mit Hilfe des unten stehenden Formulars {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die Angaben schnell und einfach anpassen.]]></item>
 		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[Diese Benutzer ist nicht berechtigt die Konfiguration zu verändern.]]></item>
 	</category>
-	
 	<category name="wcf.acp.rewrite">
 		<item name="wcf.acp.rewrite"><![CDATA[Rewrite-Regeln (Apache)]]></item>
 		<item name="wcf.acp.rewrite.generate"><![CDATA[Rewrite-Regeln generieren]]></item>
 		<item name="wcf.acp.rewrite.description"><![CDATA[Generiert die Inhalte der benötigten .htaccess-Dateien und gibt sie aus. Beachte{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} bitte, dass die benötigten Regeln bei speziellen Server-Konfigurationen abweichen können.]]></item>
 		<item name="wcf.acp.rewrite.error.notApache"><![CDATA[Der Webserver konnte nicht als Apache identifiziert werden. Diese Funktion unterstützt ausschließlich Rewrite-Regeln für Apache.]]></item>
 	</category>
-	
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.noResults"><![CDATA[Keine Treffer]]></item>
 		<item name="wcf.acp.search.provider.com.woltlab.wcf.menuItem"><![CDATA[Administrationsmenü]]></item>
