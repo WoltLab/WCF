@@ -91,6 +91,127 @@ namespace {
 }
 
 // @codingStandardsIgnoreStart
+namespace wcf\functions {
+	use wcf\system\exception\IExtraInformationException;
+
+	function getDeprecationError($message, $extraInformation) {
+		// The error needs to be defined lazily, because core.functions.php is initialized before the autoloader is ready.
+		if (!class_exists(DeprecationError::class)) {
+			class DeprecationError extends \Error implements IExtraInformationException {
+				public function __construct($message, $extraInformation) {
+					parent::__construct($message);
+					$this->extraInformation = $extraInformation;
+				}
+				
+				public function getExtraInformation() {
+					return $this->extraInformation;
+				}
+			}
+		}
+		
+		return new DeprecationError($message, $extraInformation);
+	}
+	
+	function parseDocComment($comment) {
+		$lines = preg_split('/\r?\n/', $comment, -1, PREG_SPLIT_NO_EMPTY);
+		$result = '';
+		$state = 0;
+		foreach ($lines as $line) {
+			switch ($state) {
+				case 0:
+					if (preg_match('/^\s+\*\s+@deprecated\s+(.*)/', $line, $matches)) {
+						$state = 1;
+						$result .= $matches[1];
+					}
+					break;
+				case 1:
+					if (preg_match('/^\s+\*\s+@[a-zA-Z0-9]/', $line)) {
+						break 2;
+					}
+					if (preg_match('/^\s+\*\s+(.*)/', $line, $matches)) {
+						$result .= "\n".$matches[1];
+					}
+					break;
+			}
+		}
+		
+		return $result;
+	}
+	
+	function deprecatedFeature($message, $extraInformation) {
+		if (!ENABLE_DEVELOPER_TOOLS || !ENABLE_DEPRECATION_WARNINGS) return;
+		
+		throw getDeprecationError("A deprecated feature is used, while 'ENABLE_DEPRECATION_WARNINGS' is enabled: ".$message, $extraInformation);
+	}
+	
+	/**
+	 * Sends a deprecation warning for the given class when the returned
+	 * object is destructed.
+	 * 
+	 * Usage:
+	 * 
+	 * $_ = \wcf\functions\deprecatedClass(Foo::class);
+	 * class Foo { ... }
+	 * 
+	 * Note: Is is necessary to store the return value in a variable to
+	 * ensure that the returned object outlives the class declaration.
+	 * 
+	 * @param	string	$className
+	 * @return	object
+	 */
+	function deprecatedClass($className) {
+		if (!ENABLE_DEVELOPER_TOOLS || !ENABLE_DEPRECATION_WARNINGS) return;
+
+		// A temporary object that throws the Exception in the destructor is used
+		// to support calling the class before the class itself it defined. This
+		// allows the call to this method appears at the top of the file.
+		return new class($className) {
+			public function __construct($className) {
+				$this->className = $className;
+			}
+			
+			public function __destruct() {
+				$reflection = new \ReflectionClass($this->className);
+				$comment = $reflection->getDocComment();
+				
+				$name = $reflection->name;
+				\wcf\functions\deprecatedFeature("The class '".$name."' is deprecated.", [
+					['Deprecated Class', $name],
+					['Deprecation Annotation', parseDocComment($comment) ?: 'No details are given'],
+				]);
+			}
+		};
+	}
+	
+	/**
+	 * Sends a deprecation warning for the given method.
+	 * 
+	 * Usage:
+	 * 
+	 * public function foo() {
+	 *  \wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
+	 *  ...
+	 * }
+	 * 
+	 * @param	string	$className
+	 * @param	string	$method
+	 */
+	function deprecatedMethod($className, $method) {
+		if (!ENABLE_DEVELOPER_TOOLS || !ENABLE_DEPRECATION_WARNINGS) return;
+
+		$reflection = new \ReflectionMethod($className, $method);
+		$comment = $reflection->getDocComment();
+		
+		$name = $reflection->class."::".$reflection->name;
+		\wcf\functions\deprecatedFeature("The method '".$name."' is deprecated.", [
+			['Deprecated Method', $name],
+			['Deprecation Annotation', parseDocComment($comment) ?: 'No details are given'],
+		]);
+	}
+}
+// @codingStandardsIgnoreEnd
+
+// @codingStandardsIgnoreStart
 namespace wcf\functions\exception {
 	use wcf\system\WCF;
 	use wcf\system\exception\IExtraInformationException;
@@ -506,7 +627,7 @@ EXPLANATION;
 									?>
 									<li>
 										<p class="exceptionFieldTitle"><?php echo StringUtil::encodeHTML($key); ?><span class="exceptionColon">:</span></p>
-										<p class="exceptionFieldValue"><?php echo StringUtil::encodeHTML($value); ?></p>
+										<p class="exceptionFieldValue" style="white-space: pre-line;"><?php echo StringUtil::encodeHTML($value); ?></p>
 									</li>
 									<?php
 								}

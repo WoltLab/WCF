@@ -385,7 +385,7 @@
 				<categoryname>module.development</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<enableoptions>log_missing_language_items</enableoptions>
+				<enableoptions>log_missing_language_items,enable_deprecation_warnings</enableoptions>
 			</option>
 			<!-- general.page -->
 			<option name="page_title">
@@ -1673,6 +1673,11 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 DESC:wcf.global.sortOrder.descending</selectoptions>
 			</option>
 			<option name="log_missing_language_items">
+				<categoryname>module.development</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+			</option>
+			<option name="enable_deprecation_warnings">
 				<categoryname>module.development</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
