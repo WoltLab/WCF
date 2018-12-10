@@ -9,7 +9,7 @@ When you contribute, please take the following things into account:
 ## Contributor Code of Conduct
 
 Please note that this project is released with a
-[Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this
+[Contributor Code of Conduct](../CODE_OF_CONDUCT.md). By participating in this
 project, you agree to abide by its terms.
 
 
@@ -59,20 +59,30 @@ first before investing a lot of time in writing code.
 ## Install the development dependencies
 
 To install the development dependencies (PHPUnit and PHP_CodeSniffer), please
-run the following command:
+run the following commands:
 
-    composer install
+```shell
+composer install
+composer require --dev slevomat/coding-standard:^4.0
+```
+
+Note that the development dependencies (in particular, for PHP_CodeSniffer)
+require PHP 7.0 or later.  The second command installs the PHP_CodeSniffer
+dependencies and should be omitted if specifically testing against an earlier
+version of PHP, however you will not be able to run the static code analysis.
 
 
 ## Unit-test your changes
 
 Please cover all changes with unit tests and make sure that your code does not
-break any existing tests. We will only merge pull request that include full
+break any existing tests. We will only merge pull requests that include full
 code coverage of the fixed bugs and the new features.
 
 To run the existing PHPUnit tests, run this command:
 
-    vendor/bin/phpunit Tests/
+```shell
+composer ci:tests:unit
+```
 
 
 ## Coding Style
@@ -82,9 +92,11 @@ is four spaces.
 
 We will only merge pull requests that follow the project's coding style.
 
-Please check your code with the provided PHP_CodeSniffer standard:
+Please check your code with the provided static code analysis tools:
 
-    vendor/bin/phpcs --standard=Configuration/PhpCodeSniffer/Standards/Emogrifier/ Classes/ Tests/
+```shell
+composer ci:static
+```
 
 Please make your code clean, well-readable and easy to understand.
 
@@ -92,16 +104,17 @@ If you add new methods or fields, please add proper PHPDoc for the new
 methods/fields. Please use grammatically correct, complete sentences in the
 code documentation.
 
+You can autoformat your code using the following command:
+
+```shell
+composer php:fix
+```
+
 
 ## Git commits
 
 Commit message should have a <= 50 character summary, optionally followed by a
 blank line and a more in depth description of 79 characters per line.
-
-[Please squash related commits together](http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html).
-
-If you already have a commit and work on it, you can also
-[amend the first commit](https://nathanhoad.net/git-amend-your-last-commit).
 
 Please use grammatically correct, complete sentences in the commit messages.
 
