@@ -249,31 +249,31 @@
     },
     {
         "name": "pelago/emogrifier",
-        "version": "V1.1.0",
-        "version_normalized": "1.1.0.0",
+        "version": "v1.2.2",
+        "version_normalized": "1.2.2.0",
         "source": {
             "type": "git",
             "url": "https://github.com/MyIntervals/emogrifier.git",
-            "reference": "dd9442740e044a11968bf6a5d94460a5426a2419"
+            "reference": "fef6a4d3a6cefb2fdc8e749a3f3a100ab43f883a"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/MyIntervals/emogrifier/zipball/dd9442740e044a11968bf6a5d94460a5426a2419",
-            "reference": "dd9442740e044a11968bf6a5d94460a5426a2419",
+            "url": "https://api.github.com/repos/MyIntervals/emogrifier/zipball/fef6a4d3a6cefb2fdc8e749a3f3a100ab43f883a",
+            "reference": "fef6a4d3a6cefb2fdc8e749a3f3a100ab43f883a",
             "shasum": ""
         },
         "require": {
-            "php": ">=5.4.0,<=7.1.99"
+            "php": ">=5.4.0,<=7.3.99"
         },
         "require-dev": {
             "phpunit/phpunit": "4.8.27",
-            "squizlabs/php_codesniffer": "2.6.0"
+            "squizlabs/php_codesniffer": "^3.3.0"
         },
-        "time": "2016-09-20T15:15:23+00:00",
+        "time": "2018-12-10T08:26:52+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
-                "dev-master": "1.2.x-dev"
+                "dev-master": "2.1.x-dev"
             }
         },
         "installation-source": "dist",
@@ -299,15 +299,24 @@
             },
             {
                 "name": "Oliver Klee",
-                "email": "typo3-coding@oliverklee.de"
+                "email": "github@oliverklee.de"
             },
             {
-                "name": "Roman Ožana",
-                "email": "ozana@omdesign.cz"
+                "name": "Zoli Szabó",
+                "email": "zoli.szabo+github@gmail.com"
+            },
+            {
+                "name": "Jake Hotson",
+                "email": "jake@qzdesign.co.uk"
             }
         ],
         "description": "Converts CSS styles into inline style attributes in your HTML code",
-        "homepage": "http://www.pelagodesign.com/sidecar/emogrifier/"
+        "homepage": "https://www.myintervals.com/emogrifier.php",
+        "keywords": [
+            "css",
+            "email",
+            "pre-processing"
+        ]
     },
     {
         "name": "symfony/polyfill-mbstring",

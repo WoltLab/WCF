@@ -1,34 +1,46 @@
 {
     "name": "pelago/emogrifier",
     "description": "Converts CSS styles into inline style attributes in your HTML code",
-    "tags": ["email", "css", "pre-processing"],
+    "keywords": [
+        "email",
+        "css",
+        "pre-processing"
+    ],
+    "homepage": "https://www.myintervals.com/emogrifier.php",
     "license": "MIT",
-    "homepage": "http://www.pelagodesign.com/sidecar/emogrifier/",
     "authors": [
+        {
+            "name": "Oliver Klee",
+            "email": "github@oliverklee.de"
+        },
+        {
+            "name": "Zoli Szabó",
+            "email": "zoli.szabo+github@gmail.com"
+        },
         {
             "name": "John Reeve",
             "email": "jreeve@pelagodesign.com"
+        },
+        {
+            "name": "Jake Hotson",
+            "email": "jake@qzdesign.co.uk"
         },
         {
             "name": "Cameron Brooks"
         },
         {
             "name": "Jaime Prado"
-        },
-        {
-            "name": "Oliver Klee",
-            "email": "typo3-coding@oliverklee.de"
-        },
-        {
-            "name": "Roman Ožana",
-            "email": "ozana@omdesign.cz"
         }
     ],
+    "support": {
+        "issues": "https://github.com/MyIntervals/emogrifier/issues",
+        "source": "https://github.com/MyIntervals/emogrifier"
+    },
     "require": {
-        "php": ">=5.4.0,<=7.1.99"
+        "php": ">=5.4.0,<=7.3.99"
     },
     "require-dev": {
-        "squizlabs/php_codesniffer": "2.6.0",
+        "squizlabs/php_codesniffer": "^3.3.0",
         "phpunit/phpunit": "4.8.27"
     },
     "autoload": {
@@ -38,7 +50,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.2.x-dev"
+            "dev-master": "2.1.x-dev"
         }
     }
 }
