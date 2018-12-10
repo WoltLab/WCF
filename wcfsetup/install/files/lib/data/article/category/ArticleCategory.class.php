@@ -135,9 +135,10 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 	/**
 	 * Returns the label groups for all accessible categories.
 	 *
+	 * @param	string	        $permission
 	 * @return	ViewableLabelGroup[]
 	 */
-	public static function getAccessibleLabelGroups() {
+	public static function getAccessibleLabelGroups($permission = 'canSetLabel') {
 		$labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
 		$accessibleCategoryIDs = self::getAccessibleCategoryIDs();
 		
@@ -149,7 +150,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 		}
 		if (empty($groupIDs)) return [];
 		
-		return LabelHandler::getInstance()->getLabelGroups(array_unique($groupIDs));
+		return LabelHandler::getInstance()->getLabelGroups(array_unique($groupIDs), true, $permission);
 	}
 	
 	/**

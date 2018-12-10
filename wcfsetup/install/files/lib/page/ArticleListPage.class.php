@@ -98,7 +98,7 @@ class ArticleListPage extends SortablePage {
 		parent::readParameters();
 		
 		// read available label groups
-		$this->labelGroups = ArticleCategory::getAccessibleLabelGroups();
+		$this->labelGroups = ArticleCategory::getAccessibleLabelGroups('canViewLabel');
 		if (!empty($this->labelGroups) && isset($_REQUEST['labelIDs']) && is_array($_REQUEST['labelIDs'])) {
 			$this->labelIDs = $_REQUEST['labelIDs'];
 			

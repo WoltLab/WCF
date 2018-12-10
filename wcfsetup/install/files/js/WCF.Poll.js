@@ -68,6 +68,7 @@ if (COMPILER_TARGET_DEFAULT) {
 				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + editorId, this._reset.bind(this));
 				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + editorId, this._submit.bind(this));
 				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'validate_' + editorId, this._validate.bind(this));
+				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'handleError_' + editorId, this._handleError.bind(this));
 			}
 			else {
 				this._container.closest('form').submit($.proxy(this._submit, this));
@@ -304,6 +305,30 @@ if (COMPILER_TARGET_DEFAULT) {
 					data.api.throwError(pollMaxVotes, WCF.Language.get('wcf.poll.maxVotes.error.invalid'));
 					data.valid = false;
 				}
+			}
+		},
+		
+		_handleError: function (data) {
+			switch (data.returnValues.fieldName) {
+				case 'pollEndTime':
+				case 'pollMaxVotes':
+					var fieldName = (data.returnValues.fieldName === 'pollEndTime') ? 'endTime' : 'maxVotes';
+					
+					var small = elCreate('small');
+					small.className = 'innerError';
+					small.innerHTML = WCF.Language.get('wcf.poll.' + fieldName + '.error.' + data.returnValues.errorType);
+					
+					var element = elById(data.returnValues.fieldName + '_' + this._editorId);
+					var parent = element.parentElement;
+					if (parent.classList.contains('inputAddon')) {
+						element = parent;
+						parent = parent.parentElement;
+					}
+					
+					parent.insertBefore(small, element.nextSibling);
+					
+					data.cancel = true;
+					break;
 			}
 		}
 	});

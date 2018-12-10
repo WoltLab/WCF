@@ -118,7 +118,12 @@ class MenuItem extends DatabaseObject {
 		}
 		
 		if ($this->getMenuPageHandler() !== null) {
-			return $this->getMenuPageHandler()->isVisible($this->pageObjectID ?: null);
+			$menuPageHandler = $this->getMenuPageHandler();
+			if ($menuPageHandler instanceof ILookupPageHandler && !$menuPageHandler->isValid($this->pageObjectID ?: null)) {
+				return false;
+			}
+			
+			return $menuPageHandler->isVisible($this->pageObjectID ?: null);
 		}
 		
 		return true;

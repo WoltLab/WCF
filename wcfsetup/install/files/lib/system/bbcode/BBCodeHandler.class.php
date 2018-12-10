@@ -104,27 +104,10 @@ class BBCodeHandler extends SingletonFactory {
 	 * Returns a list of BBCodes which contain raw code (disabled BBCode parsing)
 	 * 
 	 * @return	BBCode[]
+	 * @deprecated  3.1 - This method is no longer supported.
 	 */
 	public function getSourceBBCodes() {
-		if (empty($this->allowedBBCodes)) {
-			return [];
-		}
-		
-		if ($this->sourceBBCodes === null) {
-			$this->sourceBBCodes = [];
-			
-			foreach (BBCodeCache::getInstance()->getBBCodes() as $bbcode) {
-				if (!$bbcode->isSourceCode) {
-					continue;
-				}
-				
-				if ($this->isAvailableBBCode($bbcode->bbcodeTag)) {
-					$this->sourceBBCodes[] = $bbcode;
-				}
-			}
-		}
-		
-		return $this->sourceBBCodes;
+		return [];
 	}
 	
 	/**
