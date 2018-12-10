@@ -1,7 +1,11 @@
 {
     "config": {
         "vendor-dir": "./",
-        "prepend-autoloader": false
+        "prepend-autoloader": false,
+        "platform": {
+            "php": "7.0.22",
+            "ext-gd": "0"
+        }
     },
     "require": {
         "ezyang/htmlpurifier": "4.10.*",
