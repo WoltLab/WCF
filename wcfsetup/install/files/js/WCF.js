@@ -6579,17 +6579,24 @@ if (COMPILER_TARGET_DEFAULT) {
 			}, options || {});
 			
 			var sortableList = $('#' + this._containerID + ' .sortableList');
-			if (sortableList.is('tbody') && this._options.helper === 'clone') {
-				this._options.helper = this._tableRowHelper.bind(this);
+			if (sortableList.is('tbody')) {
+				if (this._options.items === 'li:not(.sortableNoSorting)') {
+					this._options.items = 'tr:not(.sortableNoSorting)';
+					this._options.toleranceElement = '';
+				}
 				
-				// explicitly set column widths to avoid column resizing during dragging
-				var thead = sortableList.prev('thead');
-				if (thead) {
-					thead.find('th').each(function (index, element) {
-						element = $(element);
-						
-						element.width(element.width());
-					});
+				if (this._options.helper === 'clone') {
+					this._options.helper = this._tableRowHelper.bind(this);
+					
+					// explicitly set column widths to avoid column resizing during dragging
+					var thead = sortableList.prev('thead');
+					if (thead) {
+						thead.find('th').each(function (index, element) {
+							element = $(element);
+							
+							element.width(element.width());
+						});
+					}
 				}
 			}
 			

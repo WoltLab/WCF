@@ -3,8 +3,14 @@
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/Sortable/List'], function (UiSortableList) {
 		new UiSortableList({
+			containerId: 'optionList',
+			className: 'wcf\\data\\contact\\option\\ContactOptionAction',
+			isSimpleSorting: true,
+		});
+		new UiSortableList({
 			containerId: 'recipientList',
-			className: 'wcf\\data\\contact\\recipient\\ContactRecipientAction'
+			className: 'wcf\\data\\contact\\recipient\\ContactRecipientAction',
+			isSimpleSorting: true
 		});
 	});
 	
@@ -35,42 +41,48 @@
 <section class="section">
 	<h2 class="sectionTitle">{lang}wcf.acp.contact.options{/lang}</h2>
 	
-	<table class="table">
-		<thead>
-			<tr>
-				<th class="columnID columnOptionID" colspan="2">{lang}wcf.global.objectID{/lang}</th>
-				<th class="columnTitle columnOptionTitle">{lang}wcf.global.name{/lang}</th>
-				<th class="columnText columnOptionType">{lang}wcf.acp.customOption.optionType{/lang}</th>
-				<th class="columnDigits columnShowOrder">{lang}wcf.acp.customOption.showOrder{/lang}</th>
-				
-				{event name='columnHeads'}
-			</tr>
-		</thead>
-		
-		<tbody>
-			{foreach from=$optionList item=option}
-				<tr class="jsOptionRow">
-					<td class="columnIcon">
-						<span class="icon icon16 fa-{if !$option->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $option->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$option->optionID}"></span>
-						<a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
-						{if $option->canDelete()}
-							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$option->optionID}" data-confirm-message-html="{lang __encode=true}wcf.acp.customOption.delete.confirmMessage{/lang}"></span>
-						{else}
-							<span class="icon icon16 fa-times disabled"></span>
-						{/if}
-						
-						{event name='rowButtons'}
-					</td>
-					<td class="columnID">{@$option->optionID}</td>
-					<td class="columnTitle columnOptionTitle"><a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}">{$option->optionTitle|language}</a></td>
-					<td class="columnText columnOptionType">{lang}wcf.acp.customOption.optionType.{$option->optionType}{/lang}</td>
-					<td class="columnDigits columnShowOrder">{#$option->showOrder}</td>
+	<div id="optionList" class="sortableListContainer">
+		<table class="table">
+			<thead>
+				<tr>
+					<th class="columnID columnOptionID" colspan="2">{lang}wcf.global.objectID{/lang}</th>
+					<th class="columnTitle columnOptionTitle">{lang}wcf.global.name{/lang}</th>
+					<th class="columnText columnOptionType">{lang}wcf.acp.customOption.optionType{/lang}</th>
+					<th class="columnDigits columnShowOrder">{lang}wcf.acp.customOption.showOrder{/lang}</th>
 					
-					{event name='columns'}
+					{event name='columnHeads'}
 				</tr>
-			{/foreach}
-		</tbody>
-	</table>
+			</thead>
+			
+			<tbody class="sortableList" data-object-id="0">
+				{foreach from=$optionList item=option}
+					<tr class="sortableNode jsOptionRow" data-object-id="{@$option->optionID}">
+						<td class="columnIcon">
+							<span class="icon icon16 fa-{if !$option->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $option->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$option->optionID}"></span>
+							<a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							{if $option->canDelete()}
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$option->optionID}" data-confirm-message-html="{lang __encode=true}wcf.acp.customOption.delete.confirmMessage{/lang}"></span>
+							{else}
+								<span class="icon icon16 fa-times disabled"></span>
+							{/if}
+							
+							{event name='rowButtons'}
+						</td>
+						<td class="columnID">{@$option->optionID}</td>
+						<td class="columnTitle columnOptionTitle"><a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}">{$option->optionTitle|language}</a></td>
+						<td class="columnText columnOptionType">{lang}wcf.acp.customOption.optionType.{$option->optionType}{/lang}</td>
+						<td class="columnDigits columnShowOrder">{#$option->showOrder}</td>
+						
+						{event name='columns'}
+					</tr>
+				{/foreach}
+			</tbody>
+		</table>
+		
+		<div class="formSubmit">
+			<button class="button" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
+		</div>
+	</div>
 </section>
 
 <section class="section">

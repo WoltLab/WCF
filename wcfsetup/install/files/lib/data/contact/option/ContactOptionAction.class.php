@@ -2,12 +2,15 @@
 namespace wcf\data\contact\option;
 use wcf\data\contact\recipient\ContactRecipient;
 use wcf\data\custom\option\CustomOptionAction;
+use wcf\data\ISortableAction;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
 use wcf\system\email\Mailbox;
+use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\option\ContactOptionHandler;
+use wcf\system\WCF;
 
 /**
  * Executes contact option related actions.
@@ -21,7 +24,7 @@ use wcf\system\option\ContactOptionHandler;
  * @method	ContactOptionEditor[]	getObjects()
  * @method	ContactOptionEditor	getSingleObject()
  */
-class ContactOptionAction extends CustomOptionAction {
+class ContactOptionAction extends CustomOptionAction implements ISortableAction {
 	/**
 	 * @inheritDoc
 	 */
@@ -41,6 +44,11 @@ class ContactOptionAction extends CustomOptionAction {
 	 * @inheritDoc
 	 */
 	protected $permissionsUpdate = ['admin.contact.canManageContactForm'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $requireACP = ['create', 'delete', 'update', 'updatePosition'];
 	
 	/**
 	 * Sends an email to the selected recipient.
@@ -90,5 +98,42 @@ class ContactOptionAction extends CustomOptionAction {
 		
 		// send mail
 		$email->send();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateUpdatePosition() {
+		WCF::getSession()->checkPermissions($this->permissionsUpdate);
+		
+		if (!isset($this->parameters['data']['structure']) || !is_array($this->parameters['data']['structure'])) {
+			throw new UserInputException('structure');
+		}
+		
+		$recipientList = new ContactOptionList();
+		$recipientList->setObjectIDs($this->parameters['data']['structure'][0]);
+		if ($recipientList->countObjects() != count($this->parameters['data']['structure'][0])) {
+			throw new UserInputException('structure');
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function updatePosition() {
+		$sql = "UPDATE	wcf".WCF_N."_contact_option
+			SET	showOrder = ?
+			WHERE	optionID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		$showOrder = 1;
+		WCF::getDB()->beginTransaction();
+		foreach ($this->parameters['data']['structure'][0] as $optionID) {
+			$statement->execute([
+				$showOrder++,
+				$optionID
+			]);
+		}
+		WCF::getDB()->commitTransaction();
 	}
 }

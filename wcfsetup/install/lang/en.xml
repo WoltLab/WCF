@@ -3019,6 +3019,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.code.tpl.title"><![CDATA[Smarty]]></item>
 		<item name="wcf.bbcode.code.xml.title"><![CDATA[XML]]></item>
 		<item name="wcf.bbcode.code.simplified"><![CDATA[(Code, {#$lines} line{if $lines != 1}s{/if})]]></item>
+		<item name="wcf.bbcode.image.blocked"><![CDATA[Blocked Image]]></item>
 		<item name="wcf.bbcode.image.source"><![CDATA[Image Link]]></item>
 		<item name="wcf.bbcode.quote"><![CDATA[Quote]]></item>
 		<item name="wcf.bbcode.quote.delete"><![CDATA[Delete Quote]]></item>
@@ -4207,7 +4208,8 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.user.gender.male"><![CDATA[Male]]></item>
 		<item name="wcf.user.gender.female"><![CDATA[Female]]></item>
 		<item name="wcf.user.members"><![CDATA[Members]]></item>
-		<item name="wcf.user.members.noMembers"><![CDATA[No members matched your criteria. <a href="{link controller='MembersList'}{/link}">Reset the applied filters.</a>{/if}]]></item>
+		<item name="wcf.user.members.filter"><![CDATA[Filter Members]]></item>
+		<item name="wcf.user.members.noMembers"><![CDATA[No members matched your criteria. <a href="{link controller='MembersList'}{/link}">Reset the applied filters.</a>]]></item>
 		<item name="wcf.user.members.sort"><![CDATA[Sort by]]></item>
 		<item name="wcf.user.members.sort.letters"><![CDATA[First Letter]]></item>
 		<item name="wcf.user.members.sort.letters.all"><![CDATA[All]]></item>
@@ -4368,6 +4370,12 @@ not register with us.]]></item>
 		<item name="wcf.user.disableAvatar.expires.description"><![CDATA[The avatar of the user will automatically be unblocked at the set time.]]></item>
 		<item name="wcf.user.disableAvatar.neverExpires"><![CDATA[Permanently Block]]></item>
 		<item name="wcf.user.enableAvatar"><![CDATA[Unblock Avatar]]></item>
+		<item name="wcf.user.disableCoverPhoto"><![CDATA[Block Cover Photo]]></item>
+		<item name="wcf.user.disableCoverPhoto.confirmMessage"><![CDATA[Do you really want to block the cover photo of this user?]]></item>
+		<item name="wcf.user.disableCoverPhoto.expires"><![CDATA[Unblocking]]></item>
+		<item name="wcf.user.disableCoverPhoto.expires.description"><![CDATA[The cover photo of the user will automatically be unblocked at the set time.]]></item>
+		<item name="wcf.user.disableCoverPhoto.neverExpires"><![CDATA[Permanently Block]]></item>
+		<item name="wcf.user.enableCoverPhoto"><![CDATA[Unblock Cover Photo]]></item>
 		<item name="wcf.user.disableSignature"><![CDATA[Block Signature]]></item>
 		<item name="wcf.user.disableSignature.confirmMessage"><![CDATA[Do you really want to block the signature of this user?]]></item>
 		<item name="wcf.user.disableSignature.expires"><![CDATA[Unblocking]]></item>
@@ -4723,7 +4731,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}New Notification{else}{#$count} New Notifications{/if}]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.intro"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-You currently have got {#$notifications|count} unread notification{if $notifications|count != 1}s{/if} older than 24 hours:]]></item>
+You currently have {#$notifications|count} unread notification{if $notifications|count != 1}s{/if} older than 24 hours:]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.outro"><![CDATA[{if $notifications|count > $maximum}Visit your notification list [URL:{link controller='NotificationList' isEmail=true}{/link}] to view the remaining {#$remaining} notifications.
 
 {/if}This is an automatic notification, PLEASE DO NOT REPLY TO THIS EMAIL!
@@ -4735,7 +4743,7 @@ If you wish to disable all email notifications you can do so by visiting:
 {link controller='NotificationDisable' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
 		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h2>Dear {@$mailbox->getUser()->username},</h2>
 
-<p>You currently have got {#$notifications|count} unread notification{if $notifications|count != 1}s{/if} older than 24 hours:</p>]]></item>
+<p>You currently have {#$notifications|count} unread notification{if $notifications|count != 1}s{/if} older than 24 hours:</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.html.outro"><![CDATA[<p>{if $notifications|count > $maximum}Visit your <a href="{link controller='NotificationList' isEmail=true}{/link}">notification list</a> to view the remaining {#$remaining} notifications.</p>{/if}
 
 <p>This is an automatic notification, <b>please do not reply to this email</b>!</p>
@@ -4752,7 +4760,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.follow.title"><![CDATA[New Follower]]></item>
 		<item name="wcf.user.notification.follow.title.stacked"><![CDATA[{#$count} new followers]]></item>
 		<item name="wcf.user.notification.follow.message"><![CDATA[{@$author->getAnchorTag()} follows you.]]></item>
-		<item name="wcf.user.notification.follow.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} others{/if} follow you.]]></item>
+		<item name="wcf.user.notification.follow.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} follow you.]]></item>
 		<item name="wcf.user.notification.follow.mail.plaintext"><![CDATA[{@$authorList} {if $authors|count == 1}follows{else}follow{/if} you.]]></item>
 		<item name="wcf.user.notification.follow.mail.html"><![CDATA[<p>{@$authorList} {if $authors|count == 1}follows{else}follow{/if} you:</p>]]></item>
 		<item name="wcf.user.notification.comment.title"><![CDATA[New Comment (Wall)]]></item>
@@ -4764,7 +4772,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.comment.like.title"><![CDATA[Reaction to a comment (Wall)]]></item>
 		<item name="wcf.user.notification.comment.like.title.stacked"><![CDATA[{#$count} users reacted to your comment (Wall)]]></item>
 		<item name="wcf.user.notification.comment.like.message"><![CDATA[{@$author->getAnchorTag()} reacted to your comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall/comment{@$commentID}{/link}">{$owner->username}’s wall</a>{/if} ({implode from=$reactions key=reactionID item=count}{#$count}× {@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}{/implode}).]]></item>
-		<item name="wcf.user.notification.comment.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} others{/if} reacted to your comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall/comment{@$commentID}{/link}">{$owner->username}’s wall</a>{/if} ({implode from=$reactions key=reactionID item=count}{#$count}× {@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}{/implode}).]]></item>
+		<item name="wcf.user.notification.comment.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} reacted to your comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall/comment{@$commentID}{/link}">{$owner->username}’s wall</a>{/if} ({implode from=$reactions key=reactionID item=count}{#$count}× {@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}{/implode}).]]></item>
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[New Reply (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} new replies (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponse.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} wrote a reply to your comment on <a href="{link controller='User' object=$owner}#wall/comment{@$commentID}/response{@$responseID}{/link}">{if $owner->userID == $__wcf->getUser()->userID}your{else}{$owner->username}’s{/if} wall</a>.]]></item>
@@ -4774,7 +4782,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.commentResponse.like.title"><![CDATA[Likes your reply to a comment (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponse.like.title.stacked"><![CDATA[{#$count} users reacted to your reply to a comment (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponse.like.message"><![CDATA[{@$author->getAnchorTag()} reacted to your reply to a comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}/response{@$responseID}{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall/comment{@$commentID}/response{@$responseID}{/link}">{$owner->username}’s wall</a>{/if} ({implode from=$reactions key=reactionID item=count}{#$count}× {@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}{/implode}).]]></item>
-		<item name="wcf.user.notification.commentResponse.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} others{/if} reacted to your reply to a comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}/response{@$responseID}{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall/comment{@$commentID}/response{@$responseID}{/link}">{$owner->username}’s wall</a>{/if} ({implode from=$reactions key=reactionID item=count}{#$count}× {@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}{/implode}).]]></item>
+		<item name="wcf.user.notification.commentResponse.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} reacted to your reply to a comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}/response{@$responseID}{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall/comment{@$commentID}/response{@$responseID}{/link}">{$owner->username}’s wall</a>{/if} ({implode from=$reactions key=reactionID item=count}{#$count}× {@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}{/implode}).]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title"><![CDATA[New Reply (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title.stacked"><![CDATA[{#$timesTriggered} new replies (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} wrote a reply to {$commentAuthor->username}’s comment on <a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}/response{@$responseID}{/link}">your wall</a>.]]></item>

@@ -14,6 +14,12 @@ use wcf\system\Regex;
  */
 class FileReader {
 	/**
+	 * file to send
+	 * @var	string
+	 */
+	protected $location = '';
+	
+	/**
 	 * http options
 	 * @var	array
 	 */

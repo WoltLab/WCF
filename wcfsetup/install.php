@@ -340,7 +340,7 @@ class SystemException extends \Exception implements IPrintableException {
 			?>
 			<div class="exceptionBoundary">
 				<p class="exceptionSubtitle"><?php if (!$e->getPrevious() && !$first) { echo "Original "; } else if ($e->getPrevious() && $first) { echo "Final "; } ?>Error</p>
-				<?php if ($e instanceof SystemException && $e->getDescription()) { ?>
+				<?php if (($e instanceof SystemException || $e instanceof \wcf\system\exception\SystemException) && $e->getDescription()) { ?>
 					<p class="exceptionText"><?php echo $e->getDescription(); ?></p>
 				<?php } ?>
 				<ul class="exceptionErrorDetails">
@@ -407,7 +407,6 @@ class SystemException extends \Exception implements IPrintableException {
 			<?php
 			$first = false;
 		} while ($e = $e->getPrevious());
-		?>
 		?>
 	</div>
 </body>

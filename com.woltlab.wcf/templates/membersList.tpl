@@ -86,7 +86,7 @@
 		</ol>
 	</div>
 	
-	<div id="membersListSortFilter" class="jsStaticDialogContent" data-title="{lang}wbb.thread.filter{/lang}">
+	<div id="membersListSortFilter" class="jsStaticDialogContent" data-title="{lang}wcf.user.members.filter{/lang}">
 		<form method="post" action="{link controller='MembersList' id=$searchID}{/link}">
 			<div class="section">
 				<dl>
