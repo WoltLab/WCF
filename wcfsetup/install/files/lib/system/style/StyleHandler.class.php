@@ -249,7 +249,7 @@ class StyleHandler extends SingletonFactory {
 	 */
 	public function getDefaultStyle() {
 		if (!RequestHandler::getInstance()->isACPRequest()) {
-			throw new SystemException('Illegal request, please use `getStyle()` for frontend requests.');
+			throw new \LogicException('Illegal request, please use `getStyle()` for frontend requests.');
 		}
 		
 		$styleID = $this->cache['default'];
