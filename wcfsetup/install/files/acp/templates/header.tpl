@@ -22,7 +22,7 @@
 		<meta name="msapplication-config" content="{@$__wcf->getStyleHandler()->getDefaultStyle()->getFaviconBrowserconfig()}">
 		<meta name="theme-color" content="{$__wcf->getStyleHandler()->getDefaultStyle()->getVariable('wcfPageThemeColor', true)}">
 	{else}	
-		<link rel="apple-touch-icon" sizes="180x180" href="{@$__wcf->getP1ath()}images/favicon/default.apple-touch-icon.png">
+		<link rel="apple-touch-icon" sizes="180x180" href="{@$__wcf->getPath()}images/favicon/default.apple-touch-icon.png">
 		<link rel="manifest" href="{@$__wcf->getPath()}images/favicon/default.manifest.json">
 		<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon/default.favicon.ico">
 		<meta name="msapplication-config" content="{@$__wcf->getPath()}images/favicon/default.browserconfig.xml">
