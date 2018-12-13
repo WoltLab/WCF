@@ -5,6 +5,7 @@ use wcf\data\style\Style;
 use wcf\data\style\StyleEditor;
 use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\JSON;
@@ -238,6 +239,25 @@ class StyleHandler extends SingletonFactory {
 		}
 		
 		return $this->icons;
+	}
+	
+	/**
+	 * Retrieves the default style for requests originating from the ACP. May return `null`
+	 * if there is no default style.
+	 * 
+	 * @return Style|null
+	 */
+	public function getDefaultStyle() {
+		if (!RequestHandler::getInstance()->isACPRequest()) {
+			throw new SystemException('Illegal request, please use `getStyle()` for frontend requests.');
+		}
+		
+		$styleID = $this->cache['default'];
+		if ($styleID) {
+			return $this->cache['styles'][$styleID];
+		}
+		
+		return null;
 	}
 	
 	/**
