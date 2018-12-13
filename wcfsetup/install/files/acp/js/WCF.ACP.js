@@ -1784,6 +1784,8 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 	_success: function(data) {
 		this._super(data);
 		
+		var search = elById('pageHeaderSearch');
+		this._list[0].style.setProperty('top', search.offsetTop + search.clientHeight + 'px', 'important');
 		this._list.addClass('acpSearchDropdown');
 	},
 	

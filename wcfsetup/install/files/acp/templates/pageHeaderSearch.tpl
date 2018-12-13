@@ -1,3 +1,6 @@
+<div id="pageHeaderMobileSearch" class="pageHeaderMobileSearch">
+	<!-- Placeholder for the mobile UI. -->
+</div>
 <div id="pageHeaderSearch" class="pageHeaderSearch" data-disable-auto-focus="true">
 	<div class="pageHeaderSearchInputContainer">
 		<div id="pageHeaderSearchType" class="pageHeaderSearchType dropdown">
@@ -19,3 +22,16 @@
 		</button>
 	</div>
 </div>
+<script data-relocate="true">
+	(function() {
+		elById('pageHeaderMobileSearch').addEventListener('click', function() {
+			this.classList.toggle('active');
+			
+			if (elById('pageHeaderSearch').classList.toggle('open')) {
+				window.setTimeout(function() {
+					elById('pageHeaderSearchInput').focus();
+				}, 100);
+			}
+		});
+	})();
+</script>
