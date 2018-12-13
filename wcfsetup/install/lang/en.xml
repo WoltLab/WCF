@@ -1267,8 +1267,8 @@
 		<item name="wcf.acp.option.session_enable_virtualization.description"><![CDATA[Users can login from multiple devices (desktop, tablet, smartphone, etc.) concurrently; all devices will share the same session. Disabling this will restrict users to only one device (session) at a time, causing all the other device sessions to terminate. It is not recommended to disable this option.]]></item>
 		<item name="wcf.acp.option.timezone"><![CDATA[Timezone]]></item>
 		<item name="wcf.acp.option.timezone.description"><![CDATA[The default timezone of your page.]]></item>
-		<item name="wcf.acp.option.user_ip_address_searchengine"><![CDATA[Search Engine for IP Addresses]]></item>
-		<item name="wcf.acp.option.user_ip_address_searchengine.description"><![CDATA[IP Addresses will be linked to this search engine; by default IP addresses are linked to www.google.com. <span class="inlineCode">%s</span> will be replaced by the IP address.]]></item>
+		<item name="wcf.acp.option.ip_address_search_engine"><![CDATA[Search Engine for IP Addresses]]></item>
+		<item name="wcf.acp.option.ip_address_search_engine.description"><![CDATA[IP Addresses will be linked to this search engine; by default IP addresses are linked to www.google.com. <span class="inlineCode">%s</span> will be replaced by the IP address.]]></item>
 		<item name="wcf.acp.option.user_online_timeout"><![CDATA[Users Online Timeout]]></item>
 		<item name="wcf.acp.option.user_online_timeout.description"><![CDATA[Inactive users will not appear in ‘users online’ after the following seconds.]]></item>
 		<item name="wcf.acp.option.offline"><![CDATA[Enable maintenance mode]]></item>
@@ -1622,6 +1622,10 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.message_sidebar_enable_articles"><![CDATA[Display author’s article count]]></item>
 		<item name="wcf.acp.option.log_missing_language_items"><![CDATA[Log Missing Language Items]]></item>
 		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[The missing language items are logged in the log file <kbd>{'WCF_DIR'|constant}log/missingLanguageItems.txt</kbd>.]]></item>
+		<item name="wcf.acp.option.category.general.system.ipAddress"><![CDATA[IP Addresses]]></item>
+		<item name="wcf.acp.option.category.general.system.ipAddress"><![CDATA[IP-Adressen]]></item>
+		<item name="wcf.acp.option.prune_ip_address"><![CDATA[Storage Time Period for IP Addresses]]></item>
+		<item name="wcf.acp.option.prune_ip_address.description"><![CDATA[Stored IP addresses will be removed after the following days. Use 0 to disable.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>

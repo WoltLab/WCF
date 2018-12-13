@@ -181,5 +181,15 @@
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
 		</cronjob>
+		<cronjob name="com.woltlab.wcf.pruneIpAddresses">
+			<classname>wcf\system\cronjob\PruneIpAddressesCronjob</classname>
+			<description>Prunes IP addresses</description>
+			<description language="de">Entfernt alte IP-Adressen</description>
+			<startminute>0</startminute>
+			<starthour>3</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+		</cronjob>
 	</import>
 </data>

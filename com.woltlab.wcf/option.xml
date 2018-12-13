@@ -47,6 +47,9 @@
 				<parent>general</parent>
 				<showorder>3</showorder>
 			</category>
+			<category name="general.system.ipAddress">
+				<parent>general.system</parent>
+			</category>
 			<category name="general.system.error">
 				<parent>general.system</parent>
 			</category>
@@ -269,11 +272,6 @@
 				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="module_contact_form">
-				<categoryname>module.system</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-			</option>
-			<option name="log_ip_address">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
@@ -532,6 +530,26 @@
 				<optiontype>boolean</optiontype>
 			</option>
 			<!-- /offline -->
+			<!-- general.system.ipAddress -->
+			<option name="log_ip_address">
+				<categoryname>general.system.ipAddress</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<enableoptions>prune_ip_address,ip_address_search_engine</enableoptions>
+			</option>
+			<option name="prune_ip_address">
+				<categoryname>general.system.ipAddress</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>30</defaultvalue>
+				<suffix>days</suffix>
+				<minvalue>0</minvalue>
+				<maxvalue>365</maxvalue>
+			</option>
+			<option name="ip_address_search_engine">
+				<categoryname>general.system.ipAddress</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<!-- /general.system.ipAddress -->
 			<!-- general.system.image -->
 			<option name="image_adapter_type">
 				<categoryname>general.system.image</categoryname>
@@ -1344,10 +1362,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<categoryname>user.list.online</categoryname>
 				<optiontype>integer</optiontype>
 				<hidden>1</hidden>
-			</option>
-			<option name="ip_address_search_engine">
-				<categoryname>user.list.online</categoryname>
-				<optiontype>text</optiontype>
 			</option>
 			<!-- /user.list.online -->
 			<!-- user.cleanup -->
