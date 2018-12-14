@@ -65,6 +65,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
 				link.className = iconClassNames + ' jsTooltip';
 				link.href = '#';
 				link.title = Language.get('wcf.global.page.previous');
+				link.rel = 'prev';
 				listItem.appendChild(link);
 				
 				link.addEventListener(WCF_CLICK_EVENT, this.switchPage.bind(this, this._options.activePage - 1));
@@ -163,6 +164,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
 				link.className = iconClassNames + ' jsTooltip';
 				link.href = '#';
 				link.title = Language.get('wcf.global.page.next');
+				link.rel = 'next';
 				listItem.appendChild(link);
 				
 				link.addEventListener(WCF_CLICK_EVENT, this.switchPage.bind(this, this._options.activePage + 1));
