@@ -825,4 +825,43 @@ XML;
 		
 		return $newElement;
 	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$sql = "DELETE FROM	wcf" . WCF_N . "_language_item
+			WHERE		languageItem = ?
+					AND packageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$element->getAttribute('name'),
+			$this->installation->getPackageID()
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	public function supportsDeleteInstruction() {
+		return false;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function sanitizeXmlFileAfterDeleteEntry(\DOMDocument $document) {
+		$language = $document->getElementsByTagName('language')->item(0);
+		
+		foreach (DOMUtil::getElements($language, 'category') as $category) {
+			if ($category->childNodes->length === 0) {
+				DOMUtil::removeNode($category);
+			}
+		}
+		
+		return $language->childNodes->length === 0;
+	}
 }

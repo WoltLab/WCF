@@ -199,4 +199,28 @@ class ObjectTypeDefinitionPackageInstallationPlugin extends AbstractXMLPackageIn
 		
 		return $definition;
 	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function prepareDeleteXmlElement(\DOMElement $element) {
+		$objectTypeDefinition = $element->ownerDocument->createElement($this->tagName);
+		$objectTypeDefinition->setAttribute(
+			'name',
+			$element->getElementsByTagName('name')->item(0)->nodeValue
+		);
+		
+		return $objectTypeDefinition;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$this->handleDelete([['attributes' => [
+			'name' => $element->getElementsByTagName('name')->item(0)->nodeValue
+		]]]);
+	}
 }

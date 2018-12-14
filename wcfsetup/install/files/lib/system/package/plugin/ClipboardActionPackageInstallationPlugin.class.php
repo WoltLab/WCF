@@ -331,4 +331,33 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 		
 		return $clipboardAction;
 	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function prepareDeleteXmlElement(\DOMElement $element) {
+		$clipboardAction = $element->ownerDocument->createElement($this->tagName);
+		$clipboardAction->setAttribute('name', $element->getAttribute('name'));
+		
+		$clipboardAction->appendChild($element->ownerDocument->createElement(
+			'actionclassname',
+			$element->getElementsByTagName('actionclassname')->item(0)->nodeValue
+		));
+		
+		return $clipboardAction;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$actionClassName = $element->getElementsByTagName('actionclassname')->item(0)->nodeValue;
+		
+		$this->handleDelete([[
+			'attributes' => ['name' => $element->getAttribute('name')],
+			'elements' => ['actionclassname' => $actionClassName]
+		]]);
+	}
 }

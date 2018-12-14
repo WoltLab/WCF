@@ -230,6 +230,7 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 			'pageNo' => $this->pageNo,
 			'pages' => $this->pages,
 			'pip' => $this->pip,
+			'pipObject' => $this->pipObject,
 			'project' => $this->project,
 			'startIndex' => $this->startIndex
 		]);

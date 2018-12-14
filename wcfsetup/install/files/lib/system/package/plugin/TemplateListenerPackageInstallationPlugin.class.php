@@ -511,4 +511,38 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		
 		return $listener;
 	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function prepareDeleteXmlElement(\DOMElement $element) {
+		$templateListener = $element->ownerDocument->createElement($this->tagName);
+		$templateListener->setAttribute('name', $element->getAttribute('name'));
+		
+		foreach (['environment', 'templatename', 'eventname'] as $childElement) {
+			$templateListener->appendChild($element->ownerDocument->createElement(
+				$childElement,
+				$element->getElementsByTagName($childElement)->item(0)->nodeValue
+			));
+		}
+		
+		return $templateListener;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$elements= [];
+		foreach (['environment', 'templatename', 'eventname'] as $childElement) {
+			$elements[$childElement] = $element->getElementsByTagName($childElement)->item(0)->nodeValue;
+		}
+		
+		$this->handleDelete([[
+			'attributes' => ['name' => $element->getAttribute('name')],
+			'elements' => $elements
+		]]);
+	}
 }

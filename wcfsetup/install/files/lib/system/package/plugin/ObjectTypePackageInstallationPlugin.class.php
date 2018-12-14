@@ -1131,4 +1131,37 @@ XML;
 		
 		return $returnValue;
 	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function prepareDeleteXmlElement(\DOMElement $element) {
+		$objectType = $element->ownerDocument->createElement($this->tagName);
+		$objectType->setAttribute(
+			'name',
+			$element->getElementsByTagName('name')->item(0)->nodeValue
+		);
+		
+		$objectType->appendChild($element->ownerDocument->createElement(
+			'definitionname',
+			$element->getElementsByTagName('definitionname')->item(0)->nodeValue
+		));
+		
+		return $objectType;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$name = $element->getElementsByTagName('name')->item(0)->nodeValue;
+		$definitionName = $element->getElementsByTagName('definitionname')->item(0)->nodeValue;
+		
+		$this->handleDelete([[
+			'attributes' => ['name' => $name],
+			'elements' => ['definitionname' => $definitionName]
+		]]);
+	}
 }

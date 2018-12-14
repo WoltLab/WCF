@@ -18,6 +18,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
+use wcf\util\DOMUtil;
 
 /**
  * This PIP installs, updates or deletes acl options.
@@ -610,5 +611,98 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 		}
 		
 		throw new \LogicException('Unreachable');
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function prepareDeleteXmlElement(\DOMElement $element) {
+		$deleteElement = parent::prepareDeleteXmlElement($element);
+		
+		$deleteElement->appendChild($element->ownerDocument->createElement(
+			'objecttype',
+			$element->getElementsByTagName('objecttype')->item(0)->nodeValue
+		));
+		
+		return $deleteElement;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$name = $element->getAttribute('name');
+		$objectType = $element->getElementsByTagName('objecttype')->item(0)->nodeValue;
+		
+		switch ($this->entryType) {
+			case 'categories':
+				// also delete options
+				$sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "
+					WHERE		categoryName = ?
+							AND objectTypeID = ?
+							AND packageID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					$name,
+					$this->getObjectTypeID($objectType),
+					$this->installation->getPackageID()
+				]);
+				
+				$sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "_category
+					WHERE		categoryName = ?
+							AND objectTypeID = ?
+							AND packageID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					$name,
+					$this->getObjectTypeID($objectType),
+					$this->installation->getPackageID()
+				]);
+				
+				break;
+			
+			case 'options':
+				$sql = "DELETE FROM	".$this->application . WCF_N . "_". $this->tableName ."
+					WHERE		optionName = ?
+							AND objectTypeID = ?
+							AND packageID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					$name,
+					$this->getObjectTypeID($objectType),
+					$this->installation->getPackageID()
+				]);
+				
+				break;
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function addDeleteElement(\DOMElement $element) {
+		$this->defaultAddDeleteElement($element);
+		
+		// remove install instructions for options in delete categories;
+		// explicitly adding delete instructions for these options is not
+		// necessary as they will be deleted automatically 
+		if ($this->entryType === 'categories') {
+			$categoryName = $element->getAttribute('name');
+			
+			$xpath = new \DOMXPath($element->ownerDocument);
+			$xpath->registerNamespace('ns', $element->ownerDocument->documentElement->getAttribute('xmlns'));
+			
+			$options = $xpath->query('/ns:data/ns:import/ns:options')->item(0);
+			
+			/** @var \DOMElement $option */
+			foreach (DOMUtil::getElements($options, 'option') as $option) {
+				if ($option->getElementsByTagName('categoryname')->item(0)->nodeValue === $categoryName) {
+					DOMUtil::removeNode($option);
+				}
+			}
+		}
 	}
 }

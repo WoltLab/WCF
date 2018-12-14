@@ -554,6 +554,9 @@
 		<item name="wcf.acp.devtools.project.add.info"><![CDATA[Conflicting packages, installation instructions, and update instructions can only be added when editing an existing project.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackage.error.missingFiles"><![CDATA[The following package files are missing: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.error.missingFiles"><![CDATA[The following package files are missing: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.delete.confirmMessage"><![CDATA[Do you really want to delete the entry?]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction"><![CDATA[Add delete instruction]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description"><![CDATA[The entry will not only be deleted from database and its installation instruction removed, but a delete instruction will also be explicitly added.]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP Connection Test]]></item>

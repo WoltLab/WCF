@@ -382,4 +382,34 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 		
 		return $event;
 	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function prepareDeleteXmlElement(\DOMElement $element) {
+		$userNotificationEvent = $element->ownerDocument->createElement($this->tagName);
+		
+		foreach (['name', 'objecttype'] as $childElement) {
+			$userNotificationEvent->appendChild($element->ownerDocument->createElement(
+				$childElement,
+				$element->getElementsByTagName($childElement)->item(0)->nodeValue
+			));
+		}
+		
+		return $userNotificationEvent;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$elements= [];
+		foreach (['name', 'objecttype'] as $childElement) {
+			$elements[$childElement] = $element->getElementsByTagName($childElement)->item(0)->nodeValue;
+		}
+		
+		$this->handleDelete([['elements' => $elements]]);
+	}
 }
