@@ -43,7 +43,7 @@
 			{/capture}
 				
 			{if $__sidebarRightContent|trim}
-				{if !$__sidebarRightShow|isset}{assign var='__sidebarRightShow' value='wcf.global.button.showSidebar'|language}{/if}
+				{if !$__sidebarRightShow|isset}{assign var='__sidebarRightShow' value='wcf.global.button.showSidebarRight'|language}{/if}
 				{if !$__sidebarRightHide|isset}{assign var='__sidebarRightHide' value='wcf.global.button.hideSidebar'|language}{/if}
 				
 				<aside class="sidebar boxesSidebarRight" aria-label="{lang}wcf.page.sidebar.right{/lang}" data-show-sidebar="{$__sidebarRightShow}" data-hide-sidebar="{$__sidebarRightHide}">

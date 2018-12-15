@@ -74,7 +74,7 @@
 	<section id="main" class="main" role="main"{if !$__mainItemScope|empty} {@$__mainItemScope}{/if}>
 		<div class="layoutBoundary">
 			{hascontent}
-				{if !$__sidebarLeftShow|isset}{assign var='__sidebarLeftShow' value='wcf.global.button.showSidebar'|language}{/if}
+				{if !$__sidebarLeftShow|isset}{assign var='__sidebarLeftShow' value='wcf.global.button.showSidebarLeft'|language}{/if}
 				{if !$__sidebarLeftHide|isset}{assign var='__sidebarLeftHide' value='wcf.global.button.hideSidebar'|language}{/if}
 				
 				<aside class="sidebar boxesSidebarLeft{if !$__sidebarLeftHasMenu|empty || $__wcf->getBoxHandler()->sidebarLeftHasMenu()} boxesSidebarLeftHasMenu{/if}" aria-label="{lang}wcf.page.sidebar.left{/lang}" data-show-sidebar="{$__sidebarLeftShow}" data-hide-sidebar="{$__sidebarLeftHide}" data-show-navigation="{lang}wcf.global.button.showNavigation{/lang}" data-hide-navigation="{lang}wcf.global.button.hideNavigation{/lang}">

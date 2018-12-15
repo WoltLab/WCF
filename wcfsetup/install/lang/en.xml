@@ -3621,6 +3621,8 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.global.button.showNavigation"><![CDATA[Show Navigation]]></item>
 		<item name="wcf.global.button.hideSidebar"><![CDATA[Hide Sidebar]]></item>
 		<item name="wcf.global.button.showSidebar"><![CDATA[Show Sidebar]]></item>
+		<item name="wcf.global.button.showSidebarLeft"><![CDATA[Sidebar Left]]></item>
+		<item name="wcf.global.button.showSidebarRight"><![CDATA[Sidebar Right]]></item>
 		<item name="wcf.global.button.showMenu"><![CDATA[Show Menu]]></item>
 		<item name="wcf.global.button.hideMenu"><![CDATA[Hide Menu]]></item>
 	</category>
