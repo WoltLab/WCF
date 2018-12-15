@@ -3173,6 +3173,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.global.button.trash"><![CDATA[Löschen]]></item>
 		<item name="wcf.global.button.upload"><![CDATA[Hochladen]]></item>
 		<item name="wcf.global.button.readMore"><![CDATA[Weiterlesen]]></item>
+		<item name="wcf.global.button.resetFilter"><![CDATA[Filter zurücksetzen]]></item>
 		<item name="wcf.global.comments"><![CDATA[Kommentare]]></item>
 		<item name="wcf.global.confirmation.cancel"><![CDATA[Abbrechen]]></item>
 		<item name="wcf.global.confirmation.confirm"><![CDATA[OK]]></item>
