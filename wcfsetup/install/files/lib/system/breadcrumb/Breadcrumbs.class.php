@@ -100,7 +100,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 		if ($addLandingPage) {
 			array_unshift($locations, [
 				'link' => $landingPage->getLink(),
-				'title' => WCF::getLanguage()->get(PAGE_TITLE)
+				'title' => BREADCRUMBS_HOME_USE_PAGE_TITLE ? WCF::getLanguage()->get(PAGE_TITLE) : $landingPage->getTitle(),
 			]);
 		}
 		

@@ -1628,6 +1628,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.category.general.system.ipAddress"><![CDATA[IP-Adressen]]></item>
 		<item name="wcf.acp.option.prune_ip_address"><![CDATA[Storage Time Period for IP Addresses]]></item>
 		<item name="wcf.acp.option.prune_ip_address.description"><![CDATA[Stored IP addresses will be removed after the following days. Use 0 to disable.]]></item>
+		<item name="wcf.acp.option.breadcrumbs_home_use_page_title"><![CDATA[Use the page title for the home page in the breadcrumbs]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>

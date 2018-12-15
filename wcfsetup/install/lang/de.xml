@@ -1637,6 +1637,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.category.general.system.ipAddress"><![CDATA[IP-Adressen]]></item>
 		<item name="wcf.acp.option.prune_ip_address"><![CDATA[Speicherzeit für IP-Adressen]]></item>
 		<item name="wcf.acp.option.prune_ip_address.description"><![CDATA[Zeitraum, nachdem alte IP-Adressen automatisch gelöscht werden. [0, um die Löschung zu deaktivieren]]></item>
+		<item name="wcf.acp.option.breadcrumbs_home_use_page_title"><![CDATA[Titel der Seite für die Startseite in den Breadcrumbs verwenden]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Eingabefelder]]></item>

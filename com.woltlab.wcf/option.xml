@@ -482,6 +482,11 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="breadcrumbs_home_use_page_title">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<option name="head_code">
 				<categoryname>general.page</categoryname>
 				<optiontype>textarea</optiontype>
