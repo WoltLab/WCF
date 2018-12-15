@@ -47,7 +47,10 @@ define(['Ajax', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog'], 
 		_click: function (event) {
 			event.preventDefault();
 			
-			_callbackSelect(elData(event.currentTarget, 'page-id'));
+			var page = event.currentTarget;
+			var pageTitle = elBySel('h3', page).textContent.replace(/['"]/g, '');
+			
+			_callbackSelect(elData(page, 'page-id') + '#' + pageTitle);
 			
 			UiDialog.close(this);
 		},
