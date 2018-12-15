@@ -33,4 +33,12 @@
 			{/if}
 		</li>
 	{/foreach}
+	
+	{if $activeCategory}
+		<li class="boxMenuResetFilter">
+			<a href="{link controller='ArticleList'}{/link}" class="boxMenuLink">
+				<span class="boxMenuLinkTitle">{lang}wcf.global.button.resetFilter{/lang}</span>
+			</a>
+		</li>
+	{/if}
 </ol>
