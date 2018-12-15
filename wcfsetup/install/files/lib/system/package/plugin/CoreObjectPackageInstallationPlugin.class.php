@@ -168,4 +168,28 @@ class CoreObjectPackageInstallationPlugin extends AbstractXMLPackageInstallation
 		
 		return $coreObject;
 	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function prepareDeleteXmlElement(\DOMElement $element) {
+		$coreObject = $element->ownerDocument->createElement($this->tagName);
+		$coreObject->setAttribute(
+			'name',
+			$element->getElementsByTagName('objectname')->item(0)->nodeValue
+		);
+		
+		return $coreObject;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	3.2
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$name = $element->getElementsByTagName('objectname')->item(0)->nodeValue;
+		
+		$this->handleDelete([['attributes' => ['name' => $name]]]);
+	}
 }

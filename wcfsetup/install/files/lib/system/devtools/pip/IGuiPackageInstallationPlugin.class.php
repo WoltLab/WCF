@@ -22,6 +22,16 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
 	public function addEntry(IFormDocument $form);
 	
 	/**
+	 * Deletes an existing pip entry and removes it from database.
+	 * 
+	 * @param	string		$identifier		identifier of deleted entry
+	 * @param	bool		$addDeleteInstruction	if `true`, an explicit delete instruction is added
+	 * 
+	 * @throws	\InvalidArgumentException	if no such entry exists or delete instruction should be added but is not supported
+	 */
+	public function deleteEntry($identifier, $addDeleteInstruction);
+	
+	/**
 	 * Edits the entry of this pip with the given identifier based on the data
 	 * provided by the given form and returns the new identifier of the entry
 	 * (or the old identifier if it has not changed).
@@ -94,4 +104,12 @@ interface IGuiPackageInstallationPlugin extends IIdempotentPackageInstallationPl
 	 * @throws	\InvalidArgumentException	if the given entry type is invalid (see `getEntryTypes()` method) 
 	 */
 	public function setEntryType($entryType);
+	
+	/**
+	 * Returns `true` if this package installation plugin supports delete
+	 * instructions.
+	 * 
+	 * @return	boolean
+	 */
+	public function supportsDeleteInstruction();
 }

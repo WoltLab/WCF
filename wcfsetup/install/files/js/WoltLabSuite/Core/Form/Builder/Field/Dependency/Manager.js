@@ -73,12 +73,11 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 			
 			// also hide tab menu entry
 			if (node.classList.contains('tabMenuContent')) {
-				for (var tabLink of elBySelAll('li', DomTraverse.prevByClass(node, 'tabMenu'))) {
+				elBySelAll('li', DomTraverse.prevByClass(node, 'tabMenu'), function(tabLink) {
 					if (elData(tabLink, 'name') === elData(node, 'name')) {
 						elHide(tabLink);
-						break;
 					}
-				}
+				});
 			}
 			
 			elBySelAll('[max], [maxlength], [min], [required]', node, function(validatedField) {
@@ -123,12 +122,11 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 			
 			// also show tab menu entry
 			if (node.classList.contains('tabMenuContent')) {
-				for (var tabLink of elBySelAll('li', DomTraverse.prevByClass(node, 'tabMenu'))) {
+				elBySelAll('li', DomTraverse.prevByClass(node, 'tabMenu'), function(tabLink) {
 					if (elData(tabLink, 'name') === elData(node, 'name')) {
 						elShow(tabLink);
-						break;
 					}
-				}
+				});
 			}
 			
 			elBySelAll('input, select', node, function(validatedField) {

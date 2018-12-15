@@ -4,6 +4,7 @@ use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\WCF;
 use wcf\util\DOMUtil;
 use wcf\util\XML;
 
@@ -203,5 +204,52 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 		}
 		
 		return $missingElements !== count($xmls);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function deleteEntry($identifier, $addDeleteInstruction) {
+		foreach ($this->getProjectXmls() as $xml) {
+			$element = $this->getElementByIdentifier($xml, $identifier);
+			
+			if ($element === null) {
+				throw new \InvalidArgumentException("Unknown entry with identifier '{$identifier}'.");
+			}
+			
+			if (!$this->supportsDeleteInstruction() && $addDeleteInstruction) {
+				throw new \InvalidArgumentException("This package installation plugin does not support delete instructions.");
+			}
+			
+			$this->deleteObject($element);
+			
+			if ($addDeleteInstruction) {
+				$this->addDeleteElement($element);
+			}
+			
+			$document = $element->ownerDocument;
+			
+			DOMUtil::removeNode($element);
+			
+			$deleteFile = $this->sanitizeXmlFileAfterDeleteEntry($document);
+			
+			if ($deleteFile) {
+				unlink($xml->getPath());
+			}
+			else {
+				$xml->write($xml->getPath());
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$sql = "DELETE FROM	wcf" . WCF_N . "_language_item
+			WHERE		languageItem = ?
+					AND packageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$element->getAttribute('name')]);
 	}
 }

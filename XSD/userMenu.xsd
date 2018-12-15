@@ -39,6 +39,7 @@
 			<xs:extension base="usermenuitem_delete">
 				<xs:all>
 					<xs:element name="options" type="xs:string" minOccurs="0" />
+					<xs:element name="permissions" type="xs:string" minOccurs="0" />
 					<xs:element name="controller" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="iconclassname" type="woltlab_varchar_nullable" minOccurs="0" />
 					<xs:element name="classname" type="woltlab_varchar_nullable" minOccurs="0" />

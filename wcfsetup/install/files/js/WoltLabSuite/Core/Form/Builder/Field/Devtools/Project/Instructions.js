@@ -108,7 +108,9 @@ define([
 			
 			var hasInstallInstructions = false;
 			
-			for (var instructions of existingInstructions) {
+			for (var index in existingInstructions) {
+				var instructions = existingInstructions[index];
+				
 				if (instructions.type === 'install') {
 					hasInstallInstructions = true;
 					break;
@@ -191,9 +193,10 @@ define([
 				'	<div class="jsDevtoolsProjectInstruction">' +
 				'		' + Language.get('wcf.acp.devtools.project.instruction.instruction', instructionData);
 			
-			for (var errorMessage of instructionData.errors || []) {
-				content += '' +
-					'	<small class="innerError">' + errorMessage + '</small>';
+			if (instructionData.errors) {
+				for (var index in instructionData.errors) {
+					content += '<small class="innerError">' + instructionData.errors[index] + '</small>';
+				}
 			}
 			
 			content += '' +
@@ -297,8 +300,8 @@ define([
 			elById(this._formFieldId + '_instructions' + instructionsId + '_addButton').addEventListener('click', this._addInstruction.bind(this));
 			
 			if (instructionsData.instructions) {
-				for (var instruction of instructionsData.instructions) {
-					this._addInstructionByData(instructionsId, instruction);
+				for (var index in instructionsData.instructions) {
+					this._addInstructionByData(instructionsId, instructionsData.instructions[index]);
 				}
 			}
 		},

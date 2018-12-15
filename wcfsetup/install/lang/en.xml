@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/language.xsd" languagecode="en" languagename="English" countrycode="gb">
 	<category name="wcf.acl">
-		<item name="wcf.acl.tests"><![CDATA[Restricted Access]]></item>
 		<item name="wcf.acl.access"><![CDATA[Restricted Access]]></item>
 		<item name="wcf.acl.access.grant"><![CDATA[Allow Access]]></item>
 		<item name="wcf.acl.access.granted"><![CDATA[Granted Access for Users and User-Groups]]></item>
@@ -555,6 +554,9 @@
 		<item name="wcf.acp.devtools.project.add.info"><![CDATA[Conflicting packages, installation instructions, and update instructions can only be added when editing an existing project.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackage.error.missingFiles"><![CDATA[The following package files are missing: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.error.missingFiles"><![CDATA[The following package files are missing: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.delete.confirmMessage"><![CDATA[Do you really want to delete the entry?]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction"><![CDATA[Add delete instruction]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description"><![CDATA[The entry will not only be deleted from database and its installation instruction removed, but a delete instruction will also be explicitly added.]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP Connection Test]]></item>

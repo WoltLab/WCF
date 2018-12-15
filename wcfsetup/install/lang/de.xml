@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/language.xsd" languagecode="de" languagename="Deutsch" countrycode="de">
 	<category name="wcf.acl">
-		<item name="wcf.acl.tests"><![CDATA[Zugangsbeschränkung]]></item>
 		<item name="wcf.acl.access"><![CDATA[Zugangsbeschränkung]]></item>
 		<item name="wcf.acl.access.grant"><![CDATA[Zugang gewähren]]></item>
 		<item name="wcf.acl.access.granted"><![CDATA[Erlaubte Benutzer und Benutzergruppen]]></item>
@@ -578,6 +577,9 @@
 		<item name="wcf.acp.devtools.project.add.info"><![CDATA[Inkompatible Pakete, Installations- und Aktualisierungsanweisungen können erst beim Bearbeiten eines vorhandenen Projekts hinzugefügt werden.]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackage.error.missingFiles"><![CDATA[Die folgenden Paketdateien fehlen: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.error.missingFiles"><![CDATA[Die folgenden Paketdateien fehlen: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Eintrag wirklich löschen?]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction"><![CDATA[Löschanweisung hinzufügen]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description"><![CDATA[Der Eintrag wird nicht nur aus der Datenbank gelöscht und und die Installationsanweisung entfernt, sondern es wird auch explizit eine Löschanweisung hinzugefügt.]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP-Verbindungstest]]></item>
