@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\bbcode\media\provider;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\IToggleAction;
+use wcf\data\TDatabaseObjectToggle;
 
 /**
  * Executes BBCode media provider-related actions.
@@ -14,7 +16,9 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @method	BBCodeMediaProviderEditor[]	getObjects()
  * @method	BBCodeMediaProviderEditor	getSingleObject()
  */
-class BBCodeMediaProviderAction extends AbstractDatabaseObjectAction {
+class BBCodeMediaProviderAction extends AbstractDatabaseObjectAction implements IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */

@@ -284,6 +284,7 @@ CREATE TABLE wcf1_bbcode_media_provider (
 	regex TEXT NOT NULL,
 	html TEXT NOT NULL,
 	className varchar(255) NOT NULL DEFAULT '',
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY name (name, packageID)
 );
 

@@ -16,6 +16,7 @@ class BBCodeMediaProviderCacheBuilder extends AbstractCacheBuilder {
 	 */
 	protected function rebuild(array $parameters) {
 		$providerList = new BBCodeMediaProviderList();
+		$providerList->getConditionBuilder()->add('isDisabled = ?', [0]);
 		$providerList->readObjects();
 		
 		return $providerList->getObjects();
