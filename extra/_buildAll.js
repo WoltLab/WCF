@@ -38,5 +38,10 @@ fs.readdirSync(basePath)
                 stdio: [0, 1, 2]
             });
         }
+
+        childProcess.execSync(`ts-node syncTemplates.ts ${path}`, {
+            stdio: [0, 1, 2]
+        });
+
         console.log("\n");
     });

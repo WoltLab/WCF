@@ -1,5 +1,13 @@
 {
   "dependencies": {
+    "requirejs": "^2.3.6",
+    "ts-node": "^7.0.1",
     "uglify-js": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/md5-file": "^4.0.0",
+    "@types/node": "^10.12.15",
+    "md5-file": "^4.0.0",
+    "typescript": "^3.2.2"
   }
 }
