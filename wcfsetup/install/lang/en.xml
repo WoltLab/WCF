@@ -1622,6 +1622,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.search_enable_articles"><![CDATA[Articles are searchable]]></item>
 		<item name="wcf.acp.option.search_enable_pages"><![CDATA[Pages are searchable]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_articles"><![CDATA[Display author’s article count]]></item>
+		<item name="wcf.acp.option.message_public_highlighters"><![CDATA[Selectable Syntax Highlighters]]></item>
+		<item name="wcf.acp.option.message_public_highlighters.description"><![CDATA[The chosen syntax highlighters can easily be selected by the user using the editor. The other highlighters are still available, but their name needs to be known by the user.]]></item>
 		<item name="wcf.acp.option.log_missing_language_items"><![CDATA[Log Missing Language Items]]></item>
 		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[The missing language items are logged in the log file <kbd>{'WCF_DIR'|constant}log/missingLanguageItems.txt</kbd>.]]></item>
 		<item name="wcf.acp.option.category.general.system.ipAddress"><![CDATA[IP Addresses]]></item>
@@ -3010,21 +3012,6 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.bbcode.button.collapse"><![CDATA[Display Less]]></item>
 		<item name="wcf.bbcode.button.showAll"><![CDATA[Display More]]></item>
 		<item name="wcf.bbcode.code"><![CDATA[Code]]></item>
-		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
-		<item name="wcf.bbcode.code.c.title"><![CDATA[C]]></item>
-		<item name="wcf.bbcode.code.css.title"><![CDATA[CSS]]></item>
-		<item name="wcf.bbcode.code.diff.title"><![CDATA[Diff]]></item>
-		<item name="wcf.bbcode.code.html.title"><![CDATA[HTML]]></item>
-		<item name="wcf.bbcode.code.java.title"><![CDATA[Java]]></item>
-		<item name="wcf.bbcode.code.js.title"><![CDATA[JavaScript]]></item>
-		<item name="wcf.bbcode.code.perl.title"><![CDATA[Perl]]></item>
-		<item name="wcf.bbcode.code.php.title"><![CDATA[PHP]]></item>
-		<item name="wcf.bbcode.code.plain.title"><![CDATA[Code]]></item>
-		<item name="wcf.bbcode.code.python.title"><![CDATA[Python]]></item>
-		<item name="wcf.bbcode.code.sql.title"><![CDATA[SQL]]></item>
-		<item name="wcf.bbcode.code.tex.title"><![CDATA[TeX]]></item>
-		<item name="wcf.bbcode.code.tpl.title"><![CDATA[Smarty]]></item>
-		<item name="wcf.bbcode.code.xml.title"><![CDATA[XML]]></item>
 		<item name="wcf.bbcode.code.simplified"><![CDATA[(Code, {#$lines} line{if $lines != 1}s{/if})]]></item>
 		<item name="wcf.bbcode.image.blocked"><![CDATA[Blocked Image]]></item>
 		<item name="wcf.bbcode.image.source"><![CDATA[Image Link]]></item>
@@ -3467,6 +3454,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.editor.code.highlighter"><![CDATA[Syntax Highlighting]]></item>
 		<item name="wcf.editor.code.highlighter.description"><![CDATA[Highlighting is not displayed within the editor.]]></item>
 		<item name="wcf.editor.code.highlighter.detect"><![CDATA[(Automatically Detect)]]></item>
+		<item name="wcf.editor.code.highlighter.plain"><![CDATA[(None)]]></item>
 		<item name="wcf.editor.code.line"><![CDATA[Start Line Number]]></item>
 		<item name="wcf.editor.code.line.description"><![CDATA[Optional: Specify the start for line enumeration.]]></item>
 		<item name="wcf.editor.code.title"><![CDATA[{if $highlighter}{$highlighter}{else}Code{/if}{if $file} - {$file}{/if}]]></item>
@@ -3795,6 +3783,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.message.autosave.restored.version"><![CDATA[Draft as of {@$date}]]></item>
 		<item name="wcf.message.autosave.saved"><![CDATA[Draft saved]]></item>
 		<item name="wcf.message.bbcode.code.copy"><![CDATA[Copy Contents]]></item>
+		<item name="wcf.message.bbcode.code.copy.success"><![CDATA[The contents have been successfully copied.]]></item>
 		<item name="wcf.message.quote.insertAllQuotes"><![CDATA[Insert All Quotes]]></item>
 		<item name="wcf.message.quote.insertQuote"><![CDATA[Insert Quote]]></item>
 		<item name="wcf.message.quote.insertSelectedQuotes"><![CDATA[Insert Marked Quotes]]></item>

@@ -19,76 +19,10 @@ WCF.Message.BBCode = { };
  */
 WCF.Message.BBCode.CodeViewer = Class.extend({
 	/**
-	 * dialog overlay
-	 * @var	jQuery
-	 */
-	_dialog: null,
-	
-	/**
-	 * Initializes the WCF.Message.BBCode.CodeViewer class.
+	 * @deprecated
 	 */
 	init: function() {
-		this._dialog = null;
 		
-		this._initCodeBoxes();
-		
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.Message.BBCode.CodeViewer', $.proxy(this._initCodeBoxes, this));
-		WCF.DOMNodeInsertedHandler.execute();
-	},
-	
-	/**
-	 * Initializes available code boxes.
-	 */
-	_initCodeBoxes: function() {
-		$('.codeBox:not(.jsCodeViewer)').each($.proxy(function(index, codeBox) {
-			var $codeBox = $(codeBox).addClass('jsCodeViewer');
-			
-			$('<span class="codeBoxPlainSource icon icon24 fa-files-o pointer jsTooltip" title="' + WCF.Language.get('wcf.message.bbcode.code.copy') + '" />').appendTo($codeBox.find('.codeBoxHeader')).click($.proxy(this._click, this));
-		}, this));
-	},
-	
-	/**
-	 * Shows a code viewer for a specific code box.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		var $content = '';
-		$(event.currentTarget).parents('div').next('ol').children('li').each(function(index, listItem) {
-			if ($content) {
-				$content += "\n";
-			}
-			
-			// do *not* use $.trim here, as we want to preserve whitespaces, \xa0 = &nbsp;
-			$content += $(listItem).text().replace(/\n+$/, '').replace(/\u200B/g, '').replace(/\xa0/, ' ');
-		});
-		
-		if (this._dialog === null) {
-			this._dialog = $('<div><textarea cols="60" rows="12" readonly></textarea></div>').hide().appendTo(document.body);
-			this._dialog.children('textarea').val($content);
-			this._dialog.wcfDialog({
-				title: WCF.Language.get('wcf.message.bbcode.code.copy')
-			});
-		}
-		else {
-			this._dialog.children('textarea').val($content);
-			this._dialog.wcfDialog('open');
-		}
-		
-		var textarea = this._dialog.children('textarea')[0];
-		// force LTR for RTL languages
-		if (document.documentElement.dir === 'rtl') {
-			textarea.dir = 'ltr';
-			textarea.style.setProperty('text-align', 'left', '');
-		}
-		
-		var selectAll = function () {
-			textarea.selectionStart = 0;
-			textarea.selectionEnd = textarea.value.length;
-		};
-		
-		textarea.addEventListener('mouseup', selectAll);
-		window.setTimeout(selectAll, 10);
 	}
 });
 
