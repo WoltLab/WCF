@@ -943,10 +943,12 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 			}
 		}
 		
-		$xmlData = array_merge($data, $data['data']);
-		unset($xmlData['data']);
-		$packageXmlWriter = new DevtoolsPackageXmlWriter($project, $xmlData);
-		$packageXmlWriter->write();
+		if ($data['data']['mode'] !== 'import') {
+			$xmlData = array_merge($data, $data['data']);
+			unset($xmlData['data'], $xmlData['mode']);
+			$packageXmlWriter = new DevtoolsPackageXmlWriter($project, $xmlData);
+			$packageXmlWriter->write();
+		}
 		
 		$this->saved();
 		
