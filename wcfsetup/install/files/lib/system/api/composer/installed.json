@@ -304,27 +304,32 @@
     },
     {
         "name": "pelago/emogrifier",
-        "version": "v2.0.0",
-        "version_normalized": "2.0.0.0",
+        "version": "v2.1.1",
+        "version_normalized": "2.1.1.0",
         "source": {
             "type": "git",
             "url": "https://github.com/MyIntervals/emogrifier.git",
-            "reference": "8babf8ddbf348f26b29674e2f84db66ff7e3d95e"
+            "reference": "8ee7fb5ad772915451ed3415c1992bd3697d4983"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/MyIntervals/emogrifier/zipball/8babf8ddbf348f26b29674e2f84db66ff7e3d95e",
-            "reference": "8babf8ddbf348f26b29674e2f84db66ff7e3d95e",
+            "url": "https://api.github.com/repos/MyIntervals/emogrifier/zipball/8ee7fb5ad772915451ed3415c1992bd3697d4983",
+            "reference": "8ee7fb5ad772915451ed3415c1992bd3697d4983",
             "shasum": ""
         },
         "require": {
-            "php": "^5.5.0 || ~7.0.0 || ~7.1.0 || ~7.2.0"
+            "ext-dom": "*",
+            "ext-libxml": "*",
+            "php": "^5.5.0 || ~7.0.0 || ~7.1.0 || ~7.2.0 || ~7.3.0",
+            "symfony/css-selector": "^3.4.0 || ^4.0.0"
         },
         "require-dev": {
+            "friendsofphp/php-cs-fixer": "^2.2.0",
+            "phpmd/phpmd": "^2.6.0",
             "phpunit/phpunit": "^4.8.0",
-            "squizlabs/php_codesniffer": "^3.1.0"
+            "squizlabs/php_codesniffer": "^3.3.2"
         },
-        "time": "2018-01-05T23:30:21+00:00",
+        "time": "2018-12-10T10:36:30+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -334,7 +339,7 @@
         "installation-source": "dist",
         "autoload": {
             "psr-4": {
-                "Pelago\\": "Classes/"
+                "Pelago\\": "src/"
             }
         },
         "notification-url": "https://packagist.org/downloads/",
@@ -353,16 +358,16 @@
                 "name": "Jaime Prado"
             },
             {
-                "name": "Roman Ožana",
-                "email": "ozana@omdesign.cz"
-            },
-            {
                 "name": "Oliver Klee",
                 "email": "github@oliverklee.de"
             },
             {
                 "name": "Zoli Szabó",
                 "email": "zoli.szabo+github@gmail.com"
+            },
+            {
+                "name": "Jake Hotson",
+                "email": "jake@qzdesign.co.uk"
             }
         ],
         "description": "Converts CSS styles into inline style attributes in your HTML code",
@@ -372,6 +377,61 @@
             "email",
             "pre-processing"
         ]
+    },
+    {
+        "name": "symfony/css-selector",
+        "version": "v3.4.20",
+        "version_normalized": "3.4.20.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/css-selector.git",
+            "reference": "345b9a48595d1ab9630db791dbc3e721bf0233e8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/css-selector/zipball/345b9a48595d1ab9630db791dbc3e721bf0233e8",
+            "reference": "345b9a48595d1ab9630db791dbc3e721bf0233e8",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^5.5.9|>=7.0.8"
+        },
+        "time": "2018-11-11T19:48:54+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "3.4-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\CssSelector\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jean-François Simon",
+                "email": "jeanfrancois.simon@sensiolabs.com"
+            },
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony CssSelector Component",
+        "homepage": "https://symfony.com"
     },
     {
         "name": "symfony/polyfill-mbstring",
