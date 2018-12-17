@@ -16,11 +16,19 @@ define([], function() {
 			}
 			else if (window.getSelection) {
 				var textarea = elCreate('textarea');
-				textarea.style.cssText = 'position: absolute; left: -9999px; width: 0;';
+				textarea.contentEditable = true;
+				textarea.readOnly = false;
+				textarea.style.cssText = 'position: absolute; left: -9999px; top: -9999px; width: 0; height: 0;';
 				document.body.appendChild(textarea);
 				try {
+					// see: https://stackoverflow.com/a/34046084/782822
 					textarea.value = text;
-					textarea.select();
+					var range = document.createRange();
+					range.selectNodeContents(textarea);
+					var selection = window.getSelection();
+					selection.removeAllRanges();
+					selection.addRange(range);
+					textarea.setSelectionRange(0, 999999);
 					if (!document.execCommand('copy')) {
 						return Promise.reject(new Error("execCommand('copy') failed"));
 					}
