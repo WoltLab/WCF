@@ -30,7 +30,7 @@
 
 {if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle')}
 	{capture assign='contentHeaderNavigation'}
-		<li><a href="{link controller='ArticleAdd' isACP=true}categoryID={@$category->categoryID}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+		<li><a href="#" class="button jsButtonArticleAdd"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 	{/capture}
 {/if}
 
@@ -144,5 +144,7 @@
 		new WCF.User.ObjectWatch.Subscribe();
 	});
 </script>
+
+{include file='articleAddDialog'}
 
 {include file='footer'}

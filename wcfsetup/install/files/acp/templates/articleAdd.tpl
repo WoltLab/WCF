@@ -493,15 +493,7 @@
 							<dd>
 								<textarea name="content[{@$availableLanguage->languageID}]" id="content{@$availableLanguage->languageID}" class="wysiwygTextarea" data-autosave="com.woltlab.wcf.article{$action|ucfirst}-{if $action == 'edit'}{@$articleID}{else}0{/if}-{@$availableLanguage->languageID}">{if !$content[$availableLanguage->languageID]|empty}{$content[$availableLanguage->languageID]}{/if}</textarea>
 								
-								{capture append='__redactorJavaScript'}, '{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabPage.js?v={@LAST_UPDATE_TIME}'{/capture}
-								{capture append='__redactorConfig'}
-									buttonOptions.woltlabPage = { icon: 'fa-file-text-o', title: '{lang}wcf.editor.button.page{/lang}' };
-									
-									buttons.push('woltlabPage');
-									
-									config.plugins.push('WoltLabPage');
-								{/capture}
-								
+								{include file='__wysiwygCmsToolbar'}
 								{include file='wysiwyg' wysiwygSelector='content'|concat:$availableLanguage->languageID}
 								
 								{if $errorField == 'content'|concat:$availableLanguage->languageID}
