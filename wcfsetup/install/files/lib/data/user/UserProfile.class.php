@@ -701,8 +701,10 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	integer
 	 */
 	public function getAge($year = null) {
+		$showYear = $this->birthdayShowYear || WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions');
+		
 		if ($year !== null) {
-			if ($this->birthdayShowYear) {
+			if ($showYear) {
 				$birthdayYear = 0;
 				$value = explode('-', $this->birthday);
 				if (isset($value[0])) $birthdayYear = intval($value[0]);
@@ -715,7 +717,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 		}
 		else {
 			if ($this->__age === null) {
-				if ($this->birthday && $this->birthdayShowYear) {
+				if ($this->birthday && $showYear) {
 					$this->__age = DateUtil::getAge($this->birthday);
 				}
 				else {
@@ -743,13 +745,15 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 		
 		if (!$month || !$day) return '';
 		
+		$showYear = $this->birthdayShowYear || WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions');
+		
 		$d = new \DateTime();
 		$d->setTimezone(WCF::getUser()->getTimeZone());
 		$d->setDate($birthdayYear, $month, $day);
-		$dateFormat = (($this->birthdayShowYear && $birthdayYear) ? WCF::getLanguage()->get(DateUtil::DATE_FORMAT) : str_replace('Y', '', WCF::getLanguage()->get(DateUtil::DATE_FORMAT)));
+		$dateFormat = (($showYear && $birthdayYear) ? WCF::getLanguage()->get(DateUtil::DATE_FORMAT) : str_replace('Y', '', WCF::getLanguage()->get(DateUtil::DATE_FORMAT)));
 		$birthday = DateUtil::localizeDate($d->format($dateFormat), $dateFormat, WCF::getLanguage());
 		
-		if ($this->birthdayShowYear) {
+		if ($showYear) {
 			$age = $this->getAge($year);
 			if ($age > 0) {
 				$birthday .= ' ('.$age.')';
