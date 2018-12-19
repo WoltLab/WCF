@@ -2089,9 +2089,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.aclOption.options.name.error.format"><![CDATA[The entered option name is invalid.]]></item>
 		<item name="wcf.acp.pip.aclOption.objectType"><![CDATA[ACL Object Type]]></item>
 		<item name="wcf.acp.pip.aclOption.objectType.categories.description"><![CDATA[The ACL object type determines to which type of objects the category belongs to. Note that only ACL object types of the package itself or its required packages are available.]]></item>
-		<item name="wcf.acp.pip.aclOption.objectType.categories.error.notUnique"><![CDATA[The entered name is already used by another ACL option category for the same ACL object type.]]></item>
+		<item name="wcf.acp.pip.aclOption.categories.name.error.notUnique"><![CDATA[The entered name is already used by another ACL option category for the same ACL object type.]]></item>
 		<item name="wcf.acp.pip.aclOption.objectType.options.description"><![CDATA[The ACL object type determines to which type of objects the option belongs to. Note that only ACL object types of the package itself or its required packages are available.]]></item>
-		<item name="wcf.acp.pip.aclOption.objectType.options.error.notUnique"><![CDATA[The entered name is already used by another ACL option for the same ACL object type.]]></item>
+		<item name="wcf.acp.pip.aclOption.options.name.error.notUnique"><![CDATA[The entered name is already used by another ACL option for the same ACL object type.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItem"><![CDATA[Menu Item Identifier]]></item>
 		<item name="wcf.acp.pip.abstractMenu.menuItem.error.notUnique"><![CDATA[The entered identifier is already used by another menu item.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.parentMenuItem"><![CDATA[Parent Menu Item]]></item>

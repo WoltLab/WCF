@@ -428,7 +428,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 								$nameField->addValidationError(
 									new FormFieldValidationError(
 										'notUnique',
-										'wcf.acp.pip.aclOption.objectType.' . $entryType . '.error.notUnique'
+										'wcf.acp.pip.aclOption.' . $entryType . '.name.error.notUnique'
 									)
 								);
 							}
@@ -447,7 +447,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 								$nameField->addValidationError(
 									new FormFieldValidationError(
 										'notUnique',
-										'wcf.acp.pip.aclOption.objectType.' . $entryType . '.error.notUnique'
+										'wcf.acp.pip.aclOption.' . $entryType . '.name.error.notUnique'
 									)
 								);
 							}

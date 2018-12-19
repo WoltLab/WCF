@@ -2070,9 +2070,9 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.abstractOption.options.showOrder.description"><![CDATA[Der angegebene Wert bestimmt in welcher Reihenfolge die Optionen in der gleichen Kategorie angezeigt werden.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.validationPattern"><![CDATA[Regulärer Ausdruck zur Eingabevalidierung]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.validationPattern.description"><![CDATA[Der angegebene reguläre Ausdruck wird verwendet, um den eingegebenen Wert bei der Bearbeitung des Optionswertes zu validieren.]]></item>
-		<item name="wcf.acp.pip.aclOption.objectType.categories.error.notUnique"><![CDATA[Der angegebene Namen wird bereits von einer anderen ACL-Optionskategorie vom gleichen ACL-Objekttyp verwendet.]]></item>
+		<item name="wcf.acp.pip.aclOption.categories.name.error.notUnique"><![CDATA[Der angegebene Namen wird bereits von einer anderen ACL-Optionskategorie vom gleichen ACL-Objekttyp verwendet.]]></item>
 		<item name="wcf.acp.pip.aclOption.objectType.options.description"><![CDATA[Der ACL-Objekttyp legt fest zu welcher Art von Objekten die Option gehört. {if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass nur ACL-Objekttypen des Paketes selbst oder seiner benötigten Pakete ausgewählt werden können.]]></item>
-		<item name="wcf.acp.pip.aclOption.objectType.options.error.notUnique"><![CDATA[Der angegebene Namen wird bereits von einer anderen ACL-Option vom gleichen ACL-Objekttyp verwendet.]]></item>
+		<item name="wcf.acp.pip.aclOption.options.name.error.notUnique"><![CDATA[Der angegebene Namen wird bereits von einer anderen ACL-Option vom gleichen ACL-Objekttyp verwendet.]]></item>
 		<item name="wcf.acp.pip.aclOption.options.categoryName"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.pip.aclOption.options.categoryName.description"><![CDATA[Die ACL-Option wird in der ausgewählen Kategorie aufgelistet.]]></item>
 		<item name="wcf.acp.pip.aclOption.options.name"><![CDATA[Optionsname]]></item>
