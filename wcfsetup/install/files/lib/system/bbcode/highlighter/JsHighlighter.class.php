@@ -8,6 +8,7 @@ namespace wcf\system\bbcode\highlighter;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
+ * @deprecated	since 3.2, use Prism to highlight your code.
  */
 class JsHighlighter extends Highlighter {
 	/**

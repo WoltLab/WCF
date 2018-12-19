@@ -3,6 +3,7 @@ namespace wcf\system\bbcode;
 use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeCache;
 use wcf\system\SingletonFactory;
+use wcf\util\JSON;
 
 /**
  * Handles BBCodes displayed as buttons within the WYSIWYG editor.
@@ -30,6 +31,12 @@ class BBCodeHandler extends SingletonFactory {
 	 * @var	BBCode[]
 	 */
 	protected $sourceBBCodes = null;
+	
+	/**
+	 * meta information about highlighters
+	 * @var mixed[]
+	 */
+	protected $highlighterMeta = null;
 	
 	/**
 	 * @inheritDoc
@@ -111,11 +118,24 @@ class BBCodeHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns metadata about the highlighters.
+	 * 
+	 * @return	string[]
+	 */
+	public function getHighlighterMeta() {
+		if ($this->highlighterMeta === null) {
+			$this->highlighterMeta = JSON::decode(preg_replace('!.*/\*START\*/(.*)/\*END\*/.*!', '\\1', file_get_contents(WCF_DIR.'/js/3rdParty/prism/prism-meta.js')));
+		}
+		
+		return $this->highlighterMeta;
+	}
+
+	/**
 	 * Returns a list of known highlighters.
 	 * 
 	 * @return	string[]
 	 */
 	public function getHighlighters() {
-		return BBCodeCache::getInstance()->getHighlighters();
+		return array_keys($this->getHighlighterMeta());
 	}
 }

@@ -284,6 +284,13 @@ class PackageInstallationDispatcher {
 						}
 					}
 					
+					if (WCF::getSession()->getVar('__wcfSetup_imagick')) {
+						$statement->execute([
+							'imagick',
+							'image_adapter_type',
+						]);
+					}
+					
 					// update options.inc.php
 					OptionEditor::resetCache();
 				}

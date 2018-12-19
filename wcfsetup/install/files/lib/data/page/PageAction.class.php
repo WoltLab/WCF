@@ -59,7 +59,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete', 'getSearchResultList', 'resetPosition', 'search', 'toggle', 'update', 'updatePosition'];
+	protected $requireACP = ['create', 'delete', 'getSearchResultList', 'resetPosition', 'toggle', 'update', 'updatePosition'];
 	
 	/**
 	 * @inheritDoc

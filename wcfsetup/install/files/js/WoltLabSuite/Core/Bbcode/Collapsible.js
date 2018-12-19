@@ -57,6 +57,11 @@ define([], function() {
 						if (container.scrollTop !== 0) {
 							toggle();
 						}
+						container.addEventListener('scroll', function () {
+							if (container.classList.contains('collapsed')) {
+								toggle();
+							}
+						});
 					})(container, toggleButton);
 				}
 				

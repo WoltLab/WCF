@@ -25,7 +25,7 @@
 		{/foreach}
 	</ul>
 {else}
-	{htmlCheckboxes options=$field->getOptions() name=$field->getPrefixedId()|concat:'[]' selected=$field->getValue() disableEncoding=true}
+	{htmlCheckboxes options=$field->getOptions() name=$field->getPrefixedId() selected=$field->getValue() disableEncoding=true}
 {/if}
 
 {include file='__formFieldFooter'}

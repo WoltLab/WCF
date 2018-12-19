@@ -484,6 +484,37 @@
 				<title>Artikel</title>
 			</content>
 		</page>
+		<page identifier="com.woltlab.wcf.ArticleAdd">
+			<pageType>system</pageType>
+			<controller>wcf\form\ArticleAddForm</controller>
+			<name language="de">Artikel hinzufügen</name>
+			<name language="en">Add Article</name>
+			<parent>com.woltlab.wcf.ArticleList</parent>
+			<options>module_article</options>
+			<allowSpidersToIndex>0</allowSpidersToIndex>
+			<content language="en">
+				<title>Add Article</title>
+			</content>
+			<content language="de">
+				<title>Artikel hinzufügen</title>
+			</content>
+		</page>
+		<page identifier="com.woltlab.wcf.ArticleEdit">
+			<pageType>system</pageType>
+			<controller>wcf\form\ArticleEditForm</controller>
+			<name language="de">Artikel bearbeiten</name>
+			<name language="en">Edit Article</name>
+			<parent>com.woltlab.wcf.ArticleList</parent>
+			<options>module_article</options>
+			<allowSpidersToIndex>0</allowSpidersToIndex>
+			<requireObjectID>1</requireObjectID>
+			<content language="en">
+				<title>Edit Article</title>
+			</content>
+			<content language="de">
+				<title>Artikel bearbeiten</title>
+			</content>
+		</page>
 		<page identifier="com.woltlab.wcf.UnreadArticleList">
 			<pageType>system</pageType>
 			<controller>wcf\page\UnreadArticleListPage</controller>

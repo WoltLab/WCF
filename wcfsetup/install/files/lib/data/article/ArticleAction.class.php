@@ -73,7 +73,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete', 'restore', 'search', 'toggleI18n', 'trash', 'update'];
+	protected $requireACP = ['create', 'update'];
 	
 	/**
 	 * @inheritDoc

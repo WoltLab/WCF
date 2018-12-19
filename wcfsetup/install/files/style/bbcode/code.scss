@@ -80,78 +80,41 @@
 				
 				@include wcfFontHeadline;
 			}
-			
-			> .codeBoxPlainSource {
-				flex: 0 0 auto;
-				margin-left: 10px;
-			}
 		}
 		
-		> ol {
-			margin: 20px 0 0 3.4em !important;
-			position: relative;
+		> .codeBoxCode {
+			padding-left: 7ch;
 			
-			&::before {
-				border-right: 1px solid $wcfContentBorderInner;
-				bottom: 0;
-				content: "";
-				left: -5px;
-				position: absolute;
-				top: 0;
-			}
-			
-			> li {
+			> code {
+				display: block;
+				overflow-x: auto;
 				font-family: Consolas, 'Courier New', monospace;
-				padding-left: 5px;
-				position: relative;
-				white-space: pre-wrap;
-				word-break: break-all;
-				word-wrap: break-word;
-				z-index: 1;
 				
-				.lineAnchor {
-					bottom: 0;
-					left: -3.4em;
-					position: absolute;
-					top: 0;
-					width: 3.4em;
+				.codeBoxLine {
+					> a {
+						margin-left: -7ch;
+						overflow: hidden;
+						position: absolute;
+						text-align: right;
+						text-overflow: ellipsis;
+						white-space: nowrap;
+						/* No one has line numbers greater than 999999 */
+						width: 6ch;
+		
+						&::before {
+							content: attr(title);
+						}
+					}
+					
+					> span {
+						white-space: pre-wrap;
+						word-break: break-all;
+					}
+					
+					&:target {
+						background-color: rgba(255, 255, 102, 1);
+					}
 				}
-			}
-		}
-	}
-	
-	.codeBoxJumpAnchor:target {
-		height: 100%;
-		pointer-events: none;
-		position: absolute;
-		width: 100%;
-		z-index: -1;
-		
-		&::after {
-			background-color: rgba(255, 255, 102, 1);
-			bottom: 0;
-			content: "";
-			display: block;
-			height: 100%;
-			left: 0;
-			position: absolute;
-			right: 0;
-			top: 0;
-		}
-		
-		@include screen-md-down {
-			top: -52px;
-			
-			&::after {
-				top: 52px;
-			}
-		}
-		
-		@include screen-lg {
-			top: -50px;
-			
-			&::after {
-				top: 50px;
 			}
 		}
 	}
@@ -167,103 +130,84 @@
 	}
 }
 
-/* ############## Code Styles ############## */
 
-/* -- -- -- Code Box -- -- -- */
-
-.codeBox .hlQuotes {
-	color: red;
-}
-
-.codeBox .hlComments,
-.codeBox .hlOperators {
-	color: green;
-}
-
-.codeBox .hlKeywords1 {
-	color: blue;
-}
-
-.codeBox .hlKeywords2 {
-	color: darkred;
-}
-
-.codeBox .hlKeywords3 {
-	color: darkviolet;
-}
-
-.codeBox .hlKeywords4 {
-	color: darkgoldenrod;
-}
-
-.codeBox .hlKeywords5 {
-	color: crimson;
-}
-
-.codeBox .hlNumbers {
-	color: darkorange;
-}
-
-/* -- -- -- Code Highlighters -- -- -- */
-
-/* DIFF */
-
-.diffHighlighter .hlComments {
-	color: darkviolet;
-}
-
-.diffHighlighter .hlRemoved {
-	color: red;
-}
-
-.diffHighlighter .hlAdded {
-	color: green;
-}
-
-/* PHP */
-
-.phpHighlighter .hlKeywords2 {
-	color: green;
-}
-
-.phpHighlighter .hlComments {
-	color: darkgoldenrod;
-}
-
-/* CSS */
-
-.cssHighlighter .hlComments {
-	color: #236e26;
-}
-
-.cssHighlighter .hlColors {
-	color: #751116;
-}
-
-.cssHighlighter .hlNumbers,
-.sqlHighlighter .hlNumbers {
-	color: #1906fd;
-}
-
-.cssHighlighter .hlKeywords1 {
-	color: #87154f;
-}
-
-.cssHighlighter .hlKeywords2 {
-	color: #994509;
-}
-
-.cssHighlighter .hlKeywords3,
-.cssHighlighter .hlKeywords4 {
-	color: inherit;
-}
-
-/* SQL */
-
-.sqlHighlighter .hlKeywords1 {
-	color: #663821;
-}
-
-.sqlHighlighter .hlKeywords2 {
-	color: #871550;
-}
+/* PrismJS 1.15.0
+https://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript&plugins=autoloader */
+/**
+ * prism.js default theme for JavaScript, CSS and HTML
+ * Based on dabblet (http://dabblet.com)
+ * @author Lea Verou
+ */
+ 
+ .token.comment,
+ .token.prolog,
+ .token.doctype,
+ .token.cdata {
+	 color: slategray;
+ }
+ 
+ .token.punctuation {
+	 color: #999;
+ }
+ 
+ .namespace {
+	 opacity: .7;
+ }
+ 
+ .token.property,
+ .token.tag,
+ .token.boolean,
+ .token.number,
+ .token.constant,
+ .token.symbol,
+ .token.deleted {
+	 color: #905;
+ }
+ 
+ .token.selector,
+ .token.attr-name,
+ .token.string,
+ .token.char,
+ .token.builtin,
+ .token.inserted {
+	 color: #690;
+ }
+ 
+ .token.operator,
+ .token.entity,
+ .token.url,
+ .language-css .token.string,
+ .style .token.string {
+	 color: #9a6e3a;
+	 background: hsla(0, 0%, 100%, .5);
+ }
+ 
+ .token.atrule,
+ .token.attr-value,
+ .token.keyword {
+	 color: #07a;
+ }
+ 
+ .token.function,
+ .token.class-name {
+	 color: #DD4A68;
+ }
+ 
+ .token.regex,
+ .token.important,
+ .token.variable {
+	 color: #e90;
+ }
+ 
+ .token.important,
+ .token.bold {
+	 font-weight: bold;
+ }
+ .token.italic {
+	 font-style: italic;
+ }
+ 
+ .token.entity {
+	 cursor: help;
+ }
+ 

@@ -92,10 +92,18 @@ class ArticleListPage extends SortablePage {
 	public $validSortFields = ['title', 'time'];
 	
 	/**
+	 * display 'Add Article' dialog on load
+	 * @var integer
+	 */
+	public $showArticleAddDialog = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
+		
+		if (!empty($_REQUEST['showArticleAddDialog'])) $this->showArticleAddDialog = 1;
 		
 		// read available label groups
 		$this->labelGroups = ArticleCategory::getAccessibleLabelGroups('canViewLabel');
@@ -196,7 +204,9 @@ class ArticleListPage extends SortablePage {
 			'labelIDs' => $this->labelIDs,
 			'controllerName' => $this->controllerName,
 			'controllerObject' => null,
-			'user' => $this->user
+			'user' => $this->user,
+			'categoryID' => 0,
+			'showArticleAddDialog' => $this->showArticleAddDialog,
 		]);
 	}
 }

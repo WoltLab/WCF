@@ -15,13 +15,13 @@ class ImagickImageAdapter implements IImageAdapter {
 	 * active color
 	 * @var	\ImagickPixel
 	 */
-	protected $color = null;
+	protected $color;
 	
 	/**
 	 * Imagick object
 	 * @var	\Imagick
 	 */
-	protected $imagick = null;
+	protected $imagick;
 	
 	/**
 	 * image height
@@ -48,10 +48,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	public function __construct() {
 		$this->imagick = new \Imagick();
 		
-		// check if writing animated gifs is supported
-		$version = $this->imagick->getVersion();
-		preg_match('~([0-9]+\.[0-9]+\.[0-9]+)~', $version['versionString'], $match);
-		if (version_compare($match[0], '6.3.6') < 0) {
+		if (!static::supportsAnimatedGIFs(static::getVersion())) {
 			$this->supportsWritingAnimatedGIF = false;
 		}
 	}
@@ -424,5 +421,22 @@ class ImagickImageAdapter implements IImageAdapter {
 	 */
 	public static function isSupported() {
 		return class_exists('\Imagick', false);
+	}
+	
+	/**
+	 * @return string
+	 */
+	public static function getVersion() {
+		preg_match('~(?P<version>[0-9]+\.[0-9]+\.[0-9]+)~', \Imagick::getVersion()['versionString'], $match);
+		
+		return $match['version'];
+	}
+	
+	/**
+	 * @param string $version
+	 * @return bool
+	 */
+	public static function supportsAnimatedGIFs($version) {
+		return version_compare($version, '6.3.6') >= 0;
 	}
 }

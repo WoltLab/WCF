@@ -31,6 +31,8 @@
 		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[Installed version of the graphics library “GDLib”]]></item>
 		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[The graphics-library “GDLib” is needed to read images and for the dynamic image generation.]]></item>
 		<item name="wcf.global.systemRequirements.gdLib.notFound"><![CDATA[not found]]></item>
+		<item name="wcf.global.systemRequirements.imagick"><![CDATA[Installed version of the graphics library “ImageMagick”]]></item>
+		<item name="wcf.global.systemRequirements.imagick.description"><![CDATA[The graphics-library “ImageMagick” is used to read images and for the dynamic image generation. Supports for scaling of animated GIF files.]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[Enabled]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[Not enabled]]></item>
 		<item name="wcf.global.systemRequirements.memoryLimit"><![CDATA[PHP memory limit]]></item>

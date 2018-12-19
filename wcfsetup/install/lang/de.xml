@@ -1632,6 +1632,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.search_enable_articles"><![CDATA[Artikel sind durchsuchbar]]></item>
 		<item name="wcf.acp.option.search_enable_pages"><![CDATA[Seiten sind durchsuchbar]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_articles"><![CDATA[Artikelanzahl der Autoren anzeigen]]></item>
+		<item name="wcf.acp.option.message_public_highlighters"><![CDATA[Auswählbare Syntax-Highlighter]]></item>
+		<item name="wcf.acp.option.message_public_highlighters.description"><![CDATA[Die gewählten Syntax-Highlighter stehen dem Nutzer unmittelbar im Editor zur Verfügung. Die anderen Highlighter sind weiterhin verfügbar, der Nutzer muss jedoch den internen Namen kennen.]]></item>
 		<item name="wcf.acp.option.log_missing_language_items"><![CDATA[Fehlende Sprachvariablen protokollieren]]></item>
 		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[Die fehlenden Sprachvariablen werden in der Datei <kbd>{'WCF_DIR'|constant}log/missingLanguageItems.txt</kbd> protokolliert.]]></item>
 		<item name="wcf.acp.option.category.general.system.ipAddress"><![CDATA[IP-Adressen]]></item>
@@ -2661,21 +2663,6 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.bbcode.button.collapse"><![CDATA[Weniger anzeigen]]></item>
 		<item name="wcf.bbcode.button.showAll"><![CDATA[Alles anzeigen]]></item>
 		<item name="wcf.bbcode.code"><![CDATA[Code]]></item>
-		<item name="wcf.bbcode.code.bash.title"><![CDATA[Shell-Script]]></item>
-		<item name="wcf.bbcode.code.c.title"><![CDATA[C]]></item>
-		<item name="wcf.bbcode.code.css.title"><![CDATA[CSS]]></item>
-		<item name="wcf.bbcode.code.diff.title"><![CDATA[Diff]]></item>
-		<item name="wcf.bbcode.code.html.title"><![CDATA[HTML]]></item>
-		<item name="wcf.bbcode.code.java.title"><![CDATA[Java]]></item>
-		<item name="wcf.bbcode.code.js.title"><![CDATA[JavaScript]]></item>
-		<item name="wcf.bbcode.code.perl.title"><![CDATA[Perl]]></item>
-		<item name="wcf.bbcode.code.php.title"><![CDATA[PHP]]></item>
-		<item name="wcf.bbcode.code.plain.title"><![CDATA[Code]]></item>
-		<item name="wcf.bbcode.code.sql.title"><![CDATA[SQL]]></item>
-		<item name="wcf.bbcode.code.python.title"><![CDATA[Python]]></item>
-		<item name="wcf.bbcode.code.tex.title"><![CDATA[TeX]]></item>
-		<item name="wcf.bbcode.code.tpl.title"><![CDATA[Smarty]]></item>
-		<item name="wcf.bbcode.code.xml.title"><![CDATA[XML]]></item>
 		<item name="wcf.bbcode.code.simplified"><![CDATA[(Quelltext, {#$lines} Zeile{if $lines != 1}n{/if})]]></item>
 		<item name="wcf.bbcode.image.blocked"><![CDATA[Blockierte Grafik]]></item>
 		<item name="wcf.bbcode.image.source"><![CDATA[Bild-Link]]></item>
@@ -3096,6 +3083,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.editor.code.highlighter"><![CDATA[Syntax-Hervorhebung]]></item>
 		<item name="wcf.editor.code.highlighter.description"><![CDATA[Die farbliche Hervorherbung wird im Editor nicht angezeigt.]]></item>
 		<item name="wcf.editor.code.highlighter.detect"><![CDATA[(Automatische Erkennung)]]></item>
+		<item name="wcf.editor.code.highlighter.plain"><![CDATA[(Kein)]]></item>
 		<item name="wcf.editor.code.line"><![CDATA[Start-Zeilennummer]]></item>
 		<item name="wcf.editor.code.line.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Lege{else}Legen Sie{/if} den Wert fest, ab dem die Zeilennummierung startet.]]></item>
 		<item name="wcf.editor.code.title"><![CDATA[{if $highlighter}{$highlighter}{else}Quellcode{/if}{if $file} - {$file}{/if}]]></item>
@@ -3422,6 +3410,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.message.autosave.restored.version"><![CDATA[Entwurf vom {@$date}]]></item>
 		<item name="wcf.message.autosave.saved"><![CDATA[Entwurf gespeichert]]></item>
 		<item name="wcf.message.bbcode.code.copy"><![CDATA[Inhalt kopieren]]></item>
+		<item name="wcf.message.bbcode.code.copy.success"><![CDATA[Der Inhalt wurde erfolgreich kopiert.]]></item>
 		<item name="wcf.message.quote.insertAllQuotes"><![CDATA[Alle Zitate einfügen]]></item>
 		<item name="wcf.message.quote.insertQuote"><![CDATA[Zitat einfügen]]></item>
 		<item name="wcf.message.quote.insertSelectedQuotes"><![CDATA[Markierte Zitate einfügen]]></item>
