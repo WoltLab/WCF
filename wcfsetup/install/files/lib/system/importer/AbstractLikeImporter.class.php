@@ -60,7 +60,8 @@ class AbstractLikeImporter extends AbstractImporter {
 			$data['objectUserID'],
 			$data['userID'],
 			$data['time'],
-			$data['likeValue']
+			$data['likeValue'],
+			$data['reactionTypeID']
 		]);
 		
 		return 0;
