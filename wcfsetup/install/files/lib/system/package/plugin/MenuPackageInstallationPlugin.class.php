@@ -354,8 +354,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				->options(array_combine(Box::$availablePositions, Box::$availablePositions)),
 			
 			BooleanFormField::create('boxShowHeader')
-				->label('wcf.acp.pip.menu.boxShowHeader')
-				->description('wcf.acp.pip.menu.boxShowHeader.description'),
+				->label('wcf.acp.pip.menu.boxShowHeader'),
 			
 			BooleanFormField::create('boxVisibleEverywhere')
 				->label('wcf.acp.pip.menu.boxVisibleEverywhere'),
