@@ -152,20 +152,20 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 			
 			IntegerFormField::create('showOrder')
 				->objectProperty('showorder')
-				->label('wcf.acp.pip.userProfileMenu.showOrder')
+				->label('wcf.form.field.showOrder')
 				->description('wcf.acp.pip.userProfileMenu.showOrder.description')
 				->nullable()
 				->minimum(1),
 			
 			OptionFormField::create()
-				->description('wcf.acp.pip.userProfileMenu.options.description')
+				->description('wcf.acp.pip.abstractMenu.options.description')
 				->packageIDs(array_merge(
 					[$this->installation->getPackage()->packageID],
 					array_keys($this->installation->getPackage()->getAllRequiredPackages())
 				)),
 			
 			UserGroupOptionFormField::create()
-				->description('wcf.acp.pip.userProfileMenu.permissions.description')
+				->description('wcf.acp.pip.abstractMenu.options.description')
 				->packageIDs(array_merge(
 					[$this->installation->getPackage()->packageID],
 					array_keys($this->installation->getPackage()->getAllRequiredPackages())

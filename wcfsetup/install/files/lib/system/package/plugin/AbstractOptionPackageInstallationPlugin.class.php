@@ -453,7 +453,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					
 					IntegerFormField::create('showOrder')
 						->objectProperty('showorder')
-						->label('wcf.acp.pip.abstractOption.categories.showOrder')
+						->label('wcf.form.field.showOrder')
 						->description('wcf.acp.pip.abstractOption.categories.showOrder.description')
 						->nullable(),
 					
@@ -558,7 +558,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					
 					IntegerFormField::create('showOrder')
 						->objectProperty('showorder')
-						->label('wcf.acp.pip.abstractOption.options.showOrder')
+						->label('wcf.form.field.showOrder')
 						->description('wcf.acp.pip.abstractOption.options.showOrder.description'),
 					
 					OptionFormField::create()

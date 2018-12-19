@@ -2033,12 +2033,10 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.abstractMenu.parentMenuItem.error.childAsParent"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} keinen untergeordneten Menüpunkt als übergeordneten Menüpunkt auswählen.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.parentMenuItem.error.selfParent"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} den Menüpunkt nicht als eigenen übergeordneten Menüpunkt auswählen.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.permissions.description"><![CDATA[Der aktive Benutzer muss mindestens eine der angebenen Benutzergruppenberechtigungen besitzen, damit der Menüpunkt angezeigt wird. Benutzergruppenberechtigungen von nicht als benötigt angegebenen Paketen werden als fehlend bemängelt.]]></item>
-		<item name="wcf.acp.pip.abstractMenu.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.abstractOption.categories.categoryName"><![CDATA[Kategoriename]]></item>
 		<item name="wcf.acp.pip.abstractOption.categories.options.description"><![CDATA[Mindestens eine der angebenen Optionen muss aktiviert sein, damit die Optionen in der Kategorie bearbeitet werden können. Optionen von nicht als benötigt angegebenen Paketen werden als fehlend bemängelt.]]></item>
 		<item name="wcf.acp.pip.abstractOption.categories.parentCategoryName"><![CDATA[Übergeordnete Kategorie]]></item>
 		<item name="wcf.acp.pip.abstractOption.categories.permissions.description"><![CDATA[Der aktive Benutzer muss mindestens eine der angebenen Benutzergruppenberechtigungen besitzen, damit die Optionen in der Kategorie bearbeitet werden können. Benutzergruppenberechtigungen von nicht als benötigt angegebenen Paketen werden als fehlend bemängelt.]]></item>
-		<item name="wcf.acp.pip.abstractOption.categories.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.abstractOption.categories.showOrder.description"><![CDATA[Der angegebene Wert bestimmt in welcher Reihenfolge die Kategorien mit der gleichen übergeordneten Kategorie angezeigt werden.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.categoryName"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.pip.abstractMenu.showOrder.description"><![CDATA[Der angegebene Wert bestimmt in welcher Reihenfolge die Menüpunkte mit dem gleichen übergeordneten Menüpunkt angezeigt werden.]]></item>
@@ -2066,7 +2064,6 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.abstractOption.options.permissions.description"><![CDATA[Der aktive Benutzer muss mindestens eine der angebenen Benutzergruppenberechtigungen besitzen, damit der Wert der Option bearbeitet werden kann. Benutzergruppenberechtigungen von nicht als benötigt angegebenen Paketen werden als fehlend bemängelt.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.selectOptions"><![CDATA[Auswahlmöglichkeiten]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.selectOptions.description"><![CDATA[Jede Auswahlmöglichkeit muss in einer neuen Zeile im Fomat <kbd>value:description</kbd> geschrieben werden, wobei <kbd>description</kbd> eine Sprachvariable sein darf.]]></item>
-		<item name="wcf.acp.pip.abstractOption.options.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.showOrder.description"><![CDATA[Der angegebene Wert bestimmt in welcher Reihenfolge die Optionen in der gleichen Kategorie angezeigt werden.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.validationPattern"><![CDATA[Regulärer Ausdruck zur Eingabevalidierung]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.validationPattern.description"><![CDATA[Der angegebene reguläre Ausdruck wird verwendet, um den eingegebenen Wert bei der Bearbeitung des Optionswertes zu validieren.]]></item>
@@ -2083,7 +2080,6 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.acpMenu.menuItem.description"><![CDATA[Der Bezeichner des Menüpunktes muss das Format <kbd>{literal}{app}.acp.menu.link.{additionalIdentifiers}{/literal}</kbd> besitzen, wobei <kbd>{literal}{app}{/literal}</kbd> und <kbd>{literal}{additionalIdentifiers}{/literal}</kbd> mit den passenden Werten ersetzt werden müssen. <kbd>{literal}{additionalIdentifiers}{/literal}</kbd> darf nur Buchstaben, Zahlen und Punkte enthalten.]]></item>
 		<item name="wcf.acp.pip.acpMenu.menuItem.error.format"><![CDATA[Der angegebene Bezeichner ist ungültig.]]></item>
 		<item name="wcf.acp.pip.acpMenu.menuItemController.error.noAcpController"><![CDATA[Der angegebene Controller ist kein ACP-Controller. Ein ACP-Controller beginnt mit <kbd>{literal}{app}{/literal}\acp\</kbd>, wobei <kbd>{literal}{app}{/literal}</kbd> die Abkürzung der relevanten App ist.]]></item>
-		<item name="wcf.acp.pip.acpSearchProvider.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.bbcode.attributes"><![CDATA[Attribute]]></item>
 		<item name="wcf.acp.pip.bbcode.bbcodeTag"><![CDATA[BBCode-Bezeichner]]></item>
 		<item name="wcf.acp.pip.bbcode.bbcodeTag.error.allNone"><![CDATA[Der Bezeichner darf weder <kbd>all</kbd> noch <kbd>none</kbd> sein.]]></item>
@@ -2108,9 +2104,6 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.bbcode.isSourceCode"><![CDATA[Inhalt als Quelltext behandeln]]></item>
 		<item name="wcf.acp.pip.bbcode.isSourceCode.description"><![CDATA[Der Inhalt des BBCodes wird nicht umgewandelt.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.showOrder.description"><![CDATA[Der angegebene Wert bestimmt in welcher Reihenfolge die Menüpunkte des Benutzerprofilmenüs angezeigt werden.]]></item>
-		<item name="wcf.acp.pip.userProfileMenu.showOrder"><![CDATA[Position]]></item>
-		<item name="wcf.acp.pip.userProfileMenu.permissions.description"><![CDATA[Der aktive Benutzer muss mindestens eine der angebenen Benutzergruppenberechtigungen besitzen, damit der Menüpunkt angezeigt wird. Benutzergruppenberechtigungen von nicht als benötigt angegebenen Paketen werden als fehlend bemängelt.]]></item>
-		<item name="wcf.acp.pip.userProfileMenu.options.description"><![CDATA[Mindestens eine der angebenen Optionen muss aktiviert sein, damit der Menüpunkt angezeigt wird. Optionen von nicht als benötigt angegebenen Paketen werden als fehlend bemängelt.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.menuItem.error.notUnique"><![CDATA[Der angegebene Bezeichner wird bereits von einem anderen Mennüpunkt verwendet.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.menuItem.error.format"><![CDATA[Der angegebene Bezeichner ist ungültig.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.menuItem.description"><![CDATA[Der Bezeichner des Menüpunktes darf nur Buchstaben enthalten und muss mit einem Kleinbuchstaben beginnen.]]></item>
@@ -2234,7 +2227,6 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.smiley.aliases"><![CDATA[Alternative Smiley-Codes]]></item>
 		<item name="wcf.acp.pip.smiley.aliases.description"><![CDATA[Die alternativen Smiley-Codes werden ebenfalls in dieses Smiley umgewandelt.]]></item>
 		<item name="wcf.acp.pip.smiley.aliases.error.notUnique"><![CDATA[Die folgenden alternativen Smiley-Codes werden bereits von anderen Smileys verwendet: {implode from=$notUniqueCodes item=notUniqueCode}<kbd>{$notUniqueCode}</kbd>{/implode}.]]></item>
-		<item name="wcf.acp.pip.smiley.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.smiley.showOrder.description"><![CDATA[Der angegebene Wert bestimmt in welcher Reihenfolge die Smileys angezeigt werden.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyCode"><![CDATA[Primärer Smiley-Code]]></item>
 		<item name="wcf.acp.pip.smiley.smileyCode.description"><![CDATA[Primärer Smiley-Code, der in dieses Smiley umgewandelt wird.]]></item>
@@ -2277,7 +2269,6 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.clipboardAction.actionName.error.format"><![CDATA[Der angegebene Name ist ungültig.]]></item>
 		<item name="wcf.acp.pip.clipboardAction.pages"><![CDATA[Seiten]]></item>
 		<item name="wcf.acp.pip.clipboardAction.pages.description"><![CDATA[Die Clipboard-Aktion ist auf der angegebenen Seiten verfügbar.]]></item>
-		<item name="wcf.acp.pip.clipboardAction.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.clipboardAction.showOrder.description"><![CDATA[Der angegebene Wert bestimmt in welcher Reihenfolge die Clipboard-Aktionen für eine bestimmte Clipboard-Aktion-Klasse angezeigt werden.]]></item>
 		<item name="wcf.acp.pip.clipboardAction.actionClassName"><![CDATA[Clipboard-Aktion-Klassenname]]></item>
 		<item name="wcf.acp.pip.clipboardAction.actionClassName.error.notUnique"><![CDATA[Es gibt bereits eine Clipboard-Aktion mit diesem Aktionsnamen für die angegebene Aktion-Klasse.]]></item>
@@ -2373,7 +2364,6 @@ Jeder Abschnitt darf nicht leer sein und darf nur aus Buchstaben, Zahlen, Unters
 		<item name="wcf.acp.pip.menuItem.page"><![CDATA[Seite]]></item>
 		<item name="wcf.acp.pip.menuItem.page.description"><![CDATA[Der Menüpunkt wird auf die ausgewähle Seite verlinken.]]></item>
 		<item name="wcf.acp.pip.menuItem.parentMenuItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
-		<item name="wcf.acp.pip.menuItem.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.menuItem.showOrder.description"><![CDATA[Der angegebene Wert bestimmt in welcher Reihenfolge die Menüpunkte mit dem gleichen übergeordneten Menüpunkt angezeigt werden.]]></item>
 		<item name="wcf.acp.pip.box.boxType"><![CDATA[Boy-Typ]]></item>
 		<item name="wcf.acp.pip.box.boxType.description"><![CDATA[Der Inhalt von „text“-Boxen können vom Administrator mit dem eingebauten WYSIWYG-Editor bearbeitet werden. „html“-Boxen erlaubten zusätzlich HTML-Code und „tpl“-Boxen auch Template Scripting. Der Inhalt von „system“-Boxen kann nicht vom Administrator bearbeitet werden, da ihr Inhalt vom Box-Controller bereitgestellt wird.]]></item>

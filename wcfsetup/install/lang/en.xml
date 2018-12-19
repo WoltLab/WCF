@@ -2035,10 +2035,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.userProfileMenu.menuItem.description"><![CDATA[The name of the user profile may only contain letters and must begin with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.menuItem.error.format"><![CDATA[The entered name is invalid.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.menuItem.error.notUnique"><![CDATA[The entered name is already used by another user profile menu item.]]></item>
-		<item name="wcf.acp.pip.userProfileMenu.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.showOrder.description"><![CDATA[The entered value determines in which order the user profile menu items are shown.]]></item>
-		<item name="wcf.acp.pip.userProfileMenu.options.description"><![CDATA[At least one of the entered options has to be enabled for the menu item to be available. Options of non-required packages will be reported as non-existing.]]></item>
-		<item name="wcf.acp.pip.userProfileMenu.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions in order to see the menu item. Permissions of non-required packages will be reported as non-existing.]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.eventName"><![CDATA[Event Name]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.eventName.description"><![CDATA[The name of the event may only contain letters and must begin with a lowercase letter.]]></item>
 		<item name="wcf.acp.pip.userNotificationEvent.eventName.error.format"><![CDATA[The entered name is invalid.]]></item>
@@ -2068,7 +2065,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.description"><![CDATA[The name of an ACP search result provider consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the definition name matches the package identifier. Example: <kbd>{$project->getPackage()->package}.searchedObject</kbd>]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.notUnique"><![CDATA[The entered name is already used by another acp search result provider.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.tooFewSegments"><![CDATA[The entered provider name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
-		<item name="wcf.acp.pip.acpSearchProvider.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.showOrder.description"><![CDATA[The entered value determines in which order the different types of search results are shown.]]></item>
 		<item name="wcf.acp.pip.mediaProvider.name"><![CDATA[Provider Name]]></item>
 		<item name="wcf.acp.pip.mediaProvider.name.description"><![CDATA[The name of the media provider may only contain letters, numbers and dashes and must begin with a lowercase letter.]]></item>
@@ -2104,7 +2100,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.abstractMenu.menuItemLink.error.noLinkSpecified"><![CDATA[You either have to enter a menu item controller or a menu item link.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.options.description"><![CDATA[At least one of the entered options has to be enabled for the menu item to be visible. Options of non-required packages will be reported as non-existing.]]></item>
 		<item name="wcf.acp.pip.abstractMenu.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions in order to see the menu item. Permissions of non-required packages will be reported as non-existing.]]></item>
-		<item name="wcf.acp.pip.abstractMenu.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.abstractMenu.showOrder.description"><![CDATA[The entered value determines in which order the menu items with the same parent are shown.]]></item>
 		<item name="wcf.acp.pip.acpMenu.icon"><![CDATA[Menu Item Icon]]></item>
 		<item name="wcf.acp.pip.acpMenu.icon.description"><![CDATA[The menu item icon is only available for menu items on the first level and for menu items on the fourth (and lowest) level. For first level menu items, the icon is shown in addition to the menu item title while for fourth level menu items, only the icon is shown and the menu item title becomes a tooltip.]]></item>
@@ -2156,7 +2151,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.menuItem.page"><![CDATA[Page]]></item>
 		<item name="wcf.acp.pip.menuItem.page.description"><![CDATA[The menu item will link to the selected page.]]></item>
 		<item name="wcf.acp.pip.menuItem.parentMenuItem"><![CDATA[Parent Menu Item]]></item>
-		<item name="wcf.acp.pip.menuItem.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.menuItem.showOrder.description"><![CDATA[The entered value determines in which order the menu items with the same parent are shown.]]></item>
 		<item name="wcf.acp.pip.menuItem.externalURL"><![CDATA[External URL]]></item>
 		<item name="wcf.acp.pip.menuItem.externalURL.description"><![CDATA[When clicking on the menu item, the user is redirected to the entered website.]]></item>
@@ -2213,7 +2207,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.clipboardAction.actionName.error.format"><![CDATA[The entered name is invalid.]]></item>
 		<item name="wcf.acp.pip.clipboardAction.actionClassName"><![CDATA[Clipboard Action Class Name]]></item>
 		<item name="wcf.acp.pip.clipboardAction.actionClassName.error.notUnique"><![CDATA[There is already a clipboard action with this action name for the entered action class.]]></item>
-		<item name="wcf.acp.pip.clipboardAction.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.clipboardAction.showOrder.description"><![CDATA[The entered value determines in which order the clipboard actions for the same clipboard action class are shown.]]></item>
 		<item name="wcf.acp.pip.clipboardAction.pages"><![CDATA[Pages]]></item>
 		<item name="wcf.acp.pip.clipboardAction.pages.description"><![CDATA[The clipboard action is available on the entered pages.]]></item>
@@ -2242,7 +2235,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.abstractOption.options.optionType"><![CDATA[Option Type]]></item>
 		<item name="wcf.acp.pip.abstractOption.categories.categoryName"><![CDATA[Category Name]]></item>
 		<item name="wcf.acp.pip.abstractOption.categories.parentCategoryName"><![CDATA[Parent Category]]></item>
-		<item name="wcf.acp.pip.abstractOption.categories.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.abstractOption.categories.showOrder.description"><![CDATA[The entered value determines in which order the categories with the same parent category are shown.]]></item>
 		<item name="wcf.acp.pip.abstractOption.categories.options.description"><![CDATA[At least one of the entered options has to be enabled for the options in the category to be editable. Options of non-required packages will be reported as non-existing.]]></item>
 		<item name="wcf.acp.pip.abstractOption.categories.permissions.description"><![CDATA[The active user must be granted at least one of the entered permissions for the options in the category to be editable. Permissions of non-required packages will be reported as non-existing.]]></item>
@@ -2257,7 +2249,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.abstractOption.options.selectOptions.description"><![CDATA[Each option has to be written in a new line using the format <kbd>value:description</kbd> where <kbd>description</kbd> may be the identifier of a phrase.]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.enableOptions"><![CDATA[Enabled Options]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.enableOptions.description"><![CDATA[Each enabled options setting has to be written in a new line using the format <kbd>key:otherOptions</kbd> where <kbd>key:</kbd> is optional. If a key is present, the setting is only relevant if this option has the specified key as value. <kbd>otherOptions</kbd> is a comma-separated list refering to the other options that will either be enabled or disabled depending on this option’s value. If an exclamation mark is in front of an option name, the logic is inversed: If this option has the specified key as value, the referenced option will be <strong>disabled</strong> instead of enabled.]]></item>
-		<item name="wcf.acp.pip.abstractOption.options.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.showOrder.description"><![CDATA[The entered value determines in which order the options in the same category are shown.]]></item>
 		<item name="wcf.acp.pip.option.optionName.error.notUnique"><![CDATA[The entered option name is already used by another option.]]></item>
 		<item name="wcf.acp.pip.option.options.hidden"><![CDATA[Hidden Option]]></item>
@@ -2310,7 +2301,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.smiley.aliases"><![CDATA[Secondary Smiley Codes]]></item>
 		<item name="wcf.acp.pip.smiley.aliases.description"><![CDATA[The secondary codes are also converted into this smiley.]]></item>
 		<item name="wcf.acp.pip.smiley.aliases.error.notUnique"><![CDATA[The following aliases are already used by another smiley: {implode from=$notUniqueCodes item=notUniqueCode}<kbd>{$notUniqueCode}</kbd>{/implode}.]]></item>
-		<item name="wcf.acp.pip.smiley.showOrder"><![CDATA[Position]]></item>
 		<item name="wcf.acp.pip.smiley.showOrder.description"><![CDATA[The entered value determines in which order the smilies are shown.]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath"><![CDATA[Smiley Path]]></item>
 		<item name="wcf.acp.pip.smiley.smileyPath.description"><![CDATA[The entered path has to be relative to <kbd>{'WCF_DIR'|constant}</kbd>.]]></item>

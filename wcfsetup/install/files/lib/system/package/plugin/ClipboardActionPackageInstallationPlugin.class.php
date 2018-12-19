@@ -233,7 +233,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 			
 			IntegerFormField::create('showOrder')
 				->objectProperty('showorder')
-				->label('wcf.acp.pip.clipboardAction.showOrder')
+				->label('wcf.form.field.showOrder')
 				->description('wcf.acp.pip.clipboardAction.showOrder.description')
 				->nullable(),
 			

@@ -195,7 +195,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			
 			IntegerFormField::create('showOrder')
 				->objectProperty('showorder')
-				->label('wcf.acp.pip.smiley.showOrder')
+				->label('wcf.form.field.showOrder')
 				->description('wcf.acp.pip.smiley.showOrder.description')
 				->nullable(),
 			

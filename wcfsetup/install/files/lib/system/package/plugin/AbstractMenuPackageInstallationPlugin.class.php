@@ -305,7 +305,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 			
 			IntegerFormField::create('showOrder')
 				->objectProperty('showorder')
-				->label('wcf.acp.pip.abstractMenu.showOrder')
+				->label('wcf.form.field.showOrder')
 				->description('wcf.acp.pip.abstractMenu.showOrder.description')
 				->objectProperty('showorder')
 				->minimum(1)

@@ -183,7 +183,7 @@ class ACPSearchProviderPackageInstallationPlugin extends AbstractXMLPackageInsta
 			
 			IntegerFormField::create('showOrder')
 				->objectProperty('showorder')
-				->label('wcf.acp.pip.acpSearchProvider.showOrder')
+				->label('wcf.form.field.showOrder')
 				->description('wcf.acp.pip.acpSearchProvider.showOrder.description')
 				->nullable()
 				->minimum(1),
