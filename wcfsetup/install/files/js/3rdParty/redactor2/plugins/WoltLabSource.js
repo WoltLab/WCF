@@ -96,7 +96,7 @@ $.Redactor.prototype.WoltLabSource = function() {
 				
 				mpShow.call(this);
 				
-				this.source.$textarea.val(code);
+				this.source.$textarea.val(code.replace(/&nbsp;/g, ' '));
 				
 				// noinspection JSSuspiciousNameCombination
 				textarea.style.setProperty('height', Math.ceil(height) + 'px', '');
