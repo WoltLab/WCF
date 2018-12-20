@@ -32,6 +32,10 @@
 	</nav>
 </header>
 
+{hascontent}
+	<p class="info">{content}{lang}wcf.acp.pip.{@$pip}.info{/lang}{/content}</p>
+{/hascontent}
+
 <form method="post" action="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID}{@$linkParameters}{/link}">
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
