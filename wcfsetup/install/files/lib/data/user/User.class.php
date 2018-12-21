@@ -543,4 +543,13 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 		
 		return '';
 	}
+	
+	/**
+	 * Returns true, if this user can purchase paid subscriptions.
+	 *
+	 * @return      boolean
+	 */
+	public function canPurchasePaidSubscriptions() {
+		return WCF::getUser()->userID && WCF::getUser()->activationCode == 0;
+	}
 }

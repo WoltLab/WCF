@@ -38,28 +38,30 @@ class PaidSubscriptionsBoxController extends AbstractBoxController {
 	 * @inheritDoc
 	 */
 	protected function loadContent() {
-		if (WCF::getUser()->userID && WCF::getUser()->activationCode == 0 && MODULE_PAID_SUBSCRIPTION) {
+		if (MODULE_PAID_SUBSCRIPTION) {
 			// get available subscriptions
 			$subscriptions = PaidSubscriptionCacheBuilder::getInstance()->getData();
 			
-			// get purchased subscriptions
-			$userSubscriptionList = new PaidSubscriptionUserList();
-			$userSubscriptionList->getConditionBuilder()->add('userID = ?', [WCF::getUser()->userID]);
-			$userSubscriptionList->getConditionBuilder()->add('isActive = ?', [1]);
-			$userSubscriptionList->readObjects();
-			
-			// remove purchased subscriptions
-			foreach ($userSubscriptionList as $userSubscription) {
-				if (isset($subscriptions[$userSubscription->subscriptionID])) {
-					$userSubscription->setSubscription($subscriptions[$userSubscription->subscriptionID]);
-					unset($subscriptions[$userSubscription->subscriptionID]);
+			if (WCF::getUser()->userID) {
+				// get purchased subscriptions
+				$userSubscriptionList = new PaidSubscriptionUserList();
+				$userSubscriptionList->getConditionBuilder()->add('userID = ?', [WCF::getUser()->userID]);
+				$userSubscriptionList->getConditionBuilder()->add('isActive = ?', [1]);
+				$userSubscriptionList->readObjects();
+				
+				// remove purchased subscriptions
+				foreach ($userSubscriptionList as $userSubscription) {
+					if (isset($subscriptions[$userSubscription->subscriptionID])) {
+						$userSubscription->setSubscription($subscriptions[$userSubscription->subscriptionID]);
+						unset($subscriptions[$userSubscription->subscriptionID]);
+					}
 				}
-			}
-			// remove excluded subscriptions
-			foreach ($userSubscriptionList as $userSubscription) {
-				if ($userSubscription->getSubscription()->excludedSubscriptionIDs) {
-					foreach (explode(',', $userSubscription->getSubscription()->excludedSubscriptionIDs) as $subscriptionID) {
-						if (isset($subscriptions[$subscriptionID])) unset($subscriptions[$subscriptionID]);
+				// remove excluded subscriptions
+				foreach ($userSubscriptionList as $userSubscription) {
+					if ($userSubscription->getSubscription()->excludedSubscriptionIDs) {
+						foreach (explode(',', $userSubscription->getSubscription()->excludedSubscriptionIDs) as $subscriptionID) {
+							if (isset($subscriptions[$subscriptionID])) unset($subscriptions[$subscriptionID]);
+						}
 					}
 				}
 			}
