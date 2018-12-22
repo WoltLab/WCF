@@ -184,6 +184,7 @@ class InstallPackageAction extends AbstractDialogAction {
 			case 'install':
 			case 'prepare':
 			case 'rollback':
+				// valid steps
 			break;
 			
 			default:
