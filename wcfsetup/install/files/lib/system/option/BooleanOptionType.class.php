@@ -14,7 +14,13 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
-class BooleanOptionType extends AbstractOptionType implements ISearchableUserOption {
+class BooleanOptionType extends AbstractOptionType implements ISearchableConditionUserOption {
+	/**
+	 * if `true`, the option is considered as being searched when generating the form element
+	 * @var	bool
+	 */
+	public $forceSearchOption = false;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -42,17 +48,24 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableUserOpt
 	 * @inheritDoc
 	 */
 	public function getSearchFormElement(Option $option, $value) {
-		return $this->getFormElement($option, $value);
+		$options = Option::parseEnableOptions($option->enableOptions);
+		
+		return WCF::getTPL()->fetch('booleanSearchableOptionType', 'wcf', [
+			'disableOptions' => $options['disableOptions'],
+			'enableOptions' => $options['enableOptions'],
+			'option' => $option,
+			'searchOption' => $this->forceSearchOption || ($value !== null && $value !== $option->defaultValue) || isset($_POST['searchOptions'][$option->optionName]),
+			'value' => $value
+		]);
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getCondition(PreparedStatementConditionBuilder &$conditions, Option $option, $value) {
-		$value = intval($value);
-		if (!$value) return false;
+		if (!isset($_POST['searchOptions'][$option->optionName])) return false;
 		
-		$conditions->add("option_value.userOption".$option->optionID." = ?", [1]);
+		$conditions->add("option_value.userOption".$option->optionID." = ?", [intval($value)]);
 		return true;
 	}
 	
@@ -60,10 +73,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableUserOpt
 	 * @inheritDoc
 	 */
 	public function addCondition(UserList $userList, Option $option, $value) {
-		$value = intval($value);
-		if (!$value) return;
-		
-		$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' = ?', [1]);
+		$userList->getConditionBuilder()->add('user_option_value.userOption'.$option->optionID.' = ?', [intval($value)]);
 	}
 	
 	/**

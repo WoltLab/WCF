@@ -3621,6 +3621,7 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		
 		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[Auswahl des Benutzers bei „{lang}wcf.user.option.{$option->optionName}{/lang}“:]]></item>
 		<item name="wcf.user.option.searchTextOption"><![CDATA[„{lang}wcf.user.option.{$option->optionName}{/lang}“ enthält:]]></item>
+		<item name="wcf.user.option.searchBooleanOption"><![CDATA[Auswahl des Benutzers bei „{lang}wcf.user.option.{$option->optionName}{/lang}“:]]></item>
 	</category>
 	
 	<category name="wcf.user.mail">
