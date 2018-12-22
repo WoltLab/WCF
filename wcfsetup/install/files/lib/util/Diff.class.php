@@ -287,7 +287,7 @@ class Diff {
 								for ($k = $j; $k < $max && $k <= $j + $context; $k++) {
 									if ($d[$k][0] != self::SAME) {
 										$inContext = $k - $j;
-										continue 2;
+										continue 3;
 									}
 								}
 								break 2;
