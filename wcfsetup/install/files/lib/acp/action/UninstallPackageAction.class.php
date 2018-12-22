@@ -157,7 +157,7 @@ class UninstallPackageAction extends InstallPackageAction {
 		switch ($this->step) {
 			case 'prepare':
 			case 'uninstall':
-				continue;
+				// valid steps
 			break;
 			
 			default:
