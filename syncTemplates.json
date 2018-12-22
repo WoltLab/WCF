@@ -42,6 +42,7 @@
     "articleAddDialog",
     "benchmark",
     "booleanOptionType",
+    "booleanSearchableOptionType",
     "captcha",
     "categoryOptionList",
     "checkboxesOptionType",
