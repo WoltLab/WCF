@@ -158,9 +158,7 @@ class InstallPackageAction extends AbstractDialogAction {
 	}
 	
 	/**
-	 * Returns parameters required to perform a rollback.
-	 * 
-	 * @return	array
+	 * Sets parameters required to perform a rollback.
 	 */
 	protected function stepRollback() {
 		$this->data = [
