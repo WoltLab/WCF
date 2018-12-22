@@ -4939,6 +4939,7 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.option.editorPastePreserveFormatting.description"><![CDATA[Disabling this option will force any content to be pasted from clipboard as plain text, stripping all formatting.]]></item>
 		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[User’s selection for “{lang}wcf.user.option.{$option->optionName}{/lang}”:]]></item>
 		<item name="wcf.user.option.searchTextOption"><![CDATA[“{lang}wcf.user.option.{$option->optionName}{/lang}” contains:]]></item>
+		<item name="wcf.user.option.searchBooleanOption"><![CDATA[User’s selection for “{lang}wcf.user.option.{$option->optionName}{/lang}”:]]></item>
 	</category>
 	<category name="wcf.user.mail">
 		<item name="wcf.user.mail.information"><![CDATA[Details]]></item>
