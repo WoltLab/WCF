@@ -249,6 +249,10 @@ class PackageInstallationDispatcher {
 							1,
 							'enable_developer_tools'
 						]);
+						$statement->execute([
+							1,
+							'log_missing_language_items'
+						]);
 						
 						foreach (DevtoolsSetup::getInstance()->getOptionOverrides() as $optionName => $optionValue) {
 							$statement->execute([
