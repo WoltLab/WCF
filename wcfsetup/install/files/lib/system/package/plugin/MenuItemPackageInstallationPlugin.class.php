@@ -466,7 +466,7 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 					$data['menuID'] = $menuItemList->current()->menuID;
 					$data['parentItemID'] = $menuItemList->current()->itemID;
 					
-					unset($data['parent']);
+					unset($data['menu'], $data['parent']);
 				}
 				else {
 					$data['menu'] = (new Menu($menuItemList->current()->menuID))->identifier;
