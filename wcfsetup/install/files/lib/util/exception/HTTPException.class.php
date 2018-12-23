@@ -36,7 +36,7 @@ class HTTPException extends SystemException implements IExtraInformationExceptio
 	 */
 	public function getExtraInformation() {
 		$reply = $this->http->getReply();
-		$body = StringUtil::truncate(preg_replace('/[\x00-\x1F\x80-\xFF]/', '.', $reply['body']), 512, StringUtil::HELLIP, true);
+		$body = StringUtil::truncate(preg_replace('/[\x00-\x1F\x80-\xFF]/', '.', $reply['body']), 2048, StringUtil::HELLIP, true);
 		
 		return [
 			['Body', $body],
