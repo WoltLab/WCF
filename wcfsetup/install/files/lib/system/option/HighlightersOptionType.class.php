@@ -2,7 +2,6 @@
 namespace wcf\system\option;
 use wcf\data\option\Option;
 use wcf\system\bbcode\BBCodeHandler;
-use wcf\system\WCF;
 
 /**
  * Option type implementation for Prism highlighters selection.

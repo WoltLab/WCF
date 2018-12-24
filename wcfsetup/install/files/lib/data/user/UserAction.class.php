@@ -949,8 +949,11 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	
 	/**
 	 * Validates the 'resendActivationMail' action.
-	 * @throws UserInputException
-	 * @since 3.2
+	 * 
+	 * @throws	IllegalLinkException
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
+	 * @since	3.2
 	 */
 	public function validateResendActivationMail() {
 		$this->readObjects();

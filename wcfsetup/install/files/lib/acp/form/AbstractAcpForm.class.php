@@ -152,7 +152,7 @@ abstract class AbstractAcpForm extends AbstractForm {
 	 * object has been created.
 	 *
 	 * @param	DatabaseObject	$databaseObject
-	 * @return	string[]
+	 * @param	string		$editorClass
 	 */
 	public function saveI18n(DatabaseObject $databaseObject, $editorClass) {
 		$data = [];

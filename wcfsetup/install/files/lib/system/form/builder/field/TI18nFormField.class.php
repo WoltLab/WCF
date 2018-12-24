@@ -21,6 +21,8 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	3.2
+ * 
+ * @mixin	II18nFormField
  */
 trait TI18nFormField {
 	/**

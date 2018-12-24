@@ -137,6 +137,7 @@ class CronjobScheduler extends SingletonFactory {
 				$data['state'] = Cronjob::READY;
 				
 				switch ($cronjob->state) {
+					/** @noinspection PhpMissingBreakStatementInspection */
 					case Cronjob::EXECUTING:
 						// The cronjob spent two periods in the EXECUTING state.
 						// We must assume it crashed.

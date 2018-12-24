@@ -5,7 +5,6 @@ use wcf\system\package\plugin\ACPTemplatePackageInstallationPlugin;
 use wcf\system\package\plugin\FilePackageInstallationPlugin;
 use wcf\system\package\plugin\TemplatePackageInstallationPlugin;
 use wcf\system\setup\Installer;
-use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 
 /**

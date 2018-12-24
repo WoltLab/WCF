@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\page\AbstractPage;
 use wcf\system\WCF;

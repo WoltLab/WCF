@@ -16,7 +16,7 @@ class UserContentAction extends UserAction {
 	 * Checks permissions to bulk revert.
 	 */
 	public function validateBulkRevert() {
-		WCF::getSession()->checkPermissions(array('admin.content.canBulkRevertContentChanges'));
+		WCF::getSession()->checkPermissions(['admin.content.canBulkRevertContentChanges']);
 	}
 	
 	/**
