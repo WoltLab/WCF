@@ -575,7 +575,7 @@
 		<item name="wcf.acp.devtools.project.instructions.error.missingInstructions"><![CDATA[Es wurden keine Anweisungen angegeben.]]></item>
 		<item name="wcf.acp.devtools.project.instructions.edit"><![CDATA[Anweisungen bearbeiten]]></item>
 		<item name="wcf.acp.devtools.project.instruction.edit"><![CDATA[Anweisung bearbeiten]]></item>
-		<item name="wcf.acp.devtools.project.instruction.language.error.missingFiles"><![CDATA[Das Verzeichnis <kbd>{$directory}<kdb> enthält keine XML-Dateien.]]></item>
+		<item name="wcf.acp.devtools.project.instruction.language.error.missingFiles"><![CDATA[Das Verzeichnis <kbd>{$directory}</kbd> enthält keine XML-Dateien.]]></item>
 		<item name="wcf.acp.devtools.project.instruction.error.noXmlFile"><![CDATA[Die angegebene Datei ist keine XML-Datei.]]></item>
 		<item name="wcf.acp.devtools.project.instruction.delete.confirmMessages"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Anweisung wirklich löschen?]]></item>
 		<item name="wcf.acp.devtools.project.add.info"><![CDATA[Inkompatible Pakete, Installations- und Aktualisierungsanweisungen können erst beim Bearbeiten eines vorhandenen Projekts hinzugefügt werden.]]></item>
@@ -945,7 +945,7 @@
 		<item name="wcf.acp.language.item.languageCategoryID.mode.selection"><![CDATA[Manuelle Auswahl]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.description"><![CDATA[Der Text wird zur ausgewählten Text-Kategorie hinzugefügt.]]></item>
 		<item name="wcf.acp.language.item.languageItem"><![CDATA[Text-Bezeichner]]></item>
-		<item name="wcf.acp.language.item.languageItem.description"><![CDATA[Der Text-Bezeichner besteht aus mindestens drei durch Punkte getrennte Abschnitte. Jeder Abschnitt darf nur die folgenden Zeichen enthalten: <kbd>[A-z0-9-_]</kbd>.]]></item>
+		<item name="wcf.acp.language.item.languageItem.description"><![CDATA[Der Text-Bezeichner besteht aus mindestens drei durch Punkte getrennte Abschnitte. Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen enthalten: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.language.item.languageItem.error.format"><![CDATA[Der angegebene Bezeichner ist ungültig.]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.mode.error.automaticImpossible"><![CDATA[Die Text-Kategorie kann für den angegebenen Bezeichner nicht automatisch bestimmt werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} entweder den Text-Bezeichner ändern oder manuell eine Text-Kategorie auswählen.]]></item>
 		<item name="wcf.acp.language.item.languageItem.error.prefixMismatch"><![CDATA[Der angegebene Bezeichner beginnt nicht mit der ausgewählten Text-Kategorie.]]></item>
@@ -2011,7 +2011,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.objectType.objectType.error.notUnique"><![CDATA[Der angegebene Name wird bereits von einem anderen Objekttypen derselben Objekttyp-Definition verwendet.]]></item>
 		<item name="wcf.acp.pip.objectType.objectType.error.tooFewSegments"><![CDATA[Der angegebene Bezeichner enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName"><![CDATA[Definition-Name]]></item>
-		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.description"><![CDATA[Der Name einer Objekttyp-Definition besteht aus mindestens vier durch Punkte abgetrennte Abschnitten. Jeder Abschnitt darf nicht leer sein und darf nur aus Buchstaben, Zahlen, Unterstrichen und Bindestrichen bestehen. Normalerweise stimmt der erste Teil des Namens mit dem Bezeichner des Paketes überein. Example: <kbd>{$project->getPackage()->package}.type</kbd>]]></item>
+		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.description"><![CDATA[Der Name einer Objekttyp-Definition besteht aus mindestens vier durch Punkte abgetrennte Abschnitten. Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen enthalten: <kbd>[A-z0-9-_]</kbd>. Normalerweise stimmt der erste Teil des Namens mit dem Bezeichner des Paketes überein. Example: <kbd>{$project->getPackage()->package}.type</kbd>]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.notUnique"><![CDATA[Der angegebene Name wird bereits von einer anderen Definition verwendet.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.tooFewSegments"><![CDATA[Der angegebene Name enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.interfaceName"><![CDATA[PHP-Interface]]></item>
@@ -2177,7 +2177,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.cronjob.startMinute.error.format"><![CDATA[Das angegebene Format ist ungültig. {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} eine gültige Minute oder eine Liste gültiger Minuten angeben.]]></item>
 		<item name="wcf.acp.pip.cronjob.startMonth.error.format"><![CDATA[Das angegebene Format ist ungültig. {if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} einen gültigen Monat oder eine Liste gültiger Monate angeben.]]></item>
 		<item name="wcf.acp.pip.aclOption.categories.name"><![CDATA[Kategoriename]]></item>
-		<item name="wcf.acp.pip.aclOption.categories.name.description"><![CDATA[Der Name der ACL-Optionskategorie besteht aus mindestens zwei durch Punkte abgetrennte Abschnitten. Jeder Abschnitt darf nicht leer sein und darf nur aus Buchstaben, Zahlen, Unterstrichen und Bindestrichen bestehen.]]></item>
+		<item name="wcf.acp.pip.aclOption.categories.name.description"><![CDATA[Der Name der ACL-Optionskategorie besteht aus mindestens zwei durch Punkte abgetrennte Abschnitten. Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen enthalten: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.pip.aclOption.categories.name.error.tooFewSegments"><![CDATA[Der angegebene Kategoriename enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.pip.aclOption.objectType"><![CDATA[ACL-Objekttyp]]></item>
 		<item name="wcf.acp.pip.aclOption.objectType.categories.description"><![CDATA[Der ACL-Objekttyp legt fest zu welcher Art von Objekten die Kategorie gehört. {if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass nur ACL-Objekttypen des Paketes selbst oder seiner benötigten Pakete ausgewählt werden können.]]></item>
@@ -2193,7 +2193,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.userGroupOption.options.usersOnly"><![CDATA[Nur für registierte Benutzer]]></item>
 		<item name="wcf.acp.pip.userGroupOption.options.usersOnly.description"><![CDATA[Die Benutzergruppenberechtigung ist nur für Benutzergruppen verfügbar, die ausschließlich registrierte Benutzer enthält.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName"><![CDATA[Anbietername]]></item>
-		<item name="wcf.acp.pip.acpSearchProvider.providerName.description"><![CDATA[Der Name des ACP-Suchergebnis-Anbieters besteht aus mindestens vier durch Punkte abgetrennte Abschnitten. Jeder Abschnitt darf nicht leer sein und darf nur aus Buchstaben, Zahlen, Unterstrichen und Bindestrichen bestehen. Normalerweise stimmt der erste Teil des Namens mit dem Bezeichner des Paketes überein. Example: <kbd>{$project->getPackage()->package}.searchedObject</kbd>]]></item>
+		<item name="wcf.acp.pip.acpSearchProvider.providerName.description"><![CDATA[Der Name des ACP-Suchergebnis-Anbieters besteht aus mindestens vier durch Punkte abgetrennte Abschnitten. Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen enthalten: <kbd>[A-z0-9-_]</kbd>. Normalerweise stimmt der erste Teil des Namens mit dem Bezeichner des Paketes überein. Example: <kbd>{$project->getPackage()->package}.searchedObject</kbd>]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.notUnique"><![CDATA[Der angegebene Name wird bereits von einem anderen ACP-Suchergebnis-Anbieter verwendet.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.tooFewSegments"><![CDATA[Der angegebene Name enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.showOrder.description"><![CDATA[Der angegebene Wert bestimmt in welcher Reihenfolge die verschiedenen Arten von Suchergebnisse angezeigt werden.]]></item>
@@ -2351,8 +2351,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.menuItem.externalURL"><![CDATA[Externe URL]]></item>
 		<item name="wcf.acp.pip.menuItem.externalURL.description"><![CDATA[Wenn der Benutzer auf den Menüpunkt klickt, wird er auf die angegebene Website weitergeleitet.]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier"><![CDATA[Bezeichner des Menüpunktes]]></item>
-		<item name="wcf.acp.pip.menuItem.identifier.description"><![CDATA[Der Bezeichner des Menüpunktes wird zur Aktualisierung von Menüpunkten und für die Sprachvariablen des Menüpunktes verwendet. Der Bezeichner besteht aus mindestens vier durch Punkte abgetrennte Abschnitten.
-Jeder Abschnitt darf nicht leer sein und darf nur aus Buchstaben, Zahlen, Unterstrichen und Bindestrichen bestehen. Im Allgemeinen ist der erste Teil des Bezeichners der Paketbezeichner. Beispiel: <kbd>com.foo.bar.package.menuItem</kbd>]]></item>
+		<item name="wcf.acp.pip.menuItem.identifier.description"><![CDATA[Der Bezeichner des Menüpunktes wird zur Aktualisierung von Menüpunkten und für die Sprachvariablen des Menüpunktes verwendet. Der Bezeichner besteht aus mindestens vier durch Punkte abgetrennte Abschnitten. Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen enthalten: <kbd>[A-z0-9-_]</kbd>. Im Allgemeinen ist der erste Teil des Bezeichners der Paketbezeichner. Beispiel: <kbd>com.foo.bar.package.menuItem</kbd>]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier.error.notUnique"><![CDATA[Der angegebene Bezeichner wird bereits von einem anderen Menüpunkt verwendet.]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier.error.tooFewSegments"><![CDATA[Der angegebene Bezeichner enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.pip.menuItem.linkType"><![CDATA[Linktyp des Menüpunktes]]></item>
@@ -2373,7 +2372,7 @@ Jeder Abschnitt darf nicht leer sein und darf nur aus Buchstaben, Zahlen, Unters
 		<item name="wcf.acp.pip.box.cssClassName.description"><![CDATA[Die durch Komma abgetrennte CSS-Klassen werden dem Box-Element zugewiesen.]]></item>
 		<item name="wcf.acp.pip.box.identifier"><![CDATA[Bezeichner der Box]]></item>
 		<item name="wcf.acp.pip.box.identifier.description"><![CDATA[Der Bezeichner der Box wird zur Aktualisierung von Boxen verwendet. Der Bezeichner besteht aus mindestens vier durch Punkte abgetrennte Abschnitten.
-Jeder Abschnitt darf nicht leer sein und darf nur aus Buchstaben, Zahlen, Unterstrichen und Bindestrichen bestehen. Im Allgemeinen ist der erste Teil des Bezeichners der Paketbezeichner. Beispiel: <kbd>com.foo.bar.package.Box</kbd>]]></item>
+Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen enthalten: <kbd>[A-z0-9-_]</kbd>. Im Allgemeinen ist der erste Teil des Bezeichners der Paketbezeichner. Beispiel: <kbd>com.foo.bar.package.Box</kbd>]]></item>
 		<item name="wcf.acp.pip.box.identifier.error.notUnique"><![CDATA[Der angegebene Bezeichner wird bereits von einer anderen Box verwendet.]]></item>
 		<item name="wcf.acp.pip.box.identifier.error.tooFewSegments"><![CDATA[Der angegebene Bezeichner enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.pip.box.name"><![CDATA[Name]]></item>
@@ -2396,7 +2395,7 @@ Jeder Abschnitt darf nicht leer sein und darf nur aus Buchstaben, Zahlen, Unters
 		<item name="wcf.acp.pip.menu.createBox"><![CDATA[Automatisch eine Box für das Menü erstellen]]></item>
 		<item name="wcf.acp.pip.menu.createBox.description"><![CDATA[Wenn ausgewäht, wird nach der Erstellung des Menüs auch eine Box erstellt, die das Menü enthält.]]></item>
 		<item name="wcf.acp.pip.menu.identifier"><![CDATA[Menü-Bezeichner]]></item>
-		<item name="wcf.acp.pip.menu.identifier.description"><![CDATA[Der Bezeichner der Menüs wird zur Aktualisierung von Menüs und für die Sprachvariablen des Menüs verwendet. Der Bezeichner besteht aus mindestens vier durch Punkte abgetrennte Abschnitten. sJeder Abschnitt darf nicht leer sein und darf nur aus Buchstaben, Zahlen, Unterstrichen und Bindestrichen bestehen. Im Allgemeinen ist der erste Teil des Bezeichners der Paketbezeichner. Beispiel: <kbd>com.foo.bar.package.menu</kbd>]]></item>
+		<item name="wcf.acp.pip.menu.identifier.description"><![CDATA[Der Bezeichner der Menüs wird zur Aktualisierung von Menüs und für die Sprachvariablen des Menüs verwendet. Der Bezeichner besteht aus mindestens vier durch Punkte abgetrennte Abschnitten. Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen enthalten: <kbd>[A-z0-9-_]</kbd>. Im Allgemeinen ist der erste Teil des Bezeichners der Paketbezeichner. Beispiel: <kbd>com.foo.bar.package.menu</kbd>]]></item>
 		<item name="wcf.acp.pip.menu.identifier.error.notUnique"><![CDATA[Der angegebene Bezeichner wird beits von einem anderen Menü verwendet.]]></item>
 		<item name="wcf.acp.pip.menu.identifier.error.tooFewSegments"><![CDATA[Der angegebene Bezeichner enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.pip.page.allowSpidersToIndex"><![CDATA[Suchmaschinen-Robotern dürfen diese Seite indizieren]]></item>
@@ -2417,7 +2416,7 @@ Jeder Abschnitt darf nicht leer sein und darf nur aus Buchstaben, Zahlen, Unters
 		<item name="wcf.acp.pip.page.hasFixedParent"><![CDATA[Hat feste übergeordnete Seite]]></item>
 		<item name="wcf.acp.pip.page.hasFixedParent.description"><![CDATA[Administratoren sind nicht in der Lage die übergeordnete Seite dieser Seite zu ändern.]]></item>
 		<item name="wcf.acp.pip.page.identifier"><![CDATA[Seiten-Bezeichner]]></item>
-		<item name="wcf.acp.pip.page.identifier.description"><![CDATA[Der Bezeichner besteht aus mindestens vier durch Punkte abgetrennte Abschnitten. Jeder Abschnitt darf nicht leer sein und darf nur aus Buchstaben, Zahlen, Unterstrichen und Bindestrichen bestehen. Im Allgemeinen ist der erste Teil des Bezeichners der Paketbezeichner und der zweite Teil der unqualifizierten Klassennamen ohne die Controller-Typ-Suffixe <kbd>Form</kbd> und <kbd>Page</kbd>. Beispiel: <kbd>com.foo.bar.package.Baz</kbd>]]></item>
+		<item name="wcf.acp.pip.page.identifier.description"><![CDATA[Der Bezeichner besteht aus mindestens vier durch Punkte abgetrennte Abschnitten. Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen enthalten: <kbd>[A-z0-9-_]</kbd>. Im Allgemeinen ist der erste Teil des Bezeichners der Paketbezeichner und der zweite Teil der unqualifizierten Klassennamen ohne die Controller-Typ-Suffixe <kbd>Form</kbd> und <kbd>Page</kbd>. Beispiel: <kbd>com.foo.bar.package.Baz</kbd>]]></item>
 		<item name="wcf.acp.pip.page.identifier.error.notUnique"><![CDATA[Der angegebene Bezeichner wird bereits von einer anderen Seite verwendet.]]></item>
 		<item name="wcf.acp.pip.page.identifier.error.tooFewSegments"><![CDATA[Der angegebene Bezeichner enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.pip.page.name"><![CDATA[Name]]></item>

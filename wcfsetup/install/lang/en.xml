@@ -524,7 +524,7 @@
 		<item name="wcf.acp.devtools.project.instruction.value"><![CDATA[File(s)]]></item>
 		<item name="wcf.acp.devtools.project.instruction.value.description"><![CDATA[The entered file will be processed during the installation/update.]]></item>
 		<item name="wcf.acp.devtools.project.instructions.description"><![CDATA[The instructions tell the installation and update routine what needs to be done to successfully install/update the package.]]></item>
-		<item name="wcf.acp.devtools.project.packageIdentifier.description"><![CDATA[The package identifier uniquely identifies the package. The identifier consists of at least three segments that are separated by dots. Each segment may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
+		<item name="wcf.acp.devtools.project.packageIdentifier.description"><![CDATA[The package identifier uniquely identifies the package. The identifier consists of at least three segments that are separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.devtools.project.isApplication.description"><![CDATA[An app has its own frontend with a dedicated namespace, database table prefix and template locations. It offers a logical (and to some extent physical) separation from other parts of Core and other installed apps. The last segment of the package identifier is used as the abbreviation of the application within the system. App abbreviations have to be unique within an installation.]]></item>
 		<item name="wcf.acp.devtools.project.packageDate.description"><![CDATA[The package creation date refers to when this version of the package was published. Format: <kbd>YYYY-MM-DD</kbd>.]]></item>
 		<item name="wcf.acp.devtools.project.packageUrl.description"><![CDATA[The package website provides detailed information on the package.]]></item>
@@ -923,7 +923,7 @@
 		<item name="wcf.acp.language.item.languageCategoryID.mode.selection"><![CDATA[Manual Selection]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.description"><![CDATA[The phrase will be added to the selected language category.]]></item>
 		<item name="wcf.acp.language.item.languageItem"><![CDATA[Phrase Identifier]]></item>
-		<item name="wcf.acp.language.item.languageItem.description"><![CDATA[The phrase identifier consists of at least three segments that are separated by dots. Each segment may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
+		<item name="wcf.acp.language.item.languageItem.description"><![CDATA[The phrase identifier consists of at least three segments that are separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.language.item.languageItem.error.format"><![CDATA[The entered identifier is invalid.]]></item>
 		<item name="wcf.acp.language.item.languageCategoryID.mode.error.automaticImpossible"><![CDATA[The language category cannot be determined automatically for the entered phrase identifier. You have to either change the phrase identifier or manually select a language category.]]></item>
 		<item name="wcf.acp.language.item.languageItem.error.prefixMismatch"><![CDATA[The entered identifier does not begin with the selected language category.]]></item>
@@ -1876,7 +1876,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	<category name="wcf.acp.pip">
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.data.title"><![CDATA[Ad Location Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName"><![CDATA[Category]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName.description"><![CDATA[Ad locations are grouped by their category in the ad location selection when creating and editing ads. The category consists of at least four segments that are separated by dots. Each segment may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName.description"><![CDATA[Ad locations are grouped by their category in the ad location selection when creating and editing ads. The category consists of at least four segments that are separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.categoryName.error.tooFewSegments"><![CDATA[The entered category only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.cssClassName"><![CDATA[CSS Classes]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.cssClassName.description"><![CDATA[The entered CSS classes are assigned to the element that wraps all ads at the specific location.]]></item>
@@ -1914,7 +1914,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.error.unknownObjectType"><![CDATA[The user content object type <kbd>{$objectType}</kbd> does not exist.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.data.title"><![CDATA[Notification Object Type Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category"><![CDATA[Category]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.description"><![CDATA[The category is used to group events on the notification settings page. The category consists of at least three segments that are separated by dots. Each segment may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.description"><![CDATA[The category is used to group events on the notification settings page. The category consists of at least three segments that are separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.error.tooFewSegments"><![CDATA[The category only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.data.title"><![CDATA[Rebuild Data Worker Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.niceValue"><![CDATA[Nice Value]]></item>
@@ -1933,7 +1933,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.sitemap.object.rebuildTime.description"><![CDATA[After the entered time interval, the sitemap will be rebuilt by the system.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.data.title"><![CDATA[Statistics Entry Data]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName"><![CDATA[Category]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName.description"><![CDATA[Statistics entries are grouped by their category on the stats page. The category consists of at least three segments that are separated by dots. Each segment may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName.description"><![CDATA[Statistics entries are grouped by their category on the stats page. The category consists of at least three segments that are separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.categoryName.error.tooFewSegments"><![CDATA[The entered category only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.isDefault"><![CDATA[Is Default Statistics Entry]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.statDailyHandler.isDefault.description"><![CDATA[Default statistics entries are pre-selected when loading the stats page.]]></item>
@@ -2016,11 +2016,11 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.visitTracker.objectType.description"><![CDATA[This object type definition is used to register types of objects for which it can be tracked if and when users have already seen or accessed them (the last time).]]></item>
 		<item name="wcf.acp.pip.objectType.definitionName.com.woltlab.wcf.article.discussionProvider.description"><![CDATA[This object type definition is used to register different providers for where discussions on articles take place.]]></item>
 		<item name="wcf.acp.pip.objectType.objectType"><![CDATA[Object Type Identifier]]></item>
-		<item name="wcf.acp.pip.objectType.objectType.description"><![CDATA[Textual identifier of the object type that is primarily used in PHP code. The identifier consists of at least four segments that are separated by dots. Each segment may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
+		<item name="wcf.acp.pip.objectType.objectType.description"><![CDATA[Textual identifier of the object type that is primarily used in PHP code. The identifier consists of at least four segments that are separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.pip.objectType.objectType.error.notUnique"><![CDATA[The entered name is already used by another object type of the same object type definition.]]></item>
 		<item name="wcf.acp.pip.objectType.objectType.error.tooFewSegments"><![CDATA[The entered identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName"><![CDATA[Definition Name]]></item>
-		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.description"><![CDATA[The name of an object type definitions consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the definition name matches the package identifier. Example: <kbd>{$project->getPackage()->package}.type</kbd>]]></item>
+		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.description"><![CDATA[The name of an object type definitions consists of least four segments separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>. In general, the first part of the definition name matches the package identifier. Example: <kbd>{$project->getPackage()->package}.type</kbd>]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.notUnique"><![CDATA[The entered name is already used by another definition.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.definitionName.error.tooFewSegments"><![CDATA[The entered name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.objectTypeDefinition.interfaceName"><![CDATA[PHP Interface]]></item>
@@ -2061,7 +2061,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.templateListener.templateName.description"><![CDATA[The template listeners’ code will be inserted into the selected template.]]></item>
 		<item name="wcf.acp.pip.coreObject.objectName.error.notUnique"><![CDATA[The entered class is already registered as a core object.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName"><![CDATA[Provider Name]]></item>
-		<item name="wcf.acp.pip.acpSearchProvider.providerName.description"><![CDATA[The name of an ACP search result provider consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the definition name matches the package identifier. Example: <kbd>{$project->getPackage()->package}.searchedObject</kbd>]]></item>
+		<item name="wcf.acp.pip.acpSearchProvider.providerName.description"><![CDATA[The name of an ACP search result provider consists of least four segments separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>. In general, the first part of the definition name matches the package identifier. Example: <kbd>{$project->getPackage()->package}.searchedObject</kbd>]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.notUnique"><![CDATA[The entered name is already used by another acp search result provider.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.providerName.error.tooFewSegments"><![CDATA[The entered provider name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.acpSearchProvider.showOrder.description"><![CDATA[The entered value determines in which order the different types of search results are shown.]]></item>
@@ -2075,7 +2075,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.mediaProvider.html.error.className"><![CDATA[You cannot enter HTML code if you have already provided a PHP class that handles the output.]]></item>
 		<item name="wcf.acp.pip.mediaProvider.html.error.noClassName"><![CDATA[You have to provide either HTML code or a PHP class that handles the output.]]></item>
 		<item name="wcf.acp.pip.aclOption.categories.name"><![CDATA[Category Name]]></item>
-		<item name="wcf.acp.pip.aclOption.categories.name.description"><![CDATA[The name of an ACL option category consists of least two segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes.]]></item>
+		<item name="wcf.acp.pip.aclOption.categories.name.description"><![CDATA[The name of an ACL option category consists of least two segments separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.pip.aclOption.categories.name.error.tooFewSegments"><![CDATA[The entered category name only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.aclOption.options.categoryName"><![CDATA[Category]]></item>
 		<item name="wcf.acp.pip.aclOption.options.categoryName.description"><![CDATA[The ACL option is listed in the selected category.]]></item>
@@ -2125,7 +2125,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.cronjob.startMinute.error.format"><![CDATA[The entered format is invalid. You have to entered a valid minute or a list of valid minutes.]]></item>
 		<item name="wcf.acp.pip.cronjob.startMonth.error.format"><![CDATA[The entered format is invalid. You have to entered a valid month or a list of valid months.]]></item>
 		<item name="wcf.acp.pip.menu.identifier"><![CDATA[Menu Identifier]]></item>
-		<item name="wcf.acp.pip.menu.identifier.description"><![CDATA[The menu identifier is used to update menus and for menu-related language item names. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier. Example: <kbd>com.foo.bar.package.menu</kbd>]]></item>
+		<item name="wcf.acp.pip.menu.identifier.description"><![CDATA[The menu identifier is used to update menus and for menu-related language item names. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>. In general, the first part of the menu identifier is the package identifier. Example: <kbd>com.foo.bar.package.menu</kbd>]]></item>
 		<item name="wcf.acp.pip.menu.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another menu.]]></item>
 		<item name="wcf.acp.pip.menu.identifier.error.tooFewSegments"><![CDATA[The entered menu identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.menu.createBox"><![CDATA[Automatically Create Box for Menu]]></item>
@@ -2139,7 +2139,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.menu.boxCssClassName"><![CDATA[Box CSS Classes]]></item>
 		<item name="wcf.acp.pip.menu.boxCssClassName.description"><![CDATA[The entered comma-separated CSS classes are assigned to the box containing the menu.]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier"><![CDATA[Menu Item Identifier]]></item>
-		<item name="wcf.acp.pip.menuItem.identifier.description"><![CDATA[The menu item identifier is used to update menu items and for menu item-related language item names. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier. Example: <kbd>com.foo.bar.package.menuItem</kbd>]]></item>
+		<item name="wcf.acp.pip.menuItem.identifier.description"><![CDATA[The menu item identifier is used to update menu items and for menu item-related language item names. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>. In general, the first part of the menu identifier is the package identifier. Example: <kbd>com.foo.bar.package.menuItem</kbd>]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another menu item.]]></item>
 		<item name="wcf.acp.pip.menuItem.identifier.error.tooFewSegments"><![CDATA[The identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.menuItem.menu"><![CDATA[Menu]]></item>
@@ -2154,7 +2154,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.menuItem.externalURL"><![CDATA[External URL]]></item>
 		<item name="wcf.acp.pip.menuItem.externalURL.description"><![CDATA[When clicking on the menu item, the user is redirected to the entered website.]]></item>
 		<item name="wcf.acp.pip.page.identifier"><![CDATA[Page Identifier]]></item>
-		<item name="wcf.acp.pip.page.identifier.description"><![CDATA[The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier and the second part is the unqualified controller class without the controller type suffixes <kbd>Form</kbd> and <kbd>Page</kbd>. Example: <kbd>com.foo.bar.package.Baz</kbd>]]></item>
+		<item name="wcf.acp.pip.page.identifier.description"><![CDATA[The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>. In general, the first part of the menu identifier is the package identifier and the second part is the unqualified controller class without the controller type suffixes <kbd>Form</kbd> and <kbd>Page</kbd>. Example: <kbd>com.foo.bar.package.Baz</kbd>]]></item>
 		<item name="wcf.acp.pip.page.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another page.]]></item>
 		<item name="wcf.acp.pip.page.identifier.error.tooFewSegments"><![CDATA[The identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.page.pageType"><![CDATA[Page Type]]></item>
@@ -2215,7 +2215,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.box.objectType"><![CDATA[Controller]]></item>
 		<item name="wcf.acp.pip.box.objectType.description"><![CDATA[The box controller provides the content of the box.]]></item>
 		<item name="wcf.acp.pip.box.identifier"><![CDATA[Box Identifier]]></item>
-		<item name="wcf.acp.pip.box.identifier.description"><![CDATA[The box identifier is used to update boxes. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain letters, numbers, underscores, and dashes. In general, the first part of the menu identifier is the package identifier. Example: <kbd>com.foo.bar.package.Box</kbd>]]></item>
+		<item name="wcf.acp.pip.box.identifier.description"><![CDATA[The box identifier is used to update boxes. The identifier consists of least four segments separated by dots. Each segment must not be empty and may only contain the following characters: <kbd>[A-z0-9-_]</kbd>. In general, the first part of the menu identifier is the package identifier. Example: <kbd>com.foo.bar.package.Box</kbd>]]></item>
 		<item name="wcf.acp.pip.box.identifier.error.notUnique"><![CDATA[The entered identifier is already used by another box.]]></item>
 		<item name="wcf.acp.pip.box.identifier.error.tooFewSegments"><![CDATA[The identifier only contains {#$segmentCount} segment{if $segmentCount > 1}s{/if}.]]></item>
 		<item name="wcf.acp.pip.box.name"><![CDATA[Name]]></item>
