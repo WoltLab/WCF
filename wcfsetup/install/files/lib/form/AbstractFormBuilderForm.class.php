@@ -198,7 +198,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	public function show() {
 		$this->buildForm();
 		
-		return parent::show();
+		parent::show();
 	}
 	
 	/**

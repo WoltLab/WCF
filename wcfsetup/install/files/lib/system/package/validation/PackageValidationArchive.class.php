@@ -17,7 +17,7 @@ use wcf\system\WCF;
 class PackageValidationArchive implements \RecursiveIterator {
 	/**
 	 * list of excluded packages grouped by package
-	 * @var	string[][]
+	 * @var	string[][][]
 	 */
 	protected static $excludedPackages = [];
 	

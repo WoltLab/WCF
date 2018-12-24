@@ -202,7 +202,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm {
 			})
 		);
 		
-		/** @var RadioButtonFormField $languageItemCategoryID */
+		/** @var RadioButtonFormField $modeField */
 		$modeField = $dataContainer->getNodeById('languageCategoryIDMode');
 		
 		$dataContainer->getNodeById('languageCategoryID')->addDependency(

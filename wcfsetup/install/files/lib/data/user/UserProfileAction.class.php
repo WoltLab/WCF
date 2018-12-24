@@ -626,6 +626,7 @@ class UserProfileAction extends UserAction {
 	 * Validates the `deleteCoverPhoto` action.
 	 * 
 	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
 	 */
 	public function validateDeleteCoverPhoto() {
 		if (!MODULE_USER_COVER_PHOTO) {

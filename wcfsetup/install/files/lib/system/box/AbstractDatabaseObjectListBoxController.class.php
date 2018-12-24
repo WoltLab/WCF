@@ -148,7 +148,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 		/** @var FormContainer $dataContainer */
 		$dataContainer = $form->getNodeById('dataTabData');
 		
-		/** @var SingleSelectionFormField $objectType */
+		/** @var SingleSelectionFormField $objectTypeField */
 		$objectTypeField = $dataContainer->getNodeById('objectType');
 		
 		$prefix = str_replace('.', '_', $objectType) . '_';

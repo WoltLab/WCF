@@ -134,8 +134,10 @@ class XML {
 	/**
 	 * Reads the schema location and returns an array containing ['namespace', 'uri']. 
 	 * 
-	 * @return string[]
-	 * @since 3.2
+	 * @return	string[]
+	 * 
+	 * @throws	\UnexpectedValueException
+	 * @since	3.2
 	 */
 	public function getSchemaLocation() {
 		$schema = $this->document->documentElement->getAttributeNS(
@@ -147,7 +149,7 @@ class XML {
 		
 		// Schemas must include a namespace.
 		if (count($parts) !== 2) {
-			throw new SystemException("XML document '".$this->path."' does not provide a valid schema.");
+			throw new \UnexpectedValueException("XML document '".$this->path."' does not provide a valid schema.");
 		}
 		
 		return $parts;

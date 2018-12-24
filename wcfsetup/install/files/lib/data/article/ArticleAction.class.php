@@ -312,6 +312,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Validates parameters to delete articles.
 	 *
+	 * @throws	PermissionDeniedException
 	 * @throws	UserInputException
 	 */
 	public function validateDelete() {
@@ -375,6 +376,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Validates parameters to move articles to the trash bin.
 	 * 
+	 * @throws	PermissionDeniedException
 	 * @throws	UserInputException
 	 */
 	public function validateTrash() {
@@ -610,6 +612,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Validates the `publish` action.
 	 * 
+	 * @throws	PermissionDeniedException
 	 * @throws	UserInputException
 	 */
 	public function validatePublish() {
@@ -675,7 +678,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * Validates the `unpublish` action.
-	 *
+	 * 
+	 * @throws	PermissionDeniedException
 	 * @throws	UserInputException
 	 */
 	public function validateUnpublish() {
