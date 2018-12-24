@@ -3727,7 +3727,8 @@ Dateianhänge:
 		<item name="wcf.global.form.error.lessThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss kleiner sein als {#$lessThan}.{/literal}]]></item>
 		<item name="wcf.global.form.error.greaterThan.javaScript"><![CDATA[{literal}Der eingegebene Wert muss größer sein als {#$greaterThan}.{/literal}]]></item>
 		<!-- /deprecated since 2.1 -->
-</category>
+		<item name="wcf.global.form.required"><![CDATA[Benötigte Angaben]]></item>
+	</category>
 	<category name="wcf.form">
 		<item name="wcf.form.field.className"><![CDATA[Klasse]]></item>
 		<item name="wcf.form.field.className.description.interface"><![CDATA[Die angegebene Klasse (ohne Backslash als erstes Zeichen) muss das Interface <kbd>{$interface}</kbd> implementieren.]]></item>
