@@ -2,6 +2,7 @@
 namespace wcf\system\cronjob;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\data\cronjob\Cronjob;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\WCF;
 
 /**
@@ -31,8 +32,29 @@ class AttachmentCleanUpCronjob extends AbstractCronjob {
 		]);
 		$attachmentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
+		if (MODULE_CONTACT_FORM && CONTACT_FORM_PRUNE_ATTACHMENTS > 0) {
+			$attachmentIDs = array_merge($attachmentIDs, $this->getOldContactAttachmentIDs());
+		}
+		
 		if (!empty($attachmentIDs)) {
 			AttachmentEditor::deleteAll($attachmentIDs);
 		}
+	}
+	
+	/**
+	 * @return int[]
+	 */
+	protected function getOldContactAttachmentIDs() {
+		$sql = "SELECT	attachmentID
+			FROM	wcf".WCF_N."_attachment
+			WHERE	objectTypeID = ?
+				AND uploadTime < ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			ObjectTypeCache::getInstance()->getObjectTypeIDByName('com.woltlab.wcf.attachment.objectType', 'com.woltlab.wcf.contact'),
+			TIME_NOW - (CONTACT_FORM_PRUNE_ATTACHMENTS * 86400)
+		]);
+		
+		return $statement->fetchAll(\PDO::FETCH_COLUMN);
 	}
 }

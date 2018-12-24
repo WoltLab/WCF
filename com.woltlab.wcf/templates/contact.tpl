@@ -71,6 +71,12 @@
 		
 		{event name='optionFields'}
 		
+		{if CONTACT_FORM_ENABLE_ATTACHMENTS && !$attachmentHandler|empty && $attachmentHandler->canUpload()}
+			<div class="contactFormAttachments">
+				{include file='messageFormAttachments'}
+			</div>
+		{/if}
+		
 		<dl{if $errorField == 'privacyPolicyConfirmed'} class="formError"{/if}>
 			<dt></dt>
 			<dd>

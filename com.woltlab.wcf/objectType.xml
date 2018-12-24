@@ -184,6 +184,11 @@
 			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
 			<classname>wcf\system\moderation\queue\report\UserModerationQueueReportHandler</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.contact</name>
+			<definitionname>com.woltlab.wcf.attachment.objectType</definitionname>
+			<classname>wcf\system\attachment\ContactAttachmentObjectType</classname>
+		</type>
 		<!-- page -->
 		<type>
 			<name>com.woltlab.wcf.page.recentActivityEvent</name>

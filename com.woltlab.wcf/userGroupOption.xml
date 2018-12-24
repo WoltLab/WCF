@@ -33,6 +33,9 @@
 			<category name="user.message.comment">
 				<parent>user.message</parent>
 			</category>
+			<category name="user.message.contactForm">
+				<parent>user.message</parent>
+			</category>
 			<category name="user.cms">
 				<parent>user</parent>
 			</category>
@@ -558,7 +561,6 @@
 				<categoryname>user.message.attachment</categoryname>
 				<optiontype>fileSize</optiontype>
 				<defaultvalue>1000000</defaultvalue>
-				<options>module_attachment</options>
 				<minvalue>10000</minvalue>
 			</option>
 			<option name="user.attachment.allowedExtensions">
@@ -572,14 +574,12 @@ bmp
 zip
 txt
 pdf</defaultvalue>
-				<options>module_attachment</options>
 				<wildcard>*</wildcard>
 			</option>
 			<option name="user.attachment.maxCount">
 				<categoryname>user.message.attachment</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>10</defaultvalue>
-				<options>module_attachment</options>
 				<minvalue>1</minvalue>
 				<maxvalue>100</maxvalue>
 			</option>
@@ -603,6 +603,34 @@ pdf</defaultvalue>
 				<optiontype>BBCodeSelect</optiontype>
 			</option>
 			<!-- /user.message.comment -->
+			<!-- user.message.contactForm -->
+			<option name="user.contactForm.attachment.maxSize">
+				<categoryname>user.message.contactForm</categoryname>
+				<optiontype>fileSize</optiontype>
+				<defaultvalue>1000000</defaultvalue>
+				<minvalue>10000</minvalue>
+			</option>
+			<option name="user.contactForm.attachment.allowedExtensions">
+				<categoryname>user.message.contactForm</categoryname>
+				<optiontype>textarea</optiontype>
+				<defaultvalue>gif
+jpg
+jpeg
+png
+bmp
+zip
+txt
+pdf</defaultvalue>
+				<wildcard>*</wildcard>
+			</option>
+			<option name="user.contactForm.attachment.maxCount">
+				<categoryname>user.message.contactForm</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>5</defaultvalue>
+				<minvalue>1</minvalue>
+				<maxvalue>100</maxvalue>
+			</option>
+			<!-- /user.message.contactForm -->
 			<!-- user.signature -->
 			<option name="user.signature.canEditSignature">
 				<categoryname>user.signature</categoryname>

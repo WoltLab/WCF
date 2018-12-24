@@ -839,6 +839,11 @@
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.canUploadCoverPhoto"><![CDATA[Kann eigenes Titelbild hochladen]]></item>
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.maxSize"><![CDATA[Maximale Dateigröße]]></item>
 		<item name="wcf.acp.group.option.admin.content.reaction.canManageReactionType"><![CDATA[Kann Reaktions-Typen verwalten]]></item>
+		<item name="wcf.acp.group.option.category.user.message.contactForm"><![CDATA[Kontakt-Formular]]></item>
+		<item name="wcf.acp.group.option.user.contactForm.attachment.maxSize"><![CDATA[Maximale Dateianhangsgröße]]></item>
+		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
+		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions.description"><![CDATA[Eine Dateiendung pro Zeile]]></item>
+		<item name="wcf.acp.group.option.user.contactForm.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[Über WoltLab Suite&trade;]]></item>
@@ -1649,6 +1654,10 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.prune_ip_address"><![CDATA[Speicherzeit für IP-Adressen]]></item>
 		<item name="wcf.acp.option.prune_ip_address.description"><![CDATA[Zeitraum, nachdem alte IP-Adressen automatisch gelöscht werden. [0, um die Löschung zu deaktivieren]]></item>
 		<item name="wcf.acp.option.breadcrumbs_home_use_page_title"><![CDATA[Titel der Seite für die Startseite in den Breadcrumbs verwenden]]></item>
+		<item name="wcf.acp.option.category.message.contactForm"><![CDATA[Kontakt-Formular]]></item>
+		<item name="wcf.acp.option.contact_form_enable_attachments"><![CDATA[Dateianhänge im Kontakt-Formular aktivieren]]></item>
+		<item name="wcf.acp.option.contact_form_prune_attachments"><![CDATA[Dateianhänge automatisch entfernen]]></item>
+		<item name="wcf.acp.option.contact_form_prune_attachments.description"><![CDATA[Alte Dateianhänge werden nach Ablauf der Frist automatisch gelöscht. [0, um die Löschung zu deaktivieren]]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Eingabefelder]]></item>
@@ -3244,9 +3253,17 @@ Fehler sind beispielsweise:
 
 E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 {foreach from=$options item=option}
-{@$option['title']}: {if !$option['isMessage']}{@$option['value']}{else}
-{@$option['value']}{/if}
-{/foreach}]]></item>
+{@$option['title']}: {if !$option['isMessage']}{@$option['value']}{else} {* this line ends with a space *}
+{@$option['value']}{/if} {* this line ends with a space *}
+{/foreach}
+{if !$attachments|empty}
+
+Dateianhänge:
+{foreach from=$attachments item=attachment}
+- {$attachment->getTitle()} [URL: {@$attachment->getLink()} ]
+{/foreach}
+{if CONTACT_FORM_PRUNE_ATTACHMENTS}(Dateianhänge werden nach {if CONTACT_FORM_PRUNE_ATTACHMENTS == 1}einem Tag{else}{CONTACT_FORM_PRUNE_ATTACHMENTS} Tagen{/if} gelöscht.){/if} {* this line ends with a space *}
+{/if}]]></item>
 		<item name="wcf.contact.mail.html"><![CDATA[<h2>Hallo,</h2>
 
 <p>„{$name}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über das Kontaktformular auf Website <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> folgende Nachricht gesandt:</p>
@@ -3255,7 +3272,19 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 {foreach from=$options item=option}
 <p><strong>{@$option['title']}:</strong> {if !$option['isMessage']}{@$option['value']}{else}
 {@$option['value']|newlineToBreak}{/if}</p>
-{/foreach}]]></item>
+{/foreach}
+{if !$attachments|empty}
+<p><br></p>
+<p>Dateianhänge:</p>
+<ul>
+{foreach from=$attachments item=attachment}
+<li><a href="{$attachment->getLink()}">{$attachment->getTitle()}</a></li>
+{/foreach}
+</ul>
+{if CONTACT_FORM_PRUNE_ATTACHMENTS}
+<p><small>(Dateianhänge werden nach {if CONTACT_FORM_PRUNE_ATTACHMENTS == 1}einem Tag{else}{CONTACT_FORM_PRUNE_ATTACHMENTS} Tagen{/if} gelöscht.)</small></p>
+{/if}
+{/if}]]></item>
 		<item name="wcf.contact.option1"><![CDATA[Betreff]]></item>
 		<item name="wcf.contact.optionDescription1"><![CDATA[Kurze, prägnante Beschreibung der Anfrage.]]></item>
 		<item name="wcf.contact.option2"><![CDATA[Nachricht]]></item>

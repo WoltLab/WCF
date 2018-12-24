@@ -433,6 +433,12 @@ CREATE TABLE wcf1_condition (
 	conditionData MEDIUMTEXT
 );
 
+DROP TABLE IF EXISTS wcf1_contact_attachment;
+CREATE TABLE wcf1_contact_attachment (
+	attachmentID INT(10) NOT NULL,
+	accessKey CHAR(40) NOT NULL
+);
+
 DROP TABLE IF EXISTS wcf1_contact_option;
 CREATE TABLE wcf1_contact_option (
 	optionID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1906,6 +1912,8 @@ ALTER TABLE wcf1_clipboard_page ADD FOREIGN KEY (actionID) REFERENCES wcf1_clipb
 ALTER TABLE wcf1_clipboard_page ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_condition ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_contact_attachment ADD FOREIGN KEY (attachmentID) REFERENCES wcf1_attachment (attachmentID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_core_object ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 

@@ -221,6 +221,9 @@
 			<category name="message.search">
 				<parent>message</parent>
 			</category>
+			<category name="message.contactForm">
+				<parent>message</parent>
+			</category>
 			<!-- /message -->
 			<category name="dashboard"/>
 			<category name="dashboard.content">
@@ -267,11 +270,6 @@
 				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="visitor_use_tiny_build">
-				<categoryname>module.system</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-			</option>
-			<option name="module_contact_form">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
@@ -1525,6 +1523,28 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<defaultvalue>0</defaultvalue>
 			</option>
 			<!-- /message.general.poll -->
+			<!-- message.contactForm -->
+			<option name="module_contact_form">
+				<categoryname>message.contactForm</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<enableoptions>contact_form_enable_attachments</enableoptions>
+			</option>
+			<option name="contact_form_enable_attachments">
+				<categoryname>message.contactForm</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<enableoptions>contact_form_prune_attachments</enableoptions>
+			</option>
+			<option name="contact_form_prune_attachments">
+				<categoryname>message.contactForm</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>180</defaultvalue>
+				<minvalue>0</minvalue>
+				<maxvalue>365</maxvalue>
+				<suffix>days</suffix>
+			</option>
+			<!-- /message.contactForm -->
 			<!-- cms.media.thumbnail -->
 			<option name="media_small_thumbnail_width">
 				<categoryname>cms.media.thumbnail</categoryname>

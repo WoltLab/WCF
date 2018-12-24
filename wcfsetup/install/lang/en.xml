@@ -816,6 +816,11 @@
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.maxSize"><![CDATA[Maximum Image File Size]]></item>
 		<item name="wcf.acp.group.option.admin.content.reaction.canManageReactionType"><![CDATA[Can manage reaction types]]></item>
 		<item name="wcf.acp.group.option.user.signature.canEditSignature"><![CDATA[Can edit own signature]]></item>
+		<item name="wcf.acp.group.option.category.user.message.contactForm"><![CDATA[Contact Form]]></item>
+		<item name="wcf.acp.group.option.user.contactForm.attachment.maxSize"><![CDATA[Maximum Attachment File Size]]></item>
+		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions"><![CDATA[Allowed Attachment File Extensions]]></item>
+		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions.description"><![CDATA[Enter one extension per line.]]></item>
+		<item name="wcf.acp.group.option.user.contactForm.attachment.maxCount"><![CDATA[Maximum Attachments per Message]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab Suite&trade;]]></item>
@@ -1634,6 +1639,10 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.prune_ip_address"><![CDATA[Storage Time Period for IP Addresses]]></item>
 		<item name="wcf.acp.option.prune_ip_address.description"><![CDATA[Stored IP addresses will be removed after the following days. Use 0 to disable.]]></item>
 		<item name="wcf.acp.option.breadcrumbs_home_use_page_title"><![CDATA[Use the page title for the home page in the breadcrumbs]]></item>
+		<item name="wcf.acp.option.category.message.contactForm"><![CDATA[Contact Form]]></item>
+		<item name="wcf.acp.option.contact_form_enable_attachments"><![CDATA[Enable attachments for contact messages]]></item>
+		<item name="wcf.acp.option.contact_form_prune_attachments"><![CDATA[Prune old attachments]]></item>
+		<item name="wcf.acp.option.contact_form_prune_attachments.description"><![CDATA[Older attachments are automatically removed to recover disk space. Use 0 to disable.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>
@@ -3167,9 +3176,17 @@ Errors are:
 
 Email: {@$emailAddress} {* this line ends with a space *}
 {foreach from=$options item=option}
-{@$option['title']}: {if !$option['isMessage']}{@$option['value']}{else}
-{@$option['value']}{/if}
-{/foreach}]]></item>
+{@$option['title']}: {if !$option['isMessage']}{@$option['value']}{else} {* this line ends with a space *}
+{@$option['value']}{/if} {* this line ends with a space *}
+{/foreach}
+{if !$attachments|empty}
+
+Attachments:
+{foreach from=$attachments item=attachment}
+- {@$attachment->getTitle()} [URL: {@$attachment->getLink()} ]
+{/foreach}
+{if CONTACT_FORM_PRUNE_ATTACHMENTS}(Attachments are removed after {if CONTACT_FORM_PRUNE_ATTACHMENTS == 1}one day{else}{CONTACT_FORM_PRUNE_ATTACHMENTS} days{/if}.){/if} {* this line ends with a space *}
+{/if}]]></item>
 		<item name="wcf.contact.mail.html"><![CDATA[<h2>Hello,</h2>
 
 <p>„{$name}“ sent you a message on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}</a> via the contact form:</p>
@@ -3178,7 +3195,19 @@ Email: {@$emailAddress} {* this line ends with a space *}
 {foreach from=$options item=option}
 <p><strong>{@$option['title']}:</strong> {if !$option['isMessage']}{@$option['value']}{else}
 {@$option['value']|newlineToBreak}{/if}</p>
-{/foreach}]]></item>
+{/foreach}
+{if !$attachments|empty}
+<p><br></p>
+<p>Attachments:</p>
+<ul>
+{foreach from=$attachments item=attachment}
+<li><a href="{$attachment->getLink()}">{$attachment->getTitle()}</a></li>
+{/foreach}
+</ul>
+{if CONTACT_FORM_PRUNE_ATTACHMENTS}
+<p><small>(Attachments are removed after {if CONTACT_FORM_PRUNE_ATTACHMENTS == 1}one day{else}{CONTACT_FORM_PRUNE_ATTACHMENTS} days{/if}.)</small></p>
+{/if}
+{/if}]]></item>
 		<item name="wcf.contact.option1"><![CDATA[Subject]]></item>
 		<item name="wcf.contact.optionDescription1"><![CDATA[Short and precise description of your inquiry.]]></item>
 		<item name="wcf.contact.option2"><![CDATA[Message]]></item>

@@ -1,8 +1,12 @@
 <?php
 namespace wcf\data\contact\option;
+use wcf\data\attachment\AttachmentEditor;
+use wcf\data\contact\attachment\ContactAttachment;
+use wcf\data\contact\attachment\ContactAttachmentEditor;
 use wcf\data\contact\recipient\ContactRecipient;
 use wcf\data\custom\option\CustomOptionAction;
 use wcf\data\ISortableAction;
+use wcf\system\attachment\AttachmentHandler;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
@@ -60,6 +64,25 @@ class ContactOptionAction extends CustomOptionAction implements ISortableAction 
 		/** @var ContactOptionHandler $optionHandler */
 		$optionHandler = $this->parameters['optionHandler'];
 		
+		/** @var AttachmentHandler $attachmentHandler */
+		$attachmentHandler = (!empty($this->parameters['attachmentHandler'])) ? $this->parameters['attachmentHandler'] : null;
+		
+		/** @var ContactAttachment[] $attachments */
+		$attachments = [];
+		if ($attachmentHandler !== null) {
+			foreach ($attachmentHandler->getAttachmentList() as $attachment) {
+				$attachments[] = ContactAttachmentEditor::create([
+					'attachmentID' => $attachment->attachmentID,
+					'accessKey' => ContactAttachment::generateKey(),
+				]);
+				
+				(new AttachmentEditor($attachment))->update([
+					'objectID' => $attachment->attachmentID,
+					'tmpHash' => '',
+				]);
+			}
+		}
+		
 		$options = [];
 		foreach ($optionHandler->getOptions() as $option) {
 			/** @var ContactOption $object */
@@ -81,7 +104,8 @@ class ContactOptionAction extends CustomOptionAction implements ISortableAction 
 			'options' => $options,
 			'recipient' => $recipient,
 			'name' => $this->parameters['name'],
-			'emailAddress' => $this->parameters['email']
+			'emailAddress' => $this->parameters['email'],
+			'attachments' => $attachments,
 		];
 		
 		// build mail
@@ -95,7 +119,7 @@ class ContactOptionAction extends CustomOptionAction implements ISortableAction 
 		
 		// add reply-to tag
 		$email->setReplyTo(new Mailbox($this->parameters['email']));
-		
+		$email->debugDump();
 		// send mail
 		$email->send();
 	}

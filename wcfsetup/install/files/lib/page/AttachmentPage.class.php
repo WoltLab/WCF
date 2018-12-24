@@ -32,7 +32,7 @@ class AttachmentPage extends AbstractPage {
 	 * attachment object
 	 * @var	Attachment
 	 */
-	public $attachment = null;
+	public $attachment;
 	
 	/**
 	 * shows the tiny thumbnail
@@ -50,7 +50,7 @@ class AttachmentPage extends AbstractPage {
 	 * file reader object
 	 * @var	FileReader
 	 */
-	public $fileReader = null;
+	public $fileReader;
 	
 	/**
 	 * list of mime types which belong to files that are displayed inline
@@ -62,7 +62,12 @@ class AttachmentPage extends AbstractPage {
 	 * etag for this attachment
 	 * @var	string
 	 */ 
-	public $eTag = null;
+	public $eTag;
+	
+	/**
+	 * @var string
+	 */
+	public $controllerName = 'Attachment';
 	
 	/**
 	 * @inheritDoc
@@ -86,7 +91,7 @@ class AttachmentPage extends AbstractPage {
 			$parameters['thumbnail'] = $this->thumbnail;
 		}
 		
-		$this->canonicalURL = LinkHandler::getInstance()->getLink('Attachment', $parameters);
+		$this->canonicalURL = LinkHandler::getInstance()->getLink($this->controllerName, $parameters);
 	}
 	
 	/**
