@@ -1,6 +1,9 @@
 <?php
-namespace wcf\system\form\builder\field;
+namespace wcf\system\form\builder\field\option;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\form\builder\field\ItemListFormField;
+use wcf\system\form\builder\field\TDefaultIdFormField;
+use wcf\system\form\builder\field\TPackagesFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\WCF;
 
@@ -13,7 +16,7 @@ use wcf\system\WCF;
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\System\Form\Builder\Field
+ * @package	WoltLabSuite\Core\System\Form\Builder\Field\Option
  * @since	3.2
  */
 class OptionFormField extends ItemListFormField {

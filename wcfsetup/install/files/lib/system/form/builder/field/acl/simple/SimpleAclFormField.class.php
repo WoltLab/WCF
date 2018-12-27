@@ -1,6 +1,7 @@
 <?php
-namespace wcf\system\form\builder\field;
+namespace wcf\system\form\builder\field\acl\simple;
 use wcf\system\acl\simple\SimpleAclHandler;
+use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
 
@@ -13,7 +14,7 @@ use wcf\system\form\builder\IFormDocument;
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\System\Form\Builder\Field
+ * @package	WoltLabSuite\Core\System\Form\Builder\Field\Acl\Simple
  * @since	3.2
  */
 class SimpleAclFormField extends AbstractFormField {

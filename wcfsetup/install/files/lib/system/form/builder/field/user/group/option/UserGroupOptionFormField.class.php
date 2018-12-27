@@ -1,19 +1,22 @@
 <?php
-namespace wcf\system\form\builder\field;
+namespace wcf\system\form\builder\field\user\group\option;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\form\builder\field\ItemListFormField;
+use wcf\system\form\builder\field\TDefaultIdFormField;
+use wcf\system\form\builder\field\TPackagesFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\WCF;
 
 /**
  * Implementation of a form field for user group options/permissions.
- *
+ * 
  * This field uses the `wcf.form.field.userGroupOption` language item as the default
  * form field label and uses `permissions` as the default node id.
- *
+ * 
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\System\Form\Builder\Field
+ * @package	WoltLabSuite\Core\System\Form\Builder\Field\User\Group\Option
  * @since	3.2
  */
 class UserGroupOptionFormField extends ItemListFormField {

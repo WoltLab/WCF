@@ -10,7 +10,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
-use wcf\system\form\builder\field\OptionFormField;
+use wcf\system\form\builder\field\option\OptionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
