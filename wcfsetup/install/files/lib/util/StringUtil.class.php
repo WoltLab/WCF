@@ -736,13 +736,13 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Shortens numbers larger than 1000 by using unit prefixes.
+	 * Shortens numbers larger than 1000 by using unit suffixes.
 	 * 
 	 * @param       integer         $number
 	 * @return      string
 	 */
 	public static function getShortUnit($number) {
-		$unitPrefix = '';
+		$unitSuffix = '';
 		
 		if ($number >= 1000000) {
 			$number /= 1000000;
@@ -752,7 +752,7 @@ final class StringUtil {
 			else {
 				$number = round($number, 1);
 			}
-			$unitPrefix = 'M';
+			$unitSuffix = 'M';
 		}
 		else if ($number >= 1000) {
 			$number /= 1000;
@@ -762,10 +762,10 @@ final class StringUtil {
 			else {
 				$number = round($number, 1);
 			}
-			$unitPrefix = 'k';
+			$unitSuffix = 'k';
 		}
 		
-		return self::formatNumeric($number) . $unitPrefix;
+		return self::formatNumeric($number) . $unitSuffix;
 	}
 	
 	/**

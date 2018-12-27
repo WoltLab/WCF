@@ -4,7 +4,7 @@ use wcf\system\template\TemplateEngine;
 use wcf\util\StringUtil;
 
 /**
- * Shortens numbers larger than 1000 by using unit prefixes.
+ * Shortens numbers larger than 1000 by using unit suffixes.
  *
  * Usage:
  * 	{12345|shortUnit}
