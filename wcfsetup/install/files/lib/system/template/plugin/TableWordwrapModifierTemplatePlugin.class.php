@@ -20,6 +20,7 @@ class TableWordwrapModifierTemplatePlugin implements IModifierTemplatePlugin {
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		// values
 		$width = 30;
+		// zero width space
 		$break = "\xE2\x80\x8B";
 		$string = $tagArgs[0];
 		
