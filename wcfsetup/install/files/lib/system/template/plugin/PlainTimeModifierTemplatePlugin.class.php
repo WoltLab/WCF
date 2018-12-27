@@ -23,6 +23,15 @@ class PlainTimeModifierTemplatePlugin implements IModifierTemplatePlugin {
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
 		$dateTime = DateUtil::getDateTimeByTimestamp($tagArgs[0]);
-		return str_replace('%time%', DateUtil::format($dateTime, DateUtil::TIME_FORMAT), str_replace('%date%', DateUtil::format($dateTime, DateUtil::DATE_FORMAT), WCF::getLanguage()->get('wcf.date.dateTimeFormat')));
+		
+		return str_replace(
+			'%time%',
+			DateUtil::format($dateTime, DateUtil::TIME_FORMAT),
+			str_replace(
+				'%date%',
+				DateUtil::format($dateTime, DateUtil::DATE_FORMAT),
+				WCF::getLanguage()->get('wcf.date.dateTimeFormat')
+			)
+		);
 	}
 }
