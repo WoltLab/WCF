@@ -7,8 +7,8 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * Template function plugin which script tags. File extension is automatically added
- * to the script source and MUST NOT be provided.
+ * Template function plugin which generates script tags. File extension is automatically
+ * added to the script source and MUST NOT be provided.
  * 
  * If ENABLE_DEBUG_MODE=0 then the extension is '.min.js', don't fail to provide it.
  * 
