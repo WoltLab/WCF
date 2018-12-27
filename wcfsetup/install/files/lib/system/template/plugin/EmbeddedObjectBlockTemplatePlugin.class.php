@@ -6,6 +6,8 @@ use wcf\system\template\TemplateEngine;
 /**
  * Template block plugin handling embedded object data.
  * 
+ * This template plugin is intended for internal use only.
+ * 
  * @author	Alexander Ebert
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
