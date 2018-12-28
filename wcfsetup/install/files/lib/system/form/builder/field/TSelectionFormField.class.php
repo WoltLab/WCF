@@ -16,12 +16,6 @@ use wcf\util\ClassUtil;
  */
 trait TSelectionFormField {
 	/**
-	 * `true` if this field's options are filterable by the user
-	 * @var	bool
-	 */
-	protected $__filterable = false;
-	
-	/**
 	 * structured options array used to generate the form field output
 	 * @var	null|array
 	 */
@@ -32,20 +26,6 @@ trait TSelectionFormField {
 	 * @var	null|array
 	 */
 	protected $__options;
-	
-	/**
-	 * Sets if the selection options can be filtered by the user so that they
-	 * are able to quickly find the desired option out of a larger list of
-	 * available options.
-	 * 
-	 * @param	bool	$filterable	determines if field's options are filterable by user
-	 * @return	static			this node
-	 */
-	public function filterable($filterable = true) {
-		$this->__filterable = $filterable;
-		
-		return $this;
-	}
 	
 	/**
 	 * Returns a structured array that can be used to generate the form field output.
@@ -86,19 +66,6 @@ trait TSelectionFormField {
 	public function isAvailable() {
 		// selections without any possible values are not available
 		return !empty($this->__options) && parent::isAvailable();
-	}
-	
-	/**
-	 * Returns `true` if the selection options can be filtered by the user so
-	 * that they are able to quickly find the desired option out of a larger
-	 * list of available options and returns `false` otherwise.
-	 * 
-	 * Per default, fields are not filterable.
-	 * 
-	 * @return	bool
-	 */
-	public function isFilterable() {
-		return $this->__filterable;
 	}
 	
 	/**
