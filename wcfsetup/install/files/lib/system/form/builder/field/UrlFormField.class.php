@@ -19,7 +19,7 @@ class UrlFormField extends TextFormField {
 	 */
 	protected function validateText($text, Language $language = null) {
 		if ($this->isRequired() && ($this->getValue() === null || $this->getValue() === '')) {
-			if (!Url::is($text, FILTER_VALIDATE_URL)) {
+			if (!Url::is($text)) {
 				$this->addValidationError(new FormFieldValidationError(
 					'invalid',
 					'wcf.form.field.url.error.invalid',
