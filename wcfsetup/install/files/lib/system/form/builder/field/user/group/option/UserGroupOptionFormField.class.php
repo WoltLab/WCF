@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder\field\user\group\option;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
+use wcf\system\form\builder\field\IPackagesFormField;
 use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\TDefaultIdFormField;
 use wcf\system\form\builder\field\TPackagesFormField;
@@ -19,7 +20,7 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\User\Group\Option
  * @since	3.2
  */
-class UserGroupOptionFormField extends ItemListFormField {
+class UserGroupOptionFormField extends ItemListFormField implements IPackagesFormField {
 	use TDefaultIdFormField;
 	use TPackagesFormField;
 	
