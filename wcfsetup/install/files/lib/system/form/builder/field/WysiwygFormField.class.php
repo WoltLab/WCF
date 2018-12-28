@@ -57,7 +57,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	
 	/**
 	 * Returns the identifier used to autosave the field value. If autosave is disabled,
-	 * an empty is returned.
+	 * an empty string is returned.
 	 * 
 	 * @return	string
 	 */
