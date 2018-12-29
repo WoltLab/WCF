@@ -46,7 +46,7 @@ class ContactAttachmentPage extends AttachmentPage {
 		AbstractPage::checkPermissions();
 		
 		if (!$this->attachment->canDownload()) {
-			if (empty($this->accessKey) || !hash_equals($this->accessKey, $this->contactAttachment->accessKey)) {
+			if (empty($this->accessKey) || !hash_equals($this->contactAttachment->accessKey, $this->accessKey)) {
 				throw new PermissionDeniedException();
 			}
 		}
