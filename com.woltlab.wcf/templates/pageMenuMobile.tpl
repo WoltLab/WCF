@@ -7,7 +7,7 @@
 		{foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.MainMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
 			<li class="menuOverlayItem">
 				{assign var=__outstandingItems value=$menuItemNode->getOutstandingItems()}
-				<a href="{$menuItemNode->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}{if $menuItemNode->isActiveNode()} active{/if}">
+				<a href="{$menuItemNode->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}{if $menuItemNode->isActiveNode()} active{/if}"{if $menuItemNode->isExternalLink() && EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>
 					<span class="menuOverlayItemTitle">{lang}{$menuItemNode->title}{/lang}</span>
 					{if $__outstandingItems}
 						<span class="badge badgeUpdate">{#$__outstandingItems}</span>
