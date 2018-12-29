@@ -361,11 +361,11 @@ class RegisterForm extends UserAddForm {
 					// Google Plus
 					if (WCF::getSession()->getVar('__googleData')) {
 						$googleData = WCF::getSession()->getVar('__googleData');
-						$this->additionalFields['authData'] = 'google:'.$googleData['id'];
+						$this->additionalFields['authData'] = 'google:'.$googleData['sub'];
 						
 						WCF::getSession()->unregister('__googleData');
 						
-						if (isset($googleData['emails'][0]['value']) && $googleData['emails'][0]['value'] == $this->email) {
+						if (isset($googleData['email']) && $googleData['email'] == $this->email) {
 							$registerVia3rdParty = true;
 						}
 						
@@ -379,18 +379,10 @@ class RegisterForm extends UserAddForm {
 								break;
 							}
 						}
-						if (isset($googleData['birthday']) && User::getUserOptionID('birthday') !== null) $saveOptions[User::getUserOptionID('birthday')] = $googleData['birthday'];
-						if (isset($googleData['placesLived']) && User::getUserOptionID('location') !== null) {
-							// save primary location
-							$saveOptions[User::getUserOptionID('location')] = current(array_map(
-								function ($element) { return $element['value']; },
-								array_filter($googleData['placesLived'], function ($element) { return isset($element['primary']) && $element['primary']; })
-							));
-						}
 						
 						// avatar
-						if (isset($googleData['image']['url'])) {
-							$avatarURL = $googleData['image']['url'];
+						if (isset($googleData['picture'])) {
+							$avatarURL = $googleData['picture'];
 						}
 					}
 				break;
