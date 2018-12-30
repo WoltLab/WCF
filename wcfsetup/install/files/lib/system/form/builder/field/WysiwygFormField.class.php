@@ -109,7 +109,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 		
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('wysiwyg', function(IFormDocument $document, array $parameters) {
 			if ($this->checkDependencies()) {
-				$parameters[$this->getObjectProperty() . 'HtmlInputProcessor'] = $this->htmlInputProcessor;
+				$parameters[$this->getObjectProperty() . '_htmlInputProcessor'] = $this->htmlInputProcessor;
 			}
 			
 			return $parameters;
