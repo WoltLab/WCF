@@ -459,7 +459,7 @@ trait TFormNode {
 	 */
 	public static function validateClass($class) {
 		// regular expression is a more restrictive version of
-		// (https://www.w3.org/TR/2011/REC-css3-selectors-20110929/#w3cselgrammar)
+		// https://www.w3.org/TR/2011/REC-css3-selectors-20110929/#w3cselgrammar
 		if (preg_match('~^-?[_A-z][_A-z0-9-]*$~', $class) !== 1) {
 			throw new \InvalidArgumentException("Invalid class '{$class}' given.");
 		}

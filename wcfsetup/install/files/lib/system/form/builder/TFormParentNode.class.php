@@ -314,9 +314,9 @@ trait TFormParentNode {
 	/**
 	 * Checks if the given node can be added as a child to this node.
 	 * 
-	 * @param	IFormChildNode		$child			validated child node
+	 * @param	IFormChildNode		$child		validated child node
 	 * 
-	 * @throws	\InvalidArgumentException			if given node cannot be added as a child
+	 * @throws	\InvalidArgumentException		if given node cannot be added as a child
 	 */
 	public function validateChild(IFormChildNode $child) {
 		// check if a node with same id as the given node already exists

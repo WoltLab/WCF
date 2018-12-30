@@ -69,7 +69,7 @@ interface IFormDocument extends IFormParentNode {
 	
 	/**
 	 * Returns the array passed as the `$parameters` argument of the constructor
-	 * of a database object action
+	 * of a database object action.
 	 * 
 	 * @return	array		data passed to database object action
 	 */
@@ -117,7 +117,7 @@ interface IFormDocument extends IFormParentNode {
 	
 	/**
 	 * Returns the global form prefix that is prepended to form elements' names and ids to
-	 * avoid conflicts with other forms. If no prefix has been set, an empty is returned.
+	 * avoid conflicts with other forms. If no prefix has been set, an empty string is returned.
 	 * 
 	 * Note: If a prefix `foo` has been set, this method returns `foo_`. 
 	 * 

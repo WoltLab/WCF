@@ -54,9 +54,9 @@ interface IFormNode {
 	 * By default, every node is available. This methods makes it easier to create forms
 	 * that contains node that are only avaiable if certain options have specific values
 	 * or the active user has specific permissions, for example. Furthermore, fields
-	 * themselves are also able to mark themselves as unavailable, for example, a selection
-	 * field without any options. A `IFormContainer` is automatically unavailable if it
-	 * contains no available children.
+	 * are also able to mark themselves as unavailable, for example, a selection field
+	 * without any options. A `IFormContainer` is automatically unavailable if it contains
+	 * no available children.
 	 * 
 	 * Unavailable fields produce no output, their value is not read, they are not validated
 	 * and they are not checked for save values.
@@ -71,7 +71,7 @@ interface IFormNode {
 	public function available($available = true);
 	
 	/**
-	 * Returns `true` if the node's dependencies are met and returns `false` otherwise.
+	 * Returns `true` if all of the node's dependencies are met and returns `false` otherwise.
 	 *
 	 * @return	bool
 	 */
