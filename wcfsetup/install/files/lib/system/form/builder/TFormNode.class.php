@@ -382,6 +382,24 @@ trait TFormNode {
 		return $this;
 	}
 	
+	/**
+	 * Removes the given attribute and returns this node.
+	 * 
+	 * If this node does not have the given attribute, this method silently
+	 * ignores that fact.
+	 * 
+	 * @param	string		$name		removed attribute
+	 * @return	static				this node
+	 * 
+	 * @throws	\InvalidArgumentException	if the given attribute is invalid
+	 */
+	public function removeAttribute($name) {
+		static::validateAttribute($name);
+		
+		unset($this->__attributes[$name]);
+		
+		return $this;
+	}
 	
 	/**
 	 * Removes the given CSS class and returns this node.

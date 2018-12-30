@@ -221,14 +221,27 @@ interface IFormNode {
 	public function populate();
 	
 	/**
-	 * Removes the given CSS class and returns this node.
+	 * Removes the given attribute and returns this node.
 	 * 
-	 * If this node does not have the given CSS class, this method silently
+	 * If this node does not have the given attribute, this method silently
 	 * ignores that fact.
 	 * 
-	 * @param	string		$class		removed CSS class
+	 * @param	string		$name		removed attribute
 	 * @return	static				this node
 	 * 
+	 * @throws	\InvalidArgumentException	if the given attribute is invalid
+	 */
+	public function removeAttribute($name);
+	
+	/**
+	 * Removes the given CSS class and returns this node.
+	 *
+	 * If this node does not have the given CSS class, this method silently
+	 * ignores that fact.
+	 *
+	 * @param	string		$class		removed CSS class
+	 * @return	static				this node
+	 *
 	 * @throws	\InvalidArgumentException	if the given class is invalid
 	 */
 	public function removeClass($class);
