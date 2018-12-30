@@ -2,7 +2,7 @@
 namespace wcf\system\form\builder\field\validation;
 
 /**
- * Represents an error that occured during the validation of a form field.
+ * Represents an error that occurred during the validation of a form field.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH

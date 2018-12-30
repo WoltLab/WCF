@@ -99,7 +99,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * in a column of the database object's database table and returns `false`
 	 * otherwise.
 	 * 
-	 * Note: If `false` is returned, this field should probabily add its own
+	 * Note: If `false` is returned, this field should probably add its own
 	 * `IFormFieldDataProcessor` object to the form document's data processor.
 	 * A suitable place to add the processor is the `parent()`
 	 * 

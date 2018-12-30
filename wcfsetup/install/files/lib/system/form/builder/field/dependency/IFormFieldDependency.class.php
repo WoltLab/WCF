@@ -15,7 +15,7 @@ use wcf\system\form\builder\IFormNode;
 interface IFormFieldDependency {
 	/**
 	 * Returns `true` if the dependency is met, thus if the dependant form field should
-	 * be considered. Otherwise, `false` is returned.
+	 * be considered available. Otherwise, `false` is returned.
 	 * 
 	 * @return	bool
 	 */
