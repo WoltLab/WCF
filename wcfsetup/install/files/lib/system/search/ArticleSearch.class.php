@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\search;
 use wcf\data\article\category\ArticleCategory;
+use wcf\data\article\category\ArticleCategoryNodeTree;
 use wcf\data\article\content\SearchResultArticleContent;
 use wcf\data\article\content\SearchResultArticleContentList;
 use wcf\data\article\Article;
@@ -161,20 +162,9 @@ class ArticleSearch extends AbstractSearchableObjectType {
 			$this->articleCategoryIDs = $form->searchData['additionalData']['com.woltlab.wcf.article']['articleCategoryIDs'];
 		}
 		
-		$articleCategoryList = (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator();
-		$accessibleArticleCategoryIDs = [];
-		/** @var CategoryNode $node */
-		foreach ($articleCategoryList as $node) {
-			$category = new ArticleCategory($node->getDecoratedObject());
-			if ($category->isAccessible()) {
-				$accessibleArticleCategoryIDs[] = $category->categoryID;
-			}
-		}
-		
 		WCF::getTPL()->assign([
-			'accessibleArticleCategoryIDs' => $accessibleArticleCategoryIDs,
 			'articleCategoryIDs' => $this->articleCategoryIDs,
-			'articleCategoryList' => $articleCategoryList,
+			'articleCategoryList' => (new ArticleCategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
 		]);
 	}
 	
