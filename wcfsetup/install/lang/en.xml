@@ -1216,7 +1216,7 @@
 		<item name="wcf.acp.package.validation.errorCode.10"><![CDATA[Requires the package {if $package === null}“{$packageName}”{else}“{$package}”{/if} in version “{$packageVersion}” or higher, {if $package === null}but it is neither installed nor shipped.{else}but only version “{$package->packageVersion}” is installed.{/if}]]></item>
 		<item name="wcf.acp.package.validation.errorCode.11"><![CDATA[The {if $type == 'install'}install{else}update{/if}-instructions specify the file “{$value}” for the Package Installation Plugin “{$pip}”, but it cannot be found in the specified location. Possible causes:<ul class="nativeList"><li>The file has not been added to the archive at all</li><li>The file exists but under a (slightly) different name (typo)</li></ul>]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[The package cannot be installed, please review the validation results below.]]></item>
-		<item name="wcf.acp.package.upgradeAvailable"><![CDATA[<strong>Upgrade available!</strong> Visit <a href="https://www.woltlab.com/">woltlab.com</a> to learn about the new WoltLab Suite, compatible with PHP 7.2 and enriched with an integrated CMS.]]></item>
+		<item name="wcf.acp.package.upgradeAvailable"><![CDATA[<strong>Upgrade available!</strong> Visit <a href="https://www.woltlab.com/">woltlab.com</a> to learn about the new WoltLab Suite, compatible with PHP 7.3 and enriched with an integrated CMS.]]></item>
 	</category>
 	
 	<category name="wcf.acp.paidSubscription">
