@@ -3,9 +3,11 @@
 	<dd>
 		<ul class="scrollableCheckboxList">
 			{foreach from=$articleCategoryList item=category}
-				<li{if $category->getDepth() > 1} style="padding-left: {$category->getDepth()*20-20}px"{/if}>
-					<label><input type="checkbox" name="articleCategoryIDs[]" value="{@$category->categoryID}"{if $category->categoryID|in_array:$articleCategoryIDs} checked{/if}> {$category->getTitle()}</label>
-				</li>
+				{if $category->categoryID|in_array:$accessibleArticleCategoryIDs}
+					<li{if $category->getDepth() > 1} style="padding-left: {$category->getDepth()*20-20}px"{/if}>
+						<label><input type="checkbox" name="articleCategoryIDs[]" value="{@$category->categoryID}"{if $category->categoryID|in_array:$articleCategoryIDs} checked{/if}> {$category->getTitle()}</label>
+					</li>
+				{/if}
 			{/foreach}
 		</ul>
 	</dd>
