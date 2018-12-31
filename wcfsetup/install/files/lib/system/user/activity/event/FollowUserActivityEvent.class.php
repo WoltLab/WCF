@@ -17,6 +17,10 @@ class FollowUserActivityEvent extends SingletonFactory implements IUserActivityE
 	 * @inheritDoc
 	 */
 	public function prepare(array $events) {
+		if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+			return;
+		}
+		
 		$objectIDs = [];
 		foreach ($events as $event) {
 			$objectIDs[] = $event->objectID;
