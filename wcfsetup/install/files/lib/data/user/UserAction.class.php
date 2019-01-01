@@ -478,6 +478,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public function validateGetSearchResultList() {
 		$this->readBoolean('includeUserGroups', false, 'data');
 		$this->readString('searchString', false, 'data');
+		$this->readIntegerArray('restrictUserGroupIDs', false, 'data');
 		
 		if (isset($this->parameters['data']['excludedSearchValues']) && !is_array($this->parameters['data']['excludedSearchValues'])) {
 			throw new UserInputException('excludedSearchValues');
@@ -498,11 +499,16 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if ($this->parameters['data']['includeUserGroups']) {
 			$accessibleGroups = UserGroup::getAccessibleGroups();
 			foreach ($accessibleGroups as $group) {
+				if (!empty($this->parameters['data']['restrictUserGroupIDs']) && !in_array($group->groupID, $this->parameters['data']['restrictUserGroupIDs'])) {
+					continue;
+				}
+				
 				$groupName = $group->getName();
 				if (!in_array($groupName, $excludedSearchValues)) {
 					$pos = mb_strripos($groupName, $searchString);
 					if ($pos !== false && $pos == 0) {
 						$list[] = [
+							'icon' => '<span class="icon icon16 fa-users"></span>',
 							'label' => $groupName,
 							'objectID' => $group->groupID,
 							'type' => 'group'

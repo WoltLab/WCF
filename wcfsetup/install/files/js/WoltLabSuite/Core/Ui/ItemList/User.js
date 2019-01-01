@@ -22,6 +22,8 @@ define(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 	 * @exports	WoltLabSuite/Core/Ui/ItemList/User
 	 */
 	return {
+		_shadowGroups: null,
+		
 		/**
 		 * Initializes user suggestion support for an element.
 		 * 
@@ -29,16 +31,21 @@ define(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 		 * @param	{object}	options		option list
 		 */
 		init: function(elementId, options) {
+			this._shadowGroups = null;
+			
 			UiItemList.init(elementId, [], {
 				ajax: {
 					className: 'wcf\\data\\user\\UserAction',
 					parameters: {
 						data: {
-							includeUserGroups: ~~options.includeUserGroups
+							includeUserGroups: ~~options.includeUserGroups,
+							restrictUserGroupIDs: (Array.isArray(options.restrictUserGroupIDs) ? options.restrictUserGroupIDs : [])
 						}
 					}
 				},
 				callbackChange: (typeof options.callbackChange === 'function' ? options.callbackChange : null),
+				callbackSyncShadow: options.csvPerType ? this._syncShadow.bind(this) : null,
+				callbackSetupValues: (typeof options.callbackSetupValues === 'function' ? options.callbackSetupValues : null),
 				excludedSearchValues: (Array.isArray(options.excludedSearchValues) ? options.excludedSearchValues : []),
 				isCSV: true,
 				maxItems: ~~options.maxItems || -1,
@@ -51,6 +58,27 @@ define(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 		 */
 		getValues: function(elementId) {
 			return UiItemList.getValues(elementId);
+		},
+		
+		_syncShadow: function(data) {
+			var values = this.getValues(data.element.id);
+			var users = [], groups = [];
+			
+			values.forEach(function(value) {
+				if (value.type && value.type === 'group') groups.push(value.objectId);
+				else users.push(value.value);
+			});
+			
+			data.shadow.value = users.join(',');
+			if (!this._shadowGroups) {
+				this._shadowGroups = elCreate('input');
+				this._shadowGroups.type = 'hidden';
+				this._shadowGroups.name = data.shadow.name + 'GroupIDs';
+				data.shadow.parentNode.insertBefore(this._shadowGroups, data.shadow);
+			}
+			this._shadowGroups.value = groups.join(',');
+			
+			return values;
 		}
 	};
 });

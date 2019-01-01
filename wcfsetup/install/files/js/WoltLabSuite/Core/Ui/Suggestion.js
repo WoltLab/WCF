@@ -162,7 +162,8 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 				item = item.currentTarget.parentNode;
 			}
 			
-			this._options.callbackSelect(this._element.id, { objectId: elData(item.children[0], 'object-id'), value: item.textContent });
+			var anchor = item.children[0];
+			this._options.callbackSelect(this._element.id, { objectId: elData(anchor, 'object-id'), value: item.textContent, type: elData(anchor, 'type') });
 			
 			if (isEvent) {
 				this._element.focus();
@@ -239,6 +240,7 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 						anchor.textContent = item.label;
 					}
 					elData(anchor, 'object-id', item.objectID);
+					if (item.type) elData(anchor, 'type', item.type);
 					anchor.addEventListener(WCF_CLICK_EVENT, this._select.bind(this));
 					
 					listItem = elCreate('li');
