@@ -627,6 +627,8 @@
 			<pageType>text</pageType>
 			<name language="de">Dashboard</name>
 			<name language="en">Dashboard</name>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
+
 			<content language="en">
 				<title>Dashboard</title>
 				<customURL>dashboard</customURL>
@@ -641,6 +643,8 @@
 			<name language="de">Cookie-Richtlinie</name>
 			<name language="en">Cookie Policy</name>
 			<availableDuringOfflineMode>1</availableDuringOfflineMode>
+			<allowSpidersToIndex>0</allowSpidersToIndex>
+			
 			<content language="en">
 				<title>Cookie Policy</title>
 				<content><![CDATA[<p>This website uses cookies required to operate and use this site. Below you will find an explanation on our cookie usage.</p>
@@ -701,6 +705,8 @@
 			<name language="de">Datenschutzerklärung</name>
 			<name language="en">Privacy Policy</name>
 			<availableDuringOfflineMode>1</availableDuringOfflineMode>
+			<allowSpidersToIndex>0</allowSpidersToIndex>
+			
 			<content language="en">
 				<title>Privacy Policy</title>
 				<content><![CDATA[<h2>1. An overview of data protection</h2>
