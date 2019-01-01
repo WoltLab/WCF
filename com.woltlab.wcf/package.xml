@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>3.1.7</version> <!-- codename: tornado -->
-		<date>2018-12-21</date>
+		<version>5.2.0 Alpha 1</version> <!-- codename: hurricane -->
+		<date>2019-01-01</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -48,21 +48,5 @@
 		<instruction type="templateListener" />
 		
 		<instruction type="script">acp/post_install.php</instruction>
-	</instructions>
-	
-	<!-- Warning: Keep both update blocks in sync! -->
-	<instructions type="update" fromversion="3.1.6">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
-		<instruction type="language" />
-	</instructions>
-	<instructions type="update" fromversion="3.1.6 pl 1">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
-		<instruction type="language" />
 	</instructions>
 </package>
