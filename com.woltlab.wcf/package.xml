@@ -92,13 +92,6 @@
 		<instruction type="script">acp/update_com.woltlab.wcf_3.0_post_sql.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="3.0.18">
-		<instruction type="file">files_update.tar</instruction>
-		<instruction type="template">templates_update.tar</instruction>
-		
-		<instruction type="language" />
-	</instructions>
-	
 	<instructions type="update" fromversion="3.0.19">
 		<instruction type="file">files_update.tar</instruction>
 	</instructions>
