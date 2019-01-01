@@ -2391,6 +2391,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.userNotificationEvent.info"><![CDATA[The <kbd>userNotificationEvent</kbd> package installation plugin installs new user notification events. You can find more information in the <a href="https://docs.woltlab.com/package_pip_user-notification-event.html" class="externalURL">developer documentation</a>.]]></item>
 		<item name="wcf.acp.pip.userOption.info"><![CDATA[The <kbd>userOption</kbd> package installation plugin installs new user options and profile fields. You can find more information in the <a href="https://docs.woltlab.com/package_pip_user-option.html" class="externalURL">developer documentation</a>.]]></item>
 		<item name="wcf.acp.pip.userProfileMenu.info"><![CDATA[The <kbd>userProfileMenu</kbd> package installation plugin installs new menu items for the user profile menu. You can find more information in the <a href="https://docs.woltlab.com/package_pip_user-profile-menu.html" class="externalURL">developer documentation</a>.]]></item>
+		<item name="wcf.acp.pip.language.languageItemValue.de.description"><![CDATA[Helpful code fragments: <kbd>{literal}{if LANGUAGE_USE_INFORMAL_VARIANT}{else}{/if}{/literal}</kbd>, <kbd>„“</kbd>]]></item>
+		<item name="wcf.acp.pip.language.languageItemValue.en.description"><![CDATA[Helpful code fragments: <kbd>“”</kbd>]]></item>
 	</category>
 	<category name="wcf.acp.reactionType">
 		<item name="wcf.acp.reactionType.delete.confirmMessage"><![CDATA[Do you really want to delete the reaction type <span class="confirmationObject">{$reactionType->getTitle()}</span>?]]></item>
