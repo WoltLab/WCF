@@ -2,6 +2,7 @@
 namespace wcf\system\page\handler;
 use wcf\data\category\AbstractDecoratedCategory;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\IAccessibleObject;
 use wcf\data\ILinkableObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\ImplementationException;
@@ -58,9 +59,17 @@ trait TDecoratedCategoryLookupPageHandler {
 	 */
 	public function isValid($objectID = null) {
 		$className = $this->getDecoratedCategoryClass();
-		
 		/** @noinspection PhpUndefinedMethodInspection */
-		return $className::getCategory($objectID)->isAccessible();
+		$category = $className::getCategory($objectID);
+		if ($category === null) {
+			return false;
+		}
+		
+		if ($category instanceof IAccessibleObject && !$category->isAccessible()) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	/**
