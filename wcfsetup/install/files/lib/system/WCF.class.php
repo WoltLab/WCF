@@ -48,10 +48,10 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-define('WCF_VERSION', '3.1.7');
+define('WCF_VERSION', '5.2.0 Alpha 1');
 
 // define current API version
-define('WSC_API_VERSION', 2018);
+define('WSC_API_VERSION', 2019);
 
 // define current unix timestamp
 define('TIME_NOW', time());
@@ -76,7 +76,7 @@ class WCF {
 	 * list of supported legacy API versions
 	 * @var integer[]
 	 */
-	private static $supportedLegacyApiVersions = [2017];
+	private static $supportedLegacyApiVersions = [2017, 2018];
 	
 	/**
 	 * list of currently loaded applications

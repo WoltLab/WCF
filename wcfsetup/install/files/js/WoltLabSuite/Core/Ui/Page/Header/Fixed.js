@@ -95,6 +95,9 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/SimpleDro
 			
 			_pageHeaderSearch.style.setProperty('top', _pageHeaderPanel.clientHeight + 'px', '');
 			_searchInput.focus();
+			window.setTimeout(function() {
+				_searchInput.selectionStart = _searchInput.selectionEnd = _searchInput.value.length;
+			}, 1);
 		},
 		
 		/**
