@@ -478,7 +478,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public function validateGetSearchResultList() {
 		$this->readBoolean('includeUserGroups', false, 'data');
 		$this->readString('searchString', false, 'data');
-		$this->readIntegerArray('restrictUserGroupIDs', false, 'data');
+		$this->readIntegerArray('restrictUserGroupIDs', true, 'data');
 		
 		if (isset($this->parameters['data']['excludedSearchValues']) && !is_array($this->parameters['data']['excludedSearchValues'])) {
 			throw new UserInputException('excludedSearchValues');
