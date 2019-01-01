@@ -587,6 +587,7 @@
 			<pageType>text</pageType>
 			<name language="de">Dashboard</name>
 			<name language="en">Dashboard</name>
+			<allowSpidersToIndex>1</allowSpidersToIndex>
 			
 			<content>
 				<title>Dashboard</title>
@@ -600,6 +601,7 @@
 			<name language="en">Cookie Policy</name>
 			<name language="de">Cookie-Richtlinie</name>
 			<availableDuringOfflineMode>1</availableDuringOfflineMode>
+			<allowSpidersToIndex>0</allowSpidersToIndex>
 			
 			<content language="en">
 				<title>Cookie Policy</title>
@@ -663,6 +665,7 @@
 			<name language="en">Privacy Policy</name>
 			<name language="de">Datenschutzerklärung</name>
 			<availableDuringOfflineMode>1</availableDuringOfflineMode>
+			<allowSpidersToIndex>0</allowSpidersToIndex>
 			
 			<content language="en">
 				<title>Privacy Policy</title>
