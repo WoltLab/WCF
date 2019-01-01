@@ -481,9 +481,16 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				throw new \LogicException("Duplicate language file with language code '{$languageCode}'.");
 			}
 			
+			$description = null;
+			$descriptionLanguageItem = 'wcf.acp.pip.language.languageItemValue.' . $languageCode . '.description';
+			if (WCF::getLanguage()->get($descriptionLanguageItem, true) !== '') {
+				$description = $descriptionLanguageItem;
+			}
+			
 			$dataContainer->appendChild(
 				MultilineTextFormField::create($languageCode)
 					->label($languageName)
+					->description($description)
 			);
 		}
 		
