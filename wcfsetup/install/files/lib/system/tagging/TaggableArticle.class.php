@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\tagging;
 use wcf\data\article\TaggedArticleList;
-use wcf\data\tag\Tag;
 
 /**
  * Implementation of ITaggable for tagging of cms articles.
@@ -12,12 +11,12 @@ use wcf\data\tag\Tag;
  * @package	WoltLabSuite\Core\System\Tagging
  * @since	3.0
  */
-class TaggableArticle extends AbstractTaggable {
+class TaggableArticle extends AbstractCombinedTaggable {
 	/**
 	 * @inheritDoc
 	 */
-	public function getObjectList(Tag $tag) {
-		return new TaggedArticleList($tag);
+	public function getObjectListFor(array $tags) {
+		return new TaggedArticleList($tags);
 	}
 	
 	/**

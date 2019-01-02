@@ -3,8 +3,10 @@ namespace wcf\system\tagging;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\tag\Tag;
 use wcf\data\tag\TagAction;
+use wcf\data\tag\TagList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\InvalidObjectTypeException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
@@ -228,5 +230,53 @@ class TagEngine extends SingletonFactory {
 		arsort($languageIDs, SORT_NUMERIC);
 		
 		return key($languageIDs);
+	}
+	
+	/**
+	 * Generates the inner SQL statement to fetch object ids that have all listed
+	 * tags assigned to them.
+	 * 
+	 * @param string $objectType
+	 * @param Tag[] $tags
+	 * @return array
+	 * @since 3.2
+	 */
+	public function getSqlForObjectsByTags($objectType, array $tags) {
+		$parameters = [$this->getObjectTypeID($objectType)];
+		$tagIDs = implode(',', array_map(function(Tag $tag) {
+			$parameters[] = $tag->tagID;
+			
+			return '?';
+		}, $tags));
+		$parameters[] = count($tags);
+		
+		$sql = "SELECT          objectID
+			FROM            wcf".WCF_N."_tag_to_object
+			WHERE           objectTypeID = ?
+					AND tagID IN (".$tagIDs.")
+			GROUP BY        objectID
+			HAVING          COUNT(objectID) = ?";
+		
+		return [
+			'sql' => $sql,
+			'parameters' => $parameters,
+		];
+	}
+	
+	/**
+	 * Returns the matching tags by name.
+	 * 
+	 * @param string[] $names
+	 * @param int $languageID
+	 * @return Tag[]
+	 * @since 3.2
+	 */
+	public function getTagsByName(array $names, $languageID) {
+		$tagList = new TagList();
+		$tagList->getConditionBuilder()->add('name IN (?)', [$names]);
+		$tagList->getConditionBuilder()->add('languageID = ?', [$languageID ?: WCF::getLanguage()->languageID]);
+		$tagList->readObjects();
+		
+		return $tagList->getObjects();
 	}
 }

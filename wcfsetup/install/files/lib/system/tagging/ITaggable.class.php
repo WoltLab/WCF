@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\tagging;
+use wcf\data\DatabaseObjectList;
 use wcf\data\tag\Tag;
 
 /**
@@ -15,7 +16,8 @@ interface ITaggable {
 	 * Returns a list of tagged objects.
 	 * 
 	 * @param	Tag	$tag
-	 * @return	\wcf\data\DatabaseObjectList
+	 * @return	DatabaseObjectList
+	 * @deprecated 3.2
 	 */
 	public function getObjectList(Tag $tag);
 	
