@@ -3,7 +3,7 @@
 	<ol class="menuOverlayItemList" data-title="{lang}wcf.menu.page{/lang}">
 		<li class="menuOverlayTitle">{lang}wcf.menu.page.navigation{/lang}</li>
 		{foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.MainMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
-			<li class="menuOverlayItem">
+			<li class="menuOverlayItem" data-identifier="{@$menuItemNode->identifier}">
 				{assign var=__outstandingItems value=$menuItemNode->getOutstandingItems()}
 				<a href="{$menuItemNode->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}{if $menuItemNode->isActiveNode()} active{/if}"{if $menuItemNode->isExternalLink() && EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>
 					<span class="menuOverlayItemTitle">{lang}{$menuItemNode->title}{/lang}</span>
