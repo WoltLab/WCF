@@ -42,12 +42,12 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Creates a random hash.
+	 * Returns a 40 character hexadecimal string generated using a CSPRNG.
 	 * 
 	 * @return	string
 	 */
 	public static function getRandomID() {
-		return self::getHash(microtime() . uniqid((string) mt_rand(), true));
+		return bin2hex(random_bytes(20));
 	}
 	
 	/**
