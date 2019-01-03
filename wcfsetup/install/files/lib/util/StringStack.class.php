@@ -32,7 +32,7 @@ final class StringStack {
 	 */
 	public static function pushToStringStack($string, $type = 'default', $delimiter = '@@') {
 		self::$i++;
-		$hash = $delimiter.StringUtil::getHash(self::$i.uniqid(microtime()).$string).$delimiter;
+		$hash = $delimiter.StringUtil::getRandomID().$delimiter;
 		
 		if (!isset(self::$stringStack[$type])) {
 			self::$stringStack[$type] = [];
