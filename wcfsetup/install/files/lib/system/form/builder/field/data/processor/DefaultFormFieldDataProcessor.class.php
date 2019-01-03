@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\form\builder\field\data;
+namespace wcf\system\form\builder\field\data\processor;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
@@ -13,7 +13,7 @@ use wcf\system\form\builder\IFormParentNode;
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\System\Form\Builder\Field\Data
+ * @package	WoltLabSuite\Core\System\Form\Builder\Field\Data\Processor
  * @since	3.2
  */
 class DefaultFormFieldDataProcessor implements IFormFieldDataProcessor {

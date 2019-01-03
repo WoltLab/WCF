@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\form\builder\data;
-use wcf\system\form\builder\field\data\IFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\IFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
 
 /**

@@ -8,7 +8,7 @@ use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\ClassNameFormField;
-use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;

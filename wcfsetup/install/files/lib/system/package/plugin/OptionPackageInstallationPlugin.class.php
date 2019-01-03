@@ -9,7 +9,7 @@ use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
-use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\MultilineTextFormField;

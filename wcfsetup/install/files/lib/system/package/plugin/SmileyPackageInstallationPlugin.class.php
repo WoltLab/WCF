@@ -6,7 +6,7 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\TextFormField;

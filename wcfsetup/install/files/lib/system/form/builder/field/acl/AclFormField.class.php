@@ -3,7 +3,7 @@ namespace wcf\system\form\builder\field\acl;
 use wcf\data\IStorableObject;
 use wcf\system\acl\ACLHandler;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\IObjectTypeFormField;
 use wcf\system\form\builder\field\TObjectTypeFormField;
 use wcf\system\form\builder\IFormDocument;
