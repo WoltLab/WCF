@@ -1,6 +1,7 @@
 <?php
-namespace wcf\system\form\builder;
+namespace wcf\system\form\builder\data;
 use wcf\system\form\builder\field\data\IFormFieldDataProcessor;
+use wcf\system\form\builder\IFormDocument;
 
 /**
  * Data processor implementation for form fields that populates or manipulates the
@@ -9,7 +10,7 @@ use wcf\system\form\builder\field\data\IFormFieldDataProcessor;
  * @author	Matthias Schmidt
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\System\Form\Builder\Field\Data
+ * @package	WoltLabSuite\Core\System\Form\Builder\Data
  * @since	3.2
  */
 class FormDataHandler implements IFormDataHandler {
