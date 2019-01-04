@@ -90,7 +90,7 @@ class CombinedTaggedPage extends MultipleLinkPage {
 				unset($this->availableObjectTypes[$key]);
 			}
 			
-			if (!$objectType->getProcessor() instanceof ICombinedTaggable) {
+			if (!($objectType->getProcessor() instanceof ICombinedTaggable)) {
 				unset($this->availableObjectTypes[$key]);
 			}
 		}
