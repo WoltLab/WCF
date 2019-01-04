@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder;
 use wcf\data\IStorableObject;
+use wcf\system\form\builder\data\IFormDataHandler;
 
 /**
  * Represents a "whole" form (document).

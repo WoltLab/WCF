@@ -1,7 +1,9 @@
 <?php
 namespace wcf\system\form\builder;
 use wcf\data\IStorableObject;
-use wcf\system\form\builder\field\data\DefaultFormFieldDataProcessor;
+use wcf\system\form\builder\data\FormDataHandler;
+use wcf\system\form\builder\data\IFormDataHandler;
+use wcf\system\form\builder\field\data\processor\DefaultFormFieldDataProcessor;
 use wcf\system\form\builder\field\IFileFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\WCF;

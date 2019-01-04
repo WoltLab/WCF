@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\html\input\HtmlInputProcessor;

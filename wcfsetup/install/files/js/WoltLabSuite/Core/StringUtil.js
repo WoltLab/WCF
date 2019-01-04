@@ -101,7 +101,7 @@ define(['Language', './NumberUtil'], function(Language, NumberUtil) {
 		},
 		
 		/**
-		 * Shortens numbers larger than 1000 by using unit prefixes.
+		 * Shortens numbers larger than 1000 by using unit suffixes.
 		 *
 		 * @param	{?}		number
 		 * @return	{String}

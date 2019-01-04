@@ -2,7 +2,7 @@
 namespace wcf\system\form\builder\field\acl\simple;
 use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
 
 /**

@@ -15,7 +15,7 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\bbcode\BBCodeAttributesFormField;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
-use wcf\system\form\builder\field\data\VoidFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\VoidFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IconFormField;
