@@ -4176,6 +4176,9 @@ Attachments:
 		<item name="wcf.search.type.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.page"><![CDATA[Page]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.page"><![CDATA[Pages]]></item>
+		<item name="wcf.search.type.keywords"><![CDATA[Search by Terms]]></item>
+		<item name="wcf.search.type.tags"><![CDATA[Search by Tags]]></item>
+		<item name="wcf.search.type.tags.popular"><![CDATA[Popular Tags]]></item>
 	</category>
 	<category name="wcf.style">
 		<item name="wcf.style.changeStyle"><![CDATA[Change Style]]></item>
@@ -4186,13 +4189,15 @@ Attachments:
 		<item name="wcf.style.colorPicker.button.apply"><![CDATA[Apply]]></item>
 	</category>
 	<category name="wcf.tagging">
+		<item name="wcf.tagging.combinedTaggedObjects"><![CDATA[{implode from=$combinedTags item=tag glue=', '}“{$tag->name}”{/implode}]]></item>
+		<item name="wcf.tagging.combinedTaggedObjects.com.woltlab.wcf.article"><![CDATA[Articles Tagged with]]></item>
 		<item name="wcf.tagging.tags"><![CDATA[Tags]]></item>
 		<item name="wcf.tagging.tags.add"><![CDATA[Tags]]></item>
 		<item name="wcf.tagging.tags.description"><![CDATA[Separate multiple tags with a comma.]]></item>
 		<item name="wcf.tagging.objectTypes"><![CDATA[Content]]></item>
 		<item name="wcf.tagging.taggedObjects.noResults"><![CDATA[No items matched this tag.]]></item>
 		<item name="wcf.tagging.objectType.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
-		<item name="wcf.tagging.taggedObjects.com.woltlab.wcf.article"><![CDATA[Articles Tagged With “{$tag->name}”]]></item>
+		<item name="wcf.tagging.taggedObjects.com.woltlab.wcf.article"><![CDATA[Articles Tagged with “{$tag->name}”]]></item>
 	</category>
 	<category name="wcf.user">
 		<item name="wcf.user.confirmEmail"><![CDATA[Confirm Email]]></item>

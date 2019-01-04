@@ -15,7 +15,7 @@ use wcf\util\HeaderUtil;
  * Shows the tag search form.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\Form
  * @since       3.2
@@ -30,6 +30,11 @@ class TagSearchForm extends AbstractCaptchaForm {
 	 * @var int
 	 */
 	public $languageID;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $neededPermissions = ['user.tag.canViewTag'];
 	
 	/**
 	 * @var TagCloud
@@ -102,8 +107,14 @@ class TagSearchForm extends AbstractCaptchaForm {
 	public function save() {
 		parent::save();
 		
+		$tagIDs = '';
+		foreach ($this->tags as $tag) {
+			if (!empty($tagIDs)) $tagIDs .= '&';
+			$tagIDs .= 'tagIDs[]=' . $tag->tagID;
+		}
+		
 		HeaderUtil::redirect(
-			LinkHandler::getInstance()->getLink('CombinedTagged', ['tagIDs' => array_keys($this->tags)]),
+			LinkHandler::getInstance()->getLink('CombinedTagged', [], $tagIDs),
 			true,
 			true
 		);

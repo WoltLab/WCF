@@ -233,6 +233,16 @@ class TagEngine extends SingletonFactory {
 	}
 	
 	/**
+	 * @param Tag[] $tags
+	 * @return int[]
+	 */
+	public function getTagIDs($tags) {
+		return array_map(function($tag) {
+			return $tag->tagID;
+		}, $tags);
+	}
+	
+	/**
 	 * Generates the inner SQL statement to fetch object ids that have all listed
 	 * tags assigned to them.
 	 * 
@@ -241,9 +251,9 @@ class TagEngine extends SingletonFactory {
 	 * @return array
 	 * @since 3.2
 	 */
-	public function getSqlForObjectsByTags($objectType, array $tags) {
+	public function getSubselectForObjectsByTags($objectType, array $tags) {
 		$parameters = [$this->getObjectTypeID($objectType)];
-		$tagIDs = implode(',', array_map(function(Tag $tag) {
+		$tagIDs = implode(',', array_map(function(Tag $tag) use (&$parameters) {
 			$parameters[] = $tag->tagID;
 			
 			return '?';
@@ -261,6 +271,20 @@ class TagEngine extends SingletonFactory {
 			'sql' => $sql,
 			'parameters' => $parameters,
 		];
+	}
+	
+	public function setJoinCondition($objectType, array $tags, PreparedStatementConditionBuilder $conditions) {
+		$conditions->add('tag_to_object.objectTypeID = ?', [$this->getObjectTypeID($objectType)]);
+		
+		$tagIDs = [];
+		foreach ($tags as $tag) {
+			$tagIDs[] = $tag->tagID;
+		}
+		$conditions->add('tag_to_object.tagID IN (?)', [$tagIDs]);
+	}
+	
+	public function getSqlGroupAndHaving(array $tags) {
+		return 'GROUP BY tag_to_object.objectID HAVING COUNT(tag_to_object.objectID) = ' . count($tags);
 	}
 	
 	/**

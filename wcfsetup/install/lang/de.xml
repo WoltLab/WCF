@@ -4174,6 +4174,9 @@ Dateianhänge:
 		<item name="wcf.search.type.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.search.object.com.woltlab.wcf.page"><![CDATA[Seite]]></item>
 		<item name="wcf.search.type.com.woltlab.wcf.page"><![CDATA[Seiten]]></item>
+		<item name="wcf.search.type.keywords"><![CDATA[Suche nach Begriffen]]></item>
+		<item name="wcf.search.type.tags"><![CDATA[Suche nach Tags]]></item>
+		<item name="wcf.search.type.tags.popular"><![CDATA[Beliebte Tags]]></item>
 	</category>
 	<category name="wcf.style">
 		<item name="wcf.style.changeStyle"><![CDATA[Stil ändern]]></item>
@@ -4184,6 +4187,8 @@ Dateianhänge:
 		<item name="wcf.style.colorPicker.button.apply"><![CDATA[Übernehmen]]></item>
 	</category>
 	<category name="wcf.tagging">
+		<item name="wcf.tagging.combinedTaggedObjects"><![CDATA[{implode from=$combinedTags item=tag glue=', '}„{$tag->name}“{/implode}]]></item>
+		<item name="wcf.tagging.combinedTaggedObjects.com.woltlab.wcf.article"><![CDATA[Artikel mit den Tags]]></item>
 		<item name="wcf.tagging.tags"><![CDATA[Tags]]></item>
 		<item name="wcf.tagging.tags.add"><![CDATA[Tags]]></item>
 		<item name="wcf.tagging.tags.description"><![CDATA[Mehrere Tags müssen durch ein Komma getrennt werden.]]></item>

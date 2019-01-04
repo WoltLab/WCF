@@ -16,14 +16,27 @@ class TaggedArticleList extends AccessibleArticleList {
 	/**
 	 * Creates a new CategoryArticleList object.
 	 *
-	 * @param	Tag|Tag[]	$tag
+	 * @param Tag|Tag[] $tags
 	 */
-	public function __construct($tag) {
+	public function __construct($tags) {
 		parent::__construct();
 		
 		$this->sqlOrderBy = 'article.time ' . ARTICLE_SORT_ORDER;
 		
-		$innerSql = TagEngine::getInstance()->getSqlForObjectsByTags('com.woltlab.wcf.article', $tag);
-		$this->getConditionBuilder()->add("article.articleID IN (SELECT articleID FROM wcf".WCF_N."_article_content WHERE articleContentID IN (".$innerSql['sql']."))", [$innerSql['parameters']]);
+		$tagIDs = TagEngine::getInstance()->getTagIDs($tags);
+		$this->getConditionBuilder()->add("article.articleID IN (
+			SELECT articleID FROM wcf".WCF_N."_article_content WHERE articleContentID IN (
+				SELECT          objectID
+				FROM            wcf".WCF_N."_tag_to_object
+				WHERE           objectTypeID = ?
+						AND tagID IN (?)
+				GROUP BY        objectID
+				HAVING          COUNT(objectID) = ?
+			)
+		)", [
+			TagEngine::getInstance()->getObjectTypeID('com.woltlab.wcf.article'),
+			$tagIDs,
+			count($tagIDs)
+		]);
 	}
 }

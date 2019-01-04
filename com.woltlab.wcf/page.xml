@@ -270,6 +270,19 @@
 				<title>Suche</title>
 			</content>
 		</page>
+		<page identifier="com.woltlab.wcf.TagSearch">
+			<pageType>system</pageType>
+			<controller>wcf\form\TagSearchForm</controller>
+			<name language="de">Suche nach Tags</name>
+			<name language="en">Search by Tags</name>
+			<permissions>user.tag.canViewTag</permissions>
+			<content language="en">
+				<title>Search by Tags</title>
+			</content>
+			<content language="de">
+				<title>Suche nach Tags</title>
+			</content>
+		</page>
 		<page identifier="com.woltlab.wcf.Settings">
 			<pageType>system</pageType>
 			<controller>wcf\form\SettingsForm</controller>

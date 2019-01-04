@@ -6,28 +6,66 @@ use wcf\data\tag\Tag;
 use wcf\data\tag\TagList;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\tagging\ICombinedTaggable;
 use wcf\system\tagging\TypedTagCloud;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
- * Shows the a list of tagged objects.
+ * Shows the a list of objects matching a combination of tags.
  * 
- * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
- * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\Page
+ * @author      Alexander Ebert
+ * @copyright   2001-2019 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\Page
  */
-class CombinedTaggedPage extends TaggedPage {
+class CombinedTaggedPage extends MultipleLinkPage {
+	/**
+	 * @var	ObjectType[]
+	 */
+	public $availableObjectTypes = [];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $neededModules = ['MODULE_TAGGING'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $neededPermissions = ['user.tag.canViewTag'];
+	
+	/**
+	 * @var ObjectType
+	 */
+	public $objectType;
+	
+	/**
+	 * @var ICombinedTaggable
+	 */
+	public $processor;
+	
+	/**
+	 * @var Tag[]
+	 */
 	public $tags = [];
+	
+	/**
+	 * @var int[]
+	 */
 	public $tagIDs = [];
+	
+	/**
+	 * @var TypedTagCloud
+	 */
+	public $tagCloud;
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
-		MultipleLinkPage::readParameters();
+		parent::readParameters();
 		
 		if (isset($_GET['tagIDs']) && is_array($this->tagIDs)) $this->tagIDs = ArrayUtil::toIntegerArray($_GET['tagIDs']);
 		if (empty($this->tagIDs)) {
@@ -51,6 +89,10 @@ class CombinedTaggedPage extends TaggedPage {
 			if (!$objectType->validateOptions() || !$objectType->validatePermissions()) {
 				unset($this->availableObjectTypes[$key]);
 			}
+			
+			if (!$objectType->getProcessor() instanceof ICombinedTaggable) {
+				unset($this->availableObjectTypes[$key]);
+			}
 		}
 		
 		if (empty($this->availableObjectTypes)) {
@@ -68,13 +110,15 @@ class CombinedTaggedPage extends TaggedPage {
 			// No object type provided, use the first object type.
 			$this->objectType = reset($this->availableObjectTypes);
 		}
+		
+		$this->processor = $this->objectType->getProcessor();
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	protected function initObjectList() {
-		$this->objectList = $this->objectType->getProcessor()->getObjectListFor($this->tags);
+		$this->objectList = $this->processor->getObjectListFor($this->tags);
 	}
 	
 	/**
@@ -93,12 +137,12 @@ class CombinedTaggedPage extends TaggedPage {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
-			'tag' => $this->tag,
+			'combinedTags' => $this->tags,
 			'tags' => $this->tagCloud->getTags(100),
 			'availableObjectTypes' => $this->availableObjectTypes,
 			'objectType' => $this->objectType->objectType,
-			'resultListTemplateName' => $this->objectType->getProcessor()->getTemplateName(),
-			'resultListApplication' => $this->objectType->getProcessor()->getApplication()
+			'resultListTemplateName' => $this->processor->getTemplateName(),
+			'resultListApplication' => $this->processor->getApplication()
 		]);
 		
 		if (count($this->objectList) === 0) {
