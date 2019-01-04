@@ -18,7 +18,7 @@ class TemplateEditForm extends TemplateAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.template';
+	public $activeMenuItem = 'wcf.acp.menu.link.template.list';
 	
 	/**
 	 * template id

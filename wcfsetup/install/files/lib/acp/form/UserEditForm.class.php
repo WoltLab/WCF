@@ -30,7 +30,7 @@ class UserEditForm extends UserAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
+	public $activeMenuItem = 'wcf.acp.menu.link.user.list';
 	
 	/**
 	 * @inheritDoc

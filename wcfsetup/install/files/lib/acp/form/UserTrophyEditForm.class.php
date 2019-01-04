@@ -19,7 +19,7 @@ class UserTrophyEditForm extends UserTrophyAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.trophy';
+	public $activeMenuItem = 'wcf.acp.menu.link.userTrophy.list';
 	
 	/**
 	 * @inheritDoc

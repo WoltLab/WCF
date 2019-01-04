@@ -21,7 +21,7 @@ class NoticeEditForm extends NoticeAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.notice';
+	public $activeMenuItem = 'wcf.acp.menu.link.notice.list';
 	
 	/**
 	 * edited notice object

@@ -19,7 +19,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.template';
+	public $activeMenuItem = 'wcf.acp.menu.link.template.group.list';
 	
 	/**
 	 * template group id

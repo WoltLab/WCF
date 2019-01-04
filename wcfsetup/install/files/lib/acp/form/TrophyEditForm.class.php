@@ -25,7 +25,7 @@ class TrophyEditForm extends TrophyAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.trophy';
+	public $activeMenuItem = 'wcf.acp.menu.link.trophy.list';
 	
 	/**
 	 * @inheritDoc

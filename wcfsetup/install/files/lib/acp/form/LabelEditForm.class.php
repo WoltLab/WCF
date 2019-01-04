@@ -20,7 +20,7 @@ class LabelEditForm extends LabelAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.label';
+	public $activeMenuItem = 'wcf.acp.menu.link.label.list';
 	
 	/**
 	 * @inheritDoc

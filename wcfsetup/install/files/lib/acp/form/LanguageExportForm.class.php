@@ -21,7 +21,7 @@ class LanguageExportForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.language';
+	public $activeMenuItem = 'wcf.acp.menu.link.language.list';
 	
 	/**
 	 * @inheritDoc

@@ -19,7 +19,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.user.option';
+	public $activeMenuItem = 'wcf.acp.menu.link.user.option.list';
 	
 	/**
 	 * user option id

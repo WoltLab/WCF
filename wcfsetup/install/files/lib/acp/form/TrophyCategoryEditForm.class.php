@@ -14,7 +14,7 @@ class TrophyCategoryEditForm extends AbstractCategoryEditForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.trophy';
+	public $activeMenuItem = 'wcf.acp.menu.link.trophy.category.list';
 	
 	/**
 	 * @inheritDoc

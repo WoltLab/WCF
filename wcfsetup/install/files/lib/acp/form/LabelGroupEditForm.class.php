@@ -20,7 +20,7 @@ class LabelGroupEditForm extends LabelGroupAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.label';
+	public $activeMenuItem = 'wcf.acp.menu.link.label.group.list';
 	
 	/**
 	 * @inheritDoc

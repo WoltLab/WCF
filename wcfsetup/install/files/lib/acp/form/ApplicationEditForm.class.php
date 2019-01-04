@@ -29,7 +29,7 @@ class ApplicationEditForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.package';
+	public $activeMenuItem = 'wcf.acp.menu.link.application.management';
 	
 	/**
 	 * viewable application object

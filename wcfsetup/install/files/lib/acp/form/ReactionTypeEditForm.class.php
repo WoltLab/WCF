@@ -16,6 +16,11 @@ class ReactionTypeEditForm extends ReactionTypeAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.reactionType.list';
+	
+	/**
+	 * @inheritDoc
+	 */
 	public $formAction = 'edit';
 	
 	/**

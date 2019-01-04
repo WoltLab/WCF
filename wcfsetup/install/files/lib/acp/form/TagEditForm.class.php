@@ -20,7 +20,7 @@ class TagEditForm extends TagAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.tag';
+	public $activeMenuItem = 'wcf.acp.menu.link.tag.list';
 	
 	/**
 	 * @inheritDoc

@@ -19,7 +19,7 @@ class UserOptionCategoryEditForm extends UserOptionCategoryAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.user.option';
+	public $activeMenuItem = 'wcf.acp.menu.link.user.option.category.list';
 	
 	/**
 	 * category id

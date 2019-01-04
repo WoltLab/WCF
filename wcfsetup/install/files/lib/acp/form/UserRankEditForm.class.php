@@ -19,7 +19,7 @@ class UserRankEditForm extends UserRankAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.user.rank';
+	public $activeMenuItem = 'wcf.acp.menu.link.user.rank.list';
 	
 	/**
 	 * rank id

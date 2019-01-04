@@ -19,7 +19,7 @@ class SmileyEditForm extends SmileyAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.smiley';
+	public $activeMenuItem = 'wcf.acp.menu.link.smiley.list';
 	
 	/**
 	 * @inheritDoc

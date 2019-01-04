@@ -21,7 +21,7 @@ class BBCodeEditForm extends BBCodeAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.bbcode';
+	public $activeMenuItem = 'wcf.acp.menu.link.bbcode.list';
 	
 	/**
 	 * @inheritDoc

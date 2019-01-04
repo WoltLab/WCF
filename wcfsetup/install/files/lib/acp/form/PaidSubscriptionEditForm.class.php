@@ -18,6 +18,11 @@ use wcf\system\WCF;
  */
 class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
 	/**
+	 * @inheritDoc
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.paidSubscription.list';
+	
+	/**
 	 * id of the edited subscription
 	 * @var	integer
 	 */

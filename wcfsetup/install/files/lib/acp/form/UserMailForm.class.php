@@ -94,7 +94,7 @@ class UserMailForm extends AbstractForm {
 		
 		if (isset($_GET['id'])) $this->userID = intval($_GET['id']);
 		
-		$this->activeMenuItem = ($this->action == 'all' ? 'wcf.acp.menu.link.user.mail' : ($this->action == 'group' ? 'wcf.acp.menu.link.group.mail' : 'wcf.acp.menu.link.user.management'));
+		$this->activeMenuItem = ($this->action == 'all' ? 'wcf.acp.menu.link.user.mail' : ($this->action == 'group' ? 'wcf.acp.menu.link.group.mail' : 'wcf.acp.menu.link.user.list'));
 	}
 	
 	/**

@@ -19,7 +19,7 @@ class AdEditForm extends AdAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.ad';
+	public $activeMenuItem = 'wcf.acp.menu.link.ad.list';
 	
 	/**
 	 * id of the edited ad

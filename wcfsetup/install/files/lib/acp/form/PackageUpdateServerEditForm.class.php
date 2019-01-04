@@ -16,6 +16,11 @@ use wcf\system\WCF;
  */
 class PackageUpdateServerEditForm extends PackageUpdateServerAddForm {
 	/**
+	 * @inheritDoc
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.package.server.list';
+	
+	/**
 	 * update server id
 	 * @var	integer
 	 */

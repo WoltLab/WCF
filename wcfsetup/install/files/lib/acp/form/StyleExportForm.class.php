@@ -18,7 +18,7 @@ class StyleExportForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.style';
+	public $activeMenuItem = 'wcf.acp.menu.link.style.list';
 	
 	/**
 	 * true, if style has custom images

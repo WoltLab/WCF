@@ -21,7 +21,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.group';
+	public $activeMenuItem = 'wcf.acp.menu.link.group.list';
 	
 	/**
 	 * @inheritDoc

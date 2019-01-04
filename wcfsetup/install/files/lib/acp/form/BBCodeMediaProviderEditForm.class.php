@@ -18,7 +18,7 @@ class BBCodeMediaProviderEditForm extends BBCodeMediaProviderAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.bbcode';
+	public $activeMenuItem = 'wcf.acp.menu.link.bbcode.list';
 	
 	/**
 	 * @inheritDoc

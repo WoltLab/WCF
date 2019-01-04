@@ -20,7 +20,7 @@ class LanguageAddForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.language';
+	public $activeMenuItem = 'wcf.acp.menu.link.language.list';
 	
 	/**
 	 * country code

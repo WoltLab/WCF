@@ -17,6 +17,11 @@ use wcf\system\WCF;
  */
 class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
 	/**
+	 * @inheritDoc
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.group.assignment';
+
+	/**
 	 * edited automatic user group assignment
 	 * @var	UserGroupAssignment
 	 */

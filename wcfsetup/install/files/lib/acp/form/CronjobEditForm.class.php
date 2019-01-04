@@ -19,7 +19,7 @@ class CronjobEditForm extends CronjobAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.maintenance';
+	public $activeMenuItem = 'wcf.acp.menu.link.cronjob.list';
 	
 	/**
 	 * cronjob id

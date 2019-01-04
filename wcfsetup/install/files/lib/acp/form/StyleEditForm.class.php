@@ -20,7 +20,7 @@ class StyleEditForm extends StyleAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.style';
+	public $activeMenuItem = 'wcf.acp.menu.link.style.list';
 	
 	/**
 	 * style object

@@ -26,7 +26,7 @@ class SitemapEditForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.maintenance';
+	public $activeMenuItem = 'wcf.acp.menu.link.maintenance.sitemap';
 	
 	/**
 	 * @inheritDoc

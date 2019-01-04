@@ -32,7 +32,7 @@ class UserAssignToGroupForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
+	public $activeMenuItem = 'wcf.acp.menu.link.user.list';
 	
 	/**
 	 * ids of the relevant users
