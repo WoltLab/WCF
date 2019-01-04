@@ -1465,6 +1465,7 @@
 		<item name="wcf.acp.option.search_default_sort_field.description"/>
 		<item name="wcf.acp.option.search_default_sort_order"><![CDATA[Standardreihenfolge]]></item>
 		<item name="wcf.acp.option.search_default_sort_order.description"/>
+		<item name="wcf.acp.option.search_max_combined_tags"><![CDATA[Maximale Anzahl Tags pro Suche]]></item>
 		<item name="wcf.acp.option.category.message.general.poll"><![CDATA[Umfragen]]></item>
 		<item name="wcf.acp.option.module_poll"><![CDATA[Umfragen]]></item>
 		<item name="wcf.acp.option.poll_max_options"><![CDATA[Maximale Anzahl an Antworten]]></item>

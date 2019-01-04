@@ -1509,6 +1509,14 @@ username:wcf.search.sortBy.username</selectoptions>
 				<selectoptions>ASC:wcf.global.sortOrder.ascending
 DESC:wcf.global.sortOrder.descending</selectoptions>
 			</option>
+			<option name="search_max_combined_tags">
+				<categoryname>message.search</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>3</defaultvalue>
+				<options>module_tagging</options>
+				<minvalue>1</minvalue>
+				<maxvalue>10</maxvalue>
+			</option>
 			<!-- message.general.poll -->
 			<option name="poll_max_options">
 				<categoryname>message.general.poll</categoryname>
