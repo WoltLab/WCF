@@ -27,6 +27,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
 use wcf\util\DOMUtil;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\XML;
 
@@ -473,23 +474,16 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		]);
 		
 		// add one field per language
-		foreach ($this->getProjectXmls() as $xml) {
-			$languageCode = $xml->getDocument()->documentElement->getAttribute('languagecode');
-			$languageName = LanguageFactory::getInstance()->getLanguageByCode($languageCode)->languageName;
-			
-			if ($dataContainer->getNodeById($languageCode) !== null) {
-				throw new \LogicException("Duplicate language file with language code '{$languageCode}'.");
-			}
-			
+		foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 			$description = null;
-			$descriptionLanguageItem = 'wcf.acp.pip.language.languageItemValue.' . $languageCode . '.description';
+			$descriptionLanguageItem = 'wcf.acp.pip.language.languageItemValue.' . $language->languageCode . '.description';
 			if (WCF::getLanguage()->get($descriptionLanguageItem, true) !== '') {
 				$description = $descriptionLanguageItem;
 			}
 			
 			$dataContainer->appendChild(
-				MultilineTextFormField::create($languageCode)
-					->label($languageName)
+				MultilineTextFormField::create($language->languageCode)
+					->label($language->languageName)
 					->description($description)
 			);
 		}
@@ -642,25 +636,43 @@ XML;
 	
 	/**
 	 * Returns the xml objects for this pip.
-	 *
+	 * 
+	 * @param	boolean		$createXmlFiles		if `true` and if a relevant XML file does not exist, it is created
 	 * @return	XML[]
 	 */
-	protected function getProjectXmls() {
+	protected function getProjectXmls($createXmlFiles = false) {
 		$xmls = [];
 		
-		foreach ($this->installation->getProject()->getLanguageFiles() as $languageFile) {
-			$xml = new XML();
-			if (!file_exists($languageFile)) {
-				$xml->loadXML($languageFile, $this->getEmptyXml(substr(basename($languageFile), 0, -4)));
-			}
-			else {
-				$xml->load($languageFile);
+		if ($createXmlFiles) {
+			$directory = $this->installation->getProject()->path . ($this->installation->getProject()->isCore() ? 'wcfsetup/install/lang/' : 'language/');
+			if (!is_dir($directory)) {
+				FileUtil::makePath($directory);
 			}
 			
-			// only consider installed languages
-			$languageCode = $xml->getDocument()->documentElement->getAttribute('languagecode');
-			if (LanguageFactory::getInstance()->getLanguageByCode($languageCode) !== null) {
+			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+				$languageFile = $directory . $language->languageCode . '.xml';
+				
+				$xml = new XML();
+				if (!file_exists($languageFile)) {
+					$xml->loadXML($languageFile, $this->getEmptyXml(substr(basename($languageFile), 0, -4)));
+				}
+				else {
+					$xml->load($languageFile);
+				}
+				
 				$xmls[] = $xml;
+			}
+		}
+		else {
+			foreach ($this->installation->getProject()->getLanguageFiles() as $languageFile) {
+				$xml = new XML();
+				$xml->load($languageFile);
+				
+				// only consider installed languages
+				$languageCode = $xml->getDocument()->documentElement->getAttribute('languagecode');
+				if (LanguageFactory::getInstance()->getLanguageByCode($languageCode) !== null) {
+					$xmls[] = $xml;
+				}
 			}
 		}
 		

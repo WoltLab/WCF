@@ -38,7 +38,7 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 	 * @param	IFormDocument		$form
 	 */
 	public function addEntry(IFormDocument $form) {
-		foreach ($this->getProjectXmls() as $xml) {
+		foreach ($this->getProjectXmls(true) as $xml) {
 			$newElement = $this->createAndInsertNewXmlElement($xml, $form);
 			
 			$this->saveObject($newElement);
@@ -72,7 +72,7 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 	 */
 	public function editEntry(IFormDocument $form, $identifier) {
 		$newElement = null;
-		foreach ($this->getProjectXmls() as $xml) {
+		foreach ($this->getProjectXmls(true) as $xml) {
 			$element = $this->getElementByIdentifier($xml, $identifier);
 			$newElement = $this->replaceXmlElement($xml, $form, $identifier);
 			
@@ -134,9 +134,10 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 	/**
 	 * Returns the xml objects for this pip.
 	 * 
+	 * @param	boolean		$createXmlFiles		if `true` and if a relevant XML file does not exist, it is created
 	 * @return	XML[]
 	 */
-	abstract protected function getProjectXmls();
+	abstract protected function getProjectXmls($createXmlFiles = false);
 	
 	/**
 	 * @inheritDoc
