@@ -82,8 +82,13 @@ class TagSearchForm extends AbstractCaptchaForm {
 			}
 		}
 		
-		$this->tags = TagEngine::getInstance()->getTagsByName($this->tagNames, $this->languageID);
-		if (empty($this->tags)) {
+		if (!empty($this->tagNames)) {
+			$this->tags = TagEngine::getInstance()->getTagsByName($this->tagNames, $this->languageID);
+			if (empty($this->tags)) {
+				throw new UserInputException('tags');
+			}
+		}
+		else {
 			throw new UserInputException('tags');
 		}
 	}

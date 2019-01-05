@@ -25,6 +25,15 @@
 					<dt><label for="tagSearchInput">{lang}wcf.tagging.tags{/lang}</label></dt>
 					<dd>
 						<input id="tagSearchInput" type="text" value="" class="long">
+						{if $errorField === 'tags'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.tagging.tags.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
 						<small>{lang}wcf.tagging.tags.description{/lang}</small>
 					</dd>
 				</dl>
