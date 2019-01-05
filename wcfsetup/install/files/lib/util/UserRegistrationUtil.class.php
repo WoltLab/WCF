@@ -142,7 +142,7 @@ final class UserRegistrationUtil {
 	 * @return	string
 	 */
 	public static function getRandomFieldName($fieldName) {
-		$hash = StringUtil::getHash($fieldName . StringUtil::getRandomID());
+		$hash = StringUtil::getRandomID();
 		return substr($hash, 0, mt_rand(8, 16));
 	}
 }

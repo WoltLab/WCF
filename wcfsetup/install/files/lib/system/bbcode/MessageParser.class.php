@@ -168,7 +168,7 @@ class MessageParser extends BBCodeParser {
 	 */
 	protected function cacheCodesCallback($matches) {
 		// create hash
-		$hash = '@@'.StringUtil::getHash(uniqid(microtime()).$matches[3]).'@@';
+		$hash = '@@'.StringUtil::getRandomID().'@@';
 		
 		// build tag
 		$tag = $this->buildTag($matches[1]);

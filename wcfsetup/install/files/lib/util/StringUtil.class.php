@@ -42,12 +42,12 @@ final class StringUtil {
 	}
 	
 	/**
-	 * Creates a random hash.
+	 * Returns a 40 character hexadecimal string generated using a CSPRNG.
 	 * 
 	 * @return	string
 	 */
 	public static function getRandomID() {
-		return self::getHash(microtime() . uniqid((string) mt_rand(), true));
+		return bin2hex(random_bytes(20));
 	}
 	
 	/**
@@ -56,7 +56,21 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function getUUID() {
-		return sprintf('%04x%04x-%04x-%04x-%04x-%04x%04x%04x', mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(16384, 20479), mt_rand(32768, 49151), mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535));
+		return sprintf(
+			'%04x%04x-%04x-%04x-%02x%02x-%04x%04x%04x',
+			// time_low
+			random_int(0, 0xffff), random_int(0, 0xffff),
+			// time_mid
+			random_int(0, 0xffff), 
+			// time_hi_and_version
+			random_int(0, 0x0fff) | 0x4000,
+			// clock_seq_hi_and_res
+			random_int(0, 0x3f) | 0x80,
+			// clock_seq_low
+			random_int(0, 0xff),
+			// node
+			random_int(0, 0xffff), random_int(0, 0xffff), random_int(0, 0xffff)
+		);
 	}
 	
 	/**

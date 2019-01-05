@@ -169,7 +169,7 @@ class SimpleMessageParser extends SingletonFactory {
 	 * @return	string
 	 */
 	protected function cacheURLsCallback($matches) {
-		$hash = '@@'.StringUtil::getHash(uniqid(microtime()).$matches[0]).'@@';
+		$hash = '@@'.StringUtil::getRandomID().'@@';
 		$this->cachedURLs[$hash] = $matches[0];
 		
 		return $hash;
@@ -182,7 +182,7 @@ class SimpleMessageParser extends SingletonFactory {
 	 * @return	string
 	 */
 	protected function cacheEmailsCallback($matches) {
-		$hash = '@@'.StringUtil::getHash(uniqid(microtime()).$matches[0]).'@@';
+		$hash = '@@'.StringUtil::getRandomID().'@@';
 		$this->cachedEmails[$hash] = $matches[0];
 		
 		return $hash;
