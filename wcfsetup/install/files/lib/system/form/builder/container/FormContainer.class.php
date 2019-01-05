@@ -20,6 +20,7 @@ class FormContainer implements IFormContainer {
 	use TFormChildNode;
 	use TFormElement;
 	use TFormParentNode {
+		TFormParentNode::cleanup insteadof TFormElement;
 		validateChild as protected defaultValidateChild;
 	}
 	

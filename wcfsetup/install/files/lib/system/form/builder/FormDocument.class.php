@@ -20,6 +20,7 @@ use wcf\system\WCF;
 class FormDocument implements IFormDocument {
 	use TFormNode;
 	use TFormParentNode {
+		TFormParentNode::cleanup insteadof TFormNode;
 		readValues as protected defaultReadValues;
 	}
 	
@@ -71,6 +72,13 @@ class FormDocument implements IFormDocument {
 	 * @var	bool
 	 */
 	protected $isBuilt = false;
+	
+	/**
+	 * Cleans up the form document before the form document object is destroyed.
+	 */
+	public function __destruct() {
+		$this->cleanup();
+	}
 	
 	/**
 	 * @inheritDoc

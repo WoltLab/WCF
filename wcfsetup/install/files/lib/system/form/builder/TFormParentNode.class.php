@@ -93,6 +93,22 @@ trait TFormParentNode {
 	}
 	
 	/**
+	 * Cleans up after the whole form is not used anymore.
+	 * This method has to support being called multiple times.
+	 * 
+	 * This form should not clean up input fields.
+	 * 
+	 * @return	static		this node
+	 */
+	public function cleanup() {
+		foreach ($this as $child) {
+			$child->cleanup();
+		}
+		
+		return $this;
+	}
+	
+	/**
 	 * Returns the number of direct children of this node.
 	 * 
 	 * @return	int	number of children

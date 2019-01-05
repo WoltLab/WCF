@@ -178,6 +178,18 @@ trait TFormNode {
 	}
 	
 	/**
+	 * Cleans up after the whole form is not used anymore.
+	 * This method has to support being called multiple times.
+	 * 
+	 * This form should not clean up input fields.
+	 *
+	 * @return	static		this node
+	 */
+	public function cleanup() {
+		return $this;
+	}
+	
+	/**
 	 * Returns the value of the additional attribute of this node with the given name.
 	 * 
 	 * @param	string		$name		attribute name
