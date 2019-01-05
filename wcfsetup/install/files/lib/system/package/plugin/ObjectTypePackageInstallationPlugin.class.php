@@ -738,21 +738,6 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @inheritDoc
 	 * @since	3.2
 	 */
-	protected function getEmptyXml() {
-		$apiVersion = WSC_API_VERSION;
-		
-		return <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/{$apiVersion}/objectType.xsd">
-	<import></import>
-</data>
-XML;
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
-	 */
 	public function getEntryList() {
 		$xml = $this->getProjectXml();
 		$xpath = $xml->xpath();

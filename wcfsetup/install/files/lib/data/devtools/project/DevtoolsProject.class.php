@@ -208,6 +208,10 @@ class DevtoolsProject extends DatabaseObject {
 	public function getLanguageFiles() {
 		$languageDirectory = $this->path . ($this->isCore() ? 'wcfsetup/install/lang/' : 'language/');
 		
+		if (!is_dir($languageDirectory)) {
+			return [];
+		}
+		
 		return array_values(DirectoryUtil::getInstance($languageDirectory)->getFiles(SORT_ASC, Regex::compile('\w+\.xml')));
 	}
 	
