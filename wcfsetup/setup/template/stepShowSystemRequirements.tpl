@@ -140,7 +140,7 @@
 				<dl class="col-xs-12 col-md-6">
 					<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
 					<dd>
-						<span class="badge {if !$system.imagick.result}red{elseif !$system.imagick.supportsAnimatedGIFs}yellow{else}green{/if}">{$system.imagick.value}</span>
+						<span class="badge {if !$system.imagick.result}red{elseif !$system.imagick.supportsAnimatedGIFs}yellow{else}green{/if}">{if !$system.imagick.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}{$system.imagick.value}{/if}</span>
 						{if !$system.imagick.result}<small>{lang}wcf.global.systemRequirements.imagick.description{/lang}</small>{/if}
 					</dd>
 				</dl>
