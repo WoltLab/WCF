@@ -763,7 +763,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// create style info file
 		$xml = new XMLWriter();
-		$xml->beginDocument('style', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/vortex/style.xsd');
+		$xml->beginDocument('style', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/style.xsd');
 		
 		// general block
 		$xml->startElement('general');
@@ -802,7 +802,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$styleTar->addString(self::INFO_FILE, $xml->endDocument());
 		
 		// create variable list
-		$xml->beginDocument('variables', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/vortex/styleVariables.xsd');
+		$xml->beginDocument('variables', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/styleVariables.xsd');
 		
 		// get variables
 		$sql = "SELECT		variable.variableName, value.variableValue
@@ -908,7 +908,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$packageTar->add($styleTarName, '', FileUtil::addTrailingSlash(dirname($styleTarName)));
 			
 			// create package.xml
-			$xml->beginDocument('package', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/vortex/package.xsd', ['name' => $packageName]);
+			$xml->beginDocument('package', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/package.xsd', ['name' => $packageName]);
 			
 			$xml->startElement('packageinformation');
 			$xml->writeElement('packagename', $this->styleName);
