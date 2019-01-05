@@ -123,10 +123,67 @@ class ViewableMedia extends DatabaseObjectDecorator {
 	 * @return	string
 	 */
 	public function getElementTag($size) {
-		if ($this->isImage && $this->tinyThumbnailType) {
-			$tinyThumbnail = Media::getThumbnailSizes()['tiny'];
-			if ($size <= $tinyThumbnail['width'] && $size <= $tinyThumbnail['height']) {
-				return '<img src="' . StringUtil::encodeHTML($this->getThumbnailLink('tiny')) . '" alt="' . StringUtil::encodeHTML($this->altText) . '" '.($this->title ? 'title="'.StringUtil::encodeHTML($this->title).'" ' : '').'style="width: ' . $size . 'px; height: ' . $size . 'px;">';
+		if ($this->isImage) {
+			$width = $size;
+			$height = $size;
+			$link = null;
+			
+			if ($this->tinyThumbnailType) {
+				$link = $this->getThumbnailLink('tiny');
+				
+				if ($size <= $this->tinyThumbnailWidth && $size <= $this->tinyThumbnailHeight) {
+					if ($this->tinyThumbnailHeight < $this->tinyThumbnailWidth) {
+						$height = round($this->tinyThumbnailHeight / $this->tinyThumbnailWidth * $size);
+					}
+					else {
+						$width = round($this->tinyThumbnailWidth / $this->tinyThumbnailHeight * $size);
+					}
+				}
+				else if ($size <= $this->tinyThumbnailWidth) {
+					$height = round($this->tinyThumbnailHeight / $this->tinyThumbnailWidth * $size);
+				}
+				else if ($size <= $this->tinyThumbnailHeight) {
+					$width = round($this->tinyThumbnailWidth / $this->tinyThumbnailHeight * $size);
+				}
+				else {
+					$link = null;
+				}
+				
+				$marginTop = floor(($size - $height) / 2);
+			}
+			
+			if ($link === null) {
+				$link = $this->getLink();
+				
+				// round smaller dimension to 
+				if ($size <= $this->width && $size <= $this->height) {
+					if ($this->height < $this->width) {
+						$height = round($this->height / $this->width * $size);
+					}
+					else {
+						$width = round($this->width / $this->height * $size);
+					}
+				}
+				else if ($size <= $this->width) {
+					$height = round($this->height / $this->width * $size);
+				}
+				else if ($size <= $this->height) {
+					$width = round($this->width / $this->height * $size);
+				}
+				else {
+					$width = $this->width;
+					$height = $this->height;
+				}
+				
+				$marginTop = floor(($size - $height) / 2);
+			}
+			
+			if ($link !== null) {
+				return '<span style="display: inline-block; text-align: center; width: ' . $size . 'px; height: ' . $size . 'px;">
+						<img src="' . StringUtil::encodeHTML($link) . '" alt="' . StringUtil::encodeHTML($this->altText)
+						. '" '. ($this->title ? 'title="' . StringUtil::encodeHTML($this->title) . '" ' : '')
+						. 'style="width: ' . $width . 'px; height: ' . $height . 'px; margin-top: ' . $marginTop . 'px;">
+					</span>';
 			}
 		}
 		
