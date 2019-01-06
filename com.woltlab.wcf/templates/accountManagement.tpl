@@ -233,7 +233,7 @@
 								{if $__wcf->getSession()->getVar('__googleData')}
 									<label><input type="checkbox" name="googleConnect" value="1"{if $googleConnect} checked{/if}> {lang}wcf.user.3rdparty.google.connect{/lang}</label>
 								{else}
-									<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.connect{/lang}</span></a>
+									<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google"></span> <span>{lang}wcf.user.3rdparty.google.connect{/lang}</span></a>
 								{/if}
 							</dd>
 						</dl>
