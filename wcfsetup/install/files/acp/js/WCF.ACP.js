@@ -2485,7 +2485,8 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 		
 		var dl = $(this._pageInputs[0]).parents('dl:eq(0)');
 		
-		// hide the page controller element
+		// hide the page controller elements
+		dl.prev('dl').hide();
 		dl.hide();
 		
 		var section = dl.parent('section');

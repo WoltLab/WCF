@@ -221,7 +221,7 @@
 													
 													{if GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== ''}
 														<li id="googleAuth" class="thirdPartyLogin">
-															<a href="{link controller='GoogleAuth'}{/link}" class="button thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
+															<a href="{link controller='GoogleAuth'}{/link}" class="button thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
 														</li>
 													{/if}
 													
