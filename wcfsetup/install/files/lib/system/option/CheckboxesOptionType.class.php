@@ -19,4 +19,11 @@ class CheckboxesOptionType extends MultiSelectOptionType {
 	 * @inheritDoc
 	 */
 	protected $searchableFormElementTemplate = 'checkboxesSearchableOptionType';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getCSSClassName() {
+		return 'checkboxList';
+	}
 }

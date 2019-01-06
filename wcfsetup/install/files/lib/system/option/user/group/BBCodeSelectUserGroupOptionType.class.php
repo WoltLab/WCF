@@ -147,4 +147,11 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 		// both lists of BBCodes are equal
 		return 0;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getCSSClassName() {
+		return 'checkboxList';
+	}
 }

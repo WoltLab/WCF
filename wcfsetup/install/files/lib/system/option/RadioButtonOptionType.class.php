@@ -121,4 +121,11 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	protected function getSelectOptions(Option $option) {
 		return $option->parseSelectOptions();
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getCSSClassName() {
+		return 'checkboxList';
+	}
 }

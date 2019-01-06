@@ -68,6 +68,25 @@ dl {
 		&.wide > dt {
 			display: none;
 		}
+		
+		/* The option */
+		dt.checkboxList + dd,
+		dd.checkboxList {
+			&::after {
+				content: "";
+				clear: both;
+				display: table;
+			}
+			
+			label {
+				float: left;
+				clear: both;
+			}
+			
+			small {
+				clear: both;
+			}
+		}
 	}
 	
 	&.floated > dd {
