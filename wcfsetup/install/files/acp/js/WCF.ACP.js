@@ -1941,6 +1941,13 @@ WCF.ACP.User.BanHandler = {
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		elBySelAll('.jsUserRow', undefined, function(userRow) {
+			var userId = parseInt(elData(userRow, 'object-id'), 10);
+			if (data.objectIDs.indexOf(userId) !== -1) {
+				elData(userRow, 'banned', data.actionName === 'ban');
+			}
+		});
+		
 		$('.jsBanButton').each(function(index, button) {
 			var $button = $(button);
 			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
@@ -1961,6 +1968,8 @@ WCF.ACP.User.BanHandler = {
 		if (data.actionName == 'ban') {
 			this._dialog.wcfDialog('close');
 		}
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.acp.user', 'refresh', {userIds: data.objectIDs});
 	}
 };
 
@@ -2102,6 +2111,13 @@ WCF.ACP.User.EnableHandler = {
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		elBySelAll('.jsUserRow', undefined, function(userRow) {
+			var userId = parseInt(elData(userRow, 'object-id'), 10);
+			if (data.objectIDs.indexOf(userId) !== -1) {
+				elData(userRow, 'enabled', data.actionName === 'enable');
+			}
+		});
+		
 		$('.jsEnableButton').each(function(index, button) {
 			var $button = $(button);
 			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
@@ -2116,6 +2132,8 @@ WCF.ACP.User.EnableHandler = {
 		
 		var $notification = new WCF.System.Notification();
 		$notification.show(function() { window.location.reload(); });
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.acp.user', 'refresh', {userIds: data.objectIDs});
 	}
 };
 

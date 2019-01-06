@@ -4453,6 +4453,8 @@ not register with us.]]></item>
 		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Last Activity]]></item>
 		<item name="wcf.user.sortField.reactionReputation"><![CDATA[Reputation from Reactions]]></item>
 		<item name="wcf.user.articles"><![CDATA[Articles]]></item>
+		<item name="wcf.user.status.banned"><![CDATA[The user has been banned.]]></item>
+		<item name="wcf.user.status.isDisabled"><![CDATA[The user has not been approved yet.]]></item>
 	</category>
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>

@@ -4456,6 +4456,8 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
 		<item name="wcf.user.sortField.reactionReputation"><![CDATA[Reputation aus Reaktionen]]></item>
 		<item name="wcf.user.articles"><![CDATA[Artikel]]></item>
+		<item name="wcf.user.status.banned"><![CDATA[Der Benutzer ist gesperrt.]]></item>
+		<item name="wcf.user.status.isDisabled"><![CDATA[Der Benutzer ist nicht freigeschaltet.]]></item>
 	</category>
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>

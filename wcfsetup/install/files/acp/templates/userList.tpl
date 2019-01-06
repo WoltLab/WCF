@@ -31,7 +31,9 @@
 			'wcf.acp.user.ban.neverExpires': '{lang}wcf.acp.user.ban.neverExpires{/lang}',
 			'wcf.acp.user.sendNewPassword.workerTitle': '{lang}wcf.acp.user.sendNewPassword.workerTitle{/lang}',
 			'wcf.acp.worker.abort.confirmMessage': '{lang}wcf.acp.worker.abort.confirmMessage{/lang}',
-			'wcf.acp.content.removeContent': '{lang}wcf.acp.content.removeContent{/lang}'
+			'wcf.acp.content.removeContent': '{lang}wcf.acp.content.removeContent{/lang}',
+			'wcf.user.status.banned': '{lang}wcf.user.status.banned{/lang}',
+			'wcf.user.status.isDisabled': '{lang}wcf.user.status.isDisabled{/lang}'
 		});
 		WCF.ACP.User.BanHandler.init();
 		
@@ -163,11 +165,19 @@
 						<td class="columnID columnUserID">{@$user->userID}</td>
 						<td class="columnIcon">{@$user->getAvatar()->getImageTag(24)}</td>
 						<td class="columnTitle columnUsername">
-							{if $user->editable}
-								<a title="{lang}wcf.acp.user.edit{/lang}" href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>
-							{else}
-								{$user->username}
-							{/if}
+							<span class="username">
+								{if $user->editable}
+									<a title="{lang}wcf.acp.user.edit{/lang}" href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>
+								{else}
+									{$user->username}
+								{/if}
+							</span>
+							
+							<span class="userStatusIcons">
+								{if $user->banned}<span class="icon icon16 fa-lock jsTooltip jsUserStatusBanned" title="{lang}wcf.user.status.banned{/lang}"></span>{/if}
+								{if $user->activationCode != 0}<span class="icon icon16 fa-power-off jsTooltip jsUserStatusIsDisabled" title="{lang}wcf.user.status.isDisabled{/lang}"></span>{/if}
+							</span>
+							
 							{if MODULE_USER_RANK}
 								{if $user->getUserTitle()} <span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>{/if}
 								{if $user->getRank() && $user->getRank()->rankImage} <span class="userRankImage">{@$user->getRank()->getImage()}</span>{/if}
