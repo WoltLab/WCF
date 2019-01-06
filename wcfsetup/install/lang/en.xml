@@ -4031,6 +4031,8 @@ Attachments:
 		<item name="wcf.page.sidebar.left"><![CDATA[Left Sidebar]]></item>
 		<item name="wcf.page.sidebar.right"><![CDATA[Right Sidebar]]></item>
 		<item name="wcf.page.breadcrumb"><![CDATA[Breadcrumb]]></item>
+		<item name="wcf.page.requestedPage.condition.reverseLogic"><![CDATA[Reverse “Requested Page” selection]]></item>
+		<item name="wcf.page.requestedPage.condition.reverseLogic.description"><![CDATA[If selected, the requested page <strong>may not</strong> be one of the pages selected under “Requested Page”.]]></item>
 	</category>
 	<category name="wcf.acp.page">
 		<item name="wcf.acp.page.add"><![CDATA[Add Page]]></item>

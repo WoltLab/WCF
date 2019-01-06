@@ -22,6 +22,7 @@
     "__itemListFormField",
     "__mediaSetCategoryDialog",
     "__multilineTextFormField",
+    "__multiPageCondition",
     "__multipleSelectionFormField",
     "__nonEmptyFormFieldDependency",
     "__numericFormField",

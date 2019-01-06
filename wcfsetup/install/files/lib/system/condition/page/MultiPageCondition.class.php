@@ -31,6 +31,27 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
 	protected $label = 'wcf.page.requestedPage';
 	
 	/**
+	 * is `true` if the logic should be reversed, thus all of the non-selected pages fulfill the
+	 * condition
+	 * @var	bool
+	 */
+	protected $reverseLogic = false;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getData() {
+		if (!empty($this->fieldValue)) {
+			return [
+				$this->fieldName => $this->fieldValue,
+				$this->fieldName . '_reverseLogic' => $this->reverseLogic
+			];
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected function getFieldElement() {
@@ -46,7 +67,12 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
 	 * @inheritDoc
 	 */
 	public function getHTML() {
-		return AbstractSingleFieldCondition::getHTML();
+		return WCF::getTPL()->fetch('__multiPageCondition', 'wcf', [
+			'condition' => $this,
+			'conditionHtml' => AbstractSingleFieldCondition::getHTML(),
+			'fieldName' => $this->fieldName,
+			'reverseLogic' => $this->reverseLogic
+		]);
 	}
 	
 	/**
@@ -59,12 +85,48 @@ class MultiPageCondition extends AbstractMultiSelectCondition implements IConten
 	/**
 	 * @inheritDoc
 	 */
+	public function readFormParameters() {
+		parent::readFormParameters();
+		
+		if (isset($_POST[$this->fieldName . '_reverseLogic'])) $this->reverseLogic = (bool)$this->fieldName . '_reverseLogic';
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	public function reset() {
+		$this->fieldValue = [];
+		$this->reverseLogic = false;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function setData(Condition $condition) {
+		parent::setData($condition);
+		
+		// backwards compatibility: if the reverse logic condition entry does not exist,
+		// the logic is not reversed 
+		$this->reverseLogic = $condition->conditionData[$this->fieldName . '_reverseLogic'] ?? false;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function showContent(Condition $condition) {
 		$activeRequest = RequestHandler::getInstance()->getActiveRequest();
 		if ($activeRequest !== null) {
 			$pageID = $activeRequest->getPageID();
-			if ($pageID && $condition->pageIDs && is_array($condition->pageIDs)) {
-				return in_array($pageID, $condition->pageIDs);
+			$pageIDs = $condition->{$this->fieldName};
+			
+			if ($pageID && $condition->pageIDs && is_array($pageIDs)) {
+				$matchingPageID = in_array($pageID, $pageIDs);
+				
+				if ($condition->{$this->fieldName . '_reverseLogic'}) {
+					return !$matchingPageID;
+				}
+				
+				return $matchingPageID;
 			}
 		}
 		
