@@ -4660,7 +4660,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.3rdparty.google"><![CDATA[Google]]></item>
 		<item name="wcf.user.3rdparty.google.login"><![CDATA[Google]]></item>
 		<item name="wcf.user.3rdparty.google.login.error.access_denied"><![CDATA[Access to your Google account has been rejected.]]></item>
-		<item name="wcf.user.3rdparty.google.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-google-plus"></span>&nbsp;Google.]]></item>
+		<item name="wcf.user.3rdparty.google.register"><![CDATA[You are creating an account through <span class="icon icon16 fa-google"></span>&nbsp;Google.]]></item>
 		<item name="wcf.user.3rdparty.google.connect"><![CDATA[Connect with your Google account{if $__wcf->session->getVar('__googleUsername')} “{$__wcf->session->getVar('__googleUsername')}”{/if}.]]></item>
 		<item name="wcf.user.3rdparty.google.connect.success"><![CDATA[Your user account has been connected with Google.]]></item>
 		<item name="wcf.user.3rdparty.google.connect.error.inuse"><![CDATA[Your Google account is already connected to a different user.]]></item>
