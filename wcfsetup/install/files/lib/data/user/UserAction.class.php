@@ -18,6 +18,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
@@ -1011,5 +1012,29 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}
 		
 		$this->unmarkItems($this->objectIDs);
+	}
+	
+	/**
+	 * @since 3.2
+	 */
+	public function validateDevtoolsSetLanguage() {
+		if (!ENABLE_DEBUG_MODE || !ENABLE_DEVELOPER_TOOLS) {
+			throw new PermissionDeniedException();
+		}
+		
+		$this->readInteger('languageID');
+		
+		if (LanguageFactory::getInstance()->getLanguage($this->parameters['languageID']) === null) {
+			throw new UserInputException('languageID', 'invalid');
+		}
+	}
+	
+	/**
+	 * @since 3.2
+	 */
+	public function devtoolsSetLanguage() {
+		(new UserEditor(WCF::getUser()))->update([
+			'languageID' => $this->parameters['languageID']
+		]);
 	}
 }

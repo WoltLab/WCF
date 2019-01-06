@@ -148,6 +148,8 @@
 		});
 	</script>
 	
+	{include file='__devtoolsLanguageChooser'}
+	
 	<script>
 		// prevent jQuery and other libraries from utilizing define()
 		__require_define_amd = define.amd;
