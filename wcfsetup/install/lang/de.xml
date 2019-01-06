@@ -347,8 +347,8 @@
 		<item name="wcf.acp.dataImport.configure.database.name"><![CDATA[Datenbankname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.prefix"><![CDATA[Tabellen-Präfix]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem"><![CDATA[Datei-System-Zugang]]></item>
-		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[Pfad zur Installation]]></item>
-		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[Wird für den Import von Datei-basierten Inhalten (wie z.B. Avatare) benötigt.]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[Pfad zur alten Installation]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[Geben Sie den Dateipfad der alten Installation an, dieser wird für den Import von Datei-basierten Inhalten, z. B. Avatare oder Dateianhänge, benötigt.]]></item>
 		<item name="wcf.acp.dataImport.configure.database.error"><![CDATA[Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
 		<br><strong>{$exception->getMessage()}<br>{$exception->getErrorDesc()}</strong>]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[Es wurde keine Installation unter dem angegeben Pfad gefunden.]]></item>

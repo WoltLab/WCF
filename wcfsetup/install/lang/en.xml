@@ -324,8 +324,8 @@
 		<item name="wcf.acp.dataImport.configure.database.name"><![CDATA[Database Name]]></item>
 		<item name="wcf.acp.dataImport.configure.database.prefix"><![CDATA[Table Prefix]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem"><![CDATA[Filesystem]]></item>
-		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[Installation Path]]></item>
-		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[Required if file-based data (e.g. avatars or attachments) should be imported.]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[Path to the Old Installation]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[Please enter the path to the old installation, this is required to import files, such as avatars or attachments.]]></item>
 		<item name="wcf.acp.dataImport.configure.database.error"><![CDATA[An error occurred while trying to access the database:<br><strong>{$exception->getMessage()}<br>{$exception->getErrorDesc()}</strong>]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[Unable to find a valid installation located at the path you have provided.]]></item>
 		<item name="wcf.acp.dataImport.configure.settings"><![CDATA[Settings]]></item>
