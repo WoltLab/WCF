@@ -80,6 +80,10 @@ class Language extends DatabaseObject {
 	 * @return	string
 	 */
 	public function get($item, $optional = false) {
+		if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS && is_array($optional) && !empty($optional)) {
+			throw new \InvalidArgumentException("The second parameter of Language::get() does not support non-empty arrays. Did you mean to use Language::getDynamicVariable()?");
+		}
+		
 		if (!isset($this->items[$item])) {
 			// load category file
 			$explodedItem = explode('.', $item);
