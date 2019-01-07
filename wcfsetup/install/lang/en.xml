@@ -2179,8 +2179,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.page.name.description"><![CDATA[The page name is displayed in the ACP on the page list.]]></item>
 		<item name="wcf.acp.pip.page.controller"><![CDATA[Page Controller]]></item>
 		<item name="wcf.acp.pip.page.handler"><![CDATA[Page Handler]]></item>
-		<item name="wcf.acp.pip.page.controllerCustomURL"><![CDATA[Custom Page URL]]></item>
-		<item name="wcf.acp.pip.page.controllerCustomURL.description"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.pip.page.requireObjectID"><![CDATA[Requires Object ID]]></item>
 		<item name="wcf.acp.pip.page.requireObjectID.description"><![CDATA[The page requires an object id to be displayed.]]></item>
 		<item name="wcf.acp.pip.page.hasFixedParent"><![CDATA[Has Fixed Parent]]></item>

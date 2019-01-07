@@ -2423,8 +2423,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.pip.page.contentMetaKeywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.pip.page.contentTitle"><![CDATA[Titel]]></item>
 		<item name="wcf.acp.pip.page.controller"><![CDATA[Seiten-Controller]]></item>
-		<item name="wcf.acp.pip.page.controllerCustomURL"><![CDATA[Individuelle Controller-URL]]></item>
-		<item name="wcf.acp.pip.page.controllerCustomURL.description"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.pip.page.cssClassName"><![CDATA[CSS-Klassen]]></item>
 		<item name="wcf.acp.pip.page.cssClassName.description"><![CDATA[Die durch Komma abgetrennte CSS-Klassen werden dem <kbd>body</kbd>-Element zugewiesen.]]></item>
 		<item name="wcf.acp.pip.page.excludeFromLandingPage"><![CDATA[Seite kann nicht als Startseite ausgewählt werden]]></item>

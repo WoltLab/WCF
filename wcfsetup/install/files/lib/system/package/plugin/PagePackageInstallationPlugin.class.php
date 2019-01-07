@@ -194,6 +194,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					$handler = $data['elements']['handler'];
 				}
 				
+				// @deprecated
 				if (!empty($data['elements']['controllerCustomURL'])) {
 					$controllerCustomURL = $data['elements']['controllerCustomURL'];
 					if ($controllerCustomURL && !RouteHandler::isValidCustomUrl($controllerCustomURL)) {
@@ -487,10 +488,6 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				->label('wcf.acp.pip.page.handler')
 				->implementedInterface(IMenuPageHandler::class),
 			
-			TextFormField::create('controllerCustomURL')
-				->label('wcf.acp.pip.page.controllerCustomURL')
-				->description('wcf.acp.pip.page.controllerCustomURL.description'),
-			
 			BooleanFormField::create('requireObjectID')
 				->label('wcf.acp.pip.page.requireObjectID')
 				->description('wcf.acp.pip.page.requireObjectID.description'),
@@ -655,7 +652,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		}
 		
 		$optionalElements = [
-			'controller', 'handler', 'controllerCustomURL', 'hasFixedParent',
+			'controller', 'handler', 'hasFixedParent',
 			'parent', 'options', 'permissions', 'cssClassName', 'allowSpidersToIndex',
 			'excludeFromLandingPage', 'availableDuringOfflineMode', 'requireObjectID'
 		];
@@ -805,7 +802,6 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			$page,
 			[
 				'handler' => '',
-				'controllerCustomURL' => '',
 				'hasFixedParent' => 0,
 				'parent' => '',
 				'options' => '',
