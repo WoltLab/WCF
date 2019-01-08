@@ -52,7 +52,7 @@ class UploadFile {
 	 * The unique id for the file.
 	 * @var String
 	 */
-	private $uniquieId;
+	private $uniqueId;
 	
 	/**
 	 * UploadFile constructor.
@@ -72,7 +72,7 @@ class UploadFile {
 		$this->filesize = filesize($location);
 		$this->processed = $processed;
 		$this->viewableImage = $viewableImage;
-		$this->uniquieId = sha1(sha1_file($location) . sha1($location));
+		$this->uniqueId = sha1(sha1_file($location) . sha1($location));
 		
 		if (@getimagesize($location) !== false) {
 			$this->isImage = true;
@@ -131,7 +131,7 @@ class UploadFile {
 	 * @return String
 	 */
 	public function getUniqueFileId() {
-		return $this->uniquieId;
+		return $this->uniqueId;
 	}
 	
 	/**
