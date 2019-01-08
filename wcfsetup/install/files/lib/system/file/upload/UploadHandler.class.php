@@ -137,7 +137,7 @@ class UploadHandler extends SingletonFactory {
 		
 		/** @var UploadFile $storageFile */
 		foreach ($storage[$internalId]['files'] as $id => $storageFile) {
-			if ($storageFile->getUniqueFileId() == $uniqueFileId) {
+			if ($storageFile->getUniqueFileId() === $uniqueFileId) {
 				unset($storage[$internalId]['files'][$id]);
 				break;
 			}
@@ -195,7 +195,7 @@ class UploadHandler extends SingletonFactory {
 		}
 		
 		foreach ($this->getFilesForInternalId($internalId) as $file) {
-			if ($file->getUniqueFileId() == $uniqueFileId) {
+			if ($file->getUniqueFileId() === $uniqueFileId) {
 				return $file;
 			}
 		}

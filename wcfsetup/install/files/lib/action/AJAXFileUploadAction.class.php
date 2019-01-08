@@ -121,7 +121,7 @@ class AJAXFileUploadAction extends AbstractSecureAction {
 				'filename' => $file->getFilename(),
 				'icon' => $file->getIconName(),
 				'filesize' => FileUtil::formatFilesize($file->filesize),
-				'image' => ($file->viewableImage) ? $file->getImage() : null, 
+				'image' => $file->viewableImage ? $file->getImage() : null, 
 				'uniqueFileId' => $file->getUniqueFileId()
 			];
 		}
