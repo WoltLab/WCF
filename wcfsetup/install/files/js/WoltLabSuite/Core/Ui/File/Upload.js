@@ -184,7 +184,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 				DomUtil.insertAfter(innerError, elBySel('small', this._fileElements[uploadId][i]));
 			}
 			
-			throw new Error("Upload failed: "+ data.message);
+			throw new Error("Upload failed: " + data.message);
 			
 			return false;
 		},
@@ -242,10 +242,10 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		 */
 		_success: function(uploadId, data, responseText, xhr, requestOptions) {
 			for (var i in this._fileElements[uploadId]) {
-				if (typeof data['files'][i] !== 'undefined') {
+				if (data['files'][i] !== undefined) {
 					if (this._options.imagePreview) {
 						if (data['files'][i].image === null) {
-							throw new Error("Excpect image for uploaded file. None given.");
+							throw new Error("Expect image for uploaded file. None given.");
 						}
 						
 						elRemove(this._fileElements[uploadId][i]);
@@ -270,7 +270,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 						elBySel('.icon', this._fileElements[uploadId][i]).classList.add('fa-' + data['files'][i].icon);
 					}
 				}
-				else if (typeof data['error'][i] !== 'undefined') {
+				else if (data['error'][i] !== undefined) {
 					this._fileElements[uploadId][i].classList.add('uploadFailed');
 					
 					elBySel('small', this._fileElements[uploadId][i]).innerHTML = '';
@@ -367,7 +367,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 					DomUtil.insertAfter(innerError, this._buttonContainer);
 				}
 				
-				innerError.textContent= WCF.Language.get('wcf.upload.error.reachedRemainingLimit').replace(/#remaining#/, this._options.maxFiles);
+				innerError.textContent = WCF.Language.get('wcf.upload.error.reachedRemainingLimit').replace(/#remaining#/, this._options.maxFiles);
 			}
 			
 			// re-create upload button to effectively reset the 'files'
