@@ -58,7 +58,7 @@ class UploadHandler extends SingletonFactory {
 	/**
 	 * Returns the uploaded files for a specific fieldId.
 	 * 
-	 * @param       String          $fieldId
+	 * @param       string          $fieldId
 	 * @return      UploadFile[]
 	 */
 	public function getFilesForFieldId($fieldId) {
@@ -72,7 +72,7 @@ class UploadHandler extends SingletonFactory {
 	/**
 	 * Returns the removed but previosly proccessed files for a specific fieldId.
 	 *
-	 * @param       String          $fieldId
+	 * @param       string          $fieldId
 	 * @param       boolean         $processFiles
 	 * @return      UploadFile[]
 	 */
@@ -87,7 +87,7 @@ class UploadHandler extends SingletonFactory {
 	/**
 	 * Returns the removed but previosly proccessed files for a specific internalId.
 	 *
-	 * @param       String          $internalId
+	 * @param       string          $internalId
 	 * @param       boolean         $processFiles
 	 * @return      UploadFile[]
 	 */
@@ -148,8 +148,8 @@ class UploadHandler extends SingletonFactory {
 	
 	/**
 	 * Renders the field with the given fieldId for the template.
-	 * @param       String          $fieldId
-	 * @return      String
+	 * @param       string          $fieldId
+	 * @return      string
 	 */
 	public function renderField($fieldId) {
 		if (!isset($this->fields[$fieldId])) {
@@ -166,7 +166,7 @@ class UploadHandler extends SingletonFactory {
 	/**
 	 * Returns true, if the given internalId is valid.
 	 * 
-	 * @param       String          $internalId
+	 * @param       string          $internalId
 	 * @return      boolean
 	 */
 	public function isValidInternalId($internalId) {
@@ -175,8 +175,8 @@ class UploadHandler extends SingletonFactory {
 	
 	/**
 	 * 
-	 * @param       String        $internalId
-	 * @param       String        $uniqueFileId
+	 * @param       string        $internalId
+	 * @param       string        $uniqueFileId
 	 * @return      boolean
 	 */
 	public function isValidUniqueFileId($internalId, $uniqueFileId) {
@@ -185,8 +185,8 @@ class UploadHandler extends SingletonFactory {
 	
 	/**
 	 *
-	 * @param       String          $internalId
-	 * @param       String          $uniqueFileId
+	 * @param       string          $internalId
+	 * @param       string          $uniqueFileId
 	 * @return      UploadFile|null
 	 */
 	public function getFileForUniqueFileId($internalId, $uniqueFileId) {
@@ -206,7 +206,7 @@ class UploadHandler extends SingletonFactory {
 	/**
 	 * Add a file for an internalId. 
 	 * 
-	 * @param       String          $internalId
+	 * @param       string          $internalId
 	 * @param       UploadFile      $file
 	 */
 	public function addFileForInternalId($internalId, UploadFile $file) {
@@ -219,7 +219,7 @@ class UploadHandler extends SingletonFactory {
 	 * HEADS UP: Deletes all uploaded files and overwrites them with
 	 * the given files. If you want to add a file, use the addFileForInternalId method. 
 	 * 
-	 * @param       String          $internalId
+	 * @param       string          $internalId
 	 * @param       UploadFile[]    $files
 	 */
 	public function registerFilesForInternalId($internalId, array $files) {
@@ -242,7 +242,7 @@ class UploadHandler extends SingletonFactory {
 	/**
 	 * Add a file for an upload field with the given fieldId.
 	 * 
-	 * @param       String          $fieldId
+	 * @param       string          $fieldId
 	 * @param       UploadFile      $file
 	 */
 	public function addFileForField($fieldId, UploadFile $file) {
@@ -255,7 +255,7 @@ class UploadHandler extends SingletonFactory {
 	 * HEADS UP: Deletes all uploaded files and overwrites them with
 	 * the given files. If you want to add a file, use the addFileForField method.
 	 * 
-	 * @param       String          $fieldId
+	 * @param       string          $fieldId
 	 * @param       UploadFile[]    $files
 	 */
 	public function registerFilesForField($fieldId, array $files) {
@@ -269,7 +269,7 @@ class UploadHandler extends SingletonFactory {
 	/**
 	 * Returns the field for the internalId.
 	 * 
-	 * @param       String          $internalId
+	 * @param       string          $internalId
 	 * @return      UploadField
 	 */
 	public function getFieldForInternalId($internalId) {
@@ -283,7 +283,7 @@ class UploadHandler extends SingletonFactory {
 	/**
 	 * Returns the count of uploaded files for an internal id. 
 	 * 
-	 * @param       String          $internalId
+	 * @param       string          $internalId
 	 * @return      int
 	 */
 	public function getFilesCountForInternalId($internalId) {
@@ -293,7 +293,7 @@ class UploadHandler extends SingletonFactory {
 	/**
 	 * Returns the files for an internal identifier.
 	 *
-	 * @param       String          $internalId
+	 * @param       string          $internalId
 	 * @return      UploadFile[]
 	 */
 	private function getFilesForInternalId($internalId) {
@@ -358,7 +358,7 @@ class UploadHandler extends SingletonFactory {
 	/**
 	 * Returns the known internalIds. 
 	 * 
-	 * @return String[]
+	 * @return string[]
 	 */
 	private function getKnownInternalIds() {
 		return array_keys($this->getStorage());

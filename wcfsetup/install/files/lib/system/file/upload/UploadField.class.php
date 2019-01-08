@@ -56,9 +56,9 @@ class UploadField {
 	/**
 	 * UploadField constructor.
 	 *
-	 * @param       String          $fieldId
-	 * @param       String          $fieldName
-	 * @param       String          $fieldDescription
+	 * @param       string          $fieldId
+	 * @param       string          $fieldName
+	 * @param       string          $fieldDescription
 	 */
 	public function __construct($fieldId, $fieldName = 'Upload', $fieldDescription = null) {
 		$this->fieldId = $fieldId;
@@ -96,7 +96,7 @@ class UploadField {
 	/**
 	 * Returns the fieldId. 
 	 * 
-	 * @return String
+	 * @return string
 	 */
 	public function getFieldId() {
 		return $this->fieldId;
@@ -105,7 +105,7 @@ class UploadField {
 	/**
 	 * Sets the internalId for this field.
 	 * 
-	 * @param       String          $internalId
+	 * @param       string          $internalId
 	 */
 	public function setInternalId($internalId) {
 		$this->internalId = $internalId;
@@ -114,7 +114,7 @@ class UploadField {
 	/**
 	 * Returns the internalId of this field.
 	 * 
-	 * @return String|null
+	 * @return string|null
 	 */
 	public function getInternalId() {
 		return $this->internalId;
@@ -123,7 +123,7 @@ class UploadField {
 	/**
 	 * Returns the name of the field. 
 	 * 
-	 * @return String
+	 * @return string
 	 */
 	public function getName() {
 		return WCF::getLanguage()->get($this->name);
@@ -132,7 +132,7 @@ class UploadField {
 	/**
 	 * Returns the description of the field.
 	 *
-	 * @return String
+	 * @return string
 	 */
 	public function getDescription() {
 		return WCF::getLanguage()->get($this->description);

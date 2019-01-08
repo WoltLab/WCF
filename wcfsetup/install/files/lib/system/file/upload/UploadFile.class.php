@@ -14,7 +14,7 @@ use wcf\util\FileUtil;
 class UploadFile {
 	/**
 	 * Location for the file. 
-	 * @var String
+	 * @var string
 	 */
 	private $location;
 	
@@ -26,7 +26,7 @@ class UploadFile {
 	
 	/**
 	 * The filename. 
-	 * @var String
+	 * @var string
 	 */
 	private $filename;
 	
@@ -50,15 +50,15 @@ class UploadFile {
 	
 	/**
 	 * The unique id for the file.
-	 * @var String
+	 * @var string
 	 */
 	private $uniqueId;
 	
 	/**
 	 * UploadFile constructor.
 	 *
-	 * @param       String          $location
-	 * @param       String          $filename
+	 * @param       string          $location
+	 * @param       string          $filename
 	 * @param       boolean         $viewableImage
 	 * @param       boolean         $processed
 	 */
@@ -92,7 +92,7 @@ class UploadFile {
 	 * Returns the image location or a base64 encoded string of the image. Returns null
 	 * if the file is not an image or the image is not viewable. 
 	 * 
-	 * @return String|null
+	 * @return string|null
 	 */
 	public function getImage() {
 		if (!$this->isImage() || !$this->viewableImage) {
@@ -111,7 +111,7 @@ class UploadFile {
 	/**
 	 * Returns the location of the file.
 	 * 
-	 * @return String
+	 * @return string
 	 */
 	public function getLocation() {
 		return $this->location;
@@ -120,7 +120,7 @@ class UploadFile {
 	/**
 	 * Returns the filename of the file. 
 	 * 
-	 * @return String
+	 * @return string
 	 */
 	public function getFilename() {
 		return $this->filename;
@@ -128,7 +128,7 @@ class UploadFile {
 	
 	/**
 	 * Returns the unique file id for the file. It is used to identify the certain file. 
-	 * @return String
+	 * @return string
 	 */
 	public function getUniqueFileId() {
 		return $this->uniqueId;
@@ -138,7 +138,7 @@ class UploadFile {
 	 * Sets the new location of the file, after it is processed and 
 	 * sets the `processed` attribute to true.
 	 * 
-	 * @param       String        $newLocation
+	 * @param       string        $newLocation
 	 */
 	public function setProcessed($newLocation) {
 		if (!file_exists($newLocation)) {

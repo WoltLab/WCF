@@ -4,8 +4,6 @@ use wcf\system\exception\AJAXException;
 use wcf\system\exception\UserInputException;
 use wcf\system\file\upload\UploadFile;
 use wcf\system\file\upload\UploadHandler;
-use wcf\system\WCF;
-use wcf\util\FileUtil;
 use wcf\util\JSON;
 
 /**
@@ -22,13 +20,13 @@ class AJAXFileDeleteAction extends AbstractSecureAction {
 	
 	/**
 	 * The internal upload id.
-	 * @var String 
+	 * @var string 
 	 */
 	public $internalId;
 	
 	/**
 	 * The unique file id.
-	 * @var String 
+	 * @var string 
 	 */
 	public $uniqueFileId;
 	

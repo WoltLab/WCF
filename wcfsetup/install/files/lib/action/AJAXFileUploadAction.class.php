@@ -22,7 +22,7 @@ class AJAXFileUploadAction extends AbstractSecureAction {
 	
 	/**
 	 * The internal upload id.
-	 * @var String 
+	 * @var string 
 	 */
 	public $internalId;
 	
