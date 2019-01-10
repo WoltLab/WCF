@@ -195,6 +195,7 @@
 						<li>Alexander Ebert</li>
 						<li>Joshua R&uuml;sweg</li>
 						<li>Matthias Schmidt</li>
+						<li>Max Mader</li>
 						<li>Marcel Werk</li>
 					</ul>
 				</dd>
