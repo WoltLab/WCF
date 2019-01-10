@@ -517,6 +517,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 					}
 				}
 			}
+			
+			usort($list, function(array $item1, array $item2) {
+				return strcasecmp($item1['label'], $item2['label']);
+			});
 		}
 		
 		// find users
