@@ -739,6 +739,12 @@ pdf</defaultvalue>
 				<suffix>chars</suffix>
 				<admindefaultvalue>10000</admindefaultvalue>
 			</option>
+			<option name="user.profile.canEditUserProfile">
+				<categoryname>user.profile</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<usersonly>1</usersonly>
+			</option>
 			<option name="user.profile.avatar.canSeeAvatars">
 				<categoryname>user.profile.avatar</categoryname>
 				<optiontype>boolean</optiontype>

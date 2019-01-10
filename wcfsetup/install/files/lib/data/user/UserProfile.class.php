@@ -881,7 +881,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	boolean
 	 */
 	public function canEditOwnProfile() {
-		return ($this->activationCode ? false : true);
+		if ($this->activationCode || !$this->getPermission('user.profile.canEditUserProfile')) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	/**
