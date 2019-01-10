@@ -3,6 +3,7 @@ namespace wcf\system\file\upload;
 use wcf\system\exception\ImplementationException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Handles uploads for files.
@@ -44,10 +45,7 @@ class UploadHandler extends SingletonFactory {
 			$this->fields[$field->getFieldId()] = $field;
 		}
 		else {
-			do {
-				$internalId = bin2hex(random_bytes(32));
-			} 
-			while (in_array($internalId, $this->getKnownInternalIds()));
+			$internalId = StringUtil::getRandomID();
 			
 			$field->setInternalId($internalId);
 			
