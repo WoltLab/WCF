@@ -13,42 +13,36 @@ use wcf\system\WCF;
  */
 class UploadField {
 	/**
-	 * The max number of files for this field. 
-	 * 
+	 * The max number of files for this field.
 	 * @var int 
 	 */
 	public $maxFiles = 10;
 	
 	/**
 	 * The intern field id. Should be unique for each form.
-	 * 
 	 * @var string
 	 */
 	public $fieldId;
 	
 	/**
 	 * The internalId for uploads.
-	 * 
 	 * @var string|null 
 	 */
 	public $internalId = null;
 	
 	/**
 	 * The name of the field.
-	 * 
 	 * @var string 
 	 */
 	public $name;
 	/**
 	 * The description of the field.
-	 * 
-	 * @var tring 
+	 * @var string 
 	 */
 	public $description;
 	
 	/**
 	 * Indicates whether the field is image only.
-	 * 
 	 * @var boolean
 	 */
 	public $imageOnly = false;

@@ -32,6 +32,8 @@ class UploadHandler extends SingletonFactory {
 	 * Registers a UploadField.
 	 * 
 	 * @param       UploadField     $field
+	 * 
+	 * @throws      \InvalidArgumentException       if a field with the given fieldId is already registered
 	 */
 	public function registerUploadField(UploadField $field) {
 		if (isset($this->fields[$field->getFieldId()])) {
@@ -58,6 +60,8 @@ class UploadHandler extends SingletonFactory {
 	 * 
 	 * @param       string          $fieldId
 	 * @return      UploadFile[]
+	 * 
+	 * @throws      \InvalidArgumentException       if the given fieldId is unknown
 	 */
 	public function getFilesForFieldId($fieldId) {
 		if (!isset($this->fields[$fieldId])) {
@@ -73,6 +77,8 @@ class UploadHandler extends SingletonFactory {
 	 * @param       string          $fieldId
 	 * @param       boolean         $processFiles
 	 * @return      UploadFile[]
+	 * 
+	 * @throws      \InvalidArgumentException       if the given fieldId is unknown
 	 */
 	public function getRemovedFiledForFieldId($fieldId, $processFiles = true) {
 		if (!isset($this->fields[$fieldId])) {
@@ -110,8 +116,12 @@ class UploadHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * @param $internalId
-	 * @param $uniqueFileId
+	 * Removes a file from the upload. 
+	 * 
+	 * @param       string          $internalId
+	 * @param       string          $uniqueFileId
+	 * 
+	 * @throws      \InvalidArgumentException       if the given internalId is unknown
 	 */
 	public function removeFile($internalId, $uniqueFileId) {
 		if (!$this->isValidInternalId($internalId)) {
@@ -146,8 +156,11 @@ class UploadHandler extends SingletonFactory {
 	
 	/**
 	 * Renders the field with the given fieldId for the template.
+	 * 
 	 * @param       string          $fieldId
 	 * @return      string
+	 * 
+	 * @throws      \InvalidArgumentException       if the given fieldId is unknown
 	 */
 	public function renderField($fieldId) {
 		if (!isset($this->fields[$fieldId])) {
@@ -172,6 +185,7 @@ class UploadHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Checks whether the passed internal file id is valid for an internal id.
 	 * 
 	 * @param       string        $internalId
 	 * @param       string        $uniqueFileId
@@ -186,6 +200,8 @@ class UploadHandler extends SingletonFactory {
 	 * @param       string          $internalId
 	 * @param       string          $uniqueFileId
 	 * @return      UploadFile|null
+	 * 
+	 * @throws      \InvalidArgumentException       if the given internalId is unknown
 	 */
 	public function getFileForUniqueFileId($internalId, $uniqueFileId) {
 		if (!$this->isValidInternalId($internalId)) {
@@ -219,6 +235,8 @@ class UploadHandler extends SingletonFactory {
 	 * 
 	 * @param       string          $internalId
 	 * @param       UploadFile[]    $files
+	 * 
+	 * @throws      \InvalidArgumentException       if the given internalId is unknown
 	 */
 	public function registerFilesForInternalId($internalId, array $files) {
 		if (!$this->isValidInternalId($internalId)) {
@@ -255,6 +273,8 @@ class UploadHandler extends SingletonFactory {
 	 * 
 	 * @param       string          $fieldId
 	 * @param       UploadFile[]    $files
+	 * 
+	 * @throws      \InvalidArgumentException       if the given fieldId is unknown
 	 */
 	public function registerFilesForField($fieldId, array $files) {
 		if (!isset($this->fields[$fieldId])) {
@@ -269,6 +289,8 @@ class UploadHandler extends SingletonFactory {
 	 * 
 	 * @param       string          $internalId
 	 * @return      UploadField
+	 * 
+	 * @throws      \InvalidArgumentException       if the given internalId is unknown
 	 */
 	public function getFieldForInternalId($internalId) {
 		if (!$this->isValidInternalId($internalId)) {
@@ -344,21 +366,14 @@ class UploadHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * @param UploadField $field
+	 * Remove the removedFiles from the upload process.
+	 * 
+	 * @param       UploadField     $field
 	 */
 	private function processRemovedFiles(UploadField $field) {
 		$storage = $this->getStorage();
 		$storage[$field->getInternalId()]['removedFiles'] = [];
 		
 		WCF::getSession()->register(self::UPLOAD_HANDLER_SESSION_VAR, $storage);
-	}
-	
-	/**
-	 * Returns the known internalIds. 
-	 * 
-	 * @return string[]
-	 */
-	private function getKnownInternalIds() {
-		return array_keys($this->getStorage());
 	}
 }
