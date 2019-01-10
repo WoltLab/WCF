@@ -55,14 +55,14 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	/**
 	 * number of unread articles in watched categories
 	 * @var	integer
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	protected static $unreadWatchedArticles;
 	
 	/**
 	 * number of unread articles ordered by categories
 	 * @var	integer
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	protected static $unreadArticlesByCategory;
 	
@@ -257,7 +257,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	 *
 	 * @param       integer         $articleCategoryID
 	 * @return	integer
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public static function getUnreadArticlesForCategory($articleCategoryID) {
 		if (self::$unreadArticlesByCategory === null) {
@@ -300,7 +300,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	 * 
 	 * @param       integer         $articleCategoryID
 	 * @return      integer
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	private static function fetchUnreadArticlesForCategory($articleCategoryID) {
 		$accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
@@ -345,7 +345,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	 * Returns the number of unread articles in watched categories.
 	 *
 	 * @return	integer
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public static function getWatchedUnreadArticles() {
 		if (self::$unreadWatchedArticles === null) {

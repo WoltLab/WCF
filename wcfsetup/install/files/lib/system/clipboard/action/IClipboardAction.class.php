@@ -50,7 +50,7 @@ interface IClipboardAction {
 	 * have been executed.
 	 * 
 	 * @return      string[]
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function getReloadPageOnSuccess();
 }

@@ -18,7 +18,7 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	/**
 	 * generate the table of contents
 	 * @var bool
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $enableToc = false;
 	

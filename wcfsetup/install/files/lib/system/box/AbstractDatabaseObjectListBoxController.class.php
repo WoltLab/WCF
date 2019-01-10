@@ -142,7 +142,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	 * 
 	 * @param	IFormDocument	$form
 	 * @param	string		$objectType
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function addPipGuiFormFields(IFormDocument $form, $objectType) {
 		/** @var FormContainer $dataContainer */
@@ -207,7 +207,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	 * @param	\DOMElement	$element
 	 * @param	bool		$saveData
 	 * @return	array
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getPipGuiElementData(\DOMElement $element, $saveData = false) {
 		$data = [];
@@ -428,7 +428,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	/**
 	 * @param	\DOMElement	$element
 	 * @param	IFormDocument	$form
-	 * @sicne	3.2
+	 * @since	5.2
 	 */
 	public function writePipGuiEntry(\DOMElement $element, IFormDocument $form) {
 		$data = $form->getData()['data'];

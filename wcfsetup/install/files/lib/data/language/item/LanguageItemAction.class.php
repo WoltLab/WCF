@@ -47,7 +47,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Creates multiple language items.
 	 * 
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function createLanguageItems() {
 		if (!isset($this->parameters['data']['packageID'])) {
@@ -149,7 +149,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 	 * 
 	 * @throws	PermissionDeniedException
 	 * @throws	UserInputException
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function validateDeleteCustomLanguageItems() {
 		if (!WCF::getSession()->getPermission('admin.language.canManageLanguage')) {
@@ -172,7 +172,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Deletes custom language items in every language.
 	 * 
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function deleteCustomLanguageItems() {
 		if (empty($this->objects)) {

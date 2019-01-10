@@ -12,7 +12,7 @@ use wcf\system\request\LinkHandler;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
- * @since       3.2
+ * @since       5.2
  */
 class WatchedArticleListPage extends ArticleListPage {
 	/**

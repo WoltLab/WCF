@@ -119,7 +119,7 @@ class InstallPackageAction extends AbstractDialogAction {
 	 * the installation finished.
 	 * 
 	 * @return	string
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function getRedirectLink() {
 		// get domain path

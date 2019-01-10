@@ -355,7 +355,7 @@ class WCF {
 	 * Loads the options file, automatically created if not exists.
 	 */
 	protected function loadOptions() {
-		// the attachment module is always enabled since 3.2
+		// the attachment module is always enabled since 5.2
 		// https://github.com/WoltLab/WCF/issues/2531
 		define('MODULE_ATTACHMENT', 1);
 		

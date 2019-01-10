@@ -99,12 +99,12 @@ class LikeObject extends DatabaseObject {
 	}
 	
 	/**
-	 * Since version 3.2, this method returns all reactionCounts for the different reactionTypes, 
+	 * Since version 5.2, this method returns all reactionCounts for the different reactionTypes, 
 	 * instead of the user (as the method name suggests). This behavior is intentional and helps 
 	 * to establish backward compatibility.
 	 * 
 	 * @return	mixed[]
-	 * @deprecated  since 3.2
+	 * @deprecated  since 5.2
 	 */
 	public function getUsers() {
 		$returnValues = [];
@@ -145,7 +145,7 @@ class LikeObject extends DatabaseObject {
 	 * So this method returns an empty array, if this object has no reactions.
 	 * 
 	 * @return      integer[]
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getReactions() {
 		return $this->reactions; 
@@ -156,7 +156,7 @@ class LikeObject extends DatabaseObject {
 	 * there are no reactions on the object. 
 	 * 
 	 * @return      integer|null
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getReputation() {
 		if ($this->reputation === null && !empty($this->getReactions())) {

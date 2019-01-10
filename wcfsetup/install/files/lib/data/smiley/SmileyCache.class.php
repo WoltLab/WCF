@@ -133,7 +133,7 @@ class SmileyCache extends SingletonFactory {
 	/**
 	 * Assigns the smilies and their categories to the template.
 	 * 
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public function assignVariables() {
 		if (!MODULE_SMILEY) {

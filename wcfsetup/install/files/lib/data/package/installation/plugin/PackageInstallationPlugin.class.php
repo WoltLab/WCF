@@ -34,7 +34,7 @@ class PackageInstallationPlugin extends DatabaseObject {
 	 * @see		IPackageInstallationPlugin::getDefaultFilename()
 	 * 
 	 * @return	null|string
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getDefaultFilename() {
 		return $this->className::getDefaultFilename();

@@ -2355,9 +2355,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.userOption.options.contentPattern.description"><![CDATA[The entered content pattern is used to extract specific parts of the user-entered value to be stored as the option value.]]></item>
 		<item name="wcf.acp.pip.userOption.options.contentPattern.error.invalid"><![CDATA[The entered regular expression is invalid.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions"><![CDATA[Supports Reactions]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions.description"><![CDATA[Specifies whether the notification has support for the reaction system. WoltLab Suite Core 3.2 (or higher) will only send notifications about reactions if selected.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions.description"><![CDATA[Specifies whether the notification has support for the reaction system. WoltLab Suite Core 5.2 (or higher) will only send notifications about reactions if selected.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions"><![CDATA[Supports Reactions]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description"><![CDATA[Specifies whether the recent activity event supports the reaction system. WoltLab Suite Core 3.2 (or higher) will only create recent activity events about reactions if selected.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description"><![CDATA[Specifies whether the recent activity event supports the reaction system. WoltLab Suite Core 5.2 (or higher) will only create recent activity events about reactions if selected.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.data.title"><![CDATA[Recent Activity Event Data]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.text.disableAutocomplete"><![CDATA[Disable Autocomplete]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.text.disableAutocomplete.description"><![CDATA[Disables the browser’s autocomplete support for the input field.]]></item>

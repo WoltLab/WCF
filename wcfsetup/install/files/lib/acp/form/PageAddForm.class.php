@@ -194,19 +194,19 @@ class PageAddForm extends AbstractForm {
 	
 	/**
 	 * @var bool
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $enableShareButtons = 0;
 	
 	/**
 	 * @var int
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $presetPageID = 0;
 	
 	/**
 	 * @var Page
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $presetPage;
 	

@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Action
- * @since	3.2
+ * @since	5.2
  */
 class DevtoolsInstallPackageAction extends InstallPackageAction {
 	/**

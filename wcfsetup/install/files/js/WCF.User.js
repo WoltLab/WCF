@@ -1945,7 +1945,7 @@ WCF.User.RecentActivityLoader = Class.extend({
  * Loads likes once the user scrolls to the very bottom.
  * 
  * @param	integer		userID
- * @deprecated  since 3.2
+ * @deprecated  since 5.2
  */
 WCF.User.LikeLoader = Class.extend({
 	/**

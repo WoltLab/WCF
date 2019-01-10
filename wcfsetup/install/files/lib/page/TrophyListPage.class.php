@@ -51,14 +51,14 @@ class TrophyListPage extends MultipleLinkPage {
 	/**
 	 * the category id filter
 	 * @var int
-	 * @deprecated since 3.2, use CategoryTrophyListPage instead
+	 * @deprecated since 5.2, use CategoryTrophyListPage instead
 	 */
 	public $categoryID = 0;
 	
 	/**
 	 * The category object filter 
 	 * @var TrophyCategory
-	 * @deprecated since 3.2, use CategoryTrophyListPage instead
+	 * @deprecated since 5.2, use CategoryTrophyListPage instead
 	 */
 	public $category;
 	

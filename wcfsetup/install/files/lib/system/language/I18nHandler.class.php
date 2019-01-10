@@ -81,7 +81,7 @@ class I18nHandler extends SingletonFactory {
 	 * Does nothing if no such element exists.
 	 * 
 	 * @param	string		$elementID
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function unregister($elementID) {
 		$index = array_search($elementID, $this->elementIDs);

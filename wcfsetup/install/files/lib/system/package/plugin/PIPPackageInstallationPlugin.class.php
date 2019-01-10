@@ -97,7 +97,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		/** @var FormContainer $dataContainer */
@@ -146,7 +146,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		return [
@@ -158,7 +158,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
@@ -166,7 +166,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -177,7 +177,7 @@ class PIPPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];

@@ -9,7 +9,7 @@ use wcf\system\form\builder\field\IFormField;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Validation
- * @since	3.2
+ * @since	5.2
  */
 interface IFormFieldValidator {
 	/**

@@ -87,7 +87,7 @@ class LanguageItemListPage extends SortablePage {
 	/**
 	 * is `1` if only custom language items (created via ACP) should be shown
 	 * @var	integer
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public $isCustomLanguageItem = 0;
 	
@@ -105,7 +105,7 @@ class LanguageItemListPage extends SortablePage {
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public $forceCanonicalURL = true;
 	

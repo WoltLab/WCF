@@ -177,7 +177,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		/** @var FormContainer $dataContainer */
@@ -284,7 +284,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -339,7 +339,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return sha1(
@@ -350,7 +350,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -361,7 +361,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$event = $document->createElement($this->tagName);
@@ -385,7 +385,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareDeleteXmlElement(\DOMElement $element) {
 		$userNotificationEvent = $element->ownerDocument->createElement($this->tagName);
@@ -402,7 +402,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function deleteObject(\DOMElement $element) {
 		$elements= [];

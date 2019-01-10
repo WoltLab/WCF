@@ -419,7 +419,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		$tabContainter = TabMenuFormContainer::create('tabMenu');
@@ -630,7 +630,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -755,7 +755,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('identifier');
@@ -763,7 +763,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -774,7 +774,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();

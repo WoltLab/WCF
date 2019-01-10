@@ -98,7 +98,7 @@ class XML {
 	/**
 	 * Validate the loaded document against the specified xml schema definition.
 	 * 
-	 * @deprecated 3.2
+	 * @deprecated	since 5.2
 	 */
 	public function validate() {
 		// determine schema
@@ -117,7 +117,7 @@ class XML {
 	/**
 	 * Determines schema for given document.
 	 * 
-	 * @deprecated 3.2
+	 * @deprecated	since 5.2
 	 */
 	protected function getSchema() {
 		$tmp = $this->getSchemaLocation();
@@ -137,7 +137,7 @@ class XML {
 	 * @return	string[]
 	 * 
 	 * @throws	\UnexpectedValueException
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getSchemaLocation() {
 		$schema = $this->document->documentElement->getAttributeNS(
@@ -222,7 +222,7 @@ class XML {
 	 * Returns the dom document object this object is working with.
 	 * 
 	 * @return	\DOMDocument
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getDocument() {
 		return $this->document;
@@ -233,7 +233,7 @@ class XML {
 	 * 
 	 * @param	string		$fileLocation	location of file
 	 * @param	bool		$cdata		indicates of values are escaped using cdata
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function write($fileLocation, $cdata = false) {
 		$schemaParts = explode(' ', $this->document->documentElement->getAttributeNS($this->document->documentElement->lookupNamespaceUri('xsi'), 'schemaLocation'));
@@ -260,7 +260,7 @@ class XML {
 	 * @param	XMLWriter	$writer		xml writer
 	 * @param	\DOMElement	$element	written element
 	 * @param	bool		$cdata		indicates if element value is escaped using cdata
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function writeElement(XMLWriter $writer, \DOMElement $element, $cdata) {
 		if ($element->childNodes->length === 1 && $element->firstChild instanceof \DOMText) {
@@ -292,7 +292,7 @@ class XML {
 	 * 
 	 * @param	\DOMElement	$element	elements whose attributes will be returned
 	 * @return	array				attributes
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getAttributes(\DOMElement $element) {
 		$attributes = [];

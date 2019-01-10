@@ -31,7 +31,7 @@ class Package extends DatabaseObject {
 	/**
 	 * recursive list of packages that were given as required packages during installation
 	 * @var		Package[]
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected $allRequiredPackages;
 	
@@ -151,7 +151,7 @@ class Package extends DatabaseObject {
 	 * those required packages.
 	 *
 	 * @return	Package[]
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getAllRequiredPackages() {
 		if ($this->allRequiredPackages === null) {

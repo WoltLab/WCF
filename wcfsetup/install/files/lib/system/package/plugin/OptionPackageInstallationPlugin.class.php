@@ -134,7 +134,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		parent::addFormFields($form);
@@ -242,7 +242,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = parent::fetchElementData($element, $saveData);
@@ -272,7 +272,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function getSortOptionHandler() {
 		// reuse OptionHandler
@@ -305,7 +305,7 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$option = parent::prepareXmlElement($document, $form);

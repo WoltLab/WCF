@@ -43,7 +43,7 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function createPackage(array $packageData) {
 		$package = parent::createPackage($packageData);
@@ -93,7 +93,7 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
 	 * Returns the project the installation dispatcher is created for.
 	 * 
 	 * @return	DevtoolsProject
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getProject() {
 		return $this->project;

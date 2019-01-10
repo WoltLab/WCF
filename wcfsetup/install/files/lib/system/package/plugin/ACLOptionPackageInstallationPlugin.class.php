@@ -348,7 +348,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		$objectTypes = [];
@@ -500,7 +500,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getEntryTypes() {
 		return ['options', 'categories'];
@@ -508,7 +508,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -551,7 +551,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		$elementData = $this->getElementData($element);
@@ -561,7 +561,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function getXsdFilename() {
 		return 'aclOption';
@@ -569,7 +569,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -580,7 +580,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData()['data'];
@@ -615,7 +615,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareDeleteXmlElement(\DOMElement $element) {
 		$deleteElement = parent::prepareDeleteXmlElement($element);
@@ -630,7 +630,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function deleteObject(\DOMElement $element) {
 		$name = $element->getAttribute('name');
@@ -681,7 +681,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addDeleteElement(\DOMElement $element) {
 		$this->defaultAddDeleteElement($element);

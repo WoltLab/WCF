@@ -475,7 +475,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * Prepares the special trophies for the given user ids.
 	 * 
 	 * @param       int[]           $userIDs
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public static function prepareSpecialTrophies(array $userIDs) {
 		UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);

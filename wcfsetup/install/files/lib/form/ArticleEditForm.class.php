@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * @copyright   2001-2018 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\Form
- * @since       3.2
+ * @since       5.2
  */
 class ArticleEditForm extends \wcf\acp\form\ArticleEditForm {
 	/**

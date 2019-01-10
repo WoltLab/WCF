@@ -142,7 +142,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	 *
 	 * @param	string	$mimeType	Either 'text/plain' or 'text/html'
 	 * @return	string
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function getMailText($mimeType = 'text/plain') {
 		switch ($mimeType) {

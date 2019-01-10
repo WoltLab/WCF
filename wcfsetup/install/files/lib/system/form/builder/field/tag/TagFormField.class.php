@@ -20,7 +20,7 @@ use wcf\util\ArrayUtil;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Tag
- * @since	3.2
+ * @since	5.2
  */
 class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 	use TObjectTypeFormField;

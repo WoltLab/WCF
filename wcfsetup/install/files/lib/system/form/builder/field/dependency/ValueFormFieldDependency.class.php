@@ -9,7 +9,7 @@ use wcf\data\DatabaseObjectList;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Dependency
- * @since	3.2
+ * @since	5.2
  */
 class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	/**
