@@ -10,6 +10,7 @@
 			<startdom>*/2</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
+			<canbedisabled>0</canbedisabled>
 		</cronjob>
 		<cronjob name="com.woltlab.wcf.refreshSearchRobots">
 			<classname>wcf\system\cronjob\RefreshSearchRobotsCronjob</classname>
@@ -30,6 +31,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
+			<canbedisabled>0</canbedisabled>
 		</cronjob>
 		<cronjob name="com.woltlab.wcf.hourlyCleanUp">
 			<classname>wcf\system\cronjob\HourlyCleanUpCronjob</classname>
@@ -40,6 +42,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
+			<canbedisabled>0</canbedisabled>
 		</cronjob>
 		<cronjob name="com.woltlab.wcf.sessionCleanUp">
 			<classname>wcf\system\cronjob\SessionCleanUpCronjob</classname>
@@ -50,6 +53,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
+			<canbedisabled>0</canbedisabled>
 		</cronjob>
 		<cronjob name="com.woltlab.wcf.attachmentCleanUp">
 			<classname>wcf\system\cronjob\AttachmentCleanUpCronjob</classname>
@@ -70,6 +74,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
+			<canbedisabled>0</canbedisabled>
 		</cronjob>
 		<cronjob name="com.woltlab.wcf.lastActivityUpdate">
 			<classname>wcf\system\cronjob\LastActivityCronjob</classname>
@@ -80,6 +85,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
+			<canbedisabled>0</canbedisabled>
 		</cronjob>
 		<cronjob name="com.woltlab.wcf.userQuit">
 			<classname>wcf\system\cronjob\UserQuitCronjob</classname>
@@ -90,6 +96,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
+			<canbedisabled>0</canbedisabled>
 		</cronjob>
 		<cronjob name="com.woltlab.wcf.dailyMailNotification">
 			<classname>wcf\system\cronjob\DailyMailNotificationCronjob</classname>
@@ -100,6 +107,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
+			<canbedisabled>0</canbedisabled>
 		</cronjob>
 		<cronjob name="com.woltlab.wcf.moderationQueueCleanup">
 			<classname>wcf\system\cronjob\ModerationQueueCronjob</classname>
@@ -130,6 +138,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
+			<canbedisabled>0</canbedisabled>
 		</cronjob>
 		<cronjob name="com.woltlab.wcf.userBan">
 			<classname>wcf\system\cronjob\UserBanCronjob</classname>
@@ -140,6 +149,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
+			<canbedisabled>0</canbedisabled>
 		</cronjob>
 		<cronjob name="com.woltlab.wcf.articlePublication">
 			<classname>wcf\system\cronjob\ArticlePublicationCronjob</classname>
@@ -190,6 +200,7 @@
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>
+			<canbedisabled>0</canbedisabled>
 		</cronjob>
 	</import>
 </data>
