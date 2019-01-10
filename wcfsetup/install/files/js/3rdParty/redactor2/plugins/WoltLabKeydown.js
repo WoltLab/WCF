@@ -436,6 +436,15 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				return mpFormatEmpty.call(this, e);
 			}).bind(this);
 			
+			var mpRemoveInvisibleSpace = this.keydown.removeInvisibleSpace;
+			this.keydown.removeInvisibleSpace = (function() {
+				// Firefox on Android sets the caret to the editor root when backspacing an empty editor,
+				// potentially causing the editor itself to be removed.
+				if (this.keydown.current !== this.$editor[0]) {
+					mpRemoveInvisibleSpace.call(this);
+				}
+			}).bind(this);
+			
 			require(['Core', 'Environment'], (function (Core, Environment) {
 				if (Environment.platform() !== 'desktop') {
 					// ignore mobile devices
