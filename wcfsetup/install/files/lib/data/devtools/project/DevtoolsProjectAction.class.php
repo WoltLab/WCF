@@ -40,21 +40,21 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction {
 	/**
 	 * package installation queue for project to be installed from source
 	 * @var		PackageInstallationQueue
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public $queue;
 	
 	/**
 	 * package installation plugin the deleted entry belongs to
 	 * @var	DevtoolsPip
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected $pip;
 	
 	/**
 	 * @inheritDoc
 	 * @return	DevtoolsProject
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function create() {
 		$this->parameters['data']['path'] = FileUtil::addTrailingSlash($this->parameters['data']['path']);
@@ -169,7 +169,7 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction {
 	 * Checks if the `installPackage` action can be executed.
 	 * 
 	 * @throws	IllegalLinkException
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function validateInstallPackage() {
 		if (!ENABLE_DEVELOPER_TOOLS) {
@@ -185,7 +185,7 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction {
 	 * Installs a package that is currently only available as a project.
 	 * 
 	 * @return	int[]		id of the package installation queue for the
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function installPackage() {
 		$packageArchive = $this->getSingleObject()->getPackageArchive();
@@ -212,7 +212,7 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction {
 	 * Checks if the `deletePipEntry` action can be executed.
 	 * 
 	 * @throws	IllegalLinkException
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function validateDeletePipEntry() {
 		if (!ENABLE_DEVELOPER_TOOLS) {
@@ -267,7 +267,7 @@ class DevtoolsProjectAction extends AbstractDatabaseObjectAction {
 	 * Deletes a specific pip entry.
 	 *
 	 * @return	string[]	identifier of the deleted pip entry
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function deletePipEntry() {
 		$this->pip->getPip()->deleteEntry($this->parameters['identifier'], $this->parameters['addDeleteInstruction']);

@@ -71,7 +71,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	
 	/**
 	 * @var IArticleDiscussionProvider
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	protected $discussionProvider;
 	
@@ -119,7 +119,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	 * Returns true if the current user can edit these article.
 	 * 
 	 * @return      boolean
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function canEdit() {
 		if (WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
@@ -143,7 +143,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	 * Returns true if the current user can publish these article. 
 	 * 
 	 * @return      boolean
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function canPublish() {
 		if (WCF::getSession()->getPermission('admin.content.article.canManageArticle')) {
@@ -302,7 +302,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	 * Sets the discussion provider for this article.
 	 * 
 	 * @param       IArticleDiscussionProvider      $discussionProvider
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function setDiscussionProvider(IArticleDiscussionProvider $discussionProvider) {
 		$this->discussionProvider = $discussionProvider;
@@ -312,7 +312,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	 * Returns the responsible discussion provider for this article.
 	 * 
 	 * @return      IArticleDiscussionProvider
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function getDiscussionProvider() {
 		if ($this->discussionProvider === null) {
@@ -335,7 +335,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	 * Returns the list of the available discussion providers.
 	 * 
 	 * @return      string[]
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public static function getAllDiscussionProviders() {
 		/** @var string[] $discussionProviders */
@@ -365,7 +365,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	
 	/**
 	 * @inheritDoc
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function getTime() {
 		return $this->time;
@@ -373,7 +373,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	
 	/**
 	 * @inheritDoc
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function getUserID() {
 		return $this->userID;
@@ -381,7 +381,7 @@ class Article extends DatabaseObject implements ILinkableObject, IUserContent {
 	
 	/**
 	 * @inheritDoc
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function getUsername() {
 		return $this->username;

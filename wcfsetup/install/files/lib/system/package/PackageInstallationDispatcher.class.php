@@ -549,7 +549,7 @@ class PackageInstallationDispatcher {
 	 * 
 	 * @param	array	$packageData
 	 * @return	Package
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function createPackage(array $packageData) {
 		return PackageEditor::create($packageData);

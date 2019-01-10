@@ -120,7 +120,7 @@ class ObjectType extends ProcessibleDatabaseObject {
 	 * Returns the package that this object type belongs to.
 	 * 
 	 * @return      Package
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function getPackage() {
 		return PackageCache::getInstance()->getPackage($this->packageID);

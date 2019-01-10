@@ -20,7 +20,7 @@ use wcf\util\StringUtil;
  * @package     WoltLabSuite\Core\Acp\Page
  *
  * @property    ModificationLogList $objectList
- * @since       3.2
+ * @since       5.2
  */
 class ModificationLogListPage extends SortablePage {
 	/**

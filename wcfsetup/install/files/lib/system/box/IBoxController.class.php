@@ -75,7 +75,7 @@ interface IBoxController {
 	 * system-type boxes.
 	 * 
 	 * @return      string|null
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function getTitle();
 	

@@ -153,7 +153,7 @@ class XMLWriter {
 	 * Writes a comment.
 	 * 
 	 * @param	string		$comment
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function writeComment($comment) {
 		$this->xml->writeComment($comment);

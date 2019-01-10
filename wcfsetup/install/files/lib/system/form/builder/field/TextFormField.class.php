@@ -11,7 +11,7 @@ use wcf\system\language\LanguageFactory;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
 class TextFormField extends AbstractFormField implements II18nFormField, IMaximumLengthFormField, IMinimumLengthFormField, IPlaceholderFormField {
 	use TI18nFormField {

@@ -5,7 +5,7 @@
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
- * @since	3.2
+ * @since	5.2
  */
 define(['./Manager'], function(DependencyManager) {
 	"use strict";

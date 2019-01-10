@@ -17,7 +17,7 @@ use wcf\util\Url;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
- * @since	3.2
+ * @since	5.2
  */
 class IpSearchModifierTemplatePlugin implements IModifierTemplatePlugin {
 	/**

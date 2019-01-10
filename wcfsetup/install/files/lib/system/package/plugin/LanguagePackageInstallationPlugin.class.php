@@ -326,7 +326,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		/** @var FormContainer $dataContainer */
@@ -506,7 +506,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -551,7 +551,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
@@ -609,7 +609,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @sicne	3.2
+	 * @since	5.2
 	 */
 	protected function getImportElements(\DOMXPath $xpath) {
 		return $xpath->query('/ns:language/ns:category/ns:item');
@@ -617,7 +617,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @sicne	3.2
+	 * @since	5.2
 	 */
 	protected function getEmptyXml($languageCode) {
 		$xsdFilename = $this->getXsdFilename();
@@ -681,7 +681,7 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function saveObject(\DOMElement $newElement, \DOMElement $oldElement = null) {
 		$newElementData = $this->getElementData($newElement, true);
@@ -731,7 +731,7 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$keys = [
@@ -748,7 +748,7 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
@@ -818,7 +818,7 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function createAndInsertNewXmlElement(XML $xml, IFormDocument $form) {
 		return $this->createXmlElement($xml->getDocument(), $form);
@@ -826,7 +826,7 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function replaceXmlElement(XML $xml, IFormDocument $form, $identifier) {
 		$newElement = $this->createXmlElement($xml->getDocument(), $form);
@@ -847,7 +847,7 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function deleteObject(\DOMElement $element) {
 		$sql = "DELETE FROM	wcf" . WCF_N . "_language_item
@@ -862,7 +862,7 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function supportsDeleteInstruction() {
 		return false;
@@ -870,7 +870,7 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function sanitizeXmlFileAfterDeleteEntry(\DOMDocument $document) {
 		$language = $document->getElementsByTagName('language')->item(0);

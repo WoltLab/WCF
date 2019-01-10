@@ -10,7 +10,7 @@ use wcf\data\reaction\type\ReactionTypeEditor;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Importer
- * @since       3.2
+ * @since       5.2
  */
 class ReactionTypeImporter extends AbstractImporter {
 	/**

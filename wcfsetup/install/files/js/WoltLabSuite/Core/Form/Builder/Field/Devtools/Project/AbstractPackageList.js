@@ -6,7 +6,7 @@
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/AbstractPackageList
- * @since	3.2
+ * @since	5.2
  */
 define(['Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language'], function(DomChangeListener, DomTraverse, DomUtil, EventKey, Language) {
 	"use strict";

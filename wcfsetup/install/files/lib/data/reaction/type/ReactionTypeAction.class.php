@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Reaction\Type
- * @since	3.2
+ * @since	5.2
  *
  * @method	ReactionTypeEditor[]		getObjects()
  * @method	ReactionTypeEditor		getSingleObject()

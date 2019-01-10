@@ -72,7 +72,7 @@ class ArticleListPage extends SortablePage {
 	
 	/**
 	 * @var User
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $user;
 	

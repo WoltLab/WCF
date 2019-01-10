@@ -21,7 +21,7 @@ class LinkHandler extends SingletonFactory {
 	/**
 	 * regex object to extract controller data from controller class name
 	 * @var		Regex
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected $controllerRegex;
 	
@@ -74,7 +74,7 @@ class LinkHandler extends SingletonFactory {
 	 * @return	string
 	 * 
 	 * @throws	\InvalidArgumentException	if the passed string is no controller class name
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getControllerLink($controllerClass, array $parameters = [], $url = '') {
 		if (!$this->controllerRegex->match($controllerClass)) {

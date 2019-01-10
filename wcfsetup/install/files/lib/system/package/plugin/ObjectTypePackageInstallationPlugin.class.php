@@ -166,7 +166,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getAdditionalTemplateCode() {
 		return WCF::getTPL()->fetch('__objectTypePipGui', 'wcf', [
@@ -177,7 +177,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -212,7 +212,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		// read available object type definitions
@@ -725,7 +725,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return sha1(
@@ -736,7 +736,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getEntryList() {
 		$xml = $this->getProjectXml();
@@ -758,7 +758,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -778,7 +778,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @param	IFormDocument	$form
 	 * @param	string		$definitionName
 	 * @return	FormContainer
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getObjectTypeDefinitionDataContainer(IFormDocument $form, $definitionName) {
 		/** @var SingleSelectionFormField $definitionIDField */
@@ -801,7 +801,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
@@ -889,7 +889,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	 * @param	string			$objectTypeDefinition
 	 * @param	bool			$addConditionObject
 	 * @param	bool			$addConditionGroup
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function addConditionFields(IFormContainer $dataContainer, $objectTypeDefinition, $addConditionObject = true, $addConditionGroup = true) {
 		$prefix = preg_replace('~Fields$~', '', $dataContainer->getId());
@@ -1089,7 +1089,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function setEntryData($identifier, IFormDocument $document) {
 		$returnValue = $this->defaultSetEntryData($identifier, $document);
@@ -1121,7 +1121,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareDeleteXmlElement(\DOMElement $element) {
 		$objectType = $element->ownerDocument->createElement($this->tagName);
@@ -1140,7 +1140,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function deleteObject(\DOMElement $element) {
 		$name = $element->getElementsByTagName('name')->item(0)->nodeValue;

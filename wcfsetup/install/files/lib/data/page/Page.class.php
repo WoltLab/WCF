@@ -364,7 +364,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * Returns true if the share buttons are enabled and this is not a system-type page.
 	 * 
 	 * @return      bool
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function showShareButtons() {
 		return $this->enableShareButtons && $this->pageType !== 'system';
