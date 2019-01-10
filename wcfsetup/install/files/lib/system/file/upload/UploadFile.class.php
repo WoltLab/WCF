@@ -99,12 +99,12 @@ class UploadFile {
 			return null;
 		}
 		
-		if (!$this->processed) {
-			$imageData = getimagesize($this->location);
-			return 'data:'. $imageData['mime'] .';base64,'.base64_encode(file_get_contents($this->location));
+		if ($this->processed) {
+			return $this->location;
 		}
 		else {
-			return $this->location;
+			$imageData = getimagesize($this->location);
+			return 'data:'. $imageData['mime'] .';base64,'.base64_encode(file_get_contents($this->location));
 		}
 	}
 	
