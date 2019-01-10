@@ -20,6 +20,8 @@
 	</nav>
 </header>
 
+<div class="info">{lang}wcf.acp.sitemap.submitToSearchEngines{/lang}</div>
+
 <p class="info">{lang}wcf.acp.sitemap.cliInfo{/lang}</p>
 
 {if $sitemapObjectTypes|count}

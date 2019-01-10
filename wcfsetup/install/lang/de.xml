@@ -2555,6 +2555,13 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Sitemap deaktivieren]]></item>
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Sitemap bearbeiten]]></item>
 		<item name="wcf.acp.sitemap.cliInfo"><![CDATA[Die Sitemap kann auch mittels CLI neu generiert werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Führe{else}Führen Sie{/if} dafür <kbd>worker wcf\system\worker\SitemapRebuildWorker</kbd> in einer CLI Session aus.]]></item>
+		<item name="wcf.acp.sitemap.submitToSearchEngines"><![CDATA[<p>Die generierte Sitemap muss einmalig bei den gewünschten Suchmaschinen manuell hinterlegt werden, die vollständige Adresse lautet: <kbd>{$__wcf->getPath()}sitemaps/sitemaps.xml</kbd>.</p>
+<p><br></p>
+<p>Anleitung zum Hinterlegen der XML-Sitemaps:</p>
+<ul class="nativeList">
+	<li><a href="https://support.google.com/webmasters/answer/7451001" class="externalURL">Google</a></li>
+	<li><a href="https://www.bing.com/webmaster/help/how-to-submit-sitemaps-82a15bd4" class="externalURL">Bing</a></li>
+</ul>]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.articleCategory"><![CDATA[Artikel-Kategorien]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.article"><![CDATA[Artikel]]></item>
