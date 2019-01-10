@@ -36,6 +36,7 @@ class IndexPage extends AbstractPage {
 			'load' => '',
 			'memoryLimit' => @ini_get('memory_limit'),
 			'postMaxSize' => @ini_get('post_max_size'),
+			'uploadMaxFilesize' => @ini_get('upload_max_filesize'),
 			'sslSupport' => RemoteFile::supportsSSL()
 		];
 		
