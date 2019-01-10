@@ -144,6 +144,6 @@ class UploadField {
 	 * @param       boolean       $imageOnly
 	 */
 	public function setImageOnly($imageOnly) {
-		$this->imageOnly = (bool) $imageOnly;
+		$this->imageOnly = $imageOnly;
 	}
 }
