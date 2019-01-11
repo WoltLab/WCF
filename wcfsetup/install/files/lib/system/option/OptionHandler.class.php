@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Handles options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -24,7 +24,7 @@ class OptionHandler implements IOptionHandler {
 	 * list of application abbreviations
 	 * @var	string[]
 	 */
-	protected $abbreviations = null;
+	protected $abbreviations;
 	
 	/**
 	 * cache class name
@@ -36,25 +36,25 @@ class OptionHandler implements IOptionHandler {
 	 * list of all option categories
 	 * @var	OptionCategory[]
 	 */
-	public $cachedCategories = null;
+	public $cachedCategories;
 	
 	/**
 	 * list of all options
 	 * @var	Option[]
 	 */
-	public $cachedOptions = null;
+	public $cachedOptions;
 	
 	/**
 	 * category structure
 	 * @var	array
 	 */
-	public $cachedCategoryStructure = null;
+	public $cachedCategoryStructure;
 	
 	/**
 	 * option structure
 	 * @var	array
 	 */
-	public $cachedOptionToCategories = null;
+	public $cachedOptionToCategories;
 	
 	/**
 	 * name of the active option category
@@ -285,6 +285,17 @@ class OptionHandler implements IOptionHandler {
 	}
 	
 	/**
+	 * Wrapper function to preserve backwards compatibility with the visibility of `getOption()`.
+	 * 
+	 * @param string $optionName
+	 * @return array
+	 * @since 3.2
+	 */
+	public function getSingleOption($optionName) {
+		return $this->getOption($optionName);
+	}
+	
+	/**
 	 * Validates an option.
 	 * 
 	 * @param	Option		$option
@@ -413,6 +424,18 @@ class OptionHandler implements IOptionHandler {
 			// mark options as initialized
 			$this->didInit = true;
 		}
+	}
+	
+	/**
+	 * Removes any option that is not listed in the provided list.
+	 * 
+	 * @param string[] $optionNames
+	 * @since 5.2
+	 */
+	public function filterOptions(array $optionNames) {
+		$this->options = array_filter($this->options, function (Option $option) use ($optionNames) {
+			return in_array($option->optionName, $optionNames);
+		});
 	}
 	
 	/**

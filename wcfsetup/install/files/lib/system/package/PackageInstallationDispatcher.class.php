@@ -297,6 +297,8 @@ class PackageInstallationDispatcher {
 					
 					// update options.inc.php
 					OptionEditor::resetCache();
+					
+					WCF::getSession()->register('__wcfSetup_completed', true);
 				}
 				
 				// rebuild application paths
