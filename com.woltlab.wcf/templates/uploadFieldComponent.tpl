@@ -2,14 +2,14 @@
 	<dt><label for="{$fieldId}">{$field->getName()}</label></dt>
 	<dd>
 		{if !$field->supportMultipleFiles() && $field->isImageOnly()}
-				<div class="selectedImagePreview uploadedFile" id="{$fieldId}uploadFileList" data-internal-id="{$field->getInternalId()}">{*
-					*}{if !$files|empty}{*
-						*}{assign var="file" value=$files|reset}{*
-						*}<img src="{$file->getImage()}" alt="" class="previewImage" id="{$fieldId}Image" style="max-width: 100%" data-unique-file-id="{$file->getUniqueFileId()}">{*
-					*}
-						<ul class="buttonGroup"></ul>
-					{/if}{*
-				*}</div>
+			<div class="selectedImagePreview uploadedFile" id="{$fieldId}uploadFileList" data-internal-id="{$field->getInternalId()}">{*
+				*}{if !$files|empty}{*
+					*}{assign var="file" value=$files|reset}{*
+					*}<img src="{$file->getImage()}" alt="" class="previewImage" id="{$fieldId}Image" style="max-width: 100%" data-unique-file-id="{$file->getUniqueFileId()}">{*
+				*}
+					<ul class="buttonGroup"></ul>
+				{/if}{*
+			*}</div>
 		{else}
 			<div class="formUploadHandlerContent">
 				<ul class="formUploadHandlerList" id="{$fieldId}uploadFileList" data-internal-id="{$field->getInternalId()}">
@@ -42,7 +42,7 @@
 				{if $errorType == 'empty'}
 					{lang}wcf.global.form.error.empty{/lang}
 				{else}
-					{lang __optional="true"}{$errorType}{/lang}
+					{lang}{$errorType}{/lang}
 				{/if}
 			</small>
 		{/if}
