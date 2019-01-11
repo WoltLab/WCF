@@ -7,7 +7,7 @@
  * @module	WoltLabSuite/Core/Ui/File/Upload
  * @since	5.2
  */
-define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Dom/Traverse', 'WoltLabSuite/Core/Ui/File/Delete', 'Upload'], function(AjaxRequest, Core, DomChangeListener, Language, DomUtil, DomTraverse, DeleteHandler, CoreUpload) {
+define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upload'], function(Core, Language, DomUtil, DeleteHandler, CoreUpload) {
 	"use strict";
 	
 	/**
