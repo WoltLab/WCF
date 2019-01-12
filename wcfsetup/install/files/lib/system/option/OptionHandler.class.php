@@ -289,7 +289,7 @@ class OptionHandler implements IOptionHandler {
 	 * 
 	 * @param string $optionName
 	 * @return array
-	 * @since 3.2
+	 * @since 5.2
 	 */
 	public function getSingleOption($optionName) {
 		return $this->getOption($optionName);
