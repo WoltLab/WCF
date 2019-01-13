@@ -165,7 +165,7 @@ class DateFormField extends AbstractFormField implements IImmutableFormField {
 		
 		$dateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->getValue());
 		if ($dateTime === false) {
-			throw new \InvalidArgumentException("Given value does not match format `{$this->getSaveValueFormat()}`.");
+			throw new \InvalidArgumentException("Given value does not match format '{$this->getSaveValueFormat()}'.");
 		}
 		
 		if ($this->supportsTime()) {
