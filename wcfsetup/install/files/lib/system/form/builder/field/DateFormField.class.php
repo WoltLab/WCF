@@ -154,4 +154,25 @@ class DateFormField extends AbstractFormField {
 			}
 		}
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function value($value) {
+		parent::value($value);
+		
+		$dateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->getValue());
+		if ($dateTime === false) {
+			throw new \InvalidArgumentException("Given value does not match format `{$this->getSaveValueFormat()}`.");
+		}
+		
+		if ($this->supportsTime()) {
+			parent::value($dateTime->format('Y-m-d\TH:i:sP'));
+		}
+		else {
+			parent::value($dateTime->format('Y-m-d'));
+		}
+		
+		return $this;
+	}
 }
