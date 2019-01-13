@@ -673,6 +673,87 @@ class BasicFileUtil {
 			throw new SystemException("Unable to make '".$filename."' writable. This is a misconfiguration of your server, please contact your system administrator or hosting provider.");
 		}
 	}
+	
+	/**
+	 * Removes a leading slash from the given path.
+	 * 
+	 * @param	string		$path
+	 * @return	string
+	 */
+	public static function removeLeadingSlash($path) {
+		return ltrim($path, '/');
+	}
+	
+	/**
+	 * Removes a trailing slash from the given path.
+	 * 
+	 * @param	string		$path
+	 * @return	string
+	 */
+	public static function removeTrailingSlash($path) {
+		return rtrim($path, '/');
+	}
+	
+	/**
+	 * Adds a trailing slash to the given path.
+	 * 
+	 * @param	string		$path
+	 * @return	string
+	 */
+	public static function addTrailingSlash($path) {
+		return rtrim($path, '/').'/';
+	}
+	
+	/**
+	 * Adds a leading slash to the given path.
+	 * 
+	 * @param	string		$path
+	 * @return	string
+	 */
+	public static function addLeadingSlash($path) {
+		return '/'.ltrim($path, '/');
+	}
+	
+	/**
+	 * Creates a path on the local filesystem and returns true on success.
+	 * Parent directories do not need to exists as they will be created if
+	 * necessary.
+	 * 
+	 * @param	string		$path
+	 * @return	boolean
+	 */
+	public static function makePath($path) {
+		// directory already exists, abort
+		if (file_exists($path)) {
+			return false;
+		}
+		
+		// check if parent directory exists
+		$parent = dirname($path);
+		if ($parent != $path) {
+			// parent directory does not exist either
+			// we have to create the parent directory first
+			$parent = self::addTrailingSlash($parent);
+			if (!@file_exists($parent)) {
+				// could not create parent directory either => abort
+				if (!self::makePath($parent)) {
+					return false;
+				}
+			}
+			
+			// well, the parent directory exists or has been created
+			// lets create this path
+			if (!@mkdir($path)) {
+				return false;
+			}
+			
+			self::makeWritable($path);
+			
+			return true;
+		}
+		
+		return false;
+	}
 }
 
 /** @noinspection PhpMultipleClassesDeclarationsInOneFile */
@@ -688,18 +769,58 @@ class BasicFileUtil {
  * }
  */
 class Tar {
+	/**
+	 * name of the archive
+	 * @var	string
+	 */
 	protected $archiveName = '';
+	
+	/**
+	 * content of the tar file
+	 * @var	array
+	 */
 	protected $contentList = [];
+	
+	/**
+	 * indicates if tar file is opened
+	 * @var	boolean
+	 */
 	protected $opened = false;
+	
+	/**
+	 * indicates if file content has been read
+	 * @var	boolean
+	 */
 	protected $read = false;
+	
+	/**
+	 * file object
+	 * @var	File
+	 */
 	protected $file = null;
+	
+	/**
+	 * indicates if the tar file is (g)zipped
+	 * @var	boolean
+	 */
 	protected $isZipped = false;
+	
+	/**
+	 * file access mode
+	 * @var	string
+	 */
 	protected $mode = 'rb';
+	
+	/**
+	 * chunk size for extracting
+	 * @var	integer
+	 */
+	const CHUNK_SIZE = 8192;
 	
 	/**
 	 * Creates a new Tar object.
 	 * archiveName must be tarball or gzipped tarball
-	 *
+	 * 
 	 * @param	string		$archiveName
 	 * @throws	SystemException
 	 */
@@ -725,14 +846,14 @@ class Tar {
 	 */
 	public function open() {
 		if (!$this->opened) {
-			if ($this->isZipped) $this->file = new ZipFile($this->archiveName, $this->mode);
+			if ($this->isZipped) $this->file = new GZipFile($this->archiveName, $this->mode);
 			else {
 				// test compression
 				$this->file = new File($this->archiveName, $this->mode);
 				if ($this->file->read(2) == "\37\213") {
 					$this->file->close();
 					$this->isZipped = true;
-					$this->file = new ZipFile($this->archiveName, $this->mode);
+					$this->file = new GZipFile($this->archiveName, $this->mode);
 				}
 				else {
 					$this->file->seek(0);
@@ -741,7 +862,7 @@ class Tar {
 			$this->opened = true;
 		}
 	}
-
+	
 	/**
 	 * Closes the opened file.
 	 */
@@ -753,9 +874,7 @@ class Tar {
 	}
 	
 	/**
-	 * Returns the table of contents (TOC) list for this tar archive.
-	 *
-	 * @return	array		list of content
+	 * @inheritDoc
 	 */
 	public function getContentList() {
 		if (!$this->read) {
@@ -766,12 +885,7 @@ class Tar {
 	}
 	
 	/**
-	 * Returns an associative array with information
-	 * about a specific file in the archive.
-	 *
-	 * @param	mixed	$fileIndex	index or name of the requested file
-	 * @return	array
-	 * @throws	SystemException
+	 * @inheritDoc
 	 */
 	public function getFileInfo($fileIndex) {
 		if (!is_int($fileIndex)) {
@@ -785,12 +899,7 @@ class Tar {
 	}
 	
 	/**
-	 * Searchs a file in the tar archive
-	 * and returns the numeric fileindex.
-	 * Returns false if not found.
-	 *
-	 * @param	string		$filename
-	 * @return	integer			index of the requested file
+	 * @inheritDoc
 	 */
 	public function getIndexByFilename($filename) {
 		foreach ($this->contentList as $index => $file) {
@@ -802,11 +911,7 @@ class Tar {
 	}
 	
 	/**
-	 * Extracts a specific file and returns the content as string.
-	 * Returns false if extraction failed.
-	 *
-	 * @param	mixed		$index		index or name of the requested file
-	 * @return	string				content of the requested file
+	 * @inheritDoc
 	 */
 	public function extractToString($index) {
 		if (!$this->read) {
@@ -826,10 +931,10 @@ class Tar {
 		// read data
 		$content = '';
 		$n = floor($header['size'] / 512);
-		for($i = 0; $i < $n; $i++) {
+		for ($i = 0; $i < $n; $i++) {
 			$content .= $this->file->read(512);
 		}
-		if(($header['size'] % 512) != 0) {
+		if (($header['size'] % 512) != 0) {
 			$buffer = $this->file->read(512);
 			$content .= substr($buffer, 0, $header['size'] % 512);
 		}
@@ -838,13 +943,7 @@ class Tar {
 	}
 	
 	/**
-	 * Extracts a specific file and writes it's content
-	 * to the file specified with $destination.
-	 *
-	 * @param	mixed		$index		index or name of the requested file
-	 * @param	string		$destination
-	 * @return	boolean
-	 * @throws	SystemException
+	 * @inheritDoc
 	 */
 	public function extract($index, $destination) {
 		if (!$this->read) {
@@ -853,9 +952,14 @@ class Tar {
 		}
 		$header = $this->getFileInfo($index);
 		
-		// can not extract a folder
-		if ($header['type'] != 'file') {
-			return false;
+		BasicFileUtil::makePath(dirname($destination));
+		if ($header['type'] === 'folder') {
+			BasicFileUtil::makePath($destination);
+			return;
+		}
+		if ($header['type'] === 'symlink') {
+			// skip symlinks
+			return;
 		}
 		
 		// seek to offset
@@ -863,18 +967,13 @@ class Tar {
 		
 		$targetFile = new File($destination);
 		
-		// read data
-		$n = floor($header['size'] / 512);
-		for ($i = 0; $i < $n; $i++) {
-			$content = $this->file->read(512);
-			$targetFile->write($content, 512);
+		// read and write data
+		if ($header['size']) {
+			$buffer = $this->file->read($header['size']);
+			$targetFile->write($buffer);
 		}
-		if (($header['size'] % 512) != 0) {
-			$content = $this->file->read(512);
-			$targetFile->write($content, $header['size'] % 512);
-		}
-		
 		$targetFile->close();
+		
 		BasicFileUtil::makeWritable($destination);
 		
 		if ($header['mtime']) {
@@ -976,9 +1075,14 @@ class Tar {
 			if ($header['prefix']) {
 				$header['filename'] = $header['prefix'].'/'.$header['filename'];
 			}
-			if (($header['typeflag'] = $data['typeflag']) == '5') {
+			$header['typeflag'] = $data['typeflag'];
+			if ($header['typeflag'] == '5') {
 				$header['size'] = 0;
 				$header['type'] = 'folder';
+			}
+			else if ($header['typeflag'] == '2') {
+				$header['type'] = 'symlink';
+				$header['target'] = $data['link'];
 			}
 			else {
 				$header['type'] = 'file';
@@ -990,6 +1094,15 @@ class Tar {
 		else {
 			return false;
 		}
+	}
+	
+	/**
+	 * Returns true if this tar is (g)zipped.
+	 * 
+	 * @return	boolean
+	 */
+	public function isZipped() {
+		return $this->isZipped;
 	}
 }
 
@@ -1059,7 +1172,7 @@ class File {
  *
  * @author	Marcel Werk
  */
-class ZipFile extends File {
+class GZipFile extends File {
 	/**
 	 * checks if gz*64 functions are available instead of gz*
 	 * https://bugs.php.net/bug.php?id=53829
@@ -1069,8 +1182,8 @@ class ZipFile extends File {
 	
 	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
-	 * Opens a new zipped file.
-	 *
+	 * Opens a gzip file.
+	 * 
 	 * @param	string		$filename
 	 * @param	string		$mode
 	 * @throws	SystemException
@@ -1081,11 +1194,8 @@ class ZipFile extends File {
 		}
 		
 		$this->filename = $filename;
-		if (!self::$gzopen64 && !function_exists('gzopen')) {
-			throw new SystemException('Can not find functions of the zlib extension');
-		}
 		/** @noinspection PhpUndefinedFunctionInspection */
-		$this->resource = (self::$gzopen64 ? @gzopen64($filename, $mode) : @gzopen($filename, $mode));
+		$this->resource = (self::$gzopen64 ? gzopen64($filename, $mode) : gzopen($filename, $mode));
 		if ($this->resource === false) {
 			throw new SystemException('Can not open file ' . $filename);
 		}
@@ -1093,7 +1203,7 @@ class ZipFile extends File {
 	
 	/**
 	 * Calls the specified function on the open file.
-	 *
+	 * 
 	 * @param	string		$function
 	 * @param	array		$arguments
 	 * @return	mixed
@@ -1118,7 +1228,9 @@ class ZipFile extends File {
 	}
 	
 	/**
-	 * Returns the filesize of the unzipped file
+	 * Returns the filesize of the unzipped file.
+	 * 
+	 * @return	integer
 	 */
 	public function getFileSize() {
 		$byteBlock = 1<<14;
@@ -1137,7 +1249,7 @@ class ZipFile extends File {
 			$eof += $byteBlock * ($this->seek($eof) ? -1 : 1);
 		}
 		
-		if ($this->seek($eof) == -1) $eof -= 1;
+		if ($this->seek($eof) == -1) $eof--;
 		
 		$this->rewind();
 		return $eof - $correction;
