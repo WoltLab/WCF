@@ -11,7 +11,9 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class BooleanFormField extends AbstractFormField {
+class BooleanFormField extends AbstractFormField implements IImmutableFormField {
+	use TImmutableFormField;
+	
 	/**
 	 * @inheritDoc
 	 */

@@ -11,8 +11,9 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class MultipleSelectionFormField extends AbstractFormField implements IFilterableSelectionFormField, INullableFormField {
+class MultipleSelectionFormField extends AbstractFormField implements IFilterableSelectionFormField, IImmutableFormField, INullableFormField {
 	use TFilterableSelectionFormField;
+	use TImmutableFormField;
 	use TNullableFormField;
 	
 	/**

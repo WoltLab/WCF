@@ -1,10 +1,12 @@
 <?php
 namespace wcf\system\form\builder\field\user;
 use wcf\system\form\builder\field\AbstractFormField;
+use wcf\system\form\builder\field\IImmutableFormField;
 use wcf\system\form\builder\field\IMaximumLengthFormField;
 use wcf\system\form\builder\field\IMinimumLengthFormField;
 use wcf\system\form\builder\field\INullableFormField;
 use wcf\system\form\builder\field\IPlaceholderFormField;
+use wcf\system\form\builder\field\TImmutableFormField;
 use wcf\system\form\builder\field\TMaximumLengthFormField;
 use wcf\system\form\builder\field\TMinimumLengthFormField;
 use wcf\system\form\builder\field\TNullableFormField;
@@ -23,7 +25,8 @@ use wcf\util\UserUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\User
  * @since	5.2
  */
-class UsernameFormField extends AbstractFormField implements IMaximumLengthFormField, IMinimumLengthFormField, INullableFormField, IPlaceholderFormField {
+class UsernameFormField extends AbstractFormField implements IImmutableFormField, IMaximumLengthFormField, IMinimumLengthFormField, INullableFormField, IPlaceholderFormField {
+	use TImmutableFormField;
 	use TMaximumLengthFormField;
 	use TMinimumLengthFormField;
 	use TNullableFormField;

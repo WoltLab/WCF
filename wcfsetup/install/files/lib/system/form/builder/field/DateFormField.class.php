@@ -11,7 +11,9 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class DateFormField extends AbstractFormField {
+class DateFormField extends AbstractFormField implements IImmutableFormField {
+	use TImmutableFormField;
+	
 	/**
 	 * date time format of the save value
 	 * @var	string

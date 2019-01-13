@@ -14,7 +14,9 @@ use wcf\util\ArrayUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class ItemListFormField extends AbstractFormField {
+class ItemListFormField extends AbstractFormField implements IImmutableFormField {
+	use TImmutableFormField;
+	
 	/**
 	 * type of the returned save value (see `SAVE_VALUE_TYPE_*` constants)
 	 * @var	string

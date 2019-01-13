@@ -12,7 +12,9 @@ use wcf\system\style\StyleHandler;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class IconFormField extends AbstractFormField {
+class IconFormField extends AbstractFormField implements IImmutableFormField {
+	use TImmutableFormField;
+	
 	/**
 	 * @inheritDoc
 	 */

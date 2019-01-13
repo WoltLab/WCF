@@ -28,12 +28,6 @@ abstract class AbstractFormField implements IFormField {
 	protected $__autoFocus = false;
 	
 	/**
-	 * `true` if the value of this field is immutable and `false` otherwise
-	 * @var	bool
-	 */
-	protected $__immutable = false;
-	
-	/**
 	 * name of the object property this field represents
 	 * @var	null|string
 	 */
@@ -182,24 +176,8 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function immutable($immutable = true) {
-		$this->__immutable = $immutable;
-		
-		return $this;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function isAutoFocused() {
 		return $this->__autoFocus;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function isImmutable() {
-		return $this->__immutable;
 	}
 	
 	/**
