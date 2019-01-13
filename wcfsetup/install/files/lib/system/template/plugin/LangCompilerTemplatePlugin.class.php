@@ -39,7 +39,6 @@ class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 				?
 				wcf\system\WCF::getLanguage()->get(
 					ob_get_clean(),
-					\$this->tagStack[count(\$this->tagStack) - 1][1],
 					(
 						isset(\$this->tagStack[count(\$this->tagStack) - 1][1]['__optional'])
 						?

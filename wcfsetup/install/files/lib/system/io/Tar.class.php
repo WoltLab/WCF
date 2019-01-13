@@ -203,14 +203,13 @@ class Tar implements IArchive {
 		}
 		$header = $this->getFileInfo($index);
 		
-		// check file size
-		if (!$header['size']) {
-			throw new SystemException("Could not untar file '".$header['filename']."', file is empty.");
-		}
-		
 		FileUtil::makePath(dirname($destination));
 		if ($header['type'] === 'folder') {
 			FileUtil::makePath($destination);
+			return;
+		}
+		if ($header['type'] === 'symlink') {
+			// skip symlinks
 			return;
 		}
 		
@@ -220,8 +219,10 @@ class Tar implements IArchive {
 		$targetFile = new File($destination);
 		
 		// read and write data
-		$buffer = $this->file->read($header['size']);
-		$targetFile->write($buffer);
+		if ($header['size']) {
+			$buffer = $this->file->read($header['size']);
+			$targetFile->write($buffer);
+		}
 		$targetFile->close();
 		
 		FileUtil::makeWritable($destination);
@@ -325,9 +326,14 @@ class Tar implements IArchive {
 			if ($header['prefix']) {
 				$header['filename'] = $header['prefix'].'/'.$header['filename'];
 			}
-			if (($header['typeflag'] = $data['typeflag']) == '5') {
+			$header['typeflag'] = $data['typeflag'];
+			if ($header['typeflag'] == '5') {
 				$header['size'] = 0;
 				$header['type'] = 'folder';
+			}
+			else if ($header['typeflag'] == '2') {
+				$header['type'] = 'symlink';
+				$header['target'] = $data['link'];
 			}
 			else {
 				$header['type'] = 'file';
