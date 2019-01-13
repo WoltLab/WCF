@@ -216,7 +216,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	 * Returns the ids of the users which aren't activated.
 	 *
 	 * @return	integer[]
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function validateResendActivationMail() {
 		// check permissions

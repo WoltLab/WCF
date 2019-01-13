@@ -26,6 +26,10 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 		// get all groups
 		$groups = UserGroup::getGroupsByType();
 		
+		usort($groups, function(UserGroup $groupA, UserGroup $groupB) {
+			return strcasecmp($groupA->getName(), $groupB->getName());
+		});
+		
 		// generate html
 		$html = '';
 		foreach ($groups as $group) {
@@ -95,5 +99,12 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 		
 		// both lists are equal
 		return 0;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getCSSClassName() {
+		return 'checkboxList';
 	}
 }

@@ -89,7 +89,7 @@ class TrophyConditionHandler extends SingletonFactory {
 	 * Revoke user trophies which are not longer fulfills the conditions. 
 	 * 
 	 * @param 	integer		$maxRevokes
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function revokeTrophies($maxRevokes = 500) {
 		$trophyList = new TrophyList();
@@ -115,7 +115,7 @@ class TrophyConditionHandler extends SingletonFactory {
 	 *
 	 * @param	Trophy		$trophy
 	 * @return	integer[]
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	private function getUserIDs(Trophy $trophy) {
 		$userList = new UserList();
@@ -138,7 +138,7 @@ class TrophyConditionHandler extends SingletonFactory {
 	 * 
 	 * @param       Trophy          $trophy
 	 * @return      integer[]
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	private function getRevocableUserTrophyIDs(Trophy $trophy, $maxTrophyIDs) {
 		// Unfortunately, the condition system does not support negated conditions. 

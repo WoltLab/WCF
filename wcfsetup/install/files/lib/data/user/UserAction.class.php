@@ -18,6 +18,7 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\RequestHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
@@ -516,6 +517,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 					}
 				}
 			}
+			
+			usort($list, function(array $item1, array $item2) {
+				return strcasecmp($item1['label'], $item2['label']);
+			});
 		}
 		
 		// find users
@@ -778,7 +783,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * Validates the 'disableCoverPhoto' action.
 	 * 
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public function validateDisableCoverPhoto() {
 		$this->validateEnableCoverPhoto();
@@ -790,7 +795,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * Disables the cover photo of the handled users.
 	 * 
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public function disableCoverPhoto() {
 		if (empty($this->objects)) {
@@ -849,7 +854,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * Validates the 'enableCoverPhoto' action.
 	 * 
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public function validateEnableCoverPhoto() {
 		WCF::getSession()->checkPermissions(['admin.user.canDisableCoverPhoto']);
@@ -868,7 +873,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * Enables the cover photo of the handled users.
 	 * 
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public function enableCoverPhoto() {
 		if (empty($this->objects)) {
@@ -886,7 +891,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * Returns the remove content dialog. 
 	 * 
 	 * @return      String[]
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function prepareRemoveContent() {
 		$knownContentProvider = array_map(function ($contentProvider) {
@@ -907,7 +912,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * Validates the prepareRemoveContent method. 
 	 * 
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function validatePrepareRemoveContent() {
 		if (!isset($this->parameters['userID'])) {
@@ -959,7 +964,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 * @throws	IllegalLinkException
 	 * @throws	PermissionDeniedException
 	 * @throws	UserInputException
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function validateResendActivationMail() {
 		$this->readObjects();
@@ -981,7 +986,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	
 	/**
 	 * Triggers a new activation email.
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public function resendActivationMail() {
 		// update every selected user's activation code
@@ -1011,5 +1016,29 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}
 		
 		$this->unmarkItems($this->objectIDs);
+	}
+	
+	/**
+	 * @since	5.2
+	 */
+	public function validateDevtoolsSetLanguage() {
+		if (!ENABLE_DEBUG_MODE || !ENABLE_DEVELOPER_TOOLS) {
+			throw new PermissionDeniedException();
+		}
+		
+		$this->readInteger('languageID');
+		
+		if (LanguageFactory::getInstance()->getLanguage($this->parameters['languageID']) === null) {
+			throw new UserInputException('languageID', 'invalid');
+		}
+	}
+	
+	/**
+	 * @since	5.2
+	 */
+	public function devtoolsSetLanguage() {
+		(new UserEditor(WCF::getUser()))->update([
+			'languageID' => $this->parameters['languageID']
+		]);
 	}
 }

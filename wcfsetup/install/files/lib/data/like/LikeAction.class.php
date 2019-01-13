@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Like
- * @deprecated	since 3.2, use \wcf\data\reaction\ReactionAction instead
+ * @deprecated	since 5.2, use \wcf\data\reaction\ReactionAction instead
  * 
  * @method	Like		create()
  * @method	LikeEditor[]	getObjects()

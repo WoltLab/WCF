@@ -66,6 +66,8 @@ class UploadFile {
 	 * @param	integer		$filesize
 	 * @param	integer		$errorCode
 	 * @param	string		$mimeType
+	 * 
+	 * @throws	\Exception	if an error occurred during upload and debug mode is enabled
 	 */
 	public function __construct($filename, $location, $filesize, $errorCode = 0, $mimeType = '') {
 		if (preg_match('~^__wcf_([0-9]+)_(.*)~', $filename, $matches)) {
@@ -78,6 +80,31 @@ class UploadFile {
 		$this->filesize = $filesize;
 		$this->errorCode = $errorCode;
 		$this->mimeType = $mimeType;
+		
+		if (ENABLE_DEBUG_MODE) {
+			switch ($errorCode) {
+				case UPLOAD_ERR_INI_SIZE:
+					throw new \Exception("The uploaded file is larger than PHP's `upload_max_filesize`.");
+					
+				case UPLOAD_ERR_FORM_SIZE:
+					throw new \Exception("The uploaded file is larger than the form's `MAX_FILE_SIZE`.");
+				
+				case UPLOAD_ERR_PARTIAL:
+					throw new \Exception("The uploaded file was only partially uploaded.");
+				
+				case UPLOAD_ERR_NO_FILE:
+					throw new \Exception("No file was uploaded.");
+				
+				case UPLOAD_ERR_NO_TMP_DIR:
+					throw new \Exception("There is no temporary folder where PHP can save the file.");
+				
+				case UPLOAD_ERR_CANT_WRITE:
+					throw new \Exception("The uploaded file could not be written to disk.");
+				
+				case UPLOAD_ERR_EXTENSION:
+					throw new \Exception("A PHP extension stopped the file upload.");
+			}
+		}
 	}
 	
 	/**

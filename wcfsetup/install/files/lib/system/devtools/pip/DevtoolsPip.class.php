@@ -25,14 +25,14 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	/**
 	 * project the pip object belongs to
 	 * @var	DevtoolsProject
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected $project;
 	
 	/**
 	 * package installation plugin object
 	 * @var	IPackageInstallationPlugin
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected $pip;
 	
@@ -85,7 +85,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	 * Returns `true` if this pip supports adding and editing entries via a gui.
 	 * 
 	 * @return	boolean
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function supportsGui() {
 		return $this->isSupported() && is_subclass_of($this->getDecoratedObject()->className, IGuiPackageInstallationPlugin::class);
@@ -101,7 +101,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	 * Returns the project this object belongs to.
 	 * 
 	 * @return	DevtoolsProject
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getProject() {
 		return $this->project;
@@ -111,7 +111,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	 * Sets the project this object belongs to.
 	 * 
 	 * @param	DevtoolsProject		$project
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function setProject(DevtoolsProject $project) {
 		$this->project = $project;
@@ -123,7 +123,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	 * Note: No target will be set for the package installation plugin object.
 	 * 
 	 * @return	IPackageInstallationPlugin|IGuiPackageInstallationPlugin
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getPip() {
 		if ($this->pip === null) {

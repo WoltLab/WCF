@@ -197,19 +197,19 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * @var	bool
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $isDisabled = 0;
 	
 	/**
 	 * @var int
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $presetBoxID = 0;
 	
 	/**
 	 * @var Box
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $presetBox;
 	

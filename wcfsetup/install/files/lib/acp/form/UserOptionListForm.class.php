@@ -37,7 +37,7 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 		}
 		
 		uasort($userGroups, function(UserGroup $groupA, UserGroup $groupB) {
-			return strcmp($groupA->getName(), $groupB->getName());
+			return strcasecmp($groupA->getName(), $groupB->getName());
 		});
 		
 		return $userGroups;

@@ -76,7 +76,7 @@
 			{/hascontent}
 			
 			<div class="containerListFilterOptions jsOnly">
-				<button class="small jsStaticDialog" data-dialog-id="membersListSortFilter"><span class="icon icon16 fa-filter"></span> {lang}wbb.thread.filter{/lang}</button>
+				<button class="small jsStaticDialog" data-dialog-id="membersListSortFilter"><span class="icon icon16 fa-filter"></span> {lang}wcf.global.filter{/lang}</button>
 			</div>
 		</div>
 		<ol class="containerList userList">

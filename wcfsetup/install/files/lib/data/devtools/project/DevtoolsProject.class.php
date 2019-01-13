@@ -28,7 +28,7 @@ class DevtoolsProject extends DatabaseObject {
 	/**
 	 * is `true` if it has already been attempted to fetch a package
 	 * @var		bool
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected $didFetchPackage = false;
 	
@@ -100,7 +100,7 @@ class DevtoolsProject extends DatabaseObject {
 	 * Returns the path to the project's `package.xml` file.
 	 * 
 	 * @return	string
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getPackageXmlPath() {
 		return $this->path . ($this->isCore() ? 'com.woltlab.wcf/' : '') . 'package.xml';
@@ -220,7 +220,7 @@ class DevtoolsProject extends DatabaseObject {
 	 * 
 	 * @param	Package		$package
 	 * @throws	\InvalidArgumentException	if the identifier of the given package does not match
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function setPackage(Package $package) {
 		if ($package->package !== $this->getPackageArchive()->getPackageInfo('name')) {

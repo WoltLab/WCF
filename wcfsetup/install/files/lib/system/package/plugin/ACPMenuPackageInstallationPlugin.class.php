@@ -47,7 +47,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		parent::addFormFields($form);
@@ -126,7 +126,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = parent::fetchElementData($element, $saveData);
@@ -144,7 +144,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$menuItem = parent::prepareXmlElement($document, $form);

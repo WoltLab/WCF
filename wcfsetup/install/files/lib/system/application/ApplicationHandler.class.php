@@ -251,7 +251,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * @param	string		$string		string to be processed
 	 * @param	bool		$skipCache	if `true`, no caches will be used and relevant application packages will be read from database directly
 	 * @return	string				processed string
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public static function insertRealDatabaseTableNames($string, $skipCache = false) {
 		if ($skipCache) {

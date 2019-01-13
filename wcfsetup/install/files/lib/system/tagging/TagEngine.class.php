@@ -249,7 +249,7 @@ class TagEngine extends SingletonFactory {
 	 * @param string $objectType
 	 * @param Tag[] $tags
 	 * @return array
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public function getSubselectForObjectsByTags($objectType, array $tags) {
 		$parameters = [$this->getObjectTypeID($objectType)];
@@ -279,7 +279,7 @@ class TagEngine extends SingletonFactory {
 	 * @param string[] $names
 	 * @param int $languageID
 	 * @return Tag[]
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public function getTagsByName(array $names, $languageID) {
 		$tagList = new TagList();

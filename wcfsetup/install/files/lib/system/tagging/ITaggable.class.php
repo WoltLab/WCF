@@ -17,7 +17,7 @@ interface ITaggable {
 	 * 
 	 * @param	Tag	$tag
 	 * @return	DatabaseObjectList
-	 * @deprecated 3.2
+	 * @deprecated 5.2
 	 */
 	public function getObjectList(Tag $tag);
 	

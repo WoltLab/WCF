@@ -3,6 +3,7 @@ namespace wcf\acp\page;
 use wcf\page\AbstractPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
+use wcf\system\io\RemoteFile;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -32,7 +33,10 @@ class IndexPage extends AbstractPage {
 			'os' => PHP_OS,
 			'webserver' => isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '',
 			'mySQLVersion' => WCF::getDB()->getVersion(),
-			'load' => ''
+			'load' => '',
+			'memoryLimit' => @ini_get('memory_limit'),
+			'postMaxSize' => @ini_get('post_max_size'),
+			'sslSupport' => RemoteFile::supportsSSL()
 		];
 		
 		// get load

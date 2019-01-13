@@ -194,6 +194,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					$handler = $data['elements']['handler'];
 				}
 				
+				// @deprecated
 				if (!empty($data['elements']['controllerCustomURL'])) {
 					$controllerCustomURL = $data['elements']['controllerCustomURL'];
 					if ($controllerCustomURL && !RouteHandler::isValidCustomUrl($controllerCustomURL)) {
@@ -418,7 +419,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		$tabContainter = TabMenuFormContainer::create('tabMenu');
@@ -486,10 +487,6 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			ClassNameFormField::create('handler')
 				->label('wcf.acp.pip.page.handler')
 				->implementedInterface(IMenuPageHandler::class),
-			
-			TextFormField::create('controllerCustomURL')
-				->label('wcf.acp.pip.page.controllerCustomURL')
-				->description('wcf.acp.pip.page.controllerCustomURL.description'),
 			
 			BooleanFormField::create('requireObjectID')
 				->label('wcf.acp.pip.page.requireObjectID')
@@ -633,7 +630,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -655,7 +652,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		}
 		
 		$optionalElements = [
-			'controller', 'handler', 'controllerCustomURL', 'hasFixedParent',
+			'controller', 'handler', 'hasFixedParent',
 			'parent', 'options', 'permissions', 'cssClassName', 'allowSpidersToIndex',
 			'excludeFromLandingPage', 'availableDuringOfflineMode', 'requireObjectID'
 		];
@@ -758,7 +755,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('identifier');
@@ -766,7 +763,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -777,7 +774,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
@@ -805,7 +802,6 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			$page,
 			[
 				'handler' => '',
-				'controllerCustomURL' => '',
 				'hasFixedParent' => 0,
 				'parent' => '',
 				'options' => '',

@@ -395,7 +395,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		/** @var IFormContainer $dataContainer */
@@ -696,7 +696,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [];
@@ -855,7 +855,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
@@ -863,7 +863,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getEntryTypes() {
 		return ['options', 'categories'];
@@ -918,7 +918,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function saveObject(\DOMElement $newElement, \DOMElement $oldElement = null) {
 		switch ($this->entryType) {
@@ -944,7 +944,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		switch ($this->entryType) {
@@ -970,7 +970,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData()['data'];
@@ -1028,7 +1028,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function insertNewXmlElement(XML $xml, \DOMElement $newElement) {
 		$options = $xml->xpath()->query('/ns:data/ns:import/ns:options')->item(0);
@@ -1067,7 +1067,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * Returns the options for the option type form field.
 	 * 
 	 * @return	array
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function getOptionTypeOptions() {
 		$options = [];
@@ -1123,7 +1123,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareDeleteXmlElement(\DOMElement $element) {
 		$elementName = 'option';
@@ -1140,7 +1140,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function deleteObject(\DOMElement $element) {
 		$name = $element->getAttribute('name');
@@ -1184,7 +1184,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addDeleteElement(\DOMElement $element) {
 		$this->defaultAddDeleteElement($element);
@@ -1217,7 +1217,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function sanitizeXmlFileAfterDeleteEntry(\DOMDocument $document) {
 		$xpath = new \DOMXPath($document);

@@ -127,7 +127,7 @@ define([
 		 * Opens the media editor after uploading a single file.
 		 *
 		 * @param	{object}	data	upload event data
-		 * @since	3.2
+		 * @since	5.2
 		 */
 		_openEditorAfterUpload: function(data) {
 			if (data.upload === _upload && !data.isMultiFileUpload && !_upload.hasPendingUploads()) {

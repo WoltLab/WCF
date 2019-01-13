@@ -6,7 +6,7 @@
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Abstract
- * @since	3.2
+ * @since	5.2
  */
 define(['EventHandler', '../Manager'], function(EventHandler, DependencyManager) {
 	"use strict";

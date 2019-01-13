@@ -157,7 +157,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 	 * Returns true if the active user has subscribed to this category.
 	 *
 	 * @return	boolean
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function isSubscribed() {
 		return in_array($this->categoryID, self::getSubscribedCategoryIDs());
@@ -167,7 +167,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 	 * Returns the list of subscribed categories.
 	 *
 	 * @return	integer[]
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public static function getSubscribedCategoryIDs() {
 		if (self::$subscribedCategories === null) {

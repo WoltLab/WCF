@@ -148,6 +148,8 @@ requirejs.config({
 	define.amd = undefined;
 </script>
 
+{include file='__devtoolsLanguageChooser'}
+
 {js application='wcf' lib='jquery' hasTiny=true}
 {js application='wcf' lib='jquery-ui' hasTiny=true}
 {js application='wcf' lib='jquery-ui' file='touchPunch' bundle='WCF.Combined' hasTiny=true}

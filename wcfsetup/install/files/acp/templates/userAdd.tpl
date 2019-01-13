@@ -71,7 +71,7 @@
 						<dt>
 							<label>{lang}wcf.acp.user.groups{/lang}</label>
 						</dt>
-						<dd>
+						<dd class="checkboxList">
 							{htmlCheckboxes options=$availableGroups name=groupIDs selected=$groupIDs}
 						</dd>
 					</dl>

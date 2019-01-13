@@ -347,8 +347,8 @@
 		<item name="wcf.acp.dataImport.configure.database.name"><![CDATA[Datenbankname]]></item>
 		<item name="wcf.acp.dataImport.configure.database.prefix"><![CDATA[Tabellen-Präfix]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem"><![CDATA[Datei-System-Zugang]]></item>
-		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[Pfad zur Installation]]></item>
-		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[Wird für den Import von Datei-basierten Inhalten (wie z.B. Avatare) benötigt.]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[Pfad zur alten Installation]]></item>
+		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[Geben Sie den Dateipfad der alten Installation an, dieser wird für den Import von Datei-basierten Inhalten, z. B. Avatare oder Dateianhänge, benötigt.]]></item>
 		<item name="wcf.acp.dataImport.configure.database.error"><![CDATA[Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
 		<br><strong>{$exception->getMessage()}<br>{$exception->getErrorDesc()}</strong>]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[Es wurde keine Installation unter dem angegeben Pfad gefunden.]]></item>
@@ -843,6 +843,7 @@
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions.description"><![CDATA[Eine Dateiendung pro Zeile]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
+		<item name="wcf.acp.group.option.user.profile.canEditUserProfile"><![CDATA[Kann eigenes Profil bearbeiten]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[Über WoltLab Suite&trade;]]></item>
@@ -861,12 +862,18 @@
 		<item name="wcf.acp.index.setup.title"><![CDATA[Bitte warten]]></item>
 		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
+		<item name="wcf.acp.index.system.software.version"><![CDATA[WoltLab Suite&trade; Version]]></item>
 		<item name="wcf.acp.index.system.software.apiVersion"><![CDATA[WoltLab Suite&trade; API-Version]]></item>
 		<item name="wcf.acp.index.system.software.legacyApiVersions"><![CDATA[Ältere, noch unterstützte API-Versionen]]></item>
+		<item name="wcf.acp.index.system.software.databaseNumber"><![CDATA[Datenbank-Installationsnummer]]></item>
 		<item name="wcf.acp.index.system.server"><![CDATA[Server]]></item>
 		<item name="wcf.acp.index.system.os"><![CDATA[Betriebssystem]]></item>
 		<item name="wcf.acp.index.system.webserver"><![CDATA[Webserver]]></item>
-		<item name="wcf.acp.index.system.php"><![CDATA[PHP-Version]]></item>
+		<item name="wcf.acp.index.system.php"><![CDATA[PHP]]></item>
+		<item name="wcf.acp.index.system.php.version"><![CDATA[PHP-Version]]></item>
+		<item name="wcf.acp.index.system.php.sslSupport"><![CDATA[Unterstützung von SSL-Verbindungen]]></item>
+		<item name="wcf.acp.index.system.php.sslSupport.available"><![CDATA[vorhanden]]></item>
+		<item name="wcf.acp.index.system.php.sslSupport.notAvailable"><![CDATA[nicht vorhanden]]></item>
 		<item name="wcf.acp.index.system.mySQLVersion"><![CDATA[MySQL-Version]]></item>
 		<item name="wcf.acp.index.system.load"><![CDATA[Aktueller UNIX Load]]></item>
 		<item name="wcf.acp.index.woltlab.website"><![CDATA[Website]]></item>
@@ -1658,6 +1665,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.contact_form_enable_attachments"><![CDATA[Dateianhänge im Kontakt-Formular aktivieren]]></item>
 		<item name="wcf.acp.option.contact_form_prune_attachments"><![CDATA[Dateianhänge automatisch entfernen]]></item>
 		<item name="wcf.acp.option.contact_form_prune_attachments.description"><![CDATA[Alte Dateianhänge werden nach Ablauf der Frist automatisch gelöscht. [0, um die Löschung zu deaktivieren]]]></item>
+		<item name="wcf.acp.option.firstTimeSetup"><![CDATA[Erstmalige Einrichtung]]></item>
+		<item name="wcf.acp.option.firstTimeSetup.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Konfiguriere{else}Konfigurieren Sie{/if} die wichtigsten Einstellungen, diese können auch später über die Optionen verändert werden.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Eingabefelder]]></item>
@@ -2303,7 +2312,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.error.tooFewSegments"><![CDATA[Die angegebene Kategorie enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.data.title"><![CDATA[Daten des Benachrichtigungsobjekttypen]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions"><![CDATA[Unterstützt Reaktionen]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions.description"><![CDATA[Gibt an, ob die Benachrichtigung das Reaktionssystem unterstützt. WoltLab Suite Core 3.2 (oder neuer) wird nur Benachrichtigungen zu Reaktionen verschicken, falls ausgewählt.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions.description"><![CDATA[Gibt an, ob die Benachrichtigung das Reaktionssystem unterstützt. WoltLab Suite Core 5.2 (oder neuer) wird nur Benachrichtigungen zu Reaktionen verschicken, falls ausgewählt.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.data.title"><![CDATA[Daten zum „Anzeigen aktualisieren“-Worker]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.niceValue"><![CDATA[Nice-Wert]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.niceValue.description"><![CDATA[Der Nice-Wert wird verwendet um die Reihenfolge zu bestimmen, in welcher die „Anzeigen aktualisieren“-Worker angezeigt werden und in welche Reihenfolge sie deshalb ausgeführt werden sollten. Worker mit einem kleineren Nice-Wert werden zuerst aufgelistet.]]></item>
@@ -2320,7 +2329,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.activityPointEvent.points.description"><![CDATA[Punktenzahl, die der Benutzer für ein Aktivität dieses Types erhält.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.data.title"><![CDATA[Daten des Aktivitätentypes]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions"><![CDATA[Unterstützt Reaktionen]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description"><![CDATA[Gibt an, ob die Aktivität das Reaktionssystem unterstützt. WoltLab Suite Core 3.2 (oder neuer) wird nur Aktivitäten zu Reaktionen erstellen, falls ausgewählt.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description"><![CDATA[Gibt an, ob die Aktivität das Reaktionssystem unterstützt. WoltLab Suite Core 5.2 (oder neuer) wird nur Aktivitäten zu Reaktionen erstellen, falls ausgewählt.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.data.title"><![CDATA[Daten des versionierten Objekttypen]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tableName"><![CDATA[Datenbanktabelle mit den Originaldaten]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tableName.description"><![CDATA[Name der Datenbanktabelle, die die Originaldaten enthält, deren verschiedene Versionen nachgehalten werden. Für alle installierten Apps wird <kbd>app1_</kbd> durch <kbd>appN_</kbd> ersetzt, wobei <kbd>app</kbd> die Abkürzung der App ist und <kbd>N</kbd> der Wert von <kbd>WCF_N</kbd>.]]></item>
@@ -2417,8 +2426,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.pip.page.contentMetaKeywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.pip.page.contentTitle"><![CDATA[Titel]]></item>
 		<item name="wcf.acp.pip.page.controller"><![CDATA[Seiten-Controller]]></item>
-		<item name="wcf.acp.pip.page.controllerCustomURL"><![CDATA[Individuelle Controller-URL]]></item>
-		<item name="wcf.acp.pip.page.controllerCustomURL.description"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.pip.page.cssClassName"><![CDATA[CSS-Klassen]]></item>
 		<item name="wcf.acp.pip.page.cssClassName.description"><![CDATA[Die durch Komma abgetrennte CSS-Klassen werden dem <kbd>body</kbd>-Element zugewiesen.]]></item>
 		<item name="wcf.acp.pip.page.excludeFromLandingPage"><![CDATA[Seite kann nicht als Startseite ausgewählt werden]]></item>
@@ -2551,6 +2558,13 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Sitemap deaktivieren]]></item>
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Sitemap bearbeiten]]></item>
 		<item name="wcf.acp.sitemap.cliInfo"><![CDATA[Die Sitemap kann auch mittels CLI neu generiert werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Führe{else}Führen Sie{/if} dafür <kbd>worker wcf\system\worker\SitemapRebuildWorker</kbd> in einer CLI Session aus.]]></item>
+		<item name="wcf.acp.sitemap.submitToSearchEngines"><![CDATA[<p>Die generierte Sitemap muss einmalig bei den gewünschten Suchmaschinen manuell hinterlegt werden, die vollständige Adresse lautet: <kbd>{$__wcf->getPath()}sitemaps/sitemaps.xml</kbd>.</p>
+<p><br></p>
+<p>Anleitung zum Hinterlegen der XML-Sitemaps:</p>
+<ul class="nativeList">
+	<li><a href="https://support.google.com/webmasters/answer/7451001" class="externalURL">Google</a></li>
+	<li><a href="https://www.bing.com/webmaster/help/how-to-submit-sitemaps-82a15bd4" class="externalURL">Bing</a></li>
+</ul>]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.articleCategory"><![CDATA[Artikel-Kategorien]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.article"><![CDATA[Artikel]]></item>
@@ -4456,6 +4470,8 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
 		<item name="wcf.user.sortField.reactionReputation"><![CDATA[Reputation aus Reaktionen]]></item>
 		<item name="wcf.user.articles"><![CDATA[Artikel]]></item>
+		<item name="wcf.user.status.banned"><![CDATA[Der Benutzer ist gesperrt.]]></item>
+		<item name="wcf.user.status.isDisabled"><![CDATA[Der Benutzer ist nicht freigeschaltet.]]></item>
 	</category>
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>

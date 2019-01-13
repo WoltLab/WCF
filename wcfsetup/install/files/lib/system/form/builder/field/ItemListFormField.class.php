@@ -12,9 +12,11 @@ use wcf\util\ArrayUtil;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
-class ItemListFormField extends AbstractFormField {
+class ItemListFormField extends AbstractFormField implements IImmutableFormField {
+	use TImmutableFormField;
+	
 	/**
 	 * type of the returned save value (see `SAVE_VALUE_TYPE_*` constants)
 	 * @var	string

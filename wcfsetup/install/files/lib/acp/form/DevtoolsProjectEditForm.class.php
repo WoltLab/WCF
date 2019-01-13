@@ -47,7 +47,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setFormObjectData() {
 		parent::setFormObjectData();

@@ -203,7 +203,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'Ui/Simple
 		 */
 		_createUI: function(element, options) {
 			var list = elCreate('ol');
-			list.className = 'inputItemList';
+			list.className = 'inputItemList' + (element.disabled ? ' disabled' : '');
 			elData(list, 'element-id', element.id);
 			list.addEventListener(WCF_CLICK_EVENT, function(event) {
 				if (event.target === list) {
@@ -397,17 +397,21 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'Ui/Simple
 			content.className = 'content';
 			elData(content, 'object-id', value.objectId);
 			content.textContent = value.value;
-			
-			var button = elCreate('a');
-			button.className = 'icon icon16 fa-times';
-			button.addEventListener(WCF_CLICK_EVENT, _callbackRemoveItem);
 			listItem.appendChild(content);
-			listItem.appendChild(button);
+			
+			if (!data.element.disabled) {
+				var button = elCreate('a');
+				button.className = 'icon icon16 fa-times';
+				button.addEventListener(WCF_CLICK_EVENT, _callbackRemoveItem);
+				listItem.appendChild(button);
+			}
 			
 			data.list.insertBefore(listItem, data.listItem);
 			data.element.value = '';
 			
-			this._handleLimit(elementId);
+			if (!data.element.disabled) {
+				this._handleLimit(elementId);
+			}
 			var values = this._syncShadow(data);
 			
 			if (typeof data.options.callbackChange === 'function') {

@@ -80,6 +80,10 @@
 			<h2 class="sectionTitle">{lang}wcf.acp.index.system.software{/lang}</h2>
 			
 			<dl>
+				<dt>{lang}wcf.acp.index.system.software.version{/lang}</dt>
+				<dd>{@WCF_VERSION}</dd>
+			</dl>
+			<dl>
 				<dt>{lang}wcf.acp.index.system.software.apiVersion{/lang}</dt>
 				<dd>{@WSC_API_VERSION}</dd>
 			</dl>
@@ -91,6 +95,11 @@
 			{/if}
 			
 			{event name='softwareFields'}
+			
+			<dl>
+				<dt>{lang}wcf.acp.index.system.software.databaseNumber{/lang}</dt>
+				<dd>{@WCF_N}</dd>
+			</dl>
 		</section>
 		
 		<section class="section">
@@ -107,17 +116,6 @@
 			</dl>
 			
 			<dl>
-				<dt>{lang}wcf.acp.index.system.php{/lang}</dt>
-				<dd>
-					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
-						<a href="{link controller='PHPInfo'}{/link}">{PHP_VERSION}</a>
-					{else}
-						{PHP_VERSION}
-					{/if}
-				</dd>
-			</dl>
-			
-			<dl>
 				<dt>{lang}wcf.acp.index.system.mySQLVersion{/lang}</dt>
 				<dd>{$server[mySQLVersion]}</dd>
 			</dl>
@@ -130,6 +128,44 @@
 			{/if}
 			
 			{event name='serverFields'}
+		</section>
+		
+		<section class="section">
+			<h2 class="sectionTitle">{lang}wcf.acp.index.system.php{/lang}</h2>
+			
+			<dl>
+				<dt>{lang}wcf.acp.index.system.php.version{/lang}</dt>
+				<dd>
+					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
+						<a href="{link controller='PHPInfo'}{/link}">{PHP_VERSION}</a>
+					{else}
+						{PHP_VERSION}
+					{/if}
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt>memory_limit</dt>
+				<dd>
+					{$server[memoryLimit]}
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt>post_max_size</dt>
+				<dd>
+					{$server[postMaxSize]}
+				</dd>
+			</dl>
+			
+			<dl>
+				<dt>{lang}wcf.acp.index.system.php.sslSupport{/lang}</dt>
+				<dd>
+					{if $server[sslSupport]}{lang}wcf.acp.index.system.php.sslSupport.available{/lang}{else}{lang}wcf.acp.index.system.php.sslSupport.notAvailable{/lang}{/if}
+				</dd>
+			</dl>
+			
+			{event name='phpFields'}
 		</section>
 		
 		{event name='systemFieldsets'}

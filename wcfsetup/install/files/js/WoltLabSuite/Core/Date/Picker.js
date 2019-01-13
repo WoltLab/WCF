@@ -156,34 +156,36 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 				
 				element.addEventListener(WCF_CLICK_EVENT, _callbackOpen);
 				
-				// create input addon
-				var container = elCreate('div');
-				container.className = 'inputAddon';
-				
-				var button = elCreate('a');
-				button.href = '#';
-				button.className = 'inputSuffix button jsTooltip';
-				button.addEventListener(WCF_CLICK_EVENT, _callbackOpen);
-				container.appendChild(button);
-				
-				var icon = elCreate('span');
-				icon.className = 'icon icon16 fa-calendar';
-				button.appendChild(icon);
-				
-				element.parentNode.insertBefore(container, element);
-				container.insertBefore(element, button);
-				
-				if (!disableClear) {
-					button = elCreate('a');
-					button.className = 'inputSuffix button';
-					button.addEventListener(WCF_CLICK_EVENT, this.clear.bind(this, element));
-					if (isEmpty) button.style.setProperty('visibility', 'hidden', '');
+				if (!element.disabled) {
+					// create input addon
+					var container = elCreate('div');
+					container.className = 'inputAddon';
 					
+					var button = elCreate('a');
+					button.href = '#';
+					button.className = 'inputSuffix button jsTooltip';
+					button.addEventListener(WCF_CLICK_EVENT, _callbackOpen);
 					container.appendChild(button);
 					
-					icon = elCreate('span');
-					icon.className = 'icon icon16 fa-times';
+					var icon = elCreate('span');
+					icon.className = 'icon icon16 fa-calendar';
 					button.appendChild(icon);
+					
+					element.parentNode.insertBefore(container, element);
+					container.insertBefore(element, button);
+					
+					if (!disableClear) {
+						button = elCreate('a');
+						button.className = 'inputSuffix button';
+						button.addEventListener(WCF_CLICK_EVENT, this.clear.bind(this, element));
+						if (isEmpty) button.style.setProperty('visibility', 'hidden', '');
+						
+						container.appendChild(button);
+						
+						icon = elCreate('span');
+						icon.className = 'icon icon16 fa-times';
+						button.appendChild(icon);
+					}
 				}
 				
 				// check if the date input has one of the following classes set otherwise default to 'short'
