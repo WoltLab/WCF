@@ -40,7 +40,7 @@
 	require(['WoltLabSuite/Core/Ui/File/Upload', 'Language'], function(Upload, Language) {
 		new Upload("{$uploadFieldId}UploadButtonDiv", "{$uploadFieldId}uploadFileList", {
 			internalId: '{$uploadField->getInternalId()}',
-			maxFiles: {$uploadField->getMaxFiles()},
+			{if $uploadField->getMaxFiles()}maxFiles: {$uploadField->getMaxFiles()},{/if}
 			imagePreview: {if !$uploadField->supportMultipleFiles() && $uploadField->isImageOnly()}true{else}false{/if}
 		});
 		

@@ -66,7 +66,7 @@ class AJAXFileUploadAction extends AbstractSecureAction {
 			throw new UserInputException('files', 'failed');
 		}
 		
-		if (UploadHandler::getInstance()->getFieldForInternalId($this->internalId)->getMaxFiles() < UploadHandler::getInstance()->getFilesCountForInternalId($this->internalId) + count($_FILES['__files']['tmp_name'])) {
+		if (UploadHandler::getInstance()->getFieldForInternalId($this->internalId)->getMaxFiles() !== null && UploadHandler::getInstance()->getFieldForInternalId($this->internalId)->getMaxFiles() < UploadHandler::getInstance()->getFilesCountForInternalId($this->internalId) + count($_FILES['__files']['tmp_name'])) {
 			throw new UserInputException('files', 'reachedRemainingLimit');
 		}
 	}

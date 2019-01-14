@@ -22,8 +22,6 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 		
 		// set default options
 		this._options = Core.extend({
-			// is true if multiple files can be uploaded at once
-			multiple: options.maxFiles > 1,
 			// name if the upload field
 			name: '__files[]',
 			// is true if every file from a multi-file selection is uploaded in its own request
@@ -31,8 +29,12 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 			// url for uploading file
 			url: 'index.php?ajax-file-upload/&t=' + SECURITY_TOKEN,
 			// image preview
-			imagePreview: false
+			imagePreview: false,
+			// max files
+			maxFiles: null
 		}, options);
+		
+		this._options.multiple = this._options.maxFiles === null || this._options.maxFiles > 1; 
 		
 		this._options.url = Core.convertLegacyUrl(this._options.url);
 		if (this._options.url.indexOf('index.php') === 0) {
@@ -185,7 +187,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 		},
 		
 		validateUpload: function(files) {
-			if (files.length + this.countFiles() <= this._options.maxFiles) {
+			if (this._options.maxFiles === null || files.length + this.countFiles() <= this._options.maxFiles) {
 				return true;
 			}
 			else {
@@ -221,7 +223,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 		 * Checks the maximum number of files and enables or disables the upload button.
 		 */
 		checkMaxFiles: function() {
-			if (this.countFiles() >= this._options.maxFiles) {
+			if (this._options.maxFiles !== null && this.countFiles() >= this._options.maxFiles) {
 				elHide(this._button);
 			}
 			else {
