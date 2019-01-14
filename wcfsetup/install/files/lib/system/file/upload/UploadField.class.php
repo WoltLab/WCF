@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\file\upload;
-use wcf\system\WCF;
 
 /**
  * An specific upload field.
@@ -31,17 +30,6 @@ class UploadField {
 	public $internalId = null;
 	
 	/**
-	 * The name of the field.
-	 * @var string 
-	 */
-	public $name;
-	/**
-	 * The description of the field.
-	 * @var string 
-	 */
-	public $description;
-	
-	/**
 	 * Indicates whether the field is image only.
 	 * @var boolean
 	 */
@@ -51,13 +39,9 @@ class UploadField {
 	 * UploadField constructor.
 	 *
 	 * @param       string          $fieldId
-	 * @param       string          $fieldName
-	 * @param       string          $fieldDescription
 	 */
-	public function __construct($fieldId, $fieldName = 'Upload', $fieldDescription = null) {
+	public function __construct($fieldId) {
 		$this->fieldId = $fieldId;
-		$this->name = $fieldName;
-		$this->description = $fieldDescription;
 	}
 	
 	/**
@@ -112,24 +96,6 @@ class UploadField {
 	 */
 	public function getInternalId() {
 		return $this->internalId;
-	}
-	
-	/**
-	 * Returns the name of the field. 
-	 * 
-	 * @return string
-	 */
-	public function getName() {
-		return WCF::getLanguage()->get($this->name);
-	}
-	
-	/**
-	 * Returns the description of the field.
-	 *
-	 * @return string
-	 */
-	public function getDescription() {
-		return WCF::getLanguage()->get($this->description);
 	}
 	
 	/**

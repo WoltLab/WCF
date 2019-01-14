@@ -168,9 +168,9 @@ class UploadHandler extends SingletonFactory {
 		}
 		
 		return WCF::getTPL()->fetch('uploadFieldComponent', 'wcf', [
-			'field' => $this->fields[$fieldId], 
-			'fieldId' => $fieldId,
-			'files' => $this->getFilesForFieldId($fieldId)
+			'uploadField' => $this->fields[$fieldId], 
+			'uploadFieldId' => $fieldId,
+			'uploadFieldFiles' => $this->getFilesForFieldId($fieldId)
 		]);
 	}
 	
