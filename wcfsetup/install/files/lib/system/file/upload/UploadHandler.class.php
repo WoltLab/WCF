@@ -311,6 +311,16 @@ class UploadHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns true, iff a field with the given fieldId is already registered. 
+	 * 
+	 * @param       string          $fieldId
+	 * @return      boolean
+	 */
+	public function isRegisteredFieldId($fieldId) {
+		return isset($this->fields[$fieldId]);
+	}
+	
+	/**
 	 * Returns the files for an internal identifier.
 	 *
 	 * @param       string          $internalId
