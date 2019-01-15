@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\system\exception\NotImplementedException;
 use wcf\system\file\upload\UploadField;
 use wcf\system\file\upload\UploadFile;
 use wcf\system\file\upload\UploadHandler;
@@ -131,10 +130,26 @@ class UploadFormField extends AbstractFormField {
 	
 	/**
 	 * @inheritDoc
+	 * 
+	 * @param       UploadFile[]    $value
+	 * 
+	 * @throws      \InvalidArgumentException       if the value is not an array
+	 * @throws      \InvalidArgumentException       if the value contains objects, which are not an instance of UploadFile
 	 */
 	public function value($value) {
-		// @TODO
-		throw new NotImplementedException();
+		if (!is_array($value)) {
+			throw new \InvalidArgumentException('$value must be an array.');
+		}
+		
+		foreach ($value as $file) {
+			if (!($file instanceof UploadFile)) {
+				throw new \InvalidArgumentException('All given files must be an instance of '. UploadFile::class .'.');
+			}
+		}
+		
+		$this->registerField();
+		
+		UploadHandler::getInstance()->registerFilesForField($this->getId(), $value);
 	}
 	
 	/**
