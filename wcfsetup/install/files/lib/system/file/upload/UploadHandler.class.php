@@ -209,7 +209,7 @@ class UploadHandler extends SingletonFactory {
 		}
 		
 		foreach ($this->getFilesForInternalId($internalId) as $file) {
-			if ($file->getUniqueFileId() === $uniqueFileId) {
+			if (hash_equals($file->getUniqueFileId(), $uniqueFileId)) {
 				return $file;
 			}
 		}

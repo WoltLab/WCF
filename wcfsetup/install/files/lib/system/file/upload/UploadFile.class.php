@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\file\upload;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * An specific upload file.
@@ -72,7 +73,7 @@ class UploadFile {
 		$this->filesize = filesize($location);
 		$this->processed = $processed;
 		$this->viewableImage = $viewableImage;
-		$this->uniqueId = sha1(sha1_file($location) . sha1($location));
+		$this->uniqueId = StringUtil::getRandomID();
 		
 		if (@getimagesize($location) !== false) {
 			$this->isImage = true;
