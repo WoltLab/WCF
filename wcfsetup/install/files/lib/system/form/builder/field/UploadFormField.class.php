@@ -65,10 +65,22 @@ class UploadFormField extends AbstractFormField {
 	
 	/**
 	 * @inheritDoc
-	 * @return      UploadFile[]
+	 * @return      UploadFile[][]
 	 */
 	public function getValue() {
-		return UploadHandler::getInstance()->getFilesForFieldId($this->getId());
+		$returnValues = [
+			'files' => UploadHandler::getInstance()->getFilesForFieldId($this->getId()), 
+			'newFiles' => [],
+			'removedFiles' => UploadHandler::getInstance()->getRemovedFiledForFieldId($this->getId(), false)
+		];
+		
+		foreach (UploadHandler::getInstance()->getFilesForFieldId($this->getId()) as $file) {
+			if (!$file->isProcessed()) {
+				$returnValues['newFiles'][] = $file;
+			}
+		}
+		
+		return $returnValues;
 	}
 	
 	/**
@@ -92,14 +104,14 @@ class UploadFormField extends AbstractFormField {
 			}
 		}
 		
-		if ($this->getMinimum() !== null && count($this->getValue()) < $this->getMinimum()) {
+		if ($this->getMinimum() !== null && count($this->getValue()['files']) < $this->getMinimum()) {
 			$this->addValidationError(new FormFieldValidationError(
 				'minimum',
 				'wcf.form.field.upload.error.minimum',
 				['minimum' => $this->getMinimum()]
 			));
 		}
-		else if ($this->getMaximum() !== null && count($this->getValue()) > $this->getMaximum()) {
+		else if ($this->getMaximum() !== null && count($this->getValue()['files']) > $this->getMaximum()) {
 			$this->addValidationError(new FormFieldValidationError(
 				'maximum',
 				'wcf.form.field.upload.error.maximum',
