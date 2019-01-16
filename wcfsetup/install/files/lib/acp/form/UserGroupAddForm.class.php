@@ -81,6 +81,11 @@ class UserGroupAddForm extends AbstractOptionListForm {
 	protected $showOnTeamPage = 0;
 	
 	/**
+	 * @var int
+	 */
+	protected $allowMention = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -104,6 +109,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		if (isset($_POST['priority'])) $this->priority = intval($_POST['priority']);
 		if (isset($_POST['userOnlineMarking'])) $this->userOnlineMarking = StringUtil::trim($_POST['userOnlineMarking']);
 		if (isset($_POST['showOnTeamPage'])) $this->showOnTeamPage = intval($_POST['showOnTeamPage']);
+		if (isset($_POST['allowMention'])) $this->allowMention = intval($_POST['allowMention']);
 	}
 	
 	/**
@@ -150,7 +156,8 @@ class UserGroupAddForm extends AbstractOptionListForm {
 				'groupDescription' => $this->groupDescription,
 				'priority' => $this->priority,
 				'userOnlineMarking' => $this->userOnlineMarking,
-				'showOnTeamPage' => $this->showOnTeamPage
+				'showOnTeamPage' => $this->showOnTeamPage,
+				'allowMention' => $this->allowMention ? 1 : 0,
 			]),
 			'options' => $optionValues
 		];
@@ -185,7 +192,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		
 		// reset values
 		$this->groupName = '';
-		$this->priority = 0;
+		$this->allowMention = $this->priority = $this->showOnTeamPage = 0;
 		
 		I18nHandler::getInstance()->reset();
 	}
@@ -219,7 +226,8 @@ class UserGroupAddForm extends AbstractOptionListForm {
 			'userOnlineMarking' => $this->userOnlineMarking,
 			'showOnTeamPage' => $this->showOnTeamPage,
 			'groupIsGuest' => false,
-			'isBlankForm' => empty($_POST)
+			'isBlankForm' => empty($_POST),
+			'allowMention' => $this->allowMention,
 		]);
 	}
 	

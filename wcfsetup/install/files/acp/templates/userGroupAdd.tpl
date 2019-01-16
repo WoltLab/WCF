@@ -151,6 +151,15 @@
 				</dd>
 			</dl>
 		{/if}
+
+		{if $action === 'add' || !$isUnmentionableGroup}
+			<dl>
+				<dt></dt>
+				<dd>
+					<label><input type="checkbox" id="allowMention" name="allowMention" value="1"{if $allowMention} checked{/if}> {lang}wcf.acp.group.allowMention{/lang}</label>
+				</dd>
+			</dl>
+		{/if}
 		
 		{event name='dataFields'}
 	</div>

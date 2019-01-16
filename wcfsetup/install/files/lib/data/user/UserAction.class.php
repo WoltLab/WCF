@@ -480,9 +480,16 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$this->readBoolean('includeUserGroups', false, 'data');
 		$this->readString('searchString', false, 'data');
 		$this->readIntegerArray('restrictUserGroupIDs', true, 'data');
+		$this->readString('scope', true, 'data');
 		
 		if (isset($this->parameters['data']['excludedSearchValues']) && !is_array($this->parameters['data']['excludedSearchValues'])) {
 			throw new UserInputException('excludedSearchValues');
+		}
+		
+		if ($this->parameters['data']['scope']) {
+			if (!in_array($this->parameters['data']['scope'], ['mention'])) {
+				throw new UserInputException('scope');
+			}
 		}
 	}
 	
@@ -501,6 +508,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			$accessibleGroups = UserGroup::getAccessibleGroups();
 			foreach ($accessibleGroups as $group) {
 				if (!empty($this->parameters['data']['restrictUserGroupIDs']) && !in_array($group->groupID, $this->parameters['data']['restrictUserGroupIDs'])) {
+					continue;
+				}
+				
+				if ($this->parameters['data']['scope'] === 'mention' && !$group->canBeMentioned()) {
 					continue;
 				}
 				

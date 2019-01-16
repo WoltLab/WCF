@@ -17,12 +17,19 @@ use wcf\system\WCF;
  * @package	WoltLabSuite\Core\Data\User\Group
  *
  * @property-read	integer		$groupID		unique id of the user group
- * @property-read	string		$groupName		name of the user group or name of language item which contains the name
- * @property-read	string		$groupDescription	description of the user group or name of language item which contains the description
+ * @property-read	string		$groupName		name of the user group or name of language
+ *                item which contains the name
+ * @property-read	string		$groupDescription	description of the user group or name of
+ *                language item which contains the description
  * @property-read	integer		$groupType		identifier of the type of user group
- * @property-read	integer		$priority		priority of the user group used to determine member's user rank and online marking
- * @property-read	string		$userOnlineMarking	HTML code used to print the formatted name of a user group member
- * @property-read	integer		$showOnTeamPage		is `1` if the user group and its members should be shown on the team page, otherwise `0`
+ * @property-read	integer		$priority		priority of the user group used to determine
+ *                member's user rank and online marking
+ * @property-read	string		$userOnlineMarking	HTML code used to print the formatted name of
+ *                a user group member
+ * @property-read	integer		$showOnTeamPage		is `1` if the user group and its members
+ *                should be shown on the team page, otherwise `0`
+ * @property-read       int             $allowMention           is `1` if the user group can be mentioned in messages,
+ *                      otherwise `0`
  */
 class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
@@ -387,5 +394,48 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	 */
 	public function getTitle() {
 		return WCF::getLanguage()->get($this->groupName);
+	}
+	
+	/**
+	 * The `Everyone`, `Guests` and `Users` group can never be mentioned.
+	 * 
+	 * @return bool
+	 * @since 5.2
+	 */
+	public function isUnmentionableGroup() {
+		return in_array($this->groupType, [self::EVERYONE, self::GUESTS, self::USERS]);
+	}
+	
+	/**
+	 * Returns true if this group can be mentioned, is always false for the
+	 * `Everyone`, `Guests` and `Users` group.
+	 *
+	 * @return bool
+	 * @since 5.2
+	 */
+	public function canBeMentioned() {
+		if ($this->isUnmentionableGroup()) {
+			return false;
+		}
+		
+		return !!$this->allowMention;
+	}
+	
+	/**
+	 * @return UserGroup[]
+	 * @since 5.2
+	 */
+	public static function getMentionableGroups() {
+		self::getCache();
+		
+		$groups = [];
+		/** @var UserGroup $group */
+		foreach (self::$cache['groups'] as $group) {
+			if ($group->canBeMentioned()) {
+				$groups[] = $group;
+			}
+		}
+		
+		return $groups;
 	}
 }

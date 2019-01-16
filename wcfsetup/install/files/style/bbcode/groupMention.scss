@@ -1,0 +1,17 @@
+.groupMention {
+	background-color: $wcfSidebarBackground;
+	border-radius: 2px;
+	color: $wcfSidebarLink;
+	padding: 1px 5px;
+	
+	&::before {
+		content: '@';
+		/* Avoids breaks between the '@' and the group name, but still allows
+		   wrapping inside the name itself */
+		display: inline-block;
+	}
+	
+	&:hover {
+		color: $wcfSidebarLinkActive;
+	}
+}
