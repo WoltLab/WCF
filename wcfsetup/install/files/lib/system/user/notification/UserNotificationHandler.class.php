@@ -719,13 +719,11 @@ class UserNotificationHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * This method does not delete notifications, instead it marks them as confirmed. The system
-	 * does not allow to delete them, but since it was intended in WCF 2.0, this method only
-	 * exists for compatibility reasons.
-	 * 
-	 * Please consider replacing your calls with markAsConfirmed().
-	 * 
-	 * @deprecated
+	 * @deprecated This method does not delete notifications, instead it marks them as confirmed. The system
+	 * 		does not allow to delete them, but since it was intended in WCF 2.0, this method only
+	 * 		exists for compatibility reasons.
+	 * 		.
+	 * 		Please consider replacing your calls with markAsConfirmed() which takes the same parameters.
 	 * 
 	 * @param	string		$eventName
 	 * @param	string		$objectType
@@ -733,6 +731,7 @@ class UserNotificationHandler extends SingletonFactory {
 	 * @param	integer[]	$objectIDs
 	 */
 	public function deleteNotifications($eventName, $objectType, array $recipientIDs, array $objectIDs = []) {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		$this->markAsConfirmed($eventName, $objectType, $recipientIDs, $objectIDs);
 	}
 	
