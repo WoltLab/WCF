@@ -122,7 +122,6 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		$applications = ApplicationHandler::getInstance()->getApplications();
-		$applications[1] = ApplicationHandler::getInstance()->getWCF();
 		foreach ($applications as $application) {
 			$abbreviation = $application->getAbbreviation();
 			$directory = Application::getDirectory($abbreviation);

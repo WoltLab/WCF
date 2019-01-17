@@ -90,9 +90,10 @@ class ApplicationHandler extends SingletonFactory {
 	 * e.g. cross-domain files requestable through the webserver.
 	 * 
 	 * @return	Application
-	 * @deprecated  3.0 please use `getApplication()` instead
+	 * @deprecated  3.0 - please use `getApplication('wcf')` instead
 	 */
 	public function getWCF() {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		return $this->getApplicationByID(1);
 	}
 	

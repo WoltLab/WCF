@@ -1034,7 +1034,7 @@ class WCF {
 	 */
 	public function getFavicon() {
 		$activeApplication = ApplicationHandler::getInstance()->getActiveApplication();
-		$wcf = ApplicationHandler::getInstance()->getWCF();
+		$wcf = ApplicationHandler::getInstance()->getApplication('wcf');
 		$favicon = StyleHandler::getInstance()->getStyle()->getRelativeFavicon();
 		
 		if ($activeApplication->domainName !== $wcf->domainName) {
