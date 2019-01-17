@@ -228,9 +228,10 @@ final class PasswordUtil {
 	}
 	
 	/**
-	 * @deprecated	Use random_int()
+	 * @deprecated	Use \random_int($min, $max) directly.
 	 */
 	public static function secureRandomNumber($min, $max) {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		$range = $max - $min;
 		if ($range == 0) {
 			// not random

@@ -71,9 +71,10 @@ final class CryptoUtil {
 	}
 
 	/**
-	 * @deprecated	Use \hash_equals() directly.
+	 * @deprecated	Use \hash_equals($known_string, $user_string) directly.
 	 */
 	public static function secureCompare($hash1, $hash2) {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		$hash1 = (string) $hash1;
 		$hash2 = (string) $hash2;
 		
@@ -81,16 +82,18 @@ final class CryptoUtil {
 	}
 	
 	/**
-	 * @deprecated	Use \random_bytes() directly.
+	 * @deprecated	Use \random_bytes($n) directly.
 	 */
 	public static function randomBytes($n) {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		return random_bytes($n);
 	}
 	
 	/**
-	 * @deprecated	Use \random_int() directly.
+	 * @deprecated	Use \random_int($min, $max) directly.
 	 */
 	public static function randomInt($min, $max) {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		$range = $max - $min;
 		if ($range == 0) {
 			// not random
