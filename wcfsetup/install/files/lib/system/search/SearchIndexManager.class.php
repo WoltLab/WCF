@@ -112,17 +112,19 @@ class SearchIndexManager extends SingletonFactory implements ISearchIndexManager
 	
 	/**
 	 * @inheritDoc
-	 * @deprecated  3.0 - please use `set() instead`
+	 * @deprecated  3.0 - please use `->set()` which takes the same parameters.
 	 */
 	public function add($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		$this->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
 	}
 	
 	/**
 	 * @inheritDoc
-	 * @deprecated  3.0 - please use `set() instead`
+	 * @deprecated  3.0 - please use `->set()` which takes the same parameters.
 	 */
 	public function update($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID = null, $metaData = '') {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		$this->set($objectType, $objectID, $message, $subject, $time, $userID, $username, $languageID, $metaData);
 	}
 	
