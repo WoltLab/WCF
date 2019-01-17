@@ -426,6 +426,10 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	 * @since 5.2
 	 */
 	public static function getMentionableGroups() {
+		if (!WCF::getSession()->getPermission('user.message.canMentionGroups')) {
+			return [];
+		}
+		
 		self::getCache();
 		
 		$groups = [];

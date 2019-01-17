@@ -505,13 +505,13 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$list = [];
 		
 		if ($this->parameters['data']['includeUserGroups']) {
-			$accessibleGroups = UserGroup::getAccessibleGroups();
+			$accessibleGroups = UserGroup::getMentionableGroups();
 			foreach ($accessibleGroups as $group) {
 				if (!empty($this->parameters['data']['restrictUserGroupIDs']) && !in_array($group->groupID, $this->parameters['data']['restrictUserGroupIDs'])) {
 					continue;
 				}
 				
-				if ($this->parameters['data']['scope'] === 'mention' && !$group->canBeMentioned()) {
+				if ($this->parameters['data']['scope'] === 'mention' && (!WCF::getSession()->getPermission('user.message.canMentionGroups') || !$group->canBeMentioned())) {
 					continue;
 				}
 				

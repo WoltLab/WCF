@@ -66,7 +66,7 @@ class MessageUtil {
 			if ($type === 'user') {
 				$usernames[] = $element->textContent;
 			}
-			else if ($type === 'group') {
+			else if ($type === 'group' && WCF::getSession()->getPermission('user.message.canMentionGroups')) {
 				$attributes = $htmlInputProcessor->getHtmlInputNodeProcessor()->parseAttributes(
 					$element->getAttribute('data-attributes')
 				);

@@ -588,6 +588,11 @@ pdf</defaultvalue>
 				<categoryname>user.message</categoryname>
 				<optiontype>BBCodeSelect</optiontype>
 			</option>
+			<option name="user.message.canMentionGroups">
+				<categoryname>user.message</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<!-- /user.message -->
 			<!-- user.message.comment -->
 			<option name="user.comment.floodControlTime">
