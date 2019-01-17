@@ -35,9 +35,11 @@ final class ClassUtil {
 	 * @return	boolean
 	 * @throws	SystemException
 	 * 
-	 * @deprecated	use is_subclass_of() instead
+	 * @deprecated	Use is_subclass_of($className, $targetClass) directly.
 	 */
 	public static function isInstanceOf($className, $targetClass) {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
+		
 		// validate parameters
 		if (!is_string($className)) {
 			return false;
