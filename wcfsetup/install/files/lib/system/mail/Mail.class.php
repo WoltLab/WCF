@@ -9,6 +9,7 @@ use wcf\system\email\Mailbox;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
+$_ = \wcf\functions\deprecatedClass(Mail::class);
 /**
  * This class represents an e-mail.
  * 
@@ -17,6 +18,7 @@ use wcf\util\FileUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Mail
  * @deprecated	The Community Framework 2.x mail API is deprecated in favor of \wcf\system\email\*.
+ * 		see: https://community.woltlab.com/thread/240642-wsc-3-0-emails-and-background-queue/
  */
 class Mail {
 	/**
