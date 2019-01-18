@@ -246,7 +246,7 @@ class ArticleAddForm extends AbstractForm {
 			throw new UserInputException('categoryID');
 		}
 		$category = ArticleCategory::getCategory($this->categoryID);
-		if ($category === null) {
+		if ($category === null || !$category->isAccessible()) {
 			throw new UserInputException('categoryID', 'invalid');
 		}
 		
