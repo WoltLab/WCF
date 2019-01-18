@@ -114,5 +114,13 @@
 			<classname>wcf\system\user\notification\event\ArticleUserNotificationEvent</classname>
 			<preset>1</preset>
 		</event>
+		
+		<event>
+			<name>registration</name>
+			<objecttype>com.woltlab.wcf.user.registration.notification</objecttype>
+			<classname>wcf\system\user\notification\event\UserRegistrationUserNotificationEvent</classname>
+			<permissions>admin.user.canSearchUser</permissions>
+			<preset>0</preset>
+		</event>
 	</import>
 </data>
