@@ -289,6 +289,24 @@
 		return obj.hasOwnProperty(property);
 	};
 	
+	window.deprecatedFeature = function(message) {
+		console.log("A deprecated feature is used, while 'ENABLE_DEPRECATION_WARNINGS' is enabled: " + message);
+	};
+	window.deprecatedFunction = function(f, message) {
+		window.deprecatedFeature(message);
+		return f;
+	};
+	if (ENABLE_DEPRECATION_WARNINGS) {
+		window.deprecatedFeature = function(message) {
+			throw new Error("A deprecated feature is used, while 'ENABLE_DEPRECATION_WARNINGS' is enabled: " + message);
+		};
+		window.deprecatedFunction = function(f, message) {
+			return function() {
+				window.deprecatedFeature(message);
+			};
+		};
+	}
+	
 	/* assigns a global constant defining the proper 'click' event depending on the browser,
 	   enforcing 'touchstart' on mobile devices for a better UX. We're using defineProperty()
 	   here because at the time of writing Safari does not support 'const'. Thanks Safari.
