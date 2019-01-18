@@ -1190,7 +1190,7 @@
 		<item name="wcf.acp.option.category.general.payment"><![CDATA[Payments]]></item>
 		<item name="wcf.acp.option.available_payment_methods"><![CDATA[Supported Payment Methods]]></item>
 		<item name="wcf.acp.option.paypal_email_address"><![CDATA[PayPal Email Address]]></item>
-		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[Receiving payments requires a PayPal business account with enabled “Instant Payment Notification” (IPN).]]></item>
+		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[Receiving payments requires a PayPal account with enabled “Instant Payment Notification” (IPN).]]></item>
 		<item name="wcf.acp.option.module_paid_subscription"><![CDATA[Enable paid subscriptions]]></item>
 		<item name="wcf.acp.option.module_paid_subscription.description"><![CDATA[Enables the <a href="{link controller='PaidSubscriptionList'}{/link}">management for paid subscriptions</a>.]]></item>
 		<item name="wcf.acp.option.paid_subscription_enable_tos_confirmation"><![CDATA[Users are required to accept your Terms of Service before purchasing]]></item>
