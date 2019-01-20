@@ -119,6 +119,7 @@
 			<acpmenuitem name="wcf.acp.menu.link.devtools.notificationTest">
 				<parent>wcf.acp.menu.link.devtools</parent>
 				<controller>wcf\acp\page\DevtoolsNotificationTestPage</controller>
+				<permissions>admin.configuration.package.canInstallPackage</permissions>
 			</acpmenuitem>
 			<!-- /devtools -->
 		
