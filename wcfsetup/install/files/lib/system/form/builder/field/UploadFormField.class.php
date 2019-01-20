@@ -58,6 +58,7 @@ class UploadFormField extends AbstractFormField {
 		$uploadField = new UploadField($this->getId());
 		$uploadField->maxFiles = $this->getMaximum();
 		$uploadField->setImageOnly($this->isImageOnly());
+		$uploadField->setAllowSvgImages($this->isImageOnly());
 		
 		return $uploadField;
 	}
@@ -76,7 +77,16 @@ class UploadFormField extends AbstractFormField {
 	 * @return      UploadFile[]
 	 */
 	public function getValue() {
+		$this->registerField();
+		
 		return UploadHandler::getInstance()->getFilesByFieldId($this->getId());
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getObjectProperty() {
+		return null;
 	}
 	
 	/**
@@ -181,7 +191,7 @@ class UploadFormField extends AbstractFormField {
 	/**
 	 * Sets the imageOnly flag for this field.
 	 *
-	 * @param	boolean	        $imageOnly	maximum field value
+	 * @param	boolean	        $imageOnly
 	 * @return	static				this field
 	 */
 	public function imageOnly($imageOnly = true) {
