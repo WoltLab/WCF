@@ -122,6 +122,13 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 			throw new Error("Upload failed: " + data.message);
 		},
 		
+		_upload: function(event, file, blob) {
+			var innerError = elBySel('small.innerError:not(.innerFileError)', this._buttonContainer.parentNode);
+			if (innerError) elRemove(innerError);
+			
+			return Upload._super.prototype._upload.call(this, event, file, blob);
+		},
+		
 		_success: function(uploadId, data, responseText, xhr, requestOptions) {
 			for (var i in this._fileElements[uploadId]) {
 				if (data['files'][i] !== undefined) {
@@ -199,7 +206,9 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 					DomUtil.insertAfter(innerError, this._buttonContainer);
 				}
 				
-				innerError.textContent = WCF.Language.get('wcf.upload.error.reachedRemainingLimit').replace(/#remaining#/, this._options.maxFiles);
+				innerError.textContent = Language.get('wcf.upload.error.reachedRemainingLimit', {
+					maxFiles: this._options.maxFiles - this.countFiles()
+				});
 				
 				return false;
 			}
