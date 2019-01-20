@@ -21,10 +21,6 @@
 						</div>
 						
 						<ul class="buttonGroup"></ul>
-						
-						{if $errorField == $file->getUniqueFileId()}
-							<small class="innerError innerFileError">{lang __optional="true"}{$errorType}{/lang}</small>
-						{/if}
 					</div>
 				</li>
 			{/foreach}
