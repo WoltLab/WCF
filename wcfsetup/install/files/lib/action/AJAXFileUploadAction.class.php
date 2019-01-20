@@ -66,7 +66,7 @@ class AJAXFileUploadAction extends AbstractSecureAction {
 			throw new UserInputException('files', 'failed');
 		}
 		
-		if (UploadHandler::getInstance()->getFieldForInternalId($this->internalId)->getMaxFiles() !== null && UploadHandler::getInstance()->getFieldForInternalId($this->internalId)->getMaxFiles() < UploadHandler::getInstance()->getFilesCountForInternalId($this->internalId) + count($_FILES['__files']['tmp_name'])) {
+		if (UploadHandler::getInstance()->getFieldByInternalId($this->internalId)->getMaxFiles() !== null && UploadHandler::getInstance()->getFieldByInternalId($this->internalId)->getMaxFiles() < UploadHandler::getInstance()->getFilesCountByInternalId($this->internalId) + count($_FILES['__files']['tmp_name'])) {
 			throw new UserInputException('files', 'reachedRemainingLimit');
 		}
 	}
@@ -84,7 +84,7 @@ class AJAXFileUploadAction extends AbstractSecureAction {
 		
 		$i = 0;
 		
-		$field = UploadHandler::getInstance()->getFieldForInternalId($this->internalId);
+		$field = UploadHandler::getInstance()->getFieldByInternalId($this->internalId);
 		
 		foreach ($_FILES['__files']['tmp_name'] as $id => $tmpName) {
 			if ($field->isImageOnly()) {
@@ -109,7 +109,7 @@ class AJAXFileUploadAction extends AbstractSecureAction {
 			
 			$uploadFile = new UploadFile($tmpFile, $_FILES['__files']['name'][$id]);
 			
-			UploadHandler::getInstance()->addFileForInternalId($this->internalId, $uploadFile);
+			UploadHandler::getInstance()->addFileByInternalId($this->internalId, $uploadFile);
 			
 			$this->uploadedFiles[$i++] = $uploadFile;
 		}

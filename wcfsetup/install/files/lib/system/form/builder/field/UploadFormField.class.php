@@ -67,7 +67,7 @@ class UploadFormField extends AbstractFormField {
 	 * @return      UploadFile[]
 	 */
 	public function getValue() {
-		return UploadHandler::getInstance()->getFilesForFieldId($this->getId());
+		return UploadHandler::getInstance()->getFilesByFieldId($this->getId());
 	}
 	
 	/**
@@ -137,7 +137,7 @@ class UploadFormField extends AbstractFormField {
 		
 		$this->registerField();
 		
-		UploadHandler::getInstance()->registerFilesForField($this->getId(), $value);
+		UploadHandler::getInstance()->registerFilesByField($this->getId(), $value);
 	}
 	
 	/**
