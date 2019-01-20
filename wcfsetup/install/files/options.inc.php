@@ -36,6 +36,7 @@ define('MODULE_MASTER_PASSWORD', 0);
 define('TIMEZONE', 'Europe/Berlin');
 
 define('ENABLE_DEBUG_MODE', 1);
+define('ENABLE_PRODUCTION_DEBUG_MODE', 1);
 define('ENABLE_BENCHMARK', 0);
 define('EXTERNAL_LINK_TARGET_BLANK', 0);
 define('URL_LEGACY_MODE', 0);
