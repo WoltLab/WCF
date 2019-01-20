@@ -7,6 +7,7 @@ use wcf\form\AbstractForm;
 use wcf\system\acl\ACLHandler;
 use wcf\system\category\CategoryHandler;
 use wcf\system\category\CategoryPermissionHandler;
+use wcf\system\category\ICategoryType;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -99,6 +100,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 			I18nHandler::getInstance()->setOptions('title', $this->packageID, $this->category->title, $this->objectType->getProcessor()->getI18nLangVarPrefix().'.title.category\d+');
 			
 			$this->additionalData = $this->category->additionalData;
+			$this->descriptionUseHtml = $this->category->descriptionUseHtml;
 			$this->isDisabled = $this->category->isDisabled;
 			$this->parentCategoryID = $this->category->parentCategoryID;
 			$this->showOrder = $this->category->showOrder;
@@ -111,27 +113,30 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 	public function save() {
 		AbstractForm::save();
 		
+		/** @var ICategoryType $categoryType */
+		$categoryType = $this->objectType->getProcessor();
+		
 		// handle description
 		$description = '';
-		if ($this->objectType->getProcessor()->hasDescription()) {
-			$description = $this->objectType->getProcessor()->getI18nLangVarPrefix().'.description.category'.$this->category->categoryID;
+		if ($categoryType->hasDescription()) {
+			$description = $categoryType->getI18nLangVarPrefix().'.description.category'.$this->category->categoryID;
 			if (I18nHandler::getInstance()->isPlainValue('description')) {
 				I18nHandler::getInstance()->remove($description);
 				$description = I18nHandler::getInstance()->getValue('description');
 			}
 			else {
-				I18nHandler::getInstance()->save('description', $description, $this->objectType->getProcessor()->getDescriptionLangVarCategory(), $this->packageID);
+				I18nHandler::getInstance()->save('description', $description, $categoryType->getDescriptionLangVarCategory(), $this->packageID);
 			}
 		}
 		
 		// handle title
-		$title = $this->objectType->getProcessor()->getI18nLangVarPrefix().'.title.category'.$this->category->categoryID;
+		$title = $categoryType->getI18nLangVarPrefix().'.title.category'.$this->category->categoryID;
 		if (I18nHandler::getInstance()->isPlainValue('title')) {
 			I18nHandler::getInstance()->remove($title);
 			$title = I18nHandler::getInstance()->getValue('title');
 		}
 		else {
-			I18nHandler::getInstance()->save('title', $title, $this->objectType->getProcessor()->getTitleLangVarCategory(), $this->packageID);
+			I18nHandler::getInstance()->save('title', $title, $categoryType->getTitleLangVarCategory(), $this->packageID);
 		}
 		
 		// update category
@@ -139,6 +144,7 @@ class AbstractCategoryEditForm extends AbstractCategoryAddForm {
 			'data' => array_merge($this->additionalFields, [
 				'additionalData' => serialize($this->additionalData),
 				'description' => $description,
+				'descriptionUseHtml' => $categoryType->supportsHtmlDescription() ? $this->descriptionUseHtml : 0,
 				'isDisabled' => $this->isDisabled,
 				'parentCategoryID' => $this->parentCategoryID,
 				'showOrder' => $this->showOrder,

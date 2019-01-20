@@ -3099,6 +3099,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.category.description"><![CDATA[Description]]></item>
 		<item name="wcf.category.title"><![CDATA[Title]]></item>
 		<item name="wcf.category.button.choose"><![CDATA[Choose Category]]></item>
+		<item name="wcf.category.descriptionUseHtml"><![CDATA[Enable HTML code in the description]]></item>
 	</category>
 	<category name="wcf.cli">
 		<item name="wcf.cli.help.noLongHelp"><![CDATA[There is no long help for the parameter "{$topic}".]]></item>

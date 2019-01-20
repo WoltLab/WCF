@@ -94,6 +94,15 @@
 					{hascontent}<small>{content}{@$objectType->getProcessor()->getLanguageVariable('description.description', true)}{/content}</small>{/hascontent}
 				</dd>
 			</dl>
+			
+			{if $objectType->getProcessor()->supportsHtmlDescription()}
+				<dl>
+					<dt></dt>
+					<dd>
+						<label><input type="checkbox" name="descriptionUseHtml" value="1"{if $descriptionUseHtml} checked{/if}> {@$objectType->getProcessor()->getLanguageVariable('descriptionUseHtml')}</label>
+					</dd>
+				</dl>
+			{/if}
 		{/if}
 		
 		<dl{if $errorField == 'isDisabled'} class="formError"{/if}>

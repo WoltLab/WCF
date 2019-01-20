@@ -350,6 +350,7 @@ CREATE TABLE wcf1_category (
 	parentCategoryID INT(10) NOT NULL DEFAULT 0,
 	title VARCHAR(255) NOT NULL,
 	description TEXT,
+	descriptionUseHtml TINYINT(1) NOT NULL DEFAULT 0,
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	time INT(10) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,

@@ -3175,6 +3175,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.category.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.category.title"><![CDATA[Titel]]></item>
 		<item name="wcf.category.button.choose"><![CDATA[Kategorien wählen]]></item>
+		<item name="wcf.category.descriptionUseHtml"><![CDATA[HTML in der Beschreibung verwenden]]></item>
 	</category>
 	<category name="wcf.cli">
 		<item name="wcf.cli.help.noLongHelp"><![CDATA[Zu dem Parameter "{$topic}" ist keine ausführliche Erklärung verfügbar.]]></item>
