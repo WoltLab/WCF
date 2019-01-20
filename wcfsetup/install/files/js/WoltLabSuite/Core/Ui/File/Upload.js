@@ -146,7 +146,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 							var image = elCreate('img');
 							image.classList.add('previewImage');
 							image.setAttribute('src', data['files'][i].image);
-							image.setAttribute('style', "width: 100%;");
+							image.setAttribute('style', "max-width: 100%;");
 							elData(image, 'unique-file-id', data['files'][i].uniqueFileId);
 							this._target.appendChild(image);
 						}
