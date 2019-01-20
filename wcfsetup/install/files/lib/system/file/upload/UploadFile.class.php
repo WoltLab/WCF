@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\file\upload;
+use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
@@ -18,6 +19,12 @@ class UploadFile {
 	 * @var string
 	 */
 	private $location;
+	
+	/**
+	 * Full image link. 
+	 * @var string
+	 */
+	private $imageLink;
 	
 	/**
 	 * Indicator, whether the file is already processed.
@@ -101,7 +108,13 @@ class UploadFile {
 		}
 		
 		if ($this->processed) {
-			return $this->location;
+			if ($this->imageLink === null) {
+				// try to guess path
+				return str_replace(WCF_DIR, WCF::getPath(), $this->location);
+			}
+			else {
+				return $this->imageLink;
+			}
 		}
 		else {
 			$imageData = getimagesize($this->location);
@@ -148,6 +161,15 @@ class UploadFile {
 		
 		$this->location = $newLocation;
 		$this->processed = true;
+	}
+	
+	/**
+	 * Sets the new image link of the file for processed files.
+	 *
+	 * @param       string        $link
+	 */
+	public function setImageLink($link) {
+		$this->imageLink = $link;
 	}
 	
 	/**
