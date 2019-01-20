@@ -56,6 +56,26 @@ class UploadHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Unregisters an upload field by the given field id.
+	 * 
+	 * @param       string          $fieldId
+	 * 
+	 * @throws      \InvalidArgumentException       if the given fieldId is unknown
+	 */
+	public function unregisterUploadField($fieldId) {
+		if (!isset($this->fields[$fieldId])) {
+			throw new \InvalidArgumentException('UploadField with the id "'. $fieldId .'" is unknown.');
+		}
+		
+		$storage = $this->getStorage();
+		unset($storage[$this->fields[$fieldId]->getInternalId()]);
+		
+		WCF::getSession()->register(self::UPLOAD_HANDLER_SESSION_VAR, $storage);
+		
+		unset($this->fields[$fieldId]);
+	}
+	
+	/**
 	 * Returns the uploaded files for a specific fieldId.
 	 * 
 	 * @param       string          $fieldId

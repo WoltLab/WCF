@@ -41,6 +41,15 @@ class UploadFormField extends AbstractFormField {
 	}
 	
 	/**
+	 * Unregisters the current field in the upload handler.
+	 */
+	private function unregisterField() {
+		if (UploadHandler::getInstance()->isRegisteredFieldId($this->getId())) {
+			UploadHandler::getInstance()->unregisterUploadField($this->getId());
+		}
+	}
+	
+	/**
 	 * Builds the UploadField class. 
 	 * 
 	 * @return      UploadField
@@ -145,6 +154,15 @@ class UploadFormField extends AbstractFormField {
 	 */
 	public function hasSaveValue() {
 		return false;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function cleanup() {
+		$this->unregisterField();
+		
+		return $this;
 	}
 	
 	/**
