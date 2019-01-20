@@ -127,20 +127,20 @@
 					<tr class="jsPageRow">
 						<td class="columnIcon">
 							{if $page->canDisable()}
-								<span class="icon icon24 fa-{if !$page->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$page->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$page->pageID}"></span>
+								<span class="icon icon16 fa-{if !$page->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$page->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$page->pageID}"></span>
 							{else}
-								<span class="icon icon24 fa-{if !$page->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if !$page->isDisabled}disable{else}enable{/if}{/lang}"></span>
+								<span class="icon icon16 fa-{if !$page->isDisabled}check-{/if}square-o disabled" title="{lang}wcf.global.button.{if !$page->isDisabled}disable{else}enable{/if}{/lang}"></span>
 							{/if}
-							<a href="{link controller='PageEdit' id=$page->pageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon24 fa-pencil"></span></a>
+							<a href="{link controller='PageEdit' id=$page->pageID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							{if $page->canDelete()}
-								<span class="icon icon24 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$page->pageID}" data-confirm-message-html="{lang __encode=true}wcf.acp.page.delete.confirmMessage{/lang}"></span>
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$page->pageID}" data-confirm-message-html="{lang __encode=true}wcf.acp.page.delete.confirmMessage{/lang}"></span>
 							{else}
-								<span class="icon icon24 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}
 							{if !$page->requireObjectID}
-								<a href="{$page->getLink()}" title="{lang}wcf.acp.page.button.viewPage{/lang}" class="jsTooltip"><span class="icon icon24 fa-search"></span></a>
+								<a href="{$page->getLink()}" title="{lang}wcf.acp.page.button.viewPage{/lang}" class="jsTooltip"><span class="icon icon16 fa-search"></span></a>
 							{else}
-								<span class="icon icon24 fa-search disabled" title="{lang}wcf.acp.page.button.viewPage{/lang}"></span>
+								<span class="icon icon16 fa-search disabled" title="{lang}wcf.acp.page.button.viewPage{/lang}"></span>
 							{/if}
 							
 							{event name='rowButtons'}

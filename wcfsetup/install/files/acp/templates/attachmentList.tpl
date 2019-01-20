@@ -100,7 +100,7 @@
 				{foreach from=$objects item=attachment}
 					<tr class="jsAttachmentRow">
 						<td class="columnIcon">
-							<span class="icon icon24 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$attachment->attachmentID}" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}"></span>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$attachment->attachmentID}" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}"></span>
 							
 							{event name='rowButtons'}
 						</td>
