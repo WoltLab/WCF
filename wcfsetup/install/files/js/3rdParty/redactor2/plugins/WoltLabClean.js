@@ -64,13 +64,20 @@ $.Redactor.prototype.WoltLabClean = function() {
 				elBySelAll('p', div, function (p) {
 					var br = p.lastElementChild;
 					if (br && br.nodeName === 'BR') {
-						// check if there is only whitespace afterwards
-						if (br.nextSibling && br.nextSibling.textContent.replace(/[\r\n\t]/g, '').match(/^\u200B+$/)) {
-							var newP = elCreate('p');
-							newP.innerHTML = '<br>';
-							p.parentNode.insertBefore(newP, p.nextSibling);
-							
-							p.removeChild(br.nextSibling);
+						// Check if there is only whitespace afterwards.
+						if (br.nextSibling) {
+							if (br.nextSibling.textContent.replace(/[\r\n\t]/g, '').match(/^\u200B+$/)) {
+								var newP = elCreate('p');
+								newP.innerHTML = '<br>';
+								p.parentNode.insertBefore(newP, p.nextSibling);
+								
+								p.removeChild(br.nextSibling);
+								p.removeChild(br);
+							}
+						}
+						else if (br.previousElementSibling || (br.previousSibling && br.previousSibling.textContent.replace(/\u200B/g, '').trim() !== '')) {
+							// Firefox inserts bogus `<br>` at the end of paragraphs.
+							// See https://bugzilla.mozilla.org/show_bug.cgi?id=656626
 							p.removeChild(br);
 						}
 					}
