@@ -516,7 +516,7 @@
 		<item name="wcf.acp.group.option.category.user"><![CDATA[Allgemeine Rechte]]></item>
 		<item name="wcf.acp.group.option.category.user.message"><![CDATA[Nachrichten]]></item>
 		<item name="wcf.acp.group.option.category.user.message.comment"><![CDATA[Kommentare]]></item>
-		<item name="wcf.acp.group.option.error.cannotDropPrivileges"><![CDATA[Es muss immer mindestens eine Benutzergruppe mit vollen Rechen geben, es ist daher nicht möglich diese Berechtigung einzuschränken.]]></item>
+		<item name="wcf.acp.group.option.error.cannotDropPrivileges"><![CDATA[Es muss immer mindestens eine Benutzergruppe mit vollen Rechten geben, es ist daher nicht möglich diese Berechtigung einzuschränken.]]></item>
 		<item name="wcf.acp.group.option.error.exceedsOwnPermission"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} Benutzergruppen keine Berechtigungen gewähren, die {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} eigenen Berechtigungen übersteigen.]]></item>
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
