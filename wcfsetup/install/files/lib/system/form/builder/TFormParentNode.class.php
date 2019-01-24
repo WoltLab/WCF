@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder;
 use wcf\system\form\builder\field\IFormField;
+use wcf\system\form\builder\field\IImmutableFormField;
 
 /**
  * Provides default implementations of `IFormParentNode` methods.
@@ -271,7 +272,7 @@ trait TFormParentNode {
 				if ($child instanceof IFormParentNode) {
 					$child->readValues();
 				}
-				else if ($child instanceof IFormField && $child->isAvailable() && !$child->isImmutable()) {
+				else if ($child instanceof IFormField && $child->isAvailable() && (!($child instanceof IImmutableFormField) || !$child->isImmutable())) {
 					$child->readValue();
 				}
 			}
