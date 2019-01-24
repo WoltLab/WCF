@@ -1545,7 +1545,7 @@ Please follow the instructions described in <a href="https://www.woltlab.com/art
 		<item name="wcf.acp.option.category.general.payment"><![CDATA[Payments]]></item>
 		<item name="wcf.acp.option.available_payment_methods"><![CDATA[Supported Payment Methods]]></item>
 		<item name="wcf.acp.option.paypal_email_address"><![CDATA[PayPal Email Address]]></item>
-		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[Receiving payments requires a PayPal business account with enabled “Instant Payment Notification” (IPN).<br>
+		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[Receiving payments requires a PayPal account with enabled “Instant Payment Notification” (IPN).<br>
 When prompted for the notification URL for the instant payment notifications, please provide this link: <kbd>{link controller='PaypalCallback' forceFrontend=true}{/link}</kbd>.]]></item>
 		<item name="wcf.acp.option.module_paid_subscription"><![CDATA[Enable paid subscriptions]]></item>
 		<item name="wcf.acp.option.module_paid_subscription.description"><![CDATA[Enables the <a href="{link controller='PaidSubscriptionList'}{/link}">management for paid subscriptions</a>.]]></item>

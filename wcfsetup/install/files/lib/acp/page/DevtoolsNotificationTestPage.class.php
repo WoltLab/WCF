@@ -30,6 +30,11 @@ class DevtoolsNotificationTestPage extends AbstractPage {
 	/**
 	 * @inheritDoc
 	 */
+	public $neededPermissions = ['admin.configuration.package.canInstallPackage'];
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function readData() {
 		parent::readData();
 		

@@ -670,7 +670,7 @@
 		<item name="wcf.acp.group.option.category.user"><![CDATA[Allgemeine Rechte]]></item>
 		<item name="wcf.acp.group.option.category.user.message"><![CDATA[Nachrichten]]></item>
 		<item name="wcf.acp.group.option.category.user.message.comment"><![CDATA[Kommentare]]></item>
-		<item name="wcf.acp.group.option.error.cannotDropPrivileges"><![CDATA[Es muss immer mindestens eine Benutzergruppe mit vollen Rechen geben, es ist daher nicht möglich diese Berechtigung einzuschränken.]]></item>
+		<item name="wcf.acp.group.option.error.cannotDropPrivileges"><![CDATA[Es muss immer mindestens eine Benutzergruppe mit vollen Rechten geben, es ist daher nicht möglich diese Berechtigung einzuschränken.]]></item>
 		<item name="wcf.acp.group.option.error.exceedsOwnPermission"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} Benutzergruppen keine Berechtigungen gewähren, die {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} eigenen Berechtigungen übersteigen.]]></item>
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
@@ -1561,7 +1561,7 @@ Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anlei
 		<item name="wcf.acp.option.category.general.payment"><![CDATA[Zahlungsoptionen]]></item>
 		<item name="wcf.acp.option.available_payment_methods"><![CDATA[Unterstützte Zahlungsanbieter]]></item>
 		<item name="wcf.acp.option.paypal_email_address"><![CDATA[PayPal-E-Mail-Adresse]]></item>
-		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[Für die Abwicklung von PayPal-Zahlungen wird ein PayPal-Business-Konto mit aktivierter sofortiger Zahlungsbestätigung (IPN) benötigt.<br>
+		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[Für die Abwicklung von PayPal-Zahlungen wird ein PayPal-Konto mit aktivierter sofortiger Zahlungsbestätigung (IPN) benötigt.<br>
 Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigungen nutzen Sie dabei bitte folgende Adresse: <kbd>{link controller='PaypalCallback' forceFrontend=true}{/link}</kbd>.]]></item>
 		<item name="wcf.acp.option.module_paid_subscription"><![CDATA[Bezahlte Mitgliedschaften aktivieren]]></item>
 		<item name="wcf.acp.option.module_paid_subscription.description"><![CDATA[Aktiviert die <a href="{link controller='PaidSubscriptionList'}{/link}">Verwaltung der bezahlten Mitgliedschaften</a>.]]></item>
