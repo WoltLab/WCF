@@ -1026,6 +1026,31 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			'commentManager' => $this->commentProcessor
 		]);
 		
+		// load like data
+		if (MODULE_LIKE) {
+			$likeData = [];
+			$commentObjectType = LikeHandler::getInstance()->getObjectType('com.woltlab.wcf.comment');
+			LikeHandler::getInstance()->loadLikeObjects($commentObjectType, [$comment->commentID]);
+			$likeData['comment'] = LikeHandler::getInstance()->getLikeObjects($commentObjectType);
+			
+			$responseIDs = [];
+			foreach ($comment as $visibleResponse) {
+				$responseIDs[] = $visibleResponse->responseID;
+			}
+			
+			if ($response !== null) {
+				$responseIDs[] = $response->responseID;
+			}
+			
+			if (!empty($responseIDs)) {
+				$responseObjectType = LikeHandler::getInstance()->getObjectType('com.woltlab.wcf.comment.response');
+				LikeHandler::getInstance()->loadLikeObjects($responseObjectType, $responseIDs);
+				$likeData['response'] = LikeHandler::getInstance()->getLikeObjects($responseObjectType);
+			}
+			
+			WCF::getTPL()->assign('likeData', $likeData);
+		}
+		
 		$template = WCF::getTPL()->fetch('commentList');
 		if ($response === null) {
 			return $template;
