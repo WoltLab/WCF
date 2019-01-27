@@ -212,6 +212,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	 * Validates the `loadComment` action.
 	 * 
 	 * @throws	PermissionDeniedException
+	 * @since	3.1
 	 */
 	public function validateLoadComment() {
 		$this->readInteger('objectID', false, 'data');
@@ -242,6 +243,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	 * Returns a rendered comment.
 	 * 
 	 * @return	string[]
+	 * @since	3.1
 	 */
 	public function loadComment() {
 		if ($this->comment === null) {
@@ -257,6 +259,8 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	
 	/**
 	 * Validates the `loadResponse` action.
+	 * 
+	 * @since	3.1
 	 */
 	public function validateLoadResponse() {
 		$this->validateLoadComment();
@@ -264,8 +268,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	
 	/**
 	 * Returns a rendered comment.
-	 *
+	 * 
 	 * @return	string[]
+	 * @since	3.1
 	 */
 	public function loadResponse() {
 		if ($this->comment === null || $this->response === null) {
