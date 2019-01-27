@@ -1,9 +1,10 @@
 <?php
 namespace wcf\system\comment;
+use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\CommentEditor;
 use wcf\data\comment\CommentList;
-use wcf\data\comment\response\StructuredCommentResponseList;
+use wcf\data\comment\StructuredComment;
 use wcf\data\comment\StructuredCommentList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
@@ -442,17 +443,22 @@ class CommentHandler extends SingletonFactory {
 	 * given comment list as confirmed for the active user.
 	 * 
 	 * @param	string			$objectType	comment object type name
-	 * @param	StructuredCommentList	$commentList	comments whose notifications will be marked as read
+	 * @param	StructuredComment[]	$comments	comments whose notifications will be marked as read
 	 * @throws	\InvalidArgumentException		if invalid comment object type name is given
 	 * @since	5.2
 	 */
-	public function markNotificationsAsConfirmedForCommentList($objectType, StructuredCommentList $commentList) {
+	public function markNotificationsAsConfirmedForComments($objectType, array $comments) {
 		if ($this->getObjectTypeID($objectType) === null) {
 			throw new \InvalidArgumentException("Unknown comment object type '{$objectType}'.");
 		}
 		
-		if (count($commentList) === 0) {
+		if (count($comments) === 0) {
 			return;
+		}
+		
+		$commentIDs = [];
+		foreach ($comments as $comment) {
+			$commentIDs[] = $comment->commentID;
 		}
 		
 		// 1. comments
@@ -474,7 +480,7 @@ class CommentHandler extends SingletonFactory {
 					$eventData['eventName'],
 					$eventData['objectType'],
 					[WCF::getUser()->userID],
-					$commentList->getObjectIDs()
+					$commentIDs
 				);
 			}
 		}
@@ -496,7 +502,7 @@ class CommentHandler extends SingletonFactory {
 			$notificationList = new UserNotificationList();
 			$notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [array_keys($reactionCommentEvents)]);
 			$notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
-			$notificationList->getConditionBuilder()->add('user_notification.baseObjectID IN (?)', [$commentList->getObjectIDs()]);
+			$notificationList->getConditionBuilder()->add('user_notification.baseObjectID IN (?)', [$commentIDs]);
 			$notificationList->readObjects();
 			
 			$objectIDs = [];
@@ -523,7 +529,7 @@ class CommentHandler extends SingletonFactory {
 		// 2. responses
 		
 		$responseIDs = [];
-		foreach ($commentList as $comment) {
+		foreach ($comments as $comment) {
 			// as we do not know whether `Comment::getUnfilteredResponseIDs()`
 			// or `Comment::getResponseIDs()` has been used, collect response
 			// ids manually
@@ -602,19 +608,24 @@ class CommentHandler extends SingletonFactory {
 	 * Marks all comment response-related notifications for objects of the given object type in
 	 * the given comment response list as confirmed for the active user.
 	 * 
-	 * @param	string			$objectType		comment object type name
-	 * @param	StructuredCommentResponseList $responseList	comment responses whose notifications will be marked as read
+	 * @param	string			$objectType	comment object type name
+	 * @param	CommentResponse[]	$responses	comment responses whose notifications will be marked as read
 	 * 
 	 * @throws	\InvalidArgumentException		if invalid comment object type name is given
 	 * @since	5.2
 	 */
-	public function markNotificationsAsConfirmedForResponseList($objectType, StructuredCommentResponseList $responseList) {
+	public function markNotificationsAsConfirmedForResponses($objectType, array $responses) {
 		if ($this->getObjectTypeID($objectType) === null) {
 			throw new \InvalidArgumentException("Unknown comment object type '{$objectType}'.");
 		}
 		
-		if (count($responseList) === 0) {
+		if (count($responses) === 0) {
 			return;
+		}
+		
+		$responseIDs = [];
+		foreach ($responses as $response) {
+			$responseIDs[] = $response->responseID;
 		}
 		
 		$responseEvents = [];
@@ -633,7 +644,7 @@ class CommentHandler extends SingletonFactory {
 					$eventData['eventName'],
 					$eventData['objectType'],
 					[WCF::getUser()->userID],
-					$responseList->getObjectIDs()
+					$responseIDs
 				);
 			}
 		}
@@ -655,7 +666,7 @@ class CommentHandler extends SingletonFactory {
 			$notificationList = new UserNotificationList();
 			$notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [array_keys($reactionResponseEvents)]);
 			$notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
-			$notificationList->getConditionBuilder()->add('user_notification.baseObjectID IN (?)', [$responseList->getObjectIDs()]);
+			$notificationList->getConditionBuilder()->add('user_notification.baseObjectID IN (?)', [$responseIDs]);
 			$notificationList->readObjects();
 			
 			$objectIDs = [];

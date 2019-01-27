@@ -198,6 +198,12 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		$commentList->getConditionBuilder()->add("comment.time < ?", [$this->parameters['data']['lastCommentTime']]);
 		$commentList->readObjects();
 		
+		// mark notifications for loaded comments as read
+		CommentHandler::getInstance()->markNotificationsAsConfirmedForComments(
+			CommentHandler::getInstance()->getObjectType($this->parameters['data']['objectTypeID'])->objectType,
+			$commentList->getObjects()
+		);
+		
 		WCF::getTPL()->assign([
 			'commentList' => $commentList,
 			'likeData' => MODULE_LIKE ? $commentList->getLikeData() : []
@@ -250,6 +256,21 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		}
 		else if ($this->comment->objectTypeID != $this->parameters['data']['objectTypeID'] || $this->comment->objectID != $this->parameters['data']['objectID']) {
 			return ['template' => ''];
+		}
+		
+		// mark notifications for loaded comment/response as read
+		$objectType = CommentHandler::getInstance()->getObjectType($this->parameters['data']['objectTypeID'])->objectType;
+		if ($this->response === null) {
+			CommentHandler::getInstance()->markNotificationsAsConfirmedForComments(
+				$objectType,
+				[new StructuredComment($this->comment)]
+			);
+		}
+		else {
+			CommentHandler::getInstance()->markNotificationsAsConfirmedForResponses(
+				$objectType,
+				[$this->response]
+			);
 		}
 		
 		$returnValues = $this->renderComment($this->comment, $this->response);
