@@ -376,6 +376,7 @@ class ReactionHandler extends SingletonFactory {
 			return [
 				'cachedReactions' => $likeObjectData['cachedReactions'], 
 				'reactionTypeID' => $reactionTypeID, 
+				'like' => $like,
 				'likeObject' => $likeObjectData['likeObject'],
 				'cumulativeLikes' => $likeObjectData['cumulativeLikes']
 			];

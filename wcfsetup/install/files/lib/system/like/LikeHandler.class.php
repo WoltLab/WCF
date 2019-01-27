@@ -131,7 +131,7 @@ class LikeHandler extends SingletonFactory {
 		
 		return [
 			'data' => $this->loadLikeStatus($reactData['likeObject'], $user),
-			'like' => $reactData['likeObject'],
+			'like' => $reactData['like'],
 			'newValue' => $newValue,
 			'oldValue' => 0, // this value is currently a dummy value, maybe determine a real value
 			'users' => []
