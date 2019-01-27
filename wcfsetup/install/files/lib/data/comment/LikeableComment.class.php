@@ -62,7 +62,8 @@ class LikeableComment extends AbstractLikeObject implements IReactionObject {
 					[
 						'objectID' => $this->getDecoratedObject()->objectID,
 						'objectOwnerID' => $this->userID
-					]
+					],
+					$this->commentID
 				);
 			}
 		}
