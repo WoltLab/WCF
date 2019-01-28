@@ -29,7 +29,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $formAction = 'update';
+	public $formAction = 'edit';
 	
 	/**
 	 * @inheritDoc

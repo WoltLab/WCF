@@ -102,6 +102,13 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	public function saved() {
+		AbstractForm::saved();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function assignVariables() {
 		parent::assignVariables();
 		
