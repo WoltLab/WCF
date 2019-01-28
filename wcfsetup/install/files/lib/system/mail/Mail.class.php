@@ -1,6 +1,11 @@
 <?php
 namespace wcf\system\mail;
 use wcf\data\language\Language;
+use wcf\system\email\mime\AttachmentMimePart;
+use wcf\system\email\mime\MimePartFacade;
+use wcf\system\email\mime\PlainTextMimePart;
+use wcf\system\email\Email;
+use wcf\system\email\Mailbox;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -21,58 +26,10 @@ class Mail {
 	public static $lineEnding = "\n";
 	
 	/**
-	 * mail header
-	 * @var	string
-	 */
-	protected $header = '';
-	
-	/**
-	 * boundary for multipart/mixed mail
-	 * @var	string
-	 */
-	protected $boundary = '';
-	
-	/**
-	 * mail content mime type
-	 * @var	string
-	 */
-	protected $contentType = "text/plain";
-	
-	/**
-	 * mail recipients
-	 * @var	string[]
-	 */
-	protected $to = [];
-	
-	/**
-	 * mail subject
-	 * @var	string
-	 */
-	protected $subject = '';
-	
-	/**
 	 * mail message
 	 * @var	string
 	 */
 	protected $message = '';
-	
-	/**
-	 * mail sender
-	 * @var	string
-	 */
-	protected $from = '';
-	
-	/**
-	 * mail carbon copy
-	 * @var	string[]
-	 */
-	protected $cc = [];
-	
-	/**
-	 * mail blind carbon copy
-	 * @var	string[]
-	 */
-	protected $bcc = [];
 	
 	/**
 	 * mail attachments
@@ -81,22 +38,16 @@ class Mail {
 	protected $attachments = [];
 	
 	/**
-	 * priority of the mail
-	 * @var	integer
-	 */
-	protected $priority = 3;
-	
-	/**
-	 * mail body
-	 * @var	string
-	 */
-	protected $body = '';
-	
-	/**
 	 * mail language
 	 * @var	Language
 	 */
 	protected $language = null;
+	
+	/**
+	 * the underlying email object
+	 * @var	Email
+	 */
+	protected $email = null;
 	
 	/**
 	 * Creates a new Mail object.
@@ -112,7 +63,7 @@ class Mail {
 	 * @param	string		$header
 	 */
 	public function __construct($to = '', $subject = '', $message = '', $from = '', $cc = '', $bcc = '', $attachments = [], $priority = '', $header = '') {
-		$this->setBoundary();
+		$this->email = new Email();
 		
 		if (empty($from)) $from = [MAIL_FROM_NAME => MAIL_FROM_ADDRESS];
 		if (empty($priority)) $priority = 3;
@@ -121,7 +72,7 @@ class Mail {
 		$this->setSubject($subject);
 		$this->setMessage($message);
 		$this->setPriority($priority);
-		$this->setHeader($header);
+		if ($header != '') $this->setHeader($header);
 		
 		if (!empty($to)) $this->addTo($to);
 		if (!empty($cc)) $this->addCC($cc);
@@ -131,122 +82,65 @@ class Mail {
 	}
 	
 	/**
-	 * Creates and returns a basic header for the email.
+	 * Returns the underlying email object
 	 * 
-	 * @return	string		mail header
+	 * @return	Email
+	 */
+	public function getEmail() {
+		$attachments = array_map(function ($attachment) {
+			return new AttachmentMimePart($attachment['path'], $attachment['name']);
+		}, $this->attachments);
+		
+		$text = new PlainTextMimePart($this->message);
+		
+		$this->email->setBody(new MimePartFacade([$text], $attachments));
+		
+		return $this->email;
+	}
+	
+	/**
+	 * @throws \BadMethodCallException always
 	 */
 	public function getHeader() {
-		if (!empty($this->header)) {
-			$this->header = preg_replace('%(\r\n|\r|\n)%', self::$lineEnding, $this->header);
-		}
-		
-		$this->header .=
-			'X-Priority: 3'.self::$lineEnding
-			.'X-Mailer: WoltLab Suite Mail Package'.self::$lineEnding
-			.'From: '.$this->getFrom().self::$lineEnding
-			.($this->getCCString() != '' ? 'CC:'.$this->getCCString().self::$lineEnding : '')
-			.($this->getBCCString() != '' ? 'BCC:'.$this->getBCCString().self::$lineEnding : '');
-			
-		if (count($this->getAttachments())) {
-			$this->header .= 'Content-Transfer-Encoding: 8bit'.self::$lineEnding;
-			$this->header .= 'Content-Type: multipart/mixed;'.self::$lineEnding;
-			$this->header .= "\tboundary=".'"'.$this->getBoundary().'";'.self::$lineEnding;
-		}
-		else {
-			$this->header .= 'Content-Transfer-Encoding: 8bit'.self::$lineEnding;
-			$this->header .= 'Content-Type: '.$this->getContentType().'; charset=UTF-8'.self::$lineEnding;
-		}
-		
-		$this->header .= 'MIME-Version: 1.0'.self::$lineEnding;
-		
-		return $this->header;
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
-	 * Creates and returns the recipients list (TO, CC, BCC).
-	 * 
-	 * @param	boolean		$withTo
-	 * @return	string
+	 * @throws \BadMethodCallException always
 	 */
 	public function getRecipients($withTo = false) {
-		$recipients = '';
-		if ($withTo && $this->getToString() != '') $recipients .= 'TO:'.$this->getToString().self::$lineEnding;
-		if ($this->getCCString() != '') $recipients .= 'CC:'.$this->getCCString().self::$lineEnding;
-		if ($this->getBCCString() != '') $recipients .= 'BCC:'.$this->getBCCString().self::$lineEnding;
-		return $recipients;
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
-	 * Creates and returned the body (Message, Attachments) for the email.
-	 * 
-	 * @return	string		mail body
+	 * @throws \BadMethodCallException always
 	 */
 	public function getBody() {
-		$counter = 1;
-		$this->body = '';
-		
-		if (count($this->getAttachments())) {
-			// add message
-			$this->body .= '--'.$this->getBoundary().self::$lineEnding;
-			$this->body .= 'Content-Type: '.$this->getContentType().'; charset="UTF-8"'.self::$lineEnding;
-			$this->body .= 'Content-Transfer-Encoding: 8bit'.self::$lineEnding;
-			$this->body .= self::$lineEnding;
-			
-			// wrap lines after 70 characters
-			$this->body .= wordwrap($this->getMessage(), 70);
-			$this->body .= self::$lineEnding.self::$lineEnding;
-			$this->body .= '--'.$this->getBoundary().self::$lineEnding;
-			
-			// add attachments
-			foreach ($this->getAttachments() as $attachment) {
-				$fileName = $attachment['name'];
-				$path = $attachment['path'];
-				
-				// download file
-				if (FileUtil::isURL($path)) {
-					$tmpPath = FileUtil::getTemporaryFilename('mailAttachment_');
-					if (!@copy($path, $tmpPath)) continue;
-					$path = $tmpPath;
-				}
-				
-				// get file contents
-				$data = @file_get_contents($path);
-				$data = chunk_split(base64_encode($data), 70, self::$lineEnding);
-				
-				$this->body .= 'Content-Type: application/octetstream; name="'.$fileName.'"'.self::$lineEnding;
-				$this->body .= 'Content-Transfer-Encoding: base64'.self::$lineEnding;
-				$this->body .= 'Content-Disposition: attachment; filename="'.$fileName.'"'.self::$lineEnding.self::$lineEnding;
-				$this->body .= $data.self::$lineEnding.self::$lineEnding;
-				
-				if ($counter < count($this->getAttachments())) $this->body .= '--'.$this->getBoundary().self::$lineEnding;
-				$counter++;
-			}
-			
-			$this->body .= self::$lineEnding.'--'.$this->getBoundary().'--';
-		}
-		else {
-			$this->body .= $this->getMessage();
-		}
-		return $this->body;
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
-	 * Builds a formatted address: "$name" <$email>.
-	 * 
-	 * @param	string		$name
-	 * @param	string		$email
-	 * @param	boolean		$encodeName
-	 * @return	string
+	 * @throws \BadMethodCallException always
 	 */
 	public static function buildAddress($name, $email, $encodeName = true) {
-		return $email;
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
-	 * Sends this mail.
+	 * @see Email::send()
 	 */
 	public function send() {
-		MailSender::getInstance()->sendMail($this);
+		$this->getEmail()->send();
+	}
+	
+	protected function makeMailbox($email, $name = null) {
+		if ($name) {
+			return new Mailbox($email, $name, $this->getLanguage());
+		}
+		if (preg_match('~^(.+) <([^>]+)>$~', $email, $matches)) {
+			return new Mailbox($matches[2], $matches[1], $this->getLanguage());
+		}
+		return new Mailbox($email, null, $this->getLanguage());
 	}
 	
 	/**
@@ -257,48 +151,40 @@ class Mail {
 	public function addTo($to) {
 		if (is_array($to)) {
 			foreach ($to as $name => $recipient) {
-				$this->to[] = self::buildAddress($name, $recipient);
+				$this->email->addRecipient($this->makeMailbox($recipient, $name));
 			}
 		}
 		else {
-			$this->to[] = $to;
+			$this->email->addRecipient($this->makeMailbox($to));
 		}
 	}
 	
 	/**
-	 * Returns the recipients of this mail.
-	 * 
-	 * @return	mixed
+	 * @throws \BadMethodCallException always
 	 */
 	public function getTo() {
-		return $this->to;
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
-	 * Returns the list of recipients.
-	 * 
-	 * @return	string
+	 * @throws \BadMethodCallException always
 	 */
 	public function getToString() {
-		return implode(', ', $this->to);
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
-	 * Sets the subject of this mail.
-	 * 
-	 * @param	string		$subject
+	 * @see Email::setSubject()
 	 */
 	public function setSubject($subject) {
-		$this->subject = $subject;
+		$this->email->setSubject($subject);
 	}
 	
 	/**
-	 * Returns the subject of this mail.
-	 * 
-	 * @return	string
+	 * @see Email::getSubject()
 	 */
 	public function getSubject() {
-		return $this->subject;
+		return $this->email->getSubject();
 	}
 	
 	/**
@@ -311,35 +197,29 @@ class Mail {
 	}
 	
 	/**
-	 * Returns the message of this mail.
-	 * 
-	 * @return	string
+	 * @throws \BadMethodCallException always
 	 */
 	public function getMessage() {
-		return preg_replace('%(\r\n|\r|\n)%', self::$lineEnding, $this->message . (MAIL_SIGNATURE ? self::$lineEnding . self::$lineEnding . '-- ' . self::$lineEnding . $this->getLanguage()->get(MAIL_SIGNATURE) : ''));
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
-	 * Sets the sender of this mail.
-	 * 
-	 * @param	mixed		$from
+	 * @see Email::setSender()
 	 */
 	public function setFrom($from) {
 		if (is_array($from)) {
-			$this->from = self::buildAddress(key($from), current($from));
+			$this->email->setSender($this->makeMailbox(current($from), key($from)));
 		}
 		else {
-			$this->from = $from;
+			$this->email->setSender($this->makeMailbox($from));
 		}
 	}
 	
 	/**
-	 * Returns the sender of this mail.
-	 * 
-	 * @return	string
+	 * @throws \BadMethodCallException always
 	 */
 	public function getFrom() {
-		return $this->from;
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
@@ -350,30 +230,26 @@ class Mail {
 	public function addCC($cc) {
 		if (is_array($cc)) {
 			foreach ($cc as $name => $recipient) {
-				$this->cc[] = self::buildAddress($name, $recipient);
+				$this->email->addRecipient($this->makeMailbox($recipient, $name), 'cc');
 			}
 		}
 		else {
-			$this->cc[] = $cc;
+			$this->email->addRecipient($this->makeMailbox($cc), 'cc');
 		}
 	}
 	
 	/**
-	 * Returns the carbon copy recipients of this mail.
-	 * 
-	 * @return	mixed
+	 * @throws \BadMethodCallException always
 	 */
 	public function getCC() {
-		return $this->cc;
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
-	 * Returns the carbon copy recipients of this mail as string.
-	 * 
-	 * @return	string
+	 * @throws \BadMethodCallException always
 	 */
 	public function getCCString() {
-		return implode(', ', $this->cc);
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
@@ -384,30 +260,26 @@ class Mail {
 	public function addBCC($bcc) {
 		if (is_array($bcc)) {
 			foreach ($bcc as $name => $recipient) {
-				$this->bcc[] = self::buildAddress($name, $recipient);
+				$this->email->addRecipient($this->makeMailbox($recipient, $name), 'bcc');
 			}
 		}
 		else {
-			$this->bcc[] = $bcc;
+			$this->email->addRecipient($this->makeMailbox($bcc), 'bcc');
 		}
 	}
 	
 	/**
-	 * Returns the blind carbon copy recipients of this mail.
-	 * 
-	 * @return	mixed
+	 * @throws \BadMethodCallException always
 	 */
 	public function getBCC() {
-		return $this->bcc;
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
-	 * Returns the blind carbon copy recipients of this mail as string.
-	 * 
-	 * @return	string
+	 * @throws \BadMethodCallException always
 	 */
 	public function getBCCString() {
-		return implode(', ', $this->bcc);
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
@@ -444,61 +316,35 @@ class Mail {
 	 * @param	integer		$priority
 	 */
 	public function setPriority($priority) {
-		$this->priority = $priority;
+		$this->email->addHeader('x-priority', $priority);
 	}
 	
 	/**
-	 * Returns the priority of the mail
-	 * 
-	 * @return	integer
+	 * @throws \BadMethodCallException always
 	 */
 	public function getPriority() {
-		return $this->priority;
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
-	 * Creates a boundary for multipart/mixed mail.
-	 */
-	protected function setBoundary() {
-		$this->boundary = "==Multipart_Boundary_x".bin2hex(\random_bytes(20))."x";
-	}
-	
-	/**
-	 * Returns the created boundary.
-	 * 
-	 * @return	string
-	 */
-	protected function getBoundary() {
-		return $this->boundary;
-	}
-	
-	/**
-	 * Returns the content type.
-	 * 
-	 * @return	string
+	 * @throws \BadMethodCallException always
 	 */
 	public function getContentType() {
-		return $this->contentType;
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
-	 * Sets the content type.
-	 * 
-	 * @param	string		$contentType
+	 * @throws \BadMethodCallException always
 	 */
 	public function setContentType($contentType) {
-		$this->contentType = $contentType;
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**
-	 * Sets an additional header.
-	 * 
-	 * @param	string		$header
+	 * @throws \BadMethodCallException always
 	 */
 	public function setHeader($header) {
-		if (!empty($header)) {
-			$this->header .= $header.self::$lineEnding;
-		}
+		throw new \BadMethodCallException('This method is unavailable.');
 	}
 	
 	/**

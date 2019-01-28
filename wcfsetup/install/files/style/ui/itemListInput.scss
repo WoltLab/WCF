@@ -28,12 +28,17 @@
 			color: inherit;
 		}
 		
-		&.active,
-		&:hover {
+		&.active {
 			background-color: $wcfButtonBackgroundActive;
 			color: $wcfButtonTextActive;
 		}
-		
+	}
+	
+	&:not(.disabled) {
+		> item:hover {
+			background-color: $wcfButtonBackgroundActive;
+			color: $wcfButtonTextActive;
+		}
 	}
 	
 	> .input > input {

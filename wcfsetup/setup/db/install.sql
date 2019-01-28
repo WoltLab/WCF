@@ -350,6 +350,7 @@ CREATE TABLE wcf1_category (
 	parentCategoryID INT(10) NOT NULL DEFAULT 0,
 	title VARCHAR(255) NOT NULL,
 	description TEXT,
+	descriptionUseHtml TINYINT(1) NOT NULL DEFAULT 0,
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	time INT(10) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
@@ -1558,7 +1559,8 @@ CREATE TABLE wcf1_user_group (
 	groupType TINYINT(1) NOT NULL DEFAULT 4,
 	priority MEDIUMINT(8) NOT NULL DEFAULT 0,
 	userOnlineMarking VARCHAR(255) NOT NULL DEFAULT '%s',
-	showOnTeamPage TINYINT(1) NOT NULL DEFAULT 0
+	showOnTeamPage TINYINT(1) NOT NULL DEFAULT 0,
+	allowMention TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_user_group_assignment;

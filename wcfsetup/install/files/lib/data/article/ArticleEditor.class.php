@@ -26,7 +26,7 @@ class ArticleEditor extends DatabaseObjectEditor {
 	 * Updates the article counter of the given user ids.
 	 * 
 	 * @param       int[]   $users  user id => article counter increase/decrease
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public static function updateArticleCounter(array $users) {
 		$sql = "UPDATE	wcf".WCF_N."_user

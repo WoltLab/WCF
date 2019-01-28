@@ -119,7 +119,7 @@ class InstallPackageAction extends AbstractDialogAction {
 	 * the installation finished.
 	 * 
 	 * @return	string
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function getRedirectLink() {
 		// get domain path
@@ -132,8 +132,15 @@ class InstallPackageAction extends AbstractDialogAction {
 		/** @var Application $application */
 		$application = $statement->fetchObject(Application::class);
 		
-		// do not use the LinkHandler here as it is sort of unreliable during WCFSetup
-		return $application->getPageURL() . 'acp/index.php?package-list/';
+		$controller = 'package-list';
+		if (WCF::getSession()->getVar('__wcfSetup_completed')) {
+			$controller = 'first-time-setup';
+			
+			WCF::getSession()->unregister('__wcfSetup_completed');
+		}
+		
+		// Do not use the LinkHandler here as it is sort of unreliable during WCFSetup.
+		return $application->getPageURL() . "acp/index.php?{$controller}/";
 	}
 	
 	/**

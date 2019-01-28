@@ -2,8 +2,10 @@
 namespace wcf\system\form\builder\field\user;
 use wcf\data\user\UserProfile;
 use wcf\system\form\builder\field\AbstractFormField;
+use wcf\system\form\builder\field\IImmutableFormField;
 use wcf\system\form\builder\field\IMultipleFormField;
 use wcf\system\form\builder\field\INullableFormField;
+use wcf\system\form\builder\field\TImmutableFormField;
 use wcf\system\form\builder\field\TMultipleFormField;
 use wcf\system\form\builder\field\TNullableFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
@@ -17,9 +19,10 @@ use wcf\util\StringUtil;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\User
- * @since	3.2
+ * @since	5.2
  */
-class UserFormField extends AbstractFormField implements IMultipleFormField, INullableFormField {
+class UserFormField extends AbstractFormField implements IImmutableFormField, IMultipleFormField, INullableFormField {
+	use TImmutableFormField;
 	use TMultipleFormField;
 	use TNullableFormField;
 	

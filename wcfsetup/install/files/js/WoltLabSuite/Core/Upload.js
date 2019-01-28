@@ -404,7 +404,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		 * upload manager.
 		 * 
 		 * @return	{boolean}
-		 * @since	3.2
+		 * @since	5.2
 		 */
 		hasPendingUploads: function() {
 			for (var uploadId in this._fileElements) {

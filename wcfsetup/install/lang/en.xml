@@ -680,6 +680,7 @@
 		<item name="wcf.acp.group.option.user.comment.disallowedBBCodes.description"><![CDATA[Selected BBCodes <em>cannot</em> be used by the users of this user group.]]></item>
 		<item name="wcf.acp.group.option.user.message.disallowedBBCodes"><![CDATA[Disallowed BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.message.disallowedBBCodes.description"><![CDATA[Selected BBCodes <em>cannot</em> be used by the users of this user group.]]></item>
+		<item name="wcf.acp.group.option.user.message.canMentionGroups"><![CDATA[Can mention user groups]]></item>
 		<item name="wcf.acp.group.option.admin.user.rank.canManageRank"><![CDATA[Can manage user ranks]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditActivityPoints"><![CDATA[Can manage activity points]]></item>
 		<item name="wcf.acp.group.option.admin.user.canViewInvisible"><![CDATA[Can view invisible users]]></item>
@@ -820,6 +821,8 @@
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions"><![CDATA[Allowed Attachment File Extensions]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions.description"><![CDATA[Enter one extension per line.]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxCount"><![CDATA[Maximum Attachments per Message]]></item>
+		<item name="wcf.acp.group.option.user.profile.canEditUserProfile"><![CDATA[Can edit their profile]]></item>
+		<item name="wcf.acp.group.allowMention"><![CDATA[User group can be mentioned]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab Suite&trade;]]></item>
@@ -839,8 +842,8 @@
 		<item name="wcf.acp.index.system"><![CDATA[System]]></item>
 		<item name="wcf.acp.index.system.software"><![CDATA[Software]]></item>
 		<item name="wcf.acp.index.system.software.version"><![CDATA[WoltLab Suite&trade; Version]]></item>
-		<item name="wcf.acp.index.system.software.apiVersion"><![CDATA[WoltLab Suite&trade; API-version]]></item>
-		<item name="wcf.acp.index.system.software.legacyApiVersions"><![CDATA[Older, still supported, API-versions]]></item>
+		<item name="wcf.acp.index.system.software.apiVersion"><![CDATA[WoltLab Suite&trade; API Version]]></item>
+		<item name="wcf.acp.index.system.software.legacyApiVersions"><![CDATA[Older, still supported, API Versions]]></item>
 		<item name="wcf.acp.index.system.software.databaseNumber"><![CDATA[Database Installation Number]]></item>
 		<item name="wcf.acp.index.system.server"><![CDATA[Server]]></item>
 		<item name="wcf.acp.index.system.os"><![CDATA[Operating System]]></item>
@@ -1542,7 +1545,7 @@ Please follow the instructions described in <a href="https://www.woltlab.com/art
 		<item name="wcf.acp.option.category.general.payment"><![CDATA[Payments]]></item>
 		<item name="wcf.acp.option.available_payment_methods"><![CDATA[Supported Payment Methods]]></item>
 		<item name="wcf.acp.option.paypal_email_address"><![CDATA[PayPal Email Address]]></item>
-		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[Receiving payments requires a PayPal business account with enabled “Instant Payment Notification” (IPN).<br>
+		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[Receiving payments requires a PayPal account with enabled “Instant Payment Notification” (IPN).<br>
 When prompted for the notification URL for the instant payment notifications, please provide this link: <kbd>{link controller='PaypalCallback' forceFrontend=true}{/link}</kbd>.]]></item>
 		<item name="wcf.acp.option.module_paid_subscription"><![CDATA[Enable paid subscriptions]]></item>
 		<item name="wcf.acp.option.module_paid_subscription.description"><![CDATA[Enables the <a href="{link controller='PaidSubscriptionList'}{/link}">management for paid subscriptions</a>.]]></item>
@@ -1649,6 +1652,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.contact_form_enable_attachments"><![CDATA[Enable attachments for contact messages]]></item>
 		<item name="wcf.acp.option.contact_form_prune_attachments"><![CDATA[Prune old attachments]]></item>
 		<item name="wcf.acp.option.contact_form_prune_attachments.description"><![CDATA[Older attachments are automatically removed to recover disk space. Use 0 to disable.]]></item>
+		<item name="wcf.acp.option.firstTimeSetup"><![CDATA[First Time Setup]]></item>
+		<item name="wcf.acp.option.firstTimeSetup.description"><![CDATA[Configure the most important settings now, you can change them later at any time.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>
@@ -1683,7 +1688,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.customOption.isDisabled"><![CDATA[Disable option]]></item>
 	</category>
 	<category name="wcf.acp.package">
-		<item name="wcf.acp.package.apiVersions"><![CDATA[Supported WoltLab Suite&trade; API-versions]]></item>
+		<item name="wcf.acp.package.apiVersions"><![CDATA[Supported WoltLab Suite&trade; API Versions]]></item>
 		<item name="wcf.acp.package.apiVersions.missing"><![CDATA[This package does not provide any compatibility data.]]></item>
 		<item name="wcf.acp.package.application.installed"><![CDATA[Installed Apps]]></item>
 		<item name="wcf.acp.package.application.title"><![CDATA[Apps]]></item>
@@ -2179,8 +2184,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.page.name.description"><![CDATA[The page name is displayed in the ACP on the page list.]]></item>
 		<item name="wcf.acp.pip.page.controller"><![CDATA[Page Controller]]></item>
 		<item name="wcf.acp.pip.page.handler"><![CDATA[Page Handler]]></item>
-		<item name="wcf.acp.pip.page.controllerCustomURL"><![CDATA[Custom Page URL]]></item>
-		<item name="wcf.acp.pip.page.controllerCustomURL.description"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.pip.page.requireObjectID"><![CDATA[Requires Object ID]]></item>
 		<item name="wcf.acp.pip.page.requireObjectID.description"><![CDATA[The page requires an object id to be displayed.]]></item>
 		<item name="wcf.acp.pip.page.hasFixedParent"><![CDATA[Has Fixed Parent]]></item>
@@ -2356,9 +2359,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.userOption.options.contentPattern.description"><![CDATA[The entered content pattern is used to extract specific parts of the user-entered value to be stored as the option value.]]></item>
 		<item name="wcf.acp.pip.userOption.options.contentPattern.error.invalid"><![CDATA[The entered regular expression is invalid.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions"><![CDATA[Supports Reactions]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions.description"><![CDATA[Specifies whether the notification has support for the reaction system. WoltLab Suite Core 3.2 (or higher) will only send notifications about reactions if selected.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions.description"><![CDATA[Specifies whether the notification has support for the reaction system. WoltLab Suite Core 5.2 (or higher) will only send notifications about reactions if selected.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions"><![CDATA[Supports Reactions]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description"><![CDATA[Specifies whether the recent activity event supports the reaction system. WoltLab Suite Core 3.2 (or higher) will only create recent activity events about reactions if selected.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description"><![CDATA[Specifies whether the recent activity event supports the reaction system. WoltLab Suite Core 5.2 (or higher) will only create recent activity events about reactions if selected.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.data.title"><![CDATA[Recent Activity Event Data]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.text.disableAutocomplete"><![CDATA[Disable Autocomplete]]></item>
 		<item name="wcf.acp.pip.abstractOption.options.optionType.text.disableAutocomplete.description"><![CDATA[Disables the browser’s autocomplete support for the input field.]]></item>
@@ -2485,6 +2488,13 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Disable Sitemap]]></item>
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Edit Sitemap]]></item>
 		<item name="wcf.acp.sitemap.cliInfo"><![CDATA[You can rebuild the sitemap using CLI. For that, execute <kbd>worker wcf\system\worker\SitemapRebuildWorker</kbd> in a CLI session.]]></item>
+		<item name="wcf.acp.sitemap.submitToSearchEngines"><![CDATA[<p>The generated sitemap needs to be submitted once to the search engines, please provide this link: <kbd>{$__wcf->getPath()}sitemaps/sitemaps.xml</kbd>.</p>
+<p><br></p>
+<p>Instructions for submitting the sitemap:</p>
+<ul class="nativeList">
+	<li><a href="https://support.google.com/webmasters/answer/7451001" class="externalURL">Google</a></li>
+	<li><a href="https://www.bing.com/webmaster/help/how-to-submit-sitemaps-82a15bd4" class="externalURL">Bing</a></li>
+</ul>]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.articleCategory"><![CDATA[Article categories]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.article"><![CDATA[Articles]]></item>
@@ -3089,6 +3099,7 @@ Allowed extensions: {', '|implode:$attachmentHandler->getFormattedAllowedExtensi
 		<item name="wcf.category.description"><![CDATA[Description]]></item>
 		<item name="wcf.category.title"><![CDATA[Title]]></item>
 		<item name="wcf.category.button.choose"><![CDATA[Choose Category]]></item>
+		<item name="wcf.category.descriptionUseHtml"><![CDATA[Enable HTML code in the description]]></item>
 	</category>
 	<category name="wcf.cli">
 		<item name="wcf.cli.help.noLongHelp"><![CDATA[There is no long help for the parameter "{$topic}".]]></item>
@@ -4858,6 +4869,8 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.com.woltlab.wcf.userTrophy.notification.received"><![CDATA[Notify me when I receive a trophy]]></item>
 		<item name="wcf.user.notification.trophy.received.title"><![CDATA[Trophy received]]></item>
 		<item name="wcf.user.notification.trophy.received.message"><![CDATA[You received the trophy <a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a>.]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.administration"><![CDATA[Administration]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.registration"><![CDATA[Notify me of new user registrations]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Notify me when new comments are written in moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.response.notification.commentResponse"><![CDATA[Notify me when new replies to comments are written in moderation]]></item>
@@ -4913,6 +4926,12 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.notification.commentResponse"><![CDATA[Notify me of new replies to my comments]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.notification.comment"><![CDATA[Notify me of new comments on my articles]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.title"><![CDATA[New reply (Page)]]></item>
+		<item name="wcf.user.notification.userRegistration.title"><![CDATA[New user registration]]></item>
+		<item name="wcf.user.notification.userRegistration.title.stacked"><![CDATA[{#$count} new user registrations]]></item>
+		<item name="wcf.user.notification.userRegistration.message"><![CDATA[{@$author->getAnchorTag()} has registered.]]></item>
+		<item name="wcf.user.notification.userRegistration.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} have registered.]]></item>
+		<item name="wcf.user.notification.userRegistration.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1}has{else}have{/if} registered.]]></item>
+		<item name="wcf.user.notification.userRegistration.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1}has{else}have{/if} registered:</p>]]></item>
 	</category>
 	<category name="wcf.user.profile">
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You have not provided any details yet.{else}There are not any details visible to you.{/if}]]></item>

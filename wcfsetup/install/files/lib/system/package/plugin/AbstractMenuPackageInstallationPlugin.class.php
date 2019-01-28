@@ -121,7 +121,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		/** @var IFormContainer $dataContainer */
@@ -315,7 +315,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -381,7 +381,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
@@ -442,7 +442,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -453,7 +453,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData()['data'];

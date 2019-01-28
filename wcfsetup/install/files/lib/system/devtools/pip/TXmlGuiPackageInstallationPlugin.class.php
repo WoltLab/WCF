@@ -22,7 +22,7 @@ use wcf\util\XML;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Devtools\Pip
- * @since	3.2
+ * @since	5.2
  * 
  * @property	PackageInstallationDispatcher|DevtoolsPackageInstallationDispatcher	$installation
  * @mixin	AbstractXMLPackageInstallationPlugin

@@ -23,6 +23,8 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
+use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
+use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -487,6 +489,8 @@ class RegisterForm extends UserAddForm {
 			$email->send();
 		}
 		
+		$this->fireNotificationEvent($user);
+		
 		if ($this->captchaObjectType) {
 			$this->captchaObjectType->getProcessor()->reset();
 		}
@@ -504,5 +508,47 @@ class RegisterForm extends UserAddForm {
 		// forward to index page
 		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->getDynamicVariable($this->message, ['user' => $user]), 15);
 		exit;
+	}
+	
+	/**
+	 * @param       User $user
+	 * @throws      SystemException
+	 * @since       5.2
+	 */
+	protected function fireNotificationEvent(User $user) {
+		$recipientIDs = $this->getRecipientsForNotificationEvent();
+		if (!empty($recipientIDs)) {
+			UserNotificationHandler::getInstance()->fireEvent(
+				'registration',
+				'com.woltlab.wcf.user.registration.notification',
+				new UserRegistrationUserNotificationObject($user),
+				$recipientIDs
+			);
+		}
+	}
+	
+	/**
+	 * @return      integer[]
+	 * @since       5.2
+	 */
+	protected function getRecipientsForNotificationEvent() {
+		$sql = "SELECT  userID
+			FROM    wcf".WCF_N."_user_to_group
+			WHERE   groupID IN (
+					SELECT  groupID
+					FROM    wcf".WCF_N."_user_group_option_value
+					WHERE   optionID IN (
+							SELECT  optionID
+							FROM    wcf".WCF_N."_user_group_option
+							WHERE   optionName = ?
+						)
+						AND optionValue = ?
+				)";
+		$statement = WCF::getDB()->prepareStatement($sql, 100);
+		$statement->execute([
+			'admin.user.canSearchUser',
+			1
+		]);
+		return $statement->fetchAll(\PDO::FETCH_COLUMN);
 	}
 }

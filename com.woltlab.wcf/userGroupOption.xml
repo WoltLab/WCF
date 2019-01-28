@@ -588,6 +588,11 @@ pdf</defaultvalue>
 				<categoryname>user.message</categoryname>
 				<optiontype>BBCodeSelect</optiontype>
 			</option>
+			<option name="user.message.canMentionGroups">
+				<categoryname>user.message</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<!-- /user.message -->
 			<!-- user.message.comment -->
 			<option name="user.comment.floodControlTime">
@@ -738,6 +743,12 @@ pdf</defaultvalue>
 				<maxvalue>65535</maxvalue>
 				<suffix>chars</suffix>
 				<admindefaultvalue>10000</admindefaultvalue>
+			</option>
+			<option name="user.profile.canEditUserProfile">
+				<categoryname>user.profile</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<usersonly>1</usersonly>
 			</option>
 			<option name="user.profile.avatar.canSeeAvatars">
 				<categoryname>user.profile.avatar</categoryname>

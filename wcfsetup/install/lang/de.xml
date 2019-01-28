@@ -670,7 +670,7 @@
 		<item name="wcf.acp.group.option.category.user"><![CDATA[Allgemeine Rechte]]></item>
 		<item name="wcf.acp.group.option.category.user.message"><![CDATA[Nachrichten]]></item>
 		<item name="wcf.acp.group.option.category.user.message.comment"><![CDATA[Kommentare]]></item>
-		<item name="wcf.acp.group.option.error.cannotDropPrivileges"><![CDATA[Es muss immer mindestens eine Benutzergruppe mit vollen Rechen geben, es ist daher nicht möglich diese Berechtigung einzuschränken.]]></item>
+		<item name="wcf.acp.group.option.error.cannotDropPrivileges"><![CDATA[Es muss immer mindestens eine Benutzergruppe mit vollen Rechten geben, es ist daher nicht möglich diese Berechtigung einzuschränken.]]></item>
 		<item name="wcf.acp.group.option.error.exceedsOwnPermission"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} Benutzergruppen keine Berechtigungen gewähren, die {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} eigenen Berechtigungen übersteigen.]]></item>
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[Der angegebene Wert ist zu hoch.{if $option->maxvalue !== null} Der maximale Wert ist {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[Der angegebene Wert ist zu gering.{if $option->minvalue !== null} Der minimale Wert ist {#$option->minvalue}.{/if}]]></item>
@@ -704,6 +704,7 @@
 		<item name="wcf.acp.group.option.user.comment.disallowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe <em>nicht</em> verwendet werden.]]></item>
 		<item name="wcf.acp.group.option.user.message.disallowedBBCodes"><![CDATA[Nicht erlaubte BBCodes]]></item>
 		<item name="wcf.acp.group.option.user.message.disallowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe <em>nicht</em> verwendet werden.]]></item>
+		<item name="wcf.acp.group.option.user.message.canMentionGroups"><![CDATA[Kann Benutzergruppen erwähnen]]></item>
 		<item name="wcf.acp.group.option.admin.user.rank.canManageRank"><![CDATA[Kann Benutzerränge verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEditActivityPoints"><![CDATA[Kann Aktivitätspunkte bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.user.canViewInvisible"><![CDATA[Kann unsichtbare Benutzer sehen]]></item>
@@ -843,6 +844,8 @@
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions"><![CDATA[Erlaubte Dateiendungen]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions.description"><![CDATA[Eine Dateiendung pro Zeile]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
+		<item name="wcf.acp.group.option.user.profile.canEditUserProfile"><![CDATA[Kann eigenes Profil bearbeiten]]></item>
+		<item name="wcf.acp.group.allowMention"><![CDATA[Benutzergruppe kann erwähnt werden]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[Über WoltLab Suite&trade;]]></item>
@@ -1558,7 +1561,7 @@ Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}befolge{else}befolgen Sie{/if} die Anlei
 		<item name="wcf.acp.option.category.general.payment"><![CDATA[Zahlungsoptionen]]></item>
 		<item name="wcf.acp.option.available_payment_methods"><![CDATA[Unterstützte Zahlungsanbieter]]></item>
 		<item name="wcf.acp.option.paypal_email_address"><![CDATA[PayPal-E-Mail-Adresse]]></item>
-		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[Für die Abwicklung von PayPal-Zahlungen wird ein PayPal-Business-Konto mit aktivierter sofortiger Zahlungsbestätigung (IPN) benötigt.<br>
+		<item name="wcf.acp.option.paypal_email_address.description"><![CDATA[Für die Abwicklung von PayPal-Zahlungen wird ein PayPal-Konto mit aktivierter sofortiger Zahlungsbestätigung (IPN) benötigt.<br>
 Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigungen nutzen Sie dabei bitte folgende Adresse: <kbd>{link controller='PaypalCallback' forceFrontend=true}{/link}</kbd>.]]></item>
 		<item name="wcf.acp.option.module_paid_subscription"><![CDATA[Bezahlte Mitgliedschaften aktivieren]]></item>
 		<item name="wcf.acp.option.module_paid_subscription.description"><![CDATA[Aktiviert die <a href="{link controller='PaidSubscriptionList'}{/link}">Verwaltung der bezahlten Mitgliedschaften</a>.]]></item>
@@ -1664,6 +1667,8 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.contact_form_enable_attachments"><![CDATA[Dateianhänge im Kontakt-Formular aktivieren]]></item>
 		<item name="wcf.acp.option.contact_form_prune_attachments"><![CDATA[Dateianhänge automatisch entfernen]]></item>
 		<item name="wcf.acp.option.contact_form_prune_attachments.description"><![CDATA[Alte Dateianhänge werden nach Ablauf der Frist automatisch gelöscht. [0, um die Löschung zu deaktivieren]]]></item>
+		<item name="wcf.acp.option.firstTimeSetup"><![CDATA[Erstmalige Einrichtung]]></item>
+		<item name="wcf.acp.option.firstTimeSetup.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Konfiguriere{else}Konfigurieren Sie{/if} die wichtigsten Einstellungen, diese können auch später über die Optionen verändert werden.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Eingabefelder]]></item>
@@ -2309,7 +2314,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.error.tooFewSegments"><![CDATA[Die angegebene Kategorie enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.data.title"><![CDATA[Daten des Benachrichtigungsobjekttypen]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions"><![CDATA[Unterstützt Reaktionen]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions.description"><![CDATA[Gibt an, ob die Benachrichtigung das Reaktionssystem unterstützt. WoltLab Suite Core 3.2 (oder neuer) wird nur Benachrichtigungen zu Reaktionen verschicken, falls ausgewählt.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.supportsReactions.description"><![CDATA[Gibt an, ob die Benachrichtigung das Reaktionssystem unterstützt. WoltLab Suite Core 5.2 (oder neuer) wird nur Benachrichtigungen zu Reaktionen verschicken, falls ausgewählt.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.data.title"><![CDATA[Daten zum „Anzeigen aktualisieren“-Worker]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.niceValue"><![CDATA[Nice-Wert]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.rebuildData.niceValue.description"><![CDATA[Der Nice-Wert wird verwendet um die Reihenfolge zu bestimmen, in welcher die „Anzeigen aktualisieren“-Worker angezeigt werden und in welche Reihenfolge sie deshalb ausgeführt werden sollten. Worker mit einem kleineren Nice-Wert werden zuerst aufgelistet.]]></item>
@@ -2326,7 +2331,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.activityPointEvent.points.description"><![CDATA[Punktenzahl, die der Benutzer für ein Aktivität dieses Types erhält.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.data.title"><![CDATA[Daten des Aktivitätentypes]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions"><![CDATA[Unterstützt Reaktionen]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description"><![CDATA[Gibt an, ob die Aktivität das Reaktionssystem unterstützt. WoltLab Suite Core 3.2 (oder neuer) wird nur Aktivitäten zu Reaktionen erstellen, falls ausgewählt.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.user.recentActivityEvent.supportsReactions.description"><![CDATA[Gibt an, ob die Aktivität das Reaktionssystem unterstützt. WoltLab Suite Core 5.2 (oder neuer) wird nur Aktivitäten zu Reaktionen erstellen, falls ausgewählt.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.data.title"><![CDATA[Daten des versionierten Objekttypen]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tableName"><![CDATA[Datenbanktabelle mit den Originaldaten]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.versionTracker.objectType.tableName.description"><![CDATA[Name der Datenbanktabelle, die die Originaldaten enthält, deren verschiedene Versionen nachgehalten werden. Für alle installierten Apps wird <kbd>app1_</kbd> durch <kbd>appN_</kbd> ersetzt, wobei <kbd>app</kbd> die Abkürzung der App ist und <kbd>N</kbd> der Wert von <kbd>WCF_N</kbd>.]]></item>
@@ -2423,8 +2428,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.pip.page.contentMetaKeywords"><![CDATA[Meta Keywords]]></item>
 		<item name="wcf.acp.pip.page.contentTitle"><![CDATA[Titel]]></item>
 		<item name="wcf.acp.pip.page.controller"><![CDATA[Seiten-Controller]]></item>
-		<item name="wcf.acp.pip.page.controllerCustomURL"><![CDATA[Individuelle Controller-URL]]></item>
-		<item name="wcf.acp.pip.page.controllerCustomURL.description"><![CDATA[TODO]]></item>
 		<item name="wcf.acp.pip.page.cssClassName"><![CDATA[CSS-Klassen]]></item>
 		<item name="wcf.acp.pip.page.cssClassName.description"><![CDATA[Die durch Komma abgetrennte CSS-Klassen werden dem <kbd>body</kbd>-Element zugewiesen.]]></item>
 		<item name="wcf.acp.pip.page.excludeFromLandingPage"><![CDATA[Seite kann nicht als Startseite ausgewählt werden]]></item>
@@ -2557,6 +2560,13 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Sitemap deaktivieren]]></item>
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Sitemap bearbeiten]]></item>
 		<item name="wcf.acp.sitemap.cliInfo"><![CDATA[Die Sitemap kann auch mittels CLI neu generiert werden. {if LANGUAGE_USE_INFORMAL_VARIANT}Führe{else}Führen Sie{/if} dafür <kbd>worker wcf\system\worker\SitemapRebuildWorker</kbd> in einer CLI Session aus.]]></item>
+		<item name="wcf.acp.sitemap.submitToSearchEngines"><![CDATA[<p>Die generierte Sitemap muss einmalig bei den gewünschten Suchmaschinen manuell hinterlegt werden, die vollständige Adresse lautet: <kbd>{$__wcf->getPath()}sitemaps/sitemaps.xml</kbd>.</p>
+<p><br></p>
+<p>Anleitung zum Hinterlegen der XML-Sitemaps:</p>
+<ul class="nativeList">
+	<li><a href="https://support.google.com/webmasters/answer/7451001" class="externalURL">Google</a></li>
+	<li><a href="https://www.bing.com/webmaster/help/how-to-submit-sitemaps-82a15bd4" class="externalURL">Bing</a></li>
+</ul>]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.articleCategory"><![CDATA[Artikel-Kategorien]]></item>
 		<item name="wcf.acp.sitemap.objectType.com.woltlab.wcf.sitemap.object.article"><![CDATA[Artikel]]></item>
@@ -3165,6 +3175,7 @@ Erlaubte Dateiendungen: {', '|implode:$attachmentHandler->getFormattedAllowedExt
 		<item name="wcf.category.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.category.title"><![CDATA[Titel]]></item>
 		<item name="wcf.category.button.choose"><![CDATA[Kategorien wählen]]></item>
+		<item name="wcf.category.descriptionUseHtml"><![CDATA[HTML in der Beschreibung verwenden]]></item>
 	</category>
 	<category name="wcf.cli">
 		<item name="wcf.cli.help.noLongHelp"><![CDATA[Zu dem Parameter "{$topic}" ist keine ausführliche Erklärung verfügbar.]]></item>
@@ -4860,6 +4871,8 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.notification.com.woltlab.wcf.userTrophy.notification.received"><![CDATA[Trophäe erhalten]]></item>
 		<item name="wcf.user.notification.trophy.received.title"><![CDATA[Trophäe erhalten]]></item>
 		<item name="wcf.user.notification.trophy.received.message"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} die Trophäe <a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a> erhalten.]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.administration"><![CDATA[Administration]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.registration"><![CDATA[Neue Registrierung durch Benutzer]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.notification.comment"><![CDATA[Neuer Kommentar in der Moderation]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation.queue.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar in der Moderation]]></item>
@@ -4914,6 +4927,12 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar zu Ihrem Artikel]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar von Ihnen]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.notification.comment"><![CDATA[Neuer Kommentar zu Ihrem Artikel]]></item>
+		<item name="wcf.user.notification.userRegistration.title"><![CDATA[Neue Benutzer-Registrierung]]></item>
+		<item name="wcf.user.notification.userRegistration.title.stacked"><![CDATA[{#$count} neue Benutzer-Registrierungen]]></item>
+		<item name="wcf.user.notification.userRegistration.message"><![CDATA[{@$author->getAnchorTag()} hat sich registriert.]]></item>
+		<item name="wcf.user.notification.userRegistration.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} und {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} und {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} und {#$others} weitere Benutzer{/if} haben sich registriert.]]></item>
+		<item name="wcf.user.notification.userRegistration.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1}hat{else}haben{/if} sich registriert.]]></item>
+		<item name="wcf.user.notification.userRegistration.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1}hat{else}haben{/if} sich registriert:</p>]]></item>
 	</category>
 	<category name="wcf.user.profile">
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} noch keine sichtbaren Informationen hinterlegt.{else}Der Benutzer hat noch keine für {if LANGUAGE_USE_INFORMAL_VARIANT}dich{else}Sie{/if} sichtbaren Informationen hinterlegt.{/if}]]></item>

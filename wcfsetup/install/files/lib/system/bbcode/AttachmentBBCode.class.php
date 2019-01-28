@@ -3,6 +3,7 @@ namespace wcf\system\bbcode;
 use wcf\data\attachment\GroupedAttachmentList;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
@@ -151,6 +152,12 @@ class AttachmentBBCode extends AbstractBBCode {
 				}
 				
 				return $result;
+			}
+			else if (substr($attachment->fileType, 0, 6) === 'video/') {
+				return WCF::getTPL()->fetch('__videoAttachmentBBCode', 'wcf', [
+					'attachment' => $attachment,
+					'attachmentIdentifier' => StringUtil::getRandomID()
+				]);
 			}
 			else {
 				// file

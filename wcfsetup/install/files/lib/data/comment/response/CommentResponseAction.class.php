@@ -207,6 +207,12 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 			$lastResponseTime = max($lastResponseTime, $response->time);
 		}
 		
+		// mark notifications for loaded responses as read
+		CommentHandler::getInstance()->markNotificationsAsConfirmedForResponses(
+			CommentHandler::getInstance()->getObjectType($this->comment->objectTypeID)->objectType,
+			$responseList->getObjects()
+		);
+		
 		WCF::getTPL()->assign([
 			'commentCanModerate' => $commentCanModerate,
 			'likeData' => MODULE_LIKE ? $responseList->getLikeData() : [],

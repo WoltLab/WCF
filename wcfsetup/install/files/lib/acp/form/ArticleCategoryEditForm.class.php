@@ -31,7 +31,7 @@ class ArticleCategoryEditForm extends AbstractCategoryEditForm {
 	
 	/**
 	 * @var string[]
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $availableSortFields = [
 		'publicationDate',
@@ -40,13 +40,13 @@ class ArticleCategoryEditForm extends AbstractCategoryEditForm {
 	
 	/**
 	 * @var string
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $sortField = 'publicationDate';
 	
 	/**
 	 * @var string
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $sortOrder = 'DESC';
 	

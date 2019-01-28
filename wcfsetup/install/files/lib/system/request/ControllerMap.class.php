@@ -20,7 +20,7 @@ use wcf\system\WCFACP;
 class ControllerMap extends SingletonFactory {
 	/**
 	 * @var array
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	protected $applicationOverrides;
 	

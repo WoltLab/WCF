@@ -5,7 +5,7 @@
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/User/Content/Remove/Handler
- * @since       3.2
+ * @since       5.2
  */
 define(['Ajax', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Acp/Ui/Worker'], function (Ajax, Language, UiDialog, Worker) {
 	"use strict";

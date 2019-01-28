@@ -373,7 +373,8 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function(Ajax, 
 					interfaceName: 'wcf\\data\\ISearchAction',
 					parameters: {
 						data: {
-							includeUserGroups: false
+							includeUserGroups: true,
+							scope: 'mention'
 						}
 					}
 				},

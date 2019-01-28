@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
 abstract class AbstractFormField implements IFormField {
 	use TFormChildNode;
@@ -26,12 +26,6 @@ abstract class AbstractFormField implements IFormField {
 	 * @var	bool
 	 */
 	protected $__autoFocus = false;
-	
-	/**
-	 * `true` if the value of this field is immutable and `false` otherwise
-	 * @var	bool
-	 */
-	protected $__immutable = false;
 	
 	/**
 	 * name of the object property this field represents
@@ -182,24 +176,8 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function immutable($immutable = true) {
-		$this->__immutable = $immutable;
-		
-		return $this;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function isAutoFocused() {
 		return $this->__autoFocus;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function isImmutable() {
-		return $this->__immutable;
 	}
 	
 	/**

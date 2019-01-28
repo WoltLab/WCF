@@ -521,7 +521,7 @@ class Box extends DatabaseObject {
 	 * Returns true if an edit button should be displayed for this box.
 	 * 
 	 * @return      boolean
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function showEditButton() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManageBox') && in_array($this->position, $this->editButtonPositions)) {

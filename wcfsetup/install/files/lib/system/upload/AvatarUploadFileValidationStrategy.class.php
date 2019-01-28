@@ -27,6 +27,10 @@ class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStra
 			}
 		}
 		catch (SystemException $e) {
+			if (ENABLE_DEBUG_MODE) {
+				throw $e;
+			}
+			
 			$uploadFile->setValidationErrorType('badImage');
 			return false;
 		}

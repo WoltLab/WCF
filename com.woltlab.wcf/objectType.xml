@@ -175,6 +175,12 @@
 			<category>com.woltlab.wcf.user</category>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.user.registration.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\UserRegistrationUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.administration</category>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.user.recentActivityEvent.follow</name>
 			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
 			<classname>wcf\system\user\activity\event\FollowUserActivityEvent</classname>

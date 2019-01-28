@@ -248,7 +248,8 @@
 		
 		&.columnIcon {
 			@include screen-md-down {
-				:not(.button) > .icon16 {
+				:not(.button) > .icon16,
+				> .icon16 {
 					font-size: 18px;
 					height: 24px;
 					line-height: 24px;

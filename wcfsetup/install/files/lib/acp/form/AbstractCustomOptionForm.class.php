@@ -67,7 +67,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 	/**
 	 * 1 if the option is disabled
 	 * @var	boolean
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $isDisabled = 0;
 	

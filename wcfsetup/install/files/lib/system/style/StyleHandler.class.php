@@ -246,7 +246,7 @@ class StyleHandler extends SingletonFactory {
 	 * if there is no default style.
 	 * 
 	 * @return Style|null
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public function getDefaultStyle() {
 		if (!RequestHandler::getInstance()->isACPRequest()) {

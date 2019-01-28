@@ -1221,7 +1221,7 @@ if (COMPILER_TARGET_DEFAULT) {
 								$text += "\n";
 							}
 							break;
-						
+							
 						case 'P':
 							$text += "\n\n";
 							break;
@@ -1229,6 +1229,13 @@ if (COMPILER_TARGET_DEFAULT) {
 						// smilies
 						case 'IMG':
 							$text += " " + $node.alt + " ";
+							break;
+							
+						// Code listing
+						case 'DIV':
+							if ($node.classList.contains('codeBoxHeadline') || $node.classList.contains('codeBoxLine')) {
+								$text += "\n";
+							}
 							break;
 					}
 				}

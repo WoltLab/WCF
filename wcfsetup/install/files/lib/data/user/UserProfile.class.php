@@ -475,7 +475,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * Prepares the special trophies for the given user ids.
 	 * 
 	 * @param       int[]           $userIDs
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public static function prepareSpecialTrophies(array $userIDs) {
 		UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
@@ -881,7 +881,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	boolean
 	 */
 	public function canEditOwnProfile() {
-		return ($this->activationCode ? false : true);
+		if ($this->activationCode || !$this->getPermission('user.profile.canEditUserProfile')) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	/**

@@ -35,7 +35,7 @@ use wcf\util\StringUtil;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Reaction
- * @since       3.2
+ * @since       5.2
  */
 class ReactionHandler extends SingletonFactory {
 	/**
@@ -348,7 +348,7 @@ class ReactionHandler extends SingletonFactory {
 				}
 			}
 			
-			// This interface should help to determine whether the plugin has been adapted to the API 3.2.
+			// This interface should help to determine whether the plugin has been adapted to the API 5.2.
 			// If a LikeableObject does not implement this interface, no notification will be sent, because
 			// we assume, that the plugin has not been adapted to the new API. 
 			if ($likeable instanceof IReactionObject) {
@@ -376,6 +376,7 @@ class ReactionHandler extends SingletonFactory {
 			return [
 				'cachedReactions' => $likeObjectData['cachedReactions'], 
 				'reactionTypeID' => $reactionTypeID, 
+				'like' => $like,
 				'likeObject' => $likeObjectData['likeObject'],
 				'cumulativeLikes' => $likeObjectData['cumulativeLikes']
 			];

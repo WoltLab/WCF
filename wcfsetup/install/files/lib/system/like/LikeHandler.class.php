@@ -26,7 +26,7 @@ use wcf\system\WCF;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Like
- * @deprecated  The LikeHandler is deprecated since 3.2 in favor of the \wcf\system\reaction\ReactionHandler
+ * @deprecated  The LikeHandler is deprecated since 5.2 in favor of the \wcf\system\reaction\ReactionHandler
  */
 class LikeHandler extends SingletonFactory {
 	/**
@@ -131,7 +131,7 @@ class LikeHandler extends SingletonFactory {
 		
 		return [
 			'data' => $this->loadLikeStatus($reactData['likeObject'], $user),
-			'like' => $reactData['likeObject'],
+			'like' => $reactData['like'],
 			'newValue' => $newValue,
 			'oldValue' => 0, // this value is currently a dummy value, maybe determine a real value
 			'users' => []

@@ -89,4 +89,11 @@ class SelectOptionType extends RadioButtonOptionType {
 	public function hideLabelInSearch() {
 		return true;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getCSSClassName() {
+		return '';
+	}
 }

@@ -5,7 +5,7 @@
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager
- * @since	3.2
+ * @since	5.2
  */
 define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Traverse', 'Dom/Util', 'ObjectMap'], function(Dictionary, DomChangeListener, EventHandler, List, DomTraverse, DomUtil, ObjectMap) {
 	"use strict";

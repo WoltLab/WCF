@@ -132,7 +132,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		$ldq = preg_quote(WCF::getTPL()->getCompiler()->getLeftDelimiter(), '~');
@@ -386,7 +386,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -421,7 +421,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return sha1(
@@ -434,7 +434,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function setEntryData($identifier, IFormDocument $document) {
 		if ($this->defaultSetEntryData($identifier, $document)) {
@@ -472,7 +472,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -485,7 +485,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
@@ -514,7 +514,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function prepareDeleteXmlElement(\DOMElement $element) {
 		$templateListener = $element->ownerDocument->createElement($this->tagName);
@@ -532,7 +532,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function deleteObject(\DOMElement $element) {
 		$elements= [];

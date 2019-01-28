@@ -52,7 +52,7 @@
 		<div class="containerListDisplayOptions">
 			<div class="containerListSortOptions">
 				<a rel="nofollow" href="{link controller='MembersList' id=$searchID}pageNo={@$pageNo}&sortField={$sortField}&sortOrder={if $sortOrder == 'ASC'}DESC{else}ASC{/if}{if $letter}&letter={$letter}{/if}{/link}">
-					<span class="icon icon16 fa-sort-amount-{$sortOrder|strtolower} jsTooltip" title="{lang}wcf.user.members.sortBy{/lang} ({lang}wcf.global.sortOrder.{if $sortOrder === 'ASC'}ascending{else}descending{/if}{/lang})"></span>
+					<span class="icon icon16 fa-sort-amount-{$sortOrder|strtolower} jsTooltip" title="{lang}wcf.global.sorting{/lang} ({lang}wcf.global.sortOrder.{if $sortOrder === 'ASC'}ascending{else}descending{/if}{/lang})"></span>
 				</a>
 				<span class="dropdown">
 					<span class="dropdownToggle">{lang}wcf.user.sortField.{$sortField}{/lang}</span>
@@ -76,7 +76,7 @@
 			{/hascontent}
 			
 			<div class="containerListFilterOptions jsOnly">
-				<button class="small jsStaticDialog" data-dialog-id="membersListSortFilter"><span class="icon icon16 fa-filter"></span> {lang}wbb.thread.filter{/lang}</button>
+				<button class="small jsStaticDialog" data-dialog-id="membersListSortFilter"><span class="icon icon16 fa-filter"></span> {lang}wcf.global.filter{/lang}</button>
 			</div>
 		</div>
 		<ol class="containerList userList">

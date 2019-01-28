@@ -13,7 +13,7 @@ use wcf\system\form\builder\IFormElement;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
 interface IFormField extends IFormChildNode, IFormElement {
 	/**
@@ -108,28 +108,12 @@ interface IFormField extends IFormChildNode, IFormElement {
 	public function hasSaveValue();
 	
 	/**
-	 * Sets whether the value of this field is immutable and returns this field.
-	 * 
-	 * @param	bool		$immutable	determines if field value is immutable
-	 * @return	static				this field
-	 */
-	public function immutable($immutable = true);
-	
-	/**
 	 * Returns `true` if this field is auto-focused and returns `false` otherwise.
 	 * By default, fields are not auto-focused.
 	 * 
 	 * @return	bool
 	 */
 	public function isAutoFocused();
-	
-	/**
-	 * Returns `true` if the value of this field is immutable and returns `false`
-	 * otherwise. By default, fields are mutable.
-	 * 
-	 * @return	bool
-	 */
-	public function isImmutable();
 	
 	/**
 	 * Returns `true` if this field has to be filled out and returns `false` otherwise.

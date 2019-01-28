@@ -5,7 +5,7 @@
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Like/Handler
- * @deprecated  3.2 use ReactionHandler instead 
+ * @deprecated  5.2 use ReactionHandler instead 
  */
 define(
 	[

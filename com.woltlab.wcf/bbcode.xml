@@ -233,5 +233,14 @@
 				</attribute>
 			</attributes>
 		</bbcode>
+		<bbcode name="group">
+			<classname>wcf\system\bbcode\GroupBBCode</classname>
+			<attributes>
+				<attribute name="0">
+					<validationpattern><![CDATA[^\d+$]]></validationpattern>
+					<required>1</required>
+				</attribute>
+			</attributes>
+		</bbcode>
 	</import>
 </data>

@@ -17,7 +17,7 @@ use wcf\system\WCF;
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
- * @since	3.2
+ * @since	5.2
  */
 abstract class AbstractFormBuilderForm extends AbstractForm {
 	/**
@@ -154,14 +154,21 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 		
 		$this->saved();
 		
+		WCF::getTPL()->assign('success', true);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function saved() {
+		parent::saved();
+		
 		// re-build form after having created a new object
 		if ($this->formAction === 'create') {
 			$this->form->cleanup();
 			
 			$this->buildForm();
 		}
-		
-		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**

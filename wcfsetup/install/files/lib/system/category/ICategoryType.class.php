@@ -141,4 +141,12 @@ interface ICategoryType {
 	 * @return	boolean
 	 */
 	public function hasDescription();
+	
+	/**
+	 * Returns `true` if the descriptions of categories of this type support HTML.
+	 * 
+	 * @return	boolean
+	 * @since	5.2
+	 */
+	public function supportsHtmlDescription();
 }

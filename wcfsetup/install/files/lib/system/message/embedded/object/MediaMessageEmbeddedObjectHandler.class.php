@@ -46,7 +46,7 @@ class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObj
 		if ($contentLanguageID !== null) {
 			$mediaIDs = [];
 			foreach ($viewableMedia as $media) {
-				if ($media->localizedLanguageID != $contentLanguageID) {
+				if ($media !== null && $media->localizedLanguageID != $contentLanguageID) {
 					$mediaIDs[] = $media->getDecoratedObject()->mediaID;
 				}
 			}

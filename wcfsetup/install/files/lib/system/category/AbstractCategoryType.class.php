@@ -184,4 +184,12 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	public function hasDescription() {
 		return $this->hasDescription;
 	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	public function supportsHtmlDescription() {
+		return false;
+	}
 }

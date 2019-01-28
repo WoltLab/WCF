@@ -30,7 +30,7 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 	/**
 	 * list of action names that should trigger a page reload once they have been executed
 	 * @var string[]
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	protected $reloadPageOnSuccess = [];
 	

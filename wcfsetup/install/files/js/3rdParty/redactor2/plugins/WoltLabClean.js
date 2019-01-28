@@ -71,13 +71,20 @@ $.Redactor.prototype.WoltLabClean = function() {
 				elBySelAll('p', div, function (p) {
 					var br = p.lastElementChild;
 					if (br && br.nodeName === 'BR') {
-						// check if there is only whitespace afterwards
-						if (br.nextSibling && br.nextSibling.textContent.replace(/[\r\n\t]/g, '').match(/^\u200B+$/)) {
-							var newP = elCreate('p');
-							newP.innerHTML = '<br>';
-							p.parentNode.insertBefore(newP, p.nextSibling);
-							
-							p.removeChild(br.nextSibling);
+						// Check if there is only whitespace afterwards.
+						if (br.nextSibling) {
+							if (br.nextSibling.textContent.replace(/[\r\n\t]/g, '').match(/^\u200B+$/)) {
+								var newP = elCreate('p');
+								newP.innerHTML = '<br>';
+								p.parentNode.insertBefore(newP, p.nextSibling);
+								
+								p.removeChild(br.nextSibling);
+								p.removeChild(br);
+							}
+						}
+						else if (br.previousElementSibling || (br.previousSibling && br.previousSibling.textContent.replace(/\u200B/g, '').trim() !== '')) {
+							// Firefox inserts bogus `<br>` at the end of paragraphs.
+							// See https://bugzilla.mozilla.org/show_bug.cgi?id=656626
 							p.removeChild(br);
 						}
 					}
@@ -225,7 +232,39 @@ $.Redactor.prototype.WoltLabClean = function() {
 				elBySelAll('span', div, function (span) {
 					if (span.classList.contains('redactor-selection-marker')) return;
 					
-					if (!span.hasAttribute('style') || !span.style.length) {
+					if (span.hasAttribute('style') && span.style.length) {
+						// Split the styles into separate chunks.
+						var color = span.style.getPropertyValue('color');
+						var fontFamily = span.style.getPropertyValue('font-family');
+						var fontSize = span.style.getPropertyValue('font-size');
+						
+						var activeStyles = (color ? 1 : 0) + (fontFamily ? 1 : 0) + (fontSize ? 1 : 0);
+						while (activeStyles > 1) {
+							var newSpan = elCreate('span');
+							if (color) {
+								newSpan.style.setProperty('color', color, '');
+								span.style.removeProperty('color');
+								color = '';
+								activeStyles--;
+							}
+							else if (fontFamily) {
+								newSpan.style.setProperty('font-family', fontFamily, '');
+								span.style.removeProperty('font-family');
+								fontFamily = '';
+								activeStyles--;
+							}
+							else if (fontSize) {
+								newSpan.style.setProperty('font-size', fontSize, '');
+								span.style.removeProperty('font-size');
+								fontSize = '';
+								activeStyles--;
+							}
+							
+							span.parentNode.insertBefore(newSpan, span);
+							newSpan.appendChild(span);
+						}
+					}
+					else {
 						while (span.childNodes.length) {
 							span.parentNode.insertBefore(span.childNodes[0], span);
 						}
@@ -524,6 +563,89 @@ $.Redactor.prototype.WoltLabClean = function() {
 				
 				return data;
 			}).bind(this);
+			
+			var mpRemoveEmptyInlineTags = this.clean.removeEmptyInlineTags;
+			this.clean.removeEmptyInlineTags = (function(html) {
+				var tags = this.opts.inlineTags;
+				var $div = $("<div/>").html($.parseHTML(html, document, true));
+				var self = this;
+				
+				var $spans = $div.find('span');
+				var $tags = $div.find(tags.join(','));
+				
+				// WoltLab modification: Preserve the `style` attribute on `<span>` elements. 
+				$tags.filter(':not(span)').removeAttr('style');
+				
+				$tags.each(function () {
+					var tagHtml = $(this).html();
+					if (this.attributes.length === 0 && self.utils.isEmpty(tagHtml)) {
+						$(this).replaceWith(function () {
+							return $(this).contents();
+						});
+					}
+				});
+				
+				$spans.each(function () {
+					var tagHtml = $(this).html();
+					if (this.attributes.length === 0) {
+						$(this).replaceWith(function () {
+							return $(this).contents();
+						});
+					}
+				});
+				
+				html = $div.html();
+				
+				// convert php tags
+				html = html.replace('<!--?php', '<?php');
+				html = html.replace('<!--?', '<?');
+				html = html.replace('?-->', '?>');
+				
+				$div.remove();
+				
+				return html;
+			}).bind(this);
+		},
+		
+		removeRedundantStyles: function () {
+			var removeElements = [];
+			
+			// Remove tags that are always safe to remove.
+			var plainTags = [
+				'del',
+				'em',
+				'strong',
+				'sub',
+				'sup',
+				'u'
+			];
+			elBySelAll(plainTags.join(','), this.$editor[0], function(element) {
+				if (elBySel(element.nodeName, element) !== null) {
+					removeElements.push(element);
+				}
+			});
+			
+			// Search for span[style] that contain styles that actually do nothing, because their set style
+			// equals the inherited style from its ancestors.
+			elBySelAll('span[style]', this.$editor[0], function(element) {
+				['color', 'font-family', 'font-size'].forEach(function(propertyName) {
+					var value = element.style.getPropertyValue(propertyName);
+					if (value) {
+						if (window.getComputedStyle(element.parentNode).getPropertyValue(propertyName) === value) {
+							removeElements.push(element);
+						}
+					}
+				});
+			});
+			
+			var parent;
+			removeElements.forEach(function(element) {
+				parent = element.parentNode;
+				while (element.childNodes.length) {
+					parent.insertBefore(element.childNodes[0], element);
+				}
+				parent.removeChild(element);
+			});
 		}
 	}
 };

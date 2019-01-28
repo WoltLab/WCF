@@ -80,6 +80,17 @@ class Language extends DatabaseObject {
 	 * @return	string
 	 */
 	public function get($item, $optional = false) {
+		if (
+			defined('ENABLE_DEBUG_MODE') &&
+			ENABLE_DEBUG_MODE &&
+			defined('ENABLE_DEVELOPER_TOOLS') &&
+			ENABLE_DEVELOPER_TOOLS &&
+			is_array($optional) &&
+			!empty($optional)
+		) {
+			throw new \InvalidArgumentException("The second parameter of Language::get() does not support non-empty arrays. Did you mean to use Language::getDynamicVariable()?");
+		}
+		
 		if (!isset($this->items[$item])) {
 			// load category file
 			$explodedItem = explode('.', $item);
@@ -107,6 +118,7 @@ class Language extends DatabaseObject {
 		if (
 			defined('ENABLE_DEVELOPER_TOOLS') &&
 			ENABLE_DEVELOPER_TOOLS &&
+			defined('LOG_MISSING_LANGUAGE_ITEMS') &&
 			LOG_MISSING_LANGUAGE_ITEMS &&
 			preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
 		) {
@@ -143,6 +155,7 @@ class Language extends DatabaseObject {
 		if (
 			defined('ENABLE_DEVELOPER_TOOLS') &&
 			ENABLE_DEVELOPER_TOOLS &&
+			defined('LOG_MISSING_LANGUAGE_ITEMS') &&
 			LOG_MISSING_LANGUAGE_ITEMS &&
 			$staticItem === $item &&
 			preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)

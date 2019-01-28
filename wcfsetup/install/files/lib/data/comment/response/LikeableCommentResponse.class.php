@@ -65,7 +65,8 @@ class LikeableCommentResponse extends AbstractLikeObject implements IReactionObj
 						'commentID' => $comment->commentID,
 						'commentUserID' => $comment->userID,
 						'objectID' => $comment->objectID
-					]
+					],
+					$this->responseID
 				);
 			}
 		}
