@@ -725,7 +725,10 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			
 			this._renderGrid(event.currentTarget.textContent);
 			
-			this._close();
+			var data = _data.get(_input);
+			if (!data.isDateTime) {
+				this._close();
+			}
 		},
 		
 		/**
