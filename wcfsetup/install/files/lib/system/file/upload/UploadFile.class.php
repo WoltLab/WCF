@@ -27,6 +27,12 @@ class UploadFile {
 	private $imageLink;
 	
 	/**
+	 * Flag whether svg files should detected as image
+	 * @var bool
+	 */
+	private $detectSvgAsImage;
+	
+	/**
 	 * Indicator, whether the file is already processed.
 	 * @var boolean 
 	 */
@@ -69,8 +75,9 @@ class UploadFile {
 	 * @param       string          $filename
 	 * @param       boolean         $viewableImage
 	 * @param       boolean         $processed
+	 * @param       boolean         $detectSvgAsImage
 	 */
-	public function __construct($location, $filename, $viewableImage = true, $processed = false) {
+	public function __construct($location, $filename, $viewableImage = true, $processed = false, $detectSvgAsImage = false) {
 		if (!file_exists($location)) {
 			throw new \InvalidArgumentException("File '". $location ."' could not be found.");
 		}
@@ -81,8 +88,12 @@ class UploadFile {
 		$this->processed = $processed;
 		$this->viewableImage = $viewableImage;
 		$this->uniqueId = StringUtil::getRandomID();
+		$this->detectSvgAsImage = $detectSvgAsImage;
 		
-		if (@getimagesize($location) !== false) {
+		if (@getimagesize($location) !== false || ($detectSvgAsImage && in_array(FileUtil::getMimeType($location), [
+				'image/svg',
+				'image/svg+xml'
+			]))) {
 			$this->isImage = true;
 		}
 	}
@@ -117,8 +128,20 @@ class UploadFile {
 			}
 		}
 		else {
-			$imageData = getimagesize($this->location);
-			return 'data:'. $imageData['mime'] .';base64,'.base64_encode(file_get_contents($this->location));
+			$imageData = @getimagesize($this->location);
+			
+			if ($imageData !== false) {
+				return 'data:'. $imageData['mime'] .';base64,'.base64_encode(file_get_contents($this->location));
+			}
+			
+			if ($this->detectSvgAsImage && in_array(FileUtil::getMimeType($this->location), [
+					'image/svg',
+					'image/svg+xml'
+				])) {
+				return 'data:image/svg+xml;base64,'.base64_encode(file_get_contents($this->location));
+			}
+			
+			throw new \LogicException('File is an image, but can not be rendered.8');
 		}
 	}
 	

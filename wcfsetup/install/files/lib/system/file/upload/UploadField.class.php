@@ -36,6 +36,16 @@ class UploadField {
 	public $imageOnly = false;
 	
 	/**
+	 * Indicates whether the field supports svg images.
+	 * 
+	 * <strong>Heads up:</strong> svg images can contain code, therefore do not
+	 * use this option, outside the acp or check the file whether remote code is contained.
+	 * 
+	 * @var boolean
+	 */
+	public $allowSvgImages = false;
+	
+	/**
 	 * UploadField constructor.
 	 *
 	 * @param       string          $fieldId
@@ -72,6 +82,15 @@ class UploadField {
 	}
 	
 	/**
+	 * Returns true, if svg images are allowed.
+	 * 
+	 * @return boolean
+	 */
+	public function svgImagesAllowed() {
+		return $this->allowSvgImages;
+	}
+	
+	/**
 	 * Returns the fieldId. 
 	 * 
 	 * @return string
@@ -105,5 +124,14 @@ class UploadField {
 	 */
 	public function setImageOnly($imageOnly) {
 		$this->imageOnly = $imageOnly;
+	}
+	
+	/**
+	 * Set the image only flag. 
+	 * 
+	 * @param       boolean       $allowSvgImages
+	 */
+	public function setAllowSvgImages($allowSvgImages) {
+		$this->allowSvgImages = $allowSvgImages;
 	}
 }

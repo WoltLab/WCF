@@ -27,6 +27,12 @@ class UploadFormField extends AbstractFormField {
 	protected $imageOnly = false;
 	
 	/**
+	 * allowSvgImage flag.
+	 * @var boolean
+	 */
+	protected $allowSvgImage = false;
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected $templateName = '__uploadFormField';
@@ -58,7 +64,7 @@ class UploadFormField extends AbstractFormField {
 		$uploadField = new UploadField($this->getId());
 		$uploadField->maxFiles = $this->getMaximum();
 		$uploadField->setImageOnly($this->isImageOnly());
-		$uploadField->setAllowSvgImages($this->isImageOnly());
+		$uploadField->setAllowSvgImages($this->svgImageAllowed());
 		
 		return $uploadField;
 	}
@@ -201,11 +207,32 @@ class UploadFormField extends AbstractFormField {
 	}
 	
 	/**
+	 * Sets the imageOnly flag for this field.
+	 *
+	 * @param	boolean	        $allowSvgImages
+	 * @return	static				this field
+	 */
+	public function allowSvgImage($allowSvgImages = true) {
+		$this->allowSvgImage = $allowSvgImages;
+		
+		return $this;
+	}
+	
+	/**
 	 * Returns true, if the field is an image only field (only images can be uploaded).
 	 *
 	 * @return	boolean
 	 */
 	public function isImageOnly() {
 		return $this->imageOnly;
+	}
+	
+	/**
+	 * Returns true, if the field can contain svg images.
+	 *
+	 * @return	boolean
+	 */
+	public function svgImageAllowed() {
+		return $this->allowSvgImage;
 	}
 }
