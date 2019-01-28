@@ -154,14 +154,21 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 		
 		$this->saved();
 		
+		WCF::getTPL()->assign('success', true);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function saved() {
+		parent::saved();
+		
 		// re-build form after having created a new object
 		if ($this->formAction === 'create') {
 			$this->form->cleanup();
 			
 			$this->buildForm();
 		}
-		
-		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
