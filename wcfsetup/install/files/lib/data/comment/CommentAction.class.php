@@ -1071,9 +1071,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		// load like data
 		if (MODULE_LIKE) {
 			$likeData = [];
-			$commentObjectType = LikeHandler::getInstance()->getObjectType('com.woltlab.wcf.comment');
-			LikeHandler::getInstance()->loadLikeObjects($commentObjectType, [$comment->commentID]);
-			$likeData['comment'] = LikeHandler::getInstance()->getLikeObjects($commentObjectType);
+			$commentObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment');
+			ReactionHandler::getInstance()->loadLikeObjects($commentObjectType, [$comment->commentID]);
+			$likeData['comment'] = ReactionHandler::getInstance()->getLikeObjects($commentObjectType);
 			
 			$responseIDs = [];
 			foreach ($comment as $visibleResponse) {
@@ -1085,9 +1085,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			}
 			
 			if (!empty($responseIDs)) {
-				$responseObjectType = LikeHandler::getInstance()->getObjectType('com.woltlab.wcf.comment.response');
-				LikeHandler::getInstance()->loadLikeObjects($responseObjectType, $responseIDs);
-				$likeData['response'] = LikeHandler::getInstance()->getLikeObjects($responseObjectType);
+				$responseObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment.response');
+				ReactionHandler::getInstance()->loadLikeObjects($responseObjectType, $responseIDs);
+				$likeData['response'] = ReactionHandler::getInstance()->getLikeObjects($responseObjectType);
 			}
 			
 			WCF::getTPL()->assign('likeData', $likeData);
