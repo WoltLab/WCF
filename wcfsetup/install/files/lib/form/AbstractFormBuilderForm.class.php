@@ -41,7 +41,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	
 	/**
 	 * name of the object action performing the form action
-	 * if not set, `$formAction` is sued
+	 * if not set, `$formAction` is used
 	 * @var	null|string
 	 */
 	public $objectActionName;
