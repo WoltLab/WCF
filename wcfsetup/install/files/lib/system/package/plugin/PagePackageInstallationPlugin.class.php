@@ -748,6 +748,13 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			}
 			
 			$data['content'] = $content;
+			
+			if (isset($data['parent'])) {
+				$parent = $data['parent'];
+				unset($data['parent']);
+				
+				$data['parentPageID'] = Page::getPageByIdentifier($parent)->pageID;
+			}
 		}
 		
 		return $data;
