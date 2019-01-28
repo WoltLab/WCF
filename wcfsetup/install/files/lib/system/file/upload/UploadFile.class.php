@@ -141,7 +141,7 @@ class UploadFile {
 				return 'data:image/svg+xml;base64,'.base64_encode(file_get_contents($this->location));
 			}
 			
-			throw new \LogicException('File is an image, but can not be rendered.8');
+			throw new \LogicException('File is an image, but can not be rendered.');
 		}
 	}
 	
