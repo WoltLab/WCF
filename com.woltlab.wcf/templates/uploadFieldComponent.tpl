@@ -1,6 +1,6 @@
 {if !$uploadField->supportMultipleFiles() && $uploadField->isImageOnly()}
 	<div class="selectedImagePreview uploadedFile" id="{$uploadFieldId}uploadFileList" data-internal-id="{$uploadField->getInternalId()}">{*
-		*}{if !$files|empty}{*
+		*}{if !$uploadFieldFiles|empty}{*
 			*}{assign var="file" value=$uploadFieldFiles|reset}{*
 			*}<img src="{$file->getImage()}" alt="" class="previewImage" id="{$uploadFieldId}Image" style="max-width: 100%" data-unique-file-id="{$file->getUniqueFileId()}">{*
 		*}
