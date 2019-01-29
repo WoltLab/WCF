@@ -199,7 +199,7 @@ class SystemCheckPage extends AbstractPage {
 		
 		// Memory is not limited through PHP.
 		if ($memoryLimit == -1) {
-			$this->results['php']['memoryLimit']['value'] = '∞';
+			$this->results['php']['memoryLimit']['value'] = "\u{221E}";
 			$this->results['php']['memoryLimit']['result'] = true;
 		}
 		else {
@@ -215,7 +215,7 @@ class SystemCheckPage extends AbstractPage {
 				if (preg_match('~^(\d+)([KMG])$~', $memoryLimit, $matches)) {
 					switch ($matches[2]) {
 						case 'K':
-							$memoryLimit = $matches[1] * 1024;
+							$memoryLimit = $matches[1] / 1024;
 							
 							$this->results['php']['memoryLimit']['value'] = $memoryLimit . 'M';
 							$this->results['php']['memoryLimit']['result'] = ($memoryLimit >= $this->phpMemoryLimit);
