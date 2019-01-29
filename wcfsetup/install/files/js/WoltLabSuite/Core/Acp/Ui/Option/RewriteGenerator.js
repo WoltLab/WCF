@@ -25,7 +25,9 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function (Ajax, Language, UiDialog) {
 			dt.classList.add('jsOnly');
 			var dd = elCreate('dd');
 
-			_buttonGenerate = elCreate('button');
+			_buttonGenerate = elCreate('a');
+			_buttonGenerate.className = 'button';
+			_buttonGenerate.href = '#';
 			_buttonGenerate.textContent = Language.get('wcf.acp.rewrite.generate');
 			_buttonGenerate.addEventListener(WCF_CLICK_EVENT, this._onClick.bind(this));
 			dd.appendChild(_buttonGenerate);
