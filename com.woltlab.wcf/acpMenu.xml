@@ -689,17 +689,23 @@
 			<parent>wcf.acp.menu.link.management</parent>
 			<showorder>1</showorder>
 		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.systemCheck">
+			<controller>wcf\acp\page\SystemCheckPage</controller>
+			<parent>wcf.acp.menu.link.maintenance</parent>
+			<permissions>admin.configuration.package.canInstallPackage</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.cronjob.list">
 			<controller>wcf\acp\page\CronjobListPage</controller>
 			<parent>wcf.acp.menu.link.maintenance</parent>
 			<permissions>admin.management.canManageCronjob</permissions>
-			<showorder>1</showorder>
+			<showorder>2</showorder>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.cronjob.add">
 			<controller>wcf\acp\form\CronjobAddForm</controller>
 			<parent>wcf.acp.menu.link.cronjob.list</parent>
 			<permissions>admin.management.canManageCronjob</permissions>
-			<showorder>2</showorder>
+			<showorder>3</showorder>
 			<icon>fa-plus</icon>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.maintenance.cache">

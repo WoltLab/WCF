@@ -1139,6 +1139,7 @@
 		<item name="wcf.acp.menu.link.reactionType.add"><![CDATA[Reaktions-Typ hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.reactionType.edit"><![CDATA[Reaktions-Typ bearbeiten]]></item>
 		<item name="wcf.acp.menu.link.language.item.add"><![CDATA[Text hinzufügen]]></item>
+		<item name="wcf.acp.menu.link.systemCheck"><![CDATA[Systemüberprüfung]]></item>
 	</category>
 	<category name="wcf.acp.modificationLog">
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Globales Veränderungsprotokoll]]></item>
@@ -2599,6 +2600,31 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.general"><![CDATA[Allgemeine Daten]]></item>
 		<item name="wcf.acp.stat.category.com.woltlab.wcf.user"><![CDATA[Benutzer-Daten]]></item>
 		<item name="wcf.acp.stat.noData"><![CDATA[Es liegen keine Daten für den ausgewählten Zeitraum vor.]]></item>
+	</category>
+	<category name="wcf.acp.systemCheck">
+		<item name="wcf.acp.systemCheck"><![CDATA[Systemüberprüfung]]></item>
+		<item name="wcf.acp.systemCheck.result"><![CDATA[Resultat]]></item>
+		<item name="wcf.acp.systemCheck.pass"><![CDATA[Test bestanden]]></item>
+		<item name="wcf.acp.systemCheck.sufficient"><![CDATA[Ausreichend]]></item>
+		<item name="wcf.acp.systemCheck.insufficient"><![CDATA[Anforderungen nicht erfüllt]]></item>
+		<item name="wcf.acp.systemCheck.notSupported"><![CDATA[Nicht unterstützt]]></item>
+		<item name="wcf.acp.systemCheck.php"><![CDATA[PHP]]></item>
+		<item name="wcf.acp.systemCheck.mysql"><![CDATA[MySQL]]></item>
+		<item name="wcf.acp.systemCheck.directories"><![CDATA[Dateisystem]]></item>
+		<item name="wcf.acp.systemCheck.php.version"><![CDATA[Version]]></item>
+		<item name="wcf.acp.systemCheck.php.version.description"><![CDATA[Es wird mindestens PHP {$phpVersions[minimum]} benötigt, empfohlen werden die folgenden Versionsreihen von PHP: {implode from=$phpVersions[recommended] item=$recommended}{$recommended}{/implode}.]]></item>
+		<item name="wcf.acp.systemCheck.mysql.version"><![CDATA[MySQL]]></item>
+		<item name="wcf.acp.systemCheck.mysql.version.description"><![CDATA[Es wird mindestens MySQL {$mysqlVersions[mysql]} bzw. MariaDB {$mysqlVersions[mariadb][5]} oder MariaDB {$mysqlVersions[mariadb][10]} benötigt, grundsätzlich wird der Einsatz neuerer Version ausdrücklich empfohlen.]]></item>
+		<item name="wcf.acp.systemCheck.php.extension"><![CDATA[Erweiterungen]]></item>
+		<item name="wcf.acp.systemCheck.php.extension.description"><![CDATA[Die offiziellen Erweiterungen von PHP stellen zusätzliche Funktionen bereit, die für den Betrieb der Software notwendig sind.]]></item>
+		<item name="wcf.acp.systemCheck.php.memoryLimit"><![CDATA[Verfügbarer Arbeitsspeicher („memory_limit“)]]></item>
+		<item name="wcf.acp.systemCheck.php.memoryLimit.description"><![CDATA[Einige Prozesse benötigen in Spitzenzeiten eine große Menge Arbeitsspeicher, für den einwandfreien Betrieb werden mindestens {$phpMemoryLimit} MB benötigt.]]></item>
+		<item name="wcf.acp.systemCheck.php.sha256"><![CDATA[Unterstützung für SHA-256]]></item>
+		<item name="wcf.acp.systemCheck.php.sha256.description"><![CDATA[Die kryptographische Funktion SHA-256 wird für den sicheren Betrieb der Software benötigt.]]></item>
+		<item name="wcf.acp.systemCheck.mysql.innodb"><![CDATA[InnoDB verfügbar]]></item>
+		<item name="wcf.acp.systemCheck.mysql.innodb.description"><![CDATA[InnoDB (XtraDB unter MariaDB) ist eine transaktionale Storage-Engine von MySQL und wird zwingend für den Betrieb benötigt. Dies ist eine Standardfunktion von MySQL.]]></item>
+		<item name="wcf.acp.systemCheck.directories.writable"><![CDATA[Beschreibbare Verzeichnisse]]></item>
+		<item name="wcf.acp.systemCheck.directories.writable.description"><![CDATA[Einige Verzeichnisse werden zur Laufzeit durch die Software beschrieben, der PHP-Benutzer muss Schreibrechte haben.]]></item>
 	</category>
 	<category name="wcf.acp.updateServer">
 		<item name="wcf.acp.updateServer.add"><![CDATA[Server hinzufügen]]></item>
