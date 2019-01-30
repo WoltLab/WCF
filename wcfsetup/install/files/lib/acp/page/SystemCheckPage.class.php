@@ -7,8 +7,6 @@ use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**
- * Shows the style list page.
- *
  * @author      Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -36,7 +34,7 @@ class SystemCheckPage extends AbstractPage {
 			'/',
 			'/acp/style',
 			'/acp/templates/compiled',
-			'/attachments',
+			'/attachments/*',
 			'/cache',
 			'/images/*',
 			'/language',
@@ -70,6 +68,7 @@ class SystemCheckPage extends AbstractPage {
 		'pcre',
 		'gd',
 		'hash',
+		'exif',
 	];
 	
 	public $phpMemoryLimit = 128;
