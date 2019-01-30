@@ -28,15 +28,7 @@
 				<span class="menuOverlayItemTitle">{lang}wcf.global.search{/lang}</span>
 			</a>
 		</li>
-		<li class="menuOverlayItem" id="pageMainMenuMobilePageOptionsContainer">
-			<a href="#" class="menuOverlayItemLink box24">
-				<span class="icon icon24 fa-gears"></span>
-				<span class="menuOverlayItemTitle">{lang}wcf.menu.page.options{/lang}</span>
-			</a>
-			<ol class="menuOverlayItemList">
-				<li class="menuOverlayItem jsMenuOverlayItemPlaceholder"><a href="#">(placeholder)</a></li>
-			</ol>
-		</li>
+		<li class="menuOverlayTitle" id="pageMainMenuMobilePageOptionsTitle">{lang}wcf.menu.page.options{/lang}</li>
 		
 		{event name='menuItems'}
 		
