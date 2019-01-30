@@ -705,7 +705,20 @@
 												<li><a><span class="icon icon16 fa-strikethrough"></span></a></li>
 											</ul>
 										</div>
-										<div id="spEditorContent"></div>
+										<div id="spEditorContent">
+											<table id="spEditorTable" data-region="wcfEditorTable">
+												<tr>
+													<td>Lorem</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>Ipsum</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+											</table>
+										</div>
 									</div>
 									
 									<div class="spHeadline">Dropdown</div>
@@ -829,6 +842,7 @@
 								<p>{lang}wcf.acp.style.colors.description{/lang}</p>
 								<p><br></p>
 								<p><sup class="spApiVersion">3.1</sup> <small>{lang version='3.1'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
+								<p><sup class="spApiVersion">5.2</sup> <small>{lang version='5.2'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
 							</div>
 							
 							{foreach from=$colors key=spCategory item=spColors}
@@ -927,6 +941,7 @@
 				'wcfEditorButtonText': '#spEditor .redactor-toolbar a { color: VALUE; }',
 				'wcfEditorButtonTextActive': '#spEditor .redactor-toolbar a:hover, #spEditor .redactor-toolbar a.dropact { color: VALUE; }',
 				'wcfEditorButtonTextDisabled': '#spEditor .redactor-toolbar a.redactor-button-disabled { color: VALUE; }',
+				'wcfEditorTableBorder': '#spEditorTable td { border-color: VALUE; }',
 				'wcfDropdownBackground': '#spDropdown { background-color: VALUE; } __COMBO_RULE__ #spDropdown::before { border-bottom-color: VALUE; }',
 				'wcfDropdownBorderInner': '#spDropdown .dropdownDivider { border-color: VALUE; }',
 				'wcfDropdownText': '#spDropdown li { color: VALUE; }',

@@ -1,0 +1,19 @@
+/*
+ * Special styles for changes introduced in WoltLab Suite 5.2 that
+ * are not compatible with styles created for earlier versions.
+ */
+@include requireApiVersion(52) {
+	.htmlContent table,
+	.table {
+		tr:hover > td {
+			background-color: $wcfTabularBoxBackgroundActive;
+		}
+	}
+	
+	.redactor-layer table {
+		th,
+		td {
+			border-color: $wcfEditorTableBorder;
+		}
+	}
+}

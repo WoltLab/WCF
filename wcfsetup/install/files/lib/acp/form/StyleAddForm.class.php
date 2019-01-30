@@ -140,7 +140,10 @@ class StyleAddForm extends AbstractForm {
 		'wcfEditorButtonBackgroundActive' => '3.1',
 		'wcfEditorButtonText' => '3.1',
 		'wcfEditorButtonTextActive' => '3.1',
-		'wcfEditorButtonTextDisabled' => '3.1'
+		'wcfEditorButtonTextDisabled' => '3.1',
+		
+		// 5.2
+		'wcfEditorTableBorder' => '5.2',
 	];
 	
 	/**
@@ -482,7 +485,7 @@ class StyleAddForm extends AbstractForm {
 			'wcfTabularBox' => 'wcfTabularBox',
 			'wcfInput' => ['wcfInput', 'wcfInputDisabled'],
 			'wcfButton' => ['wcfButton', 'wcfButtonPrimary', 'wcfButtonDisabled'],
-			'wcfEditor' =>'wcfEditorButton',
+			'wcfEditor' => ['wcfEditorButton', 'wcfEditorTable'],
 			'wcfDropdown' => 'wcfDropdown',
 			'wcfStatus' => ['wcfStatusInfo', 'wcfStatusSuccess', 'wcfStatusWarning', 'wcfStatusError'],
 			'wcfFooterBox' => ['wcfFooterBox', 'wcfFooterBoxHeadline'],
@@ -509,6 +512,7 @@ class StyleAddForm extends AbstractForm {
 			'wcfButtonPrimary' => ['background', 'text', 'backgroundActive', 'textActive'],
 			'wcfButtonDisabled' => ['background', 'text'],
 			'wcfEditorButton' => ['background', 'backgroundActive', 'text', 'textActive', 'textDisabled'],
+			'wcfEditorTable' => ['border'],
 			'wcfDropdown' => ['background', 'borderInner', 'text', 'link', 'backgroundActive', 'linkActive'],
 			'wcfStatusInfo' => ['background', 'border', 'text', 'link', 'linkActive'],
 			'wcfStatusSuccess' => ['background', 'border', 'text', 'link', 'linkActive'],

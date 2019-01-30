@@ -45,9 +45,9 @@ class Style extends DatabaseObject {
 	 * list of supported API versions
 	 * @var string[]
 	 */
-	public static $supportedApiVersions = ['3.0', '3.1'];
+	public static $supportedApiVersions = ['3.0', '3.1', '5.2'];
 	
-	const API_VERSION = '3.1';
+	const API_VERSION = '5.2';
 	
 	const PREVIEW_IMAGE_MAX_HEIGHT = 64;
 	const PREVIEW_IMAGE_MAX_WIDTH = 102;
