@@ -188,7 +188,7 @@
 				<dt>{lang}wcf.acp.trophy.type.badge{/lang}</dt>
 				<dd>
 					<span class="icon icon64 fa-{$iconName} jsTrophyIcon trophyIcon" style="color: {$iconColor}; background-color: {$badgeColor}"></span>
-					<button class="small">{lang}wcf.global.button.edit{/lang}</button>
+					<span class="button small">{lang}wcf.global.button.edit{/lang}</span>
 					
 					<input type="hidden" name="iconName" value="{$iconName}">
 					<input type="hidden" name="iconColor" value="{$iconColor}">
