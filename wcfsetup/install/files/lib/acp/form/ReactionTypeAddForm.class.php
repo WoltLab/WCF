@@ -12,7 +12,6 @@ use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\UploadFormField;
-use wcf\util\StringUtil;
 
 /**
  * Represents the reaction type add form.
@@ -125,10 +124,6 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm {
 		$file = array_pop($files);
 		if (!$file->isProcessed()) {
 			$fileName = $reactionType->reactionTypeID . '-' . $file->getFilename();
-			
-			if (file_exists(WCF_DIR . '/images/reaction/' . $fileName)) {
-				$fileName = $reactionType->reactionTypeID . '-'. substr(0, 5, StringUtil::getRandomID()) . '-' . $file->getFilename();
-			}
 			
 			rename($file->getLocation(), WCF_DIR . '/images/reaction/' . $fileName);
 			$file->setProcessed(WCF_DIR . '/images/reaction/' . $fileName);
