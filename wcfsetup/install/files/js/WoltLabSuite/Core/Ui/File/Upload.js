@@ -105,7 +105,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 		},
 		
 		_failure: function(uploadId, data, responseText, xhr, requestOptions) {
-			for (var i in this._fileElements[uploadId]) {
+			for (var i = 0, length = this._fileElements[uploadId].length; i < length; i++) {
 				this._fileElements[uploadId][i].classList.add('uploadFailed');
 				
 				elBySel('small', this._fileElements[uploadId][i]).innerHTML = '';
@@ -130,7 +130,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 		},
 		
 		_success: function(uploadId, data, responseText, xhr, requestOptions) {
-			for (var i in this._fileElements[uploadId]) {
+			for (var i = 0, length = this._fileElements[uploadId].length; i < length; i++) {
 				if (data['files'][i] !== undefined) {
 					if (this._options.imagePreview) {
 						if (data['files'][i].image === null) {
