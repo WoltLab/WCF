@@ -89,6 +89,19 @@ class UploadFormField extends AbstractFormField {
 	}
 	
 	/**
+	 * Returns the removed files for the field. 
+	 * 
+	 * @param       bool    $processFiles
+	 * @return      UploadFile[]
+	 */
+	public function getRemovedFiles($processFiles = false) {
+		$this->registerField();
+		
+		return UploadHandler::getInstance()->getRemovedFiledByFieldId($this->getId(), $processFiles);
+	}
+	
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function getObjectProperty() {
