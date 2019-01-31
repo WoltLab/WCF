@@ -34,15 +34,15 @@
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/File/Upload', 'Language'], function(Upload, Language) {
+		Language.addObject({
+			'wcf.upload.error.reachedRemainingLimit': '{lang}wcf.upload.error.reachedRemainingLimit{/lang}',
+			'wcf.upload.error.noImage': '{lang}wcf.upload.error.noImage{/lang}'
+		});
+		
 		new Upload("{$uploadFieldId}UploadButtonDiv", "{$uploadFieldId}uploadFileList", {
 			internalId: '{$uploadField->getInternalId()}',
 			{if $uploadField->getMaxFiles()}maxFiles: {$uploadField->getMaxFiles()},{/if}
 			imagePreview: {if !$uploadField->supportMultipleFiles() && $uploadField->isImageOnly()}true{else}false{/if}
-		});
-		
-		Language.addObject({
-			'wcf.upload.error.reachedRemainingLimit': '{lang}wcf.upload.error.reachedRemainingLimit{/lang}',
-			'wcf.upload.error.noImage': '{lang}wcf.upload.error.noImage{/lang}'
 		});
 	});
 </script>
