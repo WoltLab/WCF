@@ -178,7 +178,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 					}
 				}
 				else {
-					throw new Error('Unknown uploaded file for uploadId '+ uploadId +'.');
+					throw new Error('Unknown uploaded file for uploadId ' + uploadId + '.');
 				}
 			}
 			

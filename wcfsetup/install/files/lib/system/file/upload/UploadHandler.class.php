@@ -361,7 +361,7 @@ class UploadHandler extends SingletonFactory {
 		if (isset($this->getStorage()[$internalId])) {
 			$files = $this->getStorage()[$internalId]['files'];
 			
-			// check avaibility of the files 
+			// check availability of the files 
 			/** @var UploadFile $file */
 			foreach ($files as $file) {
 				if (!file_exists($file->getLocation())) {

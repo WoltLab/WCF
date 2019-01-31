@@ -124,7 +124,7 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm {
 		/** @var UploadFile $file */
 		$file = array_pop($files);
 		if (!$file->isProcessed()) {
-			$fileName = $reactionType->reactionTypeID . '-'. $file->getFilename();
+			$fileName = $reactionType->reactionTypeID . '-' . $file->getFilename();
 			
 			if (file_exists(WCF_DIR . '/images/reaction/' . $fileName)) {
 				$fileName = $reactionType->reactionTypeID . '-'. substr(0, 5, StringUtil::getRandomID()) . '-' . $file->getFilename();
