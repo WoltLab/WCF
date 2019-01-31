@@ -89,10 +89,10 @@ class AJAXFileUploadAction extends AbstractSecureAction {
 		foreach ($_FILES['__files']['tmp_name'] as $id => $tmpName) {
 			if ($field->isImageOnly()) {
 				if (@getimagesize($tmpName) === false) {
-					if (!($field->svgImagesAllowed() && in_array(FileUtil::getMimeType($tmpName), [
+					if (!$field->svgImagesAllowed() || !in_array(FileUtil::getMimeType($tmpName), [
 							'image/svg',
 							'image/svg+xml'
-						]))) {
+						])) {
 						$response['error'][$i++] = [
 							'filename' => $_FILES['__files']['name'][$id],
 							'errorMessage' => WCF::getLanguage()->get('wcf.upload.error.noImage')
