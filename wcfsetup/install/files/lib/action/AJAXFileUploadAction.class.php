@@ -100,6 +100,17 @@ class AJAXFileUploadAction extends AbstractSecureAction {
 						continue;
 					}
 				}
+				
+				$allowedExtensions = ['jpeg', 'jpg', 'png', 'gif'];
+				if ($field->svgImagesAllowed()) $allowedExtensions[] = 'svg';
+				
+				if (!in_array(pathinfo($_FILES['__files']['name'][$id], PATHINFO_EXTENSION), $allowedExtensions)) {
+					$response['error'][$i++] = [
+						'filename' => $_FILES['__files']['name'][$id],
+						'errorMessage' => WCF::getLanguage()->get('wcf.upload.error.noImage')
+					];
+					continue;
+				}
 			}
 			
 			$tmpFile = FileUtil::getTemporaryFilename('fileUpload_');
