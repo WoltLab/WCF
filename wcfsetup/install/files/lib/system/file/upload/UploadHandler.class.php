@@ -154,6 +154,16 @@ class UploadHandler extends SingletonFactory {
 			return; 
 		}		
 		
+		$this->removeFileByObject($internalId, $file);
+	}
+	
+	/**
+	 * Removes an file by file object. 
+	 * 
+	 * @param       string          $internalId
+	 * @param       UploadFile      $file
+	 */
+	private function removeFileByObject($internalId, UploadFile $file) {
 		$storage = $this->getStorage();
 		
 		if ($file->isProcessed()) {
@@ -165,7 +175,7 @@ class UploadHandler extends SingletonFactory {
 		
 		/** @var UploadFile $storageFile */
 		foreach ($storage[$internalId]['files'] as $id => $storageFile) {
-			if ($storageFile->getUniqueFileId() === $uniqueFileId) {
+			if ($storageFile->getUniqueFileId() === $file->getUniqueFileId()) {
 				unset($storage[$internalId]['files'][$id]);
 				break;
 			}
@@ -355,7 +365,7 @@ class UploadHandler extends SingletonFactory {
 			/** @var UploadFile $file */
 			foreach ($files as $file) {
 				if (!file_exists($file->getLocation())) {
-					$this->removeFile($internalId, $file->getUniqueFileId());
+					$this->removeFile($internalId, $file);
 				}
 			}
 			
