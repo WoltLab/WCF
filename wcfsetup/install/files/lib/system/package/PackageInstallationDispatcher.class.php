@@ -433,6 +433,9 @@ class PackageInstallationDispatcher {
 		}
 		unset($nodeData['requirements']);
 		
+		$applicationDirectory = $nodeData['applicationDirectory'];
+		unset($nodeData['applicationDirectory']);
+		
 		// update package
 		if ($this->queue->packageID) {
 			$packageEditor = new PackageEditor(new Package($this->queue->packageID));
@@ -534,7 +537,7 @@ class PackageInstallationDispatcher {
 		
 		if ($this->getPackage()->isApplication && $this->getPackage()->package != 'com.woltlab.wcf' && $this->getAction() == 'install') {
 			if (empty($this->getPackage()->packageDir)) {
-				$document = $this->promptPackageDir();
+				$document = $this->promptPackageDir($applicationDirectory);
 				if ($document !== null && $document instanceof FormDocument) {
 					$installationStep->setDocument($document);
 				}
@@ -799,9 +802,10 @@ class PackageInstallationDispatcher {
 	/**
 	 * Prompts for a text input for package directory (applies for applications only)
 	 * 
+	 * @param       string          $applicationDirectory
 	 * @return	FormDocument
 	 */
-	protected function promptPackageDir() {
+	protected function promptPackageDir($applicationDirectory) {
 		// check for pre-defined directories originating from WCFSetup
 		$directory = WCF::getSession()->getVar('__wcfSetup_directories');
 		if ($directory !== null) {
@@ -841,7 +845,10 @@ class PackageInstallationDispatcher {
 			if ($isParent === false) {
 				$defaultPath = dirname(WCF_DIR);
 			}
-			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($defaultPath)) . Package::getAbbreviation($this->getPackage()->package) . '/';
+			if (!$applicationDirectory) {
+				$applicationDirectory = Package::getAbbreviation($this->getPackage()->package);
+			}
+			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($defaultPath)) . $applicationDirectory . '/';
 			
 			$packageDir->setValue($defaultPath);
 			$container->appendChild($packageDir);
