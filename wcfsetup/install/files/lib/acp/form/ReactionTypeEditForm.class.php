@@ -1,7 +1,9 @@
 <?php
 namespace wcf\acp\form;
 use wcf\data\reaction\type\ReactionType;
+use wcf\form\AbstractFormBuilderForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\file\upload\UploadFile;
 
 /**
  * Represents the reaction type add form.
@@ -35,5 +37,32 @@ class ReactionTypeEditForm extends ReactionTypeAddForm {
 				throw new IllegalLinkException();
 			}
 		}
+	}
+	
+	/**
+	 * Sets the form data based on the current form object.
+	 */
+	protected function setFormObjectData() {
+		parent::setFormObjectData(); 
+		
+		if (empty($_POST)) {
+			$this->uploadFormField->value([
+				new UploadFile(WCF_DIR . 'images/reaction/' . $this->formObject->iconFile, basename($this->formObject->iconFile), true, true, true)
+			]);
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function saved() {
+		// remove removed files
+		foreach ($this->uploadFormField->getRemovedFiles(true) as $file) {
+			@unlink($file->getLocation());
+		}
+		
+		$this->saveImage($this->formObject);
+		
+		AbstractFormBuilderForm::saved();
 	}
 }

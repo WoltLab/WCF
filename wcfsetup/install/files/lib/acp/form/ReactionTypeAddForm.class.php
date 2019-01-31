@@ -2,16 +2,17 @@
 namespace wcf\acp\form;
 use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeAction;
+use wcf\data\reaction\type\ReactionTypeEditor;
 use wcf\data\reaction\type\ReactionTypeList;
 use wcf\form\AbstractFormBuilderForm;
+use wcf\system\file\upload\UploadFile;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\IsDisabledFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
-use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
-use wcf\system\form\builder\field\validation\FormFieldValidationError;
-use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\field\UploadFormField;
+use wcf\util\StringUtil;
 
 /**
  * Represents the reaction type add form.
@@ -49,6 +50,11 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm {
 	public $neededModules = ['MODULE_LIKE'];
 	
 	/**
+	 * @var UploadFormField
+	 */
+	protected $uploadFormField;
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected function createForm() {
@@ -78,26 +84,59 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm {
 					->label('wcf.acp.reactionType.isDisabled')
 			]);
 		
+		$this->uploadFormField = UploadFormField::create('iconFile')
+			->label('wcf.acp.reactionType.image')
+			->description('wcf.acp.reactionType.image.description')
+			->required()
+			->maximum(1)
+			->imageOnly(true)
+			->allowSvgImage(true);
+		
 		$iconContainer = FormContainer::create('imageSection')
 			->label('wcf.acp.reactionType.image')
 			->appendChildren([
-				TextFormField::create('iconFile')
-					->label('wcf.acp.reactionType.image')
-					->description('wcf.acp.reactionType.image.description')
-					->required()
-					->addValidator(new FormFieldValidator('invalidPath', function(TextFormField $field) {
-						if (!file_exists(WCF_DIR.'images/reaction/'.$field->getValue())) {
-							$field->addValidationError(new FormFieldValidationError(
-								'invalidPath',
-								'wcf.acp.reactionType.image.invalidPath'
-							));
-						}
-					}))
+				$this->uploadFormField
 			]);
 		
 		$this->form->appendChildren([
 			$dataContainer, 
 			$iconContainer
 		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function saved() {
+		$this->saveImage($this->objectAction->getReturnValues()['returnValues']);
+		
+		parent::saved();
+	}
+	
+	/**
+	 * Save the image for a reaction type.
+	 * 
+	 * @param       ReactionType    $reactionType
+	 */
+	protected function saveImage(ReactionType $reactionType) {
+		$files = $this->uploadFormField->getValue();
+		
+		/** @var UploadFile $file */
+		$file = array_pop($files);
+		if (!$file->isProcessed()) {
+			$fileName = $reactionType->reactionTypeID . '-'. $file->getFilename();
+			
+			if (file_exists(WCF_DIR . '/images/reaction/' . $fileName)) {
+				$fileName = $reactionType->reactionTypeID . '-'. substr(0, 5, StringUtil::getRandomID()) . '-' . $file->getFilename();
+			}
+			
+			rename($file->getLocation(), WCF_DIR . '/images/reaction/' . $fileName);
+			$file->setProcessed(WCF_DIR . '/images/reaction/' . $fileName);
+			
+			$reactionTypeEditor = new ReactionTypeEditor($reactionType);
+			$reactionTypeEditor->update([
+				'iconFile' => $fileName
+			]);
+		}
 	}
 }
