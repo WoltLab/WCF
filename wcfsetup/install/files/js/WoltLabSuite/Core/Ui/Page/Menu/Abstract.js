@@ -121,7 +121,7 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Tra
 			
 			_pageContainer.classList.add('menuOverlay-' + this._menu.id);
 			
-			document.documentElement.classList.add('pageOverlayActive');
+			UiScreen.pageOverlayOpen();
 			
 			return true;
 		},
@@ -141,10 +141,9 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Tra
 				this._menu.classList.remove('open');
 				
 				UiScreen.scrollEnable();
+				UiScreen.pageOverlayClose();
 				
 				_pageContainer.classList.remove('menuOverlay-' + this._menu.id);
-				
-				document.documentElement.classList.remove('pageOverlayActive');
 				
 				return true;
 			}
@@ -223,7 +222,7 @@ define(['Core', 'Environment', 'EventHandler', 'Language', 'ObjectMap', 'Dom/Tra
 				// break if no edge has been touched
 				if (!isLeftEdge && !isRightEdge) return;
 				// break if a different menu is open
-				if (document.documentElement.classList.contains('pageOverlayActive')) {
+				if (UiScreen.pageOverlayIsActive()) {
 					var found = false;
 					for (var i = 0; i < _pageContainer.classList.length; i++) {
 						if (_pageContainer.classList[i] === 'menuOverlay-' + this._menu.id) {

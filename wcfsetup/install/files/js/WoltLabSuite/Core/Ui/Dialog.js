@@ -236,7 +236,7 @@ define(
 		 * @return	{object<string, *>}		dialog data
 		 */
 		openStatic: function(id, html, options, createOnly) {
-			document.documentElement.classList.add('pageOverlayActive');
+			UiScreen.pageOverlayOpen();
 			
 			if (Environment.platform() !== 'desktop') {
 				if (!this.isOpen(id)) {
@@ -830,7 +830,8 @@ define(
 				if (data.closable) {
 					window.removeEventListener('keyup', _keyupListener);
 				}
-				document.documentElement.classList.remove('pageOverlayActive');
+				
+				UiScreen.pageOverlayClose();
 			}
 			else {
 				data = _dialogs.get(_activeDialog);

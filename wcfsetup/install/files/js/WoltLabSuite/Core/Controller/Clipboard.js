@@ -11,13 +11,13 @@ define(
 		'Ajax',         'Core',     'Dictionary',      'EventHandler',
 		'Language',     'List',     'ObjectMap',       'Dom/ChangeListener',
 		'Dom/Traverse', 'Dom/Util', 'Ui/Confirmation', 'Ui/SimpleDropdown',
-		'WoltLabSuite/Core/Ui/Page/Action'
+		'WoltLabSuite/Core/Ui/Page/Action', 'Ui/Screen'
 	],
 	function(
 		Ajax,            Core,       Dictionary,        EventHandler,
 		Language,        List,       ObjectMap,         DomChangeListener,
 		DomTraverse,     DomUtil,    UiConfirmation,    UiSimpleDropdown,
-	        UiPageAction
+	        UiPageAction,    UiScreen
 	)
 {
 	"use strict";
@@ -56,7 +56,6 @@ define(
 	var _callbackItem = null;
 	var _callbackUnmarkAll = null;
 	
-	var _addPageOverlayActiveClass = false;
 	var _specialCheckboxSelector = '.messageCheckboxLabel > input[type="checkbox"], .message .messageClipboardCheckbox > input[type="checkbox"], .messageGroupList .columnMark > label > input[type="checkbox"]';
 	
 	/**
@@ -708,11 +707,7 @@ define(
 		hideEditor: function(objectType) {
 			UiPageAction.remove('wcfClipboard-' + objectType);
 			
-			if (_addPageOverlayActiveClass) {
-				_addPageOverlayActiveClass = false;
-				
-				document.documentElement.classList.add('pageOverlayActive');
-			}
+			UiScreen.pageOverlayOpen();
 		},
 		
 		/**
@@ -721,11 +716,7 @@ define(
 		showEditor: function() {
 			this._loadMarkedItems();
 			
-			if (document.documentElement.classList.contains('pageOverlayActive')) {
-				document.documentElement.classList.remove('pageOverlayActive');
-				
-				_addPageOverlayActiveClass = true;
-			}
+			UiScreen.pageOverlayClose();
 		},
 		
 		/**
