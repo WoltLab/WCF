@@ -1678,6 +1678,8 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
  * @see	WCF.Search.Base
  */
 WCF.ACP.Search = WCF.Search.Base.extend({
+	_delay: 250,
+	
 	/**
 	 * name of the selected search provider
 	 * @var	string

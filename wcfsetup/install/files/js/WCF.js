@@ -4102,6 +4102,11 @@ WCF.Search.Base = Class.extend({
 	_itemIndex: -1,
 	
 	/**
+	 * @var string
+	 */
+	_lastValue: '',
+	
+	/**
 	 * result list
 	 * @var	jQuery
 	 */
@@ -4156,6 +4161,7 @@ WCF.Search.Base = Class.extend({
 		this._caretAt = -1;
 		this._delay = 0;
 		this._excludedSearchValues = [];
+		this._lastValue = '';
 		if (excludedSearchValues) {
 			this._excludedSearchValues = excludedSearchValues;
 		}
@@ -4257,6 +4263,12 @@ WCF.Search.Base = Class.extend({
 			this._clearList(false);
 		}
 		else if ($content.length >= this._triggerLength) {
+			if (this._lastValue === $content) {
+				return;
+			}
+			
+			this._lastValue = $content;
+			
 			var $parameters = {
 				data: {
 					excludedSearchValues: this._excludedSearchValues,
