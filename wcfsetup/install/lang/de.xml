@@ -3614,6 +3614,7 @@ Dateianhänge:
 		<item name="wcf.editor.image.float.left"><![CDATA[Links]]></item>
 		<item name="wcf.editor.image.float.right"><![CDATA[Rechts]]></item>
 		<item name="wcf.editor.image.source"><![CDATA[Quelle]]></item>
+		<item name="wcf.editor.image.source.error.blocked"><![CDATA[Das Einbinden von Grafiken von Drittseiten wurde deaktiviert, bitte verwende{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} die Dateianhangs-Funktion.]]></item>
 		<item name="wcf.editor.image.source.error.insecure"><![CDATA[Unsichere Adressen („http://“) wurden für Bilder deaktiviert, bitte verwende{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} nur sichere Adressen („https://“).]]></item>
 		<item name="wcf.editor.image.source.error.invalid"><![CDATA[Der eingegebene Link ist ungültig.]]></item>
 		<item name="wcf.editor.link.add"><![CDATA[Link einfügen]]></item>

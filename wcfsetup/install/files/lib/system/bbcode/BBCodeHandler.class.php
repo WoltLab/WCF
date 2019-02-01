@@ -2,7 +2,9 @@
 namespace wcf\system\bbcode;
 use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeCache;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\SingletonFactory;
+use wcf\util\ArrayUtil;
 use wcf\util\JSON;
 
 /**
@@ -137,5 +139,25 @@ class BBCodeHandler extends SingletonFactory {
 	 */
 	public function getHighlighters() {
 		return array_keys($this->getHighlighterMeta());
+	}
+	
+	/**
+	 * Returns a list of hostnames that are permitted as image sources.
+	 * 
+	 * @return string[]
+	 * @since 5.2
+	 */
+	public function getImageExternalSourceWhitelist() {
+		$hosts = [];
+		// Hide these hosts unless external sources are actually denied.
+		if (!IMAGE_ALLOW_EXTERNAL_SOURCE) {
+			$hosts = ArrayUtil::trim(explode("\n", IMAGE_EXTERNAL_SOURCE_WHITELIST));
+		}
+		
+		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			$hosts[] = $application->domainName;
+		}
+		
+		return array_unique($hosts);
 	}
 }

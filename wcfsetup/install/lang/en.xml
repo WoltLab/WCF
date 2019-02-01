@@ -3560,6 +3560,7 @@ Attachments:
 		<item name="wcf.editor.image.float.left"><![CDATA[Left]]></item>
 		<item name="wcf.editor.image.float.right"><![CDATA[Right]]></item>
 		<item name="wcf.editor.image.source"><![CDATA[Source]]></item>
+		<item name="wcf.editor.image.source.error.blocked"><![CDATA[Images from external sources have been disabled, please use the file attachment function.]]></item>
 		<item name="wcf.editor.image.source.error.insecure"><![CDATA[Insecure sources (“http://”) for images have been disabled, please use secure sources only (“https://”).]]></item>
 		<item name="wcf.editor.image.source.error.invalid"><![CDATA[You have entered an invalid link.]]></item>
 		<item name="wcf.editor.link.add"><![CDATA[Insert Link]]></item>

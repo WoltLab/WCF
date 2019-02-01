@@ -57,6 +57,9 @@ $.Redactor.prototype.WoltLabImage = function() {
 					else if (this.opts.woltlab.forceSecureImages && source.indexOf('http://') === 0) {
 						return showError(sourceInput, WCF.Language.get('wcf.editor.image.source.error.insecure'));
 					}
+					else if (!this.WoltLabImage.isValidSource(source)) {
+						return showError(sourceInput, WCF.Language.get('wcf.editor.image.source.error.blocked'));
+					}
 					
 					// update image source
 					image.src = source;
@@ -145,6 +148,9 @@ $.Redactor.prototype.WoltLabImage = function() {
 			else if (this.opts.woltlab.forceSecureImages && source.indexOf('http://') === 0) {
 				return showError(sourceInput, WCF.Language.get('wcf.editor.image.source.error.insecure'));
 			}
+			else if (!this.WoltLabImage.isValidSource(source)) {
+				return showError(sourceInput, WCF.Language.get('wcf.editor.image.source.error.blocked'));
+			}
 			
 			// check if link is valid
 			var linkInput = elById('redactor-image-link');
@@ -181,6 +187,59 @@ $.Redactor.prototype.WoltLabImage = function() {
 					}
 				}).bind(this), 1);
 			}
+		},
+		
+		/**
+		 * @param {string} src
+		 */
+		isValidSource: function (src) {
+			var link = elCreate('a');
+			link.href = src;
+			// Relative links in IE might not have a hostname.
+			if (link.hostname === '') {
+				return true;
+			}
+			
+			
+			// Check for secure hosts only.
+			if (this.opts.woltlab.images.secureOnly && link.protocol !== 'https:') {
+				return false;
+			}
+			
+			if (!this.opts.woltlab.images.external) {
+				var isValid = false;
+				var wildcards = [];
+				this.opts.woltlab.images.whitelist.forEach(function(hostname) {
+					if (hostname.indexOf('*.') === 0) {
+						wildcards.push(hostname.replace(/^\*\./, ''));
+					}
+					else if (link.hostname === hostname) {
+						isValid = true;
+					}
+				});
+				
+				if (!isValid) {
+					wildcards.forEach(function(hostname) {
+						if (link.hostname.substr(hostname.length * -1) === hostname) {
+							isValid = true;
+						}
+					});
+				}
+				
+				if (!isValid) {
+					return false;
+				}
+			}
+			
+			return true;
+		},
+		
+		validateImages: function() {
+			elBySelAll('img:not(.smiley):not(.woltlabAttachment)', this.core.editor()[0], (function(img) {
+				if (!this.WoltLabImage.isValidSource(img.src)) {
+					img.classList.add('editorImageBlocked');
+				}
+			}).bind(this));
 		}
 	};
 };
