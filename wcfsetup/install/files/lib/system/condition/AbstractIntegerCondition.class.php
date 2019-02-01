@@ -239,6 +239,16 @@ HTML;
 			}
 		}
 		
+		$this->validateConflictingValues();
+	}
+	
+	/**
+	 * Checks if the values for `greaterThan` and `lessThan` are conflicting.
+	 * 
+	 * @throws	UserInputException		if values for `greaterThan` and `lessThan` are conflicting
+	 * @since	3.0
+	 */
+	protected function validateConflictingValues() {
 		if ($this->lessThan !== null && $this->greaterThan !== null && $this->greaterThan + 1 >= $this->lessThan) {
 			$this->errorMessage = 'wcf.condition.greaterThan.error.lessThan';
 			
