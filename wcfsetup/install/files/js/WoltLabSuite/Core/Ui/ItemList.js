@@ -543,21 +543,19 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 		 * @param	{object}	event		event object
 		 */
 		_blur: function(event) {
-			var data = _data.get(event.currentTarget.id);
+			var input = event.currentTarget;
+			var data = _data.get(input.id);
 			if (data.options.restricted) {
 				// restricted item lists only allow results from the dropdown to be picked
 				return;
 			}
 			
-			var currentTarget = event.currentTarget;
-			window.setTimeout(function() {
-				var value = currentTarget.value.trim();
-				if (value.length) {
-					if (!data.suggestion || !data.suggestion.isActive()) {
-						this._addItem(currentTarget.id, { objectId: 0, value: value });
-					}
+			var value = input.value.trim();
+			if (value.length) {
+				if (!data.suggestion || !data.suggestion.isActive()) {
+					this._addItem(input.id, { objectId: 0, value: value });
 				}
-			}.bind(this), 100);
+			}
 		}
 	};
 });
