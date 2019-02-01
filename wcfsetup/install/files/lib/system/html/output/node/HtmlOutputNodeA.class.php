@@ -87,5 +87,17 @@ class HtmlOutputNodeA extends AbstractHtmlOutputNode {
 		if (!empty($rel)) {
 			$element->setAttribute('rel', $rel);
 		}
+		
+		// If the link contains only a single image that is floated to the right,
+		// then the external link marker is misaligned. Inheriting the CSS class
+		// will cause the link marker to behave properly.
+		if ($element->childNodes->length === 1) {
+			$child = $element->childNodes->item(0);
+			if ($child->nodeType === XML_ELEMENT_NODE && $child->nodeName === 'img') {
+				if (preg_match('~\b(?P<className>messageFloatObject(?:Left|Right))\b~', $child->getAttribute('class'), $match)) {
+					$element->setAttribute('class', $element->getAttribute('class') . ' ' . $match['className']);
+				}
+			}
+		}
 	}
 }
