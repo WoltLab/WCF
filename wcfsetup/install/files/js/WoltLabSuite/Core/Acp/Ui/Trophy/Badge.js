@@ -20,7 +20,7 @@ define(['Core', 'Dictionary', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Ui/Col
 		 */
 		init: function () {
 			var iconContainer = elById('badgeContainer');
-			elBySel('button', iconContainer).addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+			elBySel('.button', iconContainer).addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
 			
 			_iconNameInput = elBySel('input[name="iconName"]', iconContainer);
 			_iconColorInput = elBySel('input[name="iconColor"]', iconContainer);
