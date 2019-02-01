@@ -197,7 +197,7 @@ class UploadFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 * 
-	 * @throws      \RuntimeException       if the field has already been initalisated
+	 * @throws      \RuntimeException       if the field has already been initialized
 	 */
 	public function maximum($maximum = null) {
 		if ($this->isRegistered()) {
@@ -232,7 +232,7 @@ class UploadFormField extends AbstractFormField {
 	}
 	
 	/**
-	 * Returns true, if the field is an image only field (only images can be uploaded).
+	 * Returns `true` if only images can be uploaded via this field and returns `false` otherwise.
 	 *
 	 * @return	boolean
 	 */
