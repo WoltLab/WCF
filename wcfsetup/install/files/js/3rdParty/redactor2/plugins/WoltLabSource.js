@@ -140,7 +140,7 @@ $.Redactor.prototype.WoltLabSource = function() {
 			
 			// protect <pre> from changes
 			var backup = [];
-			html = html.replace(new RegExp('<pre' + patternTagAttributes + '>[\s\S]*?<\/pre>', 'g'), function(match) {
+			html = html.replace(new RegExp('<pre' + patternTagAttributes + '>[\\s\\S]*?<\/pre>', 'g'), function(match) {
 				backup.push(match);
 				
 				return '@@@WCF_PRE_BACKUP_' + (backup.length - 1) + '@@@';
