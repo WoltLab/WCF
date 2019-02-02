@@ -104,6 +104,7 @@
 			
 			<div class="formSubmit">
 				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+				<a href="{link controller='MembersList'}{/link}" class="button">{lang}wcf.global.button.reset{/lang}</a>
 				<input type="hidden" name="sortField" value="{$sortField}">
 				<input type="hidden" name="sortOrder" value="{$sortOrder}">
 			</div>
