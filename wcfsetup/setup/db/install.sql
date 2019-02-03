@@ -1302,7 +1302,7 @@ CREATE TABLE wcf1_style (
 	isTainted TINYINT(1) NOT NULL DEFAULT 0,
 	hasFavicon TINYINT(1) NOT NULL DEFAULT 0,
 	coverPhotoExtension VARCHAR(4) NOT NULL DEFAULT '',
-	apiVersion ENUM('3.0', '3.1') NOT NULL DEFAULT '3.0' 
+	apiVersion ENUM('3.0', '3.1', '5.2') NOT NULL DEFAULT '3.0' 
 );
 
 DROP TABLE IF EXISTS wcf1_style_variable;
