@@ -23,13 +23,15 @@ class UploadFormField extends AbstractFormField {
 	use TMinimumFormField;
 	
 	/**
-	 * imageOnly flag for the upload field.
+	 * This flag indicates whether only images can uploaded via this field.
+	 * <strong>Heads up:</strong> SVG images can contain bad code, therefore do not
+	 * use this option, outside the acp or check the file whether remote code is contained.
 	 * @var boolean
 	 */
 	protected $imageOnly = false;
 	
 	/**
-	 * allowSvgImage flag.
+	 * This flag indicates whether SVG images are treated as image in the image only mode.
 	 * @var boolean
 	 */
 	protected $allowSvgImage = false;
@@ -66,7 +68,7 @@ class UploadFormField extends AbstractFormField {
 		$uploadField = new UploadField($this->getId());
 		$uploadField->maxFiles = $this->getMaximum();
 		$uploadField->setImageOnly($this->isImageOnly());
-		$uploadField->setAllowSvgImages($this->svgImageAllowed());
+		$uploadField->setAllowSvgImage($this->svgImageAllowed());
 		
 		return $uploadField;
 	}
@@ -226,7 +228,8 @@ class UploadFormField extends AbstractFormField {
 	}
 	
 	/**
-	 * Sets the imageOnly flag for this field.
+	 * Sets the flag for `imageOnly`. This flag indicates whether only images 
+	 * can uploaded via this field. Other file types will be rejected during upload.
 	 *
 	 * @param	boolean	        $imageOnly
 	 * @return	static				this field
@@ -238,7 +241,13 @@ class UploadFormField extends AbstractFormField {
 	}
 	
 	/**
-	 * Sets the imageOnly flag for this field.
+	 * Sets the flag for `allowSvgImage`. This flag indicates whether 
+	 * SVG images should be handled as image, if the upload field is 
+	 * image only (if this field is not image only, this method will 
+	 * throw an exception). 
+	 * 
+	 * <strong>Heads up:</strong> SVG images can contain bad code, therefore do not
+	 * use this option, outside the acp or check the file whether remote code is contained.
 	 *
 	 * @param	boolean	        $allowSvgImages
 	 * @return	static				this field
@@ -265,7 +274,7 @@ class UploadFormField extends AbstractFormField {
 	}
 	
 	/**
-	 * Returns true, if the field can contain svg images.
+	 * Returns true, if the field can contain svg images in the image only mode.
 	 *
 	 * @return	boolean
 	 */

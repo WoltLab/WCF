@@ -89,7 +89,7 @@ class AJAXFileUploadAction extends AbstractSecureAction {
 		foreach ($_FILES['__files']['tmp_name'] as $id => $tmpName) {
 			if ($field->isImageOnly()) {
 				if (@getimagesize($tmpName) === false) {
-					if (!$field->svgImagesAllowed() || !in_array(FileUtil::getMimeType($tmpName), [
+					if (!$field->svgImageAllowed() || !in_array(FileUtil::getMimeType($tmpName), [
 							'image/svg',
 							'image/svg+xml'
 						])) {
@@ -102,7 +102,7 @@ class AJAXFileUploadAction extends AbstractSecureAction {
 				}
 				
 				$allowedExtensions = ['jpeg', 'jpg', 'png', 'gif'];
-				if ($field->svgImagesAllowed()) $allowedExtensions[] = 'svg';
+				if ($field->svgImageAllowed()) $allowedExtensions[] = 'svg';
 				
 				if (!in_array(pathinfo($_FILES['__files']['name'][$id], PATHINFO_EXTENSION), $allowedExtensions)) {
 					$response['error'][$i++] = [
@@ -123,7 +123,7 @@ class AJAXFileUploadAction extends AbstractSecureAction {
 				continue;
 			}
 			
-			$uploadFile = new UploadFile($tmpFile, $_FILES['__files']['name'][$id], true, false, $field->svgImagesAllowed());
+			$uploadFile = new UploadFile($tmpFile, $_FILES['__files']['name'][$id], true, false, $field->svgImageAllowed());
 			
 			UploadHandler::getInstance()->addFileByInternalId($this->internalId, $uploadFile);
 			

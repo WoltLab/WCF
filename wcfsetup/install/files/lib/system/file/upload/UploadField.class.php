@@ -30,20 +30,18 @@ class UploadField {
 	public $internalId = null;
 	
 	/**
-	 * Indicates whether the field is image only.
+	 * This flag indicates whether only images can uploaded via this field.
 	 * @var boolean
 	 */
 	public $imageOnly = false;
 	
 	/**
-	 * Indicates whether the field supports svg images.
-	 * 
-	 * <strong>Heads up:</strong> svg images can contain code, therefore do not
+	 * This flag indicates whether only images can uploaded via this field.
+	 * <strong>Heads up:</strong> SVG images can contain bad code, therefore do not
 	 * use this option, outside the acp or check the file whether remote code is contained.
-	 * 
 	 * @var boolean
 	 */
-	public $allowSvgImages = false;
+	public $allowSvgImage = false;
 	
 	/**
 	 * UploadField constructor.
@@ -73,7 +71,7 @@ class UploadField {
 	}
 	
 	/**
-	 * Returns true, if the upload is image only.
+	 * Returns `true` if only images can be uploaded via this field and returns `false` otherwise.
 	 * 
 	 * @return boolean
 	 */
@@ -82,12 +80,12 @@ class UploadField {
 	}
 	
 	/**
-	 * Returns true, if svg images are allowed.
+	 * Returns true, if the field can contain svg images in the image only mode.
 	 * 
 	 * @return boolean
 	 */
-	public function svgImagesAllowed() {
-		return $this->allowSvgImages;
+	public function svgImageAllowed() {
+		return $this->allowSvgImage;
 	}
 	
 	/**
@@ -118,7 +116,8 @@ class UploadField {
 	}
 	
 	/**
-	 * Set the image only flag. 
+	 * Sets the flag for `imageOnly`. This flag indicates whether only images
+	 * can uploaded via this field. Other file types will be rejected during upload.
 	 * 
 	 * @param       boolean       $imageOnly
 	 */
@@ -127,11 +126,23 @@ class UploadField {
 	}
 	
 	/**
-	 * Set the image only flag. 
+	 * Sets the flag for `allowSvgImage`. This flag indicates whether
+	 * SVG images should be handled as image, if the upload field is
+	 * image only (if this field is not image only, this method will
+	 * throw an exception).
 	 * 
-	 * @param       boolean       $allowSvgImages
+	 * <strong>Heads up:</strong> SVG images can contain bad code, therefore do not
+	 * use this option, outside the acp or check the file whether remote code is contained.
+	 * 
+	 * @param       boolean       $allowSvgImage
+	 * 
+	 * @throws      \BadMethodCallException         if the imageOnly flag isn't set to true
 	 */
-	public function setAllowSvgImages($allowSvgImages) {
-		$this->allowSvgImages = $allowSvgImages;
+	public function setAllowSvgImage($allowSvgImage) {
+		if (!$this->isImageOnly()) {
+			throw new \BadMethodCallException('Allowing SVG images is only relevant, if the `imageOnly` flag is set to `true`.');
+		}
+		
+		$this->allowSvgImage = $allowSvgImage;
 	}
 }
