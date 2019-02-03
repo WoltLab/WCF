@@ -1,7 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\devtools\project\DevtoolsProjectList;
-use wcf\page\MultipleLinkPage;
+use wcf\page\SortablePage;
 
 /**
  * Shows a list of devtools projects.
@@ -11,12 +11,19 @@ use wcf\page\MultipleLinkPage;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  * @since	3.1
+ * 
+ * @property	DevtoolsProjectList	$objectList
  */
-class DevtoolsProjectListPage extends MultipleLinkPage {
+class DevtoolsProjectListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.devtools.project.list';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $defaultSortField = 'name';
 	
 	/**
 	 * @inheritDoc
@@ -39,7 +46,7 @@ class DevtoolsProjectListPage extends MultipleLinkPage {
 	public $neededPermissions = ['admin.configuration.package.canInstallPackage'];
 	
 	/**
-	 * @var DevtoolsProjectList
+	 * @inheritDoc
 	 */
-	public $objectList;
+	public $validSortFields = ['projectID', 'name', 'path'];
 }
