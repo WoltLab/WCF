@@ -242,8 +242,14 @@ class UploadFormField extends AbstractFormField {
 	 *
 	 * @param	boolean	        $allowSvgImages
 	 * @return	static				this field
+	 * 
+	 * @throws      \BadMethodCallException         if the imageOnly flag isn't set to true
 	 */
 	public function allowSvgImage($allowSvgImages = true) {
+		if (!$this->isImageOnly()) {
+			throw new \BadMethodCallException('Allowing SVG images is only relevant, if the `imageOnly` flag is set to `true`.');
+		}
+		
 		$this->allowSvgImage = $allowSvgImages;
 		
 		return $this;
