@@ -20,7 +20,10 @@
 	</category>
 	<category name="wcf.acp.ad">
 		<item name="wcf.acp.ad.ad"><![CDATA[Ads]]></item>
-		<item name="wcf.acp.ad.ad.description"><![CDATA[Enter the ad’s HTML code here.]]></item>
+		<item name="wcf.acp.ad.ad.description"><![CDATA[Enter the ad’s HTML code here. The following expressions will be automatically replace within the HTML code:
+<ul class="nativeList">
+	<li class="jsDefaultItem"><kbd>{literal}{$username}{/literal}</kbd> with the name of the active user or “Guest”</li>
+</ul>]]></item>
 		<item name="wcf.acp.ad.add"><![CDATA[Add Ad]]></item>
 		<item name="wcf.acp.ad.conditions"><![CDATA[Conditions]]></item>
 		<item name="wcf.acp.ad.conditions.description"><![CDATA[If no conditions are specified, the ad will display for every user.]]></item>

@@ -2480,10 +2480,16 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 	
 	/**
 	 * Initializes a new WCF.ACP.Ad.LocationHandler object.
+	 * 
+	 * @param	{object}	variablesDescriptions
 	 */
-	init: function() {
+	init: function(variablesDescriptions) {
+		this._variablesDescriptions = variablesDescriptions;
+		
 		this._pageConditions = $('#pageConditions');
 		this._pageInputs = $('input[name="pageIDs[]"]');
+		
+		this._variablesDescriptionsList = $('#ad').next('small').children('ul');
 		
 		var dl = $(this._pageInputs[0]).parents('dl:eq(0)');
 		
@@ -2551,6 +2557,13 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 				if (triggerEvent) Core.triggerEvent(this._pageInputs[i], 'change');
 			}
 		}.bind(this));
+		
+		this._variablesDescriptionsList.children(':not(.jsDefaultItem)').remove();
+		
+		var objectTypeId = $('#objectTypeID').val();
+		if (objectTypeId in this._variablesDescriptions) {
+			this._variablesDescriptionsList[0].innerHTML += this._variablesDescriptions[objectTypeId];
+		}
 	},
 	
 	/**

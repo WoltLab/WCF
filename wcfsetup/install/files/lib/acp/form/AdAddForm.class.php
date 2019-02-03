@@ -5,6 +5,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\ad\AdAction;
 use wcf\form\AbstractForm;
 use wcf\system\ad\AdHandler;
+use wcf\system\ad\location\IAdLocation;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -88,6 +89,16 @@ class AdAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
+		$variablesDescriptions = [];
+		foreach ($this->locationObjectTypes as $objectType) {
+			if ($objectType->className && is_subclass_of($objectType->className, IAdLocation::class)) {
+				/** @var IAdLocation $adLocation */
+				$adLocation = $objectType->getProcessor();
+				
+				$variablesDescriptions[$objectType->objectTypeID] = $adLocation->getVariablesDescription();
+			}
+		}
+		
 		WCF::getTPL()->assign([
 			'action' => 'add',
 			'ad' => $this->ad,
@@ -97,7 +108,8 @@ class AdAddForm extends AbstractForm {
 			'isDisabled' => $this->isDisabled,
 			'groupedConditionObjectTypes' => $this->groupedConditionObjectTypes,
 			'objectTypeID' => $this->objectTypeID,
-			'showOrder' => $this->showOrder
+			'showOrder' => $this->showOrder,
+			'variablesDescriptions' => $variablesDescriptions
 		]);
 	}
 	

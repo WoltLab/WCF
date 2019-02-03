@@ -2,7 +2,9 @@
 
 <script data-relocate="true">
 	$(function() {
-		new WCF.ACP.Ad.LocationHandler();
+		new WCF.ACP.Ad.LocationHandler({
+			{implode from=$variablesDescriptions key=objectType item=description}'{$objectType}': '{@$description|encodeJS}'{/implode}
+		});
 	});
 </script>
 

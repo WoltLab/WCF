@@ -62,7 +62,7 @@ class AdHandler extends SingletonFactory {
 				}
 			}
 			
-			$output .= '<div>' . $ad->ad . '</div>';
+			$output .= '<div>' . $ad->getHtmlCode() . '</div>';
 			if (ENABLE_AD_ROTATION) break;
 		}
 		
