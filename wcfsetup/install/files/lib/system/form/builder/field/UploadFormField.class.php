@@ -3,7 +3,9 @@ namespace wcf\system\form\builder\field;
 use wcf\system\file\upload\UploadField;
 use wcf\system\file\upload\UploadFile;
 use wcf\system\file\upload\UploadHandler;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\IFormDocument;
 
 /**
  * Implementation of a form field for to uploads.
@@ -190,6 +192,22 @@ class UploadFormField extends AbstractFormField {
 	 */
 	public function cleanup() {
 		$this->unregisterField();
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function populate() {
+		parent::populate();
+		
+		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('upload', function(IFormDocument $document, array $parameters) {
+			$parameters[$this->getId()] = $this->getValue();
+			$parameters[$this->getId() . '_removedFiles'] = $this->getRemovedFiles(true);
+			
+			return $parameters;
+		}));
 		
 		return $this;
 	}
