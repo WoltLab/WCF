@@ -19,7 +19,7 @@ class DevtoolsSetup extends SingletonFactory {
 	 * configuration file in the server's document root
 	 * @var string
 	 */
-	const CONFIGURATION_FILE = 'wsc-dev-config-31.json';
+	const CONFIGURATION_FILE = 'wsc-dev-config-52.json';
 	
 	/**
 	 * configuration data
