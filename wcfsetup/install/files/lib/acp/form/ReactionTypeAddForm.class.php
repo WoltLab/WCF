@@ -2,10 +2,8 @@
 namespace wcf\acp\form;
 use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeAction;
-use wcf\data\reaction\type\ReactionTypeEditor;
 use wcf\data\reaction\type\ReactionTypeList;
 use wcf\form\AbstractFormBuilderForm;
-use wcf\system\file\upload\UploadFile;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\IsDisabledFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
@@ -101,37 +99,5 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm {
 			$dataContainer, 
 			$iconContainer
 		]);
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function saved() {
-		$this->saveImage($this->objectAction->getReturnValues()['returnValues']);
-		
-		parent::saved();
-	}
-	
-	/**
-	 * Save the image for a reaction type.
-	 * 
-	 * @param       ReactionType    $reactionType
-	 */
-	protected function saveImage(ReactionType $reactionType) {
-		$files = $this->uploadFormField->getValue();
-		
-		/** @var UploadFile $file */
-		$file = array_pop($files);
-		if (!$file->isProcessed()) {
-			$fileName = $reactionType->reactionTypeID . '-' . $file->getFilename();
-			
-			rename($file->getLocation(), WCF_DIR . '/images/reaction/' . $fileName);
-			$file->setProcessed(WCF_DIR . '/images/reaction/' . $fileName);
-			
-			$reactionTypeEditor = new ReactionTypeEditor($reactionType);
-			$reactionTypeEditor->update([
-				'iconFile' => $fileName
-			]);
-		}
 	}
 }
