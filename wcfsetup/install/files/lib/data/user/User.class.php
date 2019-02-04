@@ -4,6 +4,7 @@ use wcf\data\language\Language;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObject;
 use wcf\data\IUserContent;
+use wcf\data\user\option\UserOption;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
@@ -75,31 +76,31 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * list of group ids
 	 * @var integer[]
 	 */
-	protected $groupIDs = null;
+	protected $groupIDs;
 	
 	/**
 	 * true, if user has access to the ACP
 	 * @var	boolean
 	 */
-	protected $hasAdministrativePermissions = null;
+	protected $hasAdministrativePermissions;
 	
 	/**
 	 * list of language ids
 	 * @var	integer[]
 	 */
-	protected $languageIDs = null;
+	protected $languageIDs;
 	
 	/**
 	 * date time zone object
 	 * @var	\DateTimeZone
 	 */
-	protected $timezoneObj = null;
+	protected $timezoneObj;
 	
 	/**
 	 * list of user options
-	 * @var	string[]
+	 * @var	UserOption[]
 	 */
-	protected static $userOptions = null;
+	protected static $userOptions;
 	
 	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
@@ -262,11 +263,15 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * Returns the value of the user option with the given name.
 	 * 
 	 * @param	string		$name		user option name
+	 * @param       boolean         $filterDisabled suppress values for disabled options
 	 * @return	mixed				user option value
 	 */
-	public function getUserOption($name) {
+	public function getUserOption($name, $filterDisabled = false) {
 		$optionID = self::getUserOptionID($name);
 		if ($optionID === null) {
+			return null;
+		}
+		else if ($filterDisabled && self::$userOptions[$name]->isDisabled) {
 			return null;
 		}
 		
