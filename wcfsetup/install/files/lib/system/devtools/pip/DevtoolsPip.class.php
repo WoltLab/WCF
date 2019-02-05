@@ -274,7 +274,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						$filter = new \RecursiveCallbackFilterIterator($directory, function ($current) {
 							/** @var \SplFileInfo $current */
 							$filename = $current->getFilename();
-							if ($filename[0] === '.') {
+							if ($filename[0] === '.' && $filename !== '.gitignore' && $filename !== '.htaccess') {
 								// ignore dot files and files/directories starting with a dot
 								return false;
 							}
@@ -358,7 +358,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						$filter = new \RecursiveCallbackFilterIterator($directory, function ($current) {
 							/** @var \SplFileInfo $current */
 							$filename = $current->getFilename();
-							if ($filename[0] === '.') {
+							if ($filename[0] === '.' && $filename !== '.gitignore' && $filename !== '.htaccess') {
 								// ignore dot files and files/directories starting with a dot
 								return false;
 							}

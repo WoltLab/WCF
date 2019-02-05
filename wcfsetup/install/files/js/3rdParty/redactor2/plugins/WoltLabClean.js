@@ -90,6 +90,16 @@ $.Redactor.prototype.WoltLabClean = function() {
 					}
 				});
 				
+				// Firefox inserts bogus linebreaks instead of spaces at the end of spans, if there is an adjacent span.
+				elBySelAll('span', div, function (span) {
+					if (span.childNodes.length > 0) {
+						var lastNode = span.childNodes[span.childNodes.length - 1];
+						if (lastNode.nodeType === Node.TEXT_NODE && lastNode.textContent.match(/\n$/)) {
+							lastNode.textContent = lastNode.textContent.replace(/\n+$/, (span.parentNode.lastChild === span ? '' : ' '));
+						}
+					}
+				});
+				
 				html = div.innerHTML;
 				
 				html = html.replace(/<p>\u200B<\/p>/g, '<p><br></p>');
