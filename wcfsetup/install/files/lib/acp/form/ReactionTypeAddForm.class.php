@@ -47,11 +47,6 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm {
 	public $neededModules = ['MODULE_LIKE'];
 	
 	/**
-	 * @var UploadFormField
-	 */
-	protected $uploadFormField;
-	
-	/**
 	 * @inheritDoc
 	 */
 	protected function createForm() {
@@ -81,18 +76,16 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm {
 					->label('wcf.acp.reactionType.isDisabled')
 			]);
 		
-		$this->uploadFormField = UploadFormField::create('iconFile')
-			->label('wcf.acp.reactionType.image')
-			->description('wcf.acp.reactionType.image.description')
-			->required()
-			->maximum(1)
-			->imageOnly(true)
-			->allowSvgImage(true);
-		
 		$iconContainer = FormContainer::create('imageSection')
 			->label('wcf.acp.reactionType.image')
 			->appendChildren([
-				$this->uploadFormField
+				UploadFormField::create('iconFile')
+					->label('wcf.acp.reactionType.image')
+					->description('wcf.acp.reactionType.image.description')
+					->required()
+					->maximum(1)
+					->imageOnly(true)
+					->allowSvgImage(true)
 			]);
 		
 		$this->form->appendChildren([
