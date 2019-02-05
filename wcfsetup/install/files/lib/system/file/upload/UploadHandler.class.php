@@ -3,6 +3,7 @@ namespace wcf\system\file\upload;
 use wcf\system\exception\ImplementationException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -20,6 +21,12 @@ class UploadHandler extends SingletonFactory {
 	 * @var string
 	 */
 	const UPLOAD_HANDLER_SESSION_VAR = 'file_upload_handler_storage';
+	
+	/**
+	 * Contains the valid image extensions w/o svg.
+	 * var string
+	 */
+	const VALID_IMAGE_EXTENSIONS = ['jpeg', 'jpg', 'png', 'gif'];
 	
 	/**
 	 * Contains the registered upload fields. 
@@ -416,5 +423,29 @@ class UploadHandler extends SingletonFactory {
 		$storage[$field->getInternalId()]['removedFiles'] = [];
 		
 		WCF::getSession()->register(self::UPLOAD_HANDLER_SESSION_VAR, $storage);
+	}
+	
+	/**
+	 * Returns true, iff the given location contains an image. 
+	 * 
+	 * @param       string          $location
+	 * @param       string          $imageName
+	 * @param       bool            $svgImageAllowed
+	 * @return      bool
+	 */
+	public static function isValidImage($location, $imageName, $svgImageAllowed) {
+		if (!file_exists($location)) {
+			return false;
+		}
+		
+		if (@getimagesize($location) === false && (!$svgImageAllowed || !in_array(FileUtil::getMimeType($location), ['image/svg', 'image/svg+xml']))) {
+			return false; 
+		}
+		
+		if (!in_array(pathinfo($imageName, PATHINFO_EXTENSION), array_merge(self::VALID_IMAGE_EXTENSIONS, $svgImageAllowed ? ['svg'] : []))) {
+			return false;
+		}
+		
+		return true;
 	}
 }

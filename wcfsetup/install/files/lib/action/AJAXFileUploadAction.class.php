@@ -87,24 +87,8 @@ class AJAXFileUploadAction extends AbstractSecureAction {
 		$field = UploadHandler::getInstance()->getFieldByInternalId($this->internalId);
 		
 		foreach ($_FILES['__files']['tmp_name'] as $id => $tmpName) {
-			if ($field->isImageOnly()) {
+			if ($field->isImageOnly() && !UploadHandler::isValidImage($tmpName, $_FILES['__files']['name'][$id], $field->svgImageAllowed())) {
 				if (@getimagesize($tmpName) === false) {
-					if (!$field->svgImageAllowed() || !in_array(FileUtil::getMimeType($tmpName), [
-							'image/svg',
-							'image/svg+xml'
-						])) {
-						$response['error'][$i++] = [
-							'filename' => $_FILES['__files']['name'][$id],
-							'errorMessage' => WCF::getLanguage()->get('wcf.upload.error.noImage')
-						];
-						continue;
-					}
-				}
-				
-				$allowedExtensions = ['jpeg', 'jpg', 'png', 'gif'];
-				if ($field->svgImageAllowed()) $allowedExtensions[] = 'svg';
-				
-				if (!in_array(pathinfo($_FILES['__files']['name'][$id], PATHINFO_EXTENSION), $allowedExtensions)) {
 					$response['error'][$i++] = [
 						'filename' => $_FILES['__files']['name'][$id],
 						'errorMessage' => WCF::getLanguage()->get('wcf.upload.error.noImage')
