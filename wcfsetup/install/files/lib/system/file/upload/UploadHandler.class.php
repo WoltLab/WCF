@@ -372,7 +372,7 @@ class UploadHandler extends SingletonFactory {
 			/** @var UploadFile $file */
 			foreach ($files as $file) {
 				if (!file_exists($file->getLocation())) {
-					$this->removeFile($internalId, $file);
+					$this->removeFileByObject($internalId, $file);
 				}
 			}
 			
