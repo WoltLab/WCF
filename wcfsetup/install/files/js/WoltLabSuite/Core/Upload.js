@@ -381,7 +381,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 				}
 			};
 			
-			appendFormData(this._getParameters(), '[parameters]');
+			appendFormData(this._getParameters(), 'parameters');
 			appendFormData(this._getFormData());
 			
 			var request = new AjaxRequest({
