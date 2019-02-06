@@ -10,6 +10,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\ImageUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -239,7 +240,7 @@ class SmileyAddForm extends AbstractForm {
 			}
 		}
 		else if (!empty($this->fileUpload['name'])) {
-			if (!getimagesize($this->fileUpload['tmp_name'])) {
+			if (!ImageUtil::isImage($this->fileUpload['tmp_name'], $this->fileUpload['name'])) {
 				$this->uploadedFilename = '';
 				throw new UserInputException('fileUpload', 'noImage');
 			}
