@@ -14,7 +14,7 @@ final class ImageUtil {
 	 * image extensions
 	 * @var array
 	 */
-	protected static $imageExtensions = array('jpeg', 'jpg', 'png', 'gif');
+	protected static $imageExtensions = ['jpeg', 'jpg', 'png', 'gif'];
 	
 	/**
 	 * Checks the content of an image for bad sections, e.g. the use of javascript
@@ -58,7 +58,7 @@ final class ImageUtil {
 			}
 		}
 		else if ($handleSvgAsValidImage) {
-			if (!in_array(FileUtil::getMimeType($location), array('image/svg', 'image/svg+xml')) && pathinfo($filename, PATHINFO_EXTENSION) === 'svg') {
+			if (!in_array(FileUtil::getMimeType($location), ['image/svg', 'image/svg+xml']) && pathinfo($filename, PATHINFO_EXTENSION) === 'svg') {
 				return true;
 			}
 		}
