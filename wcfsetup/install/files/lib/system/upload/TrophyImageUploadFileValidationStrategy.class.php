@@ -47,6 +47,11 @@ class TrophyImageUploadFileValidationStrategy implements IUploadFileValidationSt
 			return false; 
 		}
 		
+		if (!ImageUtil::isImage($uploadFile->getLocation(), $uploadFile->getFilename())) {
+			$uploadFile->setValidationErrorType('noImage');
+			return false; 
+		}
+		
 		return true;
 	}
 }
