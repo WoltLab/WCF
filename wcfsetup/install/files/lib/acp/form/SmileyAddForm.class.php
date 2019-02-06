@@ -272,7 +272,7 @@ class SmileyAddForm extends AbstractForm {
 			}
 		}
 		else if (!empty($this->fileUpload2x['name'])) {
-			if (!getimagesize($this->fileUpload2x['tmp_name'])) {
+			if (!ImageUtil::isImage($this->fileUpload2x['tmp_name'], $this->fileUpload2x['name'])) {
 				$this->uploadedFilename2x = '';
 				throw new UserInputException('fileUpload2x', 'noImage');
 			}
