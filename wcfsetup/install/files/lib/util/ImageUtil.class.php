@@ -11,6 +11,12 @@ namespace wcf\util;
  */
 final class ImageUtil {
 	/**
+	 * image extensions
+	 * @var array
+	 */
+	protected static $imageExtensions = ['jpeg', 'jpg', 'png', 'gif'];
+	
+	/**
 	 * Checks the content of an image for bad sections, e.g. the use of javascript
 	 * and returns false if any bad stuff was found.
 	 * 
@@ -29,6 +35,35 @@ final class ImageUtil {
 		if (strpos($content, 'script') !== false || strpos($content, 'javascript') !== false || strpos($content, 'expression(') !== false) return false;
 		
 		return true;
+	}
+	
+	/**
+	 * Checks whether a given file is a valid image.
+	 *
+	 * @param       string          $location
+	 * @param       string|null     $filename
+	 * @param       bool            $handleSvgAsValidImage  flag, whether a svg file is handled as image
+	 * @return      bool
+	 */
+	public static function isImage($location, $filename = null, $handleSvgAsValidImage = false) {
+		if ($filename === null) {
+			$filename = basename($location);
+		}
+		
+		if (@getimagesize($location) !== false) {
+			$extension = pathinfo($filename, PATHINFO_EXTENSION);
+			
+			if (in_array($extension, self::$imageExtensions)) {
+				return true;
+			}
+		}
+		else if ($handleSvgAsValidImage) {
+			if (!in_array(FileUtil::getMimeType($location), ['image/svg', 'image/svg+xml']) && pathinfo($filename, PATHINFO_EXTENSION) === 'svg') {
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
