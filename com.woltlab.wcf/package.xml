@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>3.0.19 pl 1</version> <!-- codename: vortex -->
-		<date>2019-01-01</date>
+		<version>3.0.20</version> <!-- codename: vortex -->
+		<date>2019-02-08</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -91,8 +91,69 @@
 		
 		<instruction type="script">acp/update_com.woltlab.wcf_3.0_post_sql.php</instruction>
 	</instructions>
+	<instructions type="update" fromversion="2.1.24 pl 1">
+		<instruction type="file">files_pre_update.tar</instruction>
+		<instruction type="script">acp/update_com.woltlab.wcf_3.0_pre_sql.php</instruction>
+		<instruction type="sql">update_part1.sql</instruction>
+		
+		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.0_noop.php</instruction>
+		
+		<instruction type="file">files.tar</instruction>
+		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_3.0_appConfig.php</instruction>
+		
+		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.0_columnLength.php</instruction>
+		<instruction type="sql" run="standalone">update_1.sql</instruction>
+		<instruction type="sql" run="standalone">update_2.sql</instruction>
+		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.0_dropColumns.php</instruction>
+		<instruction type="sql" run="standalone">update_3.sql</instruction>
+		<instruction type="sql" run="standalone">update_4.sql</instruction>
+		<instruction type="sql" run="standalone">update_5.sql</instruction>
+		
+		<instruction type="acpTemplate">acptemplates.tar</instruction>
+		<instruction type="template">templates.tar</instruction>
+		<instruction type="language" run="standalone">language/*.xml</instruction>
+		
+		<instruction type="packageInstallationPlugin">packageInstallationPlugin.xml</instruction>
+		<instruction type="objectTypeDefinition">objectTypeDefinition.xml</instruction>
+		<instruction type="objectType">objectType.xml</instruction>
+		<instruction type="aclOption">aclOption.xml</instruction>
+		<instruction type="acpMenu">acpMenu.xml</instruction>
+		<instruction type="acpSearchProvider">acpSearchProvider.xml</instruction>
+		<instruction type="bbcode">bbcode.xml</instruction>
+		<instruction type="clipboardAction">clipboardAction.xml</instruction>
+		<instruction type="coreObject">coreObject.xml</instruction>
+		<instruction type="cronjob">cronjob.xml</instruction>
+		<instruction type="eventListener">eventListener.xml</instruction>
+		<instruction type="option">option.xml</instruction>
+		<instruction type="smiley">smiley.xml</instruction>
+		<instruction type="userGroupOption">userGroupOption.xml</instruction>
+		<instruction type="userNotificationEvent">userNotificationEvent.xml</instruction>
+		<instruction type="userOption">userOption.xml</instruction>
+		
+		<instruction type="page">page.xml</instruction>
+		<instruction type="menu">menu.xml</instruction>
+		<instruction type="menuItem">menuItem.xml</instruction>
+		<instruction type="box">box.xml</instruction>
+		
+		<instruction type="style">defaultStyle.tar</instruction>
+		
+		<instruction type="script">acp/update_com.woltlab.wcf_3.0_post_sql.php</instruction>
+	</instructions>
 	
 	<instructions type="update" fromversion="3.0.19">
 		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language" />
+		
+		<instruction type="page" />
+	</instructions>
+	<instructions type="update" fromversion="3.0.19 pl 1">
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language" />
+		
+		<instruction type="page" />
 	</instructions>
 </package>
