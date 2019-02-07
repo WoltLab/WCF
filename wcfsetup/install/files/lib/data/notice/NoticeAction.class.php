@@ -143,7 +143,8 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 		
 		$noticeList = new NoticeList();
 		$noticeList->setObjectIDs($this->parameters['data']['structure'][0]);
-		if ($noticeList->countObjects() != count($this->parameters['data']['structure'][0])) {
+		$noticeList->readObjects();
+		if (count($noticeList) !== count($this->parameters['data']['structure'][0])) {
 			throw new UserInputException('structure');
 		}
 		

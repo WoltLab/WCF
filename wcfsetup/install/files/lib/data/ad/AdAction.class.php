@@ -92,7 +92,8 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 		
 		$adList = new AdList();
 		$adList->setObjectIDs($this->parameters['data']['structure'][0]);
-		if ($adList->countObjects() != count($this->parameters['data']['structure'][0])) {
+		$adList->readObjects();
+		if (count($adList) !== count($this->parameters['data']['structure'][0])) {
 			throw new UserInputException('structure');
 		}
 		
