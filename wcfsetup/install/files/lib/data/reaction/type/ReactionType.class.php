@@ -101,9 +101,9 @@ class ReactionType extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns the absolute location of the icon file. 
 	 * 
-	 * @return string
+	 * @return string[]
 	 */
 	public function getIconFileUploadFileLocations() {
-		return WCF_DIR . 'images/reaction/'. $this->iconFile;
+		return [WCF_DIR . 'images/reaction/'. $this->iconFile];
 	}
 }

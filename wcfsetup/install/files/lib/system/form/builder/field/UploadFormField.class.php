@@ -160,81 +160,29 @@ class UploadFormField extends AbstractFormField {
 		// first check, whether an getter for the field exists
 		if (method_exists($object, 'get'. ucfirst($this->getObjectProperty()) . 'UploadFileLocations')) {
 			$value = call_user_func([$object, 'get'. ucfirst($this->getObjectProperty()) . 'UploadFileLocations']);
-			
-			if (is_array($value)) {
-				foreach ($value as &$v) {
-					if (is_string($v) && file_exists($v)) {
-						$v = new UploadFile($v, basename($v), UploadHandler::isValidImage($v, basename($v), $this->svgImageAllowed()), true, $this->svgImageAllowed());
-					}
-					else {
-						throw new \InvalidArgumentException("The method '". get_class($object) ."::get". ucfirst($this->getObjectProperty()) ."UploadFileLocations()' provides invalid data.");
-					}
-				}
-				
-				$this->value($value);
-			}
-			else {
-				if (is_string($value) && file_exists($value)) {
-					$value = new UploadFile($value, basename($value), UploadHandler::isValidImage($value, basename($value), $this->svgImageAllowed()), true, $this->svgImageAllowed());
-				}
-				else {
-					throw new \InvalidArgumentException("The method '". get_class($object) ."::get". ucfirst($this->getObjectProperty()) ."UploadFileLocations()' provides invalid data.");
-				}
-				
-				$this->value([$value]);
-			}
+			$method = "method '" . get_class($object) . "::get" . ucfirst($this->getObjectProperty()) . "UploadFileLocations()'";
 		}
 		else if (method_exists($object, 'get'. ucfirst($this->getObjectProperty()))) {
 			$value = call_user_func([$object, 'get'. ucfirst($this->getObjectProperty())]);
-			
-			if (is_array($value)) {
-				foreach ($value as &$v) {
-					if (is_string($v) && file_exists($v)) {
-						$v = new UploadFile($v, basename($v), UploadHandler::isValidImage($v, basename($v), $this->svgImageAllowed()), true, $this->svgImageAllowed());
-					}
-					else {
-						throw new \InvalidArgumentException("The method '". get_class($object) ."::get". ucfirst($this->getObjectProperty()) ."()' provides invalid data. To load values for this object, implement the method '". get_class($object) ."::get". ucfirst($this->getObjectProperty()) ."UploadFileLocations()'.");
-					}
-				}
-				
-				$this->value($value);
-			}
-			else {
-				if (is_string($value) && file_exists($value)) {
-					$value = new UploadFile($value, basename($value), UploadHandler::isValidImage($value, basename($value), $this->svgImageAllowed()), true, $this->svgImageAllowed());
-				}
-				else {
-					throw new \InvalidArgumentException("The method '". get_class($object) ."::get". ucfirst($this->getObjectProperty()) ."()' provides invalid data. To load values for this object, implement the method '". get_class($object) ."::get". ucfirst($this->getObjectProperty()) ."UploadFileLocations()'.");
-				}
-				
-				$this->value([$value]);
-			}
+			$method = "method '" . get_class($object) . "::get" . ucfirst($this->getObjectProperty()) . "()'";
 		}
 		else {
 			$value = $object->{$this->getObjectProperty()};
+			$method = "variable '" . get_class($object) . "::$" . $this->getObjectProperty() . "'";
+		}
+		
+		if (is_array($value)) {
+			$value = array_map(function ($v) use ($method) {
+				if (!is_string($v) || !file_exists($v)) {
+					throw new \InvalidArgumentException("The " . $method . " must return an array of strings with the file locations.");
+				}
+				return new UploadFile($v, basename($v), UploadHandler::isValidImage($v, basename($v), $this->svgImageAllowed()), true, $this->svgImageAllowed());
+			}, $value);
 			
-			if (is_array($value)) {
-				foreach ($value as &$v) {
-					if (is_string($v) && file_exists($v)) {
-						$v = new UploadFile($v, basename($v), UploadHandler::isValidImage($v, basename($v), $this->svgImageAllowed()), true, $this->svgImageAllowed());
-					}
-					else {
-						throw new \InvalidArgumentException("The property '". get_class($object) ."::$". $this->getObjectProperty() ."' contains invalid data. To load values for this object, implement the method '". get_class($object) ."::get". ucfirst($this->getObjectProperty()) ."UploadFileLocations()'.");
-					}
-				}
-				
-				$this->value($value);
-			}
-			else {
-				if (is_string($value) && file_exists($value)) {
-					$value = new UploadFile($value, basename($value), UploadHandler::isValidImage($value, basename($value), $this->svgImageAllowed()), true, $this->svgImageAllowed());
-				}
-				else {
-					throw new \InvalidArgumentException("The property '". get_class($object) ."::$". $this->getObjectProperty() ."' contains invalid data. To load values for this object, implement the method '". get_class($object) ."::get". ucfirst($this->getObjectProperty()) ."UploadFileLocations()'.");
-				}
-				
-				$this->value([$value]);
-			}
+			$this->value($value);
+		}
+		else {
+			throw new \InvalidArgumentException("The " . $method . " must return an array of strings with the file locations.");
 		}
 		
 		return $this;
