@@ -48,7 +48,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-define('WCF_VERSION', '3.1.7 pl 1');
+define('WCF_VERSION', '3.1.8');
 
 // define current API version
 define('WSC_API_VERSION', 2018);
@@ -67,7 +67,7 @@ if (!defined('NO_IMPORTS')) {
  * It holds the database connection, access to template and language engine.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
