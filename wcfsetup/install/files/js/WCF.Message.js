@@ -2182,9 +2182,18 @@ WCF.Message.Share.Content = Class.extend({
 	_dialog: null,
 	
 	/**
-	 * Initializes the WCF.Message.Share.Content class.
+	 * template containing the social media share buttons
+	 * @var	string
 	 */
-	init: function() {
+	_shareButtonsTemplate: '',
+	
+	/**
+	 * Initializes the WCF.Message.Share.Content class.
+	 * 
+	 * @param	{string?}	shareButtonsTemplate
+	 */
+	init: function(shareButtonsTemplate) {
+		this._shareButtonsTemplate = shareButtonsTemplate || '';
 		this._cache = { };
 		this._dialog = null;
 		
@@ -2234,6 +2243,12 @@ WCF.Message.Share.Content = Class.extend({
 			// permalink (HTML)
 			var $section = $('<section class="section"><h2 class="sectionTitle"><label for="__sharePermalinkHTML">' + WCF.Language.get('wcf.message.share.permalink.html') + '</label></h2></section>').appendTo(this._dialog);
 			$('<input type="text" id="__sharePermalinkHTML" class="long" readonly />').attr('value', '<a href="' + $link + '">' + WCF.String.escapeHTML($title) + '</a>').appendTo($section);
+			
+			// share buttons
+			if (this._shareButtonsTemplate !== '') {
+				$section = $('<section class="section"><h2 class="sectionTitle">' + WCF.Language.get('wcf.message.share') + '</h2>'  + this._shareButtonsTemplate + '</section>').appendTo(this._dialog);
+				elData($section.children('.jsMessageShareButtons')[0], 'url', WCF.String.escapeHTML($link));
+			}
 			
 			this._cache[$key] = this._dialog.html();
 			
