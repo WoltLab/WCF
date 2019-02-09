@@ -5,6 +5,7 @@ use wcf\page\MultipleLinkPage;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\Regex;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\JSON;
@@ -41,6 +42,11 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	public $exceptionID = '';
 	
 	/**
+	 * @inheritDoc
+	 */
+	public $forceCanonicalURL = true;
+	
+	/**
 	 * active logfile
 	 * @var	string
 	 */
@@ -66,6 +72,16 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		
 		if (isset($_REQUEST['exceptionID'])) $this->exceptionID = StringUtil::trim($_REQUEST['exceptionID']);
 		if (isset($_REQUEST['logFile'])) $this->logFile = StringUtil::trim($_REQUEST['logFile']);
+		
+		$parameters = [];
+		if ($this->exceptionID !== '') {
+			$parameters['exceptionID'] = $this->exceptionID;
+		}
+		else if ($this->logFile !== '') {
+			$parameters['logFile'] = $this->logFile;
+		}
+		
+		$this->canonicalURL = LinkHandler::getInstance()->getControllerLink(self::class, $parameters);
 	}
 	
 	/**
