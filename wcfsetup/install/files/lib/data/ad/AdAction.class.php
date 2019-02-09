@@ -3,6 +3,7 @@ namespace wcf\data\ad;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -19,6 +20,8 @@ use wcf\system\WCF;
  * @method	AdEditor	getSingleObject()
  */
 class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -60,24 +63,6 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 		ConditionHandler::getInstance()->deleteConditions('com.woltlab.wcf.condition.ad', $this->objectIDs);
 		
 		return parent::delete();
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $ad) {
-			$ad->update([
-				'isDisabled' => $ad->isDisabled ? 0 : 1
-			]);
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function validateToggle() {
-		parent::validateUpdate();
 	}
 	
 	/**

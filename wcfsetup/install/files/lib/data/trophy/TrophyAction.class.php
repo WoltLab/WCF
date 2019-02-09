@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\trophy;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\trophy\UserTrophyList;
 use wcf\data\user\UserAction;
@@ -29,6 +30,8 @@ use wcf\system\WCF;
  * @method	TrophyEditor		getSingleObject()
  */
 class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction, IUploadAction, ISortableAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -123,7 +126,6 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 			$trophy->update(['isDisabled' => $trophy->isDisabled ? 0 : 1]);
 			
 			if (!$trophy->isDisabled) {
-				
 				$disabledTrophyIDs[] = $trophy->trophyID;
 			}
 			else {
@@ -180,22 +182,6 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 		}
 		
 		UserStorageHandler::getInstance()->resetAll('specialTrophies');
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function validateToggle() {
-		WCF::getSession()->checkPermissions(['admin.trophy.canManageTrophy']);
-		
-		// read objects
-		if (empty($this->objects)) {
-			$this->readObjects();
-			
-			if (empty($this->objects)) {
-				throw new UserInputException('objectIDs');
-			}
-		}
 	}
 	
 	/**

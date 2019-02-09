@@ -4,6 +4,7 @@ use wcf\data\menu\Menu;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -22,6 +23,8 @@ use wcf\system\WCF;
  * @method	MenuItemEditor		getSingleObject()
  */
 class MenuItemAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -57,15 +60,6 @@ class MenuItemAction extends AbstractDatabaseObjectAction implements ISortableAc
 			if (!$object->canDisable()) {
 				throw new PermissionDeniedException();
 			}
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $object) {
-			$object->update(['isDisabled' => $object->isDisabled ? 0 : 1]);
 		}
 	}
 	

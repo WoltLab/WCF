@@ -3,6 +3,7 @@ namespace wcf\data\contact\recipient;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -20,6 +21,8 @@ use wcf\system\WCF;
  * @method	ContactRecipientEditor		getSingleObject()
  */
 class ContactRecipientAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -68,17 +71,6 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ISo
 			if ($object->isAdministrator) {
 				throw new PermissionDeniedException();
 			}
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $object) {
-			$object->update([
-				'isDisabled' => $object->isDisabled ? 0 : 1
-			]);
 		}
 	}
 	
