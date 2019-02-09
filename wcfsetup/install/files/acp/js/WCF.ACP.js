@@ -2473,10 +2473,16 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 	_pageConditions: null,
 	
 	/**
-	 * select element for the page controller condition
+	 * select elements for the page controller condition
 	 * @var	jQuery[]
 	 */
 	_pageInputs: [],
+	
+	/**
+	 * page controller condition container
+	 * @var	jQuery[]
+	 */
+	_pageSelectionContainer: null,
 	
 	/**
 	 * Initializes a new WCF.ACP.Ad.LocationHandler object.
@@ -2491,36 +2497,10 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 		
 		this._variablesDescriptionsList = $('#ad').next('small').children('ul');
 		
-		var dl = $(this._pageInputs[0]).parents('dl:eq(0)');
+		this._pageSelectionContainer = $(this._pageInputs[0]).parents('dl:eq(0)');
 		
 		// hide the page controller elements
-		dl.prev('dl').hide();
-		dl.hide();
-		
-		var section = dl.parent('section');
-		if (!section.children('dl:visible').length) {
-			section.hide();
-		}
-		
-		var nextSection = section.next('section');
-		if (nextSection) {
-			var marginTop = nextSection.css('margin-top');
-			nextSection.css('margin-top', 0);
-			
-			require(['EventHandler'], function(EventHandler) {
-				EventHandler.add('com.woltlab.wcf.pageConditionDependence', 'checkVisivility', function() {
-					if (section.is(':visible')) {
-						nextSection.css('margin-top', marginTop);
-					}
-					else {
-						nextSection.css('margin-top', 0);
-					}
-				});
-			});
-		}
-		
-		// fix the margin of a potentially next page condition element
-		dl.next('dl').css('margin-top', 0);
+		this._hidePageSelection(true);
 		
 		$('#objectTypeID').on('change', $.proxy(this._setPageController, this));
 		
@@ -2530,33 +2510,97 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 	},
 	
 	/**
+	 * Hides the page selection form field.
+	 * 
+	 * @since	5.2
+	 */
+	_hidePageSelection: function(addEventListeners) {
+		this._pageSelectionContainer.prev('dl').hide();
+		this._pageSelectionContainer.hide();
+		
+		// fix the margin of a potentially next page condition element
+		this._pageSelectionContainer.next('dl').css('margin-top', 0);
+		
+		var section = this._pageSelectionContainer.parent('section');
+		if (!section.children('dl:visible').length) {
+			section.hide();
+			
+			var nextSection = section.next('section');
+			if (nextSection) {
+				nextSection.css('margin-top', 0);
+				
+				if (addEventListeners) {
+					require(['EventHandler'], function(EventHandler) {
+						EventHandler.add('com.woltlab.wcf.pageConditionDependence', 'checkVisivility', function() {
+							if (section.is(':visible')) {
+								nextSection.css('margin-top', '40px');
+							}
+							else {
+								nextSection.css('margin-top', 0);
+							}
+						});
+					});
+				}
+			}
+		}
+	},
+	
+	/**
+	 * Shows the page selection form field.
+	 * 
+	 * @since	5.2
+	 */
+	_showPageSelection: function() {
+		this._pageSelectionContainer.prev('dl').show();
+		this._pageSelectionContainer.show();
+		this._pageSelectionContainer.next('dl').css('margin-top', '40px');
+		
+		var section = this._pageSelectionContainer.parent('section');
+		section.show();
+		
+		var nextSection = section.next('section');
+		if (nextSection) {
+			nextSection.css('margin-top', '40px');
+		}
+	},
+	
+	/**
 	 * Sets the page controller based on the selected ad location.
 	 */
 	_setPageController: function() {
 		var option = $('#objectTypeID').find('option:checked');
+		var parent = option.parent();
 		
-		require(['Core'], function(Core) {
-			var input, triggerEvent;
+		// the page controller can be explicitly set for global positions
+		if (parent.is('optgroup') && parent.data('categoryName') === 'com.woltlab.wcf.global') {
+			this._showPageSelection();
+		}
+		else {
+			this._hidePageSelection();
 			
-			// select the related page
-			for (var i = 0, length = this._pageInputs.length; i < length; i++) {
-				input = this._pageInputs[i];
-				triggerEvent = false;
+			require(['Core'], function(Core) {
+				var input, triggerEvent;
 				
-				if (option.data('page') && elData(input, 'identifier') === option.data('page')) {
-					if (!input.checked) triggerEvent = true;
+				// select the related page
+				for (var i = 0, length = this._pageInputs.length; i < length; i++) {
+					input = this._pageInputs[i];
+					triggerEvent = false;
 					
-					input.checked = true;
-				}
-				else {
-					if (input.checked) triggerEvent = true;
+					if (option.data('page') && elData(input, 'identifier') === option.data('page')) {
+						if (!input.checked) triggerEvent = true;
+						
+						input.checked = true;
+					}
+					else {
+						if (input.checked) triggerEvent = true;
+						
+						input.checked = false;
+					}
 					
-					input.checked = false;
+					if (triggerEvent) Core.triggerEvent(this._pageInputs[i], 'change');
 				}
-				
-				if (triggerEvent) Core.triggerEvent(this._pageInputs[i], 'change');
-			}
-		}.bind(this));
+			}.bind(this));
+		}
 		
 		this._variablesDescriptionsList.children(':not(.jsDefaultItem)').remove();
 		
@@ -2575,7 +2619,7 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 			// of these conditions
 			this._pageConditions.find('select, input').remove();
 		}
-		else {
+		else if (this._pageSelectionContainer.is(':hidden')) {
 			// reset page controller conditions to avoid creation of
 			// unnecessary conditions
 			for (var i = 0, length = this._pageInputs.length; i < length; i++) {
