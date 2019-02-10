@@ -144,6 +144,9 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 			return;
 		}
 		
+		// show latest exceptions first
+		$this->exceptions = array_reverse($this->exceptions, true);
+		
 		if ($this->exceptionID) $this->searchPage($this->exceptionID);
 		$this->calculateNumberOfPages();
 		
@@ -196,9 +199,6 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 			$matches['chain'] = $chainMatches;
 			$this->exceptions[$key] = $matches;
 		}
-		
-		// show latest exceptions first
-		$this->exceptions = array_reverse($this->exceptions, true);
 	}
 	
 	/**
