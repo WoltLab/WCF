@@ -194,6 +194,16 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		},
 		
 		/**
+		 * Return additional form data for upload requests.
+		 * 
+		 * @return	{object<string, *>}	additional form data
+		 * @since       5.2
+		 */
+		_getFormData: function() {
+			return {};
+		},
+		
+		/**
 		 * Inserts the created button to upload files into the button container.
 		 */
 		_insertButton: function() {
@@ -284,7 +294,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 				files = this._fileUpload.files;
 			}
 			
-			if (files.length) {
+			if (files.length && this.validateUpload(files)) {
 				if (this._options.singleFileRequests) {
 					uploadId = [];
 					for (var i = 0, length = files.length; i < length; i++) {
@@ -307,6 +317,17 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			this._createButton();
 			
 			return uploadId;
+		},
+		
+		/**
+		 * Validates the upload before uploading them.
+		 * 
+		 * @param       {(FileList|Array.<File>)}	files		uploaded files
+		 * @return	{boolean}
+		 * @since       5.2
+		 */
+		validateUpload: function(files) {
+			return true;
 		},
 		
 		/**
@@ -350,15 +371,18 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 				
 				for (var name in parameters) {
 					if (typeof parameters[name] === 'object') {
-						appendFormData(parameters[name], prefix + '[' + name + ']');
+						var newPrefix = prefix.length === 0 ? name : prefix + '[' + name + ']';
+						appendFormData(parameters[name], newPrefix);
 					}
 					else {
-						formData.append('parameters' + prefix + '[' + name + ']', parameters[name]);
+						var dataName = prefix.length === 0 ? name : prefix + '[' + name + ']';
+						formData.append(dataName, parameters[name]);
 					}
 				}
 			};
 			
-			appendFormData(this._getParameters());
+			appendFormData(this._getParameters(), 'parameters');
+			appendFormData(this._getFormData());
 			
 			var request = new AjaxRequest({
 				data: formData,

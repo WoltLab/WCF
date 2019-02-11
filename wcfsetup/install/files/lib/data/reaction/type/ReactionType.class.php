@@ -97,4 +97,13 @@ class ReactionType extends DatabaseObject implements ITitledObject {
 	public function isNeutral() {
 		return $this->type == self::REACTION_TYPE_NEUTRAL;
 	}
+	
+	/**
+	 * Returns the absolute location of the icon file. 
+	 * 
+	 * @return string[]
+	 */
+	public function getIconFileUploadFileLocations() {
+		return [WCF_DIR . 'images/reaction/'. $this->iconFile];
+	}
 }

@@ -58,5 +58,8 @@
 		<coreobject>
 			<objectname>wcf\system\reaction\ReactionHandler</objectname>
 		</coreobject>
+		<coreobject>
+			<objectname>wcf\system\file\upload\UploadHandler</objectname>
+		</coreobject>
 	</import>
 </data>
