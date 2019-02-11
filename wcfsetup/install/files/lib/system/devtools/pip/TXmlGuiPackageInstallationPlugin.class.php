@@ -219,6 +219,10 @@ trait TXmlGuiPackageInstallationPlugin {
 		else {
 			$xml->write($this->getXmlFileLocation($project));
 		}
+		
+		if (is_subclass_of($this->className, IEditableCachedObject::class)) {
+			call_user_func([$this->className, 'resetCache']);
+		}
 	}
 	
 	/**
