@@ -1061,7 +1061,8 @@
 		<item name="wcf.acp.option.mail_from_name"><![CDATA[Sender’s Name]]></item>
 		<item name="wcf.acp.option.mail_from_name.description"><![CDATA[The sender’s name for all generated emails.]]></item>
 		<item name="wcf.acp.option.mail_send_method"><![CDATA[Send Method]]></item>
-		<item name="wcf.acp.option.mail_send_method.debug"><![CDATA[Use Debug]]></item>
+		<item name="wcf.acp.option.mail_send_method.debug"><![CDATA[Use Debug (mbox)]]></item>
+		<item name="wcf.acp.option.mail_send_method.debugFolder"><![CDATA[Use Debug (Folder with .eml files)]]></item>
 		<item name="wcf.acp.option.mail_send_method.php"><![CDATA[Use PHP]]></item>
 		<item name="wcf.acp.option.mail_send_method.smtp"><![CDATA[Use SMTP]]></item>
 		<item name="wcf.acp.option.mail_signature"><![CDATA[Sender’s Signature]]></item>

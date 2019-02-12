@@ -1076,7 +1076,8 @@
 		<item name="wcf.acp.option.mail_from_name"><![CDATA[Absender-Name]]></item>
 		<item name="wcf.acp.option.mail_from_name.description"><![CDATA[Absender-Name für automatisch generierte E-Mails]]></item>
 		<item name="wcf.acp.option.mail_send_method"><![CDATA[Versandmethode]]></item>
-		<item name="wcf.acp.option.mail_send_method.debug"><![CDATA[Debug]]></item>
+		<item name="wcf.acp.option.mail_send_method.debug"><![CDATA[Debug (mbox)]]></item>
+		<item name="wcf.acp.option.mail_send_method.debugFolder"><![CDATA[Debug (Ordner mit .eml-Dateien)]]></item>
 		<item name="wcf.acp.option.mail_send_method.php"><![CDATA[PHP]]></item>
 		<item name="wcf.acp.option.mail_send_method.smtp"><![CDATA[SMTP]]></item>
 		<item name="wcf.acp.option.mail_signature"><![CDATA[Signatur]]></item>

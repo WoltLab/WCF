@@ -243,7 +243,7 @@ class PackageInstallationDispatcher {
 							'exception_privacy'
 						]);
 						$statement->execute([
-							'debug',
+							'debugFolder',
 							'mail_send_method'
 						]);
 						$statement->execute([

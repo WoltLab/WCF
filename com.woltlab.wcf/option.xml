@@ -910,10 +910,12 @@ physical:wcf.acp.option.google_maps_type.physical</selectoptions>
 				<defaultvalue>php</defaultvalue>
 				<selectoptions>php:wcf.acp.option.mail_send_method.php
 smtp:wcf.acp.option.mail_send_method.smtp
-debug:wcf.acp.option.mail_send_method.debug</selectoptions>
+debug:wcf.acp.option.mail_send_method.debug
+debugFolder:wcf.acp.option.mail_send_method.debugFolder</selectoptions>
 				<enableoptions>php:mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password
 smtp:!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_starttls,mail_smtp_user,mail_smtp_password
-debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password</enableoptions>
+debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password
+debugFolder:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password</enableoptions>
 			</option>
 			<option name="mail_smtp_host">
 				<categoryname>general.mail.send</categoryname>
