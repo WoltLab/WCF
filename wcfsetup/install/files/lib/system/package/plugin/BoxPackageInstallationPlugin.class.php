@@ -739,18 +739,32 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			}
 			
 			$content = [];
-			if (isset($data['content'])) {
-				$content['content'] = $data['content'];
-				unset($data['content']);
-			}
-			if (isset($data['title'])) {
-				$content['title'] = $data['title'];
-				unset($data['title']);
+			
+			foreach (['title', 'content'] as $contentProperty) {
+				if (!empty($data[$contentProperty])) {
+					foreach ($data[$contentProperty] as $languageID => $value) {
+						$languageCode = LanguageFactory::getInstance()->getLanguage($languageID)->languageCode;
+						
+						if (!isset($content[$languageCode])) {
+							$content[$languageCode] = [];
+						}
+						
+						$content[$languageCode][$contentProperty] = $value;
+					}
+				}
+				
+				unset($data[$contentProperty]);
 			}
 			
-			if (!empty($content)) {
-				$data['content'] = $content;
+			foreach ($content as $languageCode => $values) {
+				foreach (['title', 'content'] as $contentProperty) {
+					if (!isset($values[$contentProperty])) {
+						$content[$languageCode][$contentProperty] = '';
+					}
+				}
 			}
+			
+			$data['content'] = $content;
 		}
 		
 		return $data;

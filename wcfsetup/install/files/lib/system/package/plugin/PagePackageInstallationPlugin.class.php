@@ -741,10 +741,26 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			
 			foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $contentProperty) {
 				if (!empty($data[$contentProperty])) {
-					$content[$contentProperty] = $data[$contentProperty];
+					foreach ($data[$contentProperty] as $languageID => $value) {
+						$languageCode = LanguageFactory::getInstance()->getLanguage($languageID)->languageCode;
+						
+						if (!isset($content[$languageCode])) {
+							$content[$languageCode] = [];
+						}
+						
+						$content[$languageCode][$contentProperty] = $value;
+					}
 				}
 				
 				unset($data[$contentProperty]);
+			}
+			
+			foreach ($content as $languageCode => $values) {
+				foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $contentProperty) {
+					if (!isset($values[$contentProperty])) {
+						$content[$languageCode][$contentProperty] = '';
+					}
+				}
 			}
 			
 			$data['content'] = $content;
