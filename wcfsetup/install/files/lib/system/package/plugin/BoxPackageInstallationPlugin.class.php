@@ -725,7 +725,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				$objectType = $data['objectType'];
 				unset($data['objectType']);
 				
-				$data['objectTypeID'] = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.boxController', $objectType)->objectTypeID;
+				if (!empty($objectType)) {
+					$data['objectTypeID'] = ObjectTypeCache::getInstance()->getObjectTypeByName(
+						'com.woltlab.wcf.boxController',
+						$objectType
+					)->objectTypeID;
+				}
 			}
 			
 			if (isset($data['visibilityExceptions'])) {
