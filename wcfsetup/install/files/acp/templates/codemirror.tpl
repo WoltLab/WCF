@@ -8,7 +8,9 @@
 {/if}
 {if $codemirrorMode|isset}
 	<script data-relocate="true">window.define.amd = undefined;</script>
+	{if $codemirrorMode != 'smartymixed'}
 	<script data-relocate="true" src="{@$__wcf->getPath()}js/3rdParty/codemirror/mode/{if $codemirrorMode == 'text/x-less'}css/css{else}{$codemirrorMode}/{$codemirrorMode}{/if}.js"></script>
+	{/if}
 	
 	{if $codemirrorMode == 'htmlmixed' || $codemirrorMode == 'smartymixed' || $codemirrorMode == 'php'}
 		{if $codemirrorMode == 'smartymixed'}
@@ -41,7 +43,17 @@
 	require(['EventHandler', 'Dom/Traverse', 'Dom/Util'], function(EventHandler, DomTraverse, DomUtil) {
 		var elements = document.querySelectorAll('{@$codemirrorSelector|encodeJS}');
 		var config = {
-			{if $codemirrorMode|isset}mode: '{@$codemirrorMode|encodeJS}',{/if}
+			{if $codemirrorMode|isset}
+				{if $codemirrorMode == 'smartymixed'}
+				mode: {
+					name: 'smarty',
+					baseMode: 'text/html',
+					version: 3
+				},
+				{else}
+				mode: '{@$codemirrorMode|encodeJS}',
+				{/if}
+			{/if}
 			lineWrapping: true,
 			indentWithTabs: true,
 			lineNumbers: true,
