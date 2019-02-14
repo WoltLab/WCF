@@ -1,30 +1,13 @@
 /* do NOT reference fonts directly, always make use of 'getFont.php' */
-@font-face {
-	font-family: 'FontAwesome';
-	src: url('../font/getFont.php?type=eot&v=4.7.0');
-	src: url('../font/getFont.php?type=eot&v=4.7.0#iefix') format('embedded-opentype'),
-	url('../font/getFont.php?type=woff2&v=4.7.0') format('woff2'),
-	url('../font/getFont.php?type=woff&v=4.7.0') format('woff'),
-	url('../font/getFont.php?type=ttf&v=4.7.0') format('truetype');
-	font-weight: normal;
-	font-style: normal;
-}
+@import 'vendor/fontawesome';
+@import 'vendor/solid';
+@import 'vendor/regular';
+@import 'vendor/brands';
+@import 'vendor/v4-shims';
 
-.icon, .fa {
-	color: $wcfContentText;
-	display: inline-block;
-	font-family: FontAwesome;
-	font-weight: normal !important;
-	font-style: normal !important;
-	text-align: center;
-	
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	
-	-moz-osx-font-smoothing: grayscale;
-	-webkit-font-smoothing: antialiased;
-	
+.icon {
+	@extend .fa;
+
 	&.disabled {
 		opacity: .3;
 	}
@@ -68,6 +51,17 @@
 	&.pink {
 		color: #f0c;
 	}
+}
+
+@mixin fas() {
+	@include fa-icon();
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 900;
+}
+@mixin far() {
+	@include fa-icon();
+	font-family: 'Font Awesome 5 Free';
+	font-weight: 400;
 }
 
 // firefox cursor issue
@@ -215,6 +209,3 @@ a > span.fa:not(.pointer) {
 .emojione-emoji {
 	z-index: auto !important;
 }
-
-@import "variables";
-@import "icons";
