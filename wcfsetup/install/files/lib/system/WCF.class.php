@@ -38,7 +38,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current wcf version
-define('WCF_VERSION', '2.1.24 pl 1 (Typhoon)');
+define('WCF_VERSION', '2.1.24 pl 2 (Typhoon)');
 
 // define current unix timestamp
 define('TIME_NOW', time());
