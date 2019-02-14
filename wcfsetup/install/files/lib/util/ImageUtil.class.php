@@ -58,7 +58,7 @@ final class ImageUtil {
 			}
 		}
 		else if ($handleSvgAsValidImage) {
-			if (!in_array(FileUtil::getMimeType($location), ['image/svg', 'image/svg+xml']) && pathinfo($filename, PATHINFO_EXTENSION) === 'svg') {
+			if (in_array(FileUtil::getMimeType($location), ['image/svg', 'image/svg+xml']) && pathinfo($filename, PATHINFO_EXTENSION) === 'svg') {
 				return true;
 			}
 		}
