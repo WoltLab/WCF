@@ -51,7 +51,44 @@ class StyleCompiler extends SingletonFactory {
 	 */
 	protected function init() {
 		require_once(WCF_DIR.'lib/system/style/scssphp/scss.inc.php');
-		$this->compiler = new Compiler();
+		$this->compiler = new class extends Compiler {
+			protected function parserFactory($path) {
+				$parser = new class($path, count($this->sourceNames), $this->encoding) extends \Leafo\ScssPhp\Parser {
+					public $shims = null;
+					public function __construct(...$parameters) {
+						parent::__construct(...$parameters);
+						
+						$shims = \wcf\util\JSON::decode(file_get_contents(WCF_DIR.'style/icon/vendor/metadata/shims.json'));
+						foreach ($shims as $shim) {
+							$this->shims[$shim[0]] = [
+								'font' => $shim[1],
+								'icon' => $shim[2]
+							];
+						}
+					}
+					public function parse($buffer) {
+						$buffer = preg_replace_callback('/content:\s*("[^"]*"\s+\+\s+)?\$fa-var-([a-zA-Z0-9-]+)(\s+\+\s+"[^"]*")?;/', function ($matches) {
+							$font = 'fas';
+							$icon = $matches[2];
+							if (isset($this->shims[$icon])) {
+								if ($this->shims[$icon]['font']) {
+									$font = $this->shims[$icon]['font'];
+								}
+								if ($this->shims[$icon]['icon']) {
+									$icon = $this->shims[$icon]['icon'];
+								}
+							}
+							
+							return '/* automated replacement for v4 icon */ @include '.$font.'(); content: '.$matches[1].'fa-content($fa-var-'.$icon.')'.($matches[3] ?? '').';';
+						}, $buffer);
+						return parent::parse($buffer);
+					}
+				};
+				$this->sourceNames[] = $path;
+				$this->addParsedFile($path);
+				return $parser;
+			}
+		};
 		// Disable Unicode support because of its horrible performance (7x slowdown)
 		// https://github.com/WoltLab/WCF/pull/2736#issuecomment-416084079
 		$this->compiler->setEncoding('iso8859-1');
@@ -356,7 +393,7 @@ class StyleCompiler extends SingletonFactory {
 		}
 		
 		try {
-			$this->compiler->setFormatter('Leafo\ScssPhp\Formatter\Crunched');
+		//	$this->compiler->setFormatter('Leafo\ScssPhp\Formatter\Crunched');
 			$content = $this->compiler->compile($scss);
 		}
 		catch (\Exception $e) {
