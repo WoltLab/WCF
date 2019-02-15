@@ -20,7 +20,7 @@ use wcf\util\UserUtil;
  * Usernames have a minimum length of 3 characters and a maximum length of 100 characters by default.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\User
  * @since	5.2

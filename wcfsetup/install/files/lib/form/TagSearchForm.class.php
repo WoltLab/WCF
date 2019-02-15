@@ -15,7 +15,7 @@ use wcf\util\HeaderUtil;
  * Shows the tag search form.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\Form
  * @since       5.2

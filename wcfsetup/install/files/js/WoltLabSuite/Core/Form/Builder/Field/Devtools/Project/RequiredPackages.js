@@ -2,7 +2,7 @@
  * Manages the packages entered in a devtools project required package form field.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/RequiredPackages
  * @see 	module:WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/AbstractPackageList

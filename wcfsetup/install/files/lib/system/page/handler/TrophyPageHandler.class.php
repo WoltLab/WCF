@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Menu page handler for the trophy page.
  *
  * @author	Joshua Rüsweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Page\Handler
  * @since	3.1

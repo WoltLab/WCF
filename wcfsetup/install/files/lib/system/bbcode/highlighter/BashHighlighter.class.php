@@ -5,7 +5,7 @@ namespace wcf\system\bbcode\highlighter;
  * Highlights syntax of bash scripts.
  * 
  * @author	Tim Duesterhus
- * @copyright	2011-2013 Tim Duesterhus
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  * @deprecated	since 5.2, use Prism to highlight your code.

@@ -14,7 +14,7 @@ use wcf\util\Url;
  * 	{"127.0.0.1"|ipSearch}
  * 
  * @author	Florian Gail
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
  * @since	5.2

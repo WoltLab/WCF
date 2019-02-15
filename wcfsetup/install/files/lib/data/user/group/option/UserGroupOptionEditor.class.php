@@ -8,7 +8,7 @@ use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
  * Provides functions to edit usergroup options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Group\Option
  * 

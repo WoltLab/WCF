@@ -23,7 +23,7 @@ use wcf\system\WCF;
  * $likeObjects = LikeHandler::getInstance()->getLikeObjects($objectType);
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Like
  * @deprecated  The LikeHandler is deprecated since 5.2 in favor of the \wcf\system\reaction\ReactionHandler

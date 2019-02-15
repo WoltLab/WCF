@@ -8,7 +8,7 @@ use wcf\system\form\builder\IFormParentNode;
  * Represents a container whose only purpose is to contain other form nodes.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Container
  * @since	5.2

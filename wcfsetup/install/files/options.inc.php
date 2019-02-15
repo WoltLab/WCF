@@ -3,7 +3,7 @@
  * Default options.inc.php for package installation of package com.woltlab.wcf.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 define('LAST_UPDATE_TIME', TIME_NOW);

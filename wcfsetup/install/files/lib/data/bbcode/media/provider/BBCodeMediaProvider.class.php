@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Represents a BBCode media provider.
  * 
  * @author	Tim Duesterhus
- * @copyright	2011-2013 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Bbcode\Media\Provider
  *

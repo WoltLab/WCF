@@ -8,7 +8,7 @@ use wcf\util\exception\CryptoException;
  * - Creating secure signatures based on the Keyed-Hash Message Authentication Code algorithm
  * 
  * @author	Tim Duesterhus, Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  * @since	3.0

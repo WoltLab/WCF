@@ -6,7 +6,7 @@ use wcf\system\Regex;
  * Highlights syntax of TeX source code.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
  * @deprecated	since 5.2, use Prism to highlight your code.

@@ -9,7 +9,7 @@ use wcf\system\language\LanguageFactory;
  * Provides functions to edit template listeners.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Template\Listener
  * 

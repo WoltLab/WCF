@@ -7,7 +7,7 @@ use wcf\system\exception\SystemException;
  * RedisCacheSource is an implementation of CacheSource that uses a Redis server to store cached variables.
  * 
  * @author	Maximilian Mader
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cache\Source
  * @since	3.0
