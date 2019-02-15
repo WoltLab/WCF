@@ -2,6 +2,7 @@
 namespace wcf\system\label;
 use wcf\data\label\group\LabelGroup;
 use wcf\data\label\group\ViewableLabelGroup;
+use wcf\data\label\Label;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\system\cache\builder\LabelCacheBuilder;
@@ -198,12 +199,63 @@ class LabelHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Replaces the labels of the label groups with the given ids with the labels with the given
+	 * ids. Existing labels of the object from other label groups will not be changed. If no
+	 * label for any of the given label group is given, an existing label from this group will
+	 * be removed.
+	 * 
+	 * @param	integer[]	$groupIDs		ids of the relevant label groups
+	 * @param	integer[]	$labelIDs		ids of the new labels
+	 * @param	string		$objectType		label object type of the updated object
+	 * @param	integer		$objectID		id of the updated object
+	 * @since	5.2
+	 */
+	public function replaceLabels(array $groupIDs, array $labelIDs, $objectType, $objectID) {
+		$objectTypeID = $this->getObjectType($objectType)->objectTypeID;
+		
+		// get the ids of the labels in the relevant label groups
+		$replacedLabelIDs = [];
+		foreach ($groupIDs as $groupID) {
+			$replacedLabelIDs = array_merge(
+				$replacedLabelIDs,
+				$this->getLabelGroup($groupID)->getLabelIDs()
+			);
+		}
+		
+		// delete old labels first
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('labelID IN (?)', [$replacedLabelIDs]);
+		$conditionBuilder->add("objectTypeID = ?", [$objectTypeID]);
+		$conditionBuilder->add("objectID = ?", [$objectID]);
+		
+		$sql = "DELETE FROM	wcf" . WCF_N . "_label_object
+			" . $conditionBuilder;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditionBuilder->getParameters());
+		
+		// assign new labels
+		if (!empty($labelIDs)) {
+			$sql = "INSERT INTO	wcf" . WCF_N . "_label_object
+						(labelID, objectTypeID, objectID)
+				VALUES		(?, ?, ?)";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			foreach ($labelIDs as $labelID) {
+				$statement->execute([
+					$labelID,
+					$objectTypeID,
+					$objectID
+				]);
+			}
+		}
+	}
+	
+	/**
 	 * Returns all assigned labels, optionally filtered to validate permissions.
 	 * 
 	 * @param	integer		$objectTypeID
 	 * @param	integer[]	$objectIDs
 	 * @param	boolean		$validatePermissions
-	 * @return	array
+	 * @return	Label[][]
 	 */
 	public function getAssignedLabels($objectTypeID, array $objectIDs, $validatePermissions = true) {
 		$conditions = new PreparedStatementConditionBuilder();
@@ -236,6 +288,7 @@ class LabelHandler extends SingletonFactory {
 					$data[$objectID] = [];
 				}
 				
+				/** @var ViewableLabelGroup $group */
 				foreach ($this->labelGroups['groups'] as $group) {
 					$label = $group->getLabel($labelID);
 					if ($label !== null) {
