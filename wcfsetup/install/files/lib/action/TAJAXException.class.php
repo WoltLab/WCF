@@ -7,10 +7,11 @@ use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\exception\ValidateActionException;
+use wcf\system\WCF;
 
 /**
  * Default implementation for the AJAXException throw method. 
- *
+ * 
  * @author	Alexander Ebert, Joshua Ruesweg
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
