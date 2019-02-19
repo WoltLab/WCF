@@ -1,6 +1,7 @@
 <?php
 namespace wcf\action;
 use wcf\system\background\BackgroundQueueHandler;
+use wcf\system\WCF;
 
 /**
  * Performs background queue jobs.
@@ -32,6 +33,9 @@ class BackgroundQueuePerformAction extends AbstractAction {
 			}
 		}
 		echo BackgroundQueueHandler::getInstance()->getRunnableCount();
+		if (WCF::getSession()->isFirstVisit() && !WCF::getUser()->userID) {
+			WCF::getSession()->delete();
+		}
 		exit;
 	}
 }
