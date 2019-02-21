@@ -146,11 +146,15 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 			$action = 'update';
 		}
 		
+		$formData = $this->form->getData();
+		if (!isset($formData['data'])) $formData['data'] = [];
+		$formData['data'] = array_merge($this->additionalFields, $formData['data']);
+		
 		/** @var AbstractDatabaseObjectAction objectAction */
 		$this->objectAction = new $this->objectActionClass(
 			array_filter([$this->formObject]),
 			$action,
-			$this->form->getData()
+			$formData
 		);
 		$this->objectAction->executeAction();
 		
