@@ -25,6 +25,8 @@ class RedisCacheSource implements ICacheSource {
 	public function __construct() {
 		try {
 			$this->redis = new Redis(CACHE_SOURCE_REDIS_HOST);
+			// check whether we can actually send queries (i.e. no AUTH is required)
+			$this->redis->get('cache:_flush');
 		}
 		catch (\Exception $e) {
 			throw new SystemException('Unable to create a Redis instance', 0, '', $e);
