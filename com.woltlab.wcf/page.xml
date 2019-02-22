@@ -329,15 +329,15 @@
 		<page identifier="com.woltlab.wcf.Following">
 			<pageType>system</pageType>
 			<controller>wcf\page\FollowingPage</controller>
-			<name language="de">Benutzer, denen Sie folgen</name>
-			<name language="en">Followed Users</name>
+			<name language="de">Benutzer, denen ich folge</name>
+			<name language="en">Users I Follow</name>
 			<hasFixedParent>1</hasFixedParent>
 			<parent>com.woltlab.wcf.AccountManagement</parent>
 			<content language="en">
-				<title>Followed Users</title>
+				<title>Users I Follow</title>
 			</content>
 			<content language="de">
-				<title>Benutzer, denen Sie folgen</title>
+				<title>Benutzer, denen ich folge</title>
 			</content>
 		</page>
 		<page identifier="com.woltlab.wcf.IgnoredUsers">

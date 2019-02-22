@@ -4296,7 +4296,7 @@ Attachments:
 		<item name="wcf.user.option.error.censoredWordsFound"><![CDATA[The text contains censored words: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}.]]></item>
 		<item name="wcf.user.error.isBanned"><![CDATA[Your user account has been banned{if $__wcf->user->banExpires != 0} until {@$__wcf->user->banExpires|plainTime}{/if}{if $__wcf->user->banReason}: {@$__wcf->user->banReason|newlineToBreak}{else}.{/if}]]></item>
 		<item name="wcf.user.access.everyone"><![CDATA[Everyone]]></item>
-		<item name="wcf.user.access.following"><![CDATA[Followed Users]]></item>
+		<item name="wcf.user.access.following"><![CDATA[Users I Follow]]></item>
 		<item name="wcf.user.access.nobody"><![CDATA[Nobody]]></item>
 		<item name="wcf.user.access.registered"><![CDATA[Registered Users]]></item>
 		<item name="wcf.user.button.login"><![CDATA[Login]]></item>
@@ -4507,7 +4507,7 @@ not register with us.]]></item>
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>
 		<item name="wcf.user.menu.community.notification"><![CDATA[Notifications]]></item>
-		<item name="wcf.user.menu.community.following"><![CDATA[Followed Users]]></item>
+		<item name="wcf.user.menu.community.following"><![CDATA[Users I Follow]]></item>
 		<item name="wcf.user.menu.community.ignoredUsers"><![CDATA[Blocked Users]]></item>
 		<item name="wcf.user.menu.profile"><![CDATA[User Account]]></item>
 		<item name="wcf.user.menu.profile.accountManagement"><![CDATA[Account Management]]></item>

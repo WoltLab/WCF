@@ -4510,8 +4510,8 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>
 		<item name="wcf.user.menu.community.notification"><![CDATA[Benachrichtigungen]]></item>
-		<item name="wcf.user.menu.community.following"><![CDATA[Nutzer, denen {if LANGUAGE_USE_INFORMAL_VARIANT}du folgst{else}Sie folgen{/if}]]></item>
-		<item name="wcf.user.menu.community.ignoredUsers"><![CDATA[Blockierte Nutzer]]></item>
+		<item name="wcf.user.menu.community.following"><![CDATA[Benutzer, denen ich folge]]></item>
+		<item name="wcf.user.menu.community.ignoredUsers"><![CDATA[Blockierte Benutzer]]></item>
 		<item name="wcf.user.menu.profile"><![CDATA[Benutzerkonto]]></item>
 		<item name="wcf.user.menu.profile.accountManagement"><![CDATA[Verwaltung]]></item>
 		<item name="wcf.user.menu.profile.avatar"><![CDATA[Avatar]]></item>
