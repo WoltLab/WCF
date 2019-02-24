@@ -181,11 +181,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	 * Sets the action of the form.
 	 */
 	protected function setFormAction() {
-		$classNamePieces = explode('\\', get_class($this));
-		$application = $classNamePieces[0];
-		$controller = preg_replace('~Form$~', '', end($classNamePieces));
-		
-		$parameters = ['application' => $application];
+		$parameters = [];
 		if ($this->formObject !== null) {
 			if ($this->formObject instanceof IRouteController) {
 				$parameters['object'] = $this->formObject;
@@ -197,7 +193,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 			}
 		}
 		
-		$this->form->action(LinkHandler::getInstance()->getLink($controller, $parameters));
+		$this->form->action(LinkHandler::getInstance()->getControllerLink(static::class, $parameters));
 	}
 	
 	/**
