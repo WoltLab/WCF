@@ -57,7 +57,7 @@ class IconFormField extends AbstractFormField implements IImmutableFormField {
 	 */
 	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
-			$this->__value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			$this->value = $this->getDocument()->getRequestData($this->getPrefixedId());
 		}
 		
 		return $this;

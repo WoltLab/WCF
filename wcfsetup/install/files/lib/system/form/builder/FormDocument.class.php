@@ -29,32 +29,7 @@ class FormDocument implements IFormDocument {
 	 * `action` property of the HTML `form` element
 	 * @var	string
 	 */
-	protected $__action;
-	
-	/**
-	 * form mode (see `self::FORM_MODE_*` constants)
-	 * @var	null|string
-	 */
-	protected $__formMode;
-	
-	/**
-	 * `method` property of the HTML `form` element
-	 * @var	string
-	 */
-	protected $__method = 'post';
-	
-	/**
-	 * global form prefix that is prepended to form elements' names and ids to
-	 * avoid conflicts with other forms
-	 * @var	string
-	 */
-	protected $__prefix;
-	
-	/**
-	 * request data of the form's field
-	 * @var	null|array
-	 */
-	protected $__requestData;
+	protected $action;
 	
 	/**
 	 * data handler for this document
@@ -75,6 +50,31 @@ class FormDocument implements IFormDocument {
 	protected $isBuilt = false;
 	
 	/**
+	 * form mode (see `self::FORM_MODE_*` constants)
+	 * @var	null|string
+	 */
+	protected $formMode;
+	
+	/**
+	 * `method` property of the HTML `form` element
+	 * @var	string
+	 */
+	protected $method = 'post';
+	
+	/**
+	 * global form prefix that is prepended to form elements' names and ids to
+	 * avoid conflicts with other forms
+	 * @var	string
+	 */
+	protected $prefix;
+	
+	/**
+	 * request data of the form's field
+	 * @var	null|array
+	 */
+	protected $requestData;
+	
+	/**
 	 * Cleans up the form document before the form document object is destroyed.
 	 */
 	public function __destruct() {
@@ -85,7 +85,7 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function action($action) {
-		$this->__action = $action;
+		$this->action = $action;
 		
 		return $this;
 	}
@@ -126,7 +126,7 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function formMode($formMode) {
-		if ($this->__formMode !== null) {
+		if ($this->formMode !== null) {
 			throw new \BadMethodCallException("Form mode has already been set");
 		}
 		
@@ -134,7 +134,7 @@ class FormDocument implements IFormDocument {
 			throw new \InvalidArgumentException("Unknown form mode '{$formMode}' given.");
 		}
 		
-		$this->__formMode = $formMode;
+		$this->formMode = $formMode;
 		
 		return $this;
 	}
@@ -143,11 +143,11 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function getAction() {
-		if ($this->__action === null) {
+		if ($this->action === null) {
 			throw new \BadMethodCallException("Action has not been set.");
 		}
 		
-		return $this->__action;
+		return $this->action;
 	}
 	
 	/**
@@ -200,11 +200,11 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function getFormMode() {
-		if ($this->__formMode === null) {
-			$this->__formMode = self::FORM_MODE_CREATE;
+		if ($this->formMode === null) {
+			$this->formMode = self::FORM_MODE_CREATE;
 		}
 		
-		return $this->__formMode;
+		return $this->formMode;
 	}
 	
 	/**
@@ -222,37 +222,37 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function getMethod() {
-		return $this->__method;
+		return $this->method;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getPrefix() {
-		if ($this->__prefix === null) {
+		if ($this->prefix === null) {
 			return '';
 		}
 		
-		return $this->__prefix . '_';
+		return $this->prefix . '_';
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getRequestData($index = null) {
-		if ($this->__requestData === null) {
-			$this->__requestData = $_POST;
+		if ($this->requestData === null) {
+			$this->requestData = $_POST;
 		}
 		
 		if ($index !== null) {
-			if (!isset($this->__requestData[$index])) {
+			if (!isset($this->requestData[$index])) {
 				throw new \InvalidArgumentException("Unknown request data with index '" . $index . "'.");
 			}
 			
-			return $this->__requestData[$index];
+			return $this->requestData[$index];
 		}
 		
-		return $this->__requestData;
+		return $this->requestData;
 	}
 	
 	/**
@@ -272,7 +272,7 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function loadValuesFromObject(IStorableObject $object) {
-		if ($this->__formMode === null) {
+		if ($this->formMode === null) {
 			$this->formMode(self::FORM_MODE_UPDATE);
 		}
 		
@@ -311,7 +311,7 @@ class FormDocument implements IFormDocument {
 			throw new \InvalidArgumentException("Invalid method '{$method}' given.");
 		}
 		
-		$this->__method = $method;
+		$this->method = $method;
 		
 		return $this;
 	}
@@ -322,7 +322,7 @@ class FormDocument implements IFormDocument {
 	public function prefix($prefix) {
 		static::validateId($prefix);
 		
-		$this->__prefix = $prefix;
+		$this->prefix = $prefix;
 		
 		return $this;
 	}
@@ -331,8 +331,8 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function readValues() {
-		if ($this->__requestData === null) {
-			$this->__requestData = $_POST;
+		if ($this->requestData === null) {
+			$this->requestData = $_POST;
 		}
 		
 		return $this->defaultReadValues();
@@ -342,11 +342,11 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function requestData(array $requestData) {
-		if ($this->__requestData !== null) {
+		if ($this->requestData !== null) {
 			throw new \BadMethodCallException('Request data has already been set.');
 		}
 		
-		$this->__requestData = $requestData;
+		$this->requestData = $requestData;
 		
 		return $this;
 	}

@@ -40,10 +40,10 @@ class UserFormField extends AbstractFormField implements IImmutableFormField, IM
 			
 			if (is_string($value)) {
 				if ($this->allowsMultiple()) {
-					$this->__value = ArrayUtil::trim(explode(',', $value));
+					$this->value = ArrayUtil::trim(explode(',', $value));
 				}
 				else {
-					$this->__value = StringUtil::trim($value);
+					$this->value = StringUtil::trim($value);
 				}
 			}
 		}

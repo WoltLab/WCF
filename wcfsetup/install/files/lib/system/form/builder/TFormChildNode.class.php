@@ -15,7 +15,7 @@ trait TFormChildNode {
 	 * parent node of this node
 	 * @var	IFormParentNode
 	 */
-	protected $__parent;
+	protected $parent;
 	
 	/**
 	 * Returns the form document this node belongs to.
@@ -45,11 +45,11 @@ trait TFormChildNode {
 	 * @throws	\BadMethodCallException		if the parent node has not been set previously
 	 */
 	public function getParent() {
-		if ($this->__parent === null) {
+		if ($this->parent === null) {
 			throw new \BadMethodCallException("Before getting the parent node of '{$this->getId()}', it must be set.");
 		}
 		
-		return $this->__parent;
+		return $this->parent;
 	}
 	
 	/**
@@ -59,11 +59,11 @@ trait TFormChildNode {
 	 * @return	static					this node
 	 */
 	public function parent(IFormParentNode $parentNode) {
-		if ($this->__parent !== null) {
+		if ($this->parent !== null) {
 			throw new \BadMethodCallException("The parent node of '{$this->getId()}' has already been set.");
 		}
 		
-		$this->__parent = $parentNode;
+		$this->parent = $parentNode;
 		
 		return $this;
 	}

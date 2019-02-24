@@ -19,7 +19,7 @@ trait TFormParentNode {
 	 * child nodes of this node
 	 * @var	IFormChildNode[]
 	 */
-	protected $__children = [];
+	protected $children = [];
 	
 	/**
 	 * current iterator index
@@ -38,7 +38,7 @@ trait TFormParentNode {
 	public function appendChild(IFormChildNode $child) {
 		$this->validateChild($child);
 		
-		$this->__children[] = $child;
+		$this->children[] = $child;
 		
 		$child->parent($this);
 		
@@ -90,7 +90,7 @@ trait TFormParentNode {
 	 * @return	IFormChildNode[]	children of this node
 	 */
 	public function children() {
-		return $this->__children;
+		return $this->children;
 	}
 	
 	/**
@@ -115,7 +115,7 @@ trait TFormParentNode {
 	 * @return	int	number of children
 	 */
 	public function count() {
-		return count($this->__children);
+		return count($this->children);
 	}
 	
 	/**
@@ -124,7 +124,7 @@ trait TFormParentNode {
 	 * @return	IFormChildNode		current child node
 	 */
 	public function current() {
-		return $this->__children[$this->index];
+		return $this->children[$this->index];
 	}
 	
 	/**
@@ -133,7 +133,7 @@ trait TFormParentNode {
 	 * @return	null|IFormParentNode		iterator for the current child node
 	 */
 	public function getChildren() {
-		$node = $this->__children[$this->index];
+		$node = $this->children[$this->index];
 		if ($node instanceof IFormParentNode) {
 			return $node;
 		}
@@ -189,7 +189,7 @@ trait TFormParentNode {
 	 * @return	bool
 	 */
 	public function hasChildren() {
-		return !empty($this->__children);
+		return !empty($this->children);
 	}
 	
 	/**
@@ -228,7 +228,7 @@ trait TFormParentNode {
 		$didInsertNode = false;
 		foreach ($this->children() as $index => $existingChild) {
 			if ($existingChild->getId() === $referenceNodeId) {
-				array_splice($this->__children, $index, 0, [$child]);
+				array_splice($this->children, $index, 0, [$child]);
 				
 				$child->parent($this);
 				
@@ -295,7 +295,7 @@ trait TFormParentNode {
 	 * @return	bool
 	 */
 	public function valid() {
-		return isset($this->__children[$this->index]);
+		return isset($this->children[$this->index]);
 	}
 	
 	/**

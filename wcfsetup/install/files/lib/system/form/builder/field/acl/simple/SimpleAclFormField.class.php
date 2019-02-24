@@ -66,7 +66,7 @@ class SimpleAclFormField extends AbstractFormField {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_array($value)) {
-				$this->__value = $value;
+				$this->value = $value;
 			}
 		}
 		

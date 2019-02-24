@@ -25,25 +25,19 @@ abstract class AbstractFormField implements IFormField {
 	 * `true` if this field is auto-focused and `false` otherwise
 	 * @var	bool
 	 */
-	protected $__autoFocus = false;
+	protected $autoFocus = false;
 	
 	/**
 	 * name of the object property this field represents
 	 * @var	null|string
 	 */
-	protected $__objectProperty;
+	protected $objectProperty;
 	
 	/**
 	 * `true` if this field has to be filled out and returns `false` otherwise
 	 * @var	bool
 	 */
-	protected $__required = false;
-	
-	/**
-	 * value of the field
-	 * @var	mixed
-	 */
-	protected $__value;
+	protected $required = false;
 	
 	/**
 	 * name of the template used to output this field
@@ -62,6 +56,12 @@ abstract class AbstractFormField implements IFormField {
 	 * @var	IFormFieldValidator[]
 	 */
 	protected $validators = [];
+	
+	/**
+	 * value of the field
+	 * @var	mixed
+	 */
+	protected $value;
 	
 	/**
 	 * @inheritDoc
@@ -93,7 +93,7 @@ abstract class AbstractFormField implements IFormField {
 	 * @inheritDoc
 	 */
 	public function autoFocus($autoFocus = true) {
-		$this->__autoFocus = $autoFocus;
+		$this->autoFocus = $autoFocus;
 		
 		return $this;
 	}
@@ -122,8 +122,8 @@ abstract class AbstractFormField implements IFormField {
 	 * @inheritDoc
 	 */
 	public function getObjectProperty() {
-		if ($this->__objectProperty !== null) {
-			return $this->__objectProperty;
+		if ($this->objectProperty !== null) {
+			return $this->objectProperty;
 		}
 		
 		return $this->getId();
@@ -154,7 +154,7 @@ abstract class AbstractFormField implements IFormField {
 	 * @inheritDoc
 	 */
 	public function getValue() {
-		return $this->__value;
+		return $this->value;
 	}
 	
 	/**
@@ -177,14 +177,14 @@ abstract class AbstractFormField implements IFormField {
 	 * @inheritDoc
 	 */
 	public function isAutoFocused() {
-		return $this->__autoFocus;
+		return $this->autoFocus;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function isRequired() {
-		return $this->__required;
+		return $this->required;
 	}
 	
 	/**
@@ -204,12 +204,12 @@ abstract class AbstractFormField implements IFormField {
 	 */
 	public function objectProperty($objectProperty) {
 		if ($objectProperty === '') {
-			$this->__objectProperty = null;
+			$this->objectProperty = null;
 		}
 		else {
 			static::validateId($objectProperty);
 			
-			$this->__objectProperty = $objectProperty;
+			$this->objectProperty = $objectProperty;
 		}
 		
 		return $this;
@@ -233,7 +233,7 @@ abstract class AbstractFormField implements IFormField {
 	 * @return	static
 	 */
 	public function required($required = true) {
-		$this->__required = $required;
+		$this->required = $required;
 		
 		return $this;
 	}
@@ -242,7 +242,7 @@ abstract class AbstractFormField implements IFormField {
 	 * @inheritDoc
 	 */
 	public function value($value) {
-		$this->__value = $value;
+		$this->value = $value;
 		
 		return $this;
 	}

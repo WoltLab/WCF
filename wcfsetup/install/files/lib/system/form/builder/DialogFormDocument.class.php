@@ -16,7 +16,7 @@ class DialogFormDocument extends FormDocument {
 	 * is `true` if dialog from can be canceled and is `false` otherwise
 	 * @var	bool
 	 */
-	protected $__isCancelable = true;
+	protected $isCancelable = true;
 	
 	/**
 	 * Sets whether the dialog from can be canceled and return this document.
@@ -25,7 +25,7 @@ class DialogFormDocument extends FormDocument {
 	 * @return	static			this document
 	 */
 	public function cancelable($cancelable = true) {
-		$this->__isCancelable = $cancelable;
+		$this->isCancelable = $cancelable;
 		
 		return $this;
 	}
@@ -36,11 +36,11 @@ class DialogFormDocument extends FormDocument {
 	public function getAction() {
 		// do not throw exception if no action has been set as a dialog
 		// form does not require an action to be set
-		if ($this->__action === null) {
-			$this->__action = '';
+		if ($this->action === null) {
+			$this->action = '';
 		}
 		
-		return $this->__action;
+		return $this->action;
 	}
 	
 	/**
@@ -63,6 +63,6 @@ class DialogFormDocument extends FormDocument {
 	 * @return	bool
 	 */
 	public function isCancelable() {
-		return $this->__isCancelable;
+		return $this->isCancelable;
 	}
 }

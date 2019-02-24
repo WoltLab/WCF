@@ -24,17 +24,17 @@ class DevtoolsProjectRequiredPackagesFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected $__value = [];
+	protected $value = [];
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId()) && is_array($this->getDocument()->getRequestData($this->getPrefixedId()))) {
-			$this->__value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			$this->value = $this->getDocument()->getRequestData($this->getPrefixedId());
 		}
 		else {
-			$this->__value = [];
+			$this->value = [];
 		}
 	}
 	

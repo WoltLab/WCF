@@ -16,7 +16,7 @@ trait TSuffixedFormField {
 	 * suffix of this field
 	 * @var	null|string
 	 */
-	protected $__suffix;
+	protected $suffix;
 	
 	/**
 	 * Returns the suffix of this field or `null` if no suffix has been set.
@@ -24,7 +24,7 @@ trait TSuffixedFormField {
 	 * @return	null|string
 	 */
 	public function getSuffix() {
-		return $this->__suffix;
+		return $this->suffix;
 	}
 	
 	/**
@@ -43,14 +43,14 @@ trait TSuffixedFormField {
 				throw new \InvalidArgumentException("Cannot use variables when unsetting suffix of field '{$this->getId()}'");
 			}
 			
-			$this->__suffix = null;
+			$this->suffix = null;
 		}
 		else {
 			if (!is_string($languageItem)) {
 				throw new \InvalidArgumentException("Given suffix language item is no string, " . gettype($languageItem) . " given.");
 			}
 			
-			$this->__suffix = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
+			$this->suffix = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
 		}
 		
 		return $this;

@@ -20,16 +20,16 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IIm
 	use TSuffixedFormField;
 	
 	/**
-	 * step value for the input element
-	 * @var	null|number
-	 */
-	protected $__step;
-	
-	/**
 	 * is `true` if only integer values are supported
 	 * @var	bool
 	 */
 	protected $integerValues = false;
+	
+	/**
+	 * step value for the input element
+	 * @var	null|number
+	 */
+	protected $step;
 	
 	/**
 	 * @inheritDoc
@@ -76,11 +76,11 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IIm
 	 * @return	number|string
 	 */
 	public function getStep() {
-		if ($this->__step === null) {
-			$this->__step = $this->getDefaultStep();
+		if ($this->step === null) {
+			$this->step = $this->getDefaultStep();
 		}
 		
-		return $this->__step;
+		return $this->step;
 	}
 	
 	/**
@@ -92,10 +92,10 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IIm
 			
 			if ($value !== '') {
 				if ($this->integerValues) {
-					$this->__value = intval($value);
+					$this->value = intval($value);
 				}
 				else {
-					$this->__value = floatval($value);
+					$this->value = floatval($value);
 				}
 			}
 		}
@@ -128,7 +128,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IIm
 			}
 		}
 		
-		$this->__step = $step;
+		$this->step = $step;
 		
 		return $this;
 	}

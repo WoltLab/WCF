@@ -24,13 +24,13 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * identifier used to autosave the field value; if empty, autosave is disabled
 	 * @var	string
 	 */
-	protected $__autosaveId = '';
+	protected $autosaveId = '';
 	
 	/**
 	 * last time the field has been edited; if `0`, the last edit time is unknown
 	 * @var	int
 	 */
-	protected $__lastEditTime = 0;
+	protected $lastEditTime = 0;
 	
 	/**
 	 * input processor containing the wysiwyg text
@@ -50,7 +50,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * @return	WysiwygFormField		this field
 	 */
 	public function autosaveId($autosaveId) {
-		$this->__autosaveId = $autosaveId;
+		$this->autosaveId = $autosaveId;
 		
 		return $this;
 	}
@@ -62,7 +62,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * @return	string
 	 */
 	public function getAutosaveId() {
-		return $this->__autosaveId;
+		return $this->autosaveId;
 	}
 	
 	/**
@@ -79,7 +79,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * @return	int
 	 */
 	public function getLastEditTime() {
-		return $this->__lastEditTime;
+		return $this->lastEditTime;
 	}
 	
 	/**
@@ -96,7 +96,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * @return	WysiwygFormField	this field
 	 */
 	public function lastEditTime($lastEditTime) {
-		$this->__lastEditTime = $lastEditTime;
+		$this->lastEditTime = $lastEditTime;
 		
 		return $this;
 	}
@@ -126,7 +126,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_string($value)) {
-				$this->__value = StringUtil::trim($value);
+				$this->value = StringUtil::trim($value);
 			}
 		}
 		

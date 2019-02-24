@@ -23,7 +23,7 @@ class BooleanFormField extends AbstractFormField implements IImmutableFormField 
 	 * @inheritDoc
 	 */
 	public function getSaveValue() {
-		return $this->__value ? 1 : 0;
+		return $this->value ? 1 : 0;
 	}
 	
 	/**
@@ -31,7 +31,7 @@ class BooleanFormField extends AbstractFormField implements IImmutableFormField 
 	 */
 	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
-			$this->__value = $this->getDocument()->getRequestData($this->getPrefixedId()) === '1';
+			$this->value = $this->getDocument()->getRequestData($this->getPrefixedId()) === '1';
 		}
 		
 		return $this;

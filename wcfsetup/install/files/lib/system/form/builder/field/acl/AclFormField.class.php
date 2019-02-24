@@ -21,10 +21,10 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 	use TObjectTypeFormField;
 	
 	/**
-	 * name of/filter for the name(s) of the shown acl option categories 
+	 * name of/filter for the name(s) of the shown acl option categories
 	 * @var	null|string
 	 */
-	protected $__categoryName;
+	protected $categoryName;
 	
 	/**
 	 * id of the edited object or `null` if no object is edited
@@ -58,7 +58,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 			throw new \InvalidArgumentException("Invalid category name given.");
 		}
 		
-		$this->__categoryName = $categoryName;
+		$this->categoryName = $categoryName;
 		
 		return $this;
 	}
@@ -70,7 +70,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 	 * @return	null|string
 	 */
 	public function getCategoryName() {
-		return $this->__categoryName;
+		return $this->categoryName;
 	}
 	
 	/**

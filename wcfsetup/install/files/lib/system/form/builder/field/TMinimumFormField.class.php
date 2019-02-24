@@ -15,7 +15,7 @@ trait TMinimumFormField {
 	 * minimum of the field value
 	 * @var	null|int
 	 */
-	protected $__minimum;
+	protected $minimum;
 	
 	/**
 	 * Returns the minimum of the values of this field or `null` if no minimum
@@ -24,7 +24,7 @@ trait TMinimumFormField {
 	 * @return	null|number
 	 */
 	public function getMinimum() {
-		return $this->__minimum;
+		return $this->minimum;
 	}
 	
 	/**
@@ -50,7 +50,7 @@ trait TMinimumFormField {
 			}
 		}
 		
-		$this->__minimum = $minimum;
+		$this->minimum = $minimum;
 		
 		return $this;
 	}

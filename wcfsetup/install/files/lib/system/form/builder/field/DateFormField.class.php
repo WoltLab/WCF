@@ -20,13 +20,13 @@ class DateFormField extends AbstractFormField implements IImmutableFormField, IN
 	 * date time format of the save value
 	 * @var	string
 	 */
-	protected $__saveValueFormat = null;
+	protected $saveValueFormat = null;
 	
 	/**
 	 * is `true` if not only the date, but also the time can be set
 	 * @var	bool
 	 */
-	protected $__supportsTime = false;
+	protected $supportsTime = false;
 	
 	/**
 	 * @inheritDoc
@@ -41,11 +41,11 @@ class DateFormField extends AbstractFormField implements IImmutableFormField, IN
 	 * @return	string
 	 */
 	public function getSaveValueFormat() {
-		if ($this->__saveValueFormat === null) {
-			$this->__saveValueFormat = 'U';
+		if ($this->saveValueFormat === null) {
+			$this->saveValueFormat = 'U';
 		}
 		
-		return $this->__saveValueFormat;
+		return $this->saveValueFormat;
 	}
 	
 	/**
@@ -90,10 +90,10 @@ class DateFormField extends AbstractFormField implements IImmutableFormField, IN
 	 */
 	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId()) && is_string($this->getDocument()->getRequestData($this->getPrefixedId()))) {
-			$this->__value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			$this->value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
-			if ($this->__value === '') {
-				$this->__value = null;
+			if ($this->value === '') {
+				$this->value = null;
 			}
 		}
 		
@@ -107,7 +107,7 @@ class DateFormField extends AbstractFormField implements IImmutableFormField, IN
 	 * @return	static
 	 */
 	public function saveValueFormat($saveValueFormat) {
-		if ($this->__saveValueFormat !== null) {
+		if ($this->saveValueFormat !== null) {
 			throw new \BadMethodCallException("Save value type has already been set.");
 		}
 		
@@ -118,7 +118,7 @@ class DateFormField extends AbstractFormField implements IImmutableFormField, IN
 			throw new \InvalidArgumentException("Invalid date time format '{$saveValueFormat}'.", 0, $e);
 		}
 		
-		$this->__saveValueFormat = $saveValueFormat;
+		$this->saveValueFormat = $saveValueFormat;
 		
 		return $this;
 	}
@@ -130,7 +130,7 @@ class DateFormField extends AbstractFormField implements IImmutableFormField, IN
 	 * @return	static		thsi field
 	 */
 	public function supportTime($supportsTime = true) {
-		$this->__supportsTime = $supportsTime;
+		$this->supportsTime = $supportsTime;
 		
 		return $this;
 	}
@@ -142,7 +142,7 @@ class DateFormField extends AbstractFormField implements IImmutableFormField, IN
 	 * @return	bool
 	 */
 	public function supportsTime() {
-		return $this->__supportsTime;
+		return $this->supportsTime;
 	}
 	
 	/**

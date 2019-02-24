@@ -76,9 +76,9 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 		
 		$tags = TagEngine::getInstance()->getObjectTags($this->getObjectType()->objectType, $objectID, $languageIDs);
 		
-		$this->__value = [];
+		$this->value = [];
 		foreach ($tags as $tag) {
-			$this->__value[] = $tag->name;
+			$this->value[] = $tag->name;
 		}
 		
 		return $this;
@@ -109,7 +109,7 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_array($value)) {
-				$this->__value = ArrayUtil::trim($value);
+				$this->value = ArrayUtil::trim($value);
 			}
 		}
 		

@@ -18,7 +18,7 @@ trait TObjectTypeFormField {
 	 * object type
 	 * @var	null|ObjectType
 	 */
-	protected $__objectType;
+	protected $objectType;
 	
 	/**
 	 * Returns the object type.
@@ -28,11 +28,11 @@ trait TObjectTypeFormField {
 	 * @throws	\BadMethodCallException		if object type has not been set
 	 */
 	public function getObjectType() {
-		if ($this->__objectType === null) {
+		if ($this->objectType === null) {
 			throw new \BadMethodCallException("Object type has not been set.");
 		}
 		
-		return $this->__objectType;
+		return $this->objectType;
 	}
 	
 	/**
@@ -46,7 +46,7 @@ trait TObjectTypeFormField {
 	 * @throws	InvalidObjectTypeException	if given object type name is invalid
 	 */
 	public function objectType($objectType) {
-		if ($this->__objectType !== null) {
+		if ($this->objectType !== null) {
 			throw new \BadMethodCallException("Object type has already been set.");
 		}
 		
@@ -54,8 +54,8 @@ trait TObjectTypeFormField {
 			throw new \UnexpectedValueException("Unknown definition name '{$this->getObjectTypeDefinition()}'.");
 		}
 		
-		$this->__objectType = ObjectTypeCache::getInstance()->getObjectTypeByName($this->getObjectTypeDefinition(), $objectType);
-		if ($this->__objectType === null) {
+		$this->objectType = ObjectTypeCache::getInstance()->getObjectTypeByName($this->getObjectTypeDefinition(), $objectType);
+		if ($this->objectType === null) {
 			throw new InvalidObjectTypeException($objectType, $this->getObjectTypeDefinition());
 		}
 		

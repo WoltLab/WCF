@@ -18,31 +18,31 @@ trait TFormNode {
 	 * additional attributes of this node
 	 * @var	array
 	 */
-	protected $__attributes = [];
+	protected $attributes = [];
 	
 	/**
 	 * `true` if this node is available and `false` otherwise
 	 * @var	bool
 	 */
-	protected $__available = true;
+	protected $available = true;
 	
 	/**
 	 * CSS classes of this node
 	 * @var	string[]
 	 */
-	protected $__classes = [];
-	
-	/**
-	 * id of the form node
-	 * @var	string
-	 */
-	protected $__id;
+	protected $classes = [];
 	
 	/**
 	 * dependencies of this node
 	 * @var	IFormFieldDependency[]
 	 */
 	protected $dependencies = [];
+	
+	/**
+	 * id of the form node
+	 * @var	string
+	 */
+	protected $id;
 	
 	/**
 	 * is `true` if node has already been populated and is `false` otherwise 
@@ -67,8 +67,8 @@ trait TFormNode {
 	public function addClass($class) {
 		static::validateClass($class);
 		
-		if (!in_array($class, $this->__classes)) {
-			$this->__classes[] = $class;
+		if (!in_array($class, $this->classes)) {
+			$this->classes[] = $class;
 		}
 		
 		return $this;
@@ -111,7 +111,7 @@ trait TFormNode {
 			throw new \InvalidArgumentException("Value argument is of invalid type, " . gettype($value) . ".");
 		}
 		
-		$this->__attributes[$name] = $value;
+		$this->attributes[$name] = $value;
 		
 		return $this;
 	}
@@ -137,7 +137,7 @@ trait TFormNode {
 	 * @return	static				this node
 	 */
 	public function available($available = true) {
-		$this->__available = $available;
+		$this->available = $available;
 		
 		return $this;
 	}
@@ -202,7 +202,7 @@ trait TFormNode {
 			throw new \InvalidArgumentException("Unknown attribute '{$name}' requested.");
 		}
 		
-		return $this->__attributes[$name];
+		return $this->attributes[$name];
 	}
 	
 	/**
@@ -211,7 +211,7 @@ trait TFormNode {
 	 * @return	array		additional node attributes
 	 */
 	public function getAttributes() {
-		return $this->__attributes;
+		return $this->attributes;
 	}
 	
 	/**
@@ -220,7 +220,7 @@ trait TFormNode {
 	 * @return	string[]	CSS classes of node
 	 */
 	public function getClasses() {
-		return $this->__classes;
+		return $this->classes;
 	}
 	
 	/**
@@ -259,11 +259,11 @@ trait TFormNode {
 	 * @throws	\BadMethodCallException		if no id has been set
 	 */
 	public function getId() {
-		if ($this->__id === null) {
+		if ($this->id === null) {
 			throw new \BadMethodCallException("Id has not been set.");
 		}
 		
-		return $this->__id;
+		return $this->id;
 	}
 	
 	/**
@@ -293,7 +293,7 @@ trait TFormNode {
 	public function hasAttribute($name) {
 		static::validateAttribute($name);
 		
-		return isset($this->__attributes[$name]);
+		return isset($this->attributes[$name]);
 	}
 	
 	/**
@@ -307,7 +307,7 @@ trait TFormNode {
 	public function hasClass($class) {
 		static::validateClass($class);
 		
-		return array_search($class, $this->__classes) !== false;
+		return array_search($class, $this->classes) !== false;
 	}
 	
 	/**
@@ -341,11 +341,11 @@ trait TFormNode {
 	public function id($id) {
 		static::validateId($id);
 		
-		if ($this->__id !== null) {
+		if ($this->id !== null) {
 			throw new \BadMethodCallException("Id has already been set.");
 		}
 		
-		$this->__id = $id;
+		$this->id = $id;
 		
 		return $this;
 	}
@@ -360,7 +360,7 @@ trait TFormNode {
 	 * @see		IFormNode::available()
 	 */
 	public function isAvailable() {
-		if ($this->__available && $this instanceof IFormParentNode) {
+		if ($this->available && $this instanceof IFormParentNode) {
 			/** @var IFormChildNode $child */
 			foreach ($this as $child) {
 				if ($child->isAvailable()) {
@@ -371,7 +371,7 @@ trait TFormNode {
 			return false;
 		}
 		
-		return $this->__available;
+		return $this->available;
 	}
 	
 	/**
@@ -408,7 +408,7 @@ trait TFormNode {
 	public function removeAttribute($name) {
 		static::validateAttribute($name);
 		
-		unset($this->__attributes[$name]);
+		unset($this->attributes[$name]);
 		
 		return $this;
 	}
@@ -427,9 +427,9 @@ trait TFormNode {
 	public function removeClass($class) {
 		static::validateClass($class);
 		
-		$index = array_search($class, $this->__classes);
+		$index = array_search($class, $this->classes);
 		if ($index !== false) {
-			unset($this->__classes[$index]);
+			unset($this->classes[$index]);
 		}
 		
 		return $this;

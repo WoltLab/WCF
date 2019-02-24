@@ -17,7 +17,7 @@ trait TMinimumLengthFormField {
 	 * minimum length of the field value
 	 * @var	null|int
 	 */
-	protected $__minimumLength;
+	protected $minimumLength;
 	
 	/**
 	 * Returns the minimum length of the values of this field or `null` if no placeholder
@@ -26,7 +26,7 @@ trait TMinimumLengthFormField {
 	 * @return	null|int
 	 */
 	public function getMinimumLength() {
-		return $this->__minimumLength;
+		return $this->minimumLength;
 	}
 	
 	/**
@@ -56,7 +56,7 @@ trait TMinimumLengthFormField {
 			}
 		}
 		
-		$this->__minimumLength = $minimumLength;
+		$this->minimumLength = $minimumLength;
 		
 		return $this;
 	}

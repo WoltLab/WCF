@@ -29,19 +29,19 @@ trait TI18nFormField {
 	 * `true` if this field supports i18n input and `false` otherwise
 	 * @var	bool
 	 */
-	protected $__i18n = false;
+	protected $i18n = false;
 	
 	/**
 	 * `true` if this field requires i18n input and `false` otherwise
 	 * @var	bool
 	 */
-	protected $__i18nRequired = false;
+	protected $i18nRequired = false;
 	
 	/**
 	 * pattern for the language item used to save the i18n values
 	 * @var	null|string
 	 */
-	protected $__languageItemPattern;
+	protected $languageItemPattern;
 	
 	/**
 	 * Returns additional template variables used to generate the html representation
@@ -74,11 +74,11 @@ trait TI18nFormField {
 			throw new \BadMethodCallException("You can only get the language item pattern for fields with i18n enabled.");
 		}
 		
-		if ($this->__languageItemPattern === null) {
+		if ($this->languageItemPattern === null) {
 			throw new \BadMethodCallException("Language item pattern has not been set.");
 		}
 		
-		return $this->__languageItemPattern;
+		return $this->languageItemPattern;
 	}
 	
 	/**
@@ -120,7 +120,7 @@ trait TI18nFormField {
 			return '';
 		}
 		
-		return $this->__value;
+		return $this->value;
 	}
 	
 	/**
@@ -165,7 +165,7 @@ trait TI18nFormField {
 	 * @return	II18nFormField			this field
 	 */
 	public function i18n($i18n = true) {
-		$this->__i18n = $i18n;
+		$this->i18n = $i18n;
 		
 		return $this;
 	}
@@ -180,7 +180,7 @@ trait TI18nFormField {
 	 * @return	static					this field
 	 */
 	public function i18nRequired($i18nRequired = true) {
-		$this->__i18nRequired = $i18nRequired;
+		$this->i18nRequired = $i18nRequired;
 		$this->i18n();
 		
 		return $this;
@@ -193,7 +193,7 @@ trait TI18nFormField {
 	 * @return	bool
 	 */
 	public function isI18n() {
-		return $this->__i18n;
+		return $this->i18n;
 	}
 	
 	/**
@@ -203,7 +203,7 @@ trait TI18nFormField {
 	 * @return	bool
 	 */
 	public function isI18nRequired() {
-		return $this->__i18nRequired;
+		return $this->i18nRequired;
 	}
 	
 	/**
@@ -225,7 +225,7 @@ trait TI18nFormField {
 			throw new \InvalidArgumentException("Given pattern is invalid.");
 		}
 		
-		$this->__languageItemPattern = $pattern;
+		$this->languageItemPattern = $pattern;
 		
 		return $this;
 	}
@@ -244,7 +244,7 @@ trait TI18nFormField {
 				$this->setStringValue($value);
 			}
 			else {
-				$this->__value = $value;
+				$this->value = $value;
 			}
 		}
 		
@@ -295,7 +295,7 @@ trait TI18nFormField {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_string($value)) {
-				$this->__value = StringUtil::trim($value);
+				$this->value = StringUtil::trim($value);
 			}
 		}
 		

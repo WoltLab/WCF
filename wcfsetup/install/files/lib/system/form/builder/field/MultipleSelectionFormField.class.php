@@ -29,10 +29,10 @@ class MultipleSelectionFormField extends AbstractFormField implements IFilterabl
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_array($value)) {
-				$this->__value = $value;
+				$this->value = $value;
 			}
 			else if (!$this->isNullable()) {
-				$this->__value = [];
+				$this->value = [];
 			}
 		}
 		

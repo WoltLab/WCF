@@ -128,7 +128,7 @@ class ItemListFormField extends AbstractFormField implements IImmutableFormField
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_array($value)) {
-				$this->__value = array_unique(ArrayUtil::trim($value));
+				$this->value = array_unique(ArrayUtil::trim($value));
 			}
 		}
 		
@@ -164,7 +164,7 @@ class ItemListFormField extends AbstractFormField implements IImmutableFormField
 		switch ($this->getSaveValueType()) {
 			case self::SAVE_VALUE_TYPE_ARRAY:
 				if (is_array($value)) {
-					$this->__value = $value;
+					$this->value = $value;
 				}
 				else {
 					throw new \InvalidArgumentException("Given value is no array, '" . gettype($value) . "' given.");
@@ -174,7 +174,7 @@ class ItemListFormField extends AbstractFormField implements IImmutableFormField
 			
 			case self::SAVE_VALUE_TYPE_CSV:
 				if (is_string($value)) {
-					$this->__value = explode(',', $value);
+					$this->value = explode(',', $value);
 				}
 				else {
 					throw new \InvalidArgumentException("Given value is no string, '" . gettype($value) . "' given.");
@@ -184,7 +184,7 @@ class ItemListFormField extends AbstractFormField implements IImmutableFormField
 			
 			case self::SAVE_VALUE_TYPE_NSV:
 				if (is_string($value)) {
-					$this->__value = explode("\n", $value);
+					$this->value = explode("\n", $value);
 				}
 				else {
 					throw new \InvalidArgumentException("Given value is no string, '" . gettype($value) . "' given.");
@@ -194,7 +194,7 @@ class ItemListFormField extends AbstractFormField implements IImmutableFormField
 			
 			case self::SAVE_VALUE_TYPE_SSV:
 				if (is_string($value)) {
-					$this->__value = explode(' ', $value);
+					$this->value = explode(' ', $value);
 				}
 				else {
 					throw new \InvalidArgumentException("Given value is no string, '" . gettype($value) . "' given.");

@@ -17,7 +17,7 @@ trait TFilterableSelectionFormField {
 	 * `true` if this field's options are filterable by the user
 	 * @var	bool
 	 */
-	protected $__filterable = false;
+	protected $filterable = false;
 	
 	/**
 	 * Sets if the selection options can be filtered by the user so that they
@@ -28,7 +28,7 @@ trait TFilterableSelectionFormField {
 	 * @return	static			this node
 	 */
 	public function filterable($filterable = true) {
-		$this->__filterable = $filterable;
+		$this->filterable = $filterable;
 		
 		return $this;
 	}
@@ -43,6 +43,6 @@ trait TFilterableSelectionFormField {
 	 * @return	bool
 	 */
 	public function isFilterable() {
-		return $this->__filterable;
+		return $this->filterable;
 	}
 }

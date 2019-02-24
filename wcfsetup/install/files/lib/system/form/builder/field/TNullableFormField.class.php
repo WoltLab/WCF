@@ -15,7 +15,7 @@ trait TNullableFormField {
 	 * `true` if this field supports `null` as its value and `false` otherwise
 	 * @var	bool
 	 */
-	protected $__nullable = false;
+	protected $nullable = false;
 	
 	/**
 	 * Returns `true` if this field supports `null` as its value and returns `false`
@@ -26,7 +26,7 @@ trait TNullableFormField {
 	 * @return	bool
 	 */
 	public function isNullable() {
-		return $this->__nullable;
+		return $this->nullable;
 	}
 	
 	/**
@@ -36,7 +36,7 @@ trait TNullableFormField {
 	 * @return	static				this node
 	 */
 	public function nullable($nullable = true) {
-		$this->__nullable = $nullable;
+		$this->nullable = $nullable;
 		
 		return $this;
 	}

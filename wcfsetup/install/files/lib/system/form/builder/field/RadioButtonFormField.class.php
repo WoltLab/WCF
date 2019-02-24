@@ -28,7 +28,7 @@ class RadioButtonFormField extends AbstractFormField implements IImmutableFormFi
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_string($value)) {
-				$this->__value = $value;
+				$this->value = $value;
 			}
 		}
 		

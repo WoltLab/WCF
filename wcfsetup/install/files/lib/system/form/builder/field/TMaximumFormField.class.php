@@ -15,7 +15,7 @@ trait TMaximumFormField {
 	 * maximum of the field value
 	 * @var	null|number
 	 */
-	protected $__maximum;
+	protected $maximum;
 	
 	/**
 	 * Returns the maximum of the values of this field or `null` if no maximum
@@ -24,7 +24,7 @@ trait TMaximumFormField {
 	 * @return	null|number
 	 */
 	public function getMaximum() {
-		return $this->__maximum;
+		return $this->maximum;
 	}
 	
 	/**
@@ -50,7 +50,7 @@ trait TMaximumFormField {
 			}
 		}
 		
-		$this->__maximum = $maximum;
+		$this->maximum = $maximum;
 		
 		return $this;
 	}

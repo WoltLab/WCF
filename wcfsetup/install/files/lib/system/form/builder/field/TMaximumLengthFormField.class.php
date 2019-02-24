@@ -17,7 +17,7 @@ trait TMaximumLengthFormField {
 	 * maximum length of the field value
 	 * @var	null|int
 	 */
-	protected $__maximumLength;
+	protected $maximumLength;
 	
 	/**
 	 * Returns the maximum length of the values of this field or `null` if no placeholder
@@ -26,7 +26,7 @@ trait TMaximumLengthFormField {
 	 * @return	null|int
 	 */
 	public function getMaximumLength() {
-		return $this->__maximumLength;
+		return $this->maximumLength;
 	}
 	
 	/**
@@ -56,7 +56,7 @@ trait TMaximumLengthFormField {
 			}
 		}
 		
-		$this->__maximumLength = $maximumLength;
+		$this->maximumLength = $maximumLength;
 		
 		return $this;
 	}

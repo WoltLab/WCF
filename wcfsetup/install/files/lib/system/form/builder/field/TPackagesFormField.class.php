@@ -16,7 +16,7 @@ trait TPackagesFormField {
 	 * ids of the packages considered for this field
 	 * @var	int[]
 	 */
-	protected $__packageIDs = [];
+	protected $packageIDs = [];
 	
 	/**
 	 * Returns the ids of the packages considered for this field. An empty
@@ -25,7 +25,7 @@ trait TPackagesFormField {
 	 * @return	int[]
 	 */
 	public function getPackageIDs() {
-		return $this->__packageIDs;
+		return $this->packageIDs;
 	}
 	
 	/**
@@ -44,7 +44,7 @@ trait TPackagesFormField {
 			}
 		}
 		
-		$this->__packageIDs = $packageIDs;
+		$this->packageIDs = $packageIDs;
 		
 		return $this;
 	}

@@ -40,7 +40,7 @@ class SingleSelectionFormField extends AbstractFormField implements IImmutableFo
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_string($value)) {
-				$this->__value = $value;
+				$this->value = $value;
 			}
 		}
 		
