@@ -2446,6 +2446,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.page.description"><![CDATA[Rebuilds the page search index.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.sitemap"><![CDATA[Rebuild Sitemap]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.sitemap.description"><![CDATA[Rebuilds the sitemap.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointEvent"><![CDATA[Rebuilds Points per Activity]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointEvent.description"><![CDATA[Recalculates points per activity]]></item>
 	</category>
 	<category name="wcf.acp.rescueMode">
 		<item name="wcf.acp.rescueMode"><![CDATA[Rescue Mode]]></item>

@@ -516,6 +516,12 @@
 			<nicevalue>60</nicevalue>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.activityPointEvent</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname>wcf\system\worker\UserActivityPointUpdateEventsWorker</classname>
+			<nicevalue>65</nicevalue>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.user</name>
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 			<classname>wcf\system\worker\UserRebuildDataWorker</classname>

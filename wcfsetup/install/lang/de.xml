@@ -2518,6 +2518,8 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.page.description"><![CDATA[Aktualisiert den Suchindex für CMS-Seiten]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.sitemap"><![CDATA[Sitemap aktualisieren]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.sitemap.description"><![CDATA[Erstellt die Sitemap neu.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointEvent"><![CDATA[Punkte pro Aktivität aktualisieren]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointEvent.description"><![CDATA[Berechnet Punkte pro Aktivität neu]]></item>
 	</category>
 	<category name="wcf.acp.rescueMode">
 		<item name="wcf.acp.rescueMode"><![CDATA[Systemwiederherstellung]]></item>
