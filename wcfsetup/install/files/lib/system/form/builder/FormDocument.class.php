@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder;
 use wcf\data\IStorableObject;
+use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\data\FormDataHandler;
 use wcf\system\form\builder\data\IFormDataHandler;
 use wcf\system\form\builder\field\data\processor\DefaultFormFieldDataProcessor;
@@ -277,19 +278,24 @@ class FormDocument implements IFormDocument {
 		
 		/** @var IFormNode $node */
 		foreach ($this->getIterator() as $node) {
-			if ($node instanceof IFormField && $node->isAvailable()) {
-				if ($node->getObjectProperty() !== $node->getId()) {
-					try {
+			if ($node->isAvailable()) {
+				if ($node instanceof IFormField) {
+					if ($node->getObjectProperty() !== $node->getId()) {
+						try {
+							$node->loadValueFromObject($object);
+						}
+						catch (\InvalidArgumentException $e) {
+							// if an object property is explicitly set,
+							// ignore invalid values as this might not be
+							// the appropriate field
+						}
+					}
+					else {
 						$node->loadValueFromObject($object);
 					}
-					catch (\InvalidArgumentException $e) {
-						// if an object property is explicitly set,
-						// ignore invalid values as this might not be
-						// the appropriate field
-					}
 				}
-				else {
-					$node->loadValueFromObject($object);
+				else if ($node instanceof IFormContainer) {
+					$node->loadValuesFromObject($object);
 				}
 			}
 		}

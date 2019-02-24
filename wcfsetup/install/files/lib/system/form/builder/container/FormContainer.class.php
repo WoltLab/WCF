@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\builder\container;
+use wcf\data\IStorableObject;
 use wcf\system\form\builder\IFormChildNode;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\TFormChildNode;
@@ -37,6 +38,15 @@ class FormContainer implements IFormContainer {
 		return WCF::getTPL()->fetch($this->templateName, 'wcf', array_merge($this->getHtmlVariables(), [
 			'container' => $this
 		]), true);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function loadValuesFromObject(IStorableObject $object) {
+		// does nothing
+		
+		return $this;
 	}
 	
 	/**
