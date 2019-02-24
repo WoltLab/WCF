@@ -32,6 +32,13 @@ class FormDocument implements IFormDocument {
 	protected $action;
 	
 	/**
+	 * `true` if form is requested via an AJAX request or processes data via an AJAX request
+	 * and `false` otherwise
+	 * @var	boolean
+	 */
+	protected $ajax;
+	
+	/**
 	 * data handler for this document
 	 * @var	IFormDataHandler
 	 */
@@ -93,6 +100,15 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
+	public function ajax($ajax = true) {
+		$this->ajax = $ajax;
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function build() {
 		if ($this->isBuilt) {
 			throw new \BadMethodCallException("Form document has already been built.");
@@ -143,7 +159,7 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function getAction() {
-		if ($this->action === null) {
+		if ($this->action === null && !$this->isAjax()) {
 			throw new \BadMethodCallException("Action has not been set.");
 		}
 		
@@ -266,6 +282,13 @@ class FormDocument implements IFormDocument {
 		}
 		
 		return !empty($requestData);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function isAjax() {
+		return $this->ajax;
 	}
 	
 	/**

@@ -33,19 +33,6 @@ class DialogFormDocument extends FormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getAction() {
-		// do not throw exception if no action has been set as a dialog
-		// form does not require an action to be set
-		if ($this->action === null) {
-			$this->action = '';
-		}
-		
-		return $this->action;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function getHtml() {
 		return WCF::getTPL()->fetch(
 			'__dialogForm',

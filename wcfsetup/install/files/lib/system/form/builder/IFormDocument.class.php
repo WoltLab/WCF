@@ -36,6 +36,15 @@ interface IFormDocument extends IFormParentNode {
 	public function action($action);
 	
 	/**
+	 * Sets whether this form is requested via an AJAX request or processes data via an AJAX
+	 * request and returns his document.
+	 * 
+	 * @param	boolean		$ajax
+	 * @return	static		this document
+	 */
+	public function ajax($ajax = true);
+	
+	/**
 	 * Is called once after all nodes have been added to this document.
 	 * 
 	 * This method is intended to trigger `IFormNode::populate()` to allow nodes to
@@ -64,7 +73,7 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @return	string				form action
 	 * 
-	 * @throws	\BadMethodCallException		if no action has been set
+	 * @throws	\BadMethodCallException		if no action has been set and `isAjax()` is `false`
 	 */
 	public function getAction();
 	
@@ -148,6 +157,16 @@ interface IFormDocument extends IFormParentNode {
 	 * @return	bool				`tu
 	 */
 	public function hasRequestData($index = null);
+	
+	/**
+	 * Returns `true` if this form is requested via an AJAX request or processes data via an
+	 * AJAX request and `false` otherwise.
+	 * 
+	 * By default, this method returns `false`.
+	 * 
+	 * @return	boolean
+	 */
+	public function isAjax();
 	
 	/**
 	 * Loads the field values from the given object and returns this document.
