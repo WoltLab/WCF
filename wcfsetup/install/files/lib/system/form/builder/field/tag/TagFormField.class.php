@@ -5,6 +5,7 @@ use wcf\data\IStorableObject;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\IObjectTypeFormField;
+use wcf\system\form\builder\field\TDefaultIdFormField;
 use wcf\system\form\builder\field\TObjectTypeFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\tagging\TagEngine;
@@ -14,7 +15,8 @@ use wcf\util\ArrayUtil;
  * Implementation of a form field for tags.
  * 
  * This field uses the `wcf.tagging.tags` and `wcf.tagging.tags.description` language
- * item as the default form field label and description, respectively.
+ * item as the default form field label and description, respectively. The default id
+ * of fields of this class is `tags`.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2019 WoltLab GmbH
@@ -23,6 +25,7 @@ use wcf\util\ArrayUtil;
  * @since	5.2
  */
 class TagFormField extends AbstractFormField implements IObjectTypeFormField {
+	use TDefaultIdFormField;
 	use TObjectTypeFormField;
 	
 	/**
@@ -153,5 +156,12 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 		}
 		
 		return parent::value($stringTags);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected static function getDefaultId() {
+		return 'tags';
 	}
 }
