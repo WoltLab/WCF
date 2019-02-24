@@ -78,7 +78,7 @@ class DateFormField extends AbstractFormField implements IImmutableFormField, IN
 				return null;
 			}
 			else {
-				return DateUtil::getDateTimeByTimestamp(0)->format($this->getSaveValueFormat());;
+				return DateUtil::getDateTimeByTimestamp(0)->format($this->getSaveValueFormat());
 			}
 		}
 		
