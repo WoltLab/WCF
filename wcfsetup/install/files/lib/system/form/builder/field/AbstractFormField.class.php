@@ -103,7 +103,7 @@ abstract class AbstractFormField implements IFormField {
 	 */
 	public function getHtml() {
 		if ($this->templateName === null) {
-			throw new \LogicException("\$templateName property has not been set.");
+			throw new \LogicException("\$templateName property has not been set for class '" . static::class . "'.");
 		}
 		
 		if ($this->requiresLabel() && $this->getLabel() === null) {
