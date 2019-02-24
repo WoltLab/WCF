@@ -127,6 +127,12 @@ class FormDocument implements IFormDocument {
 			}
 			
 			$node->populate();
+			
+			if ($node instanceof IFormParentNode) {
+				foreach ($node->children() as $child) {
+					$node->validateChild($child);
+				}
+			}
 		}
 		
 		if (!empty($doubleNodeIds)) {
