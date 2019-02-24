@@ -34,6 +34,13 @@ class FormContainer implements IFormContainer {
 	/**
 	 * @inheritDoc
 	 */
+	public function __construct() {
+		$this->addClass('section');
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getHtml() {
 		return WCF::getTPL()->fetch($this->templateName, 'wcf', array_merge($this->getHtmlVariables(), [
 			'container' => $this

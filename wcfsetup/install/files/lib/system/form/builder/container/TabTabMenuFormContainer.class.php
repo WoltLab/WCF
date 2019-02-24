@@ -10,9 +10,16 @@ namespace wcf\system\form\builder\container;
  * @package	WoltLabSuite\Core\System\Form\Builder\Container
  * @since	5.2
  */
-class TabTabMenuFormContainer extends FormContainer implements ITabFormContainer, ITabMenuFormContainer {
+class TabTabMenuFormContainer extends TabMenuFormContainer implements ITabFormContainer {
 	/**
 	 * @inheritDoc
 	 */
-	protected $templateName = '__formTabTabMenuContainer';
+	protected $templateName = '__tabTabMenuFormContainer';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function __construct() {
+		$this->addClass('tabMenuContainer')->addClass('tabMenuContent');
+	}
 }

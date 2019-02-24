@@ -15,4 +15,11 @@ class TabFormContainer extends FormContainer implements ITabFormContainer {
 	 * @inheritDoc
 	 */
 	protected $templateName = '__tabFormContainer';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function __construct() {
+		$this->addClass('tabMenuContent');
+	}
 }

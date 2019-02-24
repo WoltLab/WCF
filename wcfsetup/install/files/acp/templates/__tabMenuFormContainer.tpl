@@ -1,4 +1,8 @@
-<div id="{@$container->getPrefixedId()}Container" class="section tabMenuContainer{foreach from=$container->getClasses() item='class'} {$class}{/foreach}"{foreach from=$container->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{if !$container->checkDependencies()} style="display: none;"{/if}{if !$container->checkDependencies()} style="display: none;"{/if}>
+<div id="{@$container->getPrefixedId()}Container" {*
+	*}{if !$container->getClasses()|empty}class="{implode from=$container->getClasses() item='class' glue=' '}{$class}{/implode}" {/if}{*
+	*}{foreach from=$container->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
+	*}{if !$container->checkDependencies()} style="display: none;"{/if}{*
+*}>
 	<nav class="tabMenu">
 		<ul>
 			{foreach from=$container item='child'}
