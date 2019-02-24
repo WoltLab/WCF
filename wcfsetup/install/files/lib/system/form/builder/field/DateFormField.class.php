@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\util\DateUtil;
 
 /**
  * Implementation of a form field for to select a FontAwesome icon.
@@ -11,8 +12,9 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class DateFormField extends AbstractFormField implements IImmutableFormField {
+class DateFormField extends AbstractFormField implements IImmutableFormField, INullableFormField {
 	use TImmutableFormField;
+	use TNullableFormField;
 	
 	/**
 	 * date time format of the save value
@@ -72,7 +74,12 @@ class DateFormField extends AbstractFormField implements IImmutableFormField {
 	 */
 	public function getSaveValue() {
 		if ($this->getValue() === null) {
-			return null;
+			if ($this->isNullable()) {
+				return null;
+			}
+			else {
+				return DateUtil::getDateTimeByTimestamp(0)->format($this->getSaveValueFormat());;
+			}
 		}
 		
 		return $this->getValueDateTimeObject()->format($this->getSaveValueFormat());
