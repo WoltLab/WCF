@@ -56,9 +56,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if ($this->userOption->optionName === 'aboutMe') {
-			$this->optionType = 'aboutMe';
-		}
+		$this->optionType = $this->userOption->optionType;
 	}
 	
 	/**
