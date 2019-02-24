@@ -8,7 +8,7 @@
 			{foreach from=$container item='child'}
 				{if $child->isAvailable()}
 					{assign var='__tabMenuFormContainerChildId' value=$child->getPrefixedId()|concat:'Container'}
-					<li{if !$child->checkDependencies()} style="display: none;"{/if}><a href="{@$__wcf->getAnchor($__tabMenuFormContainerChildId)}">{@$child->getLabel()}</a></li>
+					<li{if !$child->checkDependencies()} style="display: none;"{/if}><a{if $container->usesAnchors()} href="{@$__wcf->getAnchor($__tabMenuFormContainerChildId)}"{/if}>{@$child->getLabel()}</a></li>
 				{/if}
 			{/foreach}
 		</ul>

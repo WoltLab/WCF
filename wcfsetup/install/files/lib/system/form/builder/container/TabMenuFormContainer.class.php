@@ -17,10 +17,39 @@ class TabMenuFormContainer extends FormContainer implements ITabMenuFormContaine
 	protected $templateName = '__tabMenuFormContainer';
 	
 	/**
+	 * is `true` if the links in the tab menu have anchors
+	 * @var	boolean
+	 */
+	protected $useAnchors = true;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function __construct() {
 		$this->addClass('section')
 			->addClass('tabMenuContainer');
+	}
+	
+	/**
+	 * Sets if the links in the tab menu have anchors and returns this form container.
+	 * 
+	 * @param	boolean		$useAnchors
+	 * @return	TabMenuFormContainer		this form container
+	 */
+	public function useAnchors($useAnchors = true) {
+		$this->useAnchors = $useAnchors;
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns `true` if the links in the tab menu have anchors and `false` otherwise.
+	 * 
+	 * By default, the links in the tab menu have anchors. 
+	 * 
+	 * @return	boolean
+	 */
+	public function usesAnchors() {
+		return $this->useAnchors;
 	}
 }
