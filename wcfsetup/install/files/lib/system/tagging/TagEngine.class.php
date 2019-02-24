@@ -7,6 +7,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\InvalidObjectTypeException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 
 /**
  * Manages the tagging of objects.
@@ -28,7 +29,9 @@ class TagEngine extends SingletonFactory {
 	 */
 	public function addObjectTags($objectType, $objectID, array $tags, $languageID, $replace = true) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
-		$tags = array_unique($tags);
+		$tags = array_unique(array_reduce(ArrayUtil::trim(array_map(function($tag) {
+			return explode(',', $tag);
+		}, $tags)), 'array_merge', []));
 		
 		// remove tags prior to apply the new ones (prevents duplicate entries)
 		if ($replace) {
