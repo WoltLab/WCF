@@ -6,6 +6,7 @@ use wcf\system\form\builder\field\IMaximumLengthFormField;
 use wcf\system\form\builder\field\IMinimumLengthFormField;
 use wcf\system\form\builder\field\INullableFormField;
 use wcf\system\form\builder\field\IPlaceholderFormField;
+use wcf\system\form\builder\field\TDefaultIdFormField;
 use wcf\system\form\builder\field\TImmutableFormField;
 use wcf\system\form\builder\field\TMaximumLengthFormField;
 use wcf\system\form\builder\field\TMinimumLengthFormField;
@@ -17,6 +18,8 @@ use wcf\util\UserUtil;
 /**
  * Implementation of a form field to enter one non-existing username.
  * 
+ * The default id of fields of this class is `username` and the default label is `wcf.user.username`.
+ * 
  * Usernames have a minimum length of 3 characters and a maximum length of 100 characters by default.
  * 
  * @author	Matthias Schmidt
@@ -26,6 +29,7 @@ use wcf\util\UserUtil;
  * @since	5.2
  */
 class UsernameFormField extends AbstractFormField implements IImmutableFormField, IMaximumLengthFormField, IMinimumLengthFormField, INullableFormField, IPlaceholderFormField {
+	use TDefaultIdFormField;
 	use TImmutableFormField;
 	use TMaximumLengthFormField;
 	use TMinimumLengthFormField;
@@ -41,6 +45,7 @@ class UsernameFormField extends AbstractFormField implements IImmutableFormField
 	 * Creates a new instance of `UsernameFormField`.
 	 */
 	public function __construct() {
+		$this->label('wcf.user.username');
 		$this->maximumLength(100);
 		$this->minimumLength(3);
 	}
@@ -101,5 +106,12 @@ class UsernameFormField extends AbstractFormField implements IImmutableFormField
 		}
 		
 		parent::validate();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected static function getDefaultId() {
+		return 'username';
 	}
 }
