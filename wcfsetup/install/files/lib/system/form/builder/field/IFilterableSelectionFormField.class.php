@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\data\DatabaseObjectList;
 
 /**
  * Represents a form field that consists of a predefined set of possible values

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\form\builder\field;
 use wcf\system\captcha\ICaptchaHandler;
-use wcf\system\exception\SystemException;
 
 /**
  * Implementation of a form field for a captcha.
