@@ -70,8 +70,11 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 		}
 		
 		$languageIDs = [];
-		if ($object->languageID !== null) {
-			$languageIDs[] = $object->languageID;
+		
+		/** @noinspection PhpUndefinedFieldInspection */
+		$objectLanguageId = $object->languageID;
+		if ($objectLanguageId !== null) {
+			$languageIDs[] = $objectLanguageId;
 		}
 		
 		$tags = TagEngine::getInstance()->getObjectTags($this->getObjectType()->objectType, $objectID, $languageIDs);
