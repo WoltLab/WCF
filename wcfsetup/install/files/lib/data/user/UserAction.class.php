@@ -20,6 +20,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\RequestHandler;
+use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
 
@@ -454,11 +455,17 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (isset($this->parameters['deleteOldGroups'])) $deleteOldGroups = $this->parameters['deleteOldGroups'];
 		if (isset($this->parameters['addDefaultGroups'])) $addDefaultGroups = $this->parameters['addDefaultGroups'];
 		
+		$userIDs = [];
 		foreach ($this->getObjects() as $userEditor) {
+			$userIDs[] = $userEditor->userID;
 			$userEditor->addToGroups($groupIDs, $deleteOldGroups, $addDefaultGroups);
 		}
 		
-		//reread objects
+		if (empty($this->parameters['ignoreUserGroupAssignments'])) {
+			UserGroupAssignmentHandler::getInstance()->checkUsers($userIDs);
+		}
+		
+		// reread objects
 		$this->objects = [];
 		UserEditor::resetCache();
 		$this->readObjects();
@@ -638,6 +645,12 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 				$email->send();
 			}
 		}
+		
+		$userIDs = [];
+		foreach ($this->getObjects() as $user) {
+			$userIDs[] = $user->userID;
+		}
+		UserGroupAssignmentHandler::getInstance()->checkUsers($userIDs);
 		
 		$this->unmarkItems();
 	}

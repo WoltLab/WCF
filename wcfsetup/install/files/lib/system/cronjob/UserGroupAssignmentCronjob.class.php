@@ -35,7 +35,8 @@ class UserGroupAssignmentCronjob extends AbstractCronjob {
 				$userAction = new UserAction(array_unique($users), 'addToGroups', [
 					'addDefaultGroups' => false,
 					'deleteOldGroups' => false,
-					'groups' => [$groupID]
+					'groups' => [$groupID],
+					'ignoreUserGroupAssignments' => true
 				]);
 				$userAction->executeAction();
 			}

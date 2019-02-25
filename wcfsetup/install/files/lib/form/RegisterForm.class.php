@@ -23,6 +23,7 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
+use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
@@ -437,6 +438,7 @@ class RegisterForm extends UserAddForm {
 		];
 		$this->objectAction = new UserAction([], 'create', $data);
 		$result = $this->objectAction->executeAction();
+		/** @var User $user */
 		$user = $result['returnValues'];
 		$userEditor = new UserEditor($user);
 		
@@ -455,6 +457,8 @@ class RegisterForm extends UserAddForm {
 		// activation management
 		if (REGISTER_ACTIVATION_METHOD == 0) {
 			$this->message = 'wcf.user.register.success';
+			
+			UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
 		}
 		else if (REGISTER_ACTIVATION_METHOD == 1) {
 			// registering via 3rdParty leads to instant activation
