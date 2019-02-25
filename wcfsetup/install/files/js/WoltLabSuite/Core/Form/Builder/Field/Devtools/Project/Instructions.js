@@ -188,7 +188,7 @@ define([
 			elData(listItem, 'runStandalone', instructionData.runStandalone);
 			elData(listItem, 'value', instructionData.value);
 			
-			content = '' +
+			var content = '' +
 				'<div class="sortableNodeLabel">' +
 				'	<div class="jsDevtoolsProjectInstruction">' +
 				'		' + Language.get('wcf.acp.devtools.project.instruction.instruction', instructionData);
