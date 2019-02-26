@@ -106,7 +106,7 @@ class CaptchaQuestionHandler implements ICaptchaHandler {
 		$questionID = WCF::getSession()->getVar('captchaQuestion_'.$this->captchaQuestion);
 		
 		if ($questionID === null || !isset($this->questions[$questionID])) {
-			throw new UserInputException('captchaQuestion');
+			throw new UserInputException('captchaAnswer');
 		}
 		
 		$this->question = $this->questions[$questionID];
