@@ -321,6 +321,9 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			//noinspection JSUnresolvedVariable
 			if (data.returnValues.url) {
 				//noinspection JSUnresolvedVariable
+				if (window.location == data.returnValues.url) {
+					window.location.reload();
+				}
 				window.location = data.returnValues.url;
 			}
 			else {
