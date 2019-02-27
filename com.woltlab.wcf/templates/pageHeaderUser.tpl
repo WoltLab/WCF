@@ -284,6 +284,7 @@
 		{else}
 			<li>
 				<a href="{link controller='Search'}{/link}" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
+				<span id="userPanelSearchButton" style="display: none"></span>
 			</li>
 		{/if}
 	</ul>
