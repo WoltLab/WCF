@@ -1,6 +1,6 @@
 <?php
 namespace wcf\acp\page;
-use wcf\data\user\group\UserGroupList;
+use wcf\data\user\group\I18nUserGroupList;
 use wcf\page\SortablePage;
 use wcf\system\WCF;
 
@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  * 
- * @property	UserGroupList		$objectList
+ * @property	I18nUserGroupList		$objectList
  */
 class UserGroupListPage extends SortablePage {
 	/**
@@ -28,17 +28,17 @@ class UserGroupListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $defaultSortField = 'groupName';
+	public $defaultSortField = 'groupNameI18n';
 	
 	/**
 	 * @inheritDoc
 	 */
-	public $validSortFields = ['groupID', 'groupName', 'groupType', 'members', 'priority'];
+	public $validSortFields = ['groupID', 'groupNameI18n', 'groupType', 'members', 'priority'];
 	
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = UserGroupList::class;
+	public $objectListClassName = I18nUserGroupList::class;
 	
 	/**
 	 * indicates if a group has just been deleted
@@ -64,6 +64,7 @@ class UserGroupListPage extends SortablePage {
 	protected function initObjectList() {
 		parent::initObjectList();
 		
+		if (!empty($this->objectList->sqlSelects)) $this->objectList->sqlSelects .= ',';
 		$this->objectList->sqlSelects .= "(SELECT COUNT(*) FROM wcf".WCF_N."_user_to_group WHERE groupID = user_group.groupID) AS members";
 	}
 	
@@ -71,7 +72,7 @@ class UserGroupListPage extends SortablePage {
 	 * @inheritDoc
 	 */
 	protected function readObjects() {
-		$this->sqlOrderBy = ($this->sortField != 'members' ? 'user_group.' : '').$this->sortField." ".$this->sortOrder;
+		$this->sqlOrderBy = (($this->sortField != 'members' && $this->sortField != 'groupNameI18n') ? 'user_group.' : '').$this->sortField." ".$this->sortOrder;
 		
 		parent::readObjects();
 	}
