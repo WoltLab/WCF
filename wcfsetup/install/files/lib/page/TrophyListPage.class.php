@@ -5,6 +5,7 @@ use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\trophy\TrophyList;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -79,6 +80,10 @@ class TrophyListPage extends MultipleLinkPage {
 		if (!$this->category->isAccessible()) {
 			throw new PermissionDeniedException();
 		}
+		
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('TrophyList', [
+			'object' => $this->category
+		], ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
 	}
 	
 	/**

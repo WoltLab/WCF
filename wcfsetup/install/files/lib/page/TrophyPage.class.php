@@ -10,6 +10,7 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\page\PageLocationManager;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
@@ -66,6 +67,9 @@ class TrophyPage extends MultipleLinkPage {
 	 */
 	public $trophy;
 	
+	/**
+	 * @inheritDoc
+	 */
 	public function readData() {
 		parent::readData();
 		
@@ -88,6 +92,10 @@ class TrophyPage extends MultipleLinkPage {
 		if ($this->trophy->isDisabled()) {
 			throw new PermissionDeniedException();
 		}
+		
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('Trophy', [
+			'object' => $this->trophy
+		], ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
 	}
 	
 	/**
