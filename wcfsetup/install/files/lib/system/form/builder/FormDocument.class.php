@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\form\builder;
 use wcf\data\IStorableObject;
+use wcf\system\form\builder\button\FormButton;
+use wcf\system\form\builder\button\IFormButton;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\data\FormDataHandler;
 use wcf\system\form\builder\data\IFormDataHandler;
@@ -11,6 +13,9 @@ use wcf\system\WCF;
 
 /**
  * Represents a "whole" form (document).
+ * 
+ * The default button of this class is a button with id `submitButton`, label `wcf.global.button.submit`,
+ * access key `s` and CSS class `buttonPrimary`.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2019 WoltLab GmbH
@@ -32,6 +37,12 @@ class FormDocument implements IFormDocument {
 	protected $action;
 	
 	/**
+	 * `true` if the default button is added and `false` otherwise
+	 * @var	boolean
+	 */
+	protected $addDefaultButton = true;
+	
+	/**
 	 * `true` if form is requested via an AJAX request or processes data via an AJAX request
 	 * and `false` otherwise
 	 * @var	boolean
@@ -39,7 +50,13 @@ class FormDocument implements IFormDocument {
 	protected $ajax;
 	
 	/**
-	 * data handler for this document
+	 * buttons registered for this form document
+	 * @var	IFormButton[]
+	 */
+	protected $buttons = [];
+	
+	/**
+	 * data handler for this form document
 	 * @var	IFormDataHandler
 	 */
 	protected $dataHandler;
@@ -100,6 +117,30 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
+	public function addButton(IFormButton $button) {
+		$this->buttons[] = $button;
+		
+		$button->parent($this);
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function addDefaultButton($addDefaultButton = true) {
+		if ($this->isBuilt) {
+			throw new \BadMethodCallException("After the form document has already been built, changing whether the default button is added is no possible anymore.");
+		}
+		
+		$this->addDefaultButton = $addDefaultButton;
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function ajax($ajax = true) {
 		$this->ajax = $ajax;
 		
@@ -112,6 +153,11 @@ class FormDocument implements IFormDocument {
 	public function build() {
 		if ($this->isBuilt) {
 			throw new \BadMethodCallException("Form document has already been built.");
+		}
+		
+		// add default button
+		if ($this->hasDefaultButton()) {
+			$this->createDefaultButton();
 		}
 		
 		$nodeIds = [];
@@ -135,6 +181,15 @@ class FormDocument implements IFormDocument {
 			}
 		}
 		
+		foreach ($this->getButtons() as $button) {
+			if (in_array($button->getId(), $nodeIds)) {
+				$doubleNodeIds[] = $button->getId();
+			}
+			else {
+				$nodeIds[] = $button->getId();
+			}
+		}
+		
 		if (!empty($doubleNodeIds)) {
 			throw new \LogicException("Non-unique node id" . (count($doubleNodeIds) > 1 ? 's' : '') . " '" . implode("', '", $doubleNodeIds) . "'.");
 		}
@@ -142,6 +197,18 @@ class FormDocument implements IFormDocument {
 		$this->isBuilt = true;
 		
 		return $this;
+	}
+	
+	/**
+	 * Creates the default button for this form document.
+	 */
+	protected function createDefaultButton() {
+		$this->addButton(
+			FormButton::create('submitButton')
+				->label('wcf.global.button.submit')
+				->accessKey('s')
+				->addClass('buttonPrimary')
+		);
 	}
 	
 	/**
@@ -172,6 +239,13 @@ class FormDocument implements IFormDocument {
 		return $this->action;
 	}
 	
+	/**
+	 * @inheritDoc
+	 */
+	public function getButtons() {
+		return $this->buttons;
+	}
+
 	/**
 	 * @inheritDoc
 	 */
@@ -275,6 +349,13 @@ class FormDocument implements IFormDocument {
 		}
 		
 		return $this->requestData;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function hasDefaultButton() {
+		return $this->addDefaultButton;
 	}
 	
 	/**
