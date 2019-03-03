@@ -2368,7 +2368,6 @@ $.widget('wcf.messageTabMenu', {
 				
 				if ($name === undefined) {
 					$name = $tab.wcfIdentify();
-					console.debug("[wcf.messageTabMenu] Missing name attribute, assuming generic ID '" + $name + "'");
 				}
 			}
 			

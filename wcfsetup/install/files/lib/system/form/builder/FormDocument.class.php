@@ -47,7 +47,7 @@ class FormDocument implements IFormDocument {
 	 * and `false` otherwise
 	 * @var	boolean
 	 */
-	protected $ajax;
+	protected $ajax = false;
 	
 	/**
 	 * buttons registered for this form document

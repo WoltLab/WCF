@@ -4,8 +4,8 @@ use wcf\data\IStorableObject;
 use wcf\system\acl\ACLHandler;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
-use wcf\system\form\builder\field\IObjectTypeFormField;
-use wcf\system\form\builder\field\TObjectTypeFormField;
+use wcf\system\form\builder\field\IObjectTypeFormNode;
+use wcf\system\form\builder\field\TObjectTypeFormNode;
 use wcf\system\form\builder\IFormDocument;
 
 /**
@@ -17,8 +17,8 @@ use wcf\system\form\builder\IFormDocument;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Acl
  * @since	5.2
  */
-class AclFormField extends AbstractFormField implements IObjectTypeFormField {
-	use TObjectTypeFormField;
+class AclFormField extends AbstractFormField implements IObjectTypeFormNode {
+	use TObjectTypeFormNode;
 	
 	/**
 	 * name of/filter for the name(s) of the shown acl option categories

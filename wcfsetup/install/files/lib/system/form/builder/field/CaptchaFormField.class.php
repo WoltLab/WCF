@@ -11,9 +11,9 @@ use wcf\system\captcha\ICaptchaHandler;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class CaptchaFormField extends AbstractFormField implements IObjectTypeFormField {
+class CaptchaFormField extends AbstractFormField implements IObjectTypeFormNode {
 	use TDefaultIdFormField;
-	use TObjectTypeFormField {
+	use TObjectTypeFormNode {
 		objectType as defaultObjectType;
 	}
 	

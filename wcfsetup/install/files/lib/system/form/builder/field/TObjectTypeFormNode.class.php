@@ -5,7 +5,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\InvalidObjectTypeException;
 
 /**
- * Provides default implementations of `IObjectTypeFormField` methods.
+ * Provides default implementations of `IObjectTypeFormNode` methods.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2019 WoltLab GmbH
@@ -13,7 +13,7 @@ use wcf\system\exception\InvalidObjectTypeException;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-trait TObjectTypeFormField {
+trait TObjectTypeFormNode {
 	/**
 	 * object type
 	 * @var	null|ObjectType

@@ -121,7 +121,7 @@
 
 /* attachments tab in editor */
 .formAttachmentContent {
-	> .formAttachmentList {
+	.formAttachmentList {
 		display: flex;
 		flex-wrap: wrap;
 		margin-left: 0 !important;
@@ -138,7 +138,7 @@
 	}
 	
 	@include screen-md-up {
-		> .formAttachmentList {
+		.formAttachmentList {
 			margin-right: -20px;
 			
 			> li {
@@ -155,22 +155,23 @@
 	
 	> dl {
 		margin-top: 0 !important;
+	}
+	
+	> dl > dd > div,
+	.formAttachmentButtons {
+		align-items: center;
+		display: flex;
 		
-		> dd > div {
-			align-items: center;
-			display: flex;
+		> .button {
+			flex: 0 0 auto;
 			
-			> .button {
-				flex: 0 0 auto;
-				
-				&:not(:first-child) {
-					margin-left: 10px;
-				}
+			&:not(:first-child) {
+				margin-left: 10px;
 			}
-			
-			& + small {
-				margin-top: 10px !important;
-			}
+		}
+		
+		& + small {
+			margin-top: 10px !important;
 		}
 	}
 }

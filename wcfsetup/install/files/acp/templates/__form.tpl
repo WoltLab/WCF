@@ -5,12 +5,19 @@
 	});
 </script>
 
-<form method="{@$form->getMethod()}" {*
-	*}action="{@$form->getAction()}" {*
-	*}id="{@$form->getId()}"{*
-	*}{if !$form->getClasses()|empty} class="{implode from=$form->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
-	*}{foreach from=$form->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
-*}>
+{if $form->isAjax()}
+	<section id="{@$form->getId()}"{*
+		*}{if !$form->getClasses()|empty} class="{implode from=$form->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
+		*}{foreach from=$form->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
+	*}>
+{else}
+	<form method="{@$form->getMethod()}" {*
+		*}action="{@$form->getAction()}" {*
+		*}id="{@$form->getId()}"{*
+		*}{if !$form->getClasses()|empty} class="{implode from=$form->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
+		*}{foreach from=$form->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
+	*}>
+{/if}
 	{foreach from=$form item='child'}
 		{if $child->isAvailable()}
 			{@$child->getHtml()}
@@ -26,7 +33,11 @@
 	{/if}
 	
 	{@SECURITY_TOKEN_INPUT_TAG}
-</form>
+{if $form->isAjax()}
+	</section>
+{else}
+	</form>
+{/if}
 
 <script data-relocate="true">
 	{* after all dependencies have been added, check them *}
