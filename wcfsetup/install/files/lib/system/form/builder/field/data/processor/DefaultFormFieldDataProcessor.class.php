@@ -35,7 +35,7 @@ class DefaultFormFieldDataProcessor implements IFormFieldDataProcessor {
 	 * @param	array		$data		data storage
 	 */
 	protected function getData(IFormNode $node, array &$data) {
-		if ($node->checkDependencies()) {
+		if ($node->isAvailable() && $node->checkDependencies()) {
 			if ($node instanceof IFormParentNode) {
 				foreach ($node as $childNode) {
 					$this->getData($childNode, $data);
