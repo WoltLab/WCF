@@ -53,18 +53,24 @@ class WysiwygAttachmentFormField extends AbstractFormField {
 	 * @return	WysiwygAttachmentFormField
 	 */
 	public function attachmentHandler(AttachmentHandler $attachmentHandler = null) {
-		if ($this->attachmentHandler === null && $attachmentHandler !== null) {
-			$tmpHash = StringUtil::getRandomID();
-			if ($this->getDocument()->isAjax()) {
-				$sessionTmpHash = WCF::getSession()->getVar('__wcfAttachmentTmpHash');
-				if ($sessionTmpHash !== null) {
-					$tmpHash = $sessionTmpHash;
-					
-					WCF::getSession()->unregister('__wcfAttachmentTmpHash');
+		if ($attachmentHandler !== null) {
+			if ($this->attachmentHandler === null) {
+				$tmpHash = StringUtil::getRandomID();
+				if ($this->getDocument()->isAjax()) {
+					$sessionTmpHash = WCF::getSession()->getVar('__wcfAttachmentTmpHash');
+					if ($sessionTmpHash !== null) {
+						$tmpHash = $sessionTmpHash;
+						
+						WCF::getSession()->unregister('__wcfAttachmentTmpHash');
+					}
 				}
+				
+				$attachmentHandler->setTmpHashes([$tmpHash]);
 			}
-			
-			$attachmentHandler->setTmpHashes([$tmpHash]);
+			else {
+				// preserve temporary hashes
+				$attachmentHandler->setTmpHashes($this->attachmentHandler->getTmpHashes());
+			}
 		}
 		
 		$this->attachmentHandler = $attachmentHandler;

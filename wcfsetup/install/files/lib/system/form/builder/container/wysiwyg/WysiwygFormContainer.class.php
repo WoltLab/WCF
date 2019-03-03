@@ -156,6 +156,18 @@ class WysiwygFormContainer extends FormContainer {
 	public function loadValuesFromObject(IStorableObject $object) {
 		$this->objectId = $object->getObjectID();
 		
+		if ($this->attachmentData !== null) {
+			// updated attachment handler with object id
+			$this->attachmentField->attachmentHandler(
+				new AttachmentHandler(
+					$this->attachmentData['objectType'],
+					$this->getObjectId(),
+					'.',
+					$this->attachmentData['parentObjectID']
+				)
+			);
+		}
+		
 		return parent::loadValuesFromObject($object);
 	}
 
