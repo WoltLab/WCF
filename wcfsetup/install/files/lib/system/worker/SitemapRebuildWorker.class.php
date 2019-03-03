@@ -60,6 +60,12 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker {
 	private $actualUser; 
 	
 	/**
+     	* @inheritDoc
+    	*/
+    	public function setLoopCount($loopCount) {
+        	AbstractWorker::setLoopCount($loopCount);
+    	s}	
+	/**
 	 * @inheritDoc
 	 */
 	public function countObjects() {
