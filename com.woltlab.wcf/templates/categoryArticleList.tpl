@@ -1,7 +1,7 @@
 {capture assign='pageTitle'}{$category->getTitle()}{/capture}
 
 {capture assign='contentTitle'}{$category->getTitle()}{/capture}
-{capture assign='contentDescription'}{$category->getDescription()}{/capture}
+{capture assign='contentDescription'}{if $category->descriptionUseHtml}{@$category->getDescription()}{else}{$category->getDescription()}{/if}{/capture}
 
 {capture assign='headContent'}
 	{if $pageNo < $pages}

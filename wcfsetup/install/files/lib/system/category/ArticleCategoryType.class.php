@@ -55,4 +55,12 @@ class ArticleCategoryType extends AbstractCategoryType {
 	public function canEditCategory() {
 		return WCF::getSession()->getPermission('admin.content.article.canManageCategory');
 	}
+	
+	/**
+	 * @inheritDoc
+	 * @sicne	5.2
+	 */
+	public function supportsHtmlDescription() {
+		return true;
+	}
 }

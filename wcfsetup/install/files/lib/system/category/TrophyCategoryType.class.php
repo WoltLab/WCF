@@ -72,4 +72,12 @@ class TrophyCategoryType extends AbstractCategoryType {
 		$userTrophyAction = new UserTrophyAction($userTrophyList->getObjects(), 'delete');
 		$userTrophyAction->executeAction(); 
 	}
+	
+	/**
+	 * @inheritDoc
+	 * @sicne	5.2
+	 */
+	public function supportsHtmlDescription() {
+		return true;
+	}
 }
