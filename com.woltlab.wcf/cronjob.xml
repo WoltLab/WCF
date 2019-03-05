@@ -202,5 +202,15 @@
 			<startdow>*</startdow>
 			<canbedisabled>0</canbedisabled>
 		</cronjob>
+		<cronjob name="com.woltlab.wcf.exceptionMailer">
+			<classname>wcf\system\cronjob\ExceptionMailerCronjob</classname>
+			<description>Sends out notifications about new entries in the error log.</description>
+			<description language="de">Versendet Benachrichtigungen über neue Einträge im Fehlerprotokoll.</description>
+			<startminute>0</startminute>
+			<starthour>5</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+		</cronjob>
 	</import>
 </data>
