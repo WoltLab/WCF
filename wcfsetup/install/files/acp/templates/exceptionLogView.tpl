@@ -79,7 +79,7 @@
 				
 				<dl>
 					<dt>{lang}wcf.acp.exceptionLog.exception.date{/lang}</dt>
-					<dd>{$exception[date]|strtotime|plainTime}</dd>
+					<dd>{$exception[date]|plainTime}</dd>
 				</dl>
 				
 				<dl>
