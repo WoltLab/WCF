@@ -44,7 +44,7 @@ final class ExceptionLogUtil {
 	public static function parseException($entry) {
 		static $regex = null;
 		static $chainRegex = null;
-		if ($regex === null || $chainRegex === NULL) {
+		if ($regex === null || $chainRegex === null) {
 			$regex = new Regex("(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})\s*\n".
 			"Message: (?P<message>.*?)\s*\n".
 			"PHP version: (?P<phpVersion>.*?)\s*\n".
