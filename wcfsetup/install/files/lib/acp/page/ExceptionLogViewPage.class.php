@@ -4,8 +4,9 @@ use wcf\page\AbstractPage;
 use wcf\page\MultipleLinkPage;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
-use wcf\system\Regex;
+use wcf\system\registry\RegistryHandler;
 use wcf\system\request\LinkHandler;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\ExceptionLogUtil;
@@ -89,6 +90,9 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	 */
 	public function readData() {
 		AbstractPage::readData();
+		
+		// mark notifications as read
+		RegistryHandler::getInstance()->set('com.woltlab.wcf', 'exceptionMailerTimestamp', TIME_NOW);
 		
 		$fileNameRegex = new Regex('(?:^|/)\d{4}-\d{2}-\d{2}\.txt$');
 		$this->logFiles = DirectoryUtil::getInstance(WCF_DIR.'log/')->getFiles(SORT_DESC, $fileNameRegex);
