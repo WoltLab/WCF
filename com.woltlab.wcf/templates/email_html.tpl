@@ -133,6 +133,11 @@
 		.containerHeadline h3 a {
 			font-size: {$style->getVariable('wcfFontSizeHeadline')};
 		}
+		
+		.userAvatarImage {
+			background-color: #fff;
+			border-radius: 50%;
+		}
 		</style>
 	</head>
 	<body>
