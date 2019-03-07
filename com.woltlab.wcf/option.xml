@@ -172,6 +172,14 @@
 			<category name="security.blacklist">
 				<parent>security</parent>
 			</category>
+			<category name="security.blacklist.sfs">
+				<parent>security.blacklist</parent>
+				<showorder>1</showorder>
+			</category>
+			<category name="security.blacklist.custom">
+				<parent>security.blacklist</parent>
+				<showorder>2</showorder>
+			</category>
 			<category name="security.antispam">
 				<parent>security</parent>
 			</category>
@@ -703,20 +711,62 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<validationpattern>^.{15,}$</validationpattern>
 			</option>
 			<!-- /security.general.secrets -->
-			<!-- security.blacklist -->
+			<!-- security.blacklist.sfs -->
+			<option name="blacklist_sfs_enable">
+				<categoryname>security.blacklist.sfs</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions>blacklist_sfs_username,blacklist_sfs_email_address,blacklist_sfs_ip_address,blacklist_sfs_action</enableoptions>
+			</option>
+			<option name="blacklist_sfs_username">
+				<categoryname>security.blacklist.sfs</categoryname>
+				<optiontype>select</optiontype>
+				<selectoptions><![CDATA[skip:wcf.acp.option.blacklist_sfs_enable.skip
+90percentile:wcf.acp.option.blacklist_sfs_enable.90percentile
+moreThanOnce:wcf.acp.option.blacklist_sfs_enable.moreThanOnce
+simpleMatch:wcf.acp.option.blacklist_sfs_enable.simpleMatch]]></selectoptions>
+				<defaultvalue>90percentile</defaultvalue>
+			</option>
+			<option name="blacklist_sfs_email_address">
+				<categoryname>security.blacklist.sfs</categoryname>
+				<optiontype>select</optiontype>
+				<selectoptions><![CDATA[skip:wcf.acp.option.blacklist_sfs_enable.skip
+90percentile:wcf.acp.option.blacklist_sfs_enable.90percentile
+moreThanOnce:wcf.acp.option.blacklist_sfs_enable.moreThanOnce
+simpleMatch:wcf.acp.option.blacklist_sfs_enable.simpleMatch]]></selectoptions>
+				<defaultvalue>moreThanOnce</defaultvalue>
+			</option>
+			<option name="blacklist_sfs_ip_address">
+				<categoryname>security.blacklist.sfs</categoryname>
+				<optiontype>select</optiontype>
+				<selectoptions><![CDATA[skip:wcf.acp.option.blacklist_sfs_enable.skip
+90percentile:wcf.acp.option.blacklist_sfs_enable.90percentile
+moreThanOnce:wcf.acp.option.blacklist_sfs_enable.moreThanOnce
+simpleMatch:wcf.acp.option.blacklist_sfs_enable.simpleMatch]]></selectoptions>
+				<defaultvalue>90percentile</defaultvalue>
+			</option>
+			<option name="blacklist_sfs_action">
+				<categoryname>security.blacklist.sfs</categoryname>
+				<optiontype>select</optiontype>
+				<selectoptions><![CDATA[disable:wcf.acp.option.blacklist_sfs_action.disable
+block:wcf.acp.option.blacklist_sfs_action.block]]></selectoptions>
+				<defaultvalue>disable</defaultvalue>
+			</option>
+			<!-- /security.blacklist.stopforumspam -->
+			<!-- security.blacklist.custom -->
 			<option name="blacklist_ip_addresses">
-				<categoryname>security.blacklist</categoryname>
+				<categoryname>security.blacklist.custom</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
 			<option name="blacklist_user_agents">
-				<categoryname>security.blacklist</categoryname>
+				<categoryname>security.blacklist.custom</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
 			<option name="blacklist_hostnames">
-				<categoryname>security.blacklist</categoryname>
+				<categoryname>security.blacklist.custom</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
-			<!-- /security.blacklist -->
+			<!-- /security.blacklist.custom -->
 			<!-- security.antispam.captcha -->
 			<option name="captcha_type">
 				<categoryname>security.antispam.captcha</categoryname>
@@ -1683,5 +1733,11 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 	</import>
 	<delete>
 		<option name="module_attachment"/>
+		<option name="blacklist_sfs_username_time_period" />
+		<option name="blacklist_sfs_sensitivity" />
+		<option name="blacklist_sfs_action" />
+		<option name="blacklist_sfs_username" />
+		<option name="blacklist_sfs_email_address" />
+		<option name="blacklist_sfs_ip_address" />
 	</delete>
 </data>
