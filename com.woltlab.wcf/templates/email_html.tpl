@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<style type="text/css">
-		* {
+		*:not(html):not(head):not(meta):not(br) {
 			font-family: {@$style->getVariable('wcfFontFamilyFallback', true)};
 			font-size: {$style->getVariable('wcfFontSizeDefault')};
 		}
