@@ -58,7 +58,7 @@ class ArticleCategoryType extends AbstractCategoryType {
 	
 	/**
 	 * @inheritDoc
-	 * @sicne	5.2
+	 * @since	5.2
 	 */
 	public function supportsHtmlDescription() {
 		return true;
