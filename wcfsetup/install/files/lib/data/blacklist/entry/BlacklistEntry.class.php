@@ -28,7 +28,7 @@ class BlacklistEntry extends DatabaseObject {
 	 */
 	public static function getMatches($username, $email, $ipAddress) {
 		if (BLACKLIST_SFS_USERNAME === 'skip' && BLACKLIST_SFS_EMAIL_ADDRESS === 'skip' && BLACKLIST_SFS_IP_ADDRESS === 'skip') {
-			return false;
+			return [];
 		}
 		
 		$conditions = new PreparedStatementConditionBuilder(true, 'OR');
