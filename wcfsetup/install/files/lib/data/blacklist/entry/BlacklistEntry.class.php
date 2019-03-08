@@ -73,7 +73,7 @@ class BlacklistEntry extends DatabaseObject {
 	}
 	
 	protected static function getHash($string) {
-		return hex2bin(hash('sha256', $string));
+		return hash('sha256', $string, true);
 	}
 	
 	protected static function isMatch($type, $occurrences) {
