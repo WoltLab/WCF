@@ -973,7 +973,7 @@ class WCF {
 		if (self::$zendOpcacheEnabled === null) {
 			self::$zendOpcacheEnabled = false;
 			
-			if (extension_loaded('Zend Opcache') && @ini_get('opcache.enable')) {
+			if (!defined('DISABLE_ZEND_OPCACHE') && extension_loaded('Zend Opcache') && @ini_get('opcache.enable')) {
 				self::$zendOpcacheEnabled = true;
 			}
 			
