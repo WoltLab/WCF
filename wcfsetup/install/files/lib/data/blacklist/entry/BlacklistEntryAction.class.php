@@ -75,7 +75,7 @@ class BlacklistEntryAction extends AbstractDatabaseObjectAction {
 					foreach ($data[$type] as $hash => $occurrences) {
 						$statement->execute([
 							$type,
-							$hash,
+							hex2bin($hash),
 							$lastSeen,
 							min($occurrences, 32767),
 						]);

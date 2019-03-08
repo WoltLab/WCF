@@ -302,11 +302,12 @@ CREATE TABLE wcf1_blacklist_status (
 DROP TABLE IF EXISTS wcf1_blacklist_entry;
 CREATE TABLE wcf1_blacklist_entry (
 	type ENUM('email', 'ipv4','ipv6','username'),
-	hash CHAR(64),
+	hash BINARY(32),
 	lastSeen DATETIME NOT NULL,
 	occurrences SMALLINT(5) NOT NULL,
 	
-	UNIQUE KEY entry (type, hash)
+	UNIQUE KEY entry (type, hash),
+	KEY numberOfReports (type, occurrences)
 );
 
 DROP TABLE IF EXISTS wcf1_box;

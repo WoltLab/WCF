@@ -33,24 +33,24 @@ class BlacklistEntry extends DatabaseObject {
 		
 		$conditions = new PreparedStatementConditionBuilder(true, 'OR');
 		if (BLACKLIST_SFS_USERNAME) {
-			$conditions->add('(type = ? AND hash = ?)', ['username', hash('sha256', $username)]);
+			$conditions->add('(type = ? AND hash = ?)', ['username', self::getHash($username)]);
 		}
 		if (BLACKLIST_SFS_EMAIL_ADDRESS) {
-			$conditions->add('(type = ? AND hash = ?)', ['email', hash('sha256', $email)]);
+			$conditions->add('(type = ? AND hash = ?)', ['email', self::getHash($email)]);
 		}
 		if (BLACKLIST_SFS_IP_ADDRESS) {
 			UserUtil::convertIPv6To4($ipAddress);
 			if ($ipAddress) {
 				if (filter_var($ipAddress, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) !== false) {
-					$conditions->add('(type = ? AND hash = ?)', ['ipv4', hash('sha256', $ipAddress)]);
+					$conditions->add('(type = ? AND hash = ?)', ['ipv4', self::getHash($ipAddress)]);
 				}
 				else {
 					$parts = explode(':', $ipAddress);
 					
 					// StopForumSpam uses the first two to four segments of an IPv6 address.
-					$ipv6TwoParts = hash('sha256', "{$parts[0]}:{$parts[1]}::");
-					$ipv6ThreeParts = hash('sha256', "{$parts[0]}:{$parts[1]}:{$parts[2]}::");
-					$ipv6FourParts = hash('sha256', "{$parts[0]}:{$parts[1]}:{$parts[2]}:{$parts[3]}::");
+					$ipv6TwoParts = self::getHash("{$parts[0]}:{$parts[1]}::");
+					$ipv6ThreeParts = self::getHash("{$parts[0]}:{$parts[1]}:{$parts[2]}::");
+					$ipv6FourParts = self::getHash("{$parts[0]}:{$parts[1]}:{$parts[2]}:{$parts[3]}::");
 					
 					$conditions->add('(type = ? AND hash IN (?))', ['ipv6', [$ipv6TwoParts, $ipv6ThreeParts, $ipv6FourParts]]);
 				}
@@ -69,6 +69,10 @@ class BlacklistEntry extends DatabaseObject {
 		}
 		
 		return false;
+	}
+	
+	protected static function getHash($string) {
+		return hex2bin(hash('sha256', $string));
 	}
 	
 	protected static function isMatch($type, $occurrences) {
