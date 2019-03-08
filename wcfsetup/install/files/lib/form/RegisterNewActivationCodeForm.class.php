@@ -7,6 +7,7 @@ use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
 use wcf\system\email\UserMailbox;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -90,6 +91,10 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 		
 		if ($this->user->activationCode == 0) {
 			throw new UserInputException('username', 'alreadyEnabled');
+		}
+		
+		if (!empty($this->user->getBlacklistMatches())) {
+			throw new PermissionDeniedException();
 		}
 	}
 	
@@ -195,6 +200,10 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 	public function show() {
 		if (REGISTER_ACTIVATION_METHOD != 1) {
 			throw new IllegalLinkException();
+		}
+		
+		if ($this->user === null && !empty(WCF::getUser()->getBlacklistMatches())) {
+			throw new PermissionDeniedException();
 		}
 		
 		parent::show();

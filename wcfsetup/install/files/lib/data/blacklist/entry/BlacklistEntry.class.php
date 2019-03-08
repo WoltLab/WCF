@@ -24,9 +24,9 @@ class BlacklistEntry extends DatabaseObject {
 	 * @param string $username
 	 * @param string $email
 	 * @param string $ipAddress
-	 * @return boolean
+	 * @return string[]
 	 */
-	public static function shouldReject($username, $email, $ipAddress) {
+	public static function getMatches($username, $email, $ipAddress) {
 		if (BLACKLIST_SFS_USERNAME === 'skip' && BLACKLIST_SFS_EMAIL_ADDRESS === 'skip' && BLACKLIST_SFS_IP_ADDRESS === 'skip') {
 			return false;
 		}
@@ -62,13 +62,14 @@ class BlacklistEntry extends DatabaseObject {
 			".$conditions;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
+		$matches = [];
 		while ($row = $statement->fetchArray()) {
 			if (self::isMatch($row['type'], $row['occurrences'])) {
-				return true;
+				$matches[] = ($row['type'] === 'ipv4' || $row['type'] === 'ipv6') ? 'ip' : $row['type'];
 			}
 		}
 		
-		return false;
+		return $matches;
 	}
 	
 	protected static function getHash($string) {

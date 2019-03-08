@@ -28,6 +28,7 @@ use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 use wcf\util\UserRegistrationUtil;
 use wcf\util\UserUtil;
@@ -84,11 +85,11 @@ class RegisterForm extends UserAddForm {
 	public $randomFieldNames = [];
 	
 	/**
-	 * the user will be disabled and requires manual approval
-	 * @var bool
+	 * list of fields that have matches in the blacklist
+	 * @var string[]
 	 * @since 5.2
 	 */
-	public $forceDisableUser = false;
+	public $blacklistMatches = [];
 	
 	/**
 	 * min number of seconds between form request and submit
@@ -175,13 +176,9 @@ class RegisterForm extends UserAddForm {
 		}
 		
 		if (BLACKLIST_SFS_ENABLE) {
-			if (BlacklistEntry::shouldReject($this->username, $this->email, UserUtil::getIpAddress())) {
-				if (BLACKLIST_SFS_ACTION === 'disable') {
-					$this->forceDisableUser = true;
-				}
-				else {
-					throw new PermissionDeniedException();
-				}
+			$this->blacklistMatches = BlacklistEntry::getMatches($this->username, $this->email, UserUtil::getIpAddress());
+			if (BLACKLIST_SFS_ACTION === 'block') {
+				throw new PermissionDeniedException();
 			}
 		}
 	}
@@ -431,7 +428,7 @@ class RegisterForm extends UserAddForm {
 		
 		// generate activation code
 		$addDefaultGroups = true;
-		if ($this->forceDisableUser || (REGISTER_ACTIVATION_METHOD == 1 && !$registerVia3rdParty) || REGISTER_ACTIVATION_METHOD == 2) {
+		if (!empty($this->blacklistMatches) || (REGISTER_ACTIVATION_METHOD == 1 && !$registerVia3rdParty) || REGISTER_ACTIVATION_METHOD == 2) {
 			$activationCode = UserRegistrationUtil::getActivationCode();
 			$this->additionalFields['activationCode'] = $activationCode;
 			$addDefaultGroups = false;
@@ -448,7 +445,8 @@ class RegisterForm extends UserAddForm {
 			'data' => array_merge($this->additionalFields, [
 				'username' => $this->username,
 				'email' => $this->email,
-				'password' => $this->password
+				'password' => $this->password,
+				'blacklistMatches' => (!empty($this->blacklistMatches)) ? JSON::encode($this->blacklistMatches) : '',
 			]),
 			'groups' => $this->groupIDs,
 			'languageIDs' => $this->visibleLanguages,
@@ -473,10 +471,10 @@ class RegisterForm extends UserAddForm {
 		}
 		
 		// activation management
-		if (REGISTER_ACTIVATION_METHOD == 0 && !$this->forceDisableUser) {
+		if (REGISTER_ACTIVATION_METHOD == 0 && empty($this->blacklistMatches)) {
 			$this->message = 'wcf.user.register.success';
 		}
-		else if (REGISTER_ACTIVATION_METHOD == 1 && !$this->forceDisableUser) {
+		else if (REGISTER_ACTIVATION_METHOD == 1 && empty($this->blacklistMatches)) {
 			// registering via 3rdParty leads to instant activation
 			if ($registerVia3rdParty) {
 				$this->message = 'wcf.user.register.success';
@@ -493,7 +491,7 @@ class RegisterForm extends UserAddForm {
 				$this->message = 'wcf.user.register.success.needActivation';
 			}
 		}
-		else if (REGISTER_ACTIVATION_METHOD == 2 || $this->forceDisableUser) {
+		else if (REGISTER_ACTIVATION_METHOD == 2 || !empty($this->blacklistMatches)) {
 			$this->message = 'wcf.user.register.success.awaitActivation';
 		}
 		

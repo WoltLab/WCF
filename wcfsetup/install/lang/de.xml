@@ -4534,6 +4534,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.articles"><![CDATA[Artikel]]></item>
 		<item name="wcf.user.status.banned"><![CDATA[Der Benutzer ist gesperrt.]]></item>
 		<item name="wcf.user.status.isDisabled"><![CDATA[Der Benutzer ist nicht freigeschaltet.]]></item>
+		<item name="wcf.user.status.blacklistMatches"><![CDATA[Der Benutzer wurde auf Grund eines Treffers in der Datenbank von „Stop Forum Spam“ automatisch deaktiviert.]]></item>
 	</category>
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>

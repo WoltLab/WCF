@@ -1491,6 +1491,7 @@ CREATE TABLE wcf1_user (
 	positiveReactionsReceived INT(10) NOT NULL DEFAULT 0,
 	negativeReactionsReceived INT(10) NOT NULL DEFAULT 0,
 	neutralReactionsReceived INT(10) NOT NULL DEFAULT 0,
+	blacklistMatches VARCHAR(255) NOT NULL DEFAULT '',
 	
 	KEY username (username),
 	KEY email (email),
