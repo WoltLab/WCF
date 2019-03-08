@@ -1733,11 +1733,5 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 	</import>
 	<delete>
 		<option name="module_attachment"/>
-		<option name="blacklist_sfs_username_time_period" />
-		<option name="blacklist_sfs_sensitivity" />
-		<option name="blacklist_sfs_action" />
-		<option name="blacklist_sfs_username" />
-		<option name="blacklist_sfs_email_address" />
-		<option name="blacklist_sfs_ip_address" />
 	</delete>
 </data>
