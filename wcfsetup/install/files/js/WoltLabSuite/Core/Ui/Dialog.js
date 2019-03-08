@@ -563,7 +563,7 @@ define(
 		_maintainFocus: function(event) {
 			if (_activeDialog) {
 				var data = _dialogs.get(_activeDialog);
-				if (!data.dialog.contains(event.target) && !event.target.closest('.dropdownMenuContainer')) {
+				if (!data.dialog.contains(event.target) && !event.target.closest('.dropdownMenuContainer') && !event.target.closest('.datePicker')) {
 					this._setFocusToFirstItem(data.dialog, true);
 				}
 			}

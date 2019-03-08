@@ -11,6 +11,7 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 	
 	var _didInit = false;
 	var _firstDayOfWeek = 0;
+	var _wasInsidePicker = false;
 	
 	var _data = new ObjectMap();
 	var _input = null;
@@ -29,6 +30,7 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 	var _datePicker = null;
 	
 	var _callbackOpen = null;
+	var _callbackFocus = null;
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Date/Picker
@@ -162,8 +164,15 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 					container.className = 'inputAddon';
 					
 					var button = elCreate('a');
-					button.href = '#';
+					
 					button.className = 'inputSuffix button jsTooltip';
+					button.href = '#';
+					elAttr(button, 'role', 'button');
+					elAttr(button, 'tabindex', '0');
+					elAttr(button, 'title', Language.get('wcf.date.datePicker'));
+					elAttr(button, 'aria-label', Language.get('wcf.date.datePicker'));
+					elAttr(button, 'aria-haspopup', true);
+					elAttr(button, 'aria-expanded', false);
 					button.addEventListener(WCF_CLICK_EVENT, _callbackOpen);
 					container.appendChild(button);
 					
@@ -283,8 +292,14 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			
 			this._createPicker();
 			
+			if (_callbackFocus === null) {
+				_callbackFocus = this._maintainFocus.bind(this);
+				document.body.addEventListener('focus', _callbackFocus, { capture: true });
+			}
+			
 			var input = (event.currentTarget.nodeName === 'INPUT') ? event.currentTarget : event.currentTarget.previousElementSibling;
 			if (input === _input) {
+				this._close();
 				return;
 			}
 			
@@ -325,6 +340,10 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			this._renderPicker(date.getDate(), date.getMonth(), date.getFullYear());
 			
 			UiAlignment.set(_datePicker, _input);
+			
+			elAttr(_input.nextElementSibling, 'aria-expanded', true);
+			
+			_wasInsidePicker = false;
 		},
 		
 		/**
@@ -341,6 +360,7 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 				
 				EventHandler.fire('WoltLabSuite/Core/Date/Picker', 'close', {element: _input});
 				
+				elAttr(_input.nextElementSibling, 'aria-expanded', false);
 				_input = null;
 				_minDate = 0;
 				_maxDate = 0;
@@ -448,6 +468,14 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 					}
 					
 					cell.classList[selectable ? 'remove' : 'add']('otherMonth');
+					if (selectable) {
+						cell.href = '#';
+						elAttr(cell, 'role', 'button');
+						elAttr(cell, 'tabindex', '0');
+						elAttr(cell, 'title', DateUtil.formatDate(date));
+						elAttr(cell, 'aria-label', DateUtil.formatDate(date));
+					}
+					
 					date.setDate(date.getDate() + 1);
 				}
 				
@@ -566,7 +594,12 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			_datePicker.appendChild(header);
 			
 			_dateMonthPrevious = elCreate('a');
-			_dateMonthPrevious.className = 'previous';
+			_dateMonthPrevious.className = 'previous jsTooltip';
+			_dateMonthPrevious.href = '#';
+			elAttr(_dateMonthPrevious, 'role', 'button');
+			elAttr(_dateMonthPrevious, 'tabindex', '0');
+			elAttr(_dateMonthPrevious, 'title', Language.get('wcf.date.datePicker.previousMonth'));
+			elAttr(_dateMonthPrevious, 'aria-label', Language.get('wcf.date.datePicker.previousMonth'));
 			_dateMonthPrevious.innerHTML = '<span class="icon icon16 fa-arrow-left"></span>';
 			_dateMonthPrevious.addEventListener(WCF_CLICK_EVENT, this.previousMonth.bind(this));
 			header.appendChild(_dateMonthPrevious);
@@ -575,7 +608,9 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			header.appendChild(monthYearContainer);
 			
 			_dateMonth = elCreate('select');
-			_dateMonth.className = 'month';
+			_dateMonth.className = 'month jsTooltip';
+			elAttr(_dateMonth, 'title', Language.get('wcf.date.datePicker.month'));
+			elAttr(_dateMonth, 'aria-label', Language.get('wcf.date.datePicker.month'));
 			_dateMonth.addEventListener('change', this._changeMonth.bind(this));
 			monthYearContainer.appendChild(_dateMonth);
 			
@@ -586,12 +621,19 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			_dateMonth.innerHTML = months;
 			
 			_dateYear = elCreate('select');
-			_dateYear.className = 'year';
+			_dateYear.className = 'year jsTooltip';
+			elAttr(_dateYear, 'title', Language.get('wcf.date.datePicker.year'));
+			elAttr(_dateYear, 'aria-label', Language.get('wcf.date.datePicker.year'));
 			_dateYear.addEventListener('change', this._changeYear.bind(this));
 			monthYearContainer.appendChild(_dateYear);
 			
 			_dateMonthNext = elCreate('a');
-			_dateMonthNext.className = 'next';
+			_dateMonthNext.className = 'next jsTooltip';
+			_dateMonthNext.href = '#';
+			elAttr(_dateMonthNext, 'role', 'button');
+			elAttr(_dateMonthNext, 'tabindex', '0');
+			elAttr(_dateMonthNext, 'title', Language.get('wcf.date.datePicker.nextMonth'));
+			elAttr(_dateMonthNext, 'aria-label', Language.get('wcf.date.datePicker.nextMonth'));
 			_dateMonthNext.innerHTML = '<span class="icon icon16 fa-arrow-right"></span>';
 			_dateMonthNext.addEventListener(WCF_CLICK_EVENT, this.nextMonth.bind(this));
 			header.appendChild(_dateMonthNext);
@@ -633,6 +675,8 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			
 			_dateHour = elCreate('select');
 			_dateHour.className = 'hour';
+			elAttr(_dateHour, 'title', Language.get('wcf.date.datePicker.hour'));
+			elAttr(_dateHour, 'aria-label', Language.get('wcf.date.datePicker.hour'));
 			_dateHour.addEventListener('change', this._formatValue.bind(this));
 			
 			var tmp = '';
@@ -650,6 +694,8 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			
 			_dateMinute = elCreate('select');
 			_dateMinute.className = 'minute';
+			elAttr(_dateMinute, 'title', Language.get('wcf.date.datePicker.minute'));
+			elAttr(_dateMinute, 'aria-label', Language.get('wcf.date.datePicker.minute'));
 			_dateMinute.addEventListener('change', this._formatValue.bind(this));
 			
 			tmp = '';
@@ -666,7 +712,9 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 		/**
 		 * Shows the previous month.
 		 */
-		previousMonth: function() {
+		previousMonth: function(event) {
+			event.preventDefault();
+			
 			if (_dateMonth.value === '0') {
 				_dateMonth.value = 11;
 				_dateYear.value = ~~_dateYear.value - 1;
@@ -681,7 +729,9 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 		/**
 		 * Shows the next month.
 		 */
-		nextMonth: function() {
+		nextMonth: function(event) {
+			event.preventDefault();
+			
 			if (_dateMonth.value === '11') {
 				_dateMonth.value = 0;
 				_dateYear.value = ~~_dateYear.value + 1;
@@ -717,6 +767,8 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 		 * @param	{object}	event		event object
 		 */
 		_click: function(event) {
+			event.preventDefault();
+			
 			if (event.currentTarget.classList.contains('otherMonth')) {
 				return;
 			}
@@ -859,6 +911,26 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			}
 			
 			return element;
+		},
+		
+		/**
+		 * @param {Event} event
+		 */
+		_maintainFocus: function(event) {
+			if (_datePicker !== null && _datePicker.classList.contains('active')) {
+				if (!_datePicker.contains(event.target)) {
+					if (_wasInsidePicker) {
+						_input.nextElementSibling.focus();
+						_wasInsidePicker = false;
+					}
+					else {
+						elBySel('.previous', _datePicker).focus();
+					}
+				}
+				else {
+					_wasInsidePicker = true;
+				}
+			}
 		}
 	};
 	

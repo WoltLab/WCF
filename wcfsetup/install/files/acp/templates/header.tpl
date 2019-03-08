@@ -135,7 +135,14 @@
 				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 				'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}',
 				'wcf.menu.page': '{lang}wcf.menu.page{/lang}',
-				'wcf.menu.user': '{lang}wcf.menu.user{/lang}'
+				'wcf.menu.user': '{lang}wcf.menu.user{/lang}',
+				'wcf.date.datePicker': '{lang}wcf.date.datePicker{/lang}',
+				'wcf.date.datePicker.previousMonth': '{lang}wcf.date.datePicker.previousMonth{/lang}',
+				'wcf.date.datePicker.nextMonth': '{lang}wcf.date.datePicker.nextMonth{/lang}',
+				'wcf.date.datePicker.month': '{lang}wcf.date.datePicker.month{/lang}',
+				'wcf.date.datePicker.year': '{lang}wcf.date.datePicker.year{/lang}',
+				'wcf.date.datePicker.hour': '{lang}wcf.date.datePicker.hour{/lang}',
+				'wcf.date.datePicker.minute': '{lang}wcf.date.datePicker.minute{/lang}'
 				{event name='javascriptLanguageImport'}
 			});
 			

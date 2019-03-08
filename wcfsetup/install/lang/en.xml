@@ -3487,6 +3487,13 @@ Attachments:
 		<item name="wcf.date.endTime.error.beforeStartTime"><![CDATA[The end time has to be after the start time.]]></item>
 		<item name="wcf.date.startTime.error.invalid"><![CDATA[The start time is invalid.]]></item>
 		<item name="wcf.date.endTime.error.invalid"><![CDATA[The end time is invalid.]]></item>
+		<item name="wcf.date.datePicker"><![CDATA[Choose Date]]></item>
+		<item name="wcf.date.datePicker.previousMonth"><![CDATA[Previous Month]]></item>
+		<item name="wcf.date.datePicker.nextMonth"><![CDATA[Next Month]]></item>
+		<item name="wcf.date.datePicker.month"><![CDATA[Month]]></item>
+		<item name="wcf.date.datePicker.year"><![CDATA[Year]]></item>
+		<item name="wcf.date.datePicker.hour"><![CDATA[Hour]]></item>
+		<item name="wcf.date.datePicker.minute"><![CDATA[Minute]]></item>
 	</category>
 	<category name="wcf.edit">
 		<item name="wcf.edit.version"><![CDATA[Version]]></item>
