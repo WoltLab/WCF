@@ -5,6 +5,7 @@ use wcf\system\database\editor\DatabaseEditor;
 use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
 use wcf\system\database\exception\DatabaseQueryException;
 use wcf\system\database\exception\DatabaseTransactionException;
+use wcf\system\database\statement\DebugPreparedStatement;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\WCF;
 
@@ -114,6 +115,10 @@ abstract class Database {
 		$this->database = $database;
 		$this->failsafeTest = $failsafeTest;
 		$this->tryToCreateDatabase = $tryToCreateDatabase;
+		
+		if (defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE) {
+			$this->preparedStatementClassName = DebugPreparedStatement::class;
+		}
 		
 		// connect database
 		$this->connect();
