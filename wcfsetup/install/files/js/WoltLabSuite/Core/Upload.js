@@ -92,6 +92,8 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			
 			this._button = elCreate('p');
 			this._button.className = 'button uploadButton';
+			elAttr(this._button, 'role', 'button');
+			elAttr(this._button, 'tabindex', '0');
 			
 			var span = elCreate('span');
 			span.textContent = Language.get('wcf.global.button.upload');
