@@ -178,7 +178,7 @@ class RegisterForm extends UserAddForm {
 		if (BLACKLIST_SFS_ENABLE) {
 			$this->blacklistMatches = BlacklistEntry::getMatches($this->username, $this->email, UserUtil::getIpAddress());
 			if (BLACKLIST_SFS_ACTION === 'block') {
-				throw new PermissionDeniedException();
+				throw new NamedUserException('wcf.user.register.error.blacklistMatches');
 			}
 		}
 	}
