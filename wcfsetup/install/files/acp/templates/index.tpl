@@ -159,6 +159,13 @@
 			</dl>
 			
 			<dl>
+				<dt>upload_max_filesize</dt>
+				<dd>
+					{$server[upload_max_filesize]}
+				</dd>
+			</dl>
+			
+			<dl>
 				<dt>{lang}wcf.acp.index.system.php.sslSupport{/lang}</dt>
 				<dd>
 					{if $server[sslSupport]}{lang}wcf.acp.index.system.php.sslSupport.available{/lang}{else}{lang}wcf.acp.index.system.php.sslSupport.notAvailable{/lang}{/if}

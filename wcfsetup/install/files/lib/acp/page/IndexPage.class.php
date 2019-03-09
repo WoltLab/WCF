@@ -35,6 +35,7 @@ class IndexPage extends AbstractPage {
 			'mySQLVersion' => WCF::getDB()->getVersion(),
 			'load' => '',
 			'memoryLimit' => @ini_get('memory_limit'),
+			'upload_max_filesize' => @ini_get('upload_max_filesize'),
 			'postMaxSize' => @ini_get('post_max_size'),
 			'sslSupport' => RemoteFile::supportsSSL()
 		];
