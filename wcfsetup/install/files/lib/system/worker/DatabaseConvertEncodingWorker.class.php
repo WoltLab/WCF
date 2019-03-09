@@ -20,6 +20,15 @@ class DatabaseConvertEncodingWorker extends AbstractRebuildDataWorker {
 	/**
 	 * @inheritDoc
 	 */
+	public function initObjectList() {
+		// This rebuild worker has no database object list
+		// therefore we do nothing in this method an overwrite
+		// the parent method, that it does not throw an exception.
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function countObjects() {
 		if ($this->count === null) {
 			$this->count = count($this->getTables());
