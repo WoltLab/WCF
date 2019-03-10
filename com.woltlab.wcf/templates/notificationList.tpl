@@ -108,7 +108,7 @@
 		{/hascontent}
 	</footer>
 {else}
-	<p class="info">{lang}wcf.user.notification.noNotifications{/lang}</p>
+	<p class="info" role="status">{lang}wcf.user.notification.noNotifications{/lang}</p>
 {/if}
 
 <script data-relocate="true">

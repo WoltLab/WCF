@@ -45,7 +45,7 @@
 {if $items}
 	{include file=$resultListTemplateName application=$resultListApplication}
 {else}
-	<p class="info">{lang}wcf.tagging.taggedObjects.noResults{/lang}</p>
+	<p class="info" role="status">{lang}wcf.tagging.taggedObjects.noResults{/lang}</p>
 {/if}
 
 <footer class="contentFooter">

@@ -54,7 +54,7 @@
 		{/hascontent}
 	</footer>
 {else}
-	<p class="info">{lang}wcf.user.ignoredUsers.noUsers{/lang}</p>
+	<p class="info" role="status">{lang}wcf.user.ignoredUsers.noUsers{/lang}</p>
 {/if}
 
 <script data-relocate="true">
