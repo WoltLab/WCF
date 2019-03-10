@@ -186,5 +186,23 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 				}
 			}
 		}
+		
+		if (BLACKLIST_SFS_ENABLE) {
+			$timeLimit = TIME_NOW - 31 * 86400;
+			
+			$sql = "DELETE FROM     wcf".WCF_N."_blacklist_entry
+				WHERE           lastSeen < ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				gmdate('Y-m-d H:i:s', $timeLimit)
+			]);
+			
+			$sql = "DELETE FROM     wcf".WCF_N."_blacklist_status
+				WHERE           date < ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				gmdate('Y-m-d', $timeLimit)
+			]);
+		}
 	}
 }

@@ -10,7 +10,7 @@
 		<p class="info" role="status">{lang}wcf.page.availableUpdates{/lang}</p>
 	{/if}
 	
-	{if $__wcf->user->activationCode && REGISTER_ACTIVATION_METHOD == 1 && $templateName != 'registerActivation' && $templateName != 'register' && $templateName != 'redirect'}
+	{if $__wcf->user->activationCode && REGISTER_ACTIVATION_METHOD == 1 && $templateName != 'registerActivation' && $templateName != 'register' && $templateName != 'redirect' && $__wcf->user->getBlacklistMatches()|empty}
 		<p class="warning" role="status">{lang}wcf.user.register.needActivation{/lang}</p>
 	{/if}
 	
