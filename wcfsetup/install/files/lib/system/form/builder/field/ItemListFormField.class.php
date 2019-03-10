@@ -14,7 +14,8 @@ use wcf\util\ArrayUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class ItemListFormField extends AbstractFormField implements IImmutableFormField {
+class ItemListFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField {
+	use TAutoFocusFormField;
 	use TImmutableFormField;
 	
 	/**

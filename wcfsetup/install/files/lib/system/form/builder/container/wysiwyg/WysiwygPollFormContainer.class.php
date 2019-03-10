@@ -8,13 +8,13 @@ use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\IntegerFormField;
-use wcf\system\form\builder\field\IObjectTypeFormNode;
 use wcf\system\form\builder\field\poll\PollOptionsFormField;
 use wcf\system\form\builder\field\TextFormField;
-use wcf\system\form\builder\field\TObjectTypeFormNode;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\IObjectTypeFormNode;
+use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\form\builder\TWysiwygFormNode;
 use wcf\system\poll\IPollHandler;
 

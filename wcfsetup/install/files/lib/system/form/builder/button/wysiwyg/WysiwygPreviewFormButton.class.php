@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\form\builder\button\wysiwyg;
 use wcf\system\form\builder\button\FormButton;
-use wcf\system\form\builder\field\IObjectTypeFormNode;
-use wcf\system\form\builder\field\TObjectTypeFormNode;
+use wcf\system\form\builder\IObjectTypeFormNode;
+use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\form\builder\TWysiwygFormNode;
 
 /**

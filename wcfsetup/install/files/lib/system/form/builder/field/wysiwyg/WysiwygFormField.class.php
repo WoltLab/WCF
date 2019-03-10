@@ -4,12 +4,12 @@ use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\IMaximumLengthFormField;
 use wcf\system\form\builder\field\IMinimumLengthFormField;
-use wcf\system\form\builder\field\IObjectTypeFormNode;
 use wcf\system\form\builder\field\TMaximumLengthFormField;
 use wcf\system\form\builder\field\TMinimumLengthFormField;
-use wcf\system\form\builder\field\TObjectTypeFormNode;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\IObjectTypeFormNode;
+use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\util\StringUtil;
 
@@ -66,8 +66,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * Sets the identifier used to autosave the field value and returns this field.
 	 * 
 	 * @param	string		$autosaveId	identifier used to autosave field value
-	 *
-	 * @return        WysiwygFormNode		this field
+	 * @return	WysiwygFormField		this field
 	 */
 	public function autosaveId($autosaveId) {
 		$this->autosaveId = $autosaveId;
@@ -113,8 +112,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * Sets the last time this field has been edited and returns this field.
 	 * 
 	 * @param	int	$lastEditTime	last time field has been edited
-	 *
-	 * @return        WysiwygFormNode	this field
+	 * @return	WysiwygFormField	this field
 	 */
 	public function lastEditTime($lastEditTime) {
 		$this->lastEditTime = $lastEditTime;
@@ -158,8 +156,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * Sets if the form field supports attachments and returns this field.
 	 * 
 	 * @param	boolean		$supportAttachments
-	 *
-	 * @return        WysiwygFormNode
+	 * @return	WysiwygFormField		this field
 	 */
 	public function supportAttachments($supportAttachments = true) {
 		$this->supportAttachments = $supportAttachments;
@@ -171,8 +168,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * Sets if the form field supports mentions and returns this field.
 	 * 
 	 * @param	boolean		$supportMentions
-	 *
-	 * @return        WysiwygFormNode
+	 * @return	WysiwygFormField		this field
 	 */
 	public function supportMentions($supportMentions = true) {
 		$this->supportMentions = $supportMentions;

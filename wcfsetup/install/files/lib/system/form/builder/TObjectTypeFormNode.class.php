@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\form\builder\field;
+namespace wcf\system\form\builder;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\exception\InvalidObjectTypeException;

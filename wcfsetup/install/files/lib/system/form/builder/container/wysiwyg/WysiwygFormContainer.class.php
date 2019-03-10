@@ -104,7 +104,7 @@ class WysiwygFormContainer extends FormContainer {
 	
 	/**
 	 * actual wysiwyg form field
-	 * @var	WysiwygFormNode
+	 * @var	WysiwygFormField
 	 */
 	protected $wysiwygField;
 	

@@ -4,9 +4,9 @@ use wcf\data\IStorableObject;
 use wcf\system\acl\ACLHandler;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
-use wcf\system\form\builder\field\IObjectTypeFormNode;
-use wcf\system\form\builder\field\TObjectTypeFormNode;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\IObjectTypeFormNode;
+use wcf\system\form\builder\TObjectTypeFormNode;
 
 /**
  * Implementation of a form field for setting acl option values.
