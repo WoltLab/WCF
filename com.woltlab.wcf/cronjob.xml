@@ -202,5 +202,18 @@
 			<startdow>*</startdow>
 			<canbedisabled>0</canbedisabled>
 		</cronjob>
+		<cronjob name="com.woltlab.wcf.updateBlacklist">
+			<classname>wcf\system\cronjob\UpdateBlacklistCronjob</classname>
+			<description>Refreshes the blacklist for spam prevention</description>
+			<description language="de">Aktualisiert die Sperrlisten zur Spambekämpfung</description>
+			<!-- Runs once every hour, even though the data is only refreshed every 6 hours,
+			     but allows instances to catch up when it misses some updates. -->
+			<startminute>15</startminute>
+			<starthour>*</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbedisabled>0</canbedisabled>
+		</cronjob>
 	</import>
 </data>
