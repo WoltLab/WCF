@@ -2,9 +2,11 @@
 namespace wcf\system\form\builder\field\user;
 use wcf\data\user\UserProfile;
 use wcf\system\form\builder\field\AbstractFormField;
+use wcf\system\form\builder\field\IAutoFocusFormField;
 use wcf\system\form\builder\field\IImmutableFormField;
 use wcf\system\form\builder\field\IMultipleFormField;
 use wcf\system\form\builder\field\INullableFormField;
+use wcf\system\form\builder\field\TAutoFocusFormField;
 use wcf\system\form\builder\field\TImmutableFormField;
 use wcf\system\form\builder\field\TMultipleFormField;
 use wcf\system\form\builder\field\TNullableFormField;
@@ -21,7 +23,8 @@ use wcf\util\StringUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\User
  * @since	5.2
  */
-class UserFormField extends AbstractFormField implements IImmutableFormField, IMultipleFormField, INullableFormField {
+class UserFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField, IMultipleFormField, INullableFormField {
+	use TAutoFocusFormField;
 	use TImmutableFormField;
 	use TMultipleFormField;
 	use TNullableFormField;

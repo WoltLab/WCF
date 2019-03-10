@@ -24,13 +24,7 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 */
 	public function addValidationError(IFormFieldValidationError $error);
 	
-	/**
-	 * Sets whether this field is auto-focused and returns this field.
-	 * 
-	 * @param	bool		$autoFocus	determines if field is auto-focused
-	 * @return	static				this field
-	 */
-	public function autoFocus($autoFocus = true);
+	
 	
 	/**
 	 * Adds the given validation error to this field and returns this field.
@@ -106,14 +100,6 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 * @return	bool
 	 */
 	public function hasSaveValue();
-	
-	/**
-	 * Returns `true` if this field is auto-focused and returns `false` otherwise.
-	 * By default, fields are not auto-focused.
-	 * 
-	 * @return	bool
-	 */
-	public function isAutoFocused();
 	
 	/**
 	 * Returns `true` if this field has to be filled out and returns `false` otherwise.

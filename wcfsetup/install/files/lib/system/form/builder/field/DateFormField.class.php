@@ -12,7 +12,8 @@ use wcf\util\DateUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class DateFormField extends AbstractFormField implements IImmutableFormField, INullableFormField {
+class DateFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField, INullableFormField {
+	use TAutoFocusFormField;
 	use TImmutableFormField;
 	use TNullableFormField;
 	

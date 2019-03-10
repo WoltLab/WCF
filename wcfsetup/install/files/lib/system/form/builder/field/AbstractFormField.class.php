@@ -22,12 +22,6 @@ abstract class AbstractFormField implements IFormField {
 	use TFormElement;
 	
 	/**
-	 * `true` if this field is auto-focused and `false` otherwise
-	 * @var	bool
-	 */
-	protected $autoFocus = false;
-	
-	/**
 	 * name of the object property this field represents
 	 * @var	null|string
 	 */
@@ -85,15 +79,6 @@ abstract class AbstractFormField implements IFormField {
 		}
 		
 		$this->validators[$validator->getId()] = $validator;
-		
-		return $this;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function autoFocus($autoFocus = true) {
-		$this->autoFocus = $autoFocus;
 		
 		return $this;
 	}
@@ -171,13 +156,6 @@ abstract class AbstractFormField implements IFormField {
 	 */
 	public function hasSaveValue() {
 		return true;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function isAutoFocused() {
-		return $this->autoFocus;
 	}
 	
 	/**
