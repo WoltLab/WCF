@@ -151,27 +151,6 @@ class WysiwygFormContainer extends FormContainer {
 	}
 	
 	/**
-	 * @inheritDoc
-	 */
-	public function loadValuesFromObject(IStorableObject $object) {
-		$this->objectId = $object->getObjectID();
-		
-		if ($this->attachmentData !== null) {
-			// updated attachment handler with object id
-			$this->attachmentField->attachmentHandler(
-				new AttachmentHandler(
-					$this->attachmentData['objectType'],
-					$this->getObjectId(),
-					'.',
-					$this->attachmentData['parentObjectID']
-				)
-			);
-		}
-		
-		return parent::loadValuesFromObject($object);
-	}
-
-	/**
 	 * Sets the attachment-related data used to create an `AttachmentHandler` object for the
 	 * attachment form field. If no attachment data is set, attachments are not supported.
 	 * 
@@ -327,15 +306,36 @@ class WysiwygFormContainer extends FormContainer {
 	}
 	
 	/**
+	 * @inheritDoc
+	 */
+	public function loadValuesFromObject(IStorableObject $object) {
+		$this->objectId = $object->getObjectID();
+		
+		if ($this->attachmentData !== null) {
+			// updated attachment handler with object id
+			$this->attachmentField->attachmentHandler(
+				new AttachmentHandler(
+					$this->attachmentData['objectType'],
+					$this->getObjectId(),
+					'.',
+					$this->attachmentData['parentObjectID']
+				)
+			);
+		}
+		
+		return parent::loadValuesFromObject($object);
+	}
+	
+	/**
 	 * Sets the poll object type used by the poll form field container.
 	 * 
 	 * By default, no poll object type is set, thus the poll form field container is not available.
-	 *
+	 * 
 	 * @param	string		$pollObjectType		poll object type for wysiwyg form field
 	 * @return	WysiwygFormContainer			this container
 	 * @throws	\InvalidArgumentException		if the given string is no poll object type
 	 */
-	public function pollObjectType($pollObjectType = true) {
+	public function pollObjectType($pollObjectType) {
 		if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.poll', $pollObjectType) === null) {
 			throw new \InvalidArgumentException("Unknown poll object type '{$pollObjectType}'.");
 		}
@@ -468,7 +468,7 @@ class WysiwygFormContainer extends FormContainer {
 	 */
 	public function supportSmilies($supportSmilies = true) {
 		if ($this->smiliesContainer !== null) {
-			throw new \BadMethodCallException("The smilies form container has already been initialized. Use the smilies container directly to manipulate poll support.");
+			throw new \BadMethodCallException("The smilies form container has already been initialized. Use the smilies container directly to manipulate smiley support.");
 		}
 		
 		$this->supportSmilies = $supportSmilies;
