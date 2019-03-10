@@ -116,7 +116,7 @@
 		'offset',
 		'paragraphize',
 		'paste',
-		'placeholder',
+		'placeholder', // Unsupported module
 		'progress', // Unsupported module
 		'selection',
 		'shortcuts',
@@ -757,7 +757,6 @@
 						attr = 'class';
 					}
 					
-					this.placeholder.hide();
 					this.buffer.set();
 					
 					return (this.utils.isCollapsed()) ? this.block.formatCollapsed(tag,
@@ -1084,21 +1083,11 @@
 		build: function () {
 			return {
 				start: function () {
-					if (this.opts.type === 'inline') {
-						this.opts.type = 'inline';
+					if (this.opts.type !== 'textarea') {
+						throw new Error('Only `<textarea>` types are allowed.');
 					}
-					else if (this.opts.type === 'div') {
-						// empty
-						var html = $.trim(this.$editor.html());
-						if (html === '') {
-							this.$editor.html(this.opts.emptyHtml);
-						}
-						
-						this.build.buildTextarea();
-					}
-					else if (this.opts.type === 'textarea') {
-						this.build.startTextarea();
-					}
+					
+					this.build.startTextarea();
 					
 					// set in
 					this.build.setIn();
@@ -1135,14 +1124,7 @@
 					
 					return (typeof name === 'undefined') ? 'content-' + this.uuid : name;
 				},
-				buildTextarea: function () {
-					this.$textarea = $('<textarea>');
-					this.$textarea.attr('name', this.build.getName());
-					this.$textarea.hide();
-					this.$element.after(this.$textarea);
-					
-					this.build.setStartAttrs();
-				},
+				buildTextarea: function () {},
 				loadFromTextarea: function () {
 					this.$editor = $('<div />');
 					
@@ -1203,8 +1185,6 @@
 					if (this.opts.type === 'inline' || this.opts.type === 'pre') {
 						this.opts.toolbarMobile = false;
 						this.opts.toolbar = false;
-						this.opts.air = false;
-						this.opts.linkify = false;
 						
 					}
 					
@@ -1264,43 +1244,26 @@
 					this.build.setHelpers();
 					
 					// init buttons
-					if (this.opts.toolbar || this.opts.air) {
-						this.toolbarsButtons = this.button.init();
-					}
+					this.toolbarsButtons = this.button.init();
 					
 					// load toolbar
-					if (this.opts.air) {
-						this.air.build();
-					}
-					else if (this.opts.toolbar) {
-						this.toolbar.build();
-					}
-					
-					if (this.detect.isMobile() && this.opts.toolbarMobile && this.opts.air) {
-						this.opts.toolbar = true;
-						this.toolbar.build();
-					}
+					this.toolbar.build();
 					
 					// observe dropdowns
-					if (this.opts.air || this.opts.toolbar) {
-						this.core.editor().on(
-							'mouseup.redactor-observe.' + this.uuid + ' keyup.redactor-observe.' + this.uuid + ' focus.redactor-observe.' + this.uuid + ' touchstart.redactor-observe.' + this.uuid,
-							$.proxy(this.observe.toolbar, this)
-						);
-						this.core.element().on('blur.callback.redactor', $.proxy(function () {
-							this.button.setInactiveAll();
-							
-						}, this));
-					}
+					this.core.editor().on(
+						'mouseup.redactor-observe.' + this.uuid + ' keyup.redactor-observe.' + this.uuid + ' focus.redactor-observe.' + this.uuid + ' touchstart.redactor-observe.' + this.uuid,
+						$.proxy(this.observe.toolbar, this)
+					);
+					this.core.element().on('blur.callback.redactor', $.proxy(function () {
+						this.button.setInactiveAll();
+						
+					}, this));
 					
 					// modal templates init
 					this.modal.templates();
 					
 					// plugins
 					this.build.plugins();
-					
-					// autosave
-					this.autosave.init();
 					
 					// sync code
 					this.code.html = this.code.cleaned(this.core.editor().html());
@@ -1309,22 +1272,11 @@
 					this.core.callback('init');
 					this.core.callback('initToEdit');
 					
-					// get images & files list
-					this.storage.observe();
-					
 					// started
 					this.start = false;
 					
 				},
 				setHelpers: function () {
-					// linkify
-					if (this.opts.linkify) {
-						this.linkify.format();
-					}
-					
-					// placeholder
-					this.placeholder.init();
-					
 					// focus
 					if (this.opts.focus) {
 						setTimeout(this.focus.start, 100);
@@ -1387,10 +1339,9 @@
 						}
 						
 						// init
-						if ($.isFunction(this[s].init)) {
+						if (typeof this[s].init === 'function') {
 							this[s].init();
 						}
-						
 					}, this));
 					
 				}
@@ -1582,12 +1533,11 @@
 					};
 				},
 				setFormatting: function () {
-					$.each(this.toolbarsButtons.format.dropdown, $.proxy(function (i, s) {
-						if ($.inArray(i, this.opts.formatting) === -1) {
-							delete this.toolbarsButtons.format.dropdown[i];
+					for (var key in this.toolbarsButtons.format.dropdown) {
+						if (this.toolbarsButtons.format.dropdown.hasOwnProperty(key) && this.opts.formatting.indexOf(key) === -1) {
+							delete this.toolbarsButtons.format.dropdown[key];
 						}
-						
-					}, this));
+					}
 					
 				},
 				hideButtons: function () {
@@ -1612,82 +1562,31 @@
 				load: function ($toolbar) {
 					this.button.buttons = [];
 					
-					$.each(this.opts.buttons, $.proxy(function (i, btnName) {
-						if (!this.toolbarsButtons[btnName] || (btnName === 'file' && !this.file.is()) || (btnName === 'image' && !this.image.is())) {
+					this.opts.buttons.forEach((function(btnName) {
+						if (btnName === 'image' && !this.image.is()) {
 							return;
 						}
 						
-						$toolbar.append($('<li>').append(this.button.build(btnName,
-							this.toolbarsButtons[btnName]
-						)));
-						
-					}, this));
-				},
-				buildButtonTooltip: function ($btn, title) {
-					if (typeof this.button.toolbar() === 'undefined') return;
-					if (this.opts.air || this.detect.isMobile()) return;
-					
-					var $tooltip = $('<span>');
-					$tooltip.addClass('re-button-tooltip');
-					$tooltip.html(title);
-					
-					var self = this;
-					var $toolbar = this.button.toolbar();
-					var $box = $toolbar.closest('.redactor-toolbar-box');
-					$box = ($box.length === 0) ? $toolbar : $box;
-					$box.prepend($tooltip);
-					$btn.on('mouseover', function () {
-						if ($(this).hasClass('redactor-button-disabled')) {
-							return;
+						if (this.toolbarsButtons.hasOwnProperty(btnName)) {
+							var listItem = elCreate('li');
+							listItem.appendChild(this.button.build(btnName,
+								this.toolbarsButtons[btnName]
+							)[0]);
+							$toolbar[0].appendChild(listItem);
 						}
-						
-						var pos = ($toolbar.hasClass('toolbar-fixed-box')) ? $btn.offset() : $btn.position();
-						pos = (self.opts.toolbarFixedTarget !== document) ? $btn.position() : pos;
-						var top = ($toolbar.hasClass('toolbar-fixed-box')) ? $btn.position().top : pos.top;
-						var height = $btn.innerHeight();
-						var width = $btn.innerWidth();
-						var posBox = ($toolbar.hasClass('toolbar-fixed-box')) ? 'fixed' : 'absolute';
-						posBox = (self.opts.toolbarFixedTarget !== document) ? 'absolute' : posBox;
-						var scrollFix = (self.opts.toolbarFixedTarget !== document) ? $toolbar.position().top : 0;
-						
-						$tooltip.show();
-						$tooltip.css({
-							top: (top + height + scrollFix) + 'px',
-							left: (pos.left + width / 2 - $tooltip.innerWidth() / 2) + 'px',
-							position: posBox
-						});
-						
-					}).on('mouseout', function () {
-						$tooltip.hide();
-					});
+					}).bind(this));
 				},
+				buildButtonTooltip: function () {},
 				build: function (btnName, btnObject) {
-					if (this.opts.toolbar === false) {
-						return;
-					}
-					
-					var title = (typeof btnObject.label !== 'undefined') ? btnObject.label : btnObject.title;
-					var $button = $('<a href="javascript:void(null);" alt="' + title + '" rel="' + btnName + '" />');
+					var $button = $('<a href="javascript:void(null);" rel="' + btnName + '" />');
 					
 					$button.addClass('re-button re-' + btnName);
 					$button.attr({
 						'role': 'button',
-						'aria-label': title,
 						'tabindex': '-1'
 					});
 					
-					if (typeof btnObject.icon !== 'undefined' && !this.opts.buttonsTextLabeled) {
-						var $icon = $('<i>');
-						$icon.addClass('re-icon-' + btnName);
-						
-						$button.append($icon);
-						$button.addClass('re-button-icon');
-						
-						this.button.buildButtonTooltip($button, title);
-					}
-					else {
-						$button.html(btnObject.title);
-					}
+					$button.html(btnObject.title);
 					
 					// click
 					if (btnObject.func || btnObject.command || btnObject.dropdown) {
@@ -1760,10 +1659,6 @@
 					
 					if (type !== 'dropdown') {
 						this.dropdown.hideAll(false);
-					}
-					
-					if (this.opts.air && type !== 'dropdown') {
-						this.air.hide(e);
 					}
 					
 					if (this.detect.isIe() || !this.detect.isDesktop()) {
@@ -1892,7 +1787,6 @@
 				setIcon: function ($btn, icon) {
 					if (!this.opts.buttonsTextLabeled) {
 						$btn.html(icon).addClass('re-button-icon');
-						this.button.buildButtonTooltip($btn, $btn.attr('alt'));
 					}
 				},
 				changeIcon: function (key, newIconClass) {
@@ -2241,7 +2135,6 @@
 			return {
 				onSet: function (html) {
 					html = this.clean.savePreCode(html);
-					html = this.clean.saveFormTags(html);
 					
 					// convert script tag
 					if (this.opts.script) {
@@ -3053,10 +2946,7 @@
 					return html;
 				},
 				saveFormTags: function (html) {
-					return html.replace(
-						/<form(.*?)>([\w\W]*?)<\/form>/gi,
-						'<section$1 rel="redactor-form-tag">$2</section>'
-					);
+					return html;
 				},
 				restoreFormTags: function (html) {
 					return html.replace(
@@ -3147,13 +3037,7 @@
 						''
 					);
 					
-					// clean
-					if (this.opts.type === 'textarea') {
-						html = this.clean.onSet(html);
-					}
-					else if (this.opts.type === 'div' && html === '') {
-						html = this.opts.emptyHtml;
-					}
+					html = this.clean.onSet(html);
 					
 					html = html.replace(
 						/<p><span id="selection-marker-1" class="redactor-selection-marker">​<\/span><\/p>/,
@@ -3162,6 +3046,7 @@
 					
 					this.events.stopDetectChanges();
 					this.core.editor().html(html);
+					
 					this.observe.load();
 					this.events.startDetectChanges();
 				},
@@ -3188,8 +3073,6 @@
 					if (this.opts.type === 'textarea') {
 						this.code.sync();
 					}
-					
-					this.placeholder.enable();
 				},
 				get: function () {
 					if (this.opts.type === 'textarea') {
@@ -3351,12 +3234,6 @@
 					
 					this.core.callback('destroy');
 					
-					// placeholder
-					this.placeholder.destroy();
-					
-					// progress
-					this.progress.destroy();
-					
 					// help label
 					$('#redactor-voice-' + this.uuid).remove();
 					
@@ -3422,11 +3299,6 @@
 						this.$element.val(html).show();
 					}
 					
-					// air
-					if (this.opts.air) {
-						this.$air.remove();
-					}
-					
 					if (this.opts.toolbar && this.$toolbar) {
 						this.$toolbar.remove();
 					}
@@ -3442,9 +3314,6 @@
 					
 					// hide link's tooltip
 					$('.redactor-link-tooltip').remove();
-					
-					// autosave
-					clearInterval(this.autosaveTimeout);
 				}
 			};
 		},
@@ -3971,15 +3840,6 @@
 					
 					this.code.sync();
 					
-					// autosave
-					if (this.autosave.is()) {
-						
-						clearTimeout(this.autosaveTimeout);
-						this.autosaveTimeout = setTimeout($.proxy(this.autosave.send, this),
-							300
-						);
-					}
-					
 				},
 				onDropUpload: function (e) {
 					e.preventDefault();
@@ -4141,7 +4001,6 @@
 						return;
 					}
 					
-					this.placeholder.hide();
 					var $figure = $('<' + this.opts.imageTag + '>');
 					
 					$img = $('<img>');
@@ -4157,7 +4016,6 @@
 					var pre = this.utils.isTag(this.selection.current(), 'pre');
 					
 					if (direct) {
-						this.air.collapsed();
 						this.marker.remove();
 						
 						var node = this.insert.nodeToPoint(e, this.marker.get());
@@ -4197,8 +4055,6 @@
 						this.buffer.set();
 						
 						// insert
-						this.air.collapsed();
-						
 						if (pre) {
 							$(pre).after($figure);
 						}
@@ -4210,12 +4066,6 @@
 					}
 					
 					this.events.dropImage = false;
-					this.storage.add({
-						type: type,
-						node: $img[0],
-						url: json.url,
-						id: id
-					});
 					
 					var nextNode = $img[0].nextSibling;
 					var $nextFigure = $figure.next();
@@ -4684,7 +4534,6 @@
 					this.utils.restoreScroll();
 					this.observe.image = false;
 					this.events.startDetectChanges();
-					this.placeholder.enable();
 					this.code.sync();
 					
 				}
@@ -4857,7 +4706,6 @@
 					// Arrange tag
 					tag = this.inline.arrangeTag(tag);
 					
-					this.placeholder.hide();
 					this.buffer.set();
 					
 					(this.utils.isCollapsed()) ? this.inline.formatCollapsed(tag,
@@ -5480,15 +5328,10 @@
 		insert: function () {
 			return {
 				set: function (html) {
-					this.placeholder.hide();
-					
 					this.code.set(html);
 					this.focus.end();
-					
-					this.placeholder.enable();
 				},
 				html: function (html, data) {
-					this.placeholder.hide();
 					this.core.editor().focus();
 					
 					var block = this.selection.block();
@@ -5583,7 +5426,6 @@
 					if (data.pre) this.clean.cleanPre();
 					
 					this.caret.end(endNode);
-					this.linkify.format();
 				},
 				text: function (text) {
 					text = text.toString();
@@ -5597,7 +5439,6 @@
 						return;
 					}
 					
-					this.placeholder.hide();
 					this.core.editor().focus();
 					
 					// blocks
@@ -5636,12 +5477,10 @@
 					}
 					
 					this.utils.disableSelectAll();
-					this.linkify.format();
 					this.clean.normalizeCurrentHeading();
 					
 				},
 				raw: function (html) {
-					this.placeholder.hide();
 					this.core.editor().focus();
 					
 					var sel = this.selection.get();
@@ -5668,8 +5507,6 @@
 					}
 				},
 				node: function (node, deleteContent) {
-					this.placeholder.hide();
-					
 					if (typeof this.start !== 'undefined') {
 						this.core.editor().focus();
 					}
@@ -5754,8 +5591,6 @@
 					if (last) {
 						this.caret.end(last);
 					}
-					
-					this.linkify.format();
 				},
 				placeHtml: function (html) {
 					var marker = document.createElement('span');
@@ -5784,8 +5619,6 @@
 					this.selection.update(sel, range);
 				},
 				nodeToPoint: function (e, node) {
-					this.placeholder.hide();
-					
 					node = node[0] || node;
 					
 					if (this.utils.isEmpty()) {
@@ -6594,7 +6427,6 @@
 					if (key === this.keyCode.BACKSPACE || key === this.keyCode.DELETE) {
 						if (this.utils.isSelectAll()) {
 							this.focus.start();
-							this.toolbar.setUnfixed();
 							
 							return;
 						}
@@ -6635,14 +6467,6 @@
 							this.selection.restore();
 						}
 					}
-					
-					// linkify
-					if (this.linkify.isKey(key)) {
-						this.selection.save();
-						this.linkify.format();
-						this.selection.restore();
-					}
-					
 				}
 				
 			};
@@ -8148,7 +7972,6 @@
 						formData.append('clipboard', 1);
 						formData.append(this.opts.imageUploadParam, blob);
 						
-						this.progress.show();
 						this.upload.send(formData, false);
 						this.code.sync();
 						this.rtePaste = false;
@@ -8171,7 +7994,6 @@
 					formData.append('clipboard', 1);
 					formData.append(this.opts.imageUploadParam, blob);
 					
-					this.progress.show();
 					this.upload.send(formData, e);
 					this.rtePaste = false;
 				},
@@ -8195,92 +8017,24 @@
 			};
 		},
 		
-		// =placeholder
+		// =placeholder -- UNSUPPORTED MODULE
 		placeholder: function () {
 			return {
-				
-				// public
-				enable: function () {
-					setTimeout($.proxy(function () {
-						return (this.placeholder.isEditorEmpty()) ? this.placeholder.show() : this.placeholder.hide();
-						
-					}, this), 5);
-				},
-				show: function () {
-					this.core.editor().addClass('redactor-placeholder');
-				},
-				update: function (text) {
-					this.opts.placeholder = text;
-					this.core.editor().attr('placeholder', text);
-				},
-				hide: function () {
-					this.core.editor().removeClass('redactor-placeholder');
-				},
-				is: function () {
-					return this.core.editor().hasClass('redactor-placeholder');
-				},
-				
-				// private
-				init: function () {
-					if (!this.placeholder.enabled()) {
-						return;
-					}
-					
-					if (!this.utils.isEditorRelative()) {
-						this.utils.setEditorRelative();
-					}
-					
-					this.placeholder.build();
-					this.placeholder.buildPosition();
-					this.placeholder.enable();
-					this.placeholder.enableEvents();
-					
-				},
-				enabled: function () {
-					return (this.opts.placeholder) ? this.core.element().attr('placeholder',
-						this.opts.placeholder
-					) : this.placeholder.isAttr();
-				},
-				enableEvents: function () {
-					this.core.editor().on('keydown.redactor-placeholder.' + this.uuid,
-						$.proxy(this.placeholder.enable, this)
-					);
-				},
-				disableEvents: function () {
-					this.core.editor().off('.redactor-placeholder.' + this.uuid);
-				},
-				build: function () {
-					this.core.editor().attr('placeholder', this.core.element().attr('placeholder'));
-				},
-				buildPosition: function () {
-					var $style = $('<style />');
-					$style.addClass('redactor-placeholder-style-tag');
-					$style.html('#' + this.core.id() + '.redactor-placeholder::after ' + this.placeholder.getPosition());
-					
-					$('head').append($style);
-				},
-				getPosition: function () {
-					return '{ top: ' + this.core.editor().css('padding-top') + '; left: ' + this.core.editor().css(
-						'padding-left') + '; }';
-				},
-				isEditorEmpty: function () {
-					var html = $.trim(this.core.editor().html()).replace(/[\t\n]/g, '');
-					var states = ['', '<p>​</p>', '<p>​<br></p>', this.opts.emptyHtmlRendered];
-					
-					return ($.inArray(html, states) !== -1);
-				},
-				isAttr: function () {
-					return (typeof this.core.element().attr('placeholder') !== 'undefined' && this.core.element().attr(
-						'placeholder') !== '');
-				},
-				destroy: function () {
-					this.core.editor().removeAttr('placeholder');
-					
-					this.placeholder.hide();
-					this.placeholder.disableEvents();
-					
-					$('.redactor-placeholder-style-tag').remove();
-				}
+				enable: function () {},
+				show: function () {},
+				update: function () {},
+				hide: function () {},
+				is: function () {},
+				init: function () {},
+				enabled: function () {},
+				enableEvents: function () {},
+				disableEvents: function () {},
+				build: function () {},
+				buildPosition: function () {},
+				getPosition: function () {},
+				isEditorEmpty: function () {},
+				isAttr: function () {},
+				destroy: function () {}
 			};
 		},
 		
@@ -8901,204 +8655,28 @@
 					this.button.hideButtons();
 					this.button.hideButtonsOnMobile();
 					
-					this.$toolbarBox = $('<div />').addClass('redactor-toolbar-box');
-					this.$toolbar = this.toolbar.createContainer();
-					this.$toolbarBox.append(this.$toolbar);
+					this.$toolbarBox = $('<div class="redactor-toolbar-box" />');
+					this.$toolbarBox[0].innerHTML = '<ul class="redactor-toolbar" id="redactor-toolbar-' + this.uuid + '" role="toolbar"></ul>';
+					this.$toolbar = $(this.$toolbarBox[0].children[0]);
+					this.$box[0].insertBefore(this.$toolbarBox[0], this.$box[0].firstChild);
 					
-					this.toolbar.append();
 					this.button.$toolbar = this.$toolbar;
 					this.button.setFormatting();
 					this.button.load(this.$toolbar);
-					
-					this.toolbar.setOverflow();
-					this.toolbar.setFixed();
-					
 				},
-				createContainer: function () {
-					return $('<ul>').addClass('redactor-toolbar').attr({
-						'id': 'redactor-toolbar-' + this.uuid,
-						'role': 'toolbar'
-					});
-				},
-				append: function () {
-					if (this.opts.toolbarExternal) {
-						this.$toolbar.addClass('redactor-toolbar-external');
-						$(this.opts.toolbarExternal).html(this.$toolbarBox);
-					}
-					else {
-						if (this.opts.type === 'textarea') {
-							this.$box.prepend(this.$toolbarBox);
-						}
-						else {
-							this.$element.before(this.$toolbarBox);
-						}
-						
-					}
-				},
-				setOverflow: function () {
-					if (this.opts.toolbarOverflow) {
-						this.$toolbar.addClass('redactor-toolbar-overflow');
-					}
-				},
-				setFixed: function () {
-					if (!this.opts.toolbarFixed || this.opts.toolbarExternal) {
-						return;
-					}
-					
-					if (this.opts.toolbarFixedTarget !== document) {
-						var $el = $(this.opts.toolbarFixedTarget);
-						this.toolbar.toolbarOffsetTop = ($el.length === 0) ? 0 : this.core.box().offset().top - $el.offset().top;
-					}
-					
-					// bootstrap modal fix
-					var late = (this.core.box().closest('.modal-body').length !== 0) ? 1000 : 0;
-					
-					setTimeout($.proxy(function () {
-						var self = this;
-						this.toolbar.observeScroll(false);
-						if (this.detect.isDesktop()) {
-							$(this.opts.toolbarFixedTarget).on('scroll.redactor.' + this.uuid,
-								function () {
-									if (self.core.editor().height() < 100 || self.placeholder.isEditorEmpty()) {
-										return;
-									}
-									
-									self.toolbar.observeScroll();
-								}
-							);
-						}
-						else {
-							$(this.opts.toolbarFixedTarget).on('scroll.redactor.' + this.uuid,
-								function () {
-									if (self.core.editor().height() < 100 || self.placeholder.isEditorEmpty()) {
-										return;
-									}
-									
-									self.core.toolbar().hide();
-									clearTimeout($.data(this, 'scrollCheck'));
-									$.data(this,
-										'scrollCheck',
-										setTimeout(function () {
-											self.core.toolbar().show();
-											self.toolbar.observeScroll();
-										}, 250)
-									);
-									
-								}
-							);
-						}
-						
-					}, this), late);
-					
-				},
-				setUnfixed: function () {
-					this.toolbar.observeScrollDisable();
-				},
-				getBoxTop: function () {
-					return (this.opts.toolbarFixedTarget === document) ? this.core.box().offset().top : this.toolbar.toolbarOffsetTop;
-				},
-				observeScroll: function (start) {
-					// tolerance 0 if redactor in the hidden layer
-					var tolerance = 0;
-					
-					if (start !== false) {
-						tolerance = (this.opts.toolbarFixedTarget === document) ? 20 : 0;
-					}
-					
-					var scrollTop = $(this.opts.toolbarFixedTarget).scrollTop();
-					var boxTop = this.toolbar.getBoxTop();
-					
-					if (scrollTop === boxTop) {
-						return;
-					}
-					
-					if ((scrollTop + this.opts.toolbarFixedTopOffset + tolerance) > boxTop) {
-						this.toolbar.observeScrollEnable(scrollTop, boxTop);
-					}
-					else {
-						this.toolbar.observeScrollDisable();
-					}
-				},
-				observeScrollResize: function () {
-					this.$toolbar.css({
-						
-						width: this.core.box().innerWidth(),
-						left: this.core.box().offset().left
-						
-					});
-				},
-				observeScrollEnable: function (scrollTop, boxTop) {
-					if (typeof this.fullscreen !== 'undefined' && this.fullscreen.isOpened === false) {
-						this.toolbar.observeScrollDisable();
-						return;
-					}
-					
-					var end = boxTop + this.core.box().outerHeight() - 32;
-					var width = this.core.box().innerWidth();
-					
-					var position = (this.detect.isDesktop()) ? 'fixed' : 'absolute';
-					var top = (this.detect.isDesktop()) ? this.opts.toolbarFixedTopOffset : ($(this.opts.toolbarFixedTarget).scrollTop() - boxTop + this.opts.toolbarFixedTopOffset);
-					var left = (this.detect.isDesktop()) ? this.core.box().offset().left : 0;
-					
-					if (this.opts.toolbarFixedTarget !== document) {
-						position = 'absolute';
-						top = this.opts.toolbarFixedTopOffset + $(this.opts.toolbarFixedTarget).scrollTop() - boxTop;
-						left = 0;
-					}
-					
-					this.$toolbar.addClass('toolbar-fixed-box');
-					
-					this.$toolbar.css({
-						position: position,
-						width: width,
-						top: top,
-						left: left
-					});
-					
-					if (scrollTop > end) {
-						$('.redactor-dropdown-' + this.uuid + ':visible').hide();
-					}
-					
-					this.toolbar.setDropdownsFixed();
-					
-					this.$toolbar.css('visibility', (scrollTop < end) ? 'visible' : 'hidden');
-					$(window).on('resize.redactor-toolbar.' + this.uuid,
-						$.proxy(this.toolbar.observeScrollResize, this)
-					);
-				},
-				observeScrollDisable: function () {
-					this.$toolbar.css({
-						position: 'relative',
-						width: 'auto',
-						top: 0,
-						left: 0,
-						visibility: 'visible'
-					});
-					
-					this.toolbar.unsetDropdownsFixed();
-					this.$toolbar.removeClass('toolbar-fixed-box');
-					$(window).off('resize.redactor-toolbar.' + this.uuid);
-				},
-				setDropdownsFixed: function () {
-					var position = (this.opts.toolbarFixedTarget === document && this.detect.isDesktop()) ? 'fixed' : 'absolute';
-					this.toolbar.setDropdownPosition(position);
-				},
-				unsetDropdownsFixed: function () {
-					this.toolbar.setDropdownPosition('absolute');
-				},
-				setDropdownPosition: function (position) {
-					var self = this;
-					$('.redactor-dropdown-' + this.uuid).each(function () {
-						var $el = $(this);
-						var $button = self.button.get($el.attr('rel'));
-						var top = (position === 'fixed') ? self.opts.toolbarFixedTopOffset : $button.offset().top;
-						
-						$el.css({
-							position: position,
-							top: ($button.innerHeight() + top) + 'px'
-						});
-					});
-				}
+				createContainer: function () {},
+				append: function () {},
+				setOverflow: function () {},
+				setFixed: function () {},
+				setUnfixed: function () {},
+				getBoxTop: function () {},
+				observeScroll: function () {},
+				observeScrollResize: function () {},
+				observeScrollEnable: function () {},
+				observeScrollDisable: function () {},
+				setDropdownsFixed: function () {},
+				unsetDropdownsFixed: function () {},
+				setDropdownPosition: function () {}
 			};
 		},
 		
