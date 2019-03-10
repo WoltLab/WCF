@@ -1020,13 +1020,11 @@ redis:wcf.acp.option.cache_source_type.redis</selectoptions>
 				<optiontype>checkboxes</optiontype>
 				<defaultvalue>Facebook
 Twitter
-Google
 Reddit
 LinkedIn
 Pinterest</defaultvalue>
 				<selectoptions>Facebook
 Twitter
-Google
 Reddit
 WhatsApp
 LinkedIn

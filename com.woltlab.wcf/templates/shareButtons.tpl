@@ -18,14 +18,6 @@
 				</a>
 			</li>
 		{/if}
-		{if 'Google'|in_array:$__share_buttons_providers}
-			<li>
-				<a href="#" role="button" class="button jsShareGoogle" title="{lang}wcf.message.share.google{/lang}" aria-label="{lang}wcf.message.share.google{/lang}">
-					<span class="icon icon24 fa-google-plus-official"></span>
-					<span>{lang}wcf.message.share.google{/lang}</span>
-				</a>
-			</li>
-		{/if}
 		{if 'Reddit'|in_array:$__share_buttons_providers}
 			<li>
 				<a href="#" role="button" class="button jsShareReddit" title="{lang}wcf.message.share.reddit{/lang}" aria-label="{lang}wcf.message.share.reddit{/lang}">

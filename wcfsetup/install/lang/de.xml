@@ -3954,7 +3954,6 @@ Dateianhänge:
 		<item name="wcf.message.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.message.share"><![CDATA[Teilen]]></item>
 		<item name="wcf.message.share.facebook"><![CDATA[Facebook]]></item>
-		<item name="wcf.message.share.google"><![CDATA[Google+]]></item>
 		<item name="wcf.message.share.permalink"><![CDATA[Permalink]]></item>
 		<item name="wcf.message.share.permalink.bbcode"><![CDATA[BBCode]]></item>
 		<item name="wcf.message.share.permalink.html"><![CDATA[HTML]]></item>
