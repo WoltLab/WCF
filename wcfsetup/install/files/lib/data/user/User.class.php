@@ -11,6 +11,7 @@ use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
+use wcf\util\JSON;
 use wcf\util\PasswordUtil;
 use wcf\util\UserUtil;
 
@@ -70,6 +71,7 @@ use wcf\util\UserUtil;
  * @property-read	string		$disableCoverPhotoReason	reason why the user's cover photo is disabled
  * @property-read	integer		$disableCoverPhotoExpires	timestamp at which the user's cover photo will automatically be enabled again
  * @property-read	integer		$articles			number of articles written by the user
+ * @property-read       string          $blacklistMatches               JSON string of an array with all matches in the blacklist, otherwise an empty string 
  */
 final class User extends DatabaseObject implements IRouteController, IUserContent {
 	/**
@@ -556,5 +558,23 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 */
 	public function canPurchasePaidSubscriptions() {
 		return WCF::getUser()->userID && WCF::getUser()->activationCode == 0;
+	}
+	
+	/**
+	 * Returns the list of fields that had matches in the blacklist. An empty list is
+	 * returned if the user has been approved, regardless of any known matches.
+	 * 
+	 * @return string[]
+	 * @since 5.2
+	 */
+	public function getBlacklistMatches() {
+		if ($this->activationCode && $this->blacklistMatches) {
+			$matches = JSON::decode($this->blacklistMatches);
+			if (is_array($matches)) {
+				return $matches;
+			}
+		}
+		
+		return [];
 	}
 }
