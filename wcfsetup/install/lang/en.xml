@@ -3900,7 +3900,6 @@ Attachments:
 		<item name="wcf.message.settings"><![CDATA[Settings]]></item>
 		<item name="wcf.message.share"><![CDATA[Share]]></item>
 		<item name="wcf.message.share.facebook"><![CDATA[Facebook]]></item>
-		<item name="wcf.message.share.google"><![CDATA[Google+]]></item>
 		<item name="wcf.message.share.permalink"><![CDATA[Permalink]]></item>
 		<item name="wcf.message.share.permalink.bbcode"><![CDATA[BBCode]]></item>
 		<item name="wcf.message.share.permalink.html"><![CDATA[HTML]]></item>
@@ -4090,6 +4089,7 @@ Attachments:
 		<item name="wcf.page.breadcrumb"><![CDATA[Breadcrumb]]></item>
 		<item name="wcf.page.requestedPage.condition.reverseLogic"><![CDATA[Reverse “Requested Page” selection]]></item>
 		<item name="wcf.page.requestedPage.condition.reverseLogic.description"><![CDATA[If selected, the requested page <strong>may not</strong> be one of the pages selected under “Requested Page”.]]></item>
+		<item name="wcf.page.box.edit"><![CDATA[Edit Box]]></item>
 	</category>
 	<category name="wcf.acp.page">
 		<item name="wcf.acp.page.add"><![CDATA[Add Page]]></item>
