@@ -1,7 +1,7 @@
 /*
 	Redactor II
-	Version 2.12
-	Updated: December 4, 2017
+	Version 2.99
+	Heavily modified version for WoltLab Suite.
 
 	http://imperavi.com/redactor/
 
@@ -82,10 +82,10 @@
 	
 	// Options
 	$.Redactor = Redactor;
-	$.Redactor.VERSION = '2.12';
+	$.Redactor.VERSION = '2.99'; // Fake version
 	$.Redactor.modules = [
-		'air',
-		'autosave',
+		'air', // Unsupported module
+		'autosave', // Unsupported module
 		'block',
 		'buffer',
 		'build',
@@ -97,7 +97,7 @@
 		'detect',
 		'dropdown',
 		'events',
-		'file',
+		'file', // Unsupported module
 		'focus',
 		'image',
 		'indent',
@@ -108,7 +108,7 @@
 		'lang',
 		'line',
 		'link',
-		'linkify',
+		'linkify', // Unsupported module
 		'list',
 		'marker',
 		'modal',
@@ -117,13 +117,13 @@
 		'paragraphize',
 		'paste',
 		'placeholder',
-		'progress',
+		'progress', // Unsupported module
 		'selection',
 		'shortcuts',
-		'storage',
+		'storage', // Unsupported module
 		'toolbar',
-		'upload',
-		'uploads3',
+		'upload', // Unsupported module
+		'uploads3', // Unsupported module
 		'utils',
 		
 		'browser' // deprecated
@@ -700,221 +700,32 @@
 			}
 		},
 		
-		// =air
+		// =air -- UNSUPPORTED MODULE
 		air: function () {
 			return {
 				enabled: false,
-				collapsed: function () {
-					if (this.opts.air) {
-						this.selection.get().collapseToStart();
-					}
-				},
-				collapsedEnd: function () {
-					if (this.opts.air) {
-						this.selection.get().collapseToEnd();
-					}
-				},
-				build: function () {
-					if (this.detect.isMobile()) {
-						return;
-					}
-					
-					this.button.hideButtons();
-					this.button.hideButtonsOnMobile();
-					
-					if (this.opts.buttons.length === 0) {
-						return;
-					}
-					
-					this.$air = this.air.createContainer();
-					
-					if (this.opts.airWidth !== false) {
-						this.$air.css('width', this.opts.airWidth);
-					}
-					
-					this.air.append();
-					this.button.$toolbar = this.$air;
-					this.button.setFormatting();
-					this.button.load(this.$air);
-					
-					this.core.editor().on('mouseup.redactor', this, $.proxy(function (e) {
-						if (this.selection.text() !== '') {
-							this.air.show(e);
-						}
-					}, this));
-					
-				},
-				append: function () {
-					this.$air.appendTo('body');
-				},
-				createContainer: function () {
-					return $('<ul>').addClass('redactor-air').attr({
-						'id': 'redactor-air-' + this.uuid,
-						'role': 'toolbar'
-					}).hide();
-				},
-				show: function (e) {
-					//this.marker.remove();
-					this.selection.saveInstant();
-					//this.selection.restore(false);
-					
-					$('.redactor-air').hide();
-					
-					var leftFix = 0;
-					var width = this.$air.innerWidth();
-					
-					if ($(window).width() < (e.clientX + width)) {
-						leftFix = 200;
-					}
-					
-					this.$air.css({
-						left: (e.clientX - leftFix) + 'px',
-						top: (e.clientY + 10 + $(document).scrollTop()) + 'px'
-					}).show();
-					
-					this.air.enabled = true;
-					this.air.bindHide();
-				},
-				bindHide: function () {
-					$(document).on('mousedown.redactor-air.' + this.uuid, $.proxy(function (e) {
-						var dropdown = $(e.target).closest('.redactor-dropdown').length;
-						
-						if ($(e.target).closest(this.$air).length === 0 && dropdown === 0) {
-							var hide = this.air.hide(e);
-							if (hide !== false) {
-								this.marker.remove();
-							}
-						}
-						
-					}, this)).on('keydown.redactor-air.' + this.uuid, $.proxy(function (e) {
-						var key = e.which;
-						if ((!this.utils.isRedactorParent(e.target) && !$(e.target).hasClass(
-							'redactor-in')) || $(e.target).closest('#redactor-modal').length !== 0) {
-							return;
-						}
-						
-						if (key === this.keyCode.ESC) {
-							this.selection.get().collapseToStart();
-							//this.marker.remove();
-						}
-						else if (key === this.keyCode.BACKSPACE || key === this.keyCode.DELETE) {
-							var sel = this.selection.get();
-							var range = this.selection.range(sel);
-							range.deleteContents();
-							//this.marker.remove();
-						}
-						else if (key === this.keyCode.ENTER) {
-							this.selection.get().collapseToEnd();
-							//this.marker.remove();
-						}
-						
-						if (this.air.enabled) {
-							this.air.hide(e);
-						}
-						else {
-							this.selection.get().collapseToStart();
-							//this.marker.remove();
-						}
-						
-					}, this));
-				},
-				hide: function (e) {
-					var ctrl = e.ctrlKey || e.metaKey || (e.shiftKey && e.altKey);
-					if (ctrl) {
-						return false;
-					}
-					
-					this.button.setInactiveAll();
-					this.$air.fadeOut(100);
-					this.air.enabled = false;
-					$(document).off('mousedown.redactor-air.' + this.uuid);
-					$(document).off('keydown.redactor-air.' + this.uuid);
-					
-				}
+				collapsed: function () {},
+				collapsedEnd: function () {},
+				build: function () {},
+				append: function () {},
+				createContainer: function () {},
+				show: function () {},
+				bindHide: function () {},
+				hide: function () {}
 			};
 		},
 		
-		// =autosave
+		// =autosave -- UNSUPPORTED MODULE
 		autosave: function () {
 			return {
 				enabled: false,
 				html: false,
-				init: function () {
-					if (!this.opts.autosave) {
-						return;
-					}
-					
-					this.autosave.enabled = true;
-					this.autosave.name = (this.opts.autosaveName) ? this.opts.autosaveName : this.$textarea.attr(
-						'name');
-					
-				},
-				is: function () {
-					return this.autosave.enabled;
-				},
-				send: function () {
-					if (!this.opts.autosave) {
-						return;
-					}
-					
-					this.autosave.source = this.code.get();
-					
-					if (this.autosave.html === this.autosave.source) {
-						return;
-					}
-					
-					// data
-					var data = {};
-					data.name = this.autosave.name;
-					data[this.autosave.name] = this.autosave.source;
-					data = this.autosave.getHiddenFields(data);
-					
-					// ajax
-					var jsxhr = $.ajax({
-						url: this.opts.autosave,
-						type: 'post',
-						data: data
-					});
-					
-					jsxhr.done(this.autosave.success);
-				},
-				getHiddenFields: function (data) {
-					if (this.opts.autosaveFields === false || typeof this.opts.autosaveFields !== 'object') {
-						return data;
-					}
-					
-					$.each(this.opts.autosaveFields, $.proxy(function (k, v) {
-						if (v !== null && v.toString().indexOf('#') === 0) {
-							v = $(v).val();
-						}
-						
-						data[k] = v;
-						
-					}, this));
-					
-					return data;
-					
-				},
-				success: function (data) {
-					var json;
-					try {
-						json = JSON.parse(data);
-					}
-					catch (e) {
-						//data has already been parsed
-						json = data;
-					}
-					
-					var callbackName = (typeof json.error === 'undefined') ? 'autosave' : 'autosaveError';
-					
-					this.core.callback(callbackName, this.autosave.name, json);
-					this.autosave.html = this.autosave.source;
-				},
-				disable: function () {
-					this.autosave.enabled = false;
-					
-					clearInterval(this.autosaveTimeout);
-				}
+				init: function () {},
+				is: function () {},
+				send: function () {},
+				getHiddenFields: function () {},
+				success: function () {},
+				disable: function () {}
 			};
 		},
 		
@@ -4206,87 +4017,14 @@
 			};
 		},
 		
-		// =file
+		// =file -- UNSUPPORTED MODULE
 		file: function () {
 			return {
-				is: function () {
-					return !(!this.opts.fileUpload || !this.opts.fileUpload && !this.opts.s3);
-				},
-				show: function () {
-					// build modal
-					this.modal.load('file', this.lang.get('file'), 700);
-					
-					// build upload
-					this.upload.init('#redactor-modal-file-upload',
-						this.opts.fileUpload,
-						this.file.insert
-					);
-					
-					// set selected text
-					$('#redactor-filename').val(this.selection.get().toString());
-					
-					// show
-					this.modal.show();
-				},
-				insert: function (json, direct, e) {
-					// error callback
-					if (typeof json.error !== 'undefined') {
-						this.modal.close();
-						this.core.callback('fileUploadError', json);
-						return;
-					}
-					
-					this.file.release(e, direct);
-					
-					// prepare
-					this.buffer.set();
-					this.air.collapsed();
-					
-					// get
-					var text = this.file.text(json);
-					var $link = $('<a />').attr('href', json.url).text(text);
-					var id = (typeof json.id === 'undefined') ? '' : json.id;
-					var type = (typeof json.s3 === 'undefined') ? 'file' : 's3';
-					
-					// set id
-					$link.attr('data-' + type, id);
-					
-					// insert
-					$link = $(this.insert.node($link));
-					
-					// focus
-					this.caret.after($link);
-					
-					// callback
-					this.storage.add({
-						type: type,
-						node: $link[0],
-						url: json.url,
-						id: id
-					});
-					
-					if (direct !== null) {
-						this.core.callback('fileUpload', $link, json);
-					}
-					
-				},
-				release: function (e, direct) {
-					if (direct) {
-						// drag and drop upload
-						this.marker.remove();
-						this.insert.nodeToPoint(e, this.marker.get());
-						this.selection.restore();
-					}
-					else {
-						// upload from modal
-						this.modal.close();
-					}
-				},
-				text: function (json) {
-					var text = $('#redactor-filename').val();
-					
-					return (typeof text === 'undefined' || text === '') ? json.name : text;
-				}
+				is: function () {},
+				show: function () {},
+				insert: function () {},
+				release: function () {},
+				text: function (json) {}
 			};
 		},
 		
@@ -7260,155 +6998,17 @@
 			};
 		},
 		
-		// =linkify
+		// =linkify -- UNSUPPORTED MODULE
 		linkify: function () {
 			return {
-				isKey: function (key) {
-					return key === this.keyCode.ENTER || key === this.keyCode.SPACE;
-				},
-				isLink: function (node) {
-					return (node.nodeValue.match(this.opts.regexps.linkyoutube) || node.nodeValue.match(
-						this.opts.regexps.linkvimeo) || node.nodeValue.match(this.opts.regexps.linkimage) || node.nodeValue.match(
-						this.opts.regexps.url));
-				},
-				isFiltered: function (i, node) {
-					return node.nodeType === 3 && $.trim(node.nodeValue) !== '' && !$(node).parent().is(
-						'pre') && (this.linkify.isLink(node));
-				},
-				handler: function (i, node) {
-					var $el = $(node);
-					var text = $el.text();
-					var html = text;
-					
-					if (html.match(this.opts.regexps.linkyoutube) || html.match(this.opts.regexps.linkvimeo)) {
-						html = this.linkify.convertVideoLinks(html);
-					}
-					else if (html.match(this.opts.regexps.linkimage)) {
-						html = this.linkify.convertImages(html);
-					}
-					else {
-						html = this.linkify.convertLinks(html);
-					}
-					
-					$el.before(text.replace(text, html)).remove();
-				},
-				format: function () {
-					if (!this.opts.linkify || this.utils.isCurrentOrParent('pre')) {
-						return;
-					}
-					
-					this.core.editor().find(':not(iframe,img,a,pre,code,.redactor-unlink)').addBack().contents().filter(
-						$.proxy(this.linkify.isFiltered,
-							this
-						)).each($.proxy(this.linkify.handler, this));
-					
-					// collect
-					var $el;
-					var $objects = this.core.editor().find('.redactor-linkify-object').each($.proxy(function (i, s) {
-							$el = $(s);
-							$el.removeClass('redactor-linkify-object');
-							if ($el.attr('class') === '') {
-								$el.removeAttr('class');
-							}
-							
-							if (s.tagName === 'A') {
-								this.core.callback('insertedLink', $el);
-							}
-							
-							return $el;
-							
-						},
-						this
-					));
-					
-					// callback
-					setTimeout($.proxy(function () {
-						this.code.sync();
-						this.core.callback('linkify', $objects);
-						
-					}, this), 100);
-					
-				},
-				convertVideoLinks: function (html) {
-					var iframeStart = '<div class="' + this.opts.videoContainerClass + ' redactor-linkify-object"><iframe class="redactor-linkify-object" width="500" height="281" src="';
-					var iframeEnd = '" frameborder="0" allowfullscreen></iframe></div>';
-					
-					if (html.match(this.opts.regexps.linkyoutube)) {
-						html = html.replace(this.opts.regexps.linkyoutube,
-							iframeStart + '//www.youtube.com/embed/$1' + iframeEnd
-						);
-					}
-					
-					if (html.match(this.opts.regexps.linkvimeo)) {
-						html = html.replace(this.opts.regexps.linkvimeo,
-							iframeStart + '//player.vimeo.com/video/$2' + iframeEnd
-						);
-					}
-					
-					return html;
-				},
-				convertImages: function (html) {
-					var matches = html.match(this.opts.regexps.linkimage);
-					if (!matches) {
-						return html;
-					}
-					
-					return html.replace(html,
-						'<img src="' + matches + '"  class="redactor-linkify-object" />'
-					);
-				},
-				convertLinks: function (html) {
-					var matches = html.match(this.opts.regexps.url);
-					if (!matches) {
-						return html;
-					}
-					
-					matches = $.grep(matches,
-						function (v, k) { return $.inArray(v, matches) === k; }
-					);
-					
-					var length = matches.length;
-					
-					for (var i = 0; i < length; i++) {
-						var href = matches[i], text = href;
-						var linkProtocol = (href.match(/(https?|ftp):\/\//i) !== null) ? '' : 'http://';
-						
-						if (text.length > this.opts.linkSize) {
-							text = text.substring(0, this.opts.linkSize) + '...';
-						}
-						
-						if (text.search('%') === -1) {
-							text = decodeURIComponent(text);
-						}
-						
-						var regexB = '\\b';
-						
-						if ($.inArray(href.slice(-1), ['/', '&', '=']) !== -1) {
-							regexB = '';
-						}
-						
-						// escaping url
-						var regexp = new RegExp(
-							'(' + href.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g,
-							'\\$&'
-							) + regexB + ')',
-							'g'
-						);
-						
-						// target
-						var target = '';
-						if (this.opts.pasteLinkTarget !== false) {
-							target = ' target="' + this.opts.pasteLinkTarget + '"';
-						}
-						
-						html = html.replace(regexp,
-							'<a href="' + linkProtocol + $.trim(href) + '"' + target + ' class="redactor-linkify-object">' + $.trim(
-							text) + '</a>'
-						);
-					}
-					
-					return html;
-				}
+				isKey: function () {},
+				isLink: function () {},
+				isFiltered: function () {},
+				handler: function () {},
+				format: function () {},
+				convertVideoLinks: function () {},
+				convertImages: function () {},
+				convertLinks: function () {}
 			};
 		},
 		
@@ -7841,28 +7441,11 @@
 				callbacks: {},
 				templates: function () {
 					this.opts.modal = {
-						'image-edit': String() + '<div class="redactor-modal-tab redactor-group" data-title="General">' + '<div id="redactor-image-preview" class="redactor-modal-tab-side">' + '</div>' + '<div class="redactor-modal-tab-area">' + '<section>' + '<label>' + this.lang.get(
-							'title') + '</label>' + '<input type="text" id="redactor-image-title" />' + '</section>' + '<section>' + '<label>' + this.lang.get(
-							'caption') + '</label>' + '<input type="text" id="redactor-image-caption" aria-label="' + this.lang.get(
-							'caption') + '" />' + '</section>' + '<section>' + '<label>' + this.lang.get(
-							'link') + '</label>' + '<input type="text" id="redactor-image-link" aria-label="' + this.lang.get(
-							'link') + '" />' + '</section>' + '<section>' + '<label class="redactor-image-position-option">' + this.lang.get(
-							'image-position') + '</label>' + '<select class="redactor-image-position-option" id="redactor-image-align" aria-label="' + this.lang.get(
-							'image-position') + '">' + '<option value="none">' + this.lang.get(
-							'none') + '</option>' + '<option value="left">' + this.lang.get(
-							'left') + '</option>' + '<option value="center">' + this.lang.get(
-							'center') + '</option>' + '<option value="right">' + this.lang.get(
-							'right') + '</option>' + '</select>' + '</section>' + '<section>' + '<label class="checkbox"><input type="checkbox" id="redactor-image-link-blank" aria-label="' + this.lang.get(
-							'link-in-new-tab') + '"> ' + this.lang.get('link-in-new-tab') + '</label>' + '</section>' + '<section>' + '<button id="redactor-modal-button-action">' + this.lang.get(
-							'insert') + '</button>' + '<button id="redactor-modal-button-cancel">' + this.lang.get(
-							'cancel') + '</button>' + '<button id="redactor-modal-button-delete" class="redactor-modal-button-offset">' + this.lang.get(
-							'delete') + '</button>' + '</section>' + '</div>' + '</div>',
+						'image-edit': '',
 						
-						'image': String() + '<div class="redactor-modal-tab" data-title="Upload">' + '<section>' + '<div id="redactor-modal-image-droparea"></div>' + '</section>' + '</div>',
+						'image': '',
 						
-						'file': String() + '<div class="redactor-modal-tab" data-title="Upload">' + '<section>' + '<label>' + this.lang.get(
-							'filename') + ' <span class="desc">(' + this.lang.get('optional') + ')</span></label>' + '<input type="text" id="redactor-filename" aria-label="' + this.lang.get(
-							'filename') + '" /><br><br>' + '</section>' + '<section>' + '<div id="redactor-modal-file-upload"></div>' + '</section>' + '</div>',
+						'file': '',
 						
 						'link': String() + '<div class="redactor-modal-tab" data-title="General">' + '<section>' + '<label>URL</label>' + '<input type="url" id="redactor-link-url" aria-label="URL" />' + '</section>' + '<section>' + '<label>' + this.lang.get(
 							'text') + '</label>' + '<input type="text" id="redactor-link-url-text" aria-label="' + this.lang.get(
@@ -7896,177 +7479,19 @@
 				getDeleteButton: function () {
 					return this.$modalBody.find('#redactor-modal-button-delete');
 				},
-				load: function (templateName, title, width) {
-					if (typeof this.$modalBox !== 'undefined' && this.$modalBox.hasClass('open')) {
-						return;
-					}
-					
-					this.modal.templateName = templateName;
-					this.modal.width = width;
-					
-					this.modal.build();
-					this.modal.enableEvents();
-					this.modal.setTitle(title);
-					this.modal.setDraggable();
-					this.modal.setContent();
-					
-					// callbacks
-					if (typeof this.modal.callbacks[templateName] !== 'undefined') {
-						this.modal.callbacks[templateName].call(this);
-					}
-					
-				},
-				show: function () {
-					
-					if (!this.detect.isDesktop()) {
-						document.activeElement.blur();
-					}
-					
-					this.selection.save();
-					this.modal.buildTabber();
-					
-					if (this.detect.isMobile()) {
-						this.modal.width = '96%';
-					}
-					
-					// resize
-					setTimeout($.proxy(this.modal.buildWidth, this), 0);
-					$(window).on('resize.redactor-modal', $.proxy(this.modal.buildWidth, this));
-					
-					this.$modalOverlay.redactorAnimation('fadeIn', {
-						duration: 0.25
-					});
-					
-					this.$modalBox.addClass('open').show();
-					this.$modal.redactorAnimation('fadeIn', {
-						timing: 'cubic-bezier(0.175, 0.885, 0.320, 1.105)'
-					}, $.proxy(function () {
-						
-						this.utils.saveScroll();
-						this.utils.disableBodyScroll();
-						
-						// modal shown callback
-						this.core.callback('modalOpened', this.modal.templateName, this.$modal);
-						
-						// fix bootstrap modal focus
-						$(document).off('focusin.modal');
-						
-						// enter
-						var $elements = this.$modal.find(
-							'input[type=text],input[type=url],input[type=email]');
-						$elements.on('keydown.redactor-modal',
-							$.proxy(this.modal.setEnter, this)
-						);
-						
-					}, this));
-					
-				},
-				buildWidth: function () {
-					var windowHeight = $(window).height();
-					var windowWidth = $(window).width();
-					
-					var number = (typeof this.modal.width === 'number');
-					
-					if (!number && this.modal.width.match(/%$/)) {
-						this.$modal.css({
-							'width': this.modal.width,
-							'margin-bottom': '16px'
-						});
-					}
-					else if (parseInt(this.modal.width) > windowWidth) {
-						this.$modal.css({
-							'width': '96%',
-							'margin-bottom': '2%'
-						});
-					}
-					else {
-						if (number) {
-							this.modal.width += 'px';
-						}
-						
-						this.$modal.css({
-							'width': this.modal.width,
-							'margin-bottom': '16px'
-						});
-					}
-					
-					// margin top
-					var height = this.$modal.outerHeight();
-					var top = (windowHeight / 2 - height / 2) + 'px';
-					
-					if (this.detect.isMobile()) {
-						top = '2%';
-					}
-					else if (height > windowHeight) {
-						top = '16px';
-						
-					}
-					
-					this.$modal.css('margin-top', top);
-				},
-				buildTabber: function () {
-					this.modal.tabs = this.$modal.find('.redactor-modal-tab');
-					
-					if (this.modal.tabs.length < 2) {
-						return;
-					}
-					
-					this.modal.$tabsBox = $('<div id="redactor-modal-tabber" />');
-					$.each(this.modal.tabs, $.proxy(function (i, s) {
-						var a = $('<a href="#" rel="' + i + '" />').text($(s).attr('data-title'));
-						
-						a.on('click', $.proxy(this.modal.showTab, this));
-						
-						if (i === 0) {
-							a.addClass('active');
-						}
-						
-						this.modal.$tabsBox.append(a);
-						
-					}, this));
-					
-					this.$modalBody.prepend(this.modal.$tabsBox);
-					
-				},
-				showTab: function (e) {
-					e.preventDefault();
-					
-					var $el = $(e.target);
-					var index = $el.attr('rel');
-					
-					this.modal.tabs.hide();
-					this.modal.tabs.eq(index).show();
-					
-					$('#redactor-modal-tabber').find('a').removeClass('active');
-					$el.addClass('active');
-					
-					return false;
-					
-				},
-				setTitle: function (title) {
-					this.$modalHeader.html(title);
-				},
+				load: function () { /* WoltLabModal.js */ },
+				show: function () { /* WoltLabModal.js */ },
+				buildWidth: function () { },
+				buildTabber: function () {},
+				showTab: function () {},
+				setTitle: function () { /* WoltLabModal.js */ },
 				setContent: function () {
 					this.$modalBody.html(this.modal.getTemplate(this.modal.templateName));
 					
 					this.modal.getCancelButton().on('mousedown', $.proxy(this.modal.close, this));
 				},
-				setDraggable: function () {
-					if (typeof $.fn.draggable === 'undefined') {
-						return;
-					}
-					
-					this.$modal.draggable({handle: this.$modalHeader});
-					this.$modalHeader.css('cursor', 'move');
-				},
-				setEnter: function (e) {
-					if (e.which !== 13) {
-						return;
-					}
-					
-					e.preventDefault();
-					this.modal.getActionButton().click();
-				},
+				setDraggable: function () {},
+				setEnter: function () {},
 				build: function () {
 					this.modal.buildOverlay();
 					
@@ -8089,74 +7514,10 @@
 					this.$modalOverlay = $('<div id="redactor-modal-overlay">').hide();
 					$('body').prepend(this.$modalOverlay);
 				},
-				enableEvents: function () {
-					this.$modalClose.on('mousedown.redactor-modal',
-						$.proxy(this.modal.close, this)
-					);
-					$(document).on('keyup.redactor-modal', $.proxy(this.modal.closeHandler, this));
-					this.core.editor().on('keyup.redactor-modal',
-						$.proxy(this.modal.closeHandler, this)
-					);
-					this.$modalBox.on('click.redactor-modal', $.proxy(this.modal.close, this));
-				},
-				disableEvents: function () {
-					this.$modalClose.off('mousedown.redactor-modal');
-					$(document).off('keyup.redactor-modal');
-					this.core.editor().off('keyup.redactor-modal');
-					this.$modalBox.off('click§.redactor-modal');
-					$(window).off('resize.redactor-modal');
-				},
-				closeHandler: function (e) {
-					if (e.which !== this.keyCode.ESC) {
-						return;
-					}
-					
-					this.modal.close(false);
-				},
-				close: function (e) {
-					if (e) {
-						if ($(e.target).attr('id') !== 'redactor-modal-button-cancel' && e.target !== this.$modalClose[0] && e.target !== this.$modalBox[0]) {
-							return;
-						}
-						
-						e.preventDefault();
-					}
-					
-					if (!this.$modalBox) {
-						return;
-					}
-					
-					// restore selection
-					this.selection.restore();
-					
-					this.modal.disableEvents();
-					this.utils.enableBodyScroll();
-					this.utils.restoreScroll();
-					
-					this.$modalOverlay.redactorAnimation('fadeOut',
-						{duration: 0.4},
-						$.proxy(function () {
-							this.$modalOverlay.remove();
-							
-						}, this)
-					);
-					
-					this.$modal.redactorAnimation('fadeOut', {
-						
-						duration: 0.3,
-						timing: 'cubic-bezier(0.175, 0.885, 0.320, 1.175)'
-						
-					}, $.proxy(function () {
-						if (typeof this.$modalBox !== 'undefined') {
-							this.$modalBox.remove();
-							this.$modalBox = undefined;
-						}
-						
-						this.core.callback('modalClosed', this.modal.templateName);
-						
-					}, this));
-					
-				}
+				enableEvents: function () {},
+				disableEvents: function () {},
+				closeHandler: function () {},
+				close: function () { /* WoltLabModal.js */ }
 			};
 		},
 		
@@ -8923,55 +8284,18 @@
 			};
 		},
 		
-		// =progress
+		// =progress -- UNSUPPORTED MODULE
 		progress: function () {
 			return {
 				$box: null,
 				$bar: null,
 				target: document.body,  // or id selector
-				
-				// public
-				show: function () {
-					if (!this.progress.is()) {
-						this.progress.build();
-						this.progress.$box.redactorAnimation('fadeIn');
-					}
-					else {
-						this.progress.$box.show();
-					}
-				},
-				hide: function () {
-					if (this.progress.is()) {
-						this.progress.$box.redactorAnimation('fadeOut',
-							{duration: 0.35},
-							$.proxy(this.progress.destroy, this)
-						);
-					}
-				},
-				update: function (value) {
-					this.progress.show();
-					this.progress.$bar.css('width', value + '%');
-				},
-				is: function () {
-					return (this.progress.$box === null) ? false : true;
-				},
-				
-				// private
-				build: function () {
-					this.progress.$bar = $('<span />');
-					this.progress.$box = $('<div id="redactor-progress" />');
-					
-					this.progress.$box.append(this.progress.$bar);
-					$(this.progress.target).append(this.progress.$box);
-				},
-				destroy: function () {
-					if (this.progress.is()) {
-						this.progress.$box.remove();
-					}
-					
-					this.progress.$box = null;
-					this.progress.$bar = null;
-				}
+				show: function () {},
+				hide: function () {},
+				update: function () {},
+				is: function () {},
+				build: function () {},
+				destroy: function () {}
 			};
 		},
 		
@@ -9558,71 +8882,14 @@
 			};
 		},
 		
-		// =storage
+		// =storage -- UNSUPPORTED MODULE
 		storage: function () {
 			return {
 				data: [],
-				add: function (data) {
-					// type, node, url, id
-					data.status = true;
-					data.url = decodeURI(data.url);
-					
-					this.storage.data[data.url] = data;
-				},
-				status: function (url, status) {
-					this.storage.data[decodeURI(url)].status = status;
-				},
-				observe: function () {
-					var _this = this;
-					
-					var $images = this.core.editor().find('[data-image]');
-					$images.each(function (i, s) {
-						_this.storage.add({
-							type: 'image',
-							node: s,
-							url: s.src,
-							id: $(s).attr('data-image')
-						});
-					});
-					
-					var $files = this.core.editor().find('[data-file]');
-					$files.each(function (i, s) {
-						_this.storage.add({
-							type: 'file',
-							node: s,
-							url: s.href,
-							id: $(s).attr('data-file')
-						});
-					});
-					
-					var $s3 = this.core.editor().find('[data-s3]');
-					$s3.each(function (i, s) {
-						var url = (s.tagName === 'IMG') ? s.src : s.href;
-						_this.storage.add({
-							type: 's3',
-							node: s,
-							url: url,
-							id: $(s).attr('data-s3')
-						});
-					});
-					
-				},
-				changes: function () {
-					for (var key in this.storage.data) {
-						var data = this.storage.data[key];
-						var attr = (data.node.tagName === 'IMG') ? 'src' : 'href';
-						var $el = this.core.editor().find('[data-' + data.type + '][' + attr + '="' + data.url + '"]');
-						
-						if ($el.length === 0) {
-							this.storage.status(data.url, false);
-						}
-						else {
-							this.storage.status(data.url, true);
-						}
-					}
-					
-					return this.storage.data;
-				}
+				add: function () {},
+				status: function () {},
+				observe: function () {},
+				changes: function () {}
 				
 			};
 		},
@@ -9835,310 +9102,35 @@
 			};
 		},
 		
-		// =upload
+		// =upload -- UNSUPPORTED MODULE
 		upload: function () {
 			return {
-				init: function (id, url, callback) {
-					this.upload.direct = false;
-					this.upload.callback = callback;
-					this.upload.url = url;
-					this.upload.$el = $(id);
-					this.upload.$droparea = $('<div id="redactor-droparea" />');
-					
-					this.upload.$placeholdler = $('<div id="redactor-droparea-placeholder" />').text(
-						this.lang.get('upload-label'));
-					this.upload.$input = $('<input type="file" name="file" multiple />');
-					
-					this.upload.$placeholdler.append(this.upload.$input);
-					this.upload.$droparea.append(this.upload.$placeholdler);
-					this.upload.$el.append(this.upload.$droparea);
-					
-					this.upload.$droparea.off('redactor.upload');
-					this.upload.$input.off('redactor.upload');
-					
-					this.upload.$droparea.on('dragover.redactor.upload',
-						$.proxy(this.upload.onDrag, this)
-					);
-					this.upload.$droparea.on('dragleave.redactor.upload',
-						$.proxy(this.upload.onDragLeave, this)
-					);
-					
-					// change
-					this.upload.$input.on('change.redactor.upload', $.proxy(function (e) {
-						e = e.originalEvent || e;
-						var len = this.upload.$input[0].files.length;
-						
-						for (var i = 0; i < len; i++) {
-							var index = (len - 1) - i;
-							this.upload.traverseFile(this.upload.$input[0].files[index], e);
-						}
-					}, this));
-					
-					// drop
-					this.upload.$droparea.on('drop.redactor.upload', $.proxy(function (e) {
-						e.preventDefault();
-						
-						this.upload.$droparea.removeClass('drag-hover').addClass('drag-drop');
-						this.upload.onDrop(e);
-						
-					}, this));
-				},
-				directUpload: function (file, e) {
-					this.upload.direct = true;
-					this.upload.traverseFile(file, e);
-				},
-				onDrop: function (e) {
-					e = e.originalEvent || e;
-					var files = e.dataTransfer.files;
-					
-					if (this.opts.multipleImageUpload) {
-						var len = files.length;
-						for (var i = 0; i < len; i++) {
-							this.upload.traverseFile(files[i], e);
-						}
-					}
-					else {
-						this.upload.traverseFile(files[0], e);
-					}
-				},
-				traverseFile: function (file, e) {
-					if (this.opts.s3) {
-						this.upload.setConfig(file);
-						this.uploads3.send(file, e);
-						return;
-					}
-					
-					var formData = !!window.FormData ? new FormData() : null;
-					if (window.FormData) {
-						this.upload.setConfig(file);
-						
-						var name = (this.upload.type === 'image') ? this.opts.imageUploadParam : this.opts.fileUploadParam;
-						formData.append(name, file);
-					}
-					
-					var stop = this.core.callback('uploadStart', e, formData);
-					if (stop !== false) {
-						this.progress.show();
-						this.upload.send(formData, e);
-					}
-				},
-				setConfig: function (file) {
-					this.upload.getType(file);
-					
-					if (this.upload.direct) {
-						this.upload.url = (this.upload.type === 'image') ? this.opts.imageUpload : this.opts.fileUpload;
-						this.upload.callback = (this.upload.type === 'image') ? this.image.insert : this.file.insert;
-					}
-				},
-				getType: function (file) {
-					this.upload.type = (this.opts.imageTypes.indexOf(file.type) === -1) ? 'file' : 'image';
-					
-					if (this.opts.imageUpload === null && this.opts.fileUpload !== null) {
-						this.upload.type = 'file';
-					}
-				},
-				getHiddenFields: function (obj, fd) {
-					if (obj === false || typeof obj !== 'object') {
-						return fd;
-					}
-					
-					$.each(obj, $.proxy(function (k, v) {
-						if (v !== null && v.toString().indexOf('#') === 0) {
-							v = $(v).val();
-						}
-						
-						fd.append(k, v);
-						
-					}, this));
-					
-					return fd;
-					
-				},
-				send: function (formData, e) {
-					// append hidden fields
-					if (this.upload.type === 'image') {
-						formData = this.utils.appendFields(this.opts.imageUploadFields,
-							formData
-						);
-						formData = this.utils.appendForms(this.opts.imageUploadForms, formData);
-						formData = this.upload.getHiddenFields(this.upload.imageFields,
-							formData
-						);
-					}
-					else {
-						formData = this.utils.appendFields(this.opts.fileUploadFields,
-							formData
-						);
-						formData = this.utils.appendForms(this.opts.fileUploadForms, formData);
-						formData = this.upload.getHiddenFields(this.upload.fileFields,
-							formData
-						);
-					}
-					
-					var xhr = new XMLHttpRequest();
-					xhr.open('POST', this.upload.url);
-					xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-					
-					// complete
-					xhr.onreadystatechange = $.proxy(function () {
-						if (xhr.readyState === 4) {
-							var data = xhr.responseText;
-							
-							data = data.replace(/^\[/, '');
-							data = data.replace(/\]$/, '');
-							
-							var json;
-							try {
-								json = (typeof data === 'string' ? JSON.parse(data) : data);
-							}
-							catch (err) {
-								json = {error: true};
-							}
-							
-							this.progress.hide();
-							
-							if (!this.upload.direct) {
-								this.upload.$droparea.removeClass('drag-drop');
-							}
-							
-							this.upload.callback(json, this.upload.direct, e);
-						}
-					}, this);
-					
-					// before send
-					var stop = this.core.callback('uploadBeforeSend', xhr);
-					if (stop !== false) {
-						xhr.send(formData);
-					}
-				},
-				onDrag: function (e) {
-					e.preventDefault();
-					this.upload.$droparea.addClass('drag-hover');
-				},
-				onDragLeave: function (e) {
-					e.preventDefault();
-					this.upload.$droparea.removeClass('drag-hover');
-				},
-				clearImageFields: function () {
-					this.upload.imageFields = {};
-				},
-				addImageFields: function (name, value) {
-					this.upload.imageFields[name] = value;
-				},
-				removeImageFields: function (name) {
-					delete this.upload.imageFields[name];
-				},
-				clearFileFields: function () {
-					this.upload.fileFields = {};
-				},
-				addFileFields: function (name, value) {
-					this.upload.fileFields[name] = value;
-				},
-				removeFileFields: function (name) {
-					delete this.upload.fileFields[name];
-				}
+				init: function () {},
+				directUpload: function () {},
+				onDrop: function () {},
+				traverseFile: function () {},
+				setConfig: function () {},
+				getType: function () {},
+				getHiddenFields: function () {},
+				send: function () {},
+				onDrag: function () {},
+				onDragLeave: function () {},
+				clearImageFields: function () {},
+				addImageFields: function () {},
+				removeImageFields: function () {},
+				clearFileFields: function () {},
+				addFileFields: function () {},
+				removeFileFields: function () {}
 			};
 		},
 		
-		// =s3
+		// =s3 -- UNSUPPORTED MODULE
 		uploads3: function () {
 			return {
-				send: function (file, e) {
-					this.uploads3.executeOnSignedUrl(file, $.proxy(function (signedURL) {
-						this.uploads3.sendToS3(file, signedURL, e);
-					}, this));
-				},
-				executeOnSignedUrl: function (file, callback) {
-					var xhr = new XMLHttpRequest();
-					var mark = (this.opts.s3.search(/\?/) === -1) ? '?' : '&';
-					
-					xhr.open('GET',
-						this.opts.s3 + mark + 'name=' + file.name + '&type=' + file.type,
-						true
-					);
-					
-					// hack to pass bytes through unprocessed.
-					if (xhr.overrideMimeType) {
-						xhr.overrideMimeType('text/plain; charset=x-user-defined');
-					}
-					
-					var that = this;
-					xhr.onreadystatechange = function (e) {
-						if (this.readyState === 4 && this.status === 200) {
-							that.progress.show();
-							callback(decodeURIComponent(this.responseText));
-						}
-					};
-					
-					xhr.send();
-				},
-				createCORSRequest: function (method, url) {
-					var xhr = new XMLHttpRequest();
-					if ('withCredentials' in xhr) {
-						xhr.open(method, url, true);
-					}
-					else if (typeof XDomainRequest !== 'undefined') {
-						xhr = new XDomainRequest();
-						xhr.open(method, url);
-					}
-					else {
-						xhr = null;
-					}
-					
-					return xhr;
-				},
-				
-				sendToS3: function (file, url, e) {
-					var xhr = this.uploads3.createCORSRequest('PUT', url);
-					if (!xhr) {
-						return;
-					}
-					
-					xhr.onload = $.proxy(function () {
-						var json;
-						this.progress.hide();
-						
-						if (xhr.status !== 200) {
-							// error
-							json = {error: true};
-							this.upload.callback(json, this.upload.direct, xhr);
-							
-							return;
-						}
-						
-						var s3file = url.split('?');
-						if (!s3file[0]) {
-							// url parsing is fail
-							return false;
-						}
-						
-						if (!this.upload.direct) {
-							this.upload.$droparea.removeClass('drag-drop');
-						}
-						
-						json = {
-							url: s3file[0],
-							id: s3file[0],
-							s3: true
-						};
-						if (this.upload.type === 'file') {
-							var arr = s3file[0].split('/');
-							json.name = arr[arr.length - 1];
-						}
-						
-						this.upload.callback(json, this.upload.direct, e);
-						
-					}, this);
-					
-					xhr.onerror = function () {};
-					xhr.upload.onprogress = function (e) {};
-					
-					xhr.setRequestHeader('Content-Type', file.type);
-					xhr.setRequestHeader('x-amz-acl', 'public-read');
-					
-					xhr.send(file);
-					
-				}
+				send: function () {},
+				executeOnSignedUrl: function () {},
+				createCORSRequest: function () {},
+				sendToS3: function () {}
 			};
 		},
 		
