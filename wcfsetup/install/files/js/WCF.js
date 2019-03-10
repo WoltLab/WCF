@@ -878,9 +878,10 @@ WCF.Dropdown = {
 	 * Toggles a dropdown.
 	 * 
 	 * @param	string		containerID
+	 * @param       {boolean=}      disableAutoFocus
 	 */
-	toggleDropdown: function(containerID) {
-		window.bc_wcfSimpleDropdown._toggle(null, containerID);
+	toggleDropdown: function(containerID, disableAutoFocus) {
+		window.bc_wcfSimpleDropdown._toggle(null, containerID, null, disableAutoFocus);
 	},
 	
 	/**
@@ -4464,7 +4465,7 @@ WCF.Search.Base = Class.extend({
 		
 		var $containerID = this._searchInput.parents('.dropdown').wcfIdentify();
 		if (!WCF.Dropdown.getDropdownMenu($containerID).hasClass('dropdownOpen')) {
-			WCF.Dropdown.toggleDropdown($containerID);
+			WCF.Dropdown.toggleDropdown($containerID, true);
 			
 			this._openDropdown();
 		}

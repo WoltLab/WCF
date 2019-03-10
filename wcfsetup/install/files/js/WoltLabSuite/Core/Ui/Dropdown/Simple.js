@@ -185,9 +185,10 @@ define(
 		 * 
 		 * @param	{string}	containerId	        dropdown wrapper id
 		 * @param       {Element=}      referenceElement        alternative reference element, used for reusable dropdown menus
+		 * @param       {boolean=}      disableAutoFocus
 		 */
-		toggleDropdown: function(containerId, referenceElement) {
-			this._toggle(null, containerId, referenceElement);
+		toggleDropdown: function(containerId, referenceElement, disableAutoFocus) {
+			this._toggle(null, containerId, referenceElement, disableAutoFocus);
 		},
 		
 		/**
@@ -245,11 +246,12 @@ define(
 		 * Opens the dropdown unless it is already open.
 		 * 
 		 * @param	{string}	containerId	dropdown wrapper id
+		 * @param       {boolean=}      disableAutoFocus
 		 */
-		open: function(containerId) {
+		open: function(containerId, disableAutoFocus) {
 			var menu = _menus.get(containerId);
 			if (menu !== undefined && !menu.classList.contains('dropdownOpen')) {
-				this.toggleDropdown(containerId);
+				this.toggleDropdown(containerId, undefined, disableAutoFocus);
 			}
 		},
 		
@@ -379,9 +381,10 @@ define(
 		 * @param	{?Event}	event		        event object, should be 'null' if targetId is given
 		 * @param	{string?}	targetId	        dropdown wrapper id
 		 * @param       {Element=}      alternateElement        alternative reference element for alignment
+		 * @param       {boolean=}      disableAutoFocus
 		 * @return	{boolean}	'false' if event is not null
 		 */
-		_toggle: function(event, targetId, alternateElement) {
+		_toggle: function(event, targetId, alternateElement, disableAutoFocus) {
 			if (event !== null) {
 				event.preventDefault();
 				event.stopPropagation();
@@ -479,20 +482,22 @@ define(
 					
 					this._notifyCallbacks(containerId, 'open');
 					
-					elAttr(menu, 'role', 'menu');
-					elAttr(menu, 'tabindex', -1);
-					menu.removeEventListener('keydown', _callbackDropdownMenuKeyDown);
-					menu.addEventListener('keydown', _callbackDropdownMenuKeyDown);
-					var firstListItem = null;
-					elBySelAll('li', menu, function(listItem) {
-						if (firstListItem === null) firstListItem = listItem;
-						else if (listItem.classList.contains('active')) firstListItem = listItem;
-						
-						elAttr(listItem, 'role', 'menuitem');
-						elAttr(listItem, 'tabindex', -1);
-					});
-					if (firstListItem !== null) {
-						firstListItem.focus();
+					if (!disableAutoFocus) {
+						elAttr(menu, 'role', 'menu');
+						elAttr(menu, 'tabindex', -1);
+						menu.removeEventListener('keydown', _callbackDropdownMenuKeyDown);
+						menu.addEventListener('keydown', _callbackDropdownMenuKeyDown);
+						var firstListItem = null;
+						elBySelAll('li', menu, function (listItem) {
+							if (firstListItem === null) firstListItem = listItem;
+							else if (listItem.classList.contains('active')) firstListItem = listItem;
+							
+							elAttr(listItem, 'role', 'menuitem');
+							elAttr(listItem, 'tabindex', -1);
+						});
+						if (firstListItem !== null) {
+							firstListItem.focus();
+						}
 					}
 					
 					this.setAlignment(dropdown, menu, alternateElement);
