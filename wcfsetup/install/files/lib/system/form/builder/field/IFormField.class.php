@@ -24,8 +24,6 @@ interface IFormField extends IFormChildNode, IFormElement {
 	 */
 	public function addValidationError(IFormFieldValidationError $error);
 	
-	
-	
 	/**
 	 * Adds the given validation error to this field and returns this field.
 	 * 
