@@ -210,7 +210,9 @@ define(
 				
 				// alignment
 				horizontal: (elData(dropdownMenu, 'dropdown-alignment-horizontal') === 'right') ? 'right' : 'left',
-				vertical: (elData(dropdownMenu, 'dropdown-alignment-vertical') === 'top') ? 'top' : 'bottom'
+				vertical: (elData(dropdownMenu, 'dropdown-alignment-vertical') === 'top') ? 'top' : 'bottom',
+				
+				allowFlip: elData(dropdownMenu, 'dropdown-allow-flip') || 'both'
 			});
 		},
 		
@@ -355,7 +357,10 @@ define(
 						this.setAlignment(dropdown, _menus.get(containerId));
 					}
 					else {
-						this.close(containerId);
+						var menu = _menus.get(dropdown.id);
+						if (!elDataBool(menu, 'dropdown-ignore-page-scroll')) {
+							this.close(containerId);
+						}
 					}
 				}
 			}).bind(this));
@@ -491,11 +496,12 @@ define(
 						elAttr(listItem, 'role', 'menuitem');
 						elAttr(listItem, 'tabindex', -1);
 					});
+					
+					this.setAlignment(dropdown, menu, alternateElement);
+					
 					if (firstListItem !== null) {
 						firstListItem.focus();
 					}
-					
-					this.setAlignment(dropdown, menu, alternateElement);
 				}
 			}).bind(this));
 			
@@ -513,62 +519,83 @@ define(
 		},
 		
 		_dropdownMenuKeyDown: function(event) {
-			if (EventKey.ArrowDown(event) || EventKey.ArrowUp(event)) {
+			var button, dropdown;
+			
+			var activeItem = document.activeElement;
+			if (activeItem.nodeName !== 'LI') {
+				return;
+			}
+			
+			if (EventKey.ArrowDown(event) || EventKey.ArrowUp(event) || EventKey.End(event) || EventKey.Home(event)) {
 				event.preventDefault();
 				
-				var activeItem = document.activeElement;
-				if (activeItem.nodeName === 'LI') {
-					var listItems = Array.prototype.slice.call(elBySelAll('li', activeItem.closest('.dropdownMenu')));
-					if (EventKey.ArrowUp(event)) {
-						listItems.reverse();
+				var listItems = Array.prototype.slice.call(elBySelAll('li', activeItem.closest('.dropdownMenu')));
+				if (EventKey.ArrowUp(event) || EventKey.End(event)) {
+					listItems.reverse();
+				}
+				var newActiveItem = null;
+				var isValidItem = function(listItem) {
+					return !listItem.classList.contains('dropdownDivider') && listItem.clientHeight > 0;
+				};
+				
+				var activeIndex = listItems.indexOf(activeItem);
+				if (EventKey.End(event) || EventKey.Home(event)) {
+					activeIndex = -1;
+				}
+				
+				for (var i = activeIndex + 1; i < listItems.length; i++) {
+					if (isValidItem(listItems[i])) {
+						newActiveItem = listItems[i];
+						break;
 					}
-					var activeIndex = listItems.indexOf(activeItem);
-					var newActiveItem = null;
-					
-					var isValidItem = function(listItem) {
-						return !listItem.classList.contains('dropdownDivider') && listItem.clientHeight > 0;
-					};
-					
-					for (var i = activeIndex + 1; i < listItems.length; i++) {
+				}
+				
+				if (newActiveItem === null) {
+					for (i = 0; i < listItems.length; i++) {
 						if (isValidItem(listItems[i])) {
 							newActiveItem = listItems[i];
 							break;
 						}
 					}
-					
-					if (newActiveItem === null) {
-						for (i = 0; i < listItems.length; i++) {
-							if (isValidItem(listItems[i])) {
-								newActiveItem = listItems[i];
-								break;
-							}
-						}
-					}
-					newActiveItem.focus();
 				}
+				
+				newActiveItem.focus();
 			}
 			else if (EventKey.Enter(event) || EventKey.Space(event)) {
 				event.preventDefault();
-				var activeItem = document.activeElement;
-				if (activeItem.nodeName === 'LI') {
-					var target = activeItem;
-					if (target.childElementCount === 1 && (target.children[0].nodeName === 'SPAN' || target.children[0].nodeName === 'A')) {
-						target = target.children[0];
-					}
-					
-					var dropdown = _dropdowns.get(_activeTargetId);
-					var button = elBySel('.dropdownToggle', dropdown);
-					target.click();
-					if (button) button.focus();
+				
+				var target = activeItem;
+				if (target.childElementCount === 1 && (target.children[0].nodeName === 'SPAN' || target.children[0].nodeName === 'A')) {
+					target = target.children[0];
 				}
+				
+				dropdown = _dropdowns.get(_activeTargetId);
+				button = elBySel('.dropdownToggle', dropdown);
+				require(['Core'], function(Core) {
+					var mouseEvent = elData(dropdown, 'a11y-mouse-event') || 'click';
+					Core.triggerEvent(target, mouseEvent);
+					
+					if (button) button.focus();
+				});
 			}
-			else if (EventKey.Tab(event)) {
+			else if (EventKey.Escape(event) || EventKey.Tab(event)) {
 				event.preventDefault();
-				var dropdown = _dropdowns.get(_activeTargetId);
-				var button = elBySel('.dropdownToggle', dropdown);
+				
+				dropdown = _dropdowns.get(_activeTargetId);
+				button = elBySel('.dropdownToggle', dropdown);
+				// Remote controlled drop-down menus may not have a dedicated toggle button, instead the
+				// `dropdown` element itself is the button.
+				if (button === null && !dropdown.classList.contains('dropdown')) {
+					button = dropdown;
+				}
+				
 				this._toggle(null, _activeTargetId);
 				if (button) button.focus();
 			}
+		},
+		
+		_getNextVisibleItem: function(activeItem, index) {
+			var items = Array.prototype.slice.call(elBySelAll('li', activeItem.closest('.dropdownMenu')));
 		}
 	};
 });
