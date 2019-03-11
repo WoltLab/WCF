@@ -19,7 +19,6 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabCode.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabColor.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabDragAndDrop.js?v={@LAST_UPDATE_TIME}',
-			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabDropdown.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabEvent.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabFont.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabFullscreen.js?v={@LAST_UPDATE_TIME}',
@@ -200,7 +199,6 @@
 					
 					// WoltLab specials
 					'WoltLabBlock',
-					'WoltLabDropdown',
 					'WoltLabEvent',
 					'WoltLabKeydown',
 					
