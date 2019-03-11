@@ -327,7 +327,7 @@ define(['Ajax', 'Core', 'EventKey', 'Dom/Util', 'Ui/SimpleDropdown'], function(A
 					UiSimpleDropdown.close(this._dropdownContainerId);
 				}
 				else {
-					UiSimpleDropdown.open(this._dropdownContainerId);
+					UiSimpleDropdown.open(this._dropdownContainerId, true);
 					
 					// mark first item as active
 					if (this._list.childElementCount && ~~elData(this._list.children[0], 'object-id')) {

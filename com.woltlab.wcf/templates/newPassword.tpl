@@ -2,7 +2,7 @@
 
 {include file='formError'}
 
-<p class="info">{lang}wcf.user.newPassword.info{/lang}</p>
+<p class="info" role="status">{lang}wcf.user.newPassword.info{/lang}</p>
 
 <form method="post" action="{link controller='NewPassword'}{/link}">
 	<div class="section">

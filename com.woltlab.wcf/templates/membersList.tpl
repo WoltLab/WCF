@@ -111,7 +111,7 @@
 		</form>
 	</div>
 {else}
-	<p class="info">{lang}wcf.user.members.noMembers{/lang}</p>
+	<p class="info" role="status">{lang}wcf.user.members.noMembers{/lang}</p>
 {/if}
 
 <footer class="contentFooter">

@@ -1,7 +1,10 @@
 <?php
-namespace wcf\system\form\builder\field\wysiwyg;
+namespace wcf\system\form\builder\wysiwyg;
 use wcf\data\smiley\Smiley;
-use wcf\system\form\builder\field\AbstractFormField;
+use wcf\system\form\builder\IFormChildNode;
+use wcf\system\form\builder\TFormChildNode;
+use wcf\system\form\builder\TFormNode;
+use wcf\system\WCF;
 
 /**
  * Implementation of a form field for the list smilies of a certain category used by a wysiwyg
@@ -15,7 +18,12 @@ use wcf\system\form\builder\field\AbstractFormField;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class WysiwygSmileyFormField extends AbstractFormField {
+class WysiwygSmileyFormNode implements IFormChildNode {
+	use TFormChildNode;
+	use TFormNode {
+		isAvailable as traitIsAvailable;
+	}
+	
 	/**
 	 * list of available smilies
 	 * @var	Smiley[]
@@ -25,7 +33,11 @@ class WysiwygSmileyFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected $templateName = '__wysiwygSmileyFormField';
+	public function getHtml() {
+		return WCF::getTPL()->fetch('__wysiwygSmileyFormNode', 'wcf', [
+			'node' => $this
+		]);
+	}
 	
 	/**
 	 * Returns the list of available smilies.
@@ -47,7 +59,7 @@ class WysiwygSmileyFormField extends AbstractFormField {
 	 * @inheritDoc
 	 */
 	public function isAvailable() {
-		return parent::isAvailable() && !empty($this->smilies);
+		return $this->traitIsAvailable() && !empty($this->smilies);
 	}
 	
 	/**
@@ -61,7 +73,7 @@ class WysiwygSmileyFormField extends AbstractFormField {
 	 * Sets the list of available smilies.
 	 * 
 	 * @param	Smiley[]	$smilies	available smilies
-	 * @return	WysiwygSmileyFormField		this form field
+	 * @return	WysiwygSmileyFormNode		this form field
 	 */
 	public function smilies(array $smilies) {
 		foreach ($smilies as $smiley) {
@@ -76,5 +88,12 @@ class WysiwygSmileyFormField extends AbstractFormField {
 		$this->smilies = $smilies;
 		
 		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validate() {
+		// does nothing
 	}
 }

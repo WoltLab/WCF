@@ -5,11 +5,11 @@
 {include file='formError'}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
+	<p class="success" role="status">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
 
 {if $__wcf->user->disableSignature}
-	<p class="error">{lang}wcf.user.signature.error.disabled{/lang}</p>
+	<p class="error" role="alert">{lang}wcf.user.signature.error.disabled{/lang}</p>
 {/if}
 
 <form method="post" action="{link controller='SignatureEdit'}{/link}">

@@ -32,7 +32,7 @@
 	</li>
 	
 	{if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle') || $__wcf->getSession()->getPermission('admin.content.article.canContributeArticle')}
-		<li><a href="#" class="button jsButtonArticleAdd"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+		<li><a href="#" class="button jsButtonArticleAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
 	{/if}
 {/capture}
 
@@ -110,7 +110,7 @@
 		{include file='articleListItems'}
 	</div>
 {else}
-	<p class="info">{lang}wcf.global.noItems{/lang}</p>
+	<p class="info" role="status">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 <footer class="contentFooter">

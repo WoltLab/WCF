@@ -4,7 +4,7 @@ use wcf\data\smiley\SmileyCache;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\TabFormContainer;
 use wcf\system\form\builder\container\TabTabMenuFormContainer;
-use wcf\system\form\builder\field\wysiwyg\WysiwygSmileyFormField;
+use wcf\system\form\builder\wysiwyg\WysiwygSmileyFormNode;
 use wcf\system\form\builder\TWysiwygFormNode;
 use wcf\util\StringUtil;
 
@@ -55,7 +55,7 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer {
 							FormContainer::create($this->getId() . '_smileyCategoryContainer' . $smileyCategory->categoryID)
 								->removeClass('section')
 								->appendChild(
-									WysiwygSmileyFormField::create($this->getId() . '_smileyCategory' . $smileyCategory->categoryID)
+									WysiwygSmileyFormNode::create($this->getId() . '_smileyCategory' . $smileyCategory->categoryID)
 										->smilies(SmileyCache::getInstance()->getCategorySmilies($smileyCategory->categoryID ?: null))
 								)
 						)
