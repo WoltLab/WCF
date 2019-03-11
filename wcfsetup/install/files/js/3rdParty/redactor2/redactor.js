@@ -1599,14 +1599,33 @@
 							true
 						);
 						
-						var $dropdown = $('<ul class="redactor-dropdown redactor-dropdown-' + this.uuid + ' redactor-dropdown-box-' + btnName + '" style="display: none;">');
+						var $dropdown = $('<ul class="dropdownMenu redactor-dropdown-menu redactor-dropdown-menu-' + $button[0].rel + '" data-dropdown-allow-flip="horizontal" data-dropdown-ignore-page-scroll="true" />');
 						$button.data('dropdown', $dropdown);
 						this.dropdown.build(btnName, $dropdown, btnObject.dropdown);
+						
+						this.button.setupDropdown($button[0], $dropdown[0]);
 					}
 					
 					this.button.buttons.push($button);
 					
 					return $button;
+				},
+				setupDropdown: function(button, dropdown) {
+					require(['Ui/SimpleDropdown'], (function (UiSimpleDropdown) {
+						UiSimpleDropdown.initFragment(button, dropdown);
+						UiSimpleDropdown.registerCallback(button.id, (function(containerId, action) {
+							if (action === 'close') {
+								this.dropdown.hideOut();
+							}
+						}).bind(this));
+						
+						elData(button, 'a11y-mouse-event', 'mousedown');
+						
+						button.addEventListener('click', function (event) {
+							event.preventDefault();
+							event.stopPropagation();
+						});
+					}).bind(this));
 				},
 				getButtons: function () {
 					return this.button.toolbar().find('a.re-button');
@@ -1821,21 +1840,29 @@
 					var key = $btn.attr('rel');
 					this.button.addCallback($btn, 'dropdown');
 					
-					var $dropdown = $('<div class="redactor-dropdown redactor-dropdown-' + this.uuid + ' redactor-dropdown-box-' + key + '" style="display: none;">');
+					var $dropdown = $('<ul class="dropdownMenu redactor-dropdown-menu redactor-dropdown-menu-' + key + '" data-dropdown-allow-flip="horizontal" data-dropdown-ignore-page-scroll="true" />');
 					$btn.data('dropdown', $dropdown);
 					
 					// build dropdown
 					if (dropdown) {
 						this.dropdown.build(key, $dropdown, dropdown);
+						
+						this.button.setupDropdown($btn[0], $dropdown[0]);
 					}
 					
 					return $dropdown;
 				},
 				setActive: function (key) {
-					this.button.get(key).addClass('redactor-act');
+					this.button.get(key).addClass('redactor-act').attr({
+						'aria-pressed': true,
+						tabindex: 0
+					});
 				},
 				setInactive: function (key) {
-					this.button.get(key).removeClass('redactor-act');
+					this.button.get(key).removeClass('redactor-act').attr({
+						'aria-pressed': false,
+						tabindex: (key === 'html') ? 0 : -1
+					});
 				},
 				setInactiveAll: function (key) {
 					var $btns = this.button.toolbar().find('a.re-button');
@@ -3250,7 +3277,6 @@
 					this.$element.off('.redactor').removeData('redactor');
 					this.core.editor().off('.redactor');
 					
-					$(document).off('.redactor-dropdown');
 					$(document).off('.redactor-air.' + this.uuid);
 					$(document).off('mousedown.redactor-blur.' + this.uuid);
 					$(document).off('mousedown.redactor.' + this.uuid);
@@ -3369,61 +3395,52 @@
 					return this.dropdown.active;
 				},
 				build: function (name, $dropdown, dropdownObject) {
-					dropdownObject = this.dropdown.buildFormatting(name, dropdownObject);
-					
-					$.each(dropdownObject, $.proxy(function (btnName, btnObject) {
-						var $item = this.dropdown.buildItem(btnName, btnObject);
-						
-						this.observe.addDropdown($item, btnName, btnObject);
-						$dropdown.attr('rel', name).append($item);
-						
-					}, this));
-				},
-				buildFormatting: function (name, dropdownObject) {
-					if (name !== 'format' || this.opts.formattingAdd === false) {
-						return dropdownObject;
+					var btnObject, fragment = document.createDocumentFragment();
+					for (var btnName in dropdownObject) {
+						if (dropdownObject.hasOwnProperty(btnName)) {
+							btnObject = dropdownObject[btnName];
+							
+							var item = this.dropdown.buildItem(btnName, btnObject);
+							
+							this.observe.addDropdown($(item), btnName, btnObject);
+							fragment.appendChild(item);
+						}
 					}
 					
-					$.each(this.opts.formattingAdd, $.proxy(function (i, s) {
-						var type = (this.utils.isBlockTag(s.args[0])) ? 'block' : 'inline';
-						
-						dropdownObject[i] = {
-							func: (type === 'block') ? 'block.format' : 'inline.format',
-							args: s.args,
-							title: s.title
-						};
-						
-					}, this));
+					var hasItems = false;
+					for (var i = 0, length = fragment.childNodes.length; i < length; i++) {
+						if (fragment.childNodes[i].nodeType === Node.ELEMENT_NODE) {
+							hasItems = true;
+							break;
+						}
+					}
 					
-					return dropdownObject;
+					if (hasItems) {
+						$dropdown[0].rel = name;
+						$dropdown[0].appendChild(fragment);
+					}
 				},
+				buildFormatting: function () {},
 				buildItem: function (btnName, btnObject) {
-					var $itemContainer = $('<li />');
+					var itemContainer = elCreate('li');
 					if (typeof btnObject.classname !== 'undefined') {
-						$itemContainer.addClass(btnObject.classname);
+						itemContainer.classList.add(btnObject.classname);
 					}
 					
-					if (btnName.search(/^divider/i) !== -1) {
-						$itemContainer.addClass('redactor-dropdown-divider');
+					if (btnName.toLowerCase().indexOf('divider') === 0) {
+						itemContainer.classList.add('redactor-dropdown-divider');
 						
-						return $itemContainer;
+						return itemContainer;
 					}
 					
-					var $item = $('<a href="#" class="redactor-dropdown-' + btnName + '" role="button" />');
-					var $itemSpan = $('<span />').html(btnObject.title);
-					
-					$item.append($itemSpan);
-					$item.on('mousedown', $.proxy(function (e) {
-						e.preventDefault();
+					itemContainer.innerHTML = '<a href="#" class="redactor-dropdown-' + btnName + '" role="button"><span>' + btnObject.title + '</span></a>';
+					itemContainer.children[0].addEventListener('mousedown', (function(event) {
+						event.preventDefault();
 						
-						this.dropdown.buildClick(e, btnName, btnObject);
-						
-					}, this));
+						this.dropdown.buildClick(event, btnName, btnObject);
+					}).bind(this));
 					
-					$itemContainer.append($item);
-					
-					return $itemContainer;
-					
+					return itemContainer;
 				},
 				buildClick: function (e, btnName, btnObject) {
 					if ($(e.target).hasClass('redactor-dropdown-link-inactive')) {
@@ -3470,107 +3487,34 @@
 					this.dropdown.key = key;
 					this.dropdown.button = this.button.get(this.dropdown.key);
 					
-					if (this.dropdown.button.hasClass('dropact')) {
-						this.dropdown.hide();
-						return;
-					}
-					
-					// re append
-					this.dropdown.active = this.dropdown.button.data('dropdown').appendTo(document.body);
-					
-					// callback
-					this.core.callback('dropdownShow', {
-						dropdown: this.dropdown.active,
-						key: this.dropdown.key,
-						button: this.dropdown.button
-					});
-					
-					// set button
-					this.button.setActive(this.dropdown.key);
-					this.dropdown.button.addClass('dropact');
-					
-					// position
-					this.dropdown.getButtonPosition();
-					
-					// show
-					if (this.button.toolbar().hasClass('toolbar-fixed-box') && this.detect.isDesktop()) {
-						this.dropdown.showIsFixedToolbar();
-					}
-					else {
-						this.dropdown.showIsUnFixedToolbar();
-					}
-					
-					// disable scroll whan dropdown scroll
-					if (this.detect.isDesktop() && !this.detect.isFirefox()) {
-						this.dropdown.active.on('mouseover.redactor-dropdown',
-							$.proxy(this.utils.disableBodyScroll, this)
-						);
-						this.dropdown.active.on(
-							'mouseout.redactor-dropdown mousedown.redactor-dropdown',
-							$.proxy(this.utils.enableBodyScroll, this)
-						);
-					}
-					
-					e.stopPropagation();
-					
-				},
-				showIsFixedToolbar: function () {
-					var top = this.dropdown.button.position().top + this.dropdown.button.innerHeight() + this.opts.toolbarFixedTopOffset;
-					
-					var position = 'fixed';
-					if (this.opts.toolbarFixedTarget !== document) {
-						top = (this.dropdown.button.innerHeight() + this.$toolbar.offset().top) + this.opts.toolbarFixedTopOffset;
-						position = 'absolute';
-					}
-					
-					this.dropdown.active.css({
+					require(['Ui/SimpleDropdown'], (function(UiSimpleDropdown) {
+						var dropdownId = this.dropdown.button[0].id;
 						
-						position: position,
-						left: this.dropdown.position.left + 'px',
-						top: top + 'px'
-						
-					}).show();
-					
-					// animate
-					this.dropdown.active.redactorAnimation('slideDown',
-						{duration: 0.2},
-						$.proxy(function () {
-							this.dropdown.enableCallback();
-							this.dropdown.enableEvents();
+						UiSimpleDropdown.toggleDropdown(dropdownId);
+						if (UiSimpleDropdown.isOpen(dropdownId)) {
+							this.dropdown.active = $(UiSimpleDropdown.getDropdownMenu(dropdownId));
 							
-						}, this)
-					);
-				},
-				showIsUnFixedToolbar: function () {
-					this.dropdown.active.css({
-						
-						position: 'absolute',
-						left: this.dropdown.position.left + 'px',
-						top: (this.dropdown.button.innerHeight() + this.dropdown.position.top) + 'px'
-						
-					}).show();
-					
-					// animate
-					this.dropdown.active.redactorAnimation(((this.opts.animation) ? 'slideDown' : 'show'),
-						{duration: 0.2},
-						$.proxy(function () {
-							this.dropdown.enableCallback();
-							this.dropdown.enableEvents();
+							this.core.callback('dropdownShow', {
+								dropdown: this.dropdown.active,
+								key: this.dropdown.key,
+								button: this.dropdown.button
+							});
 							
-						}, this)
-					);
+							this.button.setActive(this.dropdown.key);
+							this.dropdown.button.addClass('dropact');
+							
+							this.dropdown.enableCallback();
+						}
+						else {
+							this.dropdown.hide();
+						}
+					}).bind(this));
+					
+					e.preventDefault();
 				},
-				enableEvents: function () {
-					$(document).on('mousedown.redactor-dropdown',
-						$.proxy(this.dropdown.hideAll, this)
-					);
-					this.core.editor().on('touchstart.redactor-dropdown',
-						$.proxy(this.dropdown.hideAll, this)
-					);
-					$(document).on('keyup.redactor-dropdown',
-						$.proxy(this.dropdown.closeHandler, this)
-					);
-				},
+				showIsFixedToolbar: function () {},
+				showIsUnFixedToolbar: function () {},
+				enableEvents: function () {},
 				enableCallback: function () {
 					this.core.callback('dropdownShown', {
 						dropdown: this.dropdown.active,
@@ -3578,83 +3522,27 @@
 						button: this.dropdown.button
 					});
 				},
-				getButtonPosition: function () {
-					this.dropdown.position = this.dropdown.button.offset();
-					
-					// fix right placement
-					var dropdownWidth = this.dropdown.active.width();
-					if ((this.dropdown.position.left + dropdownWidth) > $(document).width()) {
-						this.dropdown.position.left = Math.max(0,
-							this.dropdown.position.left - dropdownWidth + parseInt(this.dropdown.button.innerWidth())
-						);
-					}
-					
-				},
-				closeHandler: function (e) {
-					if (e.which !== this.keyCode.ESC) {
-						return;
-					}
-					
-					this.dropdown.hideAll(e);
-					this.core.editor().focus();
-				},
-				hideAll: function (e, key) {
-					if (this.detect.isDesktop()) {
-						this.utils.enableBodyScroll();
-					}
-					
-					if (e !== false && $(e.target).closest('.redactor-dropdown').length !== 0) {
-						return;
-					}
-					
-					var $buttons = (typeof key === 'undefined') ? this.button.toolbar().find(
-						'a.dropact') : this.button.toolbar().find('a.dropact').not('.re-' + key);
-					var $elements = (typeof key === 'undefined') ? $('.redactor-dropdown-' + this.uuid) : $(
-						'.redactor-dropdown-' + this.uuid).not('.redactor-dropdown-box-' + key);
-					
-					if ($elements.length !== 0) {
-						$(document).off('.redactor-dropdown');
-						this.core.editor().off('.redactor-dropdown');
-						
-						$.each($elements, $.proxy(function (i, s) {
-							var $el = $(s);
-							
-							this.core.callback('dropdownHide', $el);
-							
-							$el.hide();
-							$el.off('mouseover mouseout').off('.redactor-dropdown');
-							
-						}, this));
-						
-						$buttons.removeClass('redactor-act dropact');
-					}
-					
-				},
-				hide: function () {
+				getButtonPosition: function () {},
+				closeHandler: function () {},
+				hideAll: function (e, key) { this.dropdown.hideOut(key); },
+				hide: function () { this.dropdown.hideOut(); },
+				hideOut: function (key) {
 					if (this.dropdown.active === false) {
 						return;
 					}
 					
-					if (this.detect.isDesktop()) {
-						this.utils.enableBodyScroll();
+					if (this.dropdown.button[0].rel === key) {
+						return;
 					}
 					
-					this.dropdown.active.redactorAnimation(((this.opts.animation) ? 'slideUp' : 'hide'),
-						{duration: 0.2},
-						$.proxy(function () {
-							$(document).off('.redactor-dropdown');
-							this.core.editor().off('.redactor-dropdown');
-							
-							this.dropdown.hideOut();
-							
-						}, this)
-					);
-				},
-				hideOut: function () {
 					this.core.callback('dropdownHide', this.dropdown.active);
 					
+					var id = this.dropdown.button[0].id;
+					require(['Ui/SimpleDropdown'], function(UiSimpleDropdown) {
+						UiSimpleDropdown.close(id);
+					});
+					
 					this.dropdown.button.removeClass('redactor-act dropact');
-					this.dropdown.active.off('mouseover mouseout').off('.redactor-dropdown');
 					this.dropdown.button = false;
 					this.dropdown.key = false;
 					this.dropdown.active = false;
@@ -8663,6 +8551,10 @@
 					this.button.$toolbar = this.$toolbar;
 					this.button.setFormatting();
 					this.button.load(this.$toolbar);
+					
+					require(['Core'], (function(Core) {
+						this.$toolbar[0].addEventListener('keydown', this.toolbar.keydown.bind(this, Core));
+					}).bind(this));
 				},
 				createContainer: function () {},
 				append: function () {},
@@ -8676,7 +8568,89 @@
 				observeScrollDisable: function () {},
 				setDropdownsFixed: function () {},
 				unsetDropdownsFixed: function () {},
-				setDropdownPosition: function () {}
+				setDropdownPosition: function () {},
+				/**
+				 * @param {object} Core
+				 * @param {KeyboardEvent} event
+				 */
+				keydown: function(Core, event) {
+					var activeButton = document.activeElement;
+					if (!activeButton.classList.contains('re-button')) {
+						return;
+					}
+					
+					// Enter, Space, End, Home, ArrowLeft, ArrowRight, ArrowDown
+					// Remarks: ArrowUp is not considered, because we do not support radio groups at the top level.
+					var keyboardCodes = [13, 32, 35, 36, 37, 39, 40];
+					if (keyboardCodes.indexOf(event.which) === -1) {
+						return;
+					}
+					
+					// [Enter] || [Space]
+					if (event.which === 13 || event.which === 32) {
+						event.preventDefault();
+						
+						require(['Core'], function(Core) {
+							Core.triggerEvent(activeButton, 'mousedown');
+						});
+						
+						return;
+					}
+					
+					// [ArrowDown] opens drop-down menus, but does nothing on "regular" buttons.
+					if (event.which === 40) {
+						if (elAttr(activeButton, 'aria-haspopup') !== 'true') {
+							return;
+						}
+						
+						event.preventDefault();
+						Core.triggerEvent(activeButton, 'mousedown');
+						
+						var dropdown = $(activeButton).data('dropdown');
+						var firstItem = elBySel('li', dropdown[0]);
+						if (firstItem) firstItem.focus();
+						return;
+					}
+					
+					event.preventDefault();
+					
+					var buttons = Array.prototype.slice.call(elBySelAll('.re-button', this.$toolbar[0]));
+					var newActiveButton = null;
+					// [End]
+					if (event.which === 35) {
+						newActiveButton = buttons[buttons.length - 1];
+					}
+					// [Home]
+					else if (event.which === 36) {
+						newActiveButton = buttons[0];
+					}
+					else {
+						var index = buttons.indexOf(activeButton);
+						
+						// [ArrowLeft]
+						if (event.which === 37) {
+							index--;
+							
+							if (index === -1) {
+								index = buttons.length - 1;
+							}
+						}
+						// [ArrowRight]
+						else if (event.which === 39) {
+							index++;
+							
+							if (index === buttons.length) {
+								index = 0;
+							}
+						}
+						
+						newActiveButton = buttons[index];
+					}
+					
+					if (newActiveButton !== null) {
+						newActiveButton.focus();
+					}
+				}
 			};
 		},
 		
@@ -9021,22 +8995,7 @@
 				disableSelectAll: function () {
 					this.selectAll = false;
 				},
-				disableBodyScroll: function () {
-					var $body = $('html');
-					var windowWidth = window.innerWidth;
-					if (!windowWidth) {
-						var documentElementRect = document.documentElement.getBoundingClientRect();
-						windowWidth = documentElementRect.right - Math.abs(documentElementRect.left);
-					}
-					
-					var isOverflowing = document.body.clientWidth < windowWidth;
-					var scrollbarWidth = this.utils.measureScrollbar();
-					
-					$body.css('overflow', 'hidden');
-					if (isOverflowing) {
-						$body.css('padding-right', scrollbarWidth);
-					}
-				},
+				disableBodyScroll: function () {},
 				measureScrollbar: function () {
 					var $body = $('body');
 					var scrollDiv = document.createElement('div');
@@ -9047,13 +9006,7 @@
 					$body[0].removeChild(scrollDiv);
 					return scrollbarWidth;
 				},
-				enableBodyScroll: function () {
-					$('html').css({
-						'overflow': '',
-						'padding-right': ''
-					});
-					$('body').remove('redactor-scrollbar-measure');
-				},
+				enableBodyScroll: function () {},
 				appendFields: function (appendFields, data) {
 					if (!appendFields) {
 						return data;

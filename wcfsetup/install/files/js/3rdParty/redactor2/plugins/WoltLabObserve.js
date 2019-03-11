@@ -22,6 +22,8 @@ $.Redactor.prototype.WoltLabObserve = function() {
 					}
 					
 					button.classList.remove('redactor-act');
+					if (button.rel !== 'html') elAttr(button, 'tabindex', -1);
+					elAttr(button, 'aria-pressed', false);
 				}
 			}).bind(this);
 			

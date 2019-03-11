@@ -157,6 +157,9 @@ $.Redactor.prototype.WoltLabButton = function() {
 			this.$toolbar[0].addEventListener('dragstart', function (event) {
 				event.preventDefault();
 			});
+			
+			// Set the tabindex of the HTML button to `0` to support tab navigation (ARIA).
+			elAttr(elBySel('.re-html', toolbar), 'tabindex', 0);
 		},
 		
 		_handleCustomButton: function (bbcode) {
