@@ -12,7 +12,7 @@ use wcf\system\WCFACP;
  * Resolves incoming requests and performs lookups for controller to url mappings.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  * @since	3.0
@@ -20,7 +20,7 @@ use wcf\system\WCFACP;
 class ControllerMap extends SingletonFactory {
 	/**
 	 * @var array
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	protected $applicationOverrides;
 	

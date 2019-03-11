@@ -9,7 +9,7 @@
 {include file='header' __disableLoginLink=true __disableAds=true}
 
 {if $isExternalAuthentication}
-	<p class="info">{lang}wcf.user.3rdparty.{$__wcf->session->getVar('__3rdPartyProvider')}.register{/lang}</p>
+	<p class="info" role="status">{lang}wcf.user.3rdparty.{$__wcf->session->getVar('__3rdPartyProvider')}.register{/lang}</p>
 {/if}
 
 {include file='formError'}
@@ -18,7 +18,7 @@
 	<div class="section">
 		<dl{if $errorType.username|isset} class="formError"{/if}>
 			<dt>
-				<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label>
+				<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label> <span class="customOptionRequired">*</span>
 			</dt>
 			<dd>
 				<input type="text" id="{@$randomFieldNames[username]}" name="{@$randomFieldNames[username]}" value="{$username}" required class="medium" autocomplete="username">
@@ -44,7 +44,7 @@
 		
 		<dl>
 			<dt>
-				<label for="username">{lang}wcf.user.username{/lang}</label>
+				<label for="username">{lang}wcf.user.username{/lang}</label> <span class="customOptionRequired">*</span>
 			</dt>
 			<dd>
 				<input type="text" id="username" name="username" value="" autocomplete="off" class="medium" tabindex="998">
@@ -53,7 +53,7 @@
 		
 		<dl>
 			<dt>
-				<label for="email">{lang}wcf.user.email{/lang}</label>
+				<label for="email">{lang}wcf.user.email{/lang}</label> <span class="customOptionRequired">*</span>
 			</dt>
 			<dd>
 				<input type="email" id="email" name="email" value="" autocomplete="off" class="medium" tabindex="999">
@@ -68,7 +68,7 @@
 		
 		<dl{if $errorType.email|isset} class="formError"{/if}>
 			<dt>
-				<label for="{@$randomFieldNames[email]}">{lang}wcf.user.email{/lang}</label>
+				<label for="{@$randomFieldNames[email]}">{lang}wcf.user.email{/lang}</label> <span class="customOptionRequired">*</span>
 			</dt>
 			<dd>
 				<input type="email" id="{@$randomFieldNames[email]}" name="{@$randomFieldNames[email]}" value="{$email}" required class="medium">
@@ -84,7 +84,7 @@
 		
 		<dl{if $errorType.confirmEmail|isset} class="formError"{/if}>
 			<dt>
-				<label for="{@$randomFieldNames[confirmEmail]}">{lang}wcf.user.confirmEmail{/lang}</label>
+				<label for="{@$randomFieldNames[confirmEmail]}">{lang}wcf.user.confirmEmail{/lang}</label> <span class="customOptionRequired">*</span>
 			</dt>
 			<dd>
 				<input type="email" id="{@$randomFieldNames[confirmEmail]}" name="{@$randomFieldNames[confirmEmail]}" value="{$confirmEmail}" required class="medium">
@@ -105,7 +105,7 @@
 			
 			<dl{if $errorType.password|isset} class="formError"{/if}>
 				<dt>
-					<label for="{@$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label>
+					<label for="{@$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label> <span class="customOptionRequired">*</span>
 				</dt>
 				<dd>
 					<input type="password" id="{@$randomFieldNames[password]}" name="{@$randomFieldNames[password]}" value="{$password}" required class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
@@ -121,7 +121,7 @@
 			
 			<dl{if $errorType.confirmPassword|isset} class="formError"{/if}>
 				<dt>
-					<label for="{@$randomFieldNames[confirmPassword]}">{lang}wcf.user.confirmPassword{/lang}</label>
+					<label for="{@$randomFieldNames[confirmPassword]}">{lang}wcf.user.confirmPassword{/lang}</label> <span class="customOptionRequired">*</span>
 				</dt>
 				<dd>
 					<input type="password" id="{@$randomFieldNames[confirmPassword]}" name="{@$randomFieldNames[confirmPassword]}" value="{$confirmPassword}" required class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
@@ -206,6 +206,10 @@
 	<div class="formSubmit">
 		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
 		{@SECURITY_TOKEN_INPUT_TAG}
+	</div>
+	
+	<div class="section">
+		<p><span class="customOptionRequired">*</span> {lang}wcf.global.form.required{/lang}</p>
 	</div>
 </form>
 

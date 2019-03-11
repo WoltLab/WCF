@@ -399,6 +399,8 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				}
 				badNodes.forEach(elRemove);
 				
+				this.WoltLabClean.removeRedundantStyles();
+				
 				this.rtePaste = false;
 			}).bind(this);
 			

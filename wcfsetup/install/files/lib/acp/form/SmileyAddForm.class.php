@@ -10,13 +10,14 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\ImageUtil;
 use wcf\util\StringUtil;
 
 /**
  * Shows the smiley add form.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -239,7 +240,7 @@ class SmileyAddForm extends AbstractForm {
 			}
 		}
 		else if (!empty($this->fileUpload['name'])) {
-			if (!getimagesize($this->fileUpload['tmp_name'])) {
+			if (!ImageUtil::isImage($this->fileUpload['tmp_name'], $this->fileUpload['name'])) {
 				$this->uploadedFilename = '';
 				throw new UserInputException('fileUpload', 'noImage');
 			}
@@ -271,7 +272,7 @@ class SmileyAddForm extends AbstractForm {
 			}
 		}
 		else if (!empty($this->fileUpload2x['name'])) {
-			if (!getimagesize($this->fileUpload2x['tmp_name'])) {
+			if (!ImageUtil::isImage($this->fileUpload2x['tmp_name'], $this->fileUpload2x['name'])) {
 				$this->uploadedFilename2x = '';
 				throw new UserInputException('fileUpload2x', 'noImage');
 			}

@@ -2,7 +2,7 @@
  * Provides the trophy icon designer.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Trophy/Badge
  */
@@ -20,7 +20,7 @@ define(['Core', 'Dictionary', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Ui/Col
 		 */
 		init: function () {
 			var iconContainer = elById('badgeContainer');
-			elBySel('button', iconContainer).addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
+			elBySel('.button', iconContainer).addEventListener(WCF_CLICK_EVENT, this._click.bind(this));
 			
 			_iconNameInput = elBySel('input[name="iconName"]', iconContainer);
 			_iconColorInput = elBySel('input[name="iconColor"]', iconContainer);

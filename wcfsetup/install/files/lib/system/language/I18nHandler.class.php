@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Provides internationalization support for input fields.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Language
  */
@@ -81,7 +81,7 @@ class I18nHandler extends SingletonFactory {
 	 * Does nothing if no such element exists.
 	 * 
 	 * @param	string		$elementID
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function unregister($elementID) {
 		$index = array_search($elementID, $this->elementIDs);
@@ -186,13 +186,15 @@ class I18nHandler extends SingletonFactory {
 	 * 
 	 * @param	string		$elementID
 	 * @param	string		$plainValue
+	 * @param	boolean		$forceAsPlainValue	if `true`, the value is added as a plain value in any case
 	 * @throws	SystemException
 	 */
-	public function setValue($elementID, $plainValue) {
+	public function setValue($elementID, $plainValue, $forceAsPlainValue = false) {
 		if (!is_string($plainValue)) {
 			throw new SystemException('Invalid argument for parameter $plainValue', 0, 'Expected string. '.ucfirst(gettype($plainValue)).' given.');
 		}
-		if (!$this->isPlainValue($elementID)) {
+		
+		if (!$this->isPlainValue($elementID) && !$forceAsPlainValue) {
 			$i18nValues = [];
 			foreach ($this->availableLanguages as $language) {
 				$i18nValues[$language->languageID] = StringUtil::trim($plainValue);

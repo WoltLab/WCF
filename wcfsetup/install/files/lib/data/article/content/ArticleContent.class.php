@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * Represents an article content.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article\Content
  * @since	3.0
@@ -142,7 +142,7 @@ class ArticleContent extends DatabaseObject implements ILinkableObject, IRouteCo
 	 *
 	 * @param	string	$mimeType	Either 'text/plain' or 'text/html'
 	 * @return	string
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function getMailText($mimeType = 'text/plain') {
 		switch ($mimeType) {

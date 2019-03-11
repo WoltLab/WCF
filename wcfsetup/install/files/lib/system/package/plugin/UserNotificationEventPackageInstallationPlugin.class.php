@@ -9,8 +9,8 @@ use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\OptionFormField;
-use wcf\system\form\builder\field\UserGroupOptionFormField;
+use wcf\system\form\builder\field\option\OptionFormField;
+use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -26,7 +26,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes user notification events.
  * 
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -177,7 +177,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		/** @var FormContainer $dataContainer */
@@ -284,7 +284,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -339,7 +339,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return sha1(
@@ -350,7 +350,7 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -361,9 +361,9 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$event = $document->createElement($this->tagName);
 		
 		$this->appendElementChildren(
@@ -381,5 +381,35 @@ class UserNotificationEventPackageInstallationPlugin extends AbstractXMLPackageI
 		);
 		
 		return $event;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function prepareDeleteXmlElement(\DOMElement $element) {
+		$userNotificationEvent = $element->ownerDocument->createElement($this->tagName);
+		
+		foreach (['name', 'objecttype'] as $childElement) {
+			$userNotificationEvent->appendChild($element->ownerDocument->createElement(
+				$childElement,
+				$element->getElementsByTagName($childElement)->item(0)->nodeValue
+			));
+		}
+		
+		return $userNotificationEvent;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$elements= [];
+		foreach (['name', 'objecttype'] as $childElement) {
+			$elements[$childElement] = $element->getElementsByTagName($childElement)->item(0)->nodeValue;
+		}
+		
+		$this->handleDelete([['elements' => $elements]]);
 	}
 }

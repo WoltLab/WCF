@@ -5,6 +5,7 @@ use wcf\data\user\UserAction;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
+use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -15,7 +16,7 @@ use wcf\util\StringUtil;
  * Shows the user activation form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -85,6 +86,10 @@ class RegisterActivationForm extends AbstractForm {
 		if ($this->user->activationCode != $this->activationCode) {
 			throw new UserInputException('activationCode', 'invalid');
 		}
+		
+		if (!empty($this->user->getBlacklistMatches())) {
+			throw new PermissionDeniedException();
+		}
 	}
 	
 	/**
@@ -125,6 +130,10 @@ class RegisterActivationForm extends AbstractForm {
 		
 		if (empty($_POST) && $this->user !== null && $this->activationCode != 0) {
 			$this->submit();
+		}
+		
+		if ($this->user === null && !empty(WCF::getUser()->getBlacklistMatches())) {
+			throw new PermissionDeniedException();
 		}
 		
 		parent::show();

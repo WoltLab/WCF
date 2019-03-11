@@ -22,7 +22,7 @@ use wcf\system\WCF;
  * Represents a box.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Box
  * @since	3.0
@@ -521,7 +521,7 @@ class Box extends DatabaseObject {
 	 * Returns true if an edit button should be displayed for this box.
 	 * 
 	 * @return      boolean
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function showEditButton() {
 		if (WCF::getSession()->getPermission('admin.content.cms.canManageBox') && in_array($this->position, $this->editButtonPositions)) {

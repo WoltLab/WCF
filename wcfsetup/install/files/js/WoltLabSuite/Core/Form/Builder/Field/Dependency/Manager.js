@@ -2,10 +2,10 @@
  * Manages form field dependencies.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager
- * @since	3.2
+ * @since	5.2
  */
 define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Traverse', 'Dom/Util', 'ObjectMap'], function(Dictionary, DomChangeListener, EventHandler, List, DomTraverse, DomUtil, ObjectMap) {
 	"use strict";
@@ -71,6 +71,15 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 			elHide(node);
 			_dependencyHiddenNodes.add(node);
 			
+			// also hide tab menu entry
+			if (node.classList.contains('tabMenuContent')) {
+				elBySelAll('li', DomTraverse.prevByClass(node, 'tabMenu'), function(tabLink) {
+					if (elData(tabLink, 'name') === elData(node, 'name')) {
+						elHide(tabLink);
+					}
+				});
+			}
+			
 			elBySelAll('[max], [maxlength], [min], [required]', node, function(validatedField) {
 				var properties = new Dictionary();
 				
@@ -110,6 +119,15 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 		_show: function(node) {
 			elShow(node);
 			_dependencyHiddenNodes.delete(node);
+			
+			// also show tab menu entry
+			if (node.classList.contains('tabMenuContent')) {
+				elBySelAll('li', DomTraverse.prevByClass(node, 'tabMenu'), function(tabLink) {
+					if (elData(tabLink, 'name') === elData(node, 'name')) {
+						elShow(tabLink);
+					}
+				});
+			}
 			
 			elBySelAll('input, select', node, function(validatedField) {
 				// if a container is shown, ignore all fields that
@@ -281,13 +299,6 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 			
 			if (form === null) {
 				throw new Error("Unknown element with id '" + formId + "'");
-			}
-			if (form.tagName !== 'FORM') {
-				var dialogContent = DomTraverse.parentByClass(form, 'dialogContent');
-				
-				if (dialogContent === null) {
-					throw new Error("Element with id '" + formId + "' is no form.");
-				}
 			}
 			
 			if (_forms.has(form)) {

@@ -4,7 +4,7 @@
  * Enhanced image viewer for WCF.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.ImageViewer = Class.extend({
@@ -392,7 +392,9 @@ $.widget('ui.wcfImageViewer', {
 		
 		this._bindListener();
 		
-		document.documentElement.classList.add('pageOverlayActive');
+		require(['Ui/Screen'], function(UiScreen) {
+			UiScreen.pageOverlayOpen();
+		});
 		
 		return true;
 	},
@@ -427,7 +429,9 @@ $.widget('ui.wcfImageViewer', {
 		WCF.System.DisableScrolling.enable();
 		WCF.System.DisableZoom.enable();
 		
-		document.documentElement.classList.remove('pageOverlayActive');
+		require(['Ui/Screen'], function(UiScreen) {
+			UiScreen.pageOverlayClose();
+		});
 		
 		return true;
 	},

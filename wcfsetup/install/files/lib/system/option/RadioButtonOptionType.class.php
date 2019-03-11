@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Option type implementation for radio buttons.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -120,5 +120,12 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	 */
 	protected function getSelectOptions(Option $option) {
 		return $option->parseSelectOptions();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getCSSClassName() {
+		return 'checkboxList';
 	}
 }

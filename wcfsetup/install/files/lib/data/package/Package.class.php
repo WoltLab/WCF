@@ -9,7 +9,7 @@ use wcf\util\FileUtil;
  * Represents a package.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package
  *
@@ -31,7 +31,7 @@ class Package extends DatabaseObject {
 	/**
 	 * recursive list of packages that were given as required packages during installation
 	 * @var		Package[]
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected $allRequiredPackages;
 	
@@ -151,7 +151,7 @@ class Package extends DatabaseObject {
 	 * those required packages.
 	 *
 	 * @return	Package[]
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getAllRequiredPackages() {
 		if ($this->allRequiredPackages === null) {
@@ -287,7 +287,7 @@ class Package extends DatabaseObject {
 	 * 	com.woltlab.wcf
 	 * 
 	 * Reminder: The package name being examined here contains the 'name' attribute
-	 * of the 'package' tag noted in the 'packages.xml' file delivered inside
+	 * of the 'package' tag noted in the 'package.xml' file delivered inside
 	 * the respective package.
 	 * 
 	 * @param	string		$packageName

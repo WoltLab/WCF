@@ -80,7 +80,7 @@
 				<dl{if $errorField == 'uploadPackage'} class="formError"{/if}>
 					<dt><label for="uploadPackage">{lang}wcf.acp.package.source.upload{/lang}</label></dt>
 					<dd>
-						<input type="file" id="uploadPackage" name="uploadPackage" value="">
+						<input type="file" id="uploadPackage" name="uploadPackage" value="" accept="application/x-tar,application/gzip,application/tar+gzip">
 						{if $errorField == 'uploadPackage'}
 							<small class="innerError">
 								{if $errorType == 'empty'}

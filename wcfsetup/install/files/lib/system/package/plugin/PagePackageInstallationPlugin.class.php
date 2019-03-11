@@ -21,12 +21,12 @@ use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
-use wcf\system\form\builder\field\OptionFormField;
+use wcf\system\form\builder\field\option\OptionFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
-use wcf\system\form\builder\field\UserGroupOptionFormField;
+use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\validation\FormFieldValidatorUtil;
@@ -42,7 +42,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes CMS pages.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
@@ -194,6 +194,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					$handler = $data['elements']['handler'];
 				}
 				
+				// @deprecated
 				if (!empty($data['elements']['controllerCustomURL'])) {
 					$controllerCustomURL = $data['elements']['controllerCustomURL'];
 					if ($controllerCustomURL && !RouteHandler::isValidCustomUrl($controllerCustomURL)) {
@@ -418,7 +419,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		$tabContainter = TabMenuFormContainer::create('tabMenu');
@@ -486,10 +487,6 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			ClassNameFormField::create('handler')
 				->label('wcf.acp.pip.page.handler')
 				->implementedInterface(IMenuPageHandler::class),
-			
-			TextFormField::create('controllerCustomURL')
-				->label('wcf.acp.pip.page.controllerCustomURL')
-				->description('wcf.acp.pip.page.controllerCustomURL.description'),
 			
 			BooleanFormField::create('requireObjectID')
 				->label('wcf.acp.pip.page.requireObjectID')
@@ -633,7 +630,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -655,7 +652,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 		}
 		
 		$optionalElements = [
-			'controller', 'handler', 'controllerCustomURL', 'hasFixedParent',
+			'controller', 'handler', 'hasFixedParent',
 			'parent', 'options', 'permissions', 'cssClassName', 'allowSpidersToIndex',
 			'excludeFromLandingPage', 'availableDuringOfflineMode', 'requireObjectID'
 		];
@@ -744,13 +741,38 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			
 			foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $contentProperty) {
 				if (!empty($data[$contentProperty])) {
-					$content[$contentProperty] = $data[$contentProperty];
+					foreach ($data[$contentProperty] as $languageID => $value) {
+						$languageCode = LanguageFactory::getInstance()->getLanguage($languageID)->languageCode;
+						
+						if (!isset($content[$languageCode])) {
+							$content[$languageCode] = [];
+						}
+						
+						$content[$languageCode][$contentProperty] = $value;
+					}
 				}
 				
 				unset($data[$contentProperty]);
 			}
 			
+			foreach ($content as $languageCode => $values) {
+				foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $contentProperty) {
+					if (!isset($values[$contentProperty])) {
+						$content[$languageCode][$contentProperty] = '';
+					}
+				}
+			}
+			
 			$data['content'] = $content;
+			
+			if (isset($data['parent'])) {
+				$parent = $data['parent'];
+				unset($data['parent']);
+				
+				if (!empty($parent)) {
+					$data['parentPageID'] = Page::getPageByIdentifier($parent)->pageID;
+				}
+			}
 		}
 		
 		return $data;
@@ -758,7 +780,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('identifier');
@@ -766,7 +788,7 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -777,9 +799,9 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
 		$data = $formData['data'];
 		
@@ -805,7 +827,6 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			$page,
 			[
 				'handler' => '',
-				'controllerCustomURL' => '',
 				'hasFixedParent' => 0,
 				'parent' => '',
 				'options' => '',

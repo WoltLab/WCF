@@ -7,8 +7,8 @@ use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
- * Template function plugin which script tags. File extension is automatically added
- * to the script source and MUST NOT be provided.
+ * Template function plugin which generates script tags. File extension is automatically
+ * added to the script source and MUST NOT be provided.
  * 
  * If ENABLE_DEBUG_MODE=0 then the extension is '.min.js', don't fail to provide it.
  * 
@@ -37,7 +37,7 @@ use wcf\util\StringUtil;
  *      http://example.com/wcf/js/WCF.Combined.tiny.min.js (ENABLE_DEBUG_MODE=0 && VISITOR_USE_TINY_BUILD=1)
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
  * @since	3.0

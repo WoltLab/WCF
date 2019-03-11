@@ -4,7 +4,7 @@
  * Message related classes for WCF
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Message = { };
@@ -19,76 +19,10 @@ WCF.Message.BBCode = { };
  */
 WCF.Message.BBCode.CodeViewer = Class.extend({
 	/**
-	 * dialog overlay
-	 * @var	jQuery
-	 */
-	_dialog: null,
-	
-	/**
-	 * Initializes the WCF.Message.BBCode.CodeViewer class.
+	 * @deprecated
 	 */
 	init: function() {
-		this._dialog = null;
 		
-		this._initCodeBoxes();
-		
-		WCF.DOMNodeInsertedHandler.addCallback('WCF.Message.BBCode.CodeViewer', $.proxy(this._initCodeBoxes, this));
-		WCF.DOMNodeInsertedHandler.execute();
-	},
-	
-	/**
-	 * Initializes available code boxes.
-	 */
-	_initCodeBoxes: function() {
-		$('.codeBox:not(.jsCodeViewer)').each($.proxy(function(index, codeBox) {
-			var $codeBox = $(codeBox).addClass('jsCodeViewer');
-			
-			$('<span class="codeBoxPlainSource icon icon24 fa-files-o pointer jsTooltip" title="' + WCF.Language.get('wcf.message.bbcode.code.copy') + '" />').appendTo($codeBox.find('.codeBoxHeader')).click($.proxy(this._click, this));
-		}, this));
-	},
-	
-	/**
-	 * Shows a code viewer for a specific code box.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		var $content = '';
-		$(event.currentTarget).parents('div').next('ol').children('li').each(function(index, listItem) {
-			if ($content) {
-				$content += "\n";
-			}
-			
-			// do *not* use $.trim here, as we want to preserve whitespaces, \xa0 = &nbsp;
-			$content += $(listItem).text().replace(/\n+$/, '').replace(/\u200B/g, '').replace(/\xa0/, ' ');
-		});
-		
-		if (this._dialog === null) {
-			this._dialog = $('<div><textarea cols="60" rows="12" readonly></textarea></div>').hide().appendTo(document.body);
-			this._dialog.children('textarea').val($content);
-			this._dialog.wcfDialog({
-				title: WCF.Language.get('wcf.message.bbcode.code.copy')
-			});
-		}
-		else {
-			this._dialog.children('textarea').val($content);
-			this._dialog.wcfDialog('open');
-		}
-		
-		var textarea = this._dialog.children('textarea')[0];
-		// force LTR for RTL languages
-		if (document.documentElement.dir === 'rtl') {
-			textarea.dir = 'ltr';
-			textarea.style.setProperty('text-align', 'left', '');
-		}
-		
-		var selectAll = function () {
-			textarea.selectionStart = 0;
-			textarea.selectionEnd = textarea.value.length;
-		};
-		
-		textarea.addEventListener('mouseup', selectAll);
-		window.setTimeout(selectAll, 10);
 	}
 });
 
@@ -1287,7 +1221,7 @@ if (COMPILER_TARGET_DEFAULT) {
 								$text += "\n";
 							}
 							break;
-						
+							
 						case 'P':
 							$text += "\n\n";
 							break;
@@ -1295,6 +1229,13 @@ if (COMPILER_TARGET_DEFAULT) {
 						// smilies
 						case 'IMG':
 							$text += " " + $node.alt + " ";
+							break;
+							
+						// Code listing
+						case 'DIV':
+							if ($node.classList.contains('codeBoxHeadline') || $node.classList.contains('codeBoxLine')) {
+								$text += "\n";
+							}
 							break;
 					}
 				}
@@ -2241,9 +2182,18 @@ WCF.Message.Share.Content = Class.extend({
 	_dialog: null,
 	
 	/**
-	 * Initializes the WCF.Message.Share.Content class.
+	 * template containing the social media share buttons
+	 * @var	string
 	 */
-	init: function() {
+	_shareButtonsTemplate: '',
+	
+	/**
+	 * Initializes the WCF.Message.Share.Content class.
+	 * 
+	 * @param	{string?}	shareButtonsTemplate
+	 */
+	init: function(shareButtonsTemplate) {
+		this._shareButtonsTemplate = shareButtonsTemplate || '';
 		this._cache = { };
 		this._dialog = null;
 		
@@ -2293,6 +2243,12 @@ WCF.Message.Share.Content = Class.extend({
 			// permalink (HTML)
 			var $section = $('<section class="section"><h2 class="sectionTitle"><label for="__sharePermalinkHTML">' + WCF.Language.get('wcf.message.share.permalink.html') + '</label></h2></section>').appendTo(this._dialog);
 			$('<input type="text" id="__sharePermalinkHTML" class="long" readonly />').attr('value', '<a href="' + $link + '">' + WCF.String.escapeHTML($title) + '</a>').appendTo($section);
+			
+			// share buttons
+			if (this._shareButtonsTemplate !== '') {
+				$section = $('<section class="section"><h2 class="sectionTitle">' + WCF.Language.get('wcf.message.share') + '</h2>'  + this._shareButtonsTemplate + '</section>').appendTo(this._dialog);
+				elData($section.children('.jsMessageShareButtons')[0], 'url', WCF.String.escapeHTML($link));
+			}
 			
 			this._cache[$key] = this._dialog.html();
 			
@@ -2412,7 +2368,6 @@ $.widget('wcf.messageTabMenu', {
 				
 				if ($name === undefined) {
 					$name = $tab.wcfIdentify();
-					console.debug("[wcf.messageTabMenu] Missing name attribute, assuming generic ID '" + $name + "'");
 				}
 			}
 			

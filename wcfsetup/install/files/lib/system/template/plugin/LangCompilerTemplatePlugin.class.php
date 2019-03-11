@@ -10,7 +10,7 @@ use wcf\system\template\TemplateScriptingCompiler;
  * 	{lang var=$x}foo{/lang}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
  */
@@ -39,7 +39,6 @@ class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 				?
 				wcf\system\WCF::getLanguage()->get(
 					ob_get_clean(),
-					\$this->tagStack[count(\$this->tagStack) - 1][1],
 					(
 						isset(\$this->tagStack[count(\$this->tagStack) - 1][1]['__optional'])
 						?

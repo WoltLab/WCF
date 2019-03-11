@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Parses urls and smilies in simple messages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  */
@@ -169,7 +169,7 @@ class SimpleMessageParser extends SingletonFactory {
 	 * @return	string
 	 */
 	protected function cacheURLsCallback($matches) {
-		$hash = '@@'.StringUtil::getHash(uniqid(microtime()).$matches[0]).'@@';
+		$hash = '@@'.StringUtil::getRandomID().'@@';
 		$this->cachedURLs[$hash] = $matches[0];
 		
 		return $hash;
@@ -182,7 +182,7 @@ class SimpleMessageParser extends SingletonFactory {
 	 * @return	string
 	 */
 	protected function cacheEmailsCallback($matches) {
-		$hash = '@@'.StringUtil::getHash(uniqid(microtime()).$matches[0]).'@@';
+		$hash = '@@'.StringUtil::getRandomID().'@@';
 		$this->cachedEmails[$hash] = $matches[0];
 		
 		return $hash;

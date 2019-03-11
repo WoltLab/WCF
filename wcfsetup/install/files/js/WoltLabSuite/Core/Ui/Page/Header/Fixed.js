@@ -2,7 +2,7 @@
  * Manages the sticky page header.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Header/Fixed
  */
@@ -95,6 +95,9 @@ define(['Core', 'EventHandler', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/SimpleDro
 			
 			_pageHeaderSearch.style.setProperty('top', _pageHeaderPanel.clientHeight + 'px', '');
 			_searchInput.focus();
+			window.setTimeout(function() {
+				_searchInput.selectionStart = _searchInput.selectionEnd = _searchInput.value.length;
+			}, 1);
 		},
 		
 		/**

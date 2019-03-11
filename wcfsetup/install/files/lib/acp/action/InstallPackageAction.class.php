@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Handles an AJAX-based package installation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Action
  */
@@ -89,27 +89,13 @@ class InstallPackageAction extends AbstractDialogAction {
 				$this->installation->completeSetup();
 				$this->finalize();
 				
-				// get domain path
-				$sql = "SELECT	*
-					FROM	wcf".WCF_N."_application
-					WHERE	packageID = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute([1]);
-				
-				/** @var Application $application */
-				$application = $statement->fetchObject(Application::class);
-				
-				// build redirect location
-				// do not use the LinkHandler here as it is sort of unreliable during WCFSetup
-				$location = $application->getPageURL() . 'acp/index.php?package-list/';
-				
 				WCF::resetZendOpcache();
 				
 				// show success
 				$this->data = [
 					'currentAction' => $this->getCurrentAction(null),
 					'progress' => 100,
-					'redirectLocation' => $location,
+					'redirectLocation' => $this->getRedirectLink(),
 					'step' => 'success'
 				];
 				return;
@@ -126,6 +112,35 @@ class InstallPackageAction extends AbstractDialogAction {
 				'queueID' => $queueID
 			];
 		}
+	}
+	
+	/**
+	 * Returns the link to the page to which the user is redirected after
+	 * the installation finished.
+	 * 
+	 * @return	string
+	 * @since	5.2
+	 */
+	protected function getRedirectLink() {
+		// get domain path
+		$sql = "SELECT	*
+			FROM	wcf".WCF_N."_application
+			WHERE	packageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([1]);
+		
+		/** @var Application $application */
+		$application = $statement->fetchObject(Application::class);
+		
+		$controller = 'package-list';
+		if (WCF::getSession()->getVar('__wcfSetup_completed')) {
+			$controller = 'first-time-setup';
+			
+			WCF::getSession()->unregister('__wcfSetup_completed');
+		}
+		
+		// Do not use the LinkHandler here as it is sort of unreliable during WCFSetup.
+		return $application->getPageURL() . "acp/index.php?{$controller}/";
 	}
 	
 	/**
@@ -159,9 +174,7 @@ class InstallPackageAction extends AbstractDialogAction {
 	}
 	
 	/**
-	 * Returns parameters required to perform a rollback.
-	 * 
-	 * @return	array
+	 * Sets the parameters required to perform a rollback.
 	 */
 	protected function stepRollback() {
 		$this->data = [
@@ -178,6 +191,7 @@ class InstallPackageAction extends AbstractDialogAction {
 			case 'install':
 			case 'prepare':
 			case 'rollback':
+				// valid steps
 			break;
 			
 			default:

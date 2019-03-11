@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Abstract implementation of a category type.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Category
  */
@@ -183,5 +183,13 @@ abstract class AbstractCategoryType extends SingletonFactory implements ICategor
 	 */
 	public function hasDescription() {
 		return $this->hasDescription;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	public function supportsHtmlDescription() {
+		return false;
 	}
 }

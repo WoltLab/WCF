@@ -3,6 +3,7 @@ namespace wcf\system\html\input\node;
 use wcf\data\bbcode\media\provider\BBCodeMediaProvider;
 use wcf\data\smiley\Smiley;
 use wcf\data\smiley\SmileyCache;
+use wcf\data\user\group\UserGroup;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\bbcode\HtmlBBCodeParser;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -14,7 +15,7 @@ use wcf\util\StringUtil;
  * Parses all text nodes searching for links, media, mentions or smilies.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Html\Input\Node
  * @since	3.0
@@ -174,9 +175,11 @@ class HtmlInputNodeTextParser {
 			$this->detectMention($node, $value, $usernames);
 		}
 		
-		$users = [];
+		$groups = $users = [];
 		if (!empty($usernames)) {
 			$users = $this->lookupUsernames($usernames);
+			$groups = $this->lookupGroups($usernames);
+			
 		}
 		
 		$allowEmail = BBCodeHandler::getInstance()->isAvailableBBCode('email');
@@ -188,8 +191,8 @@ class HtmlInputNodeTextParser {
 			$node = $nodes[$i];
 			$oldValue = $value = $node->textContent;
 			
-			if (!empty($users)) {
-				$value = $this->parseMention($node, $value, $users);
+			if (!empty($users) || !empty($groups)) {
+				$value = $this->parseMention($node, $value, $users, $groups);
 			}
 			
 			if ($allowURL || $allowMedia) {
@@ -306,35 +309,71 @@ class HtmlInputNodeTextParser {
 	}
 	
 	/**
+	 * @param string[] $usernames
+	 * @return UserGroup[]
+	 * @since 5.2
+	 */
+	protected function lookupGroups(array $usernames) {
+		/** @var UserGroup[] $availableUserGroups */
+		$availableUserGroups = [];
+		foreach (UserGroup::getMentionableGroups() as $group) {
+			$availableUserGroups[] = $group;
+		}
+		
+		if (empty($availableUserGroups)) {
+			return [];
+		}
+		
+		// Sorting the usernames by length allows for more precise matches.
+		usort($usernames, function ($usernameA, $usernameB) {
+			return mb_strlen($usernameA) - mb_strlen($usernameB);
+		});
+		
+		$groups = [];
+		foreach ($usernames as $username) {
+			foreach ($availableUserGroups as $group) {
+				if (strcasecmp($group->getName(), $username) === 0) {
+					$groups[$group->groupID] = $group->getName();
+					
+					continue 2;
+				}
+			}
+		}
+		
+		return$groups;
+	}
+	
+	/**
 	 * Parses text nodes and searches for mentions.
 	 * 
 	 * @param       \DOMText        $text           text node
 	 * @param       string          $value          node value
 	 * @param       string[]        $users          list of usernames by user id
+	 * @param       string[]        $groups         list of group names by group id
 	 * @return      string          modified node value with replacement placeholders
 	 */
-	protected function parseMention(\DOMText $text, $value, array $users) {
+	protected function parseMention(\DOMText $text, $value, array $users, array $groups) {
 		if (mb_strpos($value, '@') === false) {
 			return $value;
 		}
 		
-		foreach ($users as $userID => $username) {
+		$replaceMatch = function($objectID, $objectTitle, $bbcodeTagName) use ($text, &$value) {
 			$offset = 0;
 			do {
-				$needle = '@' . $username;
+				$needle = '@' . $objectTitle;
 				$pos = mb_stripos($value, $needle, $offset);
 				
 				// username not found, maybe it is quoted
 				if ($pos === false) {
-					$needle = "@'" . str_ireplace("'", "''", $username) . "'";
+					$needle = "@'" . str_ireplace("'", "''", $objectTitle) . "'";
 					$pos = mb_stripos($value, $needle, $offset);
 				}
 				
 				if ($pos !== false) {
 					$element = $text->ownerDocument->createElement('woltlab-metacode');
-					$element->setAttribute('data-name', 'user');
-					$element->setAttribute('data-attributes', base64_encode(JSON::encode([$userID])));
-					$element->appendChild($text->ownerDocument->createTextNode($username));
+					$element->setAttribute('data-name', $bbcodeTagName);
+					$element->setAttribute('data-attributes', base64_encode(JSON::encode([$objectID])));
+					$element->appendChild($text->ownerDocument->createTextNode($objectTitle));
 					
 					$marker = $this->addReplacement($text, $element);
 					
@@ -347,6 +386,14 @@ class HtmlInputNodeTextParser {
 				}
 			}
 			while ($pos);
+		};
+		
+		foreach ($users as $userID => $username) {
+			$replaceMatch($userID, $username, 'user');
+		}
+		
+		foreach ($groups as $groupID => $name) {
+			$replaceMatch($groupID, $name, 'group');
 		}
 		
 		return $value;

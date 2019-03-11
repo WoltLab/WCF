@@ -11,7 +11,7 @@
 {include file='formError'}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
+	<p class="success" role="status">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
 
 <form method="post" action="{link controller='NotificationSettings'}{/link}" id="notificationSettings">

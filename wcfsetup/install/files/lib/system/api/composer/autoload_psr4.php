@@ -8,5 +8,7 @@ $baseDir = $vendorDir;
 return array(
     'TrueBV\\' => array($vendorDir . '/true/punycode/src'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
-    'Pelago\\' => array($vendorDir . '/pelago/emogrifier/Classes'),
+    'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
+    'Pelago\\' => array($vendorDir . '/pelago/emogrifier/src'),
+    'Leafo\\ScssPhp\\' => array($vendorDir . '/leafo/scssphp/src'),
 );

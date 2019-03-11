@@ -19,13 +19,14 @@ use wcf\util\XML;
  * interface for an xml-based package installation plugin.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Devtools\Pip
- * @since	3.2
+ * @since	5.2
  * 
  * @property	PackageInstallationDispatcher|DevtoolsPackageInstallationDispatcher	$installation
  * @mixin	AbstractXMLPackageInstallationPlugin
+ * @mixin	IGuiPackageInstallationPlugin
  */
 trait TXmlGuiPackageInstallationPlugin {
 	/**
@@ -39,6 +40,26 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @var	null|string
 	 */
 	protected $entryType;
+	
+	/**
+	 * Adds a delete element to the xml file based on the given installation
+	 * element.
+	 * 
+	 * @param	\DOMElement	$element	installation element
+	 */
+	protected function addDeleteElement(\DOMElement $element) {
+		$document = $element->ownerDocument;
+		
+		$data = $document->getElementsByTagName('data')->item(0);
+		$delete = $data->getElementsByTagName('delete')->item(0);
+		
+		if ($delete === null) {
+			$delete = $document->createElement('delete');
+			$data->appendChild($delete);
+		}
+		
+		$delete->appendChild($document->importNode($this->prepareDeleteXmlElement($element)));
+	}
 	
 	/**
 	 * Adds a new entry of this pip based on the data provided by the given
@@ -127,20 +148,20 @@ trait TXmlGuiPackageInstallationPlugin {
 	 * @param	IFormDocument		$form
 	 * @return	\DOMElement
 	 */
-	abstract protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form);
+	abstract protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form);
 	
 	/**
 	 * Creates a new XML element for the given document using the data provided
 	 * by the given form and return the new dom element.
 	 * 
-	 * This method internally calls `doCreateXmlElement()` and fires an event.
+	 * This method internally calls `prepareXmlElement()` and fires an event.
 	 *
 	 * @param	\DOMDocument		$document
 	 * @param	IFormDocument		$form
 	 * @return	\DOMElement
 	 */
 	protected function createXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$xmlElement = $this->doCreateXmlElement($document, $form);
+		$xmlElement = $this->prepareXmlElement($document, $form);
 		
 		$data = [
 			'document' => $document,
@@ -148,13 +169,106 @@ trait TXmlGuiPackageInstallationPlugin {
 			'form' => $form
 		];
 		
-		EventHandler::getInstance()->fireAction($this, 'didDoCreateXmlElement', $data);
+		EventHandler::getInstance()->fireAction($this, 'didPrepareXmlElement', $data);
 		
 		if (!($data['element'] instanceof \DOMElement)) {
 			throw new \UnexpectedValueException('XML element is no "\DOMElement" object anymore.');
 		}
 		
 		return $data['element'];
+	}
+	
+	/**
+	 * Deletes the entry of this pip with the given identifier and, based
+	 * on the value of `$addDeleteInstruction`, adds a delete instruction.
+	 * 
+	 * @param	string		$identifier
+	 * @param	boolean		$addDeleteInstruction
+	 */
+	public function deleteEntry($identifier, $addDeleteInstruction) {
+		$xml = $this->getProjectXml();
+		
+		$element = $this->getElementByIdentifier($xml, $identifier);
+		
+		if ($element === null) {
+			throw new \InvalidArgumentException("Unknown entry with identifier '{$identifier}'.");
+		}
+		
+		if (!$this->supportsDeleteInstruction() && $addDeleteInstruction) {
+			throw new \InvalidArgumentException("This package installation plugin does not support delete instructions.");
+		}
+		
+		$this->deleteObject($element);
+		
+		if ($addDeleteInstruction) {
+			$this->addDeleteElement($element);
+		}
+		
+		$document = $element->ownerDocument;
+		
+		DOMUtil::removeNode($element);
+		
+		/** @var DevtoolsProject $project */
+		$project = $this->installation->getProject();
+		
+		$deleteFile = $this->sanitizeXmlFileAfterDeleteEntry($document);
+		
+		if ($deleteFile) {
+			unlink($this->getXmlFileLocation($project));
+		}
+		else {
+			$xml->write($this->getXmlFileLocation($project));
+		}
+		
+		if (is_subclass_of($this->className, IEditableCachedObject::class)) {
+			call_user_func([$this->className, 'resetCache']);
+		}
+	}
+	
+	/**
+	 * Sanitizes the given document after an entry has been deleted by removing
+	 * empty parent elements and returns `true` if the xml file should be deleted
+	 * because there is no content left.
+	 * 
+	 * @param	\DOMDocument	$document	sanitized document
+	 * @return	boolean
+	 */
+	protected function sanitizeXmlFileAfterDeleteEntry(\DOMDocument $document) {
+		$data = $document->getElementsByTagName('data')->item(0);
+		$import = $data->getElementsByTagName('import')->item(0);
+		
+		// remove empty import node
+		if ($import->childNodes->length === 0) {
+			DOMUtil::removeNode($import);
+			
+			// delete file if empty
+			if ($data->childNodes->length === 0) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	/**
+	 * Deletes the given element from database.
+	 * 
+	 * @param	\DOMElement	$element
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$name = $element->getAttribute('name');
+		if ($name !== '') {
+			$this->handleDelete([['attributes' => ['name' => $name]]]);
+		}
+		else {
+			$identifier = $element->getAttribute('identifier');
+			if ($identifier !== '') {
+				$this->handleDelete([['attributes' => ['identifier' => $identifier]]]);
+			}
+			else {
+				throw new \LogicException("Cannot delete object using the default implementations.");
+			}
+		}
 	}
 	
 	/**
@@ -422,6 +536,36 @@ XML;
 	}
 	
 	/**
+	 * Returns a delete xml element based on the given import element.
+	 * 
+	 * @param	\DOMElement	$element
+	 * @return	\DOMElement
+	 */
+	protected function prepareDeleteXmlElement(\DOMElement $element) {
+		if (!$this->supportsDeleteInstruction()) {
+			throw new \BadMethodCallException("Cannot prepare delete xml element if delete instructions are not supported.");
+		}
+		
+		$name = $element->getAttribute('name');
+		if ($name !== '') {
+			$element = $element->ownerDocument->createElement($this->tagName);
+			$element->setAttribute('name', $name);
+		}
+		else {
+			$identifier = $element->getAttribute('identifier');
+			if ($identifier !== '') {
+				$element = $element->ownerDocument->createElement($this->tagName);
+				$element->setAttribute('identifier', $identifier);
+			}
+			else {
+				throw new \LogicException("Cannot prepare delete xml element using the default implementations.");
+			}
+		}
+		
+		return $element;
+	}
+	
+	/**
 	 * Saves an object represented by an XML element in the database by either
 	 * creating a new element (if `$oldElement = null`) or updating an existing
 	 * element.
@@ -541,5 +685,15 @@ XML;
 		}
 		
 		$this->entryType = $entryType;
+	}
+	
+	/**
+	 * Returns `true` if this package installation plugin supports delete
+	 * instructions.
+	 * 
+	 * @return	boolean
+	 */
+	public function supportsDeleteInstruction() {
+		return true;
 	}
 }

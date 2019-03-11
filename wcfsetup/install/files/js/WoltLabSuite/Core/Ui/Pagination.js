@@ -2,7 +2,7 @@
  * Callback-based pagination.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Pagination
  */
@@ -65,6 +65,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
 				link.className = iconClassNames + ' jsTooltip';
 				link.href = '#';
 				link.title = Language.get('wcf.global.page.previous');
+				link.rel = 'prev';
 				listItem.appendChild(link);
 				
 				link.addEventListener(WCF_CLICK_EVENT, this.switchPage.bind(this, this._options.activePage - 1));
@@ -163,6 +164,7 @@ define(['Core', 'Language', 'ObjectMap', 'StringUtil', 'WoltLabSuite/Core/Ui/Pag
 				link.className = iconClassNames + ' jsTooltip';
 				link.href = '#';
 				link.title = Language.get('wcf.global.page.next');
+				link.rel = 'next';
 				listItem.appendChild(link);
 				
 				link.addEventListener(WCF_CLICK_EVENT, this.switchPage.bind(this, this._options.activePage + 1));

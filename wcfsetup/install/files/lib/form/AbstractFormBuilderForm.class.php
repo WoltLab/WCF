@@ -14,10 +14,10 @@ use wcf\system\WCF;
  * Abstract implementation of a form using the form builder API.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
- * @since	3.2
+ * @since	5.2
  */
 abstract class AbstractFormBuilderForm extends AbstractForm {
 	/**
@@ -41,7 +41,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	
 	/**
 	 * name of the object action performing the form action
-	 * if not set, `$formAction` is sued
+	 * if not set, `$formAction` is used
 	 * @var	null|string
 	 */
 	public $objectActionName;
@@ -110,7 +110,9 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	 */
 	public function readData() {
 		if ($this->formObject !== null) {
-			$this->form->loadValuesFromObject($this->formObject);
+			if (empty($_POST)) {
+				$this->setFormObjectData();
+			}
 		}
 		else if ($this->formAction === 'edit') {
 			throw new \UnexpectedValueException("Missing form object to update.");
@@ -136,33 +138,50 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
+		$action = $this->formAction;
+		if ($this->objectActionName) {
+			$action = $this->objectActionName;
+		}
+		else if ($this->formAction === 'edit') {
+			$action = 'update';
+		}
+		
+		$formData = $this->form->getData();
+		if (!isset($formData['data'])) $formData['data'] = [];
+		$formData['data'] = array_merge($this->additionalFields, $formData['data']);
+		
 		/** @var AbstractDatabaseObjectAction objectAction */
 		$this->objectAction = new $this->objectActionClass(
 			array_filter([$this->formObject]),
-			$this->objectActionName ?: $this->formAction,
-			$this->form->getData()
+			$action,
+			$formData
 		);
 		$this->objectAction->executeAction();
 		
 		$this->saved();
 		
+		WCF::getTPL()->assign('success', true);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function saved() {
+		parent::saved();
+		
 		// re-build form after having created a new object
 		if ($this->formAction === 'create') {
+			$this->form->cleanup();
+			
 			$this->buildForm();
 		}
-		
-		WCF::getTPL()->assign('success', true);
 	}
 	
 	/**
 	 * Sets the action of the form.
 	 */
 	protected function setFormAction() {
-		$classNamePieces = explode('\\', get_class($this));
-		$application = $classNamePieces[0];
-		$controller = preg_replace('~Form$~', '', end($classNamePieces));
-		
-		$parameters = ['application' => $application];
+		$parameters = [];
 		if ($this->formObject !== null) {
 			if ($this->formObject instanceof IRouteController) {
 				$parameters['object'] = $this->formObject;
@@ -174,7 +193,14 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 			}
 		}
 		
-		$this->form->action(LinkHandler::getInstance()->getLink($controller, $parameters));
+		$this->form->action(LinkHandler::getInstance()->getControllerLink(static::class, $parameters));
+	}
+	
+	/**
+	 * Sets the form data based on the current form object.
+	 */
+	protected function setFormObjectData() {
+		$this->form->loadValuesFromObject($this->formObject);
 	}
 	
 	/**
@@ -183,7 +209,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	public function show() {
 		$this->buildForm();
 		
-		return parent::show();
+		parent::show();
 	}
 	
 	/**

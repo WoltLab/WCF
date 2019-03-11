@@ -27,6 +27,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\package\PackageArchive;
 use wcf\system\WCF;
 use wcf\util\DOMUtil;
+use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 use wcf\util\XML;
 
@@ -34,7 +35,7 @@ use wcf\util\XML;
  * Installs, updates and deletes languages, their categories and items.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -295,6 +296,13 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	}
 	
 	/**
+	 * @inheritDoc
+	 */
+	protected function postImport() {
+		LanguageFactory::getInstance()->deleteLanguageCache();
+	}
+	
+	/**
 	 * @see	\wcf\system\package\plugin\IPackageInstallationPlugin::getDefaultFilename()
 	 * @since	3.0
 	 */
@@ -318,7 +326,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		/** @var FormContainer $dataContainer */
@@ -466,17 +474,17 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		]);
 		
 		// add one field per language
-		foreach ($this->getProjectXmls() as $xml) {
-			$languageCode = $xml->getDocument()->documentElement->getAttribute('languagecode');
-			$languageName = $xml->getDocument()->documentElement->getAttribute('languagename');
-			
-			if ($dataContainer->getNodeById($languageCode) !== null) {
-				throw new \LogicException("Duplicate language file with language code '{$languageCode}'.");
+		foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+			$description = null;
+			$descriptionLanguageItem = 'wcf.acp.pip.language.languageItemValue.' . $language->languageCode . '.description';
+			if (WCF::getLanguage()->get($descriptionLanguageItem, true) !== '') {
+				$description = $descriptionLanguageItem;
 			}
 			
 			$dataContainer->appendChild(
-				MultilineTextFormField::create($languageCode)
-					->label($languageName)
+				MultilineTextFormField::create($language->languageCode)
+					->label($language->languageName)
+					->description($description)
 			);
 		}
 		
@@ -498,7 +506,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -543,7 +551,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
@@ -601,7 +609,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @sicne	3.2
+	 * @since	5.2
 	 */
 	protected function getImportElements(\DOMXPath $xpath) {
 		return $xpath->query('/ns:language/ns:category/ns:item');
@@ -609,7 +617,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @sicne	3.2
+	 * @since	5.2
 	 */
 	protected function getEmptyXml($languageCode) {
 		$xsdFilename = $this->getXsdFilename();
@@ -628,25 +636,43 @@ XML;
 	
 	/**
 	 * Returns the xml objects for this pip.
-	 *
+	 * 
+	 * @param	boolean		$createXmlFiles		if `true` and if a relevant XML file does not exist, it is created
 	 * @return	XML[]
 	 */
-	protected function getProjectXmls() {
+	protected function getProjectXmls($createXmlFiles = false) {
 		$xmls = [];
 		
-		foreach ($this->installation->getProject()->getLanguageFiles() as $languageFile) {
-			$xml = new XML();
-			if (!file_exists($languageFile)) {
-				$xml->loadXML($languageFile, $this->getEmptyXml(substr(basename($languageFile), 0, -4)));
-			}
-			else {
-				$xml->load($languageFile);
+		if ($createXmlFiles) {
+			$directory = $this->installation->getProject()->path . ($this->installation->getProject()->isCore() ? 'wcfsetup/install/lang/' : 'language/');
+			if (!is_dir($directory)) {
+				FileUtil::makePath($directory);
 			}
 			
-			// only consider installed languages
-			$languageCode = $xml->getDocument()->documentElement->getAttribute('languagecode');
-			if (LanguageFactory::getInstance()->getLanguageByCode($languageCode) !== null) {
+			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+				$languageFile = $directory . $language->languageCode . '.xml';
+				
+				$xml = new XML();
+				if (!file_exists($languageFile)) {
+					$xml->loadXML($languageFile, $this->getEmptyXml(substr(basename($languageFile), 0, -4)));
+				}
+				else {
+					$xml->load($languageFile);
+				}
+				
 				$xmls[] = $xml;
+			}
+		}
+		else {
+			foreach ($this->installation->getProject()->getLanguageFiles() as $languageFile) {
+				$xml = new XML();
+				$xml->load($languageFile);
+				
+				// only consider installed languages
+				$languageCode = $xml->getDocument()->documentElement->getAttribute('languagecode');
+				if (LanguageFactory::getInstance()->getLanguageByCode($languageCode) !== null) {
+					$xmls[] = $xml;
+				}
 			}
 		}
 		
@@ -655,7 +681,7 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function saveObject(\DOMElement $newElement, \DOMElement $oldElement = null) {
 		$newElementData = $this->getElementData($newElement, true);
@@ -705,7 +731,7 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$keys = [
@@ -722,9 +748,9 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$languageCode = $document->documentElement->getAttribute('languagecode');
@@ -792,7 +818,7 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function createAndInsertNewXmlElement(XML $xml, IFormDocument $form) {
 		return $this->createXmlElement($xml->getDocument(), $form);
@@ -800,21 +826,61 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function replaceXmlElement(XML $xml, IFormDocument $form, $identifier) {
 		$newElement = $this->createXmlElement($xml->getDocument(), $form);
 		
 		// replace old element
 		$element = $this->getElementByIdentifier($xml, $identifier);
-		
-		if ($element->parentNode === $newElement->parentNode) {
-			DOMUtil::replaceElement($element, $newElement, false);
-		}
-		else {
-			DOMUtil::removeNode($element);
+		if ($element !== null) {
+			if ($element->parentNode === $newElement->parentNode) {
+				DOMUtil::replaceElement($element, $newElement, false);
+			}
+			else {
+				DOMUtil::removeNode($element);
+			}
 		}
 		
 		return $newElement;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$sql = "DELETE FROM	wcf" . WCF_N . "_language_item
+			WHERE		languageItem = ?
+					AND packageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$element->getAttribute('name'),
+			$this->installation->getPackageID()
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	public function supportsDeleteInstruction() {
+		return false;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function sanitizeXmlFileAfterDeleteEntry(\DOMDocument $document) {
+		$language = $document->getElementsByTagName('language')->item(0);
+		
+		foreach (DOMUtil::getElements($language, 'category') as $category) {
+			if ($category->childNodes->length === 0) {
+				DOMUtil::removeNode($category);
+			}
+		}
+		
+		return $language->childNodes->length === 0;
 	}
 }

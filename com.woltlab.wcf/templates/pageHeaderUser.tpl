@@ -221,7 +221,7 @@
 													
 													{if GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== ''}
 														<li id="googleAuth" class="thirdPartyLogin">
-															<a href="{link controller='GoogleAuth'}{/link}" class="button thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
+															<a href="{link controller='GoogleAuth'}{/link}" class="button thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
 														</li>
 													{/if}
 													
@@ -277,8 +277,15 @@
 		{/if}
 		
 		<!-- page search -->
-		<li class="jsOnly">
-			<a href="#" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
-		</li>
+		{if !SEARCH_USE_CAPTCHA || $__wcf->user->userID}
+			<li class="jsOnly">
+				<a href="#" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
+			</li>
+		{else}
+			<li>
+				<a href="{link controller='Search'}{/link}" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
+				<span id="userPanelSearchButton" style="display: none"></span>
+			</li>
+		{/if}
 	</ul>
 </nav>

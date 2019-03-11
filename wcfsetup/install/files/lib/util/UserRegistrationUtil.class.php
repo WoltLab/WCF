@@ -5,7 +5,7 @@ namespace wcf\util;
  * Contains user registration related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -142,7 +142,7 @@ final class UserRegistrationUtil {
 	 * @return	string
 	 */
 	public static function getRandomFieldName($fieldName) {
-		$hash = StringUtil::getHash($fieldName . StringUtil::getRandomID());
+		$hash = StringUtil::getRandomID();
 		return substr($hash, 0, mt_rand(8, 16));
 	}
 }

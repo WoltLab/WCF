@@ -8,12 +8,14 @@ use wcf\system\language\LanguageFactory;
  * Implementation of a form field for single-line text values.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
-class TextFormField extends AbstractFormField implements II18nFormField, IMaximumLengthFormField, IMinimumLengthFormField, IPlaceholderFormField {
+class TextFormField extends AbstractFormField implements IAutoFocusFormField, II18nFormField, IImmutableFormField, IMaximumLengthFormField, IMinimumLengthFormField, IPlaceholderFormField {
+	use TAutoFocusFormField;
+	use TImmutableFormField;
 	use TI18nFormField {
 		validate as protected i18nValidate;
 	}
@@ -33,13 +35,15 @@ class TextFormField extends AbstractFormField implements II18nFormField, IMaximu
 		if ($this->isI18n()) {
 			$this->i18nValidate();
 			
-			$value = $this->getValue();
-			if ($this->hasPlainValue()) {
-				$this->validateText($value);
-			}
-			else {
-				foreach ($value as $languageID => $languageValue) {
-					$this->validateText($languageValue, LanguageFactory::getInstance()->getLanguage($languageID));
+			if (empty($this->getValidationErrors())) {
+				$value = $this->getValue();
+				if ($this->hasPlainValue()) {
+					$this->validateText($value);
+				}
+				else {
+					foreach ($value as $languageID => $languageValue) {
+						$this->validateText($languageValue, LanguageFactory::getInstance()->getLanguage($languageID));
+					}
 				}
 			}
 		}

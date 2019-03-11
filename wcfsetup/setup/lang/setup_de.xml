@@ -30,6 +30,8 @@
 		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[Die derzeitige Konfiguration der Skriptsprache „PHP“ macht das Hochladen von Dateien unmöglich. Einige Funktionalitäten werden durch diese Konfiguration nur eingeschränkt funktionieren.]]></item>
 		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[Installierte Version der Grafikbearbeitungs-Bibliothek „gdlib“]]></item>
 		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[Grafikbearbeitungs-Bibliothek „gdlib“ ist für die Verarbeitung und dynamische Generierung von Bildern zuständig.]]></item>
+		<item name="wcf.global.systemRequirements.imagick"><![CDATA[Installierte Version der Grafikbearbeitungs-Bibliothek „ImageMagick“]]></item>
+		<item name="wcf.global.systemRequirements.imagick.description"><![CDATA[Grafikbearbeitungs-Bibliothek „ImageMagick“ ist für die Verarbeitung und dynamische Generierung von Bildern zuständig. Unterstützt zusätzlich die Skalierung von animierten GIF-Dateien.]]></item>
 		<item name="wcf.global.systemRequirements.gdLib.notFound"><![CDATA[nicht gefunden]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[aktiviert]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[nicht aktiviert]]></item>

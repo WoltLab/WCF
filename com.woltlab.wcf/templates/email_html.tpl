@@ -1,7 +1,7 @@
 <html>
 	<head>
 		<style type="text/css">
-		* {
+		*:not(html):not(head):not(meta):not(br) {
 			font-family: {@$style->getVariable('wcfFontFamilyFallback', true)};
 			font-size: {$style->getVariable('wcfFontSizeDefault')};
 		}
@@ -132,6 +132,11 @@
 
 		.containerHeadline h3 a {
 			font-size: {$style->getVariable('wcfFontSizeHeadline')};
+		}
+		
+		.userAvatarImage {
+			background-color: #fff;
+			border-radius: 50%;
 		}
 		</style>
 	</head>

@@ -6,10 +6,10 @@ use wcf\system\form\builder\field\IFormField;
  * Validates the value of a form field.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Validation
- * @since	3.2
+ * @since	5.2
  */
 class FormFieldValidator implements IFormFieldValidator {
 	/**

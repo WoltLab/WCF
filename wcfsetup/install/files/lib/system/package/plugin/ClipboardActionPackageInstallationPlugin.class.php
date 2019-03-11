@@ -22,7 +22,7 @@ use wcf\system\WCF;
  * Installs, updates and deletes clipboard actions.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */
@@ -177,7 +177,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		/** @var FormContainer $dataContainer */
@@ -233,7 +233,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 			
 			IntegerFormField::create('showOrder')
 				->objectProperty('showorder')
-				->label('wcf.acp.pip.clipboardAction.showOrder')
+				->label('wcf.form.field.showOrder')
 				->description('wcf.acp.pip.clipboardAction.showOrder.description')
 				->nullable(),
 			
@@ -247,7 +247,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -282,7 +282,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return sha1(
@@ -293,7 +293,7 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -304,9 +304,9 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
 		$data = $formData['data'];
 		
@@ -330,5 +330,34 @@ class ClipboardActionPackageInstallationPlugin extends AbstractXMLPackageInstall
 		}
 		
 		return $clipboardAction;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function prepareDeleteXmlElement(\DOMElement $element) {
+		$clipboardAction = $element->ownerDocument->createElement($this->tagName);
+		$clipboardAction->setAttribute('name', $element->getAttribute('name'));
+		
+		$clipboardAction->appendChild($element->ownerDocument->createElement(
+			'actionclassname',
+			$element->getElementsByTagName('actionclassname')->item(0)->nodeValue
+		));
+		
+		return $clipboardAction;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$actionClassName = $element->getElementsByTagName('actionclassname')->item(0)->nodeValue;
+		
+		$this->handleDelete([[
+			'attributes' => ['name' => $element->getAttribute('name')],
+			'elements' => ['actionclassname' => $actionClassName]
+		]]);
 	}
 }

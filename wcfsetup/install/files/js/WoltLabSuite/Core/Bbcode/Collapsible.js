@@ -2,7 +2,7 @@
  * Generic handler for collapsible bbcode boxes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Bbcode/Collapsible
  */
@@ -57,6 +57,11 @@ define([], function() {
 						if (container.scrollTop !== 0) {
 							toggle();
 						}
+						container.addEventListener('scroll', function () {
+							if (container.classList.contains('collapsed')) {
+								toggle();
+							}
+						});
 					})(container, toggleButton);
 				}
 				

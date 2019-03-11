@@ -2,7 +2,7 @@
  * Provides a link to scroll to top once the page is scrolled by at least 50% the height of the window.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/JumpToTop
  */
@@ -30,6 +30,7 @@ define(['Environment', 'Language', './Action'], function(Environment, Language, 
 			button.className = 'jsTooltip';
 			button.href = '#';
 			elAttr(button, 'title', Language.get('wcf.global.scrollUp'));
+			elAttr(button, 'role', 'button');
 			button.innerHTML = '<span class="icon icon32 fa-angle-up"></span>';
 			
 			button.addEventListener(WCF_CLICK_EVENT, this._jump.bind(this));

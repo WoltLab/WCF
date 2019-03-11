@@ -48,10 +48,10 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-define('WCF_VERSION', '3.1.6 pl 1');
+define('WCF_VERSION', '5.2.0 Alpha 1');
 
 // define current API version
-define('WSC_API_VERSION', 2018);
+define('WSC_API_VERSION', 2019);
 
 // define current unix timestamp
 define('TIME_NOW', time());
@@ -67,7 +67,7 @@ if (!defined('NO_IMPORTS')) {
  * It holds the database connection, access to template and language engine.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
@@ -76,7 +76,7 @@ class WCF {
 	 * list of supported legacy API versions
 	 * @var integer[]
 	 */
-	private static $supportedLegacyApiVersions = [2017];
+	private static $supportedLegacyApiVersions = [2017, 2018];
 	
 	/**
 	 * list of currently loaded applications
@@ -355,7 +355,7 @@ class WCF {
 	 * Loads the options file, automatically created if not exists.
 	 */
 	protected function loadOptions() {
-		// the attachment module is always enabled since 3.2
+		// the attachment module is always enabled since 5.2
 		// https://github.com/WoltLab/WCF/issues/2531
 		define('MODULE_ATTACHMENT', 1);
 		

@@ -6,7 +6,7 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\TextFormField;
@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes smilies.
  * 
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */
@@ -104,7 +104,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		/** @var FormContainer $dataContainer */
@@ -195,7 +195,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 			
 			IntegerFormField::create('showOrder')
 				->objectProperty('showorder')
-				->label('wcf.acp.pip.smiley.showOrder')
+				->label('wcf.form.field.showOrder')
 				->description('wcf.acp.pip.smiley.showOrder.description')
 				->nullable(),
 			
@@ -225,7 +225,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -265,7 +265,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
@@ -273,7 +273,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -284,9 +284,9 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$smiley = $document->createElement($this->tagName);

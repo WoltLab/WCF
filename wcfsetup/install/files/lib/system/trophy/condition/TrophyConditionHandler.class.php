@@ -12,7 +12,7 @@ use wcf\system\SingletonFactory;
  * Handles trophy conditions. 
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Trophy\Condition
  * @since	3.1
@@ -89,6 +89,7 @@ class TrophyConditionHandler extends SingletonFactory {
 	 * Revoke user trophies which are not longer fulfills the conditions. 
 	 * 
 	 * @param 	integer		$maxRevokes
+	 * @since       5.2
 	 */
 	public function revokeTrophies($maxRevokes = 500) {
 		$trophyList = new TrophyList();
@@ -114,6 +115,7 @@ class TrophyConditionHandler extends SingletonFactory {
 	 *
 	 * @param	Trophy		$trophy
 	 * @return	integer[]
+	 * @since       5.2
 	 */
 	private function getUserIDs(Trophy $trophy) {
 		$userList = new UserList();
@@ -136,6 +138,7 @@ class TrophyConditionHandler extends SingletonFactory {
 	 * 
 	 * @param       Trophy          $trophy
 	 * @return      integer[]
+	 * @since       5.2
 	 */
 	private function getRevocableUserTrophyIDs(Trophy $trophy, $maxTrophyIDs) {
 		// Unfortunately, the condition system does not support negated conditions. 

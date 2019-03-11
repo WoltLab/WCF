@@ -4,13 +4,13 @@ use wcf\data\comment\Comment;
 use wcf\data\like\object\LikeObject;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\manager\ICommentManager;
-use wcf\system\like\LikeHandler;
+use wcf\system\reaction\ReactionHandler;
 
 /**
  * Provides a structured comment response list.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Comment\Response
  *
@@ -94,9 +94,9 @@ class StructuredCommentResponseList extends CommentResponseList {
 	public function getLikeData() {
 		if (empty($this->objectIDs)) return [];
 		
-		$objectType = LikeHandler::getInstance()->getObjectType('com.woltlab.wcf.comment.response');
-		LikeHandler::getInstance()->loadLikeObjects($objectType, $this->objectIDs);
-		$likeData = ['response' => LikeHandler::getInstance()->getLikeObjects($objectType)];
+		$objectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment.response');
+		ReactionHandler::getInstance()->loadLikeObjects($objectType, $this->objectIDs);
+		$likeData = ['response' => ReactionHandler::getInstance()->getLikeObjects($objectType)];
 		
 		return $likeData;
 	}

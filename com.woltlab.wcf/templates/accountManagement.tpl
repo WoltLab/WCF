@@ -4,10 +4,10 @@
 
 {include file='formError'}
 
-<p class="warning">{lang}wcf.user.accountManagement.warning{/lang}</p>
+<p class="warning" role="status">{lang}wcf.user.accountManagement.warning{/lang}</p>
 
 {if $success|isset && $success|count > 0}
-	<div class="success">
+	<div class="success" role="status">
 		{foreach from=$success item=successMessage}
 			<p>{lang}{@$successMessage}{/lang}</p>
 		{/foreach}
@@ -233,7 +233,7 @@
 								{if $__wcf->getSession()->getVar('__googleData')}
 									<label><input type="checkbox" name="googleConnect" value="1"{if $googleConnect} checked{/if}> {lang}wcf.user.3rdparty.google.connect{/lang}</label>
 								{else}
-									<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.connect{/lang}</span></a>
+									<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google"></span> <span>{lang}wcf.user.3rdparty.google.connect{/lang}</span></a>
 								{/if}
 							</dd>
 						</dl>

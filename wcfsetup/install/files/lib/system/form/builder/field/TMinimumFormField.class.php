@@ -5,17 +5,17 @@ namespace wcf\system\form\builder\field;
  * Provides default implementations of `IMinimumFormField` methods.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
 trait TMinimumFormField {
 	/**
 	 * minimum of the field value
 	 * @var	null|int
 	 */
-	protected $__minimum;
+	protected $minimum;
 	
 	/**
 	 * Returns the minimum of the values of this field or `null` if no minimum
@@ -24,7 +24,7 @@ trait TMinimumFormField {
 	 * @return	null|number
 	 */
 	public function getMinimum() {
-		return $this->__minimum;
+		return $this->minimum;
 	}
 	
 	/**
@@ -50,7 +50,7 @@ trait TMinimumFormField {
 			}
 		}
 		
-		$this->__minimum = $minimum;
+		$this->minimum = $minimum;
 		
 		return $this;
 	}

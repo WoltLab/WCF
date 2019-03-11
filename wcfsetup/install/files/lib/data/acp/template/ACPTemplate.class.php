@@ -7,7 +7,7 @@ use wcf\data\DatabaseObject;
  * Represents an ACP template.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Acp\Template
  *
@@ -26,7 +26,7 @@ class ACPTemplate extends DatabaseObject {
 	 * Returns the path to this template.
 	 * 
 	 * @return	string
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getPath() {
 		return PackageCache::getInstance()->getPackage($this->packageID)->getAbsolutePackageDir() . 'acp/templates/' . $this->templateName . '.tpl';
@@ -36,7 +36,7 @@ class ACPTemplate extends DatabaseObject {
 	 * Returns the source of this template.
 	 * 
 	 * @return	string
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getSource() {
 		return @file_get_contents($this->getPath());

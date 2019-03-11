@@ -8,6 +8,7 @@ php:
 - 7.0
 - 7.1
 - 7.2
+- 7.3
 
 cache:
   directories:
@@ -16,35 +17,49 @@ cache:
 
 env:
   matrix:
-  - DEPENDENCIES=latest
-  - DEPENDENCIES=oldest
+  - DEPENDENCIES_PREFERENCE="--prefer-lowest"
+  - DEPENDENCIES_PREFERENCE=""
+
+before_install:
+- phpenv config-rm xdebug.ini || echo "xdebug not available"
 
 install:
 - >
+  export IGNORE_PLATFORM_REQS="$(composer php:version |grep -q '^7.3' && printf -- --ignore-platform-reqs)";
   echo;
-  if [ "$DEPENDENCIES" = "latest" ]; then
-    echo "Installing the latest dependencies";
-    composer update --with-dependencies --prefer-stable --prefer-dist
-  else
-    echo "Installing the lowest dependencies";
-    composer update --with-dependencies --prefer-stable --prefer-dist --prefer-lowest
-  fi;
+  echo "Updating the dependencies";
+  composer update $IGNORE_PLATFORM_REQS --with-dependencies $DEPENDENCIES_PREFERENCE;
   composer show;
 
-before_script:
-  - |
-    if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
-      phpenv config-rm xdebug.ini
-    else
-      echo "xdebug.ini does not exist"
-    fi
-  - vendor/bin/phpcs --config-set encoding utf-8
-  - if [ "$GITHUB_COMPOSER_AUTH" ]; then composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH; fi
-
 script:
-  # Run PHP lint on all PHP files.
-  - find Classes/ Tests/ -name '*.php' -print0 | xargs -0 -n 1 -P 4 php -l
-  # Check the coding style.
-  - vendor/bin/phpcs --standard=Configuration/PhpCodeSniffer/Standards/Emogrifier/ Classes/ Tests/
-  # Run the unit tests.
-  - vendor/bin/phpunit Tests/
+- >
+  echo;
+  echo "Validating the composer.json";
+  composer validate --no-check-all --no-check-lock --strict;
+
+- >
+  echo;
+  echo "Linting all PHP files";
+  composer ci:php:lint;
+
+- >
+  echo;
+  echo "Running the unit tests";
+  composer ci:tests:unit;
+
+- >
+  echo;
+  echo "Running PHPMD";
+  composer ci:php:md;
+
+- >
+  echo;
+  function version_gte() { test "$(printf '%s\n' "$@" | sort -n -t. -r | head -n 1)" = "$1"; };
+  if version_gte $(composer php:version) 7; then
+    echo "Installing slevomat/coding-standard only for PHP 7.x";
+    composer require $IGNORE_PLATFORM_REQS --dev slevomat/coding-standard:^4.0 $DEPENDENCIES_PREFERENCE;
+    echo "Running PHP_CodeSniffer";
+    composer ci:php:sniff;
+  else
+    echo "Skipped PHP_CodeSniffer due to insufficient PHP version: $(composer php:version)";
+  fi;

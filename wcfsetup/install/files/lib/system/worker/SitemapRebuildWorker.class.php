@@ -19,12 +19,12 @@ use wcf\util\MessageUtil;
  * Worker implementation for rebuilding all sitemaps.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Worker
  * @since	3.1
  */
-class SitemapRebuildWorker extends AbstractWorker {
+class SitemapRebuildWorker extends AbstractRebuildDataWorker {
 	/**
 	 * The limit of objects in one sitemap file.
 	 */
@@ -57,12 +57,21 @@ class SitemapRebuildWorker extends AbstractWorker {
 	 * The user profile of the actual user.
 	 * @var User
 	 */
-	private $actualUser; 
+	private $actualUser;
 	
 	/**
 	 * @inheritDoc
 	 */
-	protected function countObjects() {
+	public function initObjectList() {
+		// This rebuild worker has no database object list
+		// therefore we do nothing in this method an overwrite
+		// the parent method, that it does not throw an exception.
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function countObjects() {
 		// changes session owner to 'System' during the building of sitemaps
 		$this->changeUserToGuest();
 		

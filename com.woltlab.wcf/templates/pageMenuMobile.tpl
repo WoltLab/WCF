@@ -5,9 +5,10 @@
 		
 		<li class="menuOverlayTitle">{lang}wcf.menu.page.navigation{/lang}</li>
 		{foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.MainMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
-			<li class="menuOverlayItem">
+			{* Does not use `data-identifier` to prevent compatibility issues. See https://github.com/WoltLab/WCF/pull/2813 *}
+			<li class="menuOverlayItem" data-mobile-identifier="{@$menuItemNode->identifier}">
 				{assign var=__outstandingItems value=$menuItemNode->getOutstandingItems()}
-				<a href="{$menuItemNode->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}{if $menuItemNode->isActiveNode()} active{/if}">
+				<a href="{$menuItemNode->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}{if $menuItemNode->isActiveNode()} active{/if}"{if $menuItemNode->isExternalLink() && EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>
 					<span class="menuOverlayItemTitle">{lang}{$menuItemNode->title}{/lang}</span>
 					{if $__outstandingItems}
 						<span class="badge badgeUpdate">{#$__outstandingItems}</span>
@@ -27,15 +28,7 @@
 				<span class="menuOverlayItemTitle">{lang}wcf.global.search{/lang}</span>
 			</a>
 		</li>
-		<li class="menuOverlayItem" id="pageMainMenuMobilePageOptionsContainer">
-			<a href="#" class="menuOverlayItemLink box24">
-				<span class="icon icon24 fa-gears"></span>
-				<span class="menuOverlayItemTitle">{lang}wcf.menu.page.options{/lang}</span>
-			</a>
-			<ol class="menuOverlayItemList">
-				<li class="menuOverlayItem jsMenuOverlayItemPlaceholder"><a href="#">(placeholder)</a></li>
-			</ol>
-		</li>
+		<li class="menuOverlayTitle" id="pageMainMenuMobilePageOptionsTitle">{lang}wcf.menu.page.options{/lang}</li>
 		
 		{event name='menuItems'}
 		

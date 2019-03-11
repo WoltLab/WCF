@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * Shows the group edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -21,7 +21,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.group';
+	public $activeMenuItem = 'wcf.acp.menu.link.group.list';
 	
 	/**
 	 * @inheritDoc
@@ -39,6 +39,11 @@ class UserGroupEditForm extends UserGroupAddForm {
 	 * @var	UserGroupEditor
 	 */
 	public $group;
+	
+	/**
+	 * @var bool
+	 */
+	public $isUnmentionableGroup = false;
 	
 	/**
 	 * @inheritDoc
@@ -62,6 +67,8 @@ class UserGroupEditForm extends UserGroupAddForm {
 		$this->optionHandler->setUserGroup($group);
 		/** @noinspection PhpUndefinedMethodInspection */
 		$this->optionHandler->init();
+		
+		$this->isUnmentionableGroup = $this->group->isUnmentionableGroup();
 	}
 	
 	/**
@@ -70,6 +77,17 @@ class UserGroupEditForm extends UserGroupAddForm {
 	protected function initOptionHandler() {
 		// does nothing, we call OptionHandler::init() after we set the
 		// user group
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validate() {
+		parent::validate();
+		
+		if ($this->allowMention && $this->isUnmentionableGroup) {
+			$this->allowMention = false;
+		}
 	}
 	
 	/**
@@ -84,6 +102,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 			$this->priority = $this->group->priority;
 			$this->userOnlineMarking = $this->group->userOnlineMarking;
 			$this->showOnTeamPage = $this->group->showOnTeamPage;
+			$this->allowMention = $this->group->allowMention;
 		}
 		
 		parent::readData();
@@ -104,7 +123,8 @@ class UserGroupEditForm extends UserGroupAddForm {
 			'availableUserGroups' => UserGroup::getAccessibleGroups(),
 			'groupIsEveryone' => $this->group->groupType == UserGroup::EVERYONE,
 			'groupIsGuest' => $this->group->groupType == UserGroup::GUESTS,
-			'groupIsUsers' => $this->group->groupType == UserGroup::USERS
+			'groupIsUsers' => $this->group->groupType == UserGroup::USERS,
+			'isUnmentionableGroup' => $this->isUnmentionableGroup ? 1 : 0,
 		]);
 		
 		// add warning when the initiator is in the group
@@ -149,7 +169,8 @@ class UserGroupEditForm extends UserGroupAddForm {
 				'groupDescription' => $this->groupDescription,
 				'priority' => $this->priority,
 				'userOnlineMarking' => $this->userOnlineMarking,
-				'showOnTeamPage' => $this->showOnTeamPage
+				'showOnTeamPage' => $this->showOnTeamPage,
+				'allowMention' => $this->allowMention,
 			]),
 			'options' => $optionValues
 		]);

@@ -2,7 +2,7 @@
  * Provides helper functions for String handling.
  * 
  * @author	Tim Duesterhus, Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/StringUtil
  */
@@ -101,7 +101,7 @@ define(['Language', './NumberUtil'], function(Language, NumberUtil) {
 		},
 		
 		/**
-		 * Shortens numbers larger than 1000 by using unit prefixes.
+		 * Shortens numbers larger than 1000 by using unit suffixes.
 		 *
 		 * @param	{?}		number
 		 * @return	{String}

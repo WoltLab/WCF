@@ -45,7 +45,7 @@ use wcf\util\StringUtil;
  * PackageInstallationDispatcher handles the whole installation process.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */
@@ -242,12 +242,16 @@ class PackageInstallationDispatcher {
 							'exception_privacy'
 						]);
 						$statement->execute([
-							'debug',
+							'debugFolder',
 							'mail_send_method'
 						]);
 						$statement->execute([
 							1,
 							'enable_developer_tools'
+						]);
+						$statement->execute([
+							1,
+							'log_missing_language_items'
 						]);
 						
 						foreach (DevtoolsSetup::getInstance()->getOptionOverrides() as $optionName => $optionValue) {
@@ -284,8 +288,17 @@ class PackageInstallationDispatcher {
 						}
 					}
 					
+					if (WCF::getSession()->getVar('__wcfSetup_imagick')) {
+						$statement->execute([
+							'imagick',
+							'image_adapter_type',
+						]);
+					}
+					
 					// update options.inc.php
 					OptionEditor::resetCache();
+					
+					WCF::getSession()->register('__wcfSetup_completed', true);
 				}
 				
 				// rebuild application paths
@@ -420,6 +433,9 @@ class PackageInstallationDispatcher {
 		}
 		unset($nodeData['requirements']);
 		
+		$applicationDirectory = $nodeData['applicationDirectory'];
+		unset($nodeData['applicationDirectory']);
+		
 		// update package
 		if ($this->queue->packageID) {
 			$packageEditor = new PackageEditor(new Package($this->queue->packageID));
@@ -446,7 +462,7 @@ class PackageInstallationDispatcher {
 		}
 		else {
 			// create package entry
-			$package = PackageEditor::create($nodeData);
+			$package = $this->createPackage($nodeData);
 			
 			// update package id for current queue
 			$queueEditor = new PackageInstallationQueueEditor($this->queue);
@@ -521,7 +537,7 @@ class PackageInstallationDispatcher {
 		
 		if ($this->getPackage()->isApplication && $this->getPackage()->package != 'com.woltlab.wcf' && $this->getAction() == 'install') {
 			if (empty($this->getPackage()->packageDir)) {
-				$document = $this->promptPackageDir();
+				$document = $this->promptPackageDir($applicationDirectory);
 				if ($document !== null && $document instanceof FormDocument) {
 					$installationStep->setDocument($document);
 				}
@@ -531,6 +547,17 @@ class PackageInstallationDispatcher {
 		}
 		
 		return $installationStep;
+	}
+	
+	/**
+	 * Creates a new package based on the given data and returns it.
+	 * 
+	 * @param	array	$packageData
+	 * @return	Package
+	 * @since	5.2
+	 */
+	protected function createPackage(array $packageData) {
+		return PackageEditor::create($packageData);
 	}
 	
 	/**
@@ -775,9 +802,10 @@ class PackageInstallationDispatcher {
 	/**
 	 * Prompts for a text input for package directory (applies for applications only)
 	 * 
+	 * @param       string          $applicationDirectory
 	 * @return	FormDocument
 	 */
-	protected function promptPackageDir() {
+	protected function promptPackageDir($applicationDirectory) {
 		// check for pre-defined directories originating from WCFSetup
 		$directory = WCF::getSession()->getVar('__wcfSetup_directories');
 		if ($directory !== null) {
@@ -817,7 +845,10 @@ class PackageInstallationDispatcher {
 			if ($isParent === false) {
 				$defaultPath = dirname(WCF_DIR);
 			}
-			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($defaultPath)) . Package::getAbbreviation($this->getPackage()->package) . '/';
+			if (!$applicationDirectory) {
+				$applicationDirectory = Package::getAbbreviation($this->getPackage()->package);
+			}
+			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($defaultPath)) . $applicationDirectory . '/';
 			
 			$packageDir->setValue($defaultPath);
 			$container->appendChild($packageDir);

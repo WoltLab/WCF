@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Processes HTML nodes and handles bbcodes.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Input\Node
  * @since       3.0

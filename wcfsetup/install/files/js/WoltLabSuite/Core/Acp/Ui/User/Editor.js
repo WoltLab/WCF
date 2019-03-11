@@ -2,7 +2,7 @@
  * User editing capabilities for the user list.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/User/Editor
  * @since       3.1
@@ -19,6 +19,8 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown', 'WoltLa
 		 */
 		init: function () {
 			elBySelAll('.jsUserRow', undefined, this._initUser.bind(this));
+			
+			EventHandler.add('com.woltlab.wcf.acp.user', 'refresh', this._refreshUsers.bind(this));
 		},
 		
 		/**
@@ -144,6 +146,39 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown', 'WoltLa
 					hasItem = true;
 				}
 			}
+		},
+		
+		_refreshUsers: function (data) {
+			elBySelAll('.jsUserRow', undefined, function(userRow) {
+				var userId = parseInt(elData(userRow, 'object-id'));
+				if (data.userIds.indexOf(userId) !== -1) {
+					var userStatusIcons = elBySel('.userStatusIcons', userRow);
+					
+					var banned = elDataBool(userRow, 'banned');
+					var iconBanned = elBySel('.jsUserStatusBanned', userRow);
+					if (banned && iconBanned === null) {
+						iconBanned = elCreate('span');
+						iconBanned.className = 'icon icon16 fa-lock jsUserStatusBanned jsTooltip';
+						iconBanned.title = Language.get('wcf.user.status.banned');
+						userStatusIcons.insertBefore(iconBanned, null);
+					}
+					else if (!banned && iconBanned !== null) {
+						elRemove(iconBanned);
+					}
+					
+					var isDisabled = elDataBool(userRow, 'enabled') === false;
+					var iconIsDisabled = elBySel('.jsUserStatusIsDisabled', userRow);
+					if (isDisabled && iconIsDisabled === null) {
+						iconIsDisabled = elCreate('span');
+						iconIsDisabled.className = 'icon icon16 fa-power-off jsUserStatusIsDisabled jsTooltip';
+						iconIsDisabled.title = Language.get('wcf.user.status.isDisabled');
+						userStatusIcons.appendChild(iconIsDisabled);
+					}
+					else if (!isDisabled && iconIsDisabled !== null) {
+						elRemove(iconIsDisabled);
+					}
+				}
+			})
 		}
 	};
 });

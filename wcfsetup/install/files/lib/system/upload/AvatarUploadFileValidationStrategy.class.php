@@ -7,7 +7,7 @@ use wcf\system\exception\SystemException;
  * Validation strategy for avatar uploads.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Upload
  */
@@ -27,6 +27,10 @@ class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStra
 			}
 		}
 		catch (SystemException $e) {
+			if (ENABLE_DEBUG_MODE) {
+				throw $e;
+			}
+			
 			$uploadFile->setValidationErrorType('badImage');
 			return false;
 		}

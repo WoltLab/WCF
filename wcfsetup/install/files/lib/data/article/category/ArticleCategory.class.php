@@ -19,7 +19,7 @@ use wcf\system\WCF;
  * Represents an article category.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article\Category
  * @since	3.0
@@ -135,9 +135,10 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 	/**
 	 * Returns the label groups for all accessible categories.
 	 *
+	 * @param	string	        $permission
 	 * @return	ViewableLabelGroup[]
 	 */
-	public static function getAccessibleLabelGroups() {
+	public static function getAccessibleLabelGroups($permission = 'canSetLabel') {
 		$labelGroupsToCategories = ArticleCategoryLabelCacheBuilder::getInstance()->getData();
 		$accessibleCategoryIDs = self::getAccessibleCategoryIDs();
 		
@@ -149,14 +150,14 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 		}
 		if (empty($groupIDs)) return [];
 		
-		return LabelHandler::getInstance()->getLabelGroups(array_unique($groupIDs));
+		return LabelHandler::getInstance()->getLabelGroups(array_unique($groupIDs), true, $permission);
 	}
 	
 	/**
 	 * Returns true if the active user has subscribed to this category.
 	 *
 	 * @return	boolean
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function isSubscribed() {
 		return in_array($this->categoryID, self::getSubscribedCategoryIDs());
@@ -166,7 +167,7 @@ class ArticleCategory extends AbstractDecoratedCategory implements IAccessibleOb
 	 * Returns the list of subscribed categories.
 	 *
 	 * @return	integer[]
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public static function getSubscribedCategoryIDs() {
 		if (self::$subscribedCategories === null) {

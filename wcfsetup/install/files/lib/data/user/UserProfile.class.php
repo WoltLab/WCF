@@ -30,7 +30,7 @@ use wcf\util\StringUtil;
  * Decorates the user object and provides functions to retrieve data for user profiles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
  * 
@@ -472,6 +472,68 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	}
 	
 	/**
+	 * Prepares the special trophies for the given user ids.
+	 * 
+	 * @param       int[]           $userIDs
+	 * @since       5.2
+	 */
+	public static function prepareSpecialTrophies(array $userIDs) {
+		UserProfileRuntimeCache::getInstance()->cacheObjectIDs($userIDs);
+		UserStorageHandler::getInstance()->loadStorage($userIDs);
+		$storageData = UserStorageHandler::getInstance()->getStorage($userIDs, 'specialTrophies');
+		
+		$rebuildUserIDs = $deleteSpecialTrophyIDs = [];
+		foreach ($storageData as $userID => $datum) {
+			if ($datum === null) {
+				$rebuildUserIDs[] = $userID;
+			}
+			else {
+				$specialTrophies = unserialize($datum);
+				
+				// check if the user has the permission to store these number of trophies,
+				// otherwise, delete the last trophies
+				if (count($specialTrophies) > UserProfileRuntimeCache::getInstance()->getObject($userID)->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
+					$deleteSpecialTrophyIDs[$userID] = [];
+					while (count($specialTrophies) > UserProfileRuntimeCache::getInstance()->getObject($userID)->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
+						$deleteSpecialTrophyIDs[$userID] = array_pop($specialTrophies);
+					}
+					
+					UserStorageHandler::getInstance()->update($userID, 'specialTrophies', serialize($specialTrophies));
+				}
+			}
+		}
+		
+		if (!empty($rebuildUserIDs)) {
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('userID IN (?)', [$rebuildUserIDs]);
+			
+			$sql = "SELECT userID, trophyID FROM wcf".WCF_N."_user_special_trophy ".$conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			
+			$data = array_combine($rebuildUserIDs, array_fill(0, count($rebuildUserIDs), []));
+			while ($row = $statement->fetchArray()) {
+				$data[$row['userID']][] = $row['trophyID'];
+			}
+			
+			foreach ($data as $userID => $trophyIDs) {
+				UserStorageHandler::getInstance()->update($userID, 'specialTrophies', serialize($trophyIDs));
+			}
+		}
+		
+		if (!empty($deleteSpecialTrophyIDs)) {
+			$conditionBuilder = new PreparedStatementConditionBuilder(true, 'OR');
+			foreach ($deleteSpecialTrophyIDs as $userID => $trophyIDs) {
+				$conditionBuilder->add('(userID = ? AND trophyID IN (?))', [$userID, $trophyIDs]);
+			}
+			
+			$sql = "DELETE FROM wcf".WCF_N."_user_special_trophy ".$conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+		}
+	}
+	
+	/**
 	 * Returns the last activity time.
 	 * 
 	 * @return	integer
@@ -639,8 +701,10 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	integer
 	 */
 	public function getAge($year = null) {
+		$showYear = $this->birthdayShowYear || WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions');
+		
 		if ($year !== null) {
-			if ($this->birthdayShowYear) {
+			if ($showYear) {
 				$birthdayYear = 0;
 				$value = explode('-', $this->birthday);
 				if (isset($value[0])) $birthdayYear = intval($value[0]);
@@ -653,7 +717,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 		}
 		else {
 			if ($this->__age === null) {
-				if ($this->birthday && $this->birthdayShowYear) {
+				if ($this->birthday && $showYear) {
 					$this->__age = DateUtil::getAge($this->birthday);
 				}
 				else {
@@ -681,13 +745,15 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 		
 		if (!$month || !$day) return '';
 		
+		$showYear = $this->birthdayShowYear || WCF::getSession()->getPermission('admin.general.canViewPrivateUserOptions');
+		
 		$d = new \DateTime();
 		$d->setTimezone(WCF::getUser()->getTimeZone());
 		$d->setDate($birthdayYear, $month, $day);
-		$dateFormat = (($this->birthdayShowYear && $birthdayYear) ? WCF::getLanguage()->get(DateUtil::DATE_FORMAT) : str_replace('Y', '', WCF::getLanguage()->get(DateUtil::DATE_FORMAT)));
+		$dateFormat = (($showYear && $birthdayYear) ? WCF::getLanguage()->get(DateUtil::DATE_FORMAT) : str_replace('Y', '', WCF::getLanguage()->get(DateUtil::DATE_FORMAT)));
 		$birthday = DateUtil::localizeDate($d->format($dateFormat), $dateFormat, WCF::getLanguage());
 		
-		if ($this->birthdayShowYear) {
+		if ($showYear) {
 			$age = $this->getAge($year);
 			if ($age > 0) {
 				$birthday .= ' ('.$age.')';
@@ -815,7 +881,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	boolean
 	 */
 	public function canEditOwnProfile() {
-		return ($this->activationCode ? false : true);
+		if ($this->activationCode || !$this->getPermission('user.profile.canEditUserProfile')) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	/**

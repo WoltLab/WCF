@@ -1,28 +1,33 @@
 <?php
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\util\DateUtil;
 
 /**
  * Implementation of a form field for to select a FontAwesome icon.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
-class DateFormField extends AbstractFormField {
+class DateFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField, INullableFormField {
+	use TAutoFocusFormField;
+	use TImmutableFormField;
+	use TNullableFormField;
+	
 	/**
 	 * date time format of the save value
 	 * @var	string
 	 */
-	protected $__saveValueFormat = null;
+	protected $saveValueFormat = null;
 	
 	/**
 	 * is `true` if not only the date, but also the time can be set
 	 * @var	bool
 	 */
-	protected $__supportsTime = false;
+	protected $supportsTime = false;
 	
 	/**
 	 * @inheritDoc
@@ -37,11 +42,11 @@ class DateFormField extends AbstractFormField {
 	 * @return	string
 	 */
 	public function getSaveValueFormat() {
-		if ($this->__saveValueFormat === null) {
-			$this->__saveValueFormat = 'U';
+		if ($this->saveValueFormat === null) {
+			$this->saveValueFormat = 'U';
 		}
 		
-		return $this->__saveValueFormat;
+		return $this->saveValueFormat;
 	}
 	
 	/**
@@ -70,7 +75,12 @@ class DateFormField extends AbstractFormField {
 	 */
 	public function getSaveValue() {
 		if ($this->getValue() === null) {
-			return null;
+			if ($this->isNullable()) {
+				return null;
+			}
+			else {
+				return DateUtil::getDateTimeByTimestamp(0)->format($this->getSaveValueFormat());
+			}
 		}
 		
 		return $this->getValueDateTimeObject()->format($this->getSaveValueFormat());
@@ -81,10 +91,10 @@ class DateFormField extends AbstractFormField {
 	 */
 	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId()) && is_string($this->getDocument()->getRequestData($this->getPrefixedId()))) {
-			$this->__value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			$this->value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
-			if ($this->__value === '') {
-				$this->__value = null;
+			if ($this->value === '') {
+				$this->value = null;
 			}
 		}
 		
@@ -98,7 +108,7 @@ class DateFormField extends AbstractFormField {
 	 * @return	static
 	 */
 	public function saveValueFormat($saveValueFormat) {
-		if ($this->__saveValueFormat !== null) {
+		if ($this->saveValueFormat !== null) {
 			throw new \BadMethodCallException("Save value type has already been set.");
 		}
 		
@@ -109,7 +119,7 @@ class DateFormField extends AbstractFormField {
 			throw new \InvalidArgumentException("Invalid date time format '{$saveValueFormat}'.", 0, $e);
 		}
 		
-		$this->__saveValueFormat = $saveValueFormat;
+		$this->saveValueFormat = $saveValueFormat;
 		
 		return $this;
 	}
@@ -121,7 +131,7 @@ class DateFormField extends AbstractFormField {
 	 * @return	static		thsi field
 	 */
 	public function supportTime($supportsTime = true) {
-		$this->__supportsTime = $supportsTime;
+		$this->supportsTime = $supportsTime;
 		
 		return $this;
 	}
@@ -133,7 +143,7 @@ class DateFormField extends AbstractFormField {
 	 * @return	bool
 	 */
 	public function supportsTime() {
-		return $this->__supportsTime;
+		return $this->supportsTime;
 	}
 	
 	/**
@@ -153,5 +163,26 @@ class DateFormField extends AbstractFormField {
 				));
 			}
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function value($value) {
+		parent::value($value);
+		
+		$dateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->getValue());
+		if ($dateTime === false) {
+			throw new \InvalidArgumentException("Given value does not match format '{$this->getSaveValueFormat()}'.");
+		}
+		
+		if ($this->supportsTime()) {
+			parent::value($dateTime->format('Y-m-d\TH:i:sP'));
+		}
+		else {
+			parent::value($dateTime->format('Y-m-d'));
+		}
+		
+		return $this;
 	}
 }

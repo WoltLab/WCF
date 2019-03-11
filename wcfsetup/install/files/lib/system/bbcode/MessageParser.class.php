@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Parses bbcode tags, smilies etc. in messages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  */
@@ -168,7 +168,7 @@ class MessageParser extends BBCodeParser {
 	 */
 	protected function cacheCodesCallback($matches) {
 		// create hash
-		$hash = '@@'.StringUtil::getHash(uniqid(microtime()).$matches[3]).'@@';
+		$hash = '@@'.StringUtil::getRandomID().'@@';
 		
 		// build tag
 		$tag = $this->buildTag($matches[1]);

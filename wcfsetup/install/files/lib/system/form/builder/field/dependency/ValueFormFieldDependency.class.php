@@ -6,10 +6,10 @@ use wcf\data\DatabaseObjectList;
  * Represents a dependency that requires that requires a field to have a certain value.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Dependency
- * @since	3.2
+ * @since	5.2
  */
 class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	/**
@@ -17,13 +17,13 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	 * `false`
 	 * @var	bool
 	 */
-	protected $__isNegated = false;
+	protected $negate = false;
 	
 	/**
 	 * possible values the field may have for the dependency to be met
 	 * @var	null|array
 	 */
-	protected $__values;
+	protected $values;
 	
 	/**
 	 * @inheritDoc
@@ -51,11 +51,11 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	 * @throws	\BadMethodCallException		if no values have been set
 	 */
 	public function getValues() {
-		if ($this->__values === null) {
+		if ($this->values === null) {
 			throw new \BadMethodCallException("Values have not been set for dependency '{$this->getId()}' on node '{$this->getDependentNode()->getId()}'.");
 		}
 		
-		return $this->__values;
+		return $this->values;
 	}
 	
 	/**
@@ -65,7 +65,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	 * @return	bool
 	 */
 	public function isNegated() {
-		return $this->__isNegated;
+		return $this->negate;
 	}
 	
 	/**
@@ -75,7 +75,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	 * @return	static		$this		this dependency
 	 */
 	public function negate($negate = true) {
-		$this->__isNegated = $negate;
+		$this->negate = $negate;
 		
 		return $this;
 	}
@@ -129,7 +129,7 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 			}
 		}
 		
-		$this->__values = $values;
+		$this->values = $values;
 		
 		return $this;
 	}

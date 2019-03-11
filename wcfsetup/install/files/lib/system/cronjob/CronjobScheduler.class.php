@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * Provides functions to execute cronjobs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob
  */
@@ -137,6 +137,7 @@ class CronjobScheduler extends SingletonFactory {
 				$data['state'] = Cronjob::READY;
 				
 				switch ($cronjob->state) {
+					/** @noinspection PhpMissingBreakStatementInspection */
 					case Cronjob::EXECUTING:
 						// The cronjob spent two periods in the EXECUTING state.
 						// We must assume it crashed.

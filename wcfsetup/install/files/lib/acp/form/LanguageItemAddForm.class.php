@@ -5,8 +5,8 @@ use wcf\data\language\item\LanguageItemAction;
 use wcf\data\language\item\LanguageItemList;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
-use wcf\system\form\builder\field\data\VoidFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\VoidFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
@@ -21,10 +21,10 @@ use wcf\system\language\LanguageFactory;
  * Shows the form to create a new language item.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
- * @since	3.2
+ * @since	5.2
  */
 class LanguageItemAddForm extends AbstractFormBuilderForm {
 	/**
@@ -202,7 +202,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm {
 			})
 		);
 		
-		/** @var RadioButtonFormField $languageItemCategoryID */
+		/** @var RadioButtonFormField $modeField */
 		$modeField = $dataContainer->getNodeById('languageCategoryIDMode');
 		
 		$dataContainer->getNodeById('languageCategoryID')->addDependency(

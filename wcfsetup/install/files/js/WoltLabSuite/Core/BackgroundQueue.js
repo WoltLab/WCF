@@ -2,7 +2,7 @@
  * Manages the invocation of the background queue.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/BackgroundQueue
  */
@@ -37,7 +37,6 @@ define(['Ajax'], function(Ajax) {
 			
 			if (_isBusy) return;
 			
-			_invocations = 0;
 			_isBusy = true;
 			
 			Ajax.api(this);
@@ -48,10 +47,14 @@ define(['Ajax'], function(Ajax) {
 			
 			// invoke the queue up to 5 times in a row
 			if (data > 0 && _invocations < 5) {
-				window.setTimeout(this.invoke.bind(this), 1000);
+				window.setTimeout(function () {
+					_isBusy = false;
+					this.invoke();
+				}.bind(this), 1000);
 			}
 			else {
 				_isBusy = false;
+				_invocations = 0;
 			}
 		},
 		

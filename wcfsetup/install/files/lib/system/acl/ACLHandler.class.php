@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * Handles ACL permissions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Acl
  */
@@ -45,7 +45,7 @@ class ACLHandler extends SingletonFactory {
 	 * explicitly read acl values grouped by object type id
 	 * @var		array
 	 * @see		ACLHandler::readValues()
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected $__readValues = [];
 	
@@ -133,7 +133,7 @@ class ACLHandler extends SingletonFactory {
 	 * using form builder, you do not need this method.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function readValues($objectTypeID) {
 		$this->__readValues[$objectTypeID] = [];
@@ -166,7 +166,7 @@ class ACLHandler extends SingletonFactory {
 	 * using form builder, you do not need this method.
 	 * 
 	 * @param	integer		$objectTypeID
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function resetValues($objectTypeID) {
 		$this->__readValues[$objectTypeID] = null;

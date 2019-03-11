@@ -4,7 +4,8 @@ requirejs.config({
 		enquire: '3rdParty/enquire',
 		favico: '3rdParty/favico',
 		'perfect-scrollbar': '3rdParty/perfect-scrollbar',
-		'Pica': '3rdParty/pica'
+		'Pica': '3rdParty/pica',
+		prism: '3rdParty/prism',
 	},
 	shim: {
 		enquire: { exports: 'enquire' },

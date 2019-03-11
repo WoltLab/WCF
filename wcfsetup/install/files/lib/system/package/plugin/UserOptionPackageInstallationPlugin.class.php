@@ -12,7 +12,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
-use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
@@ -30,7 +30,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes user options.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -193,7 +193,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		parent::addFormFields($form);
@@ -333,7 +333,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = parent::fetchElementData($element, $saveData);
@@ -382,7 +382,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function getSortOptionHandler() {
 		// reuse UserGroupOptionHandler
@@ -415,10 +415,10 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$option = parent::doCreateXmlElement($document, $form);
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
+		$option = parent::prepareXmlElement($document, $form);
 		
 		switch ($this->entryType) {
 			case 'options':

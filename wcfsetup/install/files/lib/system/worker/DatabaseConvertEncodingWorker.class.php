@@ -7,15 +7,24 @@ use wcf\system\WCF;
  * Worker implementation for database table encoding conversion.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Worker
  */
-class DatabaseConvertEncodingWorker extends AbstractWorker {
+class DatabaseConvertEncodingWorker extends AbstractRebuildDataWorker {
 	/**
 	 * @inheritDoc
 	 */
 	protected $limit = 1;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function initObjectList() {
+		// This rebuild worker has no database object list
+		// therefore we do nothing in this method an overwrite
+		// the parent method, that it does not throw an exception.
+	}
 	
 	/**
 	 * @inheritDoc

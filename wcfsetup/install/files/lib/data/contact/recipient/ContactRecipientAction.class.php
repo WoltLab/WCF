@@ -3,6 +3,7 @@ namespace wcf\data\contact\recipient;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -11,7 +12,7 @@ use wcf\system\WCF;
  * Executes contact recipient related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Contact\Recipient
  * @since	3.1
@@ -20,6 +21,8 @@ use wcf\system\WCF;
  * @method	ContactRecipientEditor		getSingleObject()
  */
 class ContactRecipientAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -43,7 +46,7 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ISo
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete', 'update'];
+	protected $requireACP = ['create', 'delete', 'toggle', 'update', 'updatePosition'];
 	
 	/**
 	 * @inheritDoc
@@ -68,17 +71,6 @@ class ContactRecipientAction extends AbstractDatabaseObjectAction implements ISo
 			if ($object->isAdministrator) {
 				throw new PermissionDeniedException();
 			}
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $object) {
-			$object->update([
-				'isDisabled' => $object->isDisabled ? 0 : 1
-			]);
 		}
 	}
 	

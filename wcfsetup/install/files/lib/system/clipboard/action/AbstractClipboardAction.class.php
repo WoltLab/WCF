@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Abstract implementation of a clipboard action handler.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Clipboard\Action
  */
@@ -30,7 +30,7 @@ abstract class AbstractClipboardAction implements IClipboardAction {
 	/**
 	 * list of action names that should trigger a page reload once they have been executed
 	 * @var string[]
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	protected $reloadPageOnSuccess = [];
 	

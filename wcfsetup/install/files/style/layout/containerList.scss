@@ -307,6 +307,38 @@
     }
 }
 
+.containerListDisplayOptions {
+	align-items: center;
+	border-bottom: 2px solid currentColor;
+	color: $wcfTabularBoxHeadline;
+	display: flex;
+}
+
+.containerListSortOptions,
+.containerListActiveFilters,
+.containerListFilterOptions {
+	padding: 5px 10px;
+}
+
+@include screen-sm-down {
+	.containerListActiveFilters {
+		display: none;
+	}
+}
+
+.containerListSortOptions {
+	flex: 1 auto;
+	
+	> .dropdown {
+		margin-left: 10px;
+	}
+}
+
+.containerListActiveFilters,
+.containerListFilterOptions {
+	flex: 0 auto;
+}
+
 @include screen-md-up {
     .flexibleCategoryList:not(.flexibleCategoryListDisabled) {
         /* WebKit */

@@ -20,7 +20,7 @@ use wcf\system\WCF;
  * Represents a page.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Page
  * @since	3.0
@@ -36,7 +36,7 @@ use wcf\system\WCF;
  * @property-read	integer		$originIsSystem		        is `1` if the page has been delivered by a package, otherwise `0` (i.e. the page has been created in the ACP)
  * @property-read	integer		$packageID		        id of the package the which delivers the page or `1` if it has been created in the ACP
  * @property-read	integer		$applicationPackageID	        id of the package of the application the pages belongs to
- * @property-read	integer		overrideApplicationPackageID	id of the package of the application that the page virtually belongs to
+ * @property-read	integer		$overrideApplicationPackageID	id of the package of the application that the page virtually belongs to
  * @property-read	string		$controller		        name of the page controller class
  * @property-read	string		$handler		        name of the page handler class for `system` pages or empty 
  * @property-read	string		$controllerCustomURL	        custom url of the page
@@ -364,7 +364,7 @@ class Page extends DatabaseObject implements ILinkableObject, ITitledObject {
 	 * Returns true if the share buttons are enabled and this is not a system-type page.
 	 * 
 	 * @return      bool
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function showShareButtons() {
 		return $this->enableShareButtons && $this->pageType !== 'system';

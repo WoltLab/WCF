@@ -5,17 +5,17 @@ namespace wcf\system\form\builder\field;
  * Implementation of a form field for multiline text values.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
 class MultilineTextFormField extends TextFormField {
 	/**
 	 * number of rows of the textarea 
 	 * @var	int
 	 */
-	protected $__rows = 10;
+	protected $rows = 10;
 	
 	/**
 	 * @inheritDoc
@@ -29,7 +29,7 @@ class MultilineTextFormField extends TextFormField {
 	 * @return	int	number of textarea rows
 	 */
 	public function getRows() {
-		return $this->__rows;
+		return $this->rows;
 	}
 	
 	/**
@@ -45,7 +45,7 @@ class MultilineTextFormField extends TextFormField {
 			throw new \InvalidArgumentException("Given number of rows is not positive.");
 		}  
 		
-		$this->__rows = $rows;
+		$this->rows = $rows;
 		
 		return $this;
 	}

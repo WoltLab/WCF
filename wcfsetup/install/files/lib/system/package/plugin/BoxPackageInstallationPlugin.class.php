@@ -36,7 +36,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes boxes.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
@@ -442,7 +442,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getAdditionalTemplateCode() {
 		return WCF::getTPL()->fetch('__boxPipGui');
@@ -450,7 +450,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		$tabContainter = TabMenuFormContainer::create('tabMenu');
@@ -612,7 +612,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -725,7 +725,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				$objectType = $data['objectType'];
 				unset($data['objectType']);
 				
-				$data['objectTypeID'] = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.boxController', $objectType)->objectTypeID;
+				if (!empty($objectType)) {
+					$data['objectTypeID'] = ObjectTypeCache::getInstance()->getObjectTypeByName(
+						'com.woltlab.wcf.boxController',
+						$objectType
+					)->objectTypeID;
+				}
 			}
 			
 			if (isset($data['visibilityExceptions'])) {
@@ -734,18 +739,32 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			}
 			
 			$content = [];
-			if (isset($data['content'])) {
-				$content['content'] = $data['content'];
-				unset($data['content']);
-			}
-			if (isset($data['title'])) {
-				$content['title'] = $data['title'];
-				unset($data['title']);
+			
+			foreach (['title', 'content'] as $contentProperty) {
+				if (!empty($data[$contentProperty])) {
+					foreach ($data[$contentProperty] as $languageID => $value) {
+						$languageCode = LanguageFactory::getInstance()->getLanguage($languageID)->languageCode;
+						
+						if (!isset($content[$languageCode])) {
+							$content[$languageCode] = [];
+						}
+						
+						$content[$languageCode][$contentProperty] = $value;
+					}
+				}
+				
+				unset($data[$contentProperty]);
 			}
 			
-			if (!empty($content)) {
-				$data['content'] = $content;
+			foreach ($content as $languageCode => $values) {
+				foreach (['title', 'content'] as $contentProperty) {
+					if (!isset($values[$contentProperty])) {
+						$content[$languageCode][$contentProperty] = '';
+					}
+				}
 			}
+			
+			$data['content'] = $content;
 		}
 		
 		return $data;
@@ -753,7 +772,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('identifier');
@@ -761,7 +780,7 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -772,9 +791,9 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
 		$data = $formData['data'];
 		

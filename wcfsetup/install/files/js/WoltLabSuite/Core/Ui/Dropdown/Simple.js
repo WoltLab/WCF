@@ -2,13 +2,13 @@
  * Simple dropdown implementation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Dropdown/Simple
  */
 define(
-	[       'CallbackList', 'Core', 'Dictionary', 'Ui/Alignment', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 'Ui/CloseOverlay'],
-	function(CallbackList,   Core,   Dictionary,   UiAlignment,    DomChangeListener,    DomTraverse,    DomUtil,    UiCloseOverlay)
+	[       'CallbackList', 'Core', 'Dictionary', 'EventKey', 'Ui/Alignment', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 'Ui/CloseOverlay'],
+	function(CallbackList,   Core,   Dictionary,   EventKey,   UiAlignment,    DomChangeListener,    DomTraverse,    DomUtil,    UiCloseOverlay)
 {
 	"use strict";
 	
@@ -18,6 +18,8 @@ define(
 	var _dropdowns = new Dictionary();
 	var _menus = new Dictionary();
 	var _menuContainer = null;
+	var _callbackDropdownMenuKeyDown =  null;
+	var _activeTargetId = '';
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Ui/Dropdown/Simple
@@ -45,6 +47,8 @@ define(
 			
 			// expose on window object for backward compatibility
 			window.bc_wcfSimpleDropdown = this;
+			
+			_callbackDropdownMenuKeyDown = this._dropdownMenuKeyDown.bind(this);
 		},
 		
 		/**
@@ -64,6 +68,11 @@ define(
 		 */
 		init: function(button, isLazyInitialization) {
 			this.setup();
+			
+			elAttr(button, 'role', 'button');
+			elAttr(button, 'tabindex', '0');
+			elAttr(button, 'aria-haspopup', true);
+			elAttr(button, 'aria-expanded', false);
 			
 			if (button.classList.contains('jsDropdownEnabled') || elData(button, 'target')) {
 				return false;
@@ -86,6 +95,7 @@ define(
 			if (!_dropdowns.has(containerId)) {
 				button.classList.add('jsDropdownEnabled');
 				button.addEventListener(WCF_CLICK_EVENT, this._toggle.bind(this));
+				button.addEventListener('keydown', this._handleKeyDown.bind(this));
 				
 				_dropdowns.set(containerId, dropdown);
 				_menus.set(containerId, menu);
@@ -175,9 +185,10 @@ define(
 		 * 
 		 * @param	{string}	containerId	        dropdown wrapper id
 		 * @param       {Element=}      referenceElement        alternative reference element, used for reusable dropdown menus
+		 * @param       {boolean=}      disableAutoFocus
 		 */
-		toggleDropdown: function(containerId, referenceElement) {
-			this._toggle(null, containerId, referenceElement);
+		toggleDropdown: function(containerId, referenceElement, disableAutoFocus) {
+			this._toggle(null, containerId, referenceElement, disableAutoFocus);
 		},
 		
 		/**
@@ -235,11 +246,12 @@ define(
 		 * Opens the dropdown unless it is already open.
 		 * 
 		 * @param	{string}	containerId	dropdown wrapper id
+		 * @param       {boolean=}      disableAutoFocus
 		 */
-		open: function(containerId) {
+		open: function(containerId, disableAutoFocus) {
 			var menu = _menus.get(containerId);
 			if (menu !== undefined && !menu.classList.contains('dropdownOpen')) {
-				this.toggleDropdown(containerId);
+				this.toggleDropdown(containerId, undefined, disableAutoFocus);
 			}
 		},
 		
@@ -369,9 +381,10 @@ define(
 		 * @param	{?Event}	event		        event object, should be 'null' if targetId is given
 		 * @param	{string?}	targetId	        dropdown wrapper id
 		 * @param       {Element=}      alternateElement        alternative reference element for alignment
+		 * @param       {boolean=}      disableAutoFocus
 		 * @return	{boolean}	'false' if event is not null
 		 */
-		_toggle: function(event, targetId, alternateElement) {
+		_toggle: function(event, targetId, alternateElement, disableAutoFocus) {
 			if (event !== null) {
 				event.preventDefault();
 				event.stopPropagation();
@@ -419,6 +432,7 @@ define(
 			}
 			
 			// close all dropdowns
+			_activeTargetId = '';
 			_dropdowns.forEach((function(dropdown, containerId) {
 				var menu = _menus.get(containerId);
 				
@@ -427,12 +441,22 @@ define(
 						dropdown.classList.remove('dropdownOpen');
 						menu.classList.remove('dropdownOpen');
 						
+						var button = elBySel('.dropdownToggle', dropdown);
+						if (button) elAttr(button, 'aria-expanded', false);
+						
 						this._notifyCallbacks(containerId, 'close');
+					}
+					else {
+						_activeTargetId = targetId;
 					}
 				}
 				else if (containerId === targetId && menu.childElementCount > 0) {
+					_activeTargetId = targetId;
 					dropdown.classList.add('dropdownOpen');
 					menu.classList.add('dropdownOpen');
+					
+					var button = elBySel('.dropdownToggle', dropdown);
+					if (button) elAttr(button, 'aria-expanded', true);
 					
 					if (menu.childElementCount && elDataBool(menu.children[0], 'scroll-to-active')) {
 						var list = menu.children[0];
@@ -458,6 +482,24 @@ define(
 					
 					this._notifyCallbacks(containerId, 'open');
 					
+					if (!disableAutoFocus) {
+						elAttr(menu, 'role', 'menu');
+						elAttr(menu, 'tabindex', -1);
+						menu.removeEventListener('keydown', _callbackDropdownMenuKeyDown);
+						menu.addEventListener('keydown', _callbackDropdownMenuKeyDown);
+						var firstListItem = null;
+						elBySelAll('li', menu, function (listItem) {
+							if (firstListItem === null) firstListItem = listItem;
+							else if (listItem.classList.contains('active')) firstListItem = listItem;
+							
+							elAttr(listItem, 'role', 'menuitem');
+							elAttr(listItem, 'tabindex', -1);
+						});
+						if (firstListItem !== null) {
+							firstListItem.focus();
+						}
+					}
+					
 					this.setAlignment(dropdown, menu, alternateElement);
 				}
 			}).bind(this));
@@ -466,6 +508,72 @@ define(
 			window.WCF.Dropdown.Interactive.Handler.closeAll();
 			
 			return (event === null);
+		},
+		
+		_handleKeyDown: function(event) {
+			if (EventKey.Enter(event) || EventKey.Space(event)) {
+				event.preventDefault();
+				this._toggle(event);
+			}
+		},
+		
+		_dropdownMenuKeyDown: function(event) {
+			if (EventKey.ArrowDown(event) || EventKey.ArrowUp(event)) {
+				event.preventDefault();
+				
+				var activeItem = document.activeElement;
+				if (activeItem.nodeName === 'LI') {
+					var listItems = Array.prototype.slice.call(elBySelAll('li', activeItem.closest('.dropdownMenu')));
+					if (EventKey.ArrowUp(event)) {
+						listItems.reverse();
+					}
+					var activeIndex = listItems.indexOf(activeItem);
+					var newActiveItem = null;
+					
+					var isValidItem = function(listItem) {
+						return !listItem.classList.contains('dropdownDivider') && listItem.clientHeight > 0;
+					};
+					
+					for (var i = activeIndex + 1; i < listItems.length; i++) {
+						if (isValidItem(listItems[i])) {
+							newActiveItem = listItems[i];
+							break;
+						}
+					}
+					
+					if (newActiveItem === null) {
+						for (i = 0; i < listItems.length; i++) {
+							if (isValidItem(listItems[i])) {
+								newActiveItem = listItems[i];
+								break;
+							}
+						}
+					}
+					newActiveItem.focus();
+				}
+			}
+			else if (EventKey.Enter(event) || EventKey.Space(event)) {
+				event.preventDefault();
+				var activeItem = document.activeElement;
+				if (activeItem.nodeName === 'LI') {
+					var target = activeItem;
+					if (target.childElementCount === 1 && (target.children[0].nodeName === 'SPAN' || target.children[0].nodeName === 'A')) {
+						target = target.children[0];
+					}
+					
+					var dropdown = _dropdowns.get(_activeTargetId);
+					var button = elBySel('.dropdownToggle', dropdown);
+					target.click();
+					if (button) button.focus();
+				}
+			}
+			else if (EventKey.Tab(event)) {
+				event.preventDefault();
+				var dropdown = _dropdowns.get(_activeTargetId);
+				var button = elBySel('.dropdownToggle', dropdown);
+				this._toggle(null, _activeTargetId);
+				if (button) button.focus();
+			}
 		}
 	};
 });

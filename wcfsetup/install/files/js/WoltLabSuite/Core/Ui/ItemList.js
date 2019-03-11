@@ -2,7 +2,7 @@
  * Flexible UI element featuring both a list of items and an input field with suggestion support.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/ItemList
  */
@@ -81,6 +81,10 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 				callbackChange: null,
 				// callback once the form is about to be submitted
 				callbackSubmit: null,
+				// Callback for the custom shadow synchronization.
+				callbackSyncShadow: null,
+				// Callback to set values during the setup.
+				callbackSetupValues: null,
 				// value may contain the placeholder `{$objectId}`
 				submitFieldName: ''
 			}, options);
@@ -132,7 +136,13 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 				suggestion: suggestion
 			});
 			
-			values = (data.values.length) ? data.values : values;
+			if (options.callbackSetupValues) {
+				values = options.callbackSetupValues();
+			}
+			else {
+				values = (data.values.length) ? data.values : values;
+			}
+			
 			if (Array.isArray(values)) {
 				var value;
 				for (var i = 0, length = values.length; i < length; i++) {
@@ -162,7 +172,8 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			elBySelAll('.item > span', data.list, function(span) {
 				values.push({
 					objectId: ~~elData(span, 'object-id'),
-					value: span.textContent
+					value: span.textContent,
+					type: elData(span, 'type')
 				});
 			});
 			
@@ -222,7 +233,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 		 */
 		_createUI: function(element, options) {
 			var list = elCreate('ol');
-			list.className = 'inputItemList';
+			list.className = 'inputItemList' + (element.disabled ? ' disabled' : '');
 			elData(list, 'element-id', element.id);
 			list.addEventListener(WCF_CLICK_EVENT, function(event) {
 				if (event.target === list) {
@@ -239,10 +250,20 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			element.addEventListener('keypress', _callbackKeyPress);
 			element.addEventListener('keyup', _callbackKeyUp);
 			element.addEventListener('paste', _callbackPaste);
+			var hasFocus = element === document.activeElement;
+			if (hasFocus) {
+				//noinspection JSUnresolvedFunction
+				element.blur();
+			}
 			element.addEventListener('blur', _callbackBlur);
-			
 			element.parentNode.insertBefore(list, element);
 			listItem.appendChild(element);
+			if (hasFocus) {
+				window.setTimeout(function() {
+					//noinspection JSUnresolvedFunction
+					element.focus();
+				}, 1);
+			}
 			
 			if (options.maxLength !== -1) {
 				elAttr(element, 'maxLength', options.maxLength);
@@ -441,19 +462,24 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			var content = elCreate('span');
 			content.className = 'content';
 			elData(content, 'object-id', value.objectId);
+			if (value.type) elData(content, 'type', value.type);
 			content.textContent = value.value;
-			
-			var button = elCreate('a');
-			button.className = 'icon icon16 fa-times';
-			button.addEventListener(WCF_CLICK_EVENT, _callbackRemoveItem);
 			listItem.appendChild(content);
-			listItem.appendChild(button);
+			
+			if (!data.element.disabled) {
+				var button = elCreate('a');
+				button.className = 'icon icon16 fa-times';
+				button.addEventListener(WCF_CLICK_EVENT, _callbackRemoveItem);
+				listItem.appendChild(button);
+			}
 			
 			data.list.insertBefore(listItem, data.listItem);
 			data.suggestion.addExcludedValue(value.value);
 			data.element.value = '';
 			
-			this._handleLimit(elementId);
+			if (!data.element.disabled) {
+				this._handleLimit(elementId);
+			}
 			var values = this._syncShadow(data);
 			
 			if (typeof data.options.callbackChange === 'function') {
@@ -497,6 +523,9 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 		 */
 		_syncShadow: function(data) {
 			if (!data.options.isCSV) return null;
+			if (typeof data.options.callbackSyncShadow === 'function') {
+				return data.options.callbackSyncShadow(data);
+			}
 			
 			var value = '', values = this.getValues(data.element.id);
 			for (var i = 0, length = values.length; i < length; i++) {
@@ -514,21 +543,19 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 		 * @param	{object}	event		event object
 		 */
 		_blur: function(event) {
-			var data = _data.get(event.currentTarget.id);
+			var input = event.currentTarget;
+			var data = _data.get(input.id);
 			if (data.options.restricted) {
 				// restricted item lists only allow results from the dropdown to be picked
 				return;
 			}
 			
-			var currentTarget = event.currentTarget;
-			window.setTimeout(function() {
-				var value = currentTarget.value.trim();
-				if (value.length) {
-					if (!data.suggestion || !data.suggestion.isActive()) {
-						this._addItem(currentTarget.id, { objectId: 0, value: value });
-					}
+			var value = input.value.trim();
+			if (value.length) {
+				if (!data.suggestion || !data.suggestion.isActive()) {
+					this._addItem(input.id, { objectId: 0, value: value });
 				}
-			}.bind(this), 100);
+			}
 		}
 	};
 });

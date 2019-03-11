@@ -10,7 +10,7 @@ use wcf\system\exception\PermissionDeniedException;
  * Implementation of IUserObjectWatch for watched article categories.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Object\Watch
  */

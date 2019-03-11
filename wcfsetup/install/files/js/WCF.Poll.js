@@ -4,7 +4,7 @@
  * Namespace for poll-related classes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Poll = { };
@@ -49,10 +49,12 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @param       {int}           maxOptions
 		 * @param       {string}        editorId
 		 */
-		init: function (containerID, optionList, maxOptions, editorId) {
+		init: function (containerID, optionList, maxOptions, editorId, fieldName) {
 			this._count = 0;
 			this._maxOptions = maxOptions || -1;
 			this._container = $('#' + containerID).children('ol:eq(0)');
+			this._fieldName = fieldName || 'pollOptions';
+			
 			if (!this._container.length) {
 				console.debug("[WCF.Poll.Management] Invalid container id given, aborting.");
 				return;
@@ -68,6 +70,7 @@ if (COMPILER_TARGET_DEFAULT) {
 				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + editorId, this._reset.bind(this));
 				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + editorId, this._submit.bind(this));
 				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'validate_' + editorId, this._validate.bind(this));
+				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'handleError_' + editorId, this._handleError.bind(this));
 			}
 			else {
 				this._container.closest('form').submit($.proxy(this._submit, this));
@@ -222,7 +225,7 @@ if (COMPILER_TARGET_DEFAULT) {
 					var $formSubmit = this._container.parents('form').find('.formSubmit');
 					
 					for (var $i = 0, $length = $options.length; $i < $length; $i++) {
-						$('<input type="hidden" name="pollOptions[' + $i + ']">').val($options[$i]).appendTo($formSubmit);
+						$('<input type="hidden" name="' + this._fieldName + '[' + $i + ']">').val($options[$i]).appendTo($formSubmit);
 					}
 				}
 			}
@@ -304,6 +307,30 @@ if (COMPILER_TARGET_DEFAULT) {
 					data.api.throwError(pollMaxVotes, WCF.Language.get('wcf.poll.maxVotes.error.invalid'));
 					data.valid = false;
 				}
+			}
+		},
+		
+		_handleError: function (data) {
+			switch (data.returnValues.fieldName) {
+				case 'pollEndTime':
+				case 'pollMaxVotes':
+					var fieldName = (data.returnValues.fieldName === 'pollEndTime') ? 'endTime' : 'maxVotes';
+					
+					var small = elCreate('small');
+					small.className = 'innerError';
+					small.innerHTML = WCF.Language.get('wcf.poll.' + fieldName + '.error.' + data.returnValues.errorType);
+					
+					var element = elById(data.returnValues.fieldName + '_' + this._editorId);
+					var parent = element.parentElement;
+					if (parent.classList.contains('inputAddon')) {
+						element = parent;
+						parent = parent.parentElement;
+					}
+					
+					parent.insertBefore(small, element.nextSibling);
+					
+					data.cancel = true;
+					break;
 			}
 		}
 	});

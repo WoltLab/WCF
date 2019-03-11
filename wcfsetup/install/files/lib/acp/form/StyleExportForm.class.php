@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Shows the style export form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -18,7 +18,7 @@ class StyleExportForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.style';
+	public $activeMenuItem = 'wcf.acp.menu.link.style.list';
 	
 	/**
 	 * true, if style has custom images

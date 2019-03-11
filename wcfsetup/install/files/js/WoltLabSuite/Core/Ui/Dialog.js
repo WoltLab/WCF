@@ -2,7 +2,7 @@
  * Modal dialog handler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Dialog
  */
@@ -122,7 +122,11 @@ define(
 						container.classList.remove('jsStaticDialogContent');
 						elData(container, 'is-static-dialog', true);
 						elHide(container);
-						button.addEventListener(WCF_CLICK_EVENT, this.openStatic.bind(this, container.id, null, { title: elData(container, 'title') }));
+						button.addEventListener(WCF_CLICK_EVENT, (function(event) {
+							event.preventDefault();
+							
+							this.openStatic(container.id, null, { title: elData(container, 'title') });
+						}).bind(this));
 					}).bind(this))(button, container);
 				}
 			}
@@ -232,7 +236,7 @@ define(
 		 * @return	{object<string, *>}		dialog data
 		 */
 		openStatic: function(id, html, options, createOnly) {
-			document.documentElement.classList.add('pageOverlayActive');
+			UiScreen.pageOverlayOpen();
 			
 			if (Environment.platform() !== 'desktop') {
 				if (!this.isOpen(id)) {
@@ -559,7 +563,7 @@ define(
 		_maintainFocus: function(event) {
 			if (_activeDialog) {
 				var data = _dialogs.get(_activeDialog);
-				if (!data.dialog.contains(event.target) && !event.target.closest('.dropdownMenuContainer')) {
+				if (!data.dialog.contains(event.target) && !event.target.closest('.dropdownMenuContainer') && !event.target.closest('.datePicker')) {
 					this._setFocusToFirstItem(data.dialog, true);
 				}
 			}
@@ -826,7 +830,8 @@ define(
 				if (data.closable) {
 					window.removeEventListener('keyup', _keyupListener);
 				}
-				document.documentElement.classList.remove('pageOverlayActive');
+				
+				UiScreen.pageOverlayClose();
 			}
 			else {
 				data = _dialogs.get(_activeDialog);

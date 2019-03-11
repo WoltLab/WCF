@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Provides functions to edit cms articles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
@@ -26,7 +26,7 @@ class ArticleEditor extends DatabaseObjectEditor {
 	 * Updates the article counter of the given user ids.
 	 * 
 	 * @param       int[]   $users  user id => article counter increase/decrease
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public static function updateArticleCounter(array $users) {
 		$sql = "UPDATE	wcf".WCF_N."_user

@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Handles ads.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Ads
  */
@@ -62,7 +62,7 @@ class AdHandler extends SingletonFactory {
 				}
 			}
 			
-			$output .= '<div>' . $ad->ad . '</div>';
+			$output .= '<div>' . $ad->getHtmlCode() . '</div>';
 			if (ENABLE_AD_ROTATION) break;
 		}
 		

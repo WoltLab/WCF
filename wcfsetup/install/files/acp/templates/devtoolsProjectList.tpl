@@ -34,9 +34,9 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnID" colspan="3">{lang}wcf.global.objectID{/lang}</th>
-					<th class="columnText">{lang}wcf.acp.devtools.project.name{/lang}</th>
-					<th class="columnText">{lang}wcf.acp.devtools.project.path{/lang}</th>
+					<th class="columnID{if $sortField === 'projectID'} active {@$sortOrder}{/if}" colspan="3"><a href="{link controller='DevtoolsProjectList'}sortField=projectID&sortOrder={if $sortField === 'projectID' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnText{if $sortField === 'name'} active {@$sortOrder}{/if}"><a href="{link controller='DevtoolsProjectList'}sortField=name&sortOrder={if $sortField === 'name' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.devtools.project.name{/lang}</a></th>
+					<th class="columnText{if $sortField === 'path'} active {@$sortOrder}{/if}"><a href="{link controller='DevtoolsProjectList'}sortField=path&sortOrder={if $sortField === 'path' && $sortOrder === 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.devtools.project.path{/lang}</a></th>
 					
 					{event name='columnHeads'}
 				</tr>

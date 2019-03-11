@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  * Default implementation of a box controller based on an object list.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
@@ -142,13 +142,13 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	 * 
 	 * @param	IFormDocument	$form
 	 * @param	string		$objectType
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function addPipGuiFormFields(IFormDocument $form, $objectType) {
 		/** @var FormContainer $dataContainer */
 		$dataContainer = $form->getNodeById('dataTabData');
 		
-		/** @var SingleSelectionFormField $objectType */
+		/** @var SingleSelectionFormField $objectTypeField */
 		$objectTypeField = $dataContainer->getNodeById('objectType');
 		
 		$prefix = str_replace('.', '_', $objectType) . '_';
@@ -207,7 +207,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	 * @param	\DOMElement	$element
 	 * @param	bool		$saveData
 	 * @return	array
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getPipGuiElementData(\DOMElement $element, $saveData = false) {
 		$data = [];
@@ -428,7 +428,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	/**
 	 * @param	\DOMElement	$element
 	 * @param	IFormDocument	$form
-	 * @sicne	3.2
+	 * @since	5.2
 	 */
 	public function writePipGuiEntry(\DOMElement $element, IFormDocument $form) {
 		$data = $form->getData()['data'];

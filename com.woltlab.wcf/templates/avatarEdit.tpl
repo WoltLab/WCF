@@ -3,13 +3,13 @@
 {include file='header' __disableAds=true __sidebarLeftHasMenu=true}
 
 {if $__wcf->user->disableAvatar}
-	<p class="error">{lang}wcf.user.avatar.error.disabled{/lang}</p>
+	<p class="error" role="alert">{lang}wcf.user.avatar.error.disabled{/lang}</p>
 {/if}
 
 {include file='formError'}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
+	<p class="success" role="status">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
 
 <form method="post" action="{link controller='AvatarEdit'}{/link}" id="avatarForm">

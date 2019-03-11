@@ -15,7 +15,7 @@ use wcf\system\WCF;
  * Represents a category.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Category
  * 
@@ -24,6 +24,7 @@ use wcf\system\WCF;
  * @property-read	integer		$parentCategoryID	id of the category's parent category or `0` if it has no parent category
  * @property-read	string		$title			title of the category or name of language item which contains the title
  * @property-read	string		$description		description of the category or name of language item which contains the description
+ * @property-read	integer		$descriptionUseHtml	is `1` if html is enabled in the description, otherwise `0`
  * @property-read	integer		$showOrder		position of the category in relation to its siblings
  * @property-read	integer		$time			timestamp at which the comment has been created
  * @property-read	integer		$isDisabled		is `1` if the category is disabled and thus neither accessible nor selectable, otherwise `0`

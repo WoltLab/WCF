@@ -5,10 +5,10 @@ namespace wcf\system\html\toc;
  * Represents an item of a table of contents with its children.
  *
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Toc
- * @since       3.2
+ * @since       5.2
  */
 class HtmlTocItem implements \Countable, \RecursiveIterator {
 	/** @var HtmlTocItem[] */

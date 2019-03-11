@@ -601,3 +601,12 @@
 		min-height: 0 !important;
 	}
 }
+
+.editorImageBlocked {
+	filter: brightness(25%);
+	transition: filter .12s linear;
+	
+	&:hover {
+		filter: brightness(75%);
+	}
+}

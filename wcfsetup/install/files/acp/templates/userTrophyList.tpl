@@ -37,7 +37,7 @@
 						{foreach from=$trophyCategories item=category}
 							<optgroup label="{$category->getTitle()}">
 								{foreach from=$category->getTrophies(true) item=trophy}
-									<option value="{@$trophy->trophyID}"{if $trophy->trophyID == $trophyID} selected{/if}{if $trophy->awardAutomatically} disabled{/if}>{$trophy->getTitle()}</option>
+									<option value="{@$trophy->trophyID}"{if $trophy->trophyID == $trophyID} selected{/if}>{$trophy->getTitle()}</option>
 								{/foreach}
 							</optgroup>
 						{/foreach}

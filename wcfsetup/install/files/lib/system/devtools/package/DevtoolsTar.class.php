@@ -6,7 +6,7 @@ use wcf\system\io\Tar;
  * Specialized implementation to emulate a regular package installation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Devtools\Package
  * @since       3.1
@@ -94,5 +94,23 @@ class DevtoolsTar extends Tar {
 		}
 		
 		return $this->contentList;
+	}
+	
+	/**
+	 * Returns all files in the virtual file list.
+	 * 
+	 * @return	string[]
+	 */
+	public function getFiles() {
+		return $this->files;
+	}
+	
+	/**
+	 * Sets all files in the virtual file list.
+	 * 
+	 * @param	string[]	$files
+	 */
+	public function setFiles(array $files) {
+		$this->files = $files;
 	}
 }

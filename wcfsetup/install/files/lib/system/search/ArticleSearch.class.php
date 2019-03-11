@@ -1,9 +1,11 @@
 <?php
 namespace wcf\system\search;
 use wcf\data\article\category\ArticleCategory;
+use wcf\data\article\category\ArticleCategoryNodeTree;
 use wcf\data\article\content\SearchResultArticleContent;
 use wcf\data\article\content\SearchResultArticleContentList;
 use wcf\data\article\Article;
+use wcf\data\category\CategoryNode;
 use wcf\data\category\CategoryNodeTree;
 use wcf\form\IForm;
 use wcf\form\SearchForm;
@@ -17,7 +19,7 @@ use wcf\util\ArrayUtil;
  * An implementation of ISearchableObjectType for searching in articles.
  *
  * @author      Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Search
  * @since	3.0
@@ -162,7 +164,7 @@ class ArticleSearch extends AbstractSearchableObjectType {
 		
 		WCF::getTPL()->assign([
 			'articleCategoryIDs' => $this->articleCategoryIDs,
-			'articleCategoryList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator()
+			'articleCategoryList' => (new ArticleCategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
 		]);
 	}
 	

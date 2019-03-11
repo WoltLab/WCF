@@ -10,7 +10,7 @@ use wcf\data\session\SessionEditor;
  * Deletes expired sessions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob
  */
@@ -21,8 +21,12 @@ class SessionCleanUpCronjob extends AbstractCronjob {
 	public function execute(Cronjob $cronjob) {
 		parent::execute($cronjob);
 		
-		ACPSessionEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
-		ACPSessionVirtualEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
+		// Prevent the sessions from expiring while the development mode is active.
+		if (!ENABLE_DEBUG_MODE || !ENABLE_DEVELOPER_TOOLS) {
+			ACPSessionEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
+			ACPSessionVirtualEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
+		}
+		
 		SessionEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
 		SessionVirtualEditor::deleteExpiredSessions(TIME_NOW - SESSION_TIMEOUT);
 	}

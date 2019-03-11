@@ -11,14 +11,14 @@ use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
-use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
-use wcf\system\form\builder\field\OptionFormField;
+use wcf\system\form\builder\field\option\OptionFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
-use wcf\system\form\builder\field\UserGroupOptionFormField;
+use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
@@ -39,7 +39,7 @@ use wcf\util\XML;
  * Abstract implementation of a package installation plugin for options.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -48,7 +48,10 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	// provide the default implementation to ensure backwards compatibility
 	// with third-party packages containing classes that extend this abstract
 	// class
-	use TXmlGuiPackageInstallationPlugin;
+	use TXmlGuiPackageInstallationPlugin {
+		addDeleteElement as defaultAddDeleteElement;
+		sanitizeXmlFileAfterDeleteEntry as defaultSanitizeXmlFileAfterDeleteEntry;
+	}
 	
 	/**
 	 * list of option types with i18n support
@@ -392,7 +395,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		/** @var IFormContainer $dataContainer */
@@ -450,7 +453,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					
 					IntegerFormField::create('showOrder')
 						->objectProperty('showorder')
-						->label('wcf.acp.pip.abstractOption.categories.showOrder')
+						->label('wcf.form.field.showOrder')
 						->description('wcf.acp.pip.abstractOption.categories.showOrder.description')
 						->nullable(),
 					
@@ -555,7 +558,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 					
 					IntegerFormField::create('showOrder')
 						->objectProperty('showorder')
-						->label('wcf.acp.pip.abstractOption.options.showOrder')
+						->label('wcf.form.field.showOrder')
 						->description('wcf.acp.pip.abstractOption.options.showOrder.description'),
 					
 					OptionFormField::create()
@@ -693,7 +696,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [];
@@ -806,8 +809,8 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 						// only set explicit showOrder when adding new categories
 						$data['showorder'] = $this->getShowOrder(
 							$data['showorder'] ?? null,
-							$data['categoryName'],
-							'categoryName'
+							$data['categoryname'],
+							'categoryname'
 						);
 					}
 					
@@ -852,7 +855,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
@@ -860,7 +863,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getEntryTypes() {
 		return ['options', 'categories'];
@@ -915,7 +918,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function saveObject(\DOMElement $newElement, \DOMElement $oldElement = null) {
 		switch ($this->entryType) {
@@ -941,7 +944,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		switch ($this->entryType) {
@@ -967,9 +970,9 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData()['data'];
 		
 		switch ($this->entryType) {
@@ -1025,7 +1028,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function insertNewXmlElement(XML $xml, \DOMElement $newElement) {
 		$options = $xml->xpath()->query('/ns:data/ns:import/ns:options')->item(0);
@@ -1064,7 +1067,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 	 * Returns the options for the option type form field.
 	 * 
 	 * @return	array
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function getOptionTypeOptions() {
 		$options = [];
@@ -1116,5 +1119,122 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 		natcasesort($options);
 		
 		return array_combine($options, $options);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function prepareDeleteXmlElement(\DOMElement $element) {
+		$elementName = 'option';
+		
+		if ($this->entryType === 'categories') {
+			$elementName .= 'category';
+		}
+		
+		$deleteElement = $element->ownerDocument->createElement($elementName);
+		$deleteElement->setAttribute('name', $element->getAttribute('name'));
+		
+		return $deleteElement;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$name = $element->getAttribute('name');
+		
+		switch ($this->entryType) {
+			case 'categories':
+				// also delete options
+				$sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "
+					WHERE		categoryName = ?
+							AND packageID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					$name,
+					$this->installation->getPackageID()
+				]);
+				
+				$sql = "DELETE FROM	" . $this->application . WCF_N . "_" . $this->tableName . "_category
+					WHERE		categoryName = ?
+							AND packageID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					$name,
+					$this->installation->getPackageID()
+				]);
+				
+				break;
+				
+			case 'options':
+				$sql = "DELETE FROM	".$this->application . WCF_N . "_". $this->tableName ."
+					WHERE		optionName = ?
+							AND packageID = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					$name,
+					$this->installation->getPackageID()
+				]);
+				
+				break;
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function addDeleteElement(\DOMElement $element) {
+		$this->defaultAddDeleteElement($element);
+		
+		// remove install instructions for options in delete categories;
+		// explicitly adding delete instructions for these options is not
+		// necessary as they will be deleted automatically 
+		if ($this->entryType === 'categories') {
+			$categoryName = $element->getAttribute('name');
+			$objectType = $element->getElementsByTagName('objecttype')->item(0)->nodeValue;
+			
+			$xpath = new \DOMXPath($element->ownerDocument);
+			$xpath->registerNamespace('ns', $element->ownerDocument->documentElement->getAttribute('xmlns'));
+			
+			$options = $xpath->query('/ns:data/ns:import/ns:options')->item(0);
+			
+			/** @var \DOMElement $option */
+			foreach (DOMUtil::getElements($options, 'option') as $option) {
+				$optionCategoryName = $option->getElementsByTagName('categoryname')->item(0);
+				
+				if ($optionCategoryName !== null) {
+					$optionObjectType = $option->getElementsByTagName('objectType')->item(0);
+					if ($optionCategoryName->nodeValue === $categoryName && $optionObjectType->nodeValue === $objectType) {
+						DOMUtil::removeNode($option);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function sanitizeXmlFileAfterDeleteEntry(\DOMDocument $document) {
+		$xpath = new \DOMXPath($document);
+		$xpath->registerNamespace('ns', $document->documentElement->getAttribute('xmlns'));
+		
+		// remove empty categories and options elements
+		foreach (['options'] as $type) {
+			$element = $xpath->query('/ns:data/ns:import/ns:' . $type)->item(0);
+			
+			// remove empty options node
+			if ($element !== null) {
+				if ($element->childNodes->length === 0) {
+					DOMUtil::removeNode($element);
+				}
+			}
+		}
+		
+		return $this->defaultSanitizeXmlFileAfterDeleteEntry($document);
 	}
 }

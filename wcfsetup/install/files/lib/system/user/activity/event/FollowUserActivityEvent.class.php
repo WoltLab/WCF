@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * User activity event implementation for follows.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Activity\Event
  */
@@ -17,6 +17,10 @@ class FollowUserActivityEvent extends SingletonFactory implements IUserActivityE
 	 * @inheritDoc
 	 */
 	public function prepare(array $events) {
+		if (!WCF::getSession()->getPermission('user.profile.canViewUserProfile')) {
+			return;
+		}
+		
 		$objectIDs = [];
 		foreach ($events as $event) {
 			$objectIDs[] = $event->objectID;

@@ -2,7 +2,7 @@
  * Handles article trash, restore and delete.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Article/InlineEditor
  */
@@ -28,8 +28,9 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Language', 'U
 				i18n: {
 					defaultLanguageId: 0,
 					isI18n: false,
-					languages: {}
-				}
+					languages: {},
+				},
+				redirectUrl: ''
 			}, options);
 			
 			if (objectId) {
@@ -255,8 +256,7 @@ define(['Ajax', 'Core', 'Dictionary', 'Dom/Util', 'EventHandler', 'Language', 'U
 			var article = _articles.get(articleId);
 			
 			if (article.isArticleEdit) {
-				//noinspection JSUnresolvedVariable
-				window.location = data.returnValues.redirectURL;
+				window.location = this._options.redirectUrl;
 			}
 			else {
 				var tbody = article.element.parentNode;

@@ -6,14 +6,15 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * Implementation of a form field for selecting multiple values.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
-class MultipleSelectionFormField extends AbstractFormField implements INullableFormField, ISelectionFormField {
+class MultipleSelectionFormField extends AbstractFormField implements IFilterableSelectionFormField, IImmutableFormField, INullableFormField {
+	use TFilterableSelectionFormField;
+	use TImmutableFormField;
 	use TNullableFormField;
-	use TSelectionFormField;
 	
 	/**
 	 * @inheritDoc
@@ -28,10 +29,10 @@ class MultipleSelectionFormField extends AbstractFormField implements INullableF
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_array($value)) {
-				$this->__value = $value;
+				$this->value = $value;
 			}
 			else if (!$this->isNullable()) {
-				$this->__value = [];
+				$this->value = [];
 			}
 		}
 		
@@ -42,7 +43,12 @@ class MultipleSelectionFormField extends AbstractFormField implements INullableF
 	 * @inheritDoc
 	 */
 	public function validate() {
-		if ($this->getValue() !== null && !empty(array_diff($this->getValue(), array_keys($this->getOptions())))) {
+		$value = $this->getValue();
+		
+		if (($value === null || empty($value)) && $this->isRequired()) {
+			$this->addValidationError(new FormFieldValidationError('empty'));
+		}
+		else if ($value !== null && !empty(array_diff($this->getValue(), array_keys($this->getOptions())))) {
 			$this->addValidationError(new FormFieldValidationError(
 				'invalidValue',
 				'wcf.global.form.error.noValidSelection'

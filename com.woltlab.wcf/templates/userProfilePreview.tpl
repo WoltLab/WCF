@@ -32,13 +32,13 @@
 				<dl class="plain inlineDataList userFields">
 					{content}
 						{if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile') && $user->isAccessible('canViewProfile')}
-							{if $user->occupation}
+							{if $user->getUserOption('occupation', true)}
 								<dt>{lang}wcf.user.option.occupation{/lang}</dt>
-								<dd>{$user->occupation}</dd>
+								<dd>{$user->getUserOption('occupation', true)}</dd>
 							{/if}
-							{if $user->hobbies}
+							{if $user->getUserOption('hobbies', true)}
 								<dt>{lang}wcf.user.option.hobbies{/lang}</dt>
-								<dd>{$user->hobbies}</dd>
+								<dd>{$user->getUserOption('hobbies', true)}</dd>
 							{/if}
 						{/if}
 						{event name='userFields'}

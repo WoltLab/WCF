@@ -11,11 +11,11 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IntegerFormField;
-use wcf\system\form\builder\field\OptionFormField;
-use wcf\system\form\builder\field\UserGroupOptionFormField;
+use wcf\system\form\builder\field\option\OptionFormField;
+use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\MultilineTextFormField;
@@ -29,7 +29,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes template listeners.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -132,7 +132,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		$ldq = preg_quote(WCF::getTPL()->getCompiler()->getLeftDelimiter(), '~');
@@ -386,7 +386,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -421,7 +421,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return sha1(
@@ -434,7 +434,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function setEntryData($identifier, IFormDocument $document) {
 		if ($this->defaultSetEntryData($identifier, $document)) {
@@ -472,7 +472,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -485,9 +485,9 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$listener = $document->createElement($this->tagName);
@@ -510,5 +510,39 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		);
 		
 		return $listener;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function prepareDeleteXmlElement(\DOMElement $element) {
+		$templateListener = $element->ownerDocument->createElement($this->tagName);
+		$templateListener->setAttribute('name', $element->getAttribute('name'));
+		
+		foreach (['environment', 'templatename', 'eventname'] as $childElement) {
+			$templateListener->appendChild($element->ownerDocument->createElement(
+				$childElement,
+				$element->getElementsByTagName($childElement)->item(0)->nodeValue
+			));
+		}
+		
+		return $templateListener;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$elements= [];
+		foreach (['environment', 'templatename', 'eventname'] as $childElement) {
+			$elements[$childElement] = $element->getElementsByTagName($childElement)->item(0)->nodeValue;
+		}
+		
+		$this->handleDelete([[
+			'attributes' => ['name' => $element->getAttribute('name')],
+			'elements' => $elements
+		]]);
 	}
 }

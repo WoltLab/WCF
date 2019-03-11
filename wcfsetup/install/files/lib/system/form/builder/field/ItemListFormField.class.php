@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 use wcf\util\ArrayUtil;
@@ -9,12 +9,15 @@ use wcf\util\ArrayUtil;
  * Implementation of a form field that allows entering a list of items.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
-class ItemListFormField extends AbstractFormField {
+class ItemListFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField {
+	use TAutoFocusFormField;
+	use TImmutableFormField;
+	
 	/**
 	 * type of the returned save value (see `SAVE_VALUE_TYPE_*` constants)
 	 * @var	string
@@ -126,7 +129,7 @@ class ItemListFormField extends AbstractFormField {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_array($value)) {
-				$this->__value = array_unique(ArrayUtil::trim($value));
+				$this->value = array_unique(ArrayUtil::trim($value));
 			}
 		}
 		
@@ -162,7 +165,7 @@ class ItemListFormField extends AbstractFormField {
 		switch ($this->getSaveValueType()) {
 			case self::SAVE_VALUE_TYPE_ARRAY:
 				if (is_array($value)) {
-					$this->__value = $value;
+					$this->value = $value;
 				}
 				else {
 					throw new \InvalidArgumentException("Given value is no array, '" . gettype($value) . "' given.");
@@ -172,7 +175,7 @@ class ItemListFormField extends AbstractFormField {
 			
 			case self::SAVE_VALUE_TYPE_CSV:
 				if (is_string($value)) {
-					$this->__value = explode(',', $value);
+					$this->value = explode(',', $value);
 				}
 				else {
 					throw new \InvalidArgumentException("Given value is no string, '" . gettype($value) . "' given.");
@@ -182,7 +185,7 @@ class ItemListFormField extends AbstractFormField {
 			
 			case self::SAVE_VALUE_TYPE_NSV:
 				if (is_string($value)) {
-					$this->__value = explode("\n", $value);
+					$this->value = explode("\n", $value);
 				}
 				else {
 					throw new \InvalidArgumentException("Given value is no string, '" . gettype($value) . "' given.");
@@ -192,7 +195,7 @@ class ItemListFormField extends AbstractFormField {
 			
 			case self::SAVE_VALUE_TYPE_SSV:
 				if (is_string($value)) {
-					$this->__value = explode(' ', $value);
+					$this->value = explode(' ', $value);
 				}
 				else {
 					throw new \InvalidArgumentException("Given value is no string, '" . gettype($value) . "' given.");

@@ -8,11 +8,17 @@ use wcf\system\Regex;
  * Provides functions to send files to the client via PHP.
  * 
  * @author	Sebastian Oettl, Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
 class FileReader {
+	/**
+	 * file to send
+	 * @var	string
+	 */
+	protected $location = '';
+	
 	/**
 	 * http options
 	 * @var	array

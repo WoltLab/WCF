@@ -9,10 +9,10 @@ use wcf\system\WCF;
  * Represents a comment notification object type for comments on articles.
  * 
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Object\Type
- * @since       3.2
+ * @since       5.2
  */
 class ArticleCommentUserNotificationObjectType extends AbstractUserNotificationObjectType implements ICommentUserNotificationObjectType {
 	/**
@@ -34,13 +34,14 @@ class ArticleCommentUserNotificationObjectType extends AbstractUserNotificationO
 	 * @inheritDoc
 	 */
 	public function getOwnerID($objectID) {
-		$sql = "SELECT	objectID
-			FROM	wcf".WCF_N."_comment
-			WHERE	commentID = ?";
+		$sql = "SELECT		article.userID
+			FROM		wcf".WCF_N."_comment comment
+			LEFT JOIN	wcf".WCF_N."_article article
+			ON		(article.articleID = comment.objectID)
+			WHERE		comment.commentID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([$objectID]);
-		$row = $statement->fetchArray();
 		
-		return ($row ? $row['objectID'] : 0);
+		return $statement->fetchSingleColumn() ?: 0;
 	}
 }

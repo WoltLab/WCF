@@ -97,5 +97,6 @@
 
 {include file='__optionEmailSmtpTest'}
 {include file='__optionRewriteTest'}
+{include file='__optionRewriteRules'}
 
 {include file='footer'}

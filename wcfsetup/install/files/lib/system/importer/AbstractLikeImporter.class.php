@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Imports likes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Importer
  */
@@ -60,7 +60,8 @@ class AbstractLikeImporter extends AbstractImporter {
 			$data['objectUserID'],
 			$data['userID'],
 			$data['time'],
-			$data['likeValue']
+			$data['likeValue'],
+			$data['reactionTypeID']
 		]);
 		
 		return 0;

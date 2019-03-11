@@ -8,19 +8,17 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\IsDisabledFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
-use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\TitleFormField;
-use wcf\system\form\builder\field\validation\FormFieldValidationError;
-use wcf\system\form\builder\field\validation\FormFieldValidator;
+use wcf\system\form\builder\field\UploadFormField;
 
 /**
  * Represents the reaction type add form.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
- * @since	3.2
+ * @since	5.2
  */
 class ReactionTypeAddForm extends AbstractFormBuilderForm {
 	/**
@@ -81,18 +79,13 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm {
 		$iconContainer = FormContainer::create('imageSection')
 			->label('wcf.acp.reactionType.image')
 			->appendChildren([
-				TextFormField::create('iconFile')
+				UploadFormField::create('iconFile')
 					->label('wcf.acp.reactionType.image')
 					->description('wcf.acp.reactionType.image.description')
 					->required()
-					->addValidator(new FormFieldValidator('invalidPath', function(TextFormField $field) {
-						if (!file_exists(WCF_DIR.'images/reaction/'.$field->getValue())) {
-							$field->addValidationError(new FormFieldValidationError(
-								'invalidPath',
-								'wcf.acp.reactionType.image.invalidPath'
-							));
-						}
-					}))
+					->maximum(1)
+					->imageOnly(true)
+					->allowSvgImage(true)
 			]);
 		
 		$this->form->appendChildren([

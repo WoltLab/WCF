@@ -3,15 +3,17 @@ namespace wcf\data\ad;
 use wcf\data\condition\Condition;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
+use wcf\system\ad\location\IAdLocation;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\request\IRouteController;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents an ad.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Ad
  *
@@ -55,5 +57,33 @@ class Ad extends DatabaseObject implements IRouteController {
 	 */
 	public function getTitle() {
 		return $this->adName;
+	}
+	
+	/**
+	 * Returns the HTML code used to display the ad.
+	 * 
+	 * @return	string
+	 * @since	5.2
+	 */
+	public function getHtmlCode() {
+		$output = $this->ad;
+		
+		$objectType = ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
+		
+		if (WCF::getUser()->userID) {
+			$output = strtr($output, ['{$username}' => StringUtil::encodeHTML(WCF::getUser()->username)]);
+		}
+		else {
+			$output = strtr($output, ['{$username}' => StringUtil::encodeHTML(WCF::getLanguage()->get('wcf.user.guest'))]);
+		}
+		
+		if ($objectType->className && is_subclass_of($objectType->className, IAdLocation::class)) {
+			/** @var IAdLocation $adLocation */
+			$adLocation = $objectType->getProcessor();
+			
+			$output = $adLocation->replaceVariables($output);
+		}
+		
+		return $output;
 	}
 }

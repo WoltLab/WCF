@@ -1,14 +1,17 @@
 <?php
 namespace wcf\util;
+use wcf\data\user\group\UserGroup;
 use wcf\system\application\ApplicationHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\Regex;
+use wcf\system\WCF;
 
 /**
  * Contains message-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -45,11 +48,13 @@ class MessageUtil {
 	 */
 	public static function getMentionedUsers(HtmlInputProcessor $htmlInputProcessor) {
 		$usernames = [];
+		$groups = [];
 		
 		$elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('woltlab-metacode');
 		/** @var \DOMElement $element */
 		foreach ($elements as $element) {
-			if ($element->getAttribute('data-name') != 'user') {
+			$type = $element->getAttribute('data-name');
+			if ($type !== 'user' && $type !== 'group') {
 				continue;
 			}
 			
@@ -58,7 +63,38 @@ class MessageUtil {
 				continue;
 			}
 			
-			$usernames[] = $element->textContent;
+			if ($type === 'user') {
+				$usernames[] = $element->textContent;
+			}
+			else if ($type === 'group' && WCF::getSession()->getPermission('user.message.canMentionGroups')) {
+				$attributes = $htmlInputProcessor->getHtmlInputNodeProcessor()->parseAttributes(
+					$element->getAttribute('data-attributes')
+				);
+				
+				if (!empty($attributes[0])) {
+					$group = UserGroup::getGroupByID($attributes[0]);
+					if ($group !== null && $group->canBeMentioned() && !isset($groups[$group->groupID])) {
+						$groups[$group->groupID] = $group;
+					}
+				}
+			}
+		}
+		
+		if (!empty($groups)) {
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add('user_to_group.groupID IN (?)', [array_keys($groups)]);
+			if (!empty($usernames)) $conditions->add('user_table.username NOT IN (?)', [$usernames]);
+			
+			$sql = "SELECT          user_table.username
+				FROM            wcf".WCF_N."_user_to_group user_to_group
+				LEFT JOIN       wcf".WCF_N."_user user_table
+				ON              (user_table.userID = user_to_group.userID)
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			while ($username = $statement->fetchSingleColumn()) {
+				$usernames[] = $username;
+			}
 		}
 		
 		return $usernames;

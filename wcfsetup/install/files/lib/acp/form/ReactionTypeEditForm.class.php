@@ -7,12 +7,17 @@ use wcf\system\exception\IllegalLinkException;
  * Represents the reaction type add form.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
- * @since	3.2
+ * @since	5.2
  */
 class ReactionTypeEditForm extends ReactionTypeAddForm {
+	/**
+	 * @inheritDoc
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.reactionType.list';
+	
 	/**
 	 * @inheritDoc
 	 */

@@ -8,7 +8,7 @@ use wcf\util\JSON;
  * Default implementation for html node processors.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Node
  * @since       3.0
@@ -163,10 +163,18 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 	 * 
 	 * @param       \DOMElement     $element        old element
 	 * @param       string          $tagName        tag name for the new element
+	 * @param       bool            $preserveAttributes     retain attributes for the new element
 	 * @return      \DOMElement     newly created element
 	 */
-	public function renameTag(\DOMElement $element, $tagName) {
+	public function renameTag(\DOMElement $element, $tagName, $preserveAttributes = false) {
 		$newElement = $this->document->createElement($tagName);
+		if ($preserveAttributes) {
+			/** @var \DOMNode $attribute */
+			foreach ($element->attributes as $attribute) {
+				$newElement->setAttribute($attribute->nodeName, $attribute->nodeValue);
+			}
+		}
+		
 		$element->parentNode->insertBefore($newElement, $element);
 		while ($element->hasChildNodes()) {
 			$newElement->appendChild($element->firstChild);
@@ -223,7 +231,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 		$this->nodeData[] = [
 			'data' => $data,
 			'identifier' => $nodeIdentifier,
-			'object' => $htmlNode
+			'object' => $htmlNode,
 		];
 	}
 	

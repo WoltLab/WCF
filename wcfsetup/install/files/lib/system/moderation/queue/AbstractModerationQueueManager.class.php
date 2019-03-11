@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Default implementation for moderation queue managers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Moderation\Queue
  */

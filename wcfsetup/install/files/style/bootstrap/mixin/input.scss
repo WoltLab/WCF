@@ -19,7 +19,8 @@
 		color: $wcfInputTextActive;
 	}
 	
-	&[disabled] {
+	&[disabled],
+	&.disabled {
 		background-color: $wcfInputDisabledBackground !important;
 		border-color: $wcfInputDisabledBorder !important;
 		color: $wcfInputDisabledText !important;

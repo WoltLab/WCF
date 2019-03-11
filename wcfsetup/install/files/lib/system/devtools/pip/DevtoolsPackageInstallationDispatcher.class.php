@@ -1,14 +1,16 @@
 <?php
 namespace wcf\system\devtools\pip;
 use wcf\data\devtools\project\DevtoolsProject;
+use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\system\devtools\package\DevtoolsInstaller;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\package\PackageInstallationNodeBuilder;
 
 /**
  * Specialized implementation to emulate a regular package installation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Devtools\Pip
  * @since       3.1
@@ -22,10 +24,33 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
 	/**
 	 * @inheritDoc
 	 */
-	public function __construct(DevtoolsProject $project) {
-		parent::__construct(new DevtoolsPackageInstallationQueue($project));
+	public function __construct(DevtoolsProject $project, PackageInstallationQueue $queue = null) {
+		$this->queue = $queue;
+		if ($this->queue === null) {
+			$this->queue = new DevtoolsPackageInstallationQueue($project);
+		}
+		
+		$this->nodeBuilder = new class($this) extends PackageInstallationNodeBuilder {
+			protected function buildOptionalNodes() {
+				// does nothing; optional packages are not supported
+			}
+		};
+		
+		$this->action = $this->queue->action;
 		
 		$this->project = $project;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function createPackage(array $packageData) {
+		$package = parent::createPackage($packageData);
+		
+		$this->project->setPackage($package);
+		
+		return $package;
 	}
 	
 	/**
@@ -68,7 +93,7 @@ class DevtoolsPackageInstallationDispatcher extends PackageInstallationDispatche
 	 * Returns the project the installation dispatcher is created for.
 	 * 
 	 * @return	DevtoolsProject
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getProject() {
 		return $this->project;

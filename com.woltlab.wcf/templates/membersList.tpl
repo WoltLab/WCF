@@ -31,50 +31,6 @@
 			</div>
 		</form>
 	</section>
-	
-	<section class="box" data-static-box-identifier="com.woltlab.wcf.MembersListLetters">
-		<h2 class="boxTitle">{lang}wcf.user.members.sort.letters{/lang}</h2>
-		
-		<div class="boxContent">
-			<ul class="buttonList smallButtons letters">
-				{foreach from=$letters item=__letter}
-					<li><a href="{if $searchID}{link controller='MembersList' id=$searchID}sortField={$sortField}&sortOrder={$sortOrder}&letter={$__letter|rawurlencode}{/link}{else}{link controller='MembersList'}sortField={$sortField}&sortOrder={$sortOrder}&letter={$__letter|rawurlencode}{/link}{/if}" class="button small{if $letter == $__letter} active{/if}">{$__letter}</a></li>
-				{/foreach}
-				{if !$letter|empty}<li class="lettersReset"><a href="{if $searchID}{link controller='MembersList' id=$searchID}sortField={$sortField}&sortOrder={$sortOrder}{/link}{else}{link controller='MembersList'}sortField={$sortField}&sortOrder={$sortOrder}{/link}{/if}" class="button small">{lang}wcf.user.members.sort.letters.all{/lang}</a></li>{/if}
-			</ul>
-		</div>
-	</section>
-	
-	<section class="box" data-static-box-identifier="com.woltlab.wcf.MembersListSorting">
-		<form method="post" action="{if $searchID}{link controller='MembersList' id=$searchID}{/link}{else}{link controller='MembersList'}{/link}{/if}">
-			<h2 class="boxTitle">{lang}wcf.user.members.sort{/lang}</h2>
-			
-			<div class="boxContent">
-				<dl>
-					<dt></dt>
-					<dd>
-						<select id="sortField" name="sortField">
-							<option value="username"{if $sortField == 'username'} selected{/if}>{lang}wcf.user.username{/lang}</option>
-							<option value="registrationDate"{if $sortField == 'registrationDate'} selected{/if}>{lang}wcf.user.registrationDate{/lang}</option>
-							<option value="activityPoints"{if $sortField == 'activityPoints'} selected{/if}>{lang}wcf.user.activityPoint{/lang}</option>
-							{if MODULE_LIKE}<option value="reactionReputation"{if $sortField == 'reactionReputation'} selected{/if}>{lang}wcf.like.reactionReputation{/lang}</option>{/if}
-							<option value="lastActivityTime"{if $sortField == 'lastActivityTime'} selected{/if}>{lang}wcf.user.usersOnline.lastActivity{/lang}</option>
-							{event name='sortField'}
-						</select>
-						<select name="sortOrder">
-							<option value="ASC"{if $sortOrder == 'ASC'} selected{/if}>{lang}wcf.global.sortOrder.ascending{/lang}</option>
-							<option value="DESC"{if $sortOrder == 'DESC'} selected{/if}>{lang}wcf.global.sortOrder.descending{/lang}</option>
-						</select>
-					</dd>
-				</dl>
-				
-				<div class="formSubmit">
-					<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-					<input type="hidden" name="letter" value="{$letter}">
-				</div>
-			</div>
-		</form>
-	</section>
 {/capture}
 
 {include file='header'}
@@ -93,14 +49,69 @@
 
 {if $items}
 	<div class="section sectionContainerList">
+		<div class="containerListDisplayOptions">
+			<div class="containerListSortOptions">
+				<a rel="nofollow" href="{link controller='MembersList' id=$searchID}pageNo={@$pageNo}&sortField={$sortField}&sortOrder={if $sortOrder == 'ASC'}DESC{else}ASC{/if}{if $letter}&letter={$letter}{/if}{/link}">
+					<span class="icon icon16 fa-sort-amount-{$sortOrder|strtolower} jsTooltip" title="{lang}wcf.global.sorting{/lang} ({lang}wcf.global.sortOrder.{if $sortOrder === 'ASC'}ascending{else}descending{/if}{/lang})"></span>
+				</a>
+				<span class="dropdown">
+					<span class="dropdownToggle">{lang}wcf.user.sortField.{$sortField}{/lang}</span>
+					
+					<ul class="dropdownMenu">
+						{foreach from=$validSortFields item=_sortField}
+							<li{if $_sortField === $sortField} class="active"{/if}><a rel="nofollow" href="{link controller='MembersList' id=$searchID}pageNo={@$pageNo}&sortField={$_sortField}&sortOrder={if $sortField === $_sortField}{if $sortOrder === 'DESC'}ASC{else}DESC{/if}{else}{$sortOrder}{/if}{if $letter}&letter={$letter}{/if}{/link}">{lang}wcf.user.sortField.{$_sortField}{/lang}</a></li>
+						{/foreach}
+					</ul>
+				</span>
+			</div>
+			
+			{hascontent}
+				<div class="containerListActiveFilters">
+					<ul class="inlineList">
+						{content}
+							{if $letter}<li><span class="icon icon16 fa-bold jsTooltip" title="{lang}wcf.user.members.sort.letters{/lang}"></span> {$letter}</li>{/if}
+						{/content}
+					</ul>
+				</div>
+			{/hascontent}
+			
+			<div class="containerListFilterOptions jsOnly">
+				<button class="small jsStaticDialog" data-dialog-id="membersListSortFilter"><span class="icon icon16 fa-filter"></span> {lang}wcf.global.filter{/lang}</button>
+			</div>
+		</div>
 		<ol class="containerList userList">
 			{foreach from=$objects item=user}
 				{include file='userListItem'}
 			{/foreach}
 		</ol>
 	</div>
+	
+	<div id="membersListSortFilter" class="jsStaticDialogContent" data-title="{lang}wcf.user.members.filter{/lang}">
+		<form method="post" action="{link controller='MembersList' id=$searchID}{/link}">
+			<div class="section">
+				<dl>
+					<dt><label for="letter">{lang}wcf.user.members.sort.letters{/lang}</label></dt>
+					<dd>
+						<select name="letter" id="letter">
+							<option value="">{lang}wcf.user.members.sort.letters.all{/lang}</option>
+							{foreach from=$letters item=__letter}
+								<option value="{$__letter}"{if $__letter == $letter} selected{/if}>{$__letter}</option>
+							{/foreach}
+						</select>
+					</dd>
+				</dl>
+			</div>
+			
+			<div class="formSubmit">
+				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+				<a href="{link controller='MembersList'}{/link}" class="button">{lang}wcf.global.button.reset{/lang}</a>
+				<input type="hidden" name="sortField" value="{$sortField}">
+				<input type="hidden" name="sortOrder" value="{$sortOrder}">
+			</div>
+		</form>
+	</div>
 {else}
-	<p class="info">{lang}wcf.user.members.noMembers{/lang}</p>
+	<p class="info" role="status">{lang}wcf.user.members.noMembers{/lang}</p>
 {/if}
 
 <footer class="contentFooter">

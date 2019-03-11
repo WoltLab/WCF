@@ -7,7 +7,7 @@ namespace wcf\util;
  * between both arrays as well.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -287,7 +287,7 @@ class Diff {
 								for ($k = $j; $k < $max && $k <= $j + $context; $k++) {
 									if ($d[$k][0] != self::SAME) {
 										$inContext = $k - $j;
-										continue 2;
+										continue 3;
 									}
 								}
 								break 2;

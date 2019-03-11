@@ -4,6 +4,7 @@ use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
 use wcf\system\package\PackageInstallationDispatcher;
+use wcf\system\WCF;
 use wcf\util\DOMUtil;
 use wcf\util\XML;
 
@@ -14,10 +15,10 @@ use wcf\util\XML;
  * files at once.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Devtools\Pip
- * @since	3.2
+ * @since	5.2
  * 
  * @property	PackageInstallationDispatcher|DevtoolsPackageInstallationDispatcher	$installation
  */
@@ -37,7 +38,7 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 	 * @param	IFormDocument		$form
 	 */
 	public function addEntry(IFormDocument $form) {
-		foreach ($this->getProjectXmls() as $xml) {
+		foreach ($this->getProjectXmls(true) as $xml) {
 			$newElement = $this->createAndInsertNewXmlElement($xml, $form);
 			
 			$this->saveObject($newElement);
@@ -71,7 +72,7 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 	 */
 	public function editEntry(IFormDocument $form, $identifier) {
 		$newElement = null;
-		foreach ($this->getProjectXmls() as $xml) {
+		foreach ($this->getProjectXmls(true) as $xml) {
 			$element = $this->getElementByIdentifier($xml, $identifier);
 			$newElement = $this->replaceXmlElement($xml, $form, $identifier);
 			
@@ -122,7 +123,7 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 				$entryList->addEntry(
 					$this->getElementIdentifier($element),
 					// we skip the event here to avoid firing all of those events
-					array_intersect_key($this->fetchElementData($element), $entryList->getKeys())
+					array_intersect_key($this->fetchElementData($element, false), $entryList->getKeys())
 				);
 			}
 		}
@@ -133,9 +134,10 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 	/**
 	 * Returns the xml objects for this pip.
 	 * 
+	 * @param	boolean		$createXmlFiles		if `true` and if a relevant XML file does not exist, it is created
 	 * @return	XML[]
 	 */
-	abstract protected function getProjectXmls();
+	abstract protected function getProjectXmls($createXmlFiles = false);
 	
 	/**
 	 * @inheritDoc
@@ -203,5 +205,52 @@ trait TMultiXmlGuiPackageInstallationPlugin {
 		}
 		
 		return $missingElements !== count($xmls);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function deleteEntry($identifier, $addDeleteInstruction) {
+		foreach ($this->getProjectXmls() as $xml) {
+			$element = $this->getElementByIdentifier($xml, $identifier);
+			
+			if ($element === null) {
+				throw new \InvalidArgumentException("Unknown entry with identifier '{$identifier}'.");
+			}
+			
+			if (!$this->supportsDeleteInstruction() && $addDeleteInstruction) {
+				throw new \InvalidArgumentException("This package installation plugin does not support delete instructions.");
+			}
+			
+			$this->deleteObject($element);
+			
+			if ($addDeleteInstruction) {
+				$this->addDeleteElement($element);
+			}
+			
+			$document = $element->ownerDocument;
+			
+			DOMUtil::removeNode($element);
+			
+			$deleteFile = $this->sanitizeXmlFileAfterDeleteEntry($document);
+			
+			if ($deleteFile) {
+				unlink($xml->getPath());
+			}
+			else {
+				$xml->write($xml->getPath());
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$sql = "DELETE FROM	wcf" . WCF_N . "_language_item
+			WHERE		languageItem = ?
+					AND packageID = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$element->getAttribute('name')]);
 	}
 }

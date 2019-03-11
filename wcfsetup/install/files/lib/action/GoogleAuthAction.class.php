@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * Handles google auth.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Action
  */
@@ -62,8 +62,14 @@ class GoogleAuthAction extends AbstractAction {
 			$data = JSON::decode($content);
 			
 			try {
+				// fetch openID connect configuration
+				$request = new HTTPRequest('https://accounts.google.com/.well-known/openid-configuration');
+				$request->execute();
+				$reply = $request->getReply();
+				$content = JSON::decode($reply['body']);
+				
 				// fetch userdata
-				$request = new HTTPRequest('https://www.googleapis.com/plus/v1/people/me');
+				$request = new HTTPRequest($content['userinfo_endpoint']);
 				$request->addHeader('Authorization', 'Bearer '.$data['access_token']);
 				$request->execute();
 				$reply = $request->getReply();
@@ -78,7 +84,7 @@ class GoogleAuthAction extends AbstractAction {
 			$userData = JSON::decode($content);
 			
 			// check whether a user is connected to this google account
-			$user = User::getUserByAuthData('google:'.$userData['id']);
+			$user = User::getUserByAuthData('google:'.$userData['sub']);
 			
 			if ($user->userID) {
 				// a user is already connected, but we are logged in, break
@@ -108,16 +114,16 @@ class GoogleAuthAction extends AbstractAction {
 				
 				// save data for connection
 				if (WCF::getUser()->userID) {
-					WCF::getSession()->register('__googleUsername', $userData['displayName']);
+					WCF::getSession()->register('__googleUsername', $userData['name']);
 					WCF::getSession()->register('__googleData', $userData);
 					
 					HeaderUtil::redirect(LinkHandler::getInstance()->getLink('AccountManagement').'#3rdParty');
 				}
 				// save data and redirect to registration
 				else {
-					WCF::getSession()->register('__username', $userData['displayName']);
-					if (isset($userData['emails'][0]['value'])) {
-						WCF::getSession()->register('__email', $userData['emails'][0]['value']);
+					WCF::getSession()->register('__username', $userData['name']);
+					if (isset($userData['email'])) {
+						WCF::getSession()->register('__email', $userData['email']);
 					}
 					
 					WCF::getSession()->register('__googleData', $userData);
@@ -144,7 +150,7 @@ class GoogleAuthAction extends AbstractAction {
 		// start auth by redirecting to google
 		$token = bin2hex(\random_bytes(20));
 		WCF::getSession()->register('__googleInit', $token);
-		HeaderUtil::redirect("https://accounts.google.com/o/oauth2/auth?client_id=".rawurlencode(StringUtil::trim(GOOGLE_PUBLIC_KEY)). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=profile+email&response_type=code");
+		HeaderUtil::redirect("https://accounts.google.com/o/oauth2/auth?client_id=".rawurlencode(StringUtil::trim(GOOGLE_PUBLIC_KEY)). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=profile+openid+email&response_type=code");
 		$this->executed();
 		exit;
 	}

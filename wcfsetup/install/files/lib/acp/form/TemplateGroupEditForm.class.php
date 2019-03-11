@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the form for editing template groups.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -19,7 +19,7 @@ class TemplateGroupEditForm extends TemplateGroupAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.template';
+	public $activeMenuItem = 'wcf.acp.menu.link.template.group.list';
 	
 	/**
 	 * template group id

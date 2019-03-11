@@ -15,7 +15,7 @@ use wcf\util\HeaderUtil;
  * Shows a list of cms articles.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * @since	3.0
@@ -72,7 +72,7 @@ class ArticleListPage extends SortablePage {
 	
 	/**
 	 * @var User
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $user;
 	
@@ -92,13 +92,21 @@ class ArticleListPage extends SortablePage {
 	public $validSortFields = ['title', 'time'];
 	
 	/**
+	 * display 'Add Article' dialog on load
+	 * @var integer
+	 */
+	public $showArticleAddDialog = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
 		
+		if (!empty($_REQUEST['showArticleAddDialog'])) $this->showArticleAddDialog = 1;
+		
 		// read available label groups
-		$this->labelGroups = ArticleCategory::getAccessibleLabelGroups();
+		$this->labelGroups = ArticleCategory::getAccessibleLabelGroups('canViewLabel');
 		if (!empty($this->labelGroups) && isset($_REQUEST['labelIDs']) && is_array($_REQUEST['labelIDs'])) {
 			$this->labelIDs = $_REQUEST['labelIDs'];
 			
@@ -196,7 +204,9 @@ class ArticleListPage extends SortablePage {
 			'labelIDs' => $this->labelIDs,
 			'controllerName' => $this->controllerName,
 			'controllerObject' => null,
-			'user' => $this->user
+			'user' => $this->user,
+			'categoryID' => 0,
+			'showArticleAddDialog' => $this->showArticleAddDialog,
 		]);
 	}
 }

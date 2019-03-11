@@ -1,6 +1,7 @@
 <?php
 namespace wcf\form;
 use wcf\acp\form\UserAddForm;
+use wcf\data\blacklist\entry\BlacklistEntry;
 use wcf\data\object\type\ObjectType;
 use wcf\data\user\avatar\Gravatar;
 use wcf\data\user\avatar\UserAvatarAction;
@@ -23,16 +24,21 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\authentication\UserAuthenticationFactory;
+use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
+use wcf\system\user\notification\object\UserRegistrationUserNotificationObject;
+use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 use wcf\util\UserRegistrationUtil;
+use wcf\util\UserUtil;
 
 /**
  * Shows the user registration form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -78,6 +84,13 @@ class RegisterForm extends UserAddForm {
 	 * @var	array
 	 */
 	public $randomFieldNames = [];
+	
+	/**
+	 * list of fields that have matches in the blacklist
+	 * @var string[]
+	 * @since 5.2
+	 */
+	public $blacklistMatches = [];
 	
 	/**
 	 * min number of seconds between form request and submit
@@ -161,6 +174,13 @@ class RegisterForm extends UserAddForm {
 		// validate registration time
 		if (!$this->isExternalAuthentication && (!WCF::getSession()->getVar('registrationStartTime') || (TIME_NOW - WCF::getSession()->getVar('registrationStartTime')) < self::$minRegistrationTime)) {
 			throw new UserInputException('registrationStartTime', []);
+		}
+		
+		if (BLACKLIST_SFS_ENABLE) {
+			$this->blacklistMatches = BlacklistEntry::getMatches($this->username, $this->email, UserUtil::getIpAddress());
+			if (BLACKLIST_SFS_ACTION === 'block') {
+				throw new NamedUserException('wcf.user.register.error.blacklistMatches');
+			}
 		}
 	}
 	
@@ -373,11 +393,11 @@ class RegisterForm extends UserAddForm {
 					// Google Plus
 					if (WCF::getSession()->getVar('__googleData')) {
 						$googleData = WCF::getSession()->getVar('__googleData');
-						$this->additionalFields['authData'] = 'google:'.$googleData['id'];
+						$this->additionalFields['authData'] = 'google:'.$googleData['sub'];
 						
 						WCF::getSession()->unregister('__googleData');
 						
-						if (isset($googleData['emails'][0]['value']) && $googleData['emails'][0]['value'] == $this->email) {
+						if (isset($googleData['email']) && $googleData['email'] == $this->email) {
 							$registerVia3rdParty = true;
 						}
 						
@@ -391,18 +411,10 @@ class RegisterForm extends UserAddForm {
 								break;
 							}
 						}
-						if (isset($googleData['birthday']) && User::getUserOptionID('birthday') !== null) $saveOptions[User::getUserOptionID('birthday')] = $googleData['birthday'];
-						if (isset($googleData['placesLived']) && User::getUserOptionID('location') !== null) {
-							// save primary location
-							$saveOptions[User::getUserOptionID('location')] = current(array_map(
-								function ($element) { return $element['value']; },
-								array_filter($googleData['placesLived'], function ($element) { return isset($element['primary']) && $element['primary']; })
-							));
-						}
 						
 						// avatar
-						if (isset($googleData['image']['url'])) {
-							$avatarURL = preg_replace('/\?sz=\d+/', '?sz=128', $googleData['image']['url']);
+						if (isset($googleData['picture'])) {
+							$avatarURL = $googleData['picture'];
 						}
 					}
 				break;
@@ -417,7 +429,7 @@ class RegisterForm extends UserAddForm {
 		
 		// generate activation code
 		$addDefaultGroups = true;
-		if ((REGISTER_ACTIVATION_METHOD == 1 && !$registerVia3rdParty) || REGISTER_ACTIVATION_METHOD == 2) {
+		if (!empty($this->blacklistMatches) || (REGISTER_ACTIVATION_METHOD == 1 && !$registerVia3rdParty) || REGISTER_ACTIVATION_METHOD == 2) {
 			$activationCode = UserRegistrationUtil::getActivationCode();
 			$this->additionalFields['activationCode'] = $activationCode;
 			$addDefaultGroups = false;
@@ -434,7 +446,8 @@ class RegisterForm extends UserAddForm {
 			'data' => array_merge($this->additionalFields, [
 				'username' => $this->username,
 				'email' => $this->email,
-				'password' => $this->password
+				'password' => $this->password,
+				'blacklistMatches' => (!empty($this->blacklistMatches)) ? JSON::encode($this->blacklistMatches) : '',
 			]),
 			'groups' => $this->groupIDs,
 			'languageIDs' => $this->visibleLanguages,
@@ -443,6 +456,7 @@ class RegisterForm extends UserAddForm {
 		];
 		$this->objectAction = new UserAction([], 'create', $data);
 		$result = $this->objectAction->executeAction();
+		/** @var User $user */
 		$user = $result['returnValues'];
 		$userEditor = new UserEditor($user);
 		
@@ -459,10 +473,12 @@ class RegisterForm extends UserAddForm {
 		}
 		
 		// activation management
-		if (REGISTER_ACTIVATION_METHOD == 0) {
+		if (REGISTER_ACTIVATION_METHOD == 0 && empty($this->blacklistMatches)) {
 			$this->message = 'wcf.user.register.success';
+			
+			UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
 		}
-		else if (REGISTER_ACTIVATION_METHOD == 1) {
+		else if (REGISTER_ACTIVATION_METHOD == 1 && empty($this->blacklistMatches)) {
 			// registering via 3rdParty leads to instant activation
 			if ($registerVia3rdParty) {
 				$this->message = 'wcf.user.register.success';
@@ -479,7 +495,7 @@ class RegisterForm extends UserAddForm {
 				$this->message = 'wcf.user.register.success.needActivation';
 			}
 		}
-		else if (REGISTER_ACTIVATION_METHOD == 2) {
+		else if (REGISTER_ACTIVATION_METHOD == 2 || !empty($this->blacklistMatches)) {
 			$this->message = 'wcf.user.register.success.awaitActivation';
 		}
 		
@@ -494,6 +510,8 @@ class RegisterForm extends UserAddForm {
 			$email->setBody(new PlainTextMimePart($language->getDynamicVariable('wcf.user.register.notification.mail', ['user' => $user])));
 			$email->send();
 		}
+		
+		$this->fireNotificationEvent($user);
 		
 		if ($this->captchaObjectType) {
 			$this->captchaObjectType->getProcessor()->reset();
@@ -512,5 +530,47 @@ class RegisterForm extends UserAddForm {
 		// forward to index page
 		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->getDynamicVariable($this->message, ['user' => $user]), 15);
 		exit;
+	}
+	
+	/**
+	 * @param       User $user
+	 * @throws      SystemException
+	 * @since       5.2
+	 */
+	protected function fireNotificationEvent(User $user) {
+		$recipientIDs = $this->getRecipientsForNotificationEvent();
+		if (!empty($recipientIDs)) {
+			UserNotificationHandler::getInstance()->fireEvent(
+				'registration',
+				'com.woltlab.wcf.user.registration.notification',
+				new UserRegistrationUserNotificationObject($user),
+				$recipientIDs
+			);
+		}
+	}
+	
+	/**
+	 * @return      integer[]
+	 * @since       5.2
+	 */
+	protected function getRecipientsForNotificationEvent() {
+		$sql = "SELECT  userID
+			FROM    wcf".WCF_N."_user_to_group
+			WHERE   groupID IN (
+					SELECT  groupID
+					FROM    wcf".WCF_N."_user_group_option_value
+					WHERE   optionID IN (
+							SELECT  optionID
+							FROM    wcf".WCF_N."_user_group_option
+							WHERE   optionName = ?
+						)
+						AND optionValue = ?
+				)";
+		$statement = WCF::getDB()->prepareStatement($sql, 100);
+		$statement->execute([
+			'admin.user.canSearchUser',
+			1
+		]);
+		return $statement->fetchAll(\PDO::FETCH_COLUMN);
 	}
 }

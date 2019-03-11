@@ -7,17 +7,17 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * Provides default implementations of `IMaximumLengthFormField` methods.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
 trait TMaximumLengthFormField {
 	/**
 	 * maximum length of the field value
 	 * @var	null|int
 	 */
-	protected $__maximumLength;
+	protected $maximumLength;
 	
 	/**
 	 * Returns the maximum length of the values of this field or `null` if no placeholder
@@ -26,7 +26,7 @@ trait TMaximumLengthFormField {
 	 * @return	null|int
 	 */
 	public function getMaximumLength() {
-		return $this->__maximumLength;
+		return $this->maximumLength;
 	}
 	
 	/**
@@ -56,7 +56,7 @@ trait TMaximumLengthFormField {
 			}
 		}
 		
-		$this->__maximumLength = $maximumLength;
+		$this->maximumLength = $maximumLength;
 		
 		return $this;
 	}

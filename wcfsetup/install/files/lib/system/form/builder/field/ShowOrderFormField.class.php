@@ -23,10 +23,10 @@ use wcf\system\WCF;
  * for the field options.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
 class ShowOrderFormField extends SingleSelectionFormField {
 	use TDefaultIdFormField;
@@ -42,8 +42,8 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	 * @inheritDoc
 	 */
 	public function getSaveValue() {
-		if ($this->__value !== null) {
-			$index = array_search($this->__value, array_keys($this->getOptions()));
+		if ($this->value !== null) {
+			$index = array_search($this->value, array_keys($this->getOptions()));
 			
 			if ($index !== false) {
 				return $index + 1;
@@ -52,7 +52,7 @@ class ShowOrderFormField extends SingleSelectionFormField {
 			return null;
 		}
 		
-		return $this->__value;
+		return $this->value;
 	}
 	
 	/**
@@ -66,9 +66,9 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	public function options($options, $nestedOptions = false, $labelLanguageItems = true) {
 		parent::options($options, $nestedOptions, $labelLanguageItems);
 		
-		$this->__options = [0 => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition')] + $this->__options;
+		$this->options = [0 => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition')] + $this->options;
 		if ($nestedOptions) {
-			array_unshift($this->__nestedOptions, [
+			array_unshift($this->nestedOptions, [
 				'depth' => 0,
 				'label' => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition'),
 				'value' => 0

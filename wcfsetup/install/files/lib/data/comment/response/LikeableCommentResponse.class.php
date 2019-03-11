@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * Likeable object implementation for comment responses.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Comment\Response
  * 
@@ -65,7 +65,8 @@ class LikeableCommentResponse extends AbstractLikeObject implements IReactionObj
 						'commentID' => $comment->commentID,
 						'commentUserID' => $comment->userID,
 						'objectID' => $comment->objectID
-					]
+					],
+					$this->responseID
 				);
 			}
 		}

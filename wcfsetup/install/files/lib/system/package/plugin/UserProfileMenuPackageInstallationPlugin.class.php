@@ -6,8 +6,8 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\OptionFormField;
-use wcf\system\form\builder\field\UserGroupOptionFormField;
+use wcf\system\form\builder\field\option\OptionFormField;
+use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\ClassNameFormField;
@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes user profile menu items.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -107,7 +107,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		/** @var FormContainer $dataContainer */
@@ -152,20 +152,20 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 			
 			IntegerFormField::create('showOrder')
 				->objectProperty('showorder')
-				->label('wcf.acp.pip.userProfileMenu.showOrder')
+				->label('wcf.form.field.showOrder')
 				->description('wcf.acp.pip.userProfileMenu.showOrder.description')
 				->nullable()
 				->minimum(1),
 			
 			OptionFormField::create()
-				->description('wcf.acp.pip.userProfileMenu.options.description')
+				->description('wcf.acp.pip.abstractMenu.options.description')
 				->packageIDs(array_merge(
 					[$this->installation->getPackage()->packageID],
 					array_keys($this->installation->getPackage()->getAllRequiredPackages())
 				)),
 			
 			UserGroupOptionFormField::create()
-				->description('wcf.acp.pip.userProfileMenu.permissions.description')
+				->description('wcf.acp.pip.abstractMenu.options.description')
 				->packageIDs(array_merge(
 					[$this->installation->getPackage()->packageID],
 					array_keys($this->installation->getPackage()->getAllRequiredPackages())
@@ -175,7 +175,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -214,7 +214,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
@@ -222,7 +222,7 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -233,9 +233,9 @@ class UserProfileMenuPackageInstallationPlugin extends AbstractXMLPackageInstall
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		
 		$userProfileMenuItem = $document->createElement($this->tagName);

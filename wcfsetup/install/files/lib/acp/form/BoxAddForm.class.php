@@ -9,6 +9,7 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\page\Page;
 use wcf\data\page\PageNodeTree;
+use wcf\data\smiley\SmileyCache;
 use wcf\form\AbstractForm;
 use wcf\system\acl\simple\SimpleAclHandler;
 use wcf\system\box\IBoxController;
@@ -30,7 +31,7 @@ use wcf\util\StringUtil;
  * Shows the box add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since	3.0
@@ -196,19 +197,19 @@ class BoxAddForm extends AbstractForm {
 	
 	/**
 	 * @var	bool
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $isDisabled = 0;
 	
 	/**
 	 * @var int
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $presetBoxID = 0;
 	
 	/**
 	 * @var Box
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $presetBox;
 	
@@ -621,6 +622,8 @@ class BoxAddForm extends AbstractForm {
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
+		
+		SmileyCache::getInstance()->assignVariables();
 		
 		WCF::getTPL()->assign([
 			'action' => 'add',

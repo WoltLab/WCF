@@ -4,7 +4,7 @@
  * User-related classes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -1650,7 +1650,7 @@ WCF.User.Registration.LostPassword = Class.extend({
  * Notification system for WCF.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Notification = { };
@@ -1945,7 +1945,7 @@ WCF.User.RecentActivityLoader = Class.extend({
  * Loads likes once the user scrolls to the very bottom.
  * 
  * @param	integer		userID
- * @deprecated  since 3.2
+ * @deprecated  since 5.2
  */
 WCF.User.LikeLoader = Class.extend({
 	/**

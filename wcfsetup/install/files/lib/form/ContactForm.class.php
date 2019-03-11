@@ -2,6 +2,7 @@
 namespace wcf\form;
 use wcf\data\contact\option\ContactOptionAction;
 use wcf\data\contact\recipient\ContactRecipientList;
+use wcf\system\attachment\AttachmentHandler;
 use wcf\system\email\Mailbox;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
@@ -15,11 +16,21 @@ use wcf\util\StringUtil;
  * Customizable contact form with selectable recipients.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
 class ContactForm extends AbstractCaptchaForm {
+	/**
+	 * @var	AttachmentHandler
+	 */
+	public $attachmentHandler;
+	
+	/**
+	 * @var	string
+	 */
+	public $attachmentObjectType = 'com.woltlab.wcf.contact';
+	
 	/**
 	 * sender email address
 	 * @var string
@@ -60,6 +71,11 @@ class ContactForm extends AbstractCaptchaForm {
 	public $privacyPolicyConfirmed = 0;
 	
 	/**
+	 * @var	string
+	 */
+	public $tmpHash = '';
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -74,6 +90,19 @@ class ContactForm extends AbstractCaptchaForm {
 		
 		if (count($this->recipientList) < 0) {
 			throw new IllegalLinkException();
+		}
+		
+		if (isset($_REQUEST['tmpHash'])) {
+			$this->tmpHash = $_REQUEST['tmpHash'];
+		}
+		if (empty($this->tmpHash)) {
+			$this->tmpHash = WCF::getSession()->getVar('__wcfAttachmentTmpHash');
+			if ($this->tmpHash === null) {
+				$this->tmpHash = StringUtil::getRandomID();
+			}
+			else {
+				WCF::getSession()->unregister('__wcfAttachmentTmpHash');
+			}
 		}
 	}
 	
@@ -142,7 +171,6 @@ class ContactForm extends AbstractCaptchaForm {
 			}
 		}
 		
-		// privacy policy
 		if (!$this->privacyPolicyConfirmed) {
 			throw new UserInputException('privacyPolicyConfirmed');
 		}
@@ -152,6 +180,10 @@ class ContactForm extends AbstractCaptchaForm {
 	 * @inheritDoc
 	 */
 	public function readData() {
+		if (CONTACT_FORM_ENABLE_ATTACHMENTS && $this->attachmentObjectType) {
+			$this->attachmentHandler = new AttachmentHandler($this->attachmentObjectType, 0, $this->tmpHash, 0);
+		}
+		
 		parent::readData();
 		
 		if (empty($_POST)) {
@@ -171,10 +203,11 @@ class ContactForm extends AbstractCaptchaForm {
 		parent::save();
 		
 		$this->objectAction = new ContactOptionAction([], 'send', [
+			'attachmentHandler' => $this->attachmentHandler,
 			'email' => $this->email,
 			'name' => $this->name,
 			'optionHandler' => $this->optionHandler,
-			'recipientID' => $this->recipientID
+			'recipientID' => $this->recipientID,
 		]);
 		$this->objectAction->executeAction();
 		
@@ -199,7 +232,12 @@ class ContactForm extends AbstractCaptchaForm {
 			'name' => $this->name,
 			'options' => $this->optionHandler->getOptions(),
 			'recipientList' => $this->recipientList,
-			'privacyPolicyConfirmed' => $this->privacyPolicyConfirmed
+			'privacyPolicyConfirmed' => $this->privacyPolicyConfirmed,
+			'attachmentHandler' => $this->attachmentHandler,
+			'attachmentObjectID' => 0,
+			'attachmentObjectType' => $this->attachmentObjectType,
+			'attachmentParentObjectID' => 0,
+			'tmpHash' => $this->tmpHash,
 		]);
 	}
 }

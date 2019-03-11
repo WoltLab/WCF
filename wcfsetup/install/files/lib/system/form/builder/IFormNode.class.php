@@ -6,10 +6,10 @@ use wcf\system\form\builder\field\dependency\IFormFieldDependency;
  * Represents a general form node providing common methods of all nodes.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder
- * @since	3.2
+ * @since	5.2
  */
 interface IFormNode {
 	/**
@@ -54,9 +54,9 @@ interface IFormNode {
 	 * By default, every node is available. This methods makes it easier to create forms
 	 * that contains node that are only avaiable if certain options have specific values
 	 * or the active user has specific permissions, for example. Furthermore, fields
-	 * themselves are also able to mark themselves as unavailable, for example, a selection
-	 * field without any options. A `IFormContainer` is automatically unavailable if it
-	 * contains no available children.
+	 * are also able to mark themselves as unavailable, for example, a selection field
+	 * without any options. A `IFormContainer` is automatically unavailable if it contains
+	 * no available children.
 	 * 
 	 * Unavailable fields produce no output, their value is not read, they are not validated
 	 * and they are not checked for save values.
@@ -71,7 +71,17 @@ interface IFormNode {
 	public function available($available = true);
 	
 	/**
-	 * Returns `true` if the node's dependencies are met and returns `false` otherwise.
+	 * Cleans up after the whole form is not used anymore.
+	 * This method has to support being called multiple times.
+	 * 
+	 * This form should not clean up input fields. 
+	 *
+	 * @return	static		this node
+	 */
+	public function cleanup();
+	
+	/**
+	 * Returns `true` if all of the node's dependencies are met and returns `false` otherwise.
 	 *
 	 * @return	bool
 	 */
@@ -221,14 +231,27 @@ interface IFormNode {
 	public function populate();
 	
 	/**
-	 * Removes the given CSS class and returns this node.
+	 * Removes the given attribute and returns this node.
 	 * 
-	 * If this node does not have the given CSS class, this method silently
+	 * If this node does not have the given attribute, this method silently
 	 * ignores that fact.
 	 * 
-	 * @param	string		$class		removed CSS class
+	 * @param	string		$name		removed attribute
 	 * @return	static				this node
 	 * 
+	 * @throws	\InvalidArgumentException	if the given attribute is invalid
+	 */
+	public function removeAttribute($name);
+	
+	/**
+	 * Removes the given CSS class and returns this node.
+	 *
+	 * If this node does not have the given CSS class, this method silently
+	 * ignores that fact.
+	 *
+	 * @param	string		$class		removed CSS class
+	 * @return	static				this node
+	 *
 	 * @throws	\InvalidArgumentException	if the given class is invalid
 	 */
 	public function removeClass($class);

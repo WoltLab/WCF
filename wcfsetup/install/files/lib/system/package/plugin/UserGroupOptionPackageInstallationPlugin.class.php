@@ -27,7 +27,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes user group options.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -212,7 +212,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		parent::addFormFields($form);
@@ -266,7 +266,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = parent::fetchElementData($element, $saveData);
@@ -303,7 +303,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function getSortOptionHandler() {
 		// reuse UserGroupOptionHandler
@@ -336,10 +336,10 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$option = parent::doCreateXmlElement($document, $form);
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
+		$option = parent::prepareXmlElement($document, $form);
 		
 		switch ($this->entryType) {
 			case 'options':
@@ -364,7 +364,7 @@ class UserGroupOptionPackageInstallationPlugin extends AbstractOptionPackageInst
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function getOptionTypeOptions() {
 		$options = [];

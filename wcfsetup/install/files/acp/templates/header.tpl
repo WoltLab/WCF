@@ -15,11 +15,19 @@
 	{event name='stylesheets'}
 	
 	<!-- Icons -->
-	<link rel="apple-touch-icon" sizes="180x180" href="{@$__wcf->getPath()}images/favicon/default.apple-touch-icon.png">
-	<link rel="manifest" href="{@$__wcf->getPath()}images/favicon/default.manifest.json">
-	<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon/default.favicon.ico">
-	<meta name="msapplication-config" content="{@$__wcf->getPath()}images/favicon/default.browserconfig.xml">
-	<meta name="theme-color" content="#3a6d9c">
+	{if PACKAGE_ID && $__wcf->getStyleHandler()->getDefaultStyle()}
+		<link rel="apple-touch-icon" sizes="180x180" href="{$__wcf->getStyleHandler()->getDefaultStyle()->getFaviconAppleTouchIcon()}">
+		<link rel="manifest" href="{@$__wcf->getStyleHandler()->getDefaultStyle()->getFaviconManifest()}">
+		<link rel="shortcut icon" href="{@$__wcf->getPath()}{@$__wcf->getStyleHandler()->getDefaultStyle()->getRelativeFavicon()}">
+		<meta name="msapplication-config" content="{@$__wcf->getStyleHandler()->getDefaultStyle()->getFaviconBrowserconfig()}">
+		<meta name="theme-color" content="{$__wcf->getStyleHandler()->getDefaultStyle()->getVariable('wcfPageThemeColor', true)}">
+	{else}	
+		<link rel="apple-touch-icon" sizes="180x180" href="{@$__wcf->getPath()}images/favicon/default.apple-touch-icon.png">
+		<link rel="manifest" href="{@$__wcf->getPath()}images/favicon/default.manifest.json">
+		<link rel="shortcut icon" href="{@$__wcf->getPath()}images/favicon/default.favicon.ico">
+		<meta name="msapplication-config" content="{@$__wcf->getPath()}images/favicon/default.browserconfig.xml">
+		<meta name="theme-color" content="#3a6d9c">
+	{/if}
 	
 	<script>
 		var SID_ARG_2ND = '';
@@ -32,6 +40,7 @@
 		var LAST_UPDATE_TIME = {@LAST_UPDATE_TIME};
 		var URL_LEGACY_MODE = false;
 		var ENABLE_DEBUG_MODE = {if ENABLE_DEBUG_MODE}true{else}false{/if};
+		var ENABLE_PRODUCTION_DEBUG_MODE = {if ENABLE_PRODUCTION_DEBUG_MODE}true{else}false{/if};
 		var ENABLE_DEVELOPER_TOOLS = {if ENABLE_DEVELOPER_TOOLS}true{else}false{/if};
 		var WSC_API_VERSION = {@WSC_API_VERSION};
 		
@@ -126,7 +135,14 @@
 				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 				'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}',
 				'wcf.menu.page': '{lang}wcf.menu.page{/lang}',
-				'wcf.menu.user': '{lang}wcf.menu.user{/lang}'
+				'wcf.menu.user': '{lang}wcf.menu.user{/lang}',
+				'wcf.date.datePicker': '{lang}wcf.date.datePicker{/lang}',
+				'wcf.date.datePicker.previousMonth': '{lang}wcf.date.datePicker.previousMonth{/lang}',
+				'wcf.date.datePicker.nextMonth': '{lang}wcf.date.datePicker.nextMonth{/lang}',
+				'wcf.date.datePicker.month': '{lang}wcf.date.datePicker.month{/lang}',
+				'wcf.date.datePicker.year': '{lang}wcf.date.datePicker.year{/lang}',
+				'wcf.date.datePicker.hour': '{lang}wcf.date.datePicker.hour{/lang}',
+				'wcf.date.datePicker.minute': '{lang}wcf.date.datePicker.minute{/lang}'
 				{event name='javascriptLanguageImport'}
 			});
 			
@@ -139,6 +155,8 @@
 			User.init({@$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}', {if $__wcf->user->userID}'{@$__wcf->user->getLink()|encodeJS}'{else}''{/if});
 		});
 	</script>
+	
+	{include file='__devtoolsLanguageChooser'}
 	
 	<script>
 		// prevent jQuery and other libraries from utilizing define()

@@ -1,35 +1,35 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
 
 /**
  * Provides default implementations of `IMultipleFormField` methods.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
 trait TMultipleFormField {
 	/**
 	 * maximum number of values that can be selected or set
 	 * @var	int
 	 */
-	protected $__maximumMultiples = IMultipleFormField::NO_MAXIMUM_MULTIPLES;
+	protected $maximumMultiples = IMultipleFormField::NO_MAXIMUM_MULTIPLES;
 	
 	/**
 	 * minimum number of values that can be selected or set
 	 * @var	int
 	 */
-	protected $__minimumMultiples = 0;
+	protected $minimumMultiples = 0;
 	
 	/**
 	 * `true` if this field allows multiple values to be selected or set and `false` otherwise
 	 * @var	bool
 	 */
-	protected $__multiple = false;
+	protected $multiple = false;
 	
 	/**
 	 * Returns `true` if multiple values can be selected or set and returns `false`
@@ -40,7 +40,7 @@ trait TMultipleFormField {
 	 * @return	bool
 	 */
 	public function allowsMultiple() {
-		return $this->__multiple;
+		return $this->multiple;
 	}
 	
 	/**
@@ -51,7 +51,7 @@ trait TMultipleFormField {
 	 * @return	int	maximum number of values
 	 */
 	public function getMaximumMultiples() {
-		return $this->__maximumMultiples;
+		return $this->maximumMultiples;
 	}
 	
 	/**
@@ -62,7 +62,7 @@ trait TMultipleFormField {
 	 * @return	int	minimum number of values
 	 */
 	public function getMinimumMultiples() {
-		return $this->__minimumMultiples;
+		return $this->minimumMultiples;
 	}
 	
 	/**
@@ -100,7 +100,7 @@ trait TMultipleFormField {
 			}
 		}
 		
-		$this->__maximumMultiples = $maximum;
+		$this->maximumMultiples = $maximum;
 		
 		return $this;
 	}
@@ -123,7 +123,7 @@ trait TMultipleFormField {
 			throw new \InvalidArgumentException("The given minimum number of values '{$minimum}' is greater than the set maximum number of values '{$this->getMaximumMultiples()}'.");
 		}
 		
-		$this->__minimumMultiples = $minimum;
+		$this->minimumMultiples = $minimum;
 		
 		return $this;
 	}
@@ -135,7 +135,7 @@ trait TMultipleFormField {
 	 * @return	static		this field
 	 */
 	public function multiple($multiple = true) {
-		$this->__multiple = $multiple;
+		$this->multiple = $multiple;
 		
 		return $this;
 	}

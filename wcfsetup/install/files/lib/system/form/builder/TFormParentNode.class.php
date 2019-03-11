@@ -1,22 +1,25 @@
 <?php
 namespace wcf\system\form\builder;
 use wcf\system\form\builder\field\IFormField;
+use wcf\system\form\builder\field\IImmutableFormField;
 
 /**
  * Provides default implementations of `IFormParentNode` methods.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder
- * @since	3.2
+ * @since	5.2
+ * 
+ * @mixin	IFormParentNode
  */
 trait TFormParentNode {
 	/**
 	 * child nodes of this node
 	 * @var	IFormChildNode[]
 	 */
-	protected $__children = [];
+	protected $children = [];
 	
 	/**
 	 * current iterator index
@@ -29,13 +32,9 @@ trait TFormParentNode {
 	 * 
 	 * @param	IFormChildNode		$child		appended child
 	 * @return	static					this node
-	 * 
-	 * @throws	\InvalidArgumentException		if the given child node cannot be appended
 	 */
 	public function appendChild(IFormChildNode $child) {
-		$this->validateChild($child);
-		
-		$this->__children[] = $child;
+		$this->children[] = $child;
 		
 		$child->parent($this);
 		
@@ -47,8 +46,6 @@ trait TFormParentNode {
 	 * 
 	 * @param	IFormChildNode[]	$children	appended children
 	 * @return	static					this node
-	 * 
-	 * @throws	\InvalidArgumentException		if any of the given child nodes is invalid or cannot be appended
 	 */
 	public function appendChildren(array $children) {
 		foreach ($children as $child) {
@@ -87,7 +84,23 @@ trait TFormParentNode {
 	 * @return	IFormChildNode[]	children of this node
 	 */
 	public function children() {
-		return $this->__children;
+		return $this->children;
+	}
+	
+	/**
+	 * Cleans up after the whole form is not used anymore.
+	 * This method has to support being called multiple times.
+	 * 
+	 * This form should not clean up input fields.
+	 * 
+	 * @return	static		this node
+	 */
+	public function cleanup() {
+		foreach ($this as $child) {
+			$child->cleanup();
+		}
+		
+		return $this;
 	}
 	
 	/**
@@ -96,7 +109,7 @@ trait TFormParentNode {
 	 * @return	int	number of children
 	 */
 	public function count() {
-		return count($this->__children);
+		return count($this->children);
 	}
 	
 	/**
@@ -105,7 +118,7 @@ trait TFormParentNode {
 	 * @return	IFormChildNode		current child node
 	 */
 	public function current() {
-		return $this->__children[$this->index];
+		return $this->children[$this->index];
 	}
 	
 	/**
@@ -114,7 +127,7 @@ trait TFormParentNode {
 	 * @return	null|IFormParentNode		iterator for the current child node
 	 */
 	public function getChildren() {
-		$node = $this->__children[$this->index];
+		$node = $this->children[$this->index];
 		if ($node instanceof IFormParentNode) {
 			return $node;
 		}
@@ -170,7 +183,7 @@ trait TFormParentNode {
 	 * @return	bool
 	 */
 	public function hasChildren() {
-		return !empty($this->__children);
+		return !empty($this->children);
 	}
 	
 	/**
@@ -209,7 +222,7 @@ trait TFormParentNode {
 		$didInsertNode = false;
 		foreach ($this->children() as $index => $existingChild) {
 			if ($existingChild->getId() === $referenceNodeId) {
-				array_splice($this->__children, $index, 0, [$child]);
+				array_splice($this->children, $index, 0, [$child]);
 				
 				$child->parent($this);
 				
@@ -253,7 +266,7 @@ trait TFormParentNode {
 				if ($child instanceof IFormParentNode) {
 					$child->readValues();
 				}
-				else if ($child instanceof IFormField && $child->isAvailable() && !$child->isImmutable()) {
+				else if ($child instanceof IFormField && $child->isAvailable() && (!($child instanceof IImmutableFormField) || !$child->isImmutable())) {
 					$child->readValue();
 				}
 			}
@@ -276,7 +289,7 @@ trait TFormParentNode {
 	 * @return	bool
 	 */
 	public function valid() {
-		return isset($this->__children[$this->index]);
+		return isset($this->children[$this->index]);
 	}
 	
 	/**
@@ -312,24 +325,11 @@ trait TFormParentNode {
 	/**
 	 * Checks if the given node can be added as a child to this node.
 	 * 
-	 * @param	IFormChildNode		$child			validated child node
+	 * @param	IFormChildNode		$child		validated child node
 	 * 
-	 * @throws	\InvalidArgumentException			if given node cannot be added as a child
+	 * @throws	\InvalidArgumentException		if given node cannot be added as a child
 	 */
 	public function validateChild(IFormChildNode $child) {
-		// check if a node with same id as the given node already exists
-		if ($this->contains($child->getId())) {
-			throw new \InvalidArgumentException("Cannot append node '{$child->getId()}' to node '{$this->getId()}' because a node with id '{$child->getId()}' already exists.");
-		}
-		
-		// check all child nodes of the given node for duplicate node ids
-		if ($child instanceof IFormParentNode) {
-			/** @var IFormNode $thisChild */
-			foreach ($child->getIterator() as $grandChild) {
-				if ($grandChild instanceof IFormParentNode && $this->contains($grandChild->getId())) {
-					throw new \InvalidArgumentException("Cannot append node '{$child->getId()}' to node '{$this->getId()}' because '{$child->getId()}' contains a node with id '{$grandChild->getId()}' that is already used by another node.");
-				}
-			}
-		}
+		// does nothing
 	}
 }

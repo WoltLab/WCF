@@ -7,17 +7,17 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * Provides default implementations of `IMinimumLengthFormField` methods.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
 trait TMinimumLengthFormField {
 	/**
 	 * minimum length of the field value
 	 * @var	null|int
 	 */
-	protected $__minimumLength;
+	protected $minimumLength;
 	
 	/**
 	 * Returns the minimum length of the values of this field or `null` if no placeholder
@@ -26,7 +26,7 @@ trait TMinimumLengthFormField {
 	 * @return	null|int
 	 */
 	public function getMinimumLength() {
-		return $this->__minimumLength;
+		return $this->minimumLength;
 	}
 	
 	/**
@@ -56,7 +56,7 @@ trait TMinimumLengthFormField {
 			}
 		}
 		
-		$this->__minimumLength = $minimumLength;
+		$this->minimumLength = $minimumLength;
 		
 		return $this;
 	}

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\builder\container;
+use wcf\data\IStorableObject;
 use wcf\system\form\builder\IFormChildNode;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\TFormChildNode;
@@ -11,15 +12,16 @@ use wcf\system\WCF;
  * Represents a default container.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Container
- * @since	3.2
+ * @since	5.2
  */
 class FormContainer implements IFormContainer {
 	use TFormChildNode;
 	use TFormElement;
 	use TFormParentNode {
+		TFormParentNode::cleanup insteadof TFormElement;
 		validateChild as protected defaultValidateChild;
 	}
 	
@@ -32,10 +34,26 @@ class FormContainer implements IFormContainer {
 	/**
 	 * @inheritDoc
 	 */
+	public function __construct() {
+		$this->addClass('section');
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getHtml() {
 		return WCF::getTPL()->fetch($this->templateName, 'wcf', array_merge($this->getHtmlVariables(), [
 			'container' => $this
 		]), true);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function loadValuesFromObject(IStorableObject $object) {
+		// does nothing
+		
+		return $this;
 	}
 	
 	/**

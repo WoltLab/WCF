@@ -118,7 +118,14 @@ requirejs.config({
 			'wcf.menu.page': '{lang}wcf.menu.page{/lang}',
 			'wcf.menu.user': '{lang}wcf.menu.user{/lang}',
 			'wcf.global.button.showMenu': '{lang}wcf.global.button.showMenu{/lang}',
-			'wcf.global.button.hideMenu': '{lang}wcf.global.button.hideMenu{/lang}'
+			'wcf.global.button.hideMenu': '{lang}wcf.global.button.hideMenu{/lang}',
+			'wcf.date.datePicker': '{lang}wcf.date.datePicker{/lang}',
+			'wcf.date.datePicker.previousMonth': '{lang}wcf.date.datePicker.previousMonth{/lang}',
+			'wcf.date.datePicker.nextMonth': '{lang}wcf.date.datePicker.nextMonth{/lang}',
+			'wcf.date.datePicker.month': '{lang}wcf.date.datePicker.month{/lang}',
+			'wcf.date.datePicker.year': '{lang}wcf.date.datePicker.year{/lang}',
+			'wcf.date.datePicker.hour': '{lang}wcf.date.datePicker.hour{/lang}',
+			'wcf.date.datePicker.minute': '{lang}wcf.date.datePicker.minute{/lang}'
 			{if MODULE_LIKE}
 				,'wcf.like.button.like': '{lang}wcf.like.button.like{/lang}',
 				'wcf.like.button.dislike': '{lang}wcf.like.button.dislike{/lang}',
@@ -147,6 +154,8 @@ requirejs.config({
 	__require_define_amd = define.amd;
 	define.amd = undefined;
 </script>
+
+{include file='__devtoolsLanguageChooser'}
 
 {js application='wcf' lib='jquery' hasTiny=true}
 {js application='wcf' lib='jquery-ui' hasTiny=true}

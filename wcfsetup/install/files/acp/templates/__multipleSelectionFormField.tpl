@@ -20,14 +20,18 @@
 	<ul class="scrollableCheckboxList" id="{@$field->getPrefixedId()}_list">
 		{foreach from=$field->getNestedOptions() item=__fieldNestedOption}
 			<li{if $__fieldNestedOption[depth] > 0} style="padding-left: {$__fieldNestedOption[depth]*20}px"{/if}>
-				<label><input type="checkbox" name="{@$field->getPrefixedId()}[]" value="{$__fieldNestedOption[value]}"{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue()} checked{/if}> {@$__fieldNestedOption[label]}</label>
+				<label><input {*
+						*}type="checkbox" {*
+						*}name="{@$field->getPrefixedId()}[]" {*
+						*}value="{$__fieldNestedOption[value]}"{*
+						*}{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue()} checked{/if}{*
+						*}{if $field->isImmutable()} disabled{/if}{*
+					*}> {@$__fieldNestedOption[label]}</label>
 			</li>
 		{/foreach}
 	</ul>
 {else}
-	<select id="{@$field->getPrefixedId()}" name="{@$field->getPrefixedId()}">
-		{htmlOptions options=$field->getOptions() selected=$field->getValue() disableEncoding=true}
-	</select>
+	{htmlCheckboxes options=$field->getOptions() name=$field->getPrefixedId() selected=$field->getValue() disabled=$field->isImmutable() disableEncoding=true}
 {/if}
 
 {include file='__formFieldFooter'}

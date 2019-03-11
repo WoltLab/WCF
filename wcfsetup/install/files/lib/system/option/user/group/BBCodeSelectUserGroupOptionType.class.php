@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * User group option type implementation for BBCode select lists.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -146,5 +146,12 @@ class BBCodeSelectUserGroupOptionType extends AbstractOptionType implements IUse
 		
 		// both lists of BBCodes are equal
 		return 0;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getCSSClassName() {
+		return 'checkboxList';
 	}
 }

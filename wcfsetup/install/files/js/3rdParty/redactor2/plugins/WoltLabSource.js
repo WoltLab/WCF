@@ -96,7 +96,7 @@ $.Redactor.prototype.WoltLabSource = function() {
 				
 				mpShow.call(this);
 				
-				this.source.$textarea.val(code);
+				this.source.$textarea.val(code.replace(/&nbsp;/g, ' '));
 				
 				// noinspection JSSuspiciousNameCombination
 				textarea.style.setProperty('height', Math.ceil(height) + 'px', '');
@@ -125,7 +125,7 @@ $.Redactor.prototype.WoltLabSource = function() {
 		},
 		
 		format: function (html) {
-			var blockTags = ['ul', 'ol', 'li'];
+			var blockTags = ['ul', 'ol', 'li', 'table', 'tbody', 'thead', 'tr', 'td', 'th'];
 			this.block.tags.forEach(function(tag) {
 				blockTags.push(tag);
 			});
@@ -134,13 +134,13 @@ $.Redactor.prototype.WoltLabSource = function() {
 			
 			// block tags that are recognized as block tags, but both
 			// newline and indentation matches inline elements
-			var blocksAsInline = ['p', 'li'];
+			var blocksAsInline = ['p', 'li', 'td', 'th'];
 			
 			var patternTagAttributes = '[^\'">]*(?:(?:"[^"]*"|\'[^\']*\')[^\'">]*)*';
 			
 			// protect <pre> from changes
 			var backup = [];
-			html = html.replace(new RegExp('<pre' + patternTagAttributes + '>[\s\S]*?<\/pre>', 'g'), function(match) {
+			html = html.replace(new RegExp('<pre' + patternTagAttributes + '>[\\s\\S]*?<\/pre>', 'g'), function(match) {
 				backup.push(match);
 				
 				return '@@@WCF_PRE_BACKUP_' + (backup.length - 1) + '@@@';
@@ -153,6 +153,9 @@ $.Redactor.prototype.WoltLabSource = function() {
 			html = html.replace(new RegExp('\\s*<(' + blockTags + ')(' + patternTagAttributes + ')>\\s*', 'g'), function(match, tag, attributes) {
 				return '\n<' + tag + attributes + '>' + (blocksAsInline.indexOf(tag) === -1 ? '\n' : '');
 			});
+			
+			// Remove empty lines between two adjacent block elements.
+			html = html.replace(new RegExp('(<(?:' + blockTags + ')(?:' + patternTagAttributes + ')>\n)\n+(?=<(?:' + blockTags + ')(?:' + patternTagAttributes + ')>)', 'g'), '$1');
 			
 			// avoid empty newline at quote start
 			html = html.replace(/<woltlab-quote([^>]*)>\n\t*\n(\t*)<p/, '<woltlab-quote$1>\n$2<p');

@@ -19,7 +19,7 @@ use wcf\util\ArrayUtil;
  * Shows the assign user to group form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -32,7 +32,7 @@ class UserAssignToGroupForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.user.management';
+	public $activeMenuItem = 'wcf.acp.menu.link.user.list';
 	
 	/**
 	 * ids of the relevant users

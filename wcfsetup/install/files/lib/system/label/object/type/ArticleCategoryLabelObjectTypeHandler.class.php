@@ -8,7 +8,7 @@ use wcf\system\cache\builder\ArticleCategoryLabelCacheBuilder;
  * Object type handler for article categories.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Label\Object\Type
  * @since       3.1

@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Default implementation for custom options utilizing the option system.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since       3.1
@@ -67,7 +67,7 @@ abstract class AbstractCustomOptionForm extends AbstractAcpForm {
 	/**
 	 * 1 if the option is disabled
 	 * @var	boolean
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $isDisabled = 0;
 	

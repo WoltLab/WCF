@@ -5,6 +5,7 @@ use wcf\system\database\editor\DatabaseEditor;
 use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
 use wcf\system\database\exception\DatabaseQueryException;
 use wcf\system\database\exception\DatabaseTransactionException;
+use wcf\system\database\statement\DebugPreparedStatement;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\WCF;
 
@@ -12,7 +13,7 @@ use wcf\system\WCF;
  * Abstract implementation of a database access class using PDO.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Database
  */
@@ -114,6 +115,10 @@ abstract class Database {
 		$this->database = $database;
 		$this->failsafeTest = $failsafeTest;
 		$this->tryToCreateDatabase = $tryToCreateDatabase;
+		
+		if (defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE) {
+			$this->preparedStatementClassName = DebugPreparedStatement::class;
+		}
 		
 		// connect database
 		$this->connect();

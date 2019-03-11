@@ -2,7 +2,7 @@
 namespace wcf\system\form\builder\field;
 use wcf\data\language\item\LanguageItemList;
 use wcf\data\IStorableObject;
-use wcf\system\form\builder\field\data\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
@@ -17,29 +17,31 @@ use wcf\util\StringUtil;
  * This trait can only to be used in combination with `TFormField`.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
+ * 
+ * @mixin	II18nFormField
  */
 trait TI18nFormField {
 	/**
 	 * `true` if this field supports i18n input and `false` otherwise
 	 * @var	bool
 	 */
-	protected $__i18n = false;
+	protected $i18n = false;
 	
 	/**
 	 * `true` if this field requires i18n input and `false` otherwise
 	 * @var	bool
 	 */
-	protected $__i18nRequired = false;
+	protected $i18nRequired = false;
 	
 	/**
 	 * pattern for the language item used to save the i18n values
 	 * @var	null|string
 	 */
-	protected $__languageItemPattern;
+	protected $languageItemPattern;
 	
 	/**
 	 * Returns additional template variables used to generate the html representation
@@ -72,11 +74,11 @@ trait TI18nFormField {
 			throw new \BadMethodCallException("You can only get the language item pattern for fields with i18n enabled.");
 		}
 		
-		if ($this->__languageItemPattern === null) {
+		if ($this->languageItemPattern === null) {
 			throw new \BadMethodCallException("Language item pattern has not been set.");
 		}
 		
-		return $this->__languageItemPattern;
+		return $this->languageItemPattern;
 	}
 	
 	/**
@@ -118,7 +120,7 @@ trait TI18nFormField {
 			return '';
 		}
 		
-		return $this->__value;
+		return $this->value;
 	}
 	
 	/**
@@ -163,7 +165,7 @@ trait TI18nFormField {
 	 * @return	II18nFormField			this field
 	 */
 	public function i18n($i18n = true) {
-		$this->__i18n = $i18n;
+		$this->i18n = $i18n;
 		
 		return $this;
 	}
@@ -178,7 +180,7 @@ trait TI18nFormField {
 	 * @return	static					this field
 	 */
 	public function i18nRequired($i18nRequired = true) {
-		$this->__i18nRequired = $i18nRequired;
+		$this->i18nRequired = $i18nRequired;
 		$this->i18n();
 		
 		return $this;
@@ -191,7 +193,7 @@ trait TI18nFormField {
 	 * @return	bool
 	 */
 	public function isI18n() {
-		return $this->__i18n;
+		return $this->i18n;
 	}
 	
 	/**
@@ -201,7 +203,7 @@ trait TI18nFormField {
 	 * @return	bool
 	 */
 	public function isI18nRequired() {
-		return $this->__i18nRequired;
+		return $this->i18nRequired;
 	}
 	
 	/**
@@ -223,7 +225,7 @@ trait TI18nFormField {
 			throw new \InvalidArgumentException("Given pattern is invalid.");
 		}
 		
-		$this->__languageItemPattern = $pattern;
+		$this->languageItemPattern = $pattern;
 		
 		return $this;
 	}
@@ -242,7 +244,7 @@ trait TI18nFormField {
 				$this->setStringValue($value);
 			}
 			else {
-				$this->__value = $value;
+				$this->value = $value;
 			}
 		}
 		
@@ -293,7 +295,7 @@ trait TI18nFormField {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_string($value)) {
-				$this->__value = StringUtil::trim($value);
+				$this->value = StringUtil::trim($value);
 			}
 		}
 		
@@ -322,7 +324,7 @@ trait TI18nFormField {
 			I18nHandler::getInstance()->setValues($this->getPrefixedId(), $values);
 		}
 		else {
-			I18nHandler::getInstance()->setValue($this->getPrefixedId(), $value);
+			I18nHandler::getInstance()->setValue($this->getPrefixedId(), $value, !$this->isI18nRequired());
 		}
 	}
 	
@@ -336,7 +338,7 @@ trait TI18nFormField {
 	 */
 	public function value($value) {
 		if ($this->isI18n()) {
-			if (is_string($value)) {
+			if (is_string($value) || is_numeric($value)) {
 				$this->setStringValue($value);
 			}
 			else if (is_array($value)) {
@@ -349,7 +351,7 @@ trait TI18nFormField {
 			}
 		}
 		else {
-			if (!is_string($value)) {
+			if (!is_string($value) && !is_numeric($value)) {
 				throw new \InvalidArgumentException("Given value is no string, " . gettype($value) . " given.");
 			}
 			

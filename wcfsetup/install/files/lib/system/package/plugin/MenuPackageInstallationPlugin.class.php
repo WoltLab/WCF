@@ -32,7 +32,7 @@ use wcf\system\WCF;
  * Installs, updates and deletes menus.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
@@ -296,7 +296,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getAdditionalTemplateCode() {
 		return WCF::getTPL()->fetch('__menuPipGui');
@@ -304,7 +304,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		/** @var FormContainer $dataContainer */
@@ -354,8 +354,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				->options(array_combine(Box::$availablePositions, Box::$availablePositions)),
 			
 			BooleanFormField::create('boxShowHeader')
-				->label('wcf.acp.pip.menu.boxShowHeader')
-				->description('wcf.acp.pip.menu.boxShowHeader.description'),
+				->label('wcf.acp.pip.menu.boxShowHeader'),
 			
 			BooleanFormField::create('boxVisibleEverywhere')
 				->label('wcf.acp.pip.menu.boxVisibleEverywhere'),
@@ -406,7 +405,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -502,7 +501,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('identifier');
@@ -510,7 +509,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -520,9 +519,9 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData();
 		
 		if ($formData['data']['identifier'] === 'com.woltlab.wcf.MainMenu') {

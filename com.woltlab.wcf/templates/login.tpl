@@ -1,9 +1,9 @@
 {include file='header' __disableLoginLink=true __disableAds=true}
 
-{if $forceLoginRedirect}<p class="info">{lang}wcf.user.login.forceLogin{/lang}</p>{/if}
+{if $forceLoginRedirect}<p class="info" role="status">{lang}wcf.user.login.forceLogin{/lang}</p>{/if}
 
 {if !$errorField|empty && $errorField == 'cookie'}
-	<p class="error">{lang}wcf.user.login.error.cookieRequired{/lang}</p>
+	<p class="error" role="alert">{lang}wcf.user.login.error.cookieRequired{/lang}</p>
 {else}
 	{include file='formError'}
 {/if}
@@ -107,7 +107,7 @@
 								
 								{if GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== ''}
 									<li id="googleAuth" class="thirdPartyLogin">
-										<a href="{link controller='GoogleAuth'}{/link}" class="button thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google-plus"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
+										<a href="{link controller='GoogleAuth'}{/link}" class="button thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
 									</li>
 								{/if}
 								

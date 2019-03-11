@@ -9,7 +9,7 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
  * Processes stored HTML for final display.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output
  * @since       3.0
@@ -18,7 +18,7 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	/**
 	 * generate the table of contents
 	 * @var bool
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $enableToc = false;
 	

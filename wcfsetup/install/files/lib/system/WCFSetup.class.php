@@ -13,6 +13,7 @@ use wcf\system\database\MySQLDatabase;
 use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\image\adapter\ImagickImageAdapter;
 use wcf\system\io\File;
 use wcf\system\io\Tar;
 use wcf\system\language\LanguageFactory;
@@ -43,7 +44,7 @@ define('ENABLE_BENCHMARK', 0);
  * Executes the installation of the basic WCF systems.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
@@ -369,6 +370,16 @@ class WCFSetup extends WCF {
 			}
 		}
 		$system['gdLib']['result'] = (version_compare($system['gdLib']['value'], '2.0.0') >= 0);
+		
+		// ImageMagick
+		$system['imagick'] = ['result' => false];
+		if (ImagickImageAdapter::isSupported()) {
+			$system['imagick'] = [
+				'result' => true,
+				'value' => ImagickImageAdapter::getVersion(),
+			];
+			$system['imagick']['supportsAnimatedGIFs'] = ImagickImageAdapter::supportsAnimatedGIFs($system['imagick']['value']);
+		}
 		
 		// memory limit
 		$system['memoryLimit']['value'] = ini_get('memory_limit');
@@ -1271,6 +1282,7 @@ class WCFSetup extends WCF {
 		SessionHandler::getInstance()->register('masterPassword', 1);
 		SessionHandler::getInstance()->register('__wcfSetup_developerMode', self::$developerMode);
 		SessionHandler::getInstance()->register('__wcfSetup_directories', self::$directories);
+		SessionHandler::getInstance()->register('__wcfSetup_imagick', ImagickImageAdapter::isSupported());
 		SessionHandler::getInstance()->unregister('__changeSessionID');
 		SessionHandler::getInstance()->update();
 		

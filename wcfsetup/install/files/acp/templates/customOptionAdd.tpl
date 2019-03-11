@@ -62,7 +62,7 @@
 	<dl>
 		<dt></dt>
 		<dd>
-			<label><input type="checkbox" name="isDisabled" value="1"{if $isDisabled} checked{/if}> {lang}wcf.acp.customOption.isDisabled{/lang}</label>
+			<label><input type="checkbox" id="isDisabled" name="isDisabled" value="1"{if $isDisabled} checked{/if}> {lang}wcf.acp.customOption.isDisabled{/lang}</label>
 		</dd>
 	</dl>
 	

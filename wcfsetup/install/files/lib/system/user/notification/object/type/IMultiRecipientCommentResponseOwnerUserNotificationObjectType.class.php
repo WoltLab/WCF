@@ -10,10 +10,10 @@ use wcf\data\comment\Comment;
  * If you use not this interface, the `commentResponseOwner` event is fired by default.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Object\Type
- * @since	3.2
+ * @since	5.2
  */
 interface IMultiRecipientCommentResponseOwnerUserNotificationObjectType {
 	/**

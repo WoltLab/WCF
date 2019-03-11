@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Represents a style.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Style
  *
@@ -45,9 +45,9 @@ class Style extends DatabaseObject {
 	 * list of supported API versions
 	 * @var string[]
 	 */
-	public static $supportedApiVersions = ['3.0', '3.1'];
+	public static $supportedApiVersions = ['3.0', '3.1', '5.2'];
 	
-	const API_VERSION = '3.1';
+	const API_VERSION = '5.2';
 	
 	const PREVIEW_IMAGE_MAX_HEIGHT = 64;
 	const PREVIEW_IMAGE_MAX_WIDTH = 102;

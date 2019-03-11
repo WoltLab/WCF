@@ -29,7 +29,7 @@ use wcf\util\StringUtil;
  * Executes user profile-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
  */
@@ -38,6 +38,11 @@ class UserProfileAction extends UserAction {
 	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['getUserProfile', 'getDetailedActivityPointList'];
+	
+	/**
+	 * @var User
+	 */
+	public $user;
 	
 	/**
 	 * user profile object
@@ -519,6 +524,20 @@ class UserProfileAction extends UserAction {
 		
 		WCF::getSession()->checkPermissions(['user.profile.coverPhoto.canUploadCoverPhoto']);
 		
+		$this->readInteger('userID', true);
+		// The `userID` parameter did not exist in 3.1, defaulting to the own user for backwards compatibility.
+		if (!$this->parameters['userID']) {
+			$this->parameters['userID'] = WCF::getUser()->userID;
+		}
+		
+		$this->user = new User($this->parameters['userID']);
+		if (!$this->user->userID) {
+			throw new UserInputException('userID');
+		}
+		else if ($this->user->userID != WCF::getUser()->userID && (!$this->user->canEdit() || !WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto'))) {
+			throw new PermissionDeniedException();
+		}
+		
 		// validate uploaded file
 		if (!isset($this->parameters['__files']) || count($this->parameters['__files']->getFiles()) != 1) {
 			throw new UserInputException('files');
@@ -563,20 +582,20 @@ class UserProfileAction extends UserAction {
 		}
 		
 		// delete old cover photo
-		if (WCF::getUser()->coverPhotoHash) {
-			UserProfileRuntimeCache::getInstance()->getObject(WCF::getUser()->userID)->getCoverPhoto()->delete();
+		if ($this->user->coverPhotoHash) {
+			UserProfileRuntimeCache::getInstance()->getObject($this->user->userID)->getCoverPhoto()->delete();
 		}
 		
 		// update user
-		(new UserEditor(WCF::getUser()))->update([
+		(new UserEditor($this->user))->update([
 			// always generate a new hash to invalidate the browser cache and to avoid filename guessing
 			'coverPhotoHash' => StringUtil::getRandomID(),
 			'coverPhotoExtension' => $this->uploadFile->getFileExtension()
 		]);
 		
 		// force-reload the user profile to use a predictable code-path to fetch the cover photo
-		UserProfileRuntimeCache::getInstance()->removeObject(WCF::getUser()->userID);
-		$userProfile = UserProfileRuntimeCache::getInstance()->getObject(WCF::getUser()->userID);
+		UserProfileRuntimeCache::getInstance()->removeObject($this->user->userID);
+		$userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->user->userID);
 		$coverPhoto = $userProfile->getCoverPhoto();
 		
 		// check images directory and create subdirectory if necessary
@@ -607,9 +626,24 @@ class UserProfileAction extends UserAction {
 	 * Validates the `deleteCoverPhoto` action.
 	 * 
 	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
 	 */
 	public function validateDeleteCoverPhoto() {
 		if (!MODULE_USER_COVER_PHOTO) {
+			throw new PermissionDeniedException();
+		}
+		
+		$this->readInteger('userID', true);
+		// The `userID` parameter did not exist in 3.1, defaulting to the own user for backwards compatibility.
+		if (!$this->parameters['userID']) {
+			$this->parameters['userID'] = WCF::getUser()->userID;
+		}
+		
+		$this->user = new User($this->parameters['userID']);
+		if (!$this->user->userID) {
+			throw new UserInputException('userID');
+		}
+		else if ($this->user->userID != WCF::getUser()->userID && (!$this->user->canEdit() || !WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto'))) {
 			throw new PermissionDeniedException();
 		}
 	}
@@ -620,20 +654,20 @@ class UserProfileAction extends UserAction {
 	 * @return	string[]	link to the new cover photo
 	 */
 	public function deleteCoverPhoto() {
-		if (WCF::getUser()->coverPhotoHash) {
-			UserProfileRuntimeCache::getInstance()->getObject(WCF::getUser()->userID)->getCoverPhoto()->delete();
+		if ($this->user->coverPhotoHash) {
+			UserProfileRuntimeCache::getInstance()->getObject($this->user->userID)->getCoverPhoto()->delete();
 			
-			(new UserEditor(WCF::getUser()))->update([
+			(new UserEditor($this->user))->update([
 				'coverPhotoHash' => null,
 				'coverPhotoExtension' => ''
 			]);
 		}
 		
 		// force-reload the user profile to use a predictable code-path to fetch the cover photo
-		UserProfileRuntimeCache::getInstance()->removeObject(WCF::getUser()->userID);
+		UserProfileRuntimeCache::getInstance()->removeObject($this->user->userID);
 		
 		return [
-			'url' => UserProfileRuntimeCache::getInstance()->getObject(WCF::getUser()->userID)->getCoverPhoto()->getURL()
+			'url' => UserProfileRuntimeCache::getInstance()->getObject($this->user->userID)->getCoverPhoto()->getURL()
 		];
 	}
 	

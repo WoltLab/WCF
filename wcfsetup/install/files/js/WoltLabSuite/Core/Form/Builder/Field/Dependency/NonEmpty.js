@@ -2,11 +2,11 @@
  * Form field dependency implementation that requires the value of a field not to be empty.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/NonEmpty
  * @see 	module:WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
- * @since	3.2
+ * @since	5.2
  */
 define(['./Abstract', 'Core'], function(Abstract, Core) {
 	"use strict";

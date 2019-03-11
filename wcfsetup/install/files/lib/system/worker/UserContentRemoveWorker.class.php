@@ -11,10 +11,10 @@ use wcf\system\WCF;
  * Worker implementation for updating users.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Worker
- * @since	3.2
+ * @since	5.2
  */
 class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 	/**
@@ -105,6 +105,27 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 		
 		$contentProviders = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider');
 		
+		// add the required object types for the select content provider
+		if (is_array($this->contentProvider)) {
+			foreach ($this->contentProvider as $contentProvider) {
+				$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $contentProvider);
+				
+				if ($objectType->requiredobjecttype !== null) {
+					$objectTypeNames = explode(',', $objectType->requiredobjecttype);
+					
+					foreach ($objectTypeNames as $objectTypeName) {
+						$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $objectTypeName);
+						
+						if ($objectType === null) {
+							throw new \RuntimeException('Unknown required object type "' . $objectTypeName . '" for object type "' . $contentProvider . '" given.');
+						}
+						
+						$this->contentProvider[] = $objectTypeName;
+					}
+				}
+			}
+		}
+		
 		foreach ($contentProviders as $contentProvider) {
 			if ($this->contentProvider === null || (is_array($this->contentProvider) && in_array($contentProvider->objectType, $this->contentProvider))) {
 				/** @var IUserContentProvider $processor */
@@ -113,14 +134,24 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 				$count = $contentList->countObjects();
 				
 				if ($count) {
-					$this->data['provider'][$contentProvider->objectTypeID] = [
-						'count' => $count
+					$this->data['provider'][$contentProvider->objectType] = [
+						'count' => $count,
+						'objectTypeID' => $contentProvider->objectTypeID,
+						'nicevalue' => $contentProvider->nicevalue ?: 0
 					];
 					
 					$this->data['count'] += ceil($count / $this->limit) * $this->limit;
 				}
 			}
 		}
+		
+		// sort object types
+		uasort($this->data['provider'], function ($a, $b) {
+			$niceValueA = ($a['nicevalue'] ?: 0);
+			$niceValueB = ($b['nicevalue'] ?: 0);
+			
+			return $niceValueA <=> $niceValueB;
+		});
 	}
 	
 	/**
@@ -136,23 +167,23 @@ class UserContentRemoveWorker extends AbstractWorker implements IWorker {
 	public function execute() {
 		if (empty($this->data['provider'])) {
 			return;
-		} 
+		}
 		
 		$values = array_keys($this->data['provider']);
-		$providerID = array_pop($values);
+		$providerObjectType = array_shift($values);
 		
 		/** @var IUserContentProvider $processor */
-		$processor = ObjectTypeCache::getInstance()->getObjectType($providerID)->getProcessor();
+		$processor = ObjectTypeCache::getInstance()->getObjectType($this->data['provider'][$providerObjectType]['objectTypeID'])->getProcessor();
 		
 		$objectList = $processor->getContentListForUser($this->user);
 		$objectList->sqlLimit = $this->limit;
 		$objectList->readObjectIDs();
 		$processor->deleteContent($objectList->objectIDs);
 		
-		$this->data['provider'][$providerID]['count'] -= $this->limit;
+		$this->data['provider'][$providerObjectType]['count'] -= $this->limit;
 		
-		if ($this->data['provider'][$providerID]['count'] <= 0) {
-			unset($this->data['provider'][$providerID]);
+		if ($this->data['provider'][$providerObjectType]['count'] <= 0) {
+			unset($this->data['provider'][$providerObjectType]);
 		}
 	}
 	

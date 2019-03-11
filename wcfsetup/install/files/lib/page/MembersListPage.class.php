@@ -13,7 +13,7 @@ use wcf\util\HeaderUtil;
  * Shows members page.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * 
@@ -160,7 +160,8 @@ class MembersListPage extends SortablePage {
 		WCF::getTPL()->assign([
 			'letters' => str_split(self::$availableLetters),
 			'letter' => $this->letter,
-			'searchID' => $this->searchID
+			'searchID' => $this->searchID,
+			'validSortFields' => $this->validSortFields,
 		]);
 		
 		if (count($this->objectList) === 0) {

@@ -284,7 +284,30 @@ CREATE TABLE wcf1_bbcode_media_provider (
 	regex TEXT NOT NULL,
 	html TEXT NOT NULL,
 	className varchar(255) NOT NULL DEFAULT '',
+	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
 	UNIQUE KEY name (name, packageID)
+);
+
+DROP TABLE IF EXISTS wcf1_blacklist_status;
+CREATE TABLE wcf1_blacklist_status (
+	date DATE NOT NULL,
+	delta1 TINYINT(1) NOT NULL DEFAULT 0,
+	delta2 TINYINT(1) NOT NULL DEFAULT 0,
+	delta3 TINYINT(1) NOT NULL DEFAULT 0,
+	delta4 TINYINT(1) NOT NULL DEFAULT 0,
+	
+	UNIQUE KEY day (date)
+);
+
+DROP TABLE IF EXISTS wcf1_blacklist_entry;
+CREATE TABLE wcf1_blacklist_entry (
+	type ENUM('email', 'ipv4','ipv6','username'),
+	hash BINARY(32),
+	lastSeen DATETIME NOT NULL,
+	occurrences SMALLINT(5) NOT NULL,
+	
+	UNIQUE KEY entry (type, hash),
+	KEY numberOfReports (type, occurrences)
 );
 
 DROP TABLE IF EXISTS wcf1_box;
@@ -349,6 +372,7 @@ CREATE TABLE wcf1_category (
 	parentCategoryID INT(10) NOT NULL DEFAULT 0,
 	title VARCHAR(255) NOT NULL,
 	description TEXT,
+	descriptionUseHtml TINYINT(1) NOT NULL DEFAULT 0,
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	time INT(10) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
@@ -430,6 +454,12 @@ CREATE TABLE wcf1_condition (
 	objectTypeID INT(10) NOT NULL,
 	objectID INT(10) NOT NULL,
 	conditionData MEDIUMTEXT
+);
+
+DROP TABLE IF EXISTS wcf1_contact_attachment;
+CREATE TABLE wcf1_contact_attachment (
+	attachmentID INT(10) NOT NULL,
+	accessKey CHAR(40) NOT NULL
 );
 
 DROP TABLE IF EXISTS wcf1_contact_option;
@@ -1294,7 +1324,7 @@ CREATE TABLE wcf1_style (
 	isTainted TINYINT(1) NOT NULL DEFAULT 0,
 	hasFavicon TINYINT(1) NOT NULL DEFAULT 0,
 	coverPhotoExtension VARCHAR(4) NOT NULL DEFAULT '',
-	apiVersion ENUM('3.0', '3.1') NOT NULL DEFAULT '3.0' 
+	apiVersion ENUM('3.0', '3.1', '5.2') NOT NULL DEFAULT '3.0' 
 );
 
 DROP TABLE IF EXISTS wcf1_style_variable;
@@ -1461,6 +1491,7 @@ CREATE TABLE wcf1_user (
 	positiveReactionsReceived INT(10) NOT NULL DEFAULT 0,
 	negativeReactionsReceived INT(10) NOT NULL DEFAULT 0,
 	neutralReactionsReceived INT(10) NOT NULL DEFAULT 0,
+	blacklistMatches VARCHAR(255) NOT NULL DEFAULT '',
 	
 	KEY username (username),
 	KEY email (email),
@@ -1551,7 +1582,8 @@ CREATE TABLE wcf1_user_group (
 	groupType TINYINT(1) NOT NULL DEFAULT 4,
 	priority MEDIUMINT(8) NOT NULL DEFAULT 0,
 	userOnlineMarking VARCHAR(255) NOT NULL DEFAULT '%s',
-	showOnTeamPage TINYINT(1) NOT NULL DEFAULT 0
+	showOnTeamPage TINYINT(1) NOT NULL DEFAULT 0,
+	allowMention TINYINT(1) NOT NULL DEFAULT 0
 );
 
 DROP TABLE IF EXISTS wcf1_user_group_assignment;
@@ -1906,6 +1938,8 @@ ALTER TABLE wcf1_clipboard_page ADD FOREIGN KEY (packageID) REFERENCES wcf1_pack
 
 ALTER TABLE wcf1_condition ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_contact_attachment ADD FOREIGN KEY (attachmentID) REFERENCES wcf1_attachment (attachmentID) ON DELETE CASCADE;
+
 ALTER TABLE wcf1_core_object ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_cronjob ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
@@ -2258,6 +2292,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorB
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonText', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonTextActive', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonTextDisabled', 'rgba(165, 165, 165, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorTableBorder', 'rgba(221, 221, 221, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontFamilyFallback', '"Segoe UI", "DejaVu Sans", "Lucida Grande", "Helvetica", sans-serif');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontFamilyGoogle', 'Open Sans');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontLineHeight', '1.48');

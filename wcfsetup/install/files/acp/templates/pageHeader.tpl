@@ -1,4 +1,4 @@
-<div class="pageHeaderContainer">
+<div class="pageHeaderContainer{if !$__isLogin|empty} pageHeaderContainerIsLogin{/if}">
 	<header id="pageHeader" class="pageHeader">
 		<div id="pageHeaderPanel" class="pageHeaderPanel">
 			<div class="layoutBoundary">

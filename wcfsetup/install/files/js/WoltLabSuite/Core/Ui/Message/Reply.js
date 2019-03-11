@@ -2,7 +2,7 @@
  * Handles user interaction with the quick reply feature.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Message/Reply
  */
@@ -321,6 +321,9 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			//noinspection JSUnresolvedVariable
 			if (data.returnValues.url) {
 				//noinspection JSUnresolvedVariable
+				if (window.location == data.returnValues.url) {
+					window.location.reload();
+				}
 				window.location = data.returnValues.url;
 			}
 			else {

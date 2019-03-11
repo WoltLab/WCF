@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the form to edit an existing captcha question.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -19,7 +19,7 @@ class CaptchaQuestionEditForm extends CaptchaQuestionAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.other';
+	public $activeMenuItem = 'wcf.acp.menu.link.captcha.question.list';
 	
 	/**
 	 * edited captcha question

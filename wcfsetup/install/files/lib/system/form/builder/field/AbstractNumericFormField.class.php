@@ -6,12 +6,14 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * Abstract implementation of a form field for numeric values.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
-abstract class AbstractNumericFormField extends AbstractFormField implements IMaximumFormField, IMinimumFormField, INullableFormField, IPlaceholderFormField, ISuffixedFormField {
+abstract class AbstractNumericFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField, IMaximumFormField, IMinimumFormField, INullableFormField, IPlaceholderFormField, ISuffixedFormField {
+	use TAutoFocusFormField;
+	use TImmutableFormField;
 	use TMaximumFormField;
 	use TMinimumFormField;
 	use TNullableFormField;
@@ -19,16 +21,16 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IMa
 	use TSuffixedFormField;
 	
 	/**
-	 * step value for the input element
-	 * @var	null|number
-	 */
-	protected $__step;
-	
-	/**
 	 * is `true` if only integer values are supported
 	 * @var	bool
 	 */
 	protected $integerValues = false;
+	
+	/**
+	 * step value for the input element
+	 * @var	null|number
+	 */
+	protected $step;
 	
 	/**
 	 * @inheritDoc
@@ -75,11 +77,11 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IMa
 	 * @return	number|string
 	 */
 	public function getStep() {
-		if ($this->__step === null) {
-			$this->__step = $this->getDefaultStep();
+		if ($this->step === null) {
+			$this->step = $this->getDefaultStep();
 		}
 		
-		return $this->__step;
+		return $this->step;
 	}
 	
 	/**
@@ -91,10 +93,10 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IMa
 			
 			if ($value !== '') {
 				if ($this->integerValues) {
-					$this->__value = intval($value);
+					$this->value = intval($value);
 				}
 				else {
-					$this->__value = floatval($value);
+					$this->value = floatval($value);
 				}
 			}
 		}
@@ -127,7 +129,7 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IMa
 			}
 		}
 		
-		$this->__step = $step;
+		$this->step = $step;
 		
 		return $this;
 	}

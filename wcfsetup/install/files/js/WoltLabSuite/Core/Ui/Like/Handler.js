@@ -2,10 +2,10 @@
  * Provides interface elements to display and review likes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Like/Handler
- * @deprecated  3.2 use ReactionHandler instead 
+ * @deprecated  5.2 use ReactionHandler instead 
  */
 define(
 	[
@@ -140,13 +140,14 @@ define(
 					// create element 
 					var createdElement = elCreate('li');
 					createdElement.className = 'reactCountButton';
-					createdElement.innerHTML = REACTION_TYPES[key].renderedIcon +' ';
 					elData(createdElement, 'reaction-type-id', key);
 					
 					var countSpan = elCreate('span');
 					countSpan.className = 'reactionCount';
 					countSpan.innerHTML = StringUtil.shortUnit(elementData.users[key]);
 					createdElement.appendChild(countSpan);
+					
+					createdElement.innerHTML = createdElement.innerHTML + REACTION_TYPES[key].renderedIcon;
 					
 					summaryList.appendChild(createdElement);
 					

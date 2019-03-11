@@ -17,7 +17,7 @@ use wcf\util\Url;
  * Processes images.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
@@ -148,7 +148,7 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 	 * @param       string          $src
 	 */
 	protected function replaceExternalSource(\DOMElement $element, $src) {
-		$element->parentNode->insertBefore($element->ownerDocument->createTextNode('[IMG:'), $element);
+		$element->parentNode->insertBefore($element->ownerDocument->createTextNode('['.WCF::getLanguage()->get('wcf.bbcode.image.blocked').': '), $element);
 		
 		$link = $element->ownerDocument->createElement('a');
 		$link->setAttribute('href', $src);

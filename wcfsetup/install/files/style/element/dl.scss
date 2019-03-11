@@ -23,7 +23,7 @@ dl {
 				margin-bottom: 20px;
 			}
 			
-			> small:not(.innerError):not(.innerSuccess):not(.innerWarning) {
+			> small:not(.innerError):not(.innerInfo):not(.innerSuccess):not(.innerWarning) {
 				color: $wcfContentDimmedText;
 				display: block;
 				margin-top: 3px;
@@ -33,7 +33,7 @@ dl {
 				display: block;
 				
 				/* indentation for checkbox descriptions */
-				+ small:not(.innerError):not(.innerSuccess):not(.innerWarning) {
+				+ small:not(.innerError):not(.innerInfo):not(.innerSuccess):not(.innerWarning) {
 					margin-left: 24px;
 				}
 			}
@@ -54,7 +54,7 @@ dl {
 						margin-right: 0;
 					}
 					
-					+ small:not(.innerError):not(.innerSuccess):not(.innerWarning) {
+					+ small:not(.innerError):not(.innerInfo):not(.innerSuccess):not(.innerWarning) {
 						margin-left: 0;
 					}
 				}
@@ -67,6 +67,25 @@ dl {
 		
 		&.wide > dt {
 			display: none;
+		}
+		
+		/* The option */
+		dt.checkboxList + dd,
+		dd.checkboxList {
+			&::after {
+				content: "";
+				clear: both;
+				display: table;
+			}
+			
+			label {
+				float: left;
+				clear: both;
+			}
+			
+			small {
+				clear: both;
+			}
 		}
 	}
 	
@@ -86,7 +105,7 @@ dl {
 				margin-top: 0;
 			}
 			
-			+ small:not(.innerError):not(.innerSuccess):not(.innerWarning) {
+			+ small:not(.innerError):not(.innerInfo):not(.innerSuccess):not(.innerWarning) {
 				margin-left: 0;
 			}
 		}

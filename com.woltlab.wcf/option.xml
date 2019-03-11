@@ -47,6 +47,9 @@
 				<parent>general</parent>
 				<showorder>3</showorder>
 			</category>
+			<category name="general.system.ipAddress">
+				<parent>general.system</parent>
+			</category>
 			<category name="general.system.error">
 				<parent>general.system</parent>
 			</category>
@@ -169,6 +172,14 @@
 			<category name="security.blacklist">
 				<parent>security</parent>
 			</category>
+			<category name="security.blacklist.sfs">
+				<parent>security.blacklist</parent>
+				<showorder>1</showorder>
+			</category>
+			<category name="security.blacklist.custom">
+				<parent>security.blacklist</parent>
+				<showorder>2</showorder>
+			</category>
 			<category name="security.antispam">
 				<parent>security</parent>
 			</category>
@@ -221,6 +232,9 @@
 			<category name="message.search">
 				<parent>message</parent>
 			</category>
+			<category name="message.contactForm">
+				<parent>message</parent>
+			</category>
 			<!-- /message -->
 			<category name="dashboard"/>
 			<category name="dashboard.content">
@@ -267,16 +281,6 @@
 				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="visitor_use_tiny_build">
-				<categoryname>module.system</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-			</option>
-			<option name="module_contact_form">
-				<categoryname>module.system</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>0</defaultvalue>
-			</option>
-			<option name="log_ip_address">
 				<categoryname>module.system</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
@@ -392,6 +396,7 @@
 				<categoryname>module.development</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
+				<enableoptions>log_missing_language_items</enableoptions>
 			</option>
 			<!-- general.page -->
 			<option name="page_title">
@@ -486,6 +491,11 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="breadcrumbs_home_use_page_title">
+				<categoryname>general.page</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<option name="head_code">
 				<categoryname>general.page</categoryname>
 				<optiontype>textarea</optiontype>
@@ -534,6 +544,26 @@
 				<optiontype>boolean</optiontype>
 			</option>
 			<!-- /offline -->
+			<!-- general.system.ipAddress -->
+			<option name="log_ip_address">
+				<categoryname>general.system.ipAddress</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<enableoptions>prune_ip_address,ip_address_search_engine</enableoptions>
+			</option>
+			<option name="prune_ip_address">
+				<categoryname>general.system.ipAddress</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>30</defaultvalue>
+				<suffix>days</suffix>
+				<minvalue>0</minvalue>
+				<maxvalue>365</maxvalue>
+			</option>
+			<option name="ip_address_search_engine">
+				<categoryname>general.system.ipAddress</categoryname>
+				<optiontype>text</optiontype>
+			</option>
+			<!-- /general.system.ipAddress -->
 			<!-- general.system.image -->
 			<option name="image_adapter_type">
 				<categoryname>general.system.image</categoryname>
@@ -684,20 +714,62 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 				<validationpattern>^.{15,}$</validationpattern>
 			</option>
 			<!-- /security.general.secrets -->
-			<!-- security.blacklist -->
+			<!-- security.blacklist.sfs -->
+			<option name="blacklist_sfs_enable">
+				<categoryname>security.blacklist.sfs</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<enableoptions>blacklist_sfs_username,blacklist_sfs_email_address,blacklist_sfs_ip_address,blacklist_sfs_action</enableoptions>
+			</option>
+			<option name="blacklist_sfs_username">
+				<categoryname>security.blacklist.sfs</categoryname>
+				<optiontype>select</optiontype>
+				<selectoptions><![CDATA[skip:wcf.acp.option.blacklist_sfs_enable.skip
+90percentile:wcf.acp.option.blacklist_sfs_enable.90percentile
+moreThanOnce:wcf.acp.option.blacklist_sfs_enable.moreThanOnce
+simpleMatch:wcf.acp.option.blacklist_sfs_enable.simpleMatch]]></selectoptions>
+				<defaultvalue>90percentile</defaultvalue>
+			</option>
+			<option name="blacklist_sfs_email_address">
+				<categoryname>security.blacklist.sfs</categoryname>
+				<optiontype>select</optiontype>
+				<selectoptions><![CDATA[skip:wcf.acp.option.blacklist_sfs_enable.skip
+90percentile:wcf.acp.option.blacklist_sfs_enable.90percentile
+moreThanOnce:wcf.acp.option.blacklist_sfs_enable.moreThanOnce
+simpleMatch:wcf.acp.option.blacklist_sfs_enable.simpleMatch]]></selectoptions>
+				<defaultvalue>moreThanOnce</defaultvalue>
+			</option>
+			<option name="blacklist_sfs_ip_address">
+				<categoryname>security.blacklist.sfs</categoryname>
+				<optiontype>select</optiontype>
+				<selectoptions><![CDATA[skip:wcf.acp.option.blacklist_sfs_enable.skip
+90percentile:wcf.acp.option.blacklist_sfs_enable.90percentile
+moreThanOnce:wcf.acp.option.blacklist_sfs_enable.moreThanOnce
+simpleMatch:wcf.acp.option.blacklist_sfs_enable.simpleMatch]]></selectoptions>
+				<defaultvalue>90percentile</defaultvalue>
+			</option>
+			<option name="blacklist_sfs_action">
+				<categoryname>security.blacklist.sfs</categoryname>
+				<optiontype>select</optiontype>
+				<selectoptions><![CDATA[disable:wcf.acp.option.blacklist_sfs_action.disable
+block:wcf.acp.option.blacklist_sfs_action.block]]></selectoptions>
+				<defaultvalue>disable</defaultvalue>
+			</option>
+			<!-- /security.blacklist.stopforumspam -->
+			<!-- security.blacklist.custom -->
 			<option name="blacklist_ip_addresses">
-				<categoryname>security.blacklist</categoryname>
+				<categoryname>security.blacklist.custom</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
 			<option name="blacklist_user_agents">
-				<categoryname>security.blacklist</categoryname>
+				<categoryname>security.blacklist.custom</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
 			<option name="blacklist_hostnames">
-				<categoryname>security.blacklist</categoryname>
+				<categoryname>security.blacklist.custom</categoryname>
 				<optiontype>textarea</optiontype>
 			</option>
-			<!-- /security.blacklist -->
+			<!-- /security.blacklist.custom -->
 			<!-- security.antispam.captcha -->
 			<option name="captcha_type">
 				<categoryname>security.antispam.captcha</categoryname>
@@ -861,10 +933,12 @@ physical:wcf.acp.option.google_maps_type.physical</selectoptions>
 				<defaultvalue>php</defaultvalue>
 				<enableoptions>php:mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password
 smtp:!mail_use_f_param,mail_smtp_host,mail_smtp_port,mail_smtp_starttls,mail_smtp_user,mail_smtp_password
-debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password</enableoptions>
+debug:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password
+debugFolder:!mail_use_f_param,!mail_smtp_host,!mail_smtp_port,!mail_smtp_starttls,!mail_smtp_user,!mail_smtp_password</enableoptions>
 				<selectoptions>php:wcf.acp.option.mail_send_method.php
 smtp:wcf.acp.option.mail_send_method.smtp
-debug:wcf.acp.option.mail_send_method.debug</selectoptions>
+debug:wcf.acp.option.mail_send_method.debug
+debugFolder:wcf.acp.option.mail_send_method.debugFolder</selectoptions>
 			</option>
 			<option name="mail_smtp_host">
 				<categoryname>general.mail.send</categoryname>
@@ -1032,13 +1106,11 @@ image/jpeg:wcf.acp.option.attachment_image_autoscale_file_type.jpeg</selectoptio
 				<optiontype>checkboxes</optiontype>
 				<defaultvalue>Facebook
 Twitter
-Google
 Reddit
 LinkedIn
 Pinterest</defaultvalue>
 				<selectoptions>Facebook
 Twitter
-Google
 Reddit
 WhatsApp
 LinkedIn
@@ -1380,10 +1452,6 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<optiontype>integer</optiontype>
 				<hidden>1</hidden>
 			</option>
-			<option name="user_ip_address_searchengine">
-				<categoryname>user.list.online</categoryname>
-				<optiontype>text</optiontype>
-			</option>
 			<!-- /user.list.online -->
 			<!-- user.cleanup -->
 			<option name="user_cleanup_notification_lifetime">
@@ -1488,6 +1556,21 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="message_public_highlighters">
+				<categoryname>message.general</categoryname>
+				<optiontype>highlighters</optiontype>
+				<defaultvalue>html
+css
+php
+javascript
+java
+c
+cpp
+csharp
+ruby
+rust
+go</defaultvalue>
+			</option>
 			<!-- /message.general -->
 			<option name="search_results_per_page">
 				<categoryname>message.search</categoryname>
@@ -1512,6 +1595,14 @@ username:wcf.search.sortBy.username</selectoptions>
 				<selectoptions>ASC:wcf.global.sortOrder.ascending
 DESC:wcf.global.sortOrder.descending</selectoptions>
 			</option>
+			<option name="search_max_combined_tags">
+				<categoryname>message.search</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>3</defaultvalue>
+				<options>module_tagging</options>
+				<minvalue>1</minvalue>
+				<maxvalue>10</maxvalue>
+			</option>
 			<!-- message.general.poll -->
 			<option name="poll_max_options">
 				<categoryname>message.general.poll</categoryname>
@@ -1526,6 +1617,28 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<defaultvalue>0</defaultvalue>
 			</option>
 			<!-- /message.general.poll -->
+			<!-- message.contactForm -->
+			<option name="module_contact_form">
+				<categoryname>message.contactForm</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<enableoptions>contact_form_enable_attachments</enableoptions>
+			</option>
+			<option name="contact_form_enable_attachments">
+				<categoryname>message.contactForm</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<enableoptions>contact_form_prune_attachments</enableoptions>
+			</option>
+			<option name="contact_form_prune_attachments">
+				<categoryname>message.contactForm</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>180</defaultvalue>
+				<minvalue>0</minvalue>
+				<maxvalue>365</maxvalue>
+				<suffix>days</suffix>
+			</option>
+			<!-- /message.contactForm -->
 			<!-- cms.media.thumbnail -->
 			<option name="media_small_thumbnail_width">
 				<categoryname>cms.media.thumbnail</categoryname>
@@ -1644,6 +1757,11 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<options>module_article</options>
 				<selectoptions>ASC:wcf.global.sortOrder.ascending
 DESC:wcf.global.sortOrder.descending</selectoptions>
+			</option>
+			<option name="log_missing_language_items">
+				<categoryname>module.development</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
 			</option>
 		</options>
 	</import>

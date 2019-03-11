@@ -17,7 +17,7 @@
 		{/hascontent}
 	</footer>
 {else}
-	<p class="info">{lang}wcf.user.recentActivity.noEntries{/lang}</p>
+	<p class="info" role="status">{lang}wcf.user.recentActivity.noEntries{/lang}</p>
 {/if}
 
 <script data-relocate="true">

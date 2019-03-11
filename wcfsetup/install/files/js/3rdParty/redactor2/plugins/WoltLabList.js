@@ -2,6 +2,8 @@ $.Redactor.prototype.WoltLabList = function() {
 	"use strict";
 	
 	return {
+		parentsQualifiedForLists: ['woltlab-quote', 'woltlab-spoiler'],
+		
 		init: function () {
 			this.list.combineAfterAndBefore = (function(block) {
 				var $prev = $(block).prev();
@@ -98,6 +100,20 @@ $.Redactor.prototype.WoltLabList = function() {
 				this.selection.restore();
 				
 				return nodes;
+			}).bind(this);
+			
+			this.list._getBlocks = (function() {
+				return this.selection.blocks().filter((function(block) {
+					var parent = block.parentNode;
+					if (parent.classList.contains('redactor-in')) {
+						return true;
+					}
+					else if (this.WoltLabList.parentsQualifiedForLists.indexOf(parent.nodeName.toLowerCase()) !== -1) {
+						return true;
+					}
+					
+					return false;
+				}).bind(this));
 			}).bind(this);
 		}
 	};

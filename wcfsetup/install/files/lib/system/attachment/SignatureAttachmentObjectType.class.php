@@ -8,10 +8,10 @@ use wcf\system\WCF;
  * Attachment object type implementation for posts.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Attachment
- * @since       3.2
+ * @since       5.2
  * 
  * @method	UserProfile	getObject($objectID)
  */

@@ -2,7 +2,7 @@
  * Initializes modules required for media list view.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Controller/Media/List
  */
@@ -127,7 +127,7 @@ define([
 		 * Opens the media editor after uploading a single file.
 		 *
 		 * @param	{object}	data	upload event data
-		 * @since	3.2
+		 * @since	5.2
 		 */
 		_openEditorAfterUpload: function(data) {
 			if (data.upload === _upload && !data.isMultiFileUpload && !_upload.hasPendingUploads()) {

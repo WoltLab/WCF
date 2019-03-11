@@ -5,6 +5,7 @@ use wcf\data\style\Style;
 use wcf\data\style\StyleEditor;
 use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\exception\SystemException;
+use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\JSON;
@@ -13,7 +14,7 @@ use wcf\util\JSON;
  * Handles styles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Style
  */
@@ -238,6 +239,26 @@ class StyleHandler extends SingletonFactory {
 		}
 		
 		return $this->icons;
+	}
+	
+	/**
+	 * Retrieves the default style for requests originating from the ACP. May return `null`
+	 * if there is no default style.
+	 * 
+	 * @return Style|null
+	 * @since	5.2
+	 */
+	public function getDefaultStyle() {
+		if (!RequestHandler::getInstance()->isACPRequest()) {
+			throw new \LogicException('Illegal request, please use `getStyle()` for frontend requests.');
+		}
+		
+		$styleID = $this->cache['default'];
+		if ($styleID) {
+			return $this->cache['styles'][$styleID];
+		}
+		
+		return null;
 	}
 	
 	/**

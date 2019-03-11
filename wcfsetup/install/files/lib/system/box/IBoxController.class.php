@@ -7,7 +7,7 @@ use wcf\data\media\ViewableMedia;
  * Default interface for box controllers.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
@@ -75,7 +75,7 @@ interface IBoxController {
 	 * system-type boxes.
 	 * 
 	 * @return      string|null
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function getTitle();
 	

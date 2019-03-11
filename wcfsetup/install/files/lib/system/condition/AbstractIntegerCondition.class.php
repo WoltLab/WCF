@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Abstract implementation of a condition for an integer value.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
@@ -239,6 +239,16 @@ HTML;
 			}
 		}
 		
+		$this->validateConflictingValues();
+	}
+	
+	/**
+	 * Checks if the values for `greaterThan` and `lessThan` are conflicting.
+	 * 
+	 * @throws	UserInputException		if values for `greaterThan` and `lessThan` are conflicting
+	 * @since	3.0
+	 */
+	protected function validateConflictingValues() {
 		if ($this->lessThan !== null && $this->greaterThan !== null && $this->greaterThan + 1 >= $this->lessThan) {
 			$this->errorMessage = 'wcf.condition.greaterThan.error.lessThan';
 			

@@ -13,7 +13,7 @@ use wcf\util\JSON;
  * Wrapper class for package installation plugins for use with the sync feature.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Devtools\Pip
  * @since       3.1
@@ -25,14 +25,14 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	/**
 	 * project the pip object belongs to
 	 * @var	DevtoolsProject
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected $project;
 	
 	/**
 	 * package installation plugin object
 	 * @var	IPackageInstallationPlugin
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected $pip;
 	
@@ -85,7 +85,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	 * Returns `true` if this pip supports adding and editing entries via a gui.
 	 * 
 	 * @return	boolean
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function supportsGui() {
 		return $this->isSupported() && is_subclass_of($this->getDecoratedObject()->className, IGuiPackageInstallationPlugin::class);
@@ -101,7 +101,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	 * Returns the project this object belongs to.
 	 * 
 	 * @return	DevtoolsProject
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getProject() {
 		return $this->project;
@@ -111,7 +111,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	 * Sets the project this object belongs to.
 	 * 
 	 * @param	DevtoolsProject		$project
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function setProject(DevtoolsProject $project) {
 		$this->project = $project;
@@ -123,7 +123,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 	 * Note: No target will be set for the package installation plugin object.
 	 * 
 	 * @return	IPackageInstallationPlugin|IGuiPackageInstallationPlugin
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getPip() {
 		if ($this->pip === null) {
@@ -252,7 +252,9 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 		$tar = $project->getPackageArchive()->getTar();
 		$tar->reset();
 		
-		$instructions = [];
+		$instructions = [
+			'value' => $target
+		];
 		
 		if ($project->isCore()) {
 			switch ($pluginName) {
@@ -272,7 +274,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						$filter = new \RecursiveCallbackFilterIterator($directory, function ($current) {
 							/** @var \SplFileInfo $current */
 							$filename = $current->getFilename();
-							if ($filename[0] === '.') {
+							if ($filename[0] === '.' && $filename !== '.gitignore' && $filename !== '.htaccess') {
 								// ignore dot files and files/directories starting with a dot
 								return false;
 							}
@@ -310,23 +312,15 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						}
 					}
 					
-					$instructions['value'] = $defaultFilename;
-					
 					break;
 				
 				case 'language':
-					$filename = "wcfsetup/install/lang/{$target}";
-					$tar->registerFile($filename, $project->path . $filename);
-					
-					$instructions['value'] = $filename;
+					$tar->registerFile($target, $project->path . 'wcfsetup/install/lang/' . $target);
 					
 					break;
 					
 				default:
-					$filename = "com.woltlab.wcf/{$target}";
-					$tar->registerFile($filename, $project->path . $filename);
-					
-					$instructions['value'] = $filename;
+					$tar->registerFile($target, $project->path . 'com.woltlab.wcf/' . $target);
 					
 					break;
 			}
@@ -364,7 +358,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						$filter = new \RecursiveCallbackFilterIterator($directory, function ($current) {
 							/** @var \SplFileInfo $current */
 							$filename = $current->getFilename();
-							if ($filename[0] === '.') {
+							if ($filename[0] === '.' && $filename !== '.gitignore' && $filename !== '.htaccess') {
 								// ignore dot files and files/directories starting with a dot
 								return false;
 							}
@@ -389,21 +383,15 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						}
 					}
 					
-					$instructions['value'] = $defaultFilename;
-					
 					break;
 				
 				default:
 					if (strpos($defaultFilename, '*') !== false) {
-						$filename = preg_replace('~\*.*$~', $target, $defaultFilename);
-						$tar->registerFile($filename, $project->path . $filename);
+						$tar->registerFile($target, $project->path . preg_replace('~\*.*$~', $target, $defaultFilename));
 					}
 					else {
-						$filename = $target;
-						$tar->registerFile($filename, $project->path . $filename);
+						$tar->registerFile($target, $project->path . $target);
 					}
-					
-					$instructions['value'] = $filename;
 					
 					break;
 			}

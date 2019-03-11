@@ -33,7 +33,6 @@
 	<xs:complexType name="optionalPackage">
 		<xs:simpleContent>
 			<xs:extension base="xs:string">
-				<xs:attribute name="minVersion" type="xs:string" />
 				<xs:attribute name="file" type="xs:string" use="required" />
 			</xs:extension>
 		</xs:simpleContent>

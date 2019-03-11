@@ -3,7 +3,7 @@
  * or the deprecated `Event.which`.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Event/Key
  */
@@ -90,6 +90,16 @@ define([], function() {
 		 */
 		Escape: function(event) {
 			return _isKey(event, 'Escape', 27);
+		},
+		
+		/**
+		 * Returns true if pressed key equals 'Space'.
+		 *
+		 * @param       {Event}         event           event object
+		 * @return      {boolean}
+		 */
+		Space: function(event) {
+			return _isKey(event, 'Space', 32);
 		},
 		
 		/**

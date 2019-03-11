@@ -6,12 +6,15 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * Implementation of a form field for boolean values.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
-class BooleanFormField extends AbstractFormField {
+class BooleanFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField {
+	use TAutoFocusFormField;
+	use TImmutableFormField;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -21,7 +24,7 @@ class BooleanFormField extends AbstractFormField {
 	 * @inheritDoc
 	 */
 	public function getSaveValue() {
-		return $this->__value ? 1 : 0;
+		return $this->value ? 1 : 0;
 	}
 	
 	/**
@@ -29,7 +32,7 @@ class BooleanFormField extends AbstractFormField {
 	 */
 	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
-			$this->__value = $this->getDocument()->getRequestData($this->getPrefixedId()) === '1';
+			$this->value = $this->getDocument()->getRequestData($this->getPrefixedId()) === '1';
 		}
 		
 		return $this;

@@ -2,7 +2,7 @@
  * Class and function collection for WCF ACP
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -168,6 +168,12 @@ WCF.ACP.Package.Installation = Class.extend({
 	_actionName: 'InstallPackage',
 	
 	/**
+	 * additional parameters send in all requests
+	 * @var	object
+	 */
+	_additionalRequestParameters: {},
+	
+	/**
 	 * true, if rollbacks are supported
 	 * @var	boolean
 	 */
@@ -210,20 +216,17 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @param	string		actionName
 	 * @param	boolean		allowRollback
 	 * @param	boolean		isUpdate
+	 * @param	object		additionalRequestParameters
 	 */
-	init: function(queueID, actionName, allowRollback, isUpdate) {
+	init: function(queueID, actionName, allowRollback, isUpdate, additionalRequestParameters) {
 		this._actionName = (actionName) ? actionName : 'InstallPackage';
 		this._allowRollback = (allowRollback === true);
 		this._queueID = queueID;
+		this._additionalRequestParameters = additionalRequestParameters || {};
 		
-		switch (this._actionName) {
-			case 'InstallPackage':
-				this._dialogTitle = 'wcf.acp.package.' + (isUpdate ? 'update' : 'install') + '.title';
-			break;
-			
-			case 'UninstallPackage':
-				this._dialogTitle = 'wcf.acp.package.uninstallation.title';
-			break;
+		this._dialogTitle = 'wcf.acp.package.' + (isUpdate ? 'update' : 'install') + '.title';
+		if (this._actionName === 'UninstallPackage') {
+			this._dialogTitle = 'wcf.acp.package.uninstallation.title';
 		}
 		
 		this._initProxy();
@@ -317,10 +320,10 @@ WCF.ACP.Package.Installation = Class.extend({
 	 * @return	object
 	 */
 	_getParameters: function() {
-		return {
+		return $.extend({}, this._additionalRequestParameters, {
 			queueID: this._queueID,
 			step: 'prepare'
-		};
+		});
 	},
 	
 	/**
@@ -517,7 +520,7 @@ WCF.ACP.Package.Installation = Class.extend({
 	_executeStep: function(step, node, additionalData) {
 		if (!additionalData) additionalData = { };
 		
-		var $data = $.extend({
+		var $data = $.extend({}, this._additionalRequestParameters, {
 			node: node,
 			queueID: this._queueID,
 			step: step
@@ -1675,6 +1678,8 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
  * @see	WCF.Search.Base
  */
 WCF.ACP.Search = WCF.Search.Base.extend({
+	_delay: 250,
+	
 	/**
 	 * name of the selected search provider
 	 * @var	string
@@ -1781,6 +1786,8 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 	_success: function(data) {
 		this._super(data);
 		
+		var search = elById('pageHeaderSearch');
+		this._list[0].style.setProperty('top', search.offsetTop + search.clientHeight + 'px', 'important');
 		this._list.addClass('acpSearchDropdown');
 	},
 	
@@ -1936,6 +1943,13 @@ WCF.ACP.User.BanHandler = {
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		elBySelAll('.jsUserRow', undefined, function(userRow) {
+			var userId = parseInt(elData(userRow, 'object-id'), 10);
+			if (data.objectIDs.indexOf(userId) !== -1) {
+				elData(userRow, 'banned', data.actionName === 'ban');
+			}
+		});
+		
 		$('.jsBanButton').each(function(index, button) {
 			var $button = $(button);
 			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
@@ -1956,6 +1970,8 @@ WCF.ACP.User.BanHandler = {
 		if (data.actionName == 'ban') {
 			this._dialog.wcfDialog('close');
 		}
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.acp.user', 'refresh', {userIds: data.objectIDs});
 	}
 };
 
@@ -2097,6 +2113,13 @@ WCF.ACP.User.EnableHandler = {
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		elBySelAll('.jsUserRow', undefined, function(userRow) {
+			var userId = parseInt(elData(userRow, 'object-id'), 10);
+			if (data.objectIDs.indexOf(userId) !== -1) {
+				elData(userRow, 'enabled', data.actionName === 'enable');
+			}
+		});
+		
 		$('.jsEnableButton').each(function(index, button) {
 			var $button = $(button);
 			if (WCF.inArray($button.data('objectID'), data.objectIDs)) {
@@ -2111,6 +2134,8 @@ WCF.ACP.User.EnableHandler = {
 		
 		var $notification = new WCF.System.Notification();
 		$notification.show(function() { window.location.reload(); });
+		
+		WCF.System.Event.fireEvent('com.woltlab.wcf.acp.user', 'refresh', {userIds: data.objectIDs});
 	}
 };
 
@@ -2448,47 +2473,34 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 	_pageConditions: null,
 	
 	/**
-	 * select element for the page controller condition
+	 * select elements for the page controller condition
 	 * @var	jQuery[]
 	 */
 	_pageInputs: [],
 	
 	/**
-	 * Initializes a new WCF.ACP.Ad.LocationHandler object.
+	 * page controller condition container
+	 * @var	jQuery[]
 	 */
-	init: function() {
+	_pageSelectionContainer: null,
+	
+	/**
+	 * Initializes a new WCF.ACP.Ad.LocationHandler object.
+	 * 
+	 * @param	{object}	variablesDescriptions
+	 */
+	init: function(variablesDescriptions) {
+		this._variablesDescriptions = variablesDescriptions;
+		
 		this._pageConditions = $('#pageConditions');
 		this._pageInputs = $('input[name="pageIDs[]"]');
 		
-		var dl = $(this._pageInputs[0]).parents('dl:eq(0)');
+		this._variablesDescriptionsList = $('#ad').next('small').children('ul');
 		
-		// hide the page controller element
-		dl.hide();
+		this._pageSelectionContainer = $(this._pageInputs[0]).parents('dl:eq(0)');
 		
-		var section = dl.parent('section');
-		if (!section.children('dl:visible').length) {
-			section.hide();
-		}
-		
-		var nextSection = section.next('section');
-		if (nextSection) {
-			var marginTop = nextSection.css('margin-top');
-			nextSection.css('margin-top', 0);
-			
-			require(['EventHandler'], function(EventHandler) {
-				EventHandler.add('com.woltlab.wcf.pageConditionDependence', 'checkVisivility', function() {
-					if (section.is(':visible')) {
-						nextSection.css('margin-top', marginTop);
-					}
-					else {
-						nextSection.css('margin-top', 0);
-					}
-				});
-			});
-		}
-		
-		// fix the margin of a potentially next page condition element
-		dl.next('dl').css('margin-top', 0);
+		// hide the page controller elements
+		this._hidePageSelection(true);
 		
 		$('#objectTypeID').on('change', $.proxy(this._setPageController, this));
 		
@@ -2498,33 +2510,104 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 	},
 	
 	/**
+	 * Hides the page selection form field.
+	 * 
+	 * @since	5.2
+	 */
+	_hidePageSelection: function(addEventListeners) {
+		this._pageSelectionContainer.prev('dl').hide();
+		this._pageSelectionContainer.hide();
+		
+		// fix the margin of a potentially next page condition element
+		this._pageSelectionContainer.next('dl').css('margin-top', 0);
+		
+		var section = this._pageSelectionContainer.parent('section');
+		if (!section.children('dl:visible').length) {
+			section.hide();
+			
+			var nextSection = section.next('section');
+			if (nextSection) {
+				nextSection.css('margin-top', 0);
+				
+				if (addEventListeners) {
+					require(['EventHandler'], function(EventHandler) {
+						EventHandler.add('com.woltlab.wcf.pageConditionDependence', 'checkVisivility', function() {
+							if (section.is(':visible')) {
+								nextSection.css('margin-top', '40px');
+							}
+							else {
+								nextSection.css('margin-top', 0);
+							}
+						});
+					});
+				}
+			}
+		}
+	},
+	
+	/**
+	 * Shows the page selection form field.
+	 * 
+	 * @since	5.2
+	 */
+	_showPageSelection: function() {
+		this._pageSelectionContainer.prev('dl').show();
+		this._pageSelectionContainer.show();
+		this._pageSelectionContainer.next('dl').css('margin-top', '40px');
+		
+		var section = this._pageSelectionContainer.parent('section');
+		section.show();
+		
+		var nextSection = section.next('section');
+		if (nextSection) {
+			nextSection.css('margin-top', '40px');
+		}
+	},
+	
+	/**
 	 * Sets the page controller based on the selected ad location.
 	 */
 	_setPageController: function() {
 		var option = $('#objectTypeID').find('option:checked');
+		var parent = option.parent();
 		
-		require(['Core'], function(Core) {
-			var input, triggerEvent;
+		// the page controller can be explicitly set for global positions
+		if (parent.is('optgroup') && parent.data('categoryName') === 'com.woltlab.wcf.global') {
+			this._showPageSelection();
+		}
+		else {
+			this._hidePageSelection();
 			
-			// select the related page
-			for (var i = 0, length = this._pageInputs.length; i < length; i++) {
-				input = this._pageInputs[i];
-				triggerEvent = false;
+			require(['Core'], function(Core) {
+				var input, triggerEvent;
 				
-				if (option.data('page') && elData(input, 'identifier') === option.data('page')) {
-					if (!input.checked) triggerEvent = true;
+				// select the related page
+				for (var i = 0, length = this._pageInputs.length; i < length; i++) {
+					input = this._pageInputs[i];
+					triggerEvent = false;
 					
-					input.checked = true;
-				}
-				else {
-					if (input.checked) triggerEvent = true;
+					if (option.data('page') && elData(input, 'identifier') === option.data('page')) {
+						if (!input.checked) triggerEvent = true;
+						
+						input.checked = true;
+					}
+					else {
+						if (input.checked) triggerEvent = true;
+						
+						input.checked = false;
+					}
 					
-					input.checked = false;
+					if (triggerEvent) Core.triggerEvent(this._pageInputs[i], 'change');
 				}
-				
-				if (triggerEvent) Core.triggerEvent(this._pageInputs[i], 'change');
-			}
-		}.bind(this));
+			}.bind(this));
+		}
+		
+		this._variablesDescriptionsList.children(':not(.jsDefaultItem)').remove();
+		
+		var objectTypeId = $('#objectTypeID').val();
+		if (objectTypeId in this._variablesDescriptions) {
+			this._variablesDescriptionsList[0].innerHTML += this._variablesDescriptions[objectTypeId];
+		}
 	},
 	
 	/**
@@ -2536,7 +2619,7 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 			// of these conditions
 			this._pageConditions.find('select, input').remove();
 		}
-		else {
+		else if (this._pageSelectionContainer.is(':hidden')) {
 			// reset page controller conditions to avoid creation of
 			// unnecessary conditions
 			for (var i = 0, length = this._pageInputs.length; i < length; i++) {

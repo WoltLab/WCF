@@ -2,6 +2,7 @@
 namespace wcf\system\page\handler;
 use wcf\data\category\AbstractDecoratedCategory;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\IAccessibleObject;
 use wcf\data\ILinkableObject;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\ImplementationException;
@@ -15,7 +16,7 @@ use wcf\system\WCF;
  * constant `OBJECT_TYPE_NAME` with the name of the `com.woltlab.wcf.category` object type.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Page\Handler
  * @since	3.0
@@ -58,9 +59,17 @@ trait TDecoratedCategoryLookupPageHandler {
 	 */
 	public function isValid($objectID = null) {
 		$className = $this->getDecoratedCategoryClass();
-		
 		/** @noinspection PhpUndefinedMethodInspection */
-		return $className::getCategory($objectID)->isAccessible();
+		$category = $className::getCategory($objectID);
+		if ($category === null) {
+			return false;
+		}
+		
+		if ($category instanceof IAccessibleObject && !$category->isAccessible()) {
+			return false;
+		}
+		
+		return true;
 	}
 	
 	/**

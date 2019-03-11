@@ -3,13 +3,14 @@ namespace wcf\system\bbcode;
 use wcf\data\attachment\GroupedAttachmentList;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
  * Parses the [attach] bbcode tag.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  */
@@ -151,6 +152,12 @@ class AttachmentBBCode extends AbstractBBCode {
 				}
 				
 				return $result;
+			}
+			else if (substr($attachment->fileType, 0, 6) === 'video/') {
+				return WCF::getTPL()->fetch('__videoAttachmentBBCode', 'wcf', [
+					'attachment' => $attachment,
+					'attachmentIdentifier' => StringUtil::getRandomID()
+				]);
 			}
 			else {
 				// file

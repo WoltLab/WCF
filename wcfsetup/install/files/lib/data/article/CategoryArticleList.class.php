@@ -7,7 +7,7 @@ use wcf\system\WCF;
  * Represents a list of articles in a specific category.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
@@ -17,8 +17,8 @@ class CategoryArticleList extends AccessibleArticleList {
 	/**
 	 * Creates a new CategoryArticleList object.
 	 *
-	 * @param	integer[]       $categoryID
-	 * @param       boolean         $includeChildCategories
+	 * @param	integer|integer[]       $categoryID
+	 * @param       boolean                 $includeChildCategories
 	 * @throws      \InvalidArgumentException
 	 */
 	public function __construct($categoryID, $includeChildCategories = false) {

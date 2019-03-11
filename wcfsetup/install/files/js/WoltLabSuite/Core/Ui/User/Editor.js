@@ -2,7 +2,7 @@
  * Simple notification overlay.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/User/Editor
  */
@@ -36,7 +36,7 @@ define(['Ajax', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', 'Ui/Notificat
 			_userHeader = elBySel('.userProfileUser');
 			
 			// init buttons
-			['ban', 'disableAvatar', 'disableSignature', 'enable'].forEach((function(action) {
+			['ban', 'disableAvatar', 'disableCoverPhoto', 'disableSignature', 'enable'].forEach((function(action) {
 				var button = elBySel('.userProfileButtonMenu .jsButtonUser' + StringUtil.ucfirst(action));
 				
 				// button is missing if users lacks the permission
@@ -69,6 +69,12 @@ define(['Ajax', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', 'Ui/Notificat
 				case 'disableAvatar':
 					if (elDataBool(_userHeader, 'disable-avatar')) {
 						actionName = 'enableAvatar';
+					}
+					break;
+					
+				case 'disableCoverPhoto':
+					if (elDataBool(_userHeader, 'disable-cover-photo')) {
+						actionName = 'enableCoverPhoto';
 					}
 					break;
 				
@@ -154,7 +160,14 @@ define(['Ajax', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', 'Ui/Notificat
 					elBySel('.userProfileButtonMenu .jsButtonUserDisableAvatar').textContent = Language.get('wcf.user.' + (data.actionName === 'disableAvatar' ? 'enable' : 'disable') + 'Avatar');
 					
 					break;
-				
+					
+				case 'disableCoverPhoto':
+				case 'enableCoverPhoto':
+					elData(_userHeader, 'disable-cover-photo', (data.actionName === 'disableCoverPhoto'));
+					elBySel('.userProfileButtonMenu .jsButtonUserDisableCoverPhoto').textContent = Language.get('wcf.user.' + (data.actionName === 'disableCoverPhoto' ? 'enable' : 'disable') + 'CoverPhoto');
+					
+					break;
+					
 				case 'disableSignature':
 				case 'enableSignature':
 					elData(_userHeader, 'disable-signature', (data.actionName === 'disableSignature'));
@@ -170,7 +183,7 @@ define(['Ajax', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Dialog', 'Ui/Notificat
 					break;
 			}
 			
-			if (data.actionName === 'ban' || data.actionName === 'disableAvatar' || data.actionName === 'disableSignature') {
+			if (data.actionName === 'ban' || data.actionName === 'disableAvatar' || data.actionName === 'disableCoverPhoto' || data.actionName === 'disableSignature') {
 				UiDialog.close(this);
 			}
 			

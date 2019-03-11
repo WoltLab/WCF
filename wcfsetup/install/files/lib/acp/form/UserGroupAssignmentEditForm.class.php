@@ -11,11 +11,16 @@ use wcf\system\WCF;
  * Shows the form to edit an existing automatic user group assignment.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
 class UserGroupAssignmentEditForm extends UserGroupAssignmentAddForm {
+	/**
+	 * @inheritDoc
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.group.assignment';
+
 	/**
 	 * edited automatic user group assignment
 	 * @var	UserGroupAssignment

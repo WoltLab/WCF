@@ -12,11 +12,16 @@ use wcf\system\WCF;
  * Shows the paid subscription edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
 class PaidSubscriptionEditForm extends PaidSubscriptionAddForm {
+	/**
+	 * @inheritDoc
+	 */
+	public $activeMenuItem = 'wcf.acp.menu.link.paidSubscription.list';
+	
 	/**
 	 * id of the edited subscription
 	 * @var	integer

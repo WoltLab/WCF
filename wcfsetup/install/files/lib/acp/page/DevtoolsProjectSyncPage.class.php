@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Shows the devtools project sync form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  * @since       3.1
@@ -63,7 +63,8 @@ class DevtoolsProjectSyncPage extends AbstractPage {
 		
 		WCF::getTPL()->assign([
 			'objectID' => $this->objectID,
-			'object' => $this->object
+			'object' => $this->object,
+			'project' => $this->object
 		]);
 	}
 }

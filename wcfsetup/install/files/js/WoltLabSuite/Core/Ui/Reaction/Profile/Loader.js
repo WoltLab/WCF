@@ -2,10 +2,10 @@
  * Handles the reaction list in the user profile. 
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Reaction/Profile/Loader
- * @since       3.2
+ * @since       5.2
  */
 define(['Ajax', 'Core', 'Language'], function(Ajax, Core, Language) {
 	"use strict";

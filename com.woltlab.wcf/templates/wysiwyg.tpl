@@ -70,6 +70,7 @@
 				'wcf.editor.code.highlighter': '{lang}wcf.editor.code.highlighter{/lang}',
 				'wcf.editor.code.highlighter.description': '{lang}wcf.editor.code.highlighter.description{/lang}',
 				'wcf.editor.code.highlighter.detect': '{lang}wcf.editor.code.highlighter.detect{/lang}',
+				'wcf.editor.code.highlighter.plain': '{lang}wcf.editor.code.highlighter.plain{/lang}',
 				'wcf.editor.code.line': '{lang}wcf.editor.code.line{/lang}',
 				'wcf.editor.code.line.description': '{lang}wcf.editor.code.line.description{/lang}',
 				'wcf.editor.code.title': '{lang __literal=true}wcf.editor.code.title{/lang}',
@@ -85,6 +86,7 @@
 				'wcf.editor.image.float.left': '{lang}wcf.editor.image.float.left{/lang}',
 				'wcf.editor.image.float.right': '{lang}wcf.editor.image.float.right{/lang}',
 				'wcf.editor.image.source': '{lang}wcf.editor.image.source{/lang}',
+				'wcf.editor.image.source.error.blocked': '{lang}wcf.editor.image.source.error.blocked{/lang}',
 				'wcf.editor.image.source.error.insecure': '{lang}wcf.editor.image.source.error.insecure{/lang}',
 				'wcf.editor.image.source.error.invalid': '{lang}wcf.editor.image.source.error.invalid{/lang}',
 				
@@ -119,7 +121,7 @@
 			var allowedInlineStyles = [], buttons = [], buttonMobile = [], buttonOptions = [], customButtons = [];
 			{include file='wysiwygToolbar'}
 			
-			var highlighters = { {implode from=$__wcf->getBBCodeHandler()->getHighlighters() item=__highlighter}'{$__highlighter}': '{lang}wcf.bbcode.code.{@$__highlighter}.title{/lang}'{/implode} };
+			var highlighters = '{@MESSAGE_PUBLIC_HIGHLIGHTERS|encodeJS}'.split(/\n/).filter(function (item) { return item != ''; });
 			
 			{include file='mediaJavaScript'}
 			
@@ -244,6 +246,13 @@
 					customButtons: customButtons,
 					forceSecureImages: {if MESSAGE_FORCE_SECURE_IMAGES}true{else}false{/if},
 					highlighters: highlighters,
+					images: {
+						external: {if IMAGE_ALLOW_EXTERNAL_SOURCE}true{else}false{/if},
+						secureOnly: {if MESSAGE_FORCE_SECURE_IMAGES}true{else}false{/if},
+						whitelist: [
+							{implode from=$__wcf->getBBCodeHandler()->getImageExternalSourceWhitelist() item=$hostname}'{$hostname|encodeJS}'{/implode}
+						]
+					},
 					media: {if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}true{else}false{/if},
 					mediaUrl: '{link controller='Media' id=-123456789 thumbnail='void' forceFrontend=true}{/link}'
 				}
@@ -293,6 +302,7 @@
 					
 					// set code
 					redactor.code.start(content);
+					redactor.WoltLabImage.validateImages();
 					
 					// set value
 					redactor.core.textarea().val(redactor.clean.onSync(redactor.$editor.html()));

@@ -15,9 +15,12 @@ use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
 use wcf\system\email\UserMailbox;
 use wcf\system\event\EventHandler;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\RequestHandler;
+use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
 
@@ -25,7 +28,7 @@ use wcf\util\UserRegistrationUtil;
  * Executes user-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
  * 
@@ -61,7 +64,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete'];
+	protected $requireACP = ['create', 'delete', 'resendActivationMail'];
 	
 	/**
 	 * Validates permissions and parameters.
@@ -452,11 +455,17 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (isset($this->parameters['deleteOldGroups'])) $deleteOldGroups = $this->parameters['deleteOldGroups'];
 		if (isset($this->parameters['addDefaultGroups'])) $addDefaultGroups = $this->parameters['addDefaultGroups'];
 		
+		$userIDs = [];
 		foreach ($this->getObjects() as $userEditor) {
+			$userIDs[] = $userEditor->userID;
 			$userEditor->addToGroups($groupIDs, $deleteOldGroups, $addDefaultGroups);
 		}
 		
-		//reread objects
+		if (empty($this->parameters['ignoreUserGroupAssignments'])) {
+			UserGroupAssignmentHandler::getInstance()->checkUsers($userIDs);
+		}
+		
+		// reread objects
 		$this->objects = [];
 		UserEditor::resetCache();
 		$this->readObjects();
@@ -477,9 +486,17 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public function validateGetSearchResultList() {
 		$this->readBoolean('includeUserGroups', false, 'data');
 		$this->readString('searchString', false, 'data');
+		$this->readIntegerArray('restrictUserGroupIDs', true, 'data');
+		$this->readString('scope', true, 'data');
 		
 		if (isset($this->parameters['data']['excludedSearchValues']) && !is_array($this->parameters['data']['excludedSearchValues'])) {
 			throw new UserInputException('excludedSearchValues');
+		}
+		
+		if ($this->parameters['data']['scope']) {
+			if (!in_array($this->parameters['data']['scope'], ['mention'])) {
+				throw new UserInputException('scope');
+			}
 		}
 	}
 	
@@ -495,13 +512,22 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$list = [];
 		
 		if ($this->parameters['data']['includeUserGroups']) {
-			$accessibleGroups = UserGroup::getAccessibleGroups();
+			$accessibleGroups = UserGroup::getMentionableGroups();
 			foreach ($accessibleGroups as $group) {
+				if (!empty($this->parameters['data']['restrictUserGroupIDs']) && !in_array($group->groupID, $this->parameters['data']['restrictUserGroupIDs'])) {
+					continue;
+				}
+				
+				if ($this->parameters['data']['scope'] === 'mention' && (!WCF::getSession()->getPermission('user.message.canMentionGroups') || !$group->canBeMentioned())) {
+					continue;
+				}
+				
 				$groupName = $group->getName();
 				if (!in_array($groupName, $excludedSearchValues)) {
 					$pos = mb_strripos($groupName, $searchString);
 					if ($pos !== false && $pos == 0) {
 						$list[] = [
+							'icon' => '<span class="icon icon16 fa-users"></span>',
 							'label' => $groupName,
 							'objectID' => $group->groupID,
 							'type' => 'group'
@@ -509,6 +535,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 					}
 				}
 			}
+			
+			usort($list, function(array $item1, array $item2) {
+				return strcasecmp($item1['label'], $item2['label']);
+			});
 		}
 		
 		// find users
@@ -615,6 +645,12 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 				$email->send();
 			}
 		}
+		
+		$userIDs = [];
+		foreach ($this->getObjects() as $user) {
+			$userIDs[] = $user->userID;
+		}
+		UserGroupAssignmentHandler::getInstance()->checkUsers($userIDs);
 		
 		$this->unmarkItems();
 	}
@@ -769,6 +805,45 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
+	 * Validates the 'disableCoverPhoto' action.
+	 * 
+	 * @since	5.2
+	 */
+	public function validateDisableCoverPhoto() {
+		$this->validateEnableCoverPhoto();
+		
+		$this->readString('disableCoverPhotoReason', true);
+		$this->readString('disableCoverPhotoExpires', true);
+	}
+	
+	/**
+	 * Disables the cover photo of the handled users.
+	 * 
+	 * @since	5.2
+	 */
+	public function disableCoverPhoto() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		$disableCoverPhotoExpires = $this->parameters['disableCoverPhotoExpires'];
+		if ($disableCoverPhotoExpires) {
+			$disableCoverPhotoExpires = strtotime($disableCoverPhotoExpires);
+		}
+		else {
+			$disableCoverPhotoExpires = 0;
+		}
+		
+		foreach ($this->getObjects() as $userEditor) {
+			$userEditor->update([
+				'disableCoverPhoto' => 1,
+				'disableCoverPhotoReason' => $this->parameters['disableCoverPhotoReason'],
+				'disableCoverPhotoExpires' => $disableCoverPhotoExpires
+			]);
+		}
+	}
+	
+	/**
 	 * Validates the 'enableAvatar' action.
 	 */
 	public function validateEnableAvatar() {
@@ -801,15 +876,53 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
+	 * Validates the 'enableCoverPhoto' action.
+	 * 
+	 * @since	5.2
+	 */
+	public function validateEnableCoverPhoto() {
+		WCF::getSession()->checkPermissions(['admin.user.canDisableCoverPhoto']);
+		
+		$this->__validateAccessibleGroups();
+		
+		if (empty($this->objects)) {
+			$this->readObjects();
+			
+			if (empty($this->objects)) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Enables the cover photo of the handled users.
+	 * 
+	 * @since	5.2
+	 */
+	public function enableCoverPhoto() {
+		if (empty($this->objects)) {
+			$this->readObjects();
+		}
+		
+		foreach ($this->getObjects() as $userEditor) {
+			$userEditor->update([
+				'disableCoverPhoto' => 0
+			]);
+		}
+	}
+	
+	/**
 	 * Returns the remove content dialog. 
 	 * 
 	 * @return      String[]
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function prepareRemoveContent() {
 		$knownContentProvider = array_map(function ($contentProvider) {
 			return $contentProvider->objectType;
-		}, ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'));
+		}, array_filter(ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.content.userContentProvider'), function ($contentProvider) {
+			return !$contentProvider->hidden;
+		}));
 		
 		return [
 			'template' => WCF::getTPL()->fetch('removeUserContentDialog', 'wcf', [
@@ -823,7 +936,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	/**
 	 * Validates the prepareRemoveContent method. 
 	 * 
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function validatePrepareRemoveContent() {
 		if (!isset($this->parameters['userID'])) {
@@ -867,5 +980,89 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function saveSocialNetworkPrivacySettings() {
 		// does nothing
+	}
+	
+	/**
+	 * Validates the 'resendActivationMail' action.
+	 * 
+	 * @throws	IllegalLinkException
+	 * @throws	PermissionDeniedException
+	 * @throws	UserInputException
+	 * @since	5.2
+	 */
+	public function validateResendActivationMail() {
+		$this->readObjects();
+		
+		if (!WCF::getSession()->getPermission('admin.user.canEnableUser')) {
+			throw new PermissionDeniedException();
+		}
+		
+		if (REGISTER_ACTIVATION_METHOD != 1) {
+			throw new IllegalLinkException();
+		}  
+		
+		foreach ($this->objects as $object) {
+			if (!$object->activationCode) {
+				throw new UserInputException('objectIDs');
+			}
+		}
+	}
+	
+	/**
+	 * Triggers a new activation email.
+	 * @since	5.2
+	 */
+	public function resendActivationMail() {
+		// update every selected user's activation code
+		foreach ($this->objects as $object) {
+			$action = new UserAction([$object], 'update', [
+				'data' => [
+					'activationCode' => UserRegistrationUtil::getActivationCode()
+				]
+			]);
+			$action->executeAction();
+			
+		}
+		
+		// get fresh user list with updated user objects
+		$newUserList = new UserList();
+		$newUserList->getConditionBuilder()->add('user_table.userID IN (?)', [$this->objectIDs]);
+		$newUserList->readObjects();
+		foreach ($newUserList->getObjects() as $object) {
+			$email = new Email();
+			$email->addRecipient(new UserMailbox($object));
+			$email->setSubject($object->getLanguage()->getDynamicVariable('wcf.user.register.needActivation.mail.subject'));
+			$email->setBody(new MimePartFacade([
+				new RecipientAwareTextMimePart('text/html', 'email_registerNeedActivation'),
+				new RecipientAwareTextMimePart('text/plain', 'email_registerNeedActivation')
+			]));
+			$email->send();
+		}
+		
+		$this->unmarkItems($this->objectIDs);
+	}
+	
+	/**
+	 * @since	5.2
+	 */
+	public function validateDevtoolsSetLanguage() {
+		if (!ENABLE_DEBUG_MODE || !ENABLE_DEVELOPER_TOOLS) {
+			throw new PermissionDeniedException();
+		}
+		
+		$this->readInteger('languageID');
+		
+		if (LanguageFactory::getInstance()->getLanguage($this->parameters['languageID']) === null) {
+			throw new UserInputException('languageID', 'invalid');
+		}
+	}
+	
+	/**
+	 * @since	5.2
+	 */
+	public function devtoolsSetLanguage() {
+		(new UserEditor(WCF::getUser()))->update([
+			'languageID' => $this->parameters['languageID']
+		]);
 	}
 }

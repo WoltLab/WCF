@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Represents a language.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Language
  * 
@@ -80,6 +80,17 @@ class Language extends DatabaseObject {
 	 * @return	string
 	 */
 	public function get($item, $optional = false) {
+		if (
+			defined('ENABLE_DEBUG_MODE') &&
+			ENABLE_DEBUG_MODE &&
+			defined('ENABLE_DEVELOPER_TOOLS') &&
+			ENABLE_DEVELOPER_TOOLS &&
+			is_array($optional) &&
+			!empty($optional)
+		) {
+			throw new \InvalidArgumentException("The second parameter of Language::get() does not support non-empty arrays. Did you mean to use Language::getDynamicVariable()?");
+		}
+		
 		if (!isset($this->items[$item])) {
 			// load category file
 			$explodedItem = explode('.', $item);
@@ -104,6 +115,20 @@ class Language extends DatabaseObject {
 			return '';
 		}
 		
+		if (
+			defined('ENABLE_DEVELOPER_TOOLS') &&
+			ENABLE_DEVELOPER_TOOLS &&
+			defined('LOG_MISSING_LANGUAGE_ITEMS') &&
+			LOG_MISSING_LANGUAGE_ITEMS &&
+			preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
+		) {
+			$logFile = WCF_DIR . 'log/missingLanguageItems.txt';
+			\wcf\functions\exception\logThrowable(
+				new \Exception("Missing language item '{$item}'."),
+				$logFile
+			);
+		}
+		
 		// return plain input
 		return $item;
 	}
@@ -125,6 +150,21 @@ class Language extends DatabaseObject {
 			$variables['__language'] = $this;
 			
 			return WCF::getTPL()->fetchString($this->dynamicItems[$item], $variables);
+		}
+		
+		if (
+			defined('ENABLE_DEVELOPER_TOOLS') &&
+			ENABLE_DEVELOPER_TOOLS &&
+			defined('LOG_MISSING_LANGUAGE_ITEMS') &&
+			LOG_MISSING_LANGUAGE_ITEMS &&
+			$staticItem === $item &&
+			preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
+		) {
+			$logFile = WCF_DIR . 'log/missingLanguageItems.txt';
+			\wcf\functions\exception\logThrowable(
+				new \Exception("Missing language item '{$item}'."),
+				$logFile
+			);
 		}
 		
 		return $staticItem;

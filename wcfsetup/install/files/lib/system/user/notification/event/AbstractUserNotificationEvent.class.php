@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Provides a default implementation for user notification events.
  * 
  * @author	Joshua Ruesweg, Marcel Werk, Oliver Kliebisch
- * @copyright	2001-2018 WoltLab GmbH, Oliver Kliebisch
+ * @copyright	2001-2019 WoltLab GmbH, Oliver Kliebisch
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  * 

@@ -18,7 +18,7 @@ use wcf\util\FileUtil;
  * Default implementation for saving uploaded files.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Upload
  * @since	3.0
@@ -134,7 +134,14 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 		}
 		
 		// move uploaded file
-		if (@move_uploaded_file($uploadFile->getLocation(), $object->getLocation())) {
+		if (ENABLE_DEBUG_MODE) {
+			$successfulUpload = move_uploaded_file($uploadFile->getLocation(), $object->getLocation());
+		}
+		else {
+			$successfulUpload = @move_uploaded_file($uploadFile->getLocation(), $object->getLocation());
+		}
+		
+		if ($successfulUpload) {
 			try {
 				$parameters = [
 					'object' => $object,
@@ -224,6 +231,10 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 				$this->objects[$uploadFile->getInternalFileID()] = $object;
 			}
 			catch (SystemException $e) {
+				if (ENABLE_DEBUG_MODE) {
+					throw $e;
+				}
+				
 				/** @var DatabaseObjectEditor $editor */
 				$editor = new $this->editorClassName($object);
 				$editor->delete();
@@ -240,6 +251,10 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 				$this->generateThumbnails($object);
 			}
 			catch (SystemException $e) {
+				if (ENABLE_DEBUG_MODE) {
+					throw $e;
+				}
+				
 				/** @var DatabaseObjectEditor $editor */
 				$editor = new $this->editorClassName($object);
 				$editor->delete();

@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Default implementation for ACP forms with i18n support.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since       3.1
@@ -152,7 +152,7 @@ abstract class AbstractAcpForm extends AbstractForm {
 	 * object has been created.
 	 *
 	 * @param	DatabaseObject	$databaseObject
-	 * @return	string[]
+	 * @param	string		$editorClass
 	 */
 	public function saveI18n(DatabaseObject $databaseObject, $editorClass) {
 		$data = [];

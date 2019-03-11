@@ -16,7 +16,7 @@ use wcf\system\form\builder\IFormDocument;
  * Installs, updates and deletes ACP menu items.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -47,7 +47,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		parent::addFormFields($form);
@@ -126,7 +126,7 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = parent::fetchElementData($element, $saveData);
@@ -144,10 +144,10 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
-		$menuItem = parent::doCreateXmlElement($document, $form);
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
+		$menuItem = parent::prepareXmlElement($document, $form);
 		
 		$this->appendElementChildren($menuItem, ['icon' => null], $form);
 		

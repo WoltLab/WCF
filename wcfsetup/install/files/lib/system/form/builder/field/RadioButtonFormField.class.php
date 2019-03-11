@@ -6,12 +6,13 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * Implementation of a radio buttons form field for selecting a single value.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
-class RadioButtonFormField extends AbstractFormField implements ISelectionFormField {
+class RadioButtonFormField extends AbstractFormField implements IImmutableFormField, ISelectionFormField {
+	use TImmutableFormField;
 	use TSelectionFormField;
 	
 	/**
@@ -27,7 +28,7 @@ class RadioButtonFormField extends AbstractFormField implements ISelectionFormFi
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_string($value)) {
-				$this->__value = $value;
+				$this->value = $value;
 			}
 		}
 		

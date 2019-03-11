@@ -2,13 +2,16 @@
 namespace wcf\system\bbcode;
 use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeCache;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\SingletonFactory;
+use wcf\util\ArrayUtil;
+use wcf\util\JSON;
 
 /**
  * Handles BBCodes displayed as buttons within the WYSIWYG editor.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  */
@@ -30,6 +33,12 @@ class BBCodeHandler extends SingletonFactory {
 	 * @var	BBCode[]
 	 */
 	protected $sourceBBCodes = null;
+	
+	/**
+	 * meta information about highlighters
+	 * @var mixed[]
+	 */
+	protected $highlighterMeta = null;
 	
 	/**
 	 * @inheritDoc
@@ -104,35 +113,51 @@ class BBCodeHandler extends SingletonFactory {
 	 * Returns a list of BBCodes which contain raw code (disabled BBCode parsing)
 	 * 
 	 * @return	BBCode[]
+	 * @deprecated  3.1 - This method is no longer supported.
 	 */
 	public function getSourceBBCodes() {
-		if (empty($this->allowedBBCodes)) {
-			return [];
-		}
-		
-		if ($this->sourceBBCodes === null) {
-			$this->sourceBBCodes = [];
-			
-			foreach (BBCodeCache::getInstance()->getBBCodes() as $bbcode) {
-				if (!$bbcode->isSourceCode) {
-					continue;
-				}
-				
-				if ($this->isAvailableBBCode($bbcode->bbcodeTag)) {
-					$this->sourceBBCodes[] = $bbcode;
-				}
-			}
-		}
-		
-		return $this->sourceBBCodes;
+		return [];
 	}
 	
+	/**
+	 * Returns metadata about the highlighters.
+	 * 
+	 * @return	string[]
+	 */
+	public function getHighlighterMeta() {
+		if ($this->highlighterMeta === null) {
+			$this->highlighterMeta = JSON::decode(preg_replace('!.*/\*START\*/(.*)/\*END\*/.*!', '\\1', file_get_contents(WCF_DIR.'/js/3rdParty/prism/prism-meta.js')));
+		}
+		
+		return $this->highlighterMeta;
+	}
+
 	/**
 	 * Returns a list of known highlighters.
 	 * 
 	 * @return	string[]
 	 */
 	public function getHighlighters() {
-		return BBCodeCache::getInstance()->getHighlighters();
+		return array_keys($this->getHighlighterMeta());
+	}
+	
+	/**
+	 * Returns a list of hostnames that are permitted as image sources.
+	 * 
+	 * @return string[]
+	 * @since 5.2
+	 */
+	public function getImageExternalSourceWhitelist() {
+		$hosts = [];
+		// Hide these hosts unless external sources are actually denied.
+		if (!IMAGE_ALLOW_EXTERNAL_SOURCE) {
+			$hosts = ArrayUtil::trim(explode("\n", IMAGE_EXTERNAL_SOURCE_WHITELIST));
+		}
+		
+		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			$hosts[] = $application->domainName;
+		}
+		
+		return array_unique($hosts);
 	}
 }

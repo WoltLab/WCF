@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Shows a list of language items.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  */
@@ -87,7 +87,7 @@ class LanguageItemListPage extends SortablePage {
 	/**
 	 * is `1` if only custom language items (created via ACP) should be shown
 	 * @var	integer
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public $isCustomLanguageItem = 0;
 	
@@ -105,7 +105,7 @@ class LanguageItemListPage extends SortablePage {
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public $forceCanonicalURL = true;
 	

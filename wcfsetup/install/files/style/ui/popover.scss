@@ -61,4 +61,9 @@
 			color: $wcfContentLinkActive;
 		}
 	}
+	
+	/* Workaround for the partially active mobile navigation on desktop devices. See #2791 */
+	.jsMobileButtonGroupNavigation > .dropdownLabel {
+		display: none;
+	}
 }

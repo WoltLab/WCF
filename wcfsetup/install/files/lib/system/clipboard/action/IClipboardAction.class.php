@@ -8,7 +8,7 @@ use wcf\system\clipboard\ClipboardEditorItem;
  * Basic interface for all clipboard editor actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Clipboard\Action
  */
@@ -50,7 +50,7 @@ interface IClipboardAction {
 	 * have been executed.
 	 * 
 	 * @return      string[]
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function getReloadPageOnSuccess();
 }

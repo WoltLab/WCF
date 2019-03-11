@@ -9,43 +9,23 @@ use wcf\util\ClassUtil;
  * Provides default implementations of `ISelectionFormField` methods.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
 trait TSelectionFormField {
-	/**
-	 * `true` if this field's options are filterable by the user
-	 * @var	bool
-	 */
-	protected $__filterable = false;
-	
 	/**
 	 * structured options array used to generate the form field output
 	 * @var	null|array
 	 */
-	protected $__nestedOptions;
+	protected $nestedOptions;
 	
 	/**
 	 * possible options to select
 	 * @var	null|array
 	 */
-	protected $__options;
-	
-	/**
-	 * Sets if the selection options can be filtered by the user so that they
-	 * are able to quickly find the desired option out of a larger list of
-	 * available options.
-	 * 
-	 * @param	bool	$filterable	determines if field's options are filterable by user
-	 * @return	static			this node
-	 */
-	public function filterable($filterable = true) {
-		$this->__filterable = $filterable;
-		
-		return $this;
-	}
+	protected $options;
 	
 	/**
 	 * Returns a structured array that can be used to generate the form field output.
@@ -60,7 +40,7 @@ trait TSelectionFormField {
 			throw new \BadMethodCallException("Nested options are not supported.");
 		}
 		
-		return $this->__nestedOptions;
+		return $this->nestedOptions;
 	}
 	
 	/**
@@ -71,7 +51,7 @@ trait TSelectionFormField {
 	 * @throws	\BadMethodCallException		if no options have been set
 	 */
 	public function getOptions() {
-		return $this->__options;
+		return $this->options;
 	}
 	
 	/**
@@ -85,20 +65,7 @@ trait TSelectionFormField {
 	 */
 	public function isAvailable() {
 		// selections without any possible values are not available
-		return !empty($this->__options) && parent::isAvailable();
-	}
-	
-	/**
-	 * Returns `true` if the selection options can be filtered by the user so
-	 * that they are able to quickly find the desired option out of a larger
-	 * list of available options and returns `false` otherwise.
-	 * 
-	 * Per default, fields are not filterable.
-	 * 
-	 * @return	bool
-	 */
-	public function isFilterable() {
-		return $this->__filterable;
+		return !empty($this->options) && parent::isAvailable();
 	}
 	
 	/**
@@ -172,7 +139,7 @@ trait TSelectionFormField {
 			$options = $dboOptions;
 		}
 		
-		$this->__options = [];
+		$this->options = [];
 		if ($nestedOptions) {
 			foreach ($options as $key => &$option) {
 				if (!is_array($option)) {
@@ -206,12 +173,12 @@ trait TSelectionFormField {
 				if (!is_string($option['value']) && !is_numeric($option['value'])) {
 					throw new \InvalidArgumentException("Nested option with key '{$key}' contain invalid value of type " . gettype($option['label']) . ".");
 				}
-				else if (isset($this->__options[$option['value']])) {
+				else if (isset($this->options[$option['value']])) {
 					throw new \InvalidArgumentException("Options values must be unique, but '{$option['value']}' appears at least twice as value.");
 				}
 				
 				// save value
-				$this->__options[$option['value']] = $option['label'];
+				$this->options[$option['value']] = $option['label'];
 				
 				// validate depth
 				if (!is_int($option['depth'])) {
@@ -223,7 +190,7 @@ trait TSelectionFormField {
 			}
 			unset($option);
 			
-			$this->__nestedOptions = $options;
+			$this->nestedOptions = $options;
 		}
 		else {
 			foreach ($options as $value => $label) {
@@ -238,7 +205,7 @@ trait TSelectionFormField {
 					throw new \InvalidArgumentException("Options contain invalid label of type " . gettype($label) . ".");
 				}
 				
-				if (isset($this->__options[$value])) {
+				if (isset($this->options[$value])) {
 					throw new \InvalidArgumentException("Options values must be unique, but '{$value}' appears at least twice as value.");
 				}
 				
@@ -247,16 +214,16 @@ trait TSelectionFormField {
 					$label = WCF::getLanguage()->getDynamicVariable($label);
 				}
 				
-				$this->__options[$value] = $label;
+				$this->options[$value] = $label;
 			}
 			
-			// ensure that `$this->__nestedOptions` is always populated
+			// ensure that `$this->nestedOptions` is always populated
 			// for form field that support nested options
 			if ($this->supportsNestedOptions()) {
-				$this->__nestedOptions = [];
+				$this->nestedOptions = [];
 				
-				foreach ($this->__options as $value => $label) {
-					$this->__nestedOptions[] = [
+				foreach ($this->options as $value => $label) {
+					$this->nestedOptions[] = [
 						'depth' => 0,
 						'label' => $label,
 						'value' => $value
@@ -265,8 +232,8 @@ trait TSelectionFormField {
 			}
 		}
 		
-		if ($this->__nestedOptions === null) {
-			$this->__nestedOptions = [];
+		if ($this->nestedOptions === null) {
+			$this->nestedOptions = [];
 		}
 		
 		return $this;

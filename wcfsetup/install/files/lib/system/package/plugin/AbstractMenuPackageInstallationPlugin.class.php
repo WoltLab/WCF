@@ -10,10 +10,10 @@ use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\IntegerFormField;
-use wcf\system\form\builder\field\OptionFormField;
+use wcf\system\form\builder\field\option\OptionFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
-use wcf\system\form\builder\field\UserGroupOptionFormField;
+use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\IFormDocument;
@@ -25,7 +25,7 @@ use wcf\util\Url;
  * Abstract implementation of a package installation plugin for menu items.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -121,7 +121,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		/** @var IFormContainer $dataContainer */
@@ -305,7 +305,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 			
 			IntegerFormField::create('showOrder')
 				->objectProperty('showorder')
-				->label('wcf.acp.pip.abstractMenu.showOrder')
+				->label('wcf.form.field.showOrder')
 				->description('wcf.acp.pip.abstractMenu.showOrder.description')
 				->objectProperty('showorder')
 				->minimum(1)
@@ -315,7 +315,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -381,7 +381,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return $element->getAttribute('name');
@@ -442,7 +442,7 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -453,9 +453,9 @@ abstract class AbstractMenuPackageInstallationPlugin extends AbstractXMLPackageI
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$formData = $form->getData()['data'];
 		
 		$menuItem = $document->createElement($this->tagName);

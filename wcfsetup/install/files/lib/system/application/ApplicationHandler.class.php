@@ -15,7 +15,7 @@ use wcf\util\FileUtil;
  * Handles multi-application environments.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Application
  */
@@ -201,7 +201,7 @@ class ApplicationHandler extends SingletonFactory {
 		}
 		
 		// relative urls contain no protocol, including implied
-		if (!preg_match('~^([a-z]+)?://~', $url)) {
+		if (!preg_match('~^([a-zA-Z0-9]+)?://~', $url)) {
 			return true;
 		}
 		
@@ -251,7 +251,7 @@ class ApplicationHandler extends SingletonFactory {
 	 * @param	string		$string		string to be processed
 	 * @param	bool		$skipCache	if `true`, no caches will be used and relevant application packages will be read from database directly
 	 * @return	string				processed string
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public static function insertRealDatabaseTableNames($string, $skipCache = false) {
 		if ($skipCache) {

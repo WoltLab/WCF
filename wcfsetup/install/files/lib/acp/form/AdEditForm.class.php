@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the form to edit an ad notice.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -19,7 +19,7 @@ class AdEditForm extends AdAddForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.ad';
+	public $activeMenuItem = 'wcf.acp.menu.link.ad.list';
 	
 	/**
 	 * id of the edited ad

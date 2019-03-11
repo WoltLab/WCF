@@ -1,12 +1,13 @@
 <?php
 namespace wcf\system\tagging;
+use wcf\data\DatabaseObjectList;
 use wcf\data\tag\Tag;
 
 /**
  * Any object type that is taggable, can implement this interface.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Tagging
  */
@@ -15,7 +16,8 @@ interface ITaggable {
 	 * Returns a list of tagged objects.
 	 * 
 	 * @param	Tag	$tag
-	 * @return	\wcf\data\DatabaseObjectList
+	 * @return	DatabaseObjectList
+	 * @deprecated 5.2
 	 */
 	public function getObjectList(Tag $tag);
 	

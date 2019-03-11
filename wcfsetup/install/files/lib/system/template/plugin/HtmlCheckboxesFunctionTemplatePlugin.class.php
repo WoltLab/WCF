@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * 	{htmlCheckboxes name="x" output=$outputArray values=$valueArray}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
  */
@@ -69,7 +69,7 @@ class HtmlCheckboxesFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		$html = '';
 		foreach ($tagArgs['options'] as $key => $value) {
 			if (!empty($html)) $html .= $tagArgs['separator'];
-			$html .= '<label><input type="checkbox" name="'.$this->encodeHTML($tagArgs['name']).'[]" value="'.$this->encodeHTML($key).'"'.(in_array($key, $tagArgs['selected']) ? ' checked' : '').'> '.$this->encodeHTML($value).'</label>';
+			$html .= '<label><input type="checkbox" name="'.$this->encodeHTML($tagArgs['name']).'[]" value="'.$this->encodeHTML($key).'"'.(in_array($key, $tagArgs['selected']) ? ' checked' : '').(!empty($tagArgs['disabled']) ? ' disabled' : '').'> '.$this->encodeHTML($value).'</label>';
 		}
 		
 		return $html;

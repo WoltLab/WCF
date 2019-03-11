@@ -2,7 +2,9 @@
 
 <script data-relocate="true">
 	$(function() {
-		new WCF.ACP.Ad.LocationHandler();
+		new WCF.ACP.Ad.LocationHandler({
+			{implode from=$variablesDescriptions key=objectType item=description}'{$objectType}': '{@$description|encodeJS}'{/implode}
+		});
 	});
 </script>
 
@@ -74,7 +76,8 @@
 				<select name="objectTypeID" id="objectTypeID">
 					<option value="0"{if !$objectTypeID} selected{/if}>{lang}wcf.global.noSelection{/lang}</option>
 					{foreach from=$locations key='locationGroupLabel' item='locationGroup'}
-						<optgroup label="{$locationGroupLabel}">
+						{assign var='__firstLocationID' value=$locationGroup|key}
+						<optgroup label="{$locationGroupLabel}" data-category-name="{@$locationObjectTypes[$__firstLocationID]->categoryname}">
 							{foreach from=$locationGroup key='locationID' item='location'}
 								<option value="{@$locationID}"{if $locationObjectTypes[$locationID]->page} data-page="{$locationObjectTypes[$locationID]->page}"{/if}{if $objectTypeID == $locationID} selected{/if}>{$location}</option>
 							{/foreach}

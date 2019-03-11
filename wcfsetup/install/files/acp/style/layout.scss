@@ -283,21 +283,53 @@ $wcfAcpSubMenuWidth: 300px;
 }
 
 @include screen-md-down {
+	.pageHeaderPanel > .layoutBoundary {
+		justify-content: normal;
+	}
+	
 	.mainMenu {
+		margin-right: 10px;
 		order: 1;
 	}
 	
-	.pageHeaderLogo {
-		order: 2;
+	.pageHeaderContainer:not(.pageHeaderContainerIsLogin) .pageHeaderLogo {
+		left: 50%;
+		position: absolute;
+		/* Half the image width is actually 27.5px, but this would also cause the browser's anti-aliasing to kick in. */
+		transform: translateX(-28px);
+	}
+	
+	.pageHeaderContainer.pageHeaderContainerIsLogin .pageHeaderLogo {
+		flex: 1 auto;
+		text-align: center;
 	}
 	
 	.userPanel {
+		flex: 1 auto;
 		order: 3;
+		pointer-events: none;
+		text-align: right;
+		
+		&::before {
+			pointer-events: all;
+		}
 	}
 	
 	.acpPageMenu,
 	.acpPageSubMenu {
 		display: none;
+	}
+	
+	.pageHeaderMobileSearch {
+		order: 2;
+		
+		&::before {
+			content: $fa-var-search;
+			font-family: FontAwesome;
+			font-size: 28px;
+			line-height: 32px;
+			padding: 5px 5px;
+		}
 	}
 }
 
@@ -385,4 +417,27 @@ $wcfAcpSubMenuWidth: 300px;
 
 #uploadCoverPhoto > .button {
 	vertical-align: top;
+}
+
+@include screen-md-down {
+	.pageHeaderSearch {
+		display: block;
+		top: 50px;
+	}
+}
+
+@include screen-sm-md {
+	.pageHeaderSearch .pageHeaderSearchInputContainer .pageHeaderSearchType {
+		flex: 0 auto;
+	}
+}
+
+@include screen-xs {
+	.pageHeaderSearchInputContainer > .dropdown {
+		flex: 1 auto;
+	}
+	
+	.pageHeaderSearchInput {
+		width: 100% !important;
+	}
 }

@@ -10,7 +10,7 @@ use wcf\util\FileUtil;
  * Cronjob for a daily system cleanup.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob
  */
@@ -185,6 +185,24 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 					@unlink($file->getPathname());
 				}
 			}
+		}
+		
+		if (BLACKLIST_SFS_ENABLE) {
+			$timeLimit = TIME_NOW - 31 * 86400;
+			
+			$sql = "DELETE FROM     wcf".WCF_N."_blacklist_entry
+				WHERE           lastSeen < ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				gmdate('Y-m-d H:i:s', $timeLimit)
+			]);
+			
+			$sql = "DELETE FROM     wcf".WCF_N."_blacklist_status
+				WHERE           date < ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				gmdate('Y-m-d', $timeLimit)
+			]);
 		}
 	}
 }

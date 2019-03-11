@@ -32,6 +32,10 @@
 	</nav>
 </header>
 
+{hascontent}
+	<p class="info">{content}{lang}wcf.acp.pip.{@$pip}.info{/lang}{/content}</p>
+{/hascontent}
+
 <form method="post" action="{link controller='DevtoolsProjectPipEntryList' id=$project->projectID}{@$linkParameters}{/link}">
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
@@ -59,8 +63,8 @@
 {/hascontent}
 
 {if !$entryList->getEntries()|empty}
-	<div class="section tabularBox jsShowOnlyMatches" id="syncPipMatches">
-		<table class="table">
+	<div class="section tabularBox jsShowOnlyMatches">
+		<table class="table" id="devtoolsProjectPipEntryList">
 			<thead>
 				<tr>
 					{foreach from=$entryList->getKeys() item=languageItem name=entryListKeys}
@@ -71,8 +75,11 @@
 			
 			<tbody>
 				{foreach from=$entryList->getEntries($startIndex-1, $itemsPerPage) key=identifier item=entry}
-					<tr>
-						<td class="columnIcon"><a href="{link controller='DevtoolsProjectPipEntryEdit' id=$project->projectID pip=$pip identifier=$identifier entryType=$entryType}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a></td>
+					<tr class="jsPipEntryRow" data-identifier="{@$identifier}">
+						<td class="columnIcon">
+							<a href="{link controller='DevtoolsProjectPipEntryEdit' id=$project->projectID pip=$pip identifier=$identifier entryType=$entryType}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}"></span>
+						</td>
 						{foreach from=$entryList->getKeys() key=key item=languageItem}
 							<td>{$entry[$key]}</td>
 						{/foreach}
@@ -117,5 +124,17 @@
 {else}
 	<p class="info">{lang}wcf.global.noItems{/lang}</p>
 {/if}
+
+<script data-relocate="true">
+	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Devtools/Project/Pip/Entry/List'], function(Language, DevtoolsProjectPipEntryList) {
+		Language.addObject({
+			'wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction': '{lang}wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction{/lang}',
+			'wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description': '{lang}wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description{/lang}',
+			'wcf.acp.devtools.project.pip.entry.delete.confirmMessage': '{lang}wcf.acp.devtools.project.pip.entry.delete.confirmMessage{/lang}'
+		});
+		
+		new DevtoolsProjectPipEntryList('devtoolsProjectPipEntryList', '{@$project->projectID}', '{@$pip}', '{@$entryType}', {if $pipObject->getPip()->supportsDeleteInstruction()}true{else}false{/if});
+	});
+</script>
 
 {include file='footer'}

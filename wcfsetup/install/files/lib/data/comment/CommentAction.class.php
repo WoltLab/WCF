@@ -35,7 +35,7 @@ use wcf\util\UserUtil;
  * Executes comment-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Comment
  * 
@@ -198,6 +198,12 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 		$commentList->getConditionBuilder()->add("comment.time < ?", [$this->parameters['data']['lastCommentTime']]);
 		$commentList->readObjects();
 		
+		// mark notifications for loaded comments as read
+		CommentHandler::getInstance()->markNotificationsAsConfirmedForComments(
+			CommentHandler::getInstance()->getObjectType($this->parameters['data']['objectTypeID'])->objectType,
+			$commentList->getObjects()
+		);
+		
 		WCF::getTPL()->assign([
 			'commentList' => $commentList,
 			'likeData' => MODULE_LIKE ? $commentList->getLikeData() : []
@@ -213,6 +219,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	 * Validates the `loadComment` action.
 	 * 
 	 * @throws	PermissionDeniedException
+	 * @since	3.1
 	 */
 	public function validateLoadComment() {
 		$this->readInteger('objectID', false, 'data');
@@ -243,6 +250,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	 * Returns a rendered comment.
 	 * 
 	 * @return	string[]
+	 * @since	3.1
 	 */
 	public function loadComment() {
 		if ($this->comment === null) {
@@ -252,12 +260,29 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			return ['template' => ''];
 		}
 		
+		// mark notifications for loaded comment/response as read
+		$objectType = CommentHandler::getInstance()->getObjectType($this->parameters['data']['objectTypeID'])->objectType;
+		if ($this->response === null) {
+			CommentHandler::getInstance()->markNotificationsAsConfirmedForComments(
+				$objectType,
+				[new StructuredComment($this->comment)]
+			);
+		}
+		else {
+			CommentHandler::getInstance()->markNotificationsAsConfirmedForResponses(
+				$objectType,
+				[$this->response]
+			);
+		}
+		
 		$returnValues = $this->renderComment($this->comment, $this->response);
 		return (is_array($returnValues)) ? $returnValues : ['template' => $returnValues];
 	}
 	
 	/**
 	 * Validates the `loadResponse` action.
+	 * 
+	 * @since	3.1
 	 */
 	public function validateLoadResponse() {
 		$this->validateLoadComment();
@@ -265,8 +290,9 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	
 	/**
 	 * Returns a rendered comment.
-	 *
+	 * 
 	 * @return	string[]
+	 * @since	3.1
 	 */
 	public function loadResponse() {
 		if ($this->comment === null || $this->response === null) {
@@ -1041,6 +1067,31 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 			'commentList' => [$comment],
 			'commentManager' => $this->commentProcessor
 		]);
+		
+		// load like data
+		if (MODULE_LIKE) {
+			$likeData = [];
+			$commentObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment');
+			ReactionHandler::getInstance()->loadLikeObjects($commentObjectType, [$comment->commentID]);
+			$likeData['comment'] = ReactionHandler::getInstance()->getLikeObjects($commentObjectType);
+			
+			$responseIDs = [];
+			foreach ($comment as $visibleResponse) {
+				$responseIDs[] = $visibleResponse->responseID;
+			}
+			
+			if ($response !== null) {
+				$responseIDs[] = $response->responseID;
+			}
+			
+			if (!empty($responseIDs)) {
+				$responseObjectType = ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.comment.response');
+				ReactionHandler::getInstance()->loadLikeObjects($responseObjectType, $responseIDs);
+				$likeData['response'] = ReactionHandler::getInstance()->getLikeObjects($responseObjectType);
+			}
+			
+			WCF::getTPL()->assign('likeData', $likeData);
+		}
 		
 		$template = WCF::getTPL()->fetch('commentList');
 		if ($response === null) {

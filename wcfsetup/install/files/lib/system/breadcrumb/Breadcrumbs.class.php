@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Manages breadcrumbs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Breadcrumb
  */
@@ -100,7 +100,7 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 		if ($addLandingPage) {
 			array_unshift($locations, [
 				'link' => $landingPage->getLink(),
-				'title' => WCF::getLanguage()->get(PAGE_TITLE)
+				'title' => BREADCRUMBS_HOME_USE_PAGE_TITLE ? WCF::getLanguage()->get(PAGE_TITLE) : $landingPage->getTitle(),
 			]);
 		}
 		

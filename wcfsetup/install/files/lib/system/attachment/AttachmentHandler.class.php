@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Handles uploaded attachments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Attachment
  */
@@ -234,5 +234,57 @@ class AttachmentHandler implements \Countable {
 	 */
 	public function getProcessor() {
 		return $this->processor;
+	}
+	
+	/**
+	 * Returns the temporary hashes used to identify the relevant uploaded attachments.
+	 * 
+	 * @return	string[]
+	 * @since	5.2
+	 */
+	public function getTmpHashes() {
+		return $this->tmpHash;
+	}
+	
+	/**
+	 * Sets the temporary hashes used to identify the relevant uploaded attachments.
+	 * 
+	 * @param	string[]	$tmpHash
+	 * @since	5.2
+	 */
+	public function setTmpHashes(array $tmpHash) {
+		$this->tmpHash = $tmpHash;
+	}
+	
+	/**
+	 * Returns the attachment object type 
+	 * 
+	 * @return	ObjectType
+	 * @since	5.2
+	 */
+	public function getObjectType() {
+		return $this->objectType;
+	}
+	
+	/**
+	 * Returns the id of the object the handled attachments belong to. If the object does not
+	 * exist (yet), `0` is returned.
+	 * 
+	 * @return	integer
+	 * @since	5.2
+	 */
+	public function getObjectID() {
+		return $this->objectID;
+	}
+	
+	/**
+	 * Returns the id of the parent object of the object the handled attachments belong to.
+	 * If no such parent object exists, `0` is returned.
+	 * 
+	 * @return	integer
+	 * @since	5.2
+	 */
+	public function getParentObjectID() {
+		return $this->parentObjectID;
 	}
 }

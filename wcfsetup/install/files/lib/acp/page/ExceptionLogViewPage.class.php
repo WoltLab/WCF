@@ -5,6 +5,7 @@ use wcf\page\MultipleLinkPage;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\Regex;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
 use wcf\util\JSON;
@@ -14,7 +15,7 @@ use wcf\util\StringUtil;
  * Shows the exception log.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  */
@@ -39,6 +40,11 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	 * @var	string
 	 */
 	public $exceptionID = '';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $forceCanonicalURL = true;
 	
 	/**
 	 * active logfile
@@ -66,6 +72,16 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		
 		if (isset($_REQUEST['exceptionID'])) $this->exceptionID = StringUtil::trim($_REQUEST['exceptionID']);
 		if (isset($_REQUEST['logFile'])) $this->logFile = StringUtil::trim($_REQUEST['logFile']);
+		
+		$parameters = [];
+		if ($this->exceptionID !== '') {
+			$parameters['exceptionID'] = $this->exceptionID;
+		}
+		else if ($this->logFile !== '') {
+			$parameters['logFile'] = $this->logFile;
+		}
+		
+		$this->canonicalURL = LinkHandler::getInstance()->getControllerLink(self::class, $parameters);
 	}
 	
 	/**
@@ -127,6 +143,9 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 			// logfile contents are pretty malformed, abort
 			return;
 		}
+		
+		// show latest exceptions first
+		$this->exceptions = array_reverse($this->exceptions, true);
 		
 		if ($this->exceptionID) $this->searchPage($this->exceptionID);
 		$this->calculateNumberOfPages();

@@ -7,7 +7,7 @@ use wcf\system\exception\SystemException;
  * RedisCacheSource is an implementation of CacheSource that uses a Redis server to store cached variables.
  * 
  * @author	Maximilian Mader
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cache\Source
  * @since	3.0
@@ -25,6 +25,8 @@ class RedisCacheSource implements ICacheSource {
 	public function __construct() {
 		try {
 			$this->redis = new Redis(CACHE_SOURCE_REDIS_HOST);
+			// check whether we can actually send queries (i.e. no AUTH is required)
+			$this->redis->get('cache:_flush');
 		}
 		catch (\Exception $e) {
 			throw new SystemException('Unable to create a Redis instance', 0, '', $e);

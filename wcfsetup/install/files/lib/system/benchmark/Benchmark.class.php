@@ -7,7 +7,7 @@ use wcf\util\FileUtil;
  * Provides functions to do a benchmark.
  * 
  * @author	Jens Hausdorf, Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Benchmark
  */
@@ -24,7 +24,7 @@ class Benchmark extends SingletonFactory {
 	/**
 	 * time when the webserver received this request
 	 * @var float
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	protected $requestStartTime = 0;
 	
@@ -105,7 +105,7 @@ class Benchmark extends SingletonFactory {
 	 * received this request.
 	 * 
 	 * @return float
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public function getRequestExecutionTime() {
 		return self::compareMicrotimes($this->requestStartTime, self::getMicrotime());
@@ -116,7 +116,7 @@ class Benchmark extends SingletonFactory {
 	 * the timestamp when our PHP code is being executed.
 	 * 
 	 * @return float
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public function getOffsetToRequestTime() {
 		return self::compareMicrotimes($this->requestStartTime, $this->startTime);

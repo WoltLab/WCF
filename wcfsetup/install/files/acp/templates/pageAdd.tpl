@@ -378,6 +378,10 @@
 						</dd>
 					</dl>
 					
+					{if $pageType == 'text'}
+						{include file='messageFormTabs' wysiwygContainerID='content0'}
+					{/if}
+					
 					<dl{if $errorField == 'metaDescription'} class="formError"{/if}>
 						<dt><label for="metaDescription">{lang}wcf.acp.page.metaDescription{/lang}</label></dt>
 						<dd>
@@ -459,6 +463,10 @@
 											{/if}
 										</dd>
 									</dl>
+									
+									{if $pageType == 'text'}
+										{include file='messageFormTabs' wysiwygContainerID='content'|concat:$availableLanguage->languageID}
+									{/if}
 									
 									{assign var='__errorFieldName' value='metaDescription_'|concat:$availableLanguage->languageID}
 									<dl{if $errorField == $__errorFieldName} class="formError"{/if}>

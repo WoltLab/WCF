@@ -11,8 +11,8 @@ use wcf\system\comment\CommentHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
-use wcf\system\like\LikeHandler;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
+use wcf\system\reaction\ReactionHandler;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\tagging\TagEngine;
@@ -29,7 +29,7 @@ use wcf\system\WCF;
  * Executes article related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
@@ -73,7 +73,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['create', 'delete', 'restore', 'toggleI18n', 'trash', 'update'];
+	protected $requireACP = ['create', 'update'];
 	
 	/**
 	 * @inheritDoc
@@ -312,6 +312,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Validates parameters to delete articles.
 	 *
+	 * @throws	PermissionDeniedException
 	 * @throws	UserInputException
 	 */
 	public function validateDelete() {
@@ -351,7 +352,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		
 		if (!empty($articleIDs)) {
 			// delete like data
-			LikeHandler::getInstance()->removeLikes('com.woltlab.wcf.likeableArticle', $articleIDs);
+			ReactionHandler::getInstance()->removeReactions('com.woltlab.wcf.likeableArticle', $articleIDs);
 			// delete comments
 			CommentHandler::getInstance()->deleteObjects('com.woltlab.wcf.articleComment', $articleContentIDs);
 			// delete tag to object entries
@@ -375,6 +376,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Validates parameters to move articles to the trash bin.
 	 * 
+	 * @throws	PermissionDeniedException
 	 * @throws	UserInputException
 	 */
 	public function validateTrash() {
@@ -610,6 +612,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Validates the `publish` action.
 	 * 
+	 * @throws	PermissionDeniedException
 	 * @throws	UserInputException
 	 */
 	public function validatePublish() {
@@ -675,7 +678,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	
 	/**
 	 * Validates the `unpublish` action.
-	 *
+	 * 
+	 * @throws	PermissionDeniedException
 	 * @throws	UserInputException
 	 */
 	public function validateUnpublish() {
@@ -724,6 +728,54 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 		ArticleEditor::updateArticleCounter($usersToArticles);
 		
 		$this->unmarkItems();
+	}
+	
+	/**
+	 * Validates parameters to search for an article by its localized title.
+	 */
+	public function validateSearch() {
+		$this->readString('searchString');
+	}
+	
+	/**
+	 * Searches for an article by its localized title.
+	 * 
+	 * @return      array   list of matching articles
+	 */
+	public function search() {
+		$sql = "SELECT          DISTINCT articleID
+			FROM            wcf".WCF_N."_article_content
+			WHERE           title LIKE ?
+					AND (
+						languageID = ?
+						OR languageID IS NULL
+					)
+			ORDER BY        title";
+		$statement = WCF::getDB()->prepareStatement($sql, 5);
+		$statement->execute([
+			'%' . $this->parameters['searchString'] . '%',
+			WCF::getLanguage()->languageID,
+		]);
+		
+		$articleIDs = [];
+		while ($articleID = $statement->fetchColumn()) {
+			$articleIDs[] = $articleID;
+		}
+		
+		$articleList = new ArticleList();
+		$articleList->setObjectIDs($articleIDs);
+		$articleList->readObjects();
+		
+		$articles = [];
+		foreach ($articleList as $article) {
+			$articles[] = [
+				'displayLink' => $article->getLink(),
+				'name' => $article->getTitle(),
+				'articleID' => $article->articleID,	
+			];
+		}
+		
+		return $articles;
 	}
 	
 	/**

@@ -2,7 +2,7 @@
  * Uploads the user cover photo via AJAX.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/User/CoverPhoto/Upload
  */
@@ -12,13 +12,21 @@ define(['Core', 'EventHandler', 'Upload', 'Ui/Notification', 'Ui/Dialog'], funct
 	/**
 	 * @constructor
 	 */
-	function UiUserCoverPhotoUpload() {
+	function UiUserCoverPhotoUpload(userId) {
 		Upload.call(this, 'coverPhotoUploadButtonContainer', 'coverPhotoUploadPreview', {
 			action: 'uploadCoverPhoto',
 			className: 'wcf\\data\\user\\UserProfileAction'
 		});
+		
+		this._userId = userId;
 	}
 	Core.inherit(UiUserCoverPhotoUpload, Upload, {
+		_getParameters: function() {
+			return {
+				userID: this._userId
+			};
+		},
+		
 		/**
 		 * @see	WoltLabSuite/Core/Upload#_success
 		 */

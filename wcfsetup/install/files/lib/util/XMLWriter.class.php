@@ -6,7 +6,7 @@ use wcf\system\exception\SystemException;
  * Writes XML documents.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -153,7 +153,7 @@ class XMLWriter {
 	 * Writes a comment.
 	 * 
 	 * @param	string		$comment
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function writeComment($comment) {
 		$this->xml->writeComment($comment);

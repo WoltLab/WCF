@@ -5,7 +5,7 @@
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">{$category->getTitle()}</h1>
 			{if $category && $category->getDescription()}
-				<p class="contentHeaderDescription">{$category->getDescription()}</p>
+				<p class="contentHeaderDescription">{if $category->descriptionUseHtml}{@$category->getDescription()}{else}{$category->getDescription()}{/if}</p>
 			{/if}
 		</div>
 	</header>
@@ -37,7 +37,7 @@
 				{foreach from=$objects item=trophy}
 					<li class="box64">
 						<div>{@$trophy->renderTrophy(64)}</div>
-
+						
 						<div class="sidebarItemTitle">
 							<h3><a href="{$trophy->getLink()}">{@$trophy->getTitle()}</a></h3>
 							{if !$trophy->getDescription()|empty}<small>{@$trophy->getDescription()}</small>{/if}
@@ -46,7 +46,7 @@
 				{/foreach}
 			</ol>
 		{else}
-			<p class="info">{lang}wcf.global.noItems{/lang}</p>
+			<p class="info" role="status">{lang}wcf.global.noItems{/lang}</p>
 		{/if}
 	</div>
 </div>

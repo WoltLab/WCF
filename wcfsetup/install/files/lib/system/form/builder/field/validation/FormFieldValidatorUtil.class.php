@@ -8,10 +8,10 @@ use wcf\system\Regex;
  * Contains form field validator-related functions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Validation
- * @since	3.2
+ * @since	5.2
  */
 abstract class FormFieldValidatorUtil {
 	/**
@@ -20,7 +20,7 @@ abstract class FormFieldValidatorUtil {
 	 * 
 	 * @param	string		$languageItemPrefix		language item prefix used for error language items `{$languageItemPrefix}.error.{errorType}`
 	 * @param	int		$minimumSegmentCount		minimum number of dot-separated segments, or `-1` if there is no minimum
-	 * @param	int		$maximumSegmentCount		maximum number of dot-separated segments, or `-1` if there is no minimum
+	 * @param	int		$maximumSegmentCount		maximum number of dot-separated segments, or `-1` if there is no maximum
 	 * @param	string		$segmentRegularExpression	regular expression used to validate each segment
 	 * @return	FormFieldValidator
 	 */
@@ -75,10 +75,12 @@ abstract class FormFieldValidatorUtil {
 	
 	/**
 	 * Returns a form field validator to check the form field value against
-	 * the given regular expression.
+	 * the given regular expression. The regex is not checked if the form
+	 * field is empty and not required. 
 	 * 
 	 * @param	string		$regularExpression	regular expression used to validate form field value
 	 * @param	string		$languageItemPrefix	language item prefix used for error language item `{$languageItemPrefix}.error.format`
+	 *
 	 * @return	IFormFieldValidator
 	 * 
 	 * @throws	\InvalidArgumentException		if regular expression is invalid
@@ -92,7 +94,14 @@ abstract class FormFieldValidatorUtil {
 		return new FormFieldValidator(
 			'format',
 			function(IFormField $formField) use ($regex, $languageItemPrefix) {
-				if (!$regex->match($formField->getSaveValue())) {
+				$value = $formField->getSaveValue();
+				
+				// ignore empty non-required form fields
+				if ($value === '' && !$formField->isRequired()) {
+					return;
+				}
+				
+				if (!$regex->match($value)) {
 					$formField->addValidationError(
 						new FormFieldValidationError(
 							'format',

@@ -17,7 +17,7 @@ use wcf\util\StyleUtil;
  * Provides access to the SCSS PHP compiler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Style
  */
@@ -52,6 +52,9 @@ class StyleCompiler extends SingletonFactory {
 	protected function init() {
 		require_once(WCF_DIR.'lib/system/style/scssphp/scss.inc.php');
 		$this->compiler = new Compiler();
+		// Disable Unicode support because of its horrible performance (7x slowdown)
+		// https://github.com/WoltLab/WCF/pull/2736#issuecomment-416084079
+		$this->compiler->setEncoding('iso8859-1');
 		$this->compiler->setImportPaths([WCF_DIR]);
 	}
 	
@@ -311,7 +314,11 @@ class StyleCompiler extends SingletonFactory {
 		
 		$variables['wcfFontFamily'] = $variables['wcfFontFamilyFallback'];
 		if (!empty($variables['wcfFontFamilyGoogle'])) {
-			$variables['wcfFontFamily'] = '"' . $variables['wcfFontFamilyGoogle'] . '", ' . $variables['wcfFontFamily'];
+			// The SCSS parser attempts to evaluate the variables, causing issues with font names that
+			// include logical operators such as "And" or "Or".
+			$variables['wcfFontFamilyGoogle'] = '"' . $variables['wcfFontFamilyGoogle'] . '"';
+			
+			$variables['wcfFontFamily'] = $variables['wcfFontFamilyGoogle'] . ', ' . $variables['wcfFontFamily'];
 		}
 		
 		// add options as SCSS variables

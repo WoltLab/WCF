@@ -22,7 +22,7 @@ use wcf\util\MessageUtil;
  * Executes comment response-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Comment\Response
  * 
@@ -206,6 +206,12 @@ class CommentResponseAction extends AbstractDatabaseObjectAction {
 			
 			$lastResponseTime = max($lastResponseTime, $response->time);
 		}
+		
+		// mark notifications for loaded responses as read
+		CommentHandler::getInstance()->markNotificationsAsConfirmedForResponses(
+			CommentHandler::getInstance()->getObjectType($this->comment->objectTypeID)->objectType,
+			$responseList->getObjects()
+		);
 		
 		WCF::getTPL()->assign([
 			'commentCanModerate' => $commentCanModerate,

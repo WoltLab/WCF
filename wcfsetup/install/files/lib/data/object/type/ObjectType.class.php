@@ -14,7 +14,7 @@ use wcf\system\SingletonFactory;
  * Represents an object type.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Object\Type
  * 
@@ -120,7 +120,7 @@ class ObjectType extends ProcessibleDatabaseObject {
 	 * Returns the package that this object type belongs to.
 	 * 
 	 * @return      Package
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public function getPackage() {
 		return PackageCache::getInstance()->getPackage($this->packageID);

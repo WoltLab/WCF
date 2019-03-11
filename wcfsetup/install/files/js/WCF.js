@@ -6,7 +6,7 @@
  * Major Contributors: Markus Bartz, Tim Duesterhus, Matthias Schmidt and Marcel Werk
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -878,9 +878,10 @@ WCF.Dropdown = {
 	 * Toggles a dropdown.
 	 * 
 	 * @param	string		containerID
+	 * @param       {boolean=}      disableAutoFocus
 	 */
-	toggleDropdown: function(containerID) {
-		window.bc_wcfSimpleDropdown._toggle(null, containerID);
+	toggleDropdown: function(containerID, disableAutoFocus) {
+		window.bc_wcfSimpleDropdown._toggle(null, containerID, null, disableAutoFocus);
 	},
 	
 	/**
@@ -4102,6 +4103,11 @@ WCF.Search.Base = Class.extend({
 	_itemIndex: -1,
 	
 	/**
+	 * @var string
+	 */
+	_lastValue: '',
+	
+	/**
 	 * result list
 	 * @var	jQuery
 	 */
@@ -4156,6 +4162,7 @@ WCF.Search.Base = Class.extend({
 		this._caretAt = -1;
 		this._delay = 0;
 		this._excludedSearchValues = [];
+		this._lastValue = '';
 		if (excludedSearchValues) {
 			this._excludedSearchValues = excludedSearchValues;
 		}
@@ -4257,6 +4264,12 @@ WCF.Search.Base = Class.extend({
 			this._clearList(false);
 		}
 		else if ($content.length >= this._triggerLength) {
+			if (this._lastValue === $content) {
+				return;
+			}
+			
+			this._lastValue = $content;
+			
 			var $parameters = {
 				data: {
 					excludedSearchValues: this._excludedSearchValues,
@@ -4452,7 +4465,7 @@ WCF.Search.Base = Class.extend({
 		
 		var $containerID = this._searchInput.parents('.dropdown').wcfIdentify();
 		if (!WCF.Dropdown.getDropdownMenu($containerID).hasClass('dropdownOpen')) {
-			WCF.Dropdown.toggleDropdown($containerID);
+			WCF.Dropdown.toggleDropdown($containerID, true);
 			
 			this._openDropdown();
 		}
@@ -5932,10 +5945,14 @@ if (COMPILER_TARGET_DEFAULT) {
 				this._fileUpload = $('<input type="file" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/>');
 				this._fileUpload.change($.proxy(this._upload, this));
 				var $button = $('<p class="button uploadButton"><span>' + WCF.Language.get('wcf.global.button.upload') + '</span></p>');
+				elAttr($button[0], 'role', 'button');
+				elAttr($button[0], 'tabindex', '0');
 				$button.prepend(this._fileUpload);
 			}
 			else {
 				var $button = $('<p class="button uploadFallbackButton"><span>' + WCF.Language.get('wcf.global.button.upload') + '</span></p>');
+				elAttr($button[0], 'role', 'button');
+				elAttr($button[0], 'tabindex', '0');
 				$button.click($.proxy(this._showOverlay, this));
 			}
 			
@@ -6586,17 +6603,24 @@ if (COMPILER_TARGET_DEFAULT) {
 			}, options || {});
 			
 			var sortableList = $('#' + this._containerID + ' .sortableList');
-			if (sortableList.is('tbody') && this._options.helper === 'clone') {
-				this._options.helper = this._tableRowHelper.bind(this);
+			if (sortableList.is('tbody')) {
+				if (this._options.items === 'li:not(.sortableNoSorting)') {
+					this._options.items = 'tr:not(.sortableNoSorting)';
+					this._options.toleranceElement = '';
+				}
 				
-				// explicitly set column widths to avoid column resizing during dragging
-				var thead = sortableList.prev('thead');
-				if (thead) {
-					thead.find('th').each(function (index, element) {
-						element = $(element);
-						
-						element.width(element.width());
-					});
+				if (this._options.helper === 'clone') {
+					this._options.helper = this._tableRowHelper.bind(this);
+					
+					// explicitly set column widths to avoid column resizing during dragging
+					var thead = sortableList.prev('thead');
+					if (thead) {
+						thead.find('th').each(function (index, element) {
+							element = $(element);
+							
+							element.width(element.width());
+						});
+					}
 				}
 			}
 			

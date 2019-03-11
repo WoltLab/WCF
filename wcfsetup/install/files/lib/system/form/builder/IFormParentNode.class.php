@@ -5,10 +5,10 @@ namespace wcf\system\form\builder;
  * Represents a form node that can have child nodes.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder
- * @since	3.2
+ * @since	5.2
  */
 interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator {
 	/**
@@ -16,8 +16,6 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator {
 	 * 
 	 * @param	IFormChildNode		$child		appended child
 	 * @return	static					this node
-	 * 
-	 * @throws	\InvalidArgumentException		if the given child node cannot be appended
 	 */
 	public function appendChild(IFormChildNode $child);
 	
@@ -26,8 +24,6 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator {
 	 * 
 	 * @param	IFormChildNode[]	$children	appended children
 	 * @return	static					this node
-	 * 
-	 * @throws	\InvalidArgumentException		if any of the given child nodes is invalid or cannot be appended
 	 */
 	public function appendChildren(array $children);
 	
@@ -97,11 +93,11 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator {
 	public function readValues();
 	
 	/**
-	 * Checks if the given node can be added as a child to this node.
+	 * Checks if the given node is a valid child for this node.
 	 * 
-	 * @param	IFormChildNode		$child			validated child node
+	 * @param	IFormChildNode		$child		validated child node
 	 * 
-	 * @throws	\InvalidArgumentException			if given node cannot be added as a child
+	 * @throws	\InvalidArgumentException		if given node cannot is an invalid child
 	 */
 	public function validateChild(IFormChildNode $child);
 }

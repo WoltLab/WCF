@@ -1,15 +1,17 @@
 <?php
 namespace wcf\system\form\builder;
 use wcf\data\IStorableObject;
+use wcf\system\form\builder\button\IFormButton;
+use wcf\system\form\builder\data\IFormDataHandler;
 
 /**
  * Represents a "whole" form (document).
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder
- * @since	3.2
+ * @since	5.2
  */
 interface IFormDocument extends IFormParentNode {
 	/**
@@ -33,6 +35,33 @@ interface IFormDocument extends IFormParentNode {
 	 * @throws	\InvalidArgumentException	if the given action is invalid
 	 */
 	public function action($action);
+	
+	/**
+	 * Adds the given button to the `formSubmit` element at the end of the form and returns this
+	 * document.
+	 * 
+	 * @param	IFormButton	$button		added button
+	 * @return	static				this document
+	 */
+	public function addButton(IFormButton $button);
+	
+	/**
+	 * Sets whether the default button is added to the form during in the `build()` method.
+	 * 
+	 * @param	boolean		$addDefaultButton
+	 * @return	static				this document
+	 * @throws	\BadMethodCallException		if the form has already been built
+	 */
+	public function addDefaultButton($addDefaultButton = true);
+	
+	/**
+	 * Sets whether this form is requested via an AJAX request or processes data via an AJAX
+	 * request and returns his document.
+	 * 
+	 * @param	boolean		$ajax
+	 * @return	static		this document
+	 */
+	public function ajax($ajax = true);
 	
 	/**
 	 * Is called once after all nodes have been added to this document.
@@ -63,13 +92,20 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @return	string				form action
 	 * 
-	 * @throws	\BadMethodCallException		if no action has been set
+	 * @throws	\BadMethodCallException		if no action has been set and `isAjax()` is `false`
 	 */
 	public function getAction();
 	
 	/**
+	 * Returns the buttons registered for this form document.
+	 * 
+	 * @return	IFormButton[]
+	 */
+	public function getButtons();
+	
+	/**
 	 * Returns the array passed as the `$parameters` argument of the constructor
-	 * of a database object action
+	 * of a database object action.
 	 * 
 	 * @return	array		data passed to database object action
 	 */
@@ -117,7 +153,7 @@ interface IFormDocument extends IFormParentNode {
 	
 	/**
 	 * Returns the global form prefix that is prepended to form elements' names and ids to
-	 * avoid conflicts with other forms. If no prefix has been set, an empty is returned.
+	 * avoid conflicts with other forms. If no prefix has been set, an empty string is returned.
 	 * 
 	 * Note: If a prefix `foo` has been set, this method returns `foo_`. 
 	 * 
@@ -138,6 +174,17 @@ interface IFormDocument extends IFormParentNode {
 	public function getRequestData($index = null);
 	
 	/**
+	 * Returns `true` if the default button is added to the form during in the `build()` method
+	 * and `false` otherwise.
+	 * 
+	 * By default, the default button is added.
+	 * Each implementing class can define itself what it considers its default button.
+	 * 
+	 * @return	boolean
+	 */
+	public function hasDefaultButton();
+	
+	/**
 	 * Returns `true` if there is any request data or, if a parameter is given, if
 	 * there is request data with a specific index.
 	 * 
@@ -147,6 +194,16 @@ interface IFormDocument extends IFormParentNode {
 	 * @return	bool				`tu
 	 */
 	public function hasRequestData($index = null);
+	
+	/**
+	 * Returns `true` if this form is requested via an AJAX request or processes data via an
+	 * AJAX request and `false` otherwise.
+	 * 
+	 * By default, this method returns `false`.
+	 * 
+	 * @return	boolean
+	 */
+	public function isAjax();
 	
 	/**
 	 * Loads the field values from the given object and returns this document.

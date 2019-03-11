@@ -2,7 +2,7 @@
  * Provides consistent support for media queries and body scrolling.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Screen
  */
@@ -14,6 +14,7 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 	var _scrollDisableCounter = 0;
 	var _scrollOffsetFrom = null;
 	var _scrollTop = 0;
+	var _pageOverlayCounter = 0;
 	
 	var _mqMap = Dictionary.fromObject({
 		'screen-xs': '(max-width: 544px)',                              /* smartphone */
@@ -150,6 +151,39 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 					}
 				}
 			}
+		},
+		
+		/**
+		 * Indicates that at least one page overlay is currently open.
+		 */
+		pageOverlayOpen: function() {
+			if (_pageOverlayCounter === 0) {
+				document.documentElement.classList.add('pageOverlayActive');
+			}
+			
+			_pageOverlayCounter++;
+		},
+		
+		/**
+		 * Marks one page overlay as closed.
+		 */
+		pageOverlayClose: function() {
+			if (_pageOverlayCounter) {
+				_pageOverlayCounter--;
+				
+				if (_pageOverlayCounter === 0) {
+					document.documentElement.classList.remove('pageOverlayActive');
+				}
+			}
+		},
+		
+		/**
+		 * Returns true if at least one page overlay is currently open.
+		 * 
+		 * @returns {boolean}
+		 */
+		pageOverlayIsActive: function() {
+			return _pageOverlayCounter > 0;
 		},
 		
 		/**

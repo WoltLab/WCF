@@ -8,7 +8,7 @@ use wcf\system\SingletonFactory;
  * Manages the bbcode cache.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Bbcode
  */
@@ -22,6 +22,7 @@ class BBCodeCache extends SingletonFactory {
 	/**
 	 * list of known highlighters
 	 * @var	string[]
+	 * @deprecated	since 5.2, use Prism to highlight your code.
 	 */
 	protected $highlighters = [];
 	
@@ -70,6 +71,7 @@ class BBCodeCache extends SingletonFactory {
 	 * Returns a list of known highlighters.
 	 * 
 	 * @return	string[]
+	 * @deprecated	since 5.2, use Prism to highlight your code.
 	 */
 	public function getHighlighters() {
 		if (empty($this->highlighters)) {

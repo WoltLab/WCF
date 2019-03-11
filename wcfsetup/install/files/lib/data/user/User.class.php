@@ -4,12 +4,14 @@ use wcf\data\language\Language;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObject;
 use wcf\data\IUserContent;
+use wcf\data\user\option\UserOption;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
+use wcf\util\JSON;
 use wcf\util\PasswordUtil;
 use wcf\util\UserUtil;
 
@@ -17,7 +19,7 @@ use wcf\util\UserUtil;
  * Represents a user.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
  * 
@@ -69,37 +71,38 @@ use wcf\util\UserUtil;
  * @property-read	string		$disableCoverPhotoReason	reason why the user's cover photo is disabled
  * @property-read	integer		$disableCoverPhotoExpires	timestamp at which the user's cover photo will automatically be enabled again
  * @property-read	integer		$articles			number of articles written by the user
+ * @property-read       string          $blacklistMatches               JSON string of an array with all matches in the blacklist, otherwise an empty string 
  */
 final class User extends DatabaseObject implements IRouteController, IUserContent {
 	/**
 	 * list of group ids
 	 * @var integer[]
 	 */
-	protected $groupIDs = null;
+	protected $groupIDs;
 	
 	/**
 	 * true, if user has access to the ACP
 	 * @var	boolean
 	 */
-	protected $hasAdministrativePermissions = null;
+	protected $hasAdministrativePermissions;
 	
 	/**
 	 * list of language ids
 	 * @var	integer[]
 	 */
-	protected $languageIDs = null;
+	protected $languageIDs;
 	
 	/**
 	 * date time zone object
 	 * @var	\DateTimeZone
 	 */
-	protected $timezoneObj = null;
+	protected $timezoneObj;
 	
 	/**
 	 * list of user options
-	 * @var	string[]
+	 * @var	UserOption[]
 	 */
-	protected static $userOptions = null;
+	protected static $userOptions;
 	
 	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
@@ -262,11 +265,15 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * Returns the value of the user option with the given name.
 	 * 
 	 * @param	string		$name		user option name
+	 * @param       boolean         $filterDisabled suppress values for disabled options
 	 * @return	mixed				user option value
 	 */
-	public function getUserOption($name) {
+	public function getUserOption($name, $filterDisabled = false) {
 		$optionID = self::getUserOptionID($name);
 		if ($optionID === null) {
+			return null;
+		}
+		else if ($filterDisabled && self::$userOptions[$name]->isDisabled) {
 			return null;
 		}
 		
@@ -542,5 +549,32 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 		}
 		
 		return '';
+	}
+	
+	/**
+	 * Returns true, if this user can purchase paid subscriptions.
+	 *
+	 * @return      boolean
+	 */
+	public function canPurchasePaidSubscriptions() {
+		return WCF::getUser()->userID && WCF::getUser()->activationCode == 0;
+	}
+	
+	/**
+	 * Returns the list of fields that had matches in the blacklist. An empty list is
+	 * returned if the user has been approved, regardless of any known matches.
+	 * 
+	 * @return string[]
+	 * @since 5.2
+	 */
+	public function getBlacklistMatches() {
+		if ($this->activationCode && $this->blacklistMatches) {
+			$matches = JSON::decode($this->blacklistMatches);
+			if (is_array($matches)) {
+				return $matches;
+			}
+		}
+		
+		return [];
 	}
 }

@@ -6,17 +6,17 @@ use wcf\system\WCF;
  * Provides default implementations of `IPlaceholderFormField` methods.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
 trait TPlaceholderFormField {
 	/**
 	 * placeholder value of this element
 	 * @var	string
 	 */
-	protected $__placeholder;
+	protected $placeholder;
 	
 	/**
 	 * Returns the placeholder value of this field or `null` if no placeholder has
@@ -25,7 +25,7 @@ trait TPlaceholderFormField {
 	 * @return	null|string
 	 */
 	public function getPlaceholder() {
-		return $this->__placeholder;
+		return $this->placeholder;
 	}
 	
 	/**
@@ -45,14 +45,14 @@ trait TPlaceholderFormField {
 				throw new \InvalidArgumentException("Cannot use variables when unsetting placeholder of field '{$this->getId()}'");
 			}
 			
-			$this->__placeholder = null;
+			$this->placeholder = null;
 		}
 		else {
 			if (!is_string($languageItem)) {
 				throw new \InvalidArgumentException("Given placeholder language item is no string, " . gettype($languageItem) . " given.");
 			}
 			
-			$this->__placeholder = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
+			$this->placeholder = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
 		}
 		
 		return $this;

@@ -6,9 +6,10 @@ use wcf\util\StringUtil;
  * Highlights difference files.
  * 
  * @author	Tim Duesterhus
- * @copyright	2011 Tim Duesterhus
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode\Highlighter
+ * @deprecated	since 5.2, use Prism to highlight your code.
  */
 class DiffHighlighter extends Highlighter {
 	/**

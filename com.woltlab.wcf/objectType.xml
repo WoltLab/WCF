@@ -175,6 +175,12 @@
 			<category>com.woltlab.wcf.user</category>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.user.registration.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\UserRegistrationUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.administration</category>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.user.recentActivityEvent.follow</name>
 			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
 			<classname>wcf\system\user\activity\event\FollowUserActivityEvent</classname>
@@ -183,6 +189,11 @@
 			<name>com.woltlab.wcf.user</name>
 			<definitionname>com.woltlab.wcf.moderation.report</definitionname>
 			<classname>wcf\system\moderation\queue\report\UserModerationQueueReportHandler</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.contact</name>
+			<definitionname>com.woltlab.wcf.attachment.objectType</definitionname>
+			<classname>wcf\system\attachment\ContactAttachmentObjectType</classname>
 		</type>
 		<!-- page -->
 		<type>
@@ -503,6 +514,12 @@
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 			<classname>wcf\system\worker\PollRebuildDataWorker</classname>
 			<nicevalue>60</nicevalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.activityPointEvent</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname>wcf\system\worker\UserActivityPointUpdateEventsWorker</classname>
+			<nicevalue>65</nicevalue>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user</name>
@@ -1185,6 +1202,11 @@
 			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
 			<classname>wcf\system\message\embedded\object\UserMessageEmbeddedObjectHandler</classname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.article</name>
+			<definitionname>com.woltlab.wcf.message.embeddedObject</definitionname>
+			<classname>wcf\system\message\embedded\object\ArticleMessageEmbeddedObjectHandler</classname>
+		</type>
 		<!-- embedded object handlers -->
 		<type>
 			<name>com.woltlab.wcf.payment.method.paypal</name>
@@ -1676,22 +1698,22 @@
 		<type>
 			<name>com.woltlab.wcf.comment</name>
 			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
-			<classname>\wcf\system\user\content\provider\CommentUserContentProvider</classname>
+			<classname>wcf\system\user\content\provider\CommentUserContentProvider</classname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.commentResponse</name>
 			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
-			<classname>\wcf\system\user\content\provider\CommentResponseUserContentProvider</classname>
+			<classname>wcf\system\user\content\provider\CommentResponseUserContentProvider</classname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.article</name>
 			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
-			<classname>\wcf\system\user\content\provider\ArticleUserContentProvider</classname>
+			<classname>wcf\system\user\content\provider\ArticleUserContentProvider</classname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.reaction</name>
 			<definitionname>com.woltlab.wcf.content.userContentProvider</definitionname>
-			<classname>\wcf\system\user\content\provider\ReactionUserContentProvider</classname>
+			<classname>wcf\system\user\content\provider\ReactionUserContentProvider</classname>
 		</type>
 		<!-- /user content provider -->
 		<!-- deprecated -->
@@ -1708,7 +1730,7 @@
 			<conditionobject>com.woltlab.wcf.page</conditionobject>
 		</type>
 		<!-- /deprecated -->
-	</import>
+</import>
 	<delete>
 		<type name="com.woltlab.wcf.like.user">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>

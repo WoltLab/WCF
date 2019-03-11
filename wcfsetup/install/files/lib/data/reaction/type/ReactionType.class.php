@@ -8,10 +8,10 @@ use wcf\system\WCF;
  * Represents a reaction type.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Reaction\Type
- * @since       3.2
+ * @since       5.2
  *
  * @property-read	integer		$reactionTypeID		unique id of the reaction type
  * @property-read	string		$title
@@ -96,5 +96,14 @@ class ReactionType extends DatabaseObject implements ITitledObject {
 	 */
 	public function isNeutral() {
 		return $this->type == self::REACTION_TYPE_NEUTRAL;
+	}
+	
+	/**
+	 * Returns the absolute location of the icon file. 
+	 * 
+	 * @return string[]
+	 */
+	public function getIconFileUploadFileLocations() {
+		return [WCF_DIR . 'images/reaction/'. $this->iconFile];
 	}
 }

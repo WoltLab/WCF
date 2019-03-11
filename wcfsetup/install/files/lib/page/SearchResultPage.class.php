@@ -8,14 +8,16 @@ use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\ImplementationException;
 use wcf\system\page\PageLocationManager;
+use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchEngine;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 
 /**
  * Shows the result of a search request.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  */
@@ -47,7 +49,7 @@ class SearchResultPage extends MultipleLinkPage {
 	 * search object
 	 * @var	Search
 	 */
-	public $search = null;
+	public $search;
 	
 	/**
 	 * messages
@@ -59,7 +61,7 @@ class SearchResultPage extends MultipleLinkPage {
 	 * search data
 	 * @var	array
 	 */
-	public $searchData = null;
+	public $searchData;
 	
 	/**
 	 * result list template
@@ -83,14 +85,31 @@ class SearchResultPage extends MultipleLinkPage {
 		if (isset($_REQUEST['id'])) $this->searchID = intval($_REQUEST['id']);
 		$this->search = new Search($this->searchID);
 		if (!$this->search->searchID || $this->search->searchType != 'messages') {
-			throw new IllegalLinkException();
+			$this->redirectOrReject();
+			
 		}
 		if ($this->search->userID && $this->search->userID != WCF::getUser()->userID) {
-			throw new IllegalLinkException();
+			$this->redirectOrReject();
 		}
 		
 		// get search data
 		$this->searchData = unserialize($this->search->searchData);
+	}
+	
+	/**
+	 * Attempts to start a new search if the search id is invalid or unavailable, and the
+	 * highlight parameter is available.
+	 */
+	protected function redirectOrReject() {
+		if (!empty($this->highlight)) {
+			HeaderUtil::redirect(
+				LinkHandler::getInstance()->getLink('Search', ['q' => $this->highlight])
+			);
+			exit;
+		}
+		else {
+			throw new IllegalLinkException();
+		}
 	}
 	
 	/**

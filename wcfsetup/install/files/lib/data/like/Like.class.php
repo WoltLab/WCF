@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Represents a like of an object.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Like
  *
@@ -76,7 +76,7 @@ class Like extends DatabaseObject {
 	 * Returns true, if like value is a like.
 	 * 
 	 * @return	boolean
-	 * @deprecated	3.2
+	 * @deprecated	5.2
 	 */
 	public function isLike() {
 		return $this->getReactionType()->isPositive();
@@ -86,7 +86,7 @@ class Like extends DatabaseObject {
 	 * Returns true, if like value is a dislike.
 	 * 
 	 * @return	boolean
-	 * @deprecated	3.2
+	 * @deprecated	5.2
 	 */
 	public function isDislike() {
 		return $this->getReactionType()->isNegative();
@@ -96,7 +96,7 @@ class Like extends DatabaseObject {
 	 * Returns the reaction for these like. 
 	 * 
 	 * @return	ReactionType
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getReactionType() {
 		return ReactionTypeCache::getInstance()->getReactionTypeByID($this->reactionTypeID);

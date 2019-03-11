@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Executes language item-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Language\Item
  * 
@@ -47,7 +47,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Creates multiple language items.
 	 * 
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function createLanguageItems() {
 		if (!isset($this->parameters['data']['packageID'])) {
@@ -149,7 +149,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 	 * 
 	 * @throws	PermissionDeniedException
 	 * @throws	UserInputException
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function validateDeleteCustomLanguageItems() {
 		if (!WCF::getSession()->getPermission('admin.language.canManageLanguage')) {
@@ -172,7 +172,7 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 	/**
 	 * Deletes custom language items in every language.
 	 * 
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function deleteCustomLanguageItems() {
 		if (empty($this->objects)) {

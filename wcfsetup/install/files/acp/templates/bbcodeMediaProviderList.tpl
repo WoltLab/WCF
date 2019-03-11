@@ -3,6 +3,7 @@
 <script data-relocate="true">
 	$(function() {
 		new WCF.Action.Delete('wcf\\data\\bbcode\\media\\provider\\BBCodeMediaProviderAction', '.jsMediaProviderRow');
+		new WCF.Action.Toggle('wcf\\data\\bbcode\\media\\provider\\BBCodeMediaProviderAction', '.jsMediaProviderRow');
 	});
 </script>
 
@@ -42,6 +43,7 @@
 				{foreach from=$objects item='mediaProvider'}
 					<tr class="jsMediaProviderRow">
 						<td class="columnIcon">
+							<span class="icon icon16 fa-{if !$mediaProvider->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$mediaProvider->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$mediaProvider->providerID}"></span>
 							<a href="{link controller='BBCodeMediaProviderEdit' object=$mediaProvider}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$mediaProvider->providerID}" data-confirm-message-html="{lang __encode=true}wcf.acp.bbcode.mediaProvider.delete.sure{/lang}"></span>
 							

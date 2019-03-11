@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  * Shows the application edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -29,7 +29,7 @@ class ApplicationEditForm extends AbstractForm {
 	/**
 	 * @inheritDoc
 	 */
-	public $activeMenuItem = 'wcf.acp.menu.link.package';
+	public $activeMenuItem = 'wcf.acp.menu.link.application.management';
 	
 	/**
 	 * viewable application object

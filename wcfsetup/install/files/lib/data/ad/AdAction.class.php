@@ -3,6 +3,7 @@ namespace wcf\data\ad;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
@@ -11,7 +12,7 @@ use wcf\system\WCF;
  * Executes ad-related actions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Ad
  * 
@@ -19,6 +20,8 @@ use wcf\system\WCF;
  * @method	AdEditor	getSingleObject()
  */
 class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -65,24 +68,6 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 	/**
 	 * @inheritDoc
 	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $ad) {
-			$ad->update([
-				'isDisabled' => $ad->isDisabled ? 0 : 1
-			]);
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function validateToggle() {
-		parent::validateUpdate();
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function validateUpdatePosition() {
 		WCF::getSession()->checkPermissions($this->permissionsUpdate);
 		
@@ -92,7 +77,8 @@ class AdAction extends AbstractDatabaseObjectAction implements ISortableAction, 
 		
 		$adList = new AdList();
 		$adList->setObjectIDs($this->parameters['data']['structure'][0]);
-		if ($adList->countObjects() != count($this->parameters['data']['structure'][0])) {
+		$adList->readObjects();
+		if (count($adList) !== count($this->parameters['data']['structure'][0])) {
 			throw new UserInputException('structure');
 		}
 		

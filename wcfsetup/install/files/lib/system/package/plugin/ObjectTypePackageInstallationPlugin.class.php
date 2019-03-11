@@ -20,8 +20,8 @@ use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
-use wcf\system\form\builder\field\OptionFormField;
-use wcf\system\form\builder\field\UserGroupOptionFormField;
+use wcf\system\form\builder\field\option\OptionFormField;
+use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
 use wcf\system\form\builder\field\BooleanFormField;
@@ -41,7 +41,7 @@ use wcf\util\DirectoryUtil;
  * Installs, updates and deletes object types.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  */
@@ -166,7 +166,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getAdditionalTemplateCode() {
 		return WCF::getTPL()->fetch('__objectTypePipGui', 'wcf', [
@@ -177,7 +177,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function fetchElementData(\DOMElement $element, $saveData) {
 		$data = [
@@ -212,7 +212,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function addFormFields(IFormDocument $form) {
 		// read available object type definitions
@@ -440,6 +440,47 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		// com.woltlab.wcf.condition.userSearch
 		$conditionAdContainer = $this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.condition.userSearch');
 		$this->addConditionFields($conditionAdContainer, 'com.woltlab.wcf.condition.userSearch', false, true);
+		
+		// com.woltlab.wcf.content.userContentProvider
+		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.content.userContentProvider')
+			->appendChildren([
+				IntegerFormField::create('userContentProviderNiceValue')
+					->objectProperty('nicevalue')
+					->label('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.niceValue')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.niceValue.description')
+					->nullable(),
+				
+				BooleanFormField::create('userContentProviderHidden')
+					->objectProperty('hidden')
+					->label('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.hidden')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.hidden.description'),
+				
+				ItemListFormField::create('userContentProviderRequiredObjectType')
+					->objectProperty('requiredobjecttype')
+					->saveValueType(ItemListFormField::SAVE_VALUE_TYPE_CSV)
+					->label('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType.description')
+					->addValidator(new FormFieldValidator('objectTypeValue', function(ItemListFormField $formField) {
+						if ($formField->getValue() === null) return; 
+						
+						foreach ($formField->getValue() as $segment) {
+							if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.content.userContentProvider', $segment) === null) {
+								$formField->addValidationError(
+									new FormFieldValidationError(
+										'unknownObjectType',
+										'wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.error.unknownObjectType',
+										['objectType' => $segment]
+									)
+								);
+							}
+						}
+					})),
+			]);
+		$this->definitionElementChildren['com.woltlab.wcf.content.userContentProvider'] = [
+			'nicevalue' => null,
+			'hidden' => 0,
+			'requiredobjecttype' => ''
+		];
 		
 		// com.woltlab.wcf.message
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.message')
@@ -684,7 +725,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getElementIdentifier(\DOMElement $element) {
 		return sha1(
@@ -695,20 +736,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
-	 */
-	protected function getEmptyXml() {
-		return <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/objectType.xsd">
-	<import></import>
-</data>
-XML;
-	}
-	
-	/**
-	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getEntryList() {
 		$xml = $this->getProjectXml();
@@ -730,7 +758,7 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	protected function setEntryListKeys(IDevtoolsPipEntryList $entryList) {
 		$entryList->setKeys([
@@ -750,7 +778,7 @@ XML;
 	 * @param	IFormDocument	$form
 	 * @param	string		$definitionName
 	 * @return	FormContainer
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function getObjectTypeDefinitionDataContainer(IFormDocument $form, $definitionName) {
 		/** @var SingleSelectionFormField $definitionIDField */
@@ -773,9 +801,9 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
-	protected function doCreateXmlElement(\DOMDocument $document, IFormDocument $form) {
+	protected function prepareXmlElement(\DOMDocument $document, IFormDocument $form) {
 		$data = $form->getData()['data'];
 		$definitionName = ObjectTypeCache::getInstance()->getDefinition($data['definitionID'])->definitionName;
 		
@@ -861,7 +889,7 @@ XML;
 	 * @param	string			$objectTypeDefinition
 	 * @param	bool			$addConditionObject
 	 * @param	bool			$addConditionGroup
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function addConditionFields(IFormContainer $dataContainer, $objectTypeDefinition, $addConditionObject = true, $addConditionGroup = true) {
 		$prefix = preg_replace('~Fields$~', '', $dataContainer->getId());
@@ -1061,7 +1089,7 @@ XML;
 	
 	/**
 	 * @inheritDoc
-	 * @since	3.2
+	 * @since	5.2
 	 */
 	public function setEntryData($identifier, IFormDocument $document) {
 		$returnValue = $this->defaultSetEntryData($identifier, $document);
@@ -1089,5 +1117,38 @@ XML;
 		}
 		
 		return $returnValue;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function prepareDeleteXmlElement(\DOMElement $element) {
+		$objectType = $element->ownerDocument->createElement($this->tagName);
+		$objectType->setAttribute(
+			'name',
+			$element->getElementsByTagName('name')->item(0)->nodeValue
+		);
+		
+		$objectType->appendChild($element->ownerDocument->createElement(
+			'definitionname',
+			$element->getElementsByTagName('definitionname')->item(0)->nodeValue
+		));
+		
+		return $objectType;
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	protected function deleteObject(\DOMElement $element) {
+		$name = $element->getElementsByTagName('name')->item(0)->nodeValue;
+		$definitionName = $element->getElementsByTagName('definitionname')->item(0)->nodeValue;
+		
+		$this->handleDelete([[
+			'attributes' => ['name' => $name],
+			'elements' => ['definitionname' => $definitionName]
+		]]);
 	}
 }

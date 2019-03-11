@@ -8,7 +8,7 @@ use wcf\util\StringUtil;
  * Shows the article category add form.
  *
  * @author      Marcel Werk
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\Acp\Form
  * @since       3.0
@@ -31,7 +31,7 @@ class ArticleCategoryAddForm extends AbstractCategoryAddForm {
 	
 	/**
 	 * @var string[]
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $availableSortFields = [
 		'publicationDate',
@@ -40,13 +40,13 @@ class ArticleCategoryAddForm extends AbstractCategoryAddForm {
 	
 	/**
 	 * @var string
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $sortField = 'publicationDate';
 	
 	/**
 	 * @var string
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	public $sortOrder = 'DESC';
 	

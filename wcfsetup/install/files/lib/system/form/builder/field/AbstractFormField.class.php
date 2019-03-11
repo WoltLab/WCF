@@ -12,44 +12,26 @@ use wcf\system\WCF;
  * Abstract implementation of a form field.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
- * @since	3.2
+ * @since	5.2
  */
 abstract class AbstractFormField implements IFormField {
 	use TFormChildNode;
 	use TFormElement;
 	
 	/**
-	 * `true` if this field is auto-focused and `false` otherwise
-	 * @var	bool
-	 */
-	protected $__autoFocus = false;
-	
-	/**
-	 * `true` if the value of this field is immutable and `false` otherwise
-	 * @var	bool
-	 */
-	protected $__immutable = false;
-	
-	/**
 	 * name of the object property this field represents
 	 * @var	null|string
 	 */
-	protected $__objectProperty;
+	protected $objectProperty;
 	
 	/**
 	 * `true` if this field has to be filled out and returns `false` otherwise
 	 * @var	bool
 	 */
-	protected $__required = false;
-	
-	/**
-	 * value of the field
-	 * @var	mixed
-	 */
-	protected $__value;
+	protected $required = false;
 	
 	/**
 	 * name of the template used to output this field
@@ -68,6 +50,12 @@ abstract class AbstractFormField implements IFormField {
 	 * @var	IFormFieldValidator[]
 	 */
 	protected $validators = [];
+	
+	/**
+	 * value of the field
+	 * @var	mixed
+	 */
+	protected $value;
 	
 	/**
 	 * @inheritDoc
@@ -98,18 +86,9 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function autoFocus($autoFocus = true) {
-		$this->__autoFocus = $autoFocus;
-		
-		return $this;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function getHtml() {
 		if ($this->templateName === null) {
-			throw new \LogicException("\$templateName property has not been set.");
+			throw new \LogicException("\$templateName property has not been set for class '" . static::class . "'.");
 		}
 		
 		if ($this->requiresLabel() && $this->getLabel() === null) {
@@ -128,8 +107,8 @@ abstract class AbstractFormField implements IFormField {
 	 * @inheritDoc
 	 */
 	public function getObjectProperty() {
-		if ($this->__objectProperty !== null) {
-			return $this->__objectProperty;
+		if ($this->objectProperty !== null) {
+			return $this->objectProperty;
 		}
 		
 		return $this->getId();
@@ -160,7 +139,7 @@ abstract class AbstractFormField implements IFormField {
 	 * @inheritDoc
 	 */
 	public function getValue() {
-		return $this->__value;
+		return $this->value;
 	}
 	
 	/**
@@ -182,31 +161,8 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function immutable($immutable = true) {
-		$this->__immutable = $immutable;
-		
-		return $this;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function isAutoFocused() {
-		return $this->__autoFocus;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function isImmutable() {
-		return $this->__immutable;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
 	public function isRequired() {
-		return $this->__required;
+		return $this->required;
 	}
 	
 	/**
@@ -226,12 +182,12 @@ abstract class AbstractFormField implements IFormField {
 	 */
 	public function objectProperty($objectProperty) {
 		if ($objectProperty === '') {
-			$this->__objectProperty = null;
+			$this->objectProperty = null;
 		}
 		else {
 			static::validateId($objectProperty);
 			
-			$this->__objectProperty = $objectProperty;
+			$this->objectProperty = $objectProperty;
 		}
 		
 		return $this;
@@ -255,7 +211,7 @@ abstract class AbstractFormField implements IFormField {
 	 * @return	static
 	 */
 	public function required($required = true) {
-		$this->__required = $required;
+		$this->required = $required;
 		
 		return $this;
 	}
@@ -264,7 +220,7 @@ abstract class AbstractFormField implements IFormField {
 	 * @inheritDoc
 	 */
 	public function value($value) {
-		$this->__value = $value;
+		$this->value = $value;
 		
 		return $this;
 	}

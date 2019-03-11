@@ -8,29 +8,29 @@ use wcf\system\WCF;
  * Abstract implementation of a form field dependency.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Dependency
- * @since	3.2
+ * @since	5.2
  */
 abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	/**
 	 * node whose availability depends on the value of a field
 	 * @var	IFormNode
 	 */
-	protected $__dependentNode;
+	protected $dependentNode;
 	
 	/**
 	 * field the availability of the node dependents on
 	 * @var	IFormField
 	 */
-	protected $__field;
+	protected $field;
 	
 	/**
 	 * id of the dependency
 	 * @var	string
 	 */
-	protected $__id;
+	protected $id;
 	
 	/**
 	 * name of the template containing the dependency JavaScript code
@@ -42,7 +42,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	 * @inheritDoc
 	 */
 	public function dependentNode(IFormNode $node) {
-		$this->__dependentNode = $node;
+		$this->dependentNode = $node;
 		
 		return $this;
 	}
@@ -51,7 +51,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	 * @inheritDoc
 	 */
 	public function field(IFormField $field) {
-		$this->__field = $field;
+		$this->field = $field;
 		
 		return $this;
 	}
@@ -60,29 +60,29 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	 * @inheritDoc
 	 */
 	public function getDependentNode() {
-		if ($this->__dependentNode === null) {
+		if ($this->dependentNode === null) {
 			throw new \BadMethodCallException("Dependent node has not been set.");
 		}
 		
-		return $this->__dependentNode;
+		return $this->dependentNode;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getField() {
-		if ($this->__field === null) {
+		if ($this->field === null) {
 			throw new \BadMethodCallException("Field has not been set.");
 		}
 		
-		return $this->__field;
+		return $this->field;
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getId() {
-		return $this->__id;
+		return $this->id;
 	}
 	
 	/**
@@ -111,7 +111,7 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 			throw new \InvalidArgumentException("Invalid id '{$id}' given.");
 		}
 		
-		$this->__id = $id;
+		$this->id = $id;
 		
 		return $this;
 	}

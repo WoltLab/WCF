@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Handles an AJAX-based package uninstallation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Action
  */
@@ -103,9 +103,7 @@ class UninstallPackageAction extends InstallPackageAction {
 	}
 	
 	/**
-	 * Uninstalls node components and returns next node.
-	 * 
-	 * @return	string
+	 * Uninstalls node components.
 	 */
 	public function stepUninstall() {
 		/** @noinspection PhpUndefinedMethodInspection */
@@ -157,6 +155,7 @@ class UninstallPackageAction extends InstallPackageAction {
 		switch ($this->step) {
 			case 'prepare':
 			case 'uninstall':
+				// valid steps
 			break;
 			
 			default:

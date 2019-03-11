@@ -18,7 +18,7 @@ use wcf\system\WCF;
  * Represents a viewable article.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
@@ -55,14 +55,14 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	/**
 	 * number of unread articles in watched categories
 	 * @var	integer
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	protected static $unreadWatchedArticles;
 	
 	/**
 	 * number of unread articles ordered by categories
 	 * @var	integer
-	 * @since 3.2
+	 * @since	5.2
 	 */
 	protected static $unreadArticlesByCategory;
 	
@@ -257,7 +257,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	 *
 	 * @param       integer         $articleCategoryID
 	 * @return	integer
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public static function getUnreadArticlesForCategory($articleCategoryID) {
 		if (self::$unreadArticlesByCategory === null) {
@@ -300,7 +300,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	 * 
 	 * @param       integer         $articleCategoryID
 	 * @return      integer
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	private static function fetchUnreadArticlesForCategory($articleCategoryID) {
 		$accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
@@ -345,7 +345,7 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	 * Returns the number of unread articles in watched categories.
 	 *
 	 * @return	integer
-	 * @since       3.2
+	 * @since       5.2
 	 */
 	public static function getWatchedUnreadArticles() {
 		if (self::$unreadWatchedArticles === null) {
