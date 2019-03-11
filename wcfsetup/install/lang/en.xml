@@ -1682,6 +1682,34 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.contact_form_prune_attachments.description"><![CDATA[Older attachments are automatically removed to recover disk space. Use 0 to disable.]]></item>
 		<item name="wcf.acp.option.firstTimeSetup"><![CDATA[First Time Setup]]></item>
 		<item name="wcf.acp.option.firstTimeSetup.description"><![CDATA[Configure the most important settings now, you can change them later at any time.]]></item>
+		<item name="wcf.acp.option.category.security.blacklist.sfs"><![CDATA[Stop Forum Spam]]></item>
+		<item name="wcf.acp.option.category.security.blacklist.sfs.description"><![CDATA[Privacy compliant verification based on a local copy of the StopForumSpam.com database.]]></item>
+		<item name="wcf.acp.option.category.security.blacklist.custom"><![CDATA[Own Blacklists]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_enable"><![CDATA[Enable the verification using Stop Forum Spam]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_enable.description"><![CDATA[The local database contains information about the number of times that an entry was reported as a spammer.<br>
+<strong>Notice: No data is transferred to a third party service at any point in the process.</strong><br>
+<br>
+The database is carefully maintained, but it there will be always be a margin of error, caused by incorrect or outdated entries. You can chose from a set of options that controls how matches are evaluated in order to reduce false-positives. The recommended settings are based on years of experience and changes should therefore be made with caution.
+<ul class="nativeList">
+	<li><strong>Do not check</strong> – This value is completely ignore.</li>
+	<li><strong>Top 10%</strong> – Only the top 10% most frequently reported values are considered.</li>
+	<li><strong>Multiple reports</strong> – Any match that has been reported more than once.</li>
+	<li><strong>Any match is sufficient</strong> – The number of reports is entirely ignored. Not recommended.</li>
+</ul>]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_enable.skip"><![CDATA[Do not check]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_enable.90percentile"><![CDATA[Top 10%]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_enable.moreThanOnce"><![CDATA[Multiple reports]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_enable.simpleMatch"><![CDATA[Any match is sufficient]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_username"><![CDATA[Username]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_username.description"><![CDATA[Usernames are the least reliable criteria. Recommended setting: <strong>Top 10%</strong>.]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_email_address"><![CDATA[Email Address]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_email_address.description"><![CDATA[Email addresses are unique and yield the best results. Recommended setting: <strong>Multiple reports</strong>.]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_ip_address"><![CDATA[IP Address]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_ip_address.description"><![CDATA[IP addresses are more likely to be imprecise, because a lot of them are dynamically assigned, e. g. for private households or celluar connections. Recommended setting: <strong>Top 10%</strong>.]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_action"><![CDATA[Action in Case of a Match]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_action.block"><![CDATA[Block]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[There is always the risk of a false-positive match, therefore its highly recommended to set it to <strong>Disable and require manual approval</strong>.]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Disable and require manual approval]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>
@@ -2418,9 +2446,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.menu.info"><![CDATA[The <kbd>menu</kbd> package installation plugin installs new menus. You can find more information in the <a href="https://docs.woltlab.com/package_pip_menu.html" class="externalURL">developer documentation</a>.]]></item>
 		<item name="wcf.acp.pip.menuItem.info"><![CDATA[The <kbd>menuItem</kbd> package installation plugin installs new menu items for existing menus. You can find more information in the <a href="https://docs.woltlab.com/package_pip_menu-item.html" class="externalURL">developer documentation</a>.]]></item>
 		<item name="wcf.acp.pip.objectType.info"><![CDATA[The <kbd>objectType</kbd> package installation plugin installs new object types. You can find more information in the <a href="https://docs.woltlab.com/package_pip_object-type.html" class="externalURL">developer documentation</a>.]]></item>
-		<item name="wcf.acp.pip.objectTypeDefinition.info"><![CDATA[The <kbd>acpSearchProvider</kbd> package installation plugin installs new object type definitions. You can find more information in the <a href="https://docs.woltlab.com/package_pip_object-type-definition.html" class="externalURL">developer documentation</a>.]]></item>
+		<item name="wcf.acp.pip.objectTypeDefinition.info"><![CDATA[The <kbd>objectTypeDefinition</kbd> package installation plugin installs new object type definitions. You can find more information in the <a href="https://docs.woltlab.com/package_pip_object-type-definition.html" class="externalURL">developer documentation</a>.]]></item>
 		<item name="wcf.acp.pip.option.info"><![CDATA[The <kbd>option</kbd> package installation plugin installs new options. You can find more information in the <a href="https://docs.woltlab.com/package_pip_option.html" class="externalURL">developer documentation</a>.]]></item>
-		<item name="wcf.acp.pip.packageInstallationPlugin.info"><![CDATA[The <kbd>acpSearchProvider</kbd> package installation plugin installs new package installation plugins. You can find more information in the <a href="https://docs.woltlab.com/package_pip_pip.html" class="externalURL">developer documentation</a>.]]></item>
+		<item name="wcf.acp.pip.packageInstallationPlugin.info"><![CDATA[The <kbd>packageInstallationPlugin</kbd> package installation plugin installs new package installation plugins. You can find more information in the <a href="https://docs.woltlab.com/package_pip_pip.html" class="externalURL">developer documentation</a>.]]></item>
 		<item name="wcf.acp.pip.page.info"><![CDATA[The <kbd>page</kbd> package installation plugin installs new pages. You can find more information in the <a href="https://docs.woltlab.com/package_pip_page.html" class="externalURL">developer documentation</a>.]]></item>
 		<item name="wcf.acp.pip.smiley.info"><![CDATA[The <kbd>smiley</kbd> package installation plugin installs new smileys. You can find more information in the <a href="https://docs.woltlab.com/package_pip_smiley.html" class="externalURL">developer documentation</a>.]]></item>
 		<item name="wcf.acp.pip.templateListener.info"><![CDATA[The <kbd>templateListener</kbd> package installation plugin installs new template listeners. You can find more information in the <a href="https://docs.woltlab.com/package_pip_template-listener.html" class="externalURL">developer documentation</a>.]]></item>
@@ -3510,6 +3538,13 @@ Attachments:
 		<item name="wcf.date.endTime.error.beforeStartTime"><![CDATA[The end time has to be after the start time.]]></item>
 		<item name="wcf.date.startTime.error.invalid"><![CDATA[The start time is invalid.]]></item>
 		<item name="wcf.date.endTime.error.invalid"><![CDATA[The end time is invalid.]]></item>
+		<item name="wcf.date.datePicker"><![CDATA[Choose Date]]></item>
+		<item name="wcf.date.datePicker.previousMonth"><![CDATA[Previous Month]]></item>
+		<item name="wcf.date.datePicker.nextMonth"><![CDATA[Next Month]]></item>
+		<item name="wcf.date.datePicker.month"><![CDATA[Month]]></item>
+		<item name="wcf.date.datePicker.year"><![CDATA[Year]]></item>
+		<item name="wcf.date.datePicker.hour"><![CDATA[Hour]]></item>
+		<item name="wcf.date.datePicker.minute"><![CDATA[Minute]]></item>
 	</category>
 	<category name="wcf.edit">
 		<item name="wcf.edit.version"><![CDATA[Version]]></item>
@@ -3916,7 +3951,6 @@ Attachments:
 		<item name="wcf.message.settings"><![CDATA[Settings]]></item>
 		<item name="wcf.message.share"><![CDATA[Share]]></item>
 		<item name="wcf.message.share.facebook"><![CDATA[Facebook]]></item>
-		<item name="wcf.message.share.google"><![CDATA[Google+]]></item>
 		<item name="wcf.message.share.permalink"><![CDATA[Permalink]]></item>
 		<item name="wcf.message.share.permalink.bbcode"><![CDATA[BBCode]]></item>
 		<item name="wcf.message.share.permalink.html"><![CDATA[HTML]]></item>
@@ -4106,6 +4140,7 @@ Attachments:
 		<item name="wcf.page.breadcrumb"><![CDATA[Breadcrumb]]></item>
 		<item name="wcf.page.requestedPage.condition.reverseLogic"><![CDATA[Reverse “Requested Page” selection]]></item>
 		<item name="wcf.page.requestedPage.condition.reverseLogic.description"><![CDATA[If selected, the requested page <strong>may not</strong> be one of the pages selected under “Requested Page”.]]></item>
+		<item name="wcf.page.box.edit"><![CDATA[Edit Box]]></item>
 	</category>
 	<category name="wcf.acp.page">
 		<item name="wcf.acp.page.add"><![CDATA[Add Page]]></item>
@@ -4528,6 +4563,7 @@ not register with us.]]></item>
 		<item name="wcf.user.articles"><![CDATA[Articles]]></item>
 		<item name="wcf.user.status.banned"><![CDATA[The user has been banned.]]></item>
 		<item name="wcf.user.status.isDisabled"><![CDATA[The user has not been approved yet.]]></item>
+		<item name="wcf.user.status.blacklistMatches"><![CDATA[The user has been automatically disabled because of matches in the “Stop Forum Spam” database.]]></item>
 	</category>
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>
@@ -4609,6 +4645,7 @@ Open the link below to access the user profile:
 <p>The use by third parties of all published contact details for the purpose of advertising is expressly excluded. We reserve the right to take legal steps in the case of the unsolicited sending of advertising information; e.g., by means of spam mail.</p>
 <p><br></p>
 <p><small><em>Source: <a href="http://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
+		<item name="wcf.user.register.error.blacklistMatches"><![CDATA[The registration could not be completed due to active restrictions, please contact the site administrator.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophies]]></item>

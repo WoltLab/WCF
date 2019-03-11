@@ -288,6 +288,28 @@ CREATE TABLE wcf1_bbcode_media_provider (
 	UNIQUE KEY name (name, packageID)
 );
 
+DROP TABLE IF EXISTS wcf1_blacklist_status;
+CREATE TABLE wcf1_blacklist_status (
+	date DATE NOT NULL,
+	delta1 TINYINT(1) NOT NULL DEFAULT 0,
+	delta2 TINYINT(1) NOT NULL DEFAULT 0,
+	delta3 TINYINT(1) NOT NULL DEFAULT 0,
+	delta4 TINYINT(1) NOT NULL DEFAULT 0,
+	
+	UNIQUE KEY day (date)
+);
+
+DROP TABLE IF EXISTS wcf1_blacklist_entry;
+CREATE TABLE wcf1_blacklist_entry (
+	type ENUM('email', 'ipv4','ipv6','username'),
+	hash BINARY(32),
+	lastSeen DATETIME NOT NULL,
+	occurrences SMALLINT(5) NOT NULL,
+	
+	UNIQUE KEY entry (type, hash),
+	KEY numberOfReports (type, occurrences)
+);
+
 DROP TABLE IF EXISTS wcf1_box;
 CREATE TABLE wcf1_box (
 	boxID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1469,6 +1491,7 @@ CREATE TABLE wcf1_user (
 	positiveReactionsReceived INT(10) NOT NULL DEFAULT 0,
 	negativeReactionsReceived INT(10) NOT NULL DEFAULT 0,
 	neutralReactionsReceived INT(10) NOT NULL DEFAULT 0,
+	blacklistMatches VARCHAR(255) NOT NULL DEFAULT '',
 	
 	KEY username (username),
 	KEY email (email),

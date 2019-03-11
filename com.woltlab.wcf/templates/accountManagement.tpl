@@ -4,10 +4,10 @@
 
 {include file='formError'}
 
-<p class="warning">{lang}wcf.user.accountManagement.warning{/lang}</p>
+<p class="warning" role="status">{lang}wcf.user.accountManagement.warning{/lang}</p>
 
 {if $success|isset && $success|count > 0}
-	<div class="success">
+	<div class="success" role="status">
 		{foreach from=$success item=successMessage}
 			<p>{lang}{@$successMessage}{/lang}</p>
 		{/foreach}

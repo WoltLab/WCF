@@ -52,7 +52,7 @@
 		{/foreach}
 	</ol>
 {else}
-	<p class="info">{lang}wcf.global.noItems{/lang}</p>
+	<p class="info" role="status">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 <footer class="contentFooter">

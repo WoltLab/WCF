@@ -13,7 +13,8 @@ use wcf\system\language\LanguageFactory;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class TextFormField extends AbstractFormField implements II18nFormField, IImmutableFormField, IMaximumLengthFormField, IMinimumLengthFormField, IPlaceholderFormField {
+class TextFormField extends AbstractFormField implements IAutoFocusFormField, II18nFormField, IImmutableFormField, IMaximumLengthFormField, IMinimumLengthFormField, IPlaceholderFormField {
+	use TAutoFocusFormField;
 	use TImmutableFormField;
 	use TI18nFormField {
 		validate as protected i18nValidate;

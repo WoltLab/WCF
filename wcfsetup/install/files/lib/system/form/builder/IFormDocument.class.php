@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder;
 use wcf\data\IStorableObject;
+use wcf\system\form\builder\button\IFormButton;
 use wcf\system\form\builder\data\IFormDataHandler;
 
 /**
@@ -34,6 +35,24 @@ interface IFormDocument extends IFormParentNode {
 	 * @throws	\InvalidArgumentException	if the given action is invalid
 	 */
 	public function action($action);
+	
+	/**
+	 * Adds the given button to the `formSubmit` element at the end of the form and returns this
+	 * document.
+	 * 
+	 * @param	IFormButton	$button		added button
+	 * @return	static				this document
+	 */
+	public function addButton(IFormButton $button);
+	
+	/**
+	 * Sets whether the default button is added to the form during in the `build()` method.
+	 * 
+	 * @param	boolean		$addDefaultButton
+	 * @return	static				this document
+	 * @throws	\BadMethodCallException		if the form has already been built
+	 */
+	public function addDefaultButton($addDefaultButton = true);
 	
 	/**
 	 * Sets whether this form is requested via an AJAX request or processes data via an AJAX
@@ -76,6 +95,13 @@ interface IFormDocument extends IFormParentNode {
 	 * @throws	\BadMethodCallException		if no action has been set and `isAjax()` is `false`
 	 */
 	public function getAction();
+	
+	/**
+	 * Returns the buttons registered for this form document.
+	 * 
+	 * @return	IFormButton[]
+	 */
+	public function getButtons();
 	
 	/**
 	 * Returns the array passed as the `$parameters` argument of the constructor
@@ -146,6 +172,17 @@ interface IFormDocument extends IFormParentNode {
 	 * @throws	\InvalidArgumentException	if invalid index is given
 	 */
 	public function getRequestData($index = null);
+	
+	/**
+	 * Returns `true` if the default button is added to the form during in the `build()` method
+	 * and `false` otherwise.
+	 * 
+	 * By default, the default button is added.
+	 * Each implementing class can define itself what it considers its default button.
+	 * 
+	 * @return	boolean
+	 */
+	public function hasDefaultButton();
 	
 	/**
 	 * Returns `true` if there is any request data or, if a parameter is given, if

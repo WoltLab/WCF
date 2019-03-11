@@ -57,7 +57,16 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker {
 	 * The user profile of the actual user.
 	 * @var User
 	 */
-	private $actualUser; 
+	private $actualUser;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function initObjectList() {
+		// This rebuild worker has no database object list
+		// therefore we do nothing in this method an overwrite
+		// the parent method, that it does not throw an exception.
+	}
 	
 	/**
 	 * @inheritDoc

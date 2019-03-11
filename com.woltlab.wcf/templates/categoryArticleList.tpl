@@ -1,7 +1,7 @@
 {capture assign='pageTitle'}{$category->getTitle()}{/capture}
 
 {capture assign='contentTitle'}{$category->getTitle()}{/capture}
-{capture assign='contentDescription'}{$category->getDescription()}{/capture}
+{capture assign='contentDescription'}{if $category->descriptionUseHtml}{@$category->getDescription()}{else}{$category->getDescription()}{/if}{/capture}
 
 {capture assign='headContent'}
 	{if $pageNo < $pages}
@@ -108,7 +108,7 @@
 		{include file='articleListItems'}
 	</div>
 {else}
-	<p class="info">{lang}wcf.global.noItems{/lang}</p>
+	<p class="info" role="status">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 <footer class="contentFooter">

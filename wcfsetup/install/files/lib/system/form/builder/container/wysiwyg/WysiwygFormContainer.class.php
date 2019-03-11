@@ -1,0 +1,478 @@
+<?php
+namespace wcf\system\form\builder\container\wysiwyg;
+use wcf\data\IStorableObject;
+use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\attachment\AttachmentHandler;
+use wcf\system\event\EventHandler;
+use wcf\system\form\builder\button\wysiwyg\WysiwygPreviewFormButton;
+use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\container\TabFormContainer;
+use wcf\system\form\builder\field\wysiwyg\WysiwygAttachmentFormField;
+use wcf\system\form\builder\field\wysiwyg\WysiwygFormField;
+use wcf\system\form\builder\IFormNode;
+use wcf\system\form\builder\TWysiwygFormNode;
+
+/**
+ * Represents the whole container with a WYSIWYG editor and the associated tab menu below it with
+ * support for smilies, attchments, settings, and polls.
+ * 
+ * Instead of having to manually set up each individual component, this form container allows to
+ * simply create an instance of this class, set some required data for some components, and the
+ * setup is complete.
+ * 
+ * @author	Matthias Schmidt
+ * @copyright	2001-2019 WoltLab GmbH
+ * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package	WoltLabSuite\Core\System\Form\Builder\Container\Wysiwyg
+ * @since	5.2
+ */
+class WysiwygFormContainer extends FormContainer {
+	use TWysiwygFormNode;
+	
+	/**
+	 * attachment form field
+	 * @var	WysiwygAttachmentFormField
+	 */
+	protected $attachmentField;
+	
+	/**
+	 * attachment-related data used to create an `AttachmentHandler` object for the attachment
+	 * form field
+	 * @var	null|array
+	 */
+	protected $attachmentData;
+	
+	/**
+	 * name of the relevant message object type
+	 * @var	string
+	 */
+	protected $messageObjectType;
+	
+	/**
+	 * id of the edited object
+	 * @var	integer
+	 */
+	protected $objectId;
+	
+	/**
+	 * pre-select attribute of the tab menu
+	 * @var	string
+	 */
+	protected $preselect = 'true';
+	
+	/**
+	 * name of the relevant poll object type
+	 * @var	string
+	 */
+	protected $pollObjectType;
+	
+	/**
+	 * poll form container
+	 * @var	WysiwygPollFormContainer
+	 */
+	protected $pollContainer;
+	
+	/**
+	 * settings form container
+	 * @var	FormContainer
+	 */
+	protected $settingsContainer;
+	
+	/**
+	 * setting nodes that will be added to the settings container when it is created
+	 * @var	IFormNode[]
+	 */
+	protected $settingsNodes = [];
+	
+	/**
+	 * form container for smiley categories
+	 * @var	WysiwygSmileyFormContainer
+	 */
+	protected $smiliesContainer;
+	
+	/**
+	 * is `true` if the wysiwyg form field should support mentions, otherwise `false`
+	 * @var	boolean
+	 */
+	protected $supportMentions = false;
+	
+	/**
+	 * is `true` if smilies are supported for this container, otherwise `false`
+	 * @var	boolean
+	 */
+	protected $supportSmilies = false;
+	
+	/**
+	 * actual wysiwyg form field
+	 * @var	WysiwygFormField
+	 */
+	protected $wysiwygField;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function create($id) {
+		// the actual id is used for the form field containing the text
+		return parent::create($id . 'Container');
+	}
+	
+	/**
+	 * Adds a node that will be appended to the settings form container when it is built and
+	 * returns this container.
+	 * 
+	 * @param	IFormNode	$settingsNode	added settings node
+	 * @return	WysiwygFormContainer		this form field container
+	 */
+	public function addSettingsNode(IFormNode $settingsNode) {
+		if ($this->settingsContainer !== null) {
+			// if settings container has already been created, add it directly
+			$this->settingsContainer->appendChild($settingsNode);
+		}
+		else {
+			$this->settingsNodes[] = $settingsNode;
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Adds nodes that will be appended to the settings form container when it is built and
+	 * returns this container.
+	 *
+	 * @param	IFormNode[]	$settingsNodes	added settings nodes
+	 * @return	WysiwygFormContainer		this form field container
+	 */
+	public function addSettingsNodes(array $settingsNodes) {
+		foreach ($settingsNodes as $settingsNode) {
+			$this->addSettingsNode($settingsNode);
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Sets the attachment-related data used to create an `AttachmentHandler` object for the
+	 * attachment form field. If no attachment data is set, attachments are not supported.
+	 * 
+	 * By default, no attachment data is set.
+	 * 
+	 * @param	null|string	$objectType		name of attachment object type or `null` to unset previous attachment data
+	 * @param	integer		$parentObjectID		id of the parent of the object the attachments belong to or `0` if no such parent exists
+	 * @return	WysiwygFormContainer			this form container
+	 * @throws	\BadMethodCallException			if the attachment form field has already been initialized
+	 */
+	public function attachmentData($objectType = null, $parentObjectID = 0) {
+		if ($this->attachmentField !== null) {
+			throw new \BadMethodCallException("The attachment form field has already been initialized. Use the atatchment form field directly to manipulate attachment data.");
+		}
+		
+		if ($objectType === null) {
+			$this->attachmentData = null;
+		}
+		else {
+			if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.attachment.objectType', $objectType) === null) {
+				throw new \InvalidArgumentException("Unknown attachment object type '{$objectType}'.");
+			}
+			
+			$this->attachmentData = [
+				'objectType' => $objectType,
+				'parentObjectID' => $parentObjectID
+			];
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns the form field handling attachments.
+	 * 
+	 * @return	WysiwygAttachmentFormField
+	 * @throws	\BadMethodCallException		if the form field container has not been populated yet/form has not been built yet
+	 */
+	public function getAttachmentField() {
+		if ($this->attachmentField === null) {
+			throw new \BadMethodCallException("Wysiwyg form field can only be requested after the form has been built.");
+		}
+		
+		return $this->attachmentField;
+	}
+	
+	/**
+	 * Returns the id of the edited object or `0` if no object is edited.
+	 * 
+	 * @return	integer
+	 */
+	public function getObjectId() {
+		return $this->objectId;
+	}
+	
+	/**
+	 * Returns the value of the wysiwyg tab menu's `data-preselect` attribute used to determine
+	 * which tab is preselected.
+	 * 
+	 * By default, `'true'` is returned which is used to pre-select the first tab.
+	 * 
+	 * @return	string
+	 */
+	public function getPreselect() {
+		return $this->preselect;
+	}
+	
+	/**
+	 * Returns the wysiwyg form container with all poll-related fields.
+	 * 
+	 * @return	WysiwygPollFormContainer
+	 * @throws	\BadMethodCallException		if the form field container has not been populated yet/form has not been built yet
+	 */
+	public function getPollContainer() {
+		if ($this->pollContainer === null) {
+			throw new \BadMethodCallException("Wysiwyg form field can only be requested after the form has been built.");
+		}
+		
+		return $this->pollContainer;
+	}
+	
+	/**
+	 * Returns the form container for all settings-related fields.
+	 * 
+	 * @return	FormContainer
+	 * @throws	\BadMethodCallException		if the form field container has not been populated yet/form has not been built yet
+	 */
+	public function getSettingsContainer() {
+		if ($this->settingsContainer === null) {
+			throw new \BadMethodCallException("Wysiwyg form field can only be requested after the form has been built.");
+		}
+		
+		return $this->settingsContainer;
+	}
+	
+	/**
+	 * Returns the form container for smiley categories.
+	 * 
+	 * @return	WysiwygSmileyFormContainer
+	 * @throws	\BadMethodCallException		if the form field container has not been populated yet/form has not been built yet
+	 */
+	public function getSmiliesContainer() {
+		if ($this->smiliesContainer === null) {
+			throw new \BadMethodCallException("Smilies form field container can only be requested after the form has been built.");
+		}
+		
+		return $this->smiliesContainer;
+	}
+	
+	/**
+	 * Returns the wysiwyg form field handling the actual text.
+	 * 
+	 * @return	WysiwygFormField
+	 * @throws	\BadMethodCallException		if the form field container has not been populated yet/form has not been built yet
+	 */
+	public function getWysiwygField() {
+		if ($this->wysiwygField === null) {
+			throw new \BadMethodCallException("Wysiwyg form field can only be requested after the form has been built.");
+		}
+		
+		return $this->wysiwygField;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function id($id) {
+		$this->wysiwygId(substr($id, 0, -strlen('Container')));
+		
+		return parent::id($id);
+	}
+	
+	/**
+	 * Sets the message object type used by the wysiwyg form field.
+	 * 
+	 * @param	string		$messageObjectType	message object type for wysiwyg form field
+	 * @return	WysiwygFormContainer			this container
+	 * @throws	\InvalidArgumentException		if the given string is no message object type
+	 */
+	public function messageObjectType($messageObjectType) {
+		if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.message', $messageObjectType) === null) {
+			throw new \InvalidArgumentException("Unknown message object type '{$messageObjectType}'.");
+		}
+		
+		if ($this->wysiwygField !== null) {
+			$this->wysiwygField->objectType($messageObjectType);
+		}
+		else {
+			$this->messageObjectType = $messageObjectType;
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function loadValuesFromObject(IStorableObject $object) {
+		$this->objectId = $object->getObjectID();
+		
+		if ($this->attachmentData !== null) {
+			// updated attachment handler with object id
+			$this->attachmentField->attachmentHandler(
+				new AttachmentHandler(
+					$this->attachmentData['objectType'],
+					$this->getObjectId(),
+					'.',
+					$this->attachmentData['parentObjectID']
+				)
+			);
+		}
+		
+		return parent::loadValuesFromObject($object);
+	}
+	
+	/**
+	 * Sets the poll object type used by the poll form field container.
+	 * 
+	 * By default, no poll object type is set, thus the poll form field container is not available.
+	 * 
+	 * @param	string		$pollObjectType		poll object type for wysiwyg form field
+	 * @return	WysiwygFormContainer			this container
+	 * @throws	\InvalidArgumentException		if the given string is no poll object type
+	 */
+	public function pollObjectType($pollObjectType) {
+		if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.poll', $pollObjectType) === null) {
+			throw new \InvalidArgumentException("Unknown poll object type '{$pollObjectType}'.");
+		}
+		
+		if ($this->pollContainer !== null) {
+			$this->pollContainer->objectType($pollObjectType);
+		}
+		else {
+			$this->pollObjectType = $pollObjectType;
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function populate() {
+		parent::populate();
+		
+		$this->wysiwygField = WysiwygFormField::create($this->wysiwygId)
+			->objectType($this->messageObjectType)
+			->supportAttachments($this->attachmentData !== null)
+			->supportMentions($this->supportMentions);
+		$this->smiliesContainer = WysiwygSmileyFormContainer::create($this->wysiwygId . 'SmiliesTab')
+			->wysiwygId($this->getWysiwygId())
+			->label('wcf.message.smilies')
+			->available($this->supportSmilies);
+		$this->attachmentField = WysiwygAttachmentFormField::create($this->wysiwygId . 'Attachments')
+			->wysiwygId($this->getWysiwygId());
+		$this->settingsContainer = FormContainer::create($this->wysiwygId . 'SettingsContainer')
+			->appendChildren($this->settingsNodes);
+		$this->pollContainer = WysiwygPollFormContainer::create($this->wysiwygId . 'PollContainer')
+			->wysiwygId($this->getWysiwygId());
+		if ($this->pollObjectType) {
+			$this->pollContainer->objectType($this->pollObjectType);
+		}
+		
+		$this->appendChildren([
+			$this->wysiwygField,
+			WysiwygTabMenuFormContainer::create($this->wysiwygId . 'Tabs')
+				->attribute('data-preselect', $this->getPreselect())
+				->attribute('data-wysiwyg-container-id', $this->wysiwygId)
+				->useAnchors(false)
+				->appendChildren([
+					$this->smiliesContainer,
+					
+					TabFormContainer::create($this->wysiwygId . 'AttachmentsTab')
+						->addClass('formAttachmentContent')
+						->label('wcf.attachment.attachments')
+						->appendChild(
+							FormContainer::create($this->wysiwygId . 'AttachmentsContainer')
+								->appendChild($this->attachmentField)
+						),
+					
+					TabFormContainer::create($this->wysiwygId . 'SettingsTab')
+						->label('wcf.message.settings')
+						->appendChild($this->settingsContainer)
+						->available(MODULE_SMILEY),
+					
+					TabFormContainer::create($this->wysiwygId . 'PollTab')
+						->label('wcf.poll.management')
+						->appendChild($this->pollContainer)
+				])
+		]);
+		
+		if ($this->attachmentData !== null) {
+			$this->attachmentField->attachmentHandler(
+				// the temporary hash may not be empty (at the same time as the
+				// object id) and it will be changed anyway by the called method
+				new AttachmentHandler(
+					$this->attachmentData['objectType'],
+					$this->getObjectId(),
+					'.',
+					$this->attachmentData['parentObjectID']
+				)
+			);
+		}
+		
+		$this->getDocument()->addButton(
+			WysiwygPreviewFormButton::create($this->getWysiwygId() . 'PreviewButton')
+				->objectType($this->messageObjectType)
+				->wysiwygId($this->getWysiwygId())
+				->objectId($this->getObjectId())
+		);
+		
+		EventHandler::getInstance()->fireAction($this, 'populate');
+	}
+	
+	/**
+	 * Sets the value of the wysiwyg tab menu's `data-preselect` attribute used to determine which
+	 * tab is preselected.
+	 * 
+	 * @param	string		$preselect	id of preselected tab, `'true'` for first tab, or non-existing id for no preselected tab
+	 * @return	WysiwygFormContainer
+	 */
+	public function preselect($preselect = 'true') {
+		$this->preselect = $preselect;
+		
+		return $this;
+	}
+	
+	/**
+	 * Sets if mentions are supported by the editor field and returns this form container.
+	 * 
+	 * By default, mentions are not supported.
+	 * 
+	 * @param	boolean		$supportMention
+	 * @return	WysiwygFormContainer		this form container
+	 * @throws	\BadMethodCallException		if the wysiwyg form field has already been initialized
+	 */
+	public function supportMentions($supportMentions = true) {
+		if ($this->wysiwygField !== null) {
+			throw new \BadMethodCallException("The wysiwyg form field has already been initialized. Use the wysiwyg form field directly to manipulate mention support.");
+		}
+		
+		$this->supportMentions = $supportMentions;
+		
+		return $this;
+	}
+	
+	/**
+	 * Sets if smilies are supported for this form container and returns this form container.
+	 * 
+	 * By default, smilies are not supported.
+	 * 
+	 * @param	boolean		$supportSmilies
+	 * @return	WysiwygFormContainer		this form container
+	 * @throws	\BadMethodCallException		if the poll container has already been initialized
+	 */
+	public function supportSmilies($supportSmilies = true) {
+		if ($this->smiliesContainer !== null) {
+			throw new \BadMethodCallException("The smilies form container has already been initialized. Use the smilies container directly to manipulate smiley support.");
+		}
+		
+		$this->supportSmilies = $supportSmilies;
+		
+		return $this;
+	}
+}

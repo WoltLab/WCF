@@ -4,10 +4,10 @@ use wcf\data\tag\Tag;
 use wcf\data\IStorableObject;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
-use wcf\system\form\builder\field\IObjectTypeFormField;
 use wcf\system\form\builder\field\TDefaultIdFormField;
-use wcf\system\form\builder\field\TObjectTypeFormField;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\IObjectTypeFormNode;
+use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\tagging\TagEngine;
 use wcf\util\ArrayUtil;
 
@@ -24,9 +24,9 @@ use wcf\util\ArrayUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Tag
  * @since	5.2
  */
-class TagFormField extends AbstractFormField implements IObjectTypeFormField {
+class TagFormField extends AbstractFormField implements IObjectTypeFormNode {
 	use TDefaultIdFormField;
-	use TObjectTypeFormField;
+	use TObjectTypeFormNode;
 	
 	/**
 	 * @inheritDoc

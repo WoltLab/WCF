@@ -2,9 +2,19 @@
 	> .messageTabMenuContent {
 		display: none;
 		
+		&:not(.messageTabMenu) {
+			> nav.menu {
+				display: none;
+			}
+		}
+		
 		&.active {
 			background-color: $wcfContentBackground;
 			display: block;
+			margin-top: 0;
+		}
+		
+		> .section:first-child {
 			margin-top: 0;
 		}
 	}
@@ -24,6 +34,8 @@
 		
 		> ul {
 			@include inlineList;
+			
+			border: 0;
 			
 			> li {
 				outline: 0;
@@ -55,6 +67,7 @@
 	width: 100%;
 }
 
+.messageTabMenu > nav.tabMenu,
 .messageTabMenuNavigation {
 	> ul {
 		background-color: $wcfContentBackground;
@@ -90,6 +103,7 @@
 				padding: 10px 20px;
 				
 				@include userSelectNone;
+				@include wcfFontDefault;
 				
 				@include screen-md-up {
 					> .icon {

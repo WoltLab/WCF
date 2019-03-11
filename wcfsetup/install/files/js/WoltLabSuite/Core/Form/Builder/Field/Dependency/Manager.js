@@ -300,13 +300,6 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 			if (form === null) {
 				throw new Error("Unknown element with id '" + formId + "'");
 			}
-			if (form.tagName !== 'FORM') {
-				var dialogContent = DomTraverse.parentByClass(form, 'dialogContent');
-				
-				if (dialogContent === null) {
-					throw new Error("Element with id '" + formId + "' is no form.");
-				}
-			}
 			
 			if (_forms.has(form)) {
 				throw new Error("Form with id '" + formId + "' has already been registered.");

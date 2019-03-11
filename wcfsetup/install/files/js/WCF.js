@@ -878,9 +878,10 @@ WCF.Dropdown = {
 	 * Toggles a dropdown.
 	 * 
 	 * @param	string		containerID
+	 * @param       {boolean=}      disableAutoFocus
 	 */
-	toggleDropdown: function(containerID) {
-		window.bc_wcfSimpleDropdown._toggle(null, containerID);
+	toggleDropdown: function(containerID, disableAutoFocus) {
+		window.bc_wcfSimpleDropdown._toggle(null, containerID, null, disableAutoFocus);
 	},
 	
 	/**
@@ -4464,7 +4465,7 @@ WCF.Search.Base = Class.extend({
 		
 		var $containerID = this._searchInput.parents('.dropdown').wcfIdentify();
 		if (!WCF.Dropdown.getDropdownMenu($containerID).hasClass('dropdownOpen')) {
-			WCF.Dropdown.toggleDropdown($containerID);
+			WCF.Dropdown.toggleDropdown($containerID, true);
 			
 			this._openDropdown();
 		}
@@ -5944,10 +5945,14 @@ if (COMPILER_TARGET_DEFAULT) {
 				this._fileUpload = $('<input type="file" name="' + this._name + '" ' + (this._options.multiple ? 'multiple="true" ' : '') + '/>');
 				this._fileUpload.change($.proxy(this._upload, this));
 				var $button = $('<p class="button uploadButton"><span>' + WCF.Language.get('wcf.global.button.upload') + '</span></p>');
+				elAttr($button[0], 'role', 'button');
+				elAttr($button[0], 'tabindex', '0');
 				$button.prepend(this._fileUpload);
 			}
 			else {
 				var $button = $('<p class="button uploadFallbackButton"><span>' + WCF.Language.get('wcf.global.button.upload') + '</span></p>');
+				elAttr($button[0], 'role', 'button');
+				elAttr($button[0], 'tabindex', '0');
 				$button.click($.proxy(this._showOverlay, this));
 			}
 			

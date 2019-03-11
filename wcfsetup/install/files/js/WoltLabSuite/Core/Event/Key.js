@@ -93,6 +93,16 @@ define([], function() {
 		},
 		
 		/**
+		 * Returns true if pressed key equals 'Space'.
+		 *
+		 * @param       {Event}         event           event object
+		 * @return      {boolean}
+		 */
+		Space: function(event) {
+			return _isKey(event, 'Space', 32);
+		},
+		
+		/**
 		 * Returns true if pressed key equals 'Tab'.
 		 * 
 		 * @param       {Event}         event           event object
