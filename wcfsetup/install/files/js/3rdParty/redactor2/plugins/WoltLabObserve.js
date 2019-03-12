@@ -81,6 +81,10 @@ $.Redactor.prototype.WoltLabObserve = function() {
 					this.button.enable('woltlabQuote');
 				}
 				
+				if (isSource) {
+					this.button.setActive('html');
+				}
+				
 				// WoltLab modification: we know that there will be quite a few
 				// active button states, so we'll simply check all ancestors one
 				// by one instead of searching the DOM over and over again

@@ -597,10 +597,6 @@ define(
 				this._toggle(null, _activeTargetId);
 				if (button) button.focus();
 			}
-		},
-		
-		_getNextVisibleItem: function(activeItem, index) {
-			var items = Array.prototype.slice.call(elBySelAll('li', activeItem.closest('.dropdownMenu')));
 		}
 	};
 });

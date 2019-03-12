@@ -58,10 +58,6 @@ $.Redactor.prototype.WoltLabSource = function() {
 				});
 			}
 			
-			// disable caret position in source mode
-			this.source.setCaretOnShow = function () {};
-			this.source.setCaretOnHide = function (html) { return html; };
-			
 			var mpHide = this.source.hide;
 			this.source.hide = (function () {
 				// use jQuery to parse, its parser is much more graceful

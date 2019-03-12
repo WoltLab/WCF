@@ -1620,6 +1620,7 @@
 						}).bind(this));
 						
 						elData(button, 'a11y-mouse-event', 'mousedown');
+						elData(button, 'aria-expanded', false);
 						
 						button.addEventListener('click', function (event) {
 							event.preventDefault();
@@ -1686,6 +1687,10 @@
 				},
 				clickCallback: function (e, callback, btnName, args) {
 					var func;
+					
+					if (e instanceof Event) {
+						e.preventDefault();
+					}
 					
 					args = (typeof args === 'undefined') ? btnName : args;
 					
@@ -1871,13 +1876,16 @@
 						$btns = $btns.not('.re-' + key);
 					}
 					
-					$btns.removeClass('redactor-act');
+					$btns.removeClass('redactor-act').attr({
+						'aria-pressed': false,
+						tabindex: (key === 'html') ? 0 : -1
+					});
 				},
 				disable: function (key) {
-					this.button.get(key).addClass('redactor-button-disabled');
+					this.button.get(key).addClass('redactor-button-disabled').attr('aria-disabled', true);
 				},
 				enable: function (key) {
-					this.button.get(key).removeClass('redactor-button-disabled');
+					this.button.get(key).removeClass('redactor-button-disabled').attr('aria-disabled', false);
 				},
 				disableAll: function (key) {
 					var $btns = this.button.toolbar().find('a.re-button');
@@ -1885,10 +1893,10 @@
 						$btns = $btns.not('.re-' + key);
 					}
 					
-					$btns.addClass('redactor-button-disabled');
+					$btns.addClass('redactor-button-disabled').attr('aria-disabled', true);
 				},
 				enableAll: function () {
-					this.button.toolbar().find('a.re-button').removeClass('redactor-button-disabled');
+					this.button.toolbar().find('a.re-button').removeClass('redactor-button-disabled').attr('aria-disabled', false);
 				},
 				remove: function (key) {
 					this.button.get(key).remove();
@@ -3501,7 +3509,7 @@
 							});
 							
 							this.button.setActive(this.dropdown.key);
-							this.dropdown.button.addClass('dropact');
+							this.dropdown.button.addClass('dropact').attr('aria-expanded', true);
 							
 							this.dropdown.enableCallback();
 						}
@@ -3542,7 +3550,7 @@
 						UiSimpleDropdown.close(id);
 					});
 					
-					this.dropdown.button.removeClass('redactor-act dropact');
+					this.dropdown.button.removeClass('redactor-act dropact').attr('aria-expanded', false);
 					this.dropdown.button = false;
 					this.dropdown.key = false;
 					this.dropdown.active = false;
