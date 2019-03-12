@@ -146,6 +146,12 @@ define([
 			// note: data will be validated/filtered by the server
 			
 			var pipField = elById(this._formFieldId + '_instructions' + instructionsId + '_pip');
+			
+			// ignore pressing button if no PIP has been selected
+			if (!pipField.value) {
+				return;
+			}
+			
 			var valueField = elById(this._formFieldId + '_instructions' + instructionsId + '_value');
 			var runStandaloneField = elById(this._formFieldId + '_instructions' + instructionsId + '_runStandalone');
 			var applicationField = elById(this._formFieldId + '_instructions' + instructionsId + '_application');
