@@ -20,7 +20,7 @@ define(['EventHandler', 'EventKey'], function (EventHandler, EventKey) {
 		init: function (editorId) {
 			this._editorId = editorId;
 			
-			var container = elBySel('.messageTabMenu[data-wysiwyg-container-id=' + this._editorId + ']');
+			var container = elById('smilies-' + this._editorId);
 			if (!container) {
 				throw new Error('Unable to find the message tab menu container containing the smilies.');
 			}
