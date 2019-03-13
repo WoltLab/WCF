@@ -8,13 +8,13 @@
  */
 define(
 	[
-		'enquire',      'Ajax',       'Core',      'Dictionary',
+		'Ajax',         'Core',       'Dictionary',
 		'Environment',  'Language',   'ObjectMap', 'Dom/ChangeListener',
 		'Dom/Traverse', 'Dom/Util',   'Ui/Confirmation', 'Ui/Screen', 'Ui/SimpleDropdown',
 		'EventHandler', 'List',       'EventKey'
 	],
 	function(
-		enquire,        Ajax,         Core,        Dictionary,
+		Ajax,           Core,         Dictionary,
 		Environment,    Language,     ObjectMap,   DomChangeListener,
 		DomTraverse,    DomUtil,      UiConfirmation, UiScreen, UiSimpleDropdown,
 		EventHandler,   List,         EventKey
