@@ -151,7 +151,10 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	}
 	
 	/**
-	 * Migrates the storage location of this attachment.
+	 * Migrates the storage location of this attachment to
+	 * include the `.bin` suffix.
+	 * 
+	 * @since	5.2
 	 */
 	public function migrateStorage() {
 		foreach ([$this->getLocation(), $this->getThumbnailLocation(), $this->getThumbnailLocation('tiny')] as $location) {
@@ -164,20 +167,22 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	/**
 	 * Returns the appropriate location with or without extension.
 	 * 
+	 * Files are suffixed with `.bin` since 5.2, but they are recognized
+	 * without the extension for backward compatibility.
+	 * 
 	 * @param	string $location
 	 * @return	string
+	 * @since	5.2
 	 */
 	protected final function getLocationHelper($location) {
-		// Check location with extension
 		if (is_readable($location.'.bin')) {
 			return $location.'.bin';
 		}
-		// Check legacy location
 		else if (is_readable($location)) {
 			return $location;
 		}
 		
-		// Assume that the attachment is not yet uploaded.
+		// Assume that the attachment has not been uploaded yet.
 		return $location.'.bin';
 	}
 	
