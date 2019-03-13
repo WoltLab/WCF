@@ -49,13 +49,15 @@ abstract class SingletonFactory {
 	 * @throws	SystemException
 	 */
 	public static final function getInstance() {
-		$className = get_called_class();
-		if (!array_key_exists($className, self::$__singletonObjects)) {
-			self::$__singletonObjects[$className] = null;
+		$className = static::class;
+		if (!isset(self::$__singletonObjects[$className])) {
+			// The previously used `null` value forced us into using `array_key_exists()` which has a bad performance,
+			// especially with the growing list of derived classes that are used today. Saves a few ms on every request.
+			self::$__singletonObjects[$className] = false;
 			self::$__singletonObjects[$className] = new $className();
 		}
-		else if (self::$__singletonObjects[$className] === null) {
-			throw new SystemException("Infinite loop detected while trying to retrieve object for '".$className."'");
+		else if (self::$__singletonObjects[$className] === false) {
+			throw new SystemException("Infinite loop detected while trying to retrieve object for '" . $className . "'");
 		}
 		
 		return self::$__singletonObjects[$className];
