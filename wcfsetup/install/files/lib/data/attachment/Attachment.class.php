@@ -123,7 +123,7 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	 * @inheritDoc
 	 */
 	public function getLocation() {
-		return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-' . $this->fileHash;
+		return $this->getLocationHelper(self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-' . $this->fileHash);
 	}
 	
 	/**
@@ -140,10 +140,33 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	 */
 	public function getThumbnailLocation($size = '') {
 		if ($size == 'tiny') {
-			return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-tiny-' . $this->fileHash;
+			$location = self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-tiny-' . $this->fileHash;
+		}
+		else {
+			$location = self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-thumbnail-' . $this->fileHash;
 		}
 		
-		return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-thumbnail-' . $this->fileHash;
+		return $this->getLocationHelper($location);
+	}
+	
+	/**
+	 * Returns the appropriate location with or without extension.
+	 * 
+	 * @param	string $location
+	 * @return	string
+	 */
+	protected final function getLocationHelper($location) {
+		// Check location with extension
+		if (is_readable($location.'.bin')) {
+			return $location.'.bin';
+		}
+		// Check legacy location
+		else if (is_readable($location)) {
+			return $location;
+		}
+		
+		// Assume that the attachment is not yet uploaded.
+		return $location.'.bin';
 	}
 	
 	/**
