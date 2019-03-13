@@ -3,6 +3,7 @@ namespace wcf\data\language;
 use wcf\data\DatabaseObject;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a language.
@@ -168,6 +169,31 @@ class Language extends DatabaseObject {
 		}
 		
 		return $staticItem;
+	}
+	
+	/**
+	 * Shortcut method to reduce the code repetition in the compiled template code.
+	 * 
+	 * @param string $item
+	 * @param mixed[] $tagStackData
+	 * @return string
+	 * @since 5.2
+	 */
+	public function tplGet($item, array &$tagStackData) {
+		$optional = !empty($tagStackData['__optional']);
+		
+		if (!empty($tagStackData['__literal'])) {
+			$value = $this->get($item, $optional);
+		}
+		else {
+			$value = $this->getDynamicVariable($item, $tagStackData, $optional);
+		}
+		
+		if (!empty($tagStackData['__encode'])) {
+			return StringUtil::encodeHTML($value);
+		}
+		
+		return $value;
 	}
 	
 	/**
