@@ -88,6 +88,10 @@ namespace {
 	if (@ini_get('zlib.output_compression')) {
 		@ini_set('zlib.output_compression', '0');
 	}
+	
+	if (!function_exists('is_countable')) {
+		function is_countable($var) { return is_array($var) || $var instanceof Countable || $var instanceof ResourceBundle || $var instanceof SimpleXmlElement; }
+	}
 }
 
 // @codingStandardsIgnoreStart
