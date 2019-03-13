@@ -7,6 +7,7 @@ use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Represents an attachment.
@@ -147,6 +148,17 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 		}
 		
 		return $this->getLocationHelper($location);
+	}
+	
+	/**
+	 * Migrates the storage location of this attachment.
+	 */
+	public function migrateStorage() {
+		foreach ([$this->getLocation(), $this->getThumbnailLocation(), $this->getThumbnailLocation('tiny')] as $location) {
+			if (!StringUtil::endsWith($location, '.bin')) {
+				rename($location, $location.'.bin');
+			}
+		}
 	}
 	
 	/**
