@@ -617,6 +617,29 @@
 		<item name="wcf.acp.exceptionLog.exception.date"><![CDATA[Datum]]></item>
 		<item name="wcf.acp.exceptionLog.exception.userAgent"><![CDATA[Browser]]></item>
 		<item name="wcf.acp.exceptionLog.exception.memory"><![CDATA[Arbeitsspeicher]]></item>
+		<item name="wcf.acp.exceptionLog.email.subject"><![CDATA[Fehlermeldungen seit {$date|plainTime}]]></item>
+		<item name="wcf.acp.exceptionLog.email.body"><![CDATA[Hallo Administrator,
+
+die folgenden Fehlermeldungen auf Ihrer Website {@PAGE_TITLE|language} wurden seit dem {$date|plainTime} protokolliert:
+
+{foreach from=$files key=file item=data}
+log/{$file}.txt {* this line ends with a space *}
+==================
+
+{if $data[verdict]|isset}
+{if $data[verdict] == 'corrupt'}
+Das Fehlerprotokoll ist defekt. Bitte prüfen Sie das Protokoll händisch: {'WCF_DIR'|constant}log/{$file}.txt
+{elseif $data[verdict] == 'huge'}
+Das Fehlerprotokoll ist sehr groß. Bitte prüfen Sie das Protokoll händisch: {'WCF_DIR'|constant}log/{$file}.txt
+{/if}
+{else}
+Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in dieser E-Mail noch nicht genannten, Fehlermeldungen lauten:
+{foreach from=$data[messages] item=message}
+- {@$message} {* this line ends with a space *}
+{/foreach}
+{/if}
+{* this line is intentionally left empty *}
+{/foreach}]]></item>
 	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>

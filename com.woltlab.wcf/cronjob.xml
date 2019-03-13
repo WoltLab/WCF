@@ -202,6 +202,16 @@
 			<startdow>*</startdow>
 			<canbedisabled>0</canbedisabled>
 		</cronjob>
+		<cronjob name="com.woltlab.wcf.exceptionMailer">
+			<classname>wcf\system\cronjob\ExceptionMailerCronjob</classname>
+			<description>Sends out notifications about new logged errors.</description>
+			<description language="de">Versendet Benachrichtigungen über neue protokollierte Fehler.</description>
+			<startminute>0</startminute>
+			<starthour>5</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+		</cronjob>
 		<cronjob name="com.woltlab.wcf.updateBlacklist">
 			<classname>wcf\system\cronjob\UpdateBlacklistCronjob</classname>
 			<description>Refreshes the blacklist for spam prevention</description>

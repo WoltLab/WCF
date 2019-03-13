@@ -593,6 +593,29 @@
 		<item name="wcf.acp.exceptionLog.exception.date"><![CDATA[Time]]></item>
 		<item name="wcf.acp.exceptionLog.exception.userAgent"><![CDATA[User Agent]]></item>
 		<item name="wcf.acp.exceptionLog.exception.memory"><![CDATA[Memory]]></item>
+		<item name="wcf.acp.exceptionLog.email.subject"><![CDATA[Logged Errors since {$date|plainTime}]]></item>
+		<item name="wcf.acp.exceptionLog.email.body"><![CDATA[Dear Administrator,
+
+the following errors have been logged on your website {@PAGE_TITLE|language} since {$date|plainTime}:
+
+{foreach from=$files key=file item=data}
+log/{$file}.txt {* this line ends with a space *}
+==================
+
+{if $data[verdict]|isset}
+{if $data[verdict] == 'corrupt'}
+This protocol file is corrupted. Please check the protocol manually: {'WCF_DIR'|constant}log/{$file}.txt
+{elseif $data[verdict] == 'huge'}
+This protocol file is very large. Please check the protocol manually: {'WCF_DIR'|constant}log/{$file}.txt
+{/if}
+{else}
+This protocol file contains {$data[count]} new entries. The first three error messages that are not yet listed in this email are:
+{foreach from=$data[messages] item=message}
+- {@$message} {* this line ends with a space *}
+{/foreach}
+{/if}
+{* this line is intentionally left empty *}
+{/foreach}]]></item>
 	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
