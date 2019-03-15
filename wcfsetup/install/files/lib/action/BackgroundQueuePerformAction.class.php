@@ -33,9 +33,7 @@ class BackgroundQueuePerformAction extends AbstractAction {
 			}
 		}
 		echo BackgroundQueueHandler::getInstance()->getRunnableCount();
-		if (WCF::getSession()->isFirstVisit() && !WCF::getUser()->userID) {
-			WCF::getSession()->delete();
-		}
+		WCF::getSession()->deleteIfNew();
 		exit;
 	}
 }

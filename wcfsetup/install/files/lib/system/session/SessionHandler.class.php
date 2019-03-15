@@ -990,6 +990,25 @@ class SessionHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Deletes this session if:
+	 * - it is newly created in this request, and
+	 * - it belongs to a guest.
+	 * 
+	 * This method is useful if you have controllers that are likely to be
+	 * accessed by a user agent that is not going to re-use sessions (e.g.
+	 * curl in a cronjob). It immediately remove the session that was created
+	 * just for that request and that is not going to be used ever again.
+	 * 
+	 * @since 5.2
+	 */
+	public function deleteIfNew() {
+		if (!$this->isFirstVisit()) return;
+		if ($this->getUser()->userID) return;
+		
+		$this->delete();
+	}
+	
+	/**
 	 * Returns currently active language id.
 	 * 
 	 * @return	integer
