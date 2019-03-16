@@ -14,10 +14,6 @@
 	</nav>
 </header>
 
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
-
 {@$form->getHtml()}
 
 {include file='footer'}

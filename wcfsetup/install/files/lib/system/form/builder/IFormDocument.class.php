@@ -75,7 +75,7 @@ interface IFormDocument extends IFormParentNode {
 	 * @throws	\BadMethodCallException		if this document has already been built
 	 */
 	public function build();
-
+	
 	/**
 	 * Sets the error message of this form using the given language item and returns this
 	 * document. If `null` is passed, the error message is unset.
@@ -85,7 +85,6 @@ interface IFormDocument extends IFormParentNode {
 	 * 
 	 * @param	null|string	$languageItem	language item containing the error message or `null` to unset error message
 	 * @param	array		$variables	additional variables used when resolving the language item
-	 *
 	 * @return	static				this document
 	 * 
 	 * @throws	\InvalidArgumentException	if the given form mode is invalid
@@ -202,6 +201,16 @@ interface IFormDocument extends IFormParentNode {
 	public function getRequestData($index = null);
 	
 	/**
+	 * Returns the success message for the whole form.
+	 *
+	 * By default, `wcf.global.form.add` or `wcf.global.form.edit` in the active user's language
+	 * is returned depending on the current form mode.
+	 *
+	 * @return	string
+	 */
+	public function getSuccessMessage();
+	
+	/**
 	 * Returns `true` if the default button is added to the form during in the `build()` method
 	 * and `false` otherwise.
 	 * 
@@ -305,6 +314,14 @@ interface IFormDocument extends IFormParentNode {
 	public function showErrorMessage($showErrorMessage = true);
 	
 	/**
+	 * Sets if the global form success message should be shown.
+	 * 
+	 * @param	boolean		$showSuccessMessage
+	 * @return	static					this document
+	 */
+	public function showSuccessMessage($showSuccessMessage = true);
+	
+	/**
 	 * Returns `true` if the global form error message should be shown if the form has validation
 	 * errors.
 	 * 
@@ -313,4 +330,28 @@ interface IFormDocument extends IFormParentNode {
 	 * @return	boolean
 	 */
 	public function showsErrorMessage();
+	
+	/**
+	 * Returns `true` if the global form success message should be shown.
+	 * 
+	 * By default, the global form error message is not shown.
+	 * 
+	 * @return	boolean
+	 */
+	public function showsSuccessMessage();
+	
+	/**
+	 * Sets the success message of this form using the given language item and returns this
+	 * document. If `null` is passed, the success message is unset.
+	 *
+	 * Unsetting the current success message causes `IFormDocument::getSuccessMessage()()` to
+	 * return the default success message.
+	 *
+	 * @param	null|string	$languageItem	language item containing the success message or `null` to unset error message
+	 * @param	array		$variables	additional variables used when resolving the language item
+	 * @return	static				this document
+	 *
+	 * @throws	\InvalidArgumentException	if the given form mode is invalid
+	 */
+	public function successMessage($languageItem = null, array $variables = []);
 }

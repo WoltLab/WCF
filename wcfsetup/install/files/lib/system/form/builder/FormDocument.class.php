@@ -113,10 +113,23 @@ class FormDocument implements IFormDocument {
 	protected $requestData;
 	
 	/**
-	 * TODO
+	 * is `true` if global form error message will be shown if there are validation errors and
+	 * is `false` otherwise
 	 * @var	boolean
 	 */
 	protected $showErrorMessage = true;
+	
+	/**
+	 * is `true` if global form success message will be shown and is `false` otherwise
+	 * @var	boolean
+	 */
+	protected $showSuccessMessage = false;
+	
+	/**
+	 * global form success message
+	 * @var	null|string
+	 */
+	protected $successMessage;
 	
 	/**
 	 * Cleans up the form document before the form document object is destroyed.
@@ -238,7 +251,7 @@ class FormDocument implements IFormDocument {
 	public function errorMessage($languageItem = null, array $variables = []) {
 		if ($languageItem === null) {
 			if (!empty($variables)) {
-				throw new \InvalidArgumentException("Cannot use variables when unsetting error element of form '{$this->getId()}'");
+				throw new \InvalidArgumentException("Cannot use variables when unsetting error message of form '{$this->getId()}'");
 			}
 			
 			$this->errorMessage = null;
@@ -408,6 +421,22 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
+	public function getSuccessMessage() {
+		if ($this->successMessage === null) {
+			$suffix = 'edit';
+			if ($this->getFormMode() === IFormDocument::FORM_MODE_CREATE) {
+				$suffix = 'add';
+			}
+			
+			$this->successMessage = WCF::getLanguage()->getDynamicVariable('wcf.global.success.' . $suffix);
+		}
+		
+		return $this->successMessage;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function hasDefaultButton() {
 		return $this->addDefaultButton;
 	}
@@ -543,6 +572,15 @@ class FormDocument implements IFormDocument {
 	 */
 	public function showErrorMessage($showErrorMessage = true) {
 		$this->showErrorMessage = $showErrorMessage;
+
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function showSuccessMessage($showSuccessMessage = true) {
+		$this->showSuccessMessage = $showSuccessMessage;
 		
 		return $this;
 	}
@@ -552,6 +590,35 @@ class FormDocument implements IFormDocument {
 	 */
 	public function showsErrorMessage() {
 		return $this->showErrorMessage;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function showsSuccessMessage() {
+		return $this->showSuccessMessage;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function successMessage($languageItem = null, array $variables = []) {
+		if ($languageItem === null) {
+			if (!empty($variables)) {
+				throw new \InvalidArgumentException("Cannot use variables when unsetting success message of form '{$this->getId()}'");
+			}
+			
+			$this->successMessage = null;
+		}
+		else {
+			if (!is_string($languageItem)) {
+				throw new \InvalidArgumentException("Given success message language item is no string, " . gettype($languageItem) . " given.");
+			}
+			
+			$this->successMessage = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
+		}
+		
+		return $this;
 	}
 	
 	/**

@@ -175,6 +175,8 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 			
 			$this->buildForm();
 		}
+		
+		$this->form->showSuccessMessage(true);
 	}
 	
 	/**

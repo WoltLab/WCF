@@ -9,6 +9,10 @@
 	<p class="error" role="alert">{@$form->getErrorMessage()}</p>
 {/if}
 
+{if $form->showsSuccessMessage()}
+	<p class="success">{@$form->getSuccessMessage()}</p>
+{/if}
+
 {if $form->isAjax()}
 	<section id="{@$form->getId()}"{*
 		*}{if !$form->getClasses()|empty} class="{implode from=$form->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
