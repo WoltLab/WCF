@@ -35,7 +35,7 @@ trait TFormElement {
 	 * @param	array		$variables	additional variables used when resolving the language item
 	 * @return	static				this element
 	 * 
-	 * @throws	\InvalidArgumentException	if the given description is no or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given description is no string or otherwise is invalid
 	 */
 	public function description($languageItem = null, array $variables = []) {
 		if ($languageItem === null) {
@@ -83,7 +83,7 @@ trait TFormElement {
 	 * @param	array		$variables	additional variables used when resolving the language item
 	 * @return	static				this element
 	 * 
-	 * @throws	\InvalidArgumentException	if the given label is no or otherwise is invalid
+	 * @throws	\InvalidArgumentException	if the given label is no string or otherwise is invalid
 	 */
 	public function label($languageItem = null, array $variables = []) {
 		if ($languageItem === null) {
@@ -95,7 +95,7 @@ trait TFormElement {
 		}
 		else {
 			if (!is_string($languageItem)) {
-				throw new \InvalidArgumentException("Given description language item is no string, " . gettype($languageItem) . " given.");
+				throw new \InvalidArgumentException("Given label language item is no string, " . gettype($languageItem) . " given.");
 			}
 			
 			$this->label = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
