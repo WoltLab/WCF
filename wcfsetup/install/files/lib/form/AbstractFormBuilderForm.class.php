@@ -224,4 +224,11 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 			throw new UserInputException($this->form->getPrefixedId());
 		}
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function validateSecurityToken() {
+		// does nothing, is handled by `IFormDocument` object
+	}
 }

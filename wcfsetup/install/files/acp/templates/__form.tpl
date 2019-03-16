@@ -5,6 +5,10 @@
 	});
 </script>
 
+{if $form->hasValidationErrors() && $form->showsErrorMessage()}
+	<p class="error" role="alert">{@$form->getErrorMessage()}</p>
+{/if}
+
 {if $form->isAjax()}
 	<section id="{@$form->getId()}"{*
 		*}{if !$form->getClasses()|empty} class="{implode from=$form->getClasses() item='class' glue=' '}{$class}{/implode}"{/if}{*
@@ -31,11 +35,11 @@
 			{/foreach}
 		</div>
 	{/if}
-	
-	{@SECURITY_TOKEN_INPUT_TAG}
+
 {if $form->isAjax()}
 	</section>
 {else}
+		{@SECURITY_TOKEN_INPUT_TAG}
 	</form>
 {/if}
 
