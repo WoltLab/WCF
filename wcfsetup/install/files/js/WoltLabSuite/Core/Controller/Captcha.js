@@ -43,7 +43,7 @@ define(['Dictionary'], function(Dictionary) {
 				throw new Error("Unknown captcha with id '" + captchaId + "'.");
 			}
 			
-			_captchas.delete(captchaId)();
+			_captchas.delete(captchaId);
 		},
 		
 		/**
