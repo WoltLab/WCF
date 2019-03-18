@@ -454,6 +454,11 @@
 			<classname>wcf\system\importer\MediaImporter</classname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.page</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\PageImporter</classname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.article.comment</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname>wcf\system\importer\ArticleCommentImporter</classname>
