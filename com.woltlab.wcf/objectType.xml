@@ -1018,6 +1018,42 @@
 			<categoryname>com.woltlab.wcf.global</categoryname>
 			<cssclassname>wcfAdLocationFooterBottom</cssclassname>
 		</type>
+		<type>
+			<name>com.woltlab.wcf.article.inArticle</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.article</categoryname>
+			<cssclassname>wcfAdLocationInArticle</cssclassname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.after1stArticle</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.article</categoryname>
+			<cssclassname>wcfAdLocationArticleList wcfAdLocationAfter1stArticle</cssclassname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.afterEvery2ndArticle</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.article</categoryname>
+			<cssclassname>wcfAdLocationArticleList wcfAdLocationAfterEvery2ndArticle</cssclassname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.afterEvery3rdArticle</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.article</categoryname>
+			<cssclassname>wcfAdLocationArticleList wcfAdLocationAfterEvery3rdArticle</cssclassname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.afterEvery5thArticle</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.article</categoryname>
+			<cssclassname>wcfAdLocationArticleList wcfAdLocationAfterEvery5thArticle</cssclassname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.afterEvery10thArticle</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.article</categoryname>
+			<cssclassname>wcfAdLocationArticleList wcfAdLocationAfterEvery10thArticle</cssclassname>
+		</type>
 		<!-- /ad locations -->
 		<!-- ad conditions -->
 		<type>

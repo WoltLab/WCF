@@ -1,5 +1,7 @@
+{if !$disableAds|isset}{assign var='disableAds' value=false}{/if}
+
 <ul class="articleList">
-	{foreach from=$objects item='article'}
+	{foreach from=$objects item='article' name=articles}
 		<li>
 			<a href="{$article->getLink()}">
 				{if $article->getTeaserImage() && $article->getTeaserImage()->hasThumbnail('tiny')}
@@ -60,5 +62,47 @@
 				{event name='articleListEntry'}
 			</a>
 		</li>
+		
+		{if MODULE_WCF_AD && !$disableAds}
+			{if $tpl[foreach][articles][iteration] === 1}
+				{hascontent}
+					<li>
+						{content}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.after1stArticle')}{/content}
+					</li>
+				{/hascontent}
+			{else}
+				{if $tpl[foreach][articles][iteration] % 2 === 0}
+					{hascontent}
+						<li>
+							{content}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.afterEvery2ndArticle')}{/content}
+						</li>
+					{/hascontent}
+				{/if}
+				
+				{if $tpl[foreach][articles][iteration] % 3 === 0}
+					{hascontent}
+						<li>
+							{content}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.afterEvery3rdArticle')}{/content}
+						</li>
+					{/hascontent}
+				{/if}
+				
+				{if $tpl[foreach][articles][iteration] % 5 === 0}
+					{hascontent}
+						<li>
+							{content}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.afterEvery5thArticle')}{/content}
+						</li>
+					{/hascontent}
+				{/if}
+				
+				{if $tpl[foreach][articles][iteration] % 10 === 0}
+					{hascontent}
+						<li>
+							{content}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.afterEvery10thArticle')}{/content}
+						</li>
+					{/hascontent}
+				{/if}
+			{/if}
+		{/if}
 	{/foreach}
 </ul>

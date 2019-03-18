@@ -51,5 +51,5 @@
 		{/foreach}
 	</ul>
 {else}
-	{include file='articleListItems' objects=$boxArticleList}
+	{include file='articleListItems' objects=$boxArticleList disableAds=true}
 {/if}

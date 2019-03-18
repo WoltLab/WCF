@@ -46,6 +46,13 @@
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.bottom"><![CDATA[Sidebar (bottom)]]></item>
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.footer.bottom"><![CDATA[End of Page]]></item>
 		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Choose display order of ads.]]></item>
+		<item name="wcf.acp.ad.location.category.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.after1stArticle"><![CDATA[After the first article]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.afterEvery10thArticle"><![CDATA[After every 10. article]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.afterEvery2ndArticle"><![CDATA[After every 2. article]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.afterEvery3rdArticle"><![CDATA[After every 3. article]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.afterEvery5thArticle"><![CDATA[After every 5. article]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.inArticle"><![CDATA[In the article]]></item>
 	</category>
 	<category name="wcf.acp.application">
 		<item name="wcf.acp.application.cookie"><![CDATA[Cookie Settings]]></item>
