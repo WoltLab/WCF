@@ -3923,6 +3923,7 @@ Dateianhänge:
 		<item name="wcf.like.reactionsGiven"><![CDATA[Vergebene Reaktionen]]></item>
 		<item name="wcf.like.reactionReputation"><![CDATA[Reputation aus Reaktionen]]></item>
 		<item name="wcf.like.reputation"><![CDATA[Reputation]]></item>
+		<item name="wcf.like.reputation.label"><![CDATA[Reputation: {if $cumulativeLikes > 0}+{elseif $cumulativeLikes == 0}±{/if}{#$cumulativeLikes}]]></item>
 	</category>
 	<category name="wcf.map">
 		<item name="wcf.map.noLocationSuggestions"><![CDATA[Für den aktuellen Kartenausschnitt liegen keine Ortsvorschläge vor.]]></item>

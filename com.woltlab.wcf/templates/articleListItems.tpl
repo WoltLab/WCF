@@ -1,64 +1,69 @@
-<ul class="articleList">
+<div class="contentItemList">
 	{foreach from=$objects item='article'}
-		<li>
-			<a href="{$article->getLink()}">
-				{if $article->getTeaserImage() && $article->getTeaserImage()->hasThumbnail('tiny')}
-					<div class="box128">
-						<div class="articleListImage">{@$article->getTeaserImage()->getThumbnailTag('tiny')}</div>
-				{/if}
-					
-					<div>
-						<div class="containerHeadline">
-							<h3 class="articleListTitle">{$article->getTitle()}</h3>
-							<ul class="inlineList articleListMetaData">
-								{if $article->hasLabels()}
-									<li>
-										<span class="icon icon16 fa-tags"></span>
-										<ul class="labelList">
-											{foreach from=$article->getLabels() item=label}
-												<li><span class="label badge{if $label->getClassNames()} {$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></li>
-											{/foreach}
-										</ul>
-									</li>
-								{/if}
-								
-								<li>
-									<span class="icon icon16 fa-clock-o"></span>
-									{@$article->time|time}
-								</li>
-								
-								{if $article->getDiscussionProvider()->getDiscussionCountPhrase()}
-									<li>
-										<span class="icon icon16 fa-comments"></span>
-										{$article->getDiscussionProvider()->getDiscussionCountPhrase()}
-									</li>
-								{/if}
-								
-								{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike')}
-									{if $article->likes || $article->dislikes || $article->neutralReactions}
-										<li class="reputationCounter {if $article->cumulativeLikes > 0}positive{elseif $article->cumulativeLikes < 0}negative{else}neutral{/if}">{if $article->cumulativeLikes > 0}+{elseif $article->cumulativeLikes == 0}±{/if}{#$article->cumulativeLikes}</li>
-									{/if}
-								{/if}
-								
-								{if ARTICLE_ENABLE_VISIT_TRACKING && $article->isNew()}<li><span class="badge label newMessageBadge">{lang}wcf.message.new{/lang}</span></li>{/if}
-
-								{if $article->isDeleted}<li><span class="badge label red">{lang}wcf.message.status.deleted{/lang}</span></li>{/if}
-								
-								{event name='articleListMetaData'}
-							</ul>
+		<article class="contentItem">
+			<a href="{$article->getLink()}" class="contentItemLink">
+				<div class="contentItemImage" style="background-image: url({if $article->getImage()}{$article->getImage()->getThumbnailLink('medium')}{else}https://thunderstrike/w/22/images/coverPhotos/default.jpg{/if})">
+					{hascontent}
+						<div class="contentItemBadges">
+							{content}
+								{if $article->isDeleted}<span class="badge label red contentItemBadge contentItemBadgeIsDeleted">{lang}wcf.message.status.deleted{/lang}</span>{/if}
+								{if ARTICLE_ENABLE_VISIT_TRACKING && $article->isNew()}<span class="badge label contentItemBadge contentItemBadgeNew">{lang}wcf.message.new{/lang}</span>{/if}
+							{/content}
 						</div>
-						
-						<div class="containerContent articleListTeaser">
-							{@$article->getFormattedTeaser()}
-						</div>
-					</div>
-						
-				{if $article->getTeaserImage() && $article->getTeaserImage()->hasThumbnail('tiny')}
-					</div>
-				{/if}
+					{/hascontent}
+				</div>
 				
-				{event name='articleListEntry'}
+				<div class="contentItemContent">
+					{if $article->hasLabels()}
+						<div class="contentItemLabels">
+							{foreach from=$article->getLabels() item=label}
+								<span class="label badge contentItemLabel{if $label->getClassNames()} {$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span>
+							{/foreach}
+						</div>
+					{/if}
+					
+					<h2 class="contentItemTitle">{$article->getTitle()}</h2>
+					
+					<div class="contentItemDescription">
+						{@$article->getFormattedTeaser()}
+					</div>
+				</div>
 			</a>
-		</li>
+			
+			<div class="contentItemMeta">
+				<a href="{$article->getUserProfile()->getLink()}" class="contentItemMetaImage" aria-hidden="true" tabindex="-1">
+					{@$article->getUserProfile()->getAvatar()->getImageTag(32)}
+				</a>
+				
+				<div class="contentItemMetaContent">
+					<div class="contentItemMetaAuthor">
+						{if $article->userID}
+							<a href="{$article->getUserProfile()->getLink()}">{$article->getUserProfile()->username}</a>
+						{else}
+							{$article->username}
+						{/if}
+					</div>
+					<div class="contentItemMetaTime">
+						{@$article->time|time}
+					</div>
+				</div>
+				
+				<div class="contentItemMetaIcons">
+					{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && ($article->likes || $article->dislikes || $article->neutralReactions)}
+						<div class="contentItemMetaIcon reputationCounter {if $article->cumulativeLikes > 0}positive{elseif $article->cumulativeLikes < 0}negative{else}neutral{/if}">
+							<span aria-label="{lang cumulativeLikes=$article->cumulativeLikes}wcf.like.reputation.label{/lang}">
+								{if $article->cumulativeLikes > 0}+{elseif $article->cumulativeLikes == 0}±{/if}{#$article->cumulativeLikes}
+							</span>
+						</div>
+					{/if}
+					<div class="contentItemMetaIcon">
+						<span class="icon icon16 fa-comments"></span>
+						<span aria-label="{$article->getDiscussionProvider()->getDiscussionCountPhrase()}">
+							{$article->getDiscussionProvider()->getDiscussionCount()}
+						</span>
+					</div>
+				</div>
+			</div>
+		</article>
 	{/foreach}
-</ul>
+</div>

@@ -3869,6 +3869,7 @@ Attachments:
 		<item name="wcf.like.reactionsGiven"><![CDATA[Reactions Given]]></item>
 		<item name="wcf.like.reactionReputation"><![CDATA[Reputation from Reactions]]></item>
 		<item name="wcf.like.reputation"><![CDATA[Reputation]]></item>
+		<item name="wcf.like.reputation.label"><![CDATA[Reputation: {if $cumulativeLikes > 0}+{elseif $cumulativeLikes == 0}±{/if}{#$cumulativeLikes}]]></item>
 	</category>
 	<category name="wcf.map">
 		<item name="wcf.map.noLocationSuggestions"><![CDATA[There are no location suggestions in the current map section.]]></item>
