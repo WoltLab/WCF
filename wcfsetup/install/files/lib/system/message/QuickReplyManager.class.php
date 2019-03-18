@@ -201,7 +201,7 @@ class QuickReplyManager extends SingletonFactory {
 		$parameters['data'][$tableIndexName] = $parameters['objectID'];
 		$parameters['data']['time'] = TIME_NOW;
 		
-		if (!isset($parameters['data']['userID'])) {
+		if (!array_key_exists('userID', $parameters['data'])) {
 			$parameters['data']['userID'] = WCF::getUser()->userID ?: null;
 		}
 		
