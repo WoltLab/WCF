@@ -2730,6 +2730,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[Select components included in the export for the style “{$style->styleName}”.]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Data]]></item>
 		<item name="wcf.acp.style.general.coverPhoto"><![CDATA[Cover Photo]]></item>
+		<item name="wcf.acp.style.general.coverPhoto.description"><![CDATA[Cover photos are used for illustrational purposes in user profiles, articles and other components.]]></item>
 		<item name="wcf.acp.style.general.favicon"><![CDATA[Favicon]]></item>
 		<item name="wcf.acp.style.general.files"><![CDATA[Files]]></item>
 		<item name="wcf.acp.style.globals"><![CDATA[Global Settings]]></item>
