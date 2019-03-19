@@ -217,6 +217,7 @@ class Style extends DatabaseObject {
 	 * Returns the cover photo filename.
 	 * 
 	 * @return      string
+	 * @since 3.1
 	 */
 	public function getCoverPhoto() {
 		if ($this->coverPhotoExtension) {
@@ -224,6 +225,22 @@ class Style extends DatabaseObject {
 		}
 		
 		return 'default.jpg';
+	}
+	
+	/**
+	 * @return string
+	 * @since 5.2
+	 */
+	public function getCoverPhotoLocation() {
+		return WCF_DIR . 'images/coverPhotos/' . $this->getCoverPhoto();
+	}
+	
+	/**
+	 * @return string
+	 * @since 5.2
+	 */
+	public function getCoverPhotoUrl() {
+		return WCF::getPath() . 'images/coverPhotos/' . $this->getCoverPhoto();
 	}
 	
 	/**

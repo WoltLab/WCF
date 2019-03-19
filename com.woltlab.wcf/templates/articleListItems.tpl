@@ -2,7 +2,7 @@
 	{foreach from=$objects item='article'}
 		<article class="contentItem">
 			<a href="{$article->getLink()}" class="contentItemLink">
-				<div class="contentItemImage" style="background-image: url({if $article->getImage()}{$article->getImage()->getThumbnailLink('medium')}{else}https://thunderstrike/w/22/images/coverPhotos/default.jpg{/if})">
+				<div class="contentItemImage" style="background-image: url({if $article->getImage()}{$article->getImage()->getThumbnailLink('medium')}{else}{$__wcf->getStyleHandler()->getStyle()->getCoverPhotoURL()}{/if})">
 					{hascontent}
 						<div class="contentItemBadges">
 							{content}
