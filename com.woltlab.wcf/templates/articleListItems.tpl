@@ -8,6 +8,8 @@
 							{content}
 								{if $article->isDeleted}<span class="badge label red contentItemBadge contentItemBadgeIsDeleted">{lang}wcf.message.status.deleted{/lang}</span>{/if}
 								{if ARTICLE_ENABLE_VISIT_TRACKING && $article->isNew()}<span class="badge label contentItemBadge contentItemBadgeNew">{lang}wcf.message.new{/lang}</span>{/if}
+								
+								{event name='contentItemBadges'}
 							{/content}
 						</div>
 					{/hascontent}
@@ -38,7 +40,7 @@
 				<div class="contentItemMetaContent">
 					<div class="contentItemMetaAuthor">
 						{if $article->userID}
-							<a href="{$article->getUserProfile()->getLink()}">{$article->getUserProfile()->username}</a>
+							<a href="{$article->getUserProfile()->getLink()}" class="userLink" data-user-id="{@$article->userID}">{$article->getUserProfile()->username}</a>
 						{else}
 							{$article->username}
 						{/if}

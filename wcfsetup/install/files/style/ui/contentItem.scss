@@ -14,6 +14,7 @@
 	flex-direction: column;
 	margin-bottom: 20px;
 	max-width: calc(50% - 10px); /* IE 11 */
+	position: relative;
 	overflow: hidden;
 }
 
@@ -50,22 +51,35 @@
 	position: relative;
 }
 
-.contentItemBadges {
+.contentItemBadges,
+.contentItemOptions {
 	align-items: flex-start;
 	display: flex;
 	flex-direction: column;
-	left: 10px;
 	position: absolute;
 	top: 10px;
 }
 
-.contentItemBadge {
-	border: 1px solid currentColor;
+.contentItemBadges {
+	left: 10px;
+}
+
+.contentItemOptions {
+	right: 10px;
+	z-index: 1;
+}
+
+.contentItemBadge,
+.contentItemOption {
 	flex: 0 auto;
 	
 	&:not(:first-child) {
 		margin-top: 5px;
 	}
+}
+
+.contentItemBadge {
+	border: 1px solid currentColor;
 }
 
 .contentItemLabels {
@@ -86,6 +100,10 @@
 .contentItemDescription {
 	color: $wcfContentText;
 	margin-top: 10px;
+}
+
+.contentItemContentLinks {
+	padding: 0 10px 10px 10px;
 }
 
 .contentItemMeta {
