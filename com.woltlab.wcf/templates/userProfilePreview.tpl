@@ -9,7 +9,7 @@
 		</a>
 		
 		<div class="userInformation">
-			{include file='userInformation'}
+			{include file='userInformation' disableDialogLinks=true}
 
 			{if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies') && ($user->isAccessible('canViewTrophies') || $user->userID == $__wcf->session->userID) && $user->getSpecialTrophies()|count}
 				<div class="specialTrophyUserContainer">
