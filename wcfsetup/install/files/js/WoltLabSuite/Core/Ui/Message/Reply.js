@@ -349,6 +349,11 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			if (!User.userId && data.returnValues.guestDialog) {
 				UiDialog.openStatic(data.returnValues.guestDialogID, data.returnValues.guestDialog, {
 					closable: false,
+					onClose: function() {
+						if (ControllerCaptcha.has(data.returnValues.guestDialogID)) {
+							ControllerCaptcha.delete(data.returnValues.guestDialogID)
+						}
+					},
 					title: Language.get('wcf.global.confirmation.title')
 				});
 				
