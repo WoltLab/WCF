@@ -1,3 +1,5 @@
+{if !$disableDialogLinks|isset}{assign var=disableDialogLinks value=false}{/if}
+
 {event name='statistics'}
 
 {if MODULE_LIKE && $user->likesReceived}
@@ -6,7 +8,7 @@
 {/if}
 
 {if $user->activityPoints}
-	<dt><a href="#" class="activityPointsDisplay jsTooltip" title="{lang}wcf.user.activityPoint.showActivityPoints{/lang}" data-user-id="{@$user->userID}">{lang}wcf.user.activityPoint{/lang}</a></dt>
+	<dt>{if $disableDialogLinks}<span>{lang}wcf.user.activityPoint{/lang}</span>{else}<a href="#" class="activityPointsDisplay jsTooltip" title="{lang}wcf.user.activityPoint.showActivityPoints{/lang}" data-user-id="{@$user->userID}">{lang}wcf.user.activityPoint{/lang}</a>{/if}</dt>
 	<dd>{#$user->activityPoints}</dd>
 {/if}
 
