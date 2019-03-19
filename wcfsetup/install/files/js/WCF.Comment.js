@@ -766,7 +766,7 @@ WCF.Comment.Handler = Class.extend({
 		this._guestDialog.wcfDialog({
 			onClose: function() {
 				if (useCaptcha) {
-					WCF.System.Captcha.removeCallback('commentAdd')
+					WCF.System.Captcha.removeCallback('commentAdd');
 				}
 			},
 			'title': WCF.Language.get('wcf.comment.guestDialog.title')
