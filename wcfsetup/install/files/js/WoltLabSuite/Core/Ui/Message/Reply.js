@@ -380,7 +380,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 					closable: false,
 					onClose: function() {
 						if (ControllerCaptcha.has(data.returnValues.guestDialogID)) {
-							ControllerCaptcha.delete(data.returnValues.guestDialogID)
+							ControllerCaptcha.delete(data.returnValues.guestDialogID);
 						}
 					},
 					title: Language.get('wcf.global.confirmation.title')
