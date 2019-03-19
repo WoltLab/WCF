@@ -1,3 +1,12 @@
+.articleTeaser {
+	@include wcfFontBold;
+}
+
+.articleTeaserContainer + .section,
+.articleImageContainer + .section {
+	margin-top: 20px !important;
+}
+
 .articleImage {
 	/* work-around for IE 11 to properly align the image if overflowing */
 	display: flex;
@@ -5,9 +14,12 @@
 	
 	.articleImageWrapper {
 		align-items: center;
+		border-radius: 3px;
+		box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
 		display: flex;
 		max-height: 300px;
 		overflow: hidden;
+		width: 100%;
 		
 		img {
 			height: auto !important;
@@ -26,12 +38,6 @@
 }
 
 .articleContent {
-	.articleTeaser {
-		@include wcfFontBold;
-		
-		margin-bottom: 20px;
-	}
-	
 	.articleTagList {
 		margin-top: 20px;
 	}
