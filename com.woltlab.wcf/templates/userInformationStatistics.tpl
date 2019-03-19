@@ -13,6 +13,6 @@
 {/if}
 
 {if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies') && $user->trophyPoints && ($user->isAccessible('canViewTrophies') || $user->userID == $__wcf->session->userID)}
-	<dt><a href="#" class="trophyPoints jsTooltip userTrophyOverlayList" data-user-id="{$user->userID}" title="{lang}wcf.user.trophy.showTrophies{/lang}">{lang}wcf.user.trophy.trophyPoints{/lang}</a></dt>
+	<dt>{if $disableDialogLinks}<span>{lang}wcf.user.trophy.trophyPoints{/lang}</span>{else}<a href="#" class="trophyPoints jsTooltip userTrophyOverlayList" data-user-id="{$user->userID}" title="{lang}wcf.user.trophy.showTrophies{/lang}">{lang}wcf.user.trophy.trophyPoints{/lang}</a>{/if}</dt>
 	<dd>{#$user->trophyPoints}</dd>
 {/if}
