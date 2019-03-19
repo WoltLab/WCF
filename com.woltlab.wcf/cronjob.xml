@@ -133,7 +133,7 @@
 			<classname>wcf\system\cronjob\UserGroupAssignmentCronjob</classname>
 			<description>Automatically assigns users to user groups</description>
 			<description language="de">Ordnet Benutzer automatisch Benutzergruppen zu</description>
-			<startminute>*/30</startminute>
+			<startminute>*/10</startminute>
 			<starthour>*</starthour>
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
