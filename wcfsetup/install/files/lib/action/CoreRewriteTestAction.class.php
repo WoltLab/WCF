@@ -21,7 +21,7 @@ class CoreRewriteTestAction extends AbstractAction {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (!isset($_GET['uuidHash']) || \hash_equals(hash('sha256', WCF_UUID), $_GET['uuidHash'])) {
+		if (!isset($_GET['uuidHash']) || !\hash_equals(hash('sha256', WCF_UUID), $_GET['uuidHash'])) {
 			throw new IllegalLinkException();
 		}
 	}
