@@ -2548,7 +2548,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.reactionType.type.neutral"><![CDATA[Neutral]]></item>
 		<item name="wcf.acp.reactionType.isDisabled"><![CDATA[Reaktion deaktivieren]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaktions-Datei]]></item>
-		<item name="wcf.acp.reactionType.image.description"><![CDATA[Der Pfad wird relativ zu „{$__wcf->getPath()}images/reaction/“ interpretiert.]]></item>
 	</category>
 	<category name="wcf.acp.rebuildData">
 		<item name="wcf.acp.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>

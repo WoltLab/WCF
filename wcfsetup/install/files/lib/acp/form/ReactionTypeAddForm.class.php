@@ -81,7 +81,6 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm {
 			->appendChildren([
 				UploadFormField::create('iconFile')
 					->label('wcf.acp.reactionType.image')
-					->description('wcf.acp.reactionType.image.description')
 					->required()
 					->maximum(1)
 					->imageOnly(true)
