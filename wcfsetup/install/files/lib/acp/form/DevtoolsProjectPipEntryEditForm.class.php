@@ -104,6 +104,8 @@ class DevtoolsProjectPipEntryEditForm extends DevtoolsProjectPipEntryAddForm {
 	 */
 	public function saved() {
 		AbstractForm::saved();
+		
+		$this->form->showSuccessMessage(true);
 	}
 	
 	/**
