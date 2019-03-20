@@ -69,7 +69,7 @@ class NotificationDisableAction extends AbstractAction {
 		}
 		
 		if (isset($_REQUEST['token'])) $this->token = StringUtil::trim($_REQUEST['token']);
-		if (empty($this->token) || \hash_equals($this->user->notificationMailToken, $this->token)) {
+		if (empty($this->token) || !\hash_equals($this->user->notificationMailToken, $this->token)) {
 			throw new IllegalLinkException();
 		}
 	}

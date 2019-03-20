@@ -68,7 +68,7 @@ class NewPasswordForm extends AbstractForm {
 			if (!$this->user->userID) throw new IllegalLinkException();
 			
 			if (!$this->user->lostPasswordKey) throw new IllegalLinkException();
-			if (\hash_equals($this->user->lostPasswordKey, $this->lostPasswordKey)) {
+			if (!\hash_equals($this->user->lostPasswordKey, $this->lostPasswordKey)) {
 				throw new IllegalLinkException();
 			}
 			// expire lost password requests after a day
