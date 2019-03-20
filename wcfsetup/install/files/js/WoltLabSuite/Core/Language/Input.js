@@ -97,8 +97,15 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 				//noinspection JSCheckFunctionSignatures
 				elData(container, 'input-id', elementId);
 				
+				var hasFocus = document.activeElement === element;
+				
+				// DOM manipulation causes focused element to lose focus
 				element.parentNode.insertBefore(container, element);
 				container.appendChild(element);
+				
+				if (hasFocus) {
+					element.focus();
+				}
 			}
 			
 			container.classList.add('dropdown');
