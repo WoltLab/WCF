@@ -57,15 +57,16 @@
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
+	padding: 10px;
 	position: relative;
 }
 
 .contentItemImageSmall {
-	height: 75px;
+	min-height: 75px;
 }
 
 .contentItemImageLarge {
-	height: 150px;
+	min-height: 150px;
 }
 
 .contentItemBadges,
@@ -73,16 +74,12 @@
 	align-items: flex-start;
 	display: flex;
 	flex-direction: column;
-	position: absolute;
-	top: 10px;
-}
-
-.contentItemBadges {
-	left: 10px;
 }
 
 .contentItemOptions {
+	position: absolute;
 	right: 10px;
+	top: 10px;
 	z-index: 1;
 }
 
