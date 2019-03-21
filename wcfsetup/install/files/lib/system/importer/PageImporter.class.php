@@ -49,6 +49,9 @@ class PageImporter extends AbstractImporter {
 		if (count($contents) > 1) {
 			$data['isMultilingual'] = 1;
 		}
+		if (empty($data['packageID'])) {
+			$data['packageID'] = 1;
+		}
 		
 		// check old id
 		if (is_numeric($oldID)) {
