@@ -10,12 +10,19 @@
 	border-radius: 3px;
 	box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
 	display: flex;
-	flex: 0 0 calc(50% - 10px);
 	flex-direction: column;
 	margin-bottom: 20px;
-	max-width: calc(50% - 10px); /* IE 11 */
 	position: relative;
 	overflow: hidden;
+}
+
+.contentItemSingleColumn {
+	flex: 0 0 100%;
+}
+
+.contentItemMultiColumn {
+	flex: 0 0 calc(50% - 10px);
+	max-width: calc(50% - 10px); /* IE 11 */
 }
 
 .contentItemLink {
@@ -23,9 +30,12 @@
 }
 
 .contentItemContent {
+	padding: 10px;
+}
+
+.contentItemContentTruncate {
 	max-height: 150px;
 	overflow: hidden;
-	padding: 10px;
 	position: relative;
 	
 	&::after {
@@ -47,8 +57,15 @@
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	height: 150px;
 	position: relative;
+}
+
+.contentItemImageSmall {
+	height: 75px;
+}
+
+.contentItemImageLarge {
+	height: 150px;
 }
 
 .contentItemBadges,
@@ -82,8 +99,19 @@
 	border: 1px solid currentColor;
 }
 
+.contentItemOption.button {
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
 .contentItemLabels {
 	margin-bottom: 5px;
+}
+
+.contentItemCategory {
+	color: $wcfContentDimmedText;
+	text-transform: uppercase;
+	
+	@include wcfFontSmall;
 }
 
 .contentItemTitle {
