@@ -34,25 +34,27 @@ class MediaImporter extends AbstractImporter {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		
 		$contents = [];
-		foreach ($additionalData['contents'] as $languageCode => $contentData) {
-			$languageID = 0;
-			if (!$languageCode) {
-				if (($language = LanguageFactory::getInstance()->getLanguageByCode($languageCode)) !== null) {
-					$languageID = $language->languageID;
+		if (!empty($additionalData['contents'])) {
+			foreach ($additionalData['contents'] as $languageCode => $contentData) {
+				$languageID = 0;
+				if (!$languageCode) {
+					if (($language = LanguageFactory::getInstance()->getLanguageByCode($languageCode)) !== null) {
+						$languageID = $language->languageID;
+					}
+					else {
+						continue;
+					}
 				}
-				else {
-					continue;
-				}
+				
+				$contents[$languageID] = [
+					'title' => (!empty($contentData['title']) ? $contentData['title'] : ''),
+					'caption' => (!empty($contentData['caption']) ? $contentData['caption'] : ''),
+					'altText' => (!empty($contentData['altText']) ? $contentData['altText'] : '')
+				];
 			}
-			
-			$contents[$languageID] = [
-				'title' => (!empty($contentData['title']) ? $contentData['title'] : ''),
-				'caption' => (!empty($contentData['caption']) ? $contentData['caption'] : ''),
-				'altText' => (!empty($contentData['altText']) ? $contentData['altText'] : '')
-			];
-		}
-		if (count($contents) > 1) {
-			$data['isMultilingual'] = 1;
+			if (count($contents) > 1) {
+				$data['isMultilingual'] = 1;
+			}
 		}
 		
 		// handle language
