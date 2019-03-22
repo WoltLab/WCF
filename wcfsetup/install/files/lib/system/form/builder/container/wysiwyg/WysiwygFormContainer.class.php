@@ -73,6 +73,12 @@ class WysiwygFormContainer extends FormContainer {
 	protected $pollContainer;
 	
 	/**
+	 * quote-related data used to create the JavaScript quote manager
+	 * @var	null|array
+	 */
+	protected $quoteData;
+	
+	/**
 	 * settings form container
 	 * @var	FormContainer
 	 */
@@ -91,10 +97,16 @@ class WysiwygFormContainer extends FormContainer {
 	protected $smiliesContainer;
 	
 	/**
-	 * is `true` if the wysiwyg form field should support mentions, otherwise `false`
+	 * is `true` if the wysiwyg form field will support mentions, otherwise `false`
 	 * @var	boolean
 	 */
 	protected $supportMentions = false;
+	
+	/**
+	 * is `true` if quotes are supported for this container, otherwise `false`
+	 * @var	boolean
+	 */
+	protected $supportQuotes = false;
 	
 	/**
 	 * is `true` if smilies are supported for this container, otherwise `false`
@@ -359,7 +371,15 @@ class WysiwygFormContainer extends FormContainer {
 		$this->wysiwygField = WysiwygFormField::create($this->wysiwygId)
 			->objectType($this->messageObjectType)
 			->supportAttachments($this->attachmentData !== null)
-			->supportMentions($this->supportMentions);
+			->supportMentions($this->supportMentions)
+			->supportQuotes($this->supportQuotes);
+		if ($this->quoteData !== null) {
+			$this->wysiwygField->quoteData(
+				$this->quoteData['objectType'],
+				$this->quoteData['actionClass'],
+				$this->quoteData['selectors']
+			);
+		}
 		$this->smiliesContainer = WysiwygSmileyFormContainer::create($this->wysiwygId . 'SmiliesTab')
 			->wysiwygId($this->getWysiwygId())
 			->label('wcf.message.smilies')
@@ -439,20 +459,68 @@ class WysiwygFormContainer extends FormContainer {
 	}
 	
 	/**
+	 * Sets the data required for advanced quote support for when quotable content is present
+	 * on the active page and returns this container.
+	 * 
+	 * Calling this method automatically enables quote support for this container.
+	 * 
+	 * @param	string		$objectType	name of the relevant `com.woltlab.wcf.message.quote` object type
+	 * @param	string		$actionClass	action class implementing `wcf\data\IMessageQuoteAction`
+	 * @param	string[]	$selectors	selectors for the quotable content (required keys: `container`, `messageBody`, and `messageContent`)
+	 * @return	static
+	 */
+	public function quoteData($objectType, $actionClass, array $selectors = []) {
+		if ($this->wysiwygField !== null) {
+			$this->wysiwygField->quoteData($objectType, $actionClass, $selectors);
+		}
+		else {
+			$this->supportQuotes();
+			
+			// the parameters are validated by `WysiwygFormField`
+			$this->quoteData = [
+				'actionClass' => $actionClass,
+				'objectType' => $objectType,
+				'selectors' => $selectors
+			];
+		}
+		
+		return $this;
+	}
+	
+	/**
 	 * Sets if mentions are supported by the editor field and returns this form container.
 	 * 
 	 * By default, mentions are not supported.
 	 * 
 	 * @param	boolean		$supportMention
 	 * @return	WysiwygFormContainer		this form container
-	 * @throws	\BadMethodCallException		if the wysiwyg form field has already been initialized
 	 */
 	public function supportMentions($supportMentions = true) {
 		if ($this->wysiwygField !== null) {
-			throw new \BadMethodCallException("The wysiwyg form field has already been initialized. Use the wysiwyg form field directly to manipulate mention support.");
+			$this->wysiwygField->supportMentions($supportMentions);
+		}
+		else {
+			$this->supportMentions = $supportMentions;
 		}
 		
-		$this->supportMentions = $supportMentions;
+		return $this;
+	}
+	
+	/**
+	 * Sets if quotes are supported by the editor field and returns this form container.
+	 * 
+	 * By default, quotes are supported.
+	 * 
+	 * @param	boolean		$supportMention
+	 * @return	WysiwygFormContainer		this form container
+	 */
+	public function supportQuotes($supportQuotes = true) {
+		if ($this->wysiwygField !== null) {
+			$this->wysiwygField->supportQuotes($supportQuotes);
+		}
+		else {
+			$this->supportQuotes = $supportQuotes;
+		}
 		
 		return $this;
 	}
@@ -464,14 +532,14 @@ class WysiwygFormContainer extends FormContainer {
 	 * 
 	 * @param	boolean		$supportSmilies
 	 * @return	WysiwygFormContainer		this form container
-	 * @throws	\BadMethodCallException		if the poll container has already been initialized
 	 */
 	public function supportSmilies($supportSmilies = true) {
 		if ($this->smiliesContainer !== null) {
-			throw new \BadMethodCallException("The smilies form container has already been initialized. Use the smilies container directly to manipulate smiley support.");
+			$this->smiliesContainer->available($supportSmilies);
 		}
-		
-		$this->supportSmilies = $supportSmilies;
+		else {
+			$this->supportSmilies = $supportSmilies;
+		}
 		
 		return $this;
 	}

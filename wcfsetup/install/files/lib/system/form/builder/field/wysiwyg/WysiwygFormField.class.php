@@ -1,5 +1,7 @@
 <?php
 namespace wcf\system\form\builder\field\wysiwyg;
+use wcf\data\IMessageQuoteAction;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\IMaximumLengthFormField;
@@ -11,6 +13,7 @@ use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IObjectTypeFormNode;
 use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\message\quote\MessageQuoteManager;
 use wcf\util\StringUtil;
 
 /**
@@ -46,16 +49,28 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	protected $lastEditTime = 0;
 	
 	/**
-	 * is `true` if this form field should support attachments, otherwise `false`
+	 * quote-related data used to create the JavaScript quote manager
+	 * @var	null|array
+	 */
+	protected $quoteData;
+	
+	/**
+	 * is `true` if this form field supports attachments, otherwise `false`
 	 * @var	boolean 
 	 */
 	protected $supportAttachments = false;
 	
 	/**
-	 * is `true` if this form field should support mentions, otherwise `false`
+	 * is `true` if this form field supports mentions, otherwise `false`
 	 * @var	boolean
 	 */
 	protected $supportMentions = false;
+	
+	/**
+	 * is `true` if this form field supports quotes, otherwise `false`
+	 * @var	boolean
+	 */
+	protected $supportQuotes = false;
 	
 	/**
 	 * @inheritDoc
@@ -75,6 +90,13 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	}
 	
 	/**
+	 * @inheritDoc
+	 */
+	public function cleanup() {
+		MessageQuoteManager::getInstance()->saved();
+	}
+	
+	/**
 	 * Returns the identifier used to autosave the field value. If autosave is disabled,
 	 * an empty string is returned.
 	 * 
@@ -82,6 +104,17 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 */
 	public function getAutosaveId() {
 		return $this->autosaveId;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getHtml() {
+		if ($this->supportsQuotes()) {
+			MessageQuoteManager::getInstance()->assignVariables();
+		}
+		
+		return parent::getHtml();
 	}
 	
 	/**
@@ -99,6 +132,31 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 */
 	public function getLastEditTime() {
 		return $this->lastEditTime;
+	}
+	
+	/**
+	 * Returns all quote data or specific quote data if an argument is given.
+	 * 
+	 * @param	null|string	$index		quote data index
+	 * @return	string[]|string
+	 * 
+	 * @throws	\BadMethodCallException		if quotes are not supported for this field
+	 * @throws	\InvalidArgumentException	if unknown quote data is requested
+	 */
+	public function getQuoteData($index = null) {
+		if (!$this->supportQuotes()) {
+			throw new \BadMethodCallException("Quotes are not supported.");
+		}
+		
+		if ($index === null) {
+			return $this->quoteData;
+		}
+		
+		if (!isset($this->quoteData[$index])) {
+			throw new \InvalidArgumentException("Unknown quote data '{$index}'.");
+		}
+		
+		return $this->quoteData[$index];
 	}
 	
 	/**
@@ -136,6 +194,50 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 		
 		return $this;
 	}
+
+	/**
+	 * Sets the data required for advanced quote support for when quotable content is present
+	 * on the active page and returns this field.
+	 * 
+	 * Calling this method automatically enables quote support for this field.
+	 * 
+	 * @param	string		$objectType	name of the relevant `com.woltlab.wcf.message.quote` object type
+	 * @param	string		$actionClass	action class implementing `wcf\data\IMessageQuoteAction`
+	 * @param	string[]	$selectors	selectors for the quotable content (required keys: `container`, `messageBody`, and `messageContent`)
+	 * @return	static
+	 * 
+	 * @throws	\InvalidArgumentException	if any of the given arguments is invalid
+	 */
+	public function quoteData($objectType, $actionClass, array $selectors = []) {
+		if (ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.message.quote', $objectType) === null) {
+			throw new \InvalidArgumentException("Unknown message quote object type '{$objectType}'.");
+		}
+		
+		if (!class_exists($actionClass)) {
+			throw new \InvalidArgumentException("Unknown class '{$actionClass}'");
+		}
+		if (!is_subclass_of($actionClass, IMessageQuoteAction::class)) {
+			throw new \InvalidArgumentException("'{$actionClass}' does not implement '" . IMessageQuoteAction::class . "'.");
+		}
+		
+		if (!empty($selectors)) {
+			foreach (['container', 'messageBody', 'messageContent'] as $selector) {
+				if (!isset($selectors[$selector])) {
+					throw new \InvalidArgumentException("Missing selector '{$selector}'.");
+				}
+			}
+		}
+		
+		$this->supportQuotes();
+		
+		$this->quoteData = [
+			'actionClass' => $actionClass,
+			'objectType' => $objectType,
+			'selectors' => $selectors
+		];
+		
+		return $this;
+	}
 	
 	/**
 	 * @inheritDoc
@@ -147,6 +249,10 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 			if (is_string($value)) {
 				$this->value = StringUtil::trim($value);
 			}
+		}
+		
+		if ($this->supportsQuotes()) {
+			MessageQuoteManager::getInstance()->readFormParameters();
 		}
 		
 		return $this;
@@ -177,6 +283,26 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	}
 	
 	/**
+	 * Sets if the form field supports quotes and returns this field.
+	 * 
+	 * @param	boolean		$supportQuotes
+	 * @return	WysiwygFormField		this field
+	 */
+	public function supportQuotes($supportQuotes = true) {
+		$this->supportQuotes = $supportQuotes;
+		
+		if (!$this->supportsQuotes()) {
+			// unset previously set quote data
+			$this->quoteData = null;
+		}
+		else {
+			MessageQuoteManager::getInstance()->readParameters();
+		}
+		
+		return $this;
+	}
+	
+	/**
 	 * Returns `true` if the form field supports attachments and returns `false` otherwise.
 	 * 
 	 * Important: If this method returns `true`, it does not necessarily mean that attachment
@@ -201,6 +327,17 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 */
 	public function supportsMentions() {
 		return $this->supportMentions;
+	}
+	
+	/**
+	 * Returns `true` if the form field supports quotes and returns `false` otherwise.
+	 * 
+	 * By default, quotes are supported.
+	 * 
+	 * @return	boolean
+	 */
+	public function supportsQuotes() {
+		return $this->supportQuotes !== null;
 	}
 	
 	/**

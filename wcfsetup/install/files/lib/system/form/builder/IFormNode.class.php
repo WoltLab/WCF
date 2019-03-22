@@ -71,7 +71,7 @@ interface IFormNode {
 	public function available($available = true);
 	
 	/**
-	 * Cleans up after the whole form is not used anymore.
+	 * Cleans up after the form data has been saved and the form is not used anymore.
 	 * This method has to support being called multiple times.
 	 * 
 	 * This form should not clean up input fields. 
