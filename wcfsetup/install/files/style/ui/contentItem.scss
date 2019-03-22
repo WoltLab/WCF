@@ -1,8 +1,7 @@
 .contentItemList {
 	display: flex;
 	flex-wrap: wrap;
-	margin-bottom: -20px;
-	justify-content: space-between;
+	margin: 0 0 -20px -20px;
 }
 
 .contentItem {
@@ -11,7 +10,7 @@
 	box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
 	display: flex;
 	flex-direction: column;
-	margin-bottom: 20px;
+	margin: 0 0 20px 20px;
 	position: relative;
 	overflow: hidden;
 }
@@ -21,8 +20,8 @@
 }
 
 .contentItemMultiColumn {
-	flex: 0 0 calc(50% - 10px);
-	max-width: calc(50% - 10px); /* IE 11 */
+	flex: 0 0 calc(50% - 20px);
+	max-width: calc(50% - 20px); /* IE 11 */
 }
 
 .contentItemLink {
@@ -180,18 +179,18 @@
 @include screen-lg {
 	/* There are no sidebars, use a three column layout. */
 	.content:first-child:last-child {
-		.contentItem {
-			flex: 0 0 calc(100% / 3 - 15px);
-			max-width: calc(100% / 3 - 15px); /* IE 11 */
+		.contentItemMultiColumn {
+			flex: 0 0 calc(100% / 3 - 20px);
+			max-width: calc(100% / 3 - 20px); /* IE 11 */
 		}
 	}
 }
 
 @include screen-md {
 	/* The sidebar, if any, is not adjacent to the content, use a three column layout. */
-	.contentItem {
-		flex: 0 0 calc(100% / 3 - 15px);
-		max-width: calc(100% / 3 - 15px); /* IE 11 */
+	.contentItemMultiColumn {
+		flex: 0 0 calc(100% / 3 - 20px);
+		max-width: calc(100% / 3 - 20px); /* IE 11 */
 	}
 }
 
@@ -201,7 +200,7 @@
 		display: block;
 	}
 	
-	.contentItem {
+	.contentItemMultiColumn {
 		max-width: none;
 	}
 }
