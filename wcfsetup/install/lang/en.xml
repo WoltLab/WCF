@@ -5099,8 +5099,6 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.option.skype"><![CDATA[Skype]]></item>
 		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.option.twitter"><![CDATA[Twitter]]></item>
-		<item name="wcf.user.option.googlePlus"><![CDATA[Google+]]></item>
-		<item name="wcf.user.option.googlePlus.description"><![CDATA[Enter the 21 digit Google Plus user ID, Google Plus username (+Username), or the URL of your Google Plus profile.]]></item>
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Can Write Comments on My Wall]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting"><![CDATA[Preserve text formatting when pasting into the editor]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting.description"><![CDATA[Disabling this option will force any content to be pasted from clipboard as plain text, stripping all formatting.]]></item>

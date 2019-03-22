@@ -5100,8 +5100,6 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.option.skype"><![CDATA[Skype]]></item>
 		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.option.twitter"><![CDATA[Twitter]]></item>
-		<item name="wcf.user.option.googlePlus"><![CDATA[Google+]]></item>
-		<item name="wcf.user.option.googlePlus.description"><![CDATA[21-stellige Google-Plus-ID, Google-Plus Benutzername (+Benutzername) oder URL zum Google-Plus-Profil]]></item>
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Kann Pinnwand-Kommentare schreiben]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting"><![CDATA[Text-Formatierung beim Einfügen in den Editor übernehmen]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting.description"><![CDATA[Die Deaktivierung dieser Option erzwingt das Einfügen aus der Zwischenablage in reiner Textform, Formatierungen werden dabei entfernt.]]></item>
