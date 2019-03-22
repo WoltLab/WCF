@@ -112,7 +112,7 @@ class WysiwygFormContainer extends FormContainer {
 	 * is `true` if smilies are supported for this container, otherwise `false`
 	 * @var	boolean
 	 */
-	protected $supportSmilies = false;
+	protected $supportSmilies = true;
 	
 	/**
 	 * actual wysiwyg form field
@@ -509,7 +509,7 @@ class WysiwygFormContainer extends FormContainer {
 	/**
 	 * Sets if quotes are supported by the editor field and returns this form container.
 	 * 
-	 * By default, quotes are supported.
+	 * By default, quotes are not supported.
 	 * 
 	 * @param	boolean		$supportMention
 	 * @return	WysiwygFormContainer		this form container
@@ -528,7 +528,7 @@ class WysiwygFormContainer extends FormContainer {
 	/**
 	 * Sets if smilies are supported for this form container and returns this form container.
 	 * 
-	 * By default, smilies are not supported.
+	 * By default, smilies are supported.
 	 * 
 	 * @param	boolean		$supportSmilies
 	 * @return	WysiwygFormContainer		this form container

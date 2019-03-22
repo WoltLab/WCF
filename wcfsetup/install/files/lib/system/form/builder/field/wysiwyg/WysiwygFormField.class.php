@@ -332,7 +332,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	/**
 	 * Returns `true` if the form field supports quotes and returns `false` otherwise.
 	 * 
-	 * By default, quotes are supported.
+	 * By default, quotes are not supported.
 	 * 
 	 * @return	boolean
 	 */
