@@ -19,9 +19,8 @@
 {if $field->supportsQuotes()}
 	{js application='wcf' file='WCF.Message' bundle='WCF.Combined'}
 	<script data-relocate="true">
-		{* use empty require to ensure that the `Bootstrap` module is loaded and 
-			`window.__wcf_bc_eventHandler` is available *}
-		require([], function() {
+		// Bootstrap for window.__wcf_bc_eventHandler
+		require(['WoltLabSuite/Core/Bootstrap'], function(Bootstrap) {
 			{include file='__messageQuoteManager' wysiwygSelector=$field->getPrefixedId() supportPaste=true}
 			
 			{if $field->getQuoteData() !== null}
