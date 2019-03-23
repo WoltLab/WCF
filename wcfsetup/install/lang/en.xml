@@ -3815,6 +3815,23 @@ Attachments:
 		<item name="wcf.form.fieldValidator.dotSeparatedString.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<kbd>{$segment}</kbd>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
 		<item name="wcf.form.field.url.error.invalid"><![CDATA[The entered link is invalid.]]></item>
 	</category>
+	<category name="wcf.image">
+		<item name="wcf.image.coverPhoto"><![CDATA[Cover Photo]]></item>
+		<item name="wcf.image.coverPhoto.delete"><![CDATA[Delete Cover Photo]]></item>
+		<item name="wcf.image.coverPhoto.delete.confirmMessage"><![CDATA[Do you really want to delete this cover photo? This will replace the current photo with the default image.]]></item>
+		<item name="wcf.image.coverPhoto.edit"><![CDATA[Edit Cover Photo]]></item>
+		<item name="wcf.image.coverPhoto.upload"><![CDATA[Upload Cover Photo]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.badImage"><![CDATA[The uploaded file is not an image.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.fileExtension"><![CDATA[The file has an invalid extension.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.maxHeight"><![CDATA[The image is too tall.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.maxSize"><![CDATA[The file is too big.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.maxWidth"><![CDATA[The image is too wide.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.minHeight"><![CDATA[The image is too small.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.minWidth"><![CDATA[The image is too small.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
+		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png<br>Maximum Filesize: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
+	</category>
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Full Screen Mode]]></item>
 		<item name="wcf.imageViewer.button.full"><![CDATA[View Source Image]]></item>

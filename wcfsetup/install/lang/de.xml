@@ -3869,6 +3869,23 @@ Dateianhänge:
 		<item name="wcf.form.field.className.description.parentClass"><![CDATA[Die angegebene Klasse (ohne führenden Backslash) muss von der Klasse <kbd>{$parentClass}</kbd> erben.]]></item>
 		<item name="wcf.form.fieldValidator.dotSeparatedString.error.invalidSegments"><![CDATA[Die folgenden Abschnitte sind ungültig: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<kbd>{$segment}</kbd>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
 	</category>
+	<category name="wcf.image">
+		<item name="wcf.image.coverPhoto"><![CDATA[Titelbild]]></item>
+		<item name="wcf.image.coverPhoto.delete"><![CDATA[Titelbild löschen]]></item>
+		<item name="wcf.image.coverPhoto.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Titelbild wirklich löschen? Nach dem Löschen wird wieder das Standard-Bild angezeigt.]]></item>
+		<item name="wcf.image.coverPhoto.edit"><![CDATA[Titelbild bearbeiten]]></item>
+		<item name="wcf.image.coverPhoto.upload"><![CDATA[Titelbild hochladen]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.badImage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} kein gültiges Bild hochgeladen.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.fileExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.maxHeight"><![CDATA[Das Bild ist zu hoch.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.maxSize"><![CDATA[Die Datei ist zu groß.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.maxWidth"><![CDATA[Das Bild ist zu breit.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.minHeight"><![CDATA[Das Bild ist zu niedrig.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.minWidth"><![CDATA[Das Bild ist zu schmal.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
+		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimale Bildgröße: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} Pixel<br>Maximale Bildgröße: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} Pixel<br>Erlaubte Dateiendungen: gif, jpg, jpeg, png<br>Maximale Dateigröße: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
+	</category>
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Vollbild-Modus]]></item>
 		<item name="wcf.imageViewer.button.full"><![CDATA[Originalversion aufrufen]]></item>
