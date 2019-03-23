@@ -1,5 +1,7 @@
 <?php
 namespace wcf\util;
+use wcf\system\exception\SystemException;
+use wcf\system\image\ImageHandler;
 
 /**
  * Contains image-related functions.
@@ -93,6 +95,82 @@ final class ImageUtil {
 			default:
 				return '';
 		}
+	}
+	
+	/**
+	 * Enforces dimensions for given image.
+	 *
+	 * @param	string		$filename
+	 * @param       integer         $maxWidth
+	 * @param       integer         $maxHeight
+	 * @param	boolean		$obtainDimensions
+	 * @return	string          new filename if file was changed, otherwise old filename
+	 * @since       5.2
+	 */
+	public static function enforceDimensions($filename, $maxWidth, $maxHeight, $obtainDimensions = true) {
+		$imageData = getimagesize($filename);
+		if ($imageData[0] > $maxWidth || $imageData[1] > $maxHeight) {
+			$adapter = ImageHandler::getInstance()->getAdapter();
+			$adapter->loadFile($filename);
+			$filename = FileUtil::getTemporaryFilename();
+			$thumbnail = $adapter->createThumbnail($maxWidth, $maxHeight, $obtainDimensions);
+			$adapter->writeImage($thumbnail, $filename);
+		}
+		
+		return $filename;
+	}
+	
+	/**
+	 * Rotates the given image based on the orientation stored in the exif data.
+	 *
+	 * @param	string		$filename
+	 * @return	string          new filename if file was changed, otherwise old filename
+	 * @since       5.2
+	 */
+	public static function fixOrientation($filename) {
+		try {
+			$exifData = ExifUtil::getExifData($filename);
+			if (!empty($exifData)) {
+				$orientation = ExifUtil::getOrientation($exifData);
+				if ($orientation != ExifUtil::ORIENTATION_ORIGINAL) {
+					$adapter = ImageHandler::getInstance()->getAdapter();
+					$adapter->loadFile($filename);
+					
+					$newImage = null;
+					switch ($orientation) {
+						case ExifUtil::ORIENTATION_180_ROTATE:
+							$newImage = $adapter->rotate(180);
+							break;
+						
+						case ExifUtil::ORIENTATION_90_ROTATE:
+							$newImage = $adapter->rotate(90);
+							break;
+						
+						case ExifUtil::ORIENTATION_270_ROTATE:
+							$newImage = $adapter->rotate(270);
+							break;
+						
+						case ExifUtil::ORIENTATION_HORIZONTAL_FLIP:
+						case ExifUtil::ORIENTATION_VERTICAL_FLIP:
+						case ExifUtil::ORIENTATION_VERTICAL_FLIP_270_ROTATE:
+						case ExifUtil::ORIENTATION_HORIZONTAL_FLIP_270_ROTATE:
+							// unsupported
+							break;
+					}
+					
+					if ($newImage !== null) {
+						$adapter->load($newImage, $adapter->getType());
+					}
+					
+					$newFilename = FileUtil::getTemporaryFilename();
+					$adapter->writeImage($newFilename);
+					$filename = $newFilename;
+				}
+			}
+		}
+		catch (SystemException $e) {}
+		
+		return $filename;
 	}
 	
 	/**
