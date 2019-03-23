@@ -3811,7 +3811,7 @@ Attachments:
 		<item name="wcf.form.field.showOrder.firstPosition"><![CDATA[(first position)]]></item>
 		<item name="wcf.form.field.text.error.maximumLength"><![CDATA[The entered text{if $language|isset} for language “{$language}”{/if} contains {#$length} characters but it may not be longer than {#$maximumLength} characters.]]></item>
 		<item name="wcf.form.field.text.error.minimumLength"><![CDATA[The entered text{if $language|isset} for language “{$language}”{/if} only contains {#$length} characters but it may not be shorter than {#$minimumLength} characters.]]></item>
-		<item name="wcf.form.field.user.error.maxmimumMultiples"><![CDATA[You may not enter more than {#$maximumCount} users but {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
+		<item name="wcf.form.field.user.error.maximumMultiples"><![CDATA[You may not enter more than {#$maximumCount} users but {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
 		<item name="wcf.form.field.user.error.minimumMultiples"><![CDATA[You have to entered at least {#$minimumCount} users but only {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
 		<item name="wcf.form.field.user.error.nonExistent"><![CDATA[{if $nonExistentUsernames|isset}The following users do not exist: {implode from=$nonExistentUsernames item=nonExistentUsername}“{$nonExistentUsername}”{/implode}.{else}The entered user does not exists.{/if}]]></item>
 		<item name="wcf.form.field.userGroupOption"><![CDATA[Permissions]]></item>
