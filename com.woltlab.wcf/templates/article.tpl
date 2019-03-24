@@ -140,6 +140,10 @@
 	
 	<div class="section articleContent" {@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.likeableArticle', $article->articleID)}>
 		<div class="htmlContent">
+			{if MODULE_WCF_AD}
+				{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.inArticle')}
+			{/if}
+			
 			{@$articleContent->getFormattedContent()}
 			
 			{event name='htmlArticleContent'}

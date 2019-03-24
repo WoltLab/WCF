@@ -1,6 +1,8 @@
+{if !$disableAds|isset}{assign var='disableAds' value=false}{/if}
+
 <div class="contentItemList">
 	{foreach from=$objects item='article'}
-		<article class="contentItem contentItemMultiColumn">
+		<article class="contentItem contentItemMultiColumn" role="article">
 			<a href="{$article->getLink()}" class="contentItemLink">
 				<div class="contentItemImage contentItemImageLarge" style="background-image: url({if $article->getImage()}{$article->getImage()->getThumbnailLink('medium')}{else}{$__wcf->getStyleHandler()->getStyle()->getCoverPhotoURL()}{/if})">
 					{hascontent}
@@ -67,5 +69,47 @@
 				</div>
 			</div>
 		</article>
+		
+		{if MODULE_WCF_AD && !$disableAds}
+			{if $tpl[foreach][articles][iteration] === 1}
+				{hascontent}
+					<div class="contentItem contentItemAd">
+						{content}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.after1stArticle')}{/content}
+					</div>
+				{/hascontent}
+			{else}
+				{if $tpl[foreach][articles][iteration] % 2 === 0}
+					{hascontent}
+						<div class="contentItem contentItemAd">
+							{content}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.afterEvery2ndArticle')}{/content}
+						</div>
+					{/hascontent}
+				{/if}
+				
+				{if $tpl[foreach][articles][iteration] % 3 === 0}
+					{hascontent}
+						<div class="contentItem contentItemAd">
+							{content}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.afterEvery3rdArticle')}{/content}
+						</div>
+					{/hascontent}
+				{/if}
+				
+				{if $tpl[foreach][articles][iteration] % 5 === 0}
+					{hascontent}
+						<div class="contentItem contentItemAd">
+							{content}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.afterEvery5thArticle')}{/content}
+						</div>
+					{/hascontent}
+					
+					{if $tpl[foreach][articles][iteration] % 10 === 0}
+						{hascontent}
+							<div class="contentItem contentItemAd">
+								{content}{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.afterEvery10thArticle')}{/content}
+							</div>
+						{/hascontent}
+					{/if}
+				{/if}
+			{/if}
+		{/if}
 	{/foreach}
 </div>
