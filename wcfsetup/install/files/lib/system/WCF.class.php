@@ -789,9 +789,10 @@ class WCF {
 			}
 			if (isset(self::$autoloadDirectories[$applicationPrefix])) {
 				$classPath = self::$autoloadDirectories[$applicationPrefix] . implode('/', $namespaces) . '.class.php';
-				if (file_exists($classPath)) {
-					require_once($classPath);
-				}
+				
+				// PHP will implicitly check if the file exists when including it, which means that we can save a
+				// redundant syscall/fs access by not checking for existence ourselves. Do not use require_once()!
+				@include_once($classPath);
 			}
 		}
 	}

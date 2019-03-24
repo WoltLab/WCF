@@ -455,7 +455,7 @@ class TemplateScriptingCompiler {
 		
 		$tagArgs = static::makeArgString($this->parseTagArgs($tagArgs, $tagCommand));
 		
-		return "<?php echo \$this->pluginObjects['".$className."']->execute(array(".$tagArgs."), \$this); ?>";
+		return "<?=\$this->pluginObjects['".$className."']->execute([".$tagArgs."], \$this);?>";
 	}
 	
 	/**
@@ -489,7 +489,7 @@ class TemplateScriptingCompiler {
 			
 			$tagArgs = static::makeArgString($this->parseTagArgs($tagArgs, $tagCommand));
 			
-			$phpCode = "<?php \$this->tagStack[] = array('".$tagCommand."', array(".$tagArgs."));\n";
+			$phpCode = "<?php \$this->tagStack[] = ['".$tagCommand."', [".$tagArgs."]];\n";
 			$phpCode .= "\$this->pluginObjects['".$className."']->init(\$this->tagStack[count(\$this->tagStack) - 1][1], \$this);\n";
 			$phpCode .= "while (\$this->pluginObjects['".$className."']->next(\$this)) { ob_start(); ?>";
 		}
@@ -616,7 +616,7 @@ class TemplateScriptingCompiler {
 		
 		$phpCode = "<?php\n";
 		$phpCode .= "if (".$args['loop'].") {\n";
-		$phpCode .= $sectionProp." = array();\n";
+		$phpCode .= $sectionProp." = [];\n";
 		$phpCode .= $sectionProp."['loop'] = (is_array(".$args['loop'].") ? count(".$args['loop'].") : max(0, (int)".$args['loop']."));\n";
 		$phpCode .= $sectionProp."['show'] = ".$args['show'].";\n";
 		if (!isset($args['step'])) {
@@ -693,17 +693,20 @@ class TemplateScriptingCompiler {
 		
 		$phpCode = "<?php\n";
 		$phpCode .= $foreachHash." = ".$args['from'].";\n";
-		$phpCode .= $foreachHash."_cnt = (".$foreachHash." !== null ? 1 : 0);\n";
-		$phpCode .= "if (is_array(".$foreachHash.") || (".$foreachHash." instanceof \\Countable)) {\n";
-		$phpCode .= $foreachHash."_cnt = count(".$foreachHash.");\n";
-		$phpCode .= "}\n";
 		
-		if (!empty($foreachProp)) {
+		if (empty($foreachProp)) {
+			$phpCode .= "if ((is_countable(".$foreachHash.") && count(".$foreachHash.") > 0) || ".$foreachHash.") {\n";
+		}
+		else {
+			$phpCode .= $foreachHash."_cnt = (".$foreachHash." !== null ? 1 : 0);\n";
+			$phpCode .= "if (is_countable(".$foreachHash.")) {\n";
+			$phpCode .= $foreachHash."_cnt = count(".$foreachHash.");\n";
+			$phpCode .= "}\n";
 			$phpCode .= $foreachProp."['total'] = ".$foreachHash."_cnt;\n";
 			$phpCode .= $foreachProp."['show'] = (".$foreachProp."['total'] > 0 ? true : false);\n";
 			$phpCode .= $foreachProp."['iteration'] = 0;\n";
+			$phpCode .= "if (".$foreachHash."_cnt > 0) {\n";
 		}
-		$phpCode .= "if (".$foreachHash."_cnt > 0) {\n";
 		
 		if (isset($args['key'])) {
 			$phpCode .= "foreach (".$foreachHash." as ".(mb_substr($args['key'], 0, 1) != '$' ? "\$this->v[".$args['key']."]" : $args['key'])." => ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
@@ -847,7 +850,7 @@ class TemplateScriptingCompiler {
 		if (strpos($application, '$') === false) {
 			$application = "'" . $application . "'";
 		}
-		$phpCode .= '$this->includeTemplate('.$file.', '.$application.', array('.$argString.'), '.($sandbox ? 1 : 0).');'."\n";
+		$phpCode .= '$this->includeTemplate('.$file.', '.$application.', ['.$argString.'], '.($sandbox ? 1 : 0).');'."\n";
 		
 		if ($assignVar !== false) {
 			$phpCode .= '$this->'.($append ? 'append' : 'assign').'('.$assignVar.', ob_get_clean());'."\n";
@@ -1088,7 +1091,7 @@ class TemplateScriptingCompiler {
 			$parsedTag = 'wcf\util\StringUtil::formatNumeric('.$parsedTag.')';
 		}
 		
-		return '<?php echo '.$parsedTag.'; ?>';
+		return '<?='.$parsedTag.';?>';
 	}
 	
 	/**
@@ -1116,7 +1119,7 @@ class TemplateScriptingCompiler {
 	 */
 	protected function compileModifier($data) {
 		if (isset($data['className'])) {
-			return "\$this->pluginObjects['".$data['className']."']->execute(array(".implode(',', $data['parameter'])."), \$this)";
+			return "\$this->pluginObjects['".$data['className']."']->execute([".implode(',', $data['parameter'])."], \$this)";
 		}
 		else {
 			return $data['name'].'('.implode(',', $data['parameter']).')';
@@ -1641,9 +1644,9 @@ class TemplateScriptingCompiler {
 			$string = str_replace('<?php', '@@PHP_START_TAG@@', $string);
 			$string = str_replace('<?', '@@PHP_SHORT_START_TAG@@', $string);
 			$string = str_replace('?>', '@@PHP_END_TAG@@', $string);
-			$string = str_replace('@@PHP_END_TAG@@', "<?php echo '?>'; ?>\n", $string);
-			$string = str_replace('@@PHP_SHORT_START_TAG@@', "<?php echo '<?'; ?>\n", $string);
-			$string = str_replace('@@PHP_START_TAG@@', "<?php echo '<?php'; ?>\n", $string);
+			$string = str_replace('@@PHP_END_TAG@@', "<?='?>';?>\n", $string);
+			$string = str_replace('@@PHP_SHORT_START_TAG@@', "<?='<?';?>\n", $string);
+			$string = str_replace('@@PHP_START_TAG@@', "<?='<?php';?>\n", $string);
 		}
 		
 		return $string;
