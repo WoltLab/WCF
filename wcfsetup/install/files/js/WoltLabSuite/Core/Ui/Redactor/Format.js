@@ -230,6 +230,53 @@ define(['Dom/Util'], function(DomUtil) {
 				return;
 			}
 			
+			// Removing a span from an empty selection in an empty line containing a `<br>` causes a selection
+			// shift where the caret is moved into the span again. Unlike inline changes to the formatting, any
+			// removal of the format in an empty line should remove it from its entirely, instead of just around
+			// the caret position.
+			var range = selection.getRangeAt(0);
+			if (range.collapsed) {
+				var container = range.startContainer;
+				var tree = [container];
+				while (true) {
+					var parent = container.parentNode;
+					if (parent === editorElement || parent.nodeName === 'TD') {
+						break;
+					}
+					
+					container = parent;
+					tree.push(container);
+				}
+				
+				if (this._isEmpty(container.innerHTML)) {
+					var marker = document.createElement('woltlab-format-marker');
+					range.insertNode(marker);
+					
+					// Find the offending span and remove it entirely.
+					tree.forEach(function (element) {
+						if (element.nodeName === 'SPAN') {
+							if (element.style.getPropertyValue(property)) {
+								DomUtil.unwrapChildNodes(element);
+							}
+						}
+					});
+					
+					// Firefox messes up the selection if the ancestor element was removed and there is
+					// an adjacent `<br>` present. Instead of keeping the caret in front of the <br>, it
+					// is implicitly moved behind it.
+					range = document.createRange();
+					range.selectNode(marker);
+					range.collapse(true);
+					
+					selection.removeAllRanges();
+					selection.addRange(range);
+					
+					elRemove(marker);
+					
+					return;
+				}
+			}
+			
 			var strikeElements = elByTag('strike', editorElement);
 			
 			// remove any <strike> element first, all though there shouldn't be any at all
@@ -421,6 +468,29 @@ define(['Dom/Util'], function(DomUtil) {
 			}
 			
 			return [tag.toLowerCase(), tag.toLowerCase() + 'script'];
+		},
+		
+		/**
+		 * Slightly modified version of Redactor's `utils.isEmpty()`.
+		 * 
+		 * @param {string} html
+		 * @returns {boolean}
+		 * @protected
+		 */
+		_isEmpty: function(html) {
+			html = html.replace(/[\u200B-\u200D\uFEFF]/g, '');
+			html = html.replace(/&nbsp;/gi, '');
+			html = html.replace(/<\/?br\s?\/?>/g, '');
+			html = html.replace(/\s/g, '');
+			html = html.replace(/^<p>[^\W\w\D\d]*?<\/p>$/i, '');
+			html = html.replace(/<iframe(.*?[^>])>$/i, 'iframe');
+			html = html.replace(/<source(.*?[^>])>$/i, 'source');
+			
+			// remove empty tags
+			html = html.replace(/<[^\/>][^>]*><\/[^>]+>/gi, '');
+			html = html.replace(/<[^\/>][^>]*><\/[^>]+>/gi, '');
+			
+			return html.trim() === '';
 		}
 	};
 });
