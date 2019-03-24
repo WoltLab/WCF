@@ -294,11 +294,19 @@
 		<name>Discovery</name>
 		<url>http://discoveryengine.com/discobot.html</url>
 	</spider>
+	<spider ident="Discordbot">
+		<name>Discord</name>
+		<url>https://discordapp.com/</url>
+	</spider>
 	<spider ident="DNAbot/1.0">
 		<name>DNAbot</name>
 	</spider>
 	<spider ident="DragonBot/1.0 libwww/5.0">
 		<name>DragonBot</name>
+	</spider>
+	<spider ident="DuckDuckBot">
+		<name>DuckDuckGo</name>
+		<url>https://duckduckgo.com/</url>
 	</spider>
 	<spider ident="DWCP/2.0">
 		<name>DWCP (Dridus' Web Cataloging Project)</name>
@@ -1055,6 +1063,10 @@
 	<spider ident="SimBot/1.0">
 		<name>Simmany Robot Ver1.0</name>
 	</spider>
+	<spider ident="SkypeUriPreview">
+		<name>Skype Preview</name>
+		<url>https://www.skype.com/</url>
+	</spider>
 	<spider ident="ssearcher100">
 		<name>Site Searcher</name>
 	</spider>
@@ -1183,6 +1195,10 @@
 		<name>Pixray</name>
 		<url>http://www.pixray.com/pixraybot/</url>
 	</spider>
+	<spider ident="TelegramBot (like TwitterBot)">
+		<name>TelegramBot (like TwitterBot)</name>
+		<url>https://telegram.org/</url>
+	</spider>
 	<spider ident="thumbshots-de-Bot">
 		<name>thumbshots-de-Bot</name>
 	</spider>
@@ -1220,6 +1236,10 @@
 	<spider ident="Twiceler">
 		<name>Twiceler</name>
 		<url>http://www.cuill.com/twiceler/robot.html</url>
+	</spider>
+	<spider ident="Twitterbot">
+		<name>Twitterbot</name>
+		<url>https://twitter.com/</url>
 	</spider>
 	<spider ident="UCSD-Crawler">
 		<name>UCSD Crawl</name>

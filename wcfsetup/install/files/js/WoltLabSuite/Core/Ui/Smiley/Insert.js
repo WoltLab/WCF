@@ -22,7 +22,11 @@ define(['EventHandler', 'EventKey'], function (EventHandler, EventKey) {
 			
 			var container = elById('smilies-' + this._editorId);
 			if (!container) {
-				throw new Error('Unable to find the message tab menu container containing the smilies.');
+				// form builder
+				container = elById(this._editorId + 'SmiliesTabContainer');
+				if (!container) {
+					throw new Error('Unable to find the message tab menu container containing the smilies.');
+				}
 			}
 			
 			container.addEventListener('keydown', this._keydown.bind(this));

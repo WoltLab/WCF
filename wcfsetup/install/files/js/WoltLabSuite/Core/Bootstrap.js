@@ -103,11 +103,11 @@ define(
 		},
 		
 		_initA11y: function() {
-			elBySelAll('nav:not([aria-label]):not([role])', undefined, function(element) {
+			elBySelAll('nav:not([aria-label]):not([aria-labelledby]):not([role])', undefined, function(element) {
 				elAttr(element, 'role', 'presentation');
 			});
 			
-			elBySelAll('article:not([aria-label]):not([role])', undefined, function(element) {
+			elBySelAll('article:not([aria-label]):not([aria-labelledby]):not([role])', undefined, function(element) {
 				elAttr(element, 'role', 'presentation');
 			});
 		}

@@ -158,17 +158,6 @@
 				<editable>3</editable>
 				<contentpattern>^https?://twitter.com/([A-Za-z0-9_]+)$</contentpattern>
 			</option>
-			<option name="googlePlus">
-				<categoryname>profile.contact</categoryname>
-				<optiontype>text</optiontype>
-				<validationpattern>^$|^\d{21}$|^\+\S[^/]+$</validationpattern>
-				<outputclass>wcf\system\option\user\GooglePlusUserOptionOutput</outputclass>
-				<searchable>1</searchable>
-				<visible>15</visible>
-				<editable>3</editable>
-				<isdisabled>1</isdisabled>
-				<contentpattern>^https?://(?:plus|www).google(?:apis)?.com(?:/\w+/\w+(?:/\w)?)?/(\d{21}|\+\S[^/]+)$</contentpattern>
-			</option>
 			<!-- /profile -->
 			<!-- settings -->
 			<option name="recentActivitiesFilterByFollowing">

@@ -51,11 +51,17 @@ class ArticleImporter extends AbstractImporter {
 				$imageID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.media', $contentData['imageID']);
 			}
 			
+			$teaserImageID = null;
+			if (!empty($contentData['teaserImageID'])) {
+				$teaserImageID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.media', $contentData['teaserImageID']);
+			}
+			
 			$contents[$languageID] = [
 				'title' => (!empty($contentData['title']) ? $contentData['title'] : ''),
 				'teaser' => (!empty($contentData['teaser']) ? $contentData['teaser'] : ''),
 				'content' => (!empty($contentData['content']) ? $contentData['content'] : ''),
 				'imageID' => $imageID,
+				'teaserImageID' => $teaserImageID,
 				'tags' => (!empty($contentData['tags']) ? $contentData['tags'] : [])
 				
 			];
@@ -95,7 +101,8 @@ class ArticleImporter extends AbstractImporter {
 				'title' => $contentData['title'],
 				'teaser' => $contentData['teaser'],
 				'content' => $contentData['content'],
-				'imageID' => $contentData['imageID']
+				'imageID' => $contentData['imageID'],
+				'teaserImageID' => $contentData['teaserImageID']
 			]);
 			
 			// save tags

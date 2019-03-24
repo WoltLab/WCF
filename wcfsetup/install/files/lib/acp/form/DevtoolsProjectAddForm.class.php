@@ -955,11 +955,6 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 		
 		$this->saved();
 		
-		// re-build form after having created a new object
-		if ($this->formAction === 'create') {
-			$this->buildForm();
-		}
-		
 		WCF::getTPL()->assign('success', true);
 	}
 }

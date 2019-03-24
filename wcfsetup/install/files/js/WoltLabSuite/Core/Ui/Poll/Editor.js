@@ -146,7 +146,6 @@ define([
 				DomUtil.insertAfter(listItem, insertAfter);
 			}
 			else {
-				console.log(this.optionList);
 				this.optionList.appendChild(listItem);
 			}
 			

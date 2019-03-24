@@ -46,6 +46,13 @@
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.bottom"><![CDATA[Sidebar (unten)]]></item>
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.footer.bottom"><![CDATA[Seitenende]]></item>
 		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Legt die Reihenfolge fest, in der die Werbungen angezeigt werden.]]></item>
+		<item name="wcf.acp.ad.location.category.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.after1stArticle"><![CDATA[Nach dem ersten Artikel]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.afterEvery10thArticle"><![CDATA[Nach jedem 10. Artikel]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.afterEvery2ndArticle"><![CDATA[Nach jedem 2. Artikel]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.afterEvery3rdArticle"><![CDATA[Nach jedem 3. Artikel]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.afterEvery5thArticle"><![CDATA[Nach jedem 5. Artikel]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.inArticle"><![CDATA[Innerhalb des Artikels]]></item>
 	</category>
 	<category name="wcf.acp.application">
 		<item name="wcf.acp.application.cookie"><![CDATA[Cookie-Einstellungen]]></item>
@@ -378,6 +385,7 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.trophy"><![CDATA[Trophäen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.userTrophy"><![CDATA[Vergebene Trophäen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.reactionType"><![CDATA[Reaktions-Typen]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.page"><![CDATA[CMS-Seiten]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die bestehenden Zuordnungen wirklich löschen?]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[Es existieren Zuordnungen eines früheren Import-Vorganges, diese werden verwendet, um Inhalte aus dem importierten Forum einwandfrei zuzuordnen. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} den Import-Vorgang vollständig abgeschlossen {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese Zuordnungen <a id="deleteMapping">löschen</a>. {if LANGUAGE_USE_INFORMAL_VARIANT}Du solltest{else}Sie sollten{/if} die Zuordnungen nicht löschen, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} jetzt oder zukünftig noch weitere Inhalte aus dem selben Forum übernehmen {if LANGUAGE_USE_INFORMAL_VARIANT}willst{else}wollen{/if}.]]></item>
 		<item name="wcf.acp.dataImport.exporter"><![CDATA[Datenquelle]]></item>
@@ -2540,7 +2548,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.reactionType.type.neutral"><![CDATA[Neutral]]></item>
 		<item name="wcf.acp.reactionType.isDisabled"><![CDATA[Reaktion deaktivieren]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaktions-Datei]]></item>
-		<item name="wcf.acp.reactionType.image.description"><![CDATA[Der Pfad wird relativ zu „{$__wcf->getPath()}images/reaction/“ interpretiert.]]></item>
 	</category>
 	<category name="wcf.acp.rebuildData">
 		<item name="wcf.acp.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
@@ -3858,7 +3865,7 @@ Dateianhänge:
 		<item name="wcf.form.field.showOrder.firstPosition"><![CDATA[(an erster Stelle)]]></item>
 		<item name="wcf.form.field.text.error.maximumLength"><![CDATA[Der angegebene Text{if $language} für die Sprache „{$language}“{/if} umfasst {#$length} Zeichen, er darf aber nicht länger als {#$maximumLength} Zeichen sein.]]></item>
 		<item name="wcf.form.field.text.error.minimumLength"><![CDATA[Der angegebene Text{if $language} für die Sprache „{$language}“{/if} umfasst {#$length} Zeichen, er darf aber nicht kürzer als {#$minimumLength} Zeichen sein.]]></item>
-		<item name="wcf.form.field.user.error.maxmimumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} zumindest {#$maximumCount} Benutzer angeben, es wurde{if $count != 1}n{else} aber nur {#$count} Benutzer angegeben.]]></item>
+		<item name="wcf.form.field.user.error.maximumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} zumindest {#$maximumCount} Benutzer angeben, es wurde{if $count != 1}n{else} aber nur {#$count} Benutzer angegeben.]]></item>
 		<item name="wcf.form.field.user.error.minimumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du darfst{else}Sie dürfen{/if} nicht mehr als {#$minimumCount} Benutzer angeben, es wurde{if $count != 1}n{else} aber {#$count} Benutzer angegeben.]]></item>
 		<item name="wcf.form.field.user.error.nonExistent"><![CDATA[{if $nonExistentUsernames|isset}Die folgenden Benutzer existieren nicht: {implode from=$nonExistentUsernames item=nonExistentUsername}„{$nonExistentUsername}“{/implode}.{else}Der angegebene Benutzer existiert nicht.{/if}]]></item>
 		<item name="wcf.form.field.userGroupOption"><![CDATA[Berechtigungen]]></item>
@@ -3868,6 +3875,9 @@ Dateianhänge:
 		<item name="wcf.form.field.url.error.invalid"><![CDATA[Der angegebene Link ist ungültig.]]></item>
 		<item name="wcf.form.field.className.description.parentClass"><![CDATA[Die angegebene Klasse (ohne führenden Backslash) muss von der Klasse <kbd>{$parentClass}</kbd> erben.]]></item>
 		<item name="wcf.form.fieldValidator.dotSeparatedString.error.invalidSegments"><![CDATA[Die folgenden Abschnitte sind ungültig: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<kbd>{$segment}</kbd>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
+		<item name="wcf.form.field.rating"><![CDATA[Bewertung]]></item>
+		<item name="wcf.form.field.rating.ratingTitle"><![CDATA[{#$rating}/{#$maximumRating}]]></item>
+		<item name="wcf.form.field.rating.removeRating"><![CDATA[Bewertung zurücksetzen]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Titelbild]]></item>
@@ -5112,8 +5122,6 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.option.skype"><![CDATA[Skype]]></item>
 		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.option.twitter"><![CDATA[Twitter]]></item>
-		<item name="wcf.user.option.googlePlus"><![CDATA[Google+]]></item>
-		<item name="wcf.user.option.googlePlus.description"><![CDATA[21-stellige Google-Plus-ID, Google-Plus Benutzername (+Benutzername) oder URL zum Google-Plus-Profil]]></item>
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Kann Pinnwand-Kommentare schreiben]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting"><![CDATA[Text-Formatierung beim Einfügen in den Editor übernehmen]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting.description"><![CDATA[Die Deaktivierung dieser Option erzwingt das Einfügen aus der Zwischenablage in reiner Textform, Formatierungen werden dabei entfernt.]]></item>

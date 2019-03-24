@@ -29,6 +29,7 @@
     "__numericFormField",
     "__pollOptionsFormField",
     "__radioButtonFormField",
+    "__ratingFormField",
     "__singleSelectionFormField",
     "__tabFormContainer",
     "__tabMenuFormContainer",
