@@ -3874,6 +3874,9 @@ Dateianhänge:
 		<item name="wcf.form.field.url.error.invalid"><![CDATA[Der angegebene Link ist ungültig.]]></item>
 		<item name="wcf.form.field.className.description.parentClass"><![CDATA[Die angegebene Klasse (ohne führenden Backslash) muss von der Klasse <kbd>{$parentClass}</kbd> erben.]]></item>
 		<item name="wcf.form.fieldValidator.dotSeparatedString.error.invalidSegments"><![CDATA[Die folgenden Abschnitte sind ungültig: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<kbd>{$segment}</kbd>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
+		<item name="wcf.form.field.rating"><![CDATA[Bewertung]]></item>
+		<item name="wcf.form.field.rating.ratingTitle"><![CDATA[{#$rating}/{#$maximumRating}]]></item>
+		<item name="wcf.form.field.rating.removeRating"><![CDATA[Bewertung zurücksetzen]]></item>
 	</category>
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Vollbild-Modus]]></item>
