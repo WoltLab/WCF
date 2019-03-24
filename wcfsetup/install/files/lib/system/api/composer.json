@@ -5,7 +5,7 @@
     },
     "require": {
         "ezyang/htmlpurifier": "4.9.*",
-        "erusev/parsedown": "1.6.*",
+        "erusev/parsedown": "1.7.*",
         "pelago/emogrifier": "1.2.*",
         "pear/net_idna2": "^0.2.0"
     }
