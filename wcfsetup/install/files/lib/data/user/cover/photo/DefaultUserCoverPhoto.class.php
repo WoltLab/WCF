@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\user\cover\photo;
 use wcf\system\style\StyleHandler;
-use wcf\system\WCF;
 
 /**
  * Represents a default cover photo.
@@ -23,14 +22,14 @@ class DefaultUserCoverPhoto implements IUserCoverPhoto {
 	 * @inheritDoc
 	 */
 	public function getLocation() {
-		return WCF_DIR . 'images/coverPhotos/' . $this->getFilename();
+		return StyleHandler::getInstance()->getStyle()->getCoverPhotoLocation();
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function getURL() {
-		return WCF::getPath() . 'images/coverPhotos/' . $this->getFilename();
+		return StyleHandler::getInstance()->getStyle()->getCoverPhotoUrl();
 	}
 	
 	/**

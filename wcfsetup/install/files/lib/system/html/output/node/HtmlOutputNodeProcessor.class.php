@@ -90,6 +90,13 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 		// dynamic node handlers
 		$this->invokeNodeHandlers('wcf\system\html\output\node\HtmlOutputNode', ['woltlab-metacode']);
 		
+		if ($this->getHtmlProcessor()->removeLinks) {
+			$links = $this->getDocument()->getElementsByTagName('a');
+			while ($links->length) {
+				DOMUtil::removeNode($links->item(0), true);
+			}
+		}
+		
 		if ($this->outputType !== 'text/html') {
 			// convert `<p>...</p>` into `...<br><br>`
 			$paragraphs = $this->getDocument()->getElementsByTagName('p');

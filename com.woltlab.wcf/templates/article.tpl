@@ -114,8 +114,16 @@
 {include file='header'}
 
 <div class="section">
+	{if $articleContent->teaser}
+		<div class="section articleTeaserContainer">
+			<div class="htmlContent">
+				<p class="articleTeaser">{@$articleContent->getFormattedTeaser()}</p>
+			</div>
+		</div>
+	{/if}
+	
 	{if $articleContent->getImage() && $articleContent->getImage()->hasThumbnail('large')}
-		<div class="section" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+		<div class="section articleImageContainer" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
 			<figure class="articleImage">
 				<div class="articleImageWrapper">{@$articleContent->getImage()->getThumbnailTag('large')}</div>
 				{if $articleContent->getImage()->caption}
@@ -134,10 +142,6 @@
 		<div class="htmlContent">
 			{if MODULE_WCF_AD}
 				{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.inArticle')}
-			{/if}
-			
-			{if $articleContent->teaser}
-				<p class="articleTeaser">{@$articleContent->getFormattedTeaser()}</p>
 			{/if}
 			
 			{@$articleContent->getFormattedContent()}

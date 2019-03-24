@@ -2737,6 +2737,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[Select components included in the export for the style “{$style->styleName}”.]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Data]]></item>
 		<item name="wcf.acp.style.general.coverPhoto"><![CDATA[Cover Photo]]></item>
+		<item name="wcf.acp.style.general.coverPhoto.description"><![CDATA[Cover photos are used for illustrational purposes in user profiles, articles and other components.]]></item>
 		<item name="wcf.acp.style.general.favicon"><![CDATA[Favicon]]></item>
 		<item name="wcf.acp.style.general.files"><![CDATA[Files]]></item>
 		<item name="wcf.acp.style.globals"><![CDATA[Global Settings]]></item>
@@ -3824,6 +3825,23 @@ Attachments:
 		<item name="wcf.form.field.rating.ratingTitle"><![CDATA[{#$rating}/{#$maximumRating}]]></item>
 		<item name="wcf.form.field.rating.removeRating"><![CDATA[Reset Rating]]></item>
 	</category>
+	<category name="wcf.image">
+		<item name="wcf.image.coverPhoto"><![CDATA[Cover Photo]]></item>
+		<item name="wcf.image.coverPhoto.delete"><![CDATA[Delete Cover Photo]]></item>
+		<item name="wcf.image.coverPhoto.delete.confirmMessage"><![CDATA[Do you really want to delete this cover photo? This will replace the current photo with the default image.]]></item>
+		<item name="wcf.image.coverPhoto.edit"><![CDATA[Edit Cover Photo]]></item>
+		<item name="wcf.image.coverPhoto.upload"><![CDATA[Upload Cover Photo]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.badImage"><![CDATA[The uploaded file is not an image.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.fileExtension"><![CDATA[The file has an invalid extension.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.maxHeight"><![CDATA[The image is too tall.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.maxSize"><![CDATA[The file is too big.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.maxWidth"><![CDATA[The image is too wide.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.minHeight"><![CDATA[The image is too small.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.minWidth"><![CDATA[The image is too small.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
+		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png<br>Maximum Filesize: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
+	</category>
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Full Screen Mode]]></item>
 		<item name="wcf.imageViewer.button.full"><![CDATA[View Source Image]]></item>
@@ -3879,6 +3897,7 @@ Attachments:
 		<item name="wcf.like.reactionsGiven"><![CDATA[Reactions Given]]></item>
 		<item name="wcf.like.reactionReputation"><![CDATA[Reputation from Reactions]]></item>
 		<item name="wcf.like.reputation"><![CDATA[Reputation]]></item>
+		<item name="wcf.like.reputation.label"><![CDATA[Reputation: {if $cumulativeLikes > 0}+{elseif $cumulativeLikes == 0}±{/if}{#$cumulativeLikes}]]></item>
 	</category>
 	<category name="wcf.map">
 		<item name="wcf.map.noLocationSuggestions"><![CDATA[There are no location suggestions in the current map section.]]></item>
