@@ -408,6 +408,8 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			
 			if (empty($requirements)) continue;
 			
+			$openRequirements = array_keys($requirements);
+			
 			$conditions = new PreparedStatementConditionBuilder();
 			$conditions->add("package IN (?)", [array_keys($requirements)]);
 			$sql = "SELECT  packageUpdateID, package
@@ -416,10 +418,20 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
 			while ($row = $statement->fetchArray()) {
-				$result = $this->canInstall($row['packageUpdateID'], $requirements[$row['package']], $installedPackages, $excludedPackagesOfInstalledPackages);
-				if (empty($result)) {
-					return [];
+				if (!in_array($row['package'], $openRequirements)) {
+					// The dependency has already been satisfied by another update server.
+					continue;
 				}
+				
+				$result = $this->canInstall($row['packageUpdateID'], $requirements[$row['package']], $installedPackages, $excludedPackagesOfInstalledPackages);
+				if (!empty($result)) {
+					$index = array_search($row['package'], $openRequirements);
+					unset($openRequirements[$index]);
+				}
+			}
+			
+			if (!empty($openRequirements)) {
+				return [];
 			}
 		}
 		
