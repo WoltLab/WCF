@@ -394,6 +394,14 @@ final class HTTPRequest {
 	 * Parses the reply headers.
 	 */
 	private function parseReplyHeaders() {
+		$statusLine = array_shift($this->replyHeaders);
+		
+		// get status code
+		$regex = new Regex('^HTTP/1.\d+\s+(\d{3})');
+		if (!$regex->match($statusLine)) throw new HTTPException($this, "Unexpected status '".$statusLine."'");
+		$matches = $regex->getMatches();
+		$this->statusCode = $matches[1];
+		
 		$headers = [];
 		$lastKey = '';
 		foreach ($this->replyHeaders as $header) {
@@ -420,13 +428,6 @@ final class HTTPRequest {
 		$this->replyHeaders = array_change_key_case($headers);
 		if (isset($this->replyHeaders['transfer-encoding'])) $this->replyHeaders['transfer-encoding'] = [implode(',', $this->replyHeaders['transfer-encoding'])];
 		$this->legacyHeaders = array_map('end', $headers);
-		
-		// get status code
-		$statusLine = reset($this->replyHeaders);
-		$regex = new Regex('^HTTP/1.\d+ +(\d{3})');
-		if (!$regex->match($statusLine[0])) throw new HTTPException($this, "Unexpected status '".$statusLine."'");
-		$matches = $regex->getMatches();
-		$this->statusCode = $matches[1];
 	}
 	
 	/**
