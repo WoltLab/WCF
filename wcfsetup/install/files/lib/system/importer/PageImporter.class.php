@@ -52,6 +52,9 @@ class PageImporter extends AbstractImporter {
 		if (empty($data['packageID'])) {
 			$data['packageID'] = 1;
 		}
+		if (empty($data['applicationPackageID'])) {
+			$data['applicationPackageID'] = 1;
+		}
 		
 		// check old id
 		if (is_numeric($oldID)) {
@@ -61,6 +64,13 @@ class PageImporter extends AbstractImporter {
 		
 		// save page
 		$page = PageEditor::create($data);
+		if (!$page->identifier) {
+			// set generic page identifier
+			$pageEditor = new PageEditor($page);
+			$pageEditor->update([
+				'identifier' => 'com.woltlab.wcf.generic'.$page->pageID
+			]);
+		}
 		
 		// save page content
 		foreach ($contents as $languageID => $contentData) {
