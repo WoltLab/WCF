@@ -21,6 +21,7 @@
     "__formFieldHeader",
     "__iconFormField",
     "__itemListFormField",
+    "__labelFormField",
     "__mediaSetCategoryDialog",
     "__multilineTextFormField",
     "__multiPageCondition",
