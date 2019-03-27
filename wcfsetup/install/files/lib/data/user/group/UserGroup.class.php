@@ -442,4 +442,14 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 		
 		return $groups;
 	}
+	
+	/**
+	 * @return UserGroup[]
+	 * @since 5.2
+	 */
+	public static function getAllGroups() {
+		self::getCache();
+		
+		return self::$cache['groups'];
+	}
 }
