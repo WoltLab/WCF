@@ -27,9 +27,10 @@ use wcf\system\template\TemplateEngine;
  *      {pageContent languageID=2}com.woltlab.wcf.CookiePolicy{/pageContent}
  *
  * @author	Alexander Ebert, Christopher Walz
- * @see         \wcf\system\template\plugin\PageBlockTempaltePlugin
+ * @see         \wcf\system\template\plugin\PageBlockTemplatePlugin
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
+ * @since	3.1
  */
 class PageContentBlockTemplatePlugin implements IBlockTemplatePlugin {
 	/**
