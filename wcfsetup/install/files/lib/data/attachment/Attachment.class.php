@@ -7,6 +7,7 @@ use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Represents an attachment.
@@ -123,7 +124,7 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	 * @inheritDoc
 	 */
 	public function getLocation() {
-		return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-' . $this->fileHash;
+		return $this->getLocationHelper(self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-' . $this->fileHash);
 	}
 	
 	/**
@@ -140,10 +141,49 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	 */
 	public function getThumbnailLocation($size = '') {
 		if ($size == 'tiny') {
-			return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-tiny-' . $this->fileHash;
+			$location = self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-tiny-' . $this->fileHash;
+		}
+		else {
+			$location = self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-thumbnail-' . $this->fileHash;
 		}
 		
-		return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-thumbnail-' . $this->fileHash;
+		return $this->getLocationHelper($location);
+	}
+	
+	/**
+	 * Migrates the storage location of this attachment to
+	 * include the `.bin` suffix.
+	 * 
+	 * @since	5.2
+	 */
+	public function migrateStorage() {
+		foreach ([$this->getLocation(), $this->getThumbnailLocation(), $this->getThumbnailLocation('tiny')] as $location) {
+			if (!StringUtil::endsWith($location, '.bin')) {
+				rename($location, $location.'.bin');
+			}
+		}
+	}
+	
+	/**
+	 * Returns the appropriate location with or without extension.
+	 * 
+	 * Files are suffixed with `.bin` since 5.2, but they are recognized
+	 * without the extension for backward compatibility.
+	 * 
+	 * @param	string $location
+	 * @return	string
+	 * @since	5.2
+	 */
+	protected final function getLocationHelper($location) {
+		if (is_readable($location.'.bin')) {
+			return $location.'.bin';
+		}
+		else if (is_readable($location)) {
+			return $location;
+		}
+		
+		// Assume that the attachment has not been uploaded yet.
+		return $location.'.bin';
 	}
 	
 	/**

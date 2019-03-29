@@ -923,10 +923,12 @@ $.widget('ui.wcfImageViewer', {
 		
 		WCF.DOMNodeInsertedHandler.execute();
 		
-		enquire.register('(max-width: 767px)', {
-			match: $.proxy(this._enableMobileView, this),
-			unmatch: $.proxy(this._disableMobileView, this)
-		});
+		require(['Ui/Screen'], function(UiScreen) {
+			UiScreen.on('screen-sm-down', {
+				match: $.proxy(this._enableMobileView, this),
+				unmatch: $.proxy(this._disableMobileView, this)
+			});
+		}.bind(this));
 		
 		return true;
 	},

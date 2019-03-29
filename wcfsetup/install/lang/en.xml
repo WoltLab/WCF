@@ -46,6 +46,13 @@
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.sidebar.bottom"><![CDATA[Sidebar (bottom)]]></item>
 		<item name="wcf.acp.ad.location.com.woltlab.wcf.footer.bottom"><![CDATA[End of Page]]></item>
 		<item name="wcf.acp.ad.showOrder.description"><![CDATA[Choose display order of ads.]]></item>
+		<item name="wcf.acp.ad.location.category.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.after1stArticle"><![CDATA[After the first article]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.afterEvery10thArticle"><![CDATA[After every 10. article]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.afterEvery2ndArticle"><![CDATA[After every 2. article]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.afterEvery3rdArticle"><![CDATA[After every 3. article]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.afterEvery5thArticle"><![CDATA[After every 5. article]]></item>
+		<item name="wcf.acp.ad.location.com.woltlab.wcf.article.inArticle"><![CDATA[In the article]]></item>
 	</category>
 	<category name="wcf.acp.application">
 		<item name="wcf.acp.application.cookie"><![CDATA[Cookie Settings]]></item>
@@ -354,6 +361,7 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.trophy"><![CDATA[Trophies]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.userTrophy"><![CDATA[Assigned trophies]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.reactionType"><![CDATA[Reaction Types]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.page"><![CDATA[CMS pages]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.confirmMessage"><![CDATA[Do you really want to delete the existing import mappings?]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[There are import mappings created by a previous import process, these mappings are used to properly handle connections between data from the imported forum and this one. In case you have imported all the desired data, you can <a id="deleteMapping">delete</a> the mappings. It is strongly recommended to keep these mappings as long as there is still data to be imported now or in the future.]]></item>
 		<item name="wcf.acp.dataImport.exporter"><![CDATA[Data Source]]></item>
@@ -593,6 +601,29 @@
 		<item name="wcf.acp.exceptionLog.exception.date"><![CDATA[Time]]></item>
 		<item name="wcf.acp.exceptionLog.exception.userAgent"><![CDATA[User Agent]]></item>
 		<item name="wcf.acp.exceptionLog.exception.memory"><![CDATA[Memory]]></item>
+		<item name="wcf.acp.exceptionLog.email.subject"><![CDATA[Logged Errors since {$date|plainTime}]]></item>
+		<item name="wcf.acp.exceptionLog.email.body"><![CDATA[Dear Administrator,
+
+the following errors have been logged on your website {@PAGE_TITLE|language} since {$date|plainTime}:
+
+{foreach from=$files key=file item=data}
+log/{$file}.txt {* this line ends with a space *}
+==================
+
+{if $data[verdict]|isset}
+{if $data[verdict] == 'corrupt'}
+This protocol file is corrupted. Please check the protocol manually: {'WCF_DIR'|constant}log/{$file}.txt
+{elseif $data[verdict] == 'huge'}
+This protocol file is very large. Please check the protocol manually: {'WCF_DIR'|constant}log/{$file}.txt
+{/if}
+{else}
+This protocol file contains {$data[count]} new entries. The first three error messages that are not yet listed in this email are:
+{foreach from=$data[messages] item=message}
+- {@$message} {* this line ends with a space *}
+{/foreach}
+{/if}
+{* this line is intentionally left empty *}
+{/foreach}]]></item>
 	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
@@ -2455,7 +2486,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.reactionType.type.neutral"><![CDATA[Neutral]]></item>
 		<item name="wcf.acp.reactionType.isDisabled"><![CDATA[Disable Reaction]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaction File]]></item>
-		<item name="wcf.acp.reactionType.image.description"><![CDATA[The path is relative to “{$__wcf->getPath()}images/reaction/”.]]></item>
 	</category>
 	<category name="wcf.acp.rebuildData">
 		<item name="wcf.acp.rebuildData"><![CDATA[Rebuild Data]]></item>
@@ -2717,6 +2747,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.exportStyle.components.description"><![CDATA[Select components included in the export for the style “{$style->styleName}”.]]></item>
 		<item name="wcf.acp.style.general"><![CDATA[Data]]></item>
 		<item name="wcf.acp.style.general.coverPhoto"><![CDATA[Cover Photo]]></item>
+		<item name="wcf.acp.style.general.coverPhoto.description"><![CDATA[Cover photos are used for illustrational purposes in user profiles, articles and other components.]]></item>
 		<item name="wcf.acp.style.general.favicon"><![CDATA[Favicon]]></item>
 		<item name="wcf.acp.style.general.files"><![CDATA[Files]]></item>
 		<item name="wcf.acp.style.globals"><![CDATA[Global Settings]]></item>
@@ -3791,7 +3822,7 @@ Attachments:
 		<item name="wcf.form.field.showOrder.firstPosition"><![CDATA[(first position)]]></item>
 		<item name="wcf.form.field.text.error.maximumLength"><![CDATA[The entered text{if $language|isset} for language “{$language}”{/if} contains {#$length} characters but it may not be longer than {#$maximumLength} characters.]]></item>
 		<item name="wcf.form.field.text.error.minimumLength"><![CDATA[The entered text{if $language|isset} for language “{$language}”{/if} only contains {#$length} characters but it may not be shorter than {#$minimumLength} characters.]]></item>
-		<item name="wcf.form.field.user.error.maxmimumMultiples"><![CDATA[You may not enter more than {#$maximumCount} users but {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
+		<item name="wcf.form.field.user.error.maximumMultiples"><![CDATA[You may not enter more than {#$maximumCount} users but {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
 		<item name="wcf.form.field.user.error.minimumMultiples"><![CDATA[You have to entered at least {#$minimumCount} users but only {#$count} user{if $count != 1}s are{else} is{/if} given.]]></item>
 		<item name="wcf.form.field.user.error.nonExistent"><![CDATA[{if $nonExistentUsernames|isset}The following users do not exist: {implode from=$nonExistentUsernames item=nonExistentUsername}“{$nonExistentUsername}”{/implode}.{else}The entered user does not exists.{/if}]]></item>
 		<item name="wcf.form.field.userGroupOption"><![CDATA[Permissions]]></item>
@@ -3800,6 +3831,26 @@ Attachments:
 		<item name="wcf.form.field.username.error.notUnique"><![CDATA[The entered username is already in use.]]></item>
 		<item name="wcf.form.fieldValidator.dotSeparatedString.error.invalidSegments"><![CDATA[The following segments are invalid: {implode from=$invalidSegments key=segmentNumber item=segment}{if $segment !== ''}<kbd>{$segment}</kbd>{else}(empty){/if} (segment {#$segmentNumber + 1}){/implode}.]]></item>
 		<item name="wcf.form.field.url.error.invalid"><![CDATA[The entered link is invalid.]]></item>
+		<item name="wcf.form.field.rating"><![CDATA[Rating]]></item>
+		<item name="wcf.form.field.rating.ratingTitle"><![CDATA[{#$rating}/{#$maximumRating}]]></item>
+		<item name="wcf.form.field.rating.removeRating"><![CDATA[Reset Rating]]></item>
+	</category>
+	<category name="wcf.image">
+		<item name="wcf.image.coverPhoto"><![CDATA[Cover Photo]]></item>
+		<item name="wcf.image.coverPhoto.delete"><![CDATA[Delete Cover Photo]]></item>
+		<item name="wcf.image.coverPhoto.delete.confirmMessage"><![CDATA[Do you really want to delete this cover photo? This will replace the current photo with the default image.]]></item>
+		<item name="wcf.image.coverPhoto.edit"><![CDATA[Edit Cover Photo]]></item>
+		<item name="wcf.image.coverPhoto.upload"><![CDATA[Upload Cover Photo]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.badImage"><![CDATA[The uploaded file is not an image.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.fileExtension"><![CDATA[The file has an invalid extension.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.maxHeight"><![CDATA[The image is too tall.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.maxSize"><![CDATA[The file is too big.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.maxWidth"><![CDATA[The image is too wide.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.minHeight"><![CDATA[The image is too small.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.minWidth"><![CDATA[The image is too small.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
+		<item name="wcf.image.coverPhoto.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
+		<item name="wcf.image.coverPhoto.upload.limits"><![CDATA[Minimum Image Size: {$coverPhotoDimensions.min.width}×{$coverPhotoDimensions.min.height} pixels<br>Maximum Image Size: {$coverPhotoDimensions.max.width}×{$coverPhotoDimensions.max.height} pixels<br>Allowed File Extensions: gif, jpg, jpeg, png<br>Maximum Filesize: {$__wcf->session->getPermission($coverPhotoPermissionMaxSize)|filesize}]]></item>
 	</category>
 	<category name="wcf.imageViewer">
 		<item name="wcf.imageViewer.button.enlarge"><![CDATA[Full Screen Mode]]></item>
@@ -3856,6 +3907,7 @@ Attachments:
 		<item name="wcf.like.reactionsGiven"><![CDATA[Reactions Given]]></item>
 		<item name="wcf.like.reactionReputation"><![CDATA[Reputation from Reactions]]></item>
 		<item name="wcf.like.reputation"><![CDATA[Reputation]]></item>
+		<item name="wcf.like.reputation.label"><![CDATA[Reputation: {if $cumulativeLikes > 0}+{elseif $cumulativeLikes == 0}±{/if}{#$cumulativeLikes}]]></item>
 	</category>
 	<category name="wcf.map">
 		<item name="wcf.map.noLocationSuggestions"><![CDATA[There are no location suggestions in the current map section.]]></item>
@@ -4128,6 +4180,7 @@ Attachments:
 		<item name="wcf.page.requestedPage.condition.reverseLogic"><![CDATA[Reverse “Requested Page” selection]]></item>
 		<item name="wcf.page.requestedPage.condition.reverseLogic.description"><![CDATA[If selected, the requested page <strong>may not</strong> be one of the pages selected under “Requested Page”.]]></item>
 		<item name="wcf.page.box.edit"><![CDATA[Edit Box]]></item>
+		<item name="wcf.page.menu.outstandingItems"><![CDATA[({#$menuItemNode->getOutstandingItems()} {if $menuItemNode->getOutstandingItems() == 1}New Item{else}News Items{/if})]]></item>
 	</category>
 	<category name="wcf.acp.page">
 		<item name="wcf.acp.page.add"><![CDATA[Add Page]]></item>
@@ -5078,8 +5131,6 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.option.skype"><![CDATA[Skype]]></item>
 		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.option.twitter"><![CDATA[Twitter]]></item>
-		<item name="wcf.user.option.googlePlus"><![CDATA[Google+]]></item>
-		<item name="wcf.user.option.googlePlus.description"><![CDATA[Enter the 21 digit Google Plus user ID, Google Plus username (+Username), or the URL of your Google Plus profile.]]></item>
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Can Write Comments on My Wall]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting"><![CDATA[Preserve text formatting when pasting into the editor]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting.description"><![CDATA[Disabling this option will force any content to be pasted from clipboard as plain text, stripping all formatting.]]></item>

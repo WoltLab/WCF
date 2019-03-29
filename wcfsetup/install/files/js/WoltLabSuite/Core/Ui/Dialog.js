@@ -8,13 +8,13 @@
  */
 define(
 	[
-		'enquire',      'Ajax',       'Core',      'Dictionary',
+		'Ajax',         'Core',       'Dictionary',
 		'Environment',  'Language',   'ObjectMap', 'Dom/ChangeListener',
 		'Dom/Traverse', 'Dom/Util',   'Ui/Confirmation', 'Ui/Screen', 'Ui/SimpleDropdown',
 		'EventHandler', 'List',       'EventKey'
 	],
 	function(
-		enquire,        Ajax,         Core,        Dictionary,
+		Ajax,           Core,         Dictionary,
 		Environment,    Language,     ObjectMap,   DomChangeListener,
 		DomTraverse,    DomUtil,      UiConfirmation, UiScreen, UiSimpleDropdown,
 		EventHandler,   List,         EventKey
@@ -648,16 +648,6 @@ define(
 			
 			var maximumHeight = (window.innerHeight * (_dialogFullHeight ? 1 : 0.8)) - unavailableHeight;
 			contentContainer.style.setProperty('max-height', ~~maximumHeight + 'px', '');
-			
-			// fix for a calculation bug in Chrome causing the scrollbar to overlap the border
-			if (Environment.browser() === 'chrome') {
-				if (data.content.scrollHeight > maximumHeight) {
-					data.content.style.setProperty('margin-right', '-1px', '');
-				}
-				else {
-					data.content.style.removeProperty('margin-right');
-				}
-			}
 			
 			// Chrome and Safari use heavy anti-aliasing when the dialog's width
 			// cannot be evenly divided, causing the whole text to become blurry

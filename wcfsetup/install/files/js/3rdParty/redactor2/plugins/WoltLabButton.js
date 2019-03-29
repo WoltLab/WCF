@@ -5,20 +5,6 @@ $.Redactor.prototype.WoltLabButton = function() {
 	
 	return {
 		init: function() {
-			// tooltips are handled on our own
-			this.button.buildButtonTooltip = function () {};
-			
-			var mpClickCallback = this.button.clickCallback;
-			this.button.clickCallback = (function(e, callback, btnName, args) {
-				// prevent the browser from breaking the editor focus
-				if (typeof e.preventDefault === 'function') {
-					e.preventDefault();
-				}
-				
-				//noinspection JSUnresolvedFunction
-				mpClickCallback.call(this, e, callback, btnName, args);
-			}).bind(this);
-			
 			// add custom buttons
 			var button, buttonName, i, length;
 			//noinspection JSUnresolvedVariable
@@ -29,6 +15,8 @@ $.Redactor.prototype.WoltLabButton = function() {
 				button = this.button.add(buttonName, '');
 				this.button.addCallback(button, this.WoltLabButton._handleCustomButton);
 			}
+			
+			var toolbar = this.core.toolbar()[0];
 			
 			// set button icons and labels
 			var buttonData, icon, iconIsImage;
@@ -73,10 +61,7 @@ $.Redactor.prototype.WoltLabButton = function() {
 				}
 				
 				icon = buttonData.icon;
-				iconIsImage = false;
-				if (!icon.match(/^fa-/) && icon.match(/\.(gif|jpe?g|png|svg)$/)) {
-					iconIsImage = true;
-				}
+				iconIsImage = (!icon.match(/^fa-/) && icon.match(/\.(gif|jpe?g|png|svg)$/));
 				
 				// set icon
 				//noinspection CssUnknownTarget
@@ -87,7 +72,7 @@ $.Redactor.prototype.WoltLabButton = function() {
 				
 				// set title
 				//noinspection JSUnresolvedVariable
-				elAttr(button[0], 'title', buttonData.title);
+				button[0].title = buttonData.title;
 				button[0].classList.add('jsTooltip');
 				
 				// update dropdown label for list
@@ -97,9 +82,6 @@ $.Redactor.prototype.WoltLabButton = function() {
 					elBySel('.redactor-dropdown-indent span', dropdown[0]).textContent = WCF.Language.get('wcf.editor.list.indent');
 				}
 			}
-			
-			var toolbar = this.core.toolbar()[0];
-			elBySelAll('.re-button-tooltip', toolbar.parentNode, elRemove);
 			
 			// enforce button order as provided with `opts.buttons`
 			var listItem, toolbarButtons = {}, toolbarOrder = [];
@@ -154,9 +136,12 @@ $.Redactor.prototype.WoltLabButton = function() {
 			}).bind(this));
 			
 			// prevent drag & drop of toolbar buttons
-			this.$toolbar[0].addEventListener('dragstart', function (event) {
+			toolbar.addEventListener('dragstart', function (event) {
 				event.preventDefault();
 			});
+			
+			// Set the tabindex of the HTML button to `0` to support tab navigation (ARIA).
+			elAttr(elBySel('.re-html', toolbar), 'tabindex', 0);
 		},
 		
 		_handleCustomButton: function (bbcode) {

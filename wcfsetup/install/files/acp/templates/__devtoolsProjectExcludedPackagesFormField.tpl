@@ -20,7 +20,7 @@
 	<dl class="col-xs-12 col-md-1">
 		<dt></dt>
 		<dd>
-			<button class="button small" id="{@$field->getPrefixedId()}_addButton">{lang}wcf.global.button.add{/lang}</button>
+			<a href="#" class="button small" id="{@$field->getPrefixedId()}_addButton">{lang}wcf.global.button.add{/lang}</a>
 		</dd>
 	</dl>
 </div>

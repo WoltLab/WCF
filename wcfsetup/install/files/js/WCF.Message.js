@@ -683,41 +683,13 @@ if (COMPILER_TARGET_DEFAULT) {
 	});
 	
 	/**
-	 * Handles smiley clicks.
-	 *
-	 * @param        string                wysiwygSelector
+	 * @deprecated 5.2 Use `WoltLabSuite/Core/Ui/Smiley/Insert` instead.
 	 */
 	WCF.Message.Smilies = Class.extend({
-		/**
-		 * wysiwyg editor id
-		 * @var        string
-		 */
-		_editorId: '',
-		
-		/**
-		 * Initializes the smiley handler.
-		 *
-		 * @param        {string}        editorId
-		 */
 		init: function (editorId) {
-			this._editorId = editorId;
-			
-			$('.messageTabMenu[data-wysiwyg-container-id=' + this._editorId + ']').on('mousedown', '.jsSmiley', this._smileyClick.bind(this));
-		},
-		
-		/**
-		 * Handles tab smiley clicks.
-		 *
-		 * @param        {Event}                event
-		 */
-		_smileyClick: function (event) {
-			event.preventDefault();
-			
-			require(['EventHandler'], (function (EventHandler) {
-				EventHandler.fire('com.woltlab.wcf.redactor2', 'insertSmiley_' + this._editorId, {
-					img: event.currentTarget.children[0]
-				});
-			}).bind(this));
+			require(['WoltLabSuite/Core/Ui/Smiley/Insert'], function(UiSmileyInsert) {
+				new UiSmileyInsert(editorId);
+			});
 		}
 	});
 	

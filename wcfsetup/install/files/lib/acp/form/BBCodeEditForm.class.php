@@ -75,6 +75,15 @@ class BBCodeEditForm extends BBCodeAddForm {
 	/**
 	 * @inheritDoc
 	 */
+	protected function validateBBCodeTagUsage() {
+		if ($this->bbcodeTag != $this->bbcode->bbcodeTag) {
+			parent::validateBBCodeTagUsage();
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function save() {
 		AbstractForm::save();
 		

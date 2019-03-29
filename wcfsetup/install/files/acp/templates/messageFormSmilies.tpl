@@ -48,8 +48,8 @@
 	{event name='fields'}
 	
 	<script data-relocate="true">
-		$(function() {
-			new WCF.Message.Smilies('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
+		require(['WoltLabSuite/Core/Ui/Smiley/Insert'], function (UiSmileyInsert) {
+			new UiSmileyInsert('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
 		});
 	</script>
 </div>

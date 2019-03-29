@@ -175,6 +175,8 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 			
 			$this->buildForm();
 		}
+		
+		$this->form->showSuccessMessage(true);
 	}
 	
 	/**
@@ -223,5 +225,12 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 		if ($this->form->hasValidationErrors()) {
 			throw new UserInputException($this->form->getPrefixedId());
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function validateSecurityToken() {
+		// does nothing, is handled by `IFormDocument` object
 	}
 }

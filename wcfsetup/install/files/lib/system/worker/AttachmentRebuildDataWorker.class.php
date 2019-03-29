@@ -45,6 +45,7 @@ class AttachmentRebuildDataWorker extends AbstractRebuildDataWorker {
 			try {
 				$action = new AttachmentAction([$attachment], 'generateThumbnails');
 				$action->executeAction();
+				$attachment->migrateStorage();
 			}
 			catch (SystemException $e) {}
 		}

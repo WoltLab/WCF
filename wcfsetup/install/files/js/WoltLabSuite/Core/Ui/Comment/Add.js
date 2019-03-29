@@ -323,6 +323,11 @@ function(
 			if (!User.userId && data.returnValues.guestDialog) {
 				UiDialog.openStatic('jsDialogGuestComment', data.returnValues.guestDialog, {
 					closable: false,
+					onClose: function() {
+						if (ControllerCaptcha.has('commentAdd')) {
+							ControllerCaptcha.delete('commentAdd');
+						}
+					},
 					title: Language.get('wcf.global.confirmation.title')
 				});
 				

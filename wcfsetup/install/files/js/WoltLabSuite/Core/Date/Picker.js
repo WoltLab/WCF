@@ -261,7 +261,7 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 				value = new Date(value).getTime();
 			}
 			else {
-				value = new Date((isMinDate ? 1970 : 2038), 0, 1).getTime();
+				value = new Date((isMinDate ? 1902 : 2038), 0, 1).getTime();
 			}
 			
 			elAttr(element, attribute, value);

@@ -136,6 +136,9 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 					->label('wcf.acp.devtools.project.path')
 					->required()
 					->addValidator(new FormFieldValidator('validPath', function (TextFormField $formField) {
+						// ensure that there is a trailing slash
+						$formField->value(FileUtil::addTrailingSlash($formField->getSaveValue() ?? ''));
+						
 						$path = $formField->getSaveValue();
 						
 						/** @var RadioButtonFormField $modeField */
@@ -951,11 +954,6 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 		}
 		
 		$this->saved();
-		
-		// re-build form after having created a new object
-		if ($this->formAction === 'create') {
-			$this->buildForm();
-		}
 		
 		WCF::getTPL()->assign('success', true);
 	}

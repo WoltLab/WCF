@@ -1,9 +1,12 @@
 <?php
 namespace wcf\system\form\builder;
-use wcf\system\WCF;
+use wcf\system\form\builder\button\FormButton;
 
 /**
  * Represents a form (document) in a dialog.
+ * 
+ * By default, the global form error message is now shown for dialog forms and it is assumed that
+ * the form is requested via an AJAX request.
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2019 WoltLab GmbH
@@ -13,13 +16,25 @@ use wcf\system\WCF;
  */
 class DialogFormDocument extends FormDocument {
 	/**
+	 * @inheritDoc
+	 */
+	protected $ajax = true;
+	
+	/**
 	 * is `true` if dialog from can be canceled and is `false` otherwise
 	 * @var	bool
 	 */
 	protected $isCancelable = true;
 	
 	/**
+	 * @inheritDoc
+	 */
+	protected $showErrorMessage = false;
+	
+	/**
 	 * Sets whether the dialog from can be canceled and return this document.
+	 * 
+	 * For cancelable dialog forms, a cancel button is added.
 	 * 
 	 * @param	bool	$cancelable	determines if dialog from can be canceled
 	 * @return	static			this document
@@ -33,12 +48,16 @@ class DialogFormDocument extends FormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml() {
-		return WCF::getTPL()->fetch(
-			'__dialogForm',
-			'wcf',
-			array_merge($this->getHtmlVariables(), ['form' => $this])
-		);
+	protected function createDefaultButton() {
+		parent::createDefaultButton();
+		
+		if ($this->isCancelable()) {
+			$this->addButton(
+				FormButton::create('cancelButton')
+					->attribute('data-type', 'cancel')
+					->label('wcf.global.button.cancel')
+			);
+		}
 	}
 	
 	/**

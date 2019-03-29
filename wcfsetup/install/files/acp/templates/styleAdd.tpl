@@ -347,25 +347,26 @@
 					
 					{event name='faviconFields'}
 				</section>
-			
-				{if MODULE_USER_COVER_PHOTO}
-					<section class="section">
+				
+				<section class="section">
+					<header class="sectionHeader">
 						<h2 class="sectionTitle">{lang}wcf.acp.style.general.coverPhoto{/lang}</h2>
-						
-						<dl>
-							<dt><label for="coverPhoto">{lang}wcf.acp.style.coverPhoto{/lang}</label></dt>
-							<dd>
-								<div id="coverPhotoPreview" style="background-image: url({@$__wcf->getPath()}images/coverPhotos/{@$style->getCoverPhoto()})"></div>
-								<div id="uploadCoverPhoto">
-									<a href="#" class="button jsButtonDeleteCoverPhoto"{if !$style->coverPhotoExtension} style="display:none"{/if}>{lang}wcf.global.button.delete{/lang}</a>
-								</div>
-								<small>{lang}wcf.acp.style.coverPhoto.description{/lang}</small>
-							</dd>
-						</dl>
-						
-						{event name='coverPhotoFields'}
-					</section>
-				{/if}
+						<p class="sectionDescription">{lang}wcf.acp.style.general.coverPhoto.description{/lang}</p>
+					</header>
+					
+					<dl>
+						<dt><label for="coverPhoto">{lang}wcf.acp.style.coverPhoto{/lang}</label></dt>
+						<dd>
+							<div id="coverPhotoPreview" style="background-image: url({@$__wcf->getPath()}images/coverPhotos/{@$style->getCoverPhoto()})"></div>
+							<div id="uploadCoverPhoto">
+								<a href="#" class="button jsButtonDeleteCoverPhoto"{if !$style->coverPhotoExtension} style="display:none"{/if}>{lang}wcf.global.button.delete{/lang}</a>
+							</div>
+							<small>{lang}wcf.acp.style.coverPhoto.description{/lang}</small>
+						</dd>
+					</dl>
+					
+					{event name='coverPhotoFields'}
+				</section>
 			{/if}
 			
 			{event name='generalFieldsets'}

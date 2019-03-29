@@ -23,6 +23,7 @@ define(['Language'], function(Language) {
 		_init: function() {
 			_overlay = elCreate('div');
 			_overlay.classList.add('spinner');
+			elAttr(_overlay, 'role', 'status');
 			
 			var icon = elCreate('span');
 			icon.className = 'icon icon48 fa-spinner';

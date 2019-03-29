@@ -20,12 +20,6 @@
 	<p class="warning">{lang}wcf.acp.devtools.project.edit.warning{/lang}</p>
 {/if}
 
-{include file='formError'}
-
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
-
 {@$form->getHtml()}
 
 {include file='footer'}

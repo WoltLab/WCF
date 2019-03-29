@@ -27,7 +27,9 @@ class FormDocument implements IFormDocument {
 	use TFormNode;
 	use TFormParentNode {
 		TFormParentNode::cleanup insteadof TFormNode;
-		readValues as protected defaultReadValues;
+		hasValidationErrors as protected traitHasValidationErrors;
+		readValues as protected traitReadValues;
+		validate as protected traitValidate;
 	}
 	
 	/**
@@ -68,10 +70,22 @@ class FormDocument implements IFormDocument {
 	protected $enctype = '';
 	
 	/**
+	 * global form error message
+	 * @var	null|string
+	 */
+	protected $errorMessage;
+	
+	/**
 	 * is `true` if form document has already been built and is `false` otherwise
 	 * @var	bool
 	 */
 	protected $isBuilt = false;
+	
+	/**
+	 * is `true` if form document is in invalid due to external factors and is `false` otherwise
+	 * @var	boolean
+	 */
+	protected $invalid = false;
 	
 	/**
 	 * form mode (see `self::FORM_MODE_*` constants)
@@ -97,6 +111,25 @@ class FormDocument implements IFormDocument {
 	 * @var	null|array
 	 */
 	protected $requestData;
+	
+	/**
+	 * is `true` if global form error message will be shown if there are validation errors and
+	 * is `false` otherwise
+	 * @var	boolean
+	 */
+	protected $showErrorMessage = true;
+	
+	/**
+	 * is `true` if global form success message will be shown and is `false` otherwise
+	 * @var	boolean
+	 */
+	protected $showSuccessMessage = false;
+	
+	/**
+	 * global form success message
+	 * @var	null|string
+	 */
+	protected $successMessage;
 	
 	/**
 	 * Cleans up the form document before the form document object is destroyed.
@@ -207,8 +240,31 @@ class FormDocument implements IFormDocument {
 			FormButton::create('submitButton')
 				->label('wcf.global.button.submit')
 				->accessKey('s')
+				->submit(!$this->isAjax())
 				->addClass('buttonPrimary')
 		);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function errorMessage($languageItem = null, array $variables = []) {
+		if ($languageItem === null) {
+			if (!empty($variables)) {
+				throw new \InvalidArgumentException("Cannot use variables when unsetting error message of form '{$this->getId()}'");
+			}
+			
+			$this->errorMessage = null;
+		}
+		else {
+			if (!is_string($languageItem)) {
+				throw new \InvalidArgumentException("Given error message language item is no string, " . gettype($languageItem) . " given.");
+			}
+			
+			$this->errorMessage = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
+		}
+		
+		return $this;
 	}
 	
 	/**
@@ -295,6 +351,17 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
+	public function getErrorMessage() {
+		if ($this->errorMessage === null) {
+			$this->errorMessage = WCF::getLanguage()->getDynamicVariable('wcf.global.form.error');
+		}
+		
+		return $this->errorMessage;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getFormMode() {
 		if ($this->formMode === null) {
 			$this->formMode = self::FORM_MODE_CREATE;
@@ -354,8 +421,31 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
+	public function getSuccessMessage() {
+		if ($this->successMessage === null) {
+			$suffix = 'edit';
+			if ($this->getFormMode() === IFormDocument::FORM_MODE_CREATE) {
+				$suffix = 'add';
+			}
+			
+			$this->successMessage = WCF::getLanguage()->getDynamicVariable('wcf.global.success.' . $suffix);
+		}
+		
+		return $this->successMessage;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function hasDefaultButton() {
 		return $this->addDefaultButton;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function hasValidationErrors() {
+		return $this->isInvalid() || $this->traitHasValidationErrors();
 	}
 	
 	/**
@@ -374,8 +464,24 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
+	public function invalid($invalid = true) {
+		$this->invalid = $invalid;
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function isAjax() {
 		return $this->ajax;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function isInvalid() {
+		return $this->invalid;
 	}
 	
 	/**
@@ -445,7 +551,7 @@ class FormDocument implements IFormDocument {
 			$this->requestData = $_POST;
 		}
 		
-		return $this->defaultReadValues();
+		return $this->traitReadValues();
 	}
 	
 	/**
@@ -459,5 +565,74 @@ class FormDocument implements IFormDocument {
 		$this->requestData = $requestData;
 		
 		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function showErrorMessage($showErrorMessage = true) {
+		$this->showErrorMessage = $showErrorMessage;
+
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function showSuccessMessage($showSuccessMessage = true) {
+		$this->showSuccessMessage = $showSuccessMessage;
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function showsErrorMessage() {
+		return $this->showErrorMessage;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function showsSuccessMessage() {
+		return $this->showSuccessMessage;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function successMessage($languageItem = null, array $variables = []) {
+		if ($languageItem === null) {
+			if (!empty($variables)) {
+				throw new \InvalidArgumentException("Cannot use variables when unsetting success message of form '{$this->getId()}'");
+			}
+			
+			$this->successMessage = null;
+		}
+		else {
+			if (!is_string($languageItem)) {
+				throw new \InvalidArgumentException("Given success message language item is no string, " . gettype($languageItem) . " given.");
+			}
+			
+			$this->successMessage = WCF::getLanguage()->getDynamicVariable($languageItem, $variables);
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validate() {
+		// check security token
+		if (!isset($_POST['t']) || !WCF::getSession()->checkSecurityToken($_POST['t'])) {
+			$this->invalid();
+			
+			$this->errorMessage('wcf.global.form.error.securityToken');
+		}
+		else {
+			$this->traitValidate();
+		}
 	}
 }

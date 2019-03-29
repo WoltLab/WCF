@@ -197,7 +197,7 @@ define([], function () {
 			var charList = "0123456789ABCDEF";
 			
 			if (g === undefined) {
-				if (r.toString().match(/^rgba?\((\d+), ?(\d+), ?(d\+)(?:, ?[0-9.]+)?\)$/)) {
+				if (r.toString().match(/^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/)) {
 					r = RegExp.$1;
 					g = RegExp.$2;
 					b = RegExp.$3;

@@ -119,20 +119,8 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function encodeJS($string) {
-		// unify newlines
 		$string = self::unifyNewlines($string);
-		
-		// escape backslash
-		$string = str_replace("\\", "\\\\", $string);
-		
-		// escape singe quote
-		$string = str_replace("'", "\'", $string);
-		
-		// escape new lines
-		$string = str_replace("\n", '\n', $string);
-		
-		// escape slashes
-		$string = str_replace("/", '\/', $string);
+		$string = str_replace(["\\", "'", "\n", "/"], ["\\\\", "\'", '\n', '\/'], $string);
 		
 		return $string;
 	}
