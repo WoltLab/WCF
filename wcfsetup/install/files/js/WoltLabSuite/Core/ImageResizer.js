@@ -106,6 +106,47 @@ define([
 		},
 		
 		/**
+		 * Loads the given file into an image object and parses Exif information.
+		 * 
+		 * @param   {File}    file the file to load
+		 * @returns {Promise} resulting image data
+		 */
+		loadFile: function (file) {
+			var exif = undefined;
+			if (file.type === 'image/jpeg') {
+				// Extract EXIF data
+				exif = ExifUtil.getExifBytesFromJpeg(file);
+			}
+			
+			var loader = new Promise(function (resolve, reject) {
+				var reader = new FileReader();
+				var image = new Image();
+				
+				reader.addEventListener('load', function () {
+					image.src = reader.result;
+				});
+				
+				reader.addEventListener('error', function () {
+					reader.abort();
+					reject(reader.error);
+				});
+				
+				image.addEventListener('error', reject);
+				
+				image.addEventListener('load', function () {
+					resolve(image);
+				});
+				
+				reader.readAsDataURL(file);
+			});
+			
+			return Promise.all([ exif, loader ])
+				.then(function (result) {
+					return { exif: result[0], image: result[1] };
+				});
+		},
+		
+		/**
 		 * Downscales an image given as File object.
 		 *
 		 * @param       {File}        file              the image to resize
