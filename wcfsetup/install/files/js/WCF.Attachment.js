@@ -320,9 +320,6 @@ if (COMPILER_TARGET_DEFAULT) {
 					var maxSize = this._buttonSelector.data('maxSize');
 					
 					var resizer = new ImageResizer();
-					var maxWidth = this._options.autoScale.maxWidth;
-					var maxHeight = this._options.autoScale.maxHeight;
-					var quality = this._options.autoScale.quality;
 					
 					// Resize the images in series.
 					// As our resizer is based on Pica it will use multiple workers per image if possible.
@@ -339,6 +336,20 @@ if (COMPILER_TARGET_DEFAULT) {
 							var promise = resizer.loadFile(file)
 								.then((function (result) {
 									var exif = result.exif;
+									var maxWidth = this._options.autoScale.maxWidth;
+									var maxHeight = this._options.autoScale.maxHeight;
+									var quality = this._options.autoScale.quality;
+									
+									if (window.devicePixelRatio >= 2) {
+										var realWidth = window.screen.width * window.devicePixelRatio;
+										var realHeight = window.screen.height * window.devicePixelRatio;
+										// Check whether the width of the image is roughly the width of the physical screen, and
+										// the height of the image is at least the height of the physical screen.
+										if (realWidth - 10 < result.image.width && result.image.width < realWidth + 10 && realHeight - 10 < result.image.height) {
+											// This appears to be a screenshot from a HiDPI device in portrait mode: Scale to logical size
+											maxWidth = Math.min(maxWidth, window.screen.width);
+										}
+									}
 									
 									return resizer.resize(result.image, maxWidth, maxHeight, quality, file.size > maxSize, timeout)
 										.then((function (resizedImage) {
