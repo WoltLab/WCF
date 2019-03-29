@@ -167,7 +167,6 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		// extract embedded content
 		$this->processEmbeddedContent();
 		
-		
 		EventHandler::getInstance()->fireAction($this, 'afterProcess');
 	}
 	
