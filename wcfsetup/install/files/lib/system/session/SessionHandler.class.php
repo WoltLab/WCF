@@ -1002,10 +1002,9 @@ class SessionHandler extends SingletonFactory {
 	 * @since 5.2
 	 */
 	public function deleteIfNew() {
-		if (!$this->isFirstVisit()) return;
-		if ($this->getUser()->userID) return;
-		
-		$this->delete();
+		if ($this->isFirstVisit() && !$this->getUser()->userID) {
+			$this->delete();
+		}
 	}
 	
 	/**
