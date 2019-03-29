@@ -1392,7 +1392,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.option.attachment_image_autoscale_quality"><![CDATA[Qualitätsstufe]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_quality.description"><![CDATA[Bestimmt die Qualität des skalierten Bildes.]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type"><![CDATA[Dateityp]]></item>
-		<item name="wcf.acp.option.attachment_image_autoscale_file_type.jpeg"><![CDATA[JPEG (verlustbehaftet, keine Transparenz, erzeugt in der Regel kleine Dateien)]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_file_type.jpeg"><![CDATA[JPEG (verlustbehaftet, erzeugt in der Regel kleine Dateien)]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type.keep"><![CDATA[Dateityp beibehalten]]></item>
 		<item name="wcf.acp.option.module_attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.option.module_smiley"><![CDATA[Smileys]]></item>

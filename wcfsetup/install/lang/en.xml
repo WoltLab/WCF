@@ -1369,7 +1369,7 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.option.attachment_image_autoscale_quality"><![CDATA[Quality]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_quality.description"><![CDATA[Defines the quality of the scaled image.]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type"><![CDATA[File type]]></item>
-		<item name="wcf.acp.option.attachment_image_autoscale_file_type.jpeg"><![CDATA[JPEG (lossy, does not support transparency, usually the generated files are small)]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_file_type.jpeg"><![CDATA[JPEG (lossy, usually the generated files are small)]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type.keep"><![CDATA[Keep the file type]]></item>
 		<item name="wcf.acp.option.module_attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.option.module_smiley"><![CDATA[Smilies]]></item>

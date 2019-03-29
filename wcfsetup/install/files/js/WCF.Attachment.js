@@ -296,9 +296,10 @@ if (COMPILER_TARGET_DEFAULT) {
 			
 			require([
 				'WoltLabSuite/Core/FileUtil',
-				'WoltLabSuite/Core/ImageResizer',
+				'WoltLabSuite/Core/Image/ImageUtil',
+				'WoltLabSuite/Core/Image/Resizer',
 				'WoltLabSuite/Core/Ajax/Status'
-			], (function (FileUtil, ImageResizer, AjaxStatus) {
+			], (function (FileUtil, ImageUtil, ImageResizer, AjaxStatus) {
 				AjaxStatus.show();
 				
 				var files = [];
@@ -360,7 +361,7 @@ if (COMPILER_TARGET_DEFAULT) {
 											
 											var fileType = this._options.autoScale.fileType;
 											
-											if (this._options.autoScale.fileType === 'keep') {
+											if (this._options.autoScale.fileType === 'keep' || ImageUtil.containsTransparentPixels(resizedImage)) {
 												fileType = file.type;
 											}
 											

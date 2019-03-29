@@ -4,7 +4,7 @@
  * @author	Maximilian Mader
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/ExifUtil
+ * @module	WoltLabSuite/Core/Image/ExifUtil
  */
 define([], function() {
 	"use strict";

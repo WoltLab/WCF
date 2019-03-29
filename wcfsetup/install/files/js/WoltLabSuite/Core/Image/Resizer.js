@@ -4,11 +4,11 @@
  * @author	Maximilian Mader
  * @copyright	2001-2018 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/ImageResizer
+ * @module	WoltLabSuite/Core/Image/Resizer
  */
 define([
 	'WoltLabSuite/Core/FileUtil',
-	'WoltLabSuite/Core/ExifUtil',
+	'WoltLabSuite/Core/Image/ExifUtil',
 	'Pica'
 ], function(FileUtil, ExifUtil, Pica) {
 	"use strict";
@@ -194,7 +194,8 @@ define([
 			
 			var options = {
 				quality: resizeQuality,
-				cancelToken: cancelPromise
+				cancelToken: cancelPromise,
+				alpha: true
 			};
 			
 			return pica.resize(image, canvas, options);
