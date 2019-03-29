@@ -174,14 +174,9 @@ define([
 			}
 			
 			// Keep image ratio
-			if (newWidth >= newHeight) {
-				canvas.width = newWidth;
-				canvas.height = newWidth * (image.height / image.width);
-			}
-			else {
-				canvas.width = newHeight * (image.width / image.height);
-				canvas.height = newHeight;
-			}
+			var ratio = Math.min(newWidth / image.width, newHeight / image.height);
+			canvas.width = Math.floor(image.width * ratio);
+			canvas.height = Math.floor(image.height * ratio);
 			
 			// Map to Pica's quality
 			var resizeQuality = 1;
