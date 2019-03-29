@@ -112,7 +112,7 @@ define([
 		 * @param       {Number}      [maxWidth]        maximum width
 		 * @param       {Number}      [maxHeight]       maximum height
 		 * @param       {Number}      [quality]         quality in percent
-		 * @param       {boolean}     [force]           whether to force scaling even if unneeded
+		 * @param       {boolean}     [force]           whether to force scaling even if unneeded (thus re-encoding with a possibly smaller file size)
 		 * @param       {Promise}     cancelPromise     a Promise used to cancel pica's operation
 		 * @returns     {Promise<{exif: any, image: any} | never>} a Promise resolving with the resized image as Canvas and optional EXIF data
 		 */
