@@ -1,21 +1,46 @@
 <?php
 namespace wcf\system\html\node;
-
 use wcf\data\bbcode\BBCode;
 use wcf\data\ITitledObject;
 use wcf\system\Regex;
 use wcf\util\DOMUtil;
 use wcf\util\JSON;
 
+/**
+ * Wrapper for links that do not have a dedicated title and are most likely the result of
+ * the automatic link detection. Links that are placed in a dedicated line ("standalone")
+ * are marked as such.
+ * 
+ * @author      Alexander Ebert
+ * @copyright   2001-2019 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package     WoltLabSuite\Core\System\Html\Node
+ * @since       5.2
+ */
 class HtmlNodePlainLink {
+	/**
+	 * @var string
+	 */
 	protected $href = '';
 	
 	/**
 	 * @var \DOMElement
 	 */
 	protected $link;
+	
+	/**
+	 * @var int
+	 */
 	protected $objectID = 0;
+	
+	/**
+	 * @var bool
+	 */
 	protected $pristine = true;
+	
+	/**
+	 * @var bool
+	 */
 	protected $standalone = false;
 	
 	/**
@@ -23,11 +48,21 @@ class HtmlNodePlainLink {
 	 */
 	protected $topLevelParent;
 	
+	/**
+	 * @param \DOMElement $link
+	 * @param string $href
+	 */
 	public function __construct(\DOMElement $link, $href) {
 		$this->link = $link;
 		$this->href = $href;
 	}
 	
+	/**
+	 * Marks the link as inline, which means that there is adjacent objects or text
+	 * in the same line.
+	 * 
+	 * @return $this
+	 */
 	public function setIsInline() {
 		$this->standalone = false;
 		$this->topLevelParent = null;
@@ -35,6 +70,12 @@ class HtmlNodePlainLink {
 		return $this;
 	}
 	
+	/**
+	 * Marks the link as standalone, which means that it is the only content in a line.
+	 * 
+	 * @param \DOMElement $topLevelParent
+	 * @return $this
+	 */
 	public function setIsStandalone(\DOMElement $topLevelParent) {
 		$this->standalone = true;
 		$this->topLevelParent = $topLevelParent;
@@ -42,14 +83,30 @@ class HtmlNodePlainLink {
 		return $this;
 	}
 	
+	/**
+	 * Returns true if the element has not been modified before.
+	 * 
+	 * @return bool
+	 */
 	public function isPristine() {
 		return $this->pristine;
 	}
 	
+	/**
+	 * Returns true if the element was placed in a dedicated line.
+	 * 
+	 * @return bool
+	 */
 	public function isStandalone() {
 		return $this->standalone;
 	}
 	
+	/**
+	 * Detects and stores the object id of the link.
+	 * 
+	 * @param Regex $regex
+	 * @return int
+	 */
 	public function detectObjectID(Regex $regex) {
 		if ($regex->match($this->href, true)) {
 			$this->objectID = $regex->getMatches()[2][0];
@@ -58,10 +115,18 @@ class HtmlNodePlainLink {
 		return $this->objectID;
 	}
 	
+	/**
+	 * @return int
+	 */
 	public function getObjectID() {
 		return $this->objectID;
 	}
 	
+	/**
+	 * Replaces the text content of the link with the object's title.
+	 * 
+	 * @param ITitledObject $object
+	 */
 	public function setTitle(ITitledObject $object) {
 		$this->markAsTainted();
 		
@@ -69,6 +134,12 @@ class HtmlNodePlainLink {
 		$this->link->appendChild($this->link->ownerDocument->createTextNode($object->getTitle()));
 	}
 	
+	/**
+	 * Replaces the entire link, including any formatting, with the provided bbcode. This is
+	 * available for standalone links only.
+	 * 
+	 * @param BBCode $bbcode
+	 */
 	public function replaceWithBBCode(BBCode $bbcode) {
 		$this->markAsTainted();
 		
