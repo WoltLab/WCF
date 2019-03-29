@@ -162,10 +162,11 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		
 		EventHandler::getInstance()->fireAction($this, 'beforeEmbeddedProcess');
 		
+		$this->convertPlainLinks();
+		
 		// extract embedded content
 		$this->processEmbeddedContent();
 		
-		$this->convertPlainLinks();
 		
 		EventHandler::getInstance()->fireAction($this, 'afterProcess');
 	}
@@ -613,7 +614,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 					}
 				}
 				
-				if (!$mayContainOtherContent || $linebreaks > 1) {
+				if (!$mayContainOtherContent || $linebreaks <= 1) {
 					$this->plainLinks[] = $plainLink->setIsStandalone($parent);
 					continue;
 				}

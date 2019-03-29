@@ -144,7 +144,7 @@ class HtmlNodePlainLink {
 		$this->markAsTainted();
 		
 		if ($this->objectID === 0) {
-			throw new \UnexpectedValueException('The objectID must not be null.');
+			throw new \UnexpectedValueException('The objectID must not be zero.');
 		}
 		
 		$metacodeElement = $this->link->ownerDocument->createElement('woltlab-metacode');
