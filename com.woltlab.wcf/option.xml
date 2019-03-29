@@ -1058,12 +1058,14 @@ redis:wcf.acp.option.cache_source_type.redis</selectoptions>
 				<optiontype>integer</optiontype>
 				<defaultvalue>1920</defaultvalue>
 				<minvalue>1</minvalue>
+				<suffix>pixel</suffix>
 			</option>
 			<option name="attachment_image_autoscale_max_height">
 				<categoryname>message.attachment.autoscale</categoryname>
 				<optiontype>integer</optiontype>
 				<defaultvalue>1200</defaultvalue>
 				<minvalue>1</minvalue>
+				<suffix>pixel</suffix>
 			</option>
 			<option name="attachment_image_autoscale_file_type">
 				<categoryname>message.attachment.autoscale</categoryname>
