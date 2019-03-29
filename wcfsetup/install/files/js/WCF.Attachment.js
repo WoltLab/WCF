@@ -324,10 +324,6 @@ if (COMPILER_TARGET_DEFAULT) {
 					var maxHeight = this._options.autoScale.maxHeight;
 					var quality = this._options.autoScale.quality;
 					
-					if (this._options.autoScale.fileType !== 'keep') {
-						resizer.setFileType(this._options.autoScale.fileType);
-					}
-					
 					// Resize the images in series.
 					// As our resizer is based on Pica it will use multiple workers per image if possible.
 					promise = Array.prototype.reduce.call(files, (function (acc, file) {
@@ -342,11 +338,7 @@ if (COMPILER_TARGET_DEFAULT) {
 							
 							var promise = resizer.resize(file, maxWidth, maxHeight, quality, file.size > maxSize, timeout)
 								.then((function (result) {
-									if (result.image instanceof File) {
-										return result.image;
-									}
-									
-									var fileType = undefined;
+									var fileType = this._options.autoScale.fileType;
 									
 									if (this._options.autoScale.fileType === 'keep') {
 										fileType = file.type;
