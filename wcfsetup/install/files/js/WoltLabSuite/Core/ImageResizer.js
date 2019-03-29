@@ -78,24 +78,24 @@ define([
 		},
 		
 		/**
-		 * Converts the result of ImageResizer.resize() into a File
+		 * Converts the given object of exif data and image data into a File.
 		 *
-		 * @param       {Object{exif: Uint8Array|undefined, image: Canvas|File} result  the result of ImageResizer.resize()
+		 * @param       {Object{exif: Uint8Array|undefined, image: Canvas} data  object containing exif data and image data
 		 * @param       {String}        fileName        the name of the returned file
 		 * @param       {String}        [fileType]      the type of the returned image
 		 * @param       {Number}        [quality]       quality setting, currently only effective for "image/jpeg"
 		 * @returns     {Promise<File>} the File object
 		 */
-		getFile: function (result, fileName, fileType, quality) {
+		saveFile: function (data, fileName, fileType, quality) {
 			fileType = fileType || this.fileType;
 			quality = quality || this.quality;
 			
 			var basename = fileName.match(/(.+)(\..+?)$/);
 			
-			return pica.toBlob(result.image, fileType, quality)
+			return pica.toBlob(data.image, fileType, quality)
 				.then(function (blob) {
-					if (fileType === 'image/jpeg' && typeof result.exif !== 'undefined') {
-						return ExifUtil.setExifData(blob, result.exif);
+					if (fileType === 'image/jpeg' && typeof data.exif !== 'undefined') {
+						return ExifUtil.setExifData(blob, data.exif);
 					}
 					
 					return blob;
@@ -149,88 +149,55 @@ define([
 		/**
 		 * Downscales an image given as File object.
 		 *
-		 * @param       {File}        file              the image to resize
+		 * @param       {Image}       image             the image to resize
 		 * @param       {Number}      [maxWidth]        maximum width
 		 * @param       {Number}      [maxHeight]       maximum height
 		 * @param       {Number}      [quality]         quality in percent
 		 * @param       {boolean}     [force]           whether to force scaling even if unneeded (thus re-encoding with a possibly smaller file size)
-		 * @param       {Promise}     cancelPromise     a Promise used to cancel pica's operation
-		 * @returns     {Promise<{exif: any, image: any} | never>} a Promise resolving with the resized image as Canvas and optional EXIF data
+		 * @param       {Promise}     cancelPromise     a Promise used to cancel pica's operation when it resolves
+		 * @returns     {Promise<Blob | undefined>}     a Promise resolving with the resized image as a {Canvas} or undefined if no resizing happened
 		 */
-		resize: function (file, maxWidth, maxHeight, quality, force, cancelPromise) {
+		resize: function (image, maxWidth, maxHeight, quality, force, cancelPromise) {
 			maxWidth = maxWidth || this.maxWidth;
 			maxHeight = maxHeight || this.maxHeight;
 			quality = quality || this.quality;
 			force = force || false;
-
-			var exif;
-			if (file.type === 'image/jpeg') {
-				// Extract EXIF data
-				exif = ExifUtil.getExifBytesFromJpeg(file);
+			
+			var canvas = document.createElement('canvas');
+			
+			// Prevent upscaling
+			var newWidth = Math.min(maxWidth, image.width);
+			var newHeight = Math.min(maxHeight, image.height);
+			
+			if (image.width <= newWidth && image.height <= newHeight && !force) {
+				return Promise.resolve(undefined);
 			}
 			
-			var resizer = new Promise(function (resolve, reject) {
-				var reader = new FileReader();
-				var image = new Image();
-				
-				reader.addEventListener('load', function () {
-					image.src = reader.result;
-				});
-				
-				reader.addEventListener('error', function () {
-					reader.abort();
-					reject(reader.error);
-				});
-				
-				image.addEventListener('error', reject);
-				
-				image.addEventListener('load', function () {
-					var canvas = document.createElement('canvas');
-					
-					// Prevent upscaling
-					var newWidth = Math.min(maxWidth, image.width);
-					var newHeight = Math.min(maxHeight, image.height);
-					
-					if (image.width <= newWidth && image.height <= newHeight && !force) {
-						return resolve(file);
-					}
-					
-					// Keep image ratio
-					if (newWidth >= newHeight) {
-						canvas.width = newWidth;
-						canvas.height = newWidth * (image.height / image.width);
-					}
-					else {
-						canvas.width = newHeight * (image.width / image.height);
-						canvas.height = newHeight;
-					}
-					
-					// Map to Pica's quality
-					var resizeQuality = 1;
-					if (quality >= 0.8) {
-						resizeQuality = 3;
-					}
-					else if (quality >= 0.4) {
-						resizeQuality = 2;
-					}
-					
-					var options = {
-						quality: resizeQuality,
-						cancelToken: cancelPromise
-					};
-					
-					pica.resize(image, canvas, options).then(function (result) {
-						resolve(result);
-					}, reject);
-				});
-				
-				reader.readAsDataURL(file);
-			});
+			// Keep image ratio
+			if (newWidth >= newHeight) {
+				canvas.width = newWidth;
+				canvas.height = newWidth * (image.height / image.width);
+			}
+			else {
+				canvas.width = newHeight * (image.width / image.height);
+				canvas.height = newHeight;
+			}
 			
-			return Promise.all([ exif, resizer ])
-				.then(function (result) {
-					return { exif: result[0], image: result[1] };
-				});
+			// Map to Pica's quality
+			var resizeQuality = 1;
+			if (quality >= 0.8) {
+				resizeQuality = 3;
+			}
+			else if (quality >= 0.4) {
+				resizeQuality = 2;
+			}
+			
+			var options = {
+				quality: resizeQuality,
+				cancelToken: cancelPromise
+			};
+			
+			return pica.resize(image, canvas, options);
 		}
 	};
 	

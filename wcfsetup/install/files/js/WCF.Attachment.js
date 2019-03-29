@@ -336,24 +336,37 @@ if (COMPILER_TARGET_DEFAULT) {
 								}, 10000);
 							});
 							
-							var promise = resizer.resize(file, maxWidth, maxHeight, quality, file.size > maxSize, timeout)
+							var promise = resizer.loadFile(file)
 								.then((function (result) {
-									var fileType = this._options.autoScale.fileType;
+									var exif = result.exif;
 									
-									if (this._options.autoScale.fileType === 'keep') {
-										fileType = file.type;
-									}
-									
-									return resizer.getFile(result, file.name, fileType, quality);
+									return resizer.resize(result.image, maxWidth, maxHeight, quality, file.size > maxSize, timeout)
+										.then((function (resizedImage) {
+											// Check whether the image actually was resized
+											if (resizedImage === undefined) {
+												return file;
+											}
+											
+											var fileType = this._options.autoScale.fileType;
+											
+											if (this._options.autoScale.fileType === 'keep') {
+												fileType = file.type;
+											}
+											
+											return resizer.saveFile({
+												exif: exif,
+												image: resizedImage
+											}, file.name, fileType, quality);
+										}).bind(this))
+										.then(function (resizedFile) {
+											if (resizedFile.size > file.size) {
+												console.debug('[WCF.Attachment] File size of "' + file.name + '" increased, uploading untouched image.');
+												return file;
+											}
+											
+											return resizedFile;
+										});
 								}).bind(this))
-								.then(function (resizedFile) {
-									if (resizedFile.size > file.size) {
-										console.debug('[WCF.Attachment] File size of "' + file.name + '" increased, uploading untouched image.');
-										return file;
-									}
-									
-									return resizedFile;
-								})
 								.catch(function (error) {
 									console.debug('[WCF.Attachment] Failed to resize image "' + file.name + '":', error);
 									return file;
