@@ -235,8 +235,8 @@ class UploadFormField extends AbstractFormField {
 		parent::populate();
 		
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('upload', function(IFormDocument $document, array $parameters) {
-			$parameters[$this->getId()] = $this->getValue();
-			$parameters[$this->getId() . '_removedFiles'] = $this->getRemovedFiles(true);
+			$parameters[$this->getObjectProperty()] = $this->getValue();
+			$parameters[$this->getObjectProperty() . '_removedFiles'] = $this->getRemovedFiles(true);
 			
 			return $parameters;
 		}));
