@@ -69,7 +69,9 @@ class UploadFormField extends AbstractFormField {
 		$uploadField = new UploadField($this->getPrefixedId());
 		$uploadField->maxFiles = $this->getMaximum();
 		$uploadField->setImageOnly($this->isImageOnly());
-		$uploadField->setAllowSvgImage($this->svgImageAllowed());
+		if ($this->isImageOnly()) {
+			$uploadField->setAllowSvgImage($this->svgImageAllowed());
+		}
 		
 		return $uploadField;
 	}
