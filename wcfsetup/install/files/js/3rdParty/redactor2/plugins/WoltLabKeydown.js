@@ -100,6 +100,28 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 								}
 							}
 						}
+						else if (e.originalEvent.which === this.keyCode.DELETE && ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].indexOf(container.nodeName) !== -1 && this.utils.isEmpty(container.innerHTML)) {
+							// Pressing the [DEL] key inside an empty heading should remove the heading entirely, instead
+							// of moving the next element's content into it. There are two situations that need to be handled:
+							// 
+							//   1. There is adjacent content, remove the heading and set the caret at the beginning of it.
+							//   2. The heading is the last element, replace it with a `<p>` and move the caret inside of it.
+							var nextElement = container.nextElementSibling;
+							if (nextElement) {
+								nextElement = container.nextElementSibling;
+							}
+							else {
+								nextElement = elCreate('p');
+								nextElement.innerHTML = this.opts.invisibleSpace;
+								container.parentNode.appendChild(nextElement);
+							}
+							
+							container.parentNode.removeChild(container);
+							this.caret.start(nextElement);
+							
+							e.originalEvent.preventDefault();
+							return;
+						}
 						else if (this.detect.isWebkit() && container.nodeName === 'LI' && e.which === this.keyCode.DELETE) {
 							// check if caret is at the end of the list item, and if there is an adjacent list item
 							var anchorNode = selection.anchorNode;
