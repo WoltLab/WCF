@@ -16,11 +16,11 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
  */
 class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	/**
-	 * generate the table of contents
-	 * @var bool
+	 * Generate the table of contents, implicitly enable this for certain object types on demand.
+	 * @var bool|null
 	 * @since	5.2
 	 */
-	public $enableToc = false;
+	public $enableToc;
 	
 	/**
 	 * Removes any link contained inside the message text.
@@ -96,7 +96,9 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 		
 		MessageEmbeddedObjectManager::getInstance()->setActiveMessage($objectType, $objectID, $this->languageID);
 		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.message', $objectType);
-		$this->enableToc = (!empty($objectType->additionalData['enableToc']));
+		if ($this->enableToc === null) {
+			$this->enableToc = (!empty($objectType->additionalData['enableToc']));
+		}
 	}
 	
 	/**

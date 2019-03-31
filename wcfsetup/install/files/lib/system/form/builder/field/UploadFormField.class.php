@@ -46,7 +46,7 @@ class UploadFormField extends AbstractFormField {
 	 * Registers the current field in the upload handler.
 	 */
 	private function registerField() {
-		if (!UploadHandler::getInstance()->isRegisteredFieldId($this->getId())) {
+		if (!UploadHandler::getInstance()->isRegisteredFieldId($this->getPrefixedId())) {
 			UploadHandler::getInstance()->registerUploadField($this->buildUploadField());
 		}
 	}
@@ -55,8 +55,8 @@ class UploadFormField extends AbstractFormField {
 	 * Unregisters the current field in the upload handler.
 	 */
 	private function unregisterField() {
-		if (UploadHandler::getInstance()->isRegisteredFieldId($this->getId())) {
-			UploadHandler::getInstance()->unregisterUploadField($this->getId());
+		if (UploadHandler::getInstance()->isRegisteredFieldId($this->getPrefixedId())) {
+			UploadHandler::getInstance()->unregisterUploadField($this->getPrefixedId());
 		}
 	}
 	
@@ -66,10 +66,12 @@ class UploadFormField extends AbstractFormField {
 	 * @return      UploadField
 	 */
 	protected function buildUploadField() {
-		$uploadField = new UploadField($this->getId());
+		$uploadField = new UploadField($this->getPrefixedId());
 		$uploadField->maxFiles = $this->getMaximum();
 		$uploadField->setImageOnly($this->isImageOnly());
-		$uploadField->setAllowSvgImage($this->svgImageAllowed());
+		if ($this->isImageOnly()) {
+			$uploadField->setAllowSvgImage($this->svgImageAllowed());
+		}
 		
 		return $uploadField;
 	}
@@ -80,7 +82,7 @@ class UploadFormField extends AbstractFormField {
 	 * @return boolean
 	 */
 	private function isRegistered() {
-		return UploadHandler::getInstance()->isRegisteredFieldId($this->getId());
+		return UploadHandler::getInstance()->isRegisteredFieldId($this->getPrefixedId());
 	}
 	
 	/**
@@ -90,7 +92,7 @@ class UploadFormField extends AbstractFormField {
 	public function getValue() {
 		$this->registerField();
 		
-		return UploadHandler::getInstance()->getFilesByFieldId($this->getId());
+		return UploadHandler::getInstance()->getFilesByFieldId($this->getPrefixedId());
 	}
 	
 	/**
@@ -102,7 +104,7 @@ class UploadFormField extends AbstractFormField {
 	public function getRemovedFiles($processFiles = false) {
 		$this->registerField();
 		
-		return UploadHandler::getInstance()->getRemovedFiledByFieldId($this->getId(), $processFiles);
+		return UploadHandler::getInstance()->getRemovedFiledByFieldId($this->getPrefixedId(), $processFiles);
 	}
 	
 	/**
@@ -209,7 +211,7 @@ class UploadFormField extends AbstractFormField {
 		
 		$this->registerField();
 		
-		UploadHandler::getInstance()->registerFilesByField($this->getId(), $value);
+		UploadHandler::getInstance()->registerFilesByField($this->getPrefixedId(), $value);
 	}
 	
 	/**
@@ -235,8 +237,8 @@ class UploadFormField extends AbstractFormField {
 		parent::populate();
 		
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('upload', function(IFormDocument $document, array $parameters) {
-			$parameters[$this->getId()] = $this->getValue();
-			$parameters[$this->getId() . '_removedFiles'] = $this->getRemovedFiles(true);
+			$parameters[$this->getObjectProperty()] = $this->getValue();
+			$parameters[$this->getObjectProperty() . '_removedFiles'] = $this->getRemovedFiles(true);
 			
 			return $parameters;
 		}));

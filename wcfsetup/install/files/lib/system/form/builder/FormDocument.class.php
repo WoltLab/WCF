@@ -626,7 +626,7 @@ class FormDocument implements IFormDocument {
 	 */
 	public function validate() {
 		// check security token
-		if (!isset($_POST['t']) || !WCF::getSession()->checkSecurityToken($_POST['t'])) {
+		if (!isset($_REQUEST['t']) || !WCF::getSession()->checkSecurityToken($_REQUEST['t'])) {
 			$this->invalid();
 			
 			$this->errorMessage('wcf.global.form.error.securityToken');
