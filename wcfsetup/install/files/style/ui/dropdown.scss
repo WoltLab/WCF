@@ -66,6 +66,16 @@
 	}
 }
 
+@include screen-md-down {
+	/* iOS WebKit fails to calculate absolute positions when the documentElement is
+	   set to `overflow: hidden`, causing the site to implicitly scroll. Elements
+	   with absolute positioning are still relative to (0,0) and are thus (partially)
+	   moved out of the viewport. */ 
+	html.iOS .dropdownMenu.dropdownOpen {
+		position: fixed;
+	}
+}
+
 .dropdownIndicator::after {
 	content: $fa-var-caret-down;
 	font-family: FontAwesome;
