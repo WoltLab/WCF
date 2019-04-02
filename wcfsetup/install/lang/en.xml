@@ -1318,7 +1318,7 @@
 		<item name="wcf.acp.package.uninstallation.step.success"><![CDATA[Uninstallation completed]]></item>
 		<item name="wcf.acp.package.uninstallation.step.uninstall"><![CDATA[Package “{$queue->packageName}” is being uninstalled …]]></item>
 		<item name="wcf.acp.package.uninstallation.title"><![CDATA[Uninstallation]]></item>
-		<item name="wcf.acp.package.uninstall.step.prepare"><![CDATA[Preparing uninstallation …]]></item>
+		<item name="wcf.acp.package.uninstallation.step.prepare"><![CDATA[Preparing uninstallation …]]></item>
 		<item name="wcf.acp.package.updateDate"><![CDATA[Update Date]]></item>
 		<item name="wcf.acp.package.update.credentials"><![CDATA[Credentials]]></item>
 		<item name="wcf.acp.package.update.error.listNotFound"><![CDATA[The package list could not be retrieved.]]></item>
