@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\form\builder\field;
 use wcf\system\captcha\ICaptchaHandler;
+use wcf\system\exception\UserInputException;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IObjectTypeFormNode;
 use wcf\system\form\builder\TObjectTypeFormNode;
 
@@ -22,6 +24,17 @@ class CaptchaFormField extends AbstractFormField implements IObjectTypeFormNode 
 	/**
 	 * @inheritDoc
 	 */
+	protected $templateName = '__captchaFormField';
+	
+	/**
+	 * exception thrown by the captcha API during validation
+	 * @var	null|UserInputException
+	 */
+	protected $validationException;
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function cleanup() {
 		try {
 			/** @var ICaptchaHandler $captcha */
@@ -39,11 +52,18 @@ class CaptchaFormField extends AbstractFormField implements IObjectTypeFormNode 
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml() {
-		/** @var ICaptchaHandler $captcha */
-		$captcha = $this->getObjectType()->getProcessor();
+	public function getHtmlVariables() {
+		$variables = [
+			'ajaxCaptcha' => $this->getDocument()->isAjax(),
+			'captchaID' => $this->getPrefixedId()
+		];
 		
-		return $captcha->getFormElement();
+		if ($this->validationException !== null) {
+			$variables['errorField'] = $this->validationException->getField();
+			$variables['errorType'] = $this->validationException->getType();
+		}
+		
+		return $variables;
 	}
 	
 	/**
@@ -51,6 +71,13 @@ class CaptchaFormField extends AbstractFormField implements IObjectTypeFormNode 
 	 */
 	public function getObjectTypeDefinition() {
 		return 'com.woltlab.wcf.captcha';
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function isAvailable() {
+		return $this->objectType !== null && parent::isAvailable();
 	}
 	
 	/**
@@ -103,7 +130,13 @@ class CaptchaFormField extends AbstractFormField implements IObjectTypeFormNode 
 		/** @var ICaptchaHandler $captcha */
 		$captcha = $this->getObjectType()->getProcessor();
 		
-		$captcha->validate();
+		try {
+			$captcha->validate();
+		}
+		catch (UserInputException $e) {
+			$this->validationException = $e;
+			$this->addValidationError(new FormFieldValidationError($e->getType()));
+		}
 	}
 	
 	/**
