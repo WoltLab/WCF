@@ -18,6 +18,11 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 	use TNullableFormField;
 	
 	/**
+	 * @inheritDoc
+	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Date';
+	
+	/**
 	 * date time format of the save value
 	 * @var	string
 	 */

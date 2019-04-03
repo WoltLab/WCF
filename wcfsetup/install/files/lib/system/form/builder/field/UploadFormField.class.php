@@ -24,6 +24,11 @@ class UploadFormField extends AbstractFormField {
 	use TMinimumFormField;
 	
 	/**
+	 * @inheritDoc
+	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+	
+	/**
 	 * This flag indicates whether only images can uploaded via this field.
 	 * <strong>Heads up:</strong> SVG images can contain bad code, therefore do not
 	 * use this option, outside the acp or check the file whether remote code is contained.

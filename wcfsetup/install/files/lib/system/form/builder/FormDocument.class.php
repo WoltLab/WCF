@@ -151,7 +151,11 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function addButton(IFormButton $button) {
-		$this->buttons[] = $button;
+		if (isset($this->buttons[$button->getId()])) {
+			throw new \InvalidArgumentException("There is already button with id '{$button->getId()}'.");
+		}
+		
+		$this->buttons[$button->getId()] = $button;
 		
 		$button->parent($this);
 		

@@ -19,6 +19,11 @@ class MultipleSelectionFormField extends AbstractFormField implements IFilterabl
 	/**
 	 * @inheritDoc
 	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Checkboxes';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $templateName = '__multipleSelectionFormField';
 	
 	/**

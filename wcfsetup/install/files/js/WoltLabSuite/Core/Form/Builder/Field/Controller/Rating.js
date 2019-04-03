@@ -4,7 +4,7 @@
  * @author	Matthias Schmidt
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Field/Rating
+ * @module	WoltLabSuite/Core/Form/Builder/Field/Controller/Rating
  * @since	5.2
  */
 define(['Dictionary'], function(Dictionary) {
@@ -32,6 +32,7 @@ define(['Dictionary'], function(Dictionary) {
 			}
 			
 			this._input = elCreate('input');
+			this._input.id = fieldId;
 			this._input.name = fieldId;
 			this._input.type = 'hidden';
 			this._input.value = value;

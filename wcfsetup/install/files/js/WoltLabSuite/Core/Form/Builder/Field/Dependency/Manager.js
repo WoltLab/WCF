@@ -306,6 +306,47 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 			}
 			
 			_forms.add(form);
+		},
+		
+		/**
+		 * Unregisters the form with the given id and all of its dependencies.
+		 * 
+		 * @param	{string}	formId		id of unregistered form
+		 */
+		unregister: function(formId) {
+			var form = elById(formId);
+			
+			if (form === null) {
+				throw new Error("Unknown element with id '" + formId + "'");
+			}
+			
+			if (!_forms.has(form)) {
+				throw new Error("Form with id '" + formId + "' has not been registered.");
+			}
+			
+			_forms.delete(form);
+			
+			_dependencyHiddenNodes.forEach(function(hiddenNode) {
+				if (form.contains(hiddenNode)) {
+					_dependencyHiddenNodes.delete(hiddenNode);
+				}
+			});
+			_nodeDependencies.forEach(function(dependencies, nodeId) {
+				if (form.contains(elById(nodeId))) {
+					_nodeDependencies.delete(nodeId);
+				}
+				
+				for (var i = 0, length = dependencies.length; i < length; i++) {
+					var fields = dependencies[i].getFields();
+					for (var j = 0, length = fields.length; j < length; j++) {
+						var field = fields[j];
+						
+						_fields.delete(field.id);
+						
+						_validatedFieldProperties.delete(field);
+					}
+				}
+			});
 		}
 	};
 });

@@ -70,6 +70,21 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		},
 		
 		/**
+		 * Unregisters the element with the given id.
+		 * 
+		 * @param	{string}	elementId
+		 * @since	5.2
+		 */
+		unregister: function(elementId) {
+			if (!_values.has(elementId)) {
+				throw new Error("Unknown element id '" + elementId + "'.");
+			}
+			
+			_values.delete(elementId);
+			_elements.delete(elementId);
+		},
+		
+		/**
 		 * Caches common event listener callbacks.
 		 */
 		_setup: function() {

@@ -4,7 +4,7 @@
  * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Field/Label
+ * @module	WoltLabSuite/Core/Form/Builder/Field/Controller/Label
  * @since	5.2
  */
 define(['Core', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], function(Core, DomUtil, Language, UiSimpleDropdown) {
@@ -34,6 +34,7 @@ define(['Core', 'Dom/Util', 'Language', 'Ui/SimpleDropdown'], function(Core, Dom
 			
 			this._input = elCreate('input');
 			this._input.type = 'hidden';
+			this._input.id = fieldId;
 			this._input.name = fieldId;
 			this._input.value = ~~labelId;
 			this._formFieldContainer.appendChild(this._input);

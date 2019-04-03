@@ -42,6 +42,11 @@ class UsernameFormField extends AbstractFormField implements IAutoFocusFormField
 	/**
 	 * @inheritDoc
 	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $templateName = '__usernameFormField';
 	
 	/**

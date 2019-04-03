@@ -1,7 +1,21 @@
 <script data-relocate="true">
 	{* register form with dependency manager before any form field-related JavaScript code is executed below *}
-	require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager'], function(FormBuilderFieldDependencyManager) {
+	require([
+		'WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager'
+		{if $form->isAjax()}
+			, 'WoltLabSuite/Core/Form/Builder/Manager'
+		{/if}
+	], function(
+		FormBuilderFieldDependencyManager
+		{if $form->isAjax()}
+			, FormBuilderManager
+		{/if}
+	) {
 		FormBuilderFieldDependencyManager.register('{@$form->getId()}');
+		
+		{if $form->isAjax()}
+			FormBuilderManager.registerForm('{@$form->getId()}');
+		{/if}
 	});
 </script>
 

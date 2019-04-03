@@ -49,6 +49,11 @@ class RatingFormField extends AbstractFormField implements IImmutableFormField, 
 	/**
 	 * @inheritDoc
 	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $templateName = '__ratingFormField';
 	
 	/**

@@ -337,7 +337,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * @return	boolean
 	 */
 	public function supportsQuotes() {
-		return $this->supportQuotes !== null;
+		return $this->supportQuotes;
 	}
 	
 	/**

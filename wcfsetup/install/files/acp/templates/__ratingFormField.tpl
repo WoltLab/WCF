@@ -17,7 +17,7 @@
 </noscript>
 
 <script data-relocate="true">
-	require(['WoltLabSuite/Core/Form/Builder/Field/Rating'], function(FormBuilderFieldRating) {
+	require(['WoltLabSuite/Core/Form/Builder/Field/Controller/Rating'], function(FormBuilderFieldRating) {
 		new FormBuilderFieldRating(
 			'{@$field->getPrefixedId()}',
 			{if $field->getValue() !== null}{@$field->getValue()}{else}''{/if},

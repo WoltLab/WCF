@@ -24,6 +24,11 @@ class CaptchaFormField extends AbstractFormField implements IObjectTypeFormNode 
 	/**
 	 * @inheritDoc
 	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Captcha';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $templateName = '__captchaFormField';
 	
 	/**

@@ -22,6 +22,12 @@ abstract class AbstractFormField implements IFormField {
 	use TFormElement;
 	
 	/**
+	 * name of the JavaScript data handler module used for Ajax dialogs
+	 * @var	null|string
+	 */
+	protected $javaScriptDataHandlerModule;
+	
+	/**
 	 * name of the object property this field represents
 	 * @var	null|string
 	 */
@@ -98,7 +104,10 @@ abstract class AbstractFormField implements IFormField {
 		return WCF::getTPL()->fetch(
 			$this->templateName,
 			'wcf',
-			array_merge($this->getHtmlVariables(), ['field' => $this]),
+			array_merge($this->getHtmlVariables(), [
+				'field' => $this,
+				'javaScriptDataHandlerModule' => $this->javaScriptDataHandlerModule
+			]),
 			true
 		);
 	}
