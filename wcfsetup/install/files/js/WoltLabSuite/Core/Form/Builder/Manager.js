@@ -48,16 +48,14 @@ define([
 				promises.push(fieldData);
 			});
 			
-			return new Promise(function(resolve, reject) {
-				Promise.all(promises).then(function(promiseData) {
-					var data = {};
-					
-					for (var i = 0, length = promiseData.length; i < length; i++) {
-						data = Core.extend(data, promiseData[i]);
-					}
-					
-					resolve(data);
-				});
+			return Promise.all(promises).then(function(promiseData) {
+				var data = {};
+				
+				for (var i = 0, length = promiseData.length; i < length; i++) {
+					data = Core.extend(data, promiseData[i]);
+				}
+				
+				return data;
 			});
 		},
 		

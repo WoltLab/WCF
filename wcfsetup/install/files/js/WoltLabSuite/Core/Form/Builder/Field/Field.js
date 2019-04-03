@@ -64,13 +64,7 @@ define([], function() {
 		 * @return	{Promise}
 		 */
 		getData: function() {
-			var data = this._getData();
-			
-			if (!(data instanceof Promise)) {
-				return Promise.resolve(data);
-			}
-			
-			return data;
+			return Promise.resolve(this._getData());
 		},
 		
 		/**

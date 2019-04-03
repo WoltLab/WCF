@@ -63,22 +63,39 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 		 * @param	{object}	data	response data
 		 */
 		_ajaxSuccess: function(data) {
-			if (data.returnValues === undefined) {
-				throw new Error("Missing return data.");
+			switch (data.actionName) {
+				case this._actionName:
+					if (data.returnValues === undefined) {
+						throw new Error("Missing return data.");
+					}
+					else if (data.returnValues.dialog === undefined) {
+						throw new Error("Missing dialog template in return data.");
+					}
+					else if (data.returnValues.formId === undefined) {
+						throw new Error("Missing form id in return data.");
+					}
+					
+					this.destroy(true);
+					
+					this._formId = data.returnValues.formId;
+					this._dialogContent = data.returnValues.dialog;
+					
+					UiDialog.open(this, this._dialogContent);
+					
+					break;
+					
+				case this._options.submitActionName:
+					this.destroy();
+					
+					if (typeof this._options.successCallback === 'function') {
+						this._options.successCallback(data.returnValues || {});
+					}
+					
+					break;
+					
+				default:
+					throw new Error("Cannot handle action '" + data.actionName + "'.");
 			}
-			else if (data.returnValues.dialog === undefined) {
-				throw new Error("Missing dialog template in return data.");
-			}
-			else if (data.returnValues.formId === undefined) {
-				throw new Error("Missing form id in return data.");
-			}
-			
-			this.destroy(true);
-			
-			this._formId = data.returnValues.formId;
-			this._dialogContent = data.returnValues.dialog;
-			
-			UiDialog.open(this, this._dialogContent);
 		},
 		
 		/**
