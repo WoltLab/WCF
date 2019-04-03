@@ -85,6 +85,10 @@ $.Redactor.prototype.WoltLabObserve = function() {
 					this.button.setActive('html');
 				}
 				
+				if (this.core.box()[0].classList.contains('redactorBoxFullscreen')) {
+					this.button.setActive('woltlabFullscreen');
+				}
+				
 				// WoltLab modification: we know that there will be quite a few
 				// active button states, so we'll simply check all ancestors one
 				// by one instead of searching the DOM over and over again
