@@ -4,7 +4,7 @@
  * @author	Matthias Schmidt
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Manager
+ * @module	WoltLabSuite/Core/Form/Builder/Dialog
  * @since	5.2
  */
 define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuilderManager, UiDialog) {
