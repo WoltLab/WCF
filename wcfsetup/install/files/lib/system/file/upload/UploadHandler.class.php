@@ -39,17 +39,22 @@ class UploadHandler extends SingletonFactory {
 	 * Registers a UploadField.
 	 * 
 	 * @param       UploadField     $field
+	 * @param       mixed           $requestData
 	 * 
 	 * @throws      \InvalidArgumentException       if a field with the given fieldId is already registered
 	 */
-	public function registerUploadField(UploadField $field) {
+	public function registerUploadField(UploadField $field, array $requestData = null) {
 		if (isset($this->fields[$field->getFieldId()])) {
 			throw new \InvalidArgumentException('UploadField with the id "'. $field->getFieldId() .'" is already registered.');
 		}
 		
+		if ($requestData === null) {
+			$requestData = $_POST;
+		}
+		
 		// read internal identifier
-		if (!empty($_POST) && isset($_POST[$field->getFieldId()]) && $this->isValidInternalId($_POST[$field->getFieldId()])) {
-			$field->setInternalId($_POST[$field->getFieldId()]);
+		if (!empty($requestData) && isset($requestData[$field->getFieldId()]) && $this->isValidInternalId($requestData[$field->getFieldId()])) {
+			$field->setInternalId($requestData[$field->getFieldId()]);
 			
 			$this->fields[$field->getFieldId()] = $field;
 		}

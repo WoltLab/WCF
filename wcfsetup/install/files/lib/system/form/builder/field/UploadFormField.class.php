@@ -52,7 +52,7 @@ class UploadFormField extends AbstractFormField {
 	 */
 	private function registerField() {
 		if (!UploadHandler::getInstance()->isRegisteredFieldId($this->getPrefixedId())) {
-			UploadHandler::getInstance()->registerUploadField($this->buildUploadField());
+			UploadHandler::getInstance()->registerUploadField($this->buildUploadField(), $this->getDocument()->getRequestData());
 		}
 	}
 	
