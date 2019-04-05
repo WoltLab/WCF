@@ -71,7 +71,7 @@
 	   set to `overflow: hidden`, causing the site to implicitly scroll. Elements
 	   with absolute positioning are still relative to (0,0) and are thus (partially)
 	   moved out of the viewport. */ 
-	html.iOS .dropdownMenu.dropdownOpen {
+	.pageOverlayActive.iOS .dropdownMenu.dropdownOpen {
 		position: fixed;
 	}
 }
