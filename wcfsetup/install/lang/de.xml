@@ -3878,6 +3878,7 @@ Dateianhänge:
 		<item name="wcf.form.field.rating"><![CDATA[Bewertung]]></item>
 		<item name="wcf.form.field.rating.ratingTitle"><![CDATA[{#$rating}/{#$maximumRating}]]></item>
 		<item name="wcf.form.field.rating.removeRating"><![CDATA[Bewertung zurücksetzen]]></item>
+		<item name="wcf.form.field.date.error.format"><![CDATA[Der angegebene Wert hat ein ungültiges Format.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Titelbild]]></item>

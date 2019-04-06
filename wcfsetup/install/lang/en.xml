@@ -3824,6 +3824,7 @@ Attachments:
 		<item name="wcf.form.field.rating"><![CDATA[Rating]]></item>
 		<item name="wcf.form.field.rating.ratingTitle"><![CDATA[{#$rating}/{#$maximumRating}]]></item>
 		<item name="wcf.form.field.rating.removeRating"><![CDATA[Reset Rating]]></item>
+		<item name="wcf.form.field.date.error.format"><![CDATA[The format of the entered value is invalid.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Cover Photo]]></item>
