@@ -302,10 +302,21 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
+	public function getButton($buttonId) {
+		if (!$this->hasButton($buttonId)) {
+			throw new \InvalidArgumentException("Unknown button with id '{$buttonId}'.");
+		}
+		
+		return $this->buttons[$buttonId];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getButtons() {
 		return $this->buttons;
 	}
-
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -436,6 +447,13 @@ class FormDocument implements IFormDocument {
 		}
 		
 		return $this->successMessage;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function hasButton($buttonId) {
+		return isset($this->buttons[$buttonId]);
 	}
 	
 	/**

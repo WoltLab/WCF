@@ -112,6 +112,16 @@ interface IFormDocument extends IFormParentNode {
 	public function getAction();
 	
 	/**
+	 * Returns the button with the given id.
+	 * 
+	 * @param	string		$buttonId	id of requested button
+	 * @return	IFormButton
+	 * 
+	 * @throws	\InvalidArgumentException	if no such button exists
+	 */
+	public function getButton($buttonId);
+	
+	/**
 	 * Returns the buttons registered for this form document.
 	 * 
 	 * @return	IFormButton[]
@@ -209,6 +219,14 @@ interface IFormDocument extends IFormParentNode {
 	 * @return	string
 	 */
 	public function getSuccessMessage();
+	
+	/**
+	 * Returns `true` if a button with the given id exists and `false` otherwise.
+	 *
+	 * @param	string		$buttonId	id of checked button
+	 * @return	boolean
+	 */
+	public function hasButton($buttonId);
 	
 	/**
 	 * Returns `true` if the default button is added to the form during in the `build()` method
