@@ -14,6 +14,8 @@ use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
  * @package	WoltLabSuite\Core\System\Cronjob
  */
 class UserGroupAssignmentCronjob extends AbstractCronjob {
+	const MAXIMUM_ASSIGNMENTS = 1000;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -22,12 +24,20 @@ class UserGroupAssignmentCronjob extends AbstractCronjob {
 		
 		$assignments = UserGroupAssignmentCacheBuilder::getInstance()->getData();
 		$usersToGroup = [];
+		
+		$assignmentCount = 0;
 		foreach ($assignments as $assignment) {
 			if (!isset($usersToGroup[$assignment->groupID])) {
 				$usersToGroup[$assignment->groupID] = [];
 			}
 			
-			$usersToGroup[$assignment->groupID] = array_merge($usersToGroup[$assignment->groupID], UserGroupAssignmentHandler::getInstance()->getUsers($assignment));
+			$newUsers = UserGroupAssignmentHandler::getInstance()->getUsers($assignment, self::MAXIMUM_ASSIGNMENTS);
+			$usersToGroup[$assignment->groupID] = array_merge($usersToGroup[$assignment->groupID], $newUsers);
+			
+			$assignmentCount += count($newUsers);
+			if ($assignmentCount > self::MAXIMUM_ASSIGNMENTS) {
+				break;
+			}
 		}
 		
 		foreach ($usersToGroup as $groupID => $users) {

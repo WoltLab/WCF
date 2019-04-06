@@ -90,13 +90,17 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 	 * assignment.
 	 * 
 	 * @param	UserGroupAssignment	$assignment
+	 * @param	integer			$maxUsers
 	 * @return	User[]
 	 */
-	public function getUsers(UserGroupAssignment $assignment) {
+	public function getUsers(UserGroupAssignment $assignment, $maxUsers = null) {
 		$userList = new UserList();
 		$userList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID = ?)', [
 			$assignment->groupID
 		]);
+		if ($maxUsers !== null) {
+			$userList->sqlLimit = $maxUsers;
+		}
 		
 		$conditions = $assignment->getConditions();
 		foreach ($conditions as $condition) {
