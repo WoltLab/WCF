@@ -3925,6 +3925,7 @@ Attachments:
 		<item name="wcf.media.caption.enableHtml"><![CDATA[Enable HTML code in caption]]></item>
 		<item name="wcf.media.category.choose"><![CDATA[Categories]]></item>
 		<item name="wcf.media.categoryID"><![CDATA[Category]]></item>
+		<item name="wcf.media.chooseFile"><![CDATA[Select File]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Select Image]]></item>
 		<item name="wcf.media.delete.confirmMessage"><![CDATA[Do you really want to delete the media file <span class="confirmationObject">{$title}</span>?]]></item>
 		<item name="wcf.media.edit"><![CDATA[Edit Media File]]></item>

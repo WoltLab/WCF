@@ -3979,6 +3979,7 @@ Dateianhänge:
 		<item name="wcf.media.caption.enableHtml"><![CDATA[HTML in der Bildunterschrift verwenden]]></item>
 		<item name="wcf.media.category.choose"><![CDATA[Kategorien]]></item>
 		<item name="wcf.media.categoryID"><![CDATA[Kategorie]]></item>
+		<item name="wcf.media.chooseFile"><![CDATA[Datei auswählen]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Bild auswählen]]></item>
 		<item name="wcf.media.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} die Datei <span class="confirmationObject">{$title}</span> wirklich löschen?]]></item>
 		<item name="wcf.media.edit"><![CDATA[Datei bearbeiten]]></item>
