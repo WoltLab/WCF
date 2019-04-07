@@ -1,5 +1,5 @@
 <ul class="inlineList smileyList">
 	{foreach from=$smilies item=smiley}
-		<li><a title="{lang}{$smiley->smileyTitle}{/lang}" class="jsTooltip jsSmiley">{@$smiley->getHtml()}</a></li>
+		<li><a class="jsSmiley">{@$smiley->getHtml('jsTooltip')}</a></li>
 	{/foreach}
 </ul>

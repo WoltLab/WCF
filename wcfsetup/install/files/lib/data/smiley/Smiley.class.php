@@ -81,12 +81,16 @@ class Smiley extends DatabaseObject {
 	/**
 	 * Returns the html code to render the smiley.
 	 * 
+	 * @param	string		$class	(additional) class(es) of the smiley element
 	 * @return	string
 	 */
-	public function getHtml() {
+	public function getHtml($class = '') {
 		$srcset = ($this->smileyPath2x) ? ' srcset="' . StringUtil::encodeHTML($this->getURL2x()) . ' 2x"' : '';
 		$height = ($this->getHeight()) ? ' height="' . $this->getHeight() . '"' : '';
+		if ($class !== '') {
+			$class = ' ' . $class;
+		}
 		
-		return '<img src="' . StringUtil::encodeHTML($this->getURL()) . '" alt="' . StringUtil::encodeHTML($this->smileyCode) . '" title="' . WCF::getLanguage()->get($this->smileyTitle) . '" class="smiley"' . $srcset . $height . '>';
+		return '<img src="' . StringUtil::encodeHTML($this->getURL()) . '" alt="' . StringUtil::encodeHTML($this->smileyCode) . '" title="' . WCF::getLanguage()->get($this->smileyTitle) . '" class="smiley' . $class . '"' . $srcset . $height . '>';
 	}
 }
