@@ -75,6 +75,11 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	protected static $accessibleGroups = null;
 	
 	/**
+	 * @var UserGroup|null
+	 */
+	protected static $ownerGroup = false;
+	
+	/**
 	 * group options of this group
 	 * @var	mixed[][]
 	 */
@@ -497,5 +502,19 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 			'admin.user.canEditUser',
 			'admin.user.canSearchUser',
 		];
+	}
+	
+	/**
+	 * Returns the owner group's id unless no group was promoted yet due to backwards compatibility.
+	 * 
+	 * @return int|null
+	 * @since 5.2
+	 */
+	public static function getOwnerGroupID() {
+		if (self::$ownerGroup === false) {
+			self::$ownerGroup = self::getGroupByType(self::OWNER);
+		}
+		
+		return self::$ownerGroup ? self::$ownerGroup->groupID : null;
 	}
 }

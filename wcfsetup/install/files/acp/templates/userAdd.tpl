@@ -602,4 +602,28 @@
 	</div>
 </form>
 
+{if $action === 'edit' && $ownerGroupID}
+	<script data-relocate="true">
+		(function() {
+			var input = elBySel('input[name="groupIDs[]"][value="{@$ownerGroupID}"]');
+			if (input) {
+				var icon = elCreate('span');
+				icon.className = 'icon icon16 fa-shield jsTooltip';
+				icon.title = '{lang}wcf.acp.group.type.owner{/lang}';
+				input.parentNode.appendChild(icon);
+				
+				{if $user->userID == $__wcf->user->userID}
+					var shadow = elCreate('input');
+					shadow.name = input.name;
+					shadow.type = 'hidden';
+					shadow.value = input.value;
+					
+					input.parentNode.appendChild(shadow);
+					input.disabled = true;
+				{/if}
+			}
+		})();
+	</script>
+{/if}
+
 {include file='footer'}
