@@ -483,7 +483,7 @@ class WCF {
 		}
 		
 		// handle banned users
-		if (self::getUser()->userID && self::getUser()->banned) {
+		if (self::getUser()->userID && self::getUser()->banned && !self::getUser()->hasOwnerAccess()) {
 			if ($isAjax) {
 				throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'), AJAXException::INSUFFICIENT_PERMISSIONS);
 			}
