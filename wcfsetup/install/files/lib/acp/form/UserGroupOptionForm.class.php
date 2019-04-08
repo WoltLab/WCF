@@ -251,7 +251,7 @@ class UserGroupOptionForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		$everyoneGroupID = $guestGroupID = $userGroupID = 0;
+		$everyoneGroupID = $guestGroupID = $ownerGroupID = $userGroupID = 0;
 		foreach ($this->groups as $group) {
 			if ($group->groupType == UserGroup::EVERYONE) {
 				$everyoneGroupID = $group->groupID;
@@ -259,9 +259,18 @@ class UserGroupOptionForm extends AbstractForm {
 			else if ($group->groupType == UserGroup::GUESTS) {
 				$guestGroupID = $group->groupID;
 			}
+			else if ($group->groupType == UserGroup::OWNER) {
+				$ownerGroupID = $group->groupID;
+			}
 			else if ($group->groupType == UserGroup::USERS) {
 				$userGroupID = $group->groupID;
 			}
+		}
+		
+		$ownerGroupPermissions = [];
+		if ($ownerGroupID) {
+			$ownerGroupPermissions = UserGroup::getOwnerPermissions();
+			$ownerGroupPermissions[] = 'admin.user.accessibleGroups';
 		}
 		
 		WCF::getTPL()->assign([
@@ -272,7 +281,9 @@ class UserGroupOptionForm extends AbstractForm {
 			'values' => $this->values,
 			'everyoneGroupID' => $everyoneGroupID,
 			'guestGroupID' => $guestGroupID,
-			'userGroupID' => $userGroupID
+			'userGroupID' => $userGroupID,
+			'ownerGroupID' => $ownerGroupID,
+			'ownerGroupPermissions' => $ownerGroupPermissions,
 		]);
 	}
 	

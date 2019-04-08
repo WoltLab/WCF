@@ -250,7 +250,7 @@
 					});
 				});
 			{elseif $ownerGroupID}
-				var input = elBySel('input[name="values[admin.user.accessibleGroups][]"][value="{$ownerGroupID}"]');
+				var input = elBySel('input[name="values[admin.user.accessibleGroups][]"][value="{@$ownerGroupID}"]');
 				if (input) {
 					elRemove(input.closest('label'));
 				}
