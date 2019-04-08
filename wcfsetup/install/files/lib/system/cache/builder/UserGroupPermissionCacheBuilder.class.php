@@ -68,6 +68,17 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 			$data[$row['optionName']]['values'][] = $row['optionValue'];
 		}
 		
+		$includesOwnerGroup = false;
+		$ownerGroup = UserGroup::getGroupByType(UserGroup::OWNER);
+		if ($ownerGroup && in_array($ownerGroup->groupID, $parameters)) {
+			$includesOwnerGroup = true;
+		}
+		
+		$forceGrantPermission = [];
+		if ($includesOwnerGroup) {
+			$forceGrantPermission = UserGroup::getOwnerPermissions();
+		}
+		
 		// merge values
 		$neverValues = [];
 		foreach ($data as $optionName => $option) {
@@ -87,6 +98,23 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 						$result = $newValue;
 					}
 				}
+			}
+			
+			if ($ownerGroup && $optionName === 'admin.user.accessibleGroups') {
+				$accessibleGroupIDs = explode(',', $result);
+				if ($includesOwnerGroup) {
+					// Regardless of the actual permissions, the owner group has access to all groups.
+					
+					$accessibleGroupIDs[] = $ownerGroup->groupID;
+				}
+				else if (!$includesOwnerGroup && in_array($ownerGroup->groupID, $accessibleGroupIDs)) {
+					$accessibleGroupIDs = array_diff($accessibleGroupIDs, [$ownerGroup->groupID]);
+				}
+				
+				$result = implode(',', $accessibleGroupIDs);
+			}
+			else if ($includesOwnerGroup && in_array($optionName, $forceGrantPermission)) {
+				$result = 1;
 			}
 			
 			// handle special value 'Never' for boolean options

@@ -69,6 +69,9 @@
 						{else}
 							{lang}{$group->groupName}{/lang}
 						{/if}
+						{if $group->isOwner()}
+							<span class="icon icon16 fa-shield jsTooltip" title="{lang}wcf.acp.group.type.owner{/lang}"></span>
+						{/if}
 					</td>
 					<td class="columnDigits columnMembers">
 						{if $group->groupType == 1 ||$group->groupType == 2}

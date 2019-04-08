@@ -857,6 +857,9 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxCount"><![CDATA[Maximum Attachments per Message]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserProfile"><![CDATA[Can edit their profile]]></item>
 		<item name="wcf.acp.group.allowMention"><![CDATA[User group can be mentioned]]></item>
+		<item name="wcf.acp.group.type.owner"><![CDATA[Owner]]></item>
+		<item name="wcf.acp.group.type.owner.description"><![CDATA[The owner group features a few irrevocable permissions and is protected from edits by other groups, only the owner group can edit itself. Members of this group can add other users to this group, but cannot remove themselves.]]></item>
+		<item name="wcf.acp.group.ownerGroupPermission"><![CDATA[The owner group always has this permission, it cannot be revoked.]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab Suite&trade;]]></item>

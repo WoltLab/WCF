@@ -57,6 +57,12 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	const OTHER = 4;
 	
 	/**
+	 * the owner group is always an administrator group
+	 * @var int
+	 */
+	const OWNER = 5;
+	
+	/**
 	 * group cache
 	 * @var	UserGroup[]
 	 */
@@ -122,7 +128,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	 * @throws	SystemException
 	 */
 	public static function getGroupByType($type) {
-		if ($type != self::EVERYONE && $type != self::GUESTS && $type != self::USERS) {
+		if ($type != self::EVERYONE && $type != self::GUESTS && $type != self::USERS && $type != self::OWNER) {
 			throw new SystemException('invalid value for type argument');
 		}
 		
@@ -198,6 +204,16 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	}
 	
 	/**
+	 * Returns true if this is the 'Owner' group.
+	 * 
+	 * @return bool
+	 * @since 5.2
+	 */
+	public function isOwner() {
+		return $this->groupType == self::OWNER;
+	}
+	
+	/**
 	 * Returns true if the given groups are accessible for the active user.
 	 * 
 	 * @param	array		$groupIDs
@@ -239,16 +255,25 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	}
 	
 	/**
-	 * Returns true if the current group is an admin-group.
-	 * Every group that may access EVERY group is an admin-group.
+	 * Returns true if the current group is an admin-group, which requires it to fulfill
+	 * one of these conditions:
+	 *  a) The WCFSetup is running and the group id is 4.
+	 *  b) This is the 'Owner' group.
+	 *  c) The group can access all groups (the 'Owner' group does not count).
 	 * 
 	 * @return	boolean
 	 */
 	public function isAdminGroup() {
-		// workaround for WCF-Setup
-		if (!PACKAGE_ID && $this->groupID == 4) return true;
+		// WCFSetup
+		if (!PACKAGE_ID && $this->groupID == 4) {
+			return true;
+		}
 		
-		$groupIDs = array_keys(self::getGroupsByType());
+		if ($this->groupType === self::OWNER) {
+			return true;
+		}
+		
+		$groupIDs = array_keys(self::getGroupsByType([], [self::OWNER]));
 		$accessibleGroupIDs = explode(',', (string) $this->getGroupOption('admin.user.accessibleGroups'));
 		
 		// no differences -> all groups are included
@@ -329,7 +354,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 		if (!$this->isAccessible()) return false;
 		
 		// cannot delete static groups
-		if ($this->groupType == self::EVERYONE || $this->groupType == self::GUESTS || $this->groupType == self::USERS) return false;
+		if ($this->groupType == self::EVERYONE || $this->groupType == self::GUESTS || $this->groupType == self::USERS || $this->groupType == self::OWNER) return false;
 		
 		return true;
 	}
@@ -451,5 +476,26 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 		self::getCache();
 		
 		return self::$cache['groups'];
+	}
+	
+	/**
+	 * Returns the list of irrevocable permissions of the owner group.
+	 * 
+	 * @return string[]
+	 * @since 5.2
+	 */
+	public static function getOwnerPermissions() {
+		return [
+			'admin.configuration.canEditOption',
+			'admin.configuration.canManageApplication',
+			'admin.configuration.package.canInstallPackage',
+			'admin.configuration.package.canUninstallPackage',
+			'admin.configuration.package.canUpdatePackage',
+			'admin.general.canUseAcp',
+			'admin.general.canViewPageDuringOfflineMode',
+			'admin.user.canEditGroup',
+			'admin.user.canEditUser',
+			'admin.user.canSearchUser',
+		];
 	}
 }

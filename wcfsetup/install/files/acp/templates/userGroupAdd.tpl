@@ -71,6 +71,10 @@
 	<p class="warning">{lang}wcf.acp.group.excludedInTinyBuild.notice{/lang}</p>
 {/if}
 
+{if $action == 'edit' && $group->isOwner()}
+	<p class="info"><span class="icon icon16 fa-shield"></span> {lang}wcf.acp.group.type.owner.description{/lang}</p>
+{/if}
+
 {if $warningSelfEdit|isset}
 	<p class="warning">{lang}wcf.acp.group.edit.warning.selfIsMember{/lang}</p>
 {/if}
@@ -218,5 +222,41 @@
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
+
+{if $action === 'edit'}
+	<script>
+		(function () {
+			{if $groupIsOwner}
+				elBySelAll('input[name="values[admin.user.accessibleGroups][]"]', undefined, function(input) {
+					var shadow = elCreate('input');
+					shadow.type = 'hidden';
+					shadow.name = input.name;
+					shadow.value = input.value;
+					
+					input.parentNode.appendChild(shadow);
+					
+					input.disabled = true;
+				});
+				
+				var permissions = [{implode from=$ownerGroupPermissions item=$_ownerPermission}'{$_ownerPermission|encodeJS}'{/implode}];
+				permissions.forEach(function(permission) {
+					elBySelAll('input[name="values[' + permission + ']"]', undefined, function (input) {
+						if (input.value === '1') {
+							input.checked = true;
+						}
+						else {
+							input.disabled = true;
+						}
+					});
+				});
+			{elseif $ownerGroupID}
+				var input = elBySel('input[name="values[admin.user.accessibleGroups][]"][value="{$ownerGroupID}"]');
+				if (input) {
+					elRemove(input.closest('label'));
+				}
+			{/if}
+		})();
+	</script>
+{/if}
 
 {include file='footer'}
