@@ -28,7 +28,6 @@ class ArticleCategoriesBoxController extends AbstractBoxController {
 		// get categories
 		$categoryTree = new ArticleCategoryNodeTree('com.woltlab.wcf.article.category');
 		$categoryList = $categoryTree->getIterator();
-		$categoryList->setMaxDepth(0);
 		
 		if (iterator_count($categoryList)) {
 			// get active category
