@@ -10,7 +10,6 @@
 	</spider>
 	<spider ident="abot/">
 		<name>abot</name>
-		<url>http://www.abot.com/</url>
 	</spider>
 	<spider ident="Accelatech RSSCrawler">
 		<name>Accelatech</name>
