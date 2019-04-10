@@ -571,6 +571,7 @@
 		<item name="wcf.acp.devtools.project.pip.entry.delete.confirmMessage"><![CDATA[Do you really want to delete the entry?]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction"><![CDATA[Add delete instruction]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description"><![CDATA[The entry will not only be deleted from database and its installation instruction removed, but a delete instruction will also be explicitly added.]]></item>
+		<item name="wcf.acp.devtools.project.edit.error.brokenPath"><![CDATA[There is no <kbd>package.xml</kbd> in the given directory. The package files have either been deleted or moved.]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP Connection Test]]></item>

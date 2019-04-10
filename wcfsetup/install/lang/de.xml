@@ -595,6 +595,7 @@
 		<item name="wcf.acp.devtools.project.pip.entry.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Eintrag wirklich löschen?]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction"><![CDATA[Löschanweisung hinzufügen]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description"><![CDATA[Der Eintrag wird nicht nur aus der Datenbank gelöscht und und die Installationsanweisung entfernt, sondern es wird auch explizit eine Löschanweisung hinzugefügt.]]></item>
+		<item name="wcf.acp.devtools.project.edit.error.brokenPath"><![CDATA[Es existiert keine <kbd>package.xml</kbd> im angegebenen Pfad. Die Paket-Dateien wurden entweder gelöscht oder verschoben.]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP-Verbindungstest]]></item>

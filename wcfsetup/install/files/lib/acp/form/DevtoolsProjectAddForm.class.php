@@ -947,14 +947,24 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 		}
 		
 		if ($data['data']['mode'] !== 'import') {
-			$xmlData = array_merge($data, $data['data']);
-			unset($xmlData['data'], $xmlData['mode']);
-			$packageXmlWriter = new DevtoolsPackageXmlWriter($project, $xmlData);
-			$packageXmlWriter->write();
+			$this->writePackageXml($project, $data);
 		}
 		
 		$this->saved();
 		
 		WCF::getTPL()->assign('success', true);
+	}
+	
+	/**
+	 * Writes the updated `package.xml` file for the given project using the given data.
+	 *
+	 * @param	DevtoolsProject		$project
+	 * @param	array			$data
+	 */
+	protected function writePackageXml(DevtoolsProject $project, array $data) {
+		$xmlData = array_merge($data, $data['data']);
+		unset($xmlData['data'], $xmlData['mode']);
+		$packageXmlWriter = new DevtoolsPackageXmlWriter($project, $xmlData);
+		$packageXmlWriter->write();
 	}
 }

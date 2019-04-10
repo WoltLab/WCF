@@ -2,6 +2,8 @@
 namespace wcf\acp\form;
 use wcf\data\devtools\project\DevtoolsProject;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\form\builder\container\TabMenuFormContainer;
+use wcf\system\form\builder\container\TabTabMenuFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectExcludedPackagesFormField;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectInstructionsFormField;
@@ -10,6 +12,7 @@ use wcf\system\form\builder\field\devtools\project\DevtoolsProjectRequiredPackag
 use wcf\system\form\builder\field\MultipleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
 use wcf\system\language\LanguageFactory;
+use wcf\system\WCF;
 
 /**
  * Shows the devtools project edit form.
@@ -27,9 +30,38 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.devtools.project.list';
 	
 	/**
+	 * @var	bool 
+	 */
+	public $hasBrokenPath = false;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public $formAction = 'edit';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function assignVariables() {
+		parent::assignVariables();
+		
+		WCF::getTPL()->assign([
+			'hasBrokenPath' => $this->hasBrokenPath
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function buildForm() {
+		parent::buildForm();
+		
+		// only show `name` and `path` field which are stored in database if path to
+		// `package.xml` file is broken
+		if ($this->hasBrokenPath) {
+			$this->tooglePackageXmlFieldAvailabilty(false);
+		}
+	}
 	
 	/**
 	 * @inheritDoc
@@ -42,6 +74,24 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 			if (!$this->formObject->projectID) {
 				throw new IllegalLinkException();
 			}
+			
+			if (!file_exists($this->formObject->getPackageXmlPath())) {
+				$this->hasBrokenPath = true;
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	public function saved() {
+		parent::saved();
+		
+		if ($this->hasBrokenPath) {
+			$this->tooglePackageXmlFieldAvailabilty(true);
+			
+			$this->hasBrokenPath = false;
 		}
 	}
 	
@@ -51,6 +101,10 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 	 */
 	protected function setFormObjectData() {
 		parent::setFormObjectData();
+		
+		if ($this->hasBrokenPath) {
+			return;
+		}
 		
 		// set additional data based on `package.xml` file
 		$packageArchive = $this->formObject->getPackageArchive();
@@ -225,5 +279,33 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		/** @var DevtoolsProjectInstructionsFormField $instructionsField */
 		$instructionsField = $this->form->getNodeById('instructions');
 		$instructionsField->value($instructions);
+	}
+	
+	protected function tooglePackageXmlFieldAvailabilty($available) {
+		/** @var TabMenuFormContainer $tabMenu */
+		$tabMenu = $this->form->getNodeById('project');
+		
+		/** @var TabTabMenuFormContainer $tab */
+		foreach ($tabMenu->children() as $tab) {
+			if ($tab->getId() !== 'dataTab') {
+				$tab->available($available);
+			}
+			else {
+				foreach ($tab->children() as $section) {
+					if ($section->getId() !== 'data') {
+						$section->available($available);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function writePackageXml(DevtoolsProject $project, array $data) {
+		if (!$this->hasBrokenPath) {
+			parent::writePackageXml($project, $data);
+		}
 	}
 }

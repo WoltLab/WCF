@@ -17,7 +17,11 @@
 {if $action === 'add'}
 	<p class="info">{lang}wcf.acp.devtools.project.add.info{/lang}</p>
 {elseif $action === 'edit'}
-	<p class="warning">{lang}wcf.acp.devtools.project.edit.warning{/lang}</p>
+	{if $hasBrokenPath}
+		<p class="warning">{lang}wcf.acp.devtools.project.edit.error.brokenPath{/lang}</p>
+	{else}
+		<p class="error">{lang}wcf.acp.devtools.project.edit.warning{/lang}</p>
+	{/if}
 {/if}
 
 {@$form->getHtml()}
