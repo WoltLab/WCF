@@ -82,7 +82,8 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 		$this->userGroups = UserGroup::getGroupsByType([], [
 			UserGroup::EVERYONE,
 			UserGroup::GUESTS,
-			UserGroup::USERS
+			UserGroup::OWNER,
+			UserGroup::USERS,
 		]);
 		foreach ($this->userGroups as $key => $userGroup) {
 			if (!$userGroup->isAccessible()) {

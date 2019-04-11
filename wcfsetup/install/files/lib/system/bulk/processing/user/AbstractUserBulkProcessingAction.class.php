@@ -43,9 +43,18 @@ abstract class AbstractUserBulkProcessingAction extends AbstractBulkProcessingAc
 		$statement->execute($conditionBuilder->getParameters());
 		$groupIDs = $statement->fetchMap('userID', 'groupID', false);
 		
+		$ownerGroupID = UserGroup::getOwnerGroupID();
+		
 		$users = [];
 		foreach ($userList as $user) {
-			if (empty($groupIDs[$user->userID]) || UserGroup::isAccessibleGroup($groupIDs[$user->userID])) {
+			if (empty($groupIDs[$user->userID])) {
+				$users[$user->userID] = $user;
+			}
+			else if ($ownerGroupID && in_array($ownerGroupID, $groupIDs[$user->userID])) {
+				// Bulk actions can never affect members of the owner group.
+				continue;
+			}
+			else if (UserGroup::isAccessibleGroup($groupIDs[$user->userID])) {
 				$users[$user->userID] = $user;
 			}
 		}
