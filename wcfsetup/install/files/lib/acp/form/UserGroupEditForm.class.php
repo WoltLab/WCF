@@ -122,8 +122,6 @@ class UserGroupEditForm extends UserGroupAddForm {
 			$ownerGroupPermissions[] = 'admin.user.accessibleGroups';
 		}
 		
-		$ownerGroup = UserGroup::getGroupByType(UserGroup::OWNER);
-		
 		WCF::getTPL()->assign([
 			'groupID' => $this->group->groupID,
 			'group' => $this->group,
@@ -135,7 +133,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 			'groupIsOwner' => $this->group->isOwner(),
 			'isUnmentionableGroup' => $this->isUnmentionableGroup ? 1 : 0,
 			'ownerGroupPermissions' => $ownerGroupPermissions,
-			'ownerGroupID' => $ownerGroup ? $ownerGroup->groupID : null,
+			'ownerGroupID' => UserGroup::getOwnerGroupID(),
 		]);
 		
 		// add warning when the initiator is in the group

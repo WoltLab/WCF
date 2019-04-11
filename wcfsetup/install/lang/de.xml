@@ -883,6 +883,10 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.group.type.owner"><![CDATA[Besitzer]]></item>
 		<item name="wcf.acp.group.type.owner.description"><![CDATA[Die Besitzer-Gruppe verfügt über nicht entziehbare Berechtigungen und kann von anderen Gruppen nicht bearbeitet werden, diese Gruppe kann nur durch die Besitzer-Gruppe selbst bearbeitet werden. Mitglieder dieser Benutzer können andere Benutzer zu dieser Gruppe hinzufügen, sich aber selbst nicht daraus entfernen.]]></item>
 		<item name="wcf.acp.group.ownerGroupPermission"><![CDATA[Die Besitzer-Gruppe verfügt immer über diese Berechtigung, sie kann nicht entzogen werden.]]></item>
+		<item name="wcf.acp.group.missingOwnerGroup"><![CDATA[Es wurde noch keine Besitzer-Gruppe festgelegt, <a href="{link controller='UserGroupPromoteOwner'}{/link}">bitte {if LANGUAGE_USE_INFORMAL_VARIANT}lege{else}legen Sie{/if} diese umgehend fest</a>.]]></item>
+		<item name="wcf.acp.group.promoteOwner"><![CDATA[Besitzer-Gruppe festlegen]]></item>
+		<item name="wcf.acp.group.promoteOwner.group"><![CDATA[Besitzer-Gruppe auswählen]]></item>
+		<item name="wcf.acp.group.promoteOwner.warning"><![CDATA[Die Besitzer-Gruppe kann, einmal festgelegt, nicht mehr geändert werden. Diese Gruppe verfügt über besondere Berechtigungen und wird vor Änderungen durch andere Gruppen geschützt, Mitglieder dieser Gruppe können nicht mehr gesperrt werden.]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[Über WoltLab Suite&trade;]]></item>

@@ -860,6 +860,11 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.group.type.owner"><![CDATA[Owner]]></item>
 		<item name="wcf.acp.group.type.owner.description"><![CDATA[The owner group features a few irrevocable permissions and is protected from edits by other groups, only the owner group can edit itself. Members of this group can add other users to this group, but cannot remove themselves.]]></item>
 		<item name="wcf.acp.group.ownerGroupPermission"><![CDATA[The owner group always has this permission, it cannot be revoked.]]></item>
+		
+		<item name="wcf.acp.group.missingOwnerGroup"><![CDATA[No owner group has been configured yet, <a href="{link controller='UserGroupPromoteOwner'}{/link}">please set it up now</a>.]]></item>
+		<item name="wcf.acp.group.promoteOwner"><![CDATA[Set Up the Owner Group]]></item>
+		<item name="wcf.acp.group.promoteOwner.group"><![CDATA[Select the owner group]]></item>
+		<item name="wcf.acp.group.promoteOwner.warning"><![CDATA[The owner group cannot be modified once it has been set up. This group has special privileges and is protected from modifications by any other group, its members cannot be banned.]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[About WoltLab Suite&trade;]]></item>
