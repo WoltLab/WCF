@@ -56,6 +56,8 @@ class UserStorageHandler extends SingletonFactory {
 	 * @param	integer[]	$userIDs
 	 */
 	public function loadStorage(array $userIDs) {
+		$this->validateUserIDs($userIDs);
+		
 		if ($this->redis) return;
 		
 		$tmp = [];
@@ -91,6 +93,8 @@ class UserStorageHandler extends SingletonFactory {
 	 * @return	mixed[]
 	 */
 	public function getStorage(array $userIDs, $field) {
+		$this->validateUserIDs($userIDs);
+		
 		$data = [];
 		
 		if ($this->redis) {
@@ -161,6 +165,8 @@ class UserStorageHandler extends SingletonFactory {
 	 * @param	string		$fieldValue
 	 */
 	public function update($userID, $field, $fieldValue) {
+		$this->validateUserIDs([$userID]);
+		
 		if ($this->redis) {
 			$this->redis->hSet($this->getRedisFieldName($field), $userID, $fieldValue);
 			$this->redis->expire($this->getRedisFieldName($field), 86400);
@@ -182,6 +188,8 @@ class UserStorageHandler extends SingletonFactory {
 	 * @param	string		$field
 	 */
 	public function reset(array $userIDs, $field) {
+		$this->validateUserIDs($userIDs);
+		
 		if ($this->redis) {
 			foreach ($userIDs as $userID) {
 				$this->redis->hDel($this->getRedisFieldName($field), $userID);
@@ -351,5 +359,17 @@ class UserStorageHandler extends SingletonFactory {
 		}
 		
 		return 'ush:'.$flush.':'.$fieldName;
+	}
+	
+	/**
+	 * @param int[] $userIDs
+	 * @since 5.2
+	 */
+	protected function validateUserIDs(array $userIDs) {
+		foreach ($userIDs as $userID) {
+			if (!$userID) {
+				throw new \InvalidArgumentException('The user id can neither be null nor zero.');
+			}
+		}
 	}
 }
