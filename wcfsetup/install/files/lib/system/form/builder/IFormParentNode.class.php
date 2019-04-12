@@ -16,6 +16,8 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator {
 	 * 
 	 * @param	IFormChildNode		$child		appended child
 	 * @return	static					this node
+	 * 
+	 * @throws	\BadMethodCallException		if method is called with multiple `IFormChildNode` as parameter (if mistakenly used instead of `appendChildren()`)
 	 */
 	public function appendChild(IFormChildNode $child);
 	

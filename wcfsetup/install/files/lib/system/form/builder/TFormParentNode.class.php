@@ -32,8 +32,14 @@ trait TFormParentNode {
 	 * 
 	 * @param	IFormChildNode		$child		appended child
 	 * @return	static					this node
+	 * 
+	 * @throws	\BadMethodCallException		if method is called with more than one parameter (might be mistakenly used instead of `appendChildren()`)
 	 */
 	public function appendChild(IFormChildNode $child) {
+		if (func_num_args() > 1) {
+			throw new \BadMethodCallException("'" . IFormParentNode::class . "::appendChild()' only supports one argument. Use '" . IFormParentNode::class . "::appendChildren()' to append multiple children at once.");
+		}
+		
 		$this->children[] = $child;
 		
 		$child->parent($this);
