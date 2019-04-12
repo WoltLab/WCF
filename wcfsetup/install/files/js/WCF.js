@@ -5527,43 +5527,39 @@ if (COMPILER_TARGET_DEFAULT) {
 		_updateData: [],
 		
 		/**
+		 * element selector
+		 * @var         string
+		 */
+		_elementSelector: null,
+		
+		/**
+		 * quick option for the inline editor
+		 * @var         string
+		 */
+		_quickOption: null,
+		
+		/**
 		 * Initializes a new inline editor.
 		 */
 		init: function (elementSelector) {
+			this._elementSelector = elementSelector;
+			
 			var $elements = $(elementSelector);
 			if (!$elements.length) {
 				return;
 			}
 			
 			this._setOptions();
-			var $quickOption = '';
 			for (var $i = 0, $length = this._options.length; $i < $length; $i++) {
 				if (this._options[$i].isQuickOption) {
-					$quickOption = this._options[$i].optionName;
+					this._quickOption = this._options[$i].optionName;
 					break;
 				}
 			}
 			
-			var self = this;
-			$elements.each(function (index, element) {
-				var $element = $(element);
-				var $elementID = $element.wcfIdentify();
-				
-				// find trigger element
-				var $trigger = self._getTriggerElement($element);
-				if ($trigger === null || $trigger.length !== 1) {
-					return;
-				}
-				
-				$trigger.on(WCF_CLICK_EVENT, $.proxy(self._show, self)).data('elementID', $elementID);
-				if ($quickOption) {
-					// simulate click on target action
-					$trigger.disableSelection().data('optionName', $quickOption).dblclick($.proxy(self._click, self));
-				}
-				
-				// store reference
-				self._elements[$elementID] = $element;
-			});
+			this.rebuild();
+			
+			WCF.DOMNodeInsertedHandler.addCallback('WCF.InlineEditor' + this._elementSelector.hashCode(), $.proxy(this.rebuild, this));
 			
 			this._proxy = new WCF.Action.Proxy({
 				success: $.proxy(this._success, this)
@@ -5572,6 +5568,35 @@ if (COMPILER_TARGET_DEFAULT) {
 			WCF.CloseOverlayHandler.addCallback('WCF.InlineEditor', $.proxy(this._closeAll, this));
 			
 			this._notification = new WCF.System.Notification(WCF.Language.get('wcf.global.success'), 'success');
+		},
+		
+		/**
+		 * Identify new elements and adds the event listeners to them.
+		 */
+		rebuild: function() {
+			var $elements = $(this._elementSelector);
+			var self = this;
+			$elements.each(function (index, element) {
+				var $element = $(element);
+				var $elementID = $element.wcfIdentify();
+				
+				if (self._elements[$elementID] === undefined) {
+					// find trigger element
+					var $trigger = self._getTriggerElement($element);
+					if ($trigger === null || $trigger.length !== 1) {
+						return;
+					}
+					
+					$trigger.on(WCF_CLICK_EVENT, $.proxy(self._show, self)).data('elementID', $elementID);
+					if (this._quickOption) {
+						// simulate click on target action
+						$trigger.disableSelection().data('optionName', $quickOption).dblclick($.proxy(self._click, self));
+					}
+					
+					// store reference
+					self._elements[$elementID] = $element;
+				}
+			});
 		},
 		
 		/**
