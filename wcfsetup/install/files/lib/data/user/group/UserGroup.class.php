@@ -60,7 +60,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	 * the owner group is always an administrator group
 	 * @var int
 	 */
-	const OWNER = 5;
+	const OWNER = 9;
 	
 	/**
 	 * group cache
