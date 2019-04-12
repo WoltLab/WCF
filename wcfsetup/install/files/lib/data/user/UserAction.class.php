@@ -626,7 +626,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		$action = new UserAction($this->objects, 'update', [
 			'data' => [
-				'activationCode' => 0
+				'activationCode' => 0,
+				'blacklistMatches' => '',
 			],
 			'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::GUESTS])
 		]);
