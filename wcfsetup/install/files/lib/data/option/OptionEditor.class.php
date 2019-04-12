@@ -141,8 +141,13 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 		// file header
 		$writer->write("<?php\n/**\n* generated at ".gmdate('r')."\n*/\n");
 		
+		// Secret options cannot be enabled through the regular options, they need to be manually
+		// defined in the Core's `config.inc.php` to be activated.
+		$attachmentStorage = new Option(null, ['optionName' => 'attachment_storage', 'optionType' => 'text', 'optionValue' => null]);
+		$secretOptions = [$attachmentStorage->getConstantName() => $attachmentStorage];
+		
 		// get all options
-		$options = Option::getOptions();
+		$options = $secretOptions + Option::getOptions();
 		foreach ($options as $optionName => $option) {
 			$writeValue = $option->optionValue;
 			if ($writeValue === null) {

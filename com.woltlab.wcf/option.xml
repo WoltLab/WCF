@@ -1015,10 +1015,6 @@ redis:wcf.acp.option.cache_source_type.redis</selectoptions>
 				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.payment -->
-			<option name="attachment_storage">
-				<categoryname>message.attachment</categoryname>
-				<optiontype>text</optiontype>
-			</option>
 			<option name="attachment_enable_thumbnails">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1730,6 +1726,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		</options>
 	</import>
 	<delete>
+		<option name="attachment_storage" />
 		<option name="module_attachment"/>
 	</delete>
 </data>
