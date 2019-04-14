@@ -313,8 +313,12 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			var message = '';
 			
 			if (data !== null) {
-				if (data.stacktrace) details = '<br><p>Stacktrace:</p><p>' + data.stacktrace + '</p>';
-				else if (data.exceptionID) details = '<br><p>Exception ID: <code>' + data.exceptionID + '</code></p>';
+				if (data.file && data.line) {
+					details += '<br><p>File:</p><p>' + data.file + ' in line ' + data.line + '</p>'
+				}
+				
+				if (data.stacktrace) details += '<br><p>Stacktrace:</p><p>' + data.stacktrace + '</p>';
+				else if (data.exceptionID) details += '<br><p>Exception ID: <code>' + data.exceptionID + '</code></p>';
 				
 				message = data.message;
 				
