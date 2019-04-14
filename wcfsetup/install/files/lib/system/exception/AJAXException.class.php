@@ -1,13 +1,14 @@
 <?php
 namespace wcf\system\exception;
 use wcf\system\WCF;
+use wcf\system\WCFACP;
 use wcf\util\JSON;
 
 /**
  * AJAXException provides JSON-encoded exceptions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab Gmb
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Exception
  */
@@ -69,9 +70,19 @@ class AJAXException extends LoggedException {
 		];
 		
 		// include a stacktrace if:
-		// - debug mode is enabled
+		// - debug mode is enabled or
 		// - within ACP and a SystemException was thrown
-		$includeStacktrace = (WCF::debugModeIsEnabled(false) || WCF::debugModeIsEnabled() && self::INTERNAL_ERROR);
+		$includeStacktrace = false;
+		if (class_exists(WCFACP::class, false)) {
+			// ACP
+			if (WCF::debugModeIsEnabled(true) || $errorType === self::INTERNAL_ERROR) {
+				$includeStacktrace = true;
+			}
+		}
+		else {
+			// frontend
+			$includeStacktrace = WCF::debugModeIsEnabled();
+		}
 		
 		if ($includeStacktrace) {
 			$responseData['stacktrace'] = nl2br($stacktrace, false);
