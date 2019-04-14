@@ -8,6 +8,10 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
+			{if $object->validate() === ''}
+				<li><a href="{link controller='DevtoolsProjectPipList' id=$object->getObjectID()}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.devtools.project.pips{/lang}</span></a></li>
+			{/if}
+			<li><a href="{link controller='DevtoolsProjectEdit' id=$object->getObjectID()}{/link}" class="button"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.devtools.project.edit{/lang}</span></a></li>
 			<li><a href="{link controller='DevtoolsProjectList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.devtools.project.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
