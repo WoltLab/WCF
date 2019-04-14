@@ -31,7 +31,8 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 			this._actionName = actionName;
 			this._options = Core.extend({
 				actionParameters: {},
-				destroyOnClose: false
+				destroyOnClose: false,
+				usesDboAction: this._className.match(/\w+\\data\\/)
 			}, options);
 			this._options.dialog = Core.extend(this._options.dialog || {}, {
 				onClose: this._dialogOnClose.bind(this),
@@ -48,13 +49,23 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 		 * @return	{object}	setup data for Ajax/Request object
 		 */
 		_ajaxSetup: function() {
-			return {
+			var options = {
 				data: {
 					actionName: this._actionName,
 					className: this._className,
 					parameters: this._options.actionParameters
 				}
 			};
+			
+			// by default, `AJAXProxyAction` is used which relies on an `IDatabaseObjectAction`
+			// object; if no such object is used but an `IAJAXInvokeAction` object,
+			// `AJAXInvokeAction` has to be used
+			if (!this._options.usesDboAction) {
+				options.url = 'index.php?ajax-invoke/&t=' + SECURITY_TOKEN;
+				options.withCredentials = true;
+			}
+			
+			return options;
 		},
 		
 		/**
@@ -85,10 +96,24 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 					break;
 					
 				case this._options.submitActionName:
-					this.destroy();
-					
-					if (typeof this._options.successCallback === 'function') {
-						this._options.successCallback(data.returnValues || {});
+					// if the validation failed, the dialog is shown again
+					if (data.returnValues && data.returnValues.formId && data.returnValues.dialog) {
+						if (data.returnValues.formId !== this._formId) {
+							throw new Error("Mismatch between form ids: expected '" + this._formId + "' but got '" + data.returnValues.formId + "'.");
+						}
+						
+						this.destroy(true);
+						
+						this._dialogContent = data.returnValues.dialog;
+						
+						UiDialog.open(this, this._dialogContent);
+					}
+					else {
+						this.destroy();
+						
+						if (typeof this._options.successCallback === 'function') {
+							this._options.successCallback(data.returnValues || {});
+						}
 					}
 					
 					break;
@@ -159,7 +184,8 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 				Ajax.api(this, {
 					actionName: this._options.submitActionName,
 					parameters: {
-						data: formData
+						data: formData,
+						formId: this._formId
 					}
 				});
 			}
