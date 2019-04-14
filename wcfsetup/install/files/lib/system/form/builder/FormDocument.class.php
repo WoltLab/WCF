@@ -406,6 +406,10 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function getHtml() {
+		if (!$this->isBuilt) {
+			throw new \BadMethodCallException("The form document has to be built before it can be rendered.");
+		}
+		
 		return WCF::getTPL()->fetch(
 			'__form',
 			'wcf',

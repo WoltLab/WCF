@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\exception;
 use wcf\system\WCF;
+use wcf\system\WCFACP;
 use wcf\util\JSON;
 
 /**
@@ -62,9 +63,19 @@ class AJAXException extends LoggedException {
 		if ($stacktrace === null) $stacktrace = $this->getTraceAsString();
 		
 		// include a stacktrace if:
-		// - debug mode is enabled
+		// - debug mode is enabled or
 		// - within ACP and a SystemException was thrown
-		$includeStacktrace = (WCF::debugModeIsEnabled(false) || WCF::debugModeIsEnabled() && self::INTERNAL_ERROR);
+		$includeStacktrace = false;
+		if (class_exists(WCFACP::class, false)) {
+			// ACP
+			if (WCF::debugModeIsEnabled(true) || $errorType === self::INTERNAL_ERROR) {
+				$includeStacktrace = true;
+			}
+		}
+		else {
+			// frontend
+			$includeStacktrace = WCF::debugModeIsEnabled();
+		}
 		
 		// extract file and line in which exception was thrown and only include it
 		// if stacktrace is also included
