@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\group\UserGroupAction;
 use wcf\form\AbstractForm;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\FormDocument;
@@ -46,6 +47,11 @@ class UserGroupPromoteOwnerForm extends AbstractForm {
 	 */
 	public function readParameters() {
 		parent::readParameters();
+		
+		// owner user groups cannot be modified
+		if (UserGroup::getOwnerGroupID() !== null) {
+			throw new IllegalLinkException();
+		}
 		
 		$this->groups = UserGroup::getGroupsByType([UserGroup::OTHER]);
 		$this->groups = array_filter($this->groups, function (UserGroup $group) {
