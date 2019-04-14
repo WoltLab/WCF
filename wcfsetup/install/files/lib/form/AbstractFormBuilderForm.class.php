@@ -60,7 +60,8 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 		
 		WCF::getTPL()->assign([
 			'action' => $this->formAction === 'create' ? 'add' : 'edit',
-			'form' => $this->form
+			'form' => $this->form,
+			'formObject' => $this->formObject
 		]);
 	}
 	
