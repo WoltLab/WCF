@@ -57,6 +57,12 @@ class UserGroupPromoteOwnerForm extends AbstractForm {
 		$this->groups = array_filter($this->groups, function (UserGroup $group) {
 			return $group->isAdminGroup();
 		});
+		
+		if (empty($this->groups)) {
+			// fallback for broken installations without an admin group
+			$this->groups = UserGroup::getGroupsByType([UserGroup::OTHER]);
+		}
+		
 		uasort($this->groups, function(UserGroup $a, UserGroup $b) {
 			return $a->getName() <=> $b->getName();
 		});
