@@ -31,7 +31,6 @@ class TagCloudTag extends DatabaseObjectDecorator {
 	 * Sets the weight of the tag.
 	 *
 	 * @param	double		$weight
-	 * @deprecated  3.0
 	 */
 	public function setWeight($weight) {
 		$this->weight = $weight;
