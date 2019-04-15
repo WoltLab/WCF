@@ -51,6 +51,10 @@ trait TSelectionFormField {
 	 * @throws	\BadMethodCallException		if no options have been set
 	 */
 	public function getOptions() {
+		if ($this->options === null) {
+			throw new \BadMethodCallException("No options have been set.");
+		}
+		
 		return $this->options;
 	}
 	
