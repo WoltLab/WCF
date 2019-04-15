@@ -55,7 +55,6 @@
 			{if $userGroupOption->optionName === 'admin.user.accessibleGroups'}
 				elBySelAll('dl[data-group-id]', container, function(dl) {
 					var groupId = parseInt(elData(dl, 'group-id'), 10);
-					console.log("Group", groupId);
 					
 					elBySelAll('input[name="values[' + groupId + '][]"', undefined, function(input) {
 						if (groupId === {@$ownerGroupID}) {
