@@ -314,7 +314,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			
 			if (data !== null) {
 				if (data.file && data.line) {
-					details += '<br><p>File:</p><p>' + data.file + ' in line ' + data.line + '</p>'
+					details += '<br><p>File:</p><p>' + data.file + ' in line ' + data.line + '</p>';
 				}
 				
 				if (data.stacktrace) details += '<br><p>Stacktrace:</p><p>' + data.stacktrace + '</p>';
