@@ -45,7 +45,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	public function __construct(DatabaseObject $object) {
 		parent::__construct($object);
 		
-		$this->availableUserGroups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
+		$this->availableUserGroups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::OWNER, UserGroup::USERS]);
 		
 		uasort($this->availableUserGroups, function(UserGroup $groupA, UserGroup $groupB) {
 			return strcmp($groupA->getName(), $groupB->getName());

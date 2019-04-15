@@ -274,7 +274,8 @@ class UserEditForm extends UserAddForm {
 			'disableCoverPhoto' => $this->disableCoverPhoto,
 			'disableCoverPhotoReason' => $this->disableCoverPhotoReason,
 			'disableCoverPhotoExpires' => $this->disableCoverPhotoExpires,
-			'deleteCoverPhoto' => $this->deleteCoverPhoto
+			'deleteCoverPhoto' => $this->deleteCoverPhoto,
+			'ownerGroupID' => UserGroup::getOwnerGroupID(),
 		]);
 	}
 	
@@ -483,6 +484,14 @@ class UserEditForm extends UserAddForm {
 	 * @inheritDoc
 	 */
 	public function validate() {
+		if ($this->user->userID == WCF::getUser()->userID && WCF::getUser()->hasOwnerAccess()) {
+			$ownerGroupID = UserGroup::getOwnerGroupID();
+			if ($ownerGroupID && !in_array($ownerGroupID, $this->groupIDs)) {
+				// Members of the owner group cannot remove themselves.
+				throw new PermissionDeniedException();
+			}
+		}
+		
 		$this->validateAvatar();
 		
 		parent::validate();

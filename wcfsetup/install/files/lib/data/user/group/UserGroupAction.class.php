@@ -212,4 +212,20 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 			])
 		];
 	}
+	
+	public function promoteOwner() {
+		if (UserGroup::getOwnerGroupID() !== null) {
+			throw new \LogicException('There is already an owner group.');
+		}
+		else if (count($this->objects) !== 1) {
+			throw new \InvalidArgumentException('Only a single group can be promoted to be the owner group.');
+		}
+		
+		$groupEditor = reset($this->objects);
+		$groupEditor->update([
+			'groupType' => UserGroup::OWNER,
+		]);
+		
+		UserGroupEditor::resetCache();
+	}
 }

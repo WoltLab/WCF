@@ -2224,7 +2224,7 @@ ALTER TABLE wcf1_notice_dismissed ADD FOREIGN KEY (userID) REFERENCES wcf1_user 
 INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (1, 'wcf.acp.group.group1', 1); -- Everyone
 INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (2, 'wcf.acp.group.group2', 2); -- Guests
 INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (3, 'wcf.acp.group.group3', 3); -- Registered Users
-INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (4, 'wcf.acp.group.group4', 4); -- Administrators
+INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (4, 'wcf.acp.group.group4', 9); -- Administrators
 INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (5, 'wcf.acp.group.group5', 4); -- Moderators
 
 -- default user group options

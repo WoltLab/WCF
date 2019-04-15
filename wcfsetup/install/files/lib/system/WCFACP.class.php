@@ -4,6 +4,7 @@ use wcf\acp\form\MasterPasswordForm;
 use wcf\acp\form\MasterPasswordInitForm;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuCache;
+use wcf\data\user\group\UserGroup;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\event\EventHandler;
@@ -175,6 +176,10 @@ class WCFACP extends WCF {
 				// force debug mode if in ACP and authenticated
 				self::$overrideDebugMode = true;
 			}
+		}
+		
+		if (PACKAGE_ID && WCF::getUser()->userID && WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage') && UserGroup::getOwnerGroupID() === null) {
+			self::getTPL()->assign(['__wscMissingOwnerGroup' => true]);
 		}
 	}
 	
