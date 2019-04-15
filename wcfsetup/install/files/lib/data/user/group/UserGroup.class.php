@@ -261,7 +261,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	
 	/**
 	 * Returns a sorted list of accessible groups.
-	 *v
+	 * 
 	 * @param	integer[]		$groupTypes
 	 * @param	integer[]		$invalidGroupTypes
 	 * @return	UserGroup[]
