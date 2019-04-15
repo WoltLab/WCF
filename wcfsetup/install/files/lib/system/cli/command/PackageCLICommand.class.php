@@ -12,8 +12,10 @@ use wcf\system\package\PackageArchive;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\package\PackageUninstallationDispatcher;
 use wcf\system\CLIWCF;
+use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\JSON;
+use wcf\util\StringUtil;
 use Zend\Console\Exception\RuntimeException as ArgvException;
 use Zend\Console\Getopt as ArgvParser;
 use Zend\ProgressBar\Adapter\Console as ConsoleProgressBar;
@@ -33,6 +35,12 @@ class PackageCLICommand implements IArgumentedCLICommand {
 	 * @var	\Zend\Console\Getopt
 	 */
 	protected $argv = null;
+	
+	/**
+	 * required data for app installation
+	 * @var string[]
+	 */
+	protected $appData = [];
 	
 	/**
 	 * Initializes the argument parser.
@@ -134,15 +142,32 @@ class PackageCLICommand implements IArgumentedCLICommand {
 			if (!$archive->isValidInstall()) {
 				$this->error('noValidInstall');
 			}
-			else if ($archive->getPackageInfo('isApplication')) {
-				// applications cannot be installed via CLI
-				$this->error('cli.installIsApplication');
+			else if ($archive->getPackageInfo('isApplication') && $archive->hasUniqueAbbreviation()) {
+				$this->error('noUniqueAbbrevation');
 			}
 			else if ($archive->isAlreadyInstalled()) {
 				$this->error('uniqueAlreadyInstalled');
 			}
-			else if ($archive->getPackageInfo('isApplication') && $archive->hasUniqueAbbreviation()) {
-				$this->error('noUniqueAbbrevation');
+			else if ($archive->getPackageInfo('isApplication') && !$archive->isAlreadyInstalled()) {
+				$this->appData['abbreviation'] = Package::getAbbreviation($archive->getPackageInfo('name'));
+				
+				$directory = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.package.packageDir.input').'> ');
+				if ($directory === null) exit;
+				$directory = StringUtil::trim($directory);
+				$this->appData['installationDirectory'] = FileUtil::removeTrailingSlash(FileUtil::addTrailingSlash($directory));
+				
+				if (file_exists($directory . 'global.php')) {
+					$this->error('directoryAlreadyInUse');
+				}
+				
+				$domain = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.application.domainName').'> ');
+				if ($domain === null) exit;
+				$this->appData['domainName'] = StringUtil::trim($domain);
+				$this->appData['cookieDomain'] = $this->appData['domainName'];
+				
+				$domainPath = CLIWCF::getReader()->readLine(WCF::getLanguage()->get('wcf.acp.application.domainPath').'> ');
+				if ($domainPath === null) exit;
+				$this->appData['domainPath'] = StringUtil::trim($domainPath);
 			}
 		}
 		
@@ -157,7 +182,8 @@ class PackageCLICommand implements IArgumentedCLICommand {
 			'packageName' => $archive->getLocalizedPackageInfo('packageName'),
 			'packageID' => ($package !== null) ? $package->packageID : null,
 			'archive' => $file,
-			'action' => $package !== null ? 'update' : 'install'
+			'action' => $package !== null ? 'update' : 'install',
+			'isApplication' => ($package !== null) ? $package->isApplication : intval($archive->getPackageInfo('isApplication'))
 		]);
 		
 		// PackageInstallationDispatcher::openQueue()
@@ -299,6 +325,14 @@ class PackageCLICommand implements IArgumentedCLICommand {
 				
 				case 'install':
 					// InstallPackageAction::stepInstall()
+					// workaround for app installation via CLI
+					if (!empty($this->appData)) {
+						WCF::getSession()->register('__wcfSetup_directories', [
+							$this->appData['abbreviation'] => $this->appData['installationDirectory']
+						]);
+						if (empty($_SERVER['HTTP_HOST'])) $_SERVER['HTTP_HOST'] = $this->appData['domainName'];
+					}
+					
 					$step_ = $installation->install($node);
 					$queueID = $installation->nodeBuilder->getQueueByNode($installation->queue->processNo, $step_->getNode());
 					
