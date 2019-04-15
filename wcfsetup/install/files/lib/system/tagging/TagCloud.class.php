@@ -96,7 +96,7 @@ class TagCloud {
 		}
 		
 		// sort alphabetically
-		ksort($tags);
+		ksort($tags, SORT_NATURAL | SORT_FLAG_CASE);
 		
 		// return tags
 		return $tags;
