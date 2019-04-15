@@ -260,6 +260,24 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	}
 	
 	/**
+	 * Returns a sorted list of accessible groups.
+	 *v
+	 * @param	integer[]		$groupTypes
+	 * @param	integer[]		$invalidGroupTypes
+	 * @return	UserGroup[]
+	 * @since       5.2
+	 */
+	public static function getSortedAccessibleGroups(array $groupTypes = [], array $invalidGroupTypes = []) {
+		$userGroups = self::getAccessibleGroups($groupTypes, $invalidGroupTypes);
+		
+		uasort($userGroups, function(UserGroup $groupA, UserGroup $groupB) {
+			return strcasecmp($groupA->getName(), $groupB->getName());
+		});
+		
+		return $userGroups;
+	}
+	
+	/**
 	 * Returns true if the current group is an admin-group, which requires it to fulfill
 	 * one of these conditions:
 	 *  a) The WCFSetup is running and the group id is 4.

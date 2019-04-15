@@ -126,7 +126,7 @@ class UserGroupEditForm extends UserGroupAddForm {
 			'groupID' => $this->group->groupID,
 			'group' => $this->group,
 			'action' => 'edit',
-			'availableUserGroups' => UserGroup::getAccessibleGroups(),
+			'availableUserGroups' => UserGroup::getSortedAccessibleGroups(),
 			'groupIsEveryone' => $this->group->groupType == UserGroup::EVERYONE,
 			'groupIsGuest' => $this->group->groupType == UserGroup::GUESTS,
 			'groupIsUsers' => $this->group->groupType == UserGroup::USERS,

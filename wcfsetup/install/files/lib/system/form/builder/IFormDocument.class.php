@@ -77,6 +77,13 @@ interface IFormDocument extends IFormParentNode {
 	public function build();
 	
 	/**
+	 * Returns `true` if the form data has been read via `readData()` and `false` otherwise.
+	 * 
+	 * @return	boolean
+	 */
+	public function didReadValues();
+	
+	/**
 	 * Sets the error message of this form using the given language item and returns this
 	 * document. If `null` is passed, the error message is unset.
 	 *
@@ -133,6 +140,8 @@ interface IFormDocument extends IFormParentNode {
 	 * of a database object action.
 	 * 
 	 * @return	array		data passed to database object action
+	 * 
+	 * @throws	\BadMethodCallException		if the method is called before `readValues()` is called
 	 */
 	public function getData();
 	

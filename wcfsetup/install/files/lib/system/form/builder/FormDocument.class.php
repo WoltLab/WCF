@@ -64,6 +64,12 @@ class FormDocument implements IFormDocument {
 	protected $dataHandler;
 	
 	/**
+	 * indicates if the form data has been read via `readData()`
+	 * @var	boolean
+	 */
+	protected $didReadValues = false;
+	
+	/**
 	 * encoding type of this form
 	 * @var	null|
 	 */
@@ -252,6 +258,13 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
+	public function didReadValues() {
+		return $this->didReadValues;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function errorMessage($languageItem = null, array $variables = []) {
 		if ($languageItem === null) {
 			if (!empty($variables)) {
@@ -321,6 +334,10 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function getData() {
+		if (!$this->didReadValues()) {
+			throw new \BadMethodCallException("Getting data is only possible after calling 'readValues()'.");
+		}
+		
 		return $this->getDataHandler()->getData($this);
 	}
 	
@@ -389,6 +406,10 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function getHtml() {
+		if (!$this->isBuilt) {
+			throw new \BadMethodCallException("The form document has to be built before it can be rendered.");
+		}
+		
 		return WCF::getTPL()->fetch(
 			'__form',
 			'wcf',
@@ -572,6 +593,8 @@ class FormDocument implements IFormDocument {
 		if ($this->requestData === null) {
 			$this->requestData = $_POST;
 		}
+		
+		$this->didReadValues = true;
 		
 		return $this->traitReadValues();
 	}

@@ -222,14 +222,8 @@ class UserSearchForm extends UserOptionListForm {
 				
 				// manually inject user group data for listing of group members
 				if ($this->groupID && $objectType->objectType == 'com.woltlab.wcf.userGroup') {
+					$userGroups = UserGroup::getSortedAccessibleGroups([], [UserGroup::EVERYONE, UserGroup::GUESTS]);
 					/** @var UserGroupCondition $processor */
-					
-					$userGroups = UserGroup::getAccessibleGroups([], [UserGroup::EVERYONE, UserGroup::GUESTS]);
-					
-					uasort($userGroups, function(UserGroup $groupA, UserGroup $groupB) {
-						return strcmp($groupA->getName(), $groupB->getName());
-					});
-					
 					$processor->setUserGroups($userGroups);
 					$processor->setData(new Condition(null, [
 						'conditionData' => serialize(['groupIDs' => [$this->groupID]])

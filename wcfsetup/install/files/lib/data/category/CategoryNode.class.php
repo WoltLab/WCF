@@ -160,4 +160,32 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	public function valid() {
 		return isset($this->children[$this->index]);
 	}
+	
+	/**
+	 * Returns true if this category is visible in a nested menu item list.
+	 *
+	 * @param       AbstractDecoratedCategory        $activeCategory
+	 * @return	boolean
+	 * @since       5.2
+	 */
+	public function isVisibleInNestedList(AbstractDecoratedCategory $activeCategory = null) {
+		if (!$this->getParentCategory()) {
+			// level 1 is always visible
+			return true;
+		}
+		
+		if ($activeCategory) {
+			if ($activeCategory->categoryID == $this->categoryID || $activeCategory->getDecoratedObject()->isParentCategory($this->getDecoratedObject())) {
+				// is the active category or a parent of the active category
+				return true;
+			}
+			
+			if ($this->getParentCategory()->categoryID == $activeCategory->categoryID) {
+				// is a direct child element of the active category
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }

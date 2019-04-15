@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\exception;
 use wcf\system\WCF;
+use wcf\system\WCFACP;
 use wcf\util\JSON;
 
 /**
@@ -61,23 +62,51 @@ class AJAXException extends LoggedException {
 	public function __construct($message, $errorType = self::INTERNAL_ERROR, $stacktrace = null, $returnValues = [], $exceptionID = '', $previous = null) {
 		if ($stacktrace === null) $stacktrace = $this->getTraceAsString();
 		
+		// include a stacktrace if:
+		// - debug mode is enabled or
+		// - within ACP and a SystemException was thrown
+		$includeStacktrace = false;
+		if (class_exists(WCFACP::class, false)) {
+			// ACP
+			if (WCF::debugModeIsEnabled(true) || $errorType === self::INTERNAL_ERROR) {
+				$includeStacktrace = true;
+			}
+		}
+		else {
+			// frontend
+			$includeStacktrace = WCF::debugModeIsEnabled();
+		}
+		
+		// extract file and line in which exception was thrown and only include it
+		// if stacktrace is also included
+		$file = $line = null;
+		if (isset($returnValues['file'])) {
+			if ($includeStacktrace) {
+				$file = $returnValues['file'];
+			}
+			
+			unset($returnValues['file']);
+		}
+		if (isset($returnValues['line'])) {
+			if ($includeStacktrace) {
+				$line = $returnValues['line'];
+			}
+			
+			unset($returnValues['line']);
+		}
+		
 		$responseData = [
 			'code' => $errorType,
+			'file' => $file,
+			'line' => $line,
 			'message' => $message,
 			'previous' => [],
 			'returnValues' => $returnValues
 		];
 		
-		// include a stacktrace if:
-		// - debug mode is enabled
-		// - within ACP and a SystemException was thrown
-		$includeStacktrace = (WCF::debugModeIsEnabled(false) || WCF::debugModeIsEnabled() && self::INTERNAL_ERROR);
-		
 		if ($includeStacktrace) {
 			$responseData['stacktrace'] = nl2br($stacktrace, false);
-		}
-		
-		if ($includeStacktrace) {
+			
 			while ($previous) {
 				$data = ['message' => $previous->getMessage()];
 				$data['stacktrace'] = nl2br($previous->getTraceAsString(), false);

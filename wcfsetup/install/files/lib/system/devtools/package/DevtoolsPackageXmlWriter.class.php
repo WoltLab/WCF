@@ -33,11 +33,6 @@ class DevtoolsPackageXmlWriter {
 	protected $xmlWriter;
 	
 	/**
-	 * code name of current WSC version
-	 */
-	const WSC_CODENAME = 'tornado';
-	
-	/**
 	 * Creates a new `DevtoolsPackageXmlWriter` object.
 	 *
 	 * @param	DevtoolsProject		$project
@@ -69,7 +64,7 @@ class DevtoolsPackageXmlWriter {
 		$this->xmlWriter->beginDocument(
 			'package',
 			'http://www.woltlab.com',
-			'http://www.woltlab.com/XSD/' . static::WSC_CODENAME . '/package.xsd',
+			'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/package.xsd',
 			['name' => $this->packageXmlData['packageIdentifier']]
 		);
 		

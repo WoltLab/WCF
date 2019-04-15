@@ -71,11 +71,19 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
+		$sql = "DELETE FROM	wcf" . WCF_N . "_language_item
+			WHERE		languageItem = ?";
+		$languageItemStatement = WCF::getDB()->prepareStatement($sql);
+		
 		WCF::getDB()->beginTransaction();
 		foreach ($items as $item) {
 			$statement->execute([
 				$item['attributes']['identifier'],
 				$this->installation->getPackageID()
+			]);
+			
+			$languageItemStatement->execute([
+				'wcf.menu.' . $item['attributes']['identifier']
 			]);
 		}
 		WCF::getDB()->commitTransaction();
