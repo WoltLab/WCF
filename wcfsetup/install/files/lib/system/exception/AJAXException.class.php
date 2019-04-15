@@ -62,13 +62,6 @@ class AJAXException extends LoggedException {
 	public function __construct($message, $errorType = self::INTERNAL_ERROR, $stacktrace = null, $returnValues = [], $exceptionID = '', $previous = null) {
 		if ($stacktrace === null) $stacktrace = $this->getTraceAsString();
 		
-		$responseData = [
-			'code' => $errorType,
-			'message' => $message,
-			'previous' => [],
-			'returnValues' => $returnValues
-		];
-		
 		// include a stacktrace if:
 		// - debug mode is enabled or
 		// - within ACP and a SystemException was thrown
@@ -84,11 +77,36 @@ class AJAXException extends LoggedException {
 			$includeStacktrace = WCF::debugModeIsEnabled();
 		}
 		
-		if ($includeStacktrace) {
-			$responseData['stacktrace'] = nl2br($stacktrace, false);
+		// extract file and line in which exception was thrown and only include it
+		// if stacktrace is also included
+		$file = $line = null;
+		if (isset($returnValues['file'])) {
+			if ($includeStacktrace) {
+				$file = $returnValues['file'];
+			}
+			
+			unset($returnValues['file']);
+		}
+		if (isset($returnValues['line'])) {
+			if ($includeStacktrace) {
+				$line = $returnValues['line'];
+			}
+			
+			unset($returnValues['line']);
 		}
 		
+		$responseData = [
+			'code' => $errorType,
+			'file' => $file,
+			'line' => $line,
+			'message' => $message,
+			'previous' => [],
+			'returnValues' => $returnValues
+		];
+		
 		if ($includeStacktrace) {
+			$responseData['stacktrace'] = nl2br($stacktrace, false);
+			
 			while ($previous) {
 				$data = ['message' => $previous->getMessage()];
 				$data['stacktrace'] = nl2br($previous->getTraceAsString(), false);
