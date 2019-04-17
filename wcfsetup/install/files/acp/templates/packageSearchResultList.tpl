@@ -4,7 +4,6 @@
 			<tr>
 				<th colspan="2" class="columnTitle">{lang}wcf.acp.package.name{/lang}</th>
 				<th class="columnText">{lang}wcf.acp.package.author{/lang}</a></th>
-				<th class="columnText">{lang}wcf.acp.package.version{/lang}</th>
 				<th class="columnText">{lang}wcf.acp.package.license{/lang}</th>
 				<th class="columnDate">{lang}wcf.acp.package.packageDate{/lang}</a></th>
 				
@@ -21,14 +20,11 @@
 							
 							{event name='buttons'}
 						</td>
-						<td class="columnTitle" title="{$package->packageDescription}">{$package->packageName}</td>
-						<td class="columnText">{if $package->authorURL}<a href="{$package->authorURL}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</td>
-						<td class="columnText">
-							{$package->getAccessibleVersion()->packageVersion}
-							{*if $package->getAccessibleVersion()->packageUpdateVersionID != $package->getLatestVersion()->packageUpdateVersionID}
-								<span class="icon icon16 icon-info-sign jsTooltip" title="{lang packageVersion=$package->getLatestVersion()->packageVersion}wcf.acp.package.newerVersionAvailable{/lang}"></span>
-							{/if*}
+						<td class="columnTitle" title="{$package->packageDescription}">
+							<div class="packageSearchName">{$package->packageName} <span class="packageSearchVersion">{$package->getAccessibleVersion()->packageVersion}</span></div>
+							<span class="packageSearchPackage">{$package->package}</span>
 						</td>
+						<td class="columnText">{if $package->authorURL}<a href="{$package->authorURL}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</td>
 						<td class="columnText">{if $package->getAccessibleVersion()->licenseURL}<a href="{$package->getAccessibleVersion()->licenseURL}" class="externalURL">{$package->getAccessibleVersion()->license}</a>{else}{$package->getAccessibleVersion()->license}{/if}</td>
 						<td class="columnDate">{@$package->getAccessibleVersion()->packageDate|time}</td>
 						

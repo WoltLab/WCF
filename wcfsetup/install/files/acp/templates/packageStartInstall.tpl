@@ -6,13 +6,13 @@
 {include file='header'}
 
 <script data-relocate="true">
-	$(function() {
-		WCF.Language.addObject({
+	require(['Language', 'WoltLabSuite/Core/Acp/Ui/Package/Search'], function(Language, AcpUiPackageSearch) {
+		Language.addObject({
 			'wcf.acp.package.install.title': '{lang}wcf.acp.package.install.title{/lang}',
 			'wcf.acp.package.update.unauthorized': '{lang}wcf.acp.package.update.unauthorized{/lang}'
 		});
 		
-		new WCF.ACP.Package.Search();
+		new AcpUiPackageSearch();
 	});
 </script>
 
@@ -38,32 +38,38 @@
 {include file='formError'}
 
 <div class="section">
-	<section class="section">
+	<section class="section" id="packageSearch">
 		<h2 class="sectionTitle">{lang}wcf.acp.package.search{/lang}</h2>
 		
 		<dl>
-			<dt><label for="packageName">{lang}wcf.acp.package.search.packageName{/lang}</label></dt>
-			<dd><input type="text" id="packageName" value="" class="long" data-search-name="packageName"></dd>
-		</dl>
-		<dl>
-			<dt><label for="packageDescription">{lang}wcf.acp.package.search.packageDescription{/lang}</label></dt>
-			<dd><input type="text" id="packageDescription" value="" class="long" data-search-name="packageDescription"></dd>
-		</dl>
-		<dl>
-			<dt><label for="package">{lang}wcf.acp.package.search.package{/lang}</label></dt>
+			<dt><label for="packageSearchInput">{lang}wcf.acp.package.search.input{/lang}</label></dt>
 			<dd>
-				<input type="text" id="package" value="" class="medium" data-search-name="package">
-				<small>{lang}wcf.acp.package.search.package.description{/lang}</small>
+				<input type="text" id="packageSearchInput" value="" class="long" autocomplete="off">
+				<small>{lang}wcf.acp.package.search.input.description{/lang}</small>
 			</dd>
 		</dl>
-		
-		<div class="formSubmit">
-			<button class="jsButtonPackageSearch">{lang}wcf.global.button.submit{/lang}</button>
-		</div>
 	</section>
 	
-	<section class="section tabularBox" id="packageSearchResultContainer" style="display: none;">
-		<h2 class="sectionTitle">{lang}wcf.acp.package.search.resultList{/lang} <span class="badge">0</span></h2>
+	<section class="section tabularBox" id="packageSearchResultContainer" data-status="idle">
+		<h2 class="sectionTitle">{lang}wcf.acp.package.search.resultList{/lang} <span class="badge" id="packageSearchResultCounter">0</span></h2>
+		
+		<div class="packageSearchStatus packageSearchStatusIdle">
+			<span class="packageSearchStatusLabel">{lang}wcf.acp.package.search.status.idle{/lang}</span>
+		</div>
+		
+		<div class="packageSearchStatus packageSearchStatusRefreshDatabase">
+			<span class="icon icon64 fa-spinner"></span>
+			<span class="packageSearchStatusLabel">{lang}wcf.acp.package.search.status.refreshDatabase{/lang}</span>
+		</div>
+		
+		<div class="packageSearchStatus packageSearchStatusLoading">
+			<span class="icon icon64 fa-spinner"></span>
+			<span class="packageSearchStatusLabel">{lang}wcf.acp.package.search.status.loading{/lang}</span>
+		</div>
+		
+		<div class="packageSearchStatus packageSearchStatusNoResults">
+			<span class="packageSearchStatusLabel">{lang}wcf.acp.package.search.status.noResults{/lang}</span>
+		</div>
 		
 		<div id="packageSearchResultList"></div>
 	</section>

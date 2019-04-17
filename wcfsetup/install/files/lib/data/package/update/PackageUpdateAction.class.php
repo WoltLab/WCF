@@ -54,14 +54,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	public function validateSearch() {
 		WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
 		
-		$this->readString('package', true);
-		$this->readString('packageDescription', true);
-		$this->readString('packageName', true);
-		$this->readBoolean('searchDescription', true);
-		
-		if (empty($this->parameters['package']) && empty($this->parameters['packageDescription']) && empty($this->parameters['packageName'])) {
-			throw new PermissionDeniedException();
-		}
+		$this->readString('searchString');
 	}
 	
 	/**
@@ -70,7 +63,6 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	 * @return	array
 	 */
 	public function search() {
-		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
 		$availableUpdateServers = PackageUpdateServer::getActiveUpdateServers();
 		
 		// there are no available package update servers
@@ -82,15 +74,8 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("package_update.packageUpdateServerID IN (?)", [array_keys($availableUpdateServers)]);
-		if (!empty($this->parameters['package'])) {
-			$conditions->add("package_update.package LIKE ?", ['%' . $this->parameters['package'] . '%']);
-		}
-		if (!empty($this->parameters['packageDescription'])) {
-			$conditions->add("package_update.packageDescription LIKE ?", ['%' . $this->parameters['packageDescription'] . '%']);
-		}
-		if (!empty($this->parameters['packageName'])) {
-			$conditions->add("package_update.packageName LIKE ?", ['%' . $this->parameters['packageName'] . '%']);
-		}
+		$searchString = '%' . $this->parameters['searchString'] . '%';
+		$conditions->add("(package_update.package LIKE ? OR package_update.packageDescription LIKE ? OR package_update.packageName LIKE ?)", [$searchString, $searchString, $searchString]);
 		$conditions->add("package.packageID IS NULL");
 		
 		// find matching packages
@@ -208,7 +193,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 				while ($row = $statement->fetchArray()) {
 					$packageVersions[$row['packageUpdateVersionID']] = [
 						'packageUpdateID' => $row['packageUpdateID'],
-						'packageVersion' => $row['packageVersion']
+						'packageVersion' => $row['packageVersion'],
 					];
 				}
 				
@@ -232,21 +217,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		
-		$search = SearchEditor::create([
-			'userID' => WCF::getUser()->userID,
-			'searchData' => serialize($packageUpdates),
-			'searchTime' => TIME_NOW,
-			'searchType' => 'acpPackageSearch'
-		]);
-		
-		// forward call to build the actual result list
-		$updateAction = new PackageUpdateAction([], 'getResultList', [
-			'pageNo' => 1,
-			'search' => $search
-		]);
-		
-		$returnValues = $updateAction->executeAction();
-		return $returnValues['returnValues'];
+		return $this->getResultList($availableUpdateServers, $packageUpdates);
 	}
 	
 	/**
@@ -332,7 +303,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			if (!isset($packageVersions[$package][$packageUpdateID])) {
 				$packageVersions[$package][$packageUpdateID] = [
 					'accessible' => [],
-					'existing' => []
+					'existing' => [],
 				];
 			}
 			
@@ -385,7 +356,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			$existing = array_pop($existing);
 			$packageUpdates[$versions[$accessible]] = [
 				'accessible' => $accessible,
-				'existing' => $existing
+				'existing' => $existing,
 			];
 		}
 		
@@ -439,31 +410,13 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 	}
 	
 	/**
-	 * Validates parameters to return a result list for a previous search.
-	 */
-	public function validateGetResultList() {
-		WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
-		
-		$this->readInteger('pageNo');
-		$this->readInteger('searchID');
-		
-		$this->search = new Search($this->parameters['searchID']);
-		if (!$this->search->searchID || $this->search->userID != WCF::getUser()->userID) {
-			throw new UserInputException('searchID');
-		}
-	}
-	
-	/**
 	 * Returns a result list for a previous search.
 	 * 
+	 * @param       PackageUpdateServer[]   $updateServers
+	 * @param       array                   $updateData
 	 * @return	array
 	 */
-	public function getResultList() {
-		if ($this->search === null && isset($this->parameters['search']) && $this->parameters['search'] instanceof Search) {
-			$this->search = $this->parameters['search'];
-		}
-		$updateData = unserialize($this->search->searchData);
-		
+	protected function getResultList(array $updateServers, array $updateData) {
 		// get package updates
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("packageUpdateID IN (?)", [array_keys($updateData)]);
@@ -471,7 +424,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		$sql = "SELECT	*
 			FROM	wcf".WCF_N."_package_update
 			".$conditions;
-		$statement = WCF::getDB()->prepareStatement($sql, 20, ($this->parameters['pageNo'] - 1) * 20);
+		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		$packageUpdates = $packageVersionIDs = [];
 		while ($packageUpdate = $statement->fetchObject(PackageUpdate::class)) {
@@ -497,22 +450,35 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		$updateVersions = $statement->fetchObjects(PackageUpdateVersion::class, 'packageUpdateVersionID');
 		
 		// assign versions
+		/**
+		 * @var int $packageUpdateID
+		 * @var ViewablePackageUpdate $packageUpdate
+		 */
 		foreach ($packageUpdates as $packageUpdateID => $packageUpdate) {
 			$versionIDs = $updateData[$packageUpdate->packageUpdateID];
 			$packageUpdate->setAccessibleVersion($updateVersions[$versionIDs['accessible']]);
 			$packageUpdate->setLatestVersion($updateVersions[$versionIDs['existing']]);
+			$packageUpdate->setUpdateServer($updateServers[$packageUpdate->packageUpdateServerID]);
 		}
 		
+		uasort($packageUpdates, function(ViewablePackageUpdate $a, ViewablePackageUpdate $b) {
+			$aIsTrusted = $a->getUpdateServer()->isTrustedServer() || $a->getUpdateServer()->isWoltLabStoreServer();
+			$bIsTrusted = $b->getUpdateServer()->isTrustedServer() || $b->getUpdateServer()->isWoltLabStoreServer();
+			
+			if ($aIsTrusted === $bIsTrusted) {
+				return strnatcasecmp($a->getName(), $b->getName());
+			}
+			
+			return $aIsTrusted ? -1 : 1;
+		});
+		
 		WCF::getTPL()->assign([
-			'packageUpdates' => $packageUpdates
+			'packageUpdates' => $packageUpdates,
 		]);
 		
-		$count = count($updateData);
 		return [
-			'count' => $count,
-			'pageCount' => ceil($count / 20),
-			'searchID' => $this->search->searchID,
-			'template' => WCF::getTPL()->fetch('packageSearchResultList')
+			'count' => count($updateData),
+			'template' => WCF::getTPL()->fetch('packageSearchResultList'),
 		];
 	}
 	
@@ -544,7 +510,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		}
 		
 		return [
-			'url' => $url
+			'url' => $url,
 		];
 	}
 	
@@ -630,6 +596,20 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		return $this->createQueue('install');
 	}
 	
+	public function validateRefreshDatabase() {
+		WCF::getSession()->checkPermissions(['admin.configuration.package.canInstallPackage']);
+		
+		$this->readBoolean('ignoreCache', true);
+		
+		if (ENABLE_BENCHMARK) {
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.searchForUpdates.benchmark'));
+		}
+	}
+	
+	public function refreshDatabase() {
+		PackageUpdateDispatcher::getInstance()->refreshPackageDatabase();
+	}
+	
 	/**
 	 * Creates a new package installation queue.
 	 * 
@@ -649,7 +629,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		}
 		catch (PackageUpdateUnauthorizedException $e) {
 			return [
-				'template' => $e->getRenderedTemplate()
+				'template' => $e->getRenderedTemplate(),
 			];
 		}
 		
@@ -660,7 +640,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			if (!empty($excludedPackages)) {
 				return [
 					'excludedPackages' => true,
-					'template' => WCF::getTPL()->fetch('packageUpdateExcludedPackages', 'wcf', ['excludedPackages' => $excludedPackages])
+					'template' => WCF::getTPL()->fetch('packageUpdateExcludedPackages', 'wcf', ['excludedPackages' => $excludedPackages]),
 				];
 			}
 		}
@@ -702,7 +682,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 					'packageName' => $package['packageName'],
 					'packageID' => $package['packageID'] ?: null,
 					'archive' => $package['archive'],
-					'action' => $package['action']
+					'action' => $package['action'],
 				]);
 				$parentQueueID = $queue->queueID;
 				
@@ -713,7 +693,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		}
 		
 		return [
-			'queueID' => $queueID
+			'queueID' => $queueID,
 		];
 	}
 }

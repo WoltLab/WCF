@@ -464,3 +464,62 @@ $wcfAcpSubMenuWidth: 300px;
 		text-decoration: underline;
 	}
 }
+
+/* Search for Packages */
+.packageSearchName {
+	@include wcfFontHeadline;
+	@include wcfFontBold;
+}
+
+.packageSearchVersion {
+	color: $wcfContentDimmedText;
+	font-weight: 400;
+	padding-left: 5px;
+}
+
+.packageSearchPackage {
+	color: $wcfContentDimmedText;
+	font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+	font-weight: 400;
+	
+	@include wcfFontSmall;
+}
+
+#packageSearchResultContainer {
+	&:not([data-status="idle"]) .packageSearchStatusIdle {
+		display: none;
+	}
+	
+	&:not([data-status="loading"]) .packageSearchStatusLoading {
+		display: none;
+	}
+	
+	&:not([data-status="noResults"]) .packageSearchStatusNoResults {
+		display: none;
+	}
+	
+	&:not([data-status="refreshDatabase"]) .packageSearchStatusRefreshDatabase {
+		display: none;
+	}
+	
+	&:not([data-status="showResults"]) {
+		#packageSearchResultCounter, 
+		#packageSearchResultList {
+			display: none;
+		}
+	}
+}
+
+.packageSearchStatus  {
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-height: 120px;
+}
+
+.packageSearchStatusLabel {
+	margin-top: 10px;
+	
+	@include wcfFontHeadline;
+}
