@@ -4687,7 +4687,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 <p>Der Verwendung veröffentlichter Kontaktdaten durch Dritte zum Zwecke von Werbung wird ausdrücklich widersprochen. Wir behalten uns rechtliche Schritte für den Fall der unverlangten Zusendung von Werbeinformationen, z.B. durch Spam-Mails, vor.</p>
 <p><br></p>
 <p><small><em>Quelle: <a href="http://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
-		<item name="wcf.user.register.error.blacklistMatches"><![CDATA[Die Registrierung kann aufgrund von Einschränkungen nicht fortgesetzt werden, bitte wende{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} sich direkt an den Administrator dieser Seite.]]></item>
+		<item name="wcf.user.register.error.blacklistMatches"><![CDATA[Die Registrierung kann aufgrund von Einschränkungen nicht fortgesetzt werden, bitte wende{if LANGUAGE_USE_INFORMAL_VARIANT} dich{else}n Sie sich{/if} direkt an den Administrator dieser Seite.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>
