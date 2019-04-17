@@ -1,18 +1,19 @@
 /**
- * 
+ * Search interface for the package server lists.
  * 
  * @author      Alexander Ebert
  * @copyright   2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Acp/Ui/Package/Search
  */
-define(['Ajax'], function(Ajax) {
+define(['Ajax', 'WoltLabSuite/Core/Acp/Ui/Package/PrepareInstallation'], function(Ajax, AcpUiPackagePrepareInstallation) {
 	'use strict';
 	
 	function AcpUiPackageSearch() { this.init(); }
 	AcpUiPackageSearch.prototype = {
 		init: function () {
 			this._input = elById('packageSearchInput');
+			this._installation = new AcpUiPackagePrepareInstallation();
 			this._isBusy = false;
 			this._isFirstRequest = true;
 			this._lastValue = '';
@@ -97,6 +98,18 @@ define(['Ajax'], function(Ajax) {
 						this._resultCounter.textContent = data.returnValues.count;
 						
 						this._setStatus('showResults');
+						
+						elBySelAll('.jsInstallPackage', this._resultList, (function(button) {
+							button.addEventListener(WCF_CLICK_EVENT, (function (event) {
+								event.preventDefault();
+								button.blur();
+								
+								this._installation.start(
+									elData(button, 'package'),
+									elData(button, 'package-version')
+								);
+							}).bind(this));
+						}).bind(this));
 					}
 					else {
 						this._setStatus('noResults');
