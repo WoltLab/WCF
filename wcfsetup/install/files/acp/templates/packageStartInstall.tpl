@@ -13,6 +13,10 @@
 		});
 		
 		new AcpUiPackageSearch();
+		
+		{if $errorField === 'uploadPackage'}
+			elBySel('.jsButtonUploadPackage').click();
+		{/if}
 	});
 </script>
 
@@ -23,7 +27,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="#" class="button jsStaticDialog" data-dialog-id="packageUploadDialog"><span class="icon icon16 fa-upload"></span> <span>{lang}wcf.acp.package.upload{/lang}</span></a></li>
+			<li><a href="#" class="button jsButtonUploadPackage jsStaticDialog" data-dialog-id="packageUploadDialog"><span class="icon icon16 fa-upload"></span> <span>{lang}wcf.acp.package.upload{/lang}</span></a></li>
 			<li><a href="{link controller='PackageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
