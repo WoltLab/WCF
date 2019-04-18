@@ -451,6 +451,11 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		
 		// assign versions
 		/**
+		 * @var ViewablePackageUpdate[] $thirdPartySources
+		 * @var ViewablePackageUpdate[] $trustedSources
+		 */
+		$thirdPartySources = $trustedSources = [];
+		/**
 		 * @var int $packageUpdateID
 		 * @var ViewablePackageUpdate $packageUpdate
 		 */
@@ -459,25 +464,29 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			$packageUpdate->setAccessibleVersion($updateVersions[$versionIDs['accessible']]);
 			$packageUpdate->setLatestVersion($updateVersions[$versionIDs['existing']]);
 			$packageUpdate->setUpdateServer($updateServers[$packageUpdate->packageUpdateServerID]);
+			
+			if ($packageUpdate->getUpdateServer()->isTrustedServer() || $packageUpdate->getUpdateServer()->isWoltLabStoreServer()) {
+				$trustedSources[] = $packageUpdate;
+			}
+			else {
+				$thirdPartySources[] = $packageUpdate;
+			}
 		}
 		
-		uasort($packageUpdates, function(ViewablePackageUpdate $a, ViewablePackageUpdate $b) {
-			$aIsTrusted = $a->getUpdateServer()->isTrustedServer() || $a->getUpdateServer()->isWoltLabStoreServer();
-			$bIsTrusted = $b->getUpdateServer()->isTrustedServer() || $b->getUpdateServer()->isWoltLabStoreServer();
-			
-			if ($aIsTrusted === $bIsTrusted) {
-				return strnatcasecmp($a->getName(), $b->getName());
-			}
-			
-			return $aIsTrusted ? -1 : 1;
+		uasort($thirdPartySources, function(ViewablePackageUpdate $a, ViewablePackageUpdate $b) {
+			return strnatcasecmp($a->getName(), $b->getName());
+		});
+		uasort($trustedSources, function(ViewablePackageUpdate $a, ViewablePackageUpdate $b) {
+			return strnatcasecmp($a->getName(), $b->getName());
 		});
 		
 		WCF::getTPL()->assign([
-			'packageUpdates' => $packageUpdates,
+			'thirdPartySources' => $thirdPartySources,
+			'trustedSources' => $trustedSources,
 		]);
 		
 		return [
-			'count' => count($updateData),
+			'count' => count($thirdPartySources) + count($trustedSources),
 			'template' => WCF::getTPL()->fetch('packageSearchResultList'),
 		];
 	}
