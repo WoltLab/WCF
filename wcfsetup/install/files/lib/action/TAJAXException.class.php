@@ -72,7 +72,7 @@ trait TAJAXException {
 					'errorMessage' => $exception->getMessage(),
 					'errorType' => $e->getType(),
 					'file' => $e->getFile(),
-					'fieldName' => $e->getFieldName(),
+					'fieldName' => $exception->getFieldName(),
 					'line' => $e->getLine(),
 					'realErrorMessage' => $exception->getErrorMessage()
 				]
