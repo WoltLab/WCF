@@ -7,7 +7,7 @@
  * @module	WoltLabSuite/Core/Form/Builder/Field/Controller/Rating
  * @since	5.2
  */
-define(['Dictionary'], function(Dictionary) {
+define(['Dictionary', 'Environment'], function(Dictionary, Environment) {
 	"use strict";
 	
 	/**
