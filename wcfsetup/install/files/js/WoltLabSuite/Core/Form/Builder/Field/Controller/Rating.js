@@ -85,7 +85,7 @@ define(['Dictionary', 'Environment'], function(Dictionary, Environment) {
 			this._ratingElements.forEach(function(ratingElement, rating) {
 				var icon = elByClass('icon', ratingElement)[0];
 				
-				this._toggleIcon(icon, rating <= currentRating);
+				this._toggleIcon(icon, ~~rating <= ~~currentRating);
 			}.bind(this));
 		},
 		
@@ -121,7 +121,7 @@ define(['Dictionary', 'Environment'], function(Dictionary, Environment) {
 			this._ratingElements.forEach(function(ratingElement, rating) {
 				var icon = elByClass('icon', ratingElement)[0];
 				
-				this._toggleIcon(icon, rating <= this._input.value);
+				this._toggleIcon(icon, ~~rating <= ~~this._input.value);
 			}.bind(this));
 		},
 		
