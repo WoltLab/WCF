@@ -48,13 +48,10 @@ class UploadFormField extends AbstractFormField {
 	protected $templateName = '__uploadFormField';
 	
 	/**
-	 * Registers the current field in the upload handler.
+	 * Array of temporary values, which are assigned, after the method `populate` are called.
+	 * @var array 
 	 */
-	private function registerField() {
-		if (!UploadHandler::getInstance()->isRegisteredFieldId($this->getPrefixedId())) {
-			UploadHandler::getInstance()->registerUploadField($this->buildUploadField(), $this->getDocument()->getRequestData());
-		}
-	}
+	private $values = [];
 	
 	/**
 	 * Unregisters the current field in the upload handler.
@@ -87,15 +84,18 @@ class UploadFormField extends AbstractFormField {
 	 * @return boolean
 	 */
 	private function isRegistered() {
-		return UploadHandler::getInstance()->isRegisteredFieldId($this->getPrefixedId());
+		return $this->isPopulated;
 	}
 	
 	/**
 	 * @inheritDoc
 	 * @return      UploadFile[]
+	 * @throws      \BadMethodCallException         if the method is called, before the field is populated
 	 */
 	public function getValue() {
-		$this->registerField();
+		if (!$this->isPopulated) {
+			throw new \BadMethodCallException("The field must be populated, before calling this method.");
+		}
 		
 		return UploadHandler::getInstance()->getFilesByFieldId($this->getPrefixedId());
 	}
@@ -105,18 +105,24 @@ class UploadFormField extends AbstractFormField {
 	 * 
 	 * @param       bool    $processFiles
 	 * @return      UploadFile[]
+	 * @throws      \BadMethodCallException         if the method is called, before the field is populated
 	 */
 	public function getRemovedFiles($processFiles = false) {
-		$this->registerField();
+		if (!$this->isPopulated) {
+			throw new \BadMethodCallException("The field must be populated, before calling the method.");
+		}
 		
 		return UploadHandler::getInstance()->getRemovedFiledByFieldId($this->getPrefixedId(), $processFiles);
 	}
 	
 	/**
 	 * @inheritDoc
+	 * @throws      \BadMethodCallException         if the method is called, before the field is populated
 	 */
 	public function readValue() {
-		$this->registerField(); 
+		if (!$this->isPopulated) {
+			throw new \BadMethodCallException("The field must be populated, before calling this method.");
+		}
 		
 		return $this;
 	}
@@ -151,9 +157,12 @@ class UploadFormField extends AbstractFormField {
 	
 	/**
 	 * @inheritDoc
+	 * @throws      \BadMethodCallException         if the method is called, before the field is populated
 	 */
 	public function getHtml() {
-		$this->registerField();
+		if (!$this->isPopulated) {
+			throw new \BadMethodCallException("The field must be populated, before calling this method.");
+		}
 		
 		return parent::getHtml();
 	}
@@ -214,9 +223,12 @@ class UploadFormField extends AbstractFormField {
 			}
 		}
 		
-		$this->registerField();
-		
-		UploadHandler::getInstance()->registerFilesByField($this->getPrefixedId(), $value);
+		if ($this->isPopulated) {
+			UploadHandler::getInstance()->registerFilesByField($this->getPrefixedId(), $value);
+		}
+		else {
+			$this->values = $value;
+		}
 	}
 	
 	/**
@@ -241,6 +253,12 @@ class UploadFormField extends AbstractFormField {
 	public function populate() {
 		parent::populate();
 		
+		UploadHandler::getInstance()->registerUploadField($this->buildUploadField(), $this->getDocument()->getRequestData());
+		
+		if (!empty($this->values)) {
+			UploadHandler::getInstance()->registerFilesByField($this->getPrefixedId(), $this->values);
+		}
+		
 		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('upload', function(IFormDocument $document, array $parameters) {
 			$parameters[$this->getObjectProperty()] = $this->getValue();
 			$parameters[$this->getObjectProperty() . '_removedFiles'] = $this->getRemovedFiles(true);
@@ -254,7 +272,7 @@ class UploadFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 * 
-	 * @throws      \RuntimeException       if the field has already been initialized
+	 * @throws      \LogicException       if the field has already been initialized
 	 */
 	public function maximum($maximum = null) {
 		if ($this->isRegistered()) {
