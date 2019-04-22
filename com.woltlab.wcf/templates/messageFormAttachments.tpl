@@ -63,7 +63,16 @@
 			'{$tmpHash|encodeJS}',
 			'{@$attachmentParentObjectID}',
 			{@$attachmentHandler->getMaxCount()},
-			'{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}'
+			'{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}',
+			{
+				autoScale: {
+					enable: {if ATTACHMENT_IMAGE_AUTOSCALE}true{else}false{/if},
+					maxWidth: {ATTACHMENT_IMAGE_AUTOSCALE_MAX_WIDTH},
+					maxHeight: {ATTACHMENT_IMAGE_AUTOSCALE_MAX_HEIGHT},
+					fileType: '{ATTACHMENT_IMAGE_AUTOSCALE_FILE_TYPE}',
+					quality: {ATTACHMENT_IMAGE_AUTOSCALE_QUALITY / 100}
+				}
+			}
 		);
 		new WCF.Action.Delete('wcf\\data\\attachment\\AttachmentAction', '.formAttachmentList > li');
 	});

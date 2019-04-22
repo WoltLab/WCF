@@ -1390,6 +1390,16 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Bildformat beim Erzeugen von Vorschaugrafiken beibehalten]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Höhe der Vorschaugrafiken]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Breite der Vorschaugrafiken]]></item>
+		<item name="wcf.acp.option.category.message.attachment.autoscale"><![CDATA[Automatische Bildskalierung]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale"><![CDATA[Bildskalierung durch den Webbrowser aktivieren]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale.description"><![CDATA[Wenn diese Option aktiviert ist, werden angehangene Bilder vor dem Upload im Webbrowser skaliert, falls diese die maximalen Dimensionen oder das Dateigrößenlimit überschreiten.]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_max_width"><![CDATA[Maximal erlaubte Breite einer Grafik]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_max_height"><![CDATA[Maximal erlaubte Höhe einer Grafik]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_quality"><![CDATA[Qualitätsstufe]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_quality.description"><![CDATA[Bestimmt die Qualität des skalierten Bildes.]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_file_type"><![CDATA[Dateityp]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_file_type.jpeg"><![CDATA[JPEG (verlustbehaftet, erzeugt in der Regel kleine Dateien)]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_file_type.keep"><![CDATA[Dateityp beibehalten]]></item>
 		<item name="wcf.acp.option.module_attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.option.module_smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.option.category.message.censorship"><![CDATA[Zensur-Funktion]]></item>

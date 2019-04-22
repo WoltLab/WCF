@@ -61,9 +61,15 @@ if (COMPILER_TARGET_DEFAULT) {
 		_replaceOnLoad: {},
 		
 		/**
+		 * additional options
+		 * @var Object
+		 */
+		_options: {},
+		
+		/**
 		 * @see        WCF.Upload.init()
 		 */
-		init: function (buttonSelector, fileListSelector, objectType, objectID, tmpHash, parentObjectID, maxUploads, editorId) {
+		init: function (buttonSelector, fileListSelector, objectType, objectID, tmpHash, parentObjectID, maxUploads, editorId, options) {
 			this._super(buttonSelector, fileListSelector, 'wcf\\data\\attachment\\AttachmentAction', {
 				multiple: true,
 				maxUploads: maxUploads
@@ -75,6 +81,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			this._tmpHash = tmpHash;
 			this._parentObjectID = parseInt(parentObjectID);
 			this._editorId = editorId;
+			this._options = $.extend(true, this._options, options || {});
 			
 			this._buttonSelector.children('p.button').click($.proxy(this._validateLimit, this));
 			this._fileListSelector.find('.jsButtonInsertAttachment').click($.proxy(this._insert, this));
@@ -285,20 +292,130 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * @see        WCF.Upload._upload()
 		 */
 		_upload: function (event, file, blob) {
-			var $uploadID = undefined;
+			var _super = this._super.bind(this);
 			
-			if (this._validateLimit()) {
-				$uploadID = this._super(event, file, blob);
-			}
-			
-			if (this._fileUpload) {
-				// remove and re-create the upload button since the 'files' property
-				// of the input field is readonly thus it can't be reset
-				this._removeButton();
-				this._createButton();
-			}
-			
-			return $uploadID;
+			require([
+				'WoltLabSuite/Core/FileUtil',
+				'WoltLabSuite/Core/Image/ImageUtil',
+				'WoltLabSuite/Core/Image/Resizer',
+				'WoltLabSuite/Core/Ajax/Status'
+			], (function (FileUtil, ImageUtil, ImageResizer, AjaxStatus) {
+				AjaxStatus.show();
+				
+				var files = [];
+				
+				if (file) {
+					files.push(file);
+				}
+				else if (blob) {
+					files.push(FileUtil.blobToFile(blob, 'pasted-from-clipboard'));
+				}
+				else {
+					files = this._fileUpload.prop('files');
+				}
+				
+				// We resolve with the unaltered list of files in case auto scaling is disabled.
+				var promise = Promise.resolve(files);
+				
+				if (this._options.autoScale && this._options.autoScale.enable) {
+					var maxSize = this._buttonSelector.data('maxSize');
+					
+					var resizer = new ImageResizer();
+					
+					// Resize the images in series.
+					// As our resizer is based on Pica it will use multiple workers per image if possible.
+					promise = Array.prototype.reduce.call(files, (function (acc, file) {
+						return acc.then((function (arr) {
+							var timeout = new Promise(function (resolve, reject) {
+								// We issue one timeout per image, thus multiple timeout
+								// handlers will run in parallel
+								setTimeout(function () {
+									resolve(file);
+								}, 10000);
+							});
+							
+							var promise = resizer.loadFile(file)
+								.then((function (result) {
+									var exif = result.exif;
+									var maxWidth = this._options.autoScale.maxWidth;
+									var maxHeight = this._options.autoScale.maxHeight;
+									var quality = this._options.autoScale.quality;
+									
+									if (window.devicePixelRatio >= 2) {
+										var realWidth = window.screen.width * window.devicePixelRatio;
+										var realHeight = window.screen.height * window.devicePixelRatio;
+										// Check whether the width of the image is roughly the width of the physical screen, and
+										// the height of the image is at least the height of the physical screen.
+										if (realWidth - 10 < result.image.width && result.image.width < realWidth + 10 && realHeight - 10 < result.image.height) {
+											// This appears to be a screenshot from a HiDPI device in portrait mode: Scale to logical size
+											maxWidth = Math.min(maxWidth, window.screen.width);
+										}
+									}
+									
+									return resizer.resize(result.image, maxWidth, maxHeight, quality, file.size > maxSize, timeout)
+										.then((function (resizedImage) {
+											// Check whether the image actually was resized
+											if (resizedImage === undefined) {
+												return file;
+											}
+											
+											var fileType = this._options.autoScale.fileType;
+											
+											if (this._options.autoScale.fileType === 'keep' || ImageUtil.containsTransparentPixels(resizedImage)) {
+												fileType = file.type;
+											}
+											
+											return resizer.saveFile({
+												exif: exif,
+												image: resizedImage
+											}, file.name, fileType, quality);
+										}).bind(this))
+										.then(function (resizedFile) {
+											if (resizedFile.size > file.size) {
+												console.debug('[WCF.Attachment] File size of "' + file.name + '" increased, uploading untouched image.');
+												return file;
+											}
+											
+											return resizedFile;
+										});
+								}).bind(this))
+								.catch(function (error) {
+									console.debug('[WCF.Attachment] Failed to resize image "' + file.name + '":', error);
+									return file;
+								});
+							
+							return Promise.race([timeout, promise])
+								.then(function (file) {
+									arr.push(file);
+									return arr;
+								});
+						}).bind(this));
+					}).bind(this), Promise.resolve([]));
+				}
+				
+				promise.then((function (files) {
+					var uploadID = undefined;
+					
+					if (this._validateLimit()) {
+						uploadID = _super(event, undefined, undefined, files);
+					}
+					
+					if (this._fileUpload) {
+						// remove and re-create the upload button since the 'files' property
+						// of the input field is readonly thus it can't be reset
+						this._removeButton();
+						this._createButton();
+					}
+					
+					return uploadID;
+				}).bind(this))
+				.catch(function (error) {
+					console.debug('[WCF.Attachment] Failed to upload attachments:', error);
+				})
+				.finally(AjaxStatus.hide);
+			}).bind(this), function (error) {
+				console.debug('[WCF.Attachment] Failed to load modules:', error);
+			});
 		},
 		
 		/**

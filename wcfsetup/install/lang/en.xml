@@ -1368,6 +1368,16 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Retain thumbnail dimensions]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Thumbnail Height]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Thumbnail Width]]></item>
+		<item name="wcf.acp.option.category.message.attachment.autoscale"><![CDATA[Automatic Image Scaling]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale"><![CDATA[Enables image scaling in the web browser]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale.description"><![CDATA[When enabled images are being scaled automatically in the web browser before uploading if they exceed the allowed dimensions or the file size limit.]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_max_width"><![CDATA[Maximum allowed width]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_max_height"><![CDATA[Maximum allowed height]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_quality"><![CDATA[Quality]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_quality.description"><![CDATA[Defines the quality of the scaled image.]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_file_type"><![CDATA[File type]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_file_type.jpeg"><![CDATA[JPEG (lossy, usually the generated files are small)]]></item>
+		<item name="wcf.acp.option.attachment_image_autoscale_file_type.keep"><![CDATA[Keep the file type]]></item>
 		<item name="wcf.acp.option.module_attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.option.module_smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.option.category.message.censorship"><![CDATA[Censorship]]></item>
