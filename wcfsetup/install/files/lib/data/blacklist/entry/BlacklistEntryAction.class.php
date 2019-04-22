@@ -1,8 +1,8 @@
 <?php
 namespace wcf\data\blacklist\entry;
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\blacklist\status\BlacklistStatus;
 use wcf\data\blacklist\status\BlacklistStatusEditor;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\exception\HTTPNotFoundException;
 use wcf\system\exception\HTTPServerErrorException;
 use wcf\system\exception\HTTPUnauthorizedException;

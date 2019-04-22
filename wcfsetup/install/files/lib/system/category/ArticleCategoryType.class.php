@@ -25,7 +25,7 @@ class ArticleCategoryType extends AbstractCategoryType {
 	/**
 	 * @inheritDoc
 	 */
-	protected $maximumNestingLevel = 2;
+	protected $maximumNestingLevel = 9;
 	
 	/**
 	 * @inheritDoc

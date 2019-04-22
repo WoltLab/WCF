@@ -18,6 +18,11 @@ class BooleanFormField extends AbstractFormField implements IAutoFocusFormField,
 	/**
 	 * @inheritDoc
 	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Checked';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $templateName = '__booleanFormField';
 	
 	/**

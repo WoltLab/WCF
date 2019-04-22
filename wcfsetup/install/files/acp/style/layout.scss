@@ -441,3 +441,26 @@ $wcfAcpSubMenuWidth: 300px;
 		width: 100% !important;
 	}
 }
+
+/* Owner Group */
+#wscMissingOwnerGroup {
+	background-color: rgb(248, 215, 218);
+	border-top: 5px solid red;
+	bottom: 0;
+	color: rgb(114, 28, 36);
+	left: 0;
+	padding: 10px;
+	position: fixed;
+	text-align: center;
+	right: 0;
+	z-index: 9999;
+	
+	@include screen-md-up {
+		padding: 20px;
+	}
+	
+	> a {
+		color: inherit;
+		text-decoration: underline;
+	}
+}

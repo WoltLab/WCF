@@ -32,6 +32,11 @@ class UserFormField extends AbstractFormField implements IAutoFocusFormField, II
 	/**
 	 * @inheritDoc
 	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/User';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $templateName = '__userFormField';
 	
 	/**
@@ -58,7 +63,12 @@ class UserFormField extends AbstractFormField implements IAutoFocusFormField, II
 	 * @inheritDoc
 	 */
 	public function validate() {
-		if ($this->isRequired() && ($this->getValue() === null || $this->getValue() === '') || (is_array($this->getValue()) && empty($this->getValue()))) {
+		if (
+			$this->isRequired() && (
+				($this->getValue() === null || $this->getValue() === '') ||
+				(is_array($this->getValue()) && empty($this->getValue()))
+			)
+		) {
 			$this->addValidationError(new FormFieldValidationError('empty'));
 		}
 		else if (!$this->isRequired()) {

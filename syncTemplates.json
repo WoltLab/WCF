@@ -6,6 +6,7 @@
   "templates": [
     "__aclFormField",
     "__booleanFormField",
+    "__contentLanguageFormField",
     "__dateFormField",
     "__devtoolsLanguageChooser",
     "__form",
@@ -31,6 +32,7 @@
     "__pollOptionsFormField",
     "__radioButtonFormField",
     "__ratingFormField",
+    "__singleMediaSelectionFormField",
     "__singleSelectionFormField",
     "__tabFormContainer",
     "__tabMenuFormContainer",

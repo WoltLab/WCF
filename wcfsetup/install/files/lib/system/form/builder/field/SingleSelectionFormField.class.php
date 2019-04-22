@@ -13,8 +13,15 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  */
 class SingleSelectionFormField extends AbstractFormField implements IImmutableFormField, IFilterableSelectionFormField, INullableFormField {
 	use TImmutableFormField;
-	use TFilterableSelectionFormField;
+	use TFilterableSelectionFormField {
+		filterable as protected traitFilterable;
+	}
 	use TNullableFormField;
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
 	
 	/**
 	 * @inheritDoc
@@ -30,6 +37,20 @@ class SingleSelectionFormField extends AbstractFormField implements IImmutableFo
 		}
 		
 		return parent::getSaveValue();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function filterable($filterable = true) {
+		if ($filterable) {
+			$this->javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/RadioButton';
+		}
+		else {
+			$this->javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+		}
+		
+		return $this->traitFilterable($filterable);
 	}
 	
 	/**

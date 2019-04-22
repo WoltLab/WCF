@@ -27,6 +27,11 @@ abstract class AbstractNumericFormField extends AbstractFormField implements IAu
 	protected $integerValues = false;
 	
 	/**
+	 * @inheritDoc
+	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+	
+	/**
 	 * step value for the input element
 	 * @var	null|number
 	 */

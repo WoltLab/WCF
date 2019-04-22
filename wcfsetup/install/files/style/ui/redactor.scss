@@ -587,13 +587,21 @@
 
 .redactorBoxFullscreen {
 	bottom: 0;
+	display: flex;
+	flex-direction: column;
 	left: 0;
 	position: fixed;
 	right: 0;
 	top: 0;
 	z-index: 310;
 	
-	.redactor-layer {
+	.redactor-toolbar-box {
+		flex: 0 auto;
+	}
+	
+	.redactor-layer,
+	.redactor-layer + textarea {
+		flex: 1 auto;
 		max-height: none !important;
 		min-height: 0 !important;
 	}

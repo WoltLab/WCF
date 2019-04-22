@@ -478,8 +478,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 			$this->hasAdministrativePermissions = false;
 			
 			if ($this->userID) {
-				foreach ($this->getGroupIDs() as $groupID) {
-					$group = UserGroup::getGroupByID($groupID);
+				foreach (UserGroup::getGroupsByIDs($this->getGroupIDs()) as $group) {
 					if ($group->isAdminGroup()) {
 						$this->hasAdministrativePermissions = true;
 						break;
@@ -489,6 +488,29 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 		}
 		
 		return $this->hasAdministrativePermissions;
+	}
+	
+	/**
+	 * Returns true, if this user is a member of the owner group.
+	 * 
+	 * @return bool
+	 * @since 5.2
+	 */
+	public function hasOwnerAccess() {
+		static $isOwner;
+		
+		if ($isOwner === null) {
+			$isOwner = false;
+			
+			foreach (UserGroup::getGroupsByIDs($this->getGroupIDs()) as $group) {
+				if ($group->isOwner()) {
+					$isOwner = true;
+					break;
+				}
+			}
+		}
+		
+		return $isOwner;
 	}
 	
 	/**

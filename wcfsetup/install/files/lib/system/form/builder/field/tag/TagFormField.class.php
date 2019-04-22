@@ -31,6 +31,11 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormNode {
 	/**
 	 * @inheritDoc
 	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Tag';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $templateName = '__tagFormField';
 	
 	/**

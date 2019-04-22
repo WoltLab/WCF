@@ -250,7 +250,7 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 					this._dropdownMenu.appendChild(listItem);
 				}
 				
-				UiSimpleDropdown.open(this._element.id);
+				UiSimpleDropdown.open(this._element.id, true);
 			}
 			else {
 				UiSimpleDropdown.close(this._element.id);

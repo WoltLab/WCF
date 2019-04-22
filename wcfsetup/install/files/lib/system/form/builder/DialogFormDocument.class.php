@@ -51,6 +51,8 @@ class DialogFormDocument extends FormDocument {
 	protected function createDefaultButton() {
 		parent::createDefaultButton();
 		
+		$this->getButton('submitButton')->attribute('data-type', 'submit');
+		
 		if ($this->isCancelable()) {
 			$this->addButton(
 				FormButton::create('cancelButton')

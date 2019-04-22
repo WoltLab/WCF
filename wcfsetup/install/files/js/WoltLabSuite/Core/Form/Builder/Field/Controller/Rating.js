@@ -4,10 +4,10 @@
  * @author	Matthias Schmidt
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Field/Rating
+ * @module	WoltLabSuite/Core/Form/Builder/Field/Controller/Rating
  * @since	5.2
  */
-define(['Dictionary'], function(Dictionary) {
+define(['Dictionary', 'Environment'], function(Dictionary, Environment) {
 	"use strict";
 	
 	/**
@@ -32,6 +32,7 @@ define(['Dictionary'], function(Dictionary) {
 			}
 			
 			this._input = elCreate('input');
+			this._input.id = fieldId;
 			this._input.name = fieldId;
 			this._input.type = 'hidden';
 			this._input.value = value;
@@ -84,7 +85,7 @@ define(['Dictionary'], function(Dictionary) {
 			this._ratingElements.forEach(function(ratingElement, rating) {
 				var icon = elByClass('icon', ratingElement)[0];
 				
-				this._toggleIcon(icon, rating <= currentRating);
+				this._toggleIcon(icon, ~~rating <= ~~currentRating);
 			}.bind(this));
 		},
 		
@@ -120,7 +121,7 @@ define(['Dictionary'], function(Dictionary) {
 			this._ratingElements.forEach(function(ratingElement, rating) {
 				var icon = elByClass('icon', ratingElement)[0];
 				
-				this._toggleIcon(icon, rating <= this._input.value);
+				this._toggleIcon(icon, ~~rating <= ~~this._input.value);
 			}.bind(this));
 		},
 		

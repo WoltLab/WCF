@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/language.xsd" languagecode="de" languagename="Deutsch" countrycode="de">
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/language.xsd" languagecode="de" languagename="Deutsch" countrycode="de">
 	<category name="wcf.acl">
 		<item name="wcf.acl.access"><![CDATA[Zugangsbeschränkung]]></item>
 		<item name="wcf.acl.access.grant"><![CDATA[Zugang gewähren]]></item>
@@ -595,6 +595,7 @@
 		<item name="wcf.acp.devtools.project.pip.entry.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Eintrag wirklich löschen?]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction"><![CDATA[Löschanweisung hinzufügen]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description"><![CDATA[Der Eintrag wird nicht nur aus der Datenbank gelöscht und und die Installationsanweisung entfernt, sondern es wird auch explizit eine Löschanweisung hinzugefügt.]]></item>
+		<item name="wcf.acp.devtools.project.edit.error.brokenPath"><![CDATA[Es existiert keine <kbd>package.xml</kbd> im angegebenen Pfad. Die Paket-Dateien wurden entweder gelöscht oder verschoben.]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP-Verbindungstest]]></item>
@@ -880,6 +881,13 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserProfile"><![CDATA[Kann eigenes Profil bearbeiten]]></item>
 		<item name="wcf.acp.group.allowMention"><![CDATA[Benutzergruppe kann erwähnt werden]]></item>
+		<item name="wcf.acp.group.type.owner"><![CDATA[Besitzer]]></item>
+		<item name="wcf.acp.group.type.owner.description"><![CDATA[Die Besitzer-Gruppe verfügt über nicht entziehbare Berechtigungen und kann von anderen Gruppen nicht bearbeitet werden, diese Gruppe kann nur durch die Besitzer-Gruppe selbst bearbeitet werden. Mitglieder dieser Benutzer können andere Benutzer zu dieser Gruppe hinzufügen, sich aber selbst nicht daraus entfernen.]]></item>
+		<item name="wcf.acp.group.ownerGroupPermission"><![CDATA[Die Besitzer-Gruppe verfügt immer über diese Berechtigung, sie kann nicht entzogen werden.]]></item>
+		<item name="wcf.acp.group.missingOwnerGroup"><![CDATA[Es wurde noch keine Besitzer-Gruppe festgelegt, <a href="{link controller='UserGroupPromoteOwner'}{/link}">bitte {if LANGUAGE_USE_INFORMAL_VARIANT}lege{else}legen Sie{/if} diese umgehend fest</a>.]]></item>
+		<item name="wcf.acp.group.promoteOwner"><![CDATA[Besitzer-Gruppe festlegen]]></item>
+		<item name="wcf.acp.group.promoteOwner.group"><![CDATA[Besitzer-Gruppe auswählen]]></item>
+		<item name="wcf.acp.group.promoteOwner.warning"><![CDATA[Die Besitzer-Gruppe kann, einmal festgelegt, nicht mehr geändert werden. Diese Gruppe verfügt über besondere Berechtigungen und wird vor Änderungen durch andere Gruppen geschützt, Mitglieder dieser Gruppe können nicht mehr gesperrt werden.]]></item>
 	</category>
 	<category name="wcf.acp.index">
 		<item name="wcf.acp.index.credits"><![CDATA[Über WoltLab Suite&trade;]]></item>
@@ -891,7 +899,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.index.credits.trademarks"><![CDATA[„WoltLab&reg;“ und „Burning Board&reg;“ sind eingetragene Gemeinschaftsmarken beim europäischen Harmonisierungsamt für den Binnenmarkt (OHIM) in Alicante, Spanien.]]></item>
 		<item name="wcf.acp.index.credits.contributor.more"><![CDATA[Weitere]]></item>
 		<item name="wcf.acp.index.innoDBWarning"><![CDATA[Die MySQL-Einstellung „innodb_flush_log_at_trx_commit“ steht auf dem Wert „1“ und verursacht dadurch eine starke Verlangsamung bestimmter Datenbankabfragen. Es wird empfohlen diesen Wert auf „2“ zu setzen.]]></item>
-		<item name="wcf.acp.index.inRescueMode"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du rufst{else}Sie rufen{/if} diese Installation über eine abweichende Domain auf, etwa auf Grund eines Umzuges. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}korrigiere{else}korrigieren Sie{/if} die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Apps verwalten</a>.]]></item>
+		<item name="wcf.acp.index.inRescueMode"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du rufst{else}Sie rufen{/if} diese Installation über eine abweichende Domain auf, etwa aufgrund eines Umzuges. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}korrigiere{else}korrigieren Sie{/if} die Einstellungen unter <a href="{link controller='ApplicationManagement'}{/link}">Apps verwalten</a>.]]></item>
 		<item name="wcf.acp.index.tmpBroken"><![CDATA[Für den ordnungsgemäßen Betrieb muss das Verzeichnis „{WCF_DIR|concat:'tmp/'}“ existieren und beschreibbar sein. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}überprüfe{else}überprüfen Sie{/if} auch die Zugriffsrechte auf den Ordner „{'WCF_DIR'|constant}“.]]></item>
 		<item name="wcf.acp.index.news"><![CDATA[Nachrichten]]></item>
 		<item name="wcf.acp.index.setup.notice"><![CDATA[Die Installation wird in wenigen Augenblicken automatisch gestartet, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}lade{else}laden Sie{/if} diese Seite nicht neu.]]></item>
@@ -1382,8 +1390,6 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Bildformat beim Erzeugen von Vorschaugrafiken beibehalten]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Höhe der Vorschaugrafiken]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Breite der Vorschaugrafiken]]></item>
-		<item name="wcf.acp.option.attachment_storage"><![CDATA[Speicherort der Dateianhänge]]></item>
-		<item name="wcf.acp.option.attachment_storage.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} optional einen vom Standard abweichenden Speicherort für die Dateianhänge definieren. Bereits existierende Dateianhänge müssen bei einer Änderung des Speicherortes manuell in den neuen Ort übertragen werden.]]></item>
 		<item name="wcf.acp.option.category.message.attachment.autoscale"><![CDATA[Automatische Bildskalierung]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale"><![CDATA[Bildskalierung durch den Webbrowser aktivieren]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale.description"><![CDATA[Wenn diese Option aktiviert ist, werden angehangene Bilder vor dem Upload im Webbrowser skaliert, falls diese die maximalen Dimensionen oder das Dateigrößenlimit überschreiten.]]></item>
@@ -1722,7 +1728,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.blacklist_sfs_enable.description"><![CDATA[Die lokale Datenbank enthält Informationen zur Häufigkeit, mit der ein Eintrag als Spammer gemeldet wurde.<br>
 <strong>Hinweis: Es werden zu keinem Zeitpunkt Daten an Drittseiten übertragen.</strong><br>
 <br>
-Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen, dass manche Einträge nicht korrekt oder veraltet sind. Zu diesem Zweck existieren unterschiedliche unterschiedliche Abstufungen, wie die jeweiligen Übereinstimmungen zu werten sind. Die empfohlenen Einstellungen basieren auf jahrelangen Erfahrungswerten und Veränderungen sollten daher nur mit Bedacht getätigt werden.
+Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen, dass manche Einträge nicht korrekt oder veraltet sind. Zu diesem Zweck existieren unterschiedliche Abstufungen, wie die jeweiligen Übereinstimmungen zu werten sind. Die empfohlenen Einstellungen basieren auf jahrelangen Erfahrungswerten und Veränderungen sollten daher nur mit Bedacht getätigt werden.
 <ul class="nativeList">
 	<li><strong>Nicht überprüfen</strong> – Dieses Feld wird nicht abgeglichen.</li>
 	<li><strong>Top 10%</strong> – Nur die 10% am häufigsten gemeldeten Treffer werden gewertet.</li>
@@ -1902,7 +1908,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.validation.errorCode.4"><![CDATA[Die Paketversion „{$packageVersion}“ entspricht nicht den Vorgaben und ist ungültig.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.5"><![CDATA[Das Paket „{lang}{$packageName}{/lang}“ enthält keine gültigen Installations-Anweisungen.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.6"><![CDATA[Das Paket „{lang}{$packageName}{/lang}“ (installierte Version: „{$packageVersion}“) soll auf Version „{$deliveredPackageVersion}“ aktualisiert werden, ein Update wird jedoch nicht unterstützt.]]></item>
-		<item name="wcf.acp.package.validation.errorCode.7"><![CDATA[Die folgenden installierten Paketen schließen die Installation auf Grund von Inkompatibilitäten aus: <ul class="nativeList">{foreach from=$packages item=package}<li>„{$package}“ ({$package->package})</li>{/foreach}</ul>]]></item>
+		<item name="wcf.acp.package.validation.errorCode.7"><![CDATA[Die folgenden installierten Paketen schließen die Installation aufgrund von Inkompatibilitäten aus: <ul class="nativeList">{foreach from=$packages item=package}<li>„{$package}“ ({$package->package})</li>{/foreach}</ul>]]></item>
 		<item name="wcf.acp.package.validation.errorCode.8"><![CDATA[Dieses Paket ist inkompatibel mit den folgenden, installierten Paketen: <ul class="nativeList">{foreach from=$packages item=package}<li>„{$package}“ ({$package->package})</li>{/foreach}</ul>]]></item>
 		<item name="wcf.acp.package.validation.errorCode.9"><![CDATA[Die Installation erfordert das Paket „{$packageName}“ in Version „{$packageVersion}“ oder höher, das mitgelieferte Paket trägt aber die Versionsnummer „{$deliveredPackageVersion}“.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.10"><![CDATA[Benötigt das Paket {if $package === null}„{$packageName}“{else}„{$package}“{/if} in Version „{$packageVersion}“ oder höher, {if $package === null}dies ist aber weder installiert noch wird es mitgeliefert.{else}es ist aber nur Version „{$package->packageVersion}“ installiert.{/if}]]></item>
@@ -3888,6 +3894,7 @@ Dateianhänge:
 		<item name="wcf.form.field.rating"><![CDATA[Bewertung]]></item>
 		<item name="wcf.form.field.rating.ratingTitle"><![CDATA[{#$rating}/{#$maximumRating}]]></item>
 		<item name="wcf.form.field.rating.removeRating"><![CDATA[Bewertung zurücksetzen]]></item>
+		<item name="wcf.form.field.date.error.format"><![CDATA[Der angegebene Wert hat ein ungültiges Format.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Titelbild]]></item>
@@ -3988,6 +3995,7 @@ Dateianhänge:
 		<item name="wcf.media.caption.enableHtml"><![CDATA[HTML in der Bildunterschrift verwenden]]></item>
 		<item name="wcf.media.category.choose"><![CDATA[Kategorien]]></item>
 		<item name="wcf.media.categoryID"><![CDATA[Kategorie]]></item>
+		<item name="wcf.media.chooseFile"><![CDATA[Datei auswählen]]></item>
 		<item name="wcf.media.chooseImage"><![CDATA[Bild auswählen]]></item>
 		<item name="wcf.media.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Möchtest du{else}Möchten Sie{/if} die Datei <span class="confirmationObject">{$title}</span> wirklich löschen?]]></item>
 		<item name="wcf.media.edit"><![CDATA[Datei bearbeiten]]></item>
@@ -4606,7 +4614,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.articles"><![CDATA[Artikel]]></item>
 		<item name="wcf.user.status.banned"><![CDATA[Der Benutzer ist gesperrt.]]></item>
 		<item name="wcf.user.status.isDisabled"><![CDATA[Der Benutzer ist nicht freigeschaltet.]]></item>
-		<item name="wcf.user.status.blacklistMatches"><![CDATA[Der Benutzer wurde auf Grund eines Treffers in der Datenbank von „Stop Forum Spam“ automatisch deaktiviert.]]></item>
+		<item name="wcf.user.status.blacklistMatches"><![CDATA[Der Benutzer wurde aufgrund eines Treffers in der Datenbank von „Stop Forum Spam“ automatisch deaktiviert.]]></item>
 	</category>
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>
@@ -4689,7 +4697,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 <p>Der Verwendung veröffentlichter Kontaktdaten durch Dritte zum Zwecke von Werbung wird ausdrücklich widersprochen. Wir behalten uns rechtliche Schritte für den Fall der unverlangten Zusendung von Werbeinformationen, z.B. durch Spam-Mails, vor.</p>
 <p><br></p>
 <p><small><em>Quelle: <a href="http://www.mustervorlage.net/disclaimer-muster" class="externalURL">Mustervorlage.net</a></em></small></p>]]></item>
-		<item name="wcf.user.register.error.blacklistMatches"><![CDATA[Die Registrierung kann auf Grund von Einschränkungen nicht fortgesetzt werden, bitte wende{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} sich direkt an den Administrator dieser Seite.]]></item>
+		<item name="wcf.user.register.error.blacklistMatches"><![CDATA[Die Registrierung kann aufgrund von Einschränkungen nicht fortgesetzt werden, bitte wende{if LANGUAGE_USE_INFORMAL_VARIANT} dich{else}n Sie sich{/if} direkt an den Administrator dieser Seite.]]></item>
 	</category>
 	<category name="wcf.user.trophy">
 		<item name="wcf.user.trophy.trophyPoints"><![CDATA[Trophäen]]></item>

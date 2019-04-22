@@ -147,6 +147,26 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 	/**
 	 * @inheritDoc
 	 */
+	public static function deleteAll(array $objectIDs = []) {
+		// delete language items
+		if (!empty($objectIDs)) {
+			$sql = "DELETE FROM	wcf".WCF_N."_language_item
+				WHERE		languageItem = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			WCF::getDB()->beginTransaction();
+			foreach ($objectIDs as $cronjobID) {
+				$statement->execute(['wcf.acp.cronjob.description.cronjob' . $cronjobID]);
+			}
+			WCF::getDB()->commitTransaction();
+		}
+		
+		return parent::deleteAll($objectIDs);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public static function resetCache() {
 		CronjobCacheBuilder::getInstance()->reset();
 	}

@@ -21,7 +21,12 @@ class SimpleAclFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected $templateName = 'aclSimple';
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/SimpleAcl';
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $templateName = '__simpleAclFormField';
 	
 	/**
 	 * @inheritDoc

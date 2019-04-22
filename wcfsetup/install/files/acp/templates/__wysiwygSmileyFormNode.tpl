@@ -1,5 +1,5 @@
 <ul class="inlineList smileyList">
-	{foreach from=$field->getSmilies() item=smiley}
-		<li><a title="{lang}{$smiley->smileyTitle}{/lang}" class="jsTooltip jsSmiley">{@$smiley->getHtml()}</a></li>
+	{foreach from=$node->getSmilies() item=smiley name=smilies}
+		<li><a class="jsSmiley" role="button" tabindex="{if $tpl.foreach.smilies.iteration === 1}0{else}-1{/if}">{@$smiley->getHtml('jsTooltip')}</a></li>
 	{/foreach}
 </ul>

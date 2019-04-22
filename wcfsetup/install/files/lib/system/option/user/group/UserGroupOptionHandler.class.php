@@ -26,13 +26,20 @@ class UserGroupOptionHandler extends OptionHandler {
 	 * user group object
 	 * @var	UserGroup
 	 */
-	protected $group = null;
+	protected $group;
 	
 	/**
 	 * true if current user can edit every user group
 	 * @var	boolean
 	 */
 	protected $isAdmin = null;
+	
+	/**
+	 * true if the user is part of the owner group
+	 * @var bool
+	 * @since 5.2
+	 */
+	protected $isOwner = null;
 	
 	/**
 	 * Sets current user group.
@@ -114,17 +121,24 @@ class UserGroupOptionHandler extends OptionHandler {
 	 */
 	protected function isAdmin() {
 		if ($this->isAdmin === null) {
-			$this->isAdmin = false;
-			
-			foreach (WCF::getUser()->getGroupIDs() as $groupID) {
-				if (UserGroup::getGroupByID($groupID)->isAdminGroup()) {
-					$this->isAdmin = true;
-					break;
-				}
-			}
+			$this->isAdmin = WCF::getUser()->hasAdministrativeAccess();
 		}
 		
 		return $this->isAdmin;
+	}
+	
+	/**
+	 * Returns true, if the current user is a member of the owner group.
+	 * 
+	 * @return bool
+	 * @since 5.2
+	 */
+	protected function isOwner() {
+		if ($this->isOwner === null) {
+			$this->isOwner = WCF::getUser()->hasOwnerAccess();
+		}
+		
+		return $this->isOwner;
 	}
 	
 	/**
@@ -141,7 +155,7 @@ class UserGroupOptionHandler extends OptionHandler {
 				throw new UserInputException($option->optionName, 'exceedsOwnPermission');
 			}
 		}
-		else if ($option->optionName == 'admin.user.accessibleGroups' && $this->group !== null && $this->group->isAdminGroup()) {
+		else if (!$this->isOwner() && $option->optionName == 'admin.user.accessibleGroups' && $this->group !== null && $this->group->isAdminGroup()) {
 			$hasOtherAdminGroup = false;
 			foreach (UserGroup::getGroupsByType() as $userGroup) {
 				if ($userGroup->groupID != $this->group->groupID && $userGroup->isAdminGroup()) {

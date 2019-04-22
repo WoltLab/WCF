@@ -79,7 +79,10 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 			if (element.parentNode.nodeName === 'DD') {
 				container = elCreate('div');
 				container.className = 'dropdown';
-				element.parentNode.insertBefore(container, element);
+				
+				// language chooser is the first child so that descriptions and error messages
+				// are always shown below the language chooser
+				DomUtil.prepend(container, element.parentNode);
 			}
 			else {
 				container = element.parentNode;

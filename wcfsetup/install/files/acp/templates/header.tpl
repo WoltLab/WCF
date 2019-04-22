@@ -118,6 +118,7 @@
 				'wcf.global.form.error.lessThan': '{lang __literal=true}wcf.global.form.error.lessThan{/lang}',
 				'wcf.global.form.error.multilingual': '{lang}wcf.global.form.error.multilingual{/lang}',
 				'wcf.global.form.input.maxItems': '{lang}wcf.global.form.input.maxItems{/lang}',
+				'wcf.global.language.noSelection': '{lang}wcf.global.language.noSelection{/lang}',
 				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 				'wcf.global.noSelection': '{lang}wcf.global.noSelection{/lang}',
 				'wcf.global.select': '{lang}wcf.global.select{/lang}',

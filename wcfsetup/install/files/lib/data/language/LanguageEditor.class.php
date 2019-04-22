@@ -130,7 +130,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		echo "\xEF\xBB\xBF";
 		
 		// header
-		echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<language xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/vortex/language.xsd\" languagecode=\"".$this->languageCode."\" languagename=\"".$this->languageName."\" countrycode=\"".$this->countryCode."\">\n";
+		echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<language xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/" . WSC_API_VERSION . "/language.xsd\" languagecode=\"".$this->languageCode."\" languagename=\"".$this->languageName."\" countrycode=\"".$this->countryCode."\">\n";
 		
 		// get items
 		$items = [];

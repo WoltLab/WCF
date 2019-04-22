@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/option.xsd">
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/option.xsd">
 	<import>
 		<categories>
 			<!-- modules -->
@@ -1018,10 +1018,6 @@ redis:wcf.acp.option.cache_source_type.redis</selectoptions>
 				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.payment -->
-			<option name="attachment_storage">
-				<categoryname>message.attachment</categoryname>
-				<optiontype>text</optiontype>
-			</option>
 			<option name="attachment_enable_thumbnails">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1768,6 +1764,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		</options>
 	</import>
 	<delete>
+		<option name="attachment_storage" />
 		<option name="module_attachment"/>
 	</delete>
 </data>

@@ -10,7 +10,6 @@
 	</spider>
 	<spider ident="abot/">
 		<name>abot</name>
-		<url>http://www.abot.com/</url>
 	</spider>
 	<spider ident="Accelatech RSSCrawler">
 		<name>Accelatech</name>
@@ -1153,7 +1152,7 @@
 	<spider ident="Black Widow">
 		<name>TACH Black Widow</name>
 	</spider>
-	<spider ident"Tapatalk CloudSearch">
+	<spider ident="Tapatalk CloudSearch">
 		<name>Tapatalk CloudSearch</name>
 	</spider>
 	<spider ident="Tarantula">

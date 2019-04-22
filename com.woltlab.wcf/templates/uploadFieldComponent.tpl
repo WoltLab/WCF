@@ -30,7 +30,7 @@
 
 <div id="{$uploadFieldId}UploadButtonDiv" class="uploadButtonDiv"></div>
 
-<input type="hidden" name="{$uploadFieldId}" value="{$uploadField->getInternalId()}">
+<input type="hidden" id="{$uploadFieldId}" name="{$uploadFieldId}" value="{$uploadField->getInternalId()}">
 
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Ui/File/Upload', 'Language'], function(Upload, Language) {

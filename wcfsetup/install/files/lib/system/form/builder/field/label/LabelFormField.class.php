@@ -24,6 +24,11 @@ class LabelFormField extends AbstractFormField implements IObjectTypeFormNode {
 	use TObjectTypeFormNode;
 	
 	/**
+	 * @inheritDoc
+	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+	
+	/**
 	 * label group whose labels can be selected via this form field
 	 * @var	ViewableLabelGroup
 	 */

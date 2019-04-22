@@ -64,6 +64,12 @@ class FormDocument implements IFormDocument {
 	protected $dataHandler;
 	
 	/**
+	 * indicates if the form data has been read via `readData()`
+	 * @var	boolean
+	 */
+	protected $didReadValues = false;
+	
+	/**
 	 * encoding type of this form
 	 * @var	null|
 	 */
@@ -151,7 +157,11 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function addButton(IFormButton $button) {
-		$this->buttons[] = $button;
+		if (isset($this->buttons[$button->getId()])) {
+			throw new \InvalidArgumentException("There is already button with id '{$button->getId()}'.");
+		}
+		
+		$this->buttons[$button->getId()] = $button;
 		
 		$button->parent($this);
 		
@@ -248,6 +258,13 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
+	public function didReadValues() {
+		return $this->didReadValues;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function errorMessage($languageItem = null, array $variables = []) {
 		if ($languageItem === null) {
 			if (!empty($variables)) {
@@ -298,14 +315,29 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
+	public function getButton($buttonId) {
+		if (!$this->hasButton($buttonId)) {
+			throw new \InvalidArgumentException("Unknown button with id '{$buttonId}'.");
+		}
+		
+		return $this->buttons[$buttonId];
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getButtons() {
 		return $this->buttons;
 	}
-
+	
 	/**
 	 * @inheritDoc
 	 */
 	public function getData() {
+		if (!$this->didReadValues()) {
+			throw new \BadMethodCallException("Getting data is only possible after calling 'readValues()'.");
+		}
+		
 		return $this->getDataHandler()->getData($this);
 	}
 	
@@ -374,6 +406,10 @@ class FormDocument implements IFormDocument {
 	 * @inheritDoc
 	 */
 	public function getHtml() {
+		if (!$this->isBuilt) {
+			throw new \BadMethodCallException("The form document has to be built before it can be rendered.");
+		}
+		
 		return WCF::getTPL()->fetch(
 			'__form',
 			'wcf',
@@ -432,6 +468,13 @@ class FormDocument implements IFormDocument {
 		}
 		
 		return $this->successMessage;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function hasButton($buttonId) {
+		return isset($this->buttons[$buttonId]);
 	}
 	
 	/**
@@ -551,6 +594,8 @@ class FormDocument implements IFormDocument {
 			$this->requestData = $_POST;
 		}
 		
+		$this->didReadValues = true;
+		
 		return $this->traitReadValues();
 	}
 	
@@ -626,7 +671,7 @@ class FormDocument implements IFormDocument {
 	 */
 	public function validate() {
 		// check security token
-		if (!isset($_POST['t']) || !WCF::getSession()->checkSecurityToken($_POST['t'])) {
+		if (!isset($_REQUEST['t']) || !WCF::getSession()->checkSecurityToken($_REQUEST['t'])) {
 			$this->invalid();
 			
 			$this->errorMessage('wcf.global.form.error.securityToken');

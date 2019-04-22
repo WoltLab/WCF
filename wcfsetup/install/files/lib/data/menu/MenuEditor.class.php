@@ -82,6 +82,32 @@ class MenuEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	/**
 	 * @inheritDoc
 	 */
+	public static function deleteAll(array $objectIDs = []) {
+		if (!empty($objectIDs)) {
+			// delete language items
+			$menuList = new MenuList();
+			$menuList->setObjectIDs($objectIDs);
+			$menuList->readObjects();
+			
+			if (count($menuList)) {
+				$sql = "DELETE FROM	wcf".WCF_N."_language_item
+					WHERE		languageItem = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				
+				WCF::getDB()->beginTransaction();
+				foreach ($menuList as $menu) {
+					$statement->execute(['wcf.menu.' . $menu->identifier]);
+				}
+				WCF::getDB()->commitTransaction();
+			}
+		}
+		
+		return parent::deleteAll($objectIDs);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public static function resetCache() {
 		MenuCacheBuilder::getInstance()->reset();
 	}

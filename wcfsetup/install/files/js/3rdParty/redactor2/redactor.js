@@ -1890,7 +1890,15 @@
 				disableAll: function (key) {
 					var $btns = this.button.toolbar().find('a.re-button');
 					if (typeof key !== 'undefined') {
-						$btns = $btns.not('.re-' + key);
+						if (!Array.isArray(key)) {
+							key = [key];
+						}
+						
+						key = key.map(function(value) {
+							return '.re-' + value
+						});
+						
+						$btns = $btns.not(key.join(','));
 					}
 					
 					$btns.addClass('redactor-button-disabled').attr('aria-disabled', true);

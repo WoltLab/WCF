@@ -116,15 +116,24 @@ class UserGroupEditForm extends UserGroupAddForm {
 		
 		I18nHandler::getInstance()->assignVariables(!empty($_POST));
 		
+		$ownerGroupPermissions = [];
+		if ($this->group->isOwner()) {
+			$ownerGroupPermissions = UserGroup::getOwnerPermissions();
+			$ownerGroupPermissions[] = 'admin.user.accessibleGroups';
+		}
+		
 		WCF::getTPL()->assign([
 			'groupID' => $this->group->groupID,
 			'group' => $this->group,
 			'action' => 'edit',
-			'availableUserGroups' => UserGroup::getAccessibleGroups(),
+			'availableUserGroups' => UserGroup::getSortedAccessibleGroups(),
 			'groupIsEveryone' => $this->group->groupType == UserGroup::EVERYONE,
 			'groupIsGuest' => $this->group->groupType == UserGroup::GUESTS,
 			'groupIsUsers' => $this->group->groupType == UserGroup::USERS,
+			'groupIsOwner' => $this->group->isOwner(),
 			'isUnmentionableGroup' => $this->isUnmentionableGroup ? 1 : 0,
+			'ownerGroupPermissions' => $ownerGroupPermissions,
+			'ownerGroupID' => UserGroup::getOwnerGroupID(),
 		]);
 		
 		// add warning when the initiator is in the group

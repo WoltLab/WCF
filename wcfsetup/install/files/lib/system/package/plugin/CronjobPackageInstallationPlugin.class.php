@@ -2,7 +2,9 @@
 namespace wcf\system\package\plugin;
 use wcf\data\cronjob\Cronjob;
 use wcf\data\cronjob\CronjobEditor;
+use wcf\data\cronjob\CronjobList;
 use wcf\system\cronjob\ICronjob;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
@@ -56,29 +58,40 @@ class CronjobPackageInstallationPlugin extends AbstractXMLPackageInstallationPlu
 	 * @inheritDoc
 	 */
 	protected function handleDelete(array $items) {
-		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
-			WHERE		className = ?
-					AND packageID = ?";
-		$legacyStatement = WCF::getDB()->prepareStatement($sql);
-		
-		$sql = "DELETE FROM	wcf".WCF_N."_".$this->tableName."
-			WHERE		cronjobName = ?
-					AND packageID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
+		// read cronjobs from database because deleting the language items requires the
+		// cronjob id
+		$cronjobs = $legacyCronjobs = [];
 		foreach ($items as $item) {
 			if (!isset($item['attributes']['name'])) {
-				$legacyStatement->execute([
-					$item['elements']['classname'],
-					$this->installation->getPackageID()
-				]);
+				$legacyCronjobs[] = $item['elements']['classname'];
 			}
 			else {
-				$statement->execute([
-					$item['attributes']['name'],
-					$this->installation->getPackageID()
-				]);
+				$cronjobs[] = $item['attributes']['name'];
 			}
+		}
+		
+		if (empty($cronjobs) && empty($legacyCronjobs)) {
+			return;
+		}
+		
+		$cronjobList = new CronjobList();
+		$cronjobList->getConditionBuilder()->add(
+			'packageID = ?',
+			[$this->installation->getPackageID()]
+		);
+		
+		$conditionBuilder = new PreparedStatementConditionBuilder(false, 'OR');
+		if (!empty($cronjobs)) {
+			$conditionBuilder->add('cronjobName IN (?)', [$cronjobs]);
+		}
+		if (!empty($legacyCronjobs)) {
+			$conditionBuilder->add('className IN (?)', [$legacyCronjobs]);
+		}
+		$cronjobList->getConditionBuilder()->add($conditionBuilder, $conditionBuilder->getParameters());
+		$cronjobList->readObjectIDs();
+		
+		if (!empty($cronjobList->getObjectIDs())) {
+			CronjobEditor::deleteAll($cronjobList->getObjectIDs());
 		}
 	}
 	

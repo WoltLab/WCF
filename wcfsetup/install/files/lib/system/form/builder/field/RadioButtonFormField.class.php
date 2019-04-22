@@ -18,6 +18,11 @@ class RadioButtonFormField extends AbstractFormField implements IImmutableFormFi
 	/**
 	 * @inheritDoc
 	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/RadioButton';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $templateName = '__radioButtonFormField';
 	
 	/**

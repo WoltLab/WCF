@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!-- The file "styleattributes.xsd" is used for xml-files which installs, updates or deletes style attributes.  -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.woltlab.com" targetNamespace="http://www.woltlab.com" elementFormDefault="qualified">
+	<!-- include types -->
+	<xs:include schemaLocation="types.xsd" />
+	
+	<!-- Represents the variables-node. -->
+	<xs:complexType name="variables">
+		<xs:sequence>
+			<xs:element name="variable" type="variable" minOccurs="0" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<!-- Represents a style variable value. -->
+	<xs:complexType name="variable">
+		<xs:attribute name="name" type="woltlab_varchar" use="required" />
+	</xs:complexType>
+</xs:schema>

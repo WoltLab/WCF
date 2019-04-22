@@ -62,7 +62,7 @@
 				code = code.replace(/\n\n/g, '\n');
 				
 				this.core.editor().hide();
-				this.button.disableAll('html');
+				this.button.disableAll(['html', 'woltlabFullscreen']);
 				this.source.$textarea.val(code).height(height).addClass('open').show();
 				this.source.$textarea.on('keyup.redactor-source', $.proxy(function () {
 					if (this.opts.type === 'textarea') {

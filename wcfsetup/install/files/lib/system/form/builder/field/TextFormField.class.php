@@ -26,6 +26,11 @@ class TextFormField extends AbstractFormField implements IAutoFocusFormField, II
 	/**
 	 * @inheritDoc
 	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $templateName = '__textFormField';
 	
 	/**

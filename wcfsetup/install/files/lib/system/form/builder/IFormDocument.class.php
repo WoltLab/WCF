@@ -77,6 +77,13 @@ interface IFormDocument extends IFormParentNode {
 	public function build();
 	
 	/**
+	 * Returns `true` if the form data has been read via `readData()` and `false` otherwise.
+	 * 
+	 * @return	boolean
+	 */
+	public function didReadValues();
+	
+	/**
 	 * Sets the error message of this form using the given language item and returns this
 	 * document. If `null` is passed, the error message is unset.
 	 *
@@ -112,6 +119,16 @@ interface IFormDocument extends IFormParentNode {
 	public function getAction();
 	
 	/**
+	 * Returns the button with the given id.
+	 * 
+	 * @param	string		$buttonId	id of requested button
+	 * @return	IFormButton
+	 * 
+	 * @throws	\InvalidArgumentException	if no such button exists
+	 */
+	public function getButton($buttonId);
+	
+	/**
 	 * Returns the buttons registered for this form document.
 	 * 
 	 * @return	IFormButton[]
@@ -123,6 +140,8 @@ interface IFormDocument extends IFormParentNode {
 	 * of a database object action.
 	 * 
 	 * @return	array		data passed to database object action
+	 * 
+	 * @throws	\BadMethodCallException		if the method is called before `readValues()` is called
 	 */
 	public function getData();
 	
@@ -209,6 +228,14 @@ interface IFormDocument extends IFormParentNode {
 	 * @return	string
 	 */
 	public function getSuccessMessage();
+	
+	/**
+	 * Returns `true` if a button with the given id exists and `false` otherwise.
+	 *
+	 * @param	string		$buttonId	id of checked button
+	 * @return	boolean
+	 */
+	public function hasButton($buttonId);
 	
 	/**
 	 * Returns `true` if the default button is added to the form during in the `build()` method
