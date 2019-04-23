@@ -123,8 +123,10 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 						$srcset = '';
 						foreach ($sources as $source) {
 							$tmp = preg_split('~\s+~', StringUtil::trim($source));
-							if (!empty($srcset)) $srcset .= ', ';
-							$srcset .= $this->getProxyLink($tmp[0]) . ' ' . $tmp[1];
+							if (count($tmp) === 2) {
+								if (!empty($srcset)) $srcset .= ', ';
+								$srcset .= $this->getProxyLink($tmp[0]) . ' ' . $tmp[1];
+							}
 						}
 						
 						$element->setAttribute('srcset', $srcset);
