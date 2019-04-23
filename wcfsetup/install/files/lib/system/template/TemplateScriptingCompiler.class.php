@@ -695,7 +695,7 @@ class TemplateScriptingCompiler {
 		$phpCode .= $foreachHash." = ".$args['from'].";\n";
 		
 		if (empty($foreachProp)) {
-			$phpCode .= "if ((is_countable(".$foreachHash.") && count(".$foreachHash.") > 0) || ".$foreachHash.") {\n";
+			$phpCode .= "if ((is_countable(".$foreachHash.") && count(".$foreachHash.") > 0) || (!is_countable(".$foreachHash.") && ".$foreachHash.")) {\n";
 		}
 		else {
 			$phpCode .= $foreachHash."_cnt = (".$foreachHash." !== null ? 1 : 0);\n";
