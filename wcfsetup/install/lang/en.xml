@@ -1912,6 +1912,14 @@ The database is carefully maintained, but it there will be always be a margin of
 	{/foreach}
 </ul>
 If you have <strong>already bought the licenses for the listed apps</strong>, then it is enough to install all upcoming updates. <strong>The evaluation copy will automatically be upgraded to the full version.</strong>]]></item>
+		<item name="wcf.acp.package.search.input"><![CDATA[Search term]]></item>
+		<item name="wcf.acp.package.search.input.description"><![CDATA[Partial matches are performed against the package name, its description and its internal identifier.]]></item>
+		<item name="wcf.acp.package.search.status.idle"><![CDATA[Enter three or more characters to start searching.]]></item>
+		<item name="wcf.acp.package.search.status.loading"><![CDATA[Searching…]]></item>
+		<item name="wcf.acp.package.search.status.noResults"><![CDATA[There were no matches.]]></item>
+		<item name="wcf.acp.package.search.status.refreshDatabase"><![CDATA[Retrieving the package lists…]]></item>
+		<item name="wcf.acp.package.search.result.thirdParty"><![CDATA[{if $count === 0}No matches{elseif $count === 1}One match{else}{#$count} matches{/if} in package sources maintained by third parties]]></item>
+		<item name="wcf.acp.package.search.result.trusted"><![CDATA[{if $count === 0}No matches{elseif $count === 1}One match{else}{#$count} matches{/if} in official package sources]]></item>
 	</category>
 	<category name="wcf.acp.paidSubscription">
 		<item name="wcf.acp.paidSubscription.list"><![CDATA[Paid Subscriptions]]></item>
