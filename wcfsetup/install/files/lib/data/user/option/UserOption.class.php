@@ -192,4 +192,22 @@ class UserOption extends Option {
 		
 		return true;
 	}
+
+	/**
+	 * Allows modifications of editable option.
+	 *
+	 * @param int   $editableOption
+	 */
+	public function modifyEditableOption($editableOption) {
+		$this->data['editable'] = $editableOption;
+	}
+
+	/**
+	 * Allows modifications of visible option.
+	 *
+	 * @param int   $visibleOption
+	 */
+	public function modifyVisibleOption($visibleOption) {
+		$this->data['visible'] = $visibleOption;
+	}
 }
