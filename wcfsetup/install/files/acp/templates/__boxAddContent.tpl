@@ -4,7 +4,23 @@
 		<li><a href="#" id="codemirror-content{@$languageID}-page" class="jsTooltip" title="{lang}wcf.editor.button.page{/lang}"><span class="icon icon16 fa-file-text-o"></span></a></li>
 	</ul>
 	<script data-relocate="true">
-		require(['WoltLabSuite/Core/Acp/Ui/CodeMirror/Media', 'WoltLabSuite/Core/Acp/Ui/CodeMirror/Page'], function(AcpUiCodeMirrorMedia, AcpUiCodeMirrorPage) {
+		require([
+			'Language',
+			'WoltLabSuite/Core/Acp/Ui/CodeMirror/Media',
+			'WoltLabSuite/Core/Acp/Ui/CodeMirror/Page'
+		], function(
+			Language,
+			AcpUiCodeMirrorMedia,
+			AcpUiCodeMirrorPage
+		) {
+			Language.addObject({
+				'wcf.page.search': '{lang}wcf.page.search{/lang}',
+				'wcf.page.search.error.tooShort': '{lang}wcf.page.search.error.tooShort{/lang}',
+				'wcf.page.search.error.noResults': '{lang}wcf.page.search.error.noResults{/lang}',
+				'wcf.page.search.name': '{lang}wcf.page.search.name{/lang}',
+				'wcf.page.search.results': '{lang}wcf.page.search.results{/lang}',
+			});
+			
 			new AcpUiCodeMirrorMedia('content{@$languageID}');
 			new AcpUiCodeMirrorPage('content{@$languageID}');
 		});

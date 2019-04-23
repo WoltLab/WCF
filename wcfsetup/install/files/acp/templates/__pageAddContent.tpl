@@ -8,7 +8,23 @@
 	<script data-relocate="true">
 		{include file='mediaJavaScript'}
 		
-		require(['WoltLabSuite/Core/Acp/Ui/CodeMirror/Media', 'WoltLabSuite/Core/Acp/Ui/CodeMirror/Page'], function(AcpUiCodeMirrorMedia, AcpUiCodeMirrorPage) {
+		require([
+			'Language',
+			'WoltLabSuite/Core/Acp/Ui/CodeMirror/Media',
+			'WoltLabSuite/Core/Acp/Ui/CodeMirror/Page'
+		], function(
+			Language,
+			AcpUiCodeMirrorMedia,
+			AcpUiCodeMirrorPage
+		) {
+			Language.addObject({
+				'wcf.page.search': '{lang}wcf.page.search{/lang}',
+				'wcf.page.search.error.tooShort': '{lang}wcf.page.search.error.tooShort{/lang}',
+				'wcf.page.search.error.noResults': '{lang}wcf.page.search.error.noResults{/lang}',
+				'wcf.page.search.name': '{lang}wcf.page.search.name{/lang}',
+				'wcf.page.search.results': '{lang}wcf.page.search.results{/lang}',
+			});
+			
 			new AcpUiCodeMirrorMedia('{@$__pageContentID}');
 			new AcpUiCodeMirrorPage('{@$__pageContentID}');
 		});
