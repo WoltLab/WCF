@@ -73,7 +73,9 @@ define(['Ajax', 'Core', 'Language', 'Ui/Dialog'], function(Ajax, Core, Language,
 		
 		_ajaxSuccess: function(data) {
 			if (data.returnValues.queueID) {
-				UiDialog.close(this);
+				if (UiDialog.isOpen(this)) {
+					UiDialog.close(this);
+				}
 				
 				var installation = new window.WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false);
 				installation.prepareInstallation();

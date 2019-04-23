@@ -67,7 +67,10 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		
 		// there are no available package update servers
 		if (empty($availableUpdateServers)) {
-			WCF::getTPL()->assign(['packageUpdates' => []]);
+			WCF::getTPL()->assign([
+				'thirdPartySources' => [],
+				'trustedSources' => [],
+			]);
 			
 			return ['count' => 0, 'pageCount' => 0, 'searchID' => 0, 'template' => WCF::getTPL()->fetch('packageSearchResultList')];
 		}
@@ -94,7 +97,10 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		
 		// no matches found
 		if (empty($packageUpdateIDs)) {
-			WCF::getTPL()->assign(['packageUpdates' => []]);
+			WCF::getTPL()->assign([
+				'thirdPartySources' => [],
+				'trustedSources' => [],
+			]);
 			
 			return ['count' => 0, 'pageCount' => 0, 'searchID' => 0, 'template' => WCF::getTPL()->fetch('packageSearchResultList')];
 		}
@@ -129,7 +135,10 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 		
 		// no matches found
 		if (empty($packageUpdates)) {
-			WCF::getTPL()->assign(['packageUpdates' => []]);
+			WCF::getTPL()->assign([
+				'thirdPartySources' => [],
+				'trustedSources' => [],
+			]);
 			
 			return ['count' => 0, 'pageCount' => 0, 'searchID' => 0, 'template' => WCF::getTPL()->fetch('packageSearchResultList')];
 		}
