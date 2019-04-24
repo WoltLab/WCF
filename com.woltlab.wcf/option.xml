@@ -580,16 +580,6 @@ imagick:wcf.acp.option.image_adapter_type.imagick</selectoptions>
 				<defaultvalue>mysql</defaultvalue>
 				<selectoptions>mysql:wcf.acp.option.search_engine.mysql</selectoptions>
 			</option>
-			<option name="search_enable_pages">
-				<categoryname>general.system.search</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="search_enable_articles">
-				<categoryname>general.system.search</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
 			<!-- /general.system.search -->
 			<!-- general.system.error -->
 			<option name="exception_privacy">
@@ -1600,6 +1590,16 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 				<options>module_tagging</options>
 				<minvalue>1</minvalue>
 				<maxvalue>10</maxvalue>
+			</option>
+			<option name="search_enable_pages">
+				<categoryname>message.search</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
+			<option name="search_enable_articles">
+				<categoryname>message.search</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- message.general.poll -->
 			<option name="poll_max_options">
