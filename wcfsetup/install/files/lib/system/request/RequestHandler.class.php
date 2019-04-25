@@ -269,13 +269,16 @@ class RequestHandler extends SingletonFactory {
 			exit;
 		}
 		else if (!empty($data['application']) && $data['application'] !== $application) {
-			HeaderUtil::redirect(
-				LinkHandler::getInstance()->getLink(
-					ControllerMap::getInstance()->resolve($data['application'], $data['controller'], false)['controller'],
-					['application' => $data['application']]
-				), true, true
-			);
-			exit;
+			$override = ControllerMap::getInstance()->getApplicationOverride($application, $data['controller']);
+			if ($application !== $override) {
+				HeaderUtil::redirect(
+					LinkHandler::getInstance()->getLink(
+						ControllerMap::getInstance()->resolve($data['application'], $data['controller'], false)['controller'],
+						['application' => $data['application']]
+					), true, true
+				);
+				exit;
+			}
 		}
 		
 		// copy route data

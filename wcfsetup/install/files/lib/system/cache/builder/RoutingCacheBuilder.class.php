@@ -42,6 +42,8 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 		$data['customUrls'] = $this->getCustomUrls($data['landingPages']);
 		$data['applicationOverrides'] = $this->getApplicationOverrides($data['customUrls']);
 		
+		$this->handleLandingPageWithOverriddenApplication($data);
+		
 		return $data;
 	}
 	
@@ -344,5 +346,28 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		return $data;
+	}
+	
+	protected function handleLandingPageWithOverriddenApplication(array &$data) {
+		$landingPageController = $data['landingPages']['wcf'][0];
+		$controllers = [$landingPageController];
+		
+		// The controller may be the custom url of a CMS page.
+		if (strpos($landingPageController, '__WCF_CMS__') === 0) {
+			$controllers = array_filter($data['customUrls']['reverse']['wcf'], function($controller) use ($landingPageController) {
+				return strpos($controller, "{$landingPageController}-") === 0;
+			}, ARRAY_FILTER_USE_KEY);
+		}
+		
+		foreach ($controllers as $controller) {
+			if (isset($data['applicationOverrides']['reverse']['wcf'][$controller])) {
+				$overriddenApplication = $data['applicationOverrides']['reverse']['wcf'][$controller];
+				
+				// The original landing page of the target app has been implicitly overridden, thus we need to
+				// replace the data of the affected app. This is necessary in order to avoid the original landing
+				// page to be conflicting with the global landing page, eventually overshadowing it.
+				$data['landingPages'][$overriddenApplication] = array_slice($data['landingPages']['wcf'], 0);
+			}
+		}
 	}
 }
