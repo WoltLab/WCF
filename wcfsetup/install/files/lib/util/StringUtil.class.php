@@ -47,7 +47,7 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function getRandomID() {
-		return bin2hex(\random_bytes(20));
+		return \bin2hex(\random_bytes(20));
 	}
 	
 	/**
