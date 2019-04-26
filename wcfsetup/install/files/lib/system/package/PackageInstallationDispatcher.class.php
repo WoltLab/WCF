@@ -36,7 +36,6 @@ use wcf\system\setup\Installer;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
-use wcf\util\exception\CryptoException;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -227,7 +226,7 @@ class PackageInstallationDispatcher {
 							'signature_secret'
 						]);
 					}
-					catch (CryptoException $e) {
+					catch (\Throwable $e) {
 						// ignore, the secret will stay empty and crypto operations
 						// depending on it will fail
 					}

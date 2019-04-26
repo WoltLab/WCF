@@ -13,7 +13,6 @@ use wcf\system\email\UserMailbox;
 use wcf\system\exception\SystemException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\exception\CryptoException;
 
 /**
  * Worker implementation for sending new passwords.
@@ -98,7 +97,7 @@ class SendNewPasswordWorker extends AbstractWorker {
 			$lostPasswordKey = bin2hex(\random_bytes(20));
 			$lastLostPasswordRequestTime = TIME_NOW;
 		}
-		catch (CryptoException $e) {
+		catch (\Throwable $e) {
 			$lostPasswordKey = null;
 			$lastLostPasswordRequestTime = 0;
 		}
