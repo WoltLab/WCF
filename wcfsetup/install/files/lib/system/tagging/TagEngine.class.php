@@ -6,7 +6,6 @@ use wcf\data\tag\TagAction;
 use wcf\data\tag\TagList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\InvalidObjectTypeException;
-use wcf\system\language\LanguageFactory;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;

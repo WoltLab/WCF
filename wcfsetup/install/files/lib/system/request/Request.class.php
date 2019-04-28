@@ -114,7 +114,7 @@ class Request {
 	/**
 	 * Returns request meta data.
 	 * 
-	 * @return	string[]
+	 * @return	array
 	 * @since	3.0
 	 */
 	public function getMetaData() {

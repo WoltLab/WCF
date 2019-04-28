@@ -5,8 +5,6 @@ use wcf\data\article\category\ArticleCategoryNodeTree;
 use wcf\data\article\content\SearchResultArticleContent;
 use wcf\data\article\content\SearchResultArticleContentList;
 use wcf\data\article\Article;
-use wcf\data\category\CategoryNode;
-use wcf\data\category\CategoryNodeTree;
 use wcf\form\IForm;
 use wcf\form\SearchForm;
 use wcf\system\database\util\PreparedStatementConditionBuilder;

@@ -74,6 +74,7 @@ class BlacklistStatus extends DatabaseObject {
 	 * 
 	 * @param BlacklistStatus[] $status
 	 * @return string|null
+	 * @throws SystemException
 	 */
 	public static function getNextDelta(array $status) {
 		// Fetch the index file to determine the oldest possible value that can be retrieved.

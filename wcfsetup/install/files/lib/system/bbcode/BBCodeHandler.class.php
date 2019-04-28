@@ -122,7 +122,7 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Returns metadata about the highlighters.
 	 * 
-	 * @return	string[]
+	 * @return	string[][]
 	 */
 	public function getHighlighterMeta() {
 		if ($this->highlighterMeta === null) {

@@ -127,6 +127,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 			$width = $size;
 			$height = $size;
 			$link = null;
+			$marginTop = 0;
 			
 			if ($this->tinyThumbnailType) {
 				$link = $this->getThumbnailLink('tiny');
