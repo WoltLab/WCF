@@ -595,7 +595,6 @@ final class CronjobUtil {
 		// $longPattern = '/^'.$range.'+(,'.$range.')*$/i'; / does not work on some php installations
 		$longPattern = '/^'.$range.'(,'.$range.')*$/i';
 		
-		preg_match($longPattern, $value);
 		if ($value != '*' && !preg_match($longPattern, $value)) {
 			throw new SystemException("invalid value '".$value."' given for cronjob attribute '".$name."'");
 		}
