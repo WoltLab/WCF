@@ -93,14 +93,8 @@ class SendNewPasswordWorker extends AbstractWorker {
 	 * @param	UserEditor	$userEditor
 	 */
 	protected function resetPassword(UserEditor $userEditor) {
-		try {
-			$lostPasswordKey = bin2hex(\random_bytes(20));
-			$lastLostPasswordRequestTime = TIME_NOW;
-		}
-		catch (\Throwable $e) {
-			$lostPasswordKey = null;
-			$lastLostPasswordRequestTime = 0;
-		}
+		$lostPasswordKey = bin2hex(\random_bytes(20));
+		$lastLostPasswordRequestTime = TIME_NOW;
 		$userAction = new UserAction([$userEditor], 'update', [
 			'data' => [
 				'password' => null,
