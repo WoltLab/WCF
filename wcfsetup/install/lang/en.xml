@@ -4478,6 +4478,7 @@ the website <a href="{link isEmail=true}{/link}">{@PAGE_TITLE|language}</a>.</p>
 		<item name="wcf.user.newPassword"><![CDATA[New Password]]></item>
 		<item name="wcf.user.newPassword.info"><![CDATA[You are setting a new password for the user “{$user->username}”.]]></item>
 		<item name="wcf.user.newPassword.success"><![CDATA[The password of the user “{$user->username}” has been changed successfully. You may now login with your new password.]]></item>
+		<item name="wcf.user.newPassword.error.invalidLink"><![CDATA[The link to set a new password is no longer valid. For security reasons, this link expires after some time and can only be used once. You can request a new link on the following page: <a href="{link controller='LostPassword'}{/link}">Lost Password</a>]]></item>
 		<item name="wcf.user.userID.error.invalid"><![CDATA[The User ID is invalid.]]></item>
 		<item name="wcf.user.accountManagement"><![CDATA[Account Management]]></item>
 		<item name="wcf.user.accountManagement.warning"><![CDATA[Warning! You are editing your user account, careless changes might lock you out!]]></item>
