@@ -7,7 +7,6 @@ use wcf\system\email\mime\PlainTextMimePart;
 use wcf\system\email\Email;
 use wcf\system\email\Mailbox;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 /**
  * This class represents an e-mail.

@@ -524,7 +524,11 @@ class Box extends DatabaseObject {
 	 * @since       5.2
 	 */
 	public function showEditButton() {
-		if (WCF::getSession()->getPermission('admin.content.cms.canManageBox') && in_array($this->position, $this->editButtonPositions)) {
+		if (
+			WCF::getSession()->getPermission('admin.content.cms.canManageBox')
+			&& $this->boxType !== 'menu'
+			&& in_array($this->position, $this->editButtonPositions)
+		) {
 			return true;
 		}
 		

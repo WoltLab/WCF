@@ -824,7 +824,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	public function validateEdit() {
 		$this->validatePrepareEdit();
 		
-		$this->validateMessage($this->comment !== null);
+		$this->validateMessage();
 	}
 	
 	/**
@@ -885,7 +885,7 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 	public function validateSave() {
 		$this->validateBeginEdit();
 		
-		$this->validateMessage(true);
+		$this->validateMessage();
 	}
 	
 	/**

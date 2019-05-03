@@ -559,9 +559,6 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * @since 5.2
 	 */
 	protected function convertPlainLinks() {
-		/** @var HtmlNodePlainLink[] $links */
-		$links = [];
-		
 		/** @var \DOMElement $link */
 		foreach ($this->getDocument()->getElementsByTagName('a') as $link) {
 			$href = $link->getAttribute('href');

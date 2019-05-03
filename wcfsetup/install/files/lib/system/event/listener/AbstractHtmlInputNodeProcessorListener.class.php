@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\event\listener;
-use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeCache;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\data\ITitledObject;

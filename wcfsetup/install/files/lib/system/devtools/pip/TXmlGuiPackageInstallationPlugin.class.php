@@ -76,10 +76,7 @@ trait TXmlGuiPackageInstallationPlugin {
 		
 		$this->saveObject($newElement);
 		
-		/** @var DevtoolsProject $project */
-		$project = $this->installation->getProject();
-		
-		$xml->write($this->getXmlFileLocation($project));
+		$xml->write($this->getXmlFileLocation());
 	}
 	
 	/**
@@ -208,16 +205,13 @@ trait TXmlGuiPackageInstallationPlugin {
 		
 		DOMUtil::removeNode($element);
 		
-		/** @var DevtoolsProject $project */
-		$project = $this->installation->getProject();
-		
 		$deleteFile = $this->sanitizeXmlFileAfterDeleteEntry($document);
 		
 		if ($deleteFile) {
-			unlink($this->getXmlFileLocation($project));
+			unlink($this->getXmlFileLocation());
 		}
 		else {
-			$xml->write($this->getXmlFileLocation($project));
+			$xml->write($this->getXmlFileLocation());
 		}
 		
 		if (is_subclass_of($this->className, IEditableCachedObject::class)) {
@@ -293,10 +287,7 @@ trait TXmlGuiPackageInstallationPlugin {
 		
 		$this->saveObject($newElement, $element);
 		
-		/** @var DevtoolsProject $project */
-		$project = $this->installation->getProject();
-		
-		$xml->write($this->getXmlFileLocation($project));
+		$xml->write($this->getXmlFileLocation());
 		
 		return $this->getElementIdentifier($newElement);
 	}

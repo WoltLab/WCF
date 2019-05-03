@@ -234,7 +234,7 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
 			}
 			else {
 				// `isPublic` cannot be changed when editing polls
-				$this->getIsPublicField()->isAvailable(false);
+				$this->getIsPublicField()->available(false);
 			}
 			
 			$this->getQuestionField()->value($this->poll->question);

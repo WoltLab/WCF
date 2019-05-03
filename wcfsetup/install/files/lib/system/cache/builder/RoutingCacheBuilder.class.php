@@ -349,6 +349,10 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 	}
 	
 	protected function handleLandingPageWithOverriddenApplication(array &$data) {
+		if (!PACKAGE_ID) {
+			return;
+		}
+		
 		$landingPageController = $data['landingPages']['wcf'][0];
 		$controllers = [$landingPageController];
 		

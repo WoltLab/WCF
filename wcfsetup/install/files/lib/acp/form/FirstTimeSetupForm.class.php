@@ -2,7 +2,6 @@
 namespace wcf\acp\form;
 use wcf\data\option\OptionAction;
 use wcf\system\option\OptionHandler;
-use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 
 /**

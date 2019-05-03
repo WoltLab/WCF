@@ -4,6 +4,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserEditor;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
@@ -67,12 +68,16 @@ class NewPasswordForm extends AbstractForm {
 			$this->user = new User($this->userID);
 			if (!$this->user->userID) throw new IllegalLinkException();
 			
-			if (!$this->user->lostPasswordKey) throw new IllegalLinkException();
+			if (!$this->user->lostPasswordKey) {
+				$this->throwInvalidLinkException(); 
+			}
 			if (!\hash_equals($this->user->lostPasswordKey, $this->lostPasswordKey)) {
-				throw new IllegalLinkException();
+				$this->throwInvalidLinkException();
 			}
 			// expire lost password requests after a day
-			if ($this->user->lastLostPasswordRequestTime < TIME_NOW - 86400) throw new IllegalLinkException();
+			if ($this->user->lastLostPasswordRequestTime < TIME_NOW - 86400) {
+				$this->throwInvalidLinkException();
+			}
 			
 			(new UserEditor($this->user))->update([
 				'lastLostPasswordRequestTime' => 0,
@@ -157,5 +162,9 @@ class NewPasswordForm extends AbstractForm {
 			'confirmNewPassword' => $this->confirmNewPassword,
 			'passwordRulesAttributeValue' => UserRegistrationUtil::getPasswordRulesAttributeValue()
 		]);
+	}
+	
+	private function throwInvalidLinkException() {
+		throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.error.invalidLink'));
 	}
 }
