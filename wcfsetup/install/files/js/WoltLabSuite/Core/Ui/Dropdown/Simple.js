@@ -494,6 +494,7 @@ define(
 						menu.removeEventListener('keydown', _callbackDropdownMenuKeyDown);
 						menu.addEventListener('keydown', _callbackDropdownMenuKeyDown);
 						elBySelAll('li', menu, function (listItem) {
+							if (!listItem.clientHeight) return;
 							if (firstListItem === null) firstListItem = listItem;
 							else if (listItem.classList.contains('active')) firstListItem = listItem;
 							
