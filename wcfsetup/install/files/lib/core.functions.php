@@ -97,6 +97,14 @@ namespace {
 }
 
 // @codingStandardsIgnoreStart
+namespace wcf {
+	function getRequestId() {
+		if (!defined('WCF_REQUEST_ID_HEADER') || !WCF_REQUEST_ID_HEADER) return '';
+		
+		return $_SERVER[WCF_REQUEST_ID_HEADER] ?? '';
+	}
+}
+
 namespace wcf\functions\exception {
 	use wcf\system\WCF;
 	use wcf\system\exception\IExtraInformationException;
@@ -124,7 +132,7 @@ namespace wcf\functions\exception {
 			'Message: '.$stripNewlines($e->getMessage())."\n".
 			'PHP version: '.phpversion()."\n".
 			'WoltLab Suite version: '.WCF_VERSION."\n".
-			'Request URI: '.$stripNewlines($_SERVER['REQUEST_URI'] ?? '')."\n".
+			'Request URI: '.$stripNewlines($_SERVER['REQUEST_URI'] ?? '').(\wcf\getRequestId() ? ' ('.\wcf\getRequestId().')' : '')."\n".
 			'Referrer: '.$stripNewlines($_SERVER['HTTP_REFERER'] ?? '')."\n".
 			'User Agent: '.$stripNewlines($_SERVER['HTTP_USER_AGENT'] ?? '')."\n".
 			'Peak Memory Usage: '.memory_get_peak_usage().'/'.FileUtil::getMemoryLimit()."\n";
@@ -178,6 +186,7 @@ namespace wcf\functions\exception {
 	 */
 	function printThrowable($e) {
 		$exceptionID = logThrowable($e, $logFile);
+		if (\wcf\getRequestId()) $exceptionID .= '/'.\wcf\getRequestId();
 		
 		$exceptionTitle = $exceptionSubtitle = $exceptionExplanation = '';
 		$logFile = sanitizePath($logFile);
