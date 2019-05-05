@@ -194,6 +194,7 @@ class Package extends DatabaseObject {
 	/**
 	 * Returns the absolute path to the package directory with a trailing slash.
 	 * 
+	 * @since	3.0
 	 * @return	string
 	 */
 	public function getAbsolutePackageDir() {
