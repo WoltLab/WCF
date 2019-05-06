@@ -199,6 +199,7 @@ class ContactForm extends AbstractCaptchaForm {
 			'name' => $this->name,
 			'options' => $this->optionHandler->getOptions(),
 			'recipientList' => $this->recipientList,
+			'recipientID' => $this->recipientID,
 			'privacyPolicyConfirmed' => $this->privacyPolicyConfirmed
 		]);
 	}
