@@ -30,14 +30,20 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.devtools.project.list';
 	
 	/**
-	 * @var	bool 
+	 * @inheritDoc
+	 */
+	public $formAction = 'edit';
+	
+	/**
+	 * @var	bool
 	 */
 	public $hasBrokenPath = false;
 	
 	/**
-	 * @inheritDoc
+	 * list of missing XML elements that should be present
+	 * @var	string[]
 	 */
-	public $formAction = 'edit';
+	public $missingElements = [];
 	
 	/**
 	 * @inheritDoc
@@ -46,7 +52,8 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
-			'hasBrokenPath' => $this->hasBrokenPath
+			'hasBrokenPath' => $this->hasBrokenPath,
+			'missingElements' => $this->missingElements
 		]);
 	}
 	
@@ -111,49 +118,64 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		
 		/** @var TextFormField $packageIdentifier */
 		$packageIdentifier = $this->form->getNodeById('packageIdentifier');
-		$packageIdentifier->value($packageArchive->getPackageInfo('name'));
+		if ($packageArchive->getPackageInfo('name') !== null) {
+			$packageIdentifier->value($packageArchive->getPackageInfo('name'));
+		}
+		else {
+			$this->missingElements[] = 'name';
+		}
 		
 		/** @var TextFormField $packageName */
 		$packageName = $this->form->getNodeById('packageName');
 		$xmlPackageNames = $packageArchive->getPackageInfo('packageName');
-		if (count($xmlPackageNames) === 1) {
-			$packageName->value(reset($xmlPackageNames));
+		if ($xmlPackageNames !== null) {
+			if (count($xmlPackageNames) === 1) {
+				$packageName->value(reset($xmlPackageNames));
+			}
+			else {
+				$packageNames = [];
+				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+					$packageNames[$language->languageID] = '';
+					
+					if (isset($xmlPackageNames[$language->languageCode])) {
+						$packageNames[$language->languageID] = $xmlPackageNames[$language->languageCode];
+					}
+					else if (isset($xmlPackageNames['default'])) {
+						$packageNames[$language->languageID] = $xmlPackageNames['default'];
+					}
+				}
+				
+				$packageName->value($packageNames);
+			}
 		}
 		else {
-			$packageNames = [];
-			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-				$packageNames[$language->languageID] = '';
-				
-				if (isset($xmlPackageNames[$language->languageCode])) {
-					$packageNames[$language->languageID] = $xmlPackageNames[$language->languageCode];
-				}
-				else if (isset($xmlPackageNames['default'])) {
-					$packageNames[$language->languageID] = $xmlPackageNames['default'];
-				}
-			}
-			
-			$packageName->value($packageNames);
+			$this->missingElements[] = 'packageName';
 		}
 		
 		/** @var TextFormField $packageDescription */
 		$packageDescription = $this->form->getNodeById('packageDescription');
 		$xmlPackageDescriptions = $packageArchive->getPackageInfo('packageDescription');
-		if (count($xmlPackageDescriptions) === 1) {
-			$packageDescription->value(reset($xmlPackageDescriptions));
+		if ($xmlPackageDescriptions !== null) {
+			if (count($xmlPackageDescriptions) === 1) {
+				$packageDescription->value(reset($xmlPackageDescriptions));
+			}
+			else {
+				$packageDescriptions = [];
+				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+					$packageDescriptions[$language->languageID] = '';
+					
+					if (isset($xmlPackageDescriptions[$language->languageCode])) {
+						$packageDescriptions[$language->languageID] = $xmlPackageDescriptions[$language->languageCode];
+					} else if (isset($xmlPackageDescriptions['default'])) {
+						$packageDescriptions[$language->languageID] = $xmlPackageDescriptions['default'];
+					}
+				}
+				
+				$packageDescription->value($packageDescriptions);
+			}
 		}
 		else {
-			$packageDescriptions = [];
-			foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
-				$packageDescriptions[$language->languageID] = '';
-				
-				if (isset($xmlPackageDescriptions[$language->languageCode])) {
-					$packageDescriptions[$language->languageID] = $xmlPackageDescriptions[$language->languageCode];
-				} else if (isset($xmlPackageDescriptions['default'])) {
-					$packageDescriptions[$language->languageID] = $xmlPackageDescriptions['default'];
-				}
-			}
-			
-			$packageDescription->value($packageDescriptions);
+			$this->missingElements[] = 'packageDescription';
 		}
 		
 		if (!empty($packageArchive->getPackageInfo('isApplication'))) {
@@ -170,11 +192,21 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		
 		/** @var TextFormField $version */
 		$version = $this->form->getNodeById('version');
-		$version->value($packageArchive->getPackageInfo('version'));
+		if ($packageArchive->getPackageInfo('version') !== null) {
+			$version->value($packageArchive->getPackageInfo('version'));
+		}
+		else {
+			$this->missingElements[] = 'packageDescription';
+		}
 		
 		/** @var TextFormField $date */
 		$date = $this->form->getNodeById('date');
-		$date->value(date('Y-m-d', $packageArchive->getPackageInfo('date')));
+		if ($packageArchive->getPackageInfo('date') !== null) {
+			$date->value(date('Y-m-d', $packageArchive->getPackageInfo('date')));
+		}
+		else {
+			$this->missingElements[] = 'date';
+		}
 		
 		if ($packageArchive->getPackageInfo('packageurl') !== null) {
 			/** @var TextFormField $packageUrl */
@@ -184,7 +216,12 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		
 		/** @var TextFormField $author */
 		$author = $this->form->getNodeById('author');
-		$author->value($packageArchive->getAuthorInfo('author'));
+		if ($packageArchive->getAuthorInfo('author') !== null) {
+			$author->value($packageArchive->getAuthorInfo('author'));
+		}
+		else {
+			$this->missingElements[] = 'author';
+		}
 		
 		if ($packageArchive->getAuthorInfo('authorURL') !== null) {
 			/** @var TextFormField $authorUrl */

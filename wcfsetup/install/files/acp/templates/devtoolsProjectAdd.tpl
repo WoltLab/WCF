@@ -26,6 +26,10 @@
 	{else}
 		<p class="warning">{lang}wcf.acp.devtools.project.edit.warning{/lang}</p>
 	{/if}
+	
+	{if !$missingElements|empty}
+		<p class="warning">{lang}wcf.acp.devtools.project.edit.warning.missingElements{/lang}</p>
+	{/if}
 {/if}
 
 {@$form->getHtml()}
