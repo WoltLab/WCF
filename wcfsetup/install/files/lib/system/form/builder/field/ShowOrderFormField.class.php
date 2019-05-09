@@ -67,13 +67,11 @@ class ShowOrderFormField extends SingleSelectionFormField {
 		parent::options($options, $nestedOptions, $labelLanguageItems);
 		
 		$this->options = [0 => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition')] + $this->options;
-		if ($nestedOptions) {
-			array_unshift($this->nestedOptions, [
-				'depth' => 0,
-				'label' => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition'),
-				'value' => 0
-			]);
-		}
+		array_unshift($this->nestedOptions, [
+			'depth' => 0,
+			'label' => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition'),
+			'value' => 0
+		]);
 		
 		return $this;
 	}
