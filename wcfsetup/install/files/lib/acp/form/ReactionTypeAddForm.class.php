@@ -70,6 +70,7 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm {
 					])
 					->value(ReactionType::REACTION_TYPE_POSITIVE),
 				ShowOrderFormField::create()
+					->description('wcf.acp.reactionType.showOrder.description')
 					->required()
 					->options(new ReactionTypeList()),
 				IsDisabledFormField::create()
