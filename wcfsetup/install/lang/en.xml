@@ -1172,6 +1172,7 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.modificationLog.time.afterDate"><![CDATA[After the date]]></item>
 		<item name="wcf.acp.modificationLog.time.beforeDate"><![CDATA[Before the date]]></item>
 		<item name="wcf.acp.modificationLog.unsupportedObjectTypes"><![CDATA[Some types are currently not supported and require changes to be made by the vendor.]]></item>
+		<item name="wcf.acp.modificationLog.action.allPackageActions"><![CDATA[All Actions from “{$package->package}”]]></item>
 	</category>
 	<category name="wcf.acp.notice">
 		<item name="wcf.acp.notice.add"><![CDATA[Add Notice]]></item>

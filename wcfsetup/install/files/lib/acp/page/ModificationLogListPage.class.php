@@ -143,9 +143,6 @@ class ModificationLogListPage extends SortablePage {
 		if (!empty($_REQUEST['beforeDate'])) {
 			$this->beforeDate = StringUtil::trim($_REQUEST['beforeDate']);
 		}
-		if (!empty($_REQUEST['packageID'])) {
-			$this->packageID = intval($_REQUEST['packageID']);
-		}
 		if (!empty($_REQUEST['username'])) {
 			$this->username = StringUtil::trim($_REQUEST['username']);
 		}
@@ -192,7 +189,13 @@ class ModificationLogListPage extends SortablePage {
 		if (!empty($this->availableObjectTypeIDs)) {
 			$action = '';
 			$objectTypeID = 0;
-			if (preg_match('~^(?P<objectType>.+)\-(?P<action>[^\-]+)$~', $this->action, $matches)) {
+			$packageID = 0;
+			
+			// an integer signals all actions from the package with the relevant id
+			if ($this->action == intval($this->action)) {
+				$packageID = $this->action;
+			}
+			else if (preg_match('~^(?P<objectType>.+)\-(?P<action>[^\-]+)$~', $this->action, $matches)) {
 				foreach ($this->objectTypes as $objectType) {
 					if ($objectType->objectType === $matches['objectType']) {
 						/** @var IExtendedModificationLogHandler $processor */
@@ -212,10 +215,10 @@ class ModificationLogListPage extends SortablePage {
 				$this->objectList->getConditionBuilder()->add('modification_log.action = ?', [$action]);
 			}
 			else {
-				if (isset($this->packages[$this->packageID])) {
+				if (isset($this->packages[$packageID])) {
 					$objectTypeIDs = [];
 					foreach ($this->objectTypes as $objectType) {
-						if ($objectType->packageID == $this->packageID) {
+						if ($objectType->packageID == $packageID) {
 							$objectTypeIDs[] = $objectType->objectTypeID;
 						}
 					}
@@ -304,7 +307,6 @@ class ModificationLogListPage extends SortablePage {
 			'beforeDate' => $this->beforeDate,
 			'logItems' => $this->logItems,
 			'objectTypes' => $this->objectTypes,
-			'packageID' => $this->packageID,
 			'packages' => $this->packages,
 			'unsupportedObjectTypes' => $this->unsupportedObjectTypes,
 			'username' => $this->username,
