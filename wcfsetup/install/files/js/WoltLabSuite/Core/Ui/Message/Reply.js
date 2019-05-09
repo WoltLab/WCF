@@ -41,7 +41,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			
 			// handle submit button
 			var submitCallback = this._submit.bind(this);
-			var submitButton = elBySel('button[data-type="save"]');
+			var submitButton = elBySel('button[data-type="save"]', this._container);
 			submitButton.addEventListener(WCF_CLICK_EVENT, submitCallback);
 			
 			// bind reply button
