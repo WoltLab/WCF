@@ -88,7 +88,7 @@
 							</h3>
 							
 							<ul class="inlineList dotSeparated small messageGroupInfo">
-								<li class="messageGroupAuthor">{if $entry->getAffectedObject()->getUserID()}<a href="{link controller='User' id=$entry->getAffectedObject()->getUserID()}{/link}" class="userLink" data-user-id="{@$entry->getAffectedObject()->getUserID()}">{$entry->getAffectedObject()->getUsername()}</a>{else}{$entry->getAffectedObject()->getUsername()}{/if}</li>
+								<li class="messageGroupAuthor">{if $entry->getAffectedObject()->getUserID()}<a href="{link controller='User' id=$entry->getAffectedObject()->getUserID() title=$entry->getAffectedObject()->getUsername()}{/link}" class="userLink" data-user-id="{@$entry->getAffectedObject()->getUserID()}">{$entry->getAffectedObject()->getUsername()}</a>{else}{$entry->getAffectedObject()->getUsername()}{/if}</li>
 								<li class="messageGroupTime">{@$entry->getAffectedObject()->getTime()|time}</li>
 								<li>{lang}wcf.moderation.type.{@$entry->getObjectTypeName()}{/lang}</li>
 								
