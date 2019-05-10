@@ -3478,6 +3478,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[The entered text is invalid.]]></item>
 		<item name="wcf.user.option.error.birthdayTooYoung"><![CDATA[You are not old enough. To register with this website you must be at least {#REGISTER_MIN_USER_AGE} years old.]]></item>
 		<item name="wcf.user.option.error.censoredWordsFound"><![CDATA[The text contains censored words: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}.]]></item>
+		<item name="wcf.user.option.error.disallowedBBCodes"><![CDATA[The message contains disallowed BBCodes: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}.]]></item>
 		<item name="wcf.user.error.isBanned"><![CDATA[Your user account has been banned{if $__wcf->user->banExpires != 0} until {@$__wcf->user->banExpires|plainTime}{/if}{if $__wcf->user->banReason}: {@$__wcf->user->banReason|newlineToBreak}{else}.{/if}]]></item>
 		<item name="wcf.user.access.everyone"><![CDATA[Everyone]]></item>
 		<item name="wcf.user.access.following"><![CDATA[Followed Users]]></item>
