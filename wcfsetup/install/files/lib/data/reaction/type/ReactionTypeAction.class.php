@@ -40,6 +40,16 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 	 * @inheritDoc
 	 */
 	public function create() {
+		if (isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] !== null) {
+			$sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+					SET	showOrder = showOrder + 1
+					WHERE	showOrder >= ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				$this->parameters['data']['showOrder']
+			]);
+		}
+		
 		/** @var ReactionType $reactionType */
 		$reactionType = parent::create();
 		$reactionTypeEditor = new ReactionTypeEditor($reactionType);
@@ -127,6 +137,27 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 					
 					$updateData['iconFile'] = $fileName;
 				}
+			}
+			
+			// update show order
+			if (isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] !== null) {
+				$sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+					SET	showOrder = showOrder + 1
+					WHERE	showOrder >= ?
+					AND     reactionTypeID <> ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					$this->parameters['data']['showOrder'],
+					$object->reactionTypeID
+				]);
+				
+				$sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+					SET	showOrder = showOrder - 1
+					WHERE	showOrder >= ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					$object->showOrder
+				]);
 			}
 			
 			if (!empty($updateData)) {
