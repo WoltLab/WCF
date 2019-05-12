@@ -203,4 +203,23 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 		}
 		WCF::getDB()->commitTransaction();
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function delete() {
+		$returnValues = parent::delete();
+		
+		$sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+				SET	showOrder = showOrder - 1
+				WHERE	showOrder > ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		foreach ($this->getObjects() as $object) {
+			$statement->execute([
+				$object->showOrder
+			]);
+		}
+		
+		return $returnValues;
+	}
 }
