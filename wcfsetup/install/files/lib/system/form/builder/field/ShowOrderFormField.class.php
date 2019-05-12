@@ -99,7 +99,9 @@ class ShowOrderFormField extends SingleSelectionFormField {
 		}
 		
 		if (count($keys) <= $value) {
-			throw new \InvalidArgumentException("Unknown value '{$value}' as only " . count($keys) . " values are available.");
+			// outdated `showOrder` values might cause errors; simply ignore those
+			// outdated values
+			return $this;
 		}
 		
 		return parent::value($keys[$value]);
