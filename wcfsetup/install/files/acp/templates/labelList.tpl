@@ -141,7 +141,7 @@
 	
 	{if $labelGroup && !$labelSearch && !$cssClassName && $items > 1}
 		<div class="formSubmit">
-			<button data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
+			<button class="button buttonPrimary" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
 		</div>
 	{/if}
 	

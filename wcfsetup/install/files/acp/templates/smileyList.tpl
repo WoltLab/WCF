@@ -66,13 +66,16 @@
 							</li>
 						{/foreach}
 					</ol>
-					<div class="formSubmit">
-						<button class="button" data-type="submit">{lang}wcf.global.button.submit{/lang}</button>
-					</div>
 				{else}
 					<p class="info">{lang}wcf.global.noItems{/lang}</p>
 				{/if}
 			</section>
+			
+			{if $objects|count}
+				<div class="formSubmit">
+					<button class="button buttonPrimary" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
+				</div>
+			{/if}
 		</div>
 	</div>
 	
