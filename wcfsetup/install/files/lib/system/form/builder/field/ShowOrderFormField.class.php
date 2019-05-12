@@ -32,6 +32,12 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	use TDefaultIdFormField;
 	
 	/**
+	 * is `true` if `(first position)` option was added
+	 * @var	bool
+	 */
+	protected $addedFirstPositionOption = false;
+	
+	/**
 	 * Creates a new instance of `ShowOrderFormField`.
 	 */
 	public function __construct() {
@@ -66,12 +72,16 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	public function options($options, $nestedOptions = false, $labelLanguageItems = true) {
 		parent::options($options, $nestedOptions, $labelLanguageItems);
 		
-		$this->options = [0 => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition')] + $this->options;
-		array_unshift($this->nestedOptions, [
-			'depth' => 0,
-			'label' => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition'),
-			'value' => 0
-		]);
+		if (!$this->addedFirstPositionOption) {
+			$this->options = [0 => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition')] + $this->options;
+			array_unshift($this->nestedOptions, [
+				'depth' => 0,
+				'label' => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition'),
+				'value' => 0
+			]);
+			
+			$this->addedFirstPositionOption = true;
+		}
 		
 		return $this;
 	}
