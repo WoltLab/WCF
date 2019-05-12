@@ -72,20 +72,7 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm {
 				ShowOrderFormField::create()
 					->description('wcf.acp.reactionType.showOrder.description')
 					->required()
-					->options(function () {
-						$list = new ReactionTypeList();
-						$list->sqlOrderBy = 'showOrder ASC';
-						$list->readObjects();
-						
-						$returnValues = [];
-						
-						foreach ($list as $reactionType) {
-							$returnValues[$reactionType->showOrder + 1] = $reactionType->getTitle();
-						}
-						
-						return $returnValues;
-						
-					}),
+					->options(new ReactionTypeList()),
 				IsDisabledFormField::create()
 					->label('wcf.acp.reactionType.isDisabled')
 			]);

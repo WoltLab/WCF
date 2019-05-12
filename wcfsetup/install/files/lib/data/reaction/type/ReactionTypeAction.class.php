@@ -153,7 +153,7 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 				
 				$sql = "UPDATE  wcf" . WCF_N . "_reaction_type
 					SET	showOrder = showOrder - 1
-					WHERE	showOrder >= ?";
+					WHERE	showOrder > ?";
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute([
 					$object->showOrder
