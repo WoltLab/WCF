@@ -15,6 +15,11 @@ use wcf\system\email\Mailbox;
  */
 class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 	/**
+	 * @inheritDoc
+	 */
+	const MAX_FAILURES = 24;
+	
+	/**
 	 * email to send
 	 * @var	Email
 	 */
@@ -55,17 +60,43 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 	/**
 	 * Emails will be sent with an increasing timeout between the tries.
 	 * 
-	 * @return	int	5 minutes, 30 minutes, 2 hours.
+	 * @return	int	between 15 minutes and 24 hours
 	 */
 	public function retryAfter() {
-		switch ($this->getFailures()) {
-			case 1:
-				return 5 * 60;
-			case 2:
-				return 30 * 60;
-			case 3:
-				return 2 * 60 * 60;
+		static $lookup = [
+			1 => 15,
+			2 => 45,     // running total:
+			3 => 1 * 60, // 2 hours
+			4 => 2 * 60, // 4 hours
+			5 => 4 * 60, // 8 hours
+			6 => 4 * 60, // 12 hours
+			7 => 6 * 60, // 18 hours
+			8 => 6 * 60, // 24 hours
+			9 => 6 * 60, // 30 hours
+			10 => 6 * 60, // 36 hours
+			11 => 6 * 60, // 42 hours
+			11 => 6 * 60, // 48 hours
+			12 => 12 * 60, // 60 hours
+			13 => 12 * 60, // 72 hours
+			14 => 24 * 60, // 4 days
+			15 => 24 * 60, // 5 days
+			16 => 24 * 60, // 6 days
+			17 => 24 * 60, // 7 days
+			18 => 24 * 60, // 8 days
+			19 => 24 * 60, // 9 days
+			20 => 24 * 60, // 10 days
+			21 => 24 * 60, // 11 days
+			22 => 24 * 60, // 12 days
+			23 => 24 * 60, // 13 days
+			24 => 24 * 60, // 14 days
+		];
+		
+		$result = 24 * 60;
+		if (isset($lookup[$this->getFailures()])) {
+			$result = $lookup[$this->getFailures()];
 		}
+		
+		return $result * 60;
 	}
 	
 	/**
