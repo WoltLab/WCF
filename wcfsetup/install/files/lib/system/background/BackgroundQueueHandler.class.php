@@ -104,7 +104,6 @@ class BackgroundQueueHandler extends SingletonFactory {
 				throw $e;
 			}
 			
-			// gotta catch 'em all
 			$job->fail();
 			
 			if ($job->getFailures() <= $job::MAX_FAILURES) {
@@ -115,6 +114,8 @@ class BackgroundQueueHandler extends SingletonFactory {
 				}
 			}
 			else {
+				$job->onFinalFailure();
+				
 				// job failed too often: log
 				\wcf\functions\exception\logThrowable($e);
 			}
