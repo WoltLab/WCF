@@ -3371,7 +3371,7 @@ Attachments:
 	<category name="wcf.acp.content">
 		<item name="wcf.acp.content.removeContent"><![CDATA[Delete User’s Content]]></item>
 		<item name="wcf.acp.content.provider.removeContentSectionTitle"><![CDATA[Content]]></item>
-		<item name="wcf.acp.content.provider.removeContentInfo"><![CDATA[Which types of content created by “<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>” should be deleted.]]></item>
+		<item name="wcf.acp.content.provider.removeContentInfo"><![CDATA[Select which types of content created by “<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>” should be deleted.]]></item>
 		<item name="wcf.acp.content.provider.removeContentWarning"><![CDATA[<strong>Heads up</strong>: The content will be deleted irrevocably and without any further confirmation prompt!]]></item>
 		<item name="wcf.acp.content.provider.com.woltlab.wcf.comment"><![CDATA[Comments]]></item>
 		<item name="wcf.acp.content.provider.com.woltlab.wcf.commentResponse"><![CDATA[Comment Responses]]></item>
