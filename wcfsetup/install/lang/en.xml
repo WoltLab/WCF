@@ -1718,7 +1718,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 The database is carefully maintained, but it there will be always be a margin of error, caused by incorrect or outdated entries. You can chose from a set of options that controls how matches are evaluated in order to reduce false-positives. The recommended settings are based on years of experience and changes should therefore be made with caution.
 <ul class="nativeList">
 	<li><strong>Do not check</strong> – This value is completely ignore.</li>
-	<li><strong>Top 10%</strong> – Only the top 10% most frequently reported values are considered.</li>
+	<li><strong>Top 10%</strong> – Only the top 10% of the most frequently reported values are considered.</li>
 	<li><strong>Multiple reports</strong> – Any match that has been reported more than once.</li>
 	<li><strong>Any match is sufficient</strong> – The number of reports is entirely ignored. Not recommended.</li>
 </ul>]]></item>
