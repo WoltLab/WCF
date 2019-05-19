@@ -1195,7 +1195,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.modificationLog.time.afterDate"><![CDATA[Ab dem Zeitpunkt]]></item>
 		<item name="wcf.acp.modificationLog.time.beforeDate"><![CDATA[Vor dem Zeitpunkt]]></item>
 		<item name="wcf.acp.modificationLog.unsupportedObjectTypes"><![CDATA[Einige Typen werden aktuell nicht unterstützt und müssen zuvor vom Hersteller angepasst werden.]]></item>
-		<item name="wcf.acp.modificationLog.action.allPackageActions"><![CDATA[Alle Aktionen aus „{$package->package}“]]></item>
+		<item name="wcf.acp.modificationLog.action.allPackageActions"><![CDATA[Alle Aktionen aus „{$package->getName()}“]]></item>
 	</category>
 	<category name="wcf.acp.notice">
 		<item name="wcf.acp.notice.add"><![CDATA[Hinweis hinzufügen]]></item>
