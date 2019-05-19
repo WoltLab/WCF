@@ -4,7 +4,7 @@
  * @author	Joshua Ruesweg
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/User/Content/Remove/Handler
+ * @module	WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler
  * @since       5.2
  */
 define(['Ajax', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Acp/Ui/Worker'], function (Ajax, Language, UiDialog, Worker) {
