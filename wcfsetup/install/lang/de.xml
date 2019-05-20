@@ -514,7 +514,7 @@
 		<item name="wcf.acp.devtools.project.optionalPackages"><![CDATA[Optionale Pakete]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.description"><![CDATA[Nach der Installation dieses Pakets werden folgende Pakete als optionale Pakete angeboten.]]></item>
 		<item name="wcf.acp.devtools.project.apiVersions"><![CDATA[Kompatible API-Versionen]]></item>
-		<item name="wcf.acp.devtools.project.apiVersions.description"><![CDATA[Das Paket ist mit allen ausgewählen API-Versionen von WoltLab Suite Core kompatibel.]]></item>
+		<item name="wcf.acp.devtools.project.apiVersions.description"><![CDATA[Das Paket ist mit allen ausgewählten API-Versionen von WoltLab Suite Core kompatibel.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackages.shortTitle"><![CDATA[Voraussetzungen]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackages.shortTitle"><![CDATA[Inkompatibilität]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.shortTitle"><![CDATA[Optionales]]></item>
@@ -2182,7 +2182,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.aclOption.objectType.options.description"><![CDATA[Der ACL-Objekttyp legt fest zu welcher Art von Objekten die Option gehört. {if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass nur ACL-Objekttypen des Paketes selbst oder seiner benötigten Pakete ausgewählt werden können.]]></item>
 		<item name="wcf.acp.pip.aclOption.options.name.error.notUnique"><![CDATA[Der angegebene Namen wird bereits von einer anderen ACL-Option vom gleichen ACL-Objekttyp verwendet.]]></item>
 		<item name="wcf.acp.pip.aclOption.options.categoryName"><![CDATA[Kategorie]]></item>
-		<item name="wcf.acp.pip.aclOption.options.categoryName.description"><![CDATA[Die ACL-Option wird in der ausgewählen Kategorie aufgelistet.]]></item>
+		<item name="wcf.acp.pip.aclOption.options.categoryName.description"><![CDATA[Die ACL-Option wird in der ausgewählten Kategorie aufgelistet.]]></item>
 		<item name="wcf.acp.pip.aclOption.options.name"><![CDATA[Optionsname]]></item>
 		<item name="wcf.acp.pip.aclOption.options.name.description"><![CDATA[Der Name der ACL-Option darf nur aus Buchstaben bestehen und muss mit einem Kleinbuchstaben beginnen.]]></item>
 		<item name="wcf.acp.pip.aclOption.options.name.error.format"><![CDATA[Der angegebene Optionsname ist ungültig.]]></item>
@@ -2469,7 +2469,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.menuItem.linkType.external"><![CDATA[Externer Link]]></item>
 		<item name="wcf.acp.pip.menuItem.linkType.internal"><![CDATA[Interner Link]]></item>
 		<item name="wcf.acp.pip.menuItem.menu"><![CDATA[Menü]]></item>
-		<item name="wcf.acp.pip.menuItem.menu.description"><![CDATA[Der Menüpunkt gehört zum ausgewählen Menü.]]></item>
+		<item name="wcf.acp.pip.menuItem.menu.description"><![CDATA[Der Menüpunkt gehört zum ausgewählten Menü.]]></item>
 		<item name="wcf.acp.pip.menuItem.page"><![CDATA[Seite]]></item>
 		<item name="wcf.acp.pip.menuItem.page.description"><![CDATA[Der Menüpunkt wird auf die ausgewähle Seite verlinken.]]></item>
 		<item name="wcf.acp.pip.menuItem.parentMenuItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
@@ -2574,7 +2574,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.reactionType.type.neutral"><![CDATA[Neutral]]></item>
 		<item name="wcf.acp.reactionType.isDisabled"><![CDATA[Reaktion deaktivieren]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaktions-Datei]]></item>
-		<item name="wcf.acp.reactionType.showOrder.description"><![CDATA[Der Reaktions-Typ wird nach dem ausgewählen Reaktions-Typ angezeigt.]]></item>
+		<item name="wcf.acp.reactionType.showOrder.description"><![CDATA[Der Reaktions-Typ wird nach dem ausgewählten Reaktions-Typ angezeigt.]]></item>
 	</category>
 	<category name="wcf.acp.rebuildData">
 		<item name="wcf.acp.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
