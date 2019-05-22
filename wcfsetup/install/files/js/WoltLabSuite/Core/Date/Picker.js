@@ -533,7 +533,7 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 		 * Sets the visible and shadow value
 		 */
 		_formatValue: function() {
-			var data = _data.get(_input), date, value, shadowValue;
+			var data = _data.get(_input), date;
 			
 			if (elData(_input, 'empty') === 'true') {
 				return;
