@@ -547,19 +547,6 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 					_dateHour.value,
 					_dateMinute.value
 				);
-				
-				if (data.isTimeOnly) {
-					value = DateUtil.formatTime(date);
-					shadowValue = DateUtil.format(date, 'H:i');
-				}
-				else if (data.ignoreTimezone) {
-					value = DateUtil.formatDateTime(date);
-					shadowValue = DateUtil.format(date, 'Y-m-dTH:i:s');
-				}
-				else {
-					value = DateUtil.formatDateTime(date);
-					shadowValue = DateUtil.format(date, 'c');
-				}
 			}
 			else {
 				date = new Date(
@@ -567,15 +554,9 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 					elData(_dateGrid, 'month'),
 					elData(_dateGrid, 'day')
 				);
-				
-				value = DateUtil.formatDate(date);
-				shadowValue = DateUtil.format(date, 'Y-m-d');
 			}
-			
-			_input.value = value;
-			elData(_input, 'value', date.getTime());
-			if (!data.disableClear) data.clearButton.style.removeProperty('visibility');
-			data.shadow.value = shadowValue;
+
+			this.setDate(_input, date);
 		},
 		
 		/**
@@ -810,19 +791,28 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			var data = _data.get(element);
 			
 			elData(element, 'value', date.getTime());
-			element.value = DateUtil['formatDate' + (data.isDateTime ? 'Time' : '')](date);
-			
-			var format = '';
-			if (data.ignoreTimezone) {
-				format = 'Y-m-dTH:i:s';
-			}
-			else if (data.isDateTime) {
-				format = 'c';
+
+			var format = '', value;
+			if (data.isDateTime) {
+				if (data.isTimeOnly) {
+					value = DateUtil.formatTime(date);
+					format = 'H:i';
+				}
+				else if (data.ignoreTimezone) {
+					value = DateUtil.formatDateTime(date);
+					format = 'Y-m-dTH:i:s';
+				}
+				else {
+					value = DateUtil.formatDateTime(date);
+					format = 'c';
+				}
 			}
 			else {
+				value = DateUtil.formatDate(date);
 				format = 'Y-m-d';
 			}
 
+			element.value = value;
 			data.shadow.value = DateUtil.format(date, format);
 
 			// show clear button
