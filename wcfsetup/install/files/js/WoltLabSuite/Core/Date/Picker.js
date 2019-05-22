@@ -822,8 +822,13 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			else {
 				format = 'Y-m-d';
 			}
-			
+
 			data.shadow.value = DateUtil.format(date, format);
+
+			// show clear button
+			if (!data.disableClear) {
+				data.clearButton.style.removeProperty('visibility');
+			}
 		},
 		
 		/**
