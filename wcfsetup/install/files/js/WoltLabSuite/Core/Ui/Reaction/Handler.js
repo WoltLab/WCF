@@ -139,7 +139,7 @@ define(
 			 * @param       {Element}       element
 			 */
 			_enableMobileView: function(element) {
-				var messageFooterGroup = element.parentElement.parentElement.parentElement;
+				var messageFooterGroup = element.closest('.messageFooterGroup');
 				
 				elShow(elBySel('.mobileReactButton', messageFooterGroup));
 			},
@@ -150,7 +150,7 @@ define(
 			 * @param       {Element}       element
 			 */
 			_disableMobileView: function(element) {
-				var messageFooterGroup = element.parentElement.parentElement.parentElement;
+				var messageFooterGroup = element.closest('.messageFooterGroup');
 				
 				elHide(elBySel('.mobileReactButton', messageFooterGroup));
 			},
@@ -162,7 +162,7 @@ define(
 			 * @param       {int}           objectID
 			 */
 			_setupMobileView: function(element, objectID) {
-				var messageFooterGroup = element.parentElement.parentElement.parentElement;
+				var messageFooterGroup = element.closest('.messageFooterGroup');
 				
 				var button = elCreate('button');
 				button.classList = 'mobileReactButton';
