@@ -330,12 +330,7 @@ define(
 				
 				// sort the array
 				sortedReactionTypes.sort(function (a, b) {
-					if (a.showOrder > b.showOrder) {
-						return 1;
-					}
-					else {
-						return -1;
-					}
+					return a.showOrder - b.showOrder;
 				});
 				
 				return sortedReactionTypes;
