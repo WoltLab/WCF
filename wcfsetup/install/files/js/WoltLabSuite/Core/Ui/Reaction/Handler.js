@@ -11,13 +11,13 @@ define(
 	[
 		'Ajax',      'Core',                            'Dictionary',           'Language',
 		'ObjectMap', 'StringUtil',                      'Dom/ChangeListener',   'Dom/Util',
-		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List',  'User',                 'WoltLabSuite/Core/Ui/Reaction/CountButtons', 
+		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List',  'User',                 'WoltLabSuite/Core/Ui/Reaction/CountButtons',
 		'Ui/Alignment', 'Ui/CloseOverlay',              'Ui/Screen'
 	],
 	function(
 		Ajax,        Core,              Dictionary,             Language,
 		ObjectMap,   StringUtil,        DomChangeListener,      DomUtil,
-		UiDialog,    UiUserList,        User,                   CountButtons, 
+		UiDialog,    UiUserList,        User,                   CountButtons,
 		UiAlignment, UiCloseOverlay,    UiScreen
 	)
 	{
@@ -30,7 +30,7 @@ define(
 		UiReactionHandler.prototype = {
 			/**
 			 * Initializes the reaction handler.
-			 *
+			 * 
 			 * @param	{string}	objectType	object type
 			 * @param	{object}	options		initialization options
 			 */
@@ -46,11 +46,11 @@ define(
 				
 				this._popoverCurrentObjectId = 0;
 				
-				this._popover = null; 
+				this._popover = null;
 				
 				this._options = Core.extend({
 					// selectors
-					buttonSelector: '.reactButton', 
+					buttonSelector: '.reactButton',
 					containerSelector: '',
 					isButtonGroupNavigation: false,
 					isSingleItem: false,
@@ -83,7 +83,7 @@ define(
 					
 					elementData = {
 						reactButton: null,
-						objectId: ~~elData(element, 'object-id'), 
+						objectId: ~~elData(element, 'object-id'),
 						element: element
 					};
 					
@@ -112,7 +112,14 @@ define(
 				
 				if (elementData.reactButton === null || elementData.reactButton.length === 0) {
 					// the element may have no react button 
-					return; 
+					return;
+				}
+				
+				if (Object.keys(REACTION_TYPES).length === 1) {
+					var reaction = REACTION_TYPES[Object.keys(REACTION_TYPES)[0]];
+					elementData.reactButton.title = reaction.title;
+					var textSpan = elBySel('.invisible', elementData.reactButton);
+					textSpan.innerText = reaction.title;
 				}
 				
 				if (elementData.reactButton.closest('.messageFooterGroup > .jsMobileNavigation')) {
@@ -139,7 +146,7 @@ define(
 			
 			/**
 			 * Disables the mobile view for the reaction button.
-			 *
+			 * 
 			 * @param       {Element}       element
 			 */
 			_disableMobileView: function(element) {
@@ -150,7 +157,7 @@ define(
 			
 			/**
 			 * Setup the mobile view for the reaction button.
-			 *
+			 * 
 			 * @param       {Element}       element
 			 * @param       {int}           objectID
 			 */
@@ -192,7 +199,7 @@ define(
 			},
 			
 			/**
-			 * Toggle the visibility of the react popover. 
+			 * Toggle the visibility of the react popover.
 			 * 
 			 * @param       {int}           objectId
 			 * @param       {Element}       element
@@ -203,11 +210,19 @@ define(
 					event.stopPropagation();
 				}
 				
-				if (this._popoverCurrentObjectId === 0 || this._popoverCurrentObjectId !== objectId) {
-					this._openReactPopover(objectId, element);
+				if (Object.keys(REACTION_TYPES).length === 1) {
+					var reaction = REACTION_TYPES[Object.keys(REACTION_TYPES)[0]];
+					this._popoverCurrentObjectId = objectId;
+					
+					this._react(reaction.reactionTypeID);
 				}
 				else {
-					this._closePopover(objectId, element);
+					if (this._popoverCurrentObjectId === 0 || this._popoverCurrentObjectId !== objectId) {
+						this._openReactPopover(objectId, element);
+					}
+					else {
+						this._closePopover(objectId, element);
+					}
 				}
 			},
 			
@@ -243,7 +258,7 @@ define(
 			},
 			
 			/**
-			 * Returns the react popover element. 
+			 * Returns the react popover element.
 			 * 
 			 * @returns {Element}
 			 */
@@ -296,11 +311,11 @@ define(
 					DomChangeListener.trigger();
 				}
 				
-				return this._popover; 
+				return this._popover;
 			},
 			
 			/**
-			 * Sort the reaction types by the showOrder field. 
+			 * Sort the reaction types by the showOrder field.
 			 * 
 			 * @returns     {Array}         the reaction types sorted by showOrder
 			 */
@@ -314,7 +329,7 @@ define(
 				}
 				
 				// sort the array
-				sortedReactionTypes.sort(function (a, b) { 
+				sortedReactionTypes.sort(function (a, b) {
 					if (a.showOrder > b.showOrder) {
 						return 1;
 					}
@@ -327,7 +342,7 @@ define(
 			},
 			
 			/**
-			 * Closes the react popover. 
+			 * Closes the react popover.
 			 */
 			_closePopover: function() {
 				if (this._popoverCurrentObjectId !== 0) {
@@ -367,7 +382,7 @@ define(
 				// update react button status
 				this._updateReactButton(data.returnValues.objectID, data.returnValues.reactionTypeID);
 			},
-				
+			
 			_ajaxSetup: function() {
 				return {
 					data: {
