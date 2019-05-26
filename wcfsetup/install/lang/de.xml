@@ -594,7 +594,7 @@
 		<item name="wcf.acp.devtools.project.requiredPackage.error.missingFiles"><![CDATA[Die folgenden Paketdateien fehlen: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Eintrag wirklich löschen?]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction"><![CDATA[Löschanweisung hinzufügen]]></item>
-		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description"><![CDATA[Der Eintrag wird nicht nur aus der Datenbank gelöscht und und die Installationsanweisung entfernt, sondern es wird auch explizit eine Löschanweisung hinzugefügt.]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description"><![CDATA[Der Eintrag wird nicht nur aus der Datenbank gelöscht und die Installationsanweisung entfernt, sondern es wird auch explizit eine Löschanweisung hinzugefügt.]]></item>
 		<item name="wcf.acp.devtools.project.edit.error.brokenPath"><![CDATA[Es existiert keine <kbd>package.xml</kbd> im angegebenen Pfad. Die Paket-Dateien wurden entweder gelöscht oder verschoben.]]></item>
 		<item name="wcf.acp.devtools.project.edit.warning.missingElements"><![CDATA[Die folgenden Informationen fehlen in der <kbd>package.xml</kbd>-Datei: {implode from=$missingElements item=missingElement}<kbd>{$missingElement}</kbd>{/implode}.]]></item>
 	</category>
@@ -2398,7 +2398,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType.description"><![CDATA[Die durch die angegebenen Objekttypen repräsentierten Benutzerinhalte werden bei der Entfernung der Benutzerinhalte durch <strong>diesen</strong> Anbieter ebenfalls entfernt. Muss dabei eine bestimmte Reihenfolge beachtet werden, müssen nice-Werte angegeben werden.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.data.title"><![CDATA[Daten des Nachrichtentyps]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc"><![CDATA[Inhaltsverzeichnis erstellen]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description"><![CDATA[Wenn ausgewählt wird ein Inhaltsverzeicnis für jede Nachricht dieses Types erstellt.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description"><![CDATA[Wenn ausgewählt wird ein Inhaltsverzeichnis für jede Nachricht dieses Types erstellt.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.description"><![CDATA[Die Kategorie wird dazu verwendet, Events auf der Benachrichtigungseinstellungenseite zu gruppiere. Die Kategorie besteht aus mindestens three durch Punkte abgetrennte Abschnitten. Jeder Abschnitt darf nur folgene Zeichen enthalten: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.error.tooFewSegments"><![CDATA[Die angegebene Kategorie enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
