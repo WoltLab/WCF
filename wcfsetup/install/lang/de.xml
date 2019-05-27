@@ -1176,7 +1176,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.menu.link.devtools.project.add"><![CDATA[Projekt hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.devtools.project.list"><![CDATA[Projekte]]></item>
 		<item name="wcf.acp.menu.link.devtools.notificationTest"><![CDATA[Benachrichtigungstest]]></item>
-		<item name="wcf.acp.menu.link.log.modification"><![CDATA[Globales Veränderungsprotokoll]]></item>
+		<item name="wcf.acp.menu.link.log.modification"><![CDATA[Globales Änderungsprotokoll]]></item>
 		<item name="wcf.acp.menu.link.reactionType"><![CDATA[Reaktionen]]></item>
 		<item name="wcf.acp.menu.link.reactionType.list"><![CDATA[Reaktions-Typen]]></item>
 		<item name="wcf.acp.menu.link.reactionType.add"><![CDATA[Reaktions-Typ hinzufügen]]></item>
@@ -1185,7 +1185,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.menu.link.systemCheck"><![CDATA[Systemüberprüfung]]></item>
 	</category>
 	<category name="wcf.acp.modificationLog">
-		<item name="wcf.acp.modificationLog.list"><![CDATA[Globales Veränderungsprotokoll]]></item>
+		<item name="wcf.acp.modificationLog.list"><![CDATA[Globales Änderungsprotokoll]]></item>
 		<item name="wcf.acp.modificationLog.action"><![CDATA[Aktion]]></item>
 		<item name="wcf.acp.modificationLog.action.all"><![CDATA[Alle Aktion]]></item>
 		<item name="wcf.acp.modificationLog.affectedObject"><![CDATA[Betroffenes Objekt]]></item>
