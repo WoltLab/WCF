@@ -43,6 +43,7 @@ define(
 				this._details = new ObjectMap();
 				this._objectType = objectType;
 				this._cache = new Dictionary();
+				this._objects = new Dictionary();
 				
 				this._popoverCurrentObjectId = 0;
 				
@@ -76,8 +77,7 @@ define(
 				var element, elements = elBySelAll(this._options.containerSelector), elementData, triggerChange = false, objectId;
 				for (var i = 0, length = elements.length; i < length; i++) {
 					element = elements[i];
-					objectId = ~~elData(element, 'object-id');
-					if (this._containers.has(objectId)) {
+					if (this._containers.has(DomUtil.identify(element))) {
 						continue;
 					}
 					
@@ -87,8 +87,19 @@ define(
 						element: element
 					};
 					
-					this._containers.set(objectId, elementData);
+					this._containers.set(DomUtil.identify(element), elementData);
 					this._initReactButton(element, elementData);
+					
+					if (!this._objects.has(~~elData(element, 'object-id'))) {
+						var objects = [];
+					}
+					else {
+						var objects = this._objects.get(~~elData(element, 'object-id'));
+					}
+					
+					objects.push(elementData);
+					
+					this._objects.set(~~elData(element, 'object-id'), objects);
 					
 					triggerChange = true;
 				}
@@ -174,18 +185,20 @@ define(
 			},
 			
 			_updateReactButton: function(objectID, reactionTypeID) {
-				if (reactionTypeID) {
-					this._containers.get(objectID).reactButton.classList.add('active');
-					elData(this._containers.get(objectID).reactButton, 'reaction-type-id', reactionTypeID);
-				}
-				else {
-					elData(this._containers.get(objectID).reactButton, 'reaction-type-id', 0);
-					this._containers.get(objectID).reactButton.classList.remove('active');
-				}
+				this._objects.get(objectID).forEach(function (elementData) {
+					if (reactionTypeID) {
+						elementData.reactButton.classList.add('active');
+						elData(elementData.reactButton, 'reaction-type-id', reactionTypeID);
+					}
+					else {
+						elData(elementData.reactButton, 'reaction-type-id', 0);
+						elementData.reactButton.classList.remove('active');
+					}
+				});
 			},
 			
 			_markReactionAsActive: function() {
-				var reactionTypeID = elData(this._containers.get(this._popoverCurrentObjectId).reactButton, 'reaction-type-id');
+				var reactionTypeID = elData(this._objects.get(this._popoverCurrentObjectId)[0].reactButton, 'reaction-type-id');
 				
 				//  clear old active state
 				var elements = elBySelAll('.reactionTypeButton.active', this._getPopover());
@@ -235,7 +248,7 @@ define(
 			_openReactPopover: function(objectId, element) {
 				// first close old popover, if exists 
 				if (this._popoverCurrentObjectId !== 0) {
-					this._closePopover(this._popoverCurrentObjectId, this._containers.get(this._popoverCurrentObjectId).reactButton);
+					this._closePopover();
 				}
 				
 				this._popoverCurrentObjectId = objectId;
@@ -344,9 +357,9 @@ define(
 					this._getPopover().classList.remove('active');
 					
 					if (this._options.isButtonGroupNavigation) {
-						// find nav element
-						var nav = this._containers.get(this._popoverCurrentObjectId).reactButton.closest('nav');
-						nav.style.cssText = "";
+						this._objects.get(this._popoverCurrentObjectId).forEach(function (elementData) {
+							elementData.reactButton.closest('nav').style.cssText = "";
+						});
 					}
 					
 					this._popoverCurrentObjectId = 0;
@@ -368,7 +381,7 @@ define(
 					parameters: this._options.parameters
 				});
 				
-				this._closePopover(this._popoverCurrentObjectId, this._containers.get(this._popoverCurrentObjectId).reactButton);
+				this._closePopover();
 			},
 			
 			_ajaxSuccess: function(data) {
