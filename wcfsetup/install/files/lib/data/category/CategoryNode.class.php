@@ -175,7 +175,7 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 		}
 		
 		if ($activeCategory) {
-			if ($activeCategory->categoryID == $this->categoryID || $activeCategory->getDecoratedObject()->isParentCategory($this->getDecoratedObject())) {
+			if ($activeCategory->categoryID == $this->categoryID || $activeCategory->isParentCategory($this->getDecoratedObject())) {
 				// is the active category or a parent of the active category
 				return true;
 			}
