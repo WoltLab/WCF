@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\user\notification\object;
 use wcf\data\IDatabaseObjectProcessor;
+use wcf\data\IIDObject;
 use wcf\data\ITitledObject;
 
 /**
@@ -11,14 +12,7 @@ use wcf\data\ITitledObject;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Object
  */
-interface IUserNotificationObject extends IDatabaseObjectProcessor, ITitledObject {
-	/**
-	 * Returns the ID of this object.
-	 * 
-	 * @return	integer
-	 */
-	public function getObjectID();
-	
+interface IUserNotificationObject extends IDatabaseObjectProcessor, IIDObject, ITitledObject {
 	/**
 	 * Returns the url of this object.
 	 * 

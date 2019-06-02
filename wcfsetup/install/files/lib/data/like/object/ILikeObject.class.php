@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\like\object;
+use wcf\data\IIDObject;
 use wcf\data\like\Like;
 use wcf\data\object\type\ObjectType;
 use wcf\data\IDatabaseObjectProcessor;
@@ -13,7 +14,7 @@ use wcf\data\ITitledObject;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Like\Object
  */
-interface ILikeObject extends IDatabaseObjectProcessor, ITitledObject {
+interface ILikeObject extends IDatabaseObjectProcessor, IIDObject, ITitledObject {
 	/**
 	 * Returns the url to this likeable.
 	 * 
@@ -27,13 +28,6 @@ interface ILikeObject extends IDatabaseObjectProcessor, ITitledObject {
 	 * @return	integer
 	 */
 	public function getUserID();
-	
-	/**
-	 * Returns the id of this object.
-	 * 
-	 * @return	integer
-	 */
-	public function getObjectID();
 	
 	/**
 	 * Returns the likeable object type previously set via `setObjectType()`.

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder\field;
 use wcf\data\DatabaseObjectList;
+use wcf\data\IObjectTreeNode;
 use wcf\data\ITitledObject;
 use wcf\system\WCF;
 use wcf\util\ClassUtil;
@@ -100,47 +101,53 @@ trait TSelectionFormField {
 	 */
 	public function options($options, $nestedOptions = false, $labelLanguageItems = true) {
 		if ($nestedOptions) {
-			if (!is_array($options) && !is_callable($options)) {
-				throw new \InvalidArgumentException("The given nested options are neither an array nor a callable, " . gettype($options) . " given.");
+			if (!is_array($options) && !($options instanceof \Traversable) && !is_callable($options)) {
+				throw new \InvalidArgumentException("The given nested options are neither iterable nor a callable, " . gettype($options) . " given.");
 			}
 		}
-		else if (!is_array($options) && !is_callable($options) && !($options instanceof DatabaseObjectList)) {
-			throw new \InvalidArgumentException("The given options are neither an array, a callable nor an instance of '" . DatabaseObjectList::class . "', " . gettype($options) . " given.");
+		else if (!is_array($options) && !($options instanceof \Traversable) && !is_callable($options)) {
+			throw new \InvalidArgumentException("The given options are neither iterable nor a callable, " . gettype($options) . " given.");
 		}
 		
 		if (is_callable($options)) {
 			$options = $options();
 			
 			if ($nestedOptions) {
-				if (!is_array($options) && !($options instanceof DatabaseObjectList)) {
-					throw new \UnexpectedValueException("The nested options callable is expected to return an array, " . gettype($options) . " returned.");
+				if (!is_array($options) && !($options instanceof \Traversable)) {
+					throw new \UnexpectedValueException("The nested options callable is expected to return an iterable value, " . gettype($options) . " returned.");
 				}
 			}
-			else if (!is_array($options) && !($options instanceof DatabaseObjectList)) {
-				throw new \UnexpectedValueException("The options callable is expected to return an array or an instance of '" . DatabaseObjectList::class . "', " . gettype($options) . " returned.");
+			else if (!is_array($options) && !($options instanceof \Traversable)) {
+				throw new \UnexpectedValueException("The options callable is expected to return an iterable value, " . gettype($options) . " returned.");
 			}
 			
 			return $this->options($options, $nestedOptions, $labelLanguageItems);
 		}
-		else if ($options instanceof DatabaseObjectList) {
+		else if ($options instanceof \Traversable) {
 			// automatically read objects
-			if ($options->objectIDs === null) {
+			if ($options instanceof DatabaseObjectList && $options->objectIDs === null) {
 				$options->readObjects();
 			}
 			
-			$dboOptions = [];
-			foreach ($options as $object) {
-				if (!ClassUtil::isDecoratedInstanceOf($object, ITitledObject::class)) {
-					throw new \InvalidArgumentException("The database objects in the passed list must implement '" . ITitledObject::class . "'.");
-				}
-				if (!$object::getDatabaseTableIndexIsIdentity()) {
-					throw new \InvalidArgumentException("The database objects in the passed list must must have an index that identifies the objects.");
+			if ($nestedOptions) {
+				$collectedOptions = [];
+				foreach ($options as $key => $object) {
+					if (!($object instanceof IObjectTreeNode)) {
+						throw new \InvalidArgumentException("Nested traversable options must implement '" . IObjectTreeNode::class . "'.");
+					}
+					
+					$collectedOptions[] = [
+						'depth' => $object->getDepth() - 1,
+						'label' => $object,
+						'value' => $object->getObjectID()
+					];
 				}
 				
-				$dboOptions[$object->getObjectID()] = $object->getTitle();
+				$options = $collectedOptions;
 			}
-			
-			$options = $dboOptions;
+			else {
+				$options = iterator_to_array($options);
+			}
 		}
 		
 		$this->options = [];
@@ -161,8 +168,16 @@ trait TSelectionFormField {
 				}
 				
 				// validate label
-				if (is_object($option['label']) && method_exists($option['label'], '__toString')) {
-					$option['label'] = (string) $option['label'];
+				if (is_object($option['label'])) {
+					if (method_exists($option['label'], '__toString')) {
+						$option['label'] = (string)$option['label'];
+					}
+					else if ($option['label'] instanceof ITitledObject || ClassUtil::isDecoratedInstanceOf($option['label'], ITitledObject::class)) {
+						$option['label'] = $option['label']->getTitle();
+					}
+					else {
+						throw new \InvalidArgumentException("Nested option with key '{$key}' contain invalid label of type " . gettype($option['label']) . ".");
+					}
 				}
 				else if (!is_string($option['label']) && !is_numeric($option['label'])) {
 					throw new \InvalidArgumentException("Nested option with key '{$key}' contain invalid label of type " . gettype($option['label']) . ".");
@@ -202,8 +217,16 @@ trait TSelectionFormField {
 					throw new \InvalidArgumentException("Non-nested options must not contain any array. Array given for value '{$value}'.");
 				}
 				
-				if (is_object($label) && method_exists($label, '__toString')) {
-					$label = (string) $label;
+				if (is_object($label)) {
+					if (method_exists($label, '__toString')) {
+						$label = (string)$label;
+					}
+					else if ($label instanceof ITitledObject || ClassUtil::isDecoratedInstanceOf($label, ITitledObject::class)) {
+						$label = $label->getTitle();
+					}
+					else {
+						throw new \InvalidArgumentException("Options contain invalid label of type " . gettype($label) . ".");
+					}
 				}
 				else if (!is_string($label) && !is_numeric($label)) {
 					throw new \InvalidArgumentException("Options contain invalid label of type " . gettype($label) . ".");
