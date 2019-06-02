@@ -484,7 +484,7 @@
 		<item name="wcf.acp.devtools.project.requiredPackages"><![CDATA[Benötigte Pakete]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.file"><![CDATA[Paketdatei im Paket enthalten]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.file.description"><![CDATA[Der Pfad zur Paketdatei muss <kbd>requirements/{literal}{$packageIdentifier}{/literal}.tar</kbd> lauten.]]></item>
-		<item name="wcf.acp.devtools.project.packageIdentifier.error.duplicate"><![CDATA[Das angegebene Paket wird bereits benötigt.]]></item>
+		<item name="wcf.acp.devtools.project.packageIdentifier.error.duplicate"><![CDATA[Das angegebene Paket wurde bereits hinzugefügt.]]></item>
 		<item name="wcf.acp.devtools.project.packageVersion.error.maximumLength"><![CDATA[Die Version darf nicht länger als 255 Zeichen sein.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.error.selfRequirement"><![CDATA[Ein Paket kann sich nicht selbst benötigen.]]></item>
 		<item name="wcf.acp.devtools.project.add.mode"><![CDATA[Modus]]></item>
