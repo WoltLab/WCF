@@ -278,11 +278,17 @@ class ArticleAddForm extends AbstractForm {
 				if ($image !== null && $image->isImage) {
 					$this->images[$languageID] = $image;
 				}
+				else {
+					unset($this->imageID[$languageID]);
+				}
 			}
 			foreach ($this->teaserImageID as $languageID => $imageID) {
 				$image = $mediaList->search($imageID);
 				if ($image !== null && $image->isImage) {
 					$this->teaserImages[$languageID] = $image;
+				}
+				else {
+					unset($this->teaserImageID[$languageID]);
 				}
 			}
 		}
