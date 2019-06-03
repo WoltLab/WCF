@@ -1116,7 +1116,7 @@
 		<item name="wcf.acp.option.error.validationFailed"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Inhalt eingegeben.]]></item>
 		<item name="wcf.acp.option.module_members_list"><![CDATA[Mitgliederliste]]></item>
 		<item name="wcf.acp.option.footer_code"><![CDATA[Footer-Code]]></item>
-		<item name="wcf.acp.option.footer_code.description"><![CDATA[Der hier angegebene Code wird im Fußbereich jeder Seite ausgegeben. Der Footer-Code eignet sich z.B. sehr gut für die Einbindung von Diensten wie „Google Analytics“ oder „Piwik“.]]></item>
+		<item name="wcf.acp.option.footer_code.description"><![CDATA[Der hier angegebene Code wird im Fußbereich jeder Seite ausgegeben. Der Footer-Code eignet sich z.B. sehr gut für die Einbindung von Diensten wie „Google Analytics“ oder „Matomo“.]]></item>
 		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[Profil-Besucher anzeigen]]></item>
 		<item name="wcf.acp.option.url_title_component_replacement"><![CDATA[URL-Ersetzungen]]></item>
 		<item name="wcf.acp.option.url_title_component_replacement.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} den in URLs enthaltenen Titel durch eigene Ersetzungen verändern. Dies kann z.B. zum Ersetzen von Umlauten oder zum Expandieren von Abkürzungen genutzt werden. (Eine Ersetzung pro Zeile)<br>
