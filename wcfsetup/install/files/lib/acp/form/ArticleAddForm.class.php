@@ -286,6 +286,9 @@ class ArticleAddForm extends AbstractForm {
 				if ($image !== null && $image->isImage) {
 					$this->teaserImages[$languageID] = $image;
 				}
+				else {
+					unset($this->teaserImageID[$languageID]);
+				}
 			}
 		}
 	}
