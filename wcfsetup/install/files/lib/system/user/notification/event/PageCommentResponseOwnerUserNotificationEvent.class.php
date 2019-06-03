@@ -10,7 +10,7 @@ use wcf\system\user\notification\object\CommentUserNotificationObject;
 /**
  * User notification event for page comments.
  *
- * @author	Joshua Rusweg
+ * @author	Joshua Ruesweg
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
