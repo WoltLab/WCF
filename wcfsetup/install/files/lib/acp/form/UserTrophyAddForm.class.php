@@ -184,7 +184,8 @@ class UserTrophyAddForm extends AbstractAcpForm {
 	public function reset() {
 		parent::reset();
 		
-		$this->user = $this->userIDs = [];
+		$this->user = '';
+		$this->userIDs = [];
 		$this->trophyID = '';
 		$this->useCustomDescription = 0;
 	}
