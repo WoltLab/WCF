@@ -2414,7 +2414,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.editor.code.file"><![CDATA[Dateiname]]></item>
 		<item name="wcf.editor.code.file.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Lege{else}Legen Sie{/if} einen anzuzeigenden Dateinamen fest.]]></item>
 		<item name="wcf.editor.code.highlighter"><![CDATA[Syntax-Hervorhebung]]></item>
-		<item name="wcf.editor.code.highlighter.description"><![CDATA[Die farbliche Hervorherbung wird im Editor nicht angezeigt.]]></item>
+		<item name="wcf.editor.code.highlighter.description"><![CDATA[Die farbliche Hervorhebung wird im Editor nicht angezeigt.]]></item>
 		<item name="wcf.editor.code.highlighter.detect"><![CDATA[(Automatische Erkennung)]]></item>
 		<item name="wcf.editor.code.line"><![CDATA[Start-Zeilennummer]]></item>
 		<item name="wcf.editor.code.line.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Lege{else}Legen Sie{/if} den Wert fest, ab dem die Zeilennummierung startet.]]></item>
