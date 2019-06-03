@@ -1712,13 +1712,13 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.category.security.blacklist.sfs.description"><![CDATA[Privacy compliant verification based on a local copy of the StopForumSpam.com database.]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.custom"><![CDATA[Own Blacklists]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_enable"><![CDATA[Enable the verification using Stop Forum Spam]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_enable.description"><![CDATA[The local database contains information about the number of times that an entry was reported as a spammer.<br>
+		<item name="wcf.acp.option.blacklist_sfs_enable.description"><![CDATA[The local database contains information about the number of times an entry was reported as a spammer.<br>
 <strong>Notice: No data is transferred to a third party service at any point in the process.</strong><br>
 <br>
-The database is carefully maintained, but it there will be always be a margin of error, caused by incorrect or outdated entries. You can chose from a set of options that controls how matches are evaluated in order to reduce false-positives. The recommended settings are based on years of experience and changes should therefore be made with caution.
+The database is carefully maintained, but there will be always be a margin of error, caused by incorrect or outdated entries. You can choose from a set of options that controls how matches are evaluated in order to reduce false-positives. The recommended settings are based on years of experience and changes should therefore be made with caution.
 <ul class="nativeList">
 	<li><strong>Do not check</strong> – This value is completely ignored.</li>
-	<li><strong>Top 10%</strong> – Only the top 10% of the most frequently reported values are considered.</li>
+	<li><strong>Top 10%</strong> – Only the top 10% most frequently reported values are considered.</li>
 	<li><strong>Multiple reports</strong> – Any match that has been reported more than once.</li>
 	<li><strong>Any match is sufficient</strong> – The number of reports is entirely ignored. Not recommended.</li>
 </ul>]]></item>
@@ -1731,10 +1731,10 @@ The database is carefully maintained, but it there will be always be a margin of
 		<item name="wcf.acp.option.blacklist_sfs_email_address"><![CDATA[Email Address]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_email_address.description"><![CDATA[Email addresses are unique and yield the best results. Recommended setting: <strong>Multiple reports</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_ip_address"><![CDATA[IP Address]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_ip_address.description"><![CDATA[IP addresses are more likely to be imprecise, because a lot of them are dynamically assigned, e. g. for private households or celluar connections. Recommended setting: <strong>Top 10%</strong>.]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_ip_address.description"><![CDATA[IP addresses are more likely to be imprecise, because a lot of them are dynamically assigned, e. g. for private households or cellular connections. Recommended setting: <strong>Top 10%</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action"><![CDATA[Action in Case of a Match]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.block"><![CDATA[Block]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[There is always the risk of a false-positive match, therefore its highly recommended to set it to <strong>Disable and require manual approval</strong>.]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[There is always the risk of a false-positive match, therefore it is highly recommended to set it to <strong>Disable and require manual approval</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Disable and require manual approval]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
