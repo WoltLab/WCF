@@ -61,6 +61,7 @@ class UserExportGdprAction extends AbstractAction {
 		'signature',
 		'lastActivityTime',
 		'userTitle',
+		'authData'
 	];
 	
 	/**
