@@ -438,10 +438,16 @@ class ArticleAddForm extends AbstractForm {
 		];
 		
 		$this->objectAction = new ArticleAction([], 'create', ['data' => array_merge($this->additionalFields, $data), 'content' => $content]);
+		/** @var Article $article */
 		$article = $this->objectAction->executeAction()['returnValues'];
 		// save labels
 		if (!empty($this->labelIDs)) {
 			ArticleLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $article->articleID);
+		}
+		
+		// mark published article as read
+		if (ARTICLE_ENABLE_VISIT_TRACKING && $article->publicationStatus == Article::PUBLISHED) {
+			(new ArticleAction([$article], 'markAsRead'))->executeAction();
 		}
 		
 		// call saved event
