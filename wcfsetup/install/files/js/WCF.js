@@ -3961,6 +3961,7 @@ WCF.Table.EmptyTableHandler = Class.extend({
 		
 		this._options = $.extend(true, {
 			emptyMessage: null,
+			emptyMessageHtml: null,
 			messageType: 'info',
 			refreshPage: false,
 			updatePageNumber: false,
@@ -3986,6 +3987,10 @@ WCF.Table.EmptyTableHandler = Class.extend({
 		if (this._options.emptyMessage) {
 			// insert message
 			this._tableContainer.replaceWith($('<p />').addClass(this._options.messageType).text(this._options.emptyMessage));
+		}
+		else if (this._options.emptyMessageHtml) {
+			// insert message
+			this._tableContainer.replaceWith($('<p />').addClass(this._options.messageType).html(this._options.emptyMessageHtml));
 		}
 		else if (this._options.refreshPage) {
 			// refresh page
