@@ -484,7 +484,7 @@
 		<item name="wcf.acp.devtools.project.requiredPackages"><![CDATA[Benötigte Pakete]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.file"><![CDATA[Paketdatei im Paket enthalten]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.file.description"><![CDATA[Der Pfad zur Paketdatei muss <kbd>requirements/{literal}{$packageIdentifier}{/literal}.tar</kbd> lauten.]]></item>
-		<item name="wcf.acp.devtools.project.packageIdentifier.error.duplicate"><![CDATA[Das angegebene Paket wird bereits benötigt.]]></item>
+		<item name="wcf.acp.devtools.project.packageIdentifier.error.duplicate"><![CDATA[Das angegebene Paket wurde bereits hinzugefügt.]]></item>
 		<item name="wcf.acp.devtools.project.packageVersion.error.maximumLength"><![CDATA[Die Version darf nicht länger als 255 Zeichen sein.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.error.selfRequirement"><![CDATA[Ein Paket kann sich nicht selbst benötigen.]]></item>
 		<item name="wcf.acp.devtools.project.add.mode"><![CDATA[Modus]]></item>
@@ -514,7 +514,7 @@
 		<item name="wcf.acp.devtools.project.optionalPackages"><![CDATA[Optionale Pakete]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.description"><![CDATA[Nach der Installation dieses Pakets werden folgende Pakete als optionale Pakete angeboten.]]></item>
 		<item name="wcf.acp.devtools.project.apiVersions"><![CDATA[Kompatible API-Versionen]]></item>
-		<item name="wcf.acp.devtools.project.apiVersions.description"><![CDATA[Das Paket ist mit allen ausgewählen API-Versionen von WoltLab Suite Core kompatibel.]]></item>
+		<item name="wcf.acp.devtools.project.apiVersions.description"><![CDATA[Das Paket ist mit allen ausgewählten API-Versionen von WoltLab Suite Core kompatibel.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackages.shortTitle"><![CDATA[Voraussetzungen]]></item>
 		<item name="wcf.acp.devtools.project.excludedPackages.shortTitle"><![CDATA[Inkompatibilität]]></item>
 		<item name="wcf.acp.devtools.project.optionalPackages.shortTitle"><![CDATA[Optionales]]></item>
@@ -594,8 +594,9 @@
 		<item name="wcf.acp.devtools.project.requiredPackage.error.missingFiles"><![CDATA[Die folgenden Paketdateien fehlen: {implode from=$missingFiles item=missingFile}<kbd>{$missingFile}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Eintrag wirklich löschen?]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction"><![CDATA[Löschanweisung hinzufügen]]></item>
-		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description"><![CDATA[Der Eintrag wird nicht nur aus der Datenbank gelöscht und und die Installationsanweisung entfernt, sondern es wird auch explizit eine Löschanweisung hinzugefügt.]]></item>
+		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description"><![CDATA[Der Eintrag wird nicht nur aus der Datenbank gelöscht und die Installationsanweisung entfernt, sondern es wird auch explizit eine Löschanweisung hinzugefügt.]]></item>
 		<item name="wcf.acp.devtools.project.edit.error.brokenPath"><![CDATA[Es existiert keine <kbd>package.xml</kbd> im angegebenen Pfad. Die Paket-Dateien wurden entweder gelöscht oder verschoben.]]></item>
+		<item name="wcf.acp.devtools.project.edit.warning.missingElements"><![CDATA[Die folgenden Informationen fehlen in der <kbd>package.xml</kbd>-Datei: {implode from=$missingElements item=missingElement}<kbd>{$missingElement}</kbd>{/implode}.]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP-Verbindungstest]]></item>
@@ -1175,7 +1176,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.menu.link.devtools.project.add"><![CDATA[Projekt hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.devtools.project.list"><![CDATA[Projekte]]></item>
 		<item name="wcf.acp.menu.link.devtools.notificationTest"><![CDATA[Benachrichtigungstest]]></item>
-		<item name="wcf.acp.menu.link.log.modification"><![CDATA[Globales Veränderungsprotokoll]]></item>
+		<item name="wcf.acp.menu.link.log.modification"><![CDATA[Globales Änderungsprotokoll]]></item>
 		<item name="wcf.acp.menu.link.reactionType"><![CDATA[Reaktionen]]></item>
 		<item name="wcf.acp.menu.link.reactionType.list"><![CDATA[Reaktions-Typen]]></item>
 		<item name="wcf.acp.menu.link.reactionType.add"><![CDATA[Reaktions-Typ hinzufügen]]></item>
@@ -1184,7 +1185,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.menu.link.systemCheck"><![CDATA[Systemüberprüfung]]></item>
 	</category>
 	<category name="wcf.acp.modificationLog">
-		<item name="wcf.acp.modificationLog.list"><![CDATA[Globales Veränderungsprotokoll]]></item>
+		<item name="wcf.acp.modificationLog.list"><![CDATA[Globales Änderungsprotokoll]]></item>
 		<item name="wcf.acp.modificationLog.action"><![CDATA[Aktion]]></item>
 		<item name="wcf.acp.modificationLog.action.all"><![CDATA[Alle Aktion]]></item>
 		<item name="wcf.acp.modificationLog.affectedObject"><![CDATA[Betroffenes Objekt]]></item>
@@ -1194,6 +1195,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.modificationLog.time.afterDate"><![CDATA[Ab dem Zeitpunkt]]></item>
 		<item name="wcf.acp.modificationLog.time.beforeDate"><![CDATA[Vor dem Zeitpunkt]]></item>
 		<item name="wcf.acp.modificationLog.unsupportedObjectTypes"><![CDATA[Einige Typen werden aktuell nicht unterstützt und müssen zuvor vom Hersteller angepasst werden.]]></item>
+		<item name="wcf.acp.modificationLog.action.allPackageActions"><![CDATA[Alle Aktionen aus „{$package->getName()}“]]></item>
 	</category>
 	<category name="wcf.acp.notice">
 		<item name="wcf.acp.notice.add"><![CDATA[Hinweis hinzufügen]]></item>
@@ -1534,7 +1536,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.option.error.validationFailed"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Inhalt eingegeben.]]></item>
 		<item name="wcf.acp.option.module_members_list"><![CDATA[Mitgliederliste]]></item>
 		<item name="wcf.acp.option.footer_code"><![CDATA[Footer-Code]]></item>
-		<item name="wcf.acp.option.footer_code.description"><![CDATA[Der hier angegebene Code wird im Fußbereich jeder Seite ausgegeben. Der Footer-Code eignet sich z.B. sehr gut für die Einbindung von Diensten wie „Google Analytics“ oder „Piwik“.]]></item>
+		<item name="wcf.acp.option.footer_code.description"><![CDATA[Der hier angegebene Code wird im Fußbereich jeder Seite ausgegeben. Der Footer-Code eignet sich z.B. sehr gut für die Einbindung von Diensten wie „Google Analytics“ oder „Matomo“.]]></item>
 		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[Profil-Besucher anzeigen]]></item>
 		<item name="wcf.acp.option.url_title_component_replacement"><![CDATA[URL-Ersetzungen]]></item>
 		<item name="wcf.acp.option.url_title_component_replacement.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} den in URLs enthaltenen Titel durch eigene Ersetzungen verändern. Dies kann z.B. zum Ersetzen von Umlauten oder zum Expandieren von Abkürzungen genutzt werden. (Eine Ersetzung pro Zeile)<br>
@@ -2180,7 +2182,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.aclOption.objectType.options.description"><![CDATA[Der ACL-Objekttyp legt fest zu welcher Art von Objekten die Option gehört. {if LANGUAGE_USE_INFORMAL_VARIANT}Beachte{else}Beachten Sie{/if}, dass nur ACL-Objekttypen des Paketes selbst oder seiner benötigten Pakete ausgewählt werden können.]]></item>
 		<item name="wcf.acp.pip.aclOption.options.name.error.notUnique"><![CDATA[Der angegebene Namen wird bereits von einer anderen ACL-Option vom gleichen ACL-Objekttyp verwendet.]]></item>
 		<item name="wcf.acp.pip.aclOption.options.categoryName"><![CDATA[Kategorie]]></item>
-		<item name="wcf.acp.pip.aclOption.options.categoryName.description"><![CDATA[Die ACL-Option wird in der ausgewählen Kategorie aufgelistet.]]></item>
+		<item name="wcf.acp.pip.aclOption.options.categoryName.description"><![CDATA[Die ACL-Option wird in der ausgewählten Kategorie aufgelistet.]]></item>
 		<item name="wcf.acp.pip.aclOption.options.name"><![CDATA[Optionsname]]></item>
 		<item name="wcf.acp.pip.aclOption.options.name.description"><![CDATA[Der Name der ACL-Option darf nur aus Buchstaben bestehen und muss mit einem Kleinbuchstaben beginnen.]]></item>
 		<item name="wcf.acp.pip.aclOption.options.name.error.format"><![CDATA[Der angegebene Optionsname ist ungültig.]]></item>
@@ -2396,7 +2398,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType.description"><![CDATA[Die durch die angegebenen Objekttypen repräsentierten Benutzerinhalte werden bei der Entfernung der Benutzerinhalte durch <strong>diesen</strong> Anbieter ebenfalls entfernt. Muss dabei eine bestimmte Reihenfolge beachtet werden, müssen nice-Werte angegeben werden.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.data.title"><![CDATA[Daten des Nachrichtentyps]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc"><![CDATA[Inhaltsverzeichnis erstellen]]></item>
-		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description"><![CDATA[Wenn ausgewählt wird ein Inhaltsverzeicnis für jede Nachricht dieses Types erstellt.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description"><![CDATA[Wenn ausgewählt wird ein Inhaltsverzeichnis für jede Nachricht dieses Types erstellt.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.description"><![CDATA[Die Kategorie wird dazu verwendet, Events auf der Benachrichtigungseinstellungenseite zu gruppiere. Die Kategorie besteht aus mindestens three durch Punkte abgetrennte Abschnitten. Jeder Abschnitt darf nur folgene Zeichen enthalten: <kbd>[A-z0-9-_]</kbd>.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category.error.tooFewSegments"><![CDATA[Die angegebene Kategorie enthält nur {#$segmentCount} Abschnitt{if $segmentCount > 1}e{/if}.]]></item>
@@ -2467,7 +2469,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.menuItem.linkType.external"><![CDATA[Externer Link]]></item>
 		<item name="wcf.acp.pip.menuItem.linkType.internal"><![CDATA[Interner Link]]></item>
 		<item name="wcf.acp.pip.menuItem.menu"><![CDATA[Menü]]></item>
-		<item name="wcf.acp.pip.menuItem.menu.description"><![CDATA[Der Menüpunkt gehört zum ausgewählen Menü.]]></item>
+		<item name="wcf.acp.pip.menuItem.menu.description"><![CDATA[Der Menüpunkt gehört zum ausgewählten Menü.]]></item>
 		<item name="wcf.acp.pip.menuItem.page"><![CDATA[Seite]]></item>
 		<item name="wcf.acp.pip.menuItem.page.description"><![CDATA[Der Menüpunkt wird auf die ausgewähle Seite verlinken.]]></item>
 		<item name="wcf.acp.pip.menuItem.parentMenuItem"><![CDATA[Übergeordneter Menüpunkt]]></item>
@@ -2572,6 +2574,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.reactionType.type.neutral"><![CDATA[Neutral]]></item>
 		<item name="wcf.acp.reactionType.isDisabled"><![CDATA[Reaktion deaktivieren]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaktions-Datei]]></item>
+		<item name="wcf.acp.reactionType.showOrder.description"><![CDATA[Der Reaktions-Typ wird nach dem ausgewählten Reaktions-Typ angezeigt.]]></item>
 	</category>
 	<category name="wcf.acp.rebuildData">
 		<item name="wcf.acp.rebuildData"><![CDATA[Anzeigen aktualisieren]]></item>
@@ -3189,7 +3192,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.article.aboutAuthor"><![CDATA[Über den Autor]]></item>
 		<item name="wcf.article.articleComments"><![CDATA[{#$article->comments} Kommentar{if $article->comments != 1}e{/if}]]></item>
 		<item name="wcf.article.articleViews"><![CDATA[{#$article->views} Mal gelesen]]></item>
-		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Hat mit „{$reactionType->getTitle()}“ auf den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a> reagiert.]]></item>
+		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Hat mit <span title="{$reactionType->getTitle()}" class="jsTooltip">{@$reactionType->renderIcon()}</span> auf den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a> reagiert.]]></item>
 		<item name="wcf.article.recentActivity.articleComment"><![CDATA[Hat einen Kommentar zum Artikel <a href="{$article->getLink()}#comment{$commentID}">{$article->getTitle()}</a> geschrieben.]]></item>
 		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Hat auf einen Kommentar von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> zum Artikel <a href="{$article->getLink()}#comment{@$commentID}/response{@$responseID}">{$article->getTitle()}</a> geantwortet.]]></item>
 		<item name="wcf.article.search.categories"><![CDATA[Folgende Kategorien durchsuchen]]></item>
@@ -3690,7 +3693,7 @@ Dateianhänge:
 		<item name="wcf.editor.code.file"><![CDATA[Dateiname]]></item>
 		<item name="wcf.editor.code.file.description"><![CDATA[Optional: {if LANGUAGE_USE_INFORMAL_VARIANT}Lege{else}Legen Sie{/if} einen anzuzeigenden Dateinamen fest.]]></item>
 		<item name="wcf.editor.code.highlighter"><![CDATA[Syntax-Hervorhebung]]></item>
-		<item name="wcf.editor.code.highlighter.description"><![CDATA[Die farbliche Hervorherbung wird im Editor nicht angezeigt.]]></item>
+		<item name="wcf.editor.code.highlighter.description"><![CDATA[Die farbliche Hervorhebung wird im Editor nicht angezeigt.]]></item>
 		<item name="wcf.editor.code.highlighter.detect"><![CDATA[(Automatische Erkennung)]]></item>
 		<item name="wcf.editor.code.highlighter.plain"><![CDATA[(Kein)]]></item>
 		<item name="wcf.editor.code.line"><![CDATA[Start-Zeilennummer]]></item>
@@ -3962,14 +3965,14 @@ Dateianhänge:
 		<item name="wcf.like.likes.noMoreEntries"><![CDATA[Keine weiteren Likes]]></item>
 		<item name="wcf.like.dislikes.more"><![CDATA[Weitere Dislikes]]></item>
 		<item name="wcf.like.dislikes.noMoreEntries"><![CDATA[Keine weiteren Dislikes]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[Hat mit „{$like->getReactionType()->getTitle()}“ auf den Kommentar {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">von {$commentAuthor->username}</a>{else}eines Gasts{/if} an der <a href="{$comment->getLink()}">Pinnwand von {$user->username}</a> reagiert.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[Hat mit „{$like->getReactionType()->getTitle()}“ auf die Antwort {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">von {$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} an der <a href="{$response->getLink()}">Pinnwand von {$user->username}</a> reagiert.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[Hat mit <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> auf den Kommentar {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">von {$commentAuthor->username}</a>{else}eines Gasts{/if} an der <a href="{$comment->getLink()}">Pinnwand von {$user->username}</a> reagiert.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[Hat mit <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> auf die Antwort {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">von {$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} an der <a href="{$response->getLink()}">Pinnwand von {$user->username}</a> reagiert.]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.likeableArticle"><![CDATA[Artikel]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.likeableArticle"><![CDATA[Hat mit „{$like->getReactionType()->getTitle()}“ auf den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a> reagiert.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.articleComment"><![CDATA[Hat mit „{$like->getReactionType()->getTitle()}“ auf den Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zum Artikel <a href="{$comment->getLink()}">{$articleContent->getTitle()}</a> reagiert.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.articleComment.response"><![CDATA[Hat mit „{$like->getReactionType()->getTitle()}“ auf die Antwort {if $responseAuthor}von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zum Artikel <a href="{$response->getLink()}">{$articleContent->getTitle()}</a> reagiert.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.pageComment"><![CDATA[Hat mit „{$like->getReactionType()->getTitle()}“ auf den Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zu der Seite <a href="{$comment->getLink()}">{$page->getTitle()}</a> reagiert.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.pageComment.response"><![CDATA[Hat mit „{$like->getReactionType()->getTitle()}“ auf die Antwort {if $responseAuthor}von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zu der Seite <a href="{$response->getLink()}">{$page->getTitle()}</a> reagiert.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.likeableArticle"><![CDATA[Hat mit <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> auf den Artikel <a href="{$article->getLink()}">{$article->getTitle()}</a> reagiert.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.articleComment"><![CDATA[Hat mit <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> auf den Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zum Artikel <a href="{$comment->getLink()}">{$articleContent->getTitle()}</a> reagiert.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.articleComment.response"><![CDATA[Hat mit <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> auf die Antwort {if $responseAuthor}von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zum Artikel <a href="{$response->getLink()}">{$articleContent->getTitle()}</a> reagiert.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.pageComment"><![CDATA[Hat mit <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> auf den Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zu der Seite <a href="{$comment->getLink()}">{$page->getTitle()}</a> reagiert.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.pageComment.response"><![CDATA[Hat mit <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> auf die Antwort {if $responseAuthor}von <a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}eines Gasts{/if} zum Kommentar {if $commentAuthor}von <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}eines Gasts{/if} zu der Seite <a href="{$response->getLink()}">{$page->getTitle()}</a> reagiert.]]></item>
 		<item name="wcf.like.reaction.noMoreEntries"><![CDATA[Keine weiteren Reaktionen]]></item>
 		<item name="wcf.like.reaction.more"><![CDATA[Weitere Reaktionen]]></item>
 		<item name="wcf.like.reactionsReceived"><![CDATA[Erhaltene Reaktionen]]></item>
@@ -4408,6 +4411,7 @@ Dateianhänge:
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Inhalt eingegeben.]]></item>
 		<item name="wcf.user.option.error.birthdayTooYoung"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} zu jung. Für eine Anmeldung auf dieser Seite {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} mindestens {#REGISTER_MIN_USER_AGE} Jahre alt sein.]]></item>
 		<item name="wcf.user.option.error.censoredWordsFound"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Text enthält folgende zensierte Wörter: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}]]></item>
+		<item name="wcf.user.option.error.disallowedBBCodes"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht enthält die folgenden BBCodes, die {if LANGUAGE_USE_INFORMAL_VARIANT}du nicht verwenden darfst{else}Sie nicht verwenden dürfen{/if}: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}]]></item>
 		<item name="wcf.user.error.isBanned"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzeraccount wurde{if $__wcf->user->banExpires != 0} bis zum {@$__wcf->user->banExpires|plainTime}{/if} gesperrt{if $__wcf->user->banReason}: {@$__wcf->user->banReason|newlineToBreak}{else}.{/if}]]></item>
 		<item name="wcf.user.access.everyone"><![CDATA[Jeder]]></item>
 		<item name="wcf.user.access.following"><![CDATA[Benutzer, denen ich folge]]></item>
@@ -4917,6 +4921,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.coverPhoto.upload.error.minWidth"><![CDATA[Das Bild ist zu schmal.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
+		<item name="wcf.user.coverPhoto.upload.error.tooLarge"><![CDATA[Die Datei ist zu groß.]]></item>
 	</category>
 	<category name="wcf.user.notification">
 		<item name="wcf.user.notification.button.confirmed"><![CDATA[OK]]></item>

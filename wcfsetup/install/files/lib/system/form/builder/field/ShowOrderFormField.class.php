@@ -32,6 +32,12 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	use TDefaultIdFormField;
 	
 	/**
+	 * is `true` if `(first position)` option was added
+	 * @var	bool
+	 */
+	protected $addedFirstPositionOption = false;
+	
+	/**
 	 * Creates a new instance of `ShowOrderFormField`.
 	 */
 	public function __construct() {
@@ -66,13 +72,15 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	public function options($options, $nestedOptions = false, $labelLanguageItems = true) {
 		parent::options($options, $nestedOptions, $labelLanguageItems);
 		
-		$this->options = [0 => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition')] + $this->options;
-		if ($nestedOptions) {
+		if (!$this->addedFirstPositionOption) {
+			$this->options = [0 => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition')] + $this->options;
 			array_unshift($this->nestedOptions, [
 				'depth' => 0,
 				'label' => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition'),
 				'value' => 0
 			]);
+			
+			$this->addedFirstPositionOption = true;
 		}
 		
 		return $this;
@@ -91,7 +99,9 @@ class ShowOrderFormField extends SingleSelectionFormField {
 		}
 		
 		if (count($keys) <= $value) {
-			throw new \InvalidArgumentException("Unknown value '{$value}' as only " . count($keys) . " values are available.");
+			// outdated `showOrder` values might cause errors; simply ignore those
+			// outdated values
+			return $this;
 		}
 		
 		return parent::value($keys[$value]);

@@ -492,7 +492,7 @@ class WysiwygFormContainer extends FormContainer {
 	 * 
 	 * By default, mentions are not supported.
 	 * 
-	 * @param	boolean		$supportMention
+	 * @param	boolean		$supportMentions
 	 * @return	WysiwygFormContainer		this form container
 	 */
 	public function supportMentions($supportMentions = true) {
@@ -511,7 +511,7 @@ class WysiwygFormContainer extends FormContainer {
 	 * 
 	 * By default, quotes are not supported.
 	 * 
-	 * @param	boolean		$supportMention
+	 * @param	boolean		$supportQuotes
 	 * @return	WysiwygFormContainer		this form container
 	 */
 	public function supportQuotes($supportQuotes = true) {

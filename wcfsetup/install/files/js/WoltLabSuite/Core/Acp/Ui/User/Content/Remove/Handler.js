@@ -4,7 +4,7 @@
  * @author	Joshua Ruesweg
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Acp/User/Content/Remove/Handler
+ * @module	WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler
  * @since       5.2
  */
 define(['Ajax', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Acp/Ui/Worker'], function (Ajax, Language, UiDialog, Worker) {
@@ -70,9 +70,11 @@ define(['Ajax', 'Language', 'Ui/Dialog', 'WoltLabSuite/Core/Acp/Ui/Worker'], fun
 			
 			UiDialog.close('userRemoveContentHandler-' + this._userId);
 			
-			if (objectTypes.length > 0) {
-				this._executeWorker(objectTypes);
-			}
+			window.setTimeout(function () {
+				if (objectTypes.length > 0) {
+					this._executeWorker(objectTypes);
+				}
+			}.bind(this), 200);
 		},
 		
 		_ajaxSuccess: function (data) {

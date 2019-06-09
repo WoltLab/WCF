@@ -245,6 +245,11 @@ class CommentHandler extends SingletonFactory {
 	 * @since	5.2
 	 */
 	public function markNotificationsAsConfirmed($objectType, array $objectIDs, $time = TIME_NOW) {
+		// notifications are only relevant for logged-in users
+		if (!WCF::getUser()->userID) {
+			return;
+		}
+		
 		if ($this->getObjectTypeID($objectType) === null) {
 			throw new \InvalidArgumentException("Unknown comment object type '{$objectType}'.");
 		}
@@ -448,6 +453,11 @@ class CommentHandler extends SingletonFactory {
 	 * @since	5.2
 	 */
 	public function markNotificationsAsConfirmedForComments($objectType, array $comments) {
+		// notifications are only relevant for logged-in users
+		if (!WCF::getUser()->userID) {
+			return;
+		}
+		
 		if ($this->getObjectTypeID($objectType) === null) {
 			throw new \InvalidArgumentException("Unknown comment object type '{$objectType}'.");
 		}
@@ -615,6 +625,11 @@ class CommentHandler extends SingletonFactory {
 	 * @since	5.2
 	 */
 	public function markNotificationsAsConfirmedForResponses($objectType, array $responses) {
+		// notifications are only relevant for logged-in users
+		if (!WCF::getUser()->userID) {
+			return;
+		}
+		
 		if ($this->getObjectTypeID($objectType) === null) {
 			throw new \InvalidArgumentException("Unknown comment object type '{$objectType}'.");
 		}

@@ -169,13 +169,13 @@ class CategoryNode extends DatabaseObjectDecorator implements \RecursiveIterator
 	 * @since       5.2
 	 */
 	public function isVisibleInNestedList(AbstractDecoratedCategory $activeCategory = null) {
-		if (!$this->getParentCategory()) {
-			// level 1 is always visible
+		if (!$this->getParentCategory() || !$this->getParentCategory()->getParentCategory()) {
+			// level 1 & 2 are always visible
 			return true;
 		}
 		
 		if ($activeCategory) {
-			if ($activeCategory->categoryID == $this->categoryID || $activeCategory->getDecoratedObject()->isParentCategory($this->getDecoratedObject())) {
+			if ($activeCategory->categoryID == $this->categoryID || $activeCategory->isParentCategory($this->getDecoratedObject())) {
 				// is the active category or a parent of the active category
 				return true;
 			}

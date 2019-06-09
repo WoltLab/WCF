@@ -668,13 +668,13 @@ define([
 			var fromVersionDl = this._fromVersion.closest('dl');
 			
 			if (this._instructionsType.value === 'update') {
-				instructionsTypeList.remove('col-md-11');
-				instructionsTypeList.add('col-md-6');
+				instructionsTypeList.remove('col-md-10');
+				instructionsTypeList.add('col-md-5');
 				elShow(fromVersionDl);
 			}
 			else {
-				instructionsTypeList.remove('col-md-6');
-				instructionsTypeList.add('col-md-11');
+				instructionsTypeList.remove('col-md-5');
+				instructionsTypeList.add('col-md-10');
 				elHide(fromVersionDl);
 			}
 		},

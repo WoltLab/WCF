@@ -25,7 +25,7 @@
 <p class="info">{lang}wcf.acp.sitemap.cliInfo{/lang}</p>
 
 {if $sitemapObjectTypes|count}
-	<div class="section sortableListContainer">
+	<div class="section">
 		<table class="table">
 			<thead>
 				<tr>
@@ -33,11 +33,11 @@
 					<th class="columnInteger columnPriority">{lang}wcf.acp.sitemap.priority{/lang}</th>
 					<th class="columnText columnChangeFreq">{lang}wcf.acp.sitemap.changeFreq{/lang}</th>
 					<th class="columnInteger columnRebuildTime">{lang}wcf.acp.sitemap.rebuildTime{/lang}</th>
-	
+					
 					{event name='headColumns'}
 				</tr>
 			</thead>
-
+			
 			<tbody>
 				{foreach from=$sitemapObjectTypes item=object}
 					<tr class="sitemapObjectRow">

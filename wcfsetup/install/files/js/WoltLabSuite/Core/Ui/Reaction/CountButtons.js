@@ -38,6 +38,7 @@ define(
 				}
 				
 				this._containers = new Dictionary();
+				this._objects = new Dictionary();
 				this._objectType = objectType;
 				
 				this._options = Core.extend({
@@ -64,8 +65,7 @@ define(
 				var element, elements = elBySelAll(this._options.containerSelector), elementData, triggerChange = false, objectId;
 				for (var i = 0, length = elements.length; i < length; i++) {
 					element = elements[i];
-					objectId = ~~elData(element, 'object-id');
-					if (this._containers.has(objectId)) {
+					if (this._containers.has(DomUtil.identify(element))) {
 						continue;
 					}
 					
@@ -77,8 +77,19 @@ define(
 						element: element
 					};
 					
-					this._containers.set(objectId, elementData);
+					this._containers.set(DomUtil.identify(element), elementData);
 					this._initReactionCountButtons(element, elementData);
+					
+					if (!this._objects.has(~~elData(element, 'object-id'))) {
+						var objects = [];
+					}
+					else {
+						var objects = this._objects.get(~~elData(element, 'object-id'));
+					}
+					
+					objects.push(elementData);
+					
+					this._objects.set(~~elData(element, 'object-id'), objects);
 					
 					triggerChange = true;
 				}
@@ -95,46 +106,47 @@ define(
 			 * @param       {object}        data
 			 */
 			updateCountButtons: function(objectId, data) {
-				var summaryList = elBySel(this._options.summaryListSelector, this._containers.get(objectId).element);
-				
-				var sortedElements = {}, elements = elBySelAll('li', summaryList);
-				for (var i = 0, length = elements.length; i < length; i++) {
-					if (data[elData(elements[i], 'reaction-type-id')] !== undefined) {
-						sortedElements[elData(elements[i], 'reaction-type-id')] = elements[i];
+				var triggerChange = false;
+				this._objects.get(objectId).forEach(function(elementData) {
+					var summaryList = elBySel(this._options.summaryListSelector, elementData.element);
+					
+					var sortedElements = {}, elements = elBySelAll('li', summaryList);
+					for (var i = 0, length = elements.length; i < length; i++) {
+						if (data[elData(elements[i], 'reaction-type-id')] !== undefined) {
+							sortedElements[elData(elements[i], 'reaction-type-id')] = elements[i];
+						}
+						else {
+							// reaction has no longer reactions
+							elRemove(elements[i]);
+						}
 					}
-					else {
-						// reaction has no longer reactions
-						elRemove(elements[i]);
-					}
-				}
-				
-				
-				var triggerChange = false; 
-				Object.keys(data).forEach(function(key) {
-					if (sortedElements[key] !== undefined) {
-						var reactionCount = elBySel('.reactionCount', sortedElements[key]);
-						reactionCount.innerHTML = StringUtil.shortUnit(data[key]);
-					}
-					else if (REACTION_TYPES[key] !== undefined) {
-						// create element 
-						var createdElement = elCreate('li');
-						createdElement.className = 'reactCountButton';
-						elData(createdElement, 'reaction-type-id', key);
-						
-						var countSpan = elCreate('span');
-						countSpan.className = 'reactionCount';
-						countSpan.innerHTML = StringUtil.shortUnit(data[key]);
-						createdElement.appendChild(countSpan);
-						
-						createdElement.innerHTML = createdElement.innerHTML + REACTION_TYPES[key].renderedIcon;
-						
-						summaryList.appendChild(createdElement);
-						
-						this._initReactionCountButton(createdElement, objectId);
-						
-						triggerChange = true; 
-					}
-				}, this);
+					
+					Object.keys(data).forEach(function(key) {
+						if (sortedElements[key] !== undefined) {
+							var reactionCount = elBySel('.reactionCount', sortedElements[key]);
+							reactionCount.innerHTML = StringUtil.shortUnit(data[key]);
+						}
+						else if (REACTION_TYPES[key] !== undefined) {
+							// create element 
+							var createdElement = elCreate('li');
+							createdElement.className = 'reactCountButton';
+							elData(createdElement, 'reaction-type-id', key);
+							
+							var countSpan = elCreate('span');
+							countSpan.className = 'reactionCount';
+							countSpan.innerHTML = StringUtil.shortUnit(data[key]);
+							createdElement.appendChild(countSpan);
+							
+							createdElement.innerHTML = createdElement.innerHTML + REACTION_TYPES[key].renderedIcon;
+							
+							summaryList.appendChild(createdElement);
+							
+							this._initReactionCountButton(createdElement, objectId);
+							
+							triggerChange = true;
+						}
+					}, this);
+				}.bind(this));
 				
 				if (triggerChange) {
 					DomChangeListener.trigger();

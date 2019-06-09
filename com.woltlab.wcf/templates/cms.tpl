@@ -4,7 +4,7 @@
 {/if}
 
 {capture assign='headContent'}
-	{if $page->isMultilingual}
+	{if $page->isMultilingual && $page->getPageLanguages()|count > 1}
 		{foreach from=$page->getPageLanguages() item='pageLanguage'}
 			{if $pageLanguage->getLanguage()}
 				<link rel="alternate" hreflang="{$pageLanguage->getLanguage()->languageCode}" href="{$pageLanguage->getLink()}">
@@ -14,7 +14,7 @@
 {/capture}
 
 {capture assign='contentHeaderNavigation'}
-	{if $page->isMultilingual && $__wcf->user->userID}
+	{if $page->isMultilingual && $__wcf->user->userID && $page->getPageLanguages()|count > 1}
 		<li class="dropdown">
 			<a class="dropdownToggle boxFlag box24 button">
 				<span><img src="{$activePageLanguage->getIconPath()}" alt="" class="iconFlag"></span>

@@ -2,7 +2,6 @@
 namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
-use wcf\data\user\UserEditor;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
@@ -79,18 +78,20 @@ class NewPasswordForm extends AbstractForm {
 				$this->throwInvalidLinkException();
 			}
 			
-			(new UserEditor($this->user))->update([
-				'lastLostPasswordRequestTime' => 0,
-				'lostPasswordKey' => null
+			WCF::getSession()->register('lostPasswordRequest', [
+				'userID' => $this->user->userID,
+				'key' => $this->user->lostPasswordKey
 			]);
-			WCF::getSession()->register('lostPasswordRequest', $this->user->userID);
 		}
 		else {
-			if (!WCF::getSession()->getVar('lostPasswordRequest')) throw new PermissionDeniedException();
-			$this->userID = intval(WCF::getSession()->getVar('lostPasswordRequest'));
+			if (!is_array(WCF::getSession()->getVar('lostPasswordRequest'))) throw new PermissionDeniedException();
+			$this->userID = intval(WCF::getSession()->getVar('lostPasswordRequest')['userID']);
 			
 			$this->user = new User($this->userID);
 			if (!$this->user->userID) throw new IllegalLinkException();
+			if (!\hash_equals($this->user->lostPasswordKey, WCF::getSession()->getVar('lostPasswordRequest')['key'])) {
+				$this->throwInvalidLinkException();
+			}
 		}
 	}
 	

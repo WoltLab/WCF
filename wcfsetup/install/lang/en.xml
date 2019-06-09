@@ -460,7 +460,7 @@
 		<item name="wcf.acp.devtools.project.requiredPackages"><![CDATA[Required Packages]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.file"><![CDATA[Package File Included in Package]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.file.description"><![CDATA[The path to the package file has to be <kbd>requirements/{literal}{$packageIdentifier}{/literal}.tar</kbd>.]]></item>
-		<item name="wcf.acp.devtools.project.packageIdentifier.error.duplicate"><![CDATA[The entered package is already a requirement.]]></item>
+		<item name="wcf.acp.devtools.project.packageIdentifier.error.duplicate"><![CDATA[The entered package has already been added.]]></item>
 		<item name="wcf.acp.devtools.project.packageVersion.error.maximumLength"><![CDATA[The version must not be longer than 255 characters.]]></item>
 		<item name="wcf.acp.devtools.project.requiredPackage.error.selfRequirement"><![CDATA[A package cannot require itself.]]></item>
 		<item name="wcf.acp.devtools.project.add.mode"><![CDATA[Mode]]></item>
@@ -572,6 +572,7 @@
 		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction"><![CDATA[Add delete instruction]]></item>
 		<item name="wcf.acp.devtools.project.pip.entry.delete.addDeleteInstruction.description"><![CDATA[The entry will not only be deleted from database and its installation instruction removed, but a delete instruction will also be explicitly added.]]></item>
 		<item name="wcf.acp.devtools.project.edit.error.brokenPath"><![CDATA[There is no <kbd>package.xml</kbd> in the given directory. The package files have either been deleted or moved.]]></item>
+		<item name="wcf.acp.devtools.project.edit.warning.missingElements"><![CDATA[The following information is missing from the <kbd>package.xml</kbd> file: {implode from=$missingElements item=missingElement}<kbd>{$missingElement}</kbd>{/implode}.]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP Connection Test]]></item>
@@ -861,7 +862,6 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.group.type.owner"><![CDATA[Owner]]></item>
 		<item name="wcf.acp.group.type.owner.description"><![CDATA[The owner group features a few irrevocable permissions and is protected from edits by other groups, only the owner group can edit itself. Members of this group can add other users to this group, but cannot remove themselves.]]></item>
 		<item name="wcf.acp.group.ownerGroupPermission"><![CDATA[The owner group always has this permission, it cannot be revoked.]]></item>
-		
 		<item name="wcf.acp.group.missingOwnerGroup"><![CDATA[No owner group has been configured yet, <a href="{link controller='UserGroupPromoteOwner'}{/link}">please set it up now</a>.]]></item>
 		<item name="wcf.acp.group.promoteOwner"><![CDATA[Set Up the Owner Group]]></item>
 		<item name="wcf.acp.group.promoteOwner.group"><![CDATA[Select the owner group]]></item>
@@ -1172,6 +1172,7 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.modificationLog.time.afterDate"><![CDATA[After the date]]></item>
 		<item name="wcf.acp.modificationLog.time.beforeDate"><![CDATA[Before the date]]></item>
 		<item name="wcf.acp.modificationLog.unsupportedObjectTypes"><![CDATA[Some types are currently not supported and require changes to be made by the vendor.]]></item>
+		<item name="wcf.acp.modificationLog.action.allPackageActions"><![CDATA[All Actions from “{$package->getName()}”]]></item>
 	</category>
 	<category name="wcf.acp.notice">
 		<item name="wcf.acp.notice.add"><![CDATA[Add Notice]]></item>
@@ -1515,7 +1516,7 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.option.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
 		<item name="wcf.acp.option.module_members_list"><![CDATA[Members list]]></item>
 		<item name="wcf.acp.option.footer_code"><![CDATA[Footer Code]]></item>
-		<item name="wcf.acp.option.footer_code.description"><![CDATA[The entered code will be appended to the page footer of your site. You can use it to embed services like “Google Analytics” or “Piwik”.]]></item>
+		<item name="wcf.acp.option.footer_code.description"><![CDATA[The entered code will be appended to the page footer of your site. You can use it to embed services like “Google Analytics” or “Matomo”.]]></item>
 		<item name="wcf.acp.option.profile_enable_visitors"><![CDATA[Display user’s profile visitors in profile sidebar]]></item>
 		<item name="wcf.acp.option.url_title_component_replacement"><![CDATA[URL Replacements]]></item>
 		<item name="wcf.acp.option.url_title_component_replacement.description"><![CDATA[You can replace parts of the title within the URL. You could use it to replace special characters or to expand abbreviations. Enter one replacement per line. Examples:
@@ -1711,12 +1712,12 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.category.security.blacklist.sfs.description"><![CDATA[Privacy compliant verification based on a local copy of the StopForumSpam.com database.]]></item>
 		<item name="wcf.acp.option.category.security.blacklist.custom"><![CDATA[Own Blacklists]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_enable"><![CDATA[Enable the verification using Stop Forum Spam]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_enable.description"><![CDATA[The local database contains information about the number of times that an entry was reported as a spammer.<br>
+		<item name="wcf.acp.option.blacklist_sfs_enable.description"><![CDATA[The local database contains information about the number of times an entry was reported as a spammer.<br>
 <strong>Notice: No data is transferred to a third party service at any point in the process.</strong><br>
 <br>
-The database is carefully maintained, but it there will be always be a margin of error, caused by incorrect or outdated entries. You can chose from a set of options that controls how matches are evaluated in order to reduce false-positives. The recommended settings are based on years of experience and changes should therefore be made with caution.
+The database is carefully maintained, but there will be always be a margin of error, caused by incorrect or outdated entries. You can choose from a set of options that controls how matches are evaluated in order to reduce false-positives. The recommended settings are based on years of experience and changes should therefore be made with caution.
 <ul class="nativeList">
-	<li><strong>Do not check</strong> – This value is completely ignore.</li>
+	<li><strong>Do not check</strong> – This value is completely ignored.</li>
 	<li><strong>Top 10%</strong> – Only the top 10% most frequently reported values are considered.</li>
 	<li><strong>Multiple reports</strong> – Any match that has been reported more than once.</li>
 	<li><strong>Any match is sufficient</strong> – The number of reports is entirely ignored. Not recommended.</li>
@@ -1730,10 +1731,10 @@ The database is carefully maintained, but it there will be always be a margin of
 		<item name="wcf.acp.option.blacklist_sfs_email_address"><![CDATA[Email Address]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_email_address.description"><![CDATA[Email addresses are unique and yield the best results. Recommended setting: <strong>Multiple reports</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_ip_address"><![CDATA[IP Address]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_ip_address.description"><![CDATA[IP addresses are more likely to be imprecise, because a lot of them are dynamically assigned, e. g. for private households or celluar connections. Recommended setting: <strong>Top 10%</strong>.]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_ip_address.description"><![CDATA[IP addresses are more likely to be imprecise, because a lot of them are dynamically assigned, e. g. for private households or cellular connections. Recommended setting: <strong>Top 10%</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action"><![CDATA[Action in Case of a Match]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.block"><![CDATA[Block]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[There is always the risk of a false-positive match, therefore its highly recommended to set it to <strong>Disable and require manual approval</strong>.]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[There is always the risk of a false-positive match, therefore it is highly recommended to set it to <strong>Disable and require manual approval</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Disable and require manual approval]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
@@ -2501,6 +2502,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.reactionType.type.neutral"><![CDATA[Neutral]]></item>
 		<item name="wcf.acp.reactionType.isDisabled"><![CDATA[Disable Reaction]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaction File]]></item>
+		<item name="wcf.acp.reactionType.showOrder.description"><![CDATA[The reaction type will be shown after the selected reaction type.]]></item>
 	</category>
 	<category name="wcf.acp.rebuildData">
 		<item name="wcf.acp.rebuildData"><![CDATA[Rebuild Data]]></item>
@@ -3114,7 +3116,7 @@ full extend.]]></item>
 		<item name="wcf.article.aboutAuthor"><![CDATA[About the Author]]></item>
 		<item name="wcf.article.articleComments"><![CDATA[{#$article->comments} Comment{if $article->comments != 1}s{/if}]]></item>
 		<item name="wcf.article.articleViews"><![CDATA[{#$article->views} View{if $article->views != 1}s{/if}]]></item>
-		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Liked the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.article.recentActivity.likedArticle"><![CDATA[Reacted with <span title="{$reactionType->getTitle()}" class="jsTooltip">{@$reactionType->renderIcon()}</span> to the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.article.recentActivity.articleComment"><![CDATA[Commented on article <a href="{$article->getLink()}#comment{$commentID}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.article.recentActivity.articleCommentResponse"><![CDATA[Replied to a comment by <a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a> on article <a href="{$article->getLink()}#comment{@$commentID}/response{@$responseID}">{$article->getTitle()}</a>.]]></item>
 		<item name="wcf.article.search.categories"><![CDATA[Search in Categories]]></item>
@@ -3367,9 +3369,9 @@ Attachments:
 		<item name="wcf.acp.contact.settings"><![CDATA[Edit Contact Form]]></item>
 	</category>
 	<category name="wcf.acp.content">
-		<item name="wcf.acp.content.removeContent"><![CDATA[Delete User Content]]></item>
+		<item name="wcf.acp.content.removeContent"><![CDATA[Delete User’s Content]]></item>
 		<item name="wcf.acp.content.provider.removeContentSectionTitle"><![CDATA[Content]]></item>
-		<item name="wcf.acp.content.provider.removeContentInfo"><![CDATA[Please select which content of the user “<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>” should be deleted.]]></item>
+		<item name="wcf.acp.content.provider.removeContentInfo"><![CDATA[Select which types of content created by “<a href="{link controller='UserEdit' id=$user->userID}{/link}">{$user->username}</a>” should be deleted.]]></item>
 		<item name="wcf.acp.content.provider.removeContentWarning"><![CDATA[<strong>Heads up</strong>: The content will be deleted irrevocably and without any further confirmation prompt!]]></item>
 		<item name="wcf.acp.content.provider.com.woltlab.wcf.comment"><![CDATA[Comments]]></item>
 		<item name="wcf.acp.content.provider.com.woltlab.wcf.commentResponse"><![CDATA[Comment Responses]]></item>
@@ -3909,14 +3911,14 @@ Attachments:
 		<item name="wcf.like.likes.noMoreEntries"><![CDATA[There are not any new likes at the moment.]]></item>
 		<item name="wcf.like.dislikes.more"><![CDATA[More Dislikes]]></item>
 		<item name="wcf.like.dislikes.noMoreEntries"><![CDATA[There are not any new dislikes at the moment.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[Reacted with “{$like->getReactionType()->getTitle()}” to the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{$comment->getLink()}">{$user->username}’s wall</a>.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[Reacted with “{$like->getReactionType()->getTitle()}” to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{$response->getLink()}">{$user->username}’s wall</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{$comment->getLink()}">{$user->username}’s wall</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{$response->getLink()}">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.likeableArticle"><![CDATA[Article]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.likeableArticle"><![CDATA[Reacted with “{$like->getReactionType()->getTitle()}” to the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.articleComment"><![CDATA[Reacted with “{$like->getReactionType()->getTitle()}” to the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the article <a href="{$comment->getLink()}">{$articleContent->getTitle()}</a>.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.articleComment.response"><![CDATA[Reacted with “{$like->getReactionType()->getTitle()}” to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the article <a href="{$response->getLink()}">{$articleContent->getTitle()}</a>.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.pageComment"><![CDATA[Reacted with “{$like->getReactionType()->getTitle()}” to the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the page <a href="{$comment->getLink()}">{$page->getTitle()}</a>.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.pageComment.response"><![CDATA[Reacted with “{$like->getReactionType()->getTitle()}” to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the page <a href="{$response->getLink()}">{$page->getTitle()}</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.likeableArticle"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.articleComment"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the article <a href="{$comment->getLink()}">{$articleContent->getTitle()}</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.articleComment.response"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the article <a href="{$response->getLink()}">{$articleContent->getTitle()}</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.pageComment"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the page <a href="{$comment->getLink()}">{$page->getTitle()}</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.pageComment.response"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the page <a href="{$response->getLink()}">{$page->getTitle()}</a>.]]></item>
 		<item name="wcf.like.reaction.noMoreEntries"><![CDATA[There are not any new reactions at the moment.]]></item>
 		<item name="wcf.like.reaction.more"><![CDATA[More Reactions]]></item>
 		<item name="wcf.like.reactionsReceived"><![CDATA[Reactions Received]]></item>
@@ -4411,6 +4413,7 @@ Attachments:
 		<item name="wcf.user.option.error.validationFailed"><![CDATA[The entered text is invalid.]]></item>
 		<item name="wcf.user.option.error.birthdayTooYoung"><![CDATA[You are not old enough. To register with this website you must be at least {#REGISTER_MIN_USER_AGE} years old.]]></item>
 		<item name="wcf.user.option.error.censoredWordsFound"><![CDATA[The text contains censored words: {implode from=$censoredWords key=censoredWord item=number}{$censoredWord}{if $number > 1} ({#$number}×){/if}{/implode}.]]></item>
+		<item name="wcf.user.option.error.disallowedBBCodes"><![CDATA[The message contains disallowed BBCodes: {implode from=$disallowedBBCodes item=disallowedBBCode}{$disallowedBBCode}{/implode}.]]></item>
 		<item name="wcf.user.error.isBanned"><![CDATA[Your user account has been banned{if $__wcf->user->banExpires != 0} until {@$__wcf->user->banExpires|plainTime}{/if}{if $__wcf->user->banReason}: {@$__wcf->user->banReason|newlineToBreak}{else}.{/if}]]></item>
 		<item name="wcf.user.access.everyone"><![CDATA[Everyone]]></item>
 		<item name="wcf.user.access.following"><![CDATA[Users I Follow]]></item>
@@ -4914,6 +4917,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.coverPhoto.upload.error.minWidth"><![CDATA[The image is too small.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.uploadFailed"><![CDATA[An unknown error occurred during the upload.]]></item>
 		<item name="wcf.user.coverPhoto.upload.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
+		<item name="wcf.user.coverPhoto.upload.error.tooLarge"><![CDATA[The file is too big.]]></item>
 	</category>
 	<category name="wcf.user.notification">
 		<item name="wcf.user.notification.button.confirmed"><![CDATA[OK]]></item>

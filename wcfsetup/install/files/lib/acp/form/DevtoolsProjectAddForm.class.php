@@ -136,8 +136,13 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 					->label('wcf.acp.devtools.project.path')
 					->required()
 					->addValidator(new FormFieldValidator('validPath', function (TextFormField $formField) {
-						// ensure that there is a trailing slash
-						$formField->value(FileUtil::addTrailingSlash($formField->getSaveValue() ?? ''));
+						// ensure that unified directory separators are used
+						// and that there is a trailing slash
+						$formField->value(
+							FileUtil::addTrailingSlash(
+								FileUtil::unifyDirSeparator($formField->getSaveValue() ?? '')
+							)
+						);
 						
 						$path = $formField->getSaveValue();
 						

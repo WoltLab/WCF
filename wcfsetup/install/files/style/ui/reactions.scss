@@ -172,3 +172,18 @@ li.reactCountButton:hover {
 	margin-left: auto;
 	margin-top: 20px;
 }
+
+#likeList .likeTypeSelection {
+	display: flex;
+	justify-content: flex-end;
+	
+	.buttonGroup li {
+		display: flex;
+		justify-content: stretch;
+		
+		a {
+			display: flex;
+			align-items: center;
+		}
+	}
+}

@@ -16,4 +16,9 @@ use wcf\data\DatabaseObjectList;
  * @method	ReactionType|null	search($objectID)
  * @property	ReactionType[]	        $objects
  */
-class ReactionTypeList extends DatabaseObjectList {}
+class ReactionTypeList extends DatabaseObjectList {
+	/**
+	 * @inheritDoc
+	 */
+	public $sqlOrderBy = 'reaction_type.showOrder ASC';
+}

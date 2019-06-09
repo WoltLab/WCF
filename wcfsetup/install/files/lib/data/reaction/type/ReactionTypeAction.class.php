@@ -40,6 +40,16 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 	 * @inheritDoc
 	 */
 	public function create() {
+		if (isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] !== null) {
+			$sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+					SET	showOrder = showOrder + 1
+					WHERE	showOrder >= ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				$this->parameters['data']['showOrder']
+			]);
+		}
+		
 		/** @var ReactionType $reactionType */
 		$reactionType = parent::create();
 		$reactionTypeEditor = new ReactionTypeEditor($reactionType);
@@ -129,6 +139,27 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 				}
 			}
 			
+			// update show order
+			if (isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] !== null) {
+				$sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+					SET	showOrder = showOrder + 1
+					WHERE	showOrder >= ?
+					AND     reactionTypeID <> ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					$this->parameters['data']['showOrder'],
+					$object->reactionTypeID
+				]);
+				
+				$sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+					SET	showOrder = showOrder - 1
+					WHERE	showOrder > ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					$object->showOrder
+				]);
+			}
+			
 			if (!empty($updateData)) {
 				$object->update($updateData);
 			} 
@@ -171,5 +202,24 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 			$editor->update(['showOrder' => $i++]);
 		}
 		WCF::getDB()->commitTransaction();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function delete() {
+		$returnValues = parent::delete();
+		
+		$sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+				SET	showOrder = showOrder - 1
+				WHERE	showOrder > ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		foreach ($this->getObjects() as $object) {
+			$statement->execute([
+				$object->showOrder
+			]);
+		}
+		
+		return $returnValues;
 	}
 }

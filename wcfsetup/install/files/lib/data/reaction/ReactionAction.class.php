@@ -21,6 +21,7 @@ use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Executes reaction-related actions.
@@ -99,7 +100,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 			
 			// we cast the reactionTypeID to a string, so that we can sort the array
 			if (!isset($data[(string)$item->getReactionType()->reactionTypeID])) {
-				$data[(string)$item->getReactionType()->reactionTypeID] = new GroupedUserList($item->getReactionType()->getTitle());
+				$data[(string)$item->getReactionType()->reactionTypeID] = new GroupedUserList($item->getReactionType()->renderIcon() . ' ' . StringUtil::encodeHTML($item->getReactionType()->getTitle()));
 			}
 			
 			$data[(string)$item->getReactionType()->reactionTypeID]->addUserIDs([$item->userID]);
@@ -116,7 +117,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		});
 		
 		return [
-			'template' => WCF::getTPL()->fetch('groupedUserList', 'wcf', ['groupedUsers' => $data]),
+			'template' => WCF::getTPL()->fetch('groupedUserReactionList', 'wcf', ['groupedUsers' => $data]),
 			'title' => WCF::getLanguage()->get('wcf.reactions.summary.title')
 		];
 	}

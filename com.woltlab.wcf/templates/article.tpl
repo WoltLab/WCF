@@ -157,26 +157,27 @@
 			</ul>
 		{/if}
 		
-		{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && ($__wcf->session->getPermission('user.like.canLike') || $__wcf->session->getPermission('user.like.canViewLike'))}
-			<div class="row articleLikeSection">
-				{if $__wcf->session->getPermission('user.like.canViewLike')}
-					<div class="col-xs-12 col-md-6">
-						<div class="articleLikesSummery">
-							{include file="reactionSummaryList" reactionData=$articleLikeData objectType="com.woltlab.wcf.likeableArticle" objectID=$article->articleID}
-						</div>
+		<div class="row articleLikeSection">
+			{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canViewLike')}
+				<div class="col-xs-12 col-md-6">
+					<div class="articleLikesSummery">
+						{include file="reactionSummaryList" reactionData=$articleLikeData objectType="com.woltlab.wcf.likeableArticle" objectID=$article->articleID}
 					</div>
-				{/if}
-				
-				{if MODULE_LIKE && $__wcf->session->getPermission('user.like.canLike') && (LIKE_ALLOW_FOR_OWN_CONTENT || $article->userID != $__wcf->user->userID)}
-					<div class="col-xs-12 col-md-6">
-						<ul class="articleLikeButtons buttonGroup">
-							<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{$articleLikeData[$article->articleID]->reactionTypeID}{else}0{/if}"><span class="icon icon16 fa-smile-o"></span> <span class="invisible">{lang}wcf.reactions.react{/lang}</span></span></li>
-							<li class="jsReportArticle jsOnly" data-object-id="{@$articleContent->articleContentID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
-						</ul>
-					</div>
-				{/if}
+				</div>
+			{/if}
+			
+			
+			<div class="col-xs-12 col-md-6 col-md{if !(MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canViewLike'))} col-md-offset-6{/if}">
+				<ul class="articleLikeButtons buttonGroup">
+					{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canLike') && (LIKE_ALLOW_FOR_OWN_CONTENT || $article->userID != $__wcf->user->userID)}
+						<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{$articleLikeData[$article->articleID]->reactionTypeID}{else}0{/if}"><span class="icon icon16 fa-smile-o"></span> <span class="invisible">{lang}wcf.reactions.react{/lang}</span></span></li>
+					{/if}
+					{if $__wcf->session->getPermission('user.profile.canReportContent')}
+						<li class="jsReportArticle jsOnly" data-object-id="{@$articleContent->articleContentID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
+					{/if}
+				</ul>
 			</div>
-		{/if}
+		</div>
 	</div>
 	
 	{event name='afterArticleContent'}

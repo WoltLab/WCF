@@ -11,13 +11,13 @@ define(
 	[
 		'Ajax',      'Core',                            'Dictionary',           'Language',
 		'ObjectMap', 'StringUtil',                      'Dom/ChangeListener',   'Dom/Util',
-		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List',  'User',                 'WoltLabSuite/Core/Ui/Reaction/CountButtons', 
+		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List',  'User',                 'WoltLabSuite/Core/Ui/Reaction/CountButtons',
 		'Ui/Alignment', 'Ui/CloseOverlay',              'Ui/Screen'
 	],
 	function(
 		Ajax,        Core,              Dictionary,             Language,
 		ObjectMap,   StringUtil,        DomChangeListener,      DomUtil,
-		UiDialog,    UiUserList,        User,                   CountButtons, 
+		UiDialog,    UiUserList,        User,                   CountButtons,
 		UiAlignment, UiCloseOverlay,    UiScreen
 	)
 	{
@@ -30,7 +30,7 @@ define(
 		UiReactionHandler.prototype = {
 			/**
 			 * Initializes the reaction handler.
-			 *
+			 * 
 			 * @param	{string}	objectType	object type
 			 * @param	{object}	options		initialization options
 			 */
@@ -43,14 +43,15 @@ define(
 				this._details = new ObjectMap();
 				this._objectType = objectType;
 				this._cache = new Dictionary();
+				this._objects = new Dictionary();
 				
 				this._popoverCurrentObjectId = 0;
 				
-				this._popover = null; 
+				this._popover = null;
 				
 				this._options = Core.extend({
 					// selectors
-					buttonSelector: '.reactButton', 
+					buttonSelector: '.reactButton',
 					containerSelector: '',
 					isButtonGroupNavigation: false,
 					isSingleItem: false,
@@ -76,19 +77,29 @@ define(
 				var element, elements = elBySelAll(this._options.containerSelector), elementData, triggerChange = false, objectId;
 				for (var i = 0, length = elements.length; i < length; i++) {
 					element = elements[i];
-					objectId = ~~elData(element, 'object-id');
-					if (this._containers.has(objectId)) {
+					if (this._containers.has(DomUtil.identify(element))) {
 						continue;
 					}
 					
 					elementData = {
 						reactButton: null,
-						objectId: ~~elData(element, 'object-id'), 
+						objectId: ~~elData(element, 'object-id'),
 						element: element
 					};
 					
-					this._containers.set(objectId, elementData);
+					this._containers.set(DomUtil.identify(element), elementData);
 					this._initReactButton(element, elementData);
+					
+					if (!this._objects.has(~~elData(element, 'object-id'))) {
+						var objects = [];
+					}
+					else {
+						var objects = this._objects.get(~~elData(element, 'object-id'));
+					}
+					
+					objects.push(elementData);
+					
+					this._objects.set(~~elData(element, 'object-id'), objects);
 					
 					triggerChange = true;
 				}
@@ -112,7 +123,14 @@ define(
 				
 				if (elementData.reactButton === null || elementData.reactButton.length === 0) {
 					// the element may have no react button 
-					return; 
+					return;
+				}
+				
+				if (Object.keys(REACTION_TYPES).length === 1) {
+					var reaction = REACTION_TYPES[Object.keys(REACTION_TYPES)[0]];
+					elementData.reactButton.title = reaction.title;
+					var textSpan = elBySel('.invisible', elementData.reactButton);
+					textSpan.innerText = reaction.title;
 				}
 				
 				if (elementData.reactButton.closest('.messageFooterGroup > .jsMobileNavigation')) {
@@ -132,30 +150,30 @@ define(
 			 * @param       {Element}       element
 			 */
 			_enableMobileView: function(element) {
-				var messageFooterGroup = element.parentElement.parentElement.parentElement;
+				var messageFooterGroup = element.closest('.messageFooterGroup');
 				
 				elShow(elBySel('.mobileReactButton', messageFooterGroup));
 			},
 			
 			/**
 			 * Disables the mobile view for the reaction button.
-			 *
+			 * 
 			 * @param       {Element}       element
 			 */
 			_disableMobileView: function(element) {
-				var messageFooterGroup = element.parentElement.parentElement.parentElement;
+				var messageFooterGroup = element.closest('.messageFooterGroup');
 				
 				elHide(elBySel('.mobileReactButton', messageFooterGroup));
 			},
 			
 			/**
 			 * Setup the mobile view for the reaction button.
-			 *
+			 * 
 			 * @param       {Element}       element
 			 * @param       {int}           objectID
 			 */
 			_setupMobileView: function(element, objectID) {
-				var messageFooterGroup = element.parentElement.parentElement.parentElement;
+				var messageFooterGroup = element.closest('.messageFooterGroup');
 				
 				var button = elCreate('button');
 				button.classList = 'mobileReactButton';
@@ -167,18 +185,20 @@ define(
 			},
 			
 			_updateReactButton: function(objectID, reactionTypeID) {
-				if (reactionTypeID) {
-					this._containers.get(objectID).reactButton.classList.add('active');
-					elData(this._containers.get(objectID).reactButton, 'reaction-type-id', reactionTypeID);
-				}
-				else {
-					elData(this._containers.get(objectID).reactButton, 'reaction-type-id', 0);
-					this._containers.get(objectID).reactButton.classList.remove('active');
-				}
+				this._objects.get(objectID).forEach(function (elementData) {
+					if (reactionTypeID) {
+						elementData.reactButton.classList.add('active');
+						elData(elementData.reactButton, 'reaction-type-id', reactionTypeID);
+					}
+					else {
+						elData(elementData.reactButton, 'reaction-type-id', 0);
+						elementData.reactButton.classList.remove('active');
+					}
+				});
 			},
 			
 			_markReactionAsActive: function() {
-				var reactionTypeID = elData(this._containers.get(this._popoverCurrentObjectId).reactButton, 'reaction-type-id');
+				var reactionTypeID = elData(this._objects.get(this._popoverCurrentObjectId)[0].reactButton, 'reaction-type-id');
 				
 				//  clear old active state
 				var elements = elBySelAll('.reactionTypeButton.active', this._getPopover());
@@ -192,7 +212,7 @@ define(
 			},
 			
 			/**
-			 * Toggle the visibility of the react popover. 
+			 * Toggle the visibility of the react popover.
 			 * 
 			 * @param       {int}           objectId
 			 * @param       {Element}       element
@@ -203,11 +223,19 @@ define(
 					event.stopPropagation();
 				}
 				
-				if (this._popoverCurrentObjectId === 0 || this._popoverCurrentObjectId !== objectId) {
-					this._openReactPopover(objectId, element);
+				if (Object.keys(REACTION_TYPES).length === 1) {
+					var reaction = REACTION_TYPES[Object.keys(REACTION_TYPES)[0]];
+					this._popoverCurrentObjectId = objectId;
+					
+					this._react(reaction.reactionTypeID);
 				}
 				else {
-					this._closePopover(objectId, element);
+					if (this._popoverCurrentObjectId === 0 || this._popoverCurrentObjectId !== objectId) {
+						this._openReactPopover(objectId, element);
+					}
+					else {
+						this._closePopover(objectId, element);
+					}
 				}
 			},
 			
@@ -220,7 +248,7 @@ define(
 			_openReactPopover: function(objectId, element) {
 				// first close old popover, if exists 
 				if (this._popoverCurrentObjectId !== 0) {
-					this._closePopover(this._popoverCurrentObjectId, this._containers.get(this._popoverCurrentObjectId).reactButton);
+					this._closePopover();
 				}
 				
 				this._popoverCurrentObjectId = objectId;
@@ -243,7 +271,7 @@ define(
 			},
 			
 			/**
-			 * Returns the react popover element. 
+			 * Returns the react popover element.
 			 * 
 			 * @returns {Element}
 			 */
@@ -296,11 +324,11 @@ define(
 					DomChangeListener.trigger();
 				}
 				
-				return this._popover; 
+				return this._popover;
 			},
 			
 			/**
-			 * Sort the reaction types by the showOrder field. 
+			 * Sort the reaction types by the showOrder field.
 			 * 
 			 * @returns     {Array}         the reaction types sorted by showOrder
 			 */
@@ -314,29 +342,24 @@ define(
 				}
 				
 				// sort the array
-				sortedReactionTypes.sort(function (a, b) { 
-					if (a.showOrder > b.showOrder) {
-						return 1;
-					}
-					else {
-						return -1;
-					}
+				sortedReactionTypes.sort(function (a, b) {
+					return a.showOrder - b.showOrder;
 				});
 				
 				return sortedReactionTypes;
 			},
 			
 			/**
-			 * Closes the react popover. 
+			 * Closes the react popover.
 			 */
 			_closePopover: function() {
 				if (this._popoverCurrentObjectId !== 0) {
 					this._getPopover().classList.remove('active');
 					
 					if (this._options.isButtonGroupNavigation) {
-						// find nav element
-						var nav = this._containers.get(this._popoverCurrentObjectId).reactButton.closest('nav');
-						nav.style.cssText = "";
+						this._objects.get(this._popoverCurrentObjectId).forEach(function (elementData) {
+							elementData.reactButton.closest('nav').style.cssText = "";
+						});
 					}
 					
 					this._popoverCurrentObjectId = 0;
@@ -358,7 +381,7 @@ define(
 					parameters: this._options.parameters
 				});
 				
-				this._closePopover(this._popoverCurrentObjectId, this._containers.get(this._popoverCurrentObjectId).reactButton);
+				this._closePopover();
 			},
 			
 			_ajaxSuccess: function(data) {
@@ -367,7 +390,7 @@ define(
 				// update react button status
 				this._updateReactButton(data.returnValues.objectID, data.returnValues.reactionTypeID);
 			},
-				
+			
 			_ajaxSetup: function() {
 				return {
 					data: {
