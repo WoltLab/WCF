@@ -1244,8 +1244,26 @@ class TemplateScriptingCompiler {
 						if (/*strpos($values[$i], '$') !== false || */strpos($values[$i], '@@') !== false) {
 							throw new SystemException(static::formatSyntaxError("unexpected '->".$values[$i]."' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo));
 						}
-						if (strpos($values[$i], '$') !== false) $result .= '{'.$this->compileSimpleVariable($values[$i], $variableType).'}';
-						else $result .= $values[$i];
+						if (strpos($values[$i], '$') !== false) {
+							$result .= '{'.$this->compileSimpleVariable($values[$i], $variableType).'}';
+						}
+						else {
+							$result .= $values[$i];
+						}
+						
+						// `WCF::getDB()` and `WCF::getTPL()` are not supported in enterprise mode
+						if (
+							ENABLE_ENTERPRISE_MODE
+							&& $values[$i - 1] === '$__wcf'
+							&& (strcasecmp($values[$i], 'getTPL') === 0 || strcasecmp($values[$i], 'getDB') === 0)
+						) {
+							throw new SystemException(static::formatSyntaxError(
+								"disabled method 'WCF::".$values[$i]."'",
+								$this->currentIdentifier,
+								$this->currentLineNo
+							));
+						}
+						
 						$statusStack[count($statusStack) - 1] = $status = 'object';
 					break;
 					
