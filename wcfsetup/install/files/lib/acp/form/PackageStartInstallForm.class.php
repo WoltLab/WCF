@@ -4,6 +4,7 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\form\AbstractForm;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\validation\PackageValidationException;
@@ -98,6 +99,10 @@ class PackageStartInstallForm extends AbstractForm {
 			}
 		}
 		else if (!empty($this->uploadPackage['name'])) {
+			if (ENABLE_ENTERPRISE_MODE) {
+				throw new IllegalLinkException();
+			}
+			
 			$this->validateUploadPackage();
 		}
 		else {
