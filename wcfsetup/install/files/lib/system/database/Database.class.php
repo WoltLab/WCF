@@ -97,6 +97,12 @@ abstract class Database {
 	protected $tryToCreateDatabase = false;
 	
 	/**
+	 * default driver options passed to the PDO constructor
+	 * @var array
+	 */
+	protected $defaultDriverOptions = [];
+	
+	/**
 	 * Creates a Database Object.
 	 * 
 	 * @param	string		$host			SQL database server host address
@@ -105,9 +111,10 @@ abstract class Database {
 	 * @param	string		$database		SQL database server database name
 	 * @param	integer		$port			SQL database server port
 	 * @param	boolean		$failsafeTest
-	 * @param       boolean         $tryToCreateDatabase
+	 * @param	boolean		$tryToCreateDatabase
+	 * @param	array		$defaultDriverOptions
 	 */
-	public function __construct($host, $user, $password, $database, $port, $failsafeTest = false, $tryToCreateDatabase = false) {
+	public function __construct($host, $user, $password, $database, $port, $failsafeTest = false, $tryToCreateDatabase = false, $defaultDriverOptions = []) {
 		$this->host = $host;
 		$this->port = $port;
 		$this->user = $user;
@@ -115,6 +122,7 @@ abstract class Database {
 		$this->database = $database;
 		$this->failsafeTest = $failsafeTest;
 		$this->tryToCreateDatabase = $tryToCreateDatabase;
+		$this->defaultDriverOptions = $defaultDriverOptions;
 		
 		if (defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE) {
 			$this->preparedStatementClassName = DebugPreparedStatement::class;
