@@ -84,7 +84,7 @@ final class CryptoUtil {
 	 * @deprecated	Use \random_bytes() directly.
 	 */
 	public static function randomBytes($n) {
-		return random_bytes($n);
+		return \random_bytes($n);
 	}
 	
 	/**
@@ -97,7 +97,7 @@ final class CryptoUtil {
 			throw new CryptoException("Cannot generate a secure random number, min and max are the same");
 		}
 
-		return random_int($min, $max);
+		return \random_int($min, $max);
 	}
 	
 	/**

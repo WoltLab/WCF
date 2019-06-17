@@ -47,7 +47,7 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function getRandomID() {
-		return bin2hex(random_bytes(20));
+		return \bin2hex(\random_bytes(20));
 	}
 	
 	/**
@@ -59,17 +59,17 @@ final class StringUtil {
 		return sprintf(
 			'%04x%04x-%04x-%04x-%02x%02x-%04x%04x%04x',
 			// time_low
-			random_int(0, 0xffff), random_int(0, 0xffff),
+			\random_int(0, 0xffff), \random_int(0, 0xffff),
 			// time_mid
-			random_int(0, 0xffff), 
+			\random_int(0, 0xffff), 
 			// time_hi_and_version
-			random_int(0, 0x0fff) | 0x4000,
+			\random_int(0, 0x0fff) | 0x4000,
 			// clock_seq_hi_and_res
-			random_int(0, 0x3f) | 0x80,
+			\random_int(0, 0x3f) | 0x80,
 			// clock_seq_low
-			random_int(0, 0xff),
+			\random_int(0, 0xff),
 			// node
-			random_int(0, 0xffff), random_int(0, 0xffff), random_int(0, 0xffff)
+			\random_int(0, 0xffff), \random_int(0, 0xffff), \random_int(0, 0xffff)
 		);
 	}
 	
