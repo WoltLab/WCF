@@ -580,7 +580,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function wcf2($username, $password, $salt, $dbHash) {
-		return CryptoUtil::secureCompare($dbHash, self::getDoubleSaltedHash($password, $salt));
+		return CryptoUtil::secureCompare($dbHash, self::getDoubleSaltedHash($password, $dbHash));
 	}
 	
 	/**
