@@ -561,7 +561,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function wcf2($username, $password, $salt, $dbHash) {
-		return \hash_equals($dbHash, self::getDoubleSaltedHash($password, $salt));
+		return \hash_equals($dbHash, self::getDoubleSaltedHash($password, $dbHash));
 	}
 	
 	/**
