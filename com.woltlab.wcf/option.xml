@@ -23,7 +23,6 @@
 			</category>
 			<category name="module.development">
 				<parent>module</parent>
-				<options>!enable_enterprise_mode</options>
 			</category>
 			<!-- /modules -->
 			<!-- general -->
@@ -36,7 +35,6 @@
 			</category>
 			<category name="general.page.seo">
 				<parent>general.page</parent>
-				<options>!enable_enterprise_mode</options>
 			</category>
 			<category name="general.page.sitemap">
 				<parent>general.page</parent>
@@ -57,22 +55,18 @@
 			</category>
 			<category name="general.system.cookie">
 				<parent>general.system</parent>
-				<options>!enable_enterprise_mode</options>
 			</category>
 			<category name="general.system.http">
 				<parent>general.system</parent>
-				<options>!enable_enterprise_mode</options>
 			</category>
 			<category name="general.system.packageServer">
 				<parent>general.system</parent>
-				<options>!enable_enterprise_mode</options>
 			</category>
 			<category name="general.system.proxy">
 				<parent>general.system</parent>
 			</category>
 			<category name="general.system.image">
 				<parent>general.system</parent>
-				<options>!enable_enterprise_mode</options>
 			</category>
 			<category name="general.system.search">
 				<parent>general.system</parent>
@@ -92,12 +86,10 @@
 			</category>
 			<category name="general.mail.send">
 				<parent>general.mail</parent>
-				<options>!enable_enterprise_mode</options>
 			</category>
 			<category name="general.cache">
 				<parent>general</parent>
 				<showorder>5</showorder>
-				<options>!enable_enterprise_mode</options>
 			</category>
 			<category name="general.cache.general">
 				<parent>general.cache</parent>
@@ -176,7 +168,6 @@
 			<category name="security.general.secrets">
 				<parent>security.general</parent>
 				<showorder>15</showorder>
-				<options>!enable_enterprise_mode</options>
 			</category>
 			<category name="security.blacklist">
 				<parent>security</parent>
@@ -588,7 +579,6 @@ imagick:wcf.acp.option.image_adapter_type.imagick</selectoptions>
 				<optiontype>radioButton</optiontype>
 				<defaultvalue>mysql</defaultvalue>
 				<selectoptions>mysql:wcf.acp.option.search_engine.mysql</selectoptions>
-				<options>!enable_enterprise_mode</options>
 			</option>
 			<!-- /general.system.search -->
 			<!-- general.system.error -->
@@ -1246,7 +1236,6 @@ XING</selectoptions>
 				<selectoptions>0:wcf.acp.option.register_activation_method.disabled
 1:wcf.acp.option.register_activation_method.byUser
 2:wcf.acp.option.register_activation_method.byAdmin</selectoptions>
-				<options>!enable_enterprise_mode</options>
 			</option>
 			<option name="register_username_min_length">
 				<categoryname>user.register</categoryname>
