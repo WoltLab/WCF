@@ -807,7 +807,7 @@ class WCF {
 			return self::__callStatic($name, $arguments);
 		}
 		
-		return $this->$name($arguments);
+		throw new \BadMethodCallException("Call to undefined method WCF::{$name}().");
 	}
 	
 	/**
