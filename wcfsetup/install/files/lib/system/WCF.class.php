@@ -705,9 +705,15 @@ class WCF {
 	 * Assigns some default variables to the template engine.
 	 */
 	protected function assignDefaultTemplateVariables() {
+		$wcf = $this;
+		
+		if (ENABLE_ENTERPRISE_MODE && !static::getUser()->hasOwnerAccess()) {
+			$wcf = new TemplateScriptingCore($wcf);
+		}
+		
 		self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang']);
 		self::getTPL()->assign([
-			'__wcf' => $this,
+			'__wcf' => $wcf,
 			'__wcfVersion' => LAST_UPDATE_TIME // @deprecated 2.1, use LAST_UPDATE_TIME directly
 		]);
 		
@@ -725,7 +731,7 @@ class WCF {
 		
 		EmailTemplateEngine::getInstance()->registerPrefilter(['event', 'hascontent', 'lang']);
 		EmailTemplateEngine::getInstance()->assign([
-			'__wcf' => $this
+			'__wcf' => $wcf
 		]);
 	}
 	
