@@ -65,7 +65,7 @@ define(
 			_container = elCreate('div');
 			_container.classList.add('dialogOverlay');
 			elAttr(_container, 'aria-hidden', 'true');
-			_container.addEventListener(WCF_CLICK_EVENT, this._closeOnBackdrop.bind(this));
+			_container.addEventListener('mousedown', this._closeOnBackdrop.bind(this));
 			_container.addEventListener('wheel', function (event) {
 				if (event.target === _container) {
 					event.preventDefault();

@@ -1,4 +1,5 @@
 <?php
+// @codingStandardsIgnoreFile
 $language = 'en';
 if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE']) && preg_match('~^de-[A-Z]+,de~', $_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
 	$language = 'de';
