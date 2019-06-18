@@ -99,7 +99,7 @@ class PackageStartInstallForm extends AbstractForm {
 			}
 		}
 		else if (!empty($this->uploadPackage['name'])) {
-			if (ENABLE_ENTERPRISE_MODE) {
+			if (ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess()) {
 				throw new IllegalLinkException();
 			}
 			

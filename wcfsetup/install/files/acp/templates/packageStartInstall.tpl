@@ -27,7 +27,7 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			{if !ENABLE_ENTERPRISE_MODE}
+			{if !ENABLE_ENTERPRISE_MODE || $__wcf->getUser()->hasOwnerAccess()}
 				<li><a href="#" class="button jsButtonUploadPackage jsStaticDialog" data-dialog-id="packageUploadDialog"><span class="icon icon16 fa-upload"></span> <span>{lang}wcf.acp.package.upload{/lang}</span></a></li>
 			{/if}
 			<li><a href="{link controller='PackageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
@@ -81,7 +81,7 @@
 	</section>
 </div>
 
-{if !ENABLE_ENTERPRISE_MODE}
+{if !ENABLE_ENTERPRISE_MODE || $__wcf->getUser()->hasOwnerAccess()}
 	<div id="packageUploadDialog" class="jsStaticDialogContent" data-title="{lang}wcf.acp.package.upload{/lang}">
 		<form method="post" action="{link controller='PackageStartInstall'}{/link}" enctype="multipart/form-data">
 			<div class="section">
