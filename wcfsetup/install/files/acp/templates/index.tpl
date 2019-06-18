@@ -136,7 +136,7 @@
 			<dl>
 				<dt>{lang}wcf.acp.index.system.php.version{/lang}</dt>
 				<dd>
-					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
+					{if (!ENABLE_ENTERPRISE_MODE || $__wcf->getUser()->hasOwnerAccess()) && $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
 						<a href="{link controller='PHPInfo'}{/link}">{PHP_VERSION}</a>
 					{else}
 						{PHP_VERSION}
