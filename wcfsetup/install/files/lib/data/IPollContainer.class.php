@@ -10,14 +10,7 @@ namespace wcf\data;
  * @package	WoltLabSuite\Core\Data
  * @since	5.2
  */
-interface IPollContainer extends IPollObject {
-	/**
-	 * Returns the id of the poll container.
-	 *
-	 * @return	integer
-	 */
-	public function getObjectID();
-	
+interface IPollContainer extends IIDObject, IPollObject {
 	/**
 	 * Returns the id of the poll that belongs to this object or `null` if there is no such poll.
 	 *

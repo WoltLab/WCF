@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\request;
+use wcf\data\IIDObject;
 use wcf\data\ITitledObject;
 
 /**
@@ -10,11 +11,4 @@ use wcf\data\ITitledObject;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  */
-interface IRouteController extends ITitledObject {
-	/**
-	 * Returns the id of the object.
-	 * 
-	 * @return	integer
-	 */
-	public function getObjectID();
-}
+interface IRouteController extends IIDObject, ITitledObject {}

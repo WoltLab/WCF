@@ -10,18 +10,11 @@ namespace wcf\data;
  * @package	WoltLabSuite\Core\Data
  * @since	3.1
  */
-interface IVersionTrackerObject extends IUserContent {
+interface IVersionTrackerObject extends IIDObject, IUserContent {
 	/**
 	 * Returns the link to the object's edit page.
 	 * 
 	 * @return      string
 	 */
 	public function getEditLink();
-	
-	/**
-	 * Returns the object's unique id.
-	 * 
-	 * @return      integer
-	 */
-	public function getObjectID();
 }
