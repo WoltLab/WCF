@@ -370,7 +370,7 @@ function checkInstallFile() {
 			
 			<?php if (extension_loaded('imagick')) { ?>
 				<li class="success"><?=getPhrase('php_extension_success', ['Imagick'])?></li>
-			<?php } elseif (extension_loaded('gd')) { ?>
+			<?php } else if (extension_loaded('gd')) { ?>
 				<li class="success"><?=getPhrase('php_extension_success', ['GD'])?></li>
 			<?php } else { ?>	
 				<li class="failure"><?=getPhrase('php_extension_gd_or_imagick_failure')?></li>
