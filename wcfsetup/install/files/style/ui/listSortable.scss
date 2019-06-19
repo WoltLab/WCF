@@ -21,7 +21,6 @@
 
 .sortableNodeLabel {
 	align-items: center;
-	cursor: move;
 	padding: 10px;
 	
 	/* `display:flex` acts weird inside lists with a visible list-style */
@@ -30,6 +29,10 @@
 	
 	&:hover {
 		background-color: $wcfTabularBoxBackgroundActive
+	}
+	
+	&:not(.sortableNodeStaticItem) {
+		cursor: move;
 	}
 	
 	> .icon,
