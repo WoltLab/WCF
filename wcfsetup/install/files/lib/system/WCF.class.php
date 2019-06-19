@@ -707,7 +707,7 @@ class WCF {
 	protected function assignDefaultTemplateVariables() {
 		$wcf = $this;
 		
-		if (ENABLE_ENTERPRISE_MODE && !static::getUser()->hasOwnerAccess()) {
+		if (ENABLE_ENTERPRISE_MODE) {
 			$wcf = new TemplateScriptingCore($wcf);
 		}
 		
