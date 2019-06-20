@@ -211,6 +211,7 @@ class LinkHandler extends SingletonFactory {
 		}
 		
 		$parameters['controller'] = $controller;
+		$abbreviation = ControllerMap::getInstance()->getApplicationOverride($abbreviation, $controller);
 		$routeURL = RouteHandler::getInstance()->buildRoute($abbreviation, $parameters, $isACP);
 		if (!$isRaw && !empty($url)) {
 			$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
@@ -222,8 +223,6 @@ class LinkHandler extends SingletonFactory {
 		}
 		
 		$url = $routeURL . $url;
-		
-		$abbreviation = ControllerMap::getInstance()->getApplicationOverride($abbreviation, $controller);
 		
 		// handle applications
 		if (!PACKAGE_ID) {
