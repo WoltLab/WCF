@@ -176,10 +176,14 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 		 * @param	{object}	formData
 		 */
 		_submitForm: function(formData) {
+			var submitButton = elBySel('button[data-type=submit]',  UiDialog.getDialog(this).content);
+			
 			if (typeof this._options.onSubmit === 'function') {
-				this._options.onSubmit(formData);
+				this._options.onSubmit(formData, submitButton);
 			}
 			else if (typeof this._options.submitActionName === 'string') {
+				submitButton.disabled = true;
+				
 				Ajax.api(this, {
 					actionName: this._options.submitActionName,
 					parameters: {
