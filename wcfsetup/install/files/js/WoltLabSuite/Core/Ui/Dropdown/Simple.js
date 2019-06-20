@@ -330,7 +330,7 @@ define(
 					this.toggleDropdown(containerId);
 				}
 				else {
-					this.setAlignment(containerId, _menus.get(containerId));
+					this.setAlignment(_dropdowns.get(containerId), _menus.get(containerId));
 				}
 			}
 		},
@@ -408,7 +408,7 @@ define(
 				}
 				
 				// check if 'isOverlayDropdownButton' is set which indicates that the dropdown toggle is within an overlay
-				if (elData(dropdown, 'is-overlay-dropdown-button') === null) {
+				if (elData(dropdown, 'is-overlay-dropdown-button') === '') {
 					var dialogContent = DomTraverse.parentByClass(dropdown, 'dialogContent');
 					elData(dropdown, 'is-overlay-dropdown-button', (dialogContent !== null));
 					
