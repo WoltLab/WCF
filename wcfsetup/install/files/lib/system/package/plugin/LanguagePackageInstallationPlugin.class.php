@@ -621,6 +621,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 */
 	protected function getEmptyXml($languageCode) {
 		$xsdFilename = $this->getXsdFilename();
+		$apiVersion = WSC_API_VERSION;
 		
 		$language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
 		if ($language === null) {
@@ -629,7 +630,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		
 		return <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/" . WSC_API_VERSION . "/{$xsdFilename}.xsd" languagecode="{$language->languageCode}" languagename="{$language->languageName}" countrycode="{$language->countryCode}">
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/{$apiVersion}/{$xsdFilename}.xsd" languagecode="{$language->languageCode}" languagename="{$language->languageName}" countrycode="{$language->countryCode}">
 </language>
 XML;
 	}
