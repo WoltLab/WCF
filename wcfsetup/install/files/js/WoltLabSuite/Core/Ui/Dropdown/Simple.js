@@ -64,7 +64,7 @@ define(
 		 * Initializes a dropdown.
 		 * 
 		 * @param	{Element}	button
-		 * @param	{boolean}	isLazyInitialization
+		 * @param	{boolean|Event}	isLazyInitialization
 		 */
 		init: function(button, isLazyInitialization) {
 			this.setup();
@@ -128,7 +128,15 @@ define(
 			elData(button, 'target', containerId);
 			
 			if (isLazyInitialization) {
-				setTimeout(function() { Core.triggerEvent(button, WCF_CLICK_EVENT); }, 10);
+				setTimeout(function() {
+					elData(button, 'dropdown-lazy-init', (isLazyInitialization instanceof MouseEvent));
+					
+					Core.triggerEvent(button, WCF_CLICK_EVENT);
+					
+					setTimeout(function() {
+						button.removeAttribute('data-dropdown-lazy-init');
+					}, 10);
+				}, 10);
 			}
 		},
 		
@@ -396,14 +404,20 @@ define(
 				
 				//noinspection JSCheckFunctionSignatures
 				targetId = elData(event.currentTarget, 'target');
+				
+				if (disableAutoFocus === undefined && event instanceof MouseEvent) {
+					disableAutoFocus = true;
+				}
 			}
 			
 			var dropdown = _dropdowns.get(targetId), preventToggle = false;
 			if (dropdown !== undefined) {
+				var button;
+				
 				// check if the dropdown is still the same, as some components (e.g. page actions)
 				// re-create the parent of a button
 				if (event) {
-					var button = event.currentTarget, parent = button.parentNode;
+					button = event.currentTarget, parent = button.parentNode;
 					if (parent !== dropdown) {
 						parent.classList.add('dropdown');
 						parent.id = dropdown.id;
@@ -414,6 +428,21 @@ define(
 						
 						dropdown = parent;
 						_dropdowns.set(targetId, parent);
+					}
+				}
+				
+				if (disableAutoFocus === undefined) {
+					button = dropdown.closest('.dropdownToggle');
+					if (!button) {
+						button = elBySel('.dropdownToggle', dropdown);
+						
+						if (!button && dropdown.id) {
+							button = elBySel('[data-target="' + dropdown.id + '"]');
+						}
+					}
+					
+					if (button && elDataBool(button, 'dropdown-lazy-init')) {
+						disableAutoFocus = true;
 					}
 				}
 				

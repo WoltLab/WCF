@@ -827,8 +827,8 @@ WCF.Dropdown = {
 	/**
 	 * Initializes a dropdown.
 	 * 
-	 * @param	jQuery		button
-	 * @param	boolean		isLazyInitialization
+	 * @param	{jQuery}		button
+	 * @param	{boolean|Event}		isLazyInitialization
 	 */
 	initDropdown: function(button, isLazyInitialization) {
 		window.bc_wcfSimpleDropdown.init(button[0], isLazyInitialization);
@@ -5735,7 +5735,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			}
 			
 			if ($trigger !== null) {
-				WCF.Dropdown.initDropdown($trigger, true);
+				WCF.Dropdown.initDropdown($trigger, event.originalEvent || event);
 			}
 			
 			return false;
