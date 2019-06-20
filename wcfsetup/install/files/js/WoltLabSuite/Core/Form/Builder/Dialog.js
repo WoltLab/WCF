@@ -35,8 +35,7 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 				usesDboAction: this._className.match(/\w+\\data\\/)
 			}, options);
 			this._options.dialog = Core.extend(this._options.dialog || {}, {
-				onClose: this._dialogOnClose.bind(this),
-				onSetup: this._dialogOnSetup.bind(this)
+				onClose: this._dialogOnClose.bind(this)
 			});
 			
 			this._formId = '';
@@ -86,12 +85,7 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 						throw new Error("Missing form id in return data.");
 					}
 					
-					this.destroy(true);
-					
-					this._formId = data.returnValues.formId;
-					this._dialogContent = data.returnValues.dialog;
-					
-					UiDialog.open(this, this._dialogContent);
+					this._openDialogContent(data.returnValues.formId, data.returnValues.dialog);
 					
 					break;
 					
@@ -102,11 +96,7 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 							throw new Error("Mismatch between form ids: expected '" + this._formId + "' but got '" + data.returnValues.formId + "'.");
 						}
 						
-						this.destroy(true);
-						
-						this._dialogContent = data.returnValues.dialog;
-						
-						UiDialog.open(this, this._dialogContent);
+						this._openDialogContent(data.returnValues.formId, data.returnValues.dialog);
 					}
 					else {
 						this.destroy();
@@ -128,18 +118,6 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 		 */
 		_closeDialog: function() {
 			UiDialog.close(this);
-		},
-		
-		/**
-		 * Is called when the dialog is set up.
-		 * 
-		 * @param	{HTMLElement}	content		dialog's content element
-		 */
-		_dialogOnSetup: function(content) {
-			var cancelButton = elBySel('button[data-type=cancel]', content);
-			if (cancelButton !== null) {
-				cancelButton.addEventListener('click', this._closeDialog.bind(this));
-			}
 		},
 		
 		/**
@@ -169,6 +147,27 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 		 */
 		_dialogSubmit: function() {
 			this.getData().then(this._submitForm.bind(this));
+		},
+		
+		/**
+		 * Opens the form dialog with the given form content.
+		 * 
+		 * @param	{string}	formId
+		 * @param	{string}	dialogContent
+		 */
+		_openDialogContent: function(formId, dialogContent) {
+			this.destroy(true);
+			
+			this._formId = formId;
+			this._dialogContent = dialogContent;
+			
+			var dialogData = UiDialog.open(this, this._dialogContent);
+			
+			var cancelButton = elBySel('button[data-type=cancel]', dialogData.content);
+			if (cancelButton !== null && !elDataBool(cancelButton, 'has-event-listener')) {
+				cancelButton.addEventListener('click', this._closeDialog.bind(this));
+				elData(cancelButton, 'has-event-listener', 1);
+			}
 		},
 		
 		/**
