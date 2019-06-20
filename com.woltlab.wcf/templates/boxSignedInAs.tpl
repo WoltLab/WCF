@@ -1,4 +1,6 @@
 <div class="box96">
+	{event name='signedInAs'}
+	
 	{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(96)}
 	
 	<div>
