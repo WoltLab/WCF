@@ -1,6 +1,8 @@
 <ul class="sidebarItemList">
 	{foreach from=$usersOnlineList item=userOnline}
 		<li class="box32">
+			{event name='staffOnlineListItem'}
+			
 			<a href="{link controller='User' object=$userOnline}{/link}">{@$userOnline->getAvatar()->getImageTag(32)}</a>
 			
 			<div class="sidebarItemTitle">
