@@ -4,7 +4,7 @@
 <div id="pageHeaderSearch" class="pageHeaderSearch" data-disable-auto-focus="true">
 	<div class="pageHeaderSearchInputContainer">
 		<div id="pageHeaderSearchType" class="pageHeaderSearchType dropdown">
-			<a href="#" class="button dropdownToggle">{lang}wcf.search.type.everywhere{/lang}</a>
+			<a href="#" class="button dropdownToggle"><span class="pageHeaderSearchTypeLabel">{lang}wcf.search.type.everywhere{/lang}</span></a>
 			<ul class="dropdownMenu">
 				<li><a href="#" data-provider-name="everywhere">{lang}wcf.search.type.everywhere{/lang}</a></li>
 				<li class="dropdownDivider"></li>

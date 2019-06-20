@@ -1311,7 +1311,7 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 		$dropdown.find('a[data-provider-name]').on('click', $.proxy(function(event) {
 			event.preventDefault();
 			var $button = $(event.target);
-			$('.pageHeaderSearchType > .button').text($button.text());
+			$('.pageHeaderSearchType > .button > .pageHeaderSearchTypeLabel').text($button.text());
 			
 			var $oldProviderName = this._providerName;
 			this._providerName = ($button.data('providerName') != 'everywhere' ? $button.data('providerName') : '');
