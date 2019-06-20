@@ -136,7 +136,7 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 		 * @param	{HTMLElement}	content		dialog's content element
 		 */
 		_dialogOnSetup: function(content) {
-			var cancelButton = elById(this._formId + '_cancelButton', content);
+			var cancelButton = elBySel('button[data-type=cancel]', content);
 			if (cancelButton !== null) {
 				cancelButton.addEventListener('click', this._closeDialog.bind(this));
 			}
