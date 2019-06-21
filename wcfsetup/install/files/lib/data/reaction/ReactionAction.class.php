@@ -14,6 +14,7 @@ use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -208,10 +209,24 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 	 * Validates parameters to load reactions.
 	 */
 	public function validateLoad() {
+		if (!MODULE_LIKE) {
+			throw new IllegalLinkException();
+		}
+		
 		$this->readInteger('lastLikeTime', true);
 		$this->readInteger('userID');
 		$this->readInteger('reactionTypeID');
 		$this->readString('targetType');
+		
+		$user = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
+		
+		if ($user === null) {
+			throw new IllegalLinkException();
+		}
+		
+		if ($user->isProtected()) {
+			throw new PermissionDeniedException();
+		}
 	}
 	
 	/**
