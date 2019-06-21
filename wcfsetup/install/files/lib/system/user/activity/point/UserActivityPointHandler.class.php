@@ -151,11 +151,12 @@ class UserActivityPointHandler extends SingletonFactory {
 	/**
 	 * Removes activity point events.
 	 * 
-	 * @param	string			$objectType
-	 * @param	integer[]		$userToItems
+	 * @param	string		$objectType
+	 * @param	integer[]	$userToItems
+	 * @param	boolean		$isBulkProcessing
 	 * @throws	InvalidObjectTypeException
 	 */
-	public function removeEvents($objectType, array $userToItems) {
+	public function removeEvents($objectType, array $userToItems, $isBulkProcessing = false) {
 		if (empty($userToItems)) return;
 		
 		// get and validate object type
@@ -180,9 +181,13 @@ class UserActivityPointHandler extends SingletonFactory {
 			]);
 		}
 		
-		// update total activity points per user
-		$userIDs = array_keys($userToItems);
-		$this->updateUsers($userIDs);
+		// during bulk processing, users do not have to be updated because
+		// they can be updated via `UserRebuildDataWorker` afterwards
+		// which calls `updateUsers()` 
+		if (!$isBulkProcessing) {
+			// update total activity points per user
+			$this->updateUsers(array_keys($userToItems));
+		}
 	}
 	
 	/**
