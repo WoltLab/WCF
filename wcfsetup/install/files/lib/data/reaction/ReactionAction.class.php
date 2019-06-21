@@ -40,7 +40,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = ['getReactionDetails'];
+	protected $allowGuestAccess = ['getReactionDetails', 'load'];
 	
 	/**
 	 * @inheritDoc
