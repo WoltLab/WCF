@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Date/Picker
  */
-define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment', 'WoltLabSuite/Core/Ui/CloseOverlay'], function(DateUtil, EventHandler, Language, ObjectMap, DomChangeListener, UiAlignment, UiCloseOverlay) {
+define(['DateUtil', 'Dom/Traverse', 'Dom/Util', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment', 'WoltLabSuite/Core/Ui/CloseOverlay'], function(DateUtil, DomTraverse, DomUtil, EventHandler, Language, ObjectMap, DomChangeListener, UiAlignment, UiCloseOverlay) {
 	"use strict";
 	
 	var _didInit = false;
@@ -303,6 +303,14 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 				return;
 			}
 			
+			var dialogContent = DomTraverse.parentByClass(input, 'dialogContent');
+			if (dialogContent !== null) {
+				if (!elDataBool(dialogContent, 'has-datepicker-scroll-listener')) {
+					dialogContent.addEventListener('scroll', this._onDialogScroll.bind(this));
+					elData(dialogContent, 'has-datepicker-scroll-listener', 1);
+				}
+			}
+			
 			_input = input;
 			var data = _data.get(_input), date, value = elData(_input, 'value');
 			if (value) {
@@ -364,6 +372,44 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 				_input = null;
 				_minDate = 0;
 				_maxDate = 0;
+			}
+		},
+		
+		/**
+		 * Updates the position of the date picker in a dialog if the dialog content
+		 * is scrolled.
+		 * 
+		 * @param	{Event}		event	scroll event
+		 */
+		_onDialogScroll: function(event) {
+			if (_input === null) {
+				return;
+			}
+			
+			var dialogContent = event.currentTarget;
+			
+			var offset = DomUtil.offset(_input);
+			var dialogOffset = DomUtil.offset(dialogContent);
+			
+			// check if date picker input field is still (partially) visible
+			if (offset.top + _input.clientHeight <= dialogOffset.top) {
+				// top check
+				this._close();
+			}
+			else if (offset.top >= dialogOffset.top + dialogContent.offsetHeight) {
+				// bottom check
+				this._close();
+			}
+			else if (offset.left <= dialogOffset.left) {
+				// left check
+				this._close();
+			}
+			else if (offset.left >= dialogOffset.left + dialogContent.offsetWidth) {
+				// right check
+				this._close();
+			}
+			else {
+				UiAlignment.set(_datePicker, _input);
 			}
 		},
 		
