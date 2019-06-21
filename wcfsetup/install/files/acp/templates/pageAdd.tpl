@@ -185,8 +185,10 @@
 						<dt><label for="overrideApplicationPackageID">{lang}wcf.acp.page.application{/lang}</label></dt>
 						<dd>
 							<select name="overrideApplicationPackageID" id="overrideApplicationPackageID">
+								{assign var='_overrideApplicationPackageID' value=$overrideApplicationPackageID}
+								{if !$_overrideApplicationPackageID}{assign var='_overrideApplicationPackageID' value=$page->applicationPackageID}{/if}
 								{foreach from=$availableApplications item=availableApplication}
-									<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $overrideApplicationPackageID} selected{/if}>{$availableApplication->domainName}{$availableApplication->domainPath}</option>
+									<option value="{@$availableApplication->packageID}"{if $availableApplication->packageID == $_overrideApplicationPackageID} selected{/if}>{$availableApplication->domainName}{$availableApplication->domainPath}</option>
 								{/foreach}
 							</select>
 							{if $errorField == 'overrideApplicationPackageID'}
