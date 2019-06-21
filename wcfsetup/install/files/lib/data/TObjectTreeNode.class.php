@@ -14,7 +14,7 @@ use wcf\util\ClassUtil;
 trait TObjectTreeNode {
 	/**
 	 * child nodes
-	 * @var	TObjectTreeNode[]
+	 * @var	static[]
 	 */
 	protected $children = [];
 	
@@ -26,7 +26,7 @@ trait TObjectTreeNode {
 	
 	/**
 	 * parent node object
-	 * @var	TObjectTreeNode
+	 * @var	static
 	 */
 	protected $parentNode = null;
 	
@@ -58,7 +58,7 @@ trait TObjectTreeNode {
 	/**
 	 * Return the currently iterated child node.
 	 * 
-	 * @return	IObjectTreeNode
+	 * @return	static
 	 */
 	public function current() {
 		return $this->children[$this->index];
@@ -67,7 +67,7 @@ trait TObjectTreeNode {
 	/**
 	 * Returns an iterator for the currently iterated child node by returning the node itself.
 	 * 
-	 * @return	IObjectTreeNode
+	 * @return	static
 	 */
 	public function getChildren() {
 		return $this->children[$this->index];
@@ -109,6 +109,15 @@ trait TObjectTreeNode {
 		return $i;
 	}
 
+	/**
+	 * Retruns the parent node of this node.
+	 * 
+	 * @return	static		parent node
+	 */
+	public function getParentNode() {
+		return $this->parentNode;
+	}
+	
 	/**
 	 * Returns `true` if the node as any children and return `false` otherwise.
 	 * 

@@ -36,6 +36,13 @@ interface IObjectTreeNode extends \Countable, IIDObject, \RecursiveIterator {
 	public function getOpenParentNodes();
 	
 	/**
+	 * Retruns the parent node of this node.
+	 * 
+	 * @return	static		parent node
+	 */
+	public function getParentNode();
+	
+	/**
 	 * Returns `true` if this node is the last sibling and `false` otherwise.
 	 * 
 	 * @return	boolean
