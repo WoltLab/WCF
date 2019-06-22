@@ -3,7 +3,7 @@
 	*}{foreach from=$container->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}{if !$container->checkDependencies()} style="display: none;"{/if}{*
 *}>
-	<nav class="tabMenu">
+	<nav class="{if !$__tabMenuCSSClassName|empty}{@$__tabMenuCSSClassName}{else}tabMenu{/if}">
 		<ul>
 			{foreach from=$container item='child'}
 				{if $child->isAvailable()}
