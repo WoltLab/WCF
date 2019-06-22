@@ -1,5 +1,5 @@
 <section id="{@$container->getPrefixedId()}Container"{*
-	*}{if !$container->getClasses()|empty}class="{implode from=$container->getClasses() item='class' glue=' '}{$class}{/implode}" {/if}{*
+	*}{if !$container->getClasses()|empty} class="{implode from=$container->getClasses() item='class' glue=' '}{$class}{/implode}" {/if}{*
 	*}{foreach from=$container->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
 	*}{if !$container->checkDependencies()} style="display: none;"{/if}{*
 *}>
