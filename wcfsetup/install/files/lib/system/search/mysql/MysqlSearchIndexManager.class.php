@@ -44,12 +44,20 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 	 * @inheritDoc
 	 */
 	public function delete($objectType, array $objectIDs) {
-		$sql = "DELETE FROM	" . SearchIndexManager::getTableName($objectType) . "
-			WHERE		objectID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
+		// instead of executing one query per object id, execute queries
+		// for batches of up to 1000 object ids at once
+		$itemsPerLoop = 1000;
+		$batchCount = ceil(count($objectIDs) / $itemsPerLoop);
+		$tableName = SearchIndexManager::getTableName($objectType);
+		
 		WCF::getDB()->beginTransaction();
-		foreach ($objectIDs as $objectID) {
-			$statement->execute([$objectID]);
+		for ($i = 0; $i < $batchCount; $i++) {
+			$batchObjectIDs = array_slice($objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
+			
+			$sql = "DELETE FROM	" . $tableName . "
+				WHERE		objectID IN (?" . str_repeat(', ?', count($batchObjectIDs) - 1) . ")";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($batchObjectIDs);
 		}
 		WCF::getDB()->commitTransaction();
 	}
