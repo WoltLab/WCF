@@ -3,6 +3,6 @@
 {js application='wcf' file='WCF.Message' bundle='WCF.Combined'}
 <script data-relocate="true">
 	$(function() {
-		$('.messageTabMenu').messageTabMenu();
+		$('#{@$container->getPrefixedId()}Container').messageTabMenu();
 	});
 </script>

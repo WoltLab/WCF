@@ -49,6 +49,7 @@
     "__wysiwygPreviewFormButton",
     "__wysiwygSmileyFormContainer",
     "__wysiwygSmileyFormNode",
+    "__wysiwygTabMenuFormContainer",
     "aclPermissionJavaScript",
     "articleAdd",
     "articleAddDialog",
