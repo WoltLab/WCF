@@ -77,13 +77,20 @@ class EditHistoryManager extends SingletonFactory {
 	public function delete($objectType, array $objectIDs) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
 		
-		$sql = "DELETE FROM	wcf".WCF_N."_edit_history_entry
-			WHERE		objectTypeID = ?
-				AND	objectID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
+		// instead of executing one query per object id, execute queries
+		// for batches of up to 1000 object ids at once
+		$itemsPerLoop = 1000;
+		$batchCount = ceil(count($objectIDs) / $itemsPerLoop);
+		
 		WCF::getDB()->beginTransaction();
-		foreach ($objectIDs as $objectID) {
-			$statement->execute([$objectTypeID, $objectID]);
+		for ($i = 0; $i < $batchCount; $i++) {
+			$batchObjectIDs = array_slice($objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
+			
+			$sql = "DELETE FROM	wcf".WCF_N."_edit_history_entry
+				WHERE		objectTypeID = ?
+						AND objectID IN (?" . str_repeat(', ?', count($batchObjectIDs) - 1) . ")";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(array_merge([$objectTypeID], $batchObjectIDs));
 		}
 		WCF::getDB()->commitTransaction();
 	}
