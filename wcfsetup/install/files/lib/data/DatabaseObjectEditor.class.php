@@ -100,14 +100,22 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	 * @inheritDoc
 	 */
 	public static function deleteAll(array $objectIDs = []) {
-		$sql = "DELETE FROM	".static::getDatabaseTableName()."
-			WHERE		".static::getDatabaseTableIndexName()." = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
 		$affectedCount = 0;
+		
+		// instead of executing one query per object id, execute queries
+		// for batches of up to 1000 object ids at once
+		$itemsPerLoop = 1000;
+		$batchCount = ceil(count($objectIDs) / $itemsPerLoop);
+		
 		WCF::getDB()->beginTransaction();
-		foreach ($objectIDs as $objectID) {
-			$statement->execute([$objectID]);
+		for ($i = 0; $i < $batchCount; $i++) {
+			$batchObjectIDs = array_slice($objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
+			
+			$sql = "DELETE FROM	" . static::getDatabaseTableName() . "
+				WHERE		" . static::getDatabaseTableIndexName() . 
+						" IN (?" . str_repeat(', ?', count($batchObjectIDs) - 1) . ")";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($batchObjectIDs);
 			$affectedCount += $statement->getAffectedRows();
 		}
 		WCF::getDB()->commitTransaction();
