@@ -533,6 +533,12 @@
 			<nicevalue>70</nicevalue>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.activityPointItems</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname>wcf\system\worker\UserActivityPointItemsRebuildDataWorker</classname>
+			<nicevalue>75</nicevalue>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.attachment</name>
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 			<classname>wcf\system\worker\AttachmentRebuildDataWorker</classname>

@@ -14,7 +14,6 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\image\ImageHandler;
-use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\WCF;
 
 /**
@@ -68,9 +67,6 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 		}
 		
 		if (!empty($userIDs)) {
-			// update activity points
-			UserActivityPointHandler::getInstance()->updateUsers($userIDs);
-			
 			// update article counter
 			$conditionBuilder = new PreparedStatementConditionBuilder();
 			$conditionBuilder->add('user_table.userID IN (?)', [$userIDs]);
