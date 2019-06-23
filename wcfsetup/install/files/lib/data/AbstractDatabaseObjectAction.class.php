@@ -362,16 +362,56 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			$this->readObjects();
 		}
 		
-		if (isset($this->parameters['data'])) {
-			foreach ($this->getObjects() as $object) {
-				$object->update($this->parameters['data']);
+		$tableName = call_user_func([$this->className, 'getDatabaseTableName']);
+		$indexName = call_user_func([$this->className, 'getDatabaseTableIndexName']);
+		
+		// instead of executing one query per object id, execute queries
+		// for batches of up to 1000 object ids at once
+		$itemsPerLoop = 1000;
+		$batchCount = ceil(count($this->objectIDs) / $itemsPerLoop);
+		
+		if (!empty($this->parameters['data'])) {
+			$updateSQL = '';
+			$statementParameters = [];
+			foreach ($this->parameters['data'] as $key => $value) {
+				if (!empty($updateSQL)) $updateSQL .= ', ';
+				$updateSQL .= $key . ' = ?';
+				$statementParameters[] = $value;
 			}
+			
+			WCF::getDB()->beginTransaction();
+			for ($i = 0; $i < $batchCount; $i++) {
+				$batchObjectIDs = array_slice($this->objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
+				
+				$sql = "UPDATE	" . $tableName . "
+					SET	" . $updateSQL . "
+					WHERE	" . $indexName . " IN (?" . str_repeat(', ?', count($batchObjectIDs) - 1) . ")";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array_merge($statementParameters, $batchObjectIDs));
+			}
+			WCF::getDB()->commitTransaction();
 		}
 		
-		if (isset($this->parameters['counters'])) {
-			foreach ($this->getObjects() as $object) {
-				$object->updateCounters($this->parameters['counters']);
+		if (!empty($this->parameters['counters'])) {
+			$updateSQL = '';
+			$statementParameters = [];
+			foreach ($this->parameters['counters'] as $key => $value) {
+				if (!empty($updateSQL)) $updateSQL .= ', ';
+				$updateSQL .= $key . ' = ' . $key . ' + ?';
+				$statementParameters[] = $value;
 			}
+			
+			WCF::getDB()->beginTransaction();
+			for ($i = 0; $i < $batchCount; $i++) {
+				$batchObjectIDs = array_slice($this->objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
+				
+				$sql = "UPDATE	" . $tableName . "
+					SET	" . $updateSQL . "
+					WHERE	" . $indexName . " IN (?" . str_repeat(', ?', count($batchObjectIDs) - 1) . ")";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute(array_merge($statementParameters, $batchObjectIDs));
+			}
+			WCF::getDB()->commitTransaction();
 		}
 	}
 	
