@@ -1,6 +1,8 @@
 <?php
 namespace wcf\data\user\profile\menu\item;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\menu\user\profile\UserProfileMenu;
@@ -42,6 +44,16 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction {
 			throw new UserInputException('menuItem');
 		}
 		if (!$this->menuItem->getContentManager()->isVisible($this->parameters['data']['userID'])) {
+			throw new PermissionDeniedException();
+		}
+		
+		$user = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['data']['userID']);
+		
+		if ($user === null) {
+			throw new IllegalLinkException();
+		}
+		
+		if ($user->isProtected()) {
 			throw new PermissionDeniedException();
 		}
 	}
