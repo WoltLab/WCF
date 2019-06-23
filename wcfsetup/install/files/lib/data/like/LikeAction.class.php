@@ -3,6 +3,8 @@ namespace wcf\data\like;
 use wcf\data\reaction\ReactionAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IGroupedUserListAction;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\like\LikeHandler;
@@ -289,10 +291,24 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	 * Validates parameters to load likes.
 	 */
 	public function validateLoad() {
+		if (!MODULE_LIKE) {
+			throw new IllegalLinkException();
+		}
+		
 		$this->readInteger('lastLikeTime', true);
 		$this->readInteger('userID');
 		$this->readInteger('likeValue');
 		$this->readString('likeType');
+		
+		$user = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
+		
+		if ($user === null) {
+			throw new IllegalLinkException();
+		}
+		
+		if ($user->isProtected()) {
+			throw new PermissionDeniedException();
+		}
 	}
 	
 	/**
