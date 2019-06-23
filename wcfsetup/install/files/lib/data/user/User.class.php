@@ -64,7 +64,7 @@ use wcf\util\UserUtil;
  * @property-read	integer		$activityPoints			total number of the user's activity points
  * @property-read	string		$notificationMailToken		token used for authenticating requests by the user to disable notification emails
  * @property-read	string		$authData			data of the third party used for authentication
- * @property-read	integer		$likesReceived			cumulative result of likes (counting +1) and dislikes (counting -1) the user's contents have received
+ * @property-read	integer		$likesReceived			cumulative result of likes (counting +1) the user's contents have received
  * @property-read       string          $coverPhotoHash                 hash of the user's cover photo
  * @property-read	string		$coverPhotoExtension		extension of the user's cover photo file
  * @property-read       integer         $disableCoverPhoto              is `1` if the user's cover photo has been disabled, otherwise `0`
