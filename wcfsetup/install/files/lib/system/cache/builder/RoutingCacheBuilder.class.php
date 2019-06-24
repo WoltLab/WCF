@@ -74,7 +74,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 			$languageIDs[] = $language->languageID;
 		}
 		
-		$sql = "SELECT  pageID, pageType, controller, applicationPackageID, overrideApplicationPackageID
+		$sql = "SELECT  pageID, pageType, controller, controllerCustomURL, applicationPackageID, overrideApplicationPackageID
 			FROM    wcf".WCF_N."_page
 			WHERE   overrideApplicationPackageID IS NOT NULL";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -88,6 +88,16 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 				$controller = preg_replace('/(?:Action|Form|Page)$/', '', array_pop($tmp));
 				$data['lookup'][$overrideApplication][$controller] = $application;
 				$data['reverse'][$application][$controller] = $overrideApplication;
+				
+				$controllerCustomURL = $row['controllerCustomURL'];
+				if ($controllerCustomURL) {
+					$data['lookup'][$overrideApplication][$controllerCustomURL] = $application;
+					
+					// Copy the custom url to the new application.
+					if (isset($customUrls['reverse'][$application][$controller])) {
+						$customUrls['reverse'][$overrideApplication][$controller] = $customUrls['reverse'][$application][$controller];
+					}
+				}
 			}
 			else {
 				foreach ($languageIDs as $languageID) {

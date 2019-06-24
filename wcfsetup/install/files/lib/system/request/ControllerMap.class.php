@@ -134,6 +134,10 @@ class ControllerMap extends SingletonFactory {
 	 * @return	array		empty array if there is no exact match
 	 */
 	public function resolveCustomController($application, $controller) {
+		if (isset($this->applicationOverrides['lookup'][$application][$controller])) {
+			$application = $this->applicationOverrides['lookup'][$application][$controller];
+		}
+		
 		if (isset($this->customUrls['lookup'][$application]) && isset($this->customUrls['lookup'][$application][$controller])) {
 			$data = $this->customUrls['lookup'][$application][$controller];
 			if (preg_match('~^__WCF_CMS__(?P<pageID>\d+)-(?P<languageID>\d+)$~', $data, $matches)) {
