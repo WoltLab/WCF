@@ -75,6 +75,19 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	];
 	
 	/**
+	 * list of tag names that represent inline content in the HTML 5 standard
+	 * @var string[]
+	 */
+	public static $inlineElements = [
+		'a', 'abbr', 'acronym', 'audio', 'b', 'bdi', 'bdo', 'big', 'br', 'button',
+		'canvas', 'cite', 'code', 'data', 'datalist', 'del', 'dfn', 'em', 'embed',
+		'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'label', 'map', 'mark', 'meter',
+		'noscript', 'object', 'output', 'picture', 'progress', 'q', 'ruby', 's',
+		'samp', 'script', 'select', 'slot', 'small', 'span', 'strong', 'sub', 'sup',
+		'svg', 'template', 'textarea', 'time', 'u', 'tt', 'var', 'video', 'wbr',
+	];
+	
+	/**
 	 * list of embedded content grouped by type
 	 * @var array
 	 */
@@ -234,6 +247,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		$node = $this->getDocument()->getElementsByTagName('body')->item(0)->firstChild;
 		while ($node) {
 			if ($node->nodeType === XML_ELEMENT_NODE && $node->nodeName === 'woltlab-metacode-marker') {
+				$node = $appendToPreviousParagraph($node);
+			}
+			else if ($node->nodeType === XML_ELEMENT_NODE && in_array($node->nodeName, self::$inlineElements)) {
 				$node = $appendToPreviousParagraph($node);
 			}
 			else if ($node->nodeType === XML_TEXT_NODE) {
