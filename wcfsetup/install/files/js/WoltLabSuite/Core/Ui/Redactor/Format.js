@@ -235,6 +235,7 @@ define(['Dom/Util'], function(DomUtil) {
 			// removal of the format in an empty line should remove it from its entirely, instead of just around
 			// the caret position.
 			var range = selection.getRangeAt(0);
+			var helperTextNode = null;
 			if (range.collapsed) {
 				var container = range.startContainer;
 				var tree = [container];
@@ -275,6 +276,13 @@ define(['Dom/Util'], function(DomUtil) {
 					
 					return;
 				}
+				
+				// Fill up the range with a zero length whitespace to give the browser
+				// something to strike through. If the range is completely empty, the
+				// "strike" is remembered by the browser, but not actually inserted into
+				// the DOM, causing the next keystroke to magically insert it.
+				helperTextNode = document.createTextNode('\u200B');
+				range.insertNode(helperTextNode);
 			}
 			
 			var strikeElements = elByTag('strike', editorElement);
@@ -323,6 +331,11 @@ define(['Dom/Util'], function(DomUtil) {
 					}
 				}
 			});
+			
+			if (helperTextNode !== null) {
+				window.jQuery(editorElement).redactor('caret.after', range.parentNode);
+				elRemove(helperTextNode);
+			}
 		},
 		
 		/**
