@@ -4643,7 +4643,6 @@
 						else {
 							var $first = this.inline.insertBreakpoint(inline, currentTag);
 							this.caret.after($first);
-
 						}
 					}
 					else {
