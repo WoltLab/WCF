@@ -16,17 +16,19 @@
 
 <form method="post" action="{link controller='Register'}{/link}">
 	<div class="section">
-		<dl{if $errorType.username|isset} class="formError"{/if}>
+		<dl{if $errorType[username]|isset} class="formError"{/if}>
 			<dt>
 				<label for="{@$randomFieldNames[username]}">{lang}wcf.user.username{/lang}</label> <span class="customOptionRequired">*</span>
 			</dt>
 			<dd>
 				<input type="text" id="{@$randomFieldNames[username]}" name="{@$randomFieldNames[username]}" value="{$username}" required class="medium" autocomplete="username">
-				{if $errorType.username|isset}
+				{if $errorType[username]|isset}
 					<small class="innerError">
-						{if $errorType.username == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-						{if $errorType.username == 'invalid'}{lang}wcf.user.username.error.invalid{/lang}{/if}
-						{if $errorType.username == 'notUnique'}{lang}wcf.user.username.error.notUnique{/lang}{/if}
+						{if $errorType[username] == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.user.username.error.{$errorType[username]}{/lang}
+						{/if}
 					</small>
 				{/if}
 				<small>{lang}wcf.user.username.description{/lang}</small>
@@ -66,31 +68,33 @@
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.user.email{/lang}</h2>
 		
-		<dl{if $errorType.email|isset} class="formError"{/if}>
+		<dl{if $errorType[email]|isset} class="formError"{/if}>
 			<dt>
 				<label for="{@$randomFieldNames[email]}">{lang}wcf.user.email{/lang}</label> <span class="customOptionRequired">*</span>
 			</dt>
 			<dd>
 				<input type="email" id="{@$randomFieldNames[email]}" name="{@$randomFieldNames[email]}" value="{$email}" required class="medium">
-				{if $errorType.email|isset}
+				{if $errorType[email]|isset}
 					<small class="innerError">
-						{if $errorType.email == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-						{if $errorType.email == 'invalid'}{lang}wcf.user.email.error.invalid{/lang}{/if}
-						{if $errorType.email == 'notUnique'}{lang}wcf.user.email.error.notUnique{/lang}{/if}
+						{if $errorType[email] == 'empty'}
+							{lang}wcf.global.form.error.empty{/lang}
+						{else}
+							{lang}wcf.user.email.error.{$errorType[email]}{/lang}
+						{/if}
 					</small>
 				{/if}
 			</dd>
 		</dl>
 		
-		<dl{if $errorType.confirmEmail|isset} class="formError"{/if}>
+		<dl{if $errorType[confirmEmail]|isset} class="formError"{/if}>
 			<dt>
 				<label for="{@$randomFieldNames[confirmEmail]}">{lang}wcf.user.confirmEmail{/lang}</label> <span class="customOptionRequired">*</span>
 			</dt>
 			<dd>
 				<input type="email" id="{@$randomFieldNames[confirmEmail]}" name="{@$randomFieldNames[confirmEmail]}" value="{$confirmEmail}" required class="medium">
-				{if $errorType.confirmEmail|isset}
+				{if $errorType[confirmEmail]|isset}
 					<small class="innerError">
-						{if $errorType.confirmEmail == 'notEqual'}{lang}wcf.user.confirmEmail.error.notEqual{/lang}{/if}
+						{lang}wcf.user.confirmEmail.error.{$errorType[confirmEmail]}{/lang}
 					</small>
 				{/if}
 			</dd>
@@ -103,31 +107,34 @@
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.user.password{/lang}</h2>
 			
-			<dl{if $errorType.password|isset} class="formError"{/if}>
+			<dl{if $errorType[password]|isset} class="formError"{/if}>
 				<dt>
 					<label for="{@$randomFieldNames[password]}">{lang}wcf.user.password{/lang}</label> <span class="customOptionRequired">*</span>
 				</dt>
 				<dd>
 					<input type="password" id="{@$randomFieldNames[password]}" name="{@$randomFieldNames[password]}" value="{$password}" required class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
-					{if $errorType.password|isset}
+					{if $errorType[password]|isset}
 						<small class="innerError">
-							{if $errorType.password == 'empty'}{lang}wcf.global.form.error.empty{/lang}{/if}
-							{if $errorType.password == 'notSecure'}{lang}wcf.user.password.error.notSecure{/lang}{/if}
+							{if $errorType[password] == 'empty'}
+								{lang}wcf.global.form.error.empty{/lang}
+							{else}
+								{lang}wcf.user.password.error.{$errorType[password]}{/lang}
+							{/if}
 						</small>
 					{/if}
 					<small>{lang}wcf.user.password.description{/lang}</small>
 				</dd>
 			</dl>
 			
-			<dl{if $errorType.confirmPassword|isset} class="formError"{/if}>
+			<dl{if $errorType[confirmPassword]|isset} class="formError"{/if}>
 				<dt>
 					<label for="{@$randomFieldNames[confirmPassword]}">{lang}wcf.user.confirmPassword{/lang}</label> <span class="customOptionRequired">*</span>
 				</dt>
 				<dd>
 					<input type="password" id="{@$randomFieldNames[confirmPassword]}" name="{@$randomFieldNames[confirmPassword]}" value="{$confirmPassword}" required class="medium" autocomplete="new-password" passwordrules="{$passwordRulesAttributeValue}">
-					{if $errorType.confirmPassword|isset}
+					{if $errorType[confirmPassword]|isset}
 						<small class="innerError">
-							{if $errorType.confirmPassword == 'notEqual'}{lang}wcf.user.confirmPassword.error.notEqual{/lang}{/if}
+							{lang}wcf.user.confirmPassword.error.{$errorType[confirmPassword]}{/lang}
 						</small>
 					{/if}
 				</dd>
