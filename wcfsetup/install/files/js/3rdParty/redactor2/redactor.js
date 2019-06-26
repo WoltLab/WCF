@@ -5486,10 +5486,25 @@
 
                     this.selection.saveInstant();
 
-                    var self = this;
+					// WoltLab: Chrome misbehaves in some cases, causing the `<strike>` element for
+					// contained elements to be stripped. Instead, those children are assigned the
+					// CSS style `text-decoration-line: line-through`.
+					var chromeElements = this.core.editor()[0].querySelectorAll('[style*="line-through"]'), element, strike;
+					for (var i = 0, length = chromeElements.length; i < length; i++) {
+						element = chromeElements[0];
+						
+						strike = document.createElement('strike');
+						element.parentNode.insertBefore(strike, element);
+						strike.appendChild(element);
+						
+						// Remove the bogus style attribute.
+						element.style.removeProperty('text-decoration');
+					}
+					
+					var self = this;
                     this.core.editor().find('strike').each(function()
     				{
-                        var $el = self.utils.replaceToTag(this, tag);
+    					var $el = self.utils.replaceToTag(this, tag);
         				self.inline.setParams($el[0], params);
 
         				var $inside = $el.find(tag);
