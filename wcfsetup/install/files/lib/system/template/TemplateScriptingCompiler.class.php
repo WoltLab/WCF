@@ -43,10 +43,12 @@ class TemplateScriptingCompiler {
 	 * @var	string[]
 	 */
 	protected $enterpriseFunctions = [
+		'addslashes',
 		'array_keys',
 		'array_pop',
 		'array_slice',
 		'array_values',
+		'base64_decode',
 		'base64_encode',
 		'ceil',
 		'concat',
@@ -58,6 +60,8 @@ class TemplateScriptingCompiler {
 		'empty',
 		'end',
 		'explode',
+		'file_exists',
+		'filesize',
 		'floor',
 		'function_exists',
 		'gmdate',
@@ -65,11 +69,14 @@ class TemplateScriptingCompiler {
 		'implode',
 		'in_array',
 		'is_array',
+		'is_numeric',
+		'is_object',
 		'intval',
 		'is_subclass_of',
 		'isset',
 		'key',
 		'lcfirst',
+		'ltrim',
 		'max',
 		'mb_strpos',
 		'mb_strlen',
@@ -80,6 +87,8 @@ class TemplateScriptingCompiler {
 		'md5',
 		'microtime',
 		'min',
+		'nl2br',
+		'number_format',
 		'preg_match',
 		'preg_replace',
 		'print_r',
@@ -88,11 +97,13 @@ class TemplateScriptingCompiler {
 		'round',
 		'sha1',
 		'spl_object_hash',
+		'sprintf',
 		'strpos',
 		'strlen',
 		'strtolower',
 		'strtotime',
 		'strtoupper',
+		'str_pad',
 		'str_repeat',
 		'str_replace',
 		'str_ireplace',
@@ -100,7 +111,8 @@ class TemplateScriptingCompiler {
 		'trim',
 		'ucfirst',
 		'urlencode',
-		'wcfDebug'
+		'wcfDebug',
+		'wordwrap'
 	];
 	
 	/**
