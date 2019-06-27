@@ -44,8 +44,6 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 	 * @inheritDoc
 	 */
 	public function delete($objectType, array $objectIDs) {
-		// instead of executing one query per object id, execute queries
-		// for batches of up to 1000 object ids at once
 		$itemsPerLoop = 1000;
 		$loopCount = ceil(count($objectIDs) / $itemsPerLoop);
 		$tableName = SearchIndexManager::getTableName($objectType);

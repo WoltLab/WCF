@@ -365,8 +365,6 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		$tableName = call_user_func([$this->className, 'getDatabaseTableName']);
 		$indexName = call_user_func([$this->className, 'getDatabaseTableIndexName']);
 		
-		// instead of executing one query per object id, execute queries
-		// for batches of up to 1000 object ids at once
 		$itemsPerLoop = 1000;
 		$loopCount = ceil(count($this->objectIDs) / $itemsPerLoop);
 		

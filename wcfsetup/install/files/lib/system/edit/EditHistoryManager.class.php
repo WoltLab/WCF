@@ -77,8 +77,6 @@ class EditHistoryManager extends SingletonFactory {
 	public function delete($objectType, array $objectIDs) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
 		
-		// instead of executing one query per object id, execute queries
-		// for batches of up to 1000 object ids at once
 		$itemsPerLoop = 1000;
 		$loopCount = ceil(count($objectIDs) / $itemsPerLoop);
 		
