@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -381,11 +382,14 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			for ($i = 0; $i < $loopCount; $i++) {
 				$batchObjectIDs = array_slice($this->objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
 				
+				$conditionBuilder = new PreparedStatementConditionBuilder();
+				$conditionBuilder->add($indexName . ' IN (?)', [$batchObjectIDs]);
+				
 				$sql = "UPDATE	" . $tableName . "
 					SET	" . $updateSQL . "
-					WHERE	" . $indexName . " IN (?" . str_repeat(', ?', count($batchObjectIDs) - 1) . ")";
+					" . $conditionBuilder;
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array_merge($statementParameters, $batchObjectIDs));
+				$statement->execute(array_merge($statementParameters, $conditionBuilder->getParameters()));
 			}
 			WCF::getDB()->commitTransaction();
 		}
@@ -403,11 +407,14 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			for ($i = 0; $i < $loopCount; $i++) {
 				$batchObjectIDs = array_slice($this->objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
 				
+				$conditionBuilder = new PreparedStatementConditionBuilder();
+				$conditionBuilder->add($indexName . ' IN (?)', [$batchObjectIDs]);
+				
 				$sql = "UPDATE	" . $tableName . "
 					SET	" . $updateSQL . "
-					WHERE	" . $indexName . " IN (?" . str_repeat(', ?', count($batchObjectIDs) - 1) . ")";
+					" . $conditionBuilder;
 				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array_merge($statementParameters, $batchObjectIDs));
+				$statement->execute(array_merge($statementParameters, $conditionBuilder->getParameters()));
 			}
 			WCF::getDB()->commitTransaction();
 		}

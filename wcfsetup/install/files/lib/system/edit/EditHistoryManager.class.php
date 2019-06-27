@@ -2,6 +2,7 @@
 namespace wcf\system\edit;
 use wcf\data\edit\history\entry\EditHistoryEntryList;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -84,11 +85,14 @@ class EditHistoryManager extends SingletonFactory {
 		for ($i = 0; $i < $loopCount; $i++) {
 			$batchObjectIDs = array_slice($objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
 			
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('objectTypeID = ?', [$objectTypeID]);
+			$conditionBuilder->add('objectID IN (?)', [$batchObjectIDs]);
+			
 			$sql = "DELETE FROM	wcf".WCF_N."_edit_history_entry
-				WHERE		objectTypeID = ?
-						AND objectID IN (?" . str_repeat(', ?', count($batchObjectIDs) - 1) . ")";
+				" . $conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute(array_merge([$objectTypeID], $batchObjectIDs));
+			$statement->execute($conditionBuilder->getParameters());
 		}
 		WCF::getDB()->commitTransaction();
 	}

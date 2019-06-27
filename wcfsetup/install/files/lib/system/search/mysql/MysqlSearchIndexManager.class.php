@@ -2,6 +2,7 @@
 namespace wcf\system\search\mysql;
 use wcf\data\object\type\ObjectType;
 use wcf\system\database\exception\DatabaseQueryExecutionException;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\search\AbstractSearchIndexManager;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
@@ -52,10 +53,13 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 		for ($i = 0; $i < $loopCount; $i++) {
 			$batchObjectIDs = array_slice($objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
 			
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('objectID  IN (?)', [$batchObjectIDs]);
+			
 			$sql = "DELETE FROM	" . $tableName . "
-				WHERE		objectID IN (?" . str_repeat(', ?', count($batchObjectIDs) - 1) . ")";
+				" . $conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute($batchObjectIDs);
+			$statement->execute($conditionBuilder->getParameters());
 		}
 		WCF::getDB()->commitTransaction();
 	}

@@ -199,6 +199,9 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 			for ($i = 0; $i < $batchCount; $i++) {
 				$batchQueueIDs = array_slice($queueIDs, $i * $itemsPerLoop, $itemsPerLoop);
 				
+				$conditionBuilder = new PreparedStatementConditionBuilder();
+				$conditionBuilder->add('queueID IN (?)', [$batchQueueIDs]);
+				
 				$sql = "UPDATE	wcf" . WCF_N . "_moderation_queue
 					SET	status = ?,
 						containerID = ?,
@@ -206,7 +209,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 						time = ?,
 						lastChangeTime = ?,
 						additionalData = ?
-					WHERE	queueID IN (?" . str_repeat(', ?', count($batchQueueIDs) - 1) . ")";
+					" . $conditionBuilder;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute(array_merge(
 					[
@@ -217,7 +220,7 @@ abstract class AbstractModerationQueueManager extends SingletonFactory implement
 						TIME_NOW,
 						$serializedData
 					],
-					$batchQueueIDs
+					$conditionBuilder->getParameters()
 				));
 			}
 		}
