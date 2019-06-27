@@ -47,11 +47,11 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 		// instead of executing one query per object id, execute queries
 		// for batches of up to 1000 object ids at once
 		$itemsPerLoop = 1000;
-		$batchCount = ceil(count($objectIDs) / $itemsPerLoop);
+		$loopCount = ceil(count($objectIDs) / $itemsPerLoop);
 		$tableName = SearchIndexManager::getTableName($objectType);
 		
 		WCF::getDB()->beginTransaction();
-		for ($i = 0; $i < $batchCount; $i++) {
+		for ($i = 0; $i < $loopCount; $i++) {
 			$batchObjectIDs = array_slice($objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
 			
 			$sql = "DELETE FROM	" . $tableName . "

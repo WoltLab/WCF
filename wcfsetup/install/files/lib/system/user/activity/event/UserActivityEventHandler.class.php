@@ -115,10 +115,10 @@ class UserActivityEventHandler extends SingletonFactory {
 		}
 		
 		$itemsPerLoop = 1000;
-		$batchCount = ceil(count($eventData) / $itemsPerLoop);
+		$loopCount = ceil(count($eventData) / $itemsPerLoop);
 		
 		WCF::getDB()->beginTransaction();
-		for ($i = 0; $i < $batchCount; $i++) {
+		for ($i = 0; $i < $loopCount; $i++) {
 			$batchEventData = array_slice($eventData, $i * $itemsPerLoop, $itemsPerLoop);
 			
 			$parameters = [];

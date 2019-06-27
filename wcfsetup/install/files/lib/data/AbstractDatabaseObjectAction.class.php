@@ -368,7 +368,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 		// instead of executing one query per object id, execute queries
 		// for batches of up to 1000 object ids at once
 		$itemsPerLoop = 1000;
-		$batchCount = ceil(count($this->objectIDs) / $itemsPerLoop);
+		$loopCount = ceil(count($this->objectIDs) / $itemsPerLoop);
 		
 		if (!empty($this->parameters['data'])) {
 			$updateSQL = '';
@@ -380,7 +380,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			}
 			
 			WCF::getDB()->beginTransaction();
-			for ($i = 0; $i < $batchCount; $i++) {
+			for ($i = 0; $i < $loopCount; $i++) {
 				$batchObjectIDs = array_slice($this->objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
 				
 				$sql = "UPDATE	" . $tableName . "
@@ -402,7 +402,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			}
 			
 			WCF::getDB()->beginTransaction();
-			for ($i = 0; $i < $batchCount; $i++) {
+			for ($i = 0; $i < $loopCount; $i++) {
 				$batchObjectIDs = array_slice($this->objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
 				
 				$sql = "UPDATE	" . $tableName . "
