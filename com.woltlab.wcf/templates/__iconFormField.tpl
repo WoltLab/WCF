@@ -22,9 +22,7 @@
 				input.value = iconName;
 			};
 			
-			button.addEventListener('click', function(event) {
-				event.preventDefault();
-				
+			button.addEventListener('click', function() {
 				UiStyleFontAwesome.open(callback);
 			});
 		});

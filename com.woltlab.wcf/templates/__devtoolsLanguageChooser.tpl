@@ -17,22 +17,6 @@
 			};
 			
 			var callback = function(listItem) {
-				var languageCode = elData(listItem, 'language-code');
-				if (languageCode === '{$__wcf->getLanguage()->getFixedLanguageCode()}') {
-					window.location.reload();
-					return;
-				}
-				
-				var alternateLink = elBySel('link[rel="alternate"][hreflang="' + languageCode + '"]');
-				if (alternateLink) {
-					// Check if the page does not have unique links per language, such as for the landing page.
-					var currentLink = elBySel('link[rel="alternate"][hreflang="{$__wcf->getLanguage()->getFixedLanguageCode()}"]');
-					if (!currentLink || currentLink.href !== alternateLink.href) {
-						window.location = alternateLink.href;
-						return;
-					}
-				}
-				
 				Ajax.apiOnce({
 					data: {
 						actionName: 'devtoolsSetLanguage',
