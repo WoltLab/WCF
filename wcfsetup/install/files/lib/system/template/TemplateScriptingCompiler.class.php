@@ -66,6 +66,7 @@ class TemplateScriptingCompiler {
 		'function_exists',
 		'gmdate',
 		'hash',
+		'htmlspecialchars',
 		'implode',
 		'in_array',
 		'is_array',
