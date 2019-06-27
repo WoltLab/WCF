@@ -112,8 +112,7 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 			$batchObjectIDs = array_slice($objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
 			
 			$sql = "DELETE FROM	" . static::getDatabaseTableName() . "
-				WHERE		" . static::getDatabaseTableIndexName() . 
-						" IN (?" . str_repeat(', ?', count($batchObjectIDs) - 1) . ")";
+				WHERE		" . static::getDatabaseTableIndexName() . " IN (?" . str_repeat(', ?', count($batchObjectIDs) - 1) . ")";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($batchObjectIDs);
 			$affectedCount += $statement->getAffectedRows();
