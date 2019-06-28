@@ -128,6 +128,12 @@ class UserEditForm extends UserAddForm {
 	public $deleteCoverPhoto = 0;
 	
 	/**
+	 * true to delete the current auth data
+	 * @var	boolean
+	 */
+	public $disconnect3rdParty = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -186,6 +192,8 @@ class UserEditForm extends UserAddForm {
 				if (isset($_POST['disableCoverPhotoExpires'])) $this->disableCoverPhotoExpires = @strtotime(StringUtil::trim($_POST['disableCoverPhotoExpires']));
 			}
 		}
+		
+		if (WCF::getSession()->getPermission('admin.user.canEditPassword') && isset($_POST['disconnect3rdParty'])) $this->disconnect3rdParty = 1;
 	}
 	
 	/**
@@ -319,6 +327,10 @@ class UserEditForm extends UserAddForm {
 		
 		$this->additionalFields = array_merge($this->additionalFields, $avatarData);
 		
+		if ($this->disconnect3rdParty) {
+			$this->additionalFields['authData'] = '';
+		}
+		
 		// add default groups
 		$defaultGroups = UserGroup::getAccessibleGroups([UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
 		$oldGroupIDs = $this->user->getGroupIDs();
@@ -410,8 +422,8 @@ class UserEditForm extends UserAddForm {
 		// reset password
 		$this->password = $this->confirmPassword = '';
 		
-		// reload user when deleting the cover photo
-		if ($this->deleteCoverPhoto) $this->user = new User($this->userID);
+		// reload user when deleting the cover photo or disconneting from 3rd party auth provider
+		if ($this->deleteCoverPhoto || $this->disconnect3rdParty) $this->user = new User($this->userID);
 		
 		// show success message
 		WCF::getTPL()->assign('success', true);

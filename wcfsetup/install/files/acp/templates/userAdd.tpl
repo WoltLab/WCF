@@ -122,6 +122,13 @@
 						<h2 class="sectionTitle">{lang}wcf.user.3rdparty{/lang}</h2>
 						
 						<div class="info">{lang}wcf.user.3rdparty.connect.info{/lang}</div>
+						
+						<dl>
+							<dt></dt>
+							<dd>
+								<label><input type="checkbox" name="disconnect3rdParty" value="1"> {lang}wcf.user.3rdparty.{$user->getAuthProvider()}.disconnect{/lang}</label>
+							</dd>
+						</dl>
 					</section>
 				{else}
 					<section class="section">
