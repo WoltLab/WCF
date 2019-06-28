@@ -4845,6 +4845,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.3rdparty.google.connect.error.inuse"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Google-Konto ist bereits mit einem anderen Benutzerkonto verknüpft.]]></item>
 		<item name="wcf.user.3rdparty.google.disconnect"><![CDATA[Verknüpfung mit Google trennen]]></item>
 		<item name="wcf.user.3rdparty.google.disconnect.success"><![CDATA[Die Verknüpfung mit {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Google-Konto wurde erfolgreich getrennt.]]></item>
+		<item name="wcf.user.3rdparty.connect.info"><![CDATA[Der Benutzer ist mit {lang}wcf.user.3rdparty.{$user->getAuthProvider()}{/lang} verknüpft.]]></item>
 	</category>
 	<category name="wcf.user.avatar">
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>

@@ -159,7 +159,7 @@ class UserEditForm extends UserAddForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (!WCF::getSession()->getPermission('admin.user.canEditPassword')) $this->password = $this->confirmPassword = '';
+		if (!WCF::getSession()->getPermission('admin.user.canEditPassword') || !empty($this->user->authData)) $this->password = $this->confirmPassword = '';
 		if (!WCF::getSession()->getPermission('admin.user.canEditMailAddress')) $this->email = $this->confirmEmail = $this->user->email;
 		
 		if (!empty($_POST['banned'])) $this->banned = 1;

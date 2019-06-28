@@ -4841,6 +4841,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.3rdparty.google.connect.error.inuse"><![CDATA[Your Google account is already connected to a different user.]]></item>
 		<item name="wcf.user.3rdparty.google.disconnect"><![CDATA[Cancel connection with Google]]></item>
 		<item name="wcf.user.3rdparty.google.disconnect.success"><![CDATA[Your account is no longer connected with Google.]]></item>
+		<item name="wcf.user.3rdparty.connect.info"><![CDATA[The user is connected with {lang}wcf.user.3rdparty.{$user->getAuthProvider()}{/lang}.]]></item>
 	</category>
 	<category name="wcf.user.avatar">
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
