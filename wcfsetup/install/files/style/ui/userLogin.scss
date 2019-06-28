@@ -1,3 +1,50 @@
+@mixin thirdPartyLoginButtons {
+	border-width: 0;
+	color: rgba(255, 255, 255, 1);
+	
+	> .icon {
+		flex: 0 0 24px;
+	}
+	
+	> span:not(.icon) {
+		flex: 1 1 auto;
+		margin-left: 5px;
+	}
+	
+	/* branding */
+	&.googleLoginButton {
+		background-color: rgb(221, 75, 57);
+		
+		&:hover {
+			background-color: rgb(202, 53, 35);
+		}
+	}
+	
+	&.facebookLoginButton {
+		background-color: rgb(59, 89, 152);
+		
+		&:hover {
+			background-color: rgb(48, 72, 123);
+		}
+	}
+	
+	&.twitterLoginButton {
+		background-color: rgb(85, 172, 238);
+		
+		&:hover {
+			background-color: rgb(48, 154, 234);
+		}
+	}
+	
+	&.githubLoginButton {
+		background-color: rgb(68, 68, 68);
+		
+		&:hover {
+			background-color: rgb(48, 48, 48);
+		}
+	}
+}
+
 .loginForm > form {
 	.userLoginButtons {
 		margin-top: 20px;
@@ -14,50 +61,8 @@
 		.thirdPartyLoginButton {
 			align-items: center;
 			display: flex;
-			border-width: 0;
-			color: rgba(255, 255, 255, 1);
 			
-			> .icon {
-				flex: 0 0 24px;
-			}
-			
-			> span:not(.icon) {
-				flex: 1 1 auto;
-				margin-left: 5px;
-			}
-			
-			/* branding */
-			&.googleLoginButton {
-				background-color: rgb(221, 75, 57);
-				
-				&:hover {
-					background-color: rgb(202, 53, 35);
-				}
-			}
-			
-			&.facebookLoginButton {
-				background-color: rgb(59, 89, 152);
-				
-				&:hover {
-					background-color: rgb(48, 72, 123);
-				}
-			}
-			
-			&.twitterLoginButton {
-				background-color: rgb(85, 172, 238);
-				
-				&:hover {
-					background-color: rgb(48, 154, 234);
-				}
-			}
-			
-			&.githubLoginButton {
-				background-color: rgb(68, 68, 68);
-				
-				&:hover {
-					background-color: rgb(48, 48, 48);
-				}
-			}
+			@include thirdPartyLoginButtons;
 		}
 	}
 }
@@ -116,4 +121,11 @@
 
 .loginFormLogin > .section {
 	margin-top: 30px !important;
+}
+
+/* CSS does not allow selectors starting with a number. 
+   Therefore we are using the unicode character to identify
+   the correct selector. In a nutshell: the selector is #3rdParty.section */
+#\33 rdParty.section .thirdPartyLoginButton {
+	@include thirdPartyLoginButtons;
 }
