@@ -21,7 +21,7 @@ define(['./AbstractPackageList', 'Core', 'Language'], function(AbstractPackageLi
 		/**
 		 * @see	WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/AbstractPackageList#_populateListItem
 		 */
-		_populateListItem(listItem, packageData) {
+		_populateListItem: function(listItem, packageData) {
 			OptionalPackages._super.prototype._populateListItem.call(this, listItem, packageData);
 			
 			listItem.innerHTML = ' ' + Language.get('wcf.acp.devtools.project.optionalPackage.optionalPackage', {

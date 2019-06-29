@@ -116,7 +116,7 @@ define(['Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language'
 		/**
 		 * Empties the input fields.
 		 */
-		_emptyInput() {
+		_emptyInput: function() {
 			this._packageIdentifier.value = '';
 		},
 		
@@ -184,7 +184,7 @@ define(['Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 'EventKey', 'Language'
 		 * @param	{HTMLElement}	listItem	package list element holding package data
 		 * @param	{object}	packageData	package data
 		 */
-		_populateListItem(listItem, packageData) {
+		_populateListItem: function(listItem, packageData) {
 			elData(listItem, 'package-identifier', packageData.packageIdentifier);
 		},
 		

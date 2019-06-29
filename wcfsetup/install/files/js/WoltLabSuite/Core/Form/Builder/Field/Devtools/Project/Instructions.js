@@ -279,12 +279,14 @@ define([
 			this._instructionsList.appendChild(listItem);
 			
 			var instructionListContainer = elById(this._formFieldId + '_instructions' + instructionsId + '_instructionListContainer');
-			for (var errorMessage of instructionsData.errors || []) {
-				var small = elCreate('small');
-				small.className = 'innerError';
-				small.innerHTML = errorMessage;
-				
-				instructionListContainer.parentNode.insertBefore(small, instructionListContainer);
+			if (Array.isArray(instructionsData.errors)) {
+				instructionsData.errors.forEach(function(errorMessage) {
+					var small = elCreate('small');
+					small.className = 'innerError';
+					small.innerHTML = errorMessage;
+
+					instructionListContainer.parentNode.insertBefore(small, instructionListContainer);
+				});
 			}
 			
 			new UiSortableList({
@@ -616,18 +618,18 @@ define([
 				DomTraverse.childrenByTag(elById(instructions.id + '_instructionList'), 'LI').forEach(function(instruction, instructionIndex) {
 					var namePrefix = this._formFieldId + '[' + instructionsIndex + '][instructions][' + instructionIndex + ']';
 					
-					for (var property of ['pip', 'value', 'runStandalone']) {
+					['pip', 'value', 'runStandalone'].forEach((function(property) {
 						var element = elCreate('input');
 						elAttr(element, 'type', 'hidden');
-						elAttr(element, 'name', namePrefix + '[' + property + ']')
+						elAttr(element, 'name', namePrefix + '[' + property + ']');
 						element.value = elData(instruction, property);
 						this._form.appendChild(element);
-					}
+					}).bind(this));
 					
 					if (_applicationPips.indexOf(elData(instruction, 'pip')) !== -1) {
 						var application = elCreate('input');
 						elAttr(application, 'type', 'hidden');
-						elAttr(application, 'name', namePrefix + '[application]')
+						elAttr(application, 'name', namePrefix + '[application]');
 						application.value = elData(instruction, 'application');
 						this._form.appendChild(application);
 					}

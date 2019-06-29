@@ -47,7 +47,7 @@ define(['./AbstractPackageList', 'Core', 'Language'], function(AbstractPackageLi
 		/**
 		 * @see	WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/AbstractPackageList#_emptyInput
 		 */
-		_emptyInput() {
+		_emptyInput: function() {
 			ExcludedPackages._super.prototype._emptyInput.call(this);
 			
 			this._version.value = '';
@@ -78,7 +78,7 @@ define(['./AbstractPackageList', 'Core', 'Language'], function(AbstractPackageLi
 		/**
 		 * @see	WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/AbstractPackageList#_populateListItem
 		 */
-		_populateListItem(listItem, packageData) {
+		_populateListItem: function(listItem, packageData) {
 			ExcludedPackages._super.prototype._populateListItem.call(this, listItem, packageData);
 			
 			elData(listItem, 'version', packageData.version);

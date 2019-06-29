@@ -58,7 +58,7 @@ define(['./AbstractPackageList', 'Core', 'Language'], function(AbstractPackageLi
 		/**
 		 * @see	WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/AbstractPackageList#_emptyInput
 		 */
-		_emptyInput() {
+		_emptyInput: function() {
 			RequiredPackages._super.prototype._emptyInput.call(this);
 			
 			this._minVersion.value = '';
@@ -91,7 +91,7 @@ define(['./AbstractPackageList', 'Core', 'Language'], function(AbstractPackageLi
 		/**
 		 * @see	WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/AbstractPackageList#_populateListItem
 		 */
-		_populateListItem(listItem, packageData) {
+		_populateListItem: function(listItem, packageData) {
 			RequiredPackages._super.prototype._populateListItem.call(this, listItem, packageData);
 			
 			elData(listItem, 'min-version', packageData.minVersion);
