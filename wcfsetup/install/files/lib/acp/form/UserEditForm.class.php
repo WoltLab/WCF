@@ -422,7 +422,7 @@ class UserEditForm extends UserAddForm {
 		// reset password
 		$this->password = $this->confirmPassword = '';
 		
-		// reload user when deleting the cover photo or disconneting from 3rd party auth provider
+		// reload user when deleting the cover photo or disconnecting from 3rd party auth provider
 		if ($this->deleteCoverPhoto || $this->disconnect3rdParty) $this->user = new User($this->userID);
 		
 		// show success message

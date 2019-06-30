@@ -84,7 +84,7 @@ class LostPasswordForm extends AbstractCaptchaForm {
 		if ($this->user->authData) {
 			HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(ucfirst($this->user->getAuthProvider()) . 'Auth'), WCF::getLanguage()->getDynamicVariable('wcf.user.username.error.3rdParty.redirect', [
 				'provider' => WCF::getLanguage()->get('wcf.user.3rdparty.'. $this->user->getAuthProvider())
-			]),5, 'info');
+			]), 5, 'info');
 			exit;
 		}
 		
