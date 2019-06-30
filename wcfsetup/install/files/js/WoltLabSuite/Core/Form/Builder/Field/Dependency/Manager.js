@@ -338,7 +338,7 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 				
 				for (var i = 0, length = dependencies.length; i < length; i++) {
 					var fields = dependencies[i].getFields();
-					for (var j = 0, length = fields.length; j < length; j++) {
+					for (var j = 0, fieldsLength = fields.length; j < fieldsLength; j++) {
 						var field = fields[j];
 						
 						_fields.delete(field.id);
