@@ -31,7 +31,16 @@
 		{/foreach}
 	</ul>
 {else}
-	{htmlCheckboxes options=$field->getOptions() name=$field->getPrefixedId() selected=$field->getValue() disabled=$field->isImmutable() disableEncoding=true}
+	{foreach from=$field->getNestedOptions() item=__fieldNestedOption}
+		<label{if $__fieldNestedOption[depth] > 0} style="margin-left: {$__fieldNestedOption[depth]*20}px"{/if}>
+			<input type="checkbox" {*
+				*}name="{@$field->getPrefixedId()}[]" {*
+				*}value="{$__fieldNestedOption[value]}"{*
+				*}{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue()} checked{/if}{*
+				*}{if $field->isImmutable()} disabled{/if}{*
+			*}> {@$__fieldNestedOption[label]}
+		</label>
+	{/foreach}
 {/if}
 
 {include file='__formFieldFooter'}
