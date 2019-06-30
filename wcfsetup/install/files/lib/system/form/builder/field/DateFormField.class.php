@@ -1,10 +1,11 @@
 <?php
 namespace wcf\system\form\builder\field;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\WCF;
 use wcf\util\DateUtil;
 
 /**
- * Implementation of a form field for to select a FontAwesome icon.
+ * Implementation of a form field for a date (with a time).
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2019 WoltLab GmbH
@@ -18,9 +19,23 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 	use TNullableFormField;
 	
 	/**
+	 * earliest valid date in `DateFormField::$saveValueFormat` format or `null` if no earliest
+	 * valid date has been set
+	 * @var	null|string|int
+	 */
+	protected $earliestDate;
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Date';
+	
+	/**
+	 * latest valid date in `DateFormField::$saveValueFormat` format or `null` if no latest valid
+	 * date has been set
+	 * @var	null|string|int
+	 */
+	protected $latestDate;
 	
 	/**
 	 * date time format of the save value
@@ -38,6 +53,93 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 	 * @inheritDoc
 	 */
 	protected $templateName = '__dateFormField';
+	
+	const DATE_FORMAT = 'Y-m-d';
+	const TIME_FORMAT = 'Y-m-d\TH:i:sP';
+	
+	/**
+	 * Sets the earliest valid date in `DateFormField::$saveValueFormat` format and returns this
+	 * field. If `null` is given, the previously set earliest valid date is unset.
+	 * 
+	 * @param	null|string|int		$earliestDate
+	 * @return	static
+	 */
+	public function earliestDate($earliestDate = null) {
+		$this->earliestDate = $earliestDate;
+		
+		if ($this->earliestDate !== null) {
+			$earliestDateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->earliestDate);
+			if ($earliestDateTime === false) {
+				throw new \InvalidArgumentException("Earliest date '{$this->earliestDate}' does not have save value format '{$this->getSaveValueFormat()}'.");
+			}
+			
+			if ($this->getLatestDate() !== null) {
+				$latestDateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->getLatestDate());
+				
+				if ($latestDateTime < $earliestDateTime) {
+					throw new \InvalidArgumentException("Earliest date '{$this->earliestDate}' cannot be later than latest date '{$this->getLatestDate()}'.");
+				}
+			}
+		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns the earliest valid date in `DateFormField::getSaveValueFormat()` format.
+	 * 
+	 * If no earliest valid date has been set, `null` is returned.
+	 * 
+	 * @return	null|string|int
+	 */
+	public function getEarliestDate() {
+		return $this->earliestDate;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getHtmlVariables() {
+		// the date picker JavaScript code requires the `min` and `max` value to have a
+		// specific format which is easier to create in PHP than in the template itself
+		
+		$format = static::DATE_FORMAT;
+		if ($this->supportsTime()) {
+			$format = static::TIME_FORMAT; 
+		}
+		
+		$formattedEarliestDate = '';
+		if ($this->getEarliestDate() !== null) {
+			$formattedEarliestDate = \DateTime::createFromFormat(
+				$this->getSaveValueFormat(),
+				$this->getEarliestDate()
+			)->format($format);
+		}
+		
+		$formattedLatestDate = '';
+		if ($this->getLatestDate() !== null) {
+			$formattedLatestDate = \DateTime::createFromFormat(
+				$this->getSaveValueFormat(),
+				$this->getLatestDate()
+			)->format($format);
+		}
+		
+		return [
+			'dateFormFieldEarliestDate' => $formattedEarliestDate,
+			'dateFormFieldLatestDate' => $formattedLatestDate
+		];
+	}
+	
+	/**
+	 * Returns the latest valid date in `DateFormField::getSaveValueFormat()` format.
+	 * 
+	 * If no latest valid date has been set, `null` is returned.
+	 * 
+	 * @return	null|string|int
+	 */
+	public function getLatestDate() {
+		return $this->latestDate;
+	}
 	
 	/**
 	 * Returns the type of the returned save value.
@@ -62,10 +164,10 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 	 */
 	protected function getValueDateTimeObject() {
 		if ($this->supportsTime()) {
-			$dateTime = \DateTime::createFromFormat('Y-m-d\TH:i:sP', $this->getValue());
+			$dateTime = \DateTime::createFromFormat(static::TIME_FORMAT, $this->getValue());
 		}
 		else {
-			$dateTime = \DateTime::createFromFormat('Y-m-d', $this->getValue());
+			$dateTime = \DateTime::createFromFormat(static::DATE_FORMAT, $this->getValue());
 		}
 		
 		if ($dateTime === false) {
@@ -92,6 +194,35 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 	}
 	
 	/**
+	 * Sets the latest valid date in `DateFormField::$saveValueFormat` format and returns this
+	 * field. If `null` is given, the previously set latest valid date is unset.
+	 *
+	 * @param	null|string|int		$latestDate
+	 * @return	static
+	 */
+	public function latestDate($latestDate = null) {
+		$this->latestDate = $latestDate;
+		
+		if ($this->latestDate !== null) {
+			$latestDateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->latestDate);
+			
+			if ($latestDateTime === false) {
+				throw new \InvalidArgumentException("Latest date '{$this->latestDate}' does not have save value format '{$this->getSaveValueFormat()}'.");
+			}
+			
+			if ($this->getEarliestDate() !== null) {
+				$earliestDateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->getEarliestDate());
+				
+				if ($latestDateTime < $earliestDateTime) {
+					throw new \InvalidArgumentException("Latest date '{$this->latestDate}' cannot be earlier than earliest date '{$this->getEarliestDate()}'.");
+				}
+			}
+		}
+		
+		return $this;
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readValue() {
@@ -115,13 +246,6 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 	public function saveValueFormat($saveValueFormat) {
 		if ($this->saveValueFormat !== null) {
 			throw new \BadMethodCallException("Save value type has already been set.");
-		}
-		
-		try {
-			\DateTime::createFromFormat($saveValueFormat, TIME_NOW);
-		}
-		catch (\Exception $e) {
-			throw new \InvalidArgumentException("Invalid date time format '{$saveValueFormat}'.", 0, $e);
 		}
 		
 		$this->saveValueFormat = $saveValueFormat;
@@ -161,11 +285,58 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 			}
 		}
 		else {
-			if ($this->getValueDateTimeObject() === null) {
+			$dateTime = $this->getValueDateTimeObject();
+			if ($dateTime === null) {
 				$this->addValidationError(new FormFieldValidationError(
 					'format',
 					'wcf.form.field.date.error.format'
 				));
+			}
+			else if ($this->getEarliestDate() !== null) {
+				$earliestDateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->getEarliestDate());
+				
+				if ($dateTime < $earliestDateTime) {
+					$format = DateUtil::DATE_FORMAT;
+					if ($this->supportsTime()) {
+						$format = str_replace(
+							['%date%', '%time%'],
+							[
+								WCF::getLanguage()->get(DateUtil::DATE_FORMAT),
+								WCF::getLanguage()->get(DateUtil::TIME_FORMAT)
+							],
+							WCF::getLanguage()->get('wcf.date.dateTimeFormat')
+						);
+					}
+					
+					$this->addValidationError(new FormFieldValidationError(
+						'minimum',
+						'wcf.form.field.date.error.earliestDate',
+						['earliestDate' => DateUtil::format($earliestDateTime, $format)]
+					));
+				}
+			}
+			else if ($this->getLatestDate() !== null) {
+				$latestDateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->getLatestDate());
+				
+				if ($dateTime > $latestDateTime) {
+					$format = DateUtil::DATE_FORMAT;
+					if ($this->supportsTime()) {
+						$format = str_replace(
+							['%date%', '%time%'],
+							[
+								WCF::getLanguage()->get(DateUtil::DATE_FORMAT),
+								WCF::getLanguage()->get(DateUtil::TIME_FORMAT)
+							],
+							WCF::getLanguage()->get('wcf.date.dateTimeFormat')
+						);
+					}
+					
+					$this->addValidationError(new FormFieldValidationError(
+						'minimum',
+						'wcf.form.field.date.error.latestDate',
+						['latestDateTime' => DateUtil::format($latestDateTime, $format)]
+					));
+				}
 			}
 		}
 	}
