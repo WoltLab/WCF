@@ -7,6 +7,10 @@ use wcf\system\event\EventHandler;
 use wcf\system\form\builder\button\wysiwyg\WysiwygPreviewFormButton;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\TabFormContainer;
+use wcf\system\form\builder\field\IMaximumLengthFormField;
+use wcf\system\form\builder\field\IMinimumLengthFormField;
+use wcf\system\form\builder\field\TMaximumLengthFormField;
+use wcf\system\form\builder\field\TMinimumLengthFormField;
 use wcf\system\form\builder\field\wysiwyg\WysiwygAttachmentFormField;
 use wcf\system\form\builder\field\wysiwyg\WysiwygFormField;
 use wcf\system\form\builder\IFormNode;
@@ -26,7 +30,9 @@ use wcf\system\form\builder\TWysiwygFormNode;
  * @package	WoltLabSuite\Core\System\Form\Builder\Container\Wysiwyg
  * @since	5.2
  */
-class WysiwygFormContainer extends FormContainer {
+class WysiwygFormContainer extends FormContainer implements IMaximumLengthFormField, IMinimumLengthFormField {
+	use TMaximumLengthFormField;
+	use TMinimumLengthFormField;
 	use TWysiwygFormNode;
 	
 	/**
@@ -77,6 +83,12 @@ class WysiwygFormContainer extends FormContainer {
 	 * @var	null|array
 	 */
 	protected $quoteData;
+	
+	/**
+	 * `true` if the wysiwyg field has to be filled out and `false` otherwise
+	 * @var	bool
+	 */
+	protected $required = false;
 	
 	/**
 	 * settings form container
@@ -296,6 +308,16 @@ class WysiwygFormContainer extends FormContainer {
 	}
 	
 	/**
+	 * Returns `true` if the wsyiwyg field has to be filled out and returns `false` otherwise.
+	 * By default, the wsyiwyg field does not have to be filled out.
+	 * 
+	 * @return	bool
+	 */
+	public function isRequired() {
+		return $this->required;
+	}
+	
+	/**
 	 * Sets the message object type used by the wysiwyg form field.
 	 * 
 	 * @param	string		$messageObjectType	message object type for wysiwyg form field
@@ -370,6 +392,9 @@ class WysiwygFormContainer extends FormContainer {
 		
 		$this->wysiwygField = WysiwygFormField::create($this->wysiwygId)
 			->objectType($this->messageObjectType)
+			->minimumLength($this->getMinimumLength())
+			->maximumLength($this->getMaximumLength())
+			->required($this->isRequired())
 			->supportAttachments($this->attachmentData !== null)
 			->supportMentions($this->supportMentions)
 			->supportQuotes($this->supportQuotes);
@@ -483,6 +508,18 @@ class WysiwygFormContainer extends FormContainer {
 				'selectors' => $selectors
 			];
 		}
+		
+		return $this;
+	}
+	
+	/**
+	 * Sets whether it is required to fill out the wysiwyg field and returns this container.
+	 * 
+	 * @param	bool		$required	determines if field has to be filled out
+	 * @return	static				this container
+	 */
+	public function required($required = true) {
+		$this->required = $required;
 		
 		return $this;
 	}

@@ -34,7 +34,7 @@ abstract class AbstractFormField implements IFormField {
 	protected $objectProperty;
 	
 	/**
-	 * `true` if this field has to be filled out and returns `false` otherwise
+	 * `true` if this field has to be filled out and `false` otherwise
 	 * @var	bool
 	 */
 	protected $required = false;
