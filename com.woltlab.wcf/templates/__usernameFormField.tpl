@@ -11,6 +11,7 @@
 	*}{if $field->getMinimumLength() !== null} minlength="{$field->getMinimumLength()}"{/if}{*
 	*}{if $field->getMaximumLength() !== null} maxlength="{$field->getMaximumLength()}"{/if}{*
 	*}{if $field->getPlaceholder() !== null} placeholder="{$field->getPlaceholder()}"{/if}{*
+	*}{if $field->getDocument()->isAjax()} data-dialog-submit-on-enter="true"{/if}{*
 *}>
 
 {include file='__formFieldFooter'}
