@@ -344,16 +344,17 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * @inheritDoc
 	 */
 	public function validate() {
-		if ($this->isRequired() && $this->getValue() === '') {
+		$this->htmlInputProcessor = new HtmlInputProcessor();
+		$this->htmlInputProcessor->process($this->getValue(), $this->getObjectType()->objectType);
+		
+		if ($this->isRequired() && $this->htmlInputProcessor->appearsToBeEmpty()) {
 			$this->addValidationError(new FormFieldValidationError('empty'));
 		}
 		else {
-			$this->validateMinimumLength($this->getValue());
-			$this->validateMaximumLength($this->getValue());
+			$message = $this->htmlInputProcessor->getTextContent();
+			$this->validateMinimumLength($message);
+			$this->validateMaximumLength($message);
 		}
-		
-		$this->htmlInputProcessor = new HtmlInputProcessor();
-		$this->htmlInputProcessor->process($this->getValue(), $this->getObjectType()->objectType);
 		
 		parent::validate();
 	}
