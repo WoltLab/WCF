@@ -1,4 +1,4 @@
-define(["prism/prism","prism/components/prism-c","prism/components/prism-cpp","prism/components/prism-fortran","prism/components/prism-ats","prism/components/prism-dsp"], function () {
+define(["prism/prism","prism/components/prism-c","prism/components/prism-cpp","prism/components/prism-fortran"], function () {
 (function (Prism) {
 	Prism.languages.pure = {
 		'comment': [
@@ -51,11 +51,9 @@ define(["prism/prism","prism/components/prism-c","prism/components/prism-cpp","p
 	var inlineLanguages = [
 		'c',
 		{ lang: 'c++', alias: 'cpp' },
-		'fortran',
-		'ats',
-		'dsp'
+		'fortran'
 	];
-	var inlineLanguageRe = '%< *-\\*- *{lang}\\d* *-\\*-[\\s\\S]+?%>';
+	var inlineLanguageRe = /%< *-\*- *{lang}\d* *-\*-[\s\S]+?%>/.source;
 
 	inlineLanguages.forEach(function (lang) {
 		var alias = lang;
@@ -80,4 +78,5 @@ define(["prism/prism","prism/components/prism-c","prism/components/prism-cpp","p
 	}
 
 }(Prism));
+
 return Prism; })

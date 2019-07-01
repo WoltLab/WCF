@@ -5,4 +5,6 @@ Prism.languages.objectivec = Prism.languages.extend('c', {
 	'operator': /-[->]?|\+\+?|!=?|<<?=?|>>?=?|==?|&&?|\|\|?|[~^%?*\/@]/
 });
 
+delete Prism.languages.objectivec['class-name'];
+
 return Prism; })
