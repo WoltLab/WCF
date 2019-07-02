@@ -44,7 +44,9 @@ Prism.languages.csharp = Prism.languages.extend('clike', {
 			}
 		}
 	],
-	'number': /\b0x[\da-f]+\b|(?:\b\d+\.?\d*|\B\.\d+)f?/i
+	'number': /\b0x[\da-f]+\b|(?:\b\d+\.?\d*|\B\.\d+)f?/i,
+	'operator': />>=?|<<=?|[-=]>|([-+&|?])\1|~|[-+*/%&|^!=<>]=?/,
+	'punctuation': /\?\.?|::|[{}[\];(),.:]/
 });
 
 Prism.languages.insertBefore('csharp', 'class-name', {
@@ -77,5 +79,6 @@ Prism.languages.insertBefore('csharp', 'class-name', {
 	}
 });
 
-Prism.languages.dotnet = Prism.languages.csharp;
+Prism.languages.dotnet = Prism.languages.cs = Prism.languages.csharp;
+
 return Prism; })

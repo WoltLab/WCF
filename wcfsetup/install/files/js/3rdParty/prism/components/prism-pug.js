@@ -1,4 +1,4 @@
-define(["prism/prism","prism/components/prism-javascript","prism/components/prism-coffeescript","prism/components/prism-ejs","prism/components/prism-handlebars","prism/components/prism-hogan","prism/components/prism-less","prism/components/prism-livescript","prism/components/prism-markdown","prism/components/prism-mustache","prism/components/prism-plates","prism/components/prism-scss","prism/components/prism-stylus","prism/components/prism-swig"], function () {
+define(["prism/prism","prism/components/prism-markup","prism/components/prism-javascript","prism/components/prism-coffeescript","prism/components/prism-ejs","prism/components/prism-handlebars","prism/components/prism-less","prism/components/prism-livescript","prism/components/prism-markdown","prism/components/prism-scss","prism/components/prism-stylus","prism/components/prism-twig"], function () {
 (function(Prism) {
 	// TODO:
 	// - Add CSS highlighting inside <style> tags
@@ -156,7 +156,7 @@ define(["prism/prism","prism/components/prism-javascript","prism/components/pris
 		'punctuation': /[.\-!=|]+/
 	};
 
-	var filter_pattern = '(^([\\t ]*)):{{filter_name}}(?:(?:\\r?\\n|\\r(?!\\n))(?:\\2[\\t ]+.+|\\s*?(?=\\r?\\n|\\r)))+';
+	var filter_pattern = /(^([\t ]*)):{{filter_name}}(?:(?:\r?\n|\r(?!\n))(?:\2[\t ]+.+|\s*?(?=\r?\n|\r)))+/.source;
 
 	// Non exhaustive list of available filters and associated languages
 	var filters = [
@@ -164,16 +164,11 @@ define(["prism/prism","prism/components/prism-javascript","prism/components/pris
 		{filter:'coffee',language:'coffeescript'},
 		'ejs',
 		'handlebars',
-		'hogan',
 		'less',
 		'livescript',
 		'markdown',
-		'mustache',
-		'plates',
 		{filter:'sass',language:'scss'},
-		'stylus',
-		'swig'
-
+		'stylus'
 	];
 	var all_filters = {};
 	for (var i = 0, l = filters.length; i < l; i++) {

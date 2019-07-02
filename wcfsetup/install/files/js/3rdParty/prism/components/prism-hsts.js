@@ -6,7 +6,7 @@ define(["prism/prism"], function () {
  */
 
 Prism.languages.hsts = {
-	'directive':  {
+	'directive': {
 		pattern: /\b(?:max-age=|includeSubDomains|preload)/,
 		alias: 'keyword'
 	},
@@ -15,8 +15,9 @@ Prism.languages.hsts = {
 		alias: 'selector'
 	},
 	'unsafe': {
-		pattern: /\d{0,7}/,
+		pattern: /\d{1,7}/,
 		alias: 'function'
 	}
 };
+
 return Prism; })
