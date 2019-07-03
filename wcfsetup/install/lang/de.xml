@@ -4579,7 +4579,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.login.3rdParty"><![CDATA[Anmeldung über Drittanbieter]]></item>
 		<item name="wcf.user.search.results"><![CDATA[Suchergebnisse]]></item>
 		<item name="wcf.user.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
-		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Erhaltene Likes]]></item>
+		<item name="wcf.user.activityPoint.objectType.com.woltlab.wcf.like.activityPointEvent.receivedLikes"><![CDATA[Erhaltene Reaktionen]]></item>
 		<item name="wcf.user.register.honeyPot"><![CDATA[Bitte ignorieren!]]></item>
 		<item name="wcf.user.register.honeyPot.description"><![CDATA[Falls {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} dies sehen {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}fülle{else}füllen Sie{/if} bitte die nächsten zwei Eingabefelder <strong>NICHT</strong> aus!]]></item>
 		<item name="wcf.user.searchUserContent"><![CDATA[Inhalte von {$user->username} suchen]]></item>
