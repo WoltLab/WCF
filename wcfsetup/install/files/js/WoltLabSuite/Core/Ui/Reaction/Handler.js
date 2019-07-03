@@ -186,19 +186,29 @@ define(
 			
 			_updateReactButton: function(objectID, reactionTypeID) {
 				this._objects.get(objectID).forEach(function (elementData) {
-					if (reactionTypeID) {
-						elementData.reactButton.classList.add('active');
-						elData(elementData.reactButton, 'reaction-type-id', reactionTypeID);
-					}
-					else {
-						elData(elementData.reactButton, 'reaction-type-id', 0);
-						elementData.reactButton.classList.remove('active');
+					if (elementData.reactButton !== null) {
+						if (reactionTypeID) {
+							elementData.reactButton.classList.add('active');
+							elData(elementData.reactButton, 'reaction-type-id', reactionTypeID);
+						} else {
+							elData(elementData.reactButton, 'reaction-type-id', 0);
+							elementData.reactButton.classList.remove('active');
+						}
 					}
 				});
 			},
 			
 			_markReactionAsActive: function() {
-				var reactionTypeID = elData(this._objects.get(this._popoverCurrentObjectId)[0].reactButton, 'reaction-type-id');
+				var reactionTypeID;
+				this._objects.get(this._popoverCurrentObjectId).forEach(function (element) {
+					if (element.reactButton !== null) {
+						reactionTypeID = elData(element.reactButton, 'reaction-type-id');
+					}
+				});
+				
+				if (reactionTypeID === undefined) {
+					throw new Error("Unable to find react button for current popover.");
+				}
 				
 				//  clear old active state
 				var elements = elBySelAll('.reactionTypeButton.active', this._getPopover());

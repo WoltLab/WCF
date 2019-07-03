@@ -110,6 +110,9 @@ define(
 				this._objects.get(objectId).forEach(function(elementData) {
 					var summaryList = elBySel(this._options.summaryListSelector, elementData.element);
 					
+					// summary list for the object not found; abort
+					if (summaryList === null) return; 
+					
 					var sortedElements = {}, elements = elBySelAll('li', summaryList);
 					for (var i = 0, length = elements.length; i < length; i++) {
 						if (data[elData(elements[i], 'reaction-type-id')] !== undefined) {
