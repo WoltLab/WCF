@@ -126,17 +126,6 @@ class RatingFormField extends AbstractFormField implements IImmutableFormField, 
 	}
 	
 	/**
-	 * @inheritDoc
-	 */
-	public function getValue() {
-		if ($this->value === null && !$this->isNullable()) {
-			$this->value = $this->getMinimum();
-		}
-		
-		return parent::getValue();
-	}
-	
-	/**
 	 * Returns the sorted list of possible ratings used to generate the form field's html code.
 	 * 
 	 * @return	integer[]
