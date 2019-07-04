@@ -377,6 +377,20 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	}
 	
 	/**
+	 * Returns 3rd party auth provider name.
+	 *
+	 * @return	string
+	 * @since       5.2
+	 */
+	public function getAuthProvider() {
+		if (!$this->authData) {
+			return '';
+		}
+		
+		return mb_substr($this->authData, 0, mb_strpos($this->authData, ':'));
+	}
+	
+	/**
 	 * Returns true if this user is marked.
 	 * 
 	 * @return	boolean

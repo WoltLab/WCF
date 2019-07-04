@@ -126,7 +126,7 @@ define([
 				this.container.classList.add('highlighted');
 			}.bind(this))
 		}
-	}
+	};
 	
 	return Code;
 });
