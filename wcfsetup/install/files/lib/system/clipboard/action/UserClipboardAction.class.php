@@ -2,6 +2,7 @@
 namespace wcf\system\clipboard\action;
 use wcf\data\clipboard\action\ClipboardAction;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
@@ -171,7 +172,13 @@ class UserClipboardAction extends AbstractClipboardAction {
 			return [];
 		}
 		
-		return $this->__validateAccessibleGroups(array_keys($this->objects));
+		$userIDs = [];
+		/** @var User $user */
+		foreach ($this->objects as $user) {
+			if (empty($user->authData)) $userIDs[] = $user->userID;
+		}
+		
+		return $this->__validateAccessibleGroups($userIDs);
 	}
 	
 	/**

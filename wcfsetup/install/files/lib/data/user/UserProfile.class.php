@@ -939,11 +939,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	string
 	 */
 	public function getAuthProvider() {
-		if (!$this->authData) {
-			return '';
-		}
-		
-		return mb_substr($this->authData, 0, mb_strpos($this->authData, ':'));
+		return $this->getDecoratedObject()->getAuthProvider();
 	}
 	
 	/**

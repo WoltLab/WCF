@@ -4426,6 +4426,7 @@ Attachments:
 		<item name="wcf.user.button.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.button.register"><![CDATA[Register]]></item>
 		<item name="wcf.user.username.error.3rdParty"><![CDATA[Account is connected with a 3rd party website, password cannot be requested.]]></item>
+		<item name="wcf.user.username.error.3rdParty.redirect"><![CDATA[Account is connected with {$provider}, password cannot be requested. You will now be redirected to the login with {$provider}.]]></item>
 		<item name="wcf.user.loginOrRegister"><![CDATA[Login{if !REGISTER_DISABLED} or register{/if}]]></item>
 		<item name="wcf.user.useCookies"><![CDATA[Remain logged in]]></item>
 		<item name="wcf.user.usernameOrEmail"><![CDATA[Username or Email Address]]></item>
@@ -4843,6 +4844,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.3rdparty.google.connect.error.inuse"><![CDATA[Your Google account is already connected to a different user.]]></item>
 		<item name="wcf.user.3rdparty.google.disconnect"><![CDATA[Cancel connection with Google]]></item>
 		<item name="wcf.user.3rdparty.google.disconnect.success"><![CDATA[Your account is no longer connected with Google.]]></item>
+		<item name="wcf.user.3rdparty.connect.info"><![CDATA[The user is connected with {"wcf.user.3rdparty."|concat:$user->getAuthProvider()|language}.]]></item>
 	</category>
 	<category name="wcf.user.avatar">
 		<item name="wcf.user.avatar"><![CDATA[Avatar]]></item>
