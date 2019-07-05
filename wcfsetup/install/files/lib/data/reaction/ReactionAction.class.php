@@ -215,7 +215,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		
 		$this->readInteger('lastLikeTime', true);
 		$this->readInteger('userID');
-		$this->readInteger('reactionTypeID');
+		$this->readInteger('reactionTypeID', true);
 		$this->readString('targetType');
 		
 		$user = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
@@ -245,7 +245,9 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		else {
 			$likeList->getConditionBuilder()->add("like_table.userID = ?", [$this->parameters['userID']]);
 		}
-		$likeList->getConditionBuilder()->add("like_table.reactionTypeID = ?", [$this->parameters['reactionTypeID']]);
+		if ($this->parameters['reactionTypeID']) {
+			$likeList->getConditionBuilder()->add("like_table.reactionTypeID = ?", [$this->parameters['reactionTypeID']]);
+		}
 		$likeList->readObjects();
 		
 		if (empty($likeList)) {

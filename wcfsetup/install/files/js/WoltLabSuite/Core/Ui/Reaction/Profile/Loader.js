@@ -13,17 +13,17 @@ define(['Ajax', 'Core', 'Language'], function(Ajax, Core, Language) {
 	/**
 	 * @constructor
 	 */
-	function UiReactionProfileLoader(userID, firstReactionTypeID) { this.init(userID, firstReactionTypeID); }
+	function UiReactionProfileLoader(userID) { this.init(userID); }
 	UiReactionProfileLoader.prototype = {
 		/**
 		 * Initializes a new ReactionListLoader object.
 		 *
 		 * @param	integer		userID
 		 */
-		init: function(userID, firstReactionTypeID) {
+		init: function(userID) {
 			this._container = elById('likeList');
 			this._userID = userID;
-			this._reactionTypeID = firstReactionTypeID;
+			this._reactionTypeID = null;
 			this._targetType = 'received';
 			this._options = {
 				parameters: []
@@ -31,10 +31,6 @@ define(['Ajax', 'Core', 'Language'], function(Ajax, Core, Language) {
 			
 			if (!this._userID) {
 				throw new Error("[WoltLabSuite/Core/Ui/Reaction/Profile/Loader] Invalid parameter 'userID' given.");
-			}
-			
-			if (!this._reactionTypeID) {
-				throw new Error("[WoltLabSuite/Core/Ui/Reaction/Profile/Loader] Invalid parameter 'firstReactionTypeID' given.");
 			}
 			
 			var loadButtonList = elCreate('li');
@@ -113,16 +109,23 @@ define(['Ajax', 'Core', 'Language'], function(Ajax, Core, Language) {
 		 * @param       {int}           reactionTypeID
 		 */
 		_changeReactionTypeValue: function(reactionTypeID) {
+			// remove old active state
+			var activeButton = elBySel('#reactionType .button.active');
+			if (activeButton) {
+				activeButton.classList.remove('active');
+			}
+			
 			if (this._reactionTypeID !== reactionTypeID) {
-				// remove old active state
-				elBySel('#reactionType .button.active').classList.remove('active');
-				
 				// add active status to new button 
 				elBySel('#reactionType .button[data-reaction-type-id="'+ reactionTypeID +'"]').classList.add('active');
 				
 				this._reactionTypeID = reactionTypeID;
-				this._reload();
 			}
+			else {
+				this._reactionTypeID = null;
+			}
+			
+			this._reload();
 		},
 		
 		/**

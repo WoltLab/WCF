@@ -5,7 +5,7 @@
 			'wcf.like.reaction.more': '{lang}wcf.like.reaction.more{/lang}'
 		});
 		
-		new UiReactionProfileLoader({@$userID}, {@$firstReactionTypeID});
+		new UiReactionProfileLoader({@$userID});
 	});
 </script>
 
@@ -18,7 +18,7 @@
 		
 		<ul class="buttonGroup" id="reactionType">
 			{foreach from=$__wcf->getReactionHandler()->getReactionTypes() item=reactionType name=reactionTypeLoop}
-				<li><a class="button small jsTooltip{if $tpl.foreach.reactionTypeLoop.first} active{/if}" data-reaction-type-id="{$reactionType->reactionTypeID}" title="{$reactionType->getTitle()}">{@$reactionType->renderIcon()} <span class="invisible">{$reactionType->getTitle()}</span></a></li>
+				<li><a class="button small jsTooltip" data-reaction-type-id="{$reactionType->reactionTypeID}" title="{$reactionType->getTitle()}">{@$reactionType->renderIcon()} <span class="invisible">{$reactionType->getTitle()}</span></a></li>
 			{/foreach}
 		</ul>
 	</li>
