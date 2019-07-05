@@ -617,6 +617,7 @@ class ReactionHandler extends SingletonFactory {
 		// update existing object
 		$likes = $likeObject->likes;
 		$dislikes = $likeObject->dislikes;
+		$neutralReactions = $likeObject->neutralReactions;
 		$cumulativeLikes = $likeObject->cumulativeLikes;
 		$cachedReactions = @unserialize($likeObject->cachedReactions);
 		if (!is_array($cachedReactions)) {
@@ -632,6 +633,12 @@ class ReactionHandler extends SingletonFactory {
 				$dislikes--;
 				$cumulativeLikes++;
 			}
+			else if ($like->getReactionType()->isNeutral()) {
+				$neutralReactions--;
+			}
+			else {
+				throw new \LogicException('Unreachable');
+			}
 			
 			if (isset($cachedReactions[$like->getReactionType()->reactionTypeID])) {
 				if (--$cachedReactions[$like->getReactionType()->reactionTypeID] == 0) {
@@ -643,6 +650,7 @@ class ReactionHandler extends SingletonFactory {
 			$updateData = [
 				'likes' => $likes,
 				'dislikes' => $dislikes,
+				'neutralReactions' => $neutralReactions,
 				'cumulativeLikes' => $cumulativeLikes,
 				'cachedReactions' => serialize($cachedReactions)
 			];
