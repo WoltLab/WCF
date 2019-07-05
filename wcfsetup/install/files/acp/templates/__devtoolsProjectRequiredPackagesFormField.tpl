@@ -34,7 +34,7 @@
 </div>
 
 <script data-relocate="true">
-	require(['Language', 'WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/RequiredPackages'], function(Language, RequiredPackagesFormField) {
+	require(['Language', 'WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/RequiredPackages'], function(Language, RequiredPackagesFormField) {
 		Language.addObject({
 			'wcf.acp.devtools.project.packageIdentifier.error.duplicate': '{lang}wcf.acp.devtools.project.packageIdentifier.error.duplicate{/lang}',
 			'wcf.acp.devtools.project.packageIdentifier.error.format': '{lang}wcf.acp.devtools.project.packageIdentifier.error.format{/lang}',
