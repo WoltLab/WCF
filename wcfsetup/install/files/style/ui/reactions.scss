@@ -116,6 +116,7 @@ li.reactCountButton {
 	padding: 5px;
 	cursor: pointer;
 	color: $wcfContentDimmedText;
+	white-space: nowrap;
 }
 
 li.reactCountButton:hover {
