@@ -16,7 +16,8 @@
 }
 
 .contentItemSingleColumn {
-	flex: 0 0 100%;
+	flex: 0 0 calc(100% - 20px);
+	max-width: calc(100% - 20px); /* IE 11 */
 }
 
 .contentItemMultiColumn {
