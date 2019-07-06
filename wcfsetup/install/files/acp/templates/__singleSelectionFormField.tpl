@@ -24,8 +24,8 @@
 						*}type="radio" {*
 						*}name="{@$field->getPrefixedId()}" {*
 						*}value="{$__fieldNestedOption[value]}"{*
-						*}{if $field->getValue() == $__fieldNestedOption[value]} checked{/if}{*
-						*}{if $field->isImmutable()} disabled{/if}{*
+						*}{if $field->getValue() == $__fieldNestedOption[value] && $__fieldNestedOption[isSelectable]} checked{/if}{*
+						*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
 					*}> {@$__fieldNestedOption[label]}</label>
 			</li>
 		{/foreach}
@@ -36,8 +36,8 @@
 			<option {*
 				*}name="{@$field->getPrefixedId()}" {*
 				*}value="{$__fieldNestedOption[value]}"{*
-				*}{if $field->getValue() == $__fieldNestedOption[value]} selected{/if}{*
-				*}{if $field->isImmutable()} disabled{/if}{*
+				*}{if $field->getValue() == $__fieldNestedOption[value] && $__fieldNestedOption[isSelectable]} selected{/if}{*
+				*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
 			*}>{@'&nbsp;'|str_repeat:$__fieldNestedOption[depth] * 4}{@$__fieldNestedOption[label]}</option>
 		{/foreach}
 	</select>

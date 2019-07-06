@@ -24,8 +24,8 @@
 						*}type="checkbox" {*
 						*}name="{@$field->getPrefixedId()}[]" {*
 						*}value="{$__fieldNestedOption[value]}"{*
-						*}{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue()} checked{/if}{*
-						*}{if $field->isImmutable()} disabled{/if}{*
+						*}{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue() && $__fieldNestedOption[isSelectable]} checked{/if}{*
+						*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
 					*}> {@$__fieldNestedOption[label]}</label>
 			</li>
 		{/foreach}
@@ -36,8 +36,8 @@
 			<input type="checkbox" {*
 				*}name="{@$field->getPrefixedId()}[]" {*
 				*}value="{$__fieldNestedOption[value]}"{*
-				*}{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue()} checked{/if}{*
-				*}{if $field->isImmutable()} disabled{/if}{*
+				*}{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue() && $__fieldNestedOption[isSelectable]} checked{/if}{*
+				*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
 			*}> {@$__fieldNestedOption[label]}
 		</label>
 	{/foreach}
