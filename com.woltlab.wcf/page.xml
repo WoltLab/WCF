@@ -642,11 +642,7 @@
 			<name language="en">Dashboard</name>
 			<allowSpidersToIndex>1</allowSpidersToIndex>
 
-			<content language="en">
-				<title>Dashboard</title>
-				<customURL>dashboard</customURL>
-			</content>
-			<content language="de">
+			<content>
 				<title>Dashboard</title>
 				<customURL>dashboard</customURL>
 			</content>

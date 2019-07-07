@@ -4,8 +4,8 @@
  * @author	Matthias Schmidt
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @module	WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/OptionalPackages
- * @see 	module:WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/AbstractPackageList
+ * @module	WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/OptionalPackages
+ * @see 	module:WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/AbstractPackageList
  * @since	5.2
  */
 define(['./AbstractPackageList', 'Core', 'Language'], function(AbstractPackageList, Core, Language) {

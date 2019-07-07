@@ -45,7 +45,7 @@ trait TSelectionFormField {
 	}
 	
 	/**
-	 * Returns the possible options of this field.
+	 * Returns the selectable options of this field.
 	 * 
 	 * @return	array
 	 * 
@@ -138,6 +138,7 @@ trait TSelectionFormField {
 					
 					$collectedOptions[] = [
 						'depth' => $object->getDepth() - 1,
+						'isSelectable' => true,
 						'label' => $object,
 						'value' => $object->getObjectID()
 					];
@@ -155,9 +156,6 @@ trait TSelectionFormField {
 			foreach ($options as $key => &$option) {
 				if (!is_array($option)) {
 					throw new \InvalidArgumentException("Nested option with key '{$key}' has is no array.");
-				}
-				if (count($option) !== 3) {
-					throw new \InvalidArgumentException("Nested option with key '{$key}' does not contain three elements.");
 				}
 				
 				// check if all required elements exist
@@ -196,15 +194,20 @@ trait TSelectionFormField {
 					throw new \InvalidArgumentException("Options values must be unique, but '{$option['value']}' appears at least twice as value.");
 				}
 				
-				// save value
-				$this->options[$option['value']] = $option['label'];
-				
 				// validate depth
 				if (!is_int($option['depth'])) {
 					throw new \InvalidArgumentException("Depth of nested option with key '{$key}' is no integer, " . gettype($options) . " given.");
 				}
 				if ($option['depth'] < 0) {
 					throw new \InvalidArgumentException("Depth of nested option with key '{$key}' is negative.");
+				}
+				
+				// set default value of `isSelectable`
+				$option['isSelectable'] = $option['isSelectable'] ?? true;
+				
+				// save value
+				if ($option['isSelectable']) {
+					$this->options[$option['value']] = $option['label'];
 				}
 			}
 			unset($option);
@@ -252,6 +255,7 @@ trait TSelectionFormField {
 				foreach ($this->options as $value => $label) {
 					$this->nestedOptions[] = [
 						'depth' => 0,
+						'isSelectable' => true,
 						'label' => $label,
 						'value' => $value
 					];

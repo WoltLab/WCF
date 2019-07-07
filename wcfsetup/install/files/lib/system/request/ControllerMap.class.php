@@ -47,7 +47,6 @@ class ControllerMap extends SingletonFactory {
 	
 	/**
 	 * @inheritDoc
-	 * @throws	SystemException
 	 */
 	protected function init() {
 		$this->applicationOverrides = RoutingCacheBuilder::getInstance()->getData([], 'applicationOverrides');

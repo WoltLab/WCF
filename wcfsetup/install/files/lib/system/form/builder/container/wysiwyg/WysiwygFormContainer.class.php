@@ -13,7 +13,7 @@ use wcf\system\form\builder\field\TMaximumLengthFormField;
 use wcf\system\form\builder\field\TMinimumLengthFormField;
 use wcf\system\form\builder\field\wysiwyg\WysiwygAttachmentFormField;
 use wcf\system\form\builder\field\wysiwyg\WysiwygFormField;
-use wcf\system\form\builder\IFormNode;
+use wcf\system\form\builder\IFormChildNode;
 use wcf\system\form\builder\TWysiwygFormNode;
 
 /**
@@ -98,7 +98,7 @@ class WysiwygFormContainer extends FormContainer implements IMaximumLengthFormFi
 	
 	/**
 	 * setting nodes that will be added to the settings container when it is created
-	 * @var	IFormNode[]
+	 * @var	IFormChildNode[]
 	 */
 	protected $settingsNodes = [];
 	
@@ -144,10 +144,10 @@ class WysiwygFormContainer extends FormContainer implements IMaximumLengthFormFi
 	 * Adds a node that will be appended to the settings form container when it is built and
 	 * returns this container.
 	 * 
-	 * @param	IFormNode	$settingsNode	added settings node
+	 * @param	IFormChildNode	$settingsNode	added settings node
 	 * @return	WysiwygFormContainer		this form field container
 	 */
-	public function addSettingsNode(IFormNode $settingsNode) {
+	public function addSettingsNode(IFormChildNode $settingsNode) {
 		if ($this->settingsContainer !== null) {
 			// if settings container has already been created, add it directly
 			$this->settingsContainer->appendChild($settingsNode);
@@ -162,9 +162,9 @@ class WysiwygFormContainer extends FormContainer implements IMaximumLengthFormFi
 	/**
 	 * Adds nodes that will be appended to the settings form container when it is built and
 	 * returns this container.
-	 *
-	 * @param	IFormNode[]	$settingsNodes	added settings nodes
-	 * @return	WysiwygFormContainer		this form field container
+	 * 
+	 * @param	IFormChildNode[]	$settingsNodes	added settings nodes
+	 * @return	WysiwygFormContainer			this form field container
 	 */
 	public function addSettingsNodes(array $settingsNodes) {
 		foreach ($settingsNodes as $settingsNode) {

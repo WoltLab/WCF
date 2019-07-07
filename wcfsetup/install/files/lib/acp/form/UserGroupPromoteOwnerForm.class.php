@@ -27,7 +27,8 @@ class UserGroupPromoteOwnerForm extends AbstractFormBuilderForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.group.list';
 	
 	/**
-	 * @var UserGroup
+	 * user groups that can be promoted to owner group
+	 * @var	UserGroup[]
 	 */
 	public $groups = [];
 	

@@ -161,7 +161,7 @@
 <script data-relocate="true">
 	require([
 		'Language',
-		'WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/Instructions',
+		'WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/Instructions',
 		'WoltLabSuite/Core/Template'
 	], function(
 		Language,

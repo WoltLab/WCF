@@ -534,7 +534,6 @@ class RegisterForm extends UserAddForm {
 	
 	/**
 	 * @param       User $user
-	 * @throws      SystemException
 	 * @since       5.2
 	 */
 	protected function fireNotificationEvent(User $user) {

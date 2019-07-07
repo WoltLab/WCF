@@ -26,6 +26,7 @@ interface IAdLocation {
 	/**
 	 * Replaces all relevant variables in the given ad and returns the processed ad.
 	 * 
+	 * @param	string		$ad
 	 * @return	string
 	 */
 	public function replaceVariables($ad);
