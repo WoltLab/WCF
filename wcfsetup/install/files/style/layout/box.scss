@@ -695,6 +695,28 @@
 		}
 	}
 	
+	.boxInfo {
+		background-color: $wcfStatusInfoBackground;
+		color: $wcfStatusInfoText;
+		padding: 20px;
+		text-align: center;
+		
+		a:not(.button) {
+			color: $wcfStatusInfoLink;
+			
+			@include wcfFontBold;
+			
+			&:hover {
+				color: $wcfStatusInfoLinkActive;
+				text-decoration: underline;
+			}
+		}
+		
+		.formSubmit {
+			margin-top: 20px;
+		}
+	}
+	
 	@include screen-xs {
 		.boxImage {
 			align-items: center;

@@ -44,6 +44,7 @@
 			<boxType>system</boxType>
 			<position>contentBottom</position>
 			<objectType>com.woltlab.wcf.registerButton</objectType>
+			<cssClassName>boxInfo</cssClassName>
 			<showHeader>1</showHeader>
 			<content language="de">
 				<title>Jetzt mitmachen!</title>
