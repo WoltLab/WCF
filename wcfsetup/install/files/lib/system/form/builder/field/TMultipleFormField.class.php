@@ -109,7 +109,7 @@ trait TMultipleFormField {
 	 * Sets the minimum number of values that can be selected or set and returns
 	 * this field.
 	 * 
-	 * @param	int		$maximum	maximum number of values
+	 * @param	int		$minimum	maximum number of values
 	 * @return	static				this field
 	 * 
 	 * @throws	\InvalidArgumentException	if the given minimum number of values is invalid

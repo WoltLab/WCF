@@ -45,7 +45,7 @@ abstract class AbstractHtmlNodeProcessor implements IHtmlNodeProcessor {
 	protected $xpath;
 	
 	/**
-	 * @inheritDOc
+	 * @inheritDoc
 	 */
 	public function load(IHtmlProcessor $htmlProcessor, $html) {
 		$this->htmlProcessor = $htmlProcessor;

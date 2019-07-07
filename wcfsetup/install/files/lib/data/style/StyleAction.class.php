@@ -1028,8 +1028,6 @@ BROWSERCONFIG;
 	
 	/**
 	 * Changes user style.
-	 * 
-	 * @return	string[]
 	 */
 	public function changeStyle() {
 		StyleHandler::getInstance()->changeStyle($this->style->styleID);

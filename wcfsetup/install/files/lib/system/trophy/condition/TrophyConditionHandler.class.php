@@ -137,6 +137,7 @@ class TrophyConditionHandler extends SingletonFactory {
 	 * Returns the userTrophyIDs of the users, which no longer fulfills the trophy conditions. 
 	 * 
 	 * @param       Trophy          $trophy
+	 * @param       integer         $maxTrophyIDs		maximum number of trophies that are processed
 	 * @return      integer[]
 	 * @since       5.2
 	 */

@@ -543,7 +543,6 @@ class BBCodeParser extends SingletonFactory {
 	 * 
 	 * @param	string			$text
 	 * @param	string[]		$allowedBBCodes
-	 * @return	string[]
 	 * @deprecated  3.0 - please use HtmlInputProcessor::validate() instead
 	 */
 	public function validateBBCodes($text, array $allowedBBCodes) {
