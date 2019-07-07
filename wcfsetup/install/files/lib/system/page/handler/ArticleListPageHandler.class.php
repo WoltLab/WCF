@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\page\handler;
+use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\ViewableArticle;
 
 /**
@@ -18,5 +19,14 @@ class ArticleListPageHandler extends AbstractMenuPageHandler {
 	 */
 	public function getOutstandingItemCount(/** @noinspection PhpUnusedParameterInspection */$objectID = null) {
 		return ARTICLE_ENABLE_VISIT_TRACKING ? ViewableArticle::getUnreadArticles() : 0;
+	}
+	
+	/** @noinspection PhpMissingParentCallCommonInspection */
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	public function isVisible($objectID = null) {
+		return !empty(ArticleCategory::getAccessibleCategoryIDs());
 	}
 }
