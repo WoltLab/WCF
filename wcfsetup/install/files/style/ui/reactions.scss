@@ -25,14 +25,38 @@
 	}
 }
 
-img.reactionType {
-	width: 24px;
-	height: 24px;
+.reactionType {
+	width: 20px;
+	height: 20px;
 }
 
 .reactionSummaryList {
-	span.reactionCount::after {
-		content: ' × ';
+	display: flex;
+	flex-wrap: wrap;
+	margin: -5px -5px 0 0;
+	
+	.reactionCount{
+		@include wcfFontSmall;
+		
+		&::before {
+			content: ' × ';
+		}
+	}
+	
+	&.reactionSummaryListTiny .reactionType {
+		width: 16px;
+		height: 16px;
+	}
+}
+
+.reactCountButton {
+	color: $wcfContentDimmedText;
+	flex: 0 0 auto;
+	margin: 5px 5px 0 0;
+	white-space: nowrap;
+	
+	&:hover {
+		color: $wcfContentText;
 	}
 }
 
@@ -59,10 +83,10 @@ img.reactionType {
 	}
 	
 	@include screen-md-down {
-		padding: 5px 0px;
+		padding: 5px 0;
 		
 		> ul > li.reactionTypeButton {
-			margin: 0px;
+			margin: 0;
 			display: block;
 			padding: 5px 25px;
 		}
@@ -106,21 +130,9 @@ img.reactionType {
 		}
 		
 		> ul > li.reactionTypeButton:first-child {
-			margin-left: 0px;
+			margin-left: 0;
 		}
 	}
-}
-
-li.reactCountButton {
-	display: inline;
-	padding: 5px;
-	cursor: pointer;
-	color: $wcfContentDimmedText;
-	white-space: nowrap;
-}
-
-li.reactCountButton:hover {
-	color: $wcfContentText;
 }
 
 .reputationCounter {
@@ -150,24 +162,6 @@ li.reactCountButton:hover {
 	
 	&:empty {
 		display: none;	
-	}
-}
-
-.reactionSummaryListTiny {
-	display: inline;
-	
-	li.reactCountButton > img {
-		width: 16px;
-		height: 16px;
-	}
-	
-	span.reactionCount {
-		@include wcfFontSmall;
-	}
-	
-	li.reactCountButton {
-		background-color: transparent;
-		padding: 0px;
 	}
 }
 

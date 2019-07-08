@@ -3,4 +3,4 @@
 	style="width:24px;height:24px"
 	class="reactionType"
 	data-reaction-type-id="{$reactionType->reactionTypeID}"
-/>
+>
