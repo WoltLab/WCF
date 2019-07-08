@@ -1691,6 +1691,9 @@
 					if (e instanceof Event) {
 						e.preventDefault();
 					}
+					else if (e && e.originalEvent) {
+						e.originalEvent.preventDefault();
+					}
 					
 					args = (typeof args === 'undefined') ? btnName : args;
 					
