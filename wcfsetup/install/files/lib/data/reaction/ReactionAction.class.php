@@ -52,25 +52,25 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 	 * likeable object
 	 * @var	ILikeObject
 	 */
-	public $likeableObject = null;
+	public $likeableObject;
 	
 	/**
 	 * object type object
 	 * @var	ObjectType
 	 */
-	public $objectType = null;
+	public $objectType;
 	
 	/**
 	 * like object type provider object
 	 * @var	ILikeObjectTypeProvider
 	 */
-	public $objectTypeProvider = null;
+	public $objectTypeProvider;
 	
 	/**
 	 * reaction type for the reaction
 	 * @var	ReactionType
 	 */
-	public $reactionType = null;
+	public $reactionType;
 	
 	/**
 	 * Validates parameters to fetch like details.

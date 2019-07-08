@@ -53,13 +53,6 @@
 				</div>
 				
 				<div class="contentItemMetaIcons">
-					{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && ($article->likes || $article->dislikes || $article->neutralReactions)}
-						<div class="contentItemMetaIcon reputationCounter {if $article->cumulativeLikes > 0}positive{elseif $article->cumulativeLikes < 0}negative{else}neutral{/if}">
-							<span aria-label="{lang cumulativeLikes=$article->cumulativeLikes}wcf.like.reputation.label{/lang}">
-								{if $article->cumulativeLikes > 0}+{elseif $article->cumulativeLikes == 0}±{/if}{#$article->cumulativeLikes}
-							</span>
-						</div>
-					{/if}
 					<div class="contentItemMetaIcon">
 						<span class="icon icon16 fa-comments"></span>
 						<span aria-label="{$article->getDiscussionProvider()->getDiscussionCountPhrase()}">

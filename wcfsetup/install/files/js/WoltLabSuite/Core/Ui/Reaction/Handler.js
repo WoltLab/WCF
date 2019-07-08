@@ -40,7 +40,6 @@ define(
 				}
 				
 				this._containers = new Dictionary();
-				this._details = new ObjectMap();
 				this._objectType = objectType;
 				this._cache = new Dictionary();
 				this._objects = new Dictionary();
@@ -81,25 +80,24 @@ define(
 						continue;
 					}
 					
+					objectId = ~~elData(element, 'object-id');
 					elementData = {
 						reactButton: null,
-						objectId: ~~elData(element, 'object-id'),
+						objectId: objectId,
 						element: element
 					};
 					
 					this._containers.set(DomUtil.identify(element), elementData);
 					this._initReactButton(element, elementData);
-					
-					if (!this._objects.has(~~elData(element, 'object-id'))) {
-						var objects = [];
-					}
-					else {
-						var objects = this._objects.get(~~elData(element, 'object-id'));
+
+					var objects = [];
+					if (this._objects.has(objectId)) {
+						objects = this._objects.get(objectId);
 					}
 					
 					objects.push(elementData);
 					
-					this._objects.set(~~elData(element, 'object-id'), objects);
+					this._objects.set(objectId, objects);
 					
 					triggerChange = true;
 				}
@@ -122,11 +120,13 @@ define(
 				}
 				
 				if (elementData.reactButton === null || elementData.reactButton.length === 0) {
-					// the element may have no react button 
+					// The element may have no react button. 
 					return;
 				}
 				
+				//noinspection JSUnresolvedVariable
 				if (Object.keys(REACTION_TYPES).length === 1) {
+					//noinspection JSUnresolvedVariable
 					var reaction = REACTION_TYPES[Object.keys(REACTION_TYPES)[0]];
 					elementData.reactButton.title = reaction.title;
 					var textSpan = elBySel('.invisible', elementData.reactButton);
@@ -190,7 +190,8 @@ define(
 						if (reactionTypeID) {
 							elementData.reactButton.classList.add('active');
 							elData(elementData.reactButton, 'reaction-type-id', reactionTypeID);
-						} else {
+						}
+						else {
 							elData(elementData.reactButton, 'reaction-type-id', 0);
 							elementData.reactButton.classList.remove('active');
 						}
@@ -199,25 +200,24 @@ define(
 			},
 			
 			_markReactionAsActive: function() {
-				var reactionTypeID;
+				var reactionTypeID = null;
 				this._objects.get(this._popoverCurrentObjectId).forEach(function (element) {
 					if (element.reactButton !== null) {
-						reactionTypeID = elData(element.reactButton, 'reaction-type-id');
+						reactionTypeID = ~~elData(element.reactButton, 'reaction-type-id');
 					}
 				});
 				
-				if (reactionTypeID === undefined) {
+				if (reactionTypeID === null) {
 					throw new Error("Unable to find react button for current popover.");
 				}
 				
-				//  clear old active state
-				var elements = elBySelAll('.reactionTypeButton.active', this._getPopover());
-				for (var i = 0, length = elements.length; i < length; i++) {
-					elements[i].classList.remove('active');
-				}
+				//  Clear the old active state.
+				elBySelAll('.reactionTypeButton.active', this._getPopover(), function(element) {
+					element.classList.remove('active');
+				});
 				
-				if (reactionTypeID != 0) {
-					elBySel('.reactionTypeButton[data-reaction-type-id="'+reactionTypeID+'"]', this._getPopover()).classList.add('active');
+				if (reactionTypeID) {
+					elBySel('.reactionTypeButton[data-reaction-type-id="' + reactionTypeID + '"]', this._getPopover()).classList.add('active');
 				}
 			},
 			
@@ -226,14 +226,17 @@ define(
 			 * 
 			 * @param       {int}           objectId
 			 * @param       {Element}       element
+			 * @param       {?Event}        event
 			 */
 			_toggleReactPopover: function(objectId, element, event) {
 				if (event !== null) {
 					event.preventDefault();
 					event.stopPropagation();
 				}
-				
+
+				//noinspection JSUnresolvedVariable
 				if (Object.keys(REACTION_TYPES).length === 1) {
+					//noinspection JSUnresolvedVariable
 					var reaction = REACTION_TYPES[Object.keys(REACTION_TYPES)[0]];
 					this._popoverCurrentObjectId = objectId;
 					
@@ -256,7 +259,6 @@ define(
 			 * @param       {Element}	element 		container element
 			 */
 			_openReactPopover: function(objectId, element) {
-				// first close old popover, if exists 
 				if (this._popoverCurrentObjectId !== 0) {
 					this._closePopover();
 				}
@@ -271,9 +273,7 @@ define(
 				});
 				
 				if (this._options.isButtonGroupNavigation) {
-					// find nav element
-					var nav = element.closest('nav');
-					nav.style.opacity = "1";
+					element.closest('nav').style.setProperty('opacity', '1', '');
 				}
 				
 				this._getPopover().classList.remove('forceHide');
@@ -311,7 +311,8 @@ define(
 						var reactionTypeItemSpan = elCreate('span');
 						reactionTypeItemSpan.classList = 'reactionTypeButtonTitle';
 						reactionTypeItemSpan.innerHTML = reactionType.title;
-						
+
+						//noinspection JSUnresolvedVariable
 						reactionTypeItem.innerHTML = reactionType.renderedIcon;
 						
 						reactionTypeItem.appendChild(reactionTypeItemSpan);
@@ -346,13 +347,18 @@ define(
 				var sortedReactionTypes = [];
 				
 				// convert our reaction type object to an array
+				//noinspection JSUnresolvedVariable
 				for (var key in REACTION_TYPES) {
-					if (!REACTION_TYPES.hasOwnProperty(key)) continue;
-					sortedReactionTypes.push(REACTION_TYPES[key]);
+					//noinspection JSUnresolvedVariable
+					if (REACTION_TYPES.hasOwnProperty(key)) {
+						//noinspection JSUnresolvedVariable
+						sortedReactionTypes.push(REACTION_TYPES[key]);
+					}
 				}
 				
 				// sort the array
 				sortedReactionTypes.sort(function (a, b) {
+					//noinspection JSUnresolvedVariable
 					return a.showOrder - b.showOrder;
 				});
 				
@@ -395,9 +401,9 @@ define(
 			},
 			
 			_ajaxSuccess: function(data) {
+				//noinspection JSUnresolvedVariable
 				this.countButtons.updateCountButtons(data.returnValues.objectID, data.returnValues.reactions);
 				
-				// update react button status
 				this._updateReactButton(data.returnValues.objectID, data.returnValues.reactionTypeID);
 			},
 			

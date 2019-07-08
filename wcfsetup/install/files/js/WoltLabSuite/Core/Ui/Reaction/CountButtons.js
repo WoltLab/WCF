@@ -69,27 +69,26 @@ define(
 						continue;
 					}
 					
+					objectId = ~~elData(element, 'object-id');
 					elementData = {
 						reactButton: null,
 						summary: null,
 						
-						objectId: ~~elData(element, 'object-id'), 
+						objectId: objectId, 
 						element: element
 					};
 					
 					this._containers.set(DomUtil.identify(element), elementData);
 					this._initReactionCountButtons(element, elementData);
-					
-					if (!this._objects.has(~~elData(element, 'object-id'))) {
-						var objects = [];
-					}
-					else {
-						var objects = this._objects.get(~~elData(element, 'object-id'));
+
+					var objects = [];
+					if (this._objects.has(objectId)) {
+						objects = this._objects.get(objectId);
 					}
 					
 					objects.push(elementData);
 					
-					this._objects.set(~~elData(element, 'object-id'), objects);
+					this._objects.set(objectId, objects);
 					
 					triggerChange = true;
 				}
@@ -113,13 +112,14 @@ define(
 					// summary list for the object not found; abort
 					if (summaryList === null) return; 
 					
-					var sortedElements = {}, elements = elBySelAll('li', summaryList);
+					var sortedElements = {}, elements = elBySelAll('.reactCountButton', summaryList);
 					for (var i = 0, length = elements.length; i < length; i++) {
-						if (data[elData(elements[i], 'reaction-type-id')] !== undefined) {
-							sortedElements[elData(elements[i], 'reaction-type-id')] = elements[i];
+						var reactionTypeId = elData(elements[i], 'reaction-type-id');
+						if (data.hasOwnProperty(reactionTypeId)) {
+							sortedElements[reactionTypeId] = elements[i];
 						}
 						else {
-							// reaction has no longer reactions
+							// The reaction no longer has any reactions.
 							elRemove(elements[i]);
 						}
 					}
@@ -130,25 +130,23 @@ define(
 							reactionCount.innerHTML = StringUtil.shortUnit(data[key]);
 						}
 						else if (REACTION_TYPES[key] !== undefined) {
-							// create element 
-							var createdElement = elCreate('li');
+							var createdElement = elCreate('span');
 							createdElement.className = 'reactCountButton';
+							createdElement.innerHTML = REACTION_TYPES[key].renderedIcon;
 							elData(createdElement, 'reaction-type-id', key);
-							
+
 							var countSpan = elCreate('span');
 							countSpan.className = 'reactionCount';
 							countSpan.innerHTML = StringUtil.shortUnit(data[key]);
 							createdElement.appendChild(countSpan);
 							
-							createdElement.innerHTML = createdElement.innerHTML + REACTION_TYPES[key].renderedIcon;
-							
 							summaryList.appendChild(createdElement);
-							
-							this._initReactionCountButton(createdElement, objectId);
 							
 							triggerChange = true;
 						}
 					}, this);
+					
+					window[(summaryList.childElementCount > 0 ? 'elShow' : 'elHide')](summaryList);
 				}.bind(this));
 				
 				if (triggerChange) {
@@ -163,29 +161,10 @@ define(
 			 * @param       {object}        elementData
 			 */
 			_initReactionCountButtons: function(element, elementData) {
-				if (this._options.isSingleItem) {
-					var summaryList = elBySel(this._options.summaryListSelector);
-				}
-				else {
-					var summaryList = elBySel(this._options.summaryListSelector, element);
-				}
-				
+				var summaryList = elBySel(this._options.summaryListSelector, this._options.isSingleItem ? undefined : element);
 				if (summaryList !== null) {
-					var elements = elBySelAll('li', summaryList);
-					for (var i = 0, length = elements.length; i < length; i++) {
-						this._initReactionCountButton(elements[i], elementData.objectId);
-					}
+					summaryList.addEventListener(WCF_CLICK_EVENT, this._showReactionOverlay.bind(this, elementData.objectId));
 				}
-			},
-			
-			/**
-			 * Initialized a specific reaction count button for an object.
-			 *
-			 * @param       {element}        element
-			 * @param       {int}            objectId
-			 */
-			_initReactionCountButton: function(element, objectId) {
-				element.addEventListener(WCF_CLICK_EVENT, this._showReactionOverlay.bind(this, objectId));
 			},
 			
 			/**

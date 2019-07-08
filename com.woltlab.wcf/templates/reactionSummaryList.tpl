@@ -1,9 +1,16 @@
 {if $__wcf->session->getPermission('user.like.canViewLike')}
-	<ul class="reactionSummaryList{if $isTiny|isset && $isTiny} reactionSummaryListTiny{/if} jsOnly" data-object-type="{$objectType}" data-object-id="{$objectID}">
-		{if $reactionData[$objectID]|isset && $reactionData[$objectID]->getReactions()|is_array}
-			{foreach from=$reactionData[$objectID]->getReactions() key=reactionTypeID item=reaction}
-				<li class="reactCountButton jsTooltip" data-reaction-type-id="{$reactionTypeID}" title="{lang}wcf.reactions.summary.listReactions{/lang}"><span class="reactionCount">{$reaction[reactionCount]|shortUnit}</span> {@$reaction[renderedReactionIcon]}</li>
+	{assign var='_reactionSummaryListReactions' value=null}
+        {if $reactionData[$objectID]|isset}
+		{assign var='_reactionSummaryListReactions' value=$reactionData[$objectID]->getReactions()}
+	{/if}
+	<a href="#" class="reactionSummaryList{if $isTiny|isset && $isTiny} reactionSummaryListTiny{/if} jsOnly jsTooltip" data-object-type="{$objectType}" data-object-id="{$objectID}" title="{lang}wcf.reactions.summary.listReactions{/lang}"{if $_reactionSummaryListReactions|empty} style="display: none;"{/if}>
+		{if !$_reactionSummaryListReactions|empty}
+			{foreach from=$_reactionSummaryListReactions key=reactionTypeID item=reaction}
+				<span class="reactCountButton" data-reaction-type-id="{@$reactionTypeID}">
+					{@$reaction[renderedReactionIcon]}
+					<span class="reactionCount">{$reaction[reactionCount]|shortUnit}</span>
+				</span>
 			{/foreach}
 		{/if}
-	</ul>
+	</a>
 {/if}

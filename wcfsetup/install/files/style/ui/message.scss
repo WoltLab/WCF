@@ -504,14 +504,14 @@
 	flex-wrap: wrap;
 	
 	&:not(:first-child) {
-		> .likesSummary,
+		> .reactionSummaryList,
 		> .messageFooterButtons,
 		> .messageFooterButtonsExtra {
 			margin-top: 20px;
 		}
 	}
 	
-	> .likesSummary {
+	> .reactionSummaryList {
 		flex: 0 1 auto;
 		
 		@include wcfFontSmall;
