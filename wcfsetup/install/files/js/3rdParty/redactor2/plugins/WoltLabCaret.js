@@ -18,6 +18,25 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				mpAfter.call(this, node);
 			}).bind(this);
 			
+			var mpStart = this.caret.start;
+			this.caret.start = (function (node) {
+				if (_isSafari && _iOS) {
+					var sel, range;
+					node = this.caret.prepare(node);
+
+					if (!node) {
+						return;
+					}
+					
+					// iOS Safari offsets the caret by a half if the only content is an invisible space.
+					if (node.nodeName === 'P' && node.innerHTML === '\u200b') {
+						node.innerHTML = '<br>';
+					}
+				}
+				
+				mpStart.call(this, node);
+			}).bind(this);
+			
 			var editor = this.core.editor()[0];
 			require(['Environment'], (function (Environment) {
 				_iOS = (Environment.platform() === 'ios');
