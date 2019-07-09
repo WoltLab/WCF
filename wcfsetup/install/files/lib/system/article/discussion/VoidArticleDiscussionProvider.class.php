@@ -30,6 +30,13 @@ class VoidArticleDiscussionProvider extends AbstractArticleDiscussionProvider {
 	/**
 	 * @inheritDoc
 	 */
+	public function getDiscussionLink() {
+		return '';
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function renderDiscussions() {
 		return '';
 	}

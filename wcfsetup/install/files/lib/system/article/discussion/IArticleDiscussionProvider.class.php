@@ -29,6 +29,13 @@ interface IArticleDiscussionProvider {
 	public function getDiscussionCountPhrase();
 	
 	/**
+	 * Returns the permalink to the discussions or an empty string if there is none.
+	 * 
+	 * @return      string
+	 */
+	public function getDiscussionLink();
+	
+	/**
 	 * Renders the input and display section of the associated discussion.
 	 * 
 	 * @return      string

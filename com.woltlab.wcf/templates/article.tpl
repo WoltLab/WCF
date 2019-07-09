@@ -38,8 +38,10 @@
 				
 				{if $article->getDiscussionProvider()->getDiscussionCountPhrase()}
 					<li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
-						<span class="icon icon16 fa-comments"></span>
-						<span>{$article->getDiscussionProvider()->getDiscussionCountPhrase()}</span>
+                                                <span class="icon icon16 fa-comments"></span>
+                                                {if $article->getDiscussionProvider()->getDiscussionLink()}<a href="{$article->getDiscussionProvider()->getDiscussionLink()}">{else}<span>{/if}
+							{$article->getDiscussionProvider()->getDiscussionCountPhrase()}
+                                                {if $article->getDiscussionProvider()->getDiscussionLink()}</a>{else}</span>{/if}
 						<meta itemprop="interactionType" content="http://schema.org/CommentAction">
 						<meta itemprop="userInteractionCount" content="{@$article->getDiscussionProvider()->getDiscussionCount()}">
 					</li>

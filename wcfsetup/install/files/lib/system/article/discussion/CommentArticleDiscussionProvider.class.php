@@ -31,6 +31,13 @@ class CommentArticleDiscussionProvider extends AbstractArticleDiscussionProvider
 	/**
 	 * @inheritDoc
 	 */
+	public function getDiscussionLink() {
+		return '';
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function renderDiscussions() {
 		$commentCanAdd = WCF::getSession()->getPermission('user.article.canAddComment');
 		$commentObjectTypeID = CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.articleComment');
