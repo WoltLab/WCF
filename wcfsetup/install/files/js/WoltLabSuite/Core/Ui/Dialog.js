@@ -585,7 +585,23 @@ define(
 					}
 				}
 				
-				if (focusElement) focusElement.focus();
+				if (focusElement) {
+					// Setting the focus to a select element in iOS is pretty strange, because
+					// it focuses it, but also displays the keyboard for a fraction of a second,
+					// causing it to pop out from below and immediately vanish.
+					// 
+					// iOS will only show the keyboard if an input element is focused *and* the
+					// focus is an immediate result of an user interaction. This method must be
+					// assumed to be called from within a click event, but we want to set the
+					// focus without triggering the keyboard.
+					// 
+					// We can break the condition by wrapping it in a setTimeout() call,
+					// effectively tricking iOS into focusing the element without showing the
+					// keyboard.
+					setTimeout(function() {
+						focusElement.focus();
+					}, 1);
+				}
 			}
 		},
 		
