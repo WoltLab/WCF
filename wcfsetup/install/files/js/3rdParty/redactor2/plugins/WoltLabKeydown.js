@@ -1,11 +1,16 @@
 $.Redactor.prototype.WoltLabKeydown = function() {
 	"use strict";
 	
+	var _isSafari = false;
 	var _tags = [];
 	
 	return {
 		init: function () {
 			var selection = window.getSelection();
+
+			require(['Environment'], function (Environment) {
+				_isSafari = (Environment.browser() === 'safari');
+			});
 			
 			var mpInit = this.keydown.init;
 			this.keydown.init = (function (e) {
@@ -341,10 +346,25 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 						// they do not recognize this at all times, in particular certain white-spaces
 						// and <br> may not always play well.
 						if (this.utils.isRedactorParent(listItem) && this.utils.isEmpty(listItem.innerHTML)) {
-							// the current item is empty and there is no adjacent one, force clear the
-							// contents to enable browser recognition
+							// The current item is empty and there is no adjacent one, force clear the
+							// contents to enable browser recognition.
+							// 
+							// Unless this is Safari, which absolutely loves empty lines containing only
+							// a `<br>` and freaks out when a block element is completely empty.
 							if (listItem.nextElementSibling === null) {
-								listItem.innerHTML = '';
+								listItem.innerHTML = (_isSafari) ? '<br>' : '';
+								
+								// If this is Safari, we'll move the caret behind the `<br>`, otherwise
+								// nothing will happen.
+								if (_isSafari) {
+									var range = document.createRange();
+									range.selectNodeContents(listItem);
+									range.collapse(false);
+									
+									var selection = window.getSelection();
+									selection.removeAllRanges();
+									selection.addRange(range);
+								}
 							}
 						}
 					}
