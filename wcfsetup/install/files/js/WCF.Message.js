@@ -1303,6 +1303,15 @@ if (COMPILER_TARGET_DEFAULT) {
 			var $dimensions = this._copyQuote.getDimensions('outer');
 			var $left = ($coordinates.right - $coordinates.left) / 2 - ($dimensions.width / 2) + $coordinates.left;
 			
+			// Prevent the overlay from overflowing the left or right boundary of the container.
+			var containerBoundaries = $container[0].getBoundingClientRect();
+			if ($left < containerBoundaries.left) {
+				$left = containerBoundaries.left;
+			}
+			else if ($left + $dimensions.width > containerBoundaries.right) {
+				$left = containerBoundaries.right - $dimensions.width;
+			}
+			
 			this._copyQuote.css({
 				top: $coordinates.bottom + 7 + 'px',
 				left: $left + 'px'
