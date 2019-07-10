@@ -1,8 +1,6 @@
 $.Redactor.prototype.WoltLabEvent = function() {
 	"use strict";
 	
-	var _activeInstances = 0;
-	
 	return {
 		init: function() {
 			this._callbacks = [];
@@ -20,16 +18,12 @@ $.Redactor.prototype.WoltLabEvent = function() {
 			var ua = window.navigator.userAgent.toLowerCase();
 			if (ua.indexOf('windows phone') === -1 && ua.indexOf('edge/') === -1) {
 				this.$editor[0].addEventListener('focus', function () {
-					_activeInstances++;
-					
 					document.documentElement.classList.add('redactorActive');
 				});
-				this.$editor[0].addEventListener('blur', function () {
-					_activeInstances--;
-					
+				this.$editor[0].addEventListener('focusout', function () {
 					// short delay to prevent flickering when switching focus between editors
 					window.setTimeout(function () {
-						if (_activeInstances === 0) {
+						if (!document.activeElement || !document.activeElement.classList.contains('redactor-layer')) {
 							document.documentElement.classList.remove('redactorActive');
 						}
 					}, 100);
