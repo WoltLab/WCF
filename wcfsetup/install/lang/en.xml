@@ -1124,11 +1124,11 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.menu.link.article.category.add"><![CDATA[Add Category]]></item>
 		<item name="wcf.acp.menu.link.maintenance.sitemap"><![CDATA[Sitemaps]]></item>
 		<item name="wcf.acp.menu.add"><![CDATA[Add Menu]]></item>
-		<item name="wcf.acp.menu.delete.confirmMessage"><![CDATA[Do you really want to delete the menu <span class="confirmationObject">{lang}{$menu->title}{/lang}</span>?]]></item>
+		<item name="wcf.acp.menu.delete.confirmMessage"><![CDATA[Do you really want to delete the menu <span class="confirmationObject">{$menu->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.menu.edit"><![CDATA[Edit Menu]]></item>
 		<item name="wcf.acp.menu.list"><![CDATA[Menus]]></item>
 		<item name="wcf.acp.menu.item.add"><![CDATA[Add Menu Item]]></item>
-		<item name="wcf.acp.menu.item.delete.confirmMessage"><![CDATA[Do you really want to delete the menu item <span class="confirmationObject">{lang}{$menuItemNode->title}{/lang}</span>?]]></item>
+		<item name="wcf.acp.menu.item.delete.confirmMessage"><![CDATA[Do you really want to delete the menu item <span class="confirmationObject">{$menuItemNode->title|language}</span>?]]></item>
 		<item name="wcf.acp.menu.item.edit"><![CDATA[Edit Menu Item]]></item>
 		<item name="wcf.acp.menu.item.externalURL"><![CDATA[External URL]]></item>
 		<item name="wcf.acp.menu.item.isDisabled"><![CDATA[Disable menu item]]></item>
@@ -1893,14 +1893,14 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.validation.errorCode.2"><![CDATA[The package “{$archive}” is missing the required “package.xml” file.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.3"><![CDATA[The package name “{$packageName}” does not meet the expectations and was rejected.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.4"><![CDATA[The package version “{$packageVersion}” does not meet the expectations and was rejected.]]></item>
-		<item name="wcf.acp.package.validation.errorCode.5"><![CDATA[The package “{lang}{$packageName}{/lang}” does not contain valid install instructions.]]></item>
-		<item name="wcf.acp.package.validation.errorCode.6"><![CDATA[The package “{lang}{$packageName}{/lang}” (installed version: “{$packageVersion}”) should be updated to version “{$deliveredPackageVersion}”, but an update is not supported.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.5"><![CDATA[The package “{$packageName|language}” does not contain valid install instructions.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.6"><![CDATA[The package “{$packageName|language}” (installed version: “{$packageVersion}”) should be updated to version “{$deliveredPackageVersion}”, but an update is not supported.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.7"><![CDATA[The following installed packages exclude the current package due to known incompatibilities: <ul class="nativeList">{foreach from=$packages item=package}<li>“{$package}” ({$package->package})</li>{/foreach}</ul>]]></item>
 		<item name="wcf.acp.package.validation.errorCode.8"><![CDATA[This package is incompatible with the following installed packages: <ul class="nativeList">{foreach from=$packages item=package}<li>“{$package}” ({$package->package})</li>{/foreach}</ul>]]></item>
 		<item name="wcf.acp.package.validation.errorCode.9"><![CDATA[The installation requires the package “{$packageName}” in version “{$packageVersion}” or higher, but only version “{$deliveredPackageVersion}” is shipped.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.10"><![CDATA[Requires the package {if $package === null}“{$packageName}”{else}“{$package}”{/if} in version “{$packageVersion}” or higher, {if $package === null}but it is neither installed nor shipped.{else}but only version “{$package->packageVersion}” is installed.{/if}]]></item>
 		<item name="wcf.acp.package.validation.errorCode.11"><![CDATA[The {if $type == 'install'}install{else}update{/if}-instructions specify the file “{$value}” for the Package Installation Plugin “{$pip}”, but it cannot be found in the specified location. Possible causes:<ul class="nativeList"><li>The file has not been added to the archive at all</li><li>The file exists but under a (slightly) different name (typo)</li></ul>]]></item>
-		<item name="wcf.acp.package.validation.errorCode.12"><![CDATA[The package “{lang}{$packageName}{/lang}” is already installed in version “{$packageVersion}”.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.12"><![CDATA[The package “{$packageName|language}” is already installed in version “{$packageVersion}”.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.13"><![CDATA[The API version “{$version}” is invalid.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.14"><![CDATA[This package was created for {if $isOlderVersion}an older{else}a newer{/if} version of WoltLab Suite and is not compatible.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[This package does not contain any data on API compatibility, the installation is prevented while the developer tools are enabled.]]></item>
@@ -2949,14 +2949,14 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.option.access"><![CDATA[Access]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Add Custom User Field]]></item>
 		<item name="wcf.acp.user.option.category.add"><![CDATA[Add Custom User Field Category]]></item>
-		<item name="wcf.acp.user.option.category.delete.sure"><![CDATA[Do you really want to delete the category <span class="confirmationObject">{lang}wcf.user.option.category.{$category->categoryName}{/lang}</span>?]]></item>
+		<item name="wcf.acp.user.option.category.delete.sure"><![CDATA[Do you really want to delete the category <span class="confirmationObject">{$category->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.user.option.category.edit"><![CDATA[Edit Custom User Field Category]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Fields]]></item>
 		<item name="wcf.acp.user.option.category.list"><![CDATA[Custom User Field Categories]]></item>
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Category]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Default option value suggested on first edit.]]></item>
-		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Do you really want to delete the field <span class="confirmationObject">{lang}wcf.user.option.{$option->optionName}{/lang}</span>?]]></item>
+		<item name="wcf.acp.user.option.delete.sure"><![CDATA[Do you really want to delete the field <span class="confirmationObject">{$option->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.user.option.edit"><![CDATA[Edit Custom User Field]]></item>
 		<item name="wcf.acp.user.option.editable"><![CDATA[Editable by]]></item>
@@ -5162,9 +5162,9 @@ your notifications on <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language}
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Can Write Comments on My Wall]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting"><![CDATA[Preserve text formatting when pasting into the editor]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting.description"><![CDATA[Disabling this option will force any content to be pasted from clipboard as plain text, stripping all formatting.]]></item>
-		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[User’s selection for “{lang}wcf.user.option.{$option->optionName}{/lang}”:]]></item>
-		<item name="wcf.user.option.searchTextOption"><![CDATA[“{lang}wcf.user.option.{$option->optionName}{/lang}” contains:]]></item>
-		<item name="wcf.user.option.searchBooleanOption"><![CDATA[User’s selection for “{lang}wcf.user.option.{$option->optionName}{/lang}”:]]></item>
+		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[User’s selection for “{$option->getTitle()}”:]]></item>
+		<item name="wcf.user.option.searchTextOption"><![CDATA[“{$option->getTitle()}” contains:]]></item>
+		<item name="wcf.user.option.searchBooleanOption"><![CDATA[User’s selection for “{$option->getTitle()}”:]]></item>
 	</category>
 	<category name="wcf.user.mail">
 		<item name="wcf.user.mail.information"><![CDATA[Details]]></item>

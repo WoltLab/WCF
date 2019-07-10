@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user\option;
+use wcf\data\ITitledObject;
 use wcf\data\option\Option;
 use wcf\data\user\User;
 use wcf\system\WCF;
@@ -22,7 +23,7 @@ use wcf\system\WCF;
  * @property-read	integer		$isDisabled		is `1` if the user option is disabled and thus neither shown nor editable, otherwise `0`
  * @property-read	integer		$originIsSystem		is `1` if the user option was created by the system and not manually by an administrator, otherwise `0`
  */
-class UserOption extends Option {
+class UserOption extends Option implements ITitledObject {
 	/**
 	 * visible for no one (no valid bit)
 	 * @var	integer
@@ -111,6 +112,13 @@ class UserOption extends Option {
 	 * @var	User
 	 */
 	public $user = null;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		return WCF::getLanguage()->get('wcf.user.option.' . $this->optionName);
+	}
 	
 	/**
 	 * Sets target user object.

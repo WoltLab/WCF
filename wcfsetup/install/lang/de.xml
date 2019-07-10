@@ -1147,11 +1147,11 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.menu.link.article.category.add"><![CDATA[Kategorie hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.maintenance.sitemap"><![CDATA[Sitemaps]]></item>
 		<item name="wcf.acp.menu.add"><![CDATA[Menü hinzufügen]]></item>
-		<item name="wcf.acp.menu.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Menü <span class="confirmationObject">{lang}{$menu->title}{/lang}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.menu.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Menü <span class="confirmationObject">{$menu->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.menu.edit"><![CDATA[Menü bearbeiten]]></item>
 		<item name="wcf.acp.menu.list"><![CDATA[Menüs]]></item>
 		<item name="wcf.acp.menu.item.add"><![CDATA[Menüpunkt hinzufügen]]></item>
-		<item name="wcf.acp.menu.item.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Menüpunkt <span class="confirmationObject">{lang}{$menuItemNode->title}{/lang}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.menu.item.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Menüpunkt <span class="confirmationObject">{$menuItemNode->title|language}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.menu.item.edit"><![CDATA[Menüpunkt bearbeiten]]></item>
 		<item name="wcf.acp.menu.item.externalURL"><![CDATA[Externe URL]]></item>
 		<item name="wcf.acp.menu.item.isDisabled"><![CDATA[Menüpunkt deaktivieren]]></item>
@@ -1908,14 +1908,14 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.validation.errorCode.2"><![CDATA[Das Paket „{$archive}“ enthält die notwendige „package.xml“ nicht.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.3"><![CDATA[Der Paketbezeichner „{$packageName}“ entspricht nicht den Vorgaben und ist ungültig.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.4"><![CDATA[Die Paketversion „{$packageVersion}“ entspricht nicht den Vorgaben und ist ungültig.]]></item>
-		<item name="wcf.acp.package.validation.errorCode.5"><![CDATA[Das Paket „{lang}{$packageName}{/lang}“ enthält keine gültigen Installations-Anweisungen.]]></item>
-		<item name="wcf.acp.package.validation.errorCode.6"><![CDATA[Das Paket „{lang}{$packageName}{/lang}“ (installierte Version: „{$packageVersion}“) soll auf Version „{$deliveredPackageVersion}“ aktualisiert werden, ein Update wird jedoch nicht unterstützt.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.5"><![CDATA[Das Paket „{$packageName|language}“ enthält keine gültigen Installations-Anweisungen.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.6"><![CDATA[Das Paket „{$packageName|language}“ (installierte Version: „{$packageVersion}“) soll auf Version „{$deliveredPackageVersion}“ aktualisiert werden, ein Update wird jedoch nicht unterstützt.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.7"><![CDATA[Die folgenden installierten Paketen schließen die Installation aufgrund von Inkompatibilitäten aus: <ul class="nativeList">{foreach from=$packages item=package}<li>„{$package}“ ({$package->package})</li>{/foreach}</ul>]]></item>
 		<item name="wcf.acp.package.validation.errorCode.8"><![CDATA[Dieses Paket ist inkompatibel mit den folgenden, installierten Paketen: <ul class="nativeList">{foreach from=$packages item=package}<li>„{$package}“ ({$package->package})</li>{/foreach}</ul>]]></item>
 		<item name="wcf.acp.package.validation.errorCode.9"><![CDATA[Die Installation erfordert das Paket „{$packageName}“ in Version „{$packageVersion}“ oder höher, das mitgelieferte Paket trägt aber die Versionsnummer „{$deliveredPackageVersion}“.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.10"><![CDATA[Benötigt das Paket {if $package === null}„{$packageName}“{else}„{$package}“{/if} in Version „{$packageVersion}“ oder höher, {if $package === null}dies ist aber weder installiert noch wird es mitgeliefert.{else}es ist aber nur Version „{$package->packageVersion}“ installiert.{/if}]]></item>
 		<item name="wcf.acp.package.validation.errorCode.11"><![CDATA[Die {if $type == 'install'}Installations{else}Update{/if}-Anweisungen geben für das Package Installation Plugin „{$pip}“ die Datei „{$value}“ an, diese ist jedoch nicht im Archiv enthalten. Mögliche Ursachen:<ul class="nativeList"><li>Die Datei wurde dem Archiv nicht hinzugefügt</li><li>Die Datei existiert, jedoch sind der Dateiname und die Angabe in den Anweisungen abweichend (Tippfehler)</li></ul>]]></item>
-		<item name="wcf.acp.package.validation.errorCode.12"><![CDATA[Das Paket „{lang}{$packageName}{/lang}“ ist bereits in Version „{$packageVersion}“ installiert.]]></item>
+		<item name="wcf.acp.package.validation.errorCode.12"><![CDATA[Das Paket „{$packageName|language}“ ist bereits in Version „{$packageVersion}“ installiert.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.13"><![CDATA[Die API-Version „{$version}“ ist ungültig.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.14"><![CDATA[Das Paket wurde für eine {if $isOlderVersion}ältere{else}neuere{/if} Version von WoltLab Suite entwickelt und ist nicht kompatibel.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[Das Paket verfügt über keine Angaben zur API-Kompatibilität, eine Installation  mit aktivierten Entwickler-Werkzeugen ist daher nicht möglich.]]></item>
@@ -3021,14 +3021,14 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.option.access"><![CDATA[Zugriff]]></item>
 		<item name="wcf.acp.user.option.add"><![CDATA[Benutzerprofilfeld hinzufügen]]></item>
 		<item name="wcf.acp.user.option.category.add"><![CDATA[Benutzerprofilfeld-Kategorie hinzufügen]]></item>
-		<item name="wcf.acp.user.option.category.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Benutzerprofilfeld-Kategorie <span class="confirmationObject">{lang}wcf.user.option.category.{$category->categoryName}{/lang}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.user.option.category.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Benutzerprofilfeld-Kategorie <span class="confirmationObject">{$category->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.user.option.category.edit"><![CDATA[Benutzerprofilfeld-Kategorie bearbeiten]]></item>
 		<item name="wcf.acp.user.option.category.options"><![CDATA[Felder]]></item>
 		<item name="wcf.acp.user.option.category.list"><![CDATA[Benutzerprofilfeld-Kategorien]]></item>
 		<item name="wcf.acp.user.option.categoryName"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.user.option.defaultValue"><![CDATA[Standardwert]]></item>
 		<item name="wcf.acp.user.option.defaultValue.description"><![CDATA[Wert, der beim erstmaligen Ausfüllen als Standard vorgegeben ist.]]></item>
-		<item name="wcf.acp.user.option.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Benutzerprofilfeld <span class="confirmationObject">{lang}wcf.user.option.{$option->optionName}{/lang}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.user.option.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Benutzerprofilfeld <span class="confirmationObject">{$option->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.user.option.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.user.option.edit"><![CDATA[Benutzerprofilfeld bearbeiten]]></item>
 		<item name="wcf.acp.user.option.editable"><![CDATA[Wer darf den Inhalt verändern?]]></item>
@@ -5163,9 +5163,9 @@ Benachrichtigungen auf <a href="{link isEmail=true}{/link}">{PAGE_TITLE|language
 		<item name="wcf.user.option.canWriteProfileComments"><![CDATA[Kann Pinnwand-Kommentare schreiben]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting"><![CDATA[Text-Formatierung beim Einfügen in den Editor übernehmen]]></item>
 		<item name="wcf.user.option.editorPastePreserveFormatting.description"><![CDATA[Die Deaktivierung dieser Option erzwingt das Einfügen aus der Zwischenablage in reiner Textform, Formatierungen werden dabei entfernt.]]></item>
-		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[Auswahl des Benutzers bei „{lang}wcf.user.option.{$option->optionName}{/lang}“:]]></item>
-		<item name="wcf.user.option.searchTextOption"><![CDATA[„{lang}wcf.user.option.{$option->optionName}{/lang}“ enthält:]]></item>
-		<item name="wcf.user.option.searchBooleanOption"><![CDATA[Auswahl des Benutzers bei „{lang}wcf.user.option.{$option->optionName}{/lang}“:]]></item>
+		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[Auswahl des Benutzers bei „{$option->getTitle()}“:]]></item>
+		<item name="wcf.user.option.searchTextOption"><![CDATA[„{$option->getTitle()}“ enthält:]]></item>
+		<item name="wcf.user.option.searchBooleanOption"><![CDATA[Auswahl des Benutzers bei „{$option->getTitle()}“:]]></item>
 	</category>
 	<category name="wcf.user.mail">
 		<item name="wcf.user.mail.information"><![CDATA[Informationen]]></item>

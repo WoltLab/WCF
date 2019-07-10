@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\user\option\category;
 use wcf\data\DatabaseObject;
+use wcf\data\ITitledObject;
 use wcf\system\WCF;
 
 /**
@@ -19,7 +20,7 @@ use wcf\system\WCF;
  * @property-read	string		$permissions		comma separated list of user group permissions of which the active user needs to have at least one to see the user option category
  * @property-read	string		$options		comma separated list of options of which at least one needs to be enabled for the user option category to be shown
  */
-class UserOptionCategory extends DatabaseObject {
+class UserOptionCategory extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns the title of this category.
 	 * 
@@ -27,6 +28,13 @@ class UserOptionCategory extends DatabaseObject {
 	 */
 	public function __toString() {
 		return $this->categoryName;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		return WCF::getLanguage()->get('wcf.user.option.category.' . $this->categoryName);
 	}
 	
 	/**
