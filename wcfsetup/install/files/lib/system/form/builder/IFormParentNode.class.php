@@ -76,6 +76,17 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator {
 	public function hasValidationErrors();
 	
 	/**
+	 * Inserts the given node after the node with the given id and returns this node.
+	 * 
+	 * @param	IFormChildNode		$child			inserted child node
+	 * @param	string			$referenceNodeId	id of the node after which the given node is inserted
+	 * @return	static						this node
+	 * 
+	 * @throws	\InvalidArgumentException			if given node cannot be inserted or reference node id is invalid
+	 */
+	public function insertAfter(IFormChildNode $child, $referenceNodeId);
+	
+	/**
 	 * Inserts the given node before the node with the given id and returns this node.
 	 * 
 	 * @param	IFormChildNode		$child			inserted child node

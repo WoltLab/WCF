@@ -214,6 +214,35 @@ trait TFormParentNode {
 		
 		return false;
 	}
+
+	/**
+	 * Inserts the given node after the node with the given id and returns this node.
+	 *
+	 * @param	IFormChildNode		$child			inserted child node
+	 * @param	string			$referenceNodeId	id of the node after which the given node is inserted
+	 * @return	static						this node
+	 * 
+	 * @throws	\InvalidArgumentException			if given node cannot be inserted or reference node id is invalid
+	 */
+	public function insertAfter(IFormChildNode $child, $referenceNodeId) {
+		$didInsertNode = false;
+		foreach ($this->children() as $index => $existingChild) {
+			if ($existingChild->getId() === $referenceNodeId) {
+				array_splice($this->children, $index + 1, 0, [$child]);
+				
+				$child->parent($this);
+				
+				$didInsertNode = true;
+				break;
+			}
+		}
+		
+		if (!$didInsertNode) {
+			throw new \InvalidArgumentException("Unknown child node with id '{$referenceNodeId}'.");
+		}
+		
+		return $this;
+	}
 	
 	/**
 	 * Inserts the given node before the node with the given id and returns this node.
