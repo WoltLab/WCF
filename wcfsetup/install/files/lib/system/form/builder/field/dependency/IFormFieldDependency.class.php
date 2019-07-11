@@ -42,6 +42,19 @@ interface IFormFieldDependency {
 	public function field(IFormField $field);
 	
 	/**
+	 * Sets the id of the field the availability of the node dependents on.
+	 * 
+	 * This method should only be used before building the form as afterwards,
+	 * the actual field is no automatically set.
+	 * 
+	 * @param	string		$fieldId	field id
+	 * @return	static				this dependency
+	 * 
+	 * @throws	\BadMethodCallException		if the field has already been set
+	 */
+	public function fieldId($fieldId);
+	
+	/**
 	 * Returns the node whose availability depends on the value of a field.
 	 * 
 	 * @return	IFormNode	dependent node
@@ -49,11 +62,20 @@ interface IFormFieldDependency {
 	public function getDependentNode();
 	
 	/**
-	 * Returns the field the availability of the element dependents on.
+	 * Returns the field the availability of the element dependents on or `null` if the field has
+	 * not been set yet.
 	 * 
 	 * @return	IFormField	field controlling element availability
 	 */
 	public function getField();
+	
+	/**
+	 * Returns the id of the field the availability of the node dependents on;
+	 * 
+	 * @return	string
+	 * @throws	\BadMethodCallException		if neither field not field id has been set
+	 */
+	public function getFieldId();
 	
 	/**
 	 * Returns the JavaScript code required to ensure this dependency in the template.

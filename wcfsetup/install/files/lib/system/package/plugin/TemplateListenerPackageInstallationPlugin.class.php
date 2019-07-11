@@ -215,7 +215,12 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 				->description('wcf.acp.pip.templateListener.templateName.description')
 				->required()
 				->options(array_combine(array_keys($templateEvents), array_keys($templateEvents)))
-				->filterable(),
+				->filterable()
+				->addDependency(
+					ValueFormFieldDependency::create('environment')
+						->fieldId('environment')
+						->values(['user'])
+				),
 			
 			SingleSelectionFormField::create('acpTemplateName')
 				->objectProperty('templatename')
@@ -224,6 +229,11 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 				->required()
 				->options(array_combine(array_keys($acpTemplateEvents), array_keys($acpTemplateEvents)))
 				->filterable()
+				->addDependency(
+					ValueFormFieldDependency::create('environment')
+						->fieldId('environment')
+						->values(['admin'])
+				)
 		]);
 		
 		/** @var SingleSelectionFormField $frontendTemplateName */
@@ -361,20 +371,6 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 					array_keys($this->installation->getPackage()->getAllRequiredPackages())
 				))
 		]);
-		
-		/** @var SingleSelectionFormField $environment */
-		$environment = $form->getNodeById('environment');
-		
-		$form->getNodeById('frontendTemplateName')->addDependency(
-			ValueFormFieldDependency::create('environment')
-				->field($environment)
-				->values(['user'])
-		);
-		$form->getNodeById('acpTemplateName')->addDependency(
-			ValueFormFieldDependency::create('environment')
-				->field($environment)
-				->values(['admin'])
-		);
 		
 		// ensure proper normalization of template code
 		$form->getDataHandler()->add(new CustomFormFieldDataProcessor('templateCode', function(IFormDocument $document, array $parameters) {

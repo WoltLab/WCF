@@ -144,6 +144,9 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 		
 		switch ($this->entryType) {
 			case 'options':
+				/** @var SingleSelectionFormField $optionType */
+				$optionType = $form->getNodeById('optionType');
+				
 				/** @var TextFormField $optionNameField */
 				$optionNameField = $dataContainer->getNodeById('optionName');
 				$optionNameField->addValidator(new FormFieldValidator('uniqueness', function(TextFormField $formField) {
@@ -184,7 +187,12 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 					->objectProperty('selectoptions')
 					->label('wcf.acp.pip.abstractOption.options.selectOptions')
 					->description('wcf.acp.pip.option.abstractOption.selectOptions.description')
-					->rows(5);
+					->rows(5)
+					->addDependency(
+						ValueFormFieldDependency::create('optionType')
+							->field($optionType)
+							->values($this->selectOptionOptionTypes)
+					);
 				
 				$dataContainer->insertBefore($selectOptions, 'enableOptions');
 				
@@ -196,36 +204,22 @@ class OptionPackageInstallationPlugin extends AbstractOptionPackageInstallationP
 					BooleanFormField::create('supportI18n')
 						->objectProperty('supporti18n')
 						->label('wcf.acp.pip.option.options.supportI18n')
-						->description('wcf.acp.pip.option.options.supportI18n.description'),
+						->description('wcf.acp.pip.option.options.supportI18n.description')
+						->addDependency(
+							ValueFormFieldDependency::create('optionType')
+								->field($optionType)
+								->values($this->i18nOptionTypes)
+						),
 					
 					BooleanFormField::create('requireI18n')
 						->objectProperty('requirei18n')
 						->label('wcf.acp.pip.option.options.requireI18n')
-						->description('wcf.acp.pip.option.options.requireI18n.description'),
+						->description('wcf.acp.pip.option.options.requireI18n.description')
+						->addDependency(
+							NonEmptyFormFieldDependency::create('supportI18n')
+								->fieldId('supportI18n')
+						),
 				]);
-				
-				/** @var SingleSelectionFormField $optionType */
-				$optionType = $form->getNodeById('optionType');
-				
-				/** @var BooleanFormField $supportI18n */
-				$supportI18n = $form->getNodeById('supportI18n');
-				
-				$selectOptions->addDependency(
-					ValueFormFieldDependency::create('optionType')
-						->field($optionType)
-						->values($this->selectOptionOptionTypes)
-				);
-				
-				$supportI18n->addDependency(
-					ValueFormFieldDependency::create('optionType')
-						->field($optionType)
-						->values($this->i18nOptionTypes)
-				);
-				
-				$form->getNodeById('requireI18n')->addDependency(
-					NonEmptyFormFieldDependency::create('supportI18n')
-						->field($supportI18n)
-				);
 				
 				// ensure proper normalization of select options
 				$form->getDataHandler()->add(new CustomFormFieldDataProcessor('selectOptions', function(IFormDocument $document, array $parameters) {

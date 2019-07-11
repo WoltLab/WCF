@@ -525,7 +525,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 					asort($options);
 					
 					return $options;
-				}),
+				})
+				->addDependency(
+					ValueFormFieldDependency::create('boxType')
+						->fieldId('boxType')
+						->values(['system'])
+				),
 			
 			SingleSelectionFormField::create('position')
 				->label('wcf.acp.pip.box.position')
@@ -579,6 +584,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				->i18n()
 				->i18nRequired()
 				->languageItemPattern('__NONE__')
+				->addDependency(
+					ValueFormFieldDependency::create('boxType')
+						->fieldId('boxType')
+						->values(['system'])
+						->negate()
+				)
 		]);
 		
 		// add box controller-specific form fields 
@@ -590,24 +601,6 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				$boxController->addPipGuiFormFields($form, $objectType->objectType);
 			}
 		}
-		
-		// add dependencies
-		
-		/** @var SingleSelectionFormField $boxType */
-		$boxType = $dataContainer->getNodeById('boxType');
-		
-		$dataContainer->getNodeById('objectType')->addDependency(
-			ValueFormFieldDependency::create('boxType')
-				->field($boxType)
-				->values(['system'])
-		);
-		
-		$contentContainer->getNodeById('contentContent')->addDependency(
-			ValueFormFieldDependency::create('pageType')
-				->field($boxType)
-				->values(['system'])
-				->negate()
-		);
 	}
 	
 	/**

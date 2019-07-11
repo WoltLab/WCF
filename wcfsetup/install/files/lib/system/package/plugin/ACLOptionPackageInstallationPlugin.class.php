@@ -484,13 +484,12 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 						->objectProperty('categoryname')
 						->label('wcf.acp.pip.aclOption.options.categoryName')
 						->description('wcf.acp.pip.aclOption.options.categoryName.description')
-						->options(['' => 'wcf.global.noSelection'] + $categories[$objectTypeID]);
-					
-					$categoryNameField->addDependency(
-						ValueFormFieldDependency::create('objectType')
-							->field($objectTypeFormField)
-							->values([$objectType])
-					);
+						->options(['' => 'wcf.global.noSelection'] + $categories[$objectTypeID])
+						->addDependency(
+							ValueFormFieldDependency::create('objectType')
+								->field($objectTypeFormField)
+								->values([$objectType])
+						);
 					
 					$dataContainer->appendChild($categoryNameField);
 				}

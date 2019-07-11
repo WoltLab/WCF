@@ -359,13 +359,23 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 					}
 					
 					return $nestedOptions;
-				}, true),
+				}, true)
+				->addDependency(
+					ValueFormFieldDependency::create('linkType')
+						->fieldId('linkType')
+						->values(['internal'])
+				),
 			
 			TextFormField::create('externalURL')
 				->label('wcf.acp.pip.menuItem.externalURL')
 				->description('wcf.acp.pip.menuItem.externalURL.description')
 				->required()
 				->i18n()
+				->addDependency(
+					ValueFormFieldDependency::create('linkType')
+						->fieldId('linkType')
+						->values(['external'])
+				)
 		]);
 		
 		/** @var SingleSelectionFormField $menuField */
@@ -413,22 +423,6 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				'linkType'
 			);
 		}
-		
-		// dependencies
-		
-		/** @var RadioButtonFormField $linkType */
-		$linkType = $form->getNodeById('linkType');
-		$form->getNodeById('menuItemPage')->addDependency(
-			ValueFormFieldDependency::create('linkType')
-				->field($linkType)
-				->values(['internal'])
-			);
-		
-		$form->getNodeById('externalURL')->addDependency(
-			ValueFormFieldDependency::create('linkType')
-				->field($linkType)
-				->values(['external'])
-		);
 	}
 	
 	/**

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\builder\field\dependency;
+use http\Exception\BadMethodCallException;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormNode;
 use wcf\system\WCF;
@@ -25,6 +26,12 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	 * @var	IFormField
 	 */
 	protected $field;
+	
+	/**
+	 * id of the field the availability of the node dependents on
+	 * @var	string
+	 */
+	protected $fieldId;
 	
 	/**
 	 * id of the dependency
@@ -59,6 +66,19 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	/**
 	 * @inheritDoc
 	 */
+	public function fieldId($fieldId) {
+		if ($this->getField() !== null) {
+			throw new \BadMethodCallException("Cannot set field id after field has been set.");
+		}
+		
+		$this->fieldId = $fieldId;
+		
+		return $this;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getDependentNode() {
 		if ($this->dependentNode === null) {
 			throw new \BadMethodCallException("Dependent node has not been set.");
@@ -71,11 +91,22 @@ abstract class AbstractFormFieldDependency implements IFormFieldDependency {
 	 * @inheritDoc
 	 */
 	public function getField() {
-		if ($this->field === null) {
-			throw new \BadMethodCallException("Field has not been set.");
+		return $this->field;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getFieldId() {
+		if ($this->getField() !== null) {
+			return $this->getField()->getId();
 		}
 		
-		return $this->field;
+		if ($this->fieldId === null) {
+			throw new \BadMethodCallException("Neither the field nor the field id has been set.");
+		}
+		
+		return $this->fieldId;
 	}
 	
 	/**

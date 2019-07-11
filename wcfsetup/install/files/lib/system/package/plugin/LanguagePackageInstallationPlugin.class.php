@@ -357,7 +357,12 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 					
 					return $categories;
 				}, false, false)
-				->filterable(),
+				->filterable()
+				->addDependency(
+					ValueFormFieldDependency::create('languageCategoryIDMode')
+						->fieldId('languageCategoryIDMode')
+						->values(['selection'])
+				),
 			
 			TextFormField::create('languageCategory')
 				->label('wcf.acp.language.item.languageCategoryID')
@@ -376,7 +381,12 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 							)
 						);
 					}
-				})),
+				}))
+				->addDependency(
+					ValueFormFieldDependency::create('languageCategoryIDMode')
+						->fieldId('languageCategoryIDMode')
+						->values(['new'])
+				),
 			
 			TextFormField::create('languageItem')
 				->label('wcf.acp.language.item.languageItem')
@@ -487,21 +497,6 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 					->description($description)
 			);
 		}
-		
-		// add dependencies
-		/** @var SingleSelectionFormField $languageCategoryIDMode */
-		$languageCategoryIDMode = $dataContainer->getNodeById('languageCategoryIDMode');
-		
-		$dataContainer->getNodeById('languageCategoryID')->addDependency(
-			ValueFormFieldDependency::create('languageCategoryIDMode')
-				->field($languageCategoryIDMode)
-				->values(['selection'])
-		);
-		$dataContainer->getNodeById('languageCategory')->addDependency(
-			ValueFormFieldDependency::create('languageCategoryIDMode')
-				->field($languageCategoryIDMode)
-				->values(['new'])
-		);
 	}
 	
 	/**

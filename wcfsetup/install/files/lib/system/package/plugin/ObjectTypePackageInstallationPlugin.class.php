@@ -298,18 +298,13 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 							);
 						}
 					}
-				})),
+				}))
+				->addDependency(
+					ValueFormFieldDependency::create('definitionID')
+						->fieldId('definitionID')
+						->values(array_keys($this->definitionInterfaces))
+				),
 		]);
-		
-		/** @var SingleSelectionFormField $definitionID */
-		$definitionID = $form->getNodeById('definitionID');
-		
-		// add general field dependencies
-		$form->getNodeById('className')->addDependency(
-			ValueFormFieldDependency::create('definitionID')
-				->field($definitionID)
-				->values(array_keys($this->definitionInterfaces))
-		);
 		
 		// add object type-specific fields
 		

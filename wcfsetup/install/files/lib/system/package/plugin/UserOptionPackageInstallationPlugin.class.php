@@ -220,7 +220,12 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 				->objectProperty('selectoptions')
 				->label('wcf.acp.pip.abstractOption.options.selectOptions')
 				->description('wcf.acp.pip.abstractOption.options.selectOptions.description')
-				->rows(5);
+				->rows(5)
+				->addDependency(
+					ValueFormFieldDependency::create('optionType')
+						->field($optionType)
+						->values($this->selectOptionOptionTypes)
+				);
 			
 			$dataContainer->insertBefore($selectOptions, 'enableOptions');
 			
@@ -313,12 +318,6 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 							->values(['text'])
 					),
 			]);
-			
-			$selectOptions->addDependency(
-				ValueFormFieldDependency::create('optionType')
-					->field($optionType)
-					->values($this->selectOptionOptionTypes)
-			);
 			
 			// ensure proper normalization of select options
 			$form->getDataHandler()->add(new CustomFormFieldDataProcessor('selectOptions', function(IFormDocument $document, array $parameters) {

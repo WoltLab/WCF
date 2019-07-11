@@ -426,7 +426,11 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 				->label('wcf.acp.pip.bbcode.buttonLabel')
 				->description('wcf.acp.pip.bbcode.buttonLabel.description')
 				->required()
-				->maximumLength(255),
+				->maximumLength(255)
+				->addDependency(
+					NonEmptyFormFieldDependency::create('showButton')
+						->fieldId('showButton')
+				),
 			
 			RadioButtonFormField::create('iconType')
 				->label('wcf.acp.pip.bbcode.iconType')
@@ -435,7 +439,11 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 					'fontAwesome' => 'wcf.acp.pip.bbcode.iconType.fontAwesome',
 				])
 				->required()
-				->value('fontAwesome'),
+				->value('fontAwesome')
+				->addDependency(
+					NonEmptyFormFieldDependency::create('showButton')
+						->fieldId('showButton')
+				),
 			
 			TextFormField::create('iconPath')
 				->objectProperty('wysiwygicon')
@@ -452,12 +460,22 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 							)
 						);
 					}
-				})),
+				}))
+				->addDependency(
+					ValueFormFieldDependency::create('iconType')
+						->fieldId('iconType')
+						->values(['filePath'])
+				),
 			
 			IconFormField::create('fontAwesomeIcon')
 				->objectProperty('wysiwygicon')
 				->label('wcf.acp.pip.bbcode.wysiwygIcon')
 				->required()
+				->addDependency(
+					ValueFormFieldDependency::create('iconType')
+						->fieldId('iconType')
+						->values(['fontAwesome'])
+				)
 		]);
 		
 		$form->appendChild(
@@ -471,32 +489,6 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		
 		// discard the `iconType` value as it is only used to distinguish the two icon input fields
 		$form->getDataHandler()->add(new VoidFormFieldDataProcessor('iconType'));
-		
-		// add dependencies
-		/** @var BooleanFormField $showButton */
-		$showButton = $dataContainer->getNodeById('showButton');
-		
-		/** @var RadioButtonFormField $iconType */
-		$iconType = $dataContainer->getNodeById('iconType');
-		
-		$dataContainer->getNodeById('buttonLabel')->addDependency(
-			NonEmptyFormFieldDependency::create('showButton')
-				->field($showButton)
-		);
-		$iconType->addDependency(
-			NonEmptyFormFieldDependency::create('showButton')
-				->field($showButton)
-		);
-		$dataContainer->getNodeById('iconPath')->addDependency(
-			ValueFormFieldDependency::create('iconType')
-				->field($iconType)
-				->values(['filePath'])
-		);
-		$dataContainer->getNodeById('fontAwesomeIcon')->addDependency(
-			ValueFormFieldDependency::create('iconType')
-				->field($iconType)
-				->values(['fontAwesome'])
-		);
 	}
 	
 	/**

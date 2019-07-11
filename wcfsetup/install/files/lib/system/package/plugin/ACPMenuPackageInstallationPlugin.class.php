@@ -69,15 +69,17 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 			return $value === 0 || $value == 3;
 		}));
 		
-		$dataContainer->appendChild(IconFormField::create('icon')
+		$dataContainer->appendChild(
+			IconFormField::create('icon')
 			->label('wcf.acp.pip.acpMenu.icon')
-			->description('wcf.acp.pip.acpMenu.icon.description')
-			->required()
-			->addDependency(
-				ValueFormFieldDependency::create('parentMenuItem')
-					->field($parentMenuItemFormField)
-					->values($iconParentMenuItems)
-			));
+				->description('wcf.acp.pip.acpMenu.icon.description')
+				->required()
+				->addDependency(
+					ValueFormFieldDependency::create('parentMenuItem')
+						->field($parentMenuItemFormField)
+						->values($iconParentMenuItems)
+				)
+		);
 		
 		// add additional data to default fields
 		

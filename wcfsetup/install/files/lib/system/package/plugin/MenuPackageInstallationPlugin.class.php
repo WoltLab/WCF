@@ -359,7 +359,13 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			SingleSelectionFormField::create('boxPosition')
 				->label('wcf.acp.pip.menu.boxPosition')
 				->description('wcf.acp.pip.menu.boxPosition.description')
-				->options(array_combine(Box::$availablePositions, Box::$availablePositions)),
+				->options(array_combine(Box::$availablePositions, Box::$availablePositions))
+				->addDependency(
+					ValueFormFieldDependency::create('identifier')
+						->fieldId('identifier')
+						->values(['com.woltlab.wcf.MainMenu'])
+						->negate()
+				),
 			
 			BooleanFormField::create('boxShowHeader')
 				->label('wcf.acp.pip.menu.boxShowHeader'),
@@ -400,15 +406,6 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					->field($createBox)
 			);
 		}
-		
-		/** @var TextFormField $identifier */
-		$identifier = $form->getNodeById('identifier');
-		$form->getNodeById('boxPosition')->addDependency(
-			ValueFormFieldDependency::create('identifier')
-				->field($identifier)
-				->values(['com.woltlab.wcf.MainMenu'])
-				->negate()
-		);
 	}
 	
 	/**

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder;
 use wcf\system\form\builder\field\dependency\IFormFieldDependency;
+use wcf\system\form\builder\field\IFormField;
 
 /**
  * Provides default implementations of `IFormNode` methods.
@@ -390,6 +391,23 @@ trait TFormNode {
 		}
 		
 		$this->isPopulated = true;
+		
+		// add dependent fields
+		foreach ($this->getDependencies() as $dependency) {
+			if ($dependency->getField() === null) {
+				if ($dependency->getFieldId() === null) {
+					throw new \UnexpectedValueException("Dependency '{$dependency->getId()}' for node '{$this->getId()}' has no field.");
+				}
+				
+				/** @var IFormField $field */
+				$field = $this->getDocument()->getNodeById($dependency->getFieldId());
+				if ($field === null) {
+					throw new \UnexpectedValueException("Unknown field with id '{$dependency->getFieldId()}' for dependency '{$dependency->getId()}'.");
+				}
+				
+				$dependency->field($field);
+			}
+		}
 		
 		return $this;
 	}
