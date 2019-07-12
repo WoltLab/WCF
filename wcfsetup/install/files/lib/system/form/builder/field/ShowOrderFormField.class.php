@@ -77,6 +77,7 @@ class ShowOrderFormField extends SingleSelectionFormField {
 			array_unshift($this->nestedOptions, [
 				'depth' => 0,
 				'label' => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition'),
+				'isSelectable' => true,
 				'value' => 0
 			]);
 			
