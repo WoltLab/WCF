@@ -5,6 +5,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\form\builder\container\TabMenuFormContainer;
 use wcf\system\form\builder\container\TabTabMenuFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectExcludedPackagesFormField;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectInstructionsFormField;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectOptionalPackagesFormField;
@@ -199,7 +200,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 			$this->missingElements[] = 'packageDescription';
 		}
 		
-		/** @var TextFormField $date */
+		/** @var DateFormField $date */
 		$date = $this->form->getNodeById('date');
 		if ($packageArchive->getPackageInfo('date') !== null) {
 			$date->value(date('Y-m-d', $packageArchive->getPackageInfo('date')));

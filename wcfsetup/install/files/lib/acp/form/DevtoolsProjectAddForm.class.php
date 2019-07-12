@@ -14,6 +14,7 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\TabFormContainer;
 use wcf\system\form\builder\container\TabMenuFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectExcludedPackagesFormField;
@@ -277,11 +278,11 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 					->required()
 					->maximumLength(255),
 				
-				TextFormField::create('date')
+				DateFormField::create('date')
 					->label('wcf.acp.devtools.project.packageDate')
 					->description('wcf.acp.devtools.project.packageDate.description')
 					->required()
-					->maximumLength(255),
+					->saveValueFormat('Y-m-d'),
 				
 				UrlFormField::create('packageUrl')
 					->label('wcf.acp.devtools.project.packageUrl')
