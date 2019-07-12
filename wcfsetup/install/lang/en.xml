@@ -2475,8 +2475,8 @@ Errors are:
 
 Email: {@$emailAddress} {* this line ends with a space *}
 {foreach from=$options item=option}
-{@$option['title']}: {if !$option['isMessage']}{@$option['value']}{else}
-{@$option['value']}{/if}
+{@$option['title']}: {if !$option['isMessage']}{@$option['value']}{else} {* this line ends with a space *}
+{@$option['value']}{/if} {* this line ends with a space *}
 {/foreach}]]></item>
 		<item name="wcf.contact.mail.html"><![CDATA[<h2>Hello,</h2>
 
