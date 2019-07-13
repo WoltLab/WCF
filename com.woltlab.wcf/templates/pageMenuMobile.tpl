@@ -9,7 +9,7 @@
 			<li class="menuOverlayItem" data-mobile-identifier="{@$menuItemNode->identifier}">
 				{assign var=__outstandingItems value=$menuItemNode->getOutstandingItems()}
 				<a href="{$menuItemNode->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}{if $menuItemNode->isActiveNode()} active{/if}"{if $menuItemNode->isExternalLink() && EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>
-					<span class="menuOverlayItemTitle">{lang}{$menuItemNode->title}{/lang}</span>
+					<span class="menuOverlayItemTitle">{$menuItemNode->getTitle()}</span>
 					{if $__outstandingItems}
 						<span class="badge badgeUpdate">{#$__outstandingItems}</span>
 					{/if}
@@ -77,7 +77,7 @@
 					{event name='userMenuItemsBefore'}
 					
 					{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
-						<li class="menuOverlayTitle">{lang}{$menuCategory->menuItem}{/lang}</li>
+						<li class="menuOverlayTitle">{$menuCategory->getTitle()}</li>
 						{foreach from=$__wcf->getUserMenu()->getMenuItems($menuCategory->menuItem) item=menuItem}
 							<li class="menuOverlayItem">
 								<a href="{$menuItem->getProcessor()->getLink()}" class="menuOverlayItemLink">{@$menuItem}</a>

@@ -21,7 +21,7 @@
 					<ul class="dropdownMenu" data-dropdown-alignment-horizontal="right">
 						{foreach from=$__wcf->getFrontendMenu()->getMenuItemNodeList() item=_menuItem}
 							{if !$_menuItem->parentItemID && $_menuItem->getPage()}
-								<li><a href="{$_menuItem->getURL()}">{lang}{$_menuItem->title}{/lang}</a></li>
+								<li><a href="{$_menuItem->getURL()}">{$_menuItem->getTitle()}</a></li>
 							{/if}
 						{/foreach}
 					</ul>

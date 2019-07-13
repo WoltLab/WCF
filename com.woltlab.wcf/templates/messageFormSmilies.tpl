@@ -3,7 +3,7 @@
 	{foreach from=$smileyCategories item=smileyCategory}
 		{assign var=__tabCount value=$__tabCount + 1}
 		{assign var='__smileyAnchor' value='smilies-'|concat:$smileyCategory->categoryID}
-		<li data-name="smilies-{@$smileyCategory->categoryID}" data-smiley-category-id="{@$smileyCategory->categoryID}"><a>{$smileyCategory->title|language}</a></li>
+		<li data-name="smilies-{@$smileyCategory->categoryID}" data-smiley-category-id="{@$smileyCategory->categoryID}"><a>{$smileyCategory->getTitle()}</a></li>
 	{/foreach}
 {/capture}
 

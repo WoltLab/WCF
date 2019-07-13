@@ -20,6 +20,16 @@ use wcf\util\StringUtil;
  */
 class CaptchaQuestion extends DatabaseObject {
 	/**
+	 * Returns the question in the active user's language.
+	 * 
+	 * @return	string
+	 * @since	5.2
+	 */
+	public function getQuestion() {
+		return WCF::getLanguage()->get($this->question);
+	}
+	
+	/**
 	 * Returns true if the given user input is an answer to this question.
 	 * 
 	 * @param	string		$answer

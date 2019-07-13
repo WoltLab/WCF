@@ -69,7 +69,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{@$option->optionID}</td>
-						<td class="columnTitle columnOptionTitle"><a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}">{$option->optionTitle|language}</a></td>
+						<td class="columnTitle columnOptionTitle"><a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}">{$option->getTitle()}</a></td>
 						<td class="columnText columnOptionType">{lang}wcf.acp.customOption.optionType.{$option->optionType}{/lang}</td>
 						<td class="columnDigits columnShowOrder">{#$option->showOrder}</td>
 						
@@ -93,7 +93,7 @@
 			{foreach from=$recipientList item=recipient}
 				<li class="sortableNode sortableNoNesting jsRecipient" data-object-id="{@$recipient->recipientID}">
 					<span class="sortableNodeLabel">
-						<a href="{link controller='ContactRecipientEdit' id=$recipient->recipientID}{/link}">{lang}{$recipient}{/lang}</a>
+						<a href="{link controller='ContactRecipientEdit' id=$recipient->recipientID}{/link}">{$recipient}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">
 							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>

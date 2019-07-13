@@ -56,7 +56,7 @@
 										<div><span class="icon icon48 {@$menuCategory->getIconClassName()}"></span></div>
 										
 										<div class="containerHeadline">
-											<h3>{lang}{$menuCategory->menuItem}{/lang}</h3>
+											<h3>{$menuCategory->getTitle()}</h3>
 											
 											<ul class="inlineList dotSeparated">
 												{foreach from=$__wcf->getUserMenu()->getMenuItems($menuCategory->menuItem) item=menuItem}

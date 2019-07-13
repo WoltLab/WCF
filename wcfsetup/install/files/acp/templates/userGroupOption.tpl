@@ -124,7 +124,7 @@
 				<dt>
 					{if VISITOR_USE_TINY_BUILD && $guestGroupID == $group->groupID && $userGroupOption->excludedInTinyBuild}<span class="icon icon16 fa-bolt red jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}"></span> {/if}
 					{if $ownerGroupID == $group->groupID && $userGroupOption->optionName|in_array:$ownerGroupPermissions}<span class="icon icon16 fa-shield jsTooltip" title="{lang}wcf.acp.group.ownerGroupPermission{/lang}"></span> {/if}
-					<label for="userGroupOption{@$group->groupID}">{lang}{$group->groupName}{/lang}</label>
+					<label for="userGroupOption{@$group->groupID}">{$group->getTitle()}</label>
 				</dt>
 				<dd>
 					{@$formElements[$group->groupID]}

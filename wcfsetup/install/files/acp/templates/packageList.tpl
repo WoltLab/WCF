@@ -92,7 +92,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{@$package->packageID}</td>
-						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->packageDescription|language}">
+						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->getDescription()}">
 							<a href="{link controller='Package' id=$package->packageID}{/link}"><span>{$package}</span></a>
 						</td>
 						<td class="columnText">{if $package->authorURL}<a href="{$package->authorURL}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</td>

@@ -79,6 +79,16 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 	}
 	
 	/**
+	 * Returns the button label in the active user's language.
+	 * 
+	 * @return	string
+	 * @since	5.2
+	 */
+	public function getButtonLabel() {
+		return WCF::getLanguage()->get($this->buttonLabel);
+	}
+	
+	/**
 	 * Returns BBCode object with the given tag.
 	 * 
 	 * @param	string		$tag

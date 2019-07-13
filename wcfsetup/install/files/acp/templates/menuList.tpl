@@ -56,7 +56,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID columnPageID">{@$menu->menuID}</td>
-						<td class="columnTitle"><a href="{link controller='MenuEdit' id=$menu->menuID}{/link}">{lang}{$menu->title}{/lang}</a></td>
+						<td class="columnTitle"><a href="{link controller='MenuEdit' id=$menu->menuID}{/link}">{$menu->getTitle()}</a></td>
 						<td class="columnDigits columnItems"><a href="{link controller='MenuItemList' id=$menu->menuID}{/link}">{#$menu->items}</a></td>
 						<td class="columnText columnPosition">{lang}wcf.acp.box.position.{@$menu->position}{/lang}</td>
 						<td class="columnDigits columnShowOrder">{#$menu->showOrder}</td>

@@ -40,7 +40,7 @@
 						<select name="subscriptionID" id="subscriptionID">
 							<option value="0">{lang}wcf.acp.paidSubscription.subscription{/lang}</option>
 							{foreach from=$availableSubscriptions item=availableSubscription}
-								<option value="{@$availableSubscription->subscriptionID}"{if $availableSubscription->subscriptionID == $subscriptionID} selected{/if}>{$availableSubscription->title|language}</option>
+								<option value="{@$availableSubscription->subscriptionID}"{if $availableSubscription->subscriptionID == $subscriptionID} selected{/if}>{$availableSubscription->getTitle()}</option>
 							{/foreach}
 						</select>
 					</dd>

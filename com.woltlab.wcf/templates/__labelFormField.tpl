@@ -9,7 +9,7 @@
 			<ul class="scrollableDropdownMenu">
 				{foreach from=$field->getLabelGroup() item=label}
 					<li data-label-id="{@$label->labelID}">
-						<span><span class="badge label{if $label->getClassNames()} {@$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></span>
+						<span><span class="badge label{if $label->getClassNames()} {@$label->getClassNames()}{/if}">{$label->getTitle()}</span></span>
 					</li>
 				{/foreach}
 			</ul>
@@ -20,7 +20,7 @@
 <noscript>
 	<select name="{@$field->getPrefixedId()}[{@$field->getLabelGroup()->groupID}]">
 		{foreach from=$field->getLabelGroup() item=label}
-			<option value="{@$label->labelID}">{lang}{$label->label}{/lang}</option>
+			<option value="{@$label->labelID}">{$label->getTitle()}</option>
 		{/foreach}
 	</select>
 </noscript>

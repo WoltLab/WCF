@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\custom\option;
+use wcf\data\ITitledObject;
 use wcf\data\language\Language;
 use wcf\data\option\Option;
 use wcf\system\bbcode\MessageParser;
@@ -31,12 +32,30 @@ use wcf\util\StringUtil;
  * @property-read	integer		$isDisabled		is `1` if the option is disabled, otherwise `0`
  * @property-read	integer		$originIsSystem		is `1` if the option has been delivered by a package, otherwise `0` (i.e. the option has been created in the ACP)
  */
-abstract class CustomOption extends Option {
+abstract class CustomOption extends Option implements ITitledObject {
 	/**
 	 * option value
 	 * @var	string
 	 */
 	protected $optionValue = '';
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	public function getTitle() {
+		return WCF::getLanguage()->get($this->optionTitle);
+	}
+
+	/**
+	 * Returns the option description in the active user's language.
+	 * 
+	 * @return	string
+	 * @since	5.2
+	 */
+	public function getDescription() {
+		return WCF::getLanguage()->get($this->optionDescription);
+	}
 	
 	/**
 	 * Returns true if the option is visible

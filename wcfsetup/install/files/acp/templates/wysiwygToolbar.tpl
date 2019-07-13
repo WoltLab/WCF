@@ -80,11 +80,11 @@ buttons.push('woltlabQuote');
 {foreach from=$__wcf->getBBCodeHandler()->getButtonBBCodes(true) item=__bbcode}
 	{* the HTML bbcode must be handled differently, it conflicts with the `source` toggle-button *}
 	{if $__bbcode->bbcodeTag === 'html'}
-		buttonOptions['woltlabHtml'] = { icon: '{$__bbcode->wysiwygIcon}', title: '{lang}{$__bbcode->buttonLabel}{/lang}' };
+		buttonOptions['woltlabHtml'] = { icon: '{$__bbcode->wysiwygIcon}', title: '{$__bbcode->getButtonLabel()}' };
 		buttons.push('woltlabHtml');
 		customButtons.push('woltlabHtml');
 	{else}
-		buttonOptions['{$__bbcode->bbcodeTag}'] = { icon: '{$__bbcode->wysiwygIcon}', title: '{lang}{$__bbcode->buttonLabel}{/lang}' };
+		buttonOptions['{$__bbcode->bbcodeTag}'] = { icon: '{$__bbcode->wysiwygIcon}', title: '{$__bbcode->getButtonLabel()}' };
 		buttons.push('{$__bbcode->bbcodeTag}');
 		customButtons.push('{$__bbcode->bbcodeTag}');
 	{/if}

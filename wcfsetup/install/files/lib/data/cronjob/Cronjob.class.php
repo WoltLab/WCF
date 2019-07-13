@@ -2,6 +2,7 @@
 namespace wcf\data\cronjob;
 use wcf\data\DatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
+use wcf\system\WCF;
 use wcf\util\CronjobUtil;
 
 /**
@@ -119,5 +120,15 @@ class Cronjob extends DatabaseObject {
 	 */
 	public function canBeDisabled() {
 		return $this->canBeDisabled;
+	}
+	
+	/**
+	 * Returns the cronjob description in the active user's language.
+	 * 
+	 * @return	string
+	 * @since	5.2
+	 */
+	public function getDescription() {
+		return WCF::getLanguage()->get($this->description);
 	}
 }

@@ -112,6 +112,16 @@ class Package extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns the description of this package in the active user's language.
+	 * 
+	 * @return	string
+	 * @since	5.2
+	 */
+	public function getDescription() {
+		return WCF::getLanguage()->get($this->packageDescription);
+	}
+	
+	/**
 	 * Returns the abbreviation of the package name.
 	 * 
 	 * @param	string		$package

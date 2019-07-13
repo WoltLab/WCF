@@ -445,6 +445,16 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	}
 	
 	/**
+	 * Returns the user group description in the active user's language.
+	 * 
+	 * @return	string
+	 * @since	5.2
+	 */
+	public function getDescription() {
+		return WCF::getLanguage()->get($this->groupDescription);
+	}
+	
+	/**
 	 * The `Everyone`, `Guests` and `Users` group can never be mentioned.
 	 * 
 	 * @return bool

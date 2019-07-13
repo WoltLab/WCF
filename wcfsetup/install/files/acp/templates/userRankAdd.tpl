@@ -138,7 +138,7 @@
 			<dd>
 				<select id="groupID" name="groupID">
 					{foreach from=$availableGroups item=group}
-						<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected{/if}>{$group->groupName|language}</option>
+						<option value="{@$group->groupID}"{if $group->groupID == $groupID} selected{/if}>{$group->getTitle()}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'groupID'}

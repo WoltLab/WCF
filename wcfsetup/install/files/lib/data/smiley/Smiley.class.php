@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\smiley;
 use wcf\data\DatabaseObject;
+use wcf\data\ITitledObject;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -17,15 +18,23 @@ use wcf\util\StringUtil;
  * @property-read	integer|null	$categoryID	id of the category the smiley belongs to or `null` if it belongs to the default category
  * @property-read	string		$smileyPath	path to the smiley file relative to wcf's default path
  * @property-read       string          $smileyPath2x   path to the smiley file relative to wcf's default path (2x version)
- * @property-read	string		$smileyTitle	title of the smiley
+ * @property-read	string		$smileyTitle	title of the smiley or name of language item that contains the title
  * @property-read	string		$smileyCode	code used for displaying the smiley
  * @property-read	string		$aliases	alternative codes used for displaying the smiley
  * @property-read	integer		$showOrder	position of the smiley in relation to the other smileys in the same category
  */
-class Smiley extends DatabaseObject {
+class Smiley extends DatabaseObject implements ITitledObject {
 	protected $height;
 	
 	public $smileyCodes;
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	public function getTitle() {
+		return WCF::getLanguage()->get($this->smileyTitle);
+	}
 	
 	/**
 	 * Returns the url to this smiley.

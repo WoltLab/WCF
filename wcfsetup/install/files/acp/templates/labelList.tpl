@@ -127,7 +127,7 @@
 						</td>
 						<td class="columnID">{@$label->labelID}</td>
 						<td class="columnTitle columnLabel"><a href="{link controller='LabelEdit' object=$label}{/link}" title="{$label}" class="badge label{if $label->getClassNames()} {$label->getClassNames()}{/if}">{$label}</a></td>
-						<td class="columnText columnGroup">{lang}{$label->groupName}{/lang}{if $label->groupDescription} / {$label->groupDescription}{/if}</td>
+						<td class="columnText columnGroup">{$label->groupName|language}{if $label->groupDescription} / {$label->groupDescription}{/if}</td>
 						{if $labelGroup && !$labelSearch && !$cssClassName && $items > 1}
 							<td class="columnDigits columnShowOrder">{#$label->showOrder}</td>
 						{/if}

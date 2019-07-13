@@ -270,7 +270,7 @@
 		<item name="wcf.acp.captcha.question.answers"><![CDATA[Answers]]></item>
 		<item name="wcf.acp.captcha.question.answers.description"><![CDATA[Answers beginning and ending with “~” will be interpreted as regular expressions. Enter one answer per line.]]></item>
 		<item name="wcf.acp.captcha.question.answers.error.invalidRegex"><![CDATA[The regular expression “{$invalidRegex}” is invalid.]]></item>
-		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[Do you really want to delete the question “{$question->question|language}”?]]></item>
+		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[Do you really want to delete the question “{$question->getQuestion()}”?]]></item>
 		<item name="wcf.acp.captcha.question.edit"><![CDATA[Edit Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Disable Captcha Question]]></item>
 		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha Questions]]></item>
@@ -304,7 +304,7 @@
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Run Cronjob]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Unable to find the specified class.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.invalid"><![CDATA[Invalid time format.]]></item>
-		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Do you really want to delete the cronjob <span class="confirmationObject">{$cronjob->description|language}</span>?]]></item>
+		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[Do you really want to delete the cronjob <span class="confirmationObject">{$cronjob->getDescription()}</span>?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Cronjob Log]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Clear Protocol]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[Do you really want to clear the cronjob log?]]></item>
@@ -629,7 +629,7 @@ This protocol file contains {$data[count]} new entries. The first three error me
 	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>
-		<item name="wcf.acp.group.delete.sure"><![CDATA[Do you really want to delete the user group <span class="confirmationObject">{$group->groupName|language}</span>?]]></item>
+		<item name="wcf.acp.group.delete.sure"><![CDATA[Do you really want to delete the user group <span class="confirmationObject">{$group->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Edit User Group]]></item>
 		<item name="wcf.acp.group.option.editingOption"><![CDATA[Edit User Group Option]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[Warning! You are a member of this user group, any changes could result in yourself being locked out of the Administration Control Panel.]]></item>
@@ -916,7 +916,7 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.label.group"><![CDATA[Label Group]]></item>
 		<item name="wcf.acp.label.group.add"><![CDATA[Add Label Group]]></item>
 		<item name="wcf.acp.label.group.category.connect"><![CDATA[Availability]]></item>
-		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Do you really want to delete the label group <span class="confirmationObject">{$group->groupName|language}</span>?]]></item>
+		<item name="wcf.acp.label.group.delete.sure"><![CDATA[Do you really want to delete the label group <span class="confirmationObject">{$group->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.label.group.edit"><![CDATA[Edit Label Group]]></item>
 		<item name="wcf.acp.label.group.error.invalid"><![CDATA[The selected label group is invalid.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Force selection of a label]]></item>
@@ -1128,7 +1128,7 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.menu.edit"><![CDATA[Edit Menu]]></item>
 		<item name="wcf.acp.menu.list"><![CDATA[Menus]]></item>
 		<item name="wcf.acp.menu.item.add"><![CDATA[Add Menu Item]]></item>
-		<item name="wcf.acp.menu.item.delete.confirmMessage"><![CDATA[Do you really want to delete the menu item <span class="confirmationObject">{$menuItemNode->title|language}</span>?]]></item>
+		<item name="wcf.acp.menu.item.delete.confirmMessage"><![CDATA[Do you really want to delete the menu item <span class="confirmationObject">{$menuItemNode->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.menu.item.edit"><![CDATA[Edit Menu Item]]></item>
 		<item name="wcf.acp.menu.item.externalURL"><![CDATA[External URL]]></item>
 		<item name="wcf.acp.menu.item.isDisabled"><![CDATA[Disable menu item]]></item>
@@ -1758,7 +1758,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.customOption.edit"><![CDATA[Edit Option Field]]></item>
 		<item name="wcf.acp.customOption.error.validationFailed"><![CDATA[You have entered an invalid value.]]></item>
 		<item name="wcf.acp.customOption.showOrder"><![CDATA[Display Order]]></item>
-		<item name="wcf.acp.customOption.delete.confirmMessage"><![CDATA[Do you really want to delete the option field <span class="confirmationObject">{$option->optionTitle|language}</span>?]]></item>
+		<item name="wcf.acp.customOption.delete.confirmMessage"><![CDATA[Do you really want to delete the option field <span class="confirmationObject">{$option->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.customOption.defaultValue"><![CDATA[Default Value]]></item>
 		<item name="wcf.acp.customOption.defaultValue.description"><![CDATA[Default option value suggested on initial request.]]></item>
 		<item name="wcf.acp.customOption.typeData"><![CDATA[Properties]]></item>
@@ -1796,7 +1796,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.error.sql.dropTable.description"><![CDATA[The tables above already exist and will be removed during the installation. Any contained data will be lost.]]></item>
 		<item name="wcf.acp.package.error.uniqueAlreadyInstalled"><![CDATA[This package is already installed.]]></item>
 		<item name="wcf.acp.package.error.noValidInstall"><![CDATA[The selected package does not support an installation.]]></item>
-		<item name="wcf.acp.package.error.noValidUpdate"><![CDATA[Package “{$package->packageName|language}” cannot be updated using the selected archive.]]></item>
+		<item name="wcf.acp.package.error.noValidUpdate"><![CDATA[Package “{$package->getName()}” cannot be updated using the selected archive.]]></item>
 		<item name="wcf.acp.package.identifier"><![CDATA[Identifier]]></item>
 		<item name="wcf.acp.package.information.properties"><![CDATA[Properties]]></item>
 		<item name="wcf.acp.package.information.title"><![CDATA[Details]]></item>
@@ -2677,7 +2677,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	</category>
 	<category name="wcf.acp.smiley">
 		<item name="wcf.acp.smiley.list"><![CDATA[Smilies]]></item>
-		<item name="wcf.acp.smiley.delete.sure"><![CDATA[Do you really want to delete the smiley <span class="confirmationObject">{$smiley->smileyTitle|language}</span>?]]></item>
+		<item name="wcf.acp.smiley.delete.sure"><![CDATA[Do you really want to delete the smiley <span class="confirmationObject">{$smiley->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.smiley.add"><![CDATA[Add Smiley]]></item>
 		<item name="wcf.acp.smiley.edit"><![CDATA[Edit Smiley]]></item>
 		<item name="wcf.acp.smiley.title"><![CDATA[Title]]></item>
@@ -3001,7 +3001,7 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[You can select a predefined appearance or provide your own <abbr title="Cascading Style Sheets">CSS</abbr> class name.]]></item>
 		<item name="wcf.acp.user.rank.cssClassName.error.invalid"><![CDATA[The entered CSS class name is invalid.]]></item>
 		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Current Rank Image]]></item>
-		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[Do you really want to delete the user rank <span class="confirmationObject">{$userRank->rankTitle|language}</span>?]]></item>
+		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[Do you really want to delete the user rank <span class="confirmationObject">{$userRank->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.user.rank.edit"><![CDATA[Edit User Rank]]></item>
 		<item name="wcf.acp.user.rank.hideTitle"><![CDATA[Hide title]]></item>
 		<item name="wcf.acp.user.rank.hideTitle.description"><![CDATA[Hides the title of this rank. Does not work for users that have an individual title set.]]></item>

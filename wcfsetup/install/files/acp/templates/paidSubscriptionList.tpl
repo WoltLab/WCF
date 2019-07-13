@@ -54,7 +54,7 @@
 							{event name='itemButtons'}
 						</td>
 						<td class="columnID columnSubscriptionID">{@$subscription->subscriptionID}</td>
-						<td class="columnTitle"><a href="{link controller='PaidSubscriptionEdit' id=$subscription->subscriptionID}{/link}" title="{lang}wcf.acp.paidSubscription.edit{/lang}">{$subscription->title|language}</a></td>
+						<td class="columnTitle"><a href="{link controller='PaidSubscriptionEdit' id=$subscription->subscriptionID}{/link}" title="{lang}wcf.acp.paidSubscription.edit{/lang}">{$subscription->getTitle()}</a></td>
 						<td class="columnDigits columnCost">{@$subscription->currency} {$subscription->cost|currency}</td>
 						<td class="columnDigits columnSubscriptionLength">{if $subscription->subscriptionLength}{@$subscription->subscriptionLength} {lang}wcf.acp.paidSubscription.subscriptionLengthUnit.{@$subscription->subscriptionLengthUnit}{/lang}{else}&infin;{/if}</td>
 						<td class="columnDigits columnShowOrder">{@$subscription->showOrder}</td>

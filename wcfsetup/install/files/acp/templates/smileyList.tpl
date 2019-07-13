@@ -41,7 +41,7 @@
 		<nav class="tabMenu">
 			<ul>
 				{foreach from=$categories item=categoryLoop}
-					<li{if (!$category && !$categoryLoop->categoryID) || ($category && $category->categoryID == $categoryLoop->categoryID)} class="active"{/if}><a href="{if $categoryLoop->categoryID}{link controller='SmileyList' object=$categoryLoop}{/link}{else}{link controller='SmileyList'}{/link}{/if}">{$categoryLoop->title|language}</a></li>
+					<li{if (!$category && !$categoryLoop->categoryID) || ($category && $category->categoryID == $categoryLoop->categoryID)} class="active"{/if}><a href="{if $categoryLoop->categoryID}{link controller='SmileyList' object=$categoryLoop}{/link}{else}{link controller='SmileyList'}{/link}{/if}">{$categoryLoop->getTitle()}</a></li>
 				{/foreach}
 			</ul>
 		</nav>
@@ -52,7 +52,7 @@
 						{foreach from=$objects item=smiley}
 							<li class="sortableNode sortableNoNesting smileyRow" data-object-id="{@$smiley->smileyID}">
 								<span class="sortableNodeLabel">
-									<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}">{@$smiley->getHtml()} {lang}{$smiley->smileyTitle}{/lang}</a> <span class="badge">{$smiley->smileyCode}</span>{foreach from=$smiley->getAliases() item='alias'} <span class="badge" style="margin-left: 5px">{$alias}</span>{/foreach}
+									<a href="{link controller='SmileyEdit' id=$smiley->smileyID}{/link}">{@$smiley->getHtml()} {$smiley->getTitle()}</a> <span class="badge">{$smiley->smileyCode}</span>{foreach from=$smiley->getAliases() item='alias'} <span class="badge" style="margin-left: 5px">{$alias}</span>{/foreach}
 									
 									<span class="statusDisplay sortableButtonContainer">
 										<span class="icon icon16 fa-arrows sortableNodeHandle"></span>

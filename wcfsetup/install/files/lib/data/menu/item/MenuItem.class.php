@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\menu\item;
+use wcf\data\ITitledObject;
 use wcf\data\page\Page;
 use wcf\data\page\PageCache;
 use wcf\data\DatabaseObject;
@@ -31,7 +32,7 @@ use wcf\system\WCF;
  * @property-read	integer		$originIsSystem		is `1` if the menu item has been delivered by a package, otherwise `0` (if the menu item has been created by an admin in the ACP)
  * @property-read	integer		$packageID		id of the package the which delivers the menu item or `1` if it has been created in the ACP
  */
-class MenuItem extends DatabaseObject {
+class MenuItem extends DatabaseObject implements ITitledObject {
 	/**
 	 * @var	IMenuPageHandler
 	 */
@@ -42,6 +43,14 @@ class MenuItem extends DatabaseObject {
 	 * @var	Page
 	 */
 	protected $page;
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	public function getTitle() {
+		return WCF::getLanguage()->get($this->title);
+	}
 	
 	/**
 	 * Returns true if the active user can delete this menu item.

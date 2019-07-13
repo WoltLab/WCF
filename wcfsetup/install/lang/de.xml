@@ -271,7 +271,7 @@
 		<item name="wcf.acp.captcha.question.answers"><![CDATA[Antworten]]></item>
 		<item name="wcf.acp.captcha.question.answers.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} pro Zeile eine mögliche Antwort ein. Antworten, die mit „~“ beginnen und enden, werden als reguläre Ausdrücke interpretiert.]]></item>
 		<item name="wcf.acp.captcha.question.answers.error.invalidRegex"><![CDATA[Der reguläre Ausdruck „{$invalidRegex}“ ist ungültig.]]></item>
-		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Frage <span class="confirmationObject">{$question->question|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.captcha.question.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Frage <span class="confirmationObject">{$question->getQuestion()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.captcha.question.edit"><![CDATA[Captcha-Frage bearbeiten]]></item>
 		<item name="wcf.acp.captcha.question.isDisabled"><![CDATA[Frage deaktivieren]]></item>
 		<item name="wcf.acp.captcha.question.list"><![CDATA[Captcha-Fragen]]></item>
@@ -327,7 +327,7 @@
 		<item name="wcf.acp.cronjob.execute"><![CDATA[Cronjob jetzt ausführen]]></item>
 		<item name="wcf.acp.cronjob.className.error.doesNotExist"><![CDATA[Eine Klasse mit dem angegebenen Namen existiert nicht.]]></item>
 		<item name="wcf.acp.cronjob.timing.error.invalid"><![CDATA[Das Zeitformat ist ungültig.]]></item>
-		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Cronjob <span class="confirmationObject">{$cronjob->description|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.cronjob.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Cronjob <span class="confirmationObject">{$cronjob->getDescription()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.cronjob.log"><![CDATA[Protokoll der ausgeführten Cronjobs]]></item>
 		<item name="wcf.acp.cronjob.log.clear"><![CDATA[Protokoll leeren]]></item>
 		<item name="wcf.acp.cronjob.log.clear.confirm"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} alle Protokoll-Einträge wirklich löschen?]]></item>
@@ -653,7 +653,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
-		<item name="wcf.acp.group.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Benutzergruppe <span class="confirmationObject">{$group->groupName|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.group.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Benutzergruppe <span class="confirmationObject">{$group->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.group.edit"><![CDATA[Benutzergruppe bearbeiten]]></item>
 		<item name="wcf.acp.group.option.editingOption"><![CDATA[Benutzergruppeneinstellung bearbeiten]]></item>
 		<item name="wcf.acp.group.edit.warning.selfIsMember"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du bist{else}Sie sind{/if} Mitglied dieser Benutzergruppe! Änderungen an den Zugriffsrechten dieser Benutzergruppe können dazu führen, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} aus der Administrationsoberfläche ausgeschlossen {if LANGUAGE_USE_INFORMAL_VARIANT}wirst{else}werden{/if}. Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}sei{else}seien Sie{/if} entsprechend vorsichtig!]]></item>
@@ -939,7 +939,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.label.group"><![CDATA[Labelgruppe]]></item>
 		<item name="wcf.acp.label.group.add"><![CDATA[Labelgruppe hinzufügen]]></item>
 		<item name="wcf.acp.label.group.category.connect"><![CDATA[Verfügbarkeit]]></item>
-		<item name="wcf.acp.label.group.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Labelgruppe <span class="confirmationObject">{$group->groupName|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.label.group.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die Labelgruppe <span class="confirmationObject">{$group->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.label.group.edit"><![CDATA[Labelgruppe bearbeiten]]></item>
 		<item name="wcf.acp.label.group.error.invalid"><![CDATA[Die gewählte Labelgruppe ist ungültig.]]></item>
 		<item name="wcf.acp.label.group.forceSelection"><![CDATA[Label aus dieser Gruppe muss zwingend ausgewählt werden]]></item>
@@ -1151,7 +1151,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.menu.edit"><![CDATA[Menü bearbeiten]]></item>
 		<item name="wcf.acp.menu.list"><![CDATA[Menüs]]></item>
 		<item name="wcf.acp.menu.item.add"><![CDATA[Menüpunkt hinzufügen]]></item>
-		<item name="wcf.acp.menu.item.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Menüpunkt <span class="confirmationObject">{$menuItemNode->title|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.menu.item.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Menüpunkt <span class="confirmationObject">{$menuItemNode->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.menu.item.edit"><![CDATA[Menüpunkt bearbeiten]]></item>
 		<item name="wcf.acp.menu.item.externalURL"><![CDATA[Externe URL]]></item>
 		<item name="wcf.acp.menu.item.isDisabled"><![CDATA[Menüpunkt deaktivieren]]></item>
@@ -1773,7 +1773,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.customOption.edit"><![CDATA[Eingabefeld bearbeiten]]></item>
 		<item name="wcf.acp.customOption.error.validationFailed"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Inhalt eingegeben.]]></item>
 		<item name="wcf.acp.customOption.showOrder"><![CDATA[Reihenfolge]]></item>
-		<item name="wcf.acp.customOption.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Eingabefeld <span class="confirmationObject">{$option->optionTitle|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.customOption.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Eingabefeld <span class="confirmationObject">{$option->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.customOption.defaultValue"><![CDATA[Standardwert]]></item>
 		<item name="wcf.acp.customOption.defaultValue.description"><![CDATA[Wert, der beim erstmaligen Ausfüllen als Standard vorgegeben ist.]]></item>
 		<item name="wcf.acp.customOption.typeData"><![CDATA[Eigenschaften]]></item>
@@ -1811,7 +1811,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.error.sql.dropTable.description"><![CDATA[Die oben genannten Tabellen existieren bereits und werden beim Fortfahren der Installation entfernt. Alle Daten dieser Tabellen gehen unwiderruflich verloren.]]></item>
 		<item name="wcf.acp.package.error.uniqueAlreadyInstalled"><![CDATA[Dieses Paket ist bereits installiert und kann nicht mehrfach installiert werden.]]></item>
 		<item name="wcf.acp.package.error.noValidInstall"><![CDATA[Das angegebene Paket lässt keine Neuinstallation zu.]]></item>
-		<item name="wcf.acp.package.error.noValidUpdate"><![CDATA[Paket „{$package->packageName|language}“ kann mit dem angegebenen Archiv nicht aktualisiert werden.]]></item>
+		<item name="wcf.acp.package.error.noValidUpdate"><![CDATA[Paket „{$package->getName()}“ kann mit dem angegebenen Archiv nicht aktualisiert werden.]]></item>
 		<item name="wcf.acp.package.identifier"><![CDATA[Bezeichner]]></item>
 		<item name="wcf.acp.package.information.properties"><![CDATA[Eigenschaften]]></item>
 		<item name="wcf.acp.package.information.title"><![CDATA[Informationen]]></item>
@@ -2749,7 +2749,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 	</category>
 	<category name="wcf.acp.smiley">
 		<item name="wcf.acp.smiley.list"><![CDATA[Smileys]]></item>
-		<item name="wcf.acp.smiley.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Smiley <span class="confirmationObject">{$smiley->smileyTitle|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.smiley.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} das Smiley <span class="confirmationObject">{$smiley->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.smiley.add"><![CDATA[Smiley hinzufügen]]></item>
 		<item name="wcf.acp.smiley.edit"><![CDATA[Smiley bearbeiten]]></item>
 		<item name="wcf.acp.smiley.title"><![CDATA[Titel]]></item>
@@ -3073,7 +3073,7 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.rank.cssClassName.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} aus den vorgegebenen Darstellungen wählen oder eine eigene Darstellung durch Angabe einer <abbr title="Cascading Style Sheets">CSS</abbr>-Klasse nutzen.]]></item>
 		<item name="wcf.acp.user.rank.cssClassName.error.invalid"><![CDATA[Die gewählte CSS-Klasse ist ungültig.]]></item>
 		<item name="wcf.acp.user.rank.currentImage"><![CDATA[Aktuelle Ranggrafik]]></item>
-		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Benutzerrang <span class="confirmationObject">{$userRank->rankTitle|language}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.user.rank.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Benutzerrang <span class="confirmationObject">{$userRank->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.user.rank.edit"><![CDATA[Benutzerrang bearbeiten]]></item>
 		<item name="wcf.acp.user.rank.hideTitle"><![CDATA[Rangbezeichnung ausblenden]]></item>
 		<item name="wcf.acp.user.rank.hideTitle.description"><![CDATA[Es wird nur die Ranggrafik angezeigt. Dies gilt nicht, wenn der Benutzer einen individuellen Titel eingestellt hat.]]></item>

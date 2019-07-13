@@ -31,7 +31,7 @@
 											<div class="dropdownMenu">
 												<ul class="scrollableDropdownMenu">
 													{foreach from=$labelGroup item=label}
-														<li data-label-id="{@$label->labelID}"><span><span class="badge label{if $label->getClassNames()} {@$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></span></li>
+														<li data-label-id="{@$label->labelID}"><span><span class="badge label{if $label->getClassNames()} {@$label->getClassNames()}{/if}">{$label->getTitle()}</span></span></li>
 													{/foreach}
 												</ul>
 											</div>
@@ -43,7 +43,7 @@
 												<option value="0">{lang}wcf.label.none{/lang}</option>
 												<option value="-1">{lang}wcf.label.withoutSelection{/lang}</option>
 												{foreach from=$labelGroup item=label}
-													<option value="{@$label->labelID}"{if $labelIDs[$labelGroup->groupID]|isset && $labelIDs[$labelGroup->groupID] == $label->labelID} selected{/if}>{lang}{$label->label}{/lang}</option>
+													<option value="{@$label->labelID}"{if $labelIDs[$labelGroup->groupID]|isset && $labelIDs[$labelGroup->groupID] == $label->labelID} selected{/if}>{$label->getTitle()}</option>
 												{/foreach}
 											</select>
 										{/foreach}

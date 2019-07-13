@@ -3,8 +3,8 @@
 {foreach from=$objects->getTeams() item=team}
 	<section class="section sectionContainerList">
 		<header class="sectionHeader">
-			<h2 class="sectionTitle" id="group{@$team->groupID}">{$team->groupName|language} <span class="badge">{#$team->getMembers()|count}</span></h2>
-			<p class="sectionDescription">{$team->groupDescription|language}</p>
+			<h2 class="sectionTitle" id="group{@$team->groupID}">{$team->getTitle()} <span class="badge">{#$team->getMembers()|count}</span></h2>
+			<p class="sectionDescription">{$team->getDescription()}</p>
 		</header>
 			
 		<ol class="containerList userList">
