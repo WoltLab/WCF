@@ -1507,8 +1507,6 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Zeitraum nach dem Profil-Besucher automatisch verworfen werden.]]></item>
 		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Reaktions-System]]></item>
 		<item name="wcf.acp.option.module_like"><![CDATA[Reaktions-System]]></item>
-		<item name="wcf.acp.option.like_allow_for_own_content"><![CDATA[Benutzer können auf eigene Inhalte reagieren]]></item>
-		<item name="wcf.acp.option.like_enable_dislike"><![CDATA[Benutzer können Inhalte disliken]]></item>
 		<item name="wcf.acp.option.like_show_summary"><![CDATA[Zusammenfassung anzeigen]]></item>
 		<item name="wcf.acp.option.module_user_profile_wall"><![CDATA[Benutzerprofil-Pinnwand]]></item>
 		<item name="wcf.acp.option.category.message.sidebar"><![CDATA[Seitenleiste]]></item>
