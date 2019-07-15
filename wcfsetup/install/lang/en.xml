@@ -3538,7 +3538,7 @@ Attachments:
 		<item name="wcf.date.timezone.asia.kolkata"><![CDATA[(UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi]]></item>
 		<item name="wcf.date.timezone.asia.colombo"><![CDATA[(UTC+05:30) Sri Jayawardenapura]]></item>
 		<item name="wcf.date.timezone.asia.katmandu"><![CDATA[(UTC+05:45) Kathmandu]]></item>
-		<item name="wcf.date.timezone.asia.almaty"><![CDATA[(UTC+06:00) Astana]]></item>
+		<item name="wcf.date.timezone.asia.almaty"><![CDATA[(UTC+06:00) Nur-Sultan]]></item>
 		<item name="wcf.date.timezone.asia.dhaka"><![CDATA[(UTC+06:00) Dhaka]]></item>
 		<item name="wcf.date.timezone.asia.novosibirsk"><![CDATA[(UTC+06:00) Novosibirsk]]></item>
 		<item name="wcf.date.timezone.asia.rangoon"><![CDATA[(UTC+06:30) Yangon (Rangoon)]]></item>
@@ -3549,7 +3549,7 @@ Attachments:
 		<item name="wcf.date.timezone.asia.chongqing"><![CDATA[(UTC+08:00) Beijing, Chongqing, Hong Kong, Ürümqi]]></item>
 		<item name="wcf.date.timezone.australia.perth"><![CDATA[(UTC+08:00) Perth]]></item>
 		<item name="wcf.date.timezone.asia.taipei"><![CDATA[(UTC+08:00) Taipei]]></item>
-		<item name="wcf.date.timezone.asia.ulaanbaatar"><![CDATA[(UTC+08:00) Ulan Bator]]></item>
+		<item name="wcf.date.timezone.asia.ulaanbaatar"><![CDATA[(UTC+08:00) Ulaanbaatar]]></item>
 		<item name="wcf.date.timezone.asia.yakutsk"><![CDATA[(UTC+09:00) Yakutsk]]></item>
 		<item name="wcf.date.timezone.asia.tokyo"><![CDATA[(UTC+09:00) Osaka, Sapporo, Tokyo]]></item>
 		<item name="wcf.date.timezone.asia.seoul"><![CDATA[(UTC+09:00) Seoul]]></item>
