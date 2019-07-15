@@ -3,11 +3,12 @@ namespace wcf\system\importer;
 use wcf\data\attachment\Attachment;
 use wcf\data\attachment\AttachmentEditor;
 use wcf\system\exception\SystemException;
+use wcf\util\FileUtil;
 
 /**
  * Imports attachments.
  * 
- * @author	Marcel Werk
+ * @author	Tim Duesterhus, Marcel Werk
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Importer
@@ -29,18 +30,25 @@ class AbstractAttachmentImporter extends AbstractImporter {
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
 		// check file location
-		if (!@file_exists($additionalData['fileLocation'])) return 0;
+		if (!is_readable($additionalData['fileLocation'])) return 0;
 		
-		// get file hash
-		if (empty($data['fileHash'])) $data['fileHash'] = sha1_file($additionalData['fileLocation']);
+		// Extract metadata from the file ourselves, because the
+		// information pulled from the source database might not
+		// be reliable.
+		$data['fileHash'] = sha1_file($additionalData['fileLocation']);
+		$data['filesize'] = filesize($additionalData['fileLocation']);
+		$data['fileType'] = FileUtil::getMimeType($additionalData['fileLocation']);
 		
-		// get image size
-		if (!empty($data['isImage'])) {
-			$imageData = @getimagesize($additionalData['fileLocation']);
-			if ($imageData !== false) {
-				$data['width'] = $imageData[0];
-				$data['height'] = $imageData[1];
-			}
+		$imageData = @getimagesize($additionalData['fileLocation']);
+		if ($imageData !== false) {
+			$data['isImage'] = 1;
+			$data['width'] = $imageData[0];
+			$data['height'] = $imageData[1];
+		}
+		else {
+			$data['isImage'] = 0;
+			$data['width'] = 0;
+			$data['height'] = 0;
 		}
 		
 		// get user id
