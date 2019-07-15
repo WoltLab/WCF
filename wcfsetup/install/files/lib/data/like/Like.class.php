@@ -73,26 +73,6 @@ class Like extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns true, if like value is a like.
-	 * 
-	 * @return	boolean
-	 * @deprecated	5.2
-	 */
-	public function isLike() {
-		return $this->getReactionType()->isPositive();
-	}
-	
-	/**
-	 * Returns true, if like value is a dislike.
-	 * 
-	 * @return	boolean
-	 * @deprecated	5.2
-	 */
-	public function isDislike() {
-		return $this->getReactionType()->isNegative();
-	}
-	
-	/**
 	 * Returns the reaction for these like. 
 	 * 
 	 * @return	ReactionType

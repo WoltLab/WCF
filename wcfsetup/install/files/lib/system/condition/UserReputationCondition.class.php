@@ -27,10 +27,10 @@ class UserReputationCondition extends AbstractIntegerCondition implements IConte
 		
 		if (isset($conditionData['greaterThan'])) {
 			/** @noinspection PhpUndefinedFieldInspection */
-			$objectList->getConditionBuilder()->add('(user_table.positiveReactionsReceived -  user_table.negativeReactionsReceived) > ?', [$conditionData['greaterThan']]);
+			$objectList->getConditionBuilder()->add('user_table.likesReceived > ?', [$conditionData['greaterThan']]);
 		}
 		if (isset($conditionData['lessThan'])) {
-			$objectList->getConditionBuilder()->add('(user_table.positiveReactionsReceived -  user_table.negativeReactionsReceived) < ?', [$conditionData['lessThan']]);
+			$objectList->getConditionBuilder()->add('user_table.likesReceived < ?', [$conditionData['lessThan']]);
 		}
 	}
 	
@@ -38,10 +38,10 @@ class UserReputationCondition extends AbstractIntegerCondition implements IConte
 	 * @inheritDoc
 	 */
 	public function checkUser(Condition $condition, User $user) {
-		if ($condition->greaterThan !== null && ($user->positiveReactionsReceived - $user->negativeReactionsReceived) <= $condition->greaterThan) {
+		if ($condition->greaterThan !== null && $user->likesReceived <= $condition->greaterThan) {
 			return false;
 		}
-		if ($condition->lessThan !== null && ($user->positiveReactionsReceived - $user->negativeReactionsReceived) >= $condition->lessThan) {
+		if ($condition->lessThan !== null && $user->likesReceived >= $condition->lessThan) {
 			return false;
 		}
 		

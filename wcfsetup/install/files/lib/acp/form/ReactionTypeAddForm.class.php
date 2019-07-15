@@ -60,15 +60,6 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm {
 					->maximumLength(255)
 					->i18n()
 					->languageItemPattern('wcf.reactionType.title\d+'),
-				RadioButtonFormField::create('type')
-					->label('wcf.acp.reactionType.type')
-					->required()
-					->options([
-						ReactionType::REACTION_TYPE_POSITIVE => 'wcf.acp.reactionType.type.positive',
-						ReactionType::REACTION_TYPE_NEUTRAL => 'wcf.acp.reactionType.type.neutral',
-						ReactionType::REACTION_TYPE_NEGATIVE => 'wcf.acp.reactionType.type.negative'
-					])
-					->value(ReactionType::REACTION_TYPE_POSITIVE),
 				ShowOrderFormField::create()
 					->description('wcf.acp.reactionType.showOrder.description')
 					->required()

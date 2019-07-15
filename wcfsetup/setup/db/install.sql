@@ -678,7 +678,6 @@ CREATE TABLE wcf1_like_object (
 	objectUserID INT(10),
 	likes MEDIUMINT(7) NOT NULL DEFAULT 0,
 	dislikes MEDIUMINT(7) NOT NULL DEFAULT 0,
-	neutralReactions MEDIUMINT(7) NOT NULL DEFAULT 0,
 	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
 	cachedUsers TEXT,
 	cachedReactions TEXT,
@@ -1201,7 +1200,6 @@ DROP TABLE IF EXISTS wcf1_reaction_type;
 CREATE TABLE wcf1_reaction_type (
 	reactionTypeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
 	title VARCHAR(255), 
-	type TINYINT(1),
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	iconFile MEDIUMTEXT,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0
@@ -1488,9 +1486,6 @@ CREATE TABLE wcf1_user (
 	disableCoverPhotoReason TEXT,
 	disableCoverPhotoExpires INT(10) NOT NULL DEFAULT 0,
 	articles INT(10) NOT NULL DEFAULT 0,
-	positiveReactionsReceived INT(10) NOT NULL DEFAULT 0,
-	negativeReactionsReceived INT(10) NOT NULL DEFAULT 0,
-	neutralReactionsReceived INT(10) NOT NULL DEFAULT 0,
 	blacklistMatches VARCHAR(255) NOT NULL DEFAULT '',
 	
 	KEY username (username),
@@ -1501,9 +1496,6 @@ CREATE TABLE wcf1_user (
 	KEY registrationData (registrationIpAddress, registrationDate),
 	KEY activityPoints (activityPoints),
 	KEY likesReceived (likesReceived),
-	KEY positiveReactionsReceived (positiveReactionsReceived),
-	KEY negativeReactionsReceived (negativeReactionsReceived),
-	KEY neutralReactionsReceived (neutralReactionsReceived),
 	KEY authData (authData),
 	KEY trophyPoints (trophyPoints)
 );
@@ -2430,8 +2422,8 @@ INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optio
 INSERT INTO wcf1_contact_recipient (recipientID, name, email, isAdministrator, originIsSystem) VALUES (1, 'wcf.contact.recipient.name1', '', 1, 1);
 
 -- default reaction type
-INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title1', 1, 1, 'like.svg');
-INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title2', 1, 2, 'haha.svg');
-INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title3', -1, 3, 'sad.svg');
-INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title4', 0, 4, 'confused.svg');
-INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title5', 1, 5, 'thanks.svg');
+INSERT INTO wcf1_reaction_type (title, showOrder, iconFile) VALUES ('wcf.reactionType.title1', 1, 'like.svg');
+INSERT INTO wcf1_reaction_type (title, showOrder, iconFile) VALUES ('wcf.reactionType.title2', 2, 'haha.svg');
+INSERT INTO wcf1_reaction_type (title, showOrder, iconFile) VALUES ('wcf.reactionType.title3', 3, 'sad.svg');
+INSERT INTO wcf1_reaction_type (title, showOrder, iconFile) VALUES ('wcf.reactionType.title4', 4, 'confused.svg');
+INSERT INTO wcf1_reaction_type (title, showOrder, iconFile) VALUES ('wcf.reactionType.title5', 5, 'thanks.svg');

@@ -82,67 +82,21 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 			
 			// update like counter
 			if (MODULE_LIKE) {
-				$positiveReactionTypes = $negativeReactionTypes = $neutralReactionTypes = [];
-				
-				foreach (ReactionTypeCache::getInstance()->getEnabledReactionTypes() as $reactionType) {
-					switch ($reactionType->type) {
-						case ReactionType::REACTION_TYPE_POSITIVE: 
-							$positiveReactionTypes[] = $reactionType->reactionTypeID;
-							break;
-						
-						case ReactionType::REACTION_TYPE_NEGATIVE: 
-							$negativeReactionTypes[] = $reactionType->reactionTypeID;
-							break;
-							
-						case ReactionType::REACTION_TYPE_NEUTRAL:
-							$neutralReactionTypes[] = $reactionType->reactionTypeID;
-							break;
-							
-						default: 
-							throw new \LogicException('Unreachable');
-					}
-				}
-				
 				$sql = "UPDATE	wcf".WCF_N."_user user_table SET";
-					
-				if (!empty($positiveReactionTypes)) {
+				
+				$reactionTypeIDs = array_keys(ReactionTypeCache::getInstance()->getEnabledReactionTypes());
+				if (!empty($reactionTypeIDs)) {
 					$sql .= " likesReceived = (
 							SELECT	COUNT(*)
 							FROM	wcf".WCF_N."_like
 							WHERE	objectUserID = user_table.userID
-								AND reactionTypeID IN (". implode(',', $positiveReactionTypes) .")
-						), positiveReactionsReceived = (
-							SELECT	COUNT(*)
-							FROM	wcf".WCF_N."_like
-							WHERE	objectUserID = user_table.userID
-								AND reactionTypeID IN (". implode(',', $positiveReactionTypes) ."))";
+								AND reactionTypeID IN (". implode(',', $reactionTypeIDs) .")
+						)";
 				}
 				else {
-					$sql .= " likesReceived = 0, positiveReactionsReceived = 0";
+					$sql .= " likesReceived = 0";
 				}
 				
-				if (!empty($negativeReactionTypes)) {
-					$sql .= ", negativeReactionsReceived = (
-							SELECT	COUNT(*)
-							FROM	wcf".WCF_N."_like
-							WHERE	objectUserID = user_table.userID
-								AND reactionTypeID IN (". implode(',', $negativeReactionTypes) ."))";
-				}
-				else {
-					$sql .= ", negativeReactionsReceived = 0";
-				}
-					
-				if (!empty($neutralReactionTypes)) {
-					$sql .= ", neutralReactionsReceived = (
-							SELECT	COUNT(*)
-							FROM	wcf".WCF_N."_like
-							WHERE	objectUserID = user_table.userID
-								AND reactionTypeID IN (". implode(',', $neutralReactionTypes) ."))";
-				}
-				else {
-					$sql .= ", neutralReactionsReceived = 0";
-				}
-					
 				$sql .= " ".$conditionBuilder;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditionBuilder->getParameters());

@@ -2569,9 +2569,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 	<category name="wcf.acp.reactionType">
 		<item name="wcf.acp.reactionType.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Reaktions-Typen <span class="confirmationObject">{$reactionType->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.reactionType.type"><![CDATA[Reaktions-Typ]]></item>
-		<item name="wcf.acp.reactionType.type.positive"><![CDATA[Positiv]]></item>
-		<item name="wcf.acp.reactionType.type.negative"><![CDATA[Negativ]]></item>
-		<item name="wcf.acp.reactionType.type.neutral"><![CDATA[Neutral]]></item>
 		<item name="wcf.acp.reactionType.isDisabled"><![CDATA[Reaktion deaktivieren]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaktions-Datei]]></item>
 		<item name="wcf.acp.reactionType.showOrder.description"><![CDATA[Der Reaktions-Typ wird nach dem ausgewählten Reaktions-Typ angezeigt.]]></item>
@@ -4904,9 +4901,6 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.condition.notUserTrophyIDs.description"><![CDATA[Benutzer dürfen keine der ausgewählten Trophäen erhalten haben.]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs.error.userTrophyIntersection"><![CDATA[Die ausgewählten Trophäen in „hat Trophäe“ und „hat nicht Trophäe“ sind widersprüchlich.]]></item>
 		<item name="wcf.user.condition.trophyPoints"><![CDATA[Trophäen]]></item>
-		<item name="wcf.user.condition.positiveReactionsReceived"><![CDATA[Positive Reaktionen]]></item>
-		<item name="wcf.user.condition.negativeReactionsReceived"><![CDATA[Negative Reaktionen]]></item>
-		<item name="wcf.user.condition.neutralReactionsReceived"><![CDATA[Neutrale Reaktionen]]></item>
 		<item name="wcf.user.condition.userReputation"><![CDATA[Reputation aus Reaktionen]]></item>
 	</category>
 	<category name="wcf.user.coverPhoto">

@@ -2497,9 +2497,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	<category name="wcf.acp.reactionType">
 		<item name="wcf.acp.reactionType.delete.confirmMessage"><![CDATA[Do you really want to delete the reaction type <span class="confirmationObject">{$reactionType->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.reactionType.type"><![CDATA[Reaction Type]]></item>
-		<item name="wcf.acp.reactionType.type.positive"><![CDATA[Positiv]]></item>
-		<item name="wcf.acp.reactionType.type.negative"><![CDATA[Negativ]]></item>
-		<item name="wcf.acp.reactionType.type.neutral"><![CDATA[Neutral]]></item>
 		<item name="wcf.acp.reactionType.isDisabled"><![CDATA[Disable Reaction]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaction File]]></item>
 		<item name="wcf.acp.reactionType.showOrder.description"><![CDATA[The reaction type will be shown after the selected reaction type.]]></item>
@@ -4900,9 +4897,6 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.notUserTrophyIDs.description"><![CDATA[User has not received the selected trophies.]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs.error.userTrophyIntersection"><![CDATA[The selected trophies in “User has Trophy” and “User does not have Trophy” are conflicting.]]></item>
 		<item name="wcf.user.condition.trophyPoints"><![CDATA[Trophies]]></item>
-		<item name="wcf.user.condition.positiveReactionsReceived"><![CDATA[Positive Reactions]]></item>
-		<item name="wcf.user.condition.negativeReactionsReceived"><![CDATA[Negative Reactions]]></item>
-		<item name="wcf.user.condition.neutralReactionsReceived"><![CDATA[Neutral Reactions]]></item>
 		<item name="wcf.user.condition.userReputation"><![CDATA[Reputation from Reactions]]></item>
 	</category>
 	<category name="wcf.user.coverPhoto">

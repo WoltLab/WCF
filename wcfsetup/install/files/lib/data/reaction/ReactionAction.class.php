@@ -319,49 +319,25 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		//
 		
 		if ($newLikeObject->objectUserID) {
-			$sql = "SELECT	COUNT(*) as count, like_table.reactionTypeID
-				FROM	wcf".WCF_N."_like like_table
-				WHERE	like_table.objectTypeID = ?
-					AND like_table.objectID = ?
-				GROUP BY like_table.reactionTypeID";
+			$sql = "SELECT  COUNT(*) as count
+				FROM    wcf".WCF_N."_like
+				WHERE   objectTypeID = ?
+					AND objectID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
 				$targetObjectType->objectTypeID,
 				$this->parameters['targetObjectID']
 			]);
-			
-			$updateValues = [
-				'positive' => 0,
-				'neutral' => 0, 
-				'negative' => 0
-			];
-			while ($row = $statement->fetchArray()) {
-				$reactionType = ReactionTypeCache::getInstance()->getReactionTypeByID($row['reactionTypeID']);
-				
-				if (!$reactionType->isDisabled) {
-					if ($reactionType->isPositive()) {
-						$updateValues['positive'] += $row['count'];
-					}
-					else if ($reactionType->isNegative()) {
-						$updateValues['negative'] += $row['count'];
-					}
-					else if ($reactionType->isNeutral()) {
-						$updateValues['neutral'] += $row['count'];
-					}
-				}
-			}
+			$count = $statement->fetchSingleColumn();
 			
 			// update received likes
 			$userEditor = new UserEditor(new User($newLikeObject->objectUserID));
 			$userEditor->updateCounters([
-				'likesReceived' => $updateValues['positive'],
-				'positiveReactionsReceived' => $updateValues['positive'],
-				'negativeReactionsReceived' => $updateValues['negative'],
-				'neutralReactionsReceived' => $updateValues['neutral']
+				'likesReceived' => $count,
 			]);
 			
 			// add activity points
-			UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$newLikeObject->objectUserID => $updateValues['positive']]);
+			UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$newLikeObject->objectUserID => $count]);
 		}
 	}
 }

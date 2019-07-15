@@ -602,12 +602,6 @@
 			<categoryname>com.woltlab.wcf.user</categoryname>
 		</type>
 		<type>
-			<name>com.woltlab.wcf.dislike</name>
-			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
-			<classname>wcf\system\stat\DislikeStatDailyHandler</classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
 			<name>com.woltlab.wcf.userProfileComment</name>
 			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
 			<classname>wcf\system\stat\UserProfileCommentStatDailyHandler</classname>
@@ -676,23 +670,7 @@
 			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>positiveReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.negativeReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>negativeReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.neutralReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>neutralReactionsReceived</propertyname>
+			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
 		</type>
 		<type>
@@ -784,23 +762,7 @@
 			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>positiveReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.negativeReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>negativeReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.neutralReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>neutralReactionsReceived</propertyname>
+			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
 		</type>
 		<type>
@@ -935,25 +897,7 @@
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>positiveReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.negativeReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>negativeReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.neutralReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>neutralReactionsReceived</propertyname>
+			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
 		</type>
 		<type>
@@ -1159,25 +1103,7 @@
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>positiveReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.negativeReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>negativeReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.neutralReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>neutralReactionsReceived</propertyname>
+			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
 		</type>
 		<type>
@@ -1386,23 +1312,7 @@
 			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>positiveReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.negativeReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>negativeReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.neutralReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>neutralReactionsReceived</propertyname>
+			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
 		</type>
 		<type>
@@ -1500,23 +1410,7 @@
 			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>positiveReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.negativeReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>negativeReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.neutralReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>neutralReactionsReceived</propertyname>
+			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
 		</type>
 		<type>

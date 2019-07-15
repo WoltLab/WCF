@@ -134,7 +134,7 @@ class MembersListPage extends SortablePage {
 	 */
 	protected function readObjects() {
 		if ($this->sortField === 'reactionReputation') {
-			$this->sqlOrderBy = '(user_table.positiveReactionsReceived - user_table.negativeReactionsReceived) '. $this->sortOrder;
+			$this->sqlOrderBy = 'user_table.likesReceived '. $this->sortOrder;
 		}
 		
 		parent::readObjects();

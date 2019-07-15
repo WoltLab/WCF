@@ -25,36 +25,30 @@ try {
 	WCF::getDB()->beginTransaction();
 	
 	$reactionTypes = <<<DATA
-('wcf.reactionType.title1', 1, 1, 'like.svg'), 
-('wcf.reactionType.title2', 1, 2, 'haha.svg'), 
-('wcf.reactionType.title3', -1, 3, 'sad.svg'),
-('wcf.reactionType.title4', 0, 4, 'confused.svg'),
-('wcf.reactionType.title5', 1, 5, 'thanks.svg'),
+('wcf.reactionType.title1', 1, 'like.svg'), 
+('wcf.reactionType.title2', 2, 'haha.svg'), 
+('wcf.reactionType.title3', 3, 'sad.svg'),
+('wcf.reactionType.title4', 4, 'confused.svg'),
+('wcf.reactionType.title5', 5, 'thanks.svg'),
 DATA;
 	
 	// add reaction columns 
-	$statement = WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', 'INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES '. $reactionTypes));
+	$statement = WCF::getDB()->prepareStatement('INSERT INTO wcf'.WCF_N.'_reaction_type (title, showOrder, iconFile) VALUES '. $reactionTypes);
 	$statement->execute();
 	
 	// update current likes 
-	$sql = "UPDATE wcf1_like SET reactionTypeID = ? WHERE likeValue = ?";
-	$statement = WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', $sql));
-	
+	$sql = "UPDATE wcf".WCF_N."_like SET reactionTypeID = ? WHERE likeValue = ?";
+	$statement = WCF::getDB()->prepareStatement($sql);
 	$statement->execute([
 		Like::LIKE,
 		1
 	]);
-	$statement->execute([
-		Like::DISLIKE,
-		3
-	]);
 	
-	// delete outdated likes, which aren't likes nor dislikes (normally none should exist)
-	$sql = "DELETE FROM wcf1_like WHERE reactionTypeID = 0";
-	$statement = WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', $sql));
+	// Delete outdated or unsupported likes.
+	WCF::getDB()->prepareStatement("DELETE FROM wcf".WCF_N."_like WHERE reactionTypeID = 0")->execute();
 	
 	// add foreign key  
-	$statement = WCF::getDB()->prepareStatement(str_replace('wcf1_', 'wcf'.WCF_N.'_', 'ALTER TABLE wcf1_like ADD FOREIGN KEY (reactionTypeID) REFERENCES wcf1_reaction_type (reactionTypeID) ON DELETE CASCADE'));
+	$statement = WCF::getDB()->prepareStatement('ALTER TABLE wcf'.WCF_N.'_like ADD FOREIGN KEY (reactionTypeID) REFERENCES wcf1_reaction_type (reactionTypeID) ON DELETE CASCADE');
 	$statement->execute();
 	
 	WCF::getDB()->commitTransaction();

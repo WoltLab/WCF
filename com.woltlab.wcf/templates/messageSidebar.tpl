@@ -82,9 +82,8 @@
 					<dl class="plain dataList">
 						{content}
 							{if MODULE_LIKE && MESSAGE_SIDEBAR_ENABLE_LIKES_RECEIVED && !$isReply}
-								{assign var=overallReactionCount value=$userProfile->positiveReactionsReceived - $userProfile->negativeReactionsReceived}
 								<dt><a href="{link controller='User' object=$userProfile}{/link}#likes" class="jsTooltip" title="{lang user=$userProfile}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.likesReceived{/lang}</a></dt>
-								<dd>{#$overallReactionCount}</dd>
+								<dd>{#$userProfile->cumulativeLikes}</dd>
 							{/if}
 							
 							{if MESSAGE_SIDEBAR_ENABLE_ACTIVITY_POINTS && $userProfile->activityPoints}
