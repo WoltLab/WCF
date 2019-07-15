@@ -39,6 +39,84 @@ class TemplateScriptingCompiler {
 	];
 	
 	/**
+	 * PHP functions and modifiers that can be used in enterprise mode
+	 * @var	string[]
+	 */
+	protected $enterpriseFunctions = [
+		'addslashes',
+		'array_keys',
+		'array_pop',
+		'array_slice',
+		'array_values',
+		'base64_decode',
+		'base64_encode',
+		'ceil',
+		'concat',
+		'constant',
+		'count',
+		'currency',
+		'date',
+		'defined',
+		'empty',
+		'end',
+		'explode',
+		'file_exists',
+		'filesize',
+		'floor',
+		'function_exists',
+		'gmdate',
+		'hash',
+		'htmlspecialchars',
+		'implode',
+		'in_array',
+		'is_array',
+		'is_numeric',
+		'is_object',
+		'intval',
+		'is_subclass_of',
+		'isset',
+		'key',
+		'lcfirst',
+		'ltrim',
+		'max',
+		'mb_strpos',
+		'mb_strlen',
+		'mb_strpos',
+		'mb_strtolower',
+		'mb_strtoupper',
+		'mb_substr',
+		'md5',
+		'microtime',
+		'min',
+		'nl2br',
+		'number_format',
+		'preg_match',
+		'preg_replace',
+		'print_r',
+		'rawurlencode',
+		'reset',
+		'round',
+		'sha1',
+		'spl_object_hash',
+		'sprintf',
+		'strpos',
+		'strlen',
+		'strtolower',
+		'strtotime',
+		'strtoupper',
+		'str_pad',
+		'str_repeat',
+		'str_replace',
+		'str_ireplace',
+		'substr',
+		'trim',
+		'ucfirst',
+		'urlencode',
+		'wcfDebug',
+		'wordwrap'
+	];
+	
+	/**
 	 * pattern to match variable operators like -> or .
 	 * @var	string
 	 */
@@ -1181,8 +1259,13 @@ class TemplateScriptingCompiler {
 						if (/*strpos($values[$i], '$') !== false || */strpos($values[$i], '@@') !== false) {
 							throw new SystemException(static::formatSyntaxError("unexpected '->".$values[$i]."' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo));
 						}
-						if (strpos($values[$i], '$') !== false) $result .= '{'.$this->compileSimpleVariable($values[$i], $variableType).'}';
-						else $result .= $values[$i];
+						if (strpos($values[$i], '$') !== false) {
+							$result .= '{'.$this->compileSimpleVariable($values[$i], $variableType).'}';
+						}
+						else {
+							$result .= $values[$i];
+						}
+						
 						$statusStack[count($statusStack) - 1] = $status = 'object';
 					break;
 					
@@ -1205,7 +1288,7 @@ class TemplateScriptingCompiler {
 					break;
 					
 					case 'object method':
-					case 'left parenthesis':	
+					case 'left parenthesis':
 						$result .= $this->compileSimpleVariable($values[$i], $variableType);
 						$statusStack[] = $status = $variableType;
 					break;
@@ -1237,8 +1320,22 @@ class TemplateScriptingCompiler {
 							$modifierData['className'] = $className;
 							$this->autoloadPlugins[$modifierData['className']] = $modifierData['className'];
 						}
-						else if ((!function_exists($modifierData['name']) && !in_array($modifierData['name'], $this->unknownPHPFunctions)) || in_array($modifierData['name'], $this->disabledPHPFunctions)) {
-							throw new SystemException(static::formatSyntaxError("unknown modifier '".$values[$i]."'", $this->currentIdentifier, $this->currentLineNo));
+						else if (!function_exists($modifierData['name']) && !in_array($modifierData['name'], $this->unknownPHPFunctions)) {
+							throw new SystemException(static::formatSyntaxError(
+								"unknown modifier '".$values[$i]."'",
+								$this->currentIdentifier,
+								$this->currentLineNo
+							));
+						}
+						else if (
+							in_array($modifierData['name'], $this->disabledPHPFunctions)
+							|| (ENABLE_ENTERPRISE_MODE && !in_array($modifierData['name'], $this->enterpriseFunctions))
+						) {
+							throw new SystemException(static::formatSyntaxError(
+								"disabled function '".$values[$i]."'",
+								$this->currentIdentifier,
+								$this->currentLineNo
+							));
 						}
 						
 						$statusStack[count($statusStack) - 1] = $status = 'modifier end';

@@ -71,6 +71,17 @@ class RequestHandler extends SingletonFactory {
 			// build request
 			$this->buildRequest($application);
 			
+			// enforce that certain ACP pages are not available for non-owners in enterprise mode
+			if (
+				$isACPRequest
+				&& ENABLE_ENTERPRISE_MODE
+				&& !WCF::getUser()->hasOwnerAccess()
+				&& defined($this->activeRequest->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
+				&& constant($this->activeRequest->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
+			) {
+				throw new IllegalLinkException();
+			}
+			
 			// handle offline mode
 			if (!$isACPRequest && defined('OFFLINE') && OFFLINE) {
 				if (!WCF::getSession()->getPermission('admin.general.canViewPageDuringOfflineMode') && !$this->activeRequest->isAvailableDuringOfflineMode()) {

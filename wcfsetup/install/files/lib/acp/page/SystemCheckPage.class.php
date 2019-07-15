@@ -108,6 +108,11 @@ class SystemCheckPage extends AbstractPage {
 	];
 	
 	/**
+	 * indicates that this page is only accessible to owners in enterprise mode
+	 */
+	const BLACKLISTED_IN_ENTERPRISE_MODE = true;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readData() {

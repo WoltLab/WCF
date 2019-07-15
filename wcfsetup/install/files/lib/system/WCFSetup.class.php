@@ -39,6 +39,7 @@ define('CACHE_SOURCE_TYPE', 'disk');
 define('MODULE_MASTER_PASSWORD', 1);
 define('ENABLE_DEBUG_MODE', 1);
 define('ENABLE_BENCHMARK', 0);
+define('ENABLE_ENTERPRISE_MODE', 0);
 
 /**
  * Executes the installation of the basic WCF systems.
