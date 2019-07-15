@@ -14,6 +14,10 @@
 								{lang article=$boxArticle}wcf.article.articleViews{/lang}
 							{elseif $boxSortField == 'comments'}
 								{$boxArticle->getDiscussionProvider()->getDiscussionCountPhrase()}
+							{elseif $boxSortField == 'cumulativeLikes'}
+								{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && ($boxArticle->likes || $boxArticle->dislikes)}
+									<span class="reputationCounter {if $boxArticle->cumulativeLikes > 0}positive{elseif $boxArticle->cumulativeLikes < 0}negative{else}neutral{/if}">{if $boxArticle->cumulativeLikes > 0}+{elseif $boxArticle->cumulativeLikes == 0}±{/if}{#$boxArticle->cumulativeLikes}</span>
+								{/if}
 							{/if}
 						</small>
 					</div>
