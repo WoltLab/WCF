@@ -27,7 +27,9 @@
 	
 	<nav class="contentHeaderNavigation">
 		<ul>
-			<li><a href="#" class="button jsButtonUploadPackage jsStaticDialog" data-dialog-id="packageUploadDialog"><span class="icon icon16 fa-upload"></span> <span>{lang}wcf.acp.package.upload{/lang}</span></a></li>
+			{if !ENABLE_ENTERPRISE_MODE || $__wcf->getUser()->hasOwnerAccess()}
+				<li><a href="#" class="button jsButtonUploadPackage jsStaticDialog" data-dialog-id="packageUploadDialog"><span class="icon icon16 fa-upload"></span> <span>{lang}wcf.acp.package.upload{/lang}</span></a></li>
+			{/if}
 			<li><a href="{link controller='PackageList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.package.list{/lang}</span></a></li>
 			
 			{event name='contentHeaderNavigation'}
@@ -79,33 +81,35 @@
 	</section>
 </div>
 
-<div id="packageUploadDialog" class="jsStaticDialogContent" data-title="{lang}wcf.acp.package.upload{/lang}">
-	<form method="post" action="{link controller='PackageStartInstall'}{/link}" enctype="multipart/form-data">
-		<div class="section">
-			<dl{if $errorField == 'uploadPackage'} class="formError"{/if}>
-				<dt><label for="uploadPackage">{lang}wcf.acp.package.source.upload{/lang}</label></dt>
-				<dd>
-					<input type="file" id="uploadPackage" name="uploadPackage" value="" accept="application/x-tar,application/gzip,application/tar+gzip">
-					{if $errorField == 'uploadPackage'}
-						<small class="innerError">
-							{if $errorType == 'empty'}
-								{lang}wcf.global.form.error.empty{/lang}
-							{else}
-								{lang}wcf.acp.package.error.{@$errorType}{/lang}
-							{/if}
-						</small>
-					{/if}
-					<small>{lang}wcf.acp.package.source.upload.description{/lang}</small>
-				</dd>
-			</dl>
-		</div>
-		
-		<div class="formSubmit">
-			<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
-			<input type="hidden" name="action" value="{$action}">
-			{@SECURITY_TOKEN_INPUT_TAG}
-		</div>
-	</form>
-</div>
+{if !ENABLE_ENTERPRISE_MODE || $__wcf->getUser()->hasOwnerAccess()}
+	<div id="packageUploadDialog" class="jsStaticDialogContent" data-title="{lang}wcf.acp.package.upload{/lang}">
+		<form method="post" action="{link controller='PackageStartInstall'}{/link}" enctype="multipart/form-data">
+			<div class="section">
+				<dl{if $errorField == 'uploadPackage'} class="formError"{/if}>
+					<dt><label for="uploadPackage">{lang}wcf.acp.package.source.upload{/lang}</label></dt>
+					<dd>
+						<input type="file" id="uploadPackage" name="uploadPackage" value="" accept="application/x-tar,application/gzip,application/tar+gzip">
+						{if $errorField == 'uploadPackage'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.package.error.{@$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
+						<small>{lang}wcf.acp.package.source.upload.description{/lang}</small>
+					</dd>
+				</dl>
+			</div>
+			
+			<div class="formSubmit">
+				<input type="submit" name="submitButton" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+				<input type="hidden" name="action" value="{$action}">
+				{@SECURITY_TOKEN_INPUT_TAG}
+			</div>
+		</form>
+	</div>
+{/if}
 
 {include file='footer'}

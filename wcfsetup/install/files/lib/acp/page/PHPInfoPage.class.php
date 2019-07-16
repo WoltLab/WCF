@@ -23,6 +23,11 @@ class PHPInfoPage extends AbstractPage {
 	public $neededPermissions = ['admin.configuration.package.canInstallPackage', 'admin.configuration.package.canUpdatePackage'];
 	
 	/**
+	 * indicates that this page is only accessible to owners in enterprise mode
+	 */
+	const BLACKLISTED_IN_ENTERPRISE_MODE = true;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function assignVariables() {
