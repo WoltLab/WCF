@@ -135,36 +135,6 @@
 	}
 }
 
-.reputationCounter {
-	color: $wcfContentDimmedText;
-	
-	&.positive {
-		color: #060 !important;
-		
-		&::before {
-			content: $fa-var-smile-o + "\00A0";
-		}
-	}
-	
-	&.negative {
-		color: #900 !important;
-		
-		&::before {
-			content: $fa-var-frown-o + "\00A0";
-		}
-	}
-	
-	&::before {
-		font-family: FontAwesome;
-		content: $fa-var-meh-o + "\00A0";
-		display: inline-block;
-	}
-	
-	&:empty {
-		display: none;	
-	}
-}
-
 @include screen-sm-down {
 	.reactionStatusContainer {
 		display: none;

@@ -322,7 +322,7 @@ class ReactionHandler extends SingletonFactory {
 					'objectUserID' => $likeable->getUserID() ?: null,
 					'userID' => $user->userID,
 					'time' => $time,
-					'likeValue' => $reaction->type, 
+					'likeValue' => 1, 
 					'reactionTypeID' => $reactionTypeID
 				]);
 				
@@ -334,7 +334,7 @@ class ReactionHandler extends SingletonFactory {
 				$likeEditor = new LikeEditor($like);
 				$likeEditor->update([
 					'time' => $time,
-					'likeValue' => $reaction->type,
+					'likeValue' => 1,
 					'reactionTypeID' => $reactionTypeID
 				]);
 				
