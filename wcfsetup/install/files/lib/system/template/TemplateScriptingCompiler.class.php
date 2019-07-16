@@ -171,6 +171,17 @@ class TemplateScriptingCompiler {
 	protected $staticIncludes = [];
 	
 	/**
+	 * data of all currently active `foreach` loops; entry data:
+	 * 
+	 * 	hash => unique foreach loop hash
+	 * 	itemVar => template code for the `item` variable
+	 * 	keyVar => (optional) template code for the `key` variable
+	 * 
+	 * @var	string[][]
+	 */
+	protected $foreachLoops = [];
+	
+	/**
 	 * Creates a new TemplateScriptingCompiler object.
 	 * 
 	 * @param	TemplateEngine		$template
@@ -379,7 +390,7 @@ class TemplateScriptingCompiler {
 						throw new SystemException(static::formatSyntaxError('unexpected {/foreach}', $this->currentIdentifier, $this->currentLineNo));
 					}
 					$this->popTag('foreach');
-					return "<?php } } ?>";
+					return $this->compileForeachEndTag();
 					
 				case 'section':
 					$this->pushTag('section');
@@ -689,7 +700,9 @@ class TemplateScriptingCompiler {
 			$foreachProp = "\$this->v['tpl']['foreach'][".$args['name']."]";
 		}
 		
-		$foreachHash = "\$_foreach_".StringUtil::getRandomID();
+		$hash = StringUtil::getRandomID();
+		$foreachHash = "\$_foreach_" . $hash;
+		$foreachData = ['hash' => $hash];
 		
 		$phpCode = "<?php\n";
 		$phpCode .= $foreachHash." = ".$args['from'].";\n";
@@ -708,11 +721,26 @@ class TemplateScriptingCompiler {
 			$phpCode .= "if (".$foreachHash."_cnt > 0) {\n";
 		}
 		
+		$itemVar = mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item'];
+		$foreachData['itemVar'] = $itemVar;
+		
+		$phpCode .= "\$this->foreachVars['{$hash}'] = [];\n";
+		$phpCode .= "if (isset({$itemVar})) {\n";
+		$phpCode .= "\$this->foreachVars['{$hash}']['item'] = {$itemVar};\n";
+		$phpCode .= "}\n";
+		
 		if (isset($args['key'])) {
-			$phpCode .= "foreach (".$foreachHash." as ".(mb_substr($args['key'], 0, 1) != '$' ? "\$this->v[".$args['key']."]" : $args['key'])." => ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
+			$keyVar = mb_substr($args['key'], 0, 1) != '$' ? "\$this->v[".$args['key']."]" : $args['key'];
+			$foreachData['keyVar'] = $keyVar;
+			
+			$phpCode .= "if (isset({$keyVar})) {\n";
+			$phpCode .= "\$this->foreachVars['{$hash}']['key'] = {$keyVar};\n";
+			$phpCode .= "}\n";
+			
+			$phpCode .= "foreach (".$foreachHash." as {$keyVar} => {$itemVar}) {\n";
 		}
 		else {
-			$phpCode .= "foreach (".$foreachHash." as ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
+			$phpCode .= "foreach (".$foreachHash." as {$itemVar}) {\n";
 		}
 		
 		if (!empty($foreachProp)) {
@@ -722,6 +750,38 @@ class TemplateScriptingCompiler {
 		}
 		
 		$phpCode .= "?>";
+		
+		$this->foreachLoops[] = $foreachData;
+		
+		return $phpCode;
+	}
+	
+	/**
+	 * Compiles a `/foreach` tag and returns the compiled PHP code.
+	 * 
+	 * @return	string
+	 * @since	5.2
+	 */
+	protected function compileForeachEndTag() {
+		$foreachData = array_pop($this->foreachLoops);
+		
+		// unset `item` and `key` variables and restore their sandboxed values
+		$phpCode = "<?php }\n";
+		$phpCode .= "unset({$foreachData['itemVar']});";
+		$phpCode .= "if (isset(\$this->foreachVars['{$foreachData['hash']}']['item'])) {\n";
+		$phpCode .= "{$foreachData['itemVar']} = \$this->foreachVars['{$foreachData['hash']}']['item'];\n";
+		$phpCode .= "}\n";
+		
+		if (isset($foreachData['keyVar'])) {
+			$phpCode .= "unset({$foreachData['keyVar']});";
+			$phpCode .= "if (isset(\$this->foreachVars['{$foreachData['hash']}']['key'])) {\n";
+			$phpCode .= "{$foreachData['keyVar']} = \$this->foreachVars['{$foreachData['hash']}']['key'];\n";
+			$phpCode .= "}\n";
+		}
+		
+		$phpCode .= "unset(\$this->foreachVars['{$foreachData['hash']}']);\n";
+		$phpCode .= " } ?>";
+		
 		return $phpCode;
 	}
 	
