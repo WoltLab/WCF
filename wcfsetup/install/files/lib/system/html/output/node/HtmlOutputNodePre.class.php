@@ -145,6 +145,9 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 			else if (mb_strpos($content, '\\documentclass') !== false) {
 				$highlighter = 'latex';
 			}
+			else if (mb_strpos($content, '!important;') !== false) {
+				$highlighter = 'css';
+			}
 		}
 		$eventData = [
 			'highlighter' => $highlighter,
