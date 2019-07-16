@@ -3895,7 +3895,7 @@ Attachments:
 		<item name="wcf.like.jsTooltip"><![CDATA[{literal}{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}{/literal}]]></item>
 		<item name="wcf.like.button.like"><![CDATA[Like]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Dislike]]></item>
-		<item name="wcf.like.likesReceived"><![CDATA[Reputation]]></item>
+		<item name="wcf.like.likesReceived"><![CDATA[Reactions Received]]></item>
 		<item name="wcf.like.showLikesReceived"><![CDATA[Reactions Received by {$user->username}]]></item>
 		<item name="wcf.like.likesGiven"><![CDATA[Likes Given]]></item>
 		<item name="wcf.like.dislikesReceived"><![CDATA[Dislikes Received]]></item>
@@ -3923,7 +3923,6 @@ Attachments:
 		<item name="wcf.like.reaction.noMoreEntries"><![CDATA[There are not any new reactions at the moment.]]></item>
 		<item name="wcf.like.reactionsReceived"><![CDATA[Reactions Received]]></item>
 		<item name="wcf.like.reactionsGiven"><![CDATA[Reactions Given]]></item>
-		<item name="wcf.like.reactionReputation"><![CDATA[Reputation from Reactions]]></item>
 	</category>
 	<category name="wcf.map">
 		<item name="wcf.map.noLocationSuggestions"><![CDATA[There are no location suggestions in the current map section.]]></item>
@@ -4615,11 +4614,10 @@ not register with us.]]></item>
 		<item name="wcf.user.boxList.description.registrationDate"><![CDATA[{@$boxUser->registrationDate|time}]]></item>
 		<item name="wcf.user.mostOnlineUsers"><![CDATA[Most Online Users]]></item>
 		<item name="wcf.user.sortField.activityPoints"><![CDATA[Points]]></item>
-		<item name="wcf.user.sortField.likesReceived"><![CDATA[Likes Received]]></item>
+		<item name="wcf.user.sortField.likesReceived"><![CDATA[Reactions Received]]></item>
 		<item name="wcf.user.sortField.registrationDate"><![CDATA[Registration Date]]></item>
 		<item name="wcf.user.sortField.username"><![CDATA[Username]]></item>
 		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Last Activity]]></item>
-		<item name="wcf.user.sortField.reactionReputation"><![CDATA[Reputation from Reactions]]></item>
 		<item name="wcf.user.articles"><![CDATA[Articles]]></item>
 		<item name="wcf.user.status.banned"><![CDATA[The user has been banned.]]></item>
 		<item name="wcf.user.status.isDisabled"><![CDATA[The user has not been approved yet.]]></item>
@@ -4871,7 +4869,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.groupIDs.description"><![CDATA[User is a member of the selected user group(s).]]></item>
 		<item name="wcf.user.condition.languages"><![CDATA[Language(s)]]></item>
 		<item name="wcf.user.condition.lastActivityTime"><![CDATA[Last Activity]]></item>
-		<item name="wcf.user.condition.likesReceived"><![CDATA[Positive Reactions]]></item>
+		<item name="wcf.user.condition.likesReceived"><![CDATA[Reactions Received]]></item>
 		<item name="wcf.user.condition.mobileBrowser"><![CDATA[Mobile Device or Desktop]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser"><![CDATA[Uses mobile device]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser.error.conflict"><![CDATA[You cannot simultaneously select “Uses mobile device” and “Uses desktop”.]]></item>
@@ -4894,7 +4892,6 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.notUserTrophyIDs.description"><![CDATA[User has not received the selected trophies.]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs.error.userTrophyIntersection"><![CDATA[The selected trophies in “User has Trophy” and “User does not have Trophy” are conflicting.]]></item>
 		<item name="wcf.user.condition.trophyPoints"><![CDATA[Trophies]]></item>
-		<item name="wcf.user.condition.userReputation"><![CDATA[Reputation from Reactions]]></item>
 	</category>
 	<category name="wcf.user.coverPhoto">
 		<item name="wcf.user.coverPhoto"><![CDATA[Cover Photo]]></item>

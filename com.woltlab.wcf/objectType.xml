@@ -674,12 +674,6 @@
 			<minvalue>0</minvalue>
 		</type>
 		<type>
-			<name>com.woltlab.wcf.userReputation</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserReputationCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-		</type>
-		<type>
 			<name>com.woltlab.wcf.userOptions</name>
 			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
 			<classname>wcf\system\condition\UserOptionsCondition</classname>
@@ -764,12 +758,6 @@
 			<conditiongroup>contents</conditiongroup>
 			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userReputation</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserReputationCondition</classname>
-			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.userOptions</name>
@@ -899,13 +887,6 @@
 			<conditiongroup>contents</conditiongroup>
 			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userReputation</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserReputationCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.userOptions</name>
@@ -1105,13 +1086,6 @@
 			<conditiongroup>contents</conditiongroup>
 			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userReputation</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserReputationCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.userOptions</name>
@@ -1316,12 +1290,6 @@
 			<minvalue>0</minvalue>
 		</type>
 		<type>
-			<name>com.woltlab.wcf.userReputation</name>
-			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
-			<classname>wcf\system\condition\UserReputationCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-		</type>
-		<type>
 			<name>com.woltlab.wcf.userOptions</name>
 			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
 			<classname>wcf\system\condition\UserOptionsCondition</classname>
@@ -1412,12 +1380,6 @@
 			<conditiongroup>contents</conditiongroup>
 			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userReputation</name>
-			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
-			<classname>wcf\system\condition\UserReputationCondition</classname>
-			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.userOptions</name>

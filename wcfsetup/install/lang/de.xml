@@ -1511,7 +1511,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.option.module_user_profile_wall"><![CDATA[Benutzerprofil-Pinnwand]]></item>
 		<item name="wcf.acp.option.category.message.sidebar"><![CDATA[Seitenleiste]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_online_status"><![CDATA[Online-Status der Autoren anzeigen]]></item>
-		<item name="wcf.acp.option.message_sidebar_enable_likes_received"><![CDATA[Reputation der Autoren anzeigen]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_likes_received"><![CDATA[Erhaltene Reaktionen der Autoren anzeigen]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_activity_points"><![CDATA[Aktivitätspunkte der Autoren anzeigen]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_trophy_points"><![CDATA[Anzahl der Trophäen der Autoren anzeigen]]></item>
 		<item name="wcf.acp.option.message_sidebar_user_options"><![CDATA[Ausgewählte Profilfelder der Autoren anzeigen]]></item>
@@ -3977,7 +3977,6 @@ Dateianhänge:
 		<item name="wcf.like.reaction.noMoreEntries"><![CDATA[Keine weiteren Reaktionen]]></item>
 		<item name="wcf.like.reactionsReceived"><![CDATA[Erhaltene Reaktionen]]></item>
 		<item name="wcf.like.reactionsGiven"><![CDATA[Vergebene Reaktionen]]></item>
-		<item name="wcf.like.reactionReputation"><![CDATA[Reputation aus Reaktionen]]></item>
 	</category>
 	<category name="wcf.map">
 		<item name="wcf.map.noLocationSuggestions"><![CDATA[Für den aktuellen Kartenausschnitt liegen keine Ortsvorschläge vor.]]></item>
@@ -4618,11 +4617,10 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.boxList.description.registrationDate"><![CDATA[{@$boxUser->registrationDate|time}]]></item>
 		<item name="wcf.user.mostOnlineUsers"><![CDATA[Meiste Benutzer online]]></item>
 		<item name="wcf.user.sortField.activityPoints"><![CDATA[Punkte]]></item>
-		<item name="wcf.user.sortField.likesReceived"><![CDATA[Erhaltene Likes]]></item>
+		<item name="wcf.user.sortField.likesReceived"><![CDATA[Erhaltene Reaktionen]]></item>
 		<item name="wcf.user.sortField.registrationDate"><![CDATA[Registrierungsdatum]]></item>
 		<item name="wcf.user.sortField.username"><![CDATA[Benutzername]]></item>
 		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
-		<item name="wcf.user.sortField.reactionReputation"><![CDATA[Reputation aus Reaktionen]]></item>
 		<item name="wcf.user.articles"><![CDATA[Artikel]]></item>
 		<item name="wcf.user.status.banned"><![CDATA[Der Benutzer ist gesperrt.]]></item>
 		<item name="wcf.user.status.isDisabled"><![CDATA[Der Benutzer ist nicht freigeschaltet.]]></item>
@@ -4875,7 +4873,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.condition.groupIDs.description"><![CDATA[Benutzer müssen in allen ausgewählten Benutzergruppen Mitglied sein.]]></item>
 		<item name="wcf.user.condition.languages"><![CDATA[Sprachen]]></item>
 		<item name="wcf.user.condition.lastActivityTime"><![CDATA[Letzte Aktivität]]></item>
-		<item name="wcf.user.condition.likesReceived"><![CDATA[Positive Reaktionen]]></item>
+		<item name="wcf.user.condition.likesReceived"><![CDATA[Erhaltene Reaktionen]]></item>
 		<item name="wcf.user.condition.mobileBrowser"><![CDATA[Mobiler Browser]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser"><![CDATA[Verwendet mobilen Browser]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser.error.conflict"><![CDATA[„Verwendet mobilen Browser“ und „Verwendet keinen mobilen Browser“ können nicht gleichzeitig ausgewählt werden.]]></item>
@@ -4898,7 +4896,6 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.condition.notUserTrophyIDs.description"><![CDATA[Benutzer dürfen keine der ausgewählten Trophäen erhalten haben.]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs.error.userTrophyIntersection"><![CDATA[Die ausgewählten Trophäen in „hat Trophäe“ und „hat nicht Trophäe“ sind widersprüchlich.]]></item>
 		<item name="wcf.user.condition.trophyPoints"><![CDATA[Trophäen]]></item>
-		<item name="wcf.user.condition.userReputation"><![CDATA[Reputation aus Reaktionen]]></item>
 	</category>
 	<category name="wcf.user.coverPhoto">
 		<item name="wcf.user.coverPhoto"><![CDATA[Titelbild]]></item>
