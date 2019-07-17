@@ -101,11 +101,9 @@ class LikeHandler extends SingletonFactory {
 	 * @return	array
 	 */
 	public function like(ILikeObject $likeable, User $user, $likeValue, $time = TIME_NOW) {
+		$reactionTypeID = null;
 		if ($likeValue == 1) {
-			$reactionTypeID = ReactionHandler::getInstance()->getLegacyReactionTypeID(ReactionType::REACTION_TYPE_POSITIVE);
-		}
-		else {
-			$reactionTypeID = ReactionHandler::getInstance()->getLegacyReactionTypeID(ReactionType::REACTION_TYPE_NEGATIVE);
+			$reactionTypeID = ReactionHandler::getInstance()->getFirstReactionTypeID();
 		}
 		
 		if ($reactionTypeID === null) {
@@ -114,27 +112,18 @@ class LikeHandler extends SingletonFactory {
 				'like' => 0,
 				'newValue' => 0,
 				'oldValue' => 0,
-				'users' => []
+				'users' => [],
 			];
 		}
 		
 		$reactData = ReactionHandler::getInstance()->react($likeable, $user, $reactionTypeID, $time);
-		if ($reactData['reactionTypeID'] === null) {
-			$newValue = 0; 
-		}
-		else if (ReactionTypeCache::getInstance()->getReactionTypeByID($reactData['reactionTypeID'])->type == ReactionType::REACTION_TYPE_NEGATIVE) {
-			$newValue = -1;
-		}
-		else {
-			$newValue = 1;
-		}
 		
 		return [
 			'data' => $this->loadLikeStatus($reactData['likeObject'], $user),
 			'like' => $reactData['like'],
-			'newValue' => $newValue,
-			'oldValue' => 0, // this value is currently a dummy value, maybe determine a real value
-			'users' => []
+			'newValue' => 0,
+			'oldValue' => 0,
+			'users' => [],
 		];
 	}
 	
@@ -154,8 +143,8 @@ class LikeHandler extends SingletonFactory {
 			'data' => $this->loadLikeStatus($reactData['likeObject'], $user),
 			'like' => null,
 			'newValue' => 0,
-			'oldValue' => 0, // this value is currently a dummy value, maybe determine a real value
-			'users' => []
+			'oldValue' => 0,
+			'users' => [],
 		];
 	}
 	

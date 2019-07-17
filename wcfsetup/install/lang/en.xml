@@ -1487,8 +1487,6 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Profile visitors will be removed after the following days.]]></item>
 		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Likes System]]></item>
 		<item name="wcf.acp.option.module_like"><![CDATA[Likes system]]></item>
-		<item name="wcf.acp.option.like_allow_for_own_content"><![CDATA[Users can react to their own content]]></item>
-		<item name="wcf.acp.option.like_enable_dislike"><![CDATA[Users can dislike content]]></item>
 		<item name="wcf.acp.option.like_show_summary"><![CDATA[Display likes summary]]></item>
 		<item name="wcf.acp.option.module_user_profile_wall"><![CDATA[User profile wall]]></item>
 		<item name="wcf.acp.option.category.message.sidebar"><![CDATA[Sidebar]]></item>
@@ -2497,9 +2495,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	<category name="wcf.acp.reactionType">
 		<item name="wcf.acp.reactionType.delete.confirmMessage"><![CDATA[Do you really want to delete the reaction type <span class="confirmationObject">{$reactionType->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.reactionType.type"><![CDATA[Reaction Type]]></item>
-		<item name="wcf.acp.reactionType.type.positive"><![CDATA[Positiv]]></item>
-		<item name="wcf.acp.reactionType.type.negative"><![CDATA[Negativ]]></item>
-		<item name="wcf.acp.reactionType.type.neutral"><![CDATA[Neutral]]></item>
 		<item name="wcf.acp.reactionType.isDisabled"><![CDATA[Disable Reaction]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaction File]]></item>
 		<item name="wcf.acp.reactionType.showOrder.description"><![CDATA[The reaction type will be shown after the selected reaction type.]]></item>
@@ -3900,7 +3895,7 @@ Attachments:
 		<item name="wcf.like.jsTooltip"><![CDATA[{literal}{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}{/literal}]]></item>
 		<item name="wcf.like.button.like"><![CDATA[Like]]></item>
 		<item name="wcf.like.button.dislike"><![CDATA[Dislike]]></item>
-		<item name="wcf.like.likesReceived"><![CDATA[Reputation]]></item>
+		<item name="wcf.like.likesReceived"><![CDATA[Reactions Received]]></item>
 		<item name="wcf.like.showLikesReceived"><![CDATA[Reactions Received by {$user->username}]]></item>
 		<item name="wcf.like.likesGiven"><![CDATA[Likes Given]]></item>
 		<item name="wcf.like.dislikesReceived"><![CDATA[Dislikes Received]]></item>
@@ -3923,13 +3918,11 @@ Attachments:
 		<item name="wcf.like.title.com.woltlab.wcf.articleComment.response"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the article <a href="{$response->getLink()}">{$articleContent->getTitle()}</a>.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.pageComment"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the page <a href="{$comment->getLink()}">{$page->getTitle()}</a>.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.pageComment.response"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the page <a href="{$response->getLink()}">{$page->getTitle()}</a>.]]></item>
-		<item name="wcf.like.reaction.noMoreEntries"><![CDATA[There are not any new reactions at the moment.]]></item>
+		<item name="wcf.like.reaction.label"><![CDATA[{#$reactions} reaction{if $reactions != 1}s{/if}]]></item>
 		<item name="wcf.like.reaction.more"><![CDATA[More Reactions]]></item>
+		<item name="wcf.like.reaction.noMoreEntries"><![CDATA[There are not any new reactions at the moment.]]></item>
 		<item name="wcf.like.reactionsReceived"><![CDATA[Reactions Received]]></item>
 		<item name="wcf.like.reactionsGiven"><![CDATA[Reactions Given]]></item>
-		<item name="wcf.like.reactionReputation"><![CDATA[Reputation from Reactions]]></item>
-		<item name="wcf.like.reputation"><![CDATA[Reputation]]></item>
-		<item name="wcf.like.reputation.label"><![CDATA[Reputation: {if $cumulativeLikes > 0}+{elseif $cumulativeLikes == 0}±{/if}{#$cumulativeLikes}]]></item>
 	</category>
 	<category name="wcf.map">
 		<item name="wcf.map.noLocationSuggestions"><![CDATA[There are no location suggestions in the current map section.]]></item>
@@ -4621,11 +4614,10 @@ not register with us.]]></item>
 		<item name="wcf.user.boxList.description.registrationDate"><![CDATA[{@$boxUser->registrationDate|time}]]></item>
 		<item name="wcf.user.mostOnlineUsers"><![CDATA[Most Online Users]]></item>
 		<item name="wcf.user.sortField.activityPoints"><![CDATA[Points]]></item>
-		<item name="wcf.user.sortField.likesReceived"><![CDATA[Likes Received]]></item>
+		<item name="wcf.user.sortField.likesReceived"><![CDATA[Reactions Received]]></item>
 		<item name="wcf.user.sortField.registrationDate"><![CDATA[Registration Date]]></item>
 		<item name="wcf.user.sortField.username"><![CDATA[Username]]></item>
 		<item name="wcf.user.sortField.lastActivityTime"><![CDATA[Last Activity]]></item>
-		<item name="wcf.user.sortField.reactionReputation"><![CDATA[Reputation from Reactions]]></item>
 		<item name="wcf.user.articles"><![CDATA[Articles]]></item>
 		<item name="wcf.user.status.banned"><![CDATA[The user has been banned.]]></item>
 		<item name="wcf.user.status.isDisabled"><![CDATA[The user has not been approved yet.]]></item>
@@ -4877,7 +4869,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.groupIDs.description"><![CDATA[User is a member of the selected user group(s).]]></item>
 		<item name="wcf.user.condition.languages"><![CDATA[Language(s)]]></item>
 		<item name="wcf.user.condition.lastActivityTime"><![CDATA[Last Activity]]></item>
-		<item name="wcf.user.condition.likesReceived"><![CDATA[Positive Reactions]]></item>
+		<item name="wcf.user.condition.likesReceived"><![CDATA[Reactions Received]]></item>
 		<item name="wcf.user.condition.mobileBrowser"><![CDATA[Mobile Device or Desktop]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser"><![CDATA[Uses mobile device]]></item>
 		<item name="wcf.user.condition.mobileBrowser.usesMobileBrowser.error.conflict"><![CDATA[You cannot simultaneously select “Uses mobile device” and “Uses desktop”.]]></item>
@@ -4900,10 +4892,6 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.notUserTrophyIDs.description"><![CDATA[User has not received the selected trophies.]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs.error.userTrophyIntersection"><![CDATA[The selected trophies in “User has Trophy” and “User does not have Trophy” are conflicting.]]></item>
 		<item name="wcf.user.condition.trophyPoints"><![CDATA[Trophies]]></item>
-		<item name="wcf.user.condition.positiveReactionsReceived"><![CDATA[Positive Reactions]]></item>
-		<item name="wcf.user.condition.negativeReactionsReceived"><![CDATA[Negative Reactions]]></item>
-		<item name="wcf.user.condition.neutralReactionsReceived"><![CDATA[Neutral Reactions]]></item>
-		<item name="wcf.user.condition.userReputation"><![CDATA[Reputation from Reactions]]></item>
 	</category>
 	<category name="wcf.user.coverPhoto">
 		<item name="wcf.user.coverPhoto"><![CDATA[Cover Photo]]></item>

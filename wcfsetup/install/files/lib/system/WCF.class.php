@@ -356,9 +356,14 @@ class WCF {
 	 * Loads the options file, automatically created if not exists.
 	 */
 	protected function loadOptions() {
-		// the attachment module is always enabled since 5.2
+		// The attachment module is always enabled since 5.2.
 		// https://github.com/WoltLab/WCF/issues/2531
 		define('MODULE_ATTACHMENT', 1);
+		
+		// Users cannot react to their own content since 5.2.
+		// https://github.com/WoltLab/WCF/issues/2975
+		define('LIKE_ALLOW_FOR_OWN_CONTENT', 0);
+		define('LIKE_ENABLE_DISLIKE', 0);
 		
 		$filename = WCF_DIR.'options.inc.php';
 		

@@ -36,10 +36,7 @@ class AbstractLikeImporter extends AbstractImporter {
 		
 		if (!isset($data['reactionTypeID'])) {
 			if ($data['likeValue'] == 1) {
-				$data['reactionTypeID'] = ReactionHandler::getInstance()->getLegacyReactionTypeID(ReactionType::REACTION_TYPE_POSITIVE);
-			}
-			else {
-				$data['reactionTypeID'] = ReactionHandler::getInstance()->getLegacyReactionTypeID(ReactionType::REACTION_TYPE_NEGATIVE);
+				$data['reactionTypeID'] = ReactionHandler::getInstance()->getFirstReactionTypeID();
 			}
 		}
 		else {

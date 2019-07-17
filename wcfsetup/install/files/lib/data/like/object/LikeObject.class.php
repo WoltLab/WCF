@@ -4,7 +4,6 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\User;
 use wcf\data\DatabaseObject;
-use wcf\system\reaction\ReactionHandler;
 use wcf\system\WCF;
 use wcf\util\JSON;
 
@@ -21,9 +20,8 @@ use wcf\util\JSON;
  * @property-read	integer		$objectID		id of the liked object
  * @property-read	integer|null	$objectUserID		id of the user who created the liked object or null if user has been deleted or object was created by guest
  * @property-read	integer		$likes			number of likes of the liked object
- * @property-read	integer		$dislikes		number of dislikes of the liked object
- * @property-read	integer		$neutralReactions	number of neutral reactions on the liked object
- * @property-read	integer		$cumulativeLikes	cumulative result of likes (counting +1) and dislikes (counting -1)
+ * @property-read	integer		$dislikes		legacy column, not used anymore
+ * @property-read	integer		$cumulativeLikes	number of likes of the liked object
  * @property-read	string		$cachedUsers		serialized array with the ids and names of the three users who liked (+1) the object last
  * @property-read	string		$cachedReactions	serialized array with the reactionTypeIDs and the count of the reactions
  */
@@ -149,30 +147,6 @@ class LikeObject extends DatabaseObject {
 	 */
 	public function getReactions() {
 		return $this->reactions; 
-	}
-	
-	/**
-	 * Returns the reputation of the current like object. Returns null, if
-	 * there are no reactions on the object. 
-	 * 
-	 * @return      integer|null
-	 * @since	5.2
-	 */
-	public function getReputation() {
-		if ($this->reputation === null && !empty($this->getReactions())) {
-			$this->reputation = 0;
-			foreach ($this->getReactions() as $reactionTypeID => $data) {
-				$reactionType = ReactionHandler::getInstance()->getReactionTypeByID($reactionTypeID);
-				if ($reactionType->isPositive()) {
-					$this->reputation += $data['reactionCount'];
-				}
-				else if ($reactionType->isNegative()) {
-					$this->reputation -= $data['reactionCount'];
-				}
-			}
-		}
-		
-		return $this->reputation;
 	}
 	
 	/**
