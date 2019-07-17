@@ -1,6 +1,8 @@
 <?php
+use wcf\data\language\item\LanguageItemEditor;
 use wcf\data\like\Like;
 use wcf\data\option\OptionEditor;
+use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 
 // !!!!!!!!!
@@ -23,30 +25,71 @@ OptionEditor::import([
 try {
 	WCF::getDB()->beginTransaction();
 	
-	$reactionTypes = <<<DATA
-('wcf.reactionType.title1', 1, 'like.svg'), 
-('wcf.reactionType.title2', 2, 'haha.svg'), 
-('wcf.reactionType.title3', 3, 'sad.svg'),
-('wcf.reactionType.title4', 4, 'confused.svg'),
-('wcf.reactionType.title5', 5, 'thanks.svg'),
-DATA;
+	$reactions = ['like', 'thanks', 'haha', 'confused', 'sad'];
+	if (LIKE_ENABLE_DISLIKE) {
+		$reactions[] = 'thumbsDown';
+		
+		$sql = "SELECT  languageCategoryID
+			FROM    wcf".WCF_N."_language_category
+			WHERE   languageCategory = ?";
+		$statement = WCF::getDB()->prepareStatement($sql, 1);
+		$statement->execute(['wcf.reactionType']);
+		$languageCategoryID = $statement->fetchSingleColumn();
+		
+		// Create a custom phrase for this reaction, it needs to be "manually" added
+		// because it would otherwise conflict with the next reaction created by the
+		// user, *if* there are no dislikes.
+		foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+			LanguageItemEditor::create([
+				'languageID' => $language->languageID,
+				'languageItem' => 'wcf.reactionType.title6',
+				'languageItemValue' => ($language->getFixedLanguageCode() === 'de' ? 'Gefällt mir nicht' : 'Dislike'),
+				'languageCategoryID' => $languageCategoryID,
+				'packageID' => 1,
+			]);
+		}
+	}
 	
-	// add reaction columns 
-	$statement = WCF::getDB()->prepareStatement('INSERT INTO wcf'.WCF_N.'_reaction_type (title, showOrder, iconFile) VALUES '. $reactionTypes);
-	$statement->execute();
-	
-	// update current likes 
-	$sql = "UPDATE wcf".WCF_N."_like SET reactionTypeID = ? WHERE likeValue = ?";
+	$sql = "INSERT INTO     wcf".WCF_N."_reaction_type
+				(reactionTypeID, title, showOrder, iconFile)
+		VALUES          (?, ?, ?, ?)";
 	$statement = WCF::getDB()->prepareStatement($sql);
-	$statement->execute([
-		Like::LIKE,
-		1
-	]);
+	for ($i = 0, $length = count($reactions); $i < $length; $i++) {
+		$reactionTypeID = $i + 1;
+		
+		$statement->execute([
+			$reactionTypeID,
+			"wcf.reactionType.title{$reactionTypeID}",
+			$reactionTypeID,
+			"{$reactions[$i]}.svg",
+		]);
+	}
+	
+	// Update the existing (dis)likes.
+	$likeValues = [Like::LIKE => 1];
+	if (LIKE_ENABLE_DISLIKE) $likeValues[Like::DISLIKE] = 6;
+	
+	$sql = "UPDATE  wcf".WCF_N."_like
+		SET     reactionTypeID = ?
+		WHERE   likeValue = ?";
+	$statement = WCF::getDB()->prepareStatement($sql);
+	foreach ($likeValues as $likeValue => $reactionTypeID) {
+		$statement->execute([
+			$reactionTypeID,
+			$likeValue,
+		]);
+	}
 	
 	// Delete outdated or unsupported likes.
 	WCF::getDB()->prepareStatement("DELETE FROM wcf".WCF_N."_like WHERE reactionTypeID = 0")->execute();
 	
-	// add foreign key  
+	// Adjust the like objects by moving all dislikes into regular likes/cumulativeLikes.
+	$sql = "UPDATE  wcf".WCF_N."_like_object
+		SET     likes = likes + dislikes,
+			cumulativeLikes = likes,
+			dislikes = 0";
+	WCF::getDB()->prepareStatement($sql)->execute();
+	
 	$statement = WCF::getDB()->prepareStatement('ALTER TABLE wcf'.WCF_N.'_like ADD FOREIGN KEY (reactionTypeID) REFERENCES wcf1_reaction_type (reactionTypeID) ON DELETE CASCADE');
 	$statement->execute();
 	

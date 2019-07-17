@@ -2422,8 +2422,8 @@ INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optio
 INSERT INTO wcf1_contact_recipient (recipientID, name, email, isAdministrator, originIsSystem) VALUES (1, 'wcf.contact.recipient.name1', '', 1, 1);
 
 -- default reaction type
-INSERT INTO wcf1_reaction_type (title, showOrder, iconFile) VALUES ('wcf.reactionType.title1', 1, 'like.svg');
-INSERT INTO wcf1_reaction_type (title, showOrder, iconFile) VALUES ('wcf.reactionType.title2', 2, 'haha.svg');
-INSERT INTO wcf1_reaction_type (title, showOrder, iconFile) VALUES ('wcf.reactionType.title3', 3, 'sad.svg');
-INSERT INTO wcf1_reaction_type (title, showOrder, iconFile) VALUES ('wcf.reactionType.title4', 4, 'confused.svg');
-INSERT INTO wcf1_reaction_type (title, showOrder, iconFile) VALUES ('wcf.reactionType.title5', 5, 'thanks.svg');
+INSERT INTO wcf1_reaction_type (reactionTypeID, title, showOrder, iconFile) VALUES (1, 'wcf.reactionType.title1', 1, 'like.svg');
+INSERT INTO wcf1_reaction_type (reactionTypeID, title, showOrder, iconFile) VALUES (2, 'wcf.reactionType.title5', 2, 'thanks.svg');
+INSERT INTO wcf1_reaction_type (reactionTypeID, title, showOrder, iconFile) VALUES (3, 'wcf.reactionType.title2', 3, 'haha.svg');
+INSERT INTO wcf1_reaction_type (reactionTypeID, title, showOrder, iconFile) VALUES (4, 'wcf.reactionType.title4', 4, 'confused.svg');
+INSERT INTO wcf1_reaction_type (reactionTypeID, title, showOrder, iconFile) VALUES (5, 'wcf.reactionType.title3', 5, 'sad.svg');
