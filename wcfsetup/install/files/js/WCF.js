@@ -5976,8 +5976,10 @@ if (COMPILER_TARGET_DEFAULT) {
 				this._fileUpload.change($.proxy(this._upload, this));
 				var $button = $('<p class="button uploadButton"><span>' + WCF.Language.get('wcf.global.button.upload') + '</span></p>');
 				elAttr($button[0], 'role', 'button');
-				elAttr($button[0], 'tabindex', '0');
 				$button.prepend(this._fileUpload);
+				
+				this._fileUpload[0].addEventListener('focus', function() { $button[0].classList.add('active'); });
+				this._fileUpload[0].addEventListener('blur', function() { $button[0].classList.remove('active'); });
 			}
 			else {
 				var $button = $('<p class="button uploadFallbackButton"><span>' + WCF.Language.get('wcf.global.button.upload') + '</span></p>');
