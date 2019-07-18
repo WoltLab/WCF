@@ -48,7 +48,7 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-define('WCF_VERSION', '5.2.0 Alpha 1');
+define('WCF_VERSION', '5.2.0 Alpha 2');
 
 // define current API version
 define('WSC_API_VERSION', 2019);
