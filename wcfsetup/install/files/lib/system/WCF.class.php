@@ -389,6 +389,10 @@ class WCF {
 				
 				require($filename);
 			}
+			
+			if (ENABLE_DEBUG_MODE) {
+				self::$dbObj->enableDebugMode();
+			}
 		}
 	}
 	

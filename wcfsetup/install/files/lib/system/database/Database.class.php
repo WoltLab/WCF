@@ -124,12 +124,12 @@ abstract class Database {
 		$this->tryToCreateDatabase = $tryToCreateDatabase;
 		$this->defaultDriverOptions = $defaultDriverOptions;
 		
-		if (defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE) {
-			$this->preparedStatementClassName = DebugPreparedStatement::class;
-		}
-		
 		// connect database
 		$this->connect();
+	}
+	
+	public function enableDebugMode() {
+		$this->preparedStatementClassName = DebugPreparedStatement::class;
 	}
 	
 	/**
