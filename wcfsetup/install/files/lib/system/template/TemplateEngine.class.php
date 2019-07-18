@@ -81,6 +81,19 @@ class TemplateEngine extends SingletonFactory {
 	protected $v = [];
 	
 	/**
+	 * sandboxed values of currently active foreach loops' `item` and `key` variables
+	 * 
+	 * for each currently active `foreach` loop, an array is added:
+	 *	$foreachHash => [
+	 *		(optional) 'item' => sandboxed value of an existing variable with the same name,
+	 * 		(optional) 'key' => (optional) sandboxed value of an existing variable with the same name
+	 * 	]
+	 * 
+	 * @var	mixed[][][]
+	 */
+	protected $foreachVars = [];
+	
+	/**
 	 * all cached variables for usage after execution in sandbox
 	 * @var	mixed[][]
 	 */
