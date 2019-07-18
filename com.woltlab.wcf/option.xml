@@ -718,7 +718,7 @@ private:wcf.acp.option.exception_privacy.private</selectoptions>
 90percentile:wcf.acp.option.blacklist_sfs_enable.90percentile
 moreThanOnce:wcf.acp.option.blacklist_sfs_enable.moreThanOnce
 simpleMatch:wcf.acp.option.blacklist_sfs_enable.simpleMatch]]></selectoptions>
-				<defaultvalue>90percentile</defaultvalue>
+				<defaultvalue>skip</defaultvalue>
 			</option>
 			<option name="blacklist_sfs_email_address">
 				<categoryname>security.blacklist.sfs</categoryname>

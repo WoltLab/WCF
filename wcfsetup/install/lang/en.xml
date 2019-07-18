@@ -1725,7 +1725,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.option.blacklist_sfs_enable.moreThanOnce"><![CDATA[Multiple reports]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_enable.simpleMatch"><![CDATA[Any match is sufficient]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_username"><![CDATA[Username]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_username.description"><![CDATA[Usernames are the least reliable criteria. Recommended setting: <strong>Top 10%</strong>.]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_username.description"><![CDATA[Usernames are the <strong>least reliable criteria</strong>. Recommended setting: <strong>Do not check</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_email_address"><![CDATA[Email Address]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_email_address.description"><![CDATA[Email addresses are unique and yield the best results. Recommended setting: <strong>Multiple reports</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_ip_address"><![CDATA[IP Address]]></item>

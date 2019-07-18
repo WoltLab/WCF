@@ -1740,7 +1740,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.option.blacklist_sfs_enable.moreThanOnce"><![CDATA[Mehrfach gemeldet]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_enable.simpleMatch"><![CDATA[Einfacher Treffer reicht aus]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_username"><![CDATA[Benutzername]]></item>
-		<item name="wcf.acp.option.blacklist_sfs_username.description"><![CDATA[Erfahrungsgemäß ein sehr unzuverlässiges Kriterium zur Erkennung. Empfohlene Einstellung: <strong>Top 10%</strong>.]]></item>
+		<item name="wcf.acp.option.blacklist_sfs_username.description"><![CDATA[Erfahrungsgemäß ein <strong>sehr unzuverlässiges Kriterium</strong> zur Erkennung. Empfohlene Einstellung: <strong>Nicht überprüfen</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_email_address"><![CDATA[E-Mail-Adresse]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_email_address.description"><![CDATA[E-Mail-Adressen sind einzigartig und stellen eine solide Basis dar. Empfohlene Einstellung: <strong>Mehrfach gemeldet</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_ip_address"><![CDATA[IP-Adresse]]></item>
