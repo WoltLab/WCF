@@ -73,6 +73,26 @@ class Like extends DatabaseObject {
 	}
 	
 	/**
+	 * Returns true, if like value is a like.
+	 *
+	 * @return	boolean
+	 * @deprecated	5.2
+	 */
+	public function isLike() {
+		return true;
+	}
+	
+	/**
+	 * Returns true, if like value is a dislike.
+	 *
+	 * @return	boolean
+	 * @deprecated	5.2
+	 */
+	public function isDislike() {
+		return false;
+	}
+	
+	/**
 	 * Returns the reaction for these like. 
 	 * 
 	 * @return	ReactionType
