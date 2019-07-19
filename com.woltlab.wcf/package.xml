@@ -53,7 +53,7 @@
 	<instructions type="update" fromversion="5.2.0 Alpha 1">
 		<!-- Import the new options first -->
 		<instruction type="option" />
-		<instruction type="file">files_reloadOptions.tar</instruction>
+		<instruction type="file" run="standalone">files_reloadOptions.tar</instruction>
 		<instruction type="script" run="standalone">acp/update-com.woltlab.wcf_5.2_reloadOptions.php</instruction>
 		
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
