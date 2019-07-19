@@ -106,6 +106,7 @@ class LikeRebuildDataWorker extends AbstractRebuildDataWorker {
 					$objectID,
 					$data['objectUserID'],
 					$data['likes'],
+					0,
 					$data['cumulativeLikes'], 
 					serialize($data['cachedReactions'])
 				]);
