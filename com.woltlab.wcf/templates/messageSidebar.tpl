@@ -81,9 +81,9 @@
 				<div class="userCredits">
 					<dl class="plain dataList">
 						{content}
-							{if MODULE_LIKE && MESSAGE_SIDEBAR_ENABLE_LIKES_RECEIVED && !$isReply}
+							{if MODULE_LIKE && MESSAGE_SIDEBAR_ENABLE_LIKES_RECEIVED && !$isReply && $userProfile->likesReceived}
 								<dt><a href="{link controller='User' object=$userProfile}{/link}#likes" class="jsTooltip" title="{lang user=$userProfile}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.likesReceived{/lang}</a></dt>
-								<dd>{#$userProfile->cumulativeLikes}</dd>
+								<dd>{#$userProfile->likesReceived}</dd>
 							{/if}
 							
 							{if MESSAGE_SIDEBAR_ENABLE_ACTIVITY_POINTS && $userProfile->activityPoints}
