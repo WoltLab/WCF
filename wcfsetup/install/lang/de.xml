@@ -4304,10 +4304,10 @@ Dateianhänge:
 	</category>
 	<category name="wcf.reactionType">
 		<item name="wcf.reactionType.title1"><![CDATA[Gefällt mir!]]></item>
-		<item name="wcf.reactionType.title2"><![CDATA[Haha]]></item>
-		<item name="wcf.reactionType.title3"><![CDATA[Traurig]]></item>
+		<item name="wcf.reactionType.title2"><![CDATA[Danke!]]></item>
+		<item name="wcf.reactionType.title3"><![CDATA[Haha]]></item>
 		<item name="wcf.reactionType.title4"><![CDATA[Verwirrend]]></item>
-		<item name="wcf.reactionType.title5"><![CDATA[Danke!]]></item>
+		<item name="wcf.reactionType.title5"><![CDATA[Traurig]]></item>
 	</category>
 	<category name="wcf.recaptcha">
 		<item name="wcf.recaptcha.title"><![CDATA[Sicherheitsabfrage („reCAPTCHA“)]]></item>

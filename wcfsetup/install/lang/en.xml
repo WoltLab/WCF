@@ -4306,10 +4306,10 @@ Attachments:
 	</category>
 	<category name="wcf.reactionType">
 		<item name="wcf.reactionType.title1"><![CDATA[Like]]></item>
-		<item name="wcf.reactionType.title2"><![CDATA[Haha]]></item>
-		<item name="wcf.reactionType.title3"><![CDATA[Sad]]></item>
+		<item name="wcf.reactionType.title2"><![CDATA[Thanks!]]></item>
+		<item name="wcf.reactionType.title3"><![CDATA[Haha]]></item>
 		<item name="wcf.reactionType.title4"><![CDATA[Confused]]></item>
-		<item name="wcf.reactionType.title5"><![CDATA[Thanks!]]></item>
+		<item name="wcf.reactionType.title5"><![CDATA[Sad]]></item>
 	</category>
 	<category name="wcf.recaptcha">
 		<item name="wcf.recaptcha.title"><![CDATA[Verification (“reCAPTCHA”)]]></item>
