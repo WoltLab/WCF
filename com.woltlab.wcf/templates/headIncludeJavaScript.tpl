@@ -161,6 +161,7 @@ requirejs.config({
 {js application='wcf' lib='jquery-ui' hasTiny=true}
 {js application='wcf' lib='jquery-ui' file='touchPunch' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' lib='jquery-ui' file='nestedSortable' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' lib='polyfill' file='focus-visible' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF.Assets' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF' bundle='WCF.Combined' hasTiny=true}
 
