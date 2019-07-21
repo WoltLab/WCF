@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
 /**
@@ -100,14 +101,22 @@ abstract class DatabaseObjectEditor extends DatabaseObjectDecorator implements I
 	 * @inheritDoc
 	 */
 	public static function deleteAll(array $objectIDs = []) {
-		$sql = "DELETE FROM	".static::getDatabaseTableName()."
-			WHERE		".static::getDatabaseTableIndexName()." = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		
 		$affectedCount = 0;
+		
+		$itemsPerLoop = 1000;
+		$loopCount = ceil(count($objectIDs) / $itemsPerLoop);
+		
 		WCF::getDB()->beginTransaction();
-		foreach ($objectIDs as $objectID) {
-			$statement->execute([$objectID]);
+		for ($i = 0; $i < $loopCount; $i++) {
+			$batchObjectIDs = array_slice($objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
+			
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add(static::getDatabaseTableIndexName() . ' IN (?)', [$batchObjectIDs]);
+			
+			$sql = "DELETE FROM	" . static::getDatabaseTableName() . "
+				" . $conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
 			$affectedCount += $statement->getAffectedRows();
 		}
 		WCF::getDB()->commitTransaction();

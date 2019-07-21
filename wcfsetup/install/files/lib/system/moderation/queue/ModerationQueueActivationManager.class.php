@@ -67,6 +67,34 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager {
 	}
 	
 	/**
+	 * Adds multiple entries for moderated content at once.
+	 * 
+	 * In contrast to `addModeratedContent()`, this method expects the container ids to be
+	 * passed as a parameter. If no container id is given for a specific object id, `0` is
+	 * used as container id.
+	 * 
+	 * This method is intended for bulk processing.
+	 * 
+	 * @param	string		$objectType
+	 * @param	integer[]	$objectID
+	 * @poram	integer[]	$containerIDs		format: `objectID => containerID`
+	 * @param	array		$additionalData
+	 * @throws	InvalidObjectTypeException
+	 */
+	public function addModeratedContents($objectType, array $objectIDs, array $containerIDs, array $additionalData = []) {
+		if (!$this->isValid($objectType)) {
+			throw new InvalidObjectTypeException($objectType, 'com.woltlab.wcf.moderation.activation');
+		}
+		
+		$this->addEntries(
+			$this->getObjectTypeID($objectType),
+			$objectIDs,
+			$containerIDs,
+			$additionalData
+		);
+	} 
+	
+	/**
 	 * Marks entries from moderation queue as done.
 	 * 
 	 * @param	string		$objectType
