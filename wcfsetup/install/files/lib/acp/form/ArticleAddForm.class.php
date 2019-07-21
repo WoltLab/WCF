@@ -3,6 +3,8 @@ namespace wcf\acp\form;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\Article;
 use wcf\data\article\ArticleAction;
+use wcf\data\article\category\ArticleCategoryNode;
+use wcf\data\category\CategoryNode;
 use wcf\data\category\CategoryNodeTree;
 use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\language\Language;
@@ -408,7 +410,7 @@ class ArticleAddForm extends AbstractForm {
 					'content' => !empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : '',
 					'htmlInputProcessor' => isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null,
 					'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null,
-					'teaserImageID' => !empty($this->teaserImageID[$language->languageID]) ? $this->teaserImageID[$language->languageID] : null
+					'teaserImageID' => !empty($this->teaserImageID[$language->languageID]) ? $this->teaserImageID[$language->languageID] : null,
 				];
 			}
 		}
@@ -420,7 +422,7 @@ class ArticleAddForm extends AbstractForm {
 				'content' => !empty($this->content[0]) ? $this->content[0] : '',
 				'htmlInputProcessor' => isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null,
 				'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null,
-				'teaserImageID' => !empty($this->teaserImageID[0]) ? $this->teaserImageID[0] : null
+				'teaserImageID' => !empty($this->teaserImageID[0]) ? $this->teaserImageID[0] : null,
 			];
 		}
 		
@@ -433,7 +435,7 @@ class ArticleAddForm extends AbstractForm {
 			'userID' => $this->author->userID,
 			'username' => $this->author->username,
 			'isMultilingual' => $this->isMultilingual,
-			'hasLabels' => empty($this->labelIDs) ? 0 : 1
+			'hasLabels' => empty($this->labelIDs) ? 0 : 1,
 		];
 		
 		$this->objectAction = new ArticleAction([], 'create', ['data' => array_merge($this->additionalFields, $data), 'content' => $content]);
@@ -493,6 +495,12 @@ class ArticleAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
+		$accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
+		$categoryNodeList = (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator();
+		$categoryNodes = array_filter(iterator_to_array($categoryNodeList), function(CategoryNode $categoryNode) use (&$accessibleCategoryIDs) {
+			return in_array($categoryNode->categoryID, $accessibleCategoryIDs);
+		});
+		
 		WCF::getTPL()->assign([
 			'action' => 'add',
 			'isMultilingual' => $this->isMultilingual,
@@ -511,10 +519,10 @@ class ArticleAddForm extends AbstractForm {
 			'teaser' => $this->teaser,
 			'content' => $this->content,
 			'availableLanguages' => $this->availableLanguages,
-			'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
+			'categoryNodeList' => $categoryNodes,
 			'labelIDs' => $this->labelIDs,
 			'labelGroups' => $this->labelGroups,
-			'labelGroupsToCategories' => $this->labelGroupsToCategories
+			'labelGroupsToCategories' => $this->labelGroupsToCategories,
 		]);
 	}
 }
