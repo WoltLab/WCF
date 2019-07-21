@@ -31,6 +31,10 @@
 	<p class="info">{lang}wcf.acp.user.usersAwaitingApprovalInfo{/lang}</p>
 {/if}
 
+{if $missingLanguageItemsMTime}
+	<p class="warning">{lang}wcf.acp.index.missingLanguageItems{/lang}</p>
+{/if}
+
 {event name='userNotice'}
 
 {*if ENABLE_PLUGINSTORE_WIDGET}

@@ -113,13 +113,19 @@ class IndexPage extends AbstractPage {
 			}
 		}
 		
+		$missingLanguageItemsMTime = 0;
+		if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS && file_exists(WCF_DIR . 'log/missingLanguageItems.txt')) {
+			$missingLanguageItemsMTime = filemtime(WCF_DIR . 'log/missingLanguageItems.txt');
+		}
+		
 		WCF::getTPL()->assign([
 			'recaptchaWithoutKey' => $recaptchaWithoutKey,
 			'recaptchaKeyLink' => $recaptchaKeyLink,
 			'server' => $this->server,
 			'usersAwaitingApproval' => $usersAwaitingApproval,
 			'evaluationExpired' => $evaluationExpired,
-			'evaluationPending' => $evaluationPending
+			'evaluationPending' => $evaluationPending,
+			'missingLanguageItemsMTime' => $missingLanguageItemsMTime
 		]);
 	}
 	
