@@ -170,17 +170,18 @@ define(
 			/**
 			 * Shows the reaction overly for a specific object. 
 			 *
-			 * @param       {int}        objectId
+			 * @param {int} objectId
+			 * @param {Event} event
 			 */
-			_showReactionOverlay: function(objectId) {
+			_showReactionOverlay: function(objectId, event) {
+				event.preventDefault();
+				
 				this._currentObjectId = objectId;
 				this._showOverlay();
 			},
 			
 			/**
-			 * Shows a specific page of the current opened reaction overlay. 
-			 *
-			 * @param       {int}        pageNo
+			 * Shows a specific page of the current opened reaction overlay.
 			 */
 			_showOverlay: function() {
 				this._options.parameters.data.containerID = this._objectType + '-' + this._currentObjectId;
