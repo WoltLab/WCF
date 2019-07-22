@@ -43,8 +43,13 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util', 'Ui/Si
 			
 			this._options = Core.extend({
 				callbackPrepareItem: undefined,
-				enableVisibilityFilter: true
+				enableVisibilityFilter: true,
+				filterPosition: 'bottom'
 			}, options);
+			
+			if (this._options.filterPosition !== 'top') {
+				this._options.filterPosition = 'bottom';
+			}
 			
 			var element = elById(elementId);
 			if (element === null) {
@@ -100,7 +105,12 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util', 'Ui/Si
 				inputAddon.appendChild(visibilityButton);
 			}
 			
-			container.appendChild(inputAddon);
+			if (this._options.filterPosition === 'bottom') {
+				container.appendChild(inputAddon);
+			}
+			else {
+				container.insertBefore(inputAddon, element);
+			}
 			
 			this._container = container;
 			this._dropdown = null;
