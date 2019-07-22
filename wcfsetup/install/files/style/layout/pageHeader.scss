@@ -428,14 +428,15 @@
 		}
 	}
 	
-	.pageHeaderSearchInputButton {
+	/* Increases the specificity to overrule the CSS for <button>. */
+	.pageHeaderSearchInputButton.pageHeaderSearchInputButton {
 		background-color: $wcfHeaderMenuLinkBackground;
 		border-radius: 0 0 2px 0;
 		color: $wcfHeaderMenuLink;
 		padding: 4px 9px;
 		
 		&:hover {
-			background: $wcfHeaderMenuLinkBackgroundActive;
+			background-color: $wcfHeaderMenuLinkBackgroundActive;
 			color: $wcfHeaderMenuLinkActive;
 		}
 	}
