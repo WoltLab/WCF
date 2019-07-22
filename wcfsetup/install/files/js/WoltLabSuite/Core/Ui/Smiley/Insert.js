@@ -12,6 +12,7 @@ define(['EventHandler', 'EventKey'], function (EventHandler, EventKey) {
 	function UiSmileyInsert(editorId) { this.init(editorId); }
 	
 	UiSmileyInsert.prototype = {
+		_container: null,
 		_editorId: '',
 		
 		/**
@@ -20,17 +21,17 @@ define(['EventHandler', 'EventKey'], function (EventHandler, EventKey) {
 		init: function (editorId) {
 			this._editorId = editorId;
 			
-			var container = elById('smilies-' + this._editorId);
-			if (!container) {
+			this._container = elById('smilies-' + this._editorId);
+			if (!this._container) {
 				// form builder
-				container = elById(this._editorId + 'SmiliesTabContainer');
-				if (!container) {
+				this._container = elById(this._editorId + 'SmiliesTabContainer');
+				if (!this._container) {
 					throw new Error('Unable to find the message tab menu container containing the smilies.');
 				}
 			}
 			
-			container.addEventListener('keydown', this._keydown.bind(this));
-			container.addEventListener('mousedown', this._mousedown.bind(this));
+			this._container.addEventListener('keydown', this._keydown.bind(this));
+			this._container.addEventListener('mousedown', this._mousedown.bind(this));
 		},
 		
 		/**
@@ -79,6 +80,10 @@ define(['EventHandler', 'EventKey'], function (EventHandler, EventKey) {
 		 * @protected
 		 */
 		_mousedown: function (event) {
+			if (!this._container.contains(event.target)) {
+				return;
+			}
+			
 			event.preventDefault();
 			
 			// Clicks may occur on a few different elements, but we are only looking for the image.
