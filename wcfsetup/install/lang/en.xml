@@ -3030,7 +3030,7 @@ Email: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.map.route.travelMode.driving"><![CDATA[Driving]]></item>
 		<item name="wcf.map.route.travelMode.transit"><![CDATA[Transit]]></item>
 		<item name="wcf.map.route.travelMode.walking"><![CDATA[Walking]]></item>
-		<item name="wcf.map.route.viewOnGoogleMaps"><![CDATA[View on Google Maps directly]]></item>
+		<item name="wcf.map.route.viewOnGoogleMaps"><![CDATA[View on Google Maps]]></item>
 		<item name="wcf.map.showLocationSuggestions"><![CDATA[Suggest Locations]]></item>
 		<item name="wcf.map.useLocationSuggestion"><![CDATA[Use Location]]></item>
 	</category>

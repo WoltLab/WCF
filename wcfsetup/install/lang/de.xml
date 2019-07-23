@@ -3081,7 +3081,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 		<item name="wcf.map.route.travelMode.driving"><![CDATA[Auto]]></item>
 		<item name="wcf.map.route.travelMode.transit"><![CDATA[Öffentliche Verkehrsmittel]]></item>
 		<item name="wcf.map.route.travelMode.walking"><![CDATA[Zu Fuß]]></item>
-		<item name="wcf.map.route.viewOnGoogleMaps"><![CDATA[Direkt bei Google Maps anschauen]]></item>
+		<item name="wcf.map.route.viewOnGoogleMaps"><![CDATA[Bei Google Maps anschauen]]></item>
 		<item name="wcf.map.showLocationSuggestions"><![CDATA[Orte vorschlagen]]></item>
 		<item name="wcf.map.useLocationSuggestion"><![CDATA[Ort verwenden]]></item>
 	</category>
