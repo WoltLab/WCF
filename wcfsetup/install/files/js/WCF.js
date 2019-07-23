@@ -5978,7 +5978,11 @@ if (COMPILER_TARGET_DEFAULT) {
 				elAttr($button[0], 'role', 'button');
 				$button.prepend(this._fileUpload);
 				
-				this._fileUpload[0].addEventListener('focus', function() { $button[0].classList.add('active'); });
+				this._fileUpload[0].addEventListener('focus', function() {
+					if (this.classList.contains('focus-visible')) {
+						$button[0].classList.add('active');
+					}
+				});
 				this._fileUpload[0].addEventListener('blur', function() { $button[0].classList.remove('active'); });
 			}
 			else {
