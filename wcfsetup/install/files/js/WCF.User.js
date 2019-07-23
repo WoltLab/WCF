@@ -1824,7 +1824,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			// get preview container
 			var $preview = $('#previewContainer');
 			if (!$preview.length) {
-				$preview = $('<section class="section" id="previewContainer"><h2 class="sectionTitle">' + WCF.Language.get('wcf.global.preview') + '</h2><div class="htmlContent"></div></section>').insertBefore($('#signatureContainer')).wcfFadeIn();
+				$preview = $('<section class="section" id="previewContainer"><h2 class="sectionTitle">' + WCF.Language.get('wcf.global.preview') + '</h2><div class="htmlContent messageSignatureConstraints"></div></section>').insertBefore($('#signatureContainer')).wcfFadeIn();
 			}
 			
 			$preview.children('div').first().html(data.returnValues.message);

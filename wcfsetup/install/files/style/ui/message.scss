@@ -556,14 +556,13 @@
 	}
 }
 
-.messageSignature {
-	> div {
-		@extend .htmlContent;
-	}
-	
-	img {
-		max-height: #{$wcf_option_signature_max_image_height}px;
-	}
+.messageSignature > div {
+	@extend .htmlContent;
+}
+
+.messageSignature img,
+.messageSignatureConstraints img {
+	max-height: #{$wcf_option_signature_max_image_height}px;
 }
 
 @include screen-sm-down {
