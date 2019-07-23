@@ -25,6 +25,14 @@ class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStra
 				$uploadFile->setValidationErrorType('tooSmall');
 				return false;
 			}
+			else if ($imageData[2] === IMAGETYPE_WEBP) {
+				// Reject WebP images regardless of any file extension restriction, they are
+				// neither supported in Safari nor in Internet Explorer 11. We can safely lift
+				// this restriction once Apple implements the support or if any sort of fall-
+				// back mechanism is implemented: https://github.com/WoltLab/WCF/issues/2838
+				$uploadFile->setValidationErrorType('invalidExtension');
+				return false;
+			}
 		}
 		catch (SystemException $e) {
 			if (ENABLE_DEBUG_MODE) {
