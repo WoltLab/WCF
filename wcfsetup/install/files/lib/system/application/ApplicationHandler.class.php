@@ -6,9 +6,11 @@ use wcf\data\application\ApplicationList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
+use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**
@@ -118,10 +120,18 @@ class ApplicationHandler extends SingletonFactory {
 			return new Application(null, [
 				'domainName' => $host,
 				'domainPath' => $path,
-				'cookieDomain' => $host
+				'cookieDomain' => $host,
 			]);
 		}
-		else if (isset($this->cache['application'][PACKAGE_ID])) {
+		
+		$request = RequestHandler::getInstance()->getActiveRequest();
+		if ($request !== null) {
+			$abbreviation = substr($request->getClassName(), 0, mb_strpos($request->getClassName(), '\\'));
+			
+			return $this->getApplication($abbreviation);
+		}
+		
+		if (isset($this->cache['application'][PACKAGE_ID])) {
 			return $this->cache['application'][PACKAGE_ID];
 		}
 		
@@ -228,6 +238,23 @@ class ApplicationHandler extends SingletonFactory {
 		}
 		
 		return $this->isMultiDomain;
+	}
+	
+	/**
+	 * @since 5.2
+	 */
+	public function rebuildActiveApplication() {
+		/** @var AbstractApplication $application */
+		foreach ($this->cache['application'] as $application) {
+			if ($application->getPackage()->package === 'com.woltlab.wcf') {
+				continue;
+			}
+			
+			$appObject = WCF::getApplicationObject($application);
+			if ($appObject instanceof AbstractApplication) {
+				$appObject->rebuildActiveApplication();
+			}
+		}
 	}
 	
 	/**
