@@ -2614,10 +2614,10 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[Diese Benutzer ist nicht berechtigt die Konfiguration zu verändern.]]></item>
 	</category>
 	<category name="wcf.acp.rewrite">
-		<item name="wcf.acp.rewrite"><![CDATA[Rewrite-Regeln (Apache)]]></item>
+		<item name="wcf.acp.rewrite"><![CDATA[Rewrite-Regeln]]></item>
+		<item name="wcf.acp.rewrite.apache"><![CDATA[Apache (.htaccess)]]></item>
 		<item name="wcf.acp.rewrite.generate"><![CDATA[Rewrite-Regeln generieren]]></item>
 		<item name="wcf.acp.rewrite.description"><![CDATA[Generiert die Inhalte der benötigten .htaccess-Dateien und gibt sie aus. Beachte{if !LANGUAGE_USE_INFORMAL_VARIANT}n Sie{/if} bitte, dass die benötigten Regeln bei speziellen Server-Konfigurationen abweichen können.]]></item>
-		<item name="wcf.acp.rewrite.error.notApache"><![CDATA[Der Webserver konnte nicht als Apache identifiziert werden. Diese Funktion unterstützt ausschließlich Rewrite-Regeln für Apache.]]></item>
 	</category>
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.noResults"><![CDATA[Keine Treffer]]></item>

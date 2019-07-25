@@ -115,16 +115,8 @@ class OptionAction extends AbstractDatabaseObjectAction {
 		return ['validationResult' => $smtp->testConnection()];
 	}
 	
-	/**
-	 * Validates the "generateRewriteRules" action
-	 * @throws \wcf\system\exception\AJAXException
-	 */
 	public function validateGenerateRewriteRules() {
 		WCF::getSession()->checkPermissions(['admin.configuration.canEditOption']);
-		
-		if (!FileUtil::isApacheModule()) {
-			throw new AJAXException(WCF::getLanguage()->get('wcf.acp.rewrite.error.notApache'));
-		}
 	}
 	
 	/**
@@ -134,28 +126,22 @@ class OptionAction extends AbstractDatabaseObjectAction {
 	 * @return string
 	 */
 	public function generateRewriteRules() {
-		$output = '';
-		
-		foreach ($this->fetchRewriteRules() as $path => $content) {
-			$output .= <<<SNIPPET
-<span class="inlineCode">{$path}</span>
-<pre>{$content}</pre>
-<br>
-SNIPPET;
-
-		}
-		
-		return $output;
+		return WCF::getTPL()->fetch('__optionRewriteRulesOutput', 'wcf', [
+			'rewriteRules' => $this->fetchRewriteRules(),
+		]);
 	}
 	
 	/**
 	 * Returns an array with rewrite rules per necessary directory/file
 	 * Applications in sub-directories of another application will be mapped to the top one
 	 *
-	 * @return string[]
+	 * @return string[][]
 	 */
 	protected function fetchRewriteRules() {
-		$dirs = $rules = [];
+		$dirs = [];
+		$rules = [
+			'apache' => [],
+		];
 		foreach (ApplicationHandler::getInstance()->getApplications() as $app) {
 			$test = $app->getPackage()->getAbsolutePackageDir();
 			$insert = true;
@@ -187,13 +173,15 @@ SNIPPET;
 			krsort($domainPaths);
 			
 			foreach ($domainPaths as $domainPath => $value) {
-				$path = FileUtil::removeTrailingSlash(substr($value, strlen($dir)));
-				$snippet = <<<SNIPPET
+				$htaccess = "{$dir}.htaccess";
+				if (empty($rules['apache'][$htaccess])) {
+					$path = FileUtil::removeTrailingSlash(substr($value, strlen($dir)));
+					$rules['apache'][$htaccess] = <<<SNIPPET
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteRule ^/{$path}(.*)$ {$path}/index.php?$1 [L,QSA]
 SNIPPET;
-				$rules[$dir . '.htaccess'] = (!empty($rules[$dir . '.htaccess']) ? $rules[$dir . '.htaccess'] . "\n \n " : '') . $snippet;
+				}
 			}
 		}
 		
