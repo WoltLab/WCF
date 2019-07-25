@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\builder\data\processor;
+use wcf\data\IStorableObject;
 use wcf\system\form\builder\IFormDocument;
 
 /**
@@ -25,7 +26,7 @@ abstract class AbstractFormDataProcessor implements IFormDataProcessor {
 	/**
 	 * @inheritDoc
 	 */
-	public function processObjectData(IFormDocument $document, array $data, $objectId = null) {
+	public function processObjectData(IFormDocument $document, array $data, IStorableObject $object) {
 		return $data;
 	}
 }

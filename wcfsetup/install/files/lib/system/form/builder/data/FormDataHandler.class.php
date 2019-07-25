@@ -57,9 +57,8 @@ class FormDataHandler implements IFormDataHandler {
 	 */
 	public function getObjectData(IFormDocument $document, IStorableObject $object) {
 		$data = $object->getData();
-		$objectId = $object->{$object::getDatabaseTableIndexName()};
 		foreach ($this->processors as $processor) {
-			$data = $processor->processObjectData($document, $data, $objectId);
+			$data = $processor->processObjectData($document, $data, $object);
 			
 			if (!is_array($data)) {
 				if ($processor instanceof CustomFormDataProcessor) {

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\builder\data\processor;
+use wcf\data\IStorableObject;
 use wcf\system\form\builder\IFormDocument;
 
 /**
@@ -68,6 +69,7 @@ class CustomFormDataProcessor extends AbstractFormDataProcessor {
 					($parameterClass === null ? 'any' : "'" . $parameterClass->getName() . "'") . " parameter is expected."
 				);
 			}
+			
 			if (!$parameters[1]->isArray()) {
 				throw new \InvalidArgumentException("The form data processor function's second parameter must be an array.");
 			}
@@ -93,8 +95,14 @@ class CustomFormDataProcessor extends AbstractFormDataProcessor {
 					($parameterClass === null ? 'any' : "'" . $parameterClass->getName() . "'") . " parameter is expected."
 				);
 			}
+			
 			if (!$parameters[1]->isArray()) {
 				throw new \InvalidArgumentException("The object data processor function's second parameter must be an array.");
+			}
+			
+			$parameterClass = $parameters[2]->getClass();
+			if ($parameterClass === null || $parameterClass->getName() !== IStorableObject::class) {
+				throw new \InvalidArgumentException("The object data processor function's third parameter must be an instance of '" . IStorableObject::class . "', instead " . ($parameterClass === null ? 'any' : "'" . $parameterClass->getName() . "'") . " parameter is expected.");
 			}
 			
 			$this->objectDataProcessor = $objectDataProcessor;
@@ -130,12 +138,12 @@ class CustomFormDataProcessor extends AbstractFormDataProcessor {
 	/**
 	 * @inheritDoc
 	 */
-	public function processObjectData(IFormDocument $document, array $data, $objectId = null) {
+	public function processObjectData(IFormDocument $document, array $data, IStorableObject $object) {
 		if ($this->objectDataProcessor === null) {
-			return parent::processObjectData($document, $data, $objectId);
+			return parent::processObjectData($document, $data, $object);
 		}
 		
-		$data = call_user_func($this->objectDataProcessor, $document, $data, $objectId);
+		$data = call_user_func($this->objectDataProcessor, $document, $data, $object);
 		
 		if (!is_array($data)) {
 			throw new \UnexpectedValueException("Field data processor '{$this->id}' does not return an array.");

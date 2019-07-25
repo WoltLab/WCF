@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\builder\data\processor;
+use wcf\data\IStorableObject;
 use wcf\system\form\builder\IFormDocument;
 
 /**
@@ -30,8 +31,8 @@ interface IFormDataProcessor {
 	 *
 	 * @param	IFormDocument	$document	documents whose field values will be set using the processed data
 	 * @param	array		$data		data before processing
-	 * @param	null|integer	$objectId	id of the object the data belongs to
+	 * @param	IStorableObject $object		object the data belongs to
 	 * @return	array				data after processing
 	 */
-	public function processObjectData(IFormDocument $document, array $data, $objectId = null);
+	public function processObjectData(IFormDocument $document, array $data, IStorableObject $object);
 }
