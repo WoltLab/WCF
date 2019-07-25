@@ -155,6 +155,9 @@ class StyleEditForm extends StyleAddForm {
 			unset($this->variables['overrideScssCustom']);
 		}
 		
+		// Remove control characters that break the SCSS parser, see https://stackoverflow.com/a/23066553
+		$this->variables['individualScss'] = preg_replace('/[^\PC\s]/u', '', $this->variables['individualScss']);
+		
 		$this->objectAction = new StyleAction([$this->style], 'update', [
 			'data' => array_merge($this->additionalFields, [
 				'styleName' => $this->styleName,
