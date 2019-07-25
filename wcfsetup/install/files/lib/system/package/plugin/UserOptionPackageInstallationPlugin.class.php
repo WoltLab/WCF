@@ -10,9 +10,9 @@ use wcf\data\user\option\UserOptionEditor;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\IFormContainer;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
@@ -320,7 +320,7 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 			]);
 			
 			// ensure proper normalization of select options
-			$form->getDataHandler()->add(new CustomFormFieldDataProcessor('selectOptions', function(IFormDocument $document, array $parameters) {
+			$form->getDataHandler()->addProcessor(new CustomFormDataProcessor('selectOptions', function(IFormDocument $document, array $parameters) {
 				if (isset($parameters['data']['selectoptions'])) {
 					$parameters['data']['selectoptions'] = StringUtil::unifyNewlines($parameters['data']['selectoptions']);
 				}

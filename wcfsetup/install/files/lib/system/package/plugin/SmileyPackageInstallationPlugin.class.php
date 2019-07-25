@@ -6,7 +6,7 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\TextFormField;
@@ -216,7 +216,7 @@ class SmileyPackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		]);
 		
 		// ensure proper normalization of template code
-		$form->getDataHandler()->add(new CustomFormFieldDataProcessor('templateCode', function(IFormDocument $document, array $parameters) {
+		$form->getDataHandler()->addProcessor(new CustomFormDataProcessor('templateCode', function(IFormDocument $document, array $parameters) {
 			$parameters['data']['aliases'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['aliases']));
 			
 			return $parameters;

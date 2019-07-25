@@ -4,7 +4,7 @@ use wcf\data\IStorableObject;
 use wcf\system\file\upload\UploadField;
 use wcf\system\file\upload\UploadFile;
 use wcf\system\file\upload\UploadHandler;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 
@@ -172,7 +172,7 @@ class UploadFormField extends AbstractFormField {
 	 * 
 	 * @throws \InvalidArgumentException    if the getter for the value provides invalid values
 	 */
-	public function loadValueFromObject(IStorableObject $object) {
+	public function loadValue(array $data, IStorableObject $object) {
 		// first check, whether an getter for the field exists
 		if (method_exists($object, 'get'. ucfirst($this->getObjectProperty()) . 'UploadFileLocations')) {
 			$value = call_user_func([$object, 'get'. ucfirst($this->getObjectProperty()) . 'UploadFileLocations']);
@@ -183,7 +183,7 @@ class UploadFormField extends AbstractFormField {
 			$method = "method '" . get_class($object) . "::get" . ucfirst($this->getObjectProperty()) . "()'";
 		}
 		else {
-			$value = $object->{$this->getObjectProperty()};
+			$value = $data[$this->getObjectProperty()];
 			$method = "variable '" . get_class($object) . "::$" . $this->getObjectProperty() . "'";
 		}
 		
@@ -259,7 +259,7 @@ class UploadFormField extends AbstractFormField {
 			UploadHandler::getInstance()->registerFilesByField($this->getPrefixedId(), $this->values);
 		}
 		
-		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('upload', function(IFormDocument $document, array $parameters) {
+		$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('upload', function(IFormDocument $document, array $parameters) {
 			$parameters[$this->getObjectProperty()] = $this->getValue();
 			$parameters[$this->getObjectProperty() . '_removedFiles'] = $this->getRemovedFiles(true);
 			

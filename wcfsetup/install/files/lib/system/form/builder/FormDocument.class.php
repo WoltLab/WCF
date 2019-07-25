@@ -6,7 +6,7 @@ use wcf\system\form\builder\button\IFormButton;
 use wcf\system\form\builder\container\IFormContainer;
 use wcf\system\form\builder\data\FormDataHandler;
 use wcf\system\form\builder\data\IFormDataHandler;
-use wcf\system\form\builder\field\data\processor\DefaultFormFieldDataProcessor;
+use wcf\system\form\builder\data\processor\DefaultFormDataProcessor;
 use wcf\system\form\builder\field\IFileFormField;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\WCF;
@@ -338,7 +338,7 @@ class FormDocument implements IFormDocument {
 			throw new \BadMethodCallException("Getting data is only possible after calling 'readValues()'.");
 		}
 		
-		return $this->getDataHandler()->getData($this);
+		return $this->getDataHandler()->getFormData($this);
 	}
 	
 	/**
@@ -347,7 +347,7 @@ class FormDocument implements IFormDocument {
 	public function getDataHandler() {
 		if ($this->dataHandler === null) {
 			$this->dataHandler = new FormDataHandler();
-			$this->dataHandler->add(new DefaultFormFieldDataProcessor());
+			$this->dataHandler->addProcessor(new DefaultFormDataProcessor());
 		}
 		
 		return $this->dataHandler;
@@ -535,13 +535,15 @@ class FormDocument implements IFormDocument {
 			$this->formMode(self::FORM_MODE_UPDATE);
 		}
 		
+		$data = $this->getDataHandler()->getObjectData($this, $object);
+		
 		/** @var IFormNode $node */
 		foreach ($this->getIterator() as $node) {
 			if ($node->isAvailable()) {
 				if ($node instanceof IFormField) {
 					if ($node->getObjectProperty() !== $node->getId()) {
 						try {
-							$node->loadValueFromObject($object);
+							$node->loadValue($data, $object);
 						}
 						catch (\InvalidArgumentException $e) {
 							// if an object property is explicitly set,
@@ -550,11 +552,11 @@ class FormDocument implements IFormDocument {
 						}
 					}
 					else {
-						$node->loadValueFromObject($object);
+						$node->loadValue($data, $object);
 					}
 				}
 				else if ($node instanceof IFormContainer) {
-					$node->loadValuesFromObject($object);
+					$node->loadValues($data, $object);
 				}
 			}
 		}

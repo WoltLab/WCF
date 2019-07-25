@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\IFormDocument;
 
 /**
@@ -154,7 +154,7 @@ trait TMultipleFormField {
 		parent::populate();
 		
 		if ($this->allowsMultiple()) {
-			$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('multiple', function(IFormDocument $document, array $parameters) {
+			$this->getDocument()->getDataHandler()->add(new CustomFormDataProcessor('multiple', function(IFormDocument $document, array $parameters) {
 				if ($this->checkDependencies() && !empty($this->getValue())) {
 					$parameters[$this->getObjectProperty()] = $this->getValue();
 				}

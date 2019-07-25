@@ -12,10 +12,10 @@ use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\data\processor\VoidFormDataProcessor;
 use wcf\system\form\builder\field\bbcode\BBCodeAttributesFormField;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
-use wcf\system\form\builder\field\data\processor\VoidFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IconFormField;
@@ -488,7 +488,7 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 		);
 		
 		// discard the `iconType` value as it is only used to distinguish the two icon input fields
-		$form->getDataHandler()->add(new VoidFormFieldDataProcessor('iconType'));
+		$form->getDataHandler()->addProcessor(new VoidFormDataProcessor('iconType'));
 	}
 	
 	/**

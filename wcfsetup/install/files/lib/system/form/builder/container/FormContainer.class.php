@@ -50,7 +50,7 @@ class FormContainer implements IFormContainer {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValuesFromObject(IStorableObject $object) {
+	public function loadValues(array $data, IStorableObject $object) {
 		// does nothing
 		
 		return $this;

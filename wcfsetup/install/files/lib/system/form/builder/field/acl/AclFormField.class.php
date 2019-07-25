@@ -2,8 +2,8 @@
 namespace wcf\system\form\builder\field\acl;
 use wcf\data\IStorableObject;
 use wcf\system\acl\ACLHandler;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IObjectTypeFormNode;
 use wcf\system\form\builder\TObjectTypeFormNode;
@@ -115,7 +115,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormNode {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValueFromObject(IStorableObject $object) {
+	public function loadValue(array $data, IStorableObject $object) {
 		$this->objectID = $object->{$object::getDatabaseTableIndexName()};
 		
 		if ($this->objectID === null) {
@@ -131,7 +131,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormNode {
 	public function populate() {
 		parent::populate();
 		
-		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('acl', function(IFormDocument $document, array $parameters) {
+		$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('acl', function(IFormDocument $document, array $parameters) {
 			$parameters[$this->getObjectProperty() . '_aclObjectTypeID'] = $this->getObjectType()->objectTypeID;
 			
 			return $parameters;

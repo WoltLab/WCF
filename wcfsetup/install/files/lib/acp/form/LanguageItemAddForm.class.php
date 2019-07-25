@@ -5,8 +5,8 @@ use wcf\data\language\item\LanguageItemAction;
 use wcf\data\language\item\LanguageItemList;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
-use wcf\system\form\builder\field\data\processor\VoidFormFieldDataProcessor;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\data\processor\VoidFormDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
@@ -166,10 +166,10 @@ class LanguageItemAddForm extends AbstractFormBuilderForm {
 		
 		// `languageCategoryIDMode` is an internal field not meant to be
 		// treated as real data
-		$this->form->getDataHandler()->add(new VoidFormFieldDataProcessor('languageCategoryIDMode'));
+		$this->form->getDataHandler()->addProcessor(new VoidFormDataProcessor('languageCategoryIDMode'));
 		
-		$this->form->getDataHandler()->add(
-			new CustomFormFieldDataProcessor('languageItemOriginIsSystem', function(IFormDocument $document, array $parameters) {
+		$this->form->getDataHandler()->addProcessor(
+			new CustomFormDataProcessor('languageItemOriginIsSystem', function(IFormDocument $document, array $parameters) {
 				$parameters['data']['languageItemOriginIsSystem'] = 0;
 				$parameters['data']['isCustomLanguageItem'] = 1;
 				

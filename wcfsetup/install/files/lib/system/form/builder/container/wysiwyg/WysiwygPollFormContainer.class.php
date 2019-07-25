@@ -4,8 +4,8 @@ use wcf\data\IPollContainer;
 use wcf\data\IStorableObject;
 use wcf\data\poll\Poll;
 use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\BooleanFormField;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\poll\PollOptionsFormField;
@@ -226,9 +226,9 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValuesFromObject(IStorableObject $object) {
-		if ($object instanceof IPollContainer && $object->getPollID() !== null) {
-			$this->poll = new Poll($object->getPollID());
+	public function loadValues(array $data, IStorableObject $object) {
+		if ($data instanceof IPollContainer && $data->getPollID() !== null) {
+			$this->poll = new Poll($data->getPollID());
 			if (!$this->poll->pollID) {
 				$this->poll = null;
 			}
@@ -247,7 +247,7 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
 			$this->getSortByVotesField()->value($this->poll->sortByVotes);
 		}
 		
-		return parent::loadValuesFromObject($object);
+		return parent::loadValues($data, $object);
 	}
 	
 	/**
@@ -259,7 +259,7 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
 		$id = $this->wysiwygId . 'Poll';
 		
 		// add data handler to group poll data into a sub-array of parameters
-		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor($id, function(IFormDocument $document, array $parameters) use($id) {
+		$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor($id, function(IFormDocument $document, array $parameters) use($id) {
 			if (!$this->isAvailable()) {
 				return $parameters;
 			}

@@ -108,12 +108,16 @@ interface IFormField extends IFormChildNode, IFormElement {
 	public function isRequired();
 	
 	/**
-	 * Loads the field value from the given object and returns this field.
+	 * Loads the field value from the given data and returns this field.
 	 * 
-	 * @param	IStorableObject		$object		object used to load field value
+	 * It is important to extract the value from the `$data` array instead of getting it directly
+	 * from the object as the entries of `$data` have been processed by the data processors.
+	 * 
+	 * @param	array			$data		data from which the value is extracted
+	 * @param	IStorableObject		$object		object the data belongs to
 	 * @return	static					this field
 	 */
-	public function loadValueFromObject(IStorableObject $object);
+	public function loadValue(array $data, IStorableObject $object);
 	
 	/**
 	 * Sets the name of the object property this field represents. If an empty

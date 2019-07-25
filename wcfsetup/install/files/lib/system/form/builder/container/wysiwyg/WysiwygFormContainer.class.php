@@ -342,8 +342,8 @@ class WysiwygFormContainer extends FormContainer implements IMaximumLengthFormFi
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValuesFromObject(IStorableObject $object) {
-		$this->objectId = $object->getObjectID();
+	public function loadValues(array $data, IStorableObject $object) {
+		$this->objectId = $object->{$object::getDatabaseTableIndexName()};
 		
 		if ($this->attachmentData !== null) {
 			// updated attachment handler with object id
@@ -357,7 +357,7 @@ class WysiwygFormContainer extends FormContainer implements IMaximumLengthFormFi
 			);
 		}
 		
-		return parent::loadValuesFromObject($object);
+		return parent::loadValues($data, $object);
 	}
 	
 	/**

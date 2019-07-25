@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\form\builder\field\data\processor;
+namespace wcf\system\form\builder\data\processor;
 use wcf\system\form\builder\IFormDocument;
 
 /**
@@ -8,10 +8,10 @@ use wcf\system\form\builder\IFormDocument;
  * @author	Matthias Schmidt
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\System\Form\Builder\Field\Data\Processor
+ * @package	WoltLabSuite\Core\System\Form\Builder\Data\Processor
  * @since	5.2
  */
-class VoidFormFieldDataProcessor implements IFormFieldDataProcessor {
+class VoidFormDataProcessor extends AbstractFormDataProcessor {
 	/**
 	 * is `true` if the property is stored in the `data` array
 	 * @var	bool
@@ -38,7 +38,7 @@ class VoidFormFieldDataProcessor implements IFormFieldDataProcessor {
 	/**
 	 * @inheritDoc
 	 */
-	public function __invoke(IFormDocument $document, array $parameters) {
+	public function processFormData(IFormDocument $document, array $parameters) {
 		if ($this->isDataProperty) {
 			if (isset($parameters['data'][$this->property])) {
 				unset($parameters['data'][$this->property]);

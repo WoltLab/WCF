@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\form\builder\field\wysiwyg;
 use wcf\system\attachment\AttachmentHandler;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\TWysiwygFormNode;
 use wcf\system\WCF;
@@ -117,7 +117,7 @@ class WysiwygAttachmentFormField extends AbstractFormField {
 	public function populate() {
 		parent::populate();
 		
-		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor($this->getId(), function(IFormDocument $document, array $parameters) {
+		$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor($this->getId(), function(IFormDocument $document, array $parameters) {
 			if ($this->getAttachmentHandler() !== null) {
 				$parameters[$this->getWysiwygId() . '_attachmentHandler'] = $this->getAttachmentHandler();
 			}

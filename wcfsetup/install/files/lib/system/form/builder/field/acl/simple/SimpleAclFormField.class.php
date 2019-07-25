@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\form\builder\field\acl\simple;
 use wcf\system\acl\simple\SimpleAclHandler;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
 
 /**
@@ -52,7 +52,7 @@ class SimpleAclFormField extends AbstractFormField {
 	public function populate() {
 		parent::populate();
 		
-		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('i18n', function(IFormDocument $document, array $parameters) {
+		$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('i18n', function(IFormDocument $document, array $parameters) {
 			if ($this->checkDependencies() && is_array($this->getValue()) && !empty($this->getValue())) {
 				$parameters[$this->getObjectProperty()] = $this->getValue();
 			}

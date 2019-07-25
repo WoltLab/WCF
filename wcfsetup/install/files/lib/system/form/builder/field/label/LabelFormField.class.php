@@ -3,8 +3,8 @@ namespace wcf\system\form\builder\field\label;
 use wcf\data\IStorableObject;
 use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\label\Label;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IObjectTypeFormNode;
@@ -96,9 +96,9 @@ class LabelFormField extends AbstractFormField implements IObjectTypeFormNode {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValueFromObject(IStorableObject $object) {
+	public function loadValue(array $data, IStorableObject $object) {
 		$objectTypeID = $this->getObjectType()->objectTypeID;
-		$objectID = $object->getObjectID();
+		$objectID = $object->{$object::getDatabaseTableIndexName()};
 		
 		if (!isset(static::$loadedLabels[$objectTypeID])) {
 			static::$loadedLabels[$objectTypeID] = [];
@@ -127,7 +127,7 @@ class LabelFormField extends AbstractFormField implements IObjectTypeFormNode {
 	public function populate() {
 		parent::populate();
 		
-		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('label', function(IFormDocument $document, array $parameters) {
+		$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('label', function(IFormDocument $document, array $parameters) {
 			$value = $this->getValue();
 			
 			// `-1` and `0` are special values that are irrlevent for saving

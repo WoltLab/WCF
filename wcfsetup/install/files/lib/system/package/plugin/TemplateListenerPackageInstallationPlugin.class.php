@@ -11,16 +11,16 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IntegerFormField;
+use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\option\OptionFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
-use wcf\system\form\builder\field\MultilineTextFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
-use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -374,7 +374,7 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 		]);
 		
 		// ensure proper normalization of template code
-		$form->getDataHandler()->add(new CustomFormFieldDataProcessor('templateCode', function(IFormDocument $document, array $parameters) {
+		$form->getDataHandler()->addProcessor(new CustomFormDataProcessor('templateCode', function(IFormDocument $document, array $parameters) {
 			$parameters['data']['templatecode'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['templatecode']));
 			
 			return $parameters;

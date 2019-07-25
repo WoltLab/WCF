@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 use wcf\util\ArrayUtil;
@@ -114,7 +114,7 @@ class ItemListFormField extends AbstractFormField implements IAutoFocusFormField
 		
 		// an array should be passed as a parameter outside of the `data` array
 		if ($this->getSaveValueType() === self::SAVE_VALUE_TYPE_ARRAY) {
-			$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('itemList', function(IFormDocument $document, array $parameters) {
+			$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('itemList', function(IFormDocument $document, array $parameters) {
 				if ($this->checkDependencies() && is_array($this->getValue())) {
 					$parameters[$this->getObjectProperty()] = $this->getValue();
 				}

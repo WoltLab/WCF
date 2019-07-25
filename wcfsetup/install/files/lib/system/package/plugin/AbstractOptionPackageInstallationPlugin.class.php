@@ -10,8 +10,8 @@ use wcf\system\devtools\pip\IIdempotentPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\IFormContainer;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\BooleanFormField;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IntegerFormField;
 use wcf\system\form\builder\field\MultilineTextFormField;
@@ -675,7 +675,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 				]);
 				
 				// ensure proper normalization of default value and enable options
-				$form->getDataHandler()->add(new CustomFormFieldDataProcessor('enableOptions', function(IFormDocument $document, array $parameters) {
+				$form->getDataHandler()->addProcessor(new CustomFormDataProcessor('enableOptions', function(IFormDocument $document, array $parameters) {
 					if (isset($parameters['data']['enableoptions'])) {
 						$parameters['data']['enableoptions'] = StringUtil::unifyNewlines($parameters['data']['enableoptions']);
 					}

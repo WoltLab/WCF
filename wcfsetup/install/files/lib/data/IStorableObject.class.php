@@ -31,7 +31,6 @@ interface IStorableObject {
 	/**
 	 * Returns the value of all object data variables.
 	 * 
-	 * @deprecated	This method was introduced for a function in AJAXProxy that is deprecated.
 	 * @return	mixed[]
 	 */
 	public function getData();

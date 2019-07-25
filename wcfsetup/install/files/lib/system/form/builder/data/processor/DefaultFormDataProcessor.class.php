@@ -1,5 +1,5 @@
 <?php
-namespace wcf\system\form\builder\field\data\processor;
+namespace wcf\system\form\builder\data\processor;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
@@ -13,14 +13,14 @@ use wcf\system\form\builder\IFormParentNode;
  * @author	Matthias Schmidt
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package	WoltLabSuite\Core\System\Form\Builder\Field\Data\Processor
+ * @package	WoltLabSuite\Core\System\Form\Builder\Data\Processor
  * @since	5.2
  */
-class DefaultFormFieldDataProcessor implements IFormFieldDataProcessor {
+class DefaultFormDataProcessor extends AbstractFormDataProcessor {
 	/**
 	 * @inheritDoc
 	 */
-	public function __invoke(IFormDocument $document, array $parameters) {
+	public function processFormData(IFormDocument $document, array $parameters) {
 		$parameters['data'] = [];
 		
 		$this->getData($document, $parameters['data']);

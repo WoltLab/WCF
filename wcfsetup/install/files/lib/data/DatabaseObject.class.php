@@ -116,8 +116,7 @@ abstract class DatabaseObject implements IIDObject, IStorableObject {
 	}
 	
 	/**
-	 * @deprecated	This method was introduced for a function in AJAXProxy that is deprecated.
-	 * @see	\wcf\data\IStorableObject::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
 		return $this->data;

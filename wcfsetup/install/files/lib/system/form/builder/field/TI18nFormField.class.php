@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\data\language\item\LanguageItemList;
 use wcf\data\IStorableObject;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
+use wcf\data\language\item\LanguageItemList;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
@@ -249,9 +249,9 @@ trait TI18nFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValueFromObject(IStorableObject $object) {
-		if (isset($object->{$this->getId()})) {
-			$value = $object->{$this->getId()};
+	public function loadValueFromObject(array $data, IStorableObject $object) {
+		if (isset($data[$this->getObjectProperty()])) {
+			$value = $data[$this->getObjectProperty()];
 			
 			if ($this->isI18n()) {
 				// do not use `I18nHandler::setOptions()` because then `I18nHandler` only
@@ -286,7 +286,7 @@ trait TI18nFormField {
 			
 			/** @var IFormDocument $document */
 			$document = $this->getDocument();
-			$document->getDataHandler()->add(new CustomFormFieldDataProcessor('i18n', function(IFormDocument $document, array $parameters) {
+			$document->getDataHandler()->addProcessor(new CustomFormDataProcessor('i18n', function(IFormDocument $document, array $parameters) {
 				if ($this->checkDependencies() && $this->hasI18nValues()) {
 					$parameters[$this->getObjectProperty() . '_i18n'] = $this->getValue();
 				}

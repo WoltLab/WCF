@@ -1,9 +1,9 @@
 <?php
 namespace wcf\system\form\builder\field\tag;
-use wcf\data\tag\Tag;
 use wcf\data\IStorableObject;
+use wcf\data\tag\Tag;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\TDefaultIdFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IObjectTypeFormNode;
@@ -63,7 +63,7 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormNode {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValueFromObject(IStorableObject $object) {
+	public function loadValue(array $data, IStorableObject $object) {
 		$objectID = $object->{$object::getDatabaseTableIndexName()};
 		
 		if ($objectID === null) {
@@ -77,9 +77,8 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormNode {
 		$languageIDs = [];
 		
 		/** @noinspection PhpUndefinedFieldInspection */
-		$objectLanguageId = $object->languageID;
-		if ($objectLanguageId !== null) {
-			$languageIDs[] = $objectLanguageId;
+		if (isset($data['languageID'])) {
+			$languageIDs[] = $data['languageID'];
 		}
 		
 		$tags = TagEngine::getInstance()->getObjectTags($this->getObjectType()->objectType, $objectID, $languageIDs);
@@ -98,7 +97,7 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormNode {
 	public function populate() {
 		parent::populate();
 		
-		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('acl', function(IFormDocument $document, array $parameters) {
+		$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('acl', function(IFormDocument $document, array $parameters) {
 			if ($this->checkDependencies() && $this->getValue() !== null && !empty($this->getValue())) {
 				$parameters[$this->getObjectProperty()] = $this->getValue();
 			}

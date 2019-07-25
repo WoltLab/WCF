@@ -2,8 +2,8 @@
 namespace wcf\system\form\builder\field\wysiwyg;
 use wcf\data\IMessageQuoteAction;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\IMaximumLengthFormField;
 use wcf\system\form\builder\field\IMinimumLengthFormField;
 use wcf\system\form\builder\field\TMaximumLengthFormField;
@@ -184,7 +184,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	public function populate() {
 		parent::populate();
 		
-		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('wysiwyg', function(IFormDocument $document, array $parameters) {
+		$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('wysiwyg', function(IFormDocument $document, array $parameters) {
 			if ($this->checkDependencies()) {
 				$parameters[$this->getObjectProperty() . '_htmlInputProcessor'] = $this->htmlInputProcessor;
 			}
