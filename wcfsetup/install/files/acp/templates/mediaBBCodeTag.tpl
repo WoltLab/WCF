@@ -1,4 +1,4 @@
-<div class="mediaBBCode{if $float != 'none'} messageFloatObject{$float|ucfirst}{/if}">
+<span class="mediaBBCode{if $float != 'none'} messageFloatObject{$float|ucfirst}{/if}">
 	{if $thumbnailSize != 'original'}
 		<a href="{$mediaLink}" class="embeddedAttachmentLink jsImageViewer"><img src="{$thumbnailLink}" alt="{$media->altText}" title="{$media->title}" data-width="{@$media->getThumbnailWidth($thumbnailSize)}" data-height="{@$media->getThumbnailHeight($thumbnailSize)}"></a>
 	{else}
@@ -6,12 +6,12 @@
 	{/if}
 	
 	{if $media->caption}
-		<div class="mediaBBCodeCaption">
+		<span class="mediaBBCodeCaption">
 			{if $media->captionEnableHtml}
 				{@$media->caption}
 			{else}
 				{$media->caption}
 			{/if}
-		</div>
+		</span>
 	{/if}
-</div>
+</span>
