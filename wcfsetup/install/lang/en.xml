@@ -4622,7 +4622,7 @@ not register with us.]]></item>
 		<item name="wcf.user.articles"><![CDATA[Articles]]></item>
 		<item name="wcf.user.status.banned"><![CDATA[The user has been banned.]]></item>
 		<item name="wcf.user.status.isDisabled"><![CDATA[The user has not been approved yet.]]></item>
-		<item name="wcf.user.status.blacklistMatches"><![CDATA[The user has been automatically disabled because of matches in the “Stop Forum Spam” database.]]></item>
+		<item name="wcf.user.status.blacklistMatches"><![CDATA[The user has been automatically disabled because of matches in the “Stop Forum Spam” database (Matches: {implode glue=', ' from=$user->getBlacklistMatchesTitle() item=matchLabel}{$matchLabel}{/implode}).]]></item>
 	</category>
 	<category name="wcf.user.menu">
 		<item name="wcf.user.menu.community"><![CDATA[Community]]></item>

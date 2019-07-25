@@ -613,4 +613,18 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 		
 		return [];
 	}
+	
+	/**
+	 * Returns a human readable list of fields that have positive matches against the
+	 * blacklist. If you require the raw field names, please use `getBlacklistMatches()`
+	 * instead.
+	 * 
+	 * @return string[]
+	 * @since 5.2
+	 */
+	public function getBlacklistMatchesTitle() {
+		return array_map(function($field) {
+			return WCF::getLanguage()->get('wcf.user.' . $field);
+		}, $this->getBlacklistMatches());
+	}
 }
