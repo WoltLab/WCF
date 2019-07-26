@@ -314,7 +314,7 @@
 		<item name="wcf.acp.cronjob.log.error"><![CDATA[Error]]></item>
 		<item name="wcf.acp.cronjob.log.error.showDetails"><![CDATA[Display Details]]></item>
 		<item name="wcf.acp.cronjob.log.error.details"><![CDATA[Error Message]]></item>
-		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[There are not any entries at the moment.]]></item>
+		<item name="wcf.acp.cronjob.log.noEntries"><![CDATA[There are no entries at the moment.]]></item>
 	</category>
 	<category name="wcf.acp.dataImport">
 		<item name="wcf.acp.dataImport"><![CDATA[Data Import]]></item>
@@ -367,7 +367,7 @@
 		<item name="wcf.acp.dataImport.exporter"><![CDATA[Data Source]]></item>
 		<item name="wcf.acp.dataImport.selectExporter"><![CDATA[Select Data Source]]></item>
 		<item name="wcf.acp.dataImport.selectExporter.error.invalid"><![CDATA[The selected data source is invalid.]]></item>
-		<item name="wcf.acp.dataImport.selectExporter.noExporters"><![CDATA[There are not any data importers installed at the moment.]]></item>
+		<item name="wcf.acp.dataImport.selectExporter.noExporters"><![CDATA[There are no data importers installed at the moment.]]></item>
 		<item name="wcf.acp.dataImport.started"><![CDATA[Import started.]]></item>
 	</category>
 	<category name="wcf.acp.devtools">
@@ -3783,7 +3783,7 @@ Attachments:
 		<item name="wcf.global.worker.completed"><![CDATA[Task completed]]></item>
 		<item name="wcf.global.worker.executing"><![CDATA[Executing …]]></item>
 		<item name="wcf.global.filter"><![CDATA[Filter]]></item>
-		<item name="wcf.global.noItems"><![CDATA[There are not any items at the moment.]]></item>
+		<item name="wcf.global.noItems"><![CDATA[There are no items at the moment.]]></item>
 		<item name="wcf.global.button.showAll"><![CDATA[Display All]]></item>
 		<item name="wcf.global.reason"><![CDATA[Reason]]></item>
 		<item name="wcf.global.settings"><![CDATA[Settings]]></item>
@@ -3908,9 +3908,9 @@ Attachments:
 		<item name="wcf.like.objectType.com.woltlab.wcf.comment"><![CDATA[Comment]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.comment.response"><![CDATA[Comment Reply]]></item>
 		<item name="wcf.like.likes.more"><![CDATA[More Likes]]></item>
-		<item name="wcf.like.likes.noMoreEntries"><![CDATA[There are not any new likes at the moment.]]></item>
+		<item name="wcf.like.likes.noMoreEntries"><![CDATA[There are no new likes at the moment.]]></item>
 		<item name="wcf.like.dislikes.more"><![CDATA[More Dislikes]]></item>
-		<item name="wcf.like.dislikes.noMoreEntries"><![CDATA[There are not any new dislikes at the moment.]]></item>
+		<item name="wcf.like.dislikes.noMoreEntries"><![CDATA[There are no new dislikes at the moment.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{$comment->getLink()}">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{$response->getLink()}">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.likeableArticle"><![CDATA[Article]]></item>
@@ -3921,7 +3921,7 @@ Attachments:
 		<item name="wcf.like.title.com.woltlab.wcf.pageComment.response"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the page <a href="{$response->getLink()}">{$page->getTitle()}</a>.]]></item>
 		<item name="wcf.like.reaction.label"><![CDATA[{#$reactions} reaction{if $reactions != 1}s{/if}]]></item>
 		<item name="wcf.like.reaction.more"><![CDATA[More Reactions]]></item>
-		<item name="wcf.like.reaction.noMoreEntries"><![CDATA[There are not any new reactions at the moment.]]></item>
+		<item name="wcf.like.reaction.noMoreEntries"><![CDATA[There are no new reactions at the moment.]]></item>
 		<item name="wcf.like.reactionsReceived"><![CDATA[Reactions Received]]></item>
 		<item name="wcf.like.reactionsGiven"><![CDATA[Reactions Given]]></item>
 	</category>
@@ -4301,7 +4301,7 @@ Attachments:
 	</category>
 	<category name="wcf.reactions">
 		<item name="wcf.reactions.summary.title"><![CDATA[Reactions]]></item>
-		<item name="wcf.reactions.summary.noReactions"><![CDATA[There are not any reactions at the moment.]]></item>
+		<item name="wcf.reactions.summary.noReactions"><![CDATA[There are no reactions at the moment.]]></item>
 		<item name="wcf.reactions.summary.listReactions"><![CDATA[List Reactions]]></item>
 		<item name="wcf.reactions.react"><![CDATA[React]]></item>
 	</category>
@@ -4782,8 +4782,8 @@ Open the link below to access the user profile:
 	<category name="wcf.user.recentActivity">
 		<item name="wcf.user.recentActivity"><![CDATA[Recent Activities]]></item>
 		<item name="wcf.user.recentActivity.more"><![CDATA[Display More]]></item>
-		<item name="wcf.user.recentActivity.noMoreEntries"><![CDATA[There are not any new activities at the moment.]]></item>
-		<item name="wcf.user.recentActivity.noEntries"><![CDATA[There are not any activities at the moment.]]></item>
+		<item name="wcf.user.recentActivity.noMoreEntries"><![CDATA[There are no new activities at the moment.]]></item>
+		<item name="wcf.user.recentActivity.noEntries"><![CDATA[There are no activities at the moment.]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.recentActivityEvent.follow"><![CDATA[Follow]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.recentActivityEvent"><![CDATA[Wall Comment]]></item>
 		<item name="wcf.user.recentActivity.com.woltlab.wcf.user.profileComment.response.recentActivityEvent"><![CDATA[Wall Reply]]></item>
@@ -4921,7 +4921,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.notification.markAllAsConfirmed.confirmMessage"><![CDATA[Do you really want to mark all notifications as read?]]></item>
 		<item name="wcf.user.notification.markAsConfirmed"><![CDATA[Mark as Read]]></item>
 		<item name="wcf.user.notification.noMoreNotifications"><![CDATA[You have no recent notifications.]]></item>
-		<item name="wcf.user.notification.noNotifications"><![CDATA[There are not any notifications at the moment.]]></item>
+		<item name="wcf.user.notification.noNotifications"><![CDATA[There are no notifications at the moment.]]></item>
 		<item name="wcf.user.notification.notifications"><![CDATA[Notifications]]></item>
 		<item name="wcf.user.notification.notifications.description"><![CDATA[Email notifications may not be supported for every available notification]]></item>
 		<item name="wcf.user.notification.notifications.disabled"><![CDATA[Disabled]]></item>
@@ -5084,8 +5084,8 @@ your notifications on <a href="{link}{/link}">{PAGE_TITLE|language}</a> as you w
 		<item name="wcf.user.notification.userRegistration.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1}has{else}have{/if} registered:</p>]]></item>
 	</category>
 	<category name="wcf.user.profile">
-		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You have not provided any details yet.{else}There are not any details visible to you.{/if}]]></item>
-		<item name="wcf.user.profile.content.recentActivity.noEntries"><![CDATA[There are not any recent activities at the moment.]]></item>
+		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You have not provided any details yet.{else}There are no details visible to you.{/if}]]></item>
+		<item name="wcf.user.profile.content.recentActivity.noEntries"><![CDATA[There are no recent activities at the moment.]]></item>
 		<item name="wcf.user.profile.followers"><![CDATA[{$user->username}’s Followers]]></item>
 		<item name="wcf.user.profile.following"><![CDATA[{$user->username} Follows]]></item>
 		<item name="wcf.user.profile.menu.about"><![CDATA[About Me]]></item>
@@ -5095,7 +5095,7 @@ your notifications on <a href="{link}{/link}">{PAGE_TITLE|language}</a> as you w
 		<item name="wcf.user.profile.visitors"><![CDATA[Profile Visitors]]></item>
 		<item name="wcf.user.profile.content.wall.comment"><![CDATA[Wall Comment]]></item>
 		<item name="wcf.user.profile.content.wall.commentResponse"><![CDATA[Reply to wall comment]]></item>
-		<item name="wcf.user.profile.content.wall.noEntries"><![CDATA[There are not any comments at the moment.]]></item>
+		<item name="wcf.user.profile.content.wall.noEntries"><![CDATA[There are no comments at the moment.]]></item>
 		<item name="wcf.user.profile.menu.wall"><![CDATA[Wall]]></item>
 		<item name="wcf.user.profile.menu.likes"><![CDATA[Reactions]]></item>
 		<item name="wcf.user.profile.recentActivity.profileComment"><![CDATA[Wrote a comment on <a href="{link controller='User' object=$user}{/link}#wall/comment{@$commentID}">{$user->username}’s wall</a>.]]></item>
