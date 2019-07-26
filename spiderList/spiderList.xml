@@ -1085,6 +1085,10 @@
 	<spider ident="aWapClient">
 		<name>Skymob.com</name>
 	</spider>
+	<spider ident="Slack">
+		<name>Slackbot</name>
+		<url>https://api.slack.com/robots</url>
+	</spider>
 	<spider ident="SLCrawler">
 		<name>SLCrawler</name>
 	</spider>
