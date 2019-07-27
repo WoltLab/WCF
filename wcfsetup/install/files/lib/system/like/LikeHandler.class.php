@@ -4,8 +4,6 @@ use wcf\data\like\object\ILikeObject;
 use wcf\data\like\object\LikeObject;
 use wcf\data\like\Like;
 use wcf\data\object\type\ObjectType;
-use wcf\data\reaction\type\ReactionType;
-use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\User;
 use wcf\system\reaction\ReactionHandler;
 use wcf\system\SingletonFactory;

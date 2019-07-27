@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\worker;
-use wcf\data\like\Like;
 use wcf\data\like\LikeList;
 use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\WCF;

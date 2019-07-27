@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\form\builder\field\dependency;
-use http\Exception\BadMethodCallException;
 use wcf\system\form\builder\field\IFormField;
 use wcf\system\form\builder\IFormNode;
 use wcf\system\WCF;

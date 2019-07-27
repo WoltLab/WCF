@@ -1,12 +1,10 @@
 <?php
 namespace wcf\acp\form;
-use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeAction;
 use wcf\data\reaction\type\ReactionTypeList;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\IsDisabledFormField;
-use wcf\system\form\builder\field\RadioButtonFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\UploadFormField;

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\importer;
 use wcf\data\like\Like;
-use wcf\data\reaction\type\ReactionType;
 use wcf\system\reaction\ReactionHandler;
 use wcf\system\WCF;
 

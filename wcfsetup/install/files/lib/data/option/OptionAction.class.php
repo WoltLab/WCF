@@ -3,7 +3,6 @@ namespace wcf\data\option;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\email\transport\SmtpEmailTransport;
-use wcf\system\exception\AJAXException;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
