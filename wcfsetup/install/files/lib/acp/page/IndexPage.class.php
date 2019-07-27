@@ -7,6 +7,7 @@ use wcf\system\io\RemoteFile;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Shows the welcome page in admin control panel.
@@ -114,7 +115,12 @@ class IndexPage extends AbstractPage {
 		}
 		
 		$missingLanguageItemsMTime = 0;
-		if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS && file_exists(WCF_DIR . 'log/missingLanguageItems.txt')) {
+		if (
+			ENABLE_DEBUG_MODE
+			&& ENABLE_DEVELOPER_TOOLS
+			&& file_exists(WCF_DIR . 'log/missingLanguageItems.txt')
+			&& mb_strlen(StringUtil::trim(file_get_contents(WCF_DIR . 'log/missingLanguageItems.txt'))) > 0
+		) {
 			$missingLanguageItemsMTime = filemtime(WCF_DIR . 'log/missingLanguageItems.txt');
 		}
 		
