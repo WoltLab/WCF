@@ -363,60 +363,16 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 			$this->readObjects();
 		}
 		
-		$tableName = call_user_func([$this->className, 'getDatabaseTableName']);
-		$indexName = call_user_func([$this->className, 'getDatabaseTableIndexName']);
-		
-		$itemsPerLoop = 1000;
-		$loopCount = ceil(count($this->objectIDs) / $itemsPerLoop);
-		
-		if (!empty($this->parameters['data'])) {
-			$updateSQL = '';
-			$statementParameters = [];
-			foreach ($this->parameters['data'] as $key => $value) {
-				if (!empty($updateSQL)) $updateSQL .= ', ';
-				$updateSQL .= $key . ' = ?';
-				$statementParameters[] = $value;
+		if (isset($this->parameters['data'])) {
+			foreach ($this->getObjects() as $object) {
+				$object->update($this->parameters['data']);
 			}
-			
-			WCF::getDB()->beginTransaction();
-			for ($i = 0; $i < $loopCount; $i++) {
-				$batchObjectIDs = array_slice($this->objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
-				
-				$conditionBuilder = new PreparedStatementConditionBuilder();
-				$conditionBuilder->add($indexName . ' IN (?)', [$batchObjectIDs]);
-				
-				$sql = "UPDATE	" . $tableName . "
-					SET	" . $updateSQL . "
-					" . $conditionBuilder;
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array_merge($statementParameters, $conditionBuilder->getParameters()));
-			}
-			WCF::getDB()->commitTransaction();
 		}
 		
-		if (!empty($this->parameters['counters'])) {
-			$updateSQL = '';
-			$statementParameters = [];
-			foreach ($this->parameters['counters'] as $key => $value) {
-				if (!empty($updateSQL)) $updateSQL .= ', ';
-				$updateSQL .= $key . ' = ' . $key . ' + ?';
-				$statementParameters[] = $value;
+		if (isset($this->parameters['counters'])) {
+			foreach ($this->getObjects() as $object) {
+				$object->updateCounters($this->parameters['counters']);
 			}
-			
-			WCF::getDB()->beginTransaction();
-			for ($i = 0; $i < $loopCount; $i++) {
-				$batchObjectIDs = array_slice($this->objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
-				
-				$conditionBuilder = new PreparedStatementConditionBuilder();
-				$conditionBuilder->add($indexName . ' IN (?)', [$batchObjectIDs]);
-				
-				$sql = "UPDATE	" . $tableName . "
-					SET	" . $updateSQL . "
-					" . $conditionBuilder;
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute(array_merge($statementParameters, $conditionBuilder->getParameters()));
-			}
-			WCF::getDB()->commitTransaction();
 		}
 	}
 	
