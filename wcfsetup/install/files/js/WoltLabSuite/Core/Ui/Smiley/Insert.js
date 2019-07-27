@@ -80,16 +80,14 @@ define(['EventHandler', 'EventKey'], function (EventHandler, EventKey) {
 		 * @protected
 		 */
 		_mousedown: function (event) {
-			if (!this._container.contains(event.target)) {
-				return;
-			}
-			
-			event.preventDefault();
-			
 			// Clicks may occur on a few different elements, but we are only looking for the image.
 			var listItem = event.target.closest('li');
-			var img = elBySel('img', listItem);
-			if (img) this._insert(img);
+			if (this._container.contains(listItem)) {
+				event.preventDefault();
+				
+				var img = elBySel('img', listItem);
+				if (img) this._insert(img);
+			}
 		},
 		
 		/**
