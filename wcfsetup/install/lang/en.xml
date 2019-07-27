@@ -5185,4 +5185,8 @@ your notifications on <a href="{link}{/link}">{PAGE_TITLE|language}</a> as you w
 		<item name="wcf.user.rank.user5"><![CDATA[Enlightened]]></item>
 	</category>
 	<category name="wcf.smiley"/>
+	<category name="wcf.upload">
+		<item name="wcf.upload.error.noImage"><![CDATA[The uploaded file is no image.]]></item>
+		<item name="wcf.upload.error.reachedRemainingLimit"><![CDATA[You have selected too many files. You can only upload {#$maxFiles} more file{if $maxFiles != 1}s{/if}.]]></item>
+	</category>
 </language>

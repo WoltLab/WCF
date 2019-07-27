@@ -5186,4 +5186,8 @@ Benachrichtigungen auf <a href="{link}{/link}">{PAGE_TITLE|language}</a> nach {i
 		<item name="wcf.user.rank.user5"><![CDATA[Erleuchteter]]></item>
 	</category>
 	<category name="wcf.smiley"/>
+	<category name="wcf.upload">
+		<item name="wcf.upload.error.noImage"><![CDATA[Die hochgeladene Datei ist kein Bild.]]></item>
+		<item name="wcf.upload.error.reachedRemainingLimit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} zu viele Dateien ausgewählt. {if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} nur noch {#$maxFiles} weitere Datei{if $maxFiles != 1}en{/if} hochladen.]]></item>
+	</category>
 </language>
