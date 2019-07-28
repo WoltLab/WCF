@@ -147,7 +147,10 @@ ol.nativeList {
 		/* slight margin to prevent visual merge with adjacent words */
 		margin-right: 2px;
 	}
-	
+}
+
+.containerContent,
+.htmlContent {
 	hr {
 		border: 0;
 		border-top: 1px solid $wcfContentBorderInner;
