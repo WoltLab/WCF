@@ -17,6 +17,7 @@ use wcf\data\page\PageNodeTree;
 use wcf\data\smiley\SmileyCache;
 use wcf\form\AbstractForm;
 use wcf\system\acl\simple\SimpleAclHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -589,12 +590,29 @@ class PageAddForm extends AbstractForm {
 		
 		// add page to main menu
 		if ($this->addPageToMainMenu) {
+			// select maximum showOrder value so that new menu item will be appened
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			if ($this->parentMenuItemID) {
+				$conditionBuilder->add('parentItemID = ?', [$this->parentMenuItemID]);
+			}
+			else {
+				$conditionBuilder->add('parentItemID IS NULL');
+			}
+			
+			$sql = "SELECT	MAX(showOrder)
+				FROM	wcf" . WCF_N . "_menu_item
+				" . $conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			$maxShowOrder = $statement->fetchSingleColumn() ?? 0;
+			
 			$menuItemAction = new MenuItemAction([], 'create', ['data' => [
 				'isDisabled' => $this->isDisabled ? 1 : 0,
 				'title' => (!$this->isMultilingual ? $this->title[0] : ''),
 				'pageID' => $page->pageID,
 				'menuID' => MenuCache::getInstance()->getMainMenuID(),
 				'parentItemID' => $this->parentMenuItemID,
+				'showOrder' => $maxShowOrder + 1,
 				'identifier' => StringUtil::getRandomID(),
 				'packageID' => 1
 			]]);
