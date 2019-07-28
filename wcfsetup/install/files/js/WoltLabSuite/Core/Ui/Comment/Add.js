@@ -304,9 +304,14 @@ function(
 		 * @protected
 		 */
 		_insertMessage: function(data) {
+			var insertMethod = 'after';
+			if (this._container.parentElement.dataset.sortOrder !== undefined && this._container.parentElement.dataset.sortOrder === 'ASC') {
+				insertMethod = 'before';
+			}
+			
 			// insert HTML
 			//noinspection JSCheckFunctionSignatures
-			DomUtil.insertHtml(data.returnValues.template, this._container, 'after');
+			DomUtil.insertHtml(data.returnValues.template, this._container, insertMethod);
 			
 			UiNotification.show(Language.get('wcf.global.success.add'));
 			
