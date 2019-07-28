@@ -586,7 +586,8 @@ class PageAddForm extends AbstractForm {
 		WCF::getTPL()->assign('success', true);
 		
 		// reset variables
-		$this->parentPageID = $this->isDisabled = $this->isLandingPage = $this->availableDuringOfflineMode = 0;
+		$this->parentPageID = $this->isDisabled = $this->isLandingPage = $this->availableDuringOfflineMode = $this->addPageToMainMenu = 0;
+		$this->parentMenuItemID = null;
 		$this->applicationPackageID = 1;
 		$this->cssClassName = $this->name = '';
 		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = $this->aclValues = [];
