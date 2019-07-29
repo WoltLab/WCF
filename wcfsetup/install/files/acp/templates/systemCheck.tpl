@@ -129,6 +129,18 @@
 			<small>{lang}wcf.acp.systemCheck.mysql.innodb.description{/lang}</small>
 		</dd>
 	</dl>
+	
+	<dl{if !$results[mysql][foreignKeys]} class="formError"{/if}>
+		<dt>{lang}wcf.acp.systemCheck.mysql.foreignKeys{/lang}</dt>
+		<dd>
+			{if $results[mysql][foreignKeys]}
+				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+			{else}
+				{@$statusInsufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
+			{/if}
+			<small>{lang}wcf.acp.systemCheck.mysql.foreignKeys.description{/lang}</small>
+		</dd>
+	</dl>
 </section>
 
 <section class="section">

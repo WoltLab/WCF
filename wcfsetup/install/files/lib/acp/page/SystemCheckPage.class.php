@@ -3,6 +3,7 @@ namespace wcf\acp\page;
 use wcf\data\application\Application;
 use wcf\page\AbstractPage;
 use wcf\system\exception\SystemException;
+use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 
@@ -79,6 +80,39 @@ class SystemCheckPage extends AbstractPage {
 		'recommended' => ['7.1', '7.2', '7.3'],
 	];
 	
+	public $foreignKeys = [
+		'wcf'. WCF_N .'_user' => [
+			'avatarID' => [
+				'referenceTable' => 'wcf'. WCF_N .'_user_avatar',
+				'referenceColumn' => 'avatarID'
+			]
+		],
+		'wcf'. WCF_N .'_comment' => [
+			'userID' => [
+				'referenceTable' => 'wcf'. WCF_N .'_user',
+				'referenceColumn' => 'userID'
+			],
+			'objectTypeID' => [
+				'referenceTable' => 'wcf'. WCF_N .'_object_type',
+				'referenceColumn' => 'objectTypeID'
+			]
+		],
+		'wcf'. WCF_N .'_moderation_queue' => [
+			'objectTypeID' => [
+				'referenceTable' => 'wcf'. WCF_N .'_object_type',
+				'referenceColumn' => 'objectTypeID'
+			],
+			'assignedUserID' => [
+				'referenceTable' => 'wcf'. WCF_N .'_user',
+				'referenceColumn' => 'userID'
+			],
+			'userID' => [
+				'referenceTable' => 'wcf'. WCF_N .'_user',
+				'referenceColumn' => 'userID'
+			]
+		]
+	];
+	
 	public $results = [
 		'directories' => [],
 		'mysql' => [
@@ -86,6 +120,7 @@ class SystemCheckPage extends AbstractPage {
 			'mariadb' => false,
 			'result' => false,
 			'version' => '0.0.0',
+			'foreignKeys' => false,
 		],
 		'php' => [
 			'extension' => [],
@@ -184,7 +219,23 @@ class SystemCheckPage extends AbstractPage {
 			}
 		}
 		
-		if ($this->results['mysql']['result'] && $this->results['mysql']['innodb']) {
+		// validate foreign keys
+		$this->results['mysql']['foreignKeys'] = true;
+		foreach ($this->foreignKeys as $table => $keys) {
+			$sql = "SHOW CREATE TABLE ". $table;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute();
+			
+			$command = $statement->fetchSingleColumn(1);
+			foreach ($keys as $column => $reference) {
+				if (!Regex::compile('CONSTRAINT [`"]?(.)*[`"]? FOREIGN KEY \([`"]?'. $column .'[`"]?\) REFERENCES [`"]?'. $reference['referenceTable'] .'[`"]? \([`"]?'. $reference['referenceColumn'] .'[`"]?\)')->match($command)) {
+					$this->results['mysql']['foreignKeys'] = false;
+					break 2;
+				}
+			}
+		}
+		
+		if ($this->results['mysql']['result'] && $this->results['mysql']['innodb'] && $this->results['mysql']['foreignKeys']) {
 			$this->results['status']['mysql'] = true;
 		}
 	}
