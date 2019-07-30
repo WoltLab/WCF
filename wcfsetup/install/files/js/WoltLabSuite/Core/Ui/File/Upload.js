@@ -36,7 +36,6 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 		
 		this._options.multiple = this._options.maxFiles === null || this._options.maxFiles > 1; 
 		
-		this._options.url = this._options.url;
 		if (this._options.url.indexOf('index.php') === 0) {
 			this._options.url = WSC_API_URL + this._options.url;
 		}
