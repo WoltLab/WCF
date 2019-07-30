@@ -88,8 +88,8 @@
 							<small class="innerError">
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
-								{elseif $errorType == 'awardAutomatically'}
-									{lang}wcf.acp.trophy.userTrophy.trophy.error.awardAutomatically{/lang}
+								{else}
+									{lang}wcf.acp.trophy.userTrophy.trophy.error.{@$errorType}{/lang}
 								{/if}
 							</small>
 						{/if}
