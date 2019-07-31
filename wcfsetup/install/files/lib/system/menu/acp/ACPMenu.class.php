@@ -21,6 +21,7 @@ class ACPMenu extends TreeMenu {
 	 * @since	5.2
 	 */
 	protected $enterpriseBlacklist = [
+		'wcf.acp.menu.link.language.multilingualism',
 		'wcf.acp.menu.link.systemCheck'
 	];
 	
