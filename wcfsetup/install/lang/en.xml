@@ -2635,6 +2635,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.mysql.version.description"><![CDATA[MySQL {$mysqlVersions[mysql]} or MariaDB {$mysqlVersions[mariadb][5]} or MariaDB {$mysqlVersions[mariadb][10]} are required at minimum, but it’s strongly recommended to always use the latest available version.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.foreignKeys"><![CDATA[Foreign Keys]]></item>
 		<item name="wcf.acp.systemCheck.mysql.foreignKeys.description"><![CDATA[Foreign Keys are created with the installation and are required for the software to work.]]></item>
+		<item name="wcf.acp.systemCheck.mysql.searchEngine"><![CDATA[Search]]></item>
+		<item name="wcf.acp.systemCheck.mysql.searchEngine.description"><![CDATA[All tables used for the search must be configured with the MyISAM storage engine.]]></item>
+		<item name="wcf.acp.systemCheck.mysql.searchEngine.incorrect"><![CDATA[The following tables using an incorrect storage engine (expected storage engine <code>MyISAM</code>): {implode from=$results[mysql][searchEngine][incorrectTables] key=tableName item=engine glue=", "}<code>{$tableName}</code> (<code>{$engine}</code>){/implode}.]]></item>
 		<item name="wcf.acp.systemCheck.php.extension"><![CDATA[Extensions]]></item>
 		<item name="wcf.acp.systemCheck.php.extension.description"><![CDATA[The official PHP extensions provide additional capabilities and features that are required for the software to work.]]></item>
 		<item name="wcf.acp.systemCheck.php.memoryLimit"><![CDATA[Available Memory (“memory_limit”)]]></item>

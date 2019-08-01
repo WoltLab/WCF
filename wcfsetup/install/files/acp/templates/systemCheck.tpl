@@ -141,6 +141,18 @@
 			<small>{lang}wcf.acp.systemCheck.mysql.foreignKeys.description{/lang}</small>
 		</dd>
 	</dl>
+	
+	<dl{if !$results[mysql][searchEngine][result]} class="formError"{/if}>
+		<dt>{lang}wcf.acp.systemCheck.mysql.searchEngine{/lang}</dt>
+		<dd>
+			{if $results[mysql][searchEngine][result]}
+				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
+			{else}
+				{@$statusInsufficient} {lang}wcf.acp.systemCheck.mysql.searchEngine.incorrect{/lang}
+			{/if}
+			<small>{lang}wcf.acp.systemCheck.mysql.searchEngine.description{/lang}</small>
+		</dd>
+	</dl>
 </section>
 
 <section class="section">
