@@ -2,6 +2,7 @@
 namespace wcf\acp\page;
 use wcf\data\application\Application;
 use wcf\page\AbstractPage;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
@@ -79,6 +80,39 @@ class SystemCheckPage extends AbstractPage {
 		'recommended' => ['7.1', '7.2', '7.3'],
 	];
 	
+	public $foreignKeys = [
+		'wcf'. WCF_N .'_user' => [
+			'avatarID' => [
+				'referenceTable' => 'wcf'. WCF_N .'_user_avatar',
+				'referenceColumn' => 'avatarID'
+			]
+		],
+		'wcf'. WCF_N .'_comment' => [
+			'userID' => [
+				'referenceTable' => 'wcf'. WCF_N .'_user',
+				'referenceColumn' => 'userID'
+			],
+			'objectTypeID' => [
+				'referenceTable' => 'wcf'. WCF_N .'_object_type',
+				'referenceColumn' => 'objectTypeID'
+			]
+		],
+		'wcf'. WCF_N .'_moderation_queue' => [
+			'objectTypeID' => [
+				'referenceTable' => 'wcf'. WCF_N .'_object_type',
+				'referenceColumn' => 'objectTypeID'
+			],
+			'assignedUserID' => [
+				'referenceTable' => 'wcf'. WCF_N .'_user',
+				'referenceColumn' => 'userID'
+			],
+			'userID' => [
+				'referenceTable' => 'wcf'. WCF_N .'_user',
+				'referenceColumn' => 'userID'
+			]
+		]
+	];
+	
 	public $results = [
 		'directories' => [],
 		'mysql' => [
@@ -86,6 +120,7 @@ class SystemCheckPage extends AbstractPage {
 			'mariadb' => false,
 			'result' => false,
 			'version' => '0.0.0',
+			'foreignKeys' => false,
 		],
 		'php' => [
 			'extension' => [],
@@ -184,7 +219,33 @@ class SystemCheckPage extends AbstractPage {
 			}
 		}
 		
-		if ($this->results['mysql']['result'] && $this->results['mysql']['innodb']) {
+		// validate foreign keys
+		$expectedForeignKeyCount = 0;
+		$conditionBuilder = new PreparedStatementConditionBuilder(true, 'OR');
+		foreach ($this->foreignKeys as $table => $keys) {
+			foreach ($keys as $column => $reference) {
+				$innerConditionBuilder = new PreparedStatementConditionBuilder(false);
+				$innerConditionBuilder->add('REFERENCED_TABLE_SCHEMA = ?', [WCF::getDB()->getDatabaseName()]);
+				$innerConditionBuilder->add('REFERENCED_TABLE_NAME = ?', [$reference['referenceTable']]);
+				$innerConditionBuilder->add('REFERENCED_COLUMN_NAME = ?', [$reference['referenceColumn']]);
+				$innerConditionBuilder->add('TABLE_NAME = ?', [$table]);
+				$innerConditionBuilder->add('COLUMN_NAME = ?', [$column]);
+				
+				$conditionBuilder->add('('. $innerConditionBuilder .')', $innerConditionBuilder->getParameters());
+				
+				$expectedForeignKeyCount++;
+			}
+		}
+		
+		$sql = "SELECT                  COUNT(*)
+			FROM                    INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+			". $conditionBuilder;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditionBuilder->getParameters());
+		
+		$this->results['mysql']['foreignKeys'] = $statement->fetchSingleColumn() === $expectedForeignKeyCount;
+		
+		if ($this->results['mysql']['result'] && $this->results['mysql']['innodb'] && $this->results['mysql']['foreignKeys']) {
 			$this->results['status']['mysql'] = true;
 		}
 	}

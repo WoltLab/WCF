@@ -2625,6 +2625,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.sufficient"><![CDATA[Sufficient]]></item>
 		<item name="wcf.acp.systemCheck.insufficient"><![CDATA[Requirements are not met]]></item>
 		<item name="wcf.acp.systemCheck.notSupported"><![CDATA[Not supported]]></item>
+		<item name="wcf.acp.systemCheck.notFound"><![CDATA[Not found]]></item>
 		<item name="wcf.acp.systemCheck.php"><![CDATA[PHP]]></item>
 		<item name="wcf.acp.systemCheck.mysql"><![CDATA[MySQL]]></item>
 		<item name="wcf.acp.systemCheck.directories"><![CDATA[Filesystem]]></item>
@@ -2632,6 +2633,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.php.version.description"><![CDATA[PHP {$phpVersions[minimum]} or newer is required, the following PHP series are strongly recommended: {implode from=$phpVersions[recommended] item=$recommended}{$recommended}{/implode}.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.version"><![CDATA[MySQL]]></item>
 		<item name="wcf.acp.systemCheck.mysql.version.description"><![CDATA[MySQL {$mysqlVersions[mysql]} or MariaDB {$mysqlVersions[mariadb][5]} or MariaDB {$mysqlVersions[mariadb][10]} are required at minimum, but it’s strongly recommended to always use the latest available version.]]></item>
+		<item name="wcf.acp.systemCheck.mysql.foreignKeys"><![CDATA[Foreign Keys]]></item>
+		<item name="wcf.acp.systemCheck.mysql.foreignKeys.description"><![CDATA[Foreign Keys are created with the installation and are required for the software to work.]]></item>
 		<item name="wcf.acp.systemCheck.php.extension"><![CDATA[Extensions]]></item>
 		<item name="wcf.acp.systemCheck.php.extension.description"><![CDATA[The official PHP extensions provide additional capabilities and features that are required for the software to work.]]></item>
 		<item name="wcf.acp.systemCheck.php.memoryLimit"><![CDATA[Available Memory (“memory_limit”)]]></item>

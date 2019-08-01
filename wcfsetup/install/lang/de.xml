@@ -2697,6 +2697,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.systemCheck.sufficient"><![CDATA[Ausreichend]]></item>
 		<item name="wcf.acp.systemCheck.insufficient"><![CDATA[Anforderungen nicht erfüllt]]></item>
 		<item name="wcf.acp.systemCheck.notSupported"><![CDATA[Nicht unterstützt]]></item>
+		<item name="wcf.acp.systemCheck.notFound"><![CDATA[Nicht gefunden]]></item>
 		<item name="wcf.acp.systemCheck.php"><![CDATA[PHP]]></item>
 		<item name="wcf.acp.systemCheck.mysql"><![CDATA[MySQL]]></item>
 		<item name="wcf.acp.systemCheck.directories"><![CDATA[Dateisystem]]></item>
@@ -2704,6 +2705,8 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.systemCheck.php.version.description"><![CDATA[Es wird mindestens PHP {$phpVersions[minimum]} benötigt, empfohlen werden die folgenden Versionsreihen von PHP: {implode from=$phpVersions[recommended] item=$recommended}{$recommended}{/implode}.]]></item>
 		<item name="wcf.acp.systemCheck.mysql.version"><![CDATA[MySQL]]></item>
 		<item name="wcf.acp.systemCheck.mysql.version.description"><![CDATA[Es wird mindestens MySQL {$mysqlVersions[mysql]} bzw. MariaDB {$mysqlVersions[mariadb][5]} oder MariaDB {$mysqlVersions[mariadb][10]} benötigt, grundsätzlich wird der Einsatz neuerer Version ausdrücklich empfohlen.]]></item>
+		<item name="wcf.acp.systemCheck.mysql.foreignKeys"><![CDATA[Fremdschlüssel]]></item>
+		<item name="wcf.acp.systemCheck.mysql.foreignKeys.description"><![CDATA[Fremdschlüssel werden mit der Installation in der Datenbank angelegt und werden für einen einwandfreien Betrieb benötigt.]]></item>
 		<item name="wcf.acp.systemCheck.php.extension"><![CDATA[Erweiterungen]]></item>
 		<item name="wcf.acp.systemCheck.php.extension.description"><![CDATA[Die offiziellen Erweiterungen von PHP stellen zusätzliche Funktionen bereit, die für den Betrieb der Software notwendig sind.]]></item>
 		<item name="wcf.acp.systemCheck.php.memoryLimit"><![CDATA[Verfügbarer Arbeitsspeicher („memory_limit“)]]></item>
