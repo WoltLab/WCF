@@ -2,6 +2,7 @@
 namespace wcf\acp\page;
 use wcf\data\application\Application;
 use wcf\page\AbstractPage;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\Regex;
 use wcf\system\WCF;
@@ -220,20 +221,30 @@ class SystemCheckPage extends AbstractPage {
 		}
 		
 		// validate foreign keys
-		$this->results['mysql']['foreignKeys'] = true;
+		$keyCount = 0;
+		$conditionBuilder = new PreparedStatementConditionBuilder(true, 'OR');
 		foreach ($this->foreignKeys as $table => $keys) {
-			$sql = "SHOW CREATE TABLE ". $table;
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute();
-			
-			$command = $statement->fetchSingleColumn(1);
 			foreach ($keys as $column => $reference) {
-				if (!Regex::compile('CONSTRAINT [`"]?(.)*[`"]? FOREIGN KEY \([`"]?'. $column .'[`"]?\) REFERENCES [`"]?'. $reference['referenceTable'] .'[`"]? \([`"]?'. $reference['referenceColumn'] .'[`"]?\)')->match($command)) {
-					$this->results['mysql']['foreignKeys'] = false;
-					break 2;
-				}
+				$innerConditionBuilder = new PreparedStatementConditionBuilder(false);
+				$innerConditionBuilder->add('REFERENCED_TABLE_SCHEMA = ?', [WCF::getDB()->getDatabaseName()]);
+				$innerConditionBuilder->add('REFERENCED_TABLE_NAME = ?', [$reference['referenceTable']]);
+				$innerConditionBuilder->add('REFERENCED_COLUMN_NAME = ?', [$reference['referenceColumn']]);
+				$innerConditionBuilder->add('TABLE_NAME = ?', [$table]);
+				$innerConditionBuilder->add('COLUMN_NAME = ?', [$column]);
+				
+				$conditionBuilder->add('('. $innerConditionBuilder .')', $innerConditionBuilder->getParameters());
+				
+				$keyCount++;
 			}
 		}
+		
+		$sql = "SELECT                  COUNT(*)
+			FROM                    INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+			". $conditionBuilder;
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute($conditionBuilder->getParameters());
+		
+		$this->results['mysql']['foreignKeys'] = $statement->fetchSingleColumn() === $keyCount;
 		
 		if ($this->results['mysql']['result'] && $this->results['mysql']['innodb'] && $this->results['mysql']['foreignKeys']) {
 			$this->results['status']['mysql'] = true;
