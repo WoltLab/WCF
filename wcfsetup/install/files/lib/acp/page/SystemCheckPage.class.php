@@ -220,7 +220,7 @@ class SystemCheckPage extends AbstractPage {
 		}
 		
 		// validate foreign keys
-		$keyCount = 0;
+		$expectedForeignKeyCount = 0;
 		$conditionBuilder = new PreparedStatementConditionBuilder(true, 'OR');
 		foreach ($this->foreignKeys as $table => $keys) {
 			foreach ($keys as $column => $reference) {
@@ -233,7 +233,7 @@ class SystemCheckPage extends AbstractPage {
 				
 				$conditionBuilder->add('('. $innerConditionBuilder .')', $innerConditionBuilder->getParameters());
 				
-				$keyCount++;
+				$expectedForeignKeyCount++;
 			}
 		}
 		
@@ -243,7 +243,7 @@ class SystemCheckPage extends AbstractPage {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
 		
-		$this->results['mysql']['foreignKeys'] = $statement->fetchSingleColumn() === $keyCount;
+		$this->results['mysql']['foreignKeys'] = $statement->fetchSingleColumn() === $expectedForeignKeyCount;
 		
 		if ($this->results['mysql']['result'] && $this->results['mysql']['innodb'] && $this->results['mysql']['foreignKeys']) {
 			$this->results['status']['mysql'] = true;
