@@ -136,7 +136,7 @@
 			{if $results[mysql][foreignKeys]}
 				{@$statusOk} {lang}wcf.acp.systemCheck.pass{/lang}
 			{else}
-				{@$statusInsufficient} {lang}wcf.acp.systemCheck.notSupported{/lang}
+				{@$statusInsufficient} {lang}wcf.acp.systemCheck.notFound{/lang}
 			{/if}
 			<small>{lang}wcf.acp.systemCheck.mysql.foreignKeys.description{/lang}</small>
 		</dd>

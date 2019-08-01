@@ -2697,6 +2697,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.systemCheck.sufficient"><![CDATA[Ausreichend]]></item>
 		<item name="wcf.acp.systemCheck.insufficient"><![CDATA[Anforderungen nicht erfüllt]]></item>
 		<item name="wcf.acp.systemCheck.notSupported"><![CDATA[Nicht unterstützt]]></item>
+		<item name="wcf.acp.systemCheck.notFound"><![CDATA[Nicht gefunden]]></item>
 		<item name="wcf.acp.systemCheck.php"><![CDATA[PHP]]></item>
 		<item name="wcf.acp.systemCheck.mysql"><![CDATA[MySQL]]></item>
 		<item name="wcf.acp.systemCheck.directories"><![CDATA[Dateisystem]]></item>

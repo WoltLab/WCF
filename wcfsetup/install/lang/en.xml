@@ -2625,6 +2625,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.systemCheck.sufficient"><![CDATA[Sufficient]]></item>
 		<item name="wcf.acp.systemCheck.insufficient"><![CDATA[Requirements are not met]]></item>
 		<item name="wcf.acp.systemCheck.notSupported"><![CDATA[Not supported]]></item>
+		<item name="wcf.acp.systemCheck.notFound"><![CDATA[Not found]]></item>
 		<item name="wcf.acp.systemCheck.php"><![CDATA[PHP]]></item>
 		<item name="wcf.acp.systemCheck.mysql"><![CDATA[MySQL]]></item>
 		<item name="wcf.acp.systemCheck.directories"><![CDATA[Filesystem]]></item>
