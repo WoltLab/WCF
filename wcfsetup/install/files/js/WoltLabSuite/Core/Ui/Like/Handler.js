@@ -147,10 +147,9 @@ define(
 					countSpan.innerHTML = StringUtil.shortUnit(elementData.users[key]);
 					createdElement.appendChild(countSpan);
 					
-					createdElement.innerHTML = createdElement.innerHTML + REACTION_TYPES[key].renderedIcon;
+					createdElement.innerHTML = REACTION_TYPES[key].renderedIcon + createdElement.innerHTML;
 					
 					summaryList.appendChild(createdElement);
-					
 				}
 				
 				if (isSummaryPosition) {
