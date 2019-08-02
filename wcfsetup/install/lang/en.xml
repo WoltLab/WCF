@@ -378,6 +378,7 @@
 		<item name="wcf.acp.devtools.project.sync.pageTitle"><![CDATA[Sync Data - {$object->name}]]></item>
 		<item name="wcf.acp.devtools.pip.defaultFilename"><![CDATA[Search Pattern]]></item>
 		<item name="wcf.acp.devtools.pip.error.notIdempotent"><![CDATA[This PIP does not support repeated imports and can only be processed in regular updates.]]></item>
+		<item name="wcf.acp.devtools.pip.error.defaultFilename"><![CDATA[The PIP does not have a default filename and the installation instruction does not contain a filename.]]></item>
 		<item name="wcf.acp.devtools.pip.notice"><![CDATA[Any existing instructions in the <kbd>package.xml</kbd> will be ignored; This allows the import of PIPs that have no specific instructions provided for them yet. Only the suggested default paths are recognized, with an additional support for application suffixes for <kbd>.tar</kbd>-archives (e. g. <kbd>files_wcf.tar</kbd>) are supported.]]></item>
 		<item name="wcf.acp.devtools.pip.pluginName"><![CDATA[PIP identifier]]></item>
 		<item name="wcf.acp.devtools.pip.showOnlyMatches"><![CDATA[Show valid PIPs only]]></item>

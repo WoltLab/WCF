@@ -393,6 +393,7 @@
 		<item name="wcf.acp.devtools.project.sync.pageTitle"><![CDATA[Daten-Abgleich - {$object->name}]]></item>
 		<item name="wcf.acp.devtools.pip.defaultFilename"><![CDATA[Suchmuster]]></item>
 		<item name="wcf.acp.devtools.pip.error.notIdempotent"><![CDATA[Das PIP unterstützt keinen wiederholten Import und kann nur bei einem Update verarbeitet werden.]]></item>
+		<item name="wcf.acp.devtools.pip.error.defaultFilename"><![CDATA[Das PIP hat keinen Standard-Dateinamen und bei der Installationsanweisung wurde kein Dateinamen angegeben.]]></item>
 		<item name="wcf.acp.devtools.pip.notice"><![CDATA[Bestehende Anweisungen in der <kbd>package.xml</kbd> werden nicht berücksichtigt; es können somit auch PIPs importiert werden, für die noch keine Anweisungen hinterlegt worden sind. Es werden nur die Standardpfade bei der Suche verwendet, zusätzlich werden anwendungsbezogene Suffixe (z. B. <kbd>files_wcf.tar</kbd>) für <kbd>.tar</kbd>-basierte PIPs unterstützt.]]></item>
 		<item name="wcf.acp.devtools.pip.pluginName"><![CDATA[PIP-Bezeichner]]></item>
 		<item name="wcf.acp.devtools.pip.showOnlyMatches"><![CDATA[Zeige nur übereinstimmende PIPs an]]></item>
