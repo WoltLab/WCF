@@ -360,7 +360,7 @@
 		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[Pfad zur alten Installation]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[Geben Sie den Dateipfad der alten Installation an, dieser wird für den Import von Datei-basierten Inhalten, z. B. Avatare oder Dateianhänge, benötigt.]]></item>
 		<item name="wcf.acp.dataImport.configure.database.error"><![CDATA[Beim Verbindungsversuch mit der Datenbank ist folgender Fehler aufgetreten:
-		<br><strong>{$exception->getMessage()}<br>{$exception->getErrorDesc()}</strong>]]></item>
+		<br><strong>{$exception->getPrevious()->getMessage()}</strong>]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[Es wurde keine Installation unter dem angegeben Pfad gefunden.]]></item>
 		<item name="wcf.acp.dataImport.configure.settings"><![CDATA[Einstellungen]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode"><![CDATA[Verhalten bei sich überschneidenden Benutzeraccounts]]></item>

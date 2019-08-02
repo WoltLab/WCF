@@ -336,7 +336,7 @@
 		<item name="wcf.acp.dataImport.configure.fileSystem"><![CDATA[Filesystem]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path"><![CDATA[Path to the Old Installation]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.description"><![CDATA[Please enter the path to the old installation, this is required to import files, such as avatars or attachments.]]></item>
-		<item name="wcf.acp.dataImport.configure.database.error"><![CDATA[An error occurred while trying to access the database:<br><strong>{$exception->getMessage()}<br>{$exception->getErrorDesc()}</strong>]]></item>
+		<item name="wcf.acp.dataImport.configure.database.error"><![CDATA[An error occurred while trying to access the database:<br><strong>{$exception->getPrevious()->getMessage()}</strong>]]></item>
 		<item name="wcf.acp.dataImport.configure.fileSystem.path.error"><![CDATA[Unable to find a valid installation located at the path you have provided.]]></item>
 		<item name="wcf.acp.dataImport.configure.settings"><![CDATA[Settings]]></item>
 		<item name="wcf.acp.dataImport.configure.settings.userMergeMode"><![CDATA[Behavior for colliding user accounts]]></item>
