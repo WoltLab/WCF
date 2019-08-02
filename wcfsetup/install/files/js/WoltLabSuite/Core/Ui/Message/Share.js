@@ -33,35 +33,57 @@ define(['EventHandler', 'StringUtil'], function(EventHandler, StringUtil) {
 				var providers = {
 					facebook: {
 						link: elBySel('.jsShareFacebook', container),
-						share: (function(event) { this._share('facebook', 'https://www.facebook.com/sharer.php?u={pageURL}&t={text}', true, pageUrl); }).bind(this)
+						share: (function(event) {
+							event.preventDefault();
+							this._share('facebook', 'https://www.facebook.com/sharer.php?u={pageURL}&t={text}', true, pageUrl);
+						}).bind(this)
 					},
 					google: {
 						link: elBySel('.jsShareGoogle', container),
-						share: (function(event) { this._share('google', 'https://plus.google.com/share?url={pageURL}', false, pageUrl); }).bind(this)
+						share: (function(event) {
+							event.preventDefault();
+							this._share('google', 'https://plus.google.com/share?url={pageURL}', false, pageUrl);
+						}).bind(this)
 					},
 					reddit: {
 						link: elBySel('.jsShareReddit', container),
-						share: (function(event) { this._share('reddit', 'https://ssl.reddit.com/submit?url={pageURL}', false, pageUrl); }).bind(this)
+						share: (function(event) {
+							event.preventDefault();
+							this._share('reddit', 'https://ssl.reddit.com/submit?url={pageURL}', false, pageUrl);
+						}).bind(this)
 					},
 					twitter: {
 						link: elBySel('.jsShareTwitter', container),
-						share: (function(event) { this._share('twitter', 'https://twitter.com/share?url={pageURL}&text={text}', false, pageUrl); }).bind(this)
+						share: (function(event) {
+							event.preventDefault();
+							this._share('twitter', 'https://twitter.com/share?url={pageURL}&text={text}', false, pageUrl);
+						}).bind(this)
 					},
 					linkedIn: {
 						link: elBySel('.jsShareLinkedIn', container),
-						share: (function(event) { this._share('linkedIn', 'https://www.linkedin.com/cws/share?url={pageURL}', false, pageUrl); }).bind(this)
+						share: (function(event) {
+							event.preventDefault();
+							this._share('linkedIn', 'https://www.linkedin.com/cws/share?url={pageURL}', false, pageUrl);
+						}).bind(this)
 					},
 					pinterest: {
 						link: elBySel('.jsSharePinterest', container),
-						share: (function(event) { this._share('pinterest', 'https://www.pinterest.com/pin/create/link/?url={pageURL}&description={text}', false, pageUrl); }).bind(this)
+						share: (function(event) {
+							event.preventDefault();
+							this._share('pinterest', 'https://www.pinterest.com/pin/create/link/?url={pageURL}&description={text}', false, pageUrl);
+						}).bind(this)
 					},
 					xing: {
 						link: elBySel('.jsShareXing', container),
-						share: (function(event) { this._share('xing', 'https://www.xing.com/social_plugins/share?url={pageURL}', false, pageUrl); }).bind(this)
+						share: (function(event) {
+							event.preventDefault();
+							this._share('xing', 'https://www.xing.com/social_plugins/share?url={pageURL}', false, pageUrl);
+						}).bind(this)
 					},
 					whatsApp: {
 						link: elBySel('.jsShareWhatsApp', container),
-						share: (function() {
+						share: (function(event) {
+							event.preventDefault();
 							window.location.href = 'whatsapp://send?text=' + this._pageDescription + '%20' + pageUrl;
 						}).bind(this)
 					}
