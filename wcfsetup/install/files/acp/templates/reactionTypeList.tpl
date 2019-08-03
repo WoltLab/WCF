@@ -38,28 +38,26 @@
 {/hascontent}
 
 {if $objects|count}
-	<div class="section">
-		<section id="reactionTypeList" class="sortableListContainer">
-			<ol class="sortableList" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
-				{foreach from=$objects item=reactionType}
-					<li class="sortableNode sortableNoNesting reactionTypeRow" data-object-id="{@$reactionType->reactionTypeID}">
-						<span class="sortableNodeLabel">
-							<a href="{link controller='ReactionTypeEdit' id=$reactionType->reactionTypeID}{/link}">{@$reactionType->renderIcon()} {$reactionType->getTitle()}</a>
+	<div id="reactionTypeList" class="sortableListContainer section">
+		<ol class="sortableList" data-object-id="0" start="{@($pageNo - 1) * $itemsPerPage + 1}">
+			{foreach from=$objects item=reactionType}
+				<li class="sortableNode sortableNoNesting reactionTypeRow" data-object-id="{@$reactionType->reactionTypeID}">
+					<span class="sortableNodeLabel">
+						<a href="{link controller='ReactionTypeEdit' id=$reactionType->reactionTypeID}{/link}">{@$reactionType->renderIcon()} {$reactionType->getTitle()}</a>
+						
+						<span class="statusDisplay sortableButtonContainer">
+							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
+							<span class="icon icon16 fa-{if !$reactionType->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $reactionType->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$reactionType->reactionTypeID}"></span>
+							<a href="{link controller='ReactionTypeEdit' id=$reactionType->reactionTypeID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></span></a>
+							<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton pointer jsTooltip icon icon16 fa-times" data-object-id="{@$reactionType->reactionTypeID}" data-confirm-message-html="{lang __encode=true}wcf.acp.reactionType.delete.confirmMessage{/lang}"></span>
 							
-							<span class="statusDisplay sortableButtonContainer">
-								<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
-								<span class="icon icon16 fa-{if !$reactionType->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if $reactionType->isDisabled}enable{else}disable{/if}{/lang}" data-object-id="{@$reactionType->reactionTypeID}"></span>
-								<a href="{link controller='ReactionTypeEdit' id=$reactionType->reactionTypeID}{/link}"><span title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip icon icon16 fa-pencil"></span></a>
-								<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton pointer jsTooltip icon icon16 fa-times" data-object-id="{@$reactionType->reactionTypeID}" data-confirm-message-html="{lang __encode=true}wcf.acp.reactionType.delete.confirmMessage{/lang}"></span>
-								
-								{event name='itemButtons'}
-							</span>
+							{event name='itemButtons'}
 						</span>
-						<ol class="sortableList" data-object-id="{@$reactionType->reactionTypeID}"></ol>
-					</li>
-				{/foreach}
-			</ol>
-		</section>
+					</span>
+					<ol class="sortableList" data-object-id="{@$reactionType->reactionTypeID}"></ol>
+				</li>
+			{/foreach}
+		</ol>
 	</div>
 	
 	<div class="formSubmit">
