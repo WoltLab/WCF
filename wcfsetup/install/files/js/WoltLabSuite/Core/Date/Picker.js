@@ -302,11 +302,12 @@ define(['DateUtil', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment
 			_minDate = elData(_input, 'min-date');
 			if (_minDate.match(/^datePicker-(.+)$/)) _minDate = elData(elById(RegExp.$1), 'value');
 			_minDate = new Date(+_minDate);
+			if (_minDate.getTime() > date.getTime()) date = _minDate;
 			
 			_maxDate = elData(_input, 'max-date');
 			if (_maxDate.match(/^datePicker-(.+)$/)) _maxDate = elData(elById(RegExp.$1), 'value');
 			_maxDate = new Date(+_maxDate);
-			
+						
 			if (data.isDateTime) {
 				_dateHour.value = date.getHours();
 				_dateMinute.value = date.getMinutes();
