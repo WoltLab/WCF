@@ -181,6 +181,10 @@ class UserNotificationHandler extends SingletonFactory {
 					]);
 				}
 				WCF::getDB()->commitTransaction();
+				
+				$parameters['notificationIDs'] = $notificationIDs;
+				EventHandler::getInstance()->fireAction($this, 'updateStackableNotifications', $parameters);
+				unset($parameters['notificationIDs']);
 			}
 		}
 		
@@ -239,6 +243,10 @@ class UserNotificationHandler extends SingletonFactory {
 				],
 				'recipients' => $recipients
 			];
+			
+			$parameters['notifications'] = $notifications;
+			$parameters['recipientIDs'] = $recipientIDs;
+			EventHandler::getInstance()->fireAction($this, 'createNotification', $parameters);
 			
 			if ($event->isStackable()) {
 				$data['notifications'] = $notifications;
@@ -772,6 +780,14 @@ class UserNotificationHandler extends SingletonFactory {
 			$statement->execute($conditions->getParameters());
 			$userIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 			
+			$parameters = [
+				'objectType' => $objectType,
+				'eventIDs' => $eventIDs,
+				'objectIDs' => $objectIDs,
+				'userIDs' => $userIDs
+			];
+			EventHandler::getInstance()->fireAction($this, 'removeNotifications', $parameters);
+			
 			// reset number of notifications
 			if (!empty($userIDs)) {
 				UserStorageHandler::getInstance()->reset(array_unique($userIDs), 'userNotificationCount');
@@ -816,6 +832,15 @@ class UserNotificationHandler extends SingletonFactory {
 		$parameters = $conditions->getParameters();
 		array_unshift($parameters, TIME_NOW);
 		$statement->execute($parameters);
+		
+		$parameters = [
+			'eventName' => $eventName,
+			'objectType' => $objectType,
+			'recipientIDs' => $recipientIDs,
+			'objectIDs' => $objectIDs,
+			'event' => $event
+		];
+		EventHandler::getInstance()->fireAction($this, 'markAsConfirmed', $parameters);
 		
 		// delete notification_to_user assignments (mimic legacy notification system)
 		$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
@@ -866,6 +891,11 @@ class UserNotificationHandler extends SingletonFactory {
 		$parameters = $conditions->getParameters();
 		array_unshift($parameters, TIME_NOW);
 		$statement->execute($parameters);
+		
+		$parameters = [
+			'notificationIDs' => $notificationIDs
+		];
+		EventHandler::getInstance()->fireAction($this, 'markAsConfirmedByIDs', $parameters);
 		
 		// delete notification_to_user assignments (mimic legacy notification system)
 		$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
