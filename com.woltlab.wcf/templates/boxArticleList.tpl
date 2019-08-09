@@ -15,8 +15,8 @@
 							{elseif $boxSortField == 'comments'}
 								{$boxArticle->getDiscussionProvider()->getDiscussionCountPhrase()}
 							{elseif $boxSortField == 'cumulativeLikes'}
-								{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && ($boxArticle->likes || $boxArticle->dislikes)}
-									{lang reactions=$boxArticle->cumulativeLikes}wcf.like.reaction.label{/lang}
+								{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && $boxArticle->cachedReactions}
+									{include file='__topReaction' cachedReactions=$boxArticle->cachedReactions render='full'}
 								{/if}
 							{/if}
 						</small>

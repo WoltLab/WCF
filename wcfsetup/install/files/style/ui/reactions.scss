@@ -35,17 +35,17 @@
 	flex-wrap: wrap;
 	margin: -5px -5px 0 0;
 	
-	.reactionCount{
-		@include wcfFontSmall;
-		
-		&::before {
-			content: ' × ';
-		}
-	}
-	
 	&.reactionSummaryListTiny .reactionType {
 		width: 16px;
 		height: 16px;
+	}
+}
+
+.reactionCount{
+	@include wcfFontSmall;
+	
+	&::before {
+		content: ' × ';
 	}
 }
 
@@ -159,4 +159,17 @@
 			align-items: center;
 		}
 	}
+}
+
+.topReactionFull,
+.topReactionShort {
+	> .reactionType {
+		vertical-align: bottom;
+	}
+}
+
+.topReactionTiny > .reactionType {
+	height: 16px;
+	vertical-align: top;
+	width: 16px;
 }
