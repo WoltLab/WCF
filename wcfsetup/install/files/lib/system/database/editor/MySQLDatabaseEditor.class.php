@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\database\editor;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\Regex;
 
 /**
@@ -56,43 +57,49 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @inheritDoc
 	 */
 	public function getForeignKeys($tableName) {
-		$sql = "SELECT		key_column_usage.CONSTRAINT_NAME,
-					key_column_usage.COLUMN_NAME,
-					key_column_usage.REFERENCED_TABLE_NAME,
-					key_column_usage.REFERENCED_COLUMN_NAME,
-					referential_constraints.DELETE_RULE,
-					referential_constraints.UPDATE_RULE
-			FROM		INFORMATION_SCHEMA.KEY_COLUMN_USAGE key_column_usage
-			INNER JOIN	INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS referential_constraints
-			ON 		(referential_constraints.CONSTRAINT_NAME = key_column_usage.CONSTRAINT_NAME
-					AND referential_constraints.CONSTRAINT_SCHEMA = key_column_usage.TABLE_SCHEMA
-					AND referential_constraints.TABLE_NAME = key_column_usage.TABLE_NAME)
-			WHERE		key_column_usage.TABLE_SCHEMA = ?
-					AND key_column_usage.TABLE_NAME = ?";
+		$sql = "SELECT	CONSTRAINT_NAME, DELETE_RULE, UPDATE_RULE
+			FROM	INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS
+			WHERE	CONSTRAINT_SCHEMA = ?
+				AND TABLE_NAME = ?";
 		$statement = $this->dbObj->prepareStatement($sql);
 		$statement->execute([
 			$this->dbObj->getDatabaseName(),
 			$tableName
 		]);
-		$keyInformation = $statement->fetchAll(\PDO::FETCH_ASSOC);
+		$referentialConstraints = $statement->fetchAll(\PDO::FETCH_ASSOC);
 		
 		$validActions = ['CASCADE', 'SET NULL', 'NO ACTION'];
 		
 		$foreignKeys = [];
-		foreach ($keyInformation as $information) {
-			if (!isset($foreignKeys[$information['CONSTRAINT_NAME']])) {
-				$foreignKeys[$information['CONSTRAINT_NAME']] = [
-					'columns' => [$information['COLUMN_NAME']],
-					'referencedColumns' => [$information['REFERENCED_COLUMN_NAME']],
-					'referencedTable' => $information['REFERENCED_TABLE_NAME'],
-					'ON DELETE' => in_array($information['DELETE_RULE'], $validActions) ? $information['DELETE_RULE'] : null,
-					'ON UPDATE' => in_array($information['UPDATE_RULE'], $validActions) ? $information['UPDATE_RULE'] : null
-				];
-			}
-			else {
-				$foreignKeys[$information['CONSTRAINT_NAME']]['columns'][] = $information['COLUMN_NAME'];
-				$foreignKeys[$information['CONSTRAINT_NAME']]['referencedColumns'][] = $information['REFERENCED_COLUMN_NAME'];
-			}
+		foreach ($referentialConstraints as $information) {
+			$foreignKeys[$information['CONSTRAINT_NAME']] = [
+				'columns' => [],
+				'referencedColumns' => [],
+				'ON DELETE' => in_array($information['DELETE_RULE'], $validActions) ? $information['DELETE_RULE'] : null,
+				'ON UPDATE' => in_array($information['UPDATE_RULE'], $validActions) ? $information['UPDATE_RULE'] : null
+			];
+		}
+		
+		if (empty($foreignKeys)) {
+			return [];
+		}
+		
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('CONSTRAINT_NAME IN (?)', [array_keys($foreignKeys)]);
+		$conditionBuilder->add('TABLE_SCHEMA = ?', [$this->dbObj->getDatabaseName()]);
+		$conditionBuilder->add('TABLE_NAME = ?', [$tableName]);
+		
+		$sql = "SELECT	CONSTRAINT_NAME, COLUMN_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME
+			FROM	INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+			" . $conditionBuilder;
+		$statement = $this->dbObj->prepareStatement($sql);
+		$statement->execute($conditionBuilder->getParameters());
+		$keyColumnUsage = $statement->fetchAll(\PDO::FETCH_ASSOC);
+		
+		foreach ($keyColumnUsage as $information) {
+			$foreignKeys[$information['CONSTRAINT_NAME']]['columns'][] = $information['COLUMN_NAME'];
+			$foreignKeys[$information['CONSTRAINT_NAME']]['referencedColumns'][] = $information['REFERENCED_COLUMN_NAME'];
+			$foreignKeys[$information['CONSTRAINT_NAME']]['referencedTable'] = $information['REFERENCED_TABLE_NAME'];
 		}
 		
 		foreach ($foreignKeys as $keyName => $keyData) {
