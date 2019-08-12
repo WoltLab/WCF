@@ -1,7 +1,7 @@
 <?php
 namespace wcf\data\user\notification;
 use wcf\data\DatabaseObjectEditor;
-use wcf\system\WCF;
+use wcf\system\user\notification\UserNotificationHandler;
 
 /**
  * Provides functions to edit user notifications.
@@ -23,17 +23,12 @@ class UserNotificationEditor extends DatabaseObjectEditor {
 	
 	/**
 	 * Marks this notification as confirmed.
+	 *
+	 * @deprecated	5.2 This method currently only is a wrapper for markAsConfirmedByIDs in UserNotificationHandler.
+	 * 		Please use \wcf\system\user\notification\UserNotificationHandler::markAsConfirmedByIDs()
+	 * 		from now on, as this method may be removed in the future.
 	 */
 	public function markAsConfirmed() {
-		$this->update([
-			'confirmTime' => TIME_NOW,
-			'mailNotified' => 1
-		]);
-		
-		// delete notification_to_user assignment (mimic legacy notification system)
-		$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
-			WHERE		notificationID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$this->notificationID]);
+		UserNotificationHandler::getInstance()->markAsConfirmedByIDs([$this->notificationID]);
 	}
 }
