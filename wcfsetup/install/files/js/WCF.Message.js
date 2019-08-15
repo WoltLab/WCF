@@ -1255,7 +1255,10 @@ if (COMPILER_TARGET_DEFAULT) {
 						continue;
 					}
 					
-					$text += $node.nodeValue.replace(/\n/g, '');
+					// Firefox loves to arbitrarily wrap pasted text at weird line lengths, causing
+					// pointless linebreaks to be inserted. Replacing them with a simple space will
+					// preserve the spacing between words that would otherwise be lost.
+					$text += $node.nodeValue.replace(/\n/g, ' ');
 				}
 				
 			}
