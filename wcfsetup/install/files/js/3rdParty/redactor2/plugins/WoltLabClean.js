@@ -639,9 +639,9 @@ $.Redactor.prototype.WoltLabClean = function() {
 				'u'
 			];
 			elBySelAll(plainTags.join(','), this.$editor[0], function(element) {
-				if (elBySel(element.nodeName, element) !== null) {
-					removeElements.push(element);
-				}
+				elBySelAll(element.nodeName, element, function(child) {
+					removeElements.push(child);
+				});
 			});
 			
 			// Search for span[style] that contain styles that actually do nothing, because their set style
