@@ -172,22 +172,24 @@ if (COMPILER_TARGET_DEFAULT) {
 			// show tab
 			this._fileListSelector.closest('.messageTabMenu').messageTabMenu('showTab', 'attachments', true);
 			
+			var callbackUploadId = (function(uploadId) {
+				if (replace === null) {
+					this._autoInsert.push(uploadId);
+				}
+				else {
+					this._replaceOnLoad[uploadId] = replace;
+				}
+
+				data.uploadID = uploadId;
+			}).bind(this);
+			
 			if (data.file) {
-				$uploadID = this._upload(undefined, data.file);
+				$uploadID = this._upload(undefined, data.file, undefined, callbackUploadId);
 			}
 			else {
-				$uploadID = this._upload(undefined, undefined, data.blob);
+				$uploadID = this._upload(undefined, undefined, data.blob, callbackUploadId);
 				replace = data.replace || null;
 			}
-			
-			if (replace === null) {
-				this._autoInsert.push($uploadID);
-			}
-			else {
-				this._replaceOnLoad[$uploadID] = replace;
-			}
-			
-			data.uploadID = $uploadID;
 		},
 		
 		/**
@@ -291,7 +293,7 @@ if (COMPILER_TARGET_DEFAULT) {
 		/**
 		 * @see        WCF.Upload._upload()
 		 */
-		_upload: function (event, file, blob) {
+		_upload: function (event, file, blob, callbackUploadId) {
 			var _super = this._super.bind(this);
 			
 			require([
@@ -405,6 +407,10 @@ if (COMPILER_TARGET_DEFAULT) {
 						// of the input field is readonly thus it can't be reset
 						this._removeButton();
 						this._createButton();
+					}
+					
+					if (typeof callbackUploadId === 'function') {
+						callbackUploadId(uploadID);
 					}
 					
 					return uploadID;
