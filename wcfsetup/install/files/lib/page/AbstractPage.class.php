@@ -345,6 +345,7 @@ abstract class AbstractPage implements IPage {
 			EmailNewActivationCodeForm::class,
 			LoginForm::class,
 			LostPasswordForm::class,
+			MediaPage::class,
 			NewPasswordForm::class,
 			RegisterActivationForm::class,
 			RegisterForm::class,
