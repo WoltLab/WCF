@@ -819,7 +819,7 @@
 		<item name="wcf.acp.notice.example"><![CDATA[Example text of a notice]]></item>
 		<item name="wcf.acp.notice.isDisabled"><![CDATA[Disable notice]]></item>
 		<item name="wcf.acp.notice.isDismissible"><![CDATA[User can dismiss notice]]></item>
-		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[If a user dismisses a notice, it will not display for them again.]]></item>
+		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[If a user dismisses a notice, it will not be displayed for them again.]]></item>
 		<item name="wcf.acp.notice.list"><![CDATA[Notices]]></item>
 		<item name="wcf.acp.notice.notice"><![CDATA[Notice]]></item>
 		<item name="wcf.acp.notice.notice.description"><![CDATA[<code>{literal}{$username}{/literal}</code> will be replaced by the name and <code>{literal}{$email}{/literal}</code> by the mail address of the active user.]]></item>
