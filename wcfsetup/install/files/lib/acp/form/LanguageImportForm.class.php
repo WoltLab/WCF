@@ -118,6 +118,9 @@ class LanguageImportForm extends AbstractForm {
 		catch (SystemException $e) {
 			throw new UserInputException('languageUpload', $e->getMessage());
 		}
+		catch (\InvalidArgumentException $e) {
+			throw new UserInputException('languageUpload', $e->getMessage());
+		}
 	}
 	
 	/**

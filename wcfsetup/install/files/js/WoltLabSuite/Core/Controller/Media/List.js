@@ -49,7 +49,8 @@ define([
 			options = options || {};
 			_upload = new MediaListUpload('uploadButton', 'mediaListTableBody', {
 				categoryId: options.categoryId,
-				multiple: true
+				multiple: true,
+				elementTagSize: 48
 			});
 			
 			MediaClipboard.init(

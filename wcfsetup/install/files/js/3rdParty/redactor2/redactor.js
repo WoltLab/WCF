@@ -3453,7 +3453,9 @@
 					}
 					
 					itemContainer.innerHTML = '<a href="#" class="redactor-dropdown-' + btnName + '" role="button"><span>' + btnObject.title + '</span></a>';
-					itemContainer.children[0].addEventListener('mousedown', (function(event) {
+					// Use a jQuery event here to support the unbinding of the event listener in
+					// existing "3rdParty" code.
+					$(itemContainer.children[0]).on('mousedown', (function(event) {
 						event.preventDefault();
 						
 						this.dropdown.buildClick(event, btnName, btnObject);

@@ -49,6 +49,14 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	 * @inheritDoc
 	 * @since	5.2
 	 */
+	protected function getXsdFilename() {
+		return 'acpMenu';
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
 	protected function addFormFields(IFormDocument $form) {
 		parent::addFormFields($form);
 		

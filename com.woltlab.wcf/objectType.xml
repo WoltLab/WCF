@@ -135,6 +135,7 @@
 		<type>
 			<name>com.woltlab.wcf.user.signature</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
+			<disallowedBBCodesPermission>user.signature.disallowedBBCodes</disallowedBBCodesPermission>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.signature</name>
@@ -144,10 +145,12 @@
 		<type>
 			<name>com.woltlab.wcf.comment</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
+			<disallowedBBCodesPermission>user.comment.disallowedBBCodes</disallowedBBCodesPermission>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.comment.response</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
+			<disallowedBBCodesPermission>user.comment.disallowedBBCodes</disallowedBBCodesPermission>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.paidSubscription</name>

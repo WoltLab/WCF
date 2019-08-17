@@ -31,7 +31,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 */
 	public function getColumns($tableName) {
 		$columns = [];
-		$regex = new Regex('([a-z]+)\(([0-9]+)\)', Regex::CASE_INSENSITIVE);
+		$regex = new Regex('([a-z]+)\((.+)\)', Regex::CASE_INSENSITIVE);
 		
 		$sql = "SHOW COLUMNS FROM `".$tableName."`";
 		$statement = $this->dbObj->prepareStatement($sql);
@@ -40,13 +40,52 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 			$regex->match($row['Type']);
 			$typeMatches = $regex->getMatches();
 			
+			$type = $row['Type'];
+			$length = '';
+			$decimals = '';
+			$enumValues = '';
+			if (!empty($typeMatches)) {
+				$type = $typeMatches[1];
+				
+				switch ($type) {
+					case 'enum':
+					case 'set':
+						$enumValues = $typeMatches[2];
+						break;
+						
+					case 'decimal':
+					case 'double':
+					case 'float':
+						$pieces = explode(',', $typeMatches[2]);
+						switch (count($pieces)) {
+							case 1:
+								$length = $pieces[0];
+								break;
+								
+							case 2:
+								list($length, $decimals) = $pieces;
+								break;
+						}
+						
+						break;
+						
+					default:
+						if ($typeMatches[2] == (int)$typeMatches[2]) {
+							$length = $typeMatches[2];
+						}
+						break;
+				}
+			}
+			
 			$columns[] = ['name' => $row['Field'], 'data' => [
-				'type' => empty($typeMatches) ? $row['Type'] : $typeMatches[1],
-				'length' => empty($typeMatches) ? '' : $typeMatches[2],
-				'notNull' => ($row['Null'] == 'YES') ? false : true,
+				'type' => $type,
+				'length' => $length,
+				'notNull' => $row['Null'] == 'YES' ? false : true,
 				'key' => ($row['Key'] == 'PRI') ? 'PRIMARY' : (($row['Key'] == 'UNI') ? 'UNIQUE' : ''),
 				'default' => $row['Default'],
-				'autoIncrement' => $row['Extra'] == 'auto_increment' ? true : false
+				'autoIncrement' => $row['Extra'] == 'auto_increment' ? true : false,
+				'enumValues' => $enumValues,
+				'decimals' => $decimals
 			]];
 		}
 		
@@ -159,7 +198,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 			$indices[] = $row['Key_name'];
 		}
 		
-		return $indices;
+		return array_unique($indices);
 	}
 	
 	/**
