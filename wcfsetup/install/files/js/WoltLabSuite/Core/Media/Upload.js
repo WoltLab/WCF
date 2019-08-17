@@ -60,6 +60,11 @@ define(
 	function MediaUpload(buttonContainerId, targetId, options) {
 		options = options || {};
 		
+		this._elementTagSize = 144;
+		if (options.elementTagSize) {
+			this._elementTagSize = options.elementTagSize;
+		}
+		
 		this._mediaManager = null;
 		if (options.mediaManager) {
 			this._mediaManager = options.mediaManager;
@@ -194,20 +199,19 @@ define(
 		 * @see	WoltLabSuite/Core/Upload#_getParameters
 		 */
 		_getParameters: function() {
+			var parameters = {
+				elementTagSize: this._elementTagSize
+			};
 			if (this._mediaManager) {
-				var parameters = {
-					imagesOnly: this._mediaManager.getOption('imagesOnly')
-				};
+				parameters.imagesOnly = this._mediaManager.getOption('imagesOnly');
 				
 				var categoryId = this._mediaManager.getCategoryId();
 				if (categoryId) {
 					parameters.categoryID = categoryId;
 				}
-				
-				return Core.extend(MediaUpload._super.prototype._getParameters.call(this), parameters);
 			}
 			
-			return MediaUpload._super.prototype._getParameters.call(this);
+			return Core.extend(MediaUpload._super.prototype._getParameters.call(this), parameters);
 		},
 		
 		/**
@@ -218,7 +222,10 @@ define(
 		 * @param	{integer}	size		size of the file icon in pixels
 		 */
 		_replaceFileIcon: function(fileIcon, media, size) {
-			if (media.tinyThumbnailType) {
+			if (media.elementTag) {
+				fileIcon.parentElement.innerHTML = media.elementTag;
+			}
+			else if (media.tinyThumbnailType) {
 				var img = elCreate('img');
 				elAttr(img, 'src', media.tinyThumbnailLink);
 				elAttr(img, 'alt', '');

@@ -2,6 +2,7 @@
 namespace wcf\system\form\builder\field\wysiwyg;
 use wcf\data\IMessageQuoteAction;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\IMaximumLengthFormField;
@@ -13,7 +14,9 @@ use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IObjectTypeFormNode;
 use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\message\censorship\Censorship;
 use wcf\system\message\quote\MessageQuoteManager;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
@@ -113,6 +116,17 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 		if ($this->supportsQuotes()) {
 			MessageQuoteManager::getInstance()->assignVariables();
 		}
+		
+		/** @noinspection PhpUndefinedFieldInspection */
+		$disallowedBBCodesPermission = $this->getObjectType()->disallowedBBCodesPermission;
+		if ($disallowedBBCodesPermission === null) {
+			$disallowedBBCodesPermission = 'user.message.disallowedBBCodes';
+		}
+		
+		BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(
+			',',
+			WCF::getSession()->getPermission($disallowedBBCodesPermission)
+		));
 		
 		return parent::getHtml();
 	}
@@ -344,6 +358,17 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	 * @inheritDoc
 	 */
 	public function validate() {
+		/** @noinspection PhpUndefinedFieldInspection */
+		$disallowedBBCodesPermission = $this->getObjectType()->disallowedBBCodesPermission;
+		if ($disallowedBBCodesPermission === null) {
+			$disallowedBBCodesPermission = 'user.message.disallowedBBCodes';
+		}
+		
+		BBCodeHandler::getInstance()->setDisallowedBBCodes(explode(
+			',',
+			WCF::getSession()->getPermission($disallowedBBCodesPermission)
+		));
+		
 		$this->htmlInputProcessor = new HtmlInputProcessor();
 		$this->htmlInputProcessor->process($this->getValue(), $this->getObjectType()->objectType);
 		
@@ -351,9 +376,30 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 			$this->addValidationError(new FormFieldValidationError('empty'));
 		}
 		else {
-			$message = $this->htmlInputProcessor->getTextContent();
-			$this->validateMinimumLength($message);
-			$this->validateMaximumLength($message);
+			$disallowedBBCodes = $this->htmlInputProcessor->validate();
+			if (!empty($disallowedBBCodes)) {
+				$this->addValidationError(new FormFieldValidationError(
+					'disallowedBBCodes',
+					'wcf.message.error.disallowedBBCodes',
+					['disallowedBBCodes' => $disallowedBBCodes]
+				));
+			}
+			else {
+				$message = $this->htmlInputProcessor->getTextContent();
+				$this->validateMinimumLength($message);
+				$this->validateMaximumLength($message);
+				
+				if (empty($this->getValidationErrors()) && ENABLE_CENSORSHIP) {
+					$result = Censorship::getInstance()->test($message);
+					if ($result) {
+						$this->addValidationError(new FormFieldValidationError(
+							'censoredWords',
+							'wcf.message.error.censoredWordsFound',
+							['censoredWords' => $result]
+						));
+					}
+				}
+			}
 		}
 		
 		parent::validate();

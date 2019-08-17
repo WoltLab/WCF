@@ -949,6 +949,7 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.language.export.customValues"><![CDATA[Include custom items]]></item>
 		<item name="wcf.acp.language.export.selectPackages"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.language.import.error"><![CDATA[Errors occurred while importing the language file:]]></item>
+		<item name="wcf.acp.language.import.error.categoryMismatch"><![CDATA[The phrase “{$languageItem} does not belong to the “{$categoryName}” category.]]></item>
 		<item name="wcf.acp.language.import.source.file"><![CDATA[Path to Language File]]></item>
 		<item name="wcf.acp.language.import.source.file.description"><![CDATA[Enter the relative path to a valid XML language file.]]></item>
 		<item name="wcf.acp.language.import.source.upload"><![CDATA[Upload Language File]]></item>
@@ -1198,7 +1199,7 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.notice.example"><![CDATA[Example text of a notice]]></item>
 		<item name="wcf.acp.notice.isDisabled"><![CDATA[Disable notice]]></item>
 		<item name="wcf.acp.notice.isDismissible"><![CDATA[User can dismiss notice]]></item>
-		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[If a user dismisses a notice, it will not display for them again.]]></item>
+		<item name="wcf.acp.notice.isDismissible.description"><![CDATA[If a user dismisses a notice, it will not be displayed for them again.]]></item>
 		<item name="wcf.acp.notice.list"><![CDATA[Notices]]></item>
 		<item name="wcf.acp.notice.notice"><![CDATA[Notice]]></item>
 		<item name="wcf.acp.notice.notice.description"><![CDATA[<kbd>{literal}{$username}{/literal}</kbd> will be replaced by the name and <kbd>{literal}{$email}{/literal}</kbd> by the mail address of the active user.]]></item>
@@ -2460,6 +2461,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.integerCondition.propertyName.description"><![CDATA[Name of the object property and column of <kbd>{$tableName}</kbd> database table used for this condition.]]></item>
 		<item name="wcf.acp.pip.objectType.integerCondition.propertyName"><![CDATA[Object Property Name]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.data.title"><![CDATA[Message Type Data]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission"><![CDATA[Permission for Disallowed BBCodes]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.description"><![CDATA[If the form builder API is used to create a message of this type, the given user group permission will be used to determine the disallowed BBCodes. If no permission is given, the general permission for disallowed BBCodes for messages is used.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.error.optionType"><![CDATA[The entered user group permission’s type has to be BBCodeSelect.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc"><![CDATA[Generate Table of Contents]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description"><![CDATA[If selected, a table of contents is created for each message of this type.]]></item>
 		<item name="wcf.acp.pip.templateListener.niceValue"><![CDATA[Nice Value]]></item>

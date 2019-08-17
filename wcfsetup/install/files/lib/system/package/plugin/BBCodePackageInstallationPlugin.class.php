@@ -320,6 +320,14 @@ class BBCodePackageInstallationPlugin extends AbstractXMLPackageInstallationPlug
 	 * @inheritDoc
 	 * @since	5.2
 	 */
+	protected function getXsdFilename() {
+		return 'bbcode';
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
 	protected function addFormFields(IFormDocument $form) {
 		/** @var FormContainer $dataContainer */
 		$dataContainer = $form->getNodeById('data');
