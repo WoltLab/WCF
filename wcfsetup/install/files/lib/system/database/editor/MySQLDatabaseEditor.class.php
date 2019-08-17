@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\database\editor;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\Regex;
 
 /**
@@ -89,6 +90,100 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		}
 		
 		return $columns;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getForeignKeys($tableName) {
+		$sql = "SELECT	CONSTRAINT_NAME, DELETE_RULE, UPDATE_RULE
+			FROM	INFORMATION_SCHEMA.REFERENTIAL_CONSTRAINTS
+			WHERE	CONSTRAINT_SCHEMA = ?
+				AND TABLE_NAME = ?";
+		$statement = $this->dbObj->prepareStatement($sql);
+		$statement->execute([
+			$this->dbObj->getDatabaseName(),
+			$tableName
+		]);
+		$referentialConstraints = $statement->fetchAll(\PDO::FETCH_ASSOC);
+		
+		$validActions = ['CASCADE', 'SET NULL', 'NO ACTION'];
+		
+		$foreignKeys = [];
+		foreach ($referentialConstraints as $information) {
+			$foreignKeys[$information['CONSTRAINT_NAME']] = [
+				'columns' => [],
+				'referencedColumns' => [],
+				'ON DELETE' => in_array($information['DELETE_RULE'], $validActions) ? $information['DELETE_RULE'] : null,
+				'ON UPDATE' => in_array($information['UPDATE_RULE'], $validActions) ? $information['UPDATE_RULE'] : null
+			];
+		}
+		
+		if (empty($foreignKeys)) {
+			return [];
+		}
+		
+		$conditionBuilder = new PreparedStatementConditionBuilder();
+		$conditionBuilder->add('CONSTRAINT_NAME IN (?)', [array_keys($foreignKeys)]);
+		$conditionBuilder->add('TABLE_SCHEMA = ?', [$this->dbObj->getDatabaseName()]);
+		$conditionBuilder->add('TABLE_NAME = ?', [$tableName]);
+		
+		$sql = "SELECT	CONSTRAINT_NAME, COLUMN_NAME, REFERENCED_TABLE_NAME, REFERENCED_COLUMN_NAME
+			FROM	INFORMATION_SCHEMA.KEY_COLUMN_USAGE
+			" . $conditionBuilder;
+		$statement = $this->dbObj->prepareStatement($sql);
+		$statement->execute($conditionBuilder->getParameters());
+		$keyColumnUsage = $statement->fetchAll(\PDO::FETCH_ASSOC);
+		
+		foreach ($keyColumnUsage as $information) {
+			$foreignKeys[$information['CONSTRAINT_NAME']]['columns'][] = $information['COLUMN_NAME'];
+			$foreignKeys[$information['CONSTRAINT_NAME']]['referencedColumns'][] = $information['REFERENCED_COLUMN_NAME'];
+			$foreignKeys[$information['CONSTRAINT_NAME']]['referencedTable'] = $information['REFERENCED_TABLE_NAME'];
+		}
+		
+		foreach ($foreignKeys as $keyName => $keyData) {
+			$foreignKeys[$keyName]['columns'] = array_unique($foreignKeys[$keyName]['columns']);
+			$foreignKeys[$keyName]['referencedColumns'] = array_unique($foreignKeys[$keyName]['referencedColumns']);
+		}
+		
+		return $foreignKeys;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getIndexInformation($tableName) {
+		$sql = "SHOW	INDEX
+			FROM	`".$tableName."`";
+		$statement = $this->dbObj->prepareStatement($sql);
+		$statement->execute();
+		$indices = $statement->fetchAll(\PDO::FETCH_ASSOC);
+		
+		$indexInformation = [];
+		foreach ($indices as $index) {
+			if (!isset($indexInformation[$index['Key_name']])) {
+				$type = null;
+				if ($index['Index_type'] === 'FULLTEXT') {
+					$type = 'FULLTEXT';
+				}
+				else if ($index['Key_name'] === 'PRIMARY') {
+					$type = 'PRIMARY';
+				}
+				else if ($index['Non_unique'] == 0) {
+					$type = 'UNIQUE';
+				}
+				
+				$indexInformation[$index['Key_name']] = [
+					'columns' => [$index['Column_name']],
+					'type' => $type
+				];
+			}
+			else {
+				$indexInformation[$index['Key_name']]['columns'][] = $index['Column_name'];
+			}
+		}
+		
+		return $indexInformation;
 	}
 	
 	/**
