@@ -103,7 +103,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 			$indices[] = $row['Key_name'];
 		}
 		
-		return $indices;
+		return array_unique($indices);
 	}
 	
 	/**

@@ -42,7 +42,7 @@ abstract class DatabaseEditor {
 	abstract public function getColumns($tableName);
 	
 	/**
-	 * Returns the indices of a table.
+	 * Returns the names of indices of a table.
 	 * 
 	 * @param	string		$tableName
 	 * @return	array		$indices
