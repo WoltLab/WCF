@@ -2398,6 +2398,9 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType"><![CDATA[Benötigte Objekt-Typen]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType.description"><![CDATA[Die durch die angegebenen Objekttypen repräsentierten Benutzerinhalte werden bei der Entfernung der Benutzerinhalte durch <strong>diesen</strong> Anbieter ebenfalls entfernt. Muss dabei eine bestimmte Reihenfolge beachtet werden, müssen nice-Werte angegeben werden.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.data.title"><![CDATA[Daten des Nachrichtentyps]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission"><![CDATA[Berechtigung für nicht erlaubte BBCodes]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.description"><![CDATA[Wird mit der Form Builder-API eine Nachricht dieses Typs erstellt, wird die angegebene Benutzergruppenberechtigung dafür verwendet, für nicht erlaubten BBCodes zu bestimmen. Wird keine Berechtigung angegeben, wird die allgemeine Berechtigung für nicht erlaubte BBCodes für Nachrichten verwendet.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.error.optionType"><![CDATA[Die angegebene Benutzergruppenberechtigung muss vom Typ BBCodeSelect sein.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc"><![CDATA[Inhaltsverzeichnis erstellen]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description"><![CDATA[Wenn ausgewählt wird ein Inhaltsverzeichnis für jede Nachricht dieses Types erstellt.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category"><![CDATA[Kategorie]]></item>

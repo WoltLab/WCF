@@ -2461,6 +2461,9 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.objectType.integerCondition.propertyName.description"><![CDATA[Name of the object property and column of <kbd>{$tableName}</kbd> database table used for this condition.]]></item>
 		<item name="wcf.acp.pip.objectType.integerCondition.propertyName"><![CDATA[Object Property Name]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.data.title"><![CDATA[Message Type Data]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission"><![CDATA[Permission for Disallowed BBCodes]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.description"><![CDATA[If the form builder API is used to create a message of this type, the given user group permission will be used to determine the disallowed BBCodes. If no permission is given, the general permission for disallowed BBCodes for messages is used.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.error.optionType"><![CDATA[The entered user group permission’s type has to be BBCodeSelect.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc"><![CDATA[Generate Table of Contents]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description"><![CDATA[If selected, a table of contents is created for each message of this type.]]></item>
 		<item name="wcf.acp.pip.templateListener.niceValue"><![CDATA[Nice Value]]></item>
