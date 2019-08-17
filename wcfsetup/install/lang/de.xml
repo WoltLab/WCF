@@ -972,6 +972,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.language.export.customValues"><![CDATA[Veränderte Variablen exportieren]]></item>
 		<item name="wcf.acp.language.export.selectPackages"><![CDATA[Pakete auswählen]]></item>
 		<item name="wcf.acp.language.import.error"><![CDATA[Beim Importieren der Sprachdatei ist folgender Fehler aufgetreten:]]></item>
+		<item name="wcf.acp.language.import.error.categoryMismatch"><![CDATA[Die Variable „{$languageItem}“ gehört nicht zur Kategorie „{$categoryName}“.]]></item>
 		<item name="wcf.acp.language.import.source.file"><![CDATA[Pfad zur Sprachdatei]]></item>
 		<item name="wcf.acp.language.import.source.file.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier den relativen Pfad zu einer gültigen XML-Sprachdatei an.]]></item>
 		<item name="wcf.acp.language.import.source.upload"><![CDATA[Sprachdatei vom lokalen Computer hochladen]]></item>

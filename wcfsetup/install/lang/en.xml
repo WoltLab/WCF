@@ -949,6 +949,7 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.language.export.customValues"><![CDATA[Include custom items]]></item>
 		<item name="wcf.acp.language.export.selectPackages"><![CDATA[Packages]]></item>
 		<item name="wcf.acp.language.import.error"><![CDATA[Errors occurred while importing the language file:]]></item>
+		<item name="wcf.acp.language.import.error.categoryMismatch"><![CDATA[The phrase “{$languageItem} does not belong to the “{$categoryName}” category.]]></item>
 		<item name="wcf.acp.language.import.source.file"><![CDATA[Path to Language File]]></item>
 		<item name="wcf.acp.language.import.source.file.description"><![CDATA[Enter the relative path to a valid XML language file.]]></item>
 		<item name="wcf.acp.language.import.source.upload"><![CDATA[Upload Language File]]></item>

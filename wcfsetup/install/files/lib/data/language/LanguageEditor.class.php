@@ -238,6 +238,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * @param	integer		$packageID
 	 * @param	boolean		$updateFiles
 	 * @param	boolean		$updateExistingItems
+	 * @throws	\InvalidArgumentException	if given XML file is invalid
 	 */
 	public function updateFromXML(XML $xml, $packageID, $updateFiles = true, $updateExistingItems = true) {
 		$xpath = $xml->xpath();
@@ -311,6 +312,16 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				/** @var \DOMElement $element */
 				foreach ($elements as $element) {
 					$itemName = $element->getAttribute('name');
+					if ($itemName !== $categoryName && strpos($itemName, $categoryName . '.') !== 0) {
+						throw new \InvalidArgumentException(WCF::getLanguage()->getDynamicVariable(
+							'wcf.acp.language.import.error.categoryMismatch',
+							[
+								'categoryName' => $categoryName,
+								'languageItem' => $itemName
+							]
+						));
+					}
+					
 					$itemValue = $element->nodeValue;
 					
 					$itemData[] = $this->languageID;
