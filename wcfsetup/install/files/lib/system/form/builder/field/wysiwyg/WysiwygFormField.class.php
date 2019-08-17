@@ -13,6 +13,7 @@ use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IObjectTypeFormNode;
 use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\system\message\censorship\Censorship;
 use wcf\system\message\quote\MessageQuoteManager;
 use wcf\util\StringUtil;
 
@@ -354,6 +355,17 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 			$message = $this->htmlInputProcessor->getTextContent();
 			$this->validateMinimumLength($message);
 			$this->validateMaximumLength($message);
+			
+			if (empty($this->getValidationErrors()) && ENABLE_CENSORSHIP) {
+				$result = Censorship::getInstance()->test($message);
+				if ($result) {
+					$this->addValidationError(new FormFieldValidationError(
+						'censoredWords',
+						'wcf.message.error.censoredWordsFound',
+						['censoredWords' => $result]
+					));
+				}
+			}
 		}
 		
 		parent::validate();
