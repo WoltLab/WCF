@@ -3983,7 +3983,7 @@ Dateianhänge:
 		<item name="wcf.like.reaction.label"><![CDATA[{#$reactions} Reaktion{if $reactions != 1}en{/if}]]></item>
 		<item name="wcf.like.reaction.more"><![CDATA[Weitere Reaktionen]]></item>
 		<item name="wcf.like.reaction.noMoreEntries"><![CDATA[Keine weiteren Reaktionen]]></item>
-		<item name="wcf.like.reaction.topReaction"><![CDATA[{$reaction->getTitle()} × {#$count}]]></item>
+		<item name="wcf.like.reaction.topReaction"><![CDATA[{$reaction->getTitle()} × {#$count}{if $other} und {if $other == 1}eine weitere Reaktion{else}{#$other} weitere Reaktionen{/if}{/if}]]></item>
 		<item name="wcf.like.reactionsReceived"><![CDATA[Erhaltene Reaktionen]]></item>
 		<item name="wcf.like.reactionsGiven"><![CDATA[Vergebene Reaktionen]]></item>
 	</category>

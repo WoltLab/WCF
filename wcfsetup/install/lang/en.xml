@@ -3929,7 +3929,7 @@ Attachments:
 		<item name="wcf.like.reaction.label"><![CDATA[{#$reactions} reaction{if $reactions != 1}s{/if}]]></item>
 		<item name="wcf.like.reaction.more"><![CDATA[More Reactions]]></item>
 		<item name="wcf.like.reaction.noMoreEntries"><![CDATA[There are no new reactions at the moment.]]></item>
-		<item name="wcf.like.reaction.topReaction"><![CDATA[{$reaction->getTitle()} × {#$count}]]></item>
+		<item name="wcf.like.reaction.topReaction"><![CDATA[{$reaction->getTitle()} × {#$count}{if $other} and {if $other == 1}one other reaction{else}{#$other} other reactions{/if}{/if}]]></item>
 		<item name="wcf.like.reactionsReceived"><![CDATA[Reactions Received]]></item>
 		<item name="wcf.like.reactionsGiven"><![CDATA[Reactions Given]]></item>
 	</category>

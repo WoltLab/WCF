@@ -745,10 +745,14 @@ class ReactionHandler extends SingletonFactory {
 			$cachedReactions = @unserialize($cachedReactions);
 			
 			if (is_array($cachedReactions) && !empty($cachedReactions)) {
-				asort($cachedReactions, SORT_NUMERIC);
+				$allReactions = array_sum($cachedReactions);
 				
+				arsort($cachedReactions, SORT_NUMERIC);
+				
+				$count = current($cachedReactions);
 				return [
-					'count' => current($cachedReactions),
+					'count' => $count,
+					'other' => $allReactions - $count,
 					'reaction' => ReactionTypeCache::getInstance()->getReactionTypeByID(key($cachedReactions)),
 				];
 			}
