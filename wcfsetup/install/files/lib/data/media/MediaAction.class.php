@@ -93,7 +93,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			}
 			
 			// fetch media objects from database
-			$mediaList = new MediaList();
+			$mediaList = new ViewableMediaList();
 			$mediaList->setObjectIDs($mediaIDs);
 			$mediaList->readObjects();
 			
@@ -147,6 +147,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			'caption' => $media instanceof ViewableMedia ? $media->caption : [],
 			'captionEnableHtml' => $media->captionEnableHtml,
 			'categoryID' => $media->categoryID,
+			'elementTag' => $media instanceof ViewableMedia ? $media->getElementTag($this->parameters['elementTagSize'] ?? 144) : '',
 			'fileHash' => $media->fileHash,
 			'filename' => $media->filename,
 			'filesize' => $media->filesize,
