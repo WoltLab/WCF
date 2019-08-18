@@ -396,6 +396,10 @@ class PackageInstallationDispatcher {
 	protected function installPackage(array $nodeData) {
 		$installationStep = new PackageInstallationStep();
 		
+		if ($this->getAction() === 'update' && $this->getPackageName() === 'com.woltlab.wcf') {
+			WCF::checkWritability();
+		}
+		
 		// check requirements
 		if (!empty($nodeData['requirements'])) {
 			foreach ($nodeData['requirements'] as $package => $requirementData) {
@@ -1176,7 +1180,6 @@ class PackageInstallationDispatcher {
 					];
 				}
 			}
-				
 		}
 		
 		return $errors;
