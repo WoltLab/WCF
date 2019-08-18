@@ -3917,7 +3917,7 @@ Dateianhänge:
 		<item name="wcf.form.field.date.error.format"><![CDATA[Der angegebene Wert hat ein ungültiges Format.]]></item>
 		<item name="wcf.form.field.date.error.earliestDate"><![CDATA[Der angegebene Wert darf nicht früher sein als {$earliestDate}.]]></item>
 		<item name="wcf.form.field.date.error.latestDate"><![CDATA[Der angegebene Wert darf nicht später sein als {$latestDate}.]]></item>
-		<item name="wcf.form.field.itemList.error.maximumItems"><![CDATA[Die haben {#$items} Einträge angegebenen, die Maximalanzahl beträgt jedoch jedoch {#$maximumItems}.]]></item>
+		<item name="wcf.form.field.itemList.error.maximumItems"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} {#$items} Einträge angegebenen, die Maximalanzahl beträgt jedoch {#$maximumItems}.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Titelbild]]></item>
