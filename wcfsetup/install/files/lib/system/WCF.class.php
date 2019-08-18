@@ -1200,7 +1200,7 @@ class WCF {
 		
 		if (!empty($nonWritablePaths)) {
 			$maxPaths = 10;
-			throw new \RuntimeException('The following paths are not writable: ' . implode(',' ,array_slice($nonWritablePaths, 0, $maxPaths)) . (count($nonWritablePaths) > $maxPaths ? ',' . StringUtil::HELLIP : ''));
+			throw new \RuntimeException('The following paths are not writable: ' . implode(',', array_slice($nonWritablePaths, 0, $maxPaths)) . (count($nonWritablePaths) > $maxPaths ? ',' . StringUtil::HELLIP : ''));
 		}
 	}
 }
