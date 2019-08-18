@@ -38,6 +38,7 @@ use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
@@ -132,6 +133,7 @@ class PackageInstallationDispatcher {
 		$step = null;
 		foreach ($nodes as $data) {
 			$nodeData = unserialize($data['nodeData']);
+			$this->logInstallationStep($data);
 			
 			switch ($data['nodeType']) {
 				case 'package':
@@ -152,6 +154,7 @@ class PackageInstallationDispatcher {
 			}
 			
 			if ($step->splitNode()) {
+				$this->logInstallationStep($data, 'split node');
 				$this->nodeBuilder->cloneNode($node, $data['sequenceNo']);
 				break;
 			}
@@ -166,6 +169,8 @@ class PackageInstallationDispatcher {
 		
 		// perform post-install/update actions
 		if ($node == '') {
+			$this->logInstallationStep([], 'start cleanup');
+			
 			// update "last update time" option
 			$sql = "UPDATE	wcf".WCF_N."_option
 				SET	optionValue = ?
@@ -350,9 +355,44 @@ class PackageInstallationDispatcher {
 				WHERE		processNo = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->queue->processNo]);
+			
+			$this->logInstallationStep([], 'finished cleanup');
 		}
 		
 		return $step;
+	}
+	
+	/**
+	 * Logs an installation step.
+	 * 
+	 * @param	array		$node	data of the executed node
+	 * @param	string		$log	optional additional log text
+	 */
+	protected function logInstallationStep(array $node = [], $log = '') {
+		$time = TIME_NOW;
+		$logEntry = "[" . TIME_NOW . "]\n";
+		if (!empty($node)) {
+			$logEntry .= 'sequenceNo: ' . $node['sequenceNo'] . "\n";
+			$logEntry .= 'nodeType: ' . $node['nodeType'] . "\n";
+			$logEntry .= "nodeData:\n";
+			
+			$nodeData = unserialize($node['nodeData']);
+			foreach ($nodeData as $index => $value) {
+				$logEntry .= "\t" . $index . ': ' . (!is_object($value) && !is_array($value) ? $value : JSON::encode($value)) . "\n";
+			}
+		}
+		
+		if ($log) {
+			$logEntry .= 'additional information: ' . $log . "\n";
+		}
+		
+		$logEntry .= str_repeat('-', 30) . "\n\n";
+		
+		file_put_contents(
+			WCF_DIR . 'log/' . date('Y-m-d', TIME_NOW) . '-update-' . $this->queue->queueID . '.txt',
+			$logEntry,
+			FILE_APPEND
+		);
 	}
 	
 	/**
