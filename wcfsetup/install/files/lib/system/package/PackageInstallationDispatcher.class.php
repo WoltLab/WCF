@@ -369,7 +369,6 @@ class PackageInstallationDispatcher {
 	 * @param	string		$log	optional additional log text
 	 */
 	protected function logInstallationStep(array $node = [], $log = '') {
-		$time = TIME_NOW;
 		$logEntry = "[" . TIME_NOW . "]\n";
 		if (!empty($node)) {
 			$logEntry .= 'sequenceNo: ' . $node['sequenceNo'] . "\n";
