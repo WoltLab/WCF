@@ -481,11 +481,11 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		// com.woltlab.wcf.message
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.message')
 			->appendChildren([
-				// TODO: maximum of one item (see https://github.com/WoltLab/WCF/issues/3040)
 				UserGroupOptionFormField::create('messageObjectDisallowedBBCodesPermission')
 					->objectProperty('disallowedBBCodesPermission')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.description')
+					->maximum(1)
 					->addValidator(new FormFieldValidator('optionType', function(UserGroupOptionFormField $formField) {
 						$value = $formField->getValue();
 						if (empty($value)) return;

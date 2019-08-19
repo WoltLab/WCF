@@ -3892,7 +3892,7 @@ Dateianhänge:
 		<item name="wcf.form.field.className.error.leadingBackslash"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} darf keinen führenden Backslash besitzen.]]></item>
 		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} existiert nicht.]]></item>
 		<item name="wcf.form.field.className.error.parentClass"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} erbt nicht von <kbd>{$parentClass}</kbd>.]]></item>
-		<item name="wcf.form.field.itemList.error.separator"><![CDATA[Die folgenden Elemente dürfen kein {if $separator === ','}Komma{else}Leerzeichen{/if} enthalten: {implode from=$invalidItems item=item}„{$item}“{/implode}.]]></item>
+		<item name="wcf.form.field.itemList.error.separator"><![CDATA[Die folgenden Einträge dürfen kein {if $separator === ','}Komma{else}Leerzeichen{/if} enthalten: {implode from=$invalidItems item=item}„{$item}“{/implode}.]]></item>
 		<item name="wcf.form.field.numeric.error.maximum"><![CDATA[Der angegebene Wert darf nicht kleiner als {#$maximum} sein.]]></item>
 		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[Der angegebene Wert darf nicht größer als {#$minimum} sein.]]></item>
 		<item name="wcf.form.field.option"><![CDATA[Einstellungen]]></item>
@@ -3917,6 +3917,7 @@ Dateianhänge:
 		<item name="wcf.form.field.date.error.format"><![CDATA[Der angegebene Wert hat ein ungültiges Format.]]></item>
 		<item name="wcf.form.field.date.error.earliestDate"><![CDATA[Der angegebene Wert darf nicht früher sein als {$earliestDate}.]]></item>
 		<item name="wcf.form.field.date.error.latestDate"><![CDATA[Der angegebene Wert darf nicht später sein als {$latestDate}.]]></item>
+		<item name="wcf.form.field.itemList.error.maximumItems"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} {#$items} Einträge angegebenen, die Maximalanzahl beträgt jedoch {#$maximumItems}.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Titelbild]]></item>
