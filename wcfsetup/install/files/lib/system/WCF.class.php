@@ -1151,18 +1151,18 @@ class WCF {
 			}
 			
 			if (!is_writable($path)) {
-				$nonWritablePaths[] = $path;
+				$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $path);
 				continue;
 			}
 			
 			DirectoryUtil::getInstance($path, false)->executeCallback(function($file, \SplFileInfo $fileInfo) use ($path, &$nonWritablePaths) {
 				if ($fileInfo instanceof \DirectoryIterator) {
 					if (!is_writable($fileInfo->getPath())) {
-						$nonWritablePaths[] = $fileInfo->getPath();
+						$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath());
 					}
 				}
 				else if (!is_writable($fileInfo->getRealPath())) {
-					$nonWritablePaths[] = $fileInfo->getRealPath();
+					$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath()) . $fileInfo->getFilename();
 				}
 			});
 		}
@@ -1182,18 +1182,18 @@ class WCF {
 			$path = WCF_DIR . $directory;
 			
 			if (!is_writable($path)) {
-				$nonWritablePaths[] = $path;
+				$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $path);
 				continue;
 			}
 			
 			DirectoryUtil::getInstance($path)->executeCallback(function($file, \SplFileInfo $fileInfo) use ($path, &$nonWritablePaths) {
 				if ($fileInfo instanceof \DirectoryIterator) {
 					if (!is_writable($fileInfo->getPath())) {
-						$nonWritablePaths[] = $fileInfo->getPath();
+						$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath());
 					}
 				}
 				else if (!is_writable($fileInfo->getRealPath())) {
-					$nonWritablePaths[] = $fileInfo->getRealPath();
+					$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath()) . $fileInfo->getFilename();
 				}
 			});
 		}
