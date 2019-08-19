@@ -4377,6 +4377,7 @@ Dateianhänge:
 		<item name="wcf.tagging.taggedObjects.noResults"><![CDATA[Es wurden keine Einträge mit diesem Tag gefunden.]]></item>
 		<item name="wcf.tagging.objectType.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.tagging.taggedObjects.com.woltlab.wcf.article"><![CDATA[Artikel mit dem Tag „{$tag->name}“]]></item>
+		<item name="wcf.tagging.tags.error.unknownTags"><![CDATA[Die folgenden Tags existieren nicht: {implode from=$unknownTags item=unknownTag}{$unknownTag}{/implode}.]]></item>
 	</category>
 	<category name="wcf.user">
 		<item name="wcf.user.confirmEmail"><![CDATA[E-Mail-Adresse wiederholen]]></item>

@@ -84,7 +84,13 @@ class TagSearchForm extends AbstractCaptchaForm {
 		
 		if (!empty($this->tagNames)) {
 			$this->tags = TagEngine::getInstance()->getTagsByName($this->tagNames, $this->languageID);
-			if (empty($this->tags)) {
+			if (count($this->tagNames) !== count($this->tags)) {
+				WCF::getTPL()->assign('unknownTags', array_diff($this->tagNames, array_map(function(Tag $tag) {
+					return $tag->getTitle();
+				}, $this->tags)));
+				throw new UserInputException('tags', 'unknownTags');
+			}
+			else if (empty($this->tags)) {
 				throw new UserInputException('tags');
 			}
 		}
