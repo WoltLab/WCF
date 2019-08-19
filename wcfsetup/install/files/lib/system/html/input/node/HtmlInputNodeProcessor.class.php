@@ -30,11 +30,11 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			'messageFloatObjectLeft', 'messageFloatObjectRight',
 			
 			// built-in
-			'smiley', 'woltlabAttachment', 'woltlabSuiteMedia'
+			'smiley', 'woltlabAttachment', 'woltlabSuiteMedia',
 		],
 		'li' => ['text-center', 'text-justify', 'text-right'],
 		'p' => ['text-center', 'text-justify', 'text-right'],
-		'td' => ['text-center', 'text-justify', 'text-right']
+		'td' => ['text-center', 'text-justify', 'text-right'],
 	];
 	
 	/**
@@ -47,7 +47,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * @var string[]
 	 */
 	public static $allowedStyleElements = [
-		'span'
+		'span',
 	];
 	
 	/**
@@ -70,7 +70,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		'ul', 'ol', 'li',
 		
 		// other
-		'a', 'kbd', 'woltlab-quote', 'woltlab-spoiler', 'pre', 'sub', 'sup'
+		'a', 'kbd', 'woltlab-quote', 'woltlab-spoiler', 'pre', 'sub', 'sup',
 	];
 	
 	/**
@@ -419,11 +419,8 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		
 		// handle custom nodes that have no dedicated handler
 		$customTags = [
-			'color' => 'woltlab-color',
-			'font' => 'woltlab-size',
-			'size' => 'woltlab-size',
 			'spoiler' => 'woltlab-spoiler',
-			'url' => 'a'
+			'url' => 'a',
 		];
 		
 		foreach ($customTags as $bbcode => $tagName) {
@@ -433,6 +430,28 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			
 			if ($this->getDocument()->getElementsByTagName($tagName)->length) {
 				$result[] = $bbcode;
+			}
+		}
+		
+		$inlineStyles = array_filter([
+			'color' => 'color',
+			'font' => 'font-family',
+			'size' => 'font-size',
+		], function($bbcode) {
+			return !BBCodeHandler::getInstance()->isAvailableBBCode($bbcode);
+		}, ARRAY_FILTER_USE_KEY);
+		
+		if (!empty($inlineStyles)) {
+			$styles = [];
+			/** @var \DOMElement $element */
+			foreach ($this->getXPath()->query('//*[@style]') as $element) {
+				$tmp = array_filter(explode(';', $element->getAttribute('style')));
+				foreach ($tmp as $style) {
+					$property = explode(':', $style, 2)[0];
+					if (in_array($property, $inlineStyles) && !in_array($property, $result)) {
+						$result[] = $property;
+					}
+				}
 			}
 		}
 		
