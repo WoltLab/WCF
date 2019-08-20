@@ -81,7 +81,7 @@ define(
 			// but the normal one for the desktop. The navigation reacts to a hover status if a menu item has 
 			// several submenu items. Logically, this cannot be created with the iPad, so that we display the 
 			// submenu here after a single click and only follow the link after another click. 
-			if (Environment.touch() && Environment.platform() === 'ios' && Environment.browser() === 'safari') {
+			if (Environment.touch() && Environment.platform() === 'ios' && (Environment.browser() === 'safari' || Environment.browser() === 'chrome')) {
 				UiScreen.on('screen-lg', {
 					match: this._enableLGTouchNavigation.bind(this),
 					unmatch: this._disableLGTouchNavigation.bind(this),
