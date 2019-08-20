@@ -17,6 +17,7 @@ define(
 	var _dropdownMenu = null;
 	var _dropdownMenuMessage = null;
 	var _enabled = false;
+	var _enabledLGTouchNavigation = false;
 	var _knownMessages = new List();
 	var _main = null;
 	var _messages = elByClass('message');
@@ -75,6 +76,18 @@ define(
 				unmatch: this._disableSidebarXS.bind(this),
 				setup: this._setupSidebarXS.bind(this)
 			});
+			
+			// On the iPad Pro the navigation is not usable, because there is not the mobile layout displayed, 
+			// but the normal one for the desktop. The navigation reacts to a hover status if a menu item has 
+			// several submenu items. Logically, this cannot be created with the iPad, so that we display the 
+			// submenu here after a single click and only follow the link after another click. 
+			if (Environment.touch() && Environment.platform() === 'ios' && Environment.browser() === 'safari') {
+				UiScreen.on('screen-lg', {
+					match: this._enableLGTouchNavigation.bind(this),
+					unmatch: this._disableLGTouchNavigation.bind(this),
+					setup: this._setupLGTouchNavigation.bind(this)
+				});
+			}
 		},
 		
 		/**
@@ -364,6 +377,42 @@ define(
 			_dropdownMenu.classList.add('dropdownOpen');
 			
 			_dropdownMenuMessage = message;
+		},
+		
+		_setupLGTouchNavigation: function () {
+			_enabledLGTouchNavigation = true;
+			
+			elBySelAll('.boxMenuHasChildren > a', null, function (element) {
+				element.addEventListener('touchstart', function (event) {
+					if (_enabledLGTouchNavigation && !~~elData(event.target, 'dropdown-open')) {
+						event.preventDefault();
+						
+						elData(event.target, 'dropdown-open', 1);
+						
+						// Register an new event listener after the touch ended, which is triggered once when an 
+						// element on the page is pressed. This allows us to reset the touch status of the navigation 
+						// entry when the entry is no longer open, so that it does not redirect to the page when you 
+						// click it again. 
+						element.addEventListener('touchend', function () {
+							document.body.addEventListener('touchstart', function () {
+								elData(event.target, 'dropdown-open', 0);
+							}, {
+								once: true
+							});
+						}, {
+							once: true
+						});
+					}
+				})
+			});
+		},
+		
+		_enableLGTouchNavigation: function () {
+			_enabledLGTouchNavigation = true;
+		},
+		
+		_disableLGTouchNavigation: function () {
+			_enabledLGTouchNavigation = false;
 		},
 		
 		_rebuildMobileNavigation: function (navigation) {
