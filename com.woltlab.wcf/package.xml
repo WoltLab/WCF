@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.2.0 Alpha 3</version> <!-- codename: hurricane -->
-		<date>2019-07-27</date>
+		<version>5.2.0 Alpha 4</version> <!-- codename: hurricane -->
+		<date>2019-08-17</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -50,11 +50,13 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="5.2.0 Alpha 2">
+	<instructions type="update" fromversion="5.2.0 Alpha 3">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		
 		<instruction type="language" />
+		
+		<instruction type="userGroupOption" />
 	</instructions>
 </package>

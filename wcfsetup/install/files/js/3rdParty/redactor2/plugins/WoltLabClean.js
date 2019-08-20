@@ -153,6 +153,10 @@ $.Redactor.prototype.WoltLabClean = function() {
 					
 					return WCF.String.escapeHTML(html);
 				}
+
+				if (this.clean.isHtmlMsWord(html)) {
+					html = this.clean.cleanMsWord(html);
+				}
 				
 				var div = elCreate('div');
 				div.innerHTML = html.replace(/@@@WOLTLAB-P-ALIGN-(?:left|right|center|justify)@@@/g, '');
@@ -639,9 +643,9 @@ $.Redactor.prototype.WoltLabClean = function() {
 				'u'
 			];
 			elBySelAll(plainTags.join(','), this.$editor[0], function(element) {
-				if (elBySel(element.nodeName, element) !== null) {
-					removeElements.push(element);
-				}
+				elBySelAll(element.nodeName, element, function(child) {
+					removeElements.push(child);
+				});
 			});
 			
 			// Search for span[style] that contain styles that actually do nothing, because their set style

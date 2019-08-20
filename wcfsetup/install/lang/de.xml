@@ -972,6 +972,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.language.export.customValues"><![CDATA[Veränderte Variablen exportieren]]></item>
 		<item name="wcf.acp.language.export.selectPackages"><![CDATA[Pakete auswählen]]></item>
 		<item name="wcf.acp.language.import.error"><![CDATA[Beim Importieren der Sprachdatei ist folgender Fehler aufgetreten:]]></item>
+		<item name="wcf.acp.language.import.error.categoryMismatch"><![CDATA[Die Variable „{$languageItem}“ gehört nicht zur Kategorie „{$categoryName}“.]]></item>
 		<item name="wcf.acp.language.import.source.file"><![CDATA[Pfad zur Sprachdatei]]></item>
 		<item name="wcf.acp.language.import.source.file.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Gib{else}Geben Sie{/if} hier den relativen Pfad zu einer gültigen XML-Sprachdatei an.]]></item>
 		<item name="wcf.acp.language.import.source.upload"><![CDATA[Sprachdatei vom lokalen Computer hochladen]]></item>
@@ -2397,6 +2398,9 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType"><![CDATA[Benötigte Objekt-Typen]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.content.userContentProvider.requiredObjectType.description"><![CDATA[Die durch die angegebenen Objekttypen repräsentierten Benutzerinhalte werden bei der Entfernung der Benutzerinhalte durch <strong>diesen</strong> Anbieter ebenfalls entfernt. Muss dabei eine bestimmte Reihenfolge beachtet werden, müssen nice-Werte angegeben werden.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.data.title"><![CDATA[Daten des Nachrichtentyps]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission"><![CDATA[Berechtigung für nicht erlaubte BBCodes]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.description"><![CDATA[Wird mit der Form Builder-API eine Nachricht dieses Typs erstellt, wird die angegebene Benutzergruppenberechtigung dafür verwendet, für nicht erlaubten BBCodes zu bestimmen. Wird keine Berechtigung angegeben, wird die allgemeine Berechtigung für nicht erlaubte BBCodes für Nachrichten verwendet.]]></item>
+		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.error.optionType"><![CDATA[Die angegebene Benutzergruppenberechtigung muss vom Typ BBCodeSelect sein.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc"><![CDATA[Inhaltsverzeichnis erstellen]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description"><![CDATA[Wenn ausgewählt wird ein Inhaltsverzeichnis für jede Nachricht dieses Types erstellt.]]></item>
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.notification.objectType.category"><![CDATA[Kategorie]]></item>
@@ -3205,7 +3209,7 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.article.comment"><![CDATA[Artikel-Kommentar]]></item>
 		<item name="wcf.article.commentResponse"><![CDATA[Antwort auf Artikel-Kommentar]]></item>
 		<item name="wcf.article.sortField.comments"><![CDATA[Kommentare]]></item>
-		<item name="wcf.article.sortField.cumulativeLikes"><![CDATA[Likes]]></item>
+		<item name="wcf.article.sortField.cumulativeLikes"><![CDATA[Reaktionen]]></item>
 		<item name="wcf.article.sortField.random"><![CDATA[Zufällig]]></item>
 		<item name="wcf.article.sortField.time"><![CDATA[Datum]]></item>
 		<item name="wcf.article.sortField.views"><![CDATA[Zugriffe]]></item>
@@ -3888,7 +3892,7 @@ Dateianhänge:
 		<item name="wcf.form.field.className.error.leadingBackslash"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} darf keinen führenden Backslash besitzen.]]></item>
 		<item name="wcf.form.field.className.error.nonExistent"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} existiert nicht.]]></item>
 		<item name="wcf.form.field.className.error.parentClass"><![CDATA[Die angegebene Klasse{if $language|isset} ({$language}){/if} erbt nicht von <kbd>{$parentClass}</kbd>.]]></item>
-		<item name="wcf.form.field.itemList.error.separator"><![CDATA[Die folgenden Elemente dürfen kein {if $separator === ','}Komma{else}Leerzeichen{/if} enthalten: {implode from=$invalidItems item=item}„{$item}“{/implode}.]]></item>
+		<item name="wcf.form.field.itemList.error.separator"><![CDATA[Die folgenden Einträge dürfen kein {if $separator === ','}Komma{else}Leerzeichen{/if} enthalten: {implode from=$invalidItems item=item}„{$item}“{/implode}.]]></item>
 		<item name="wcf.form.field.numeric.error.maximum"><![CDATA[Der angegebene Wert darf nicht kleiner als {#$maximum} sein.]]></item>
 		<item name="wcf.form.field.numeric.error.minimum"><![CDATA[Der angegebene Wert darf nicht größer als {#$minimum} sein.]]></item>
 		<item name="wcf.form.field.option"><![CDATA[Einstellungen]]></item>
@@ -3913,6 +3917,7 @@ Dateianhänge:
 		<item name="wcf.form.field.date.error.format"><![CDATA[Der angegebene Wert hat ein ungültiges Format.]]></item>
 		<item name="wcf.form.field.date.error.earliestDate"><![CDATA[Der angegebene Wert darf nicht früher sein als {$earliestDate}.]]></item>
 		<item name="wcf.form.field.date.error.latestDate"><![CDATA[Der angegebene Wert darf nicht später sein als {$latestDate}.]]></item>
+		<item name="wcf.form.field.itemList.error.maximumItems"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} {#$items} Einträge angegebenen, die Maximalanzahl beträgt jedoch {#$maximumItems}.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Titelbild]]></item>
@@ -3983,6 +3988,7 @@ Dateianhänge:
 		<item name="wcf.like.reaction.label"><![CDATA[{#$reactions} Reaktion{if $reactions != 1}en{/if}]]></item>
 		<item name="wcf.like.reaction.more"><![CDATA[Weitere Reaktionen]]></item>
 		<item name="wcf.like.reaction.noMoreEntries"><![CDATA[Keine weiteren Reaktionen]]></item>
+		<item name="wcf.like.reaction.topReaction"><![CDATA[{$reaction->getTitle()} × {#$count}{if $other} und {if $other == 1}eine weitere Reaktion{else}{#$other} weitere Reaktionen{/if}{/if}]]></item>
 		<item name="wcf.like.reactionsReceived"><![CDATA[Erhaltene Reaktionen]]></item>
 		<item name="wcf.like.reactionsGiven"><![CDATA[Vergebene Reaktionen]]></item>
 	</category>
@@ -4371,6 +4377,7 @@ Dateianhänge:
 		<item name="wcf.tagging.taggedObjects.noResults"><![CDATA[Es wurden keine Einträge mit diesem Tag gefunden.]]></item>
 		<item name="wcf.tagging.objectType.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.tagging.taggedObjects.com.woltlab.wcf.article"><![CDATA[Artikel mit dem Tag „{$tag->name}“]]></item>
+		<item name="wcf.tagging.tags.error.unknownTags"><![CDATA[Die folgenden Tags existieren nicht: {implode from=$unknownTags item=unknownTag}{$unknownTag}{/implode}.]]></item>
 	</category>
 	<category name="wcf.user">
 		<item name="wcf.user.confirmEmail"><![CDATA[E-Mail-Adresse wiederholen]]></item>

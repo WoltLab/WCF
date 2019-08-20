@@ -6,6 +6,7 @@ use wcf\data\object\type\ObjectTypeEditor;
 use wcf\data\DatabaseObjectList;
 use wcf\data\page\PageNode;
 use wcf\data\page\PageNodeTree;
+use wcf\data\user\group\option\UserGroupOption;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\condition\AbstractIntegerCondition;
 use wcf\system\condition\UserGroupCondition;
@@ -480,11 +481,39 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 		// com.woltlab.wcf.message
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.message')
 			->appendChildren([
-				BooleanFormField::create('enableToc')
+				UserGroupOptionFormField::create('messageObjectDisallowedBBCodesPermission')
+					->objectProperty('disallowedBBCodesPermission')
+					->label('wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission')
+					->description('wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.description')
+					->maximum(1)
+					->addValidator(new FormFieldValidator('optionType', function(UserGroupOptionFormField $formField) {
+						$value = $formField->getValue();
+						if (empty($value)) return;
+						
+						$sql = "SELECT	optionType
+							FROM	wcf" . WCF_N . "_user_group_option
+							WHERE	optionName = ?";
+						$statement = WCF::getDB()->prepareStatement($sql);
+						$statement->execute([reset($value)]);
+						if ($statement->fetchSingleColumn() !== 'BBCodeSelect') {
+							$formField->addValidationError(
+								new FormFieldValidationError(
+									'optionType',
+									'wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.error.optionType'
+								)
+							);
+						}
+					})),
+				
+				BooleanFormField::create('messageObjectTypeEnableToc')
+					->objectProperty('enableToc')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.message.enableToc.description')
 			]);
-		$this->definitionElementChildren['com.woltlab.wcf.message'] = ['enableToc' => 0];
+		$this->definitionElementChildren['com.woltlab.wcf.message'] = [
+			'disallowedBBCodesPermission' => '',
+			'enableToc' => 0
+		];
 		
 		// com.woltlab.wcf.notification.objectType
 		$this->getObjectTypeDefinitionDataContainer($form, 'com.woltlab.wcf.notification.objectType')

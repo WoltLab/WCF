@@ -164,13 +164,14 @@ class UserProfileAction extends UserAction {
 		$conditionBuilder->add('userID = ?', [$this->userProfile->userID]);
 		$conditionBuilder->add('objectTypeID IN (?)', [array_keys($activityPointObjectTypes)]);
 		
-		$sql = "SELECT	objectTypeID, activityPoints
+		$sql = "SELECT	objectTypeID, activityPoints, items
 			FROM	wcf".WCF_N."_user_activity_point
 			".$conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
 		while ($row = $statement->fetchArray()) {
 			$activityPointObjectTypes[$row['objectTypeID']]->activityPoints = $row['activityPoints'];
+			$activityPointObjectTypes[$row['objectTypeID']]->items = $row['items'];
 		}
 		
 		WCF::getTPL()->assign([

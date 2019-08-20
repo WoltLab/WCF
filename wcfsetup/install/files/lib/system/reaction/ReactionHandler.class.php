@@ -734,4 +734,30 @@ class ReactionHandler extends SingletonFactory {
 		
 		return $firstReactionType ? $firstReactionType->reactionTypeID : null;
 	}
+	
+	/**
+	 * @param string|null $cachedReactions
+	 * @return array|null
+	 * @since 5.2
+	 */
+	public function getTopReaction($cachedReactions) {
+		if ($cachedReactions) {
+			$cachedReactions = @unserialize($cachedReactions);
+			
+			if (is_array($cachedReactions) && !empty($cachedReactions)) {
+				$allReactions = array_sum($cachedReactions);
+				
+				arsort($cachedReactions, SORT_NUMERIC);
+				
+				$count = current($cachedReactions);
+				return [
+					'count' => $count,
+					'other' => $allReactions - $count,
+					'reaction' => ReactionTypeCache::getInstance()->getReactionTypeByID(key($cachedReactions)),
+				];
+			}
+		}
+		
+		return null;
+	}
 }

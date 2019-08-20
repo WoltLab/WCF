@@ -8,6 +8,7 @@
 			'{@$field->getPrefixedId()}',
 			[{if $field->getValue() !== null && !$field->getValue()|empty}{implode from=$field->getValue() item=item}'{@$item|encodeJS}'{/implode}{/if}],
 			{
+				maxItems: {if $field->getMaximum() !== null}{@$field->getMaximum()}{else}-1{/if},
 				submitFieldName: '{@$field->getPrefixedId()}[]'
 			}
 		);

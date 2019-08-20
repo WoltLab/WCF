@@ -14,9 +14,12 @@ use wcf\util\ArrayUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class ItemListFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField {
+class ItemListFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField, IMaximumFormField {
 	use TAutoFocusFormField;
 	use TImmutableFormField;
+	use TMaximumFormField {
+		maximum as protected traitMaximum;
+	}
 	
 	/**
 	 * @inheritDoc
@@ -104,6 +107,19 @@ class ItemListFormField extends AbstractFormField implements IAutoFocusFormField
 	public function hasSaveValue() {
 		// arrays cannot be returned as a simple save value
 		return $this->getSaveValueType() !== self::SAVE_VALUE_TYPE_ARRAY;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function maximum($maximum = null) {
+		$this->traitMaximum($maximum);
+		
+		if ($maximum <= 0) {
+			throw new \InvalidArgumentException("The maximum number of items has to be positive.");
+		}
+		
+		return $this;
 	}
 	
 	/**
@@ -220,6 +236,19 @@ class ItemListFormField extends AbstractFormField implements IAutoFocusFormField
 	 */
 	public function validate() {
 		if (is_array($this->getValue())) {
+			if ($this->getMaximum() !== null && count($this->getValue()) > $this->getMaximum()) {
+				$this->addValidationError(new FormFieldValidationError(
+					'maximumItems',
+					'wcf.form.field.itemList.error.maximumItems',
+					[
+						'items' => count($this->getValue()),
+						'maximumItems' => $this->getMaximum()
+					]
+				));
+				
+				return;
+			}
+			
 			$invalidItems = [];
 			foreach ($this->getValue() as $item) {
 				switch ($this->getSaveValueType()) {

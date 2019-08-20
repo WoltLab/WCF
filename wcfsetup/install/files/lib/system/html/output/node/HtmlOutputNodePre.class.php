@@ -49,7 +49,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 					$prefix = '';
 					// Create a unique prefix if possible
 					if (isset($context['objectType']) && isset($context['objectID'])) {
-						$prefix = $context['objectType'].'_'.$context['objectID'].'_';
+						$prefix = str_replace('.', '_', $context['objectType']).'_'.$context['objectID'].'_';
 					}
 					$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
 						'content' => $element->textContent,

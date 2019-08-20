@@ -55,10 +55,7 @@
 				<div class="contentItemMetaIcons">
 					{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && $article->cumulativeLikes}
 						<div class="contentItemMetaIcon">
-							<span class="icon icon16 fa-smile-o"></span>
-							<span aria-label="{lang reactions=$article->cumulativeLikes}wcf.like.reaction.label{/lang}">
-								{#$article->cumulativeLikes}
-							</span>
+							{include file='__topReaction' cachedReactions=$article->cachedReactions render='short'}
 						</div>
 					{/if}
 					<div class="contentItemMetaIcon">

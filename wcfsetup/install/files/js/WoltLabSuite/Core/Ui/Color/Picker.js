@@ -62,7 +62,7 @@ define(['Core'], function (Core) {
 				callbackSubmit: null
 			}, options);
 			
-			_marshal(element, options);
+			_marshal(element, this._options);
 		}
 	};
 	

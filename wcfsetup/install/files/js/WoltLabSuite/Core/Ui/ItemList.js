@@ -97,6 +97,13 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 					}
 					
 					form.addEventListener('submit', (function() {
+						if (this._acceptsNewItems(elementId)) {
+							var value = _data.get(elementId).element.value.trim();
+							if (value.length) {
+								this._addItem(elementId, { objectId: 0, value: value });
+							}
+						}
+						
 						var values = this.getValues(elementId);
 						if (options.submitFieldName.length) {
 							var input;
@@ -113,6 +120,16 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 							options.callbackSubmit(form, values);
 						}
 					}).bind(this));
+				}
+				else {
+					form.addEventListener('submit', function() {
+						if (this._acceptsNewItems(elementId)) {
+							var value = _data.get(elementId).element.value.trim();
+							if (value.length) {
+								this._addItem(elementId, {objectId: 0, value: value});
+							}
+						}
+					}.bind(this));
 				}
 			}
 			

@@ -30,6 +30,17 @@ class GithubAuthAction extends AbstractAction {
 	/**
 	 * @inheritDoc
 	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		if (WCF::getSession()->spiderID) {
+			throw new IllegalLinkException();
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function execute() {
 		parent::execute();
 		

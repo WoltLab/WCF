@@ -682,12 +682,26 @@ class WCFSetup extends WCF {
 					$db = new MySQLDatabase($dbHostWithoutPort, $dbUser, $dbPassword, $dbName, $dbPort, true, !!(self::$developerMode));
 				}
 				catch (DatabaseException $e) {
-					// work-around for older MySQL versions that don't know utf8mb4
-					if ($e->getPrevious()->getCode() == 1115) {
-						throw new SystemException("Insufficient MySQL version. Version '5.5.35' or greater is needed.");
+					switch ($e->getPrevious()->getCode()) {
+						// try to manually create non-existing database
+						case 1049:
+							try {
+								$db = new MySQLDatabase($dbHostWithoutPort, $dbUser, $dbPassword, $dbName, $dbPort, true, true);
+							}
+							catch (DatabaseException $e) {
+								throw new SystemException("Unknown database '{$dbName}'. Please create the database manually.");
+							}
+							
+							break;
+						
+						// work-around for older MySQL versions that don't know utf8mb4
+						case 1115:
+							throw new SystemException("Insufficient MySQL version. Version '5.5.35' or greater is needed.");
+							break;
+							
+						default:
+							throw $e;
 					}
-					
-					throw $e;
 				}
 				
 				// check sql version

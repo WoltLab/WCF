@@ -2621,11 +2621,31 @@
 					html = html.replace(/<!--[\s\S]*?-->/g, '');
 					html = html.replace(/<o:p>[\s\S]*?<\/o:p>/gi, '');
 					html = html.replace(/\n/g, ' ');
-					html = html.replace(/<br\s?\/?>|<\/p>|<\/div>|<\/li>|<\/td>/gi, '\n\n');
+					html = html.replace(/<\/p>/gi, '</p><p><br data-redactor="br"></p>');
+					html = html.replace(/<\/div>|<\/li>|<\/td>/gi, '\n\n');
 					
-					// lists
 					var $div = $('<div/>').html(html);
 					
+					// Find any <p> that contains a <br> and split it into separate paragraphs.
+					/** @var {Element} br */
+					elBySelAll('br', $div[0], function(br) {
+						if (elData(br, 'redactor') === 'br') {
+							br.removeAttribute('data-redactor');
+						}
+						else {
+							var parent = br.parentNode;
+							if (parent && parent.nodeName === 'P') {
+								var paragraph = elCreate('p');
+								while (br.nextSibling) {
+									paragraph.appendChild(br.nextSibling);
+								}
+								parent.parentNode.insertBefore(paragraph, parent.nextSibling);
+								elRemove(br);
+							}
+						}
+					});
+
+					// lists
 					var lastList = false;
 					var lastLevel = 1;
 					var listsIds = [];
@@ -2689,6 +2709,22 @@
 					});
 					
 					$div.find('[data-level][data-list]').removeAttr('data-level data-list');
+					
+					// Find lists at the top level that are surrounded by `<p><br></p>`.
+					elBySelAll('ol, ul', $div[0], function(list) {
+						['nextElementSibling', 'previousElementSibling'].forEach(function(property) {
+							var sibling = list[property];
+							while (sibling && sibling.nodeName === 'P' && sibling.className === '') {
+								if (sibling.innerHTML !== '<br>') {
+									break;
+								}
+								
+								elRemove(sibling);
+								sibling = list[property];
+							}
+						});
+					});
+					
 					html = $div.html();
 					
 					return html;
@@ -3453,7 +3489,9 @@
 					}
 					
 					itemContainer.innerHTML = '<a href="#" class="redactor-dropdown-' + btnName + '" role="button"><span>' + btnObject.title + '</span></a>';
-					itemContainer.children[0].addEventListener('mousedown', (function(event) {
+					// Use a jQuery event here to support the unbinding of the event listener in
+					// existing "3rdParty" code.
+					$(itemContainer.children[0]).on('mousedown', (function(event) {
 						event.preventDefault();
 						
 						this.dropdown.buildClick(event, btnName, btnObject);

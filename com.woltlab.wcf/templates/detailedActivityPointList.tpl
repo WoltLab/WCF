@@ -18,7 +18,7 @@
 							{lang}wcf.user.activityPoint.objectType.{$objectType->objectType}{/lang}
 						</td>
 						<td class="columnDigits">
-							{#$objectType->activityPoints/$objectType->points}
+							{#$objectType->items}
 						</td>
 						<td class="columnDigits">
 							{#$objectType->points}
