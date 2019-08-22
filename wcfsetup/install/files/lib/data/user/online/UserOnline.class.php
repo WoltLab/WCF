@@ -185,7 +185,7 @@ class UserOnline extends UserProfile {
 		}
 		
 		// firefox mobile
-		if (preg_match('~mobile.*firefox/([\d\.]+)|fennec/([\d\.]+)~i', $this->userAgent, $match)) {
+		if (preg_match('~(mobile.*firefox|fxios)/([\d\.]+)|fennec/([\d\.]+)~i', $this->userAgent, $match)) {
 			return 'Firefox Mobile '.(isset($match[2]) ? $match[2] : $match[1]);
 		}
 		
@@ -195,7 +195,7 @@ class UserOnline extends UserProfile {
 		}
 		
 		// firefox
-		if (preg_match('~(?:firefox|fxios)/([\d\.]+)~i', $this->userAgent, $match)) {
+		if (preg_match('~firefox/([\d\.]+)~i', $this->userAgent, $match)) {
 			return 'Firefox '.$match[1];
 		}
 		
