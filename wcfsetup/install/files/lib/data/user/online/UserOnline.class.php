@@ -195,7 +195,7 @@ class UserOnline extends UserProfile {
 		}
 		
 		// firefox
-		if (preg_match('~firefox/([\d\.]+)~i', $this->userAgent, $match)) {
+		if (preg_match('~(?:firefox|fxios)/([\d\.]+)~i', $this->userAgent, $match)) {
 			return 'Firefox '.$match[1];
 		}
 		
