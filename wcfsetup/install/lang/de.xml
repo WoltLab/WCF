@@ -3917,7 +3917,8 @@ Dateianhänge:
 		<item name="wcf.form.field.date.error.format"><![CDATA[Der angegebene Wert hat ein ungültiges Format.]]></item>
 		<item name="wcf.form.field.date.error.earliestDate"><![CDATA[Der angegebene Wert darf nicht früher sein als {$earliestDate}.]]></item>
 		<item name="wcf.form.field.date.error.latestDate"><![CDATA[Der angegebene Wert darf nicht später sein als {$latestDate}.]]></item>
-		<item name="wcf.form.field.itemList.error.maximumItems"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} {#$items} Einträge angegebenen, die Maximalanzahl beträgt jedoch {#$maximumItems}.]]></item>
+		<item name="wcf.form.field.itemList.error.maximumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du darfst{else}Sie dürfen{/if} nicht mehr als {#$maximumCount} {if $maximumCount == 1}Eintrag{else}Einträge{/if} angeben, es wurde{if $count != 1}n{/if} aber {#$count} {if $count == 1}Eintrag{else}Einträge{/if} angegeben.]]></item>
+		<item name="wcf.form.field.itemList.error.minimumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} zumindest {#$minimumCount} {if $minimumCount == 1}Eintrag{else}Einträge{/if} angeben, es wurde{if $count != 1}n{/if} aber nur {#$count} {if $count == 1}Eintrag{else}Einträge{/if} angegeben.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Titelbild]]></item>

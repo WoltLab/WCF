@@ -14,12 +14,10 @@ use wcf\util\ArrayUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class ItemListFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField, IMaximumFormField {
+class ItemListFormField extends AbstractFormField implements IAutoFocusFormField, IImmutableFormField, IMultipleFormField {
 	use TAutoFocusFormField;
 	use TImmutableFormField;
-	use TMaximumFormField {
-		maximum as protected traitMaximum;
-	}
+	use TMultipleFormField;
 	
 	/**
 	 * @inheritDoc
@@ -67,6 +65,13 @@ class ItemListFormField extends AbstractFormField implements IAutoFocusFormField
 	/**
 	 * @inheritDoc
 	 */
+	public function __construct() {
+		$this->multiple();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
 	public function getSaveValue() {
 		switch ($this->getSaveValueType()) {
 			case self::SAVE_VALUE_TYPE_ARRAY:
@@ -107,19 +112,6 @@ class ItemListFormField extends AbstractFormField implements IAutoFocusFormField
 	public function hasSaveValue() {
 		// arrays cannot be returned as a simple save value
 		return $this->getSaveValueType() !== self::SAVE_VALUE_TYPE_ARRAY;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function maximum($maximum = null) {
-		$this->traitMaximum($maximum);
-		
-		if ($maximum <= 0) {
-			throw new \InvalidArgumentException("The maximum number of items has to be positive.");
-		}
-		
-		return $this;
 	}
 	
 	/**
@@ -236,17 +228,25 @@ class ItemListFormField extends AbstractFormField implements IAutoFocusFormField
 	 */
 	public function validate() {
 		if (is_array($this->getValue())) {
-			if ($this->getMaximum() !== null && count($this->getValue()) > $this->getMaximum()) {
+			if ($this->getMinimumMultiples() > 0 && count($this->getValue()) < $this->getMinimumMultiples()) {
 				$this->addValidationError(new FormFieldValidationError(
-					'maximumItems',
-					'wcf.form.field.itemList.error.maximumItems',
+					'minimumMultiples',
+					'wcf.form.field.itemList.error.minimumMultiples',
 					[
-						'items' => count($this->getValue()),
-						'maximumItems' => $this->getMaximum()
+						'minimumCount' => $this->getMinimumMultiples(),
+						'count' => count($this->getValue())
 					]
 				));
-				
-				return;
+			}
+			else if ($this->getMaximumMultiples() !== IMultipleFormField::NO_MAXIMUM_MULTIPLES && count($this->getValue()) > $this->getMaximumMultiples()) {
+				$this->addValidationError(new FormFieldValidationError(
+					'maximumMultiples',
+					'wcf.form.field.itemList.error.maximumMultiples',
+					[
+						'maximumCount' => $this->getMaximumMultiples(),
+						'count' => count($this->getValue())
+					]
+				));
 			}
 			
 			$invalidItems = [];
