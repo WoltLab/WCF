@@ -51,7 +51,7 @@ trait TMultipleFormField {
 	 * @return	int	maximum number of values
 	 */
 	public function getMaximumMultiples() {
-		return $this->maximumMultiples;
+		return $this->allowsMultiple() ? $this->maximumMultiples : 1;
 	}
 	
 	/**
