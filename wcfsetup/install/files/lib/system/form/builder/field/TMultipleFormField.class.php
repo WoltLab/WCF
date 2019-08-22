@@ -101,6 +101,7 @@ trait TMultipleFormField {
 		}
 		
 		$this->maximumMultiples = $maximum;
+		$this->multiple();
 		
 		return $this;
 	}
@@ -124,6 +125,7 @@ trait TMultipleFormField {
 		}
 		
 		$this->minimumMultiples = $minimum;
+		$this->multiple();
 		
 		return $this;
 	}
