@@ -3919,6 +3919,9 @@ Dateianhänge:
 		<item name="wcf.form.field.date.error.latestDate"><![CDATA[Der angegebene Wert darf nicht später sein als {$latestDate}.]]></item>
 		<item name="wcf.form.field.itemList.error.maximumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du darfst{else}Sie dürfen{/if} nicht mehr als {#$maximumCount} {if $maximumCount == 1}Eintrag{else}Einträge{/if} angeben, es wurde{if $count != 1}n{/if} aber {#$count} {if $count == 1}Eintrag{else}Einträge{/if} angegeben.]]></item>
 		<item name="wcf.form.field.itemList.error.minimumMultiples"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du musst{else}Sie müssen{/if} zumindest {#$minimumCount} {if $minimumCount == 1}Eintrag{else}Einträge{/if} angeben, es wurde{if $count != 1}n{/if} aber nur {#$count} {if $count == 1}Eintrag{else}Einträge{/if} angegeben.]]></item>
+		<item name="wcf.form.field.email"><![CDATA[E-Mail-Adresse]]></item>
+		<item name="wcf.form.field.email.error.invalidEmail"><![CDATA[Die Eingabe ist keine gültige E-Mail-Adresse.]]></item>
+		<item name="wcf.form.field.email.error.maximumLength"><![CDATA[Die angegebene E-Mail-Adresse{if $language} für die Sprache „{$language}“{/if} umfasst {#$length} Zeichen, sie darf aber nicht länger als {#$maximumLength} Zeichen sein.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Titelbild]]></item>

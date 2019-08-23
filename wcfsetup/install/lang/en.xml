@@ -3865,6 +3865,9 @@ Attachments:
 		<item name="wcf.form.field.date.error.latestDate"><![CDATA[The entered value may not be later than {$latestDate}.]]></item>
 		<item name="wcf.form.field.itemList.error.maximumMultiples"><![CDATA[You may not enter more than {#$maximumCount} {if $maximumCount == 1}entry{else}entries{/if} but {#$count} {if $count == 1}entry is{else}entries are{/if} given.]]></item>
 		<item name="wcf.form.field.itemList.error.minimumMultiples"><![CDATA[You have to entered at least {#$minimumCount} {if $minimumCount == 1}entry{else}entries{/if} but only {#$count} {if $count == 1}entry is{else}entries are{/if} given.]]></item>
+		<item name="wcf.form.field.email"><![CDATA[Email Address]]></item>
+		<item name="wcf.form.field.email.error.invalidEmail"><![CDATA[The entered text is no valid email address.]]></item>
+		<item name="wcf.form.field.email.error.maximumLength"><![CDATA[The entered email address{if $language|isset} for language “{$language}”{/if} contains {#$length} character{if $length !== 1}s{/if} but it may not be longer than {#$maximumLength} character{if $maximumLength !== 1}s{/if}.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Cover Photo]]></item>

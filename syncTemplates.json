@@ -8,6 +8,7 @@
     "__booleanFormField",
     "__contentLanguageFormField",
     "__dateFormField",
+    "__emailFormField",
     "__emptyFormFieldDependency",
     "__form",
     "__formButton",
