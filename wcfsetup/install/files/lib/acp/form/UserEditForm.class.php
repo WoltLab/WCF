@@ -333,7 +333,7 @@ class UserEditForm extends UserAddForm {
 		
 		// add default groups
 		$defaultGroups = UserGroup::getAccessibleGroups([UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
-		$oldGroupIDs = $this->user->getGroupIDs();
+		$oldGroupIDs = $this->user->getGroupIDs(true);
 		foreach ($oldGroupIDs as $oldGroupID) {
 			if (isset($defaultGroups[$oldGroupID])) {
 				$this->groupIDs[] = $oldGroupID;
