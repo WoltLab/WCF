@@ -28,6 +28,8 @@ class OptionFormField extends ItemListFormField implements IPackagesFormField {
 	 * Creates a new instance of `OptionsFormField`.
 	 */
 	public function __construct() {
+		parent::__construct();
+		
 		$this->label('wcf.form.field.option');
 	}
 	

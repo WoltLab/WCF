@@ -485,7 +485,7 @@ class ObjectTypePackageInstallationPlugin extends AbstractXMLPackageInstallation
 					->objectProperty('disallowedBBCodesPermission')
 					->label('wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission')
 					->description('wcf.acp.pip.objectType.com.woltlab.wcf.message.disallowedBBCodesPermission.description')
-					->maximum(1)
+					->multiple(false)
 					->addValidator(new FormFieldValidator('optionType', function(UserGroupOptionFormField $formField) {
 						$value = $formField->getValue();
 						if (empty($value)) return;
