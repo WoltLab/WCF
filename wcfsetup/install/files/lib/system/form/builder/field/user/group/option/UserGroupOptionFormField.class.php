@@ -28,6 +28,8 @@ class UserGroupOptionFormField extends ItemListFormField implements IPackagesFor
 	 * Creates a new instance of `OptionsFormField`.
 	 */
 	public function __construct() {
+		parent::__construct();
+		
 		$this->label('wcf.form.field.userGroupOption');
 	}
 	
