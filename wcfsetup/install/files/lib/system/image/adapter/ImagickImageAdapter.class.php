@@ -179,7 +179,7 @@ class ImagickImageAdapter implements IImageAdapter {
 		else {
 			$this->clip($originX, $originY, $originWidth, $originHeight);
 			
-			$this->imagick->resizeImage($targetWidth, $targetHeight, \Imagick::FILTER_POINT, 0);
+			$this->imagick->resizeImage($targetWidth, $targetHeight, constant('\Imagick::FILTER_' . strtoupper(IMAGE_IMAGICK_FILTER)), 0);
 		}
 	}
 	

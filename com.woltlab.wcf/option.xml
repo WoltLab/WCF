@@ -571,6 +571,42 @@
 				<defaultvalue>gd</defaultvalue>
 				<selectoptions>gd:wcf.acp.option.image_adapter_type.gd
 imagick:wcf.acp.option.image_adapter_type.imagick</selectoptions>
+				<enableoptions>imagick:image_imagick_filter</enableoptions>
+			</option>
+			<option name="image_imagick_filter">
+				<categoryname>general.system.image</categoryname>
+				<optiontype>select</optiontype>
+				<defaultvalue>point</defaultvalue>
+				<selectoptions>point:wcf.acp.option.image_imagick_filter.point
+box:wcf.acp.option.image_imagick_filter.box
+triangle:wcf.acp.option.image_imagick_filter.triangle
+hermite:wcf.acp.option.image_imagick_filter.hermite
+hanning:wcf.acp.option.image_imagick_filter.hanning
+hamming:wcf.acp.option.image_imagick_filter.hamming
+blackman:wcf.acp.option.image_imagick_filter.blackman
+gaussian:wcf.acp.option.image_imagick_filter.gaussian
+quadratic:wcf.acp.option.image_imagick_filter.quadratic
+cubic:wcf.acp.option.image_imagick_filter.cubic
+catrom:wcf.acp.option.image_imagick_filter.catrom
+mitchell:wcf.acp.option.image_imagick_filter.mitchell
+jinc:wcf.acp.option.image_imagick_filter.jinc
+sinc:wcf.acp.option.image_imagick_filter.sinc
+sincfast:wcf.acp.option.image_imagick_filter.sincfast
+kaiser:wcf.acp.option.image_imagick_filter.kaiser
+welsh:wcf.acp.option.image_imagick_filter.welsh
+parzen:wcf.acp.option.image_imagick_filter.parzen
+bohman:wcf.acp.option.image_imagick_filter.bohman
+bartlett:wcf.acp.option.image_imagick_filter.bartlett
+lagrange:wcf.acp.option.image_imagick_filter.lagrange
+lanczos:wcf.acp.option.image_imagick_filter.lanczos
+lanczossharp:wcf.acp.option.image_imagick_filter.lanczossharp
+lanczos2:wcf.acp.option.image_imagick_filter.lanczos2
+lanczos2sharp:wcf.acp.option.image_imagick_filter.lanczos2sharp
+robidoux:wcf.acp.option.image_imagick_filter.robidoux
+robidouxsharp:wcf.acp.option.image_imagick_filter.robidouxsharp
+cosine:wcf.acp.option.image_imagick_filter.cosine
+spline:wcf.acp.option.image_imagick_filter.spline
+lanczosradius:wcf.acp.option.image_imagick_filter.lanczosradius</selectoptions>
 			</option>
 			<!-- /general.system.image -->
 			<!-- general.system.search -->
