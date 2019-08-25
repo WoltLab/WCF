@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\form\builder\field;
 use wcf\data\language\Language;
-use wcf\system\exception\UserInputException;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\language\LanguageFactory;
 use wcf\util\UserUtil;
@@ -17,13 +16,12 @@ use wcf\util\UserUtil;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class EmailFormField extends AbstractFormField implements IAutoFocusFormField, II18nFormField, IImmutableFormField, IMaximumLengthFormField, IPlaceholderFormField {
+class EmailFormField extends AbstractFormField implements IAutoFocusFormField, II18nFormField, IImmutableFormField, IPlaceholderFormField {
 	use TAutoFocusFormField;
 	use TImmutableFormField;
 	use TI18nFormField {
 		validate as protected i18nValidate;
 	}
-	use TMaximumLengthFormField;
 	use TPlaceholderFormField;
 	
 	/**
@@ -91,13 +89,6 @@ class EmailFormField extends AbstractFormField implements IAutoFocusFormField, I
 				'wcf.form.field.email.error.invalidEmail',
 				['language' => $language]
 			));
-		}
-		else {
-			$this->validateMaximumLength(
-				$email,
-				$language,
-				'wcf.form.field.email.error.maximumLength'
-			);
 		}
 	}
 }
