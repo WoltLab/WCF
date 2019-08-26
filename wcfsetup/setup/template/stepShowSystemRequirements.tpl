@@ -10,7 +10,7 @@
 			<div class="row rowColGap formGrid">
 				<dl class="col-xs-12 col-md-6">
 					<dt>{lang}wcf.global.systemRequirements.element.required{/lang}</dt>
-					<dd>5.5.4</dd>
+					<dd>7.0.22</dd>
 				</dl>
 				
 				<dl class="col-xs-12 col-md-6">
