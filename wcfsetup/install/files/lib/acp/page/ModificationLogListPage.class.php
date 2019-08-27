@@ -192,7 +192,7 @@ class ModificationLogListPage extends SortablePage {
 			$packageID = 0;
 			
 			// an integer signals all actions from the package with the relevant id
-			if ($this->action == intval($this->action)) {
+			if ($this->action == strval(intval($this->action))) {
 				$packageID = $this->action;
 			}
 			else if (preg_match('~^(?P<objectType>.+)\-(?P<action>[^\-]+)$~', $this->action, $matches)) {
