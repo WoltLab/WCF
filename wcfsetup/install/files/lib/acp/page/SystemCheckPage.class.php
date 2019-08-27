@@ -249,7 +249,7 @@ class SystemCheckPage extends AbstractPage {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
 		
-		$this->results['mysql']['foreignKeys'] = $statement->fetchSingleColumn() === $expectedForeignKeyCount;
+		$this->results['mysql']['foreignKeys'] = $statement->fetchSingleColumn() == $expectedForeignKeyCount;
 		
 		// check search engine tables
 		$objectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.searchableObjectType');
