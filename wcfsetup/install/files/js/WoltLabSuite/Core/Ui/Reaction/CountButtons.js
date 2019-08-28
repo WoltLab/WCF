@@ -107,7 +107,7 @@ define(
 			updateCountButtons: function(objectId, data) {
 				var triggerChange = false;
 				this._objects.get(objectId).forEach(function(elementData) {
-					var summaryList = elBySel(this._options.summaryListSelector, elementData.element);
+					var summaryList = elBySel(this._options.summaryListSelector, this._options.isSingleItem ? undefined : elementData.element);
 					
 					// summary list for the object not found; abort
 					if (summaryList === null) return; 
