@@ -5,6 +5,7 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 
 /**
  * Option type implementation for boolean values.
@@ -101,5 +102,24 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
 		}
 		
 		return $value1 ? 1 : -1;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getDisabledOptionNames($value, $enableOptions) {
+		$options = ArrayUtil::trim(explode(',', $enableOptions));
+		$result = [];
+		
+		foreach ($options as $item) {
+			if ($item{0} == '!') {
+				if ($value) $result[] = $item;
+			}
+			else {
+				if (!$value) $result[] = $item;
+			}
+		}
+		
+		return $result;
 	}
 }

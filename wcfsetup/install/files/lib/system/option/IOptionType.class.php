@@ -48,7 +48,7 @@ interface IOptionType {
 	public function getCSSClassName();
 	
 	/**
-	 * Returns true if options supports internationalization .
+	 * Returns true if options supports internationalization.
 	 * 
 	 * @return	boolean
 	 */
@@ -74,4 +74,14 @@ interface IOptionType {
 	 * @return	boolean
 	 */
 	public function hideLabelInSearch();
+	
+	/**
+	 * Determines disabled options by given option value.
+	 * 
+	 * @param       mixed           $value
+	 * @param       string          $enableOptions
+	 * @return      string[]
+	 * @since       5.2
+	 */
+	public function getDisabledOptionNames($value, $enableOptions);
 }

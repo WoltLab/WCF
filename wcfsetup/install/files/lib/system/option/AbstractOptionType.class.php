@@ -56,4 +56,11 @@ abstract class AbstractOptionType implements IOptionType {
 	public function hideLabelInSearch() {
 		return false;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getDisabledOptionNames($value, $enableOptions) {
+		return [];
+	}
 }

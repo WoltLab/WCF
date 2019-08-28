@@ -6,6 +6,7 @@ use wcf\data\user\UserList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -127,5 +128,45 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 	 */
 	public function getCSSClassName() {
 		return 'checkboxList';
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getDisabledOptionNames($value, $enableOptions) {
+		$valueToOptions = explode("\n", StringUtil::trim(StringUtil::unifyNewlines($enableOptions)));
+		
+		$i = 0;
+		foreach ($valueToOptions as $valueToOption) {
+			if (mb_strpos($valueToOption, ':') !== false) {
+				$optionData = explode(':', $valueToOption);
+				$key = array_shift($optionData);
+				$enableOptionValues = implode(':', $optionData);
+			}
+			else {
+				$key = $i;
+				$enableOptionValues = $valueToOption;
+			}
+			
+			if ($key == $value) {
+				$options = ArrayUtil::trim(explode(',', $enableOptionValues));
+				$result = [];
+				
+				foreach ($options as $item) {
+					if ($item{0} == '!') {
+						$result[] = $item;
+					}
+					else {
+						$result[] = $item;
+					}
+				}
+				
+				return $result;
+			}
+			
+			$i++;
+		}
+		
+		return [];
 	}
 }

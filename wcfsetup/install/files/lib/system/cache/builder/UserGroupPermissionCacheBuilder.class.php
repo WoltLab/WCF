@@ -53,7 +53,8 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("option_value.groupID IN (?)", [$parameters]);
 		
-		$sql = "SELECT		option_table.optionName, option_table.optionType, option_value.optionValue
+		$optionData = [];
+		$sql = "SELECT		option_table.optionName, option_table.optionType, option_value.optionValue, option_value.groupID, option_table.enableOptions
 			FROM		wcf".WCF_N."_user_group_option_value option_value
 			LEFT JOIN	wcf".WCF_N."_user_group_option option_table
 			ON		(option_table.optionID = option_value.optionID)
@@ -61,11 +62,33 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
-			if (!isset($data[$row['optionName']])) {
-				$data[$row['optionName']] = ['type' => $row['optionType'], 'values' => []];
+			$optionData[$row['groupID']][$row['optionName']] = $row;
+		}
+		
+		foreach ($optionData as $groupID => $options) {
+			$optionBlacklist = [];
+			
+			foreach ($options as $option) {
+				if ($option['enableOptions']) {
+					$typeObj = $this->getTypeObject($option['optionType']);
+					$disabledOptions = $typeObj->getDisabledOptionNames($option['optionValue'], $option['enableOptions']);
+					if (!empty($disabledOptions)) {
+						$optionBlacklist = array_merge($optionBlacklist, $disabledOptions);
+					}
+				}
 			}
 			
-			$data[$row['optionName']]['values'][] = $row['optionValue'];
+			$options = array_filter($options, function($optionName) use (&$optionBlacklist) {
+				return !in_array($optionName, $optionBlacklist);
+			}, ARRAY_FILTER_USE_KEY);
+			
+			foreach ($options as $option) {
+				if (!isset($data[$option['optionName']])) {
+					$data[$option['optionName']] = ['type' => $option['optionType'], 'values' => []];
+				}
+				
+				$data[$option['optionName']]['values'][] = $option['optionValue'];
+			}
 		}
 		
 		$includesOwnerGroup = false;
