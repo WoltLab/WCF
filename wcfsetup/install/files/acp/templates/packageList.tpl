@@ -1,5 +1,9 @@
 {include file='header' pageTitle='wcf.acp.package.list'}
 
+<style>
+	.upgradeAvailable .icon { color: inherit; }
+</style>
+
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
@@ -53,6 +57,8 @@
 		</nav>
 	{/hascontent}
 </header>
+
+<p class="success upgradeAvailable"><span class="icon icon16 fa-arrow-circle-up"></span> {lang}wcf.acp.package.upgradeAvailable{/lang}</p>
 
 {hascontent}
 	<div class="paginationTop">

@@ -1363,6 +1363,7 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.package.validation.errorCode.10"><![CDATA[Benötigt das Paket {if $package === null}„{$packageName}“{else}„{$package}“{/if} in Version „{$packageVersion}“ oder höher, {if $package === null}dies ist aber weder installiert noch wird es mitgeliefert.{else}es ist aber nur Version „{$package->packageVersion}“ installiert.{/if}]]></item>
 		<item name="wcf.acp.package.validation.errorCode.11"><![CDATA[Die {if $type == 'install'}Installations{else}Update{/if}-Anweisungen geben für das Package Installation Plugin „{$pip}“ die Datei „{$value}“ an, diese ist jedoch nicht im Archiv enthalten. Mögliche Ursachen:<ul class="nativeList"><li>Die Datei wurde dem Archiv nicht hinzugefügt</li><li>Die Datei existiert, jedoch sind der Dateiname und die Angabe in den Anweisungen abweichend (Tippfehler)</li></ul>]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[Das hochgeladene Paket kann nicht installiert werden, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} das unten stehende Prüfungsergebnis.]]></item>
+		<item name="wcf.acp.package.upgradeAvailable"><![CDATA[<strong>Upgrade verfügbar!</strong> Informieren Sie sich unverbindlich auf <a href="https://www.woltlab.com/de/">woltlab.com</a> über die neue WoltLab Suite, mit innovativen Neuerungen und Verbesserungen für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Community.]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">
