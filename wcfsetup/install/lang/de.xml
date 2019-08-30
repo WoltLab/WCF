@@ -2241,8 +2241,8 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[Neues Kennwort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
-ein Administrator hat {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kennwort zurück gesetzt. Es ist nun
-erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nun ein neues Kennwort {if LANGUAGE_USE_INFORMAL_VARIANT}setzt{else}setzen{/if}, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein {else}Sie Ihr {/if}
+ein Administrator hat {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kennwort zurückgesetzt. Es ist nun
+erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} ein neues Kennwort {if LANGUAGE_USE_INFORMAL_VARIANT}setzt{else}setzen{/if}, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein {else}Sie Ihr {/if}
 Benutzerkonto {@$mailbox->getUser()->username} auf der Seite {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]
 weiterhin verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}:
 
@@ -2252,8 +2252,8 @@ weiterhin verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}:
 aus Sicherheitsgründen erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Kennwort vergessen-Funktion [URL:{link controller='LostPassword' isEmail=true}{/link}] {if LANGUAGE_USE_INFORMAL_VARIANT}nutzt{else}nutzen{/if}.]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.headline"><![CDATA[Hallo {@$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.intro"><![CDATA[
-<p>ein Administrator hat {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kennwort zurück gesetzt. Es ist nun
-erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nun ein neues Kennwort {if LANGUAGE_USE_INFORMAL_VARIANT}setzt{else}setzen{/if}, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein {else}Sie Ihr {/if}
+<p>ein Administrator hat {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kennwort zurückgesetzt. Es ist nun
+erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} ein neues Kennwort {if LANGUAGE_USE_INFORMAL_VARIANT}setzt{else}setzen{/if}, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein {else}Sie Ihr {/if}
 Benutzerkonto {@$mailbox->getUser()->username} auf der Seite <a href="{link}{/link}">{@PAGE_TITLE|language}</a>
 weiterhin verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}:</p>]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.reset"><![CDATA[Neues Kennwort setzen]]></item>
