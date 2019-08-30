@@ -9,9 +9,9 @@
 {include file='header' __disableAds=true}
 
 <div class="section">
-	<div class="box64">
-		<span class="icon icon64 fa-exclamation-circle"></span>
-		<p id="errorMessage" class="fullPageErrorMessage" data-exception-class-name="{$exceptionClassName}">
+	<div class="box64 userException">
+		<span class="icon icon64 fa-exclamation-circle userExceptionIcon"></span>
+		<p id="errorMessage" class="fullPageErrorMessage userExceptionMessage" data-exception-class-name="{$exceptionClassName}">
 			{@$message}
 		</p>
 	</div>
