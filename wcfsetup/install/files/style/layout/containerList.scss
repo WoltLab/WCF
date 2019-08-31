@@ -283,6 +283,10 @@
 	.box48 {
 		max-height: 500px;
 		overflow: hidden;
+		
+		> a:first-child {
+			align-self: flex-start;
+		}
 	}
 }
 
