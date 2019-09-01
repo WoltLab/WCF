@@ -495,12 +495,6 @@ class ArticleAddForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		$accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
-		$categoryNodeList = (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator();
-		$categoryNodes = array_filter(iterator_to_array($categoryNodeList), function(CategoryNode $categoryNode) use (&$accessibleCategoryIDs) {
-			return in_array($categoryNode->categoryID, $accessibleCategoryIDs);
-		});
-		
 		WCF::getTPL()->assign([
 			'action' => 'add',
 			'isMultilingual' => $this->isMultilingual,
@@ -519,7 +513,8 @@ class ArticleAddForm extends AbstractForm {
 			'teaser' => $this->teaser,
 			'content' => $this->content,
 			'availableLanguages' => $this->availableLanguages,
-			'categoryNodeList' => $categoryNodes,
+			'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
+			'accessibleCategoryIDs' => ArticleCategory::getAccessibleCategoryIDs(),
 			'labelIDs' => $this->labelIDs,
 			'labelGroups' => $this->labelGroups,
 			'labelGroupsToCategories' => $this->labelGroupsToCategories,
