@@ -1922,6 +1922,26 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.package.search.status.refreshDatabase"><![CDATA[Retrieving the package lists…]]></item>
 		<item name="wcf.acp.package.search.result.thirdParty"><![CDATA[{if $count === 0}No matches{elseif $count === 1}One match{else}{#$count} matches{/if} in package sources maintained by third parties]]></item>
 		<item name="wcf.acp.package.search.result.trusted"><![CDATA[{if $count === 0}No matches{elseif $count === 1}One match{else}{#$count} matches{/if} in official package sources]]></item>
+		<item name="wcf.acp.package.error.databaseChange"><![CDATA[The database layout could not be changed because of the following errors:
+{implode from=$errors item=error glue=' '}
+	{if $error[type] === 'unregisteredTableDrop'}
+		The unknown table {$error[tableName]} cannot be dropped.
+	{else if $error[type] === 'foreignTableDrop'}
+		The table {$error[tableName]} belongs to a different package and thus cannot be dropped.
+	{else if $error[type] === 'unregisteredTableChange'}
+		The unknown table {$error[tableName]} cannot be altered.
+	{else if $error[type] === 'foreignColumnDrop'}
+		The column {$error[tableName]}.{$error[columnName]} belongs to a different package and thus cannot be dropped.
+	{else if $error[type] === 'foreignColumnChange'}
+		The column {$error[tableName]}.{$error[columnName]} belongs to a different package and thus cannot be dropped.
+	{else if $error[type] === 'foreignIndexDrop'}
+		The index {$error[tableName]} ({$error[columnNames]}) belongs to a different package and thus cannot be dropped.
+	{else if $error[type] === 'foreignForeignKeyDrop'}
+		The foreign key {$error[tableName]} ({$error[columnNames]}) belongs to a different package and thus cannot be dropped.
+	{else}
+		Unknown error.
+	{/if}
+{/implode}]]></item>
 	</category>
 	<category name="wcf.acp.paidSubscription">
 		<item name="wcf.acp.paidSubscription.list"><![CDATA[Paid Subscriptions]]></item>

@@ -31,7 +31,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 */
 	public function getColumns($tableName) {
 		$columns = [];
-		$regex = new Regex('([a-z]+)\((.+)\)', Regex::CASE_INSENSITIVE);
+		$regex = new Regex('([a-z]+)\((.+)\)( unsigned)?', Regex::CASE_INSENSITIVE);
 		
 		$sql = "SHOW COLUMNS FROM `".$tableName."`";
 		$statement = $this->dbObj->prepareStatement($sql);
@@ -44,6 +44,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 			$length = '';
 			$decimals = '';
 			$enumValues = '';
+			$unsigned = false;
 			if (!empty($typeMatches)) {
 				$type = $typeMatches[1];
 				
@@ -75,6 +76,10 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 						}
 						break;
 				}
+				
+				if (isset($typeMatches[3])) {
+					$unsigned = true;
+				}
 			}
 			
 			$columns[] = ['name' => $row['Field'], 'data' => [
@@ -85,7 +90,8 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 				'default' => $row['Default'],
 				'autoIncrement' => $row['Extra'] == 'auto_increment' ? true : false,
 				'enumValues' => $enumValues,
-				'decimals' => $decimals
+				'decimals' => $decimals,
+				'unsigned' => $unsigned
 			]];
 		}
 		
@@ -261,6 +267,30 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	/**
 	 * @inheritDoc
 	 */
+	public function alterColumns($tableName, $alterData) {
+		$queries = "";
+		foreach ($alterData as $columnName => $data) {
+			switch ($data['action']) {
+				case 'add':
+					$queries .= "ADD COLUMN {$this->buildColumnDefinition($columnName, $data['data'])},";
+					break;
+					
+				case 'alter':
+					$queries .= "CHANGE COLUMN `{$columnName}` {$this->buildColumnDefinition($data['oldColumnName'], $data['data'])},";
+					break;
+					
+				case 'drop':
+					$queries .= "DROP COLUMN `{$columnName}`,";
+					break;
+			}
+		}
+		
+		$this->dbObj->prepareStatement("ALTER TABLE `{$tableName}` " . rtrim($queries, ','))->execute();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function dropColumn($tableName, $columnName) {
 		$sql = "ALTER TABLE `".$tableName."` DROP COLUMN `".$columnName."`";
 		$statement = $this->dbObj->prepareStatement($sql);
@@ -342,6 +372,11 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		$definition = "`".$columnName."`";
 		// column type
 		$definition .= " ".$columnData['type'];
+		
+		if (!empty($columnData['unsigned'])) {
+			$definition .= ' UNSIGNED';
+		}
+		
 		// column length and decimals
 		if (!empty($columnData['length'])) {
 			$definition .= "(".$columnData['length'].(!empty($columnData['decimals']) ? ",".$columnData['decimals'] : "").")";
