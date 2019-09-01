@@ -108,7 +108,7 @@
 					
 					<tr>
 						<td class="columnID columnLogID">{@$modificationLog->logID}</td>
-						<td class="columnText columnUsername">{if $modificationLog->userID}<a href="{link controller='User' id=$modificationLog->userID}{/link}">{$modificationLog->username}</a>{else}{$modificationLog->username}{/if}</td>
+						<td class="columnText columnUsername">{if $modificationLog->userID}<a href="{link controller='User' id=$modificationLog->userID title=$modificationLog->username forceFrontend=true}{/link}">{$modificationLog->username}</a>{else}{$modificationLog->username}{/if}</td>
 						<td class="columnText columnAction">{lang}wcf.acp.modificationLog.{$_objectType->objectType}.{$modificationLog->action}{/lang}</td>
 						<td class="columnText columnAffectedObject" title="{lang}wcf.acp.modificationLog.affectedObject.id{/lang}">
 							{if $modificationLog->getAffectedObject()}
