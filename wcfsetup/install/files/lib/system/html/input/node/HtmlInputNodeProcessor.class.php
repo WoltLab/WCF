@@ -439,7 +439,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			'size' => 'font-size',
 		];
 		foreach ($inlineStyles as $bbcode => $property) {
-			if (!BBCodeHandler::getInstance()->isAvailableBBCode($bbcode)) {
+			if (BBCodeHandler::getInstance()->isAvailableBBCode($bbcode)) {
 				unset($inlineStyles[$bbcode]);
 			}
 		}
