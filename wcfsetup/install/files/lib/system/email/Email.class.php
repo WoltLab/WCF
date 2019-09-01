@@ -525,6 +525,15 @@ class Email {
 			BackgroundQueueHandler::getInstance()->forceCheck();
 		}
 	}
+
+	/**
+	 * Sends this email synchronously.
+	 */
+	public function sendSynchronously() {
+		foreach ($this->getJobs() as $job) {
+			BackgroundQueueHandler::getInstance()->performJob($job);
+		}
+	}
 	
 	/**
 	 * @see	Email::getEmail()
