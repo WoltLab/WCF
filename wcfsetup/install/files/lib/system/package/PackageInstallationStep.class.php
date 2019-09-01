@@ -18,6 +18,12 @@ class PackageInstallationStep {
 	protected $document = null;
 	
 	/**
+	 * exception causing node splitting
+	 * @var	null|SplitNodeException
+	 */
+	protected $exception;
+	
+	/**
 	 * next installation node
 	 * @var	string
 	 */
@@ -57,6 +63,16 @@ class PackageInstallationStep {
 	}
 	
 	/**
+	 * Returns the exception causing node splitting or `null` if the node has not been split
+	 * or if it was not split by an exception.
+	 * 
+	 * @return	null|SplitNodeException
+	 */
+	public function getException() {
+		return $this->exception;
+	}
+	
+	/**
 	 * Returns HTML-representation of form document object.
 	 * 
 	 * @return	string
@@ -76,9 +92,12 @@ class PackageInstallationStep {
 	
 	/**
 	 * Enforces node splitting.
+	 * 
+	 * @param	null|SplitNodeException		$splitNodeException
 	 */
-	public function setSplitNode() {
+	public function setSplitNode(SplitNodeException $splitNodeException = null) {
 		$this->splitNode = true;
+		$this->exception = $splitNodeException;
 	}
 	
 	/**

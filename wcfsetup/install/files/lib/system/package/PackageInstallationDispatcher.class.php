@@ -154,7 +154,12 @@ class PackageInstallationDispatcher {
 			}
 			
 			if ($step->splitNode()) {
-				$this->logInstallationStep($data, 'split node');
+				$log = 'split node';
+				if ($step->getException() !== null && $step->getException()->getMessage()) {
+					$log .= ': ' . $step->getException()->getMessage();
+				}
+				
+				$this->logInstallationStep($data, $log);
 				$this->nodeBuilder->cloneNode($node, $data['sequenceNo']);
 				break;
 			}
@@ -737,7 +742,7 @@ class PackageInstallationDispatcher {
 			$document = $plugin->{$this->action}();
 		}
 		catch (SplitNodeException $e) {
-			$step->setSplitNode();
+			$step->setSplitNode($e);
 		}
 		
 		if ($document !== null && ($document instanceof FormDocument)) {
