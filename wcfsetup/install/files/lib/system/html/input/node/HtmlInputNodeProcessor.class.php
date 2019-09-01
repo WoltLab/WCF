@@ -433,13 +433,16 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			}
 		}
 		
-		$inlineStyles = array_filter([
+		$inlineStyles = [
 			'color' => 'color',
 			'font' => 'font-family',
 			'size' => 'font-size',
-		], function($bbcode) {
-			return !BBCodeHandler::getInstance()->isAvailableBBCode($bbcode);
-		}, ARRAY_FILTER_USE_KEY);
+		];
+		foreach ($inlineStyles as $bbcode => $property) {
+			if (!BBCodeHandler::getInstance()->isAvailableBBCode($bbcode)) {
+				unset($inlineStyles[$bbcode]);
+			}
+		}
 		
 		if (!empty($inlineStyles)) {
 			$styles = [];
