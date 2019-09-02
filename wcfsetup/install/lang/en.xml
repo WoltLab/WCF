@@ -2501,7 +2501,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 	<category name="wcf.acp.reactionType">
 		<item name="wcf.acp.reactionType.delete.confirmMessage"><![CDATA[Do you really want to delete the reaction type <span class="confirmationObject">{$reactionType->getTitle()}</span>?]]></item>
 		<item name="wcf.acp.reactionType.type"><![CDATA[Reaction Type]]></item>
-		<item name="wcf.acp.reactionType.isDisabled"><![CDATA[Disable Reaction]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaction File]]></item>
 		<item name="wcf.acp.reactionType.showOrder.description"><![CDATA[The reaction type will be shown after the selected reaction type.]]></item>
 	</category>
@@ -4324,7 +4323,7 @@ Attachments:
 	</category>
 	<category name="wcf.reactionType">
 		<item name="wcf.reactionType.title1"><![CDATA[Like]]></item>
-		<item name="wcf.reactionType.title2"><![CDATA[Thanks!]]></item>
+		<item name="wcf.reactionType.title2"><![CDATA[Thanks]]></item>
 		<item name="wcf.reactionType.title3"><![CDATA[Haha]]></item>
 		<item name="wcf.reactionType.title4"><![CDATA[Confused]]></item>
 		<item name="wcf.reactionType.title5"><![CDATA[Sad]]></item>

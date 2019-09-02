@@ -83,7 +83,7 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 			if (MODULE_LIKE) {
 				$sql = "UPDATE	wcf".WCF_N."_user user_table SET";
 				
-				$reactionTypeIDs = array_keys(ReactionTypeCache::getInstance()->getEnabledReactionTypes());
+				$reactionTypeIDs = array_keys(ReactionTypeCache::getInstance()->getReactionTypes());
 				if (!empty($reactionTypeIDs)) {
 					$sql .= " likesReceived = (
 							SELECT	COUNT(*)
