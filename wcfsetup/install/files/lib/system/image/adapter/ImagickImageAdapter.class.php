@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\image\adapter;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 
 /**
@@ -179,7 +180,7 @@ class ImagickImageAdapter implements IImageAdapter {
 		else {
 			$this->clip($originX, $originY, $originWidth, $originHeight);
 			
-			$this->imagick->resizeImage($targetWidth, $targetHeight, \Imagick::FILTER_POINT, 0);
+			$this->imagick->resizeImage($targetWidth, $targetHeight, $this->getResizeFilter(), 0);
 		}
 	}
 	
@@ -414,6 +415,24 @@ class ImagickImageAdapter implements IImageAdapter {
 	 */
 	public function overlayImageRelative($file, $position, $margin, $opacity) {
 		// does nothing
+	}
+	
+	/**
+	 * Returns the preferred image filter used during image resizing.
+	 * 
+	 * @return int
+	 */
+	protected function getResizeFilter() {
+		static $filter;
+		
+		if ($filter === null) {
+			$parameters = ['filter' => null];
+			EventHandler::getInstance()->fireAction($this, 'getResizeFilter', $parameters);
+			
+			$filter = $parameters['filter'] ?? \Imagick::FILTER_POINT;
+		}
+		
+		return $filter;
 	}
 	
 	/**
