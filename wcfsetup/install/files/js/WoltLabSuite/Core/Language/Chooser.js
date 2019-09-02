@@ -171,7 +171,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 				dropdownToggle.appendChild(div);
 				
 				span = elCreate('span');
-				span.className = 'icon icon24 fa-question';
+				span.className = 'icon icon24 fa-question pointer';
 				div.appendChild(span);
 				
 				span = elCreate('span');
