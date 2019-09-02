@@ -69,7 +69,7 @@ class ReactionHandler extends SingletonFactory {
 	 * @return string
 	 */
 	public function getReactionsJSVariable() {
-		$reactions = ReactionTypeCache::getInstance()->getEnabledReactionTypes();
+		$reactions = ReactionTypeCache::getInstance()->getReactionTypes();
 		
 		$returnValues = []; 
 		
@@ -92,7 +92,7 @@ class ReactionHandler extends SingletonFactory {
 	 * @return      ReactionType[]
 	 */
 	public function getReactionTypes() {
-		return ReactionTypeCache::getInstance()->getEnabledReactionTypes();
+		return ReactionTypeCache::getInstance()->getReactionTypes();
 	}
 	
 	/**
@@ -715,7 +715,7 @@ class ReactionHandler extends SingletonFactory {
 		static $firstReactionType;
 		
 		if ($firstReactionType === null) {
-			$reactionTypes = ReactionTypeCache::getInstance()->getEnabledReactionTypes();
+			$reactionTypes = ReactionTypeCache::getInstance()->getReactionTypes();
 			ReactionType::sort($reactionTypes, 'showOrder');
 			
 			$firstReactionType = reset($reactionTypes);

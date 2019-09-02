@@ -2,8 +2,6 @@
 namespace wcf\data\reaction\type;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
-use wcf\data\IToggleAction;
-use wcf\data\TDatabaseObjectToggle;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\file\upload\UploadFile;
@@ -22,9 +20,7 @@ use wcf\system\WCF;
  * @method	ReactionTypeEditor[]		getObjects()
  * @method	ReactionTypeEditor		getSingleObject()
  */
-class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
-	use TDatabaseObjectToggle;
-	
+class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortableAction {
 	/**
 	 * @inheritDoc
 	 */

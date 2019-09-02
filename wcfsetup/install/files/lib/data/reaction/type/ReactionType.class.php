@@ -17,7 +17,6 @@ use wcf\system\WCF;
  * @property-read	string		$title
  * @property-read	integer		$showOrder		position of the reaction type in relation to the other reaction types
  * @property-read	string		$iconFile		the file location of the icon
- * @property-read       integer		$isDisabled		is `1` if the reaction type is disabled and thus not shown, otherwise `0`
  */
 class ReactionType extends DatabaseObject implements ITitledObject {
 	/**

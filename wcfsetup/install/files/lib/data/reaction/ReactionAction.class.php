@@ -97,8 +97,6 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		
 		$data = [];
 		foreach ($likeList as $item) {
-			if ($item->getReactionType()->isDisabled) continue; 
-			
 			// we cast the reactionTypeID to a string, so that we can sort the array
 			if (!isset($data[(string)$item->getReactionType()->reactionTypeID])) {
 				$data[(string)$item->getReactionType()->reactionTypeID] = new GroupedUserList($item->getReactionType()->renderIcon() . ' ' . StringUtil::encodeHTML($item->getReactionType()->getTitle()));
@@ -182,7 +180,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		
 		$this->reactionType = ReactionTypeCache::getInstance()->getReactionTypeByID($this->parameters['reactionTypeID']);
 		
-		if (!$this->reactionType->reactionTypeID || $this->reactionType->isDisabled) {
+		if (!$this->reactionType->reactionTypeID) {
 			throw new IllegalLinkException();
 		}
 		

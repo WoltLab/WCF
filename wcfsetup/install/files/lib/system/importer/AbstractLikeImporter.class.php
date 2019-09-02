@@ -1,6 +1,10 @@
 <?php
 namespace wcf\system\importer;
+use wcf\data\language\item\LanguageItemEditor;
 use wcf\data\like\Like;
+use wcf\data\reaction\type\ReactionType;
+use wcf\data\reaction\type\ReactionTypeEditor;
+use wcf\system\language\LanguageFactory;
 use wcf\system\reaction\ReactionHandler;
 use wcf\system\WCF;
 
@@ -25,6 +29,11 @@ class AbstractLikeImporter extends AbstractImporter {
 	protected $objectTypeID = 0;
 	
 	/**
+	 * @var integer|null
+	 */
+	protected static $dislikeReactionTypeID;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
@@ -37,12 +46,15 @@ class AbstractLikeImporter extends AbstractImporter {
 			if ($data['likeValue'] == 1) {
 				$data['reactionTypeID'] = ReactionHandler::getInstance()->getFirstReactionTypeID();
 			}
+			else {
+				$data['reactionTypeID'] = self::getDislikeReactionTypeID();
+			}
 		}
 		else {
 			$data['reactionTypeID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.reactionType', $data['reactionTypeID']);
 		}
 		
-		if ($data['reactionTypeID'] === null) {
+		if (empty($data['reactionTypeID'])) {
 			return 0;
 		}
 		
@@ -61,5 +73,49 @@ class AbstractLikeImporter extends AbstractImporter {
 		]);
 		
 		return 0;
+	}
+	
+	/**
+	 * @return integer
+	 */
+	protected static function getDislikeReactionTypeID() {
+		if (self::$dislikeReactionTypeID === null) {
+			$sql = "SELECT reactionTypeID FROM wcf" . WCF_N . "_reaction_type WHERE iconFile = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute(['thumbsDown.svg']);
+			$reaction = $statement->fetchObject(ReactionType::class);
+			if ($reaction === null) {
+				$sql = "SELECT MAX(showOrder) FROM wcf" . WCF_N . "_reaction_type";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute();
+				$showOrder = $statement->fetchColumn();
+				
+				$reaction = ReactionTypeEditor::create(['iconFile' => 'thumbsDown.svg', 'showOrder' => $showOrder + 1]);
+				
+				$sql = "SELECT  languageCategoryID
+					FROM    wcf".WCF_N."_language_category
+					WHERE   languageCategory = ?";
+				$statement = WCF::getDB()->prepareStatement($sql, 1);
+				$statement->execute(['wcf.reactionType']);
+				$languageCategoryID = $statement->fetchSingleColumn();
+				
+				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+					LanguageItemEditor::create([
+						'languageID' => $language->languageID,
+						'languageItem' => 'wcf.reactionType.title' . $reaction->reactionTypeID,
+						'languageItemValue' => ($language->getFixedLanguageCode() === 'de' ? 'Gefällt mir nicht' : 'Dislike'),
+						'languageCategoryID' => $languageCategoryID,
+						'packageID' => 1,
+					]);
+				}
+				
+				$editor = new ReactionTypeEditor($reaction);
+				$editor->update(['title' => 'wcf.reactionType.title' . $reaction->reactionTypeID]);
+			}
+			
+			self::$dislikeReactionTypeID = $reaction->reactionTypeID;
+		}
+		
+		return self::$dislikeReactionTypeID;
 	}
 }

@@ -14,23 +14,16 @@ use wcf\system\SingletonFactory;
  */
 class ReactionTypeCache extends SingletonFactory {
 	/**
-	 * Contains all reaction types.
+	 * Contains reaction types.
 	 * @var ReactionType[]
 	 */
 	protected $reactionTypes;
-	
-	/**
-	 * Contains all enabled reaction types.
-	 * @var ReactionType[]
-	 */
-	protected $enabledReactionTypes;
 	
 	/**
 	 * @inheritDoc
 	 */
 	protected function init() {
 		$this->reactionTypes = ReactionTypeCacheBuilder::getInstance()->getData();
-		$this->enabledReactionTypes = ReactionTypeCacheBuilder::getInstance()->getData(['onlyEnabled' => 1]);
 	}
 	
 	/**
@@ -71,21 +64,11 @@ class ReactionTypeCache extends SingletonFactory {
 	public function getReactionTypes() {
 		return $this->reactionTypes;
 	}
-	
-	/**
-	 * Return all enabled reaction types.
-	 *
-	 * @return	ReactionType[]
-	 */
-	public function getEnabledReactionTypes() {
-		return $this->enabledReactionTypes;
-	}
-	
+		
 	/**
 	 * Resets the cache for the trophies.
 	 */
 	public function clearCache() {
 		ReactionTypeCacheBuilder::getInstance()->reset();
-		ReactionTypeCacheBuilder::getInstance()->reset(['onlyEnabled' => 1]);
 	}
 }

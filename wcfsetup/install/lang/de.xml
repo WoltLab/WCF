@@ -2573,7 +2573,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 	<category name="wcf.acp.reactionType">
 		<item name="wcf.acp.reactionType.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Reaktions-Typen <span class="confirmationObject">{$reactionType->getTitle()}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.reactionType.type"><![CDATA[Reaktions-Typ]]></item>
-		<item name="wcf.acp.reactionType.isDisabled"><![CDATA[Reaktion deaktivieren]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaktions-Datei]]></item>
 		<item name="wcf.acp.reactionType.showOrder.description"><![CDATA[Der Reaktions-Typ wird nach dem ausgewählten Reaktions-Typ angezeigt.]]></item>
 	</category>
@@ -4321,8 +4320,8 @@ Dateianhänge:
 		<item name="wcf.reactions.react"><![CDATA[Reagieren]]></item>
 	</category>
 	<category name="wcf.reactionType">
-		<item name="wcf.reactionType.title1"><![CDATA[Gefällt mir!]]></item>
-		<item name="wcf.reactionType.title2"><![CDATA[Danke!]]></item>
+		<item name="wcf.reactionType.title1"><![CDATA[Gefällt mir]]></item>
+		<item name="wcf.reactionType.title2"><![CDATA[Danke]]></item>
 		<item name="wcf.reactionType.title3"><![CDATA[Haha]]></item>
 		<item name="wcf.reactionType.title4"><![CDATA[Verwirrend]]></item>
 		<item name="wcf.reactionType.title5"><![CDATA[Traurig]]></item>

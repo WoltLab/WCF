@@ -17,11 +17,6 @@ class ReactionTypeCacheBuilder extends AbstractCacheBuilder {
 	 */
 	public function rebuild(array $parameters) {
 		$reactionTypeList = new ReactionTypeList();
-		
-		if (isset($parameters['onlyEnabled']) && $parameters['onlyEnabled']) {
-			$reactionTypeList->getConditionBuilder()->add('isDisabled = ?', [0]);
-		}
-		
 		$reactionTypeList->sqlOrderBy = 'showOrder ASC';
 		$reactionTypeList->readObjects();
 		
