@@ -35,7 +35,7 @@ use wcf\util\StringUtil;
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Reaction
- * @since       5.2
+ * @since	5.2
  */
 class ReactionHandler extends SingletonFactory {
 	/**
@@ -79,7 +79,8 @@ class ReactionHandler extends SingletonFactory {
 				'renderedIcon' => $reaction->renderIcon(), 
 				'iconPath' => $reaction->getIconPath(), 
 				'showOrder' => $reaction->showOrder, 
-				'reactionTypeID' => $reaction->reactionTypeID
+				'reactionTypeID' => $reaction->reactionTypeID, 
+				'isAssignable' => $reaction->isAssignable,
 			];
 		}
 		

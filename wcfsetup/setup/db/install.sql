@@ -1201,7 +1201,8 @@ CREATE TABLE wcf1_reaction_type (
 	reactionTypeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
 	title VARCHAR(255), 
 	showOrder INT(10) NOT NULL DEFAULT 0,
-	iconFile MEDIUMTEXT
+	iconFile MEDIUMTEXT, 
+	isAssignable TINYINT(1) NOT NULL DEFAULT 1
 );
 
 DROP TABLE IF EXISTS wcf1_registry;

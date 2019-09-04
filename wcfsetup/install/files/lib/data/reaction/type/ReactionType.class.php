@@ -11,12 +11,13 @@ use wcf\system\WCF;
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Reaction\Type
- * @since       5.2
+ * @since	5.2
  *
  * @property-read	integer		$reactionTypeID		unique id of the reaction type
  * @property-read	string		$title
  * @property-read	integer		$showOrder		position of the reaction type in relation to the other reaction types
  * @property-read	string		$iconFile		the file location of the icon
+ * @property-read	boolean		$isAssignable 		`1`, if the reaction can be assigned
  */
 class ReactionType extends DatabaseObject implements ITitledObject {
 	/**
