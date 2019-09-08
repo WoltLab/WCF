@@ -263,7 +263,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 				$cmsIdentifier = '__WCF_CMS__' . $row['pageID'] . '-' . ($row['languageID'] ?: 0);
 				
 				// Discard the custom url if this CMS page is the landing page of its associated app.
-				if (!empty($landingPages[$abbreviations[$packageID]]) && $landingPages[$abbreviations[$packageID]][0] === '__WCF_CMS__' . $row['pageID']) {
+				if (!empty($landingPages[$abbreviations[$packageID]]) && $landingPages[$abbreviations[$packageID]][0] === '__WCF_CMS__' . $row['pageID'] && !$row['languageID']) {
 					$customUrl = '';
 				}
 				$data['reverse'][$abbreviations[$packageID]][$cmsIdentifier] = $customUrl;
