@@ -73,7 +73,7 @@
 		
 		{if CONTACT_FORM_ENABLE_ATTACHMENTS && !$attachmentHandler|empty && $attachmentHandler->canUpload()}
 			<div class="contactFormAttachments">
-				{include file='messageFormAttachments'}
+				{include file='messageFormAttachments' wysiwygSelector=''}
 			</div>
 		{/if}
 		

@@ -93,14 +93,18 @@ if (COMPILER_TARGET_DEFAULT) {
 			
 			this._makeSortable();
 			
-			this._insertAllButton = $('<p class="button jsButtonAttachmentInsertAll">' + WCF.Language.get('wcf.attachment.insertAll') + '</p>').hide().appendTo(this._buttonSelector);
-			this._insertAllButton.click($.proxy(this._insertAll, this));
-			
-			if (this._fileListSelector.children('li:not(.uploadFailed)').length) {
-				this._insertAllButton.show();
-			}
+			// for backwards compatibility, the object is still created but only inserted
+			// if an editor is used
+			this._insertAllButton = $('<p class="button jsButtonAttachmentInsertAll">' + WCF.Language.get('wcf.attachment.insertAll') + '</p>').hide();
 			
 			if (this._editorId) {
+				this._insertAllButton.appendTo(this._buttonSelector);
+				this._insertAllButton.click($.proxy(this._insertAll, this));
+				
+				if (this._fileListSelector.children('li:not(.uploadFailed)').length) {
+					this._insertAllButton.show();
+				}
+				
 				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'submit_' + this._editorId, this._submitInline.bind(this));
 				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'reset_' + this._editorId, this._reset.bind(this));
 				WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'dragAndDrop_' + this._editorId, this._editorUpload.bind(this));
