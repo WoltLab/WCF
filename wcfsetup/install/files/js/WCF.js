@@ -5593,9 +5593,9 @@ if (COMPILER_TARGET_DEFAULT) {
 					}
 					
 					$trigger.on(WCF_CLICK_EVENT, $.proxy(self._show, self)).data('elementID', $elementID);
-					if (this._quickOption) {
+					if (self._quickOption) {
 						// simulate click on target action
-						$trigger.disableSelection().data('optionName', $quickOption).dblclick($.proxy(self._click, self));
+						$trigger.disableSelection().data('optionName', self._quickOption).dblclick($.proxy(self._click, self));
 					}
 					
 					// store reference
