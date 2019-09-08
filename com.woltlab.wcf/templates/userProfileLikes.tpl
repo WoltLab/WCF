@@ -16,11 +16,13 @@
 			<li><a class="button small" data-like-type="given">{lang}wcf.like.reactionsGiven{/lang}</a></li>
 		</ul>
 		
-		<ul class="buttonGroup" id="reactionType">
-			{foreach from=$__wcf->getReactionHandler()->getReactionTypes() item=reactionType name=reactionTypeLoop}
-				<li><a class="button small jsTooltip" data-reaction-type-id="{$reactionType->reactionTypeID}" title="{$reactionType->getTitle()}">{@$reactionType->renderIcon()} <span class="invisible">{$reactionType->getTitle()}</span></a></li>
-			{/foreach}
-		</ul>
+		{if $__wcf->getReactionHandler()->getReactionTypes()|count > 1}
+			<ul class="buttonGroup" id="reactionType">
+				{foreach from=$__wcf->getReactionHandler()->getReactionTypes() item=reactionType name=reactionTypeLoop}
+					<li><a class="button small jsTooltip" data-reaction-type-id="{$reactionType->reactionTypeID}" title="{$reactionType->getTitle()}">{@$reactionType->renderIcon()} <span class="invisible">{$reactionType->getTitle()}</span></a></li>
+				{/foreach}
+			</ul>
+		{/if}
 	</li>
 	
 	{include file='userProfileLikeItem'}
