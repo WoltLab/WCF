@@ -20,58 +20,49 @@ use wcf\system\WCF;
  */
 class DatabaseTableChangeProcessor {
 	/**
-	 * added columns grouped by the table they belong to
-	 * @var	IDatabaseTableColumn[][]
-	 */
-	protected $addedColumns = [];
-	
-	/**
-	 * added indices grouped by the table they belong to
-	 * @var	DatabaseTableIndex[][]
-	 */
-	protected $addedIndices = [];
-	
-	/**
-	 * added tables
-	 * @var	DatabaseTable[]
-	 */
-	protected $addedTables = [];
-	
-	/**
 	 * maps the registered database table column names to the ids of the packages they belong to
 	 * @var	int[][]
 	 */
 	protected $columnPackageIDs = [];
 	
 	/**
+	 * database table columns that will be added grouped by the name of the table to which they
+	 * will be added
+	 * @var	IDatabaseTableColumn[][]
+	 */
+	protected $columnsToAdd = [];
+	
+	/**
+	 * database table columns that will be altered grouped by the name of the table to which
+	 * they belong
+	 * @var	IDatabaseTableColumn[][]
+	 */
+	protected $columnsToAlter = [];
+	
+	/**
+	 * database table columns that will be dropped grouped by the name of the table from which
+	 * they will be dropped
+	 * @var	IDatabaseTableColumn[][]
+	 */
+	protected $columnsToDrop = [];
+	
+	/**
 	 * database editor to apply the relevant changes to the table layouts
 	 * @var	DatabaseEditor
 	 */
 	protected $dbEditor;
-	
-	/**
-	 * dropped columns grouped by the table they belong to
-	 * @var	IDatabaseTableColumn[][]
-	 */
-	protected $droppedColumns = [];
-	
-	/**
-	 * dropped indices grouped by the table they belong to
-	 * @var	DatabaseTableIndex[][]|DatabaseTableForeignKey[][]
-	 */
-	protected $droppedIndices = [];
-	
-	/**
-	 * dropped tables
-	 * @var	DatabaseTable[]
-	 */
-	protected $droppedTables = [];
-	
+
 	/**
 	 * list of all existing tables in the used database
 	 * @var	string[]
 	 */
 	protected $existingTableNames = [];
+	
+	/**
+	 * existing database tables
+	 * @var	DatabaseTable[]
+	 */
+	protected $existingTables = [];
 	
 	/**
 	 * maps the registered database table index names to the ids of the packages they belong to
@@ -80,10 +71,36 @@ class DatabaseTableChangeProcessor {
 	protected $indexPackageIDs = [];
 	
 	/**
+	 * indices that will be added grouped by the name of the table to which they will be added
+	 * @var	DatabaseTableIndex[][] 
+	 */
+	protected $indicesToAdd = [];
+	
+	/**
+	 * indices that will be dropped grouped by the name of the table from which they will be dropped
+	 * @var	DatabaseTableIndex[][]
+	 */
+	protected $indicesToDrop = [];
+	
+	/**
 	 * maps the registered database table foreign key names to the ids of the packages they belong to
 	 * @var	int[][]
 	 */
 	protected $foreignKeyPackageIDs = [];
+	
+	/**
+	 * foreign keys that will be added grouped by the name of the table to which they will be
+	 * added
+	 * @var	DatabaseTableForeignKey[][]
+	 */
+	protected $foreignKeysToAdd = [];
+	
+	/**
+	 * foreign keys that will be dropped grouped by the name of the table from which they will
+	 * be dropped
+	 * @var	DatabaseTableForeignKey[][]
+	 */
+	protected $foreignKeysToDrop = [];
 	
 	/**
 	 * is `true` if only one change will be handled per request
@@ -98,6 +115,12 @@ class DatabaseTableChangeProcessor {
 	protected $package;
 	
 	/**
+	 * message for the split node exception thrown after the changes have been applied
+	 * @var	string
+	 */
+	protected $splitNodeMessage = '';
+	
+	/**
 	 * layouts/layout changes of the relevant database table
 	 * @var	DatabaseTable[]
 	 */
@@ -108,6 +131,18 @@ class DatabaseTableChangeProcessor {
 	 * @var	int[]
 	 */
 	protected $tablePackageIDs = [];
+	
+	/**
+	 * database table that will be created
+	 * @var	DatabaseTable[]
+	 */
+	protected $tablesToCreate = [];
+	
+	/**
+	 * database tables that will be dropped
+	 * @var	DatabaseTable[]
+	 */
+	protected $tablesToDrop = [];
 	
 	/**
 	 * Creates a new instance of `DatabaseTableChangeProcessor`.
@@ -137,9 +172,10 @@ class DatabaseTableChangeProcessor {
 		
 		$conditionBuilder = new PreparedStatementConditionBuilder();
 		$conditionBuilder->add('sqlTable IN (?)', [$tableNames]);
+		$conditionBuilder->add('isDone = ?', [1]);
 		
 		$sql = "SELECT	*
-			FROM	wcf".WCF_N."_package_installation_sql_log
+			FROM	wcf" . WCF_N . "_package_installation_sql_log
 			" . $conditionBuilder;
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditionBuilder->getParameters());
@@ -161,10 +197,389 @@ class DatabaseTableChangeProcessor {
 	}
 	
 	/**
+	 * Adds the given index to the table.
+	 * 
+	 * @param	string				$tableName
+	 * @param	DatabaseTableForeignKey		$foreignKey
+	 */
+	protected function addForeignKey($tableName, DatabaseTableForeignKey $foreignKey) {
+		$this->dbEditor->addForeignKey($tableName, $foreignKey->getName(), $foreignKey->getData());
+	}
+	
+	/**
+	 * Adds the given index to the table.
+	 *
+	 * @param	string			$tableName
+	 * @param	DatabaseTableIndex	$index
+	 */
+	protected function addIndex($tableName, DatabaseTableIndex $index) {
+		$this->dbEditor->addIndex($tableName, $index->getName(), $index->getData());
+	}
+	
+	/**
+	 * Applies all of the previously determined changes to achieve the desired database layout.
+	 * 
+	 * @throws	SplitNodeException	if any change has been applied
+	 */
+	protected function applyChanges() {
+		$appliedAnyChange = false;
+		
+		foreach ($this->tablesToCreate as $table) {
+			$appliedAnyChange = true;
+			
+			$this->prepareTableLog($table);
+			$this->createTable($table);
+			$this->finalizeTableLog($table);
+		}
+		
+		foreach ($this->tablesToDrop as $table) {
+			$appliedAnyChange = true;
+			
+			$this->dropTable($table);
+			$this->deleteTableLog($table);
+		}
+		
+		$columnTables = array_unique(array_merge(
+			array_keys($this->columnsToAdd),
+			array_keys($this->columnsToAlter),
+			array_keys($this->columnsToDrop)
+		));
+		foreach ($columnTables as $tableName) {
+			$appliedAnyChange = true;
+			
+			$columnsToAdd = $this->columnsToAdd[$tableName] ?? [];
+			$columnsToAlter = $this->columnsToAlter[$tableName] ?? [];
+			$columnsToDrop = $this->columnsToDrop[$tableName] ?? [];
+			
+			foreach ($columnsToAdd as $column) {
+				$this->prepareColumnLog($tableName, $column);
+			}
+			
+			$this->applyColumnChanges(
+				$tableName,
+				$columnsToAdd,
+				$columnsToAlter,
+				$columnsToDrop
+			);
+			
+			foreach ($columnsToAdd as $column) {
+				$this->finalizeColumnLog($tableName, $column);
+			}
+			
+			foreach ($columnsToDrop as $column) {
+				$this->deleteColumnLog($tableName, $column);
+			}
+		}
+		
+		foreach ($this->foreignKeysToAdd as $tableName => $foreignKeys) {
+			foreach ($foreignKeys as $foreignKey) {
+				$appliedAnyChange = true;
+				
+				$this->prepareForeignKeyLog($tableName, $foreignKey);
+				$this->addForeignKey($tableName, $foreignKey);
+				$this->finalizeForeignKeyLog($tableName, $foreignKey);
+			}
+		}
+		
+		foreach ($this->foreignKeysToDrop as $tableName => $foreignKeys) {
+			foreach ($foreignKeys as $foreignKey) {
+				$appliedAnyChange = true;
+				
+				$this->dropForeignKey($tableName, $foreignKey);
+				$this->deleteForeignKeyLog($tableName, $foreignKey);
+			}
+		}
+		
+		foreach ($this->indicesToAdd as $tableName => $indices) {
+			foreach ($indices as $index) {
+				$appliedAnyChange = true;
+				
+				$this->prepareIndexLog($tableName, $index);
+				$this->addIndex($tableName, $index);
+				$this->finalizeIndexLog($tableName, $index);
+			}
+		}
+		
+		foreach ($this->indicesToDrop as $tableName => $indices) {
+			foreach ($indices as $index) {
+				$appliedAnyChange = true;
+				
+				$this->dropIndex($tableName, $index);
+				$this->deleteIndexLog($tableName, $index);
+			}
+		}
+		
+		if ($appliedAnyChange) {
+			throw new SplitNodeException($this->splitNodeMessage);
+		}
+	}
+	
+	/**
+	 * Adds, alters, and drop columns of the same table.
+	 * 
+	 * Before a column is dropped, all of its foreign keys are dropped.
+	 * 
+	 * @param	string			$tableName
+	 * @param	IDatabaseTableColumn[]	$addedColumns
+	 * @param	IDatabaseTableColumn[]	$alteredColumns
+	 * @param	IDatabaseTableColumn[]	$droppedColumns
+	 */
+	protected function applyColumnChanges($tableName, array $addedColumns, array $alteredColumns, array $droppedColumns) {
+		$dropForeignKeys = [];
+		
+		$columnData = [];
+		foreach ($droppedColumns as $droppedColumn) {
+			$columnData[$droppedColumn->getName()] = [
+				'action' => 'drop'
+			];
+			
+			foreach ($this->getExistingTable($tableName)->getForeignKeys() as $foreignKey) {
+				if (in_array($droppedColumn->getName(), $foreignKey->getColumns())) {
+					$dropForeignKeys[] = $foreignKey->getName();
+				}
+			}
+		}
+		foreach ($addedColumns as $addedColumn) {
+			$columnData[$addedColumn->getName()] = [
+				'action' => 'add',
+				'data' => $addedColumn->getData()
+			];
+		}
+		foreach ($alteredColumns as $alteredColumn) {
+			$columnData[$alteredColumn->getName()] = [
+				'action' => 'alter',
+				'data' => $alteredColumn->getData(),
+				'oldColumnName' => $alteredColumn->getName()
+			];
+		}
+		
+		if (!empty($columnData)) {
+			foreach ($dropForeignKeys as $foreignKey) {
+				$this->dbEditor->dropForeignKey($tableName, $foreignKey);
+			}
+			
+			$this->dbEditor->alterColumns($tableName, $columnData);
+		}
+	}
+	
+	/**
+	 * Calculates all of the necessary changes to be executed.
+	 */
+	protected function calculateChanges() {
+		foreach ($this->tables as $table) {
+			$tableName = $table->getName();
+			
+			if ($table->willBeDropped()) {
+				if (in_array($tableName, $this->existingTableNames)) {
+					$this->tablesToDrop[] = $table;
+					
+					if ($this->oneChangePerRequest) {
+						$this->splitNodeMessage .= "Dropped table '{$tableName}'.";
+						break;
+					}
+				}
+				else if (isset($this->tablePackageIDs[$tableName])) {
+					$this->deleteTableLog($table);
+				}
+			}
+			else if (!in_array($tableName, $this->existingTableNames)) {
+				$this->tablesToCreate[] = $table;
+				
+				if ($this->oneChangePerRequest) {
+					$this->splitNodeMessage .= "Created table '{$tableName}'.";
+					break;
+				}
+			}
+			else {
+				// calculate difference between tables
+				$existingTable = $this->getExistingTable($tableName);
+				$existingColumns = $existingTable->getColumns();
+				
+				foreach ($table->getColumns() as $column) {
+					if ($column->willBeDropped()) {
+						if (isset($existingColumns[$column->getName()])) {
+							if (!isset($this->columnsToDrop[$tableName])) {
+								$this->columnsToDrop[$tableName] = [];
+							}
+							$this->columnsToDrop[$tableName][] = $column;
+						}
+						else if (isset($this->columnPackageIDs[$tableName][$column->getName()])) {
+							$this->deleteColumnLog($tableName, $column);
+						}
+					}
+					else if (!isset($existingColumns[$column->getName()])) {
+						if (!isset($this->columnsToAdd[$tableName])) {
+							$this->columnsToAdd[$tableName] = [];
+						}
+						$this->columnsToAdd[$tableName][] = $column;
+					}
+					else if (!empty(array_diff($column->getData(), $existingColumns[$column->getName()]->getData()))) {
+						if (!isset($this->columnsToAlter[$tableName])) {
+							$this->columnsToAlter[$tableName] = [];
+						}
+						$this->columnsToAlter[$tableName][] = $column;
+					}
+				}
+				
+				// all column-related changes are executed in one query thus break
+				// here and not within the previous loop
+				if ($this->oneChangePerRequest && (!empty($this->columnsToAdd) || !empty($this->columnsToAlter) || !empty($this->columnsToDrop))) {
+					$this->splitNodeMessage .= "Altered columns of table '{$tableName}'.";
+					break;
+				}
+				
+				$existingForeignKeys = $existingTable->getForeignKeys();
+				foreach ($table->getForeignKeys() as $foreignKey) {
+					$matchingExistingForeignKey = null;
+					foreach ($existingForeignKeys as $existingForeignKey) {
+						if (empty(array_diff($foreignKey->getData(), $existingForeignKey->getData()))) {
+							$matchingExistingForeignKey = $existingForeignKey;
+							break;
+						}
+					}
+					
+					if ($foreignKey->willBeDropped()) {
+						if ($matchingExistingForeignKey !== null) {
+							if (!isset($this->foreignKeysToDrop[$tableName])) {
+								$this->foreignKeysToDrop[$tableName] = [];
+							}
+							$this->foreignKeysToDrop[$tableName][] = $foreignKey;
+							
+							if ($this->oneChangePerRequest) {
+								$this->splitNodeMessage .= "Dropped foreign key '{$tableName}." . implode(',', $foreignKey->getColumns()) . "'.";
+								break 2;
+							}
+						}
+						else if (isset($this->foreignKeyPackageIDs[$tableName][$foreignKey->getName()])) {
+							$this->deleteForeignKeyLog($tableName, $foreignKey);
+						}
+					}
+					else if ($matchingExistingForeignKey === null) {
+						if (!isset($this->foreignKeysToAdd[$tableName])) {
+							$this->foreignKeysToAdd[$tableName] = [];
+						}
+						$this->foreignKeysToAdd[$tableName][] = $foreignKey;
+						
+						if ($this->oneChangePerRequest) {
+							$this->splitNodeMessage .= "Added foreign key '{$tableName}." . implode(',', $foreignKey->getColumns()) . "'.";
+							break 2;
+						}
+					}
+				}
+				
+				$existingIndices = $existingTable->getIndices();
+				foreach ($table->getIndices() as $index) {
+					$matchingExistingIndex = null;
+					foreach ($existingIndices as $existingIndex) {
+						if (empty(array_diff($index->getData(), $existingIndex->getData()))) {
+							$matchingExistingIndex = $existingIndex;
+							break;
+						}
+					}
+					
+					if ($index->willBeDropped()) {
+						if ($matchingExistingIndex !== null) {
+							if (!isset($this->indicesToDrop[$tableName])) {
+								$this->indicesToDrop[$tableName] = [];
+							}
+							$this->indicesToDrop[$tableName][] = $index;
+							
+							if ($this->oneChangePerRequest) {
+								$this->splitNodeMessage .= "Dropped index '{$tableName}." . implode(',', $index->getColumns()) . "'.";
+								break 2;
+							}
+						}
+						else if (isset($this->indexPackageIDs[$tableName][$index->getName()])) {
+							$this->deleteIndexLog($tableName, $index);
+						}
+					}
+					else if ($matchingExistingIndex === null) {
+						if (!isset($this->indicesToAdd[$tableName])) {
+							$this->indicesToAdd[$tableName] = [];
+						}
+						$this->indicesToAdd[$tableName][] = $index;
+						
+						if ($this->oneChangePerRequest) {
+							$this->splitNodeMessage .= "Added index '{$tableName}." . implode(',', $index->getColumns()) . "'.";
+							break 2;
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Checks for any pending log entries for the package and either marks them as done or
+	 * deletes them so that after this method finishes, there are no more undone log entries
+	 * for the package.
+	 */
+	protected function checkPendingLogEntries() {
+		$sql = "SELECT	*
+			FROM	wcf" . WCF_N . "_package_installation_sql_log
+			WHERE	packageID = ?
+				AND isDone = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([$this->package->packageID, 0]);
+		
+		$doneEntries = $undoneEntries = [];
+		while ($row = $statement->fetchArray()) {
+			// table
+			if ($row['sqlIndex'] === '' && $row['sqlColumn'] === '') {
+				if (in_array($row['sqlTable'], $this->existingTableNames)) {
+					$doneEntries[] = $row;
+				}
+				else {
+					$undoneEntries[] = $row;
+				}
+			}
+			// column
+			else if ($row['sqlIndex'] === '') {
+				if (isset($this->getExistingTable($row['sqlTable'])->getColumns()[$row['sqlColumn']])) {
+					$doneEntries[] = $row;
+				}
+				else {
+					$undoneEntries[] = $row;
+				}
+			}
+			// foreign key
+			else if (substr($row['sqlIndex'], -3) === '_fk') {
+				if (isset($this->getExistingTable($row['sqlTable'])->getForeignKeys()[$row['sqlIndex']])) {
+					$doneEntries[] = $row;
+				}
+				else {
+					$undoneEntries[] = $row;
+				}
+			}
+			// index
+			else {
+				if (isset($this->getExistingTable($row['sqlTable'])->getIndices()[$row['sqlIndex']])) {
+					$doneEntries[] = $row;
+				}
+				else {
+					$undoneEntries[] = $row;
+				}
+			}
+		}
+		
+		WCF::getDB()->beginTransaction();
+		foreach ($doneEntries as $entry) {
+			$this->finalizeLog($entry);
+		}
+		
+		// to achieve a consistent state, undone log entries will be deleted here even though
+		// they might be re-created later to ensure that after this method finishes, there are
+		// no more undone entries in the log for the relevant package
+		foreach ($undoneEntries as $entry) {
+			$this->deleteLog($entry);
+		}
+		WCF::getDB()->commitTransaction();
+	}
+	
+	/**
 	 * Creates the given table.
 	 * 
 	 * @param	DatabaseTable		$table
-	 * @throws	SplitNodeException
 	 */
 	protected function createTable(DatabaseTable $table) {
 		$columnData = array_map(function(IDatabaseTableColumn $column) {
@@ -185,32 +600,166 @@ class DatabaseTableChangeProcessor {
 		foreach ($table->getForeignKeys() as $foreignKey) {
 			$this->dbEditor->addForeignKey($table->getName(), $foreignKey->getName(), $foreignKey->getData());
 		}
+	}
+	
+	/**
+	 * Deletes the log entry for the given column.
+	 * 
+	 * @param	string				$tableName
+	 * @param	IDatabaseTableColumn		$column
+	 */
+	protected function deleteColumnLog($tableName, IDatabaseTableColumn $column) {
+		$this->deleteLog(['sqlTable' => $tableName, 'sqlColumn' => $column->getName()]);
+	}
+	
+	/**
+	 * Deletes the log entry for the given foreign key.
+	 *
+	 * @param	string				$tableName
+	 * @param	DatabaseTableForeignKey		$foreignKey
+	 */
+	protected function deleteForeignKeyLog($tableName, DatabaseTableForeignKey $foreignKey) {
+		$this->deleteLog(['sqlTable' => $tableName, 'sqlIndex' => $foreignKey->getName()]);
+	}
+	
+	/**
+	 * Deletes the log entry for the given index.
+	 * 
+	 * @param	string			$tableName
+	 * @param	DatabaseTableIndex	$index
+	 */
+	protected function deleteIndexLog($tableName, DatabaseTableIndex $index) {
+		$this->deleteLog(['sqlTable' => $tableName, 'sqlIndex' => $index->getName()]);
+	}
+	
+	/**
+	 * Deletes a log entry.
+	 * 
+	 * @param	array	$data
+	 */
+	protected function deleteLog(array $data) {
+		$sql = "DELETE FROM	wcf" . WCF_N . "_package_installation_sql_log
+			WHERE		packageID = ?
+					AND sqlTable = ?
+					AND sqlColumn = ?
+					AND sqlIndex = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
 		
-		$this->addedTables[] = $table;
+		$statement->execute([
+			$this->package->packageID,
+			$data['sqlTable'],
+			$data['sqlColumn'] ?? '',
+			$data['sqlIndex'] ?? ''
+		]);
+	}
+	
+	/**
+	 * Deletes all log entry related to the given table.
+	 * 
+	 * @param	DatabaseTable	$table
+	 */
+	protected function deleteTableLog(DatabaseTable $table) {
+		$sql = "DELETE FROM	wcf" . WCF_N . "_package_installation_sql_log
+			WHERE		packageID = ?
+					AND sqlTable = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
 		
-		if ($this->oneChangePerRequest) {
-			$this->logChanges();
-			
-			throw new SplitNodeException("Created table '{$table->getName()}'.");
-		}
+		$statement->execute([
+			$this->package->packageID,
+			$table->getName()
+		]);
+	}
+	
+	/**
+	 * Drops the given foreign key.
+	 * 
+	 * @param	string				$tableName
+	 * @param	DatabaseTableForeignKey		$foreignKey
+	 */
+	protected function dropForeignKey($tableName, DatabaseTableForeignKey $foreignKey) {
+		$this->dbEditor->dropForeignKey($tableName, $foreignKey->getName());
+		$this->dbEditor->dropIndex($tableName, $foreignKey->getName());
+	}
+	
+	/**
+	 * Drops the given index.
+	 * 
+	 * @param	string			$tableName
+	 * @param	DatabaseTableIndex	$index
+	 */
+	protected function dropIndex($tableName, DatabaseTableIndex $index) {
+		$this->dbEditor->dropIndex($tableName, $index->getName());
 	}
 	
 	/**
 	 * Drops the given table.
 	 * 
 	 * @param	DatabaseTable		$table
-	 * @throws	SplitNodeException
 	 */
 	protected function dropTable(DatabaseTable $table) {
 		$this->dbEditor->dropTable($table->getName());
+	}
+	
+	/**
+	 * Finalizes the log entry for the creation of the given column.
+	 * 
+	 * @param	string			$tableName
+	 * @param	IDatabaseTableColumn	$column
+	 */
+	protected function finalizeColumnLog($tableName, IDatabaseTableColumn $column) {
+		$this->finalizeLog(['sqlTable' => $tableName, 'sqlColumn' => $column->getName()]);
+	}
+	
+	/**
+	 * Finalizes the log entry for adding the given index.
+	 * 
+	 * @param	string				$tableName
+	 * @param	DatabaseTableForeignKey		$foreignKey
+	 */
+	protected function finalizeForeignKeyLog($tableName, DatabaseTableForeignKey $foreignKey) {
+		$this->finalizeLog(['sqlTable' => $tableName, 'sqlIndex' => $foreignKey->getName()]);
+	}
+	
+	/**
+	 * Finalizes the log entry for adding the given index.
+	 *
+	 * @param	string			$tableName
+	 * @param	DatabaseTableIndex	$index
+	 */
+	protected function finalizeIndexLog($tableName, DatabaseTableIndex $index) {
+		$this->finalizeLog(['sqlTable' => $tableName, 'sqlIndex' => $index->getName()]);
+	}
+	
+	/**
+	 * Finalizes a log entry after the relevant change has been executed.
+	 * 
+	 * @param	array	$data
+	 */
+	protected function finalizeLog(array $data) {
+		$sql = "UPDATE	wcf" . WCF_N . "_package_installation_sql_log
+			SET	isDone = ?
+			WHERE	packageID = ?
+				AND sqlTable = ?
+				AND sqlColumn = ?
+				AND sqlIndex = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
 		
-		$this->droppedTables[] = $table;
-		
-		if ($this->oneChangePerRequest) {
-			$this->logChanges();
-			
-			throw new SplitNodeException("Dropped table '{$table->getName()}'.");
-		}
+		$statement->execute([
+			1,
+			$this->package->packageID,
+			$data['sqlTable'],
+			$data['sqlColumn'] ?? '',
+			$data['sqlIndex'] ?? ''
+		]);
+	}
+	
+	/**
+	 * Finalizes the log entry for the creation of the given table.
+	 * 
+	 * @param	DatabaseTable	$table
+	 */
+	protected function finalizeTableLog(DatabaseTable $table) {
+		$this->finalizeLog(['sqlTable' => $table->getName()]);
 	}
 	
 	/**
@@ -229,8 +778,22 @@ class DatabaseTableChangeProcessor {
 		else if (isset($this->tablePackageIDs[$table->getName()])) {
 			return $this->tablePackageIDs[$table->getName()];
 		}
-	
+		
 		return null;
+	}
+	
+	/**
+	 * Returns the `DatabaseTable` object for the table with the given name.
+	 * 
+	 * @param	string		$tableName
+	 * @return	DatabaseTable
+	 */
+	protected function getExistingTable($tableName) {
+		if (!isset($this->existingTables[$tableName])) {
+			$this->existingTables[$tableName] = DatabaseTable::createFromExistingTable($this->dbEditor, $tableName);
+		}
+		
+		return $this->existingTables[$tableName];
 	}
 	
 	/**
@@ -274,85 +837,62 @@ class DatabaseTableChangeProcessor {
 	}
 	
 	/**
-	 * Logs all of the executed changes.
+	 * Prepares the log entry for the creation of the given column.
+	 * 
+	 * @param	string			$tableName
+	 * @param	IDatabaseTableColumn	$column
 	 */
-	protected function logChanges() {
-		if (!empty($this->droppedTables)) {
-			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_sql_log
-				WHERE		sqlTable = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			
-			WCF::getDB()->beginTransaction();
-			foreach ($this->droppedTables as $table) {
-				$statement->execute([$table->getName()]);
-			}
-			WCF::getDB()->commitTransaction();
-		}
+	protected function prepareColumnLog($tableName, IDatabaseTableColumn $column) {
+		$this->prepareLog(['sqlTable' => $tableName, 'sqlColumn' => $column->getName()]);
+	}
+	
+	/**
+	 * Prepares the log entry for adding the given foreign key.
+	 * 
+	 * @param	string				$tableName
+	 * @param	DatabaseTableForeignKey		$foreignKey
+	 */
+	protected function prepareForeignKeyLog($tableName, DatabaseTableForeignKey $foreignKey) {
+		$this->prepareLog(['sqlTable' => $tableName, 'sqlIndex' => $foreignKey->getName()]);
+	}
+	
+	/**
+	 * Prepares the log entry for adding the given index.
+	 *
+	 * @param	string			$tableName
+	 * @param	DatabaseTableIndex	$index
+	 */
+	protected function prepareIndexLog($tableName, DatabaseTableIndex $index) {
+		$this->prepareLog(['sqlTable' => $tableName, 'sqlIndex' => $index->getName()]);
+	}
+	
+	/**
+	 * Prepares a log entry before the relevant change has been executed.
+	 *
+	 * @param	array	$data
+	 */
+	protected function prepareLog(array $data) {
+		$sql = "INSERT INTO	wcf" . WCF_N . "_package_installation_sql_log
+					(packageID, sqlTable, sqlColumn, sqlIndex, isDone)
+			VALUES		(?, ?, ?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
 		
-		if (!empty($this->droppedColumns)) {
-			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_sql_log
-				WHERE		sqlTable = ?
-						AND sqlColumn = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			
-			WCF::getDB()->beginTransaction();
-			foreach ($this->droppedColumns as $tableName => $columns) {
-				foreach ($columns as $column) {
-					$statement->execute([$tableName, $column->getName()]);
-				}
-			}
-			WCF::getDB()->commitTransaction();
-		}
-		
-		if (!empty($this->droppedIndices)) {
-			$sql = "DELETE FROM	wcf".WCF_N."_package_installation_sql_log
-				WHERE		sqlTable = ?
-						AND sqlIndex = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			
-			WCF::getDB()->beginTransaction();
-			foreach ($this->droppedIndices as $tableName => $indices) {
-				foreach ($indices as $index) {
-					$statement->execute([$tableName, $index->getName()]);
-				}
-			}
-			WCF::getDB()->commitTransaction();
-		}
-		
-		$insertionData = [];
-		foreach ($this->addedTables as $table) {
-			$insertionData[] = ['sqlTable' => $table->getName()];
-		}
-		
-		foreach ($this->addedColumns as $tableName => $columns) {
-			foreach ($columns as $column) {
-				$insertionData[] = ['sqlTable' => $tableName, 'sqlColumn' => $column->getName()];
-			}
-		}
-		
-		foreach ($this->addedIndices as $tableName => $indices) {
-			foreach ($indices as $index) {
-				$insertionData[] = ['sqlTable' => $tableName, 'sqlIndex' => $index->getName()];
-			}
-		}
-		
-		if (!empty($insertionData)) {
-			$sql = "INSERT INTO	wcf".WCF_N."_package_installation_sql_log
-						(packageID, sqlTable, sqlColumn, sqlIndex)
-				VALUES		(?, ?, ?, ?)";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			
-			WCF::getDB()->beginTransaction();
-			foreach ($insertionData as $data) {
-				$statement->execute([
-					$this->package->packageID,
-					$data['sqlTable'],
-					$data['sqlColumn'] ?? '',
-					$data['sqlIndex'] ?? ''
-				]);
-			}
-			WCF::getDB()->commitTransaction();
-		}
+		$statement->execute([
+			$this->package->packageID,
+			$data['sqlTable'],
+			$data['sqlColumn'] ?? '',
+			$data['sqlIndex'] ?? '',
+			0
+		]);
+	}
+	
+	/**
+	 * Prepares the log entry for the creation of the given table.
+	 *
+	 * @param	DatabaseTable	$table
+	 */
+	protected function prepareTableLog(DatabaseTable $table) {
+		$this->prepareLog(['sqlTable' => $table->getName()]);
 	}
 	
 	/**
@@ -361,6 +901,8 @@ class DatabaseTableChangeProcessor {
 	 * @throws	\RuntimeException	if validation of the required layout changes fails
 	 */
 	public function process() {
+		$this->checkPendingLogEntries();
+		
 		$errors = $this->validate();
 		if (!empty($errors)) {
 			throw new \RuntimeException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.error.databaseChange', [
@@ -368,218 +910,14 @@ class DatabaseTableChangeProcessor {
 			]));
 		}
 		
-		foreach ($this->tables as $table) {
-			if ($table->willBeDropped()) {
-				if (in_array($table->getName(), $this->existingTableNames)) {
-					$this->dropTable($table);
-				}
-			}
-			else if (!in_array($table->getName(), $this->existingTableNames)) {
-				$this->createTable($table);
-			}
-			else {
-				// calculate difference between tables
-				$existingTable = DatabaseTable::createFromExistingTable($this->dbEditor, $table->getName());
-				$existingColumns = $existingTable->getColumns();
-				$existingForeignKeys = $existingTable->getForeignKeys();
-				$existingIndices = $existingTable->getIndices();
-				
-				$addedColumns = $alteredColumns = $droppedColumns = [];
-				foreach ($table->getColumns() as $column) {
-					if (!isset($existingColumns[$column->getName()]) && !$column->willBeDropped()) {
-						$addedColumns[$column->getName()] = $column;
-					}
-					else if (isset($existingColumns[$column->getName()])) {
-						if ($column->willBeDropped()) {
-							$droppedColumns[$column->getName()] = $column;
-						}
-						else if (!empty(array_diff($column->getData(), $existingColumns[$column->getName()]->getData()))) {
-							$alteredColumns[$column->getName()] = $column;
-						}
-					}
-				}
-				
-				$this->processColumns($table, $addedColumns, $alteredColumns, $droppedColumns);
-				
-				$addedForeignKeys = $droppedForeignKeys = [];
-				foreach ($table->getForeignKeys() as $foreignKey) {
-					$matchingExistingForeignKey = null;
-					foreach ($existingForeignKeys as $existingForeignKey) {
-						if (empty(array_diff($foreignKey->getData(), $existingForeignKey->getData()))) {
-							$matchingExistingForeignKey = $existingForeignKey;
-							break;
-						}
-					}
-					
-					if ($foreignKey->willBeDropped()) {
-						if ($matchingExistingForeignKey !== null) {
-							$droppedForeignKeys[$foreignKey->getName()] = $foreignKey;
-						}
-					}
-					else if ($matchingExistingForeignKey === null) {
-						$addedForeignKeys[$foreignKey->getName()] = $foreignKey;
-					}
-				}
-				
-				$this->processForeignKeys($table, $addedForeignKeys, $droppedForeignKeys);
-				
-				$addedIndices = $droppedIndices = [];
-				foreach ($table->getIndices() as $index) {
-					$matchingExistingIndex = null;
-					foreach ($existingIndices as $existingIndex) {
-						if (empty(array_diff($index->getData(), $existingIndex->getData()))) {
-							$matchingExistingIndex = $existingIndex;
-							break;
-						}
-					}
-					
-					if ($index->willBeDropped()) {
-						if ($matchingExistingIndex !== null) {
-							$droppedIndices[$index->getName()] = $index;
-						}
-					}
-					else if ($matchingExistingIndex === null) {
-						$addedIndices[$index->getName()] = $index;
-					}
-				}
-				
-				$this->processIndices($table, $addedIndices, $droppedIndices);
-			}
-		}
+		$this->calculateChanges();
 		
-		$this->logChanges();
-	}
-	
-	/**
-	 * Adds, alters and drops the given columns.
-	 * 
-	 * @param	DatabaseTable			$table
-	 * @param	IDatabaseTableColumn[]		$addedColumns
-	 * @param	IDatabaseTableColumn[]		$alteredColumns
-	 * @param	IDatabaseTableColumn[]		$droppedColumns
-	 * @throws	SplitNodeException
-	 */
-	protected function processColumns(DatabaseTable $table, array $addedColumns, array $alteredColumns, array $droppedColumns) {
-		$columnData = [];
-		foreach ($droppedColumns as $droppedColumn) {
-			$columnData[$droppedColumn->getName()] = [
-				'action' => 'drop'
-			];
-			
-			$this->droppedColumns[$table->getName()][$droppedColumn->getName()] = $droppedColumn;
-		}
-		foreach ($addedColumns as $addedColumn) {
-			$columnData[$addedColumn->getName()] = [
-				'action' => 'add',
-				'data' => $addedColumn->getData()
-			];
-			
-			if ($this->tablePackageIDs[$table->getName()] !== $this->package->packageID) {
-				$this->addedColumns[$table->getName()][$addedColumn->getName()] = $addedColumn;
-			}
-		}
-		foreach ($alteredColumns as $alteredColumn) {
-			$columnData[$alteredColumn->getName()] = [
-				'action' => 'alter',
-				'data' => $alteredColumn->getData(),
-				'oldColumnName' => $alteredColumn->getName()
-			];
-		}
-		
-		if (!empty($columnData)) {
-			$this->dbEditor->alterColumns($table->getName(), $columnData);
-			
-			if ($this->oneChangePerRequest) {
-				$this->logChanges();
-				
-				throw new SplitNodeException("Altered columns of table '{$table->getName()}'.");
-			}
-		}
-	}
-	
-	/**
-	 * Adds and drops the given foreign keys.
-	 * 
-	 * @param	DatabaseTable			$table
-	 * @param	DatabaseTableForeignKey[]	$addedForeignKeys
-	 * @param	DatabaseTableForeignKey[]	$droppedForeignKeys
-	 * @throws	SplitNodeException
-	 */
-	protected function processForeignKeys(DatabaseTable $table, array $addedForeignKeys, array $droppedForeignKeys) {
-		if (empty($addedForeignKeys) && empty($droppedForeignKeys)) {
-			return;
-		}
-		
-		foreach ($addedForeignKeys as $addedForeignKey) {
-			if ($this->tablePackageIDs[$table->getName()] !== $this->package->packageID) {
-				$this->addedIndices[$table->getName()][$addedForeignKey->getName()] = $addedForeignKey;
-			}
-			
-			$this->dbEditor->addForeignKey($table->getName(), $addedForeignKey->getName(), $addedForeignKey->getData());
-			
-			if ($this->oneChangePerRequest) {
-				$this->logChanges();
-				
-				throw new SplitNodeException("Added foreign key '{$table->getName()}." . implode(',', $addedForeignKey->getColumns()) . "'");
-			}
-		}
-		
-		foreach ($droppedForeignKeys as $droppedForeignKey) {
-			$this->droppedIndices[$table->getName()][$droppedForeignKey->getName()] = $droppedForeignKey;
-			
-			$this->dbEditor->dropForeignKey($table->getName(), $droppedForeignKey->getName());
-			
-			if ($this->oneChangePerRequest) {
-				$this->logChanges();
-				
-				throw new SplitNodeException("Dropped foreign key '{$table->getName()}." . implode(',', $droppedForeignKey->getColumns()) . "' ({$droppedForeignKey->getName()})");
-			}
-		}
-	}
-	
-	/**
-	 * Adds and drops the given indices.
-	 * 
-	 * @param	DatabaseTable		$table
-	 * @param	DatabaseTableIndex[]	$addedIndices
-	 * @param	DatabaseTableIndex[]	$droppedIndices
-	 * @throws	SplitNodeException
-	 */
-	protected function processIndices(DatabaseTable $table, array $addedIndices, array $droppedIndices) {
-		if (empty($addedIndices) && empty($droppedIndices)) {
-			return;
-		}
-		
-		foreach ($addedIndices as $addedIndex) {
-			if ($this->tablePackageIDs[$table->getName()] !== $this->package->packageID) {
-				$this->addedIndices[$table->getName()][$addedIndex->getName()] = $addedIndex;
-			}
-			
-			$this->dbEditor->addIndex($table->getName(), $addedIndex->getName(), $addedIndex->getData());
-			
-			if ($this->oneChangePerRequest) {
-				$this->logChanges();
-				
-				throw new SplitNodeException("Added index '{$table->getName()}." . implode(',', $addedIndex->getColumns()) . "'");
-			}
-		}
-		
-		foreach ($droppedIndices as $droppedIndex) {
-			$this->droppedIndices[$table->getName()][$droppedIndex->getName()] = $droppedIndex;
-			
-			$this->dbEditor->dropIndex($table->getName(), $droppedIndex->getName());
-			
-			if ($this->oneChangePerRequest) {
-				$this->logChanges();
-				
-				throw new SplitNodeException("Dropped index '{$table->getName()}." . implode(',', $droppedIndex->getColumns()) . "'");
-			}
-		}
+		$this->applyChanges();
 	}
 	
 	/**
 	 * Checks if the relevant table layout changes can be executed and returns an array with information
-	 * on any validation error.
+	 * on all validation errors.
 	 * 
 	 * @return	array
 	 */
