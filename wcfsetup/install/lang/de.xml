@@ -382,6 +382,7 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.category"><![CDATA[Artikel-Kategorien]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.comment"><![CDATA[Artikel-Kommentare]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.comment.response"><![CDATA[Artikel-Kommentar-Antworten]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.media.category"><![CDATA[Medien-Kategorien]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.media"><![CDATA[Medien]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.trophy.category"><![CDATA[Trophäen-Kategorien]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.trophy"><![CDATA[Trophäen]]></item>

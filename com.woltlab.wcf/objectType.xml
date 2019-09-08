@@ -452,6 +452,11 @@
 			<classname>wcf\system\importer\ArticleImporter</classname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.media.category</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\MediaCategoryImporter</classname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.media</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname>wcf\system\importer\MediaImporter</classname>
