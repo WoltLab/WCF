@@ -2304,7 +2304,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.date.timezone.asia.kuwait"><![CDATA[(UTC+03:00) Kuwait, Riad]]></item>
 		<item name="wcf.date.timezone.africa.nairobi"><![CDATA[(UTC+03:00) Nairobi]]></item>
 		<item name="wcf.date.timezone.asia.tehran"><![CDATA[(UTC+03:30) Teheran]]></item>
-		<item name="wcf.date.timezone.asia.muscat"><![CDATA[(UTC+04:00) Abu Dhabi, Muskat]]></item>
+		<item name="wcf.date.timezone.asia.muscat"><![CDATA[(UTC+04:00) Abu Dhabi, Maskat]]></item>
 		<item name="wcf.date.timezone.asia.baku"><![CDATA[(UTC+04:00) Baku]]></item>
 		<item name="wcf.date.timezone.asia.yerevan"><![CDATA[(UTC+04:00) Eriwan]]></item>
 		<item name="wcf.date.timezone.europe.moscow"><![CDATA[(UTC+03:00) Moskau, St. Petersburg, Wolgograd]]></item>
