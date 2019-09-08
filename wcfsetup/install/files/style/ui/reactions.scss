@@ -44,6 +44,8 @@
 .reactionCount{
 	@include wcfFontSmall;
 	
+	vertical-align: middle;
+	
 	&::before {
 		content: ' × ';
 	}
