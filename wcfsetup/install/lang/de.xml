@@ -326,11 +326,13 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Pinnwand-Kommentare]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Pinnwand-Kommentar-Antworten]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label.group"><![CDATA[Labelgruppen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley.category"><![CDATA[Smiley-Kategorien]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.category"><![CDATA[Artikel-Kategorien]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.comment"><![CDATA[Artikel-Kommentare]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.comment.response"><![CDATA[Artikel-Kommentar-Antworten]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.media"><![CDATA[Medien]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} die bestehenden Zuordnungen wirklich löschen?]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[Es existieren Zuordnungen eines früheren Import-Vorganges, diese werden verwendet, um Inhalte aus dem importierten Forum einwandfrei zuzuordnen. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} den Import-Vorgang vollständig abgeschlossen {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese Zuordnungen <a id="deleteMapping">löschen</a>. {if LANGUAGE_USE_INFORMAL_VARIANT}Du solltest{else}Sie sollten{/if} die Zuordnungen nicht löschen, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} jetzt oder zukünftig noch weitere Inhalte aus dem selben Forum übernehmen {if LANGUAGE_USE_INFORMAL_VARIANT}willst{else}wollen{/if}.]]></item>

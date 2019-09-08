@@ -324,11 +324,13 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Wall comments]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Replies to wall comments]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label.group"><![CDATA[Label groups]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley.category"><![CDATA[Smiley categories]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.category"><![CDATA[Article categories]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.comment"><![CDATA[Article comments]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.comment.response"><![CDATA[Replies to article comments]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.media"><![CDATA[Media]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.confirmMessage"><![CDATA[Do you really want to delete the existing import mappings?]]></item>
 		<item name="wcf.acp.dataImport.existingMapping.notice"><![CDATA[There are import mappings created by a previous import process, these mappings are used to properly handle connections between data from the imported forum and this one. In case you have imported all the desired data, you can <a id="deleteMapping">delete</a> the mappings. It is strongly recommended to keep these mappings as long as there is still data to be imported now or in the future.]]></item>
