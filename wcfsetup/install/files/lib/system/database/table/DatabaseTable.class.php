@@ -102,6 +102,10 @@ class DatabaseTable {
 				throw new \InvalidArgumentException("Duplicate foreign key with name '{$foreignKey->getName()}'.");
 			}
 			
+			if ($foreignKey->getOnDelete() === null && $foreignKey->getOnUpdate() === null) {
+				throw new \InvalidArgumentException("Missing action for foreign key '{$foreignKey->getName()}'.");
+			}
+			
 			$this->foreignKeys[$foreignKey->getName()] = $foreignKey;
 		}
 		
