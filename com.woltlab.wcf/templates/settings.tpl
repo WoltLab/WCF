@@ -64,7 +64,7 @@
 		
 		{if $availableStyles|count > 1}
 			<section class="section">
-				<h2 class="sectionTitle">{lang}wcf.user.style{/lang}</h2>
+				<h2 class="sectionTitle">{lang}wcf.user.styles{/lang}</h2>
 				
 				<dl>
 					<dt><label for="styleID">{lang}wcf.user.style{/lang}</label></dt>
