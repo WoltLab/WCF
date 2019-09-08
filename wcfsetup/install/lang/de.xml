@@ -4459,8 +4459,9 @@ Dateianhänge:
 		<item name="wcf.user.button.unfollow"><![CDATA[Entfolgen]]></item>
 		<item name="wcf.user.button.ignore"><![CDATA[Blockieren]]></item>
 		<item name="wcf.user.button.unignore"><![CDATA[Nicht mehr blockieren]]></item>
-		<item name="wcf.user.style"><![CDATA[Stile]]></item>
-		<item name="wcf.user.style.description"><![CDATA[Stile der Benutzeroberfläche]]></item>
+		<item name="wcf.user.style"><![CDATA[Stil]]></item>
+		<item name="wcf.user.styles"><![CDATA[Stile]]></item>
+		<item name="wcf.user.style.description"><![CDATA[Stil der Benutzeroberfläche]]></item>
 		<item name="wcf.user.username.description"><![CDATA[Der Benutzername muss mindestens {REGISTER_USERNAME_MIN_LENGTH} und darf maximal {REGISTER_USERNAME_MAX_LENGTH} Zeichen lang sein.]]></item>
 		<item name="wcf.user.password.description"><![CDATA[{if REGISTER_ENABLE_PASSWORD_SECURITY_CHECK}Das Kennwort muss aus Sicherheitsgründen mindestens {REGISTER_PASSWORD_MIN_LENGTH} Zeichen lang sein{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{*
 		*} und {*
