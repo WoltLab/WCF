@@ -4,6 +4,7 @@ use wcf\data\reaction\type\ReactionTypeAction;
 use wcf\data\reaction\type\ReactionTypeList;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\form\builder\container\FormContainer;
+use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ShowOrderFormField;
 use wcf\system\form\builder\field\TitleFormField;
 use wcf\system\form\builder\field\UploadFormField;
@@ -60,7 +61,10 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm {
 				ShowOrderFormField::create()
 					->description('wcf.acp.reactionType.showOrder.description')
 					->required()
-					->options(new ReactionTypeList())
+					->options(new ReactionTypeList()),
+				BooleanFormField::create('isAssignable')
+					->label('wcf.acp.reactionType.isAssignable')
+					->description('wcf.acp.reactionType.isAssignable.description')
 			]);
 		
 		$iconContainer = FormContainer::create('imageSection')

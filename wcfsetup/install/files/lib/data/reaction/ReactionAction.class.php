@@ -201,6 +201,15 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 				throw new PermissionDeniedException();
 			}
 		}
+		
+		if (!$this->reactionType->isAssignable) {
+			// check, if the reaction is reverted
+			$like = Like::getLike($this->likeableObject->getObjectType()->objectTypeID, $this->likeableObject->getObjectID(), WCF::getUser()->userID);
+			
+			if (!$like->likeID || $like->reactionTypeID !== $this->reactionType->reactionTypeID) {
+				throw new IllegalLinkException();
+			}
+		}
 	}
 	
 	/**

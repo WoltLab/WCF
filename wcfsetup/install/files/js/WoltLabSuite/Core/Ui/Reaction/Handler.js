@@ -217,7 +217,12 @@ define(
 				});
 				
 				if (reactionTypeID) {
-					elBySel('.reactionTypeButton[data-reaction-type-id="' + reactionTypeID + '"]', this._getPopover()).classList.add('active');
+					var reactionTypeButton = elBySel('.reactionTypeButton[data-reaction-type-id="' + reactionTypeID + '"]', this._getPopover());
+					reactionTypeButton.classList.add('active');
+					
+					if (~~elData(reactionTypeButton, 'is-assignable') === 0) {
+						elShow(reactionTypeButton);
+					}
 				}
 			},
 			
@@ -306,6 +311,8 @@ define(
 						reactionTypeItem.className = 'reactionTypeButton jsTooltip';
 						elData(reactionTypeItem, 'reaction-type-id', reactionType.reactionTypeID);
 						elData(reactionTypeItem, 'title', reactionType.title);
+						elData(reactionTypeItem, 'is-assignable', ~~reactionType.isAssignable);
+						
 						reactionTypeItem.title = reactionType.title;
 						
 						var reactionTypeItemSpan = elCreate('span');
@@ -318,6 +325,10 @@ define(
 						reactionTypeItem.appendChild(reactionTypeItemSpan);
 						
 						reactionTypeItem.addEventListener(WCF_CLICK_EVENT, this._react.bind(this, reactionType.reactionTypeID));
+						
+						if (!reactionType.isAssignable) {
+							elHide(reactionTypeItem);
+						}
 						
 						popoverContentHTML.appendChild(reactionTypeItem);
 					}
@@ -371,6 +382,8 @@ define(
 			_closePopover: function() {
 				if (this._popoverCurrentObjectId !== 0) {
 					this._getPopover().classList.remove('active');
+					
+					elBySelAll('.reactionTypeButton[data-is-assignable="0"]', this._getPopover(), elHide);
 					
 					if (this._options.isButtonGroupNavigation) {
 						this._objects.get(this._popoverCurrentObjectId).forEach(function (elementData) {

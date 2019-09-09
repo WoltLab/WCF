@@ -2506,6 +2506,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.reactionType.type"><![CDATA[Reaction Type]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaction File]]></item>
 		<item name="wcf.acp.reactionType.showOrder.description"><![CDATA[The reaction type will be shown after the selected reaction type.]]></item>
+		<item name="wcf.acp.reactionType.isAssignable"><![CDATA[Can be assigend]]></item>
+		<item name="wcf.acp.reactionType.isAssignable.description"><![CDATA[If a reaction cannot be used, users cannot react with the reaction. If a content has already been reacted to with the reaction, it remains visible to users.]]></item>
 	</category>
 	<category name="wcf.acp.rebuildData">
 		<item name="wcf.acp.rebuildData"><![CDATA[Rebuild Data]]></item>
