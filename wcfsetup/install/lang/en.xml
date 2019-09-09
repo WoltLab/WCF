@@ -351,11 +351,14 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Wall comments]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Replies to wall comments]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label.group"><![CDATA[Label groups]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley.category"><![CDATA[Smiley categories]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.category"><![CDATA[Article categories]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.comment"><![CDATA[Article comments]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.comment.response"><![CDATA[Replies to article comments]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.media.category"><![CDATA[Media categories]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.media"><![CDATA[Media]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.trophy.category"><![CDATA[Trophy categories]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.trophy"><![CDATA[Trophies]]></item>
@@ -3299,7 +3302,7 @@ Errors are:
 		<item name="wcf.comment.response.more"><![CDATA[{literal}{if $count == 1}One more reply{else}{#$count} more replies{/if}{/literal}]]></item>
 		<item name="wcf.comment.button.response.add"><![CDATA[Reply]]></item>
 		<item name="wcf.comment.guestDialog.title"><![CDATA[Guest Comment]]></item>
-		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Likes]]></item>
+		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Reactions]]></item>
 		<item name="wcf.comment.sortField.time"><![CDATA[Date]]></item>
 	</category>
 	<category name="wcf.condition">
@@ -3908,7 +3911,7 @@ Attachments:
 		<item name="wcf.label.withoutSelection"><![CDATA[Without Label]]></item>
 	</category>
 	<category name="wcf.like">
-		<item name="wcf.like.cumulativeLikes"><![CDATA[Likes]]></item>
+		<item name="wcf.like.cumulativeLikes"><![CDATA[Reactions]]></item>
 		<item name="wcf.like.tooltip"><![CDATA[{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}]]></item>
 		<item name="wcf.like.jsTooltip"><![CDATA[{literal}{if $likes}{#$likes} Like{if $likes != 1}s{/if}{if $dislikes}, {/if}{/if}{if $dislikes}{#$dislikes} Dislike{if $dislikes != 1}s{/if}{/if}{/literal}]]></item>
 		<item name="wcf.like.button.like"><![CDATA[Like]]></item>
@@ -4463,7 +4466,8 @@ Attachments:
 		<item name="wcf.user.button.unfollow"><![CDATA[Unfollow]]></item>
 		<item name="wcf.user.button.ignore"><![CDATA[Block]]></item>
 		<item name="wcf.user.button.unignore"><![CDATA[Unblock]]></item>
-		<item name="wcf.user.style"><![CDATA[Styles]]></item>
+		<item name="wcf.user.style"><![CDATA[Style]]></item>
+		<item name="wcf.user.styles"><![CDATA[Styles]]></item>
 		<item name="wcf.user.style.description"><![CDATA[Forces a specific style instead of the default one.]]></item>
 		<item name="wcf.user.username.description"><![CDATA[Username must be {REGISTER_USERNAME_MIN_LENGTH} up to {REGISTER_USERNAME_MAX_LENGTH} characters long.]]></item>
 		<item name="wcf.user.password.description"><![CDATA[{if REGISTER_ENABLE_PASSWORD_SECURITY_CHECK}Due to security reasons every password must be at least {REGISTER_PASSWORD_MIN_LENGTH} characters long{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{*

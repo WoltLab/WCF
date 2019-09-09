@@ -375,11 +375,14 @@
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment"><![CDATA[Pinnwand-Kommentare]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.user.comment.response"><![CDATA[Pinnwand-Kommentar-Antworten]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label"><![CDATA[Labels]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.label.group"><![CDATA[Labelgruppen]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.smiley.category"><![CDATA[Smiley-Kategorien]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.category"><![CDATA[Artikel-Kategorien]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.comment"><![CDATA[Artikel-Kommentare]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.article.comment.response"><![CDATA[Artikel-Kommentar-Antworten]]></item>
+		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.media.category"><![CDATA[Medien-Kategorien]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.media"><![CDATA[Medien]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.trophy.category"><![CDATA[Trophäen-Kategorien]]></item>
 		<item name="wcf.acp.dataImport.data.com.woltlab.wcf.trophy"><![CDATA[Trophäen]]></item>
@@ -3124,8 +3127,8 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter „Konfiguration �
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[Neues Kennwort für {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Benutzerkonto auf der Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
-ein Administrator hat {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kennwort zurück gesetzt. Es ist nun
-erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nun ein neues Kennwort {if LANGUAGE_USE_INFORMAL_VARIANT}setzt{else}setzen{/if}, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein {else}Sie Ihr {/if}
+ein Administrator hat {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kennwort zurückgesetzt. Es ist nun
+erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} ein neues Kennwort {if LANGUAGE_USE_INFORMAL_VARIANT}setzt{else}setzen{/if}, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein {else}Sie Ihr {/if}
 Benutzerkonto {@$mailbox->getUser()->username} auf der Seite {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]
 weiterhin verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}:
 
@@ -3135,8 +3138,8 @@ weiterhin verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}:
 aus Sicherheitsgründen erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} die Kennwort vergessen-Funktion [URL:{link controller='LostPassword' isEmail=true}{/link}] {if LANGUAGE_USE_INFORMAL_VARIANT}nutzt{else}nutzen{/if}.]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.headline"><![CDATA[Hallo {@$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.intro"><![CDATA[
-<p>ein Administrator hat {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kennwort zurück gesetzt. Es ist nun
-erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} nun ein neues Kennwort {if LANGUAGE_USE_INFORMAL_VARIANT}setzt{else}setzen{/if}, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein {else}Sie Ihr {/if}
+<p>ein Administrator hat {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Kennwort zurückgesetzt. Es ist nun
+erforderlich, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} ein neues Kennwort {if LANGUAGE_USE_INFORMAL_VARIANT}setzt{else}setzen{/if}, damit {if LANGUAGE_USE_INFORMAL_VARIANT}du dein {else}Sie Ihr {/if}
 Benutzerkonto {@$mailbox->getUser()->username} auf der Seite <a href="{link}{/link}">{@PAGE_TITLE|language}</a>
 weiterhin verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}:</p>]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.reset"><![CDATA[Neues Kennwort setzen]]></item>
@@ -3375,7 +3378,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.comment.response.more"><![CDATA[{literal}{if $count == 1}Eine weitere Antwort{else}{#$count} weitere Antworten{/if}{/literal}]]></item>
 		<item name="wcf.comment.button.response.add"><![CDATA[Antworten]]></item>
 		<item name="wcf.comment.guestDialog.title"><![CDATA[Gastkommentar]]></item>
-		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Likes]]></item>
+		<item name="wcf.comment.sortField.cumulativeLikes"><![CDATA[Reaktionen]]></item>
 		<item name="wcf.comment.sortField.time"><![CDATA[Datum]]></item>
 	</category>
 	<category name="wcf.condition">
@@ -3587,7 +3590,7 @@ Dateianhänge:
 		<item name="wcf.date.timezone.asia.kuwait"><![CDATA[(UTC+03:00) Kuwait, Riad]]></item>
 		<item name="wcf.date.timezone.africa.nairobi"><![CDATA[(UTC+03:00) Nairobi]]></item>
 		<item name="wcf.date.timezone.asia.tehran"><![CDATA[(UTC+03:30) Teheran]]></item>
-		<item name="wcf.date.timezone.asia.muscat"><![CDATA[(UTC+04:00) Abu Dhabi, Muskat]]></item>
+		<item name="wcf.date.timezone.asia.muscat"><![CDATA[(UTC+04:00) Abu Dhabi, Maskat]]></item>
 		<item name="wcf.date.timezone.asia.baku"><![CDATA[(UTC+04:00) Baku]]></item>
 		<item name="wcf.date.timezone.asia.yerevan"><![CDATA[(UTC+04:00) Eriwan]]></item>
 		<item name="wcf.date.timezone.europe.moscow"><![CDATA[(UTC+03:00) Moskau, St. Petersburg, Wolgograd]]></item>
@@ -4461,8 +4464,9 @@ Dateianhänge:
 		<item name="wcf.user.button.unfollow"><![CDATA[Entfolgen]]></item>
 		<item name="wcf.user.button.ignore"><![CDATA[Blockieren]]></item>
 		<item name="wcf.user.button.unignore"><![CDATA[Nicht mehr blockieren]]></item>
-		<item name="wcf.user.style"><![CDATA[Stile]]></item>
-		<item name="wcf.user.style.description"><![CDATA[Stile der Benutzeroberfläche]]></item>
+		<item name="wcf.user.style"><![CDATA[Stil]]></item>
+		<item name="wcf.user.styles"><![CDATA[Stile]]></item>
+		<item name="wcf.user.style.description"><![CDATA[Stil der Benutzeroberfläche]]></item>
 		<item name="wcf.user.username.description"><![CDATA[Der Benutzername muss mindestens {REGISTER_USERNAME_MIN_LENGTH} und darf maximal {REGISTER_USERNAME_MAX_LENGTH} Zeichen lang sein.]]></item>
 		<item name="wcf.user.password.description"><![CDATA[{if REGISTER_ENABLE_PASSWORD_SECURITY_CHECK}Das Kennwort muss aus Sicherheitsgründen mindestens {REGISTER_PASSWORD_MIN_LENGTH} Zeichen lang sein{if REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE || REGISTER_PASSWORD_MUST_CONTAIN_DIGIT || REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR}{*
 		*} und {*

@@ -299,6 +299,8 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	 * @inheritDoc
 	 */
 	protected function loadContent() {
+		EventHandler::getInstance()->fireAction($this, 'beforeLoadContent');
+		
 		$this->objectList = $this->getObjectList();
 		
 		if ($this->limit) {
@@ -321,6 +323,8 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 		$this->readObjects();
 		
 		$this->content = $this->getTemplate();
+		
+		EventHandler::getInstance()->fireAction($this, 'afterLoadContent');
 	}
 	
 	/**

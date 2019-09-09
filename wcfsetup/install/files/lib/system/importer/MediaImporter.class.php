@@ -70,6 +70,15 @@ class MediaImporter extends AbstractImporter {
 			if (!$media->mediaID) $data['mediaID'] = $oldID;
 		}
 		
+		// category
+		$categoryID = null;
+		if (!empty($data['categoryID'])) {
+			$categoryID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.media.category', $data['categoryID']);
+		}
+		if ($categoryID !== null) {
+			$data['categoryID'] = $categoryID;
+		}
+		
 		// save media
 		$media = MediaEditor::create($data);
 		

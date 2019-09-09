@@ -430,6 +430,8 @@ class ReactionHandler extends SingletonFactory {
 				$cachedReactions[$reactionType->reactionTypeID] = 1;
 			}
 			
+			$cachedReactions = self::cleanUpCachedReactions($cachedReactions);
+			
 			// build update date
 			$updateData = [
 				'likes' => $cumulativeLikes,
@@ -578,6 +580,8 @@ class ReactionHandler extends SingletonFactory {
 					unset($cachedReactions[$like->getReactionType()->reactionTypeID]);
 				}
 			}
+			
+			$cachedReactions = self::cleanUpCachedReactions($cachedReactions);
 			
 			// build update date
 			$updateData = [
@@ -737,6 +741,22 @@ class ReactionHandler extends SingletonFactory {
 	}
 	
 	/**
+	 * Removes deleted reactions from the reaction counter for the like object table. 
+	 * 
+	 * @param       array   $cachedReactions
+	 * @return      array
+	 */
+	private function cleanUpCachedReactions(array $cachedReactions) {
+		foreach ($cachedReactions as $reactionTypeID => $count) {
+			if (self::getReactionTypeByID($reactionTypeID) === null) {
+				unset($cachedReactions[$reactionTypeID]);
+			}
+		}
+		
+		return $cachedReactions;
+	}
+	
+	/**
 	 * @param string|null $cachedReactions
 	 * @return array|null
 	 * @since 5.2
@@ -745,17 +765,21 @@ class ReactionHandler extends SingletonFactory {
 		if ($cachedReactions) {
 			$cachedReactions = @unserialize($cachedReactions);
 			
-			if (is_array($cachedReactions) && !empty($cachedReactions)) {
-				$allReactions = array_sum($cachedReactions);
+			if (is_array($cachedReactions)) {
+				$cachedReactions = self::cleanUpCachedReactions($cachedReactions);
 				
-				arsort($cachedReactions, SORT_NUMERIC);
-				
-				$count = current($cachedReactions);
-				return [
-					'count' => $count,
-					'other' => $allReactions - $count,
-					'reaction' => ReactionTypeCache::getInstance()->getReactionTypeByID(key($cachedReactions)),
-				];
+				if (!empty($cachedReactions)) {
+					$allReactions = array_sum($cachedReactions);
+					
+					arsort($cachedReactions, SORT_NUMERIC);
+					
+					$count = current($cachedReactions);
+					return [
+						'count' => $count,
+						'other' => $allReactions - $count,
+						'reaction' => ReactionTypeCache::getInstance()->getReactionTypeByID(key($cachedReactions)),
+					];
+				}
 			}
 		}
 		
