@@ -29,7 +29,7 @@ class ArticleCommentImporter extends AbstractCommentImporter {
 	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
-		$articleID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.article', $additionalData['articleID']);
+		$articleID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.article', $data['objectID'] ?? $additionalData['articleID']);
 		if (!$articleID) return 0;
 		$article = new Article($articleID);
 		$contents = $article->getArticleContents();
