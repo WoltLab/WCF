@@ -30,7 +30,7 @@ define(['Environment', 'Language', './Action'], function(Environment, Language, 
 			button.className = 'jsTooltip';
 			button.href = '#';
 			elAttr(button, 'title', Language.get('wcf.global.scrollUp'));
-			elAttr(button, 'role', 'button');
+			elAttr(button, 'aria-hidden', 'true');
 			button.innerHTML = '<span class="icon icon32 fa-angle-up"></span>';
 			
 			button.addEventListener(WCF_CLICK_EVENT, this._jump.bind(this));
