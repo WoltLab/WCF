@@ -153,6 +153,10 @@ class InstallPackageAction extends AbstractDialogAction {
 		// clean-up previously created nodes
 		$this->installation->nodeBuilder->purgeNodes();
 		
+		if ($this->installation->getAction() === 'update' && $this->queue->package === 'com.woltlab.wcf') {
+			WCF::checkWritability();
+		}
+		
 		// create node tree
 		$this->installation->nodeBuilder->buildNodes();
 		$nextNode = $this->installation->nodeBuilder->getNextNode();

@@ -313,6 +313,10 @@ class PackageCLICommand implements IArgumentedCLICommand {
 					// clean-up previously created nodes
 					$installation->nodeBuilder->purgeNodes();
 					
+					if ($package !== null && $package->package === 'com.woltlab.wcf') {
+						WCF::checkWritability();
+					}
+					
 					// create node tree
 					$installation->nodeBuilder->buildNodes();
 					$node = $installation->nodeBuilder->getNextNode();

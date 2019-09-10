@@ -509,6 +509,10 @@ class PackageInstallationNodeBuilder {
 				}
 			}
 			
+			if ($archive->getPackageInfo('name') === 'com.woltlab.wcf') {
+				WCF::checkWritability();
+			}
+			
 			// create new queue
 			$queue = PackageInstallationQueueEditor::create([
 				'parentQueueID' => $queue->queueID,
