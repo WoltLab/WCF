@@ -147,7 +147,7 @@ class FacebookAuthAction extends AbstractAction {
 		// start auth by redirecting to facebook
 		$token = StringUtil::getRandomID();
 		WCF::getSession()->register('__facebookInit', $token);
-		HeaderUtil::redirect("https://www.facebook.com/dialog/oauth?client_id=".StringUtil::trim(FACEBOOK_PUBLIC_KEY). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=email,user_birthday,user_location");
+		HeaderUtil::redirect("https://www.facebook.com/dialog/oauth?client_id=".StringUtil::trim(FACEBOOK_PUBLIC_KEY). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=email");
 		$this->executed();
 		exit;
 	}
