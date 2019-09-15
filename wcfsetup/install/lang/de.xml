@@ -1193,7 +1193,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 	<category name="wcf.acp.modificationLog">
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Globales Änderungsprotokoll]]></item>
 		<item name="wcf.acp.modificationLog.action"><![CDATA[Aktion]]></item>
-		<item name="wcf.acp.modificationLog.action.all"><![CDATA[Alle Aktion]]></item>
+		<item name="wcf.acp.modificationLog.action.all"><![CDATA[Alle Aktionen]]></item>
 		<item name="wcf.acp.modificationLog.affectedObject"><![CDATA[Betroffenes Objekt]]></item>
 		<item name="wcf.acp.modificationLog.affectedObject.id"><![CDATA[ID: {@$modificationLog->objectID}]]></item>
 		<item name="wcf.acp.modificationLog.affectedObject.unknown"><![CDATA[(Existiert nicht mehr)]]></item>
