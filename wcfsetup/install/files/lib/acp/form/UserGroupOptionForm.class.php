@@ -151,6 +151,7 @@ class UserGroupOptionForm extends AbstractForm {
 	public function validate() {
 		parent::validate();
 		
+		$this->errorType = [];
 		$isAdmin = false;
 		foreach (WCF::getUser()->getGroupIDs() as $groupID) {
 			if (UserGroup::getGroupByID($groupID)->isAdminGroup()) {
