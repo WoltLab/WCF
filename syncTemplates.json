@@ -25,6 +25,7 @@
     "__itemListFormField",
     "__labelFormField",
     "__mediaSetCategoryDialog",
+    "__messageQuoteManager",
     "__multilineTextFormField",
     "__multiPageCondition",
     "__multipleSelectionFormField",
