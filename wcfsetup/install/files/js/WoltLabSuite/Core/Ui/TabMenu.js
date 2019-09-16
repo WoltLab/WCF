@@ -4,6 +4,7 @@
  * @author	Alexander Ebert
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	Ui/TabMenu (alias)
  * @module	WoltLabSuite/Core/Ui/TabMenu
  */
 define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/CloseOverlay', 'Ui/Screen', './TabMenu/Simple'], function(Dictionary, EventHandler, DomChangeListener, DomUtil, UiCloseOverlay, UiScreen, SimpleTabMenu) {

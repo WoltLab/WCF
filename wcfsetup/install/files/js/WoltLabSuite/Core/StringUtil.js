@@ -4,6 +4,7 @@
  * @author	Tim Duesterhus, Joshua Ruesweg
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	StringUtil (alias)
  * @module	WoltLabSuite/Core/StringUtil
  */
 define(['Language', './NumberUtil'], function(Language, NumberUtil) {

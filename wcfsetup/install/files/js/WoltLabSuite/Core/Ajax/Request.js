@@ -6,6 +6,7 @@
  * @author	Alexander Ebert
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	AjaxRequest (alias)
  * @module	WoltLabSuite/Core/Ajax/Request
  */
 define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'WoltLabSuite/Core/Ajax/Status'], function(Core, Language, DomChangeListener, DomUtil, UiDialog, AjaxStatus) {

@@ -4,6 +4,7 @@
  * @author	Alexander Ebert
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	Ui/Alignment (alias)
  * @module	WoltLabSuite/Core/Ui/Alignment
  */
 define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language, DomTraverse, DomUtil) {

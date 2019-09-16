@@ -4,6 +4,7 @@
  * @author	Alexander Ebert
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	DateUtil (alias)
  * @module	WoltLabSuite/Core/Date/Util
  */
 define(['Language'], function(Language) {

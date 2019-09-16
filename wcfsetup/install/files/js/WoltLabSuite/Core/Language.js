@@ -4,6 +4,7 @@
  * @author	Tim Duesterhus
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	Language (alias)
  * @module	WoltLabSuite/Core/Language
  */
 define(['Dictionary', './Template'], function(Dictionary, Template) {
