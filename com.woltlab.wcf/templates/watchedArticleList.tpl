@@ -23,7 +23,7 @@
 					<dl>
 						{foreach from=$labelGroups item=labelGroup}
 							{if $labelGroup|count}
-								<dt>{$labelGroup->getTitle()}</dt>
+								<dt><label>{$labelGroup->getTitle()}</label></dt>
 								<dd>
 									<ul class="labelList jsOnly">
 										<li class="dropdown labelChooser" id="labelGroup{@$labelGroup->groupID}" data-group-id="{@$labelGroup->groupID}">
