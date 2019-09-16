@@ -97,17 +97,13 @@ define(
 			
 			UiScreen.setDialogContainer(_container);
 			
-			// mobile safari dynamically shows/hides the bottom browser bar
-			// causing the window height to differ significantly
-			if (Environment.platform() === 'ios') {
-				window.addEventListener('resize', (function () {
-					_dialogs.forEach((function (dialog) {
-						if (!elAttrBool(dialog.dialog, 'aria-hidden')) {
-							this.rebuild(elData(dialog.dialog, 'id'));
-						}
-					}).bind(this));
+			window.addEventListener('resize', (function () {
+				_dialogs.forEach((function (dialog) {
+					if (!elAttrBool(dialog.dialog, 'aria-hidden')) {
+						this.rebuild(elData(dialog.dialog, 'id'));
+					}
 				}).bind(this));
-			}
+			}).bind(this));
 		},
 		
 		_initStaticDialogs: function() {
