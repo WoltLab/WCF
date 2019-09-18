@@ -78,6 +78,11 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	/**
 	 * @inheritDoc
 	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Value';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $templateName = '__wysiwygFormField';
 	
 	/**
