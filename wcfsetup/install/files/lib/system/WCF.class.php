@@ -307,25 +307,43 @@ class WCF {
 				}
 			}
 		}
-		
+
+		// Debug variable only used in exception of exception handler.
+		// Kept minimal to prevent any exceptions from determining this.
+		$fatalDebug = defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE;
+
 		@header('HTTP/1.1 503 Service Unavailable');
 		try {
 			\wcf\functions\exception\printThrowable($e);
 		}
 		catch (\Throwable $e2) {
-			echo "<pre>An Exception was thrown while handling an Exception:\n\n";
-			echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e2);
-			echo "\n\nwas thrown while:\n\n";
-			echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e);
-			echo "\n\nwas handled.</pre>";
+			if ($fatalDebug) {
+				// only show stacktraces when in debug mode.
+				// the Database->__construct regex may not match if the line is too long because
+				// then parts of it will be omitted, resulting in the password being shown to the user.
+				echo "<pre>An Exception was thrown while handling an Exception:\n\n";
+				echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e2);
+				echo "\n\nwas thrown while:\n\n";
+				echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e);
+				echo "\n\nwas handled.</pre>";
+			} else {
+				echo "<p>An Exception was thrown while handling an Exception. Enable debug mode for more information.</p>";
+			}
 			exit;
 		}
 		catch (\Exception $e2) {
-			echo "<pre>An Exception was thrown while handling an Exception:\n\n";
-			echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e2);
-			echo "\n\nwas thrown while:\n\n";
-			echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e);
-			echo "\n\nwas handled.</pre>";
+			if ($fatalDebug) {
+				// only show stacktraces when in debug mode.
+				// the Database->__construct regex may not match if the line is too long because
+				// then parts of it will be omitted, resulting in the password being shown to the user.
+				echo "<pre>An Exception was thrown while handling an Exception:\n\n";
+				echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e2);
+				echo "\n\nwas thrown while:\n\n";
+				echo preg_replace('/Database->__construct\(.*\)/', 'Database->__construct(...)', $e);
+				echo "\n\nwas handled.</pre>";
+			} else {
+				echo "<p>An Exception was thrown while handling an Exception. Enable debug mode for more information.</p>";
+			}
 			exit;
 		}
 	}
