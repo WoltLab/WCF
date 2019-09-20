@@ -3334,7 +3334,7 @@ Fehler sind beispielsweise:
 		<item name="wcf.clipboard.item.markAll"><![CDATA[Alle Elemente markieren]]></item>
 		<item name="wcf.clipboard.item.mark"><![CDATA[Element markieren]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete"><![CDATA[Endgültig löschen ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Artikel löschen?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.article.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einen{else}{#$count}{/if} Artikel löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.publish"><![CDATA[Veröffentlichen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.restore"><![CDATA[Wiederherstellen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.setCategory"><![CDATA[Kategorie ändern ({#$count})]]></item>
@@ -3342,16 +3342,16 @@ Fehler sind beispielsweise:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.trash.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if $count == 1}einen{else}{#$count}{/if} Artikel wirklich in den Papierkorb verschieben?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.article.unpublish"><![CDATA[Veröffentlichung zurückziehen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete"><![CDATA[Löschen ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete.confirmMessage"><![CDATA[{if $count == 1}Eine Datei{else}{#$count} Dateien{/if} löschen?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.media.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}eine Datei{else}{#$count} Dateien{/if} löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.insert"><![CDATA[Einfügen ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.media.setCategory"><![CDATA[Kategorie bearbeiten ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete"><![CDATA[Löschen ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete.confirmMessage"><![CDATA[{if $count == 1}Einen Tag{else}{#$count} Tag{/if} löschen?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einen Tag{else}{#$count} Tags{/if} löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.tag.setAsSynonyms"><![CDATA[Als Synonyme verwenden ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.assignToGroup"><![CDATA[Benutzergruppe zuweisen]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.ban"><![CDATA[Sperren ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete"><![CDATA[Löschen ({#$count})]]></item>
-		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[{if $count == 1}Einen{else}{#$count}{/if} Benutzer löschen?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich {if $count == 1}einen{else}{#$count}{/if} Benutzer löschen?]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.enable"><![CDATA[Aktivieren]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.exportMailAddress"><![CDATA[E-Mail-Adressen exportieren]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.merge"><![CDATA[Zusammenfügen]]></item>
