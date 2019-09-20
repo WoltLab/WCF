@@ -134,6 +134,7 @@ class WysiwygFormContainer extends FormContainer implements IMaximumLengthFormFi
 	
 	/**
 	 * @inheritDoc
+	 * @return	static
 	 */
 	public static function create($id) {
 		// the actual id is used for the form field containing the text
