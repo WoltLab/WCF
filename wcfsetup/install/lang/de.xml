@@ -1771,7 +1771,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.rescueMode.application.description"><![CDATA[Bitte {if LANGUAGE_USE_INFORMAL_VARIANT}passe{else}passen Sie{/if} sowohl die Domain als auch den Pfad jeder aufgeführten App an die geänderten Einstellungen an, die Angabe der Domain erfolgt ohne Protokoll („http://“ bzw. „https://“).]]></item>
 		<item name="wcf.acp.rescueMode.credentials"><![CDATA[Zugangsdaten]]></item>
 		<item name="wcf.acp.rescueMode.credentials.description"><![CDATA[Die Änderung der Konfiguration erfordert gültige Zugangsdaten für ein Administrator-Konto, mit der Berechtigung die installierten Apps zu verwalten.]]></item>
-		<item name="wcf.acp.rescueMode.description"><![CDATA[Die eingestellten Domains und/oder Pfade stimmen nicht mit der für den Aufruf verwendeten Adresse überein; Dies kann infolge eines Umzugs auf eine andere Domain oder Veränderung der Verzeichnisstruktur auftreten. Mit Hilfe des untenstehenden Formulars {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die Angaben schnell und einfach anpassen.]]></item>
+		<item name="wcf.acp.rescueMode.description"><![CDATA[Die eingestellten Domains und/oder Pfade stimmen nicht mit der für den Aufruf verwendeten Adresse überein; Dies kann infolge eines Umzugs auf eine andere Domain, oder durch eine Veränderung der Verzeichnisstruktur auftreten. Mit Hilfe des untenstehenden Formulars {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} die Angaben schnell und einfach anpassen.]]></item>
 		<item name="wcf.acp.rescueMode.username.notAuthorized"><![CDATA[Dieser Benutzer ist nicht berechtigt die Konfiguration zu verändern.]]></item>
 	</category>
 	
