@@ -13,7 +13,7 @@
 	.redactor-layer table {
 		th,
 		td {
-			border-color: $wcfEditorTableBorder;
+			border-color: $wcfEditorTableBorder !important;
 		}
 	}
 }
