@@ -448,6 +448,7 @@ class RegisterForm extends UserAddForm {
 				'email' => $this->email,
 				'password' => $this->password,
 				'blacklistMatches' => (!empty($this->blacklistMatches)) ? JSON::encode($this->blacklistMatches) : '',
+				'signatureEnableHtml' => 1,
 			]),
 			'groups' => $this->groupIDs,
 			'languageIDs' => $this->visibleLanguages,

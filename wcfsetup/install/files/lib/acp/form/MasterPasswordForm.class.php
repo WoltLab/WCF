@@ -3,6 +3,7 @@ namespace wcf\acp\form;
 use wcf\form\AbstractForm;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
+use wcf\system\request\RouteHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\PasswordUtil;
@@ -95,7 +96,9 @@ class MasterPasswordForm extends AbstractForm {
 		parent::readData();
 		
 		if (empty($_POST) && mb_strpos(WCF::getSession()->requestURI, 'MasterPassword') === false) {
-			$this->url = WCF::getSession()->requestURI;
+			// The request URI on it's own is not sufficient for environments that use different subdomains.
+			$protocol = RouteHandler::secureConnection() ? 'https' : 'http';
+			$this->url = $protocol . '://' . $_SERVER['HTTP_HOST'] . WCF::getSession()->requestURI;
 		}
 	}
 	

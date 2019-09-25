@@ -243,7 +243,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 					});
 				}
 				
-				elBySelAll('span', div, function (span) {
+				elBySelAll('span', div, (function (span) {
 					if (span.classList.contains('redactor-selection-marker')) return;
 					
 					if (span.hasAttribute('style') && span.style.length) {
@@ -254,6 +254,14 @@ $.Redactor.prototype.WoltLabClean = function() {
 						
 						var activeStyles = (color ? 1 : 0) + (fontFamily ? 1 : 0) + (fontSize ? 1 : 0);
 						while (activeStyles > 1) {
+							if (this.opts.pastePlainText) {
+								span.style.removeProperty('color');
+								span.style.removeProperty('font-family');
+								span.style.removeProperty('font-size');
+								
+								return;
+							}
+							
 							var newSpan = elCreate('span');
 							if (color) {
 								newSpan.style.setProperty('color', color, '');
@@ -285,7 +293,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 						
 						elRemove(span);
 					}
-				});
+				}).bind(this));
 				
 				elBySelAll('p', div, function (p) {
 					if (p.classList.contains('MsoNormal')) {
@@ -647,6 +655,11 @@ $.Redactor.prototype.WoltLabClean = function() {
 					removeElements.push(child);
 				});
 			});
+			
+			if (this.opts.pastePlainText) {
+				// Ignore any style attributes, they are removed anyway.
+				return;
+			}
 			
 			// Search for span[style] that contain styles that actually do nothing, because their set style
 			// equals the inherited style from its ancestors.
