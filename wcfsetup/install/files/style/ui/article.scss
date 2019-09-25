@@ -60,6 +60,13 @@
 	.articleLikeButtons:not(:empty) {
 		margin-top: 20px;
 	}
+	
+	.anchorFixedHeader:target::before {
+		content: "";
+		display: block;
+		height: 50px;
+		margin-top: -50px;
+	}
 }
 
 .articleAboutAuthor {

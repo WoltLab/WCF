@@ -52,6 +52,10 @@ class HtmlToc {
 			// the need of user interactions, making it a somewhat cumbersome experience. KISS.
 			$id = "{$idPrefix}-{$id}";
 			
+			$classes = $hElement->getAttribute('class');
+			if (!empty($classes)) $classes .= ' ';
+			$hElement->setAttribute('class', $classes . 'anchorFixedHeader');
+			
 			$hElement->setAttribute('id', $id);
 			
 			$headings[] = new HtmlTocItem(intval(substr($hElement->tagName, 1, 1)), $id, $title);
