@@ -254,7 +254,8 @@ class UserAddForm extends UserOptionListForm {
 				'email' => $this->email,
 				'password' => $this->password,
 				'userTitle' => $this->userTitle,
-				'signature' => $this->htmlInputProcessor->getHtml()
+				'signature' => $this->htmlInputProcessor->getHtml(),
+				'signatureEnableHtml' => 1,
 			]),
 			'groups' => $this->groupIDs,
 			'languageIDs' => $this->visibleLanguages,
