@@ -84,6 +84,6 @@ class UserRegistrationUserNotificationEvent extends AbstractUserNotificationEven
 	 * @return	UserFollowUserNotificationObject[]
 	 */
 	public static function getTestObjects(UserProfile $recipient, UserProfile $author) {
-		return [new UserRegistrationUserNotificationObject($author)];
+		return [new UserRegistrationUserNotificationObject($author->getDecoratedObject())];
 	}
 }
