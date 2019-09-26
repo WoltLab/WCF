@@ -1199,9 +1199,9 @@ CREATE TABLE wcf1_poll_option_vote (
 DROP TABLE IF EXISTS wcf1_reaction_type; 
 CREATE TABLE wcf1_reaction_type (
 	reactionTypeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-	title VARCHAR(255), 
+	title VARCHAR(255) NOT NULL, 
 	showOrder INT(10) NOT NULL DEFAULT 0,
-	iconFile MEDIUMTEXT, 
+	iconFile VARCHAR(255) NOT NULL DEFAULT '', 
 	isAssignable TINYINT(1) NOT NULL DEFAULT 1
 );
 
