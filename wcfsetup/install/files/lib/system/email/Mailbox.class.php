@@ -1,7 +1,6 @@
 <?php
 namespace wcf\system\email;
-use TrueBV\Exception\DomainOutOfBoundsException;
-use TrueBV\Exception\LabelOutOfBoundsException;
+use TrueBV\Exception\OutOfBoundsException;
 use TrueBV\Punycode;
 use wcf\data\language\Language;
 use wcf\system\language\LanguageFactory;
@@ -63,11 +62,8 @@ class Mailbox {
 			// punycode the domain ...
 			$domain = (new Punycode())->encode($domain);
 		}
-		catch (LabelOutOfBoundsException $e) {
-			throw new \DomainException($e->getMessage());
-		}
-		catch (DomainOutOfBoundsException $e) {
-			throw new \DomainException($e->getMessage());
+		catch (OutOfBoundsException $e) {
+			throw new \DomainException($e->getMessage(), 0, $e);
 		}
 		
 		// ... and rebuild address.
