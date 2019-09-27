@@ -24,20 +24,6 @@ trait TLengthDatabaseTableColumn {
 	 * @return	null|int
 	 */
 	public function getMaximumLength() {
-		if ($this instanceof IUnsignedDatabaseTableColumn && $this->getMaximumUnsignedLength() !== null) {
-			return $this->getMaximumUnsignedLength();
-		}
-		
-		return null;
-	}
-	
-	/**
-	 * Returns the maximum length value supported by the values of the column are unsigned values
-	 * or `null` if there is no such maximum.
-	 * 
-	 * @return	null|int
-	 */
-	public function getMaximumUnsignedLength() {
 		return null;
 	}
 	

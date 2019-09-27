@@ -10,7 +10,6 @@ namespace wcf\system\database\table\column;
  * @package	WoltLabSuite\Core\System\Database\Table\Column
  * @since	5.2
  */
-abstract class AbstractDecimalDatabaseTableColumn extends AbstractDatabaseTableColumn implements IDecimalsDatabaseTableColumn, IUnsignedDatabaseTableColumn {
+abstract class AbstractDecimalDatabaseTableColumn extends AbstractDatabaseTableColumn implements IDecimalsDatabaseTableColumn {
 	use TDecimalsDatabaseTableColumn;
-	use TUnsignedDatabaseTableColumn;
 }

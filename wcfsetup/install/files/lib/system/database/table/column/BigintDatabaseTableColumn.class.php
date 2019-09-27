@@ -22,11 +22,4 @@ class BigintDatabaseTableColumn extends AbstractIntDatabaseTableColumn {
 	public function getMaximumLength() {
 		return 20;
 	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getMaximumUnsignedLength() {
-		return 19;
-	}
 }

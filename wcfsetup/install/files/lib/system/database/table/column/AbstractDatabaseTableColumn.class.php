@@ -79,10 +79,6 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn {
 			$data['length'] = $this->getLength();
 		}
 		
-		if ($this instanceof IUnsignedDatabaseTableColumn) {
-			$data['unsigned'] = $this->isUnsigned();
-		}
-		
 		return $data;
 	}
 	
@@ -192,10 +188,6 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn {
 		
 		if ($column instanceof ILengthDatabaseTableColumn) {
 			$column->length($data['length'] ?: null);
-		}
-		
-		if ($column instanceof IUnsignedDatabaseTableColumn) {
-			$column->unsigned($data['unsigned'] ?? false);
 		}
 		
 		return $column;

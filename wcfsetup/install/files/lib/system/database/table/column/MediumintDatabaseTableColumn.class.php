@@ -22,11 +22,4 @@ class MediumintDatabaseTableColumn extends AbstractIntDatabaseTableColumn {
 	public function getMaximumLength() {
 		return 8;
 	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function getMaximumUnsignedLength() {
-		return 7;
-	}
 }

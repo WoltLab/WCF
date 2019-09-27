@@ -31,7 +31,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 */
 	public function getColumns($tableName) {
 		$columns = [];
-		$regex = new Regex('([a-z]+)\((.+)\)( unsigned)?', Regex::CASE_INSENSITIVE);
+		$regex = new Regex('([a-z]+)\((.+)\)', Regex::CASE_INSENSITIVE);
 		
 		$sql = "SHOW COLUMNS FROM `".$tableName."`";
 		$statement = $this->dbObj->prepareStatement($sql);
@@ -44,7 +44,6 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 			$length = '';
 			$decimals = '';
 			$enumValues = '';
-			$unsigned = false;
 			if (!empty($typeMatches)) {
 				$type = $typeMatches[1];
 				
@@ -76,10 +75,6 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 						}
 						break;
 				}
-				
-				if (isset($typeMatches[3])) {
-					$unsigned = true;
-				}
 			}
 			
 			$columns[] = ['name' => $row['Field'], 'data' => [
@@ -90,8 +85,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 				'default' => $row['Default'],
 				'autoIncrement' => $row['Extra'] == 'auto_increment' ? true : false,
 				'enumValues' => $enumValues,
-				'decimals' => $decimals,
-				'unsigned' => $unsigned
+				'decimals' => $decimals
 			]];
 		}
 		
@@ -372,10 +366,6 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		$definition = "`".$columnName."`";
 		// column type
 		$definition .= " ".$columnData['type'];
-		
-		if (!empty($columnData['unsigned'])) {
-			$definition .= ' UNSIGNED';
-		}
 		
 		// column length and decimals
 		if (!empty($columnData['length'])) {

@@ -10,10 +10,9 @@ namespace wcf\system\database\table\column;
  * @package	WoltLabSuite\Core\System\Database\Table\Column
  * @since	5.2
  */
-abstract class AbstractIntDatabaseTableColumn extends AbstractDatabaseTableColumn implements IAutoIncrementDatabaseTableColumn, ILengthDatabaseTableColumn, IUnsignedDatabaseTableColumn {
+abstract class AbstractIntDatabaseTableColumn extends AbstractDatabaseTableColumn implements IAutoIncrementDatabaseTableColumn, ILengthDatabaseTableColumn {
 	use TAutoIncrementDatabaseTableColumn;
 	use TLengthDatabaseTableColumn;
-	use TUnsignedDatabaseTableColumn;
 	
 	/**
 	 * @inheritDoc
