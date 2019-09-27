@@ -34,7 +34,7 @@ trait TLengthDatabaseTableColumn {
 	 * @return	null|int
 	 */
 	public function getMinimumLength() {
-		return 0;
+		return null;
 	}
 	
 	/**

@@ -29,6 +29,6 @@ class VarcharDatabaseTableColumn extends AbstractDatabaseTableColumn implements 
 	 * @inheritDoc
 	 */
 	public function getMinimumLength() {
-		return 0;
+		return 1;
 	}
 }

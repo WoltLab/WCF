@@ -29,6 +29,6 @@ class CharDatabaseTableColumn extends AbstractDatabaseTableColumn implements ILe
 	 * @inheritDoc
 	 */
 	public function getMinimumLength() {
-		return 0;
+		return 1;
 	}
 }

@@ -29,6 +29,6 @@ class BinaryDatabaseTableColumn extends AbstractDatabaseTableColumn implements I
 	 * @inheritDoc
 	 */
 	public function getMinimumLength() {
-		return 0;
+		return 1;
 	}
 }
