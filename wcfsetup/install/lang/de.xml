@@ -3928,6 +3928,8 @@ Dateianhänge:
 		<item name="wcf.form.field.email.error.invalidEmail"><![CDATA[Die Eingabe ist keine gültige E-Mail-Adresse.]]></item>
 		<item name="wcf.form.field.email.error.maximumLength"><![CDATA[Die angegebene E-Mail-Adresse{if $language} für die Sprache „{$language}“{/if} umfasst {#$length} Zeichen, sie darf aber nicht länger als {#$maximumLength} Zeichen sein.]]></item>
 		<item name="wcf.form.field.upload.error.maximumFilesize"><![CDATA[Die Datei „{$file->getFilename()}“ darf maximal {$maximumFilesize|filesize} groß sein.]]></item>
+		<item name="wcf.form.field.upload.error.minimumImageWidth"><![CDATA[Die Datei „{$file->getFilename()}“ muss mindestens {#$minimumImageWidth} Pixel breit sein.]]></item>
+		<item name="wcf.form.field.upload.error.maximumImageWidth"><![CDATA[Die Datei „{$file->getFilename()}“ darf maximal {#$maximumImageWidth} Pixel breit sein.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Titelbild]]></item>

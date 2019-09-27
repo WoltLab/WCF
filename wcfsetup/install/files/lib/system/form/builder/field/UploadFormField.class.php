@@ -49,6 +49,18 @@ class UploadFormField extends AbstractFormField {
 	protected $maximumFilesize;
 	
 	/**
+	 * minimum image width for each uploaded file
+	 * @var	null|number
+	 */
+	protected $minimumImageWidth;
+	
+	/**
+	 * maximum image width for each uploaded file
+	 * @var	null|number
+	 */
+	protected $maximumImageWidth;
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected $templateName = '__uploadFormField';
@@ -169,6 +181,33 @@ class UploadFormField extends AbstractFormField {
 						'wcf.form.field.upload.error.maximumFilesize',
 						[
 							'maximumFilesize' => $this->getMaximumFilesize(),
+							'file' => $file
+						]
+					));
+				}
+			}
+		}
+		
+		if ($this->getMinimumImageWidth() !== null || $this->getMaximumImageWidth() !== null) {
+			foreach ($this->getValue() as $file) {
+				$imagesize = getimagesize($file->getLocation());
+				
+				if ($this->getMinimumImageWidth() !== null && $this->getMinimumImageWidth() >= $imagesize[0]) {
+					$this->addValidationError(new FormFieldValidationError(
+						'minimumImageWidth',
+						'wcf.form.field.upload.error.minimumImageWidth',
+						[
+							'minimumImageWidth' => $this->getMinimumImageWidth(),
+							'file' => $file
+						]
+					));
+				}
+				else if ($this->getMaximumImageWidth() !== null && $imagesize[0] > $this->getMaximumImageWidth()) {
+					$this->addValidationError(new FormFieldValidationError(
+						'maximumImageWidth',
+						'wcf.form.field.upload.error.maximumImageWidth',
+						[
+							'maximumImageWidth' => $this->getMaximumImageWidth(),
 							'file' => $file
 						]
 					));
@@ -336,13 +375,105 @@ class UploadFormField extends AbstractFormField {
 	}
 	
 	/**
+	 * Sets the minimum image width for each uploaded file. If `null` is passed, the
+	 * minimum image width is removed.
+	 *
+	 * @param	null|number	$minimumImageWidth      the mimimum image width
+	 * @return	static				       this field
+	 *
+	 * @throws	\InvalidArgumentException	if the given mimimum image width is no number or otherwise invalid
+	 * @throws	\LogicException	                 if the form field is not marked as image only
+	 */
+	public function minimumImageWidth($minimumImageWidth = null) {
+		if (!$this->isImageOnly()) {
+			throw new \LogicException("The form field must be image only, to set a minimum image width.");
+		}
+		
+		if ($minimumImageWidth !== null) {
+			if (!is_numeric($minimumImageWidth)) {
+				throw new \InvalidArgumentException("Given minimum image width is no int, '" . gettype($minimumImageWidth) . "' given.");
+			}
+			
+			$maximumImageWidth = $this->getMaximumImageWidth();
+			if ($maximumImageWidth !== null && $minimumImageWidth > $maximumImageWidth) {
+				throw new \InvalidArgumentException("Minimum image width ({$minimumImageWidth}) cannot be greater than maximum image width ({$maximumImageWidth}).");
+			}
+		}
+		
+		$this->minimumImageWidth = $minimumImageWidth;
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns the mimimum image width of each file or `null` if no mimimum image width
+	 * has been set.
+	 *
+	 * @return	null|number
+	 */
+	public function getMinimumImageWidth() {
+		return $this->minimumImageWidth;
+	}
+	
+	/**
+	 * Sets the maximum image width for each uploaded file. If `null` is passed, the
+	 * maximum image width is removed.
+	 *
+	 * @param	null|number	$maximumImageWidth      the maximum image width
+	 * @return	static				       this field
+	 *
+	 * @throws	\InvalidArgumentException	if the given mimimum image width is no number or otherwise invalid
+	 * @throws	\LogicException	                 if the form field is not marked as image only
+	 */
+	public function maximumImageWidth($maximumImageWidth = null) {
+		if (!$this->isImageOnly()) {
+			throw new \LogicException("The form field must be image only, to set a maximum image width.");
+		}
+		
+		if ($maximumImageWidth !== null) {
+			if (!is_numeric($maximumImageWidth)) {
+				throw new \InvalidArgumentException("Given maximum image width is no int, '" . gettype($maximumImageWidth) . "' given.");
+			}
+			
+			$minimumImageWidth = $this->getMinimumImageWidth();
+			if ($maximumImageWidth !== null && $minimumImageWidth > $maximumImageWidth) {
+				throw new \InvalidArgumentException("Maximum image width ({$maximumImageWidth}) cannot be smaller than minimum image width ({$minimumImageWidth}).");
+			}
+		}
+		
+		$this->maximumImageWidth = $maximumImageWidth;
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns the maximum image width of each file or `null` if no maximum image width
+	 * has been set.
+	 *
+	 * @return	null|number
+	 */
+	public function getMaximumImageWidth() {
+		return $this->maximumImageWidth;
+	}
+	
+	/**
 	 * Sets the flag for `imageOnly`. This flag indicates whether only images 
 	 * can uploaded via this field. Other file types will be rejected during upload.
 	 *
 	 * @param	boolean	        $imageOnly
 	 * @return	static				this field
+	 * 
+	 * @throws       \InvalidArgumentException         if the field is not set to images only and a minimum/maximum width is set
 	 */
 	public function imageOnly($imageOnly = true) {
+		if ($imageOnly && $this->getMinimumImageWidth() !== null) {
+			throw new \InvalidArgumentException("The form field must be image only, because a minimum image width is set.");
+		}
+		
+		if ($imageOnly && $this->getMaximumImageWidth() !== null) {
+			throw new \InvalidArgumentException("The form field must be image only, because a maximum image width is set.");
+		}
+		
 		$this->imageOnly = $imageOnly;
 		
 		return $this;
