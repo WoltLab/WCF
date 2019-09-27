@@ -215,6 +215,30 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 			$packageUrl->value($packageArchive->getPackageInfo('packageurl'));
 		}
 		
+		/** @var TextFormField $license */
+		$license = $this->form->getNodeById('license');
+		$xmlLicenses = $packageArchive->getPackageInfo('license');
+		if ($xmlLicenses !== null) {
+			if (count($xmlLicenses) === 1) {
+				$license->value(reset($xmlLicenses));
+			}
+			else {
+				$licenses = [];
+				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
+					$licenses[$language->languageID] = '';
+					
+					if (isset($xmlLicenses[$language->languageCode])) {
+						$licenses[$language->languageID] = $xmlLicenses[$language->languageCode];
+					}
+					else if (isset($xmlLicenses['default'])) {
+						$licenses[$language->languageID] = $xmlLicenses['default'];
+					}
+				}
+				
+				$license->value($licenses);
+			}
+		}
+		
 		/** @var TextFormField $author */
 		$author = $this->form->getNodeById('author');
 		if ($packageArchive->getAuthorInfo('author') !== null) {

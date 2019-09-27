@@ -287,7 +287,13 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 				UrlFormField::create('packageUrl')
 					->label('wcf.acp.devtools.project.packageUrl')
 					->description('wcf.acp.devtools.project.packageUrl.description')
+					->maximumLength(255),
+				
+				TextFormField::create('license')
+					->label('wcf.acp.devtools.project.license')
 					->maximumLength(255)
+					->i18n()
+					->languageItemPattern('__NONE__')
 			])
 			->addDependency(
 				ValueFormFieldDependency::create('mode')

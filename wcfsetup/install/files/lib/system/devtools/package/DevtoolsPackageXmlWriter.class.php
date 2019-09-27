@@ -198,6 +198,57 @@ class DevtoolsPackageXmlWriter {
 	}
 	
 	/**
+	 * Writes a child of the `packageinformation` element with i18n data.
+	 * 
+	 * @param	string		$information
+	 * @param	null|string	$elementName	is set to lowercase version of `$information` if missing
+	 */
+	protected function writeI18nPackageInformation($information, $elementName = null) {
+		if ($elementName === null) {
+			$elementName = strtolower($information);
+		}
+		
+		$english = LanguageFactory::getInstance()->getLanguageByCode('en');
+		
+		if (isset($this->packageXmlData[$information . '_i18n'])) {
+			$defaultLanguageID = null;
+			if ($english !== null && isset($this->packageXmlData[$information . '_i18n'][$english->languageID])) {
+				$defaultLanguageID = $english->languageID;
+			}
+			else {
+				reset($this->packageXmlData[$information . '_i18n']);
+				$defaultLanguageID = key($this->packageXmlData[$information . '_i18n']);
+			}
+			
+			$this->xmlWriter->writeElement(
+				$elementName,
+				$this->packageXmlData[$information . '_i18n'][$defaultLanguageID],
+				[],
+				$this->requiresCdata($this->packageXmlData[$information . '_i18n'][$defaultLanguageID])
+			);
+			
+			foreach ($this->packageXmlData[$information . '_i18n'] as $languageID => $informationValue) {
+				if ($languageID !== $defaultLanguageID) {
+					$this->xmlWriter->writeElement(
+						$elementName,
+						$informationValue,
+						['language' => LanguageFactory::getInstance()->getLanguage($languageID)->languageCode],
+						$this->requiresCdata($informationValue)
+					);
+				}
+			}
+		}
+		else {
+			$this->xmlWriter->writeElement(
+				$elementName,
+				$this->packageXmlData[$information],
+				[],
+				$this->requiresCdata($this->packageXmlData[$information])
+			);
+		}
+	}
+	
+	/**
 	 * Writes the `packageinformation` element.
 	 */
 	protected function writePackageInformation() {
@@ -205,81 +256,8 @@ class DevtoolsPackageXmlWriter {
 		
 		$this->xmlWriter->writeComment(" {$this->packageXmlData['packageIdentifier']} ");
 		
-		$english = LanguageFactory::getInstance()->getLanguageByCode('en');
-		
-		if (isset($this->packageXmlData['packageName_i18n'])) {
-			$defaultLanguageID = null;
-			if ($english !== null && isset($this->packageXmlData['packageName_i18n'][$english->languageID])) {
-				$defaultLanguageID = $english->languageID;
-			}
-			else {
-				reset($this->packageXmlData['packageName_i18n']);
-				$defaultLanguageID = key($this->packageXmlData['packageName_i18n']);
-			}
-			
-			$this->xmlWriter->writeElement(
-				'packagename',
-				$this->packageXmlData['packageName_i18n'][$defaultLanguageID],
-				[],
-				$this->requiresCdata($this->packageXmlData['packageName_i18n'][$defaultLanguageID])
-			);
-			
-			foreach ($this->packageXmlData['packageName_i18n'] as $languageID => $packageName) {
-				if ($languageID !== $defaultLanguageID) {
-					$this->xmlWriter->writeElement(
-						'packagename',
-						$packageName,
-						['language' => LanguageFactory::getInstance()->getLanguage($languageID)->languageCode],
-						$this->requiresCdata($packageName)
-					);
-				}
-			}
-		}
-		else {
-			$this->xmlWriter->writeElement(
-				'packagename',
-				$this->packageXmlData['packageName'],
-				[],
-				$this->requiresCdata($this->packageXmlData['packageName'])
-			);
-		}
-		
-		if (isset($this->packageXmlData['packageDescription_i18n'])) {
-			$defaultLanguageID = null;
-			if (isset($this->packageXmlData['packageDescription_i18n'][$english->languageID])) {
-				$defaultLanguageID = $english->languageID;
-			}
-			else {
-				reset($this->packageXmlData['packageDescription_i18n']);
-				$defaultLanguageID = key($this->packageXmlData['packageDescription_i18n']);
-			}
-			
-			$this->xmlWriter->writeElement(
-				'packagedescription',
-				$this->packageXmlData['packageDescription_i18n'][$defaultLanguageID],
-				[],
-				$this->requiresCdata($this->packageXmlData['packageDescription_i18n'][$defaultLanguageID])
-			);
-			
-			foreach ($this->packageXmlData['packageDescription_i18n'] as $languageID => $packageDescription) {
-				if ($languageID !== $defaultLanguageID) {
-					$this->xmlWriter->writeElement(
-						'packagedescription',
-						$packageDescription,
-						['language' => LanguageFactory::getInstance()->getLanguage($languageID)->languageCode],
-						$this->requiresCdata($packageDescription)
-					);
-				}
-			}
-		}
-		else {
-			$this->xmlWriter->writeElement(
-				'packagedescription',
-				$this->packageXmlData['packageDescription'],
-				[],
-				$this->requiresCdata($this->packageXmlData['packageDescription'])
-			);
-		}
+		$this->writeI18nPackageInformation('packageName');
+		$this->writeI18nPackageInformation('packageDescription');
 		
 		if (!empty($this->packageXmlData['isApplication'])) {
 			$this->xmlWriter->writeElement(
@@ -317,6 +295,7 @@ class DevtoolsPackageXmlWriter {
 				$this->requiresCdata($this->packageXmlData['packageUrl'])
 			);
 		}
+		$this->writeI18nPackageInformation('license');
 		
 		$this->xmlWriter->endElement();
 	}
