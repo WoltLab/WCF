@@ -149,12 +149,11 @@ $tables = [
 	DatabaseTable::create('wcf1_reaction_type')
 		->columns([
 			ObjectIdDatabaseTableColumn::create('reactionTypeID'),
-			// TODO: is currently not `not null`
 			NotNullVarchar255DatabaseTableColumn::create('title'),
 			NotNullInt10DatabaseTableColumn::create('showOrder')
 				->defaultValue(0),
-			// TODO: should be varchar
-			MediumtextDatabaseTableColumn::create('iconFile'),
+			NotNullVarchar255DatabaseTableColumn::create('iconFile')
+				->defaultValue(''),
 			DefaultFalseBooleanDatabaseTableColumn::create('isDisabled')
 		])
 		->indices([
