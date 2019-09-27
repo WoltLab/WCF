@@ -4,6 +4,7 @@ use wcf\data\box\Box;
 use wcf\data\box\BoxList;
 use wcf\data\condition\ConditionAction;
 use wcf\data\page\Page;
+use wcf\system\event\EventHandler;
 use wcf\system\request\RequestHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -274,6 +275,20 @@ class BoxHandler extends SingletonFactory {
 				$boxes[$box->position][] = $box;
 			}
 		}
+		
+		$parameters = [
+			'boxes' => $boxes,
+			'forDisplay' => $forDisplay,
+			'pageID' => $pageID
+		];
+		
+		EventHandler::getInstance()->fireAction(static::class, 'loadBoxes', $parameters);
+		
+		if (!isset($parameters['boxes']) || !is_array($parameters['boxes'])) {
+			throw new \UnexpectedValueException("'boxes' parameter is no longer an array.");
+		}
+		
+		$boxes = $parameters['boxes'];
 		
 		foreach ($boxes as &$positionBoxes) {
 			usort($positionBoxes, function($a, $b) {
