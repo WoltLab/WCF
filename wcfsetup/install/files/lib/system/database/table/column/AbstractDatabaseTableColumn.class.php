@@ -173,8 +173,8 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn {
 			$column->decimals($data['decimals'] ?: null);
 		}
 		
-		if ($column instanceof IEnumDatabaseTableColumn) {
-			$values = explode(',', $data['enumValues'] ?? []);
+		if ($column instanceof IEnumDatabaseTableColumn && !empty($data['enumValues'])) {
+			$values = explode(',', $data['enumValues'] ?? '');
 			
 			$values = array_map(function($value) {
 				// trim one leading and one trailing `'`
