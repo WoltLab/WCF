@@ -173,6 +173,8 @@
 						<label><input type="checkbox" id="showHeader" name="showHeader" value="1"{if $showHeader} checked{/if}> {lang}wcf.acp.box.showHeader{/lang}</label>
 					</dd>
 				</dl>
+				
+				{event name='dataFields'}
 			</div>
 			
 			{if $boxType === 'system'}
