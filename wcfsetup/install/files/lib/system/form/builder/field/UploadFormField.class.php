@@ -43,6 +43,12 @@ class UploadFormField extends AbstractFormField {
 	protected $allowSvgImage = false;
 	
 	/**
+	 * maximum filesize for each uploaded file
+	 * @var	null|number
+	 */
+	protected $maximumFilesize;
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected $templateName = '__uploadFormField';
@@ -152,6 +158,22 @@ class UploadFormField extends AbstractFormField {
 				'wcf.form.field.upload.error.maximum',
 				['maximum' => $this->getMaximum()]
 			));
+		}
+		
+		if ($this->getMaximumFilesize() !== null) {
+			foreach ($this->getValue() as $file) {
+				$filesize = filesize($file->getLocation());
+				if ($filesize > $this->getMaximumFilesize()) {
+					$this->addValidationError(new FormFieldValidationError(
+						'maximumFilesize',
+						'wcf.form.field.upload.error.maximumFilesize',
+						[
+							'maximumFilesize' => $this->getMaximumFilesize(),
+							'file' => $file
+						]
+					));
+				}
+			}
 		}
 	}
 	
@@ -280,6 +302,37 @@ class UploadFormField extends AbstractFormField {
 		}
 		
 		return $this->traitMaximum($maximum);
+	}
+	
+	/**
+	 * Sets the maximum filesize for each upload. If `null` is passed, the
+	 * maximum filesize is removed.
+	 *
+	 * @param	null|number	$maximumFilesize	        maximum filesize
+	 * @return	static				        this field
+	 *
+	 * @throws	\InvalidArgumentException	if the given maximum filesize is no number or otherwise invalid
+	 */
+	public function maximumFilesize($maximumFilesize = null) {
+		if ($maximumFilesize !== null) {
+			if (!is_numeric($maximumFilesize)) {
+				throw new \InvalidArgumentException("Given maximum filesize is no int, '" . gettype($maximumFilesize) . "' given.");
+			}
+		}
+		
+		$this->maximumFilesize = $maximumFilesize;
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns the maximum filesize of each file or `null` if no maximum filesize
+	 * has been set.
+	 *
+	 * @return	null|number
+	 */
+	public function getMaximumFilesize() {
+		return $this->maximumFilesize;
 	}
 	
 	/**

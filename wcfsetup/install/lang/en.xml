@@ -3873,6 +3873,7 @@ Attachments:
 		<item name="wcf.form.field.email"><![CDATA[Email Address]]></item>
 		<item name="wcf.form.field.email.error.invalidEmail"><![CDATA[The entered text is no valid email address.]]></item>
 		<item name="wcf.form.field.email.error.maximumLength"><![CDATA[The entered email address{if $language|isset} for language “{$language}”{/if} contains {#$length} character{if $length !== 1}s{/if} but it may not be longer than {#$maximumLength} character{if $maximumLength !== 1}s{/if}.]]></item>
+		<item name="wcf.form.field.upload.error.maximumFilesize"><![CDATA[The file “{$file->getFilename()}” may have a maximum size of {$maximumFilesize|filesize}.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Cover Photo]]></item>
