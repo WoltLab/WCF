@@ -61,6 +61,18 @@ class UploadFormField extends AbstractFormField {
 	protected $maximumImageWidth;
 	
 	/**
+	 * minimum image height for each uploaded file
+	 * @var	null|number
+	 */
+	protected $minimumImageHeight;
+	
+	/**
+	 * maximum image height for each uploaded file
+	 * @var	null|number
+	 */
+	protected $maximumImageHeight;
+	
+	/**
 	 * @inheritDoc
 	 */
 	protected $templateName = '__uploadFormField';
@@ -188,11 +200,11 @@ class UploadFormField extends AbstractFormField {
 			}
 		}
 		
-		if ($this->getMinimumImageWidth() !== null || $this->getMaximumImageWidth() !== null) {
+		if ($this->getMinimumImageWidth() !== null || $this->getMaximumImageWidth() !== null || $this->getMinimumImageHeight() !== null || $this->getMaximumImageHeight() !== null) {
 			foreach ($this->getValue() as $file) {
 				$imagesize = getimagesize($file->getLocation());
 				
-				if ($this->getMinimumImageWidth() !== null && $this->getMinimumImageWidth() >= $imagesize[0]) {
+				if ($this->getMinimumImageWidth() !== null && $this->getMinimumImageWidth() > $imagesize[0]) {
 					$this->addValidationError(new FormFieldValidationError(
 						'minimumImageWidth',
 						'wcf.form.field.upload.error.minimumImageWidth',
@@ -208,6 +220,27 @@ class UploadFormField extends AbstractFormField {
 						'wcf.form.field.upload.error.maximumImageWidth',
 						[
 							'maximumImageWidth' => $this->getMaximumImageWidth(),
+							'file' => $file
+						]
+					));
+				}
+				
+				if ($this->getMinimumImageHeight() !== null && $this->getMinimumImageHeight() > $imagesize[1]) {
+					$this->addValidationError(new FormFieldValidationError(
+						'minimumImageHeight',
+						'wcf.form.field.upload.error.minimumImageHeight',
+						[
+							'minimumImageHeight' => $this->getMinimumImageHeight(),
+							'file' => $file
+						]
+					));
+				}
+				else if ($this->getMaximumImageHeight() !== null && $imagesize[0] > $this->getMaximumImageHeight()) {
+					$this->addValidationError(new FormFieldValidationError(
+						'maximumImageHeight',
+						'wcf.form.field.upload.error.maximumImageHeight',
+						[
+							'maximumImageHeight' => $this->getMaximumImageHeight(),
 							'file' => $file
 						]
 					));
@@ -457,21 +490,113 @@ class UploadFormField extends AbstractFormField {
 	}
 	
 	/**
+	 * Sets the minimum image height for each uploaded file. If `null` is passed, the
+	 * minimum image height is removed.
+	 *
+	 * @param	null|number	$minimumImageHeight      the mimimum image height
+	 * @return	static				        this field
+	 *
+	 * @throws	\InvalidArgumentException	if the given mimimum image height is no number or otherwise invalid
+	 * @throws	\LogicException	                 if the form field is not marked as image only
+	 */
+	public function minimumImageHeight($minimumImageHeight = null) {
+		if (!$this->isImageOnly()) {
+			throw new \LogicException("The form field must be image only, to set a minimum image height.");
+		}
+		
+		if ($minimumImageHeight !== null) {
+			if (!is_numeric($minimumImageHeight)) {
+				throw new \InvalidArgumentException("Given minimum image height is no int, '" . gettype($minimumImageHeight) . "' given.");
+			}
+			
+			$maximumImageHeight = $this->getMaximumImageHeight();
+			if ($maximumImageHeight !== null && $minimumImageHeight > $maximumImageHeight) {
+				throw new \InvalidArgumentException("Minimum image height ({$minimumImageHeight}) cannot be greater than maximum image height ({$maximumImageHeight}).");
+			}
+		}
+		
+		$this->minimumImageHeight = $minimumImageHeight;
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns the mimimum image height of each file or `null` if no mimimum image height
+	 * has been set.
+	 *
+	 * @return	null|number
+	 */
+	public function getMinimumImageHeight() {
+		return $this->minimumImageHeight;
+	}
+	
+	/**
+	 * Sets the maximum image height for each uploaded file. If `null` is passed, the
+	 * maximum image height is removed.
+	 *
+	 * @param	null|number	$maximumImageHeight     the maximum image height
+	 * @return	static				       this field
+	 *
+	 * @throws	\InvalidArgumentException	if the given mimimum image height is no number or otherwise invalid
+	 * @throws	\LogicException	                 if the form field is not marked as image only
+	 */
+	public function maximumImageHeight($maximumImageHeight = null) {
+		if (!$this->isImageOnly()) {
+			throw new \LogicException("The form field must be image only, to set a maximum image height.");
+		}
+		
+		if ($maximumImageHeight !== null) {
+			if (!is_numeric($maximumImageHeight)) {
+				throw new \InvalidArgumentException("Given maximum image height is no int, '" . gettype($maximumImageHeight) . "' given.");
+			}
+			
+			$minimumImageHeight = $this->getMinimumImageHeight();
+			if ($minimumImageHeight !== null && $maximumImageHeight > $minimumImageHeight) {
+				throw new \InvalidArgumentException("Maximum image height ({$maximumImageHeight}) cannot be smaller than minimum image height ({$minimumImageHeight}).");
+			}
+		}
+		
+		$this->maximumImageWidth = $maximumImageHeight;
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns the maximum image height of each file or `null` if no maximum image height
+	 * has been set.
+	 *
+	 * @return	null|number
+	 */
+	public function getMaximumImageHeight() {
+		return $this->maximumImageHeight;
+	}
+	
+	/**
 	 * Sets the flag for `imageOnly`. This flag indicates whether only images 
 	 * can uploaded via this field. Other file types will be rejected during upload.
 	 *
 	 * @param	boolean	        $imageOnly
 	 * @return	static				this field
 	 * 
-	 * @throws       \InvalidArgumentException         if the field is not set to images only and a minimum/maximum width is set
+	 * @throws       \InvalidArgumentException         if the field is not set to images only and a minimum/maximum width/height is set
 	 */
 	public function imageOnly($imageOnly = true) {
-		if ($imageOnly && $this->getMinimumImageWidth() !== null) {
-			throw new \InvalidArgumentException("The form field must be image only, because a minimum image width is set.");
-		}
-		
-		if ($imageOnly && $this->getMaximumImageWidth() !== null) {
-			throw new \InvalidArgumentException("The form field must be image only, because a maximum image width is set.");
+		if (!$imageOnly) {
+			if ($this->getMinimumImageWidth() !== null) {
+				throw new \InvalidArgumentException("The form field must be image only, because a minimum image width is set.");
+			}
+			
+			if ($this->getMaximumImageWidth() !== null) {
+				throw new \InvalidArgumentException("The form field must be image only, because a maximum image width is set.");
+			}
+			
+			if ($this->getMinimumImageHeight() !== null) {
+				throw new \InvalidArgumentException("The form field must be image only, because a minimum image height is set.");
+			}
+			
+			if ($this->getMaximumImageHeight() !== null) {
+				throw new \InvalidArgumentException("The form field must be image only, because a maximum image height is set.");
+			}
 		}
 		
 		$this->imageOnly = $imageOnly;

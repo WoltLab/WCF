@@ -3930,6 +3930,8 @@ Dateianhänge:
 		<item name="wcf.form.field.upload.error.maximumFilesize"><![CDATA[Die Datei „{$file->getFilename()}“ darf maximal {$maximumFilesize|filesize} groß sein.]]></item>
 		<item name="wcf.form.field.upload.error.minimumImageWidth"><![CDATA[Die Datei „{$file->getFilename()}“ muss mindestens {#$minimumImageWidth} Pixel breit sein.]]></item>
 		<item name="wcf.form.field.upload.error.maximumImageWidth"><![CDATA[Die Datei „{$file->getFilename()}“ darf maximal {#$maximumImageWidth} Pixel breit sein.]]></item>
+		<item name="wcf.form.field.upload.error.minimumImageHeight"><![CDATA[Die Datei „{$file->getFilename()}“ muss mindestens {#$minimumImageHeight} Pixel hoch sein.]]></item>
+		<item name="wcf.form.field.upload.error.maximumImageHeight"><![CDATA[Die Datei „{$file->getFilename()}“ darf maximal {#$maximumImageHeight} Pixel hoch sein.]]></item>
 	</category>
 	<category name="wcf.image">
 		<item name="wcf.image.coverPhoto"><![CDATA[Titelbild]]></item>
