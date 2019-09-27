@@ -103,12 +103,6 @@ class DatabaseTableChangeProcessor {
 	protected $foreignKeysToDrop = [];
 	
 	/**
-	 * is `true` if only one change will be handled per request
-	 * @var	bool
-	 */
-	protected $oneChangePerRequest = true;
-	
-	/**
 	 * package that wants to apply the changes
 	 * @var	Package
 	 */
@@ -150,9 +144,8 @@ class DatabaseTableChangeProcessor {
 	 * @param	Package			$package
 	 * @param	DatabaseTable[]		$tables
 	 * @param	DatabaseEditor		$dbEditor
-	 * @param	bool			$oneChangePerRequest
 	 */
-	public function __construct(Package $package, array $tables, DatabaseEditor $dbEditor, $oneChangePerRequest = true) {
+	public function __construct(Package $package, array $tables, DatabaseEditor $dbEditor) {
 		$this->package = $package;
 		
 		$tableNames = [];
@@ -166,7 +159,6 @@ class DatabaseTableChangeProcessor {
 		
 		$this->tables = $tables;
 		$this->dbEditor = $dbEditor;
-		$this->oneChangePerRequest = $oneChangePerRequest;
 		
 		$this->existingTableNames = $dbEditor->getTableNames();
 		
@@ -373,10 +365,8 @@ class DatabaseTableChangeProcessor {
 				if (in_array($tableName, $this->existingTableNames)) {
 					$this->tablesToDrop[] = $table;
 					
-					if ($this->oneChangePerRequest) {
-						$this->splitNodeMessage .= "Dropped table '{$tableName}'.";
-						break;
-					}
+					$this->splitNodeMessage .= "Dropped table '{$tableName}'.";
+					break;
 				}
 				else if (isset($this->tablePackageIDs[$tableName])) {
 					$this->deleteTableLog($table);
@@ -385,10 +375,8 @@ class DatabaseTableChangeProcessor {
 			else if (!in_array($tableName, $this->existingTableNames)) {
 				$this->tablesToCreate[] = $table;
 				
-				if ($this->oneChangePerRequest) {
-					$this->splitNodeMessage .= "Created table '{$tableName}'.";
-					break;
-				}
+				$this->splitNodeMessage .= "Created table '{$tableName}'.";
+				break;
 			}
 			else {
 				// calculate difference between tables
@@ -423,7 +411,7 @@ class DatabaseTableChangeProcessor {
 				
 				// all column-related changes are executed in one query thus break
 				// here and not within the previous loop
-				if ($this->oneChangePerRequest && (!empty($this->columnsToAdd) || !empty($this->columnsToAlter) || !empty($this->columnsToDrop))) {
+				if (!empty($this->columnsToAdd) || !empty($this->columnsToAlter) || !empty($this->columnsToDrop)) {
 					$this->splitNodeMessage .= "Altered columns of table '{$tableName}'.";
 					break;
 				}
@@ -445,10 +433,8 @@ class DatabaseTableChangeProcessor {
 							}
 							$this->foreignKeysToDrop[$tableName][] = $foreignKey;
 							
-							if ($this->oneChangePerRequest) {
-								$this->splitNodeMessage .= "Dropped foreign key '{$tableName}." . implode(',', $foreignKey->getColumns()) . "'.";
-								break 2;
-							}
+							$this->splitNodeMessage .= "Dropped foreign key '{$tableName}." . implode(',', $foreignKey->getColumns()) . "'.";
+							break 2;
 						}
 						else if (isset($this->foreignKeyPackageIDs[$tableName][$foreignKey->getName()])) {
 							$this->deleteForeignKeyLog($tableName, $foreignKey);
@@ -460,10 +446,8 @@ class DatabaseTableChangeProcessor {
 						}
 						$this->foreignKeysToAdd[$tableName][] = $foreignKey;
 						
-						if ($this->oneChangePerRequest) {
-							$this->splitNodeMessage .= "Added foreign key '{$tableName}." . implode(',', $foreignKey->getColumns()) . "'.";
-							break 2;
-						}
+						$this->splitNodeMessage .= "Added foreign key '{$tableName}." . implode(',', $foreignKey->getColumns()) . "'.";
+						break 2;
 					}
 				}
 				
@@ -484,10 +468,8 @@ class DatabaseTableChangeProcessor {
 							}
 							$this->indicesToDrop[$tableName][] = $index;
 							
-							if ($this->oneChangePerRequest) {
-								$this->splitNodeMessage .= "Dropped index '{$tableName}." . implode(',', $index->getColumns()) . "'.";
-								break 2;
-							}
+							$this->splitNodeMessage .= "Dropped index '{$tableName}." . implode(',', $index->getColumns()) . "'.";
+							break 2;
 						}
 						else if (isset($this->indexPackageIDs[$tableName][$index->getName()])) {
 							$this->deleteIndexLog($tableName, $index);
@@ -499,10 +481,8 @@ class DatabaseTableChangeProcessor {
 						}
 						$this->indicesToAdd[$tableName][] = $index;
 						
-						if ($this->oneChangePerRequest) {
-							$this->splitNodeMessage .= "Added index '{$tableName}." . implode(',', $index->getColumns()) . "'.";
-							break 2;
-						}
+						$this->splitNodeMessage .= "Added index '{$tableName}." . implode(',', $index->getColumns()) . "'.";
+						break 2;
 					}
 				}
 			}
