@@ -518,7 +518,7 @@ abstract class AbstractOptionPackageInstallationPlugin extends AbstractXMLPackag
 							}
 							
 							return $options;
-						}, true),
+						}, true, false),
 					
 					SingleSelectionFormField::create('optionType')
 						->objectProperty('optiontype')

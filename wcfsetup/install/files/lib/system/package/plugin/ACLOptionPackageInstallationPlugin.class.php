@@ -404,7 +404,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 			->objectProperty('objecttype')
 			->label('wcf.acp.pip.aclOption.objectType')
 			->description('wcf.acp.pip.aclOption.objectType.' . $this->entryType . '.description')
-			->options($objectTypes)
+			->options($objectTypes, false, false)
 			->required()
 			->addValidator(new FormFieldValidator('nameUniqueness', function(SingleSelectionFormField $formField) use($entryType) {
 				/** @var TextFormField $nameField */
