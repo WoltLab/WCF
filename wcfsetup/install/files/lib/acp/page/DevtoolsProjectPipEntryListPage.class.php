@@ -136,7 +136,9 @@ class DevtoolsProjectPipEntryListPage extends AbstractPage {
 			throw new IllegalLinkException();
 		}
 		
-		$this->project->validatePackageXml();
+		if ($this->project->validatePackageXml() !== '') {
+			throw new IllegalLinkException();
+		}
 		
 		if (isset($_REQUEST['pip'])) $this->pip = StringUtil::trim($_REQUEST['pip']);
 		

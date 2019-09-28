@@ -123,7 +123,7 @@ class DevtoolsProject extends DatabaseObject {
 		
 		if ($this->getPackage() === null) {
 			return WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.project.path.error.notInstalled', [
-				'package' => $this->packageArchive->getPackageInfo('name')
+				'project' => $this
 			]);
 		}
 		
