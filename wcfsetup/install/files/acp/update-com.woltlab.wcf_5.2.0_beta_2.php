@@ -18,11 +18,6 @@ use wcf\system\WCF;
  */
 
 $tables = [
-	DatabaseTable::create('wcf1_package_installation_sql_log')
-		->columns([
-			DefaultTrueBooleanDatabaseTableColumn::create('isDone'),
-		]),
-	
 	DatabaseTable::create('wcf1_reaction_type')
 		->columns([
 			NotNullVarchar255DatabaseTableColumn::create('title'),
