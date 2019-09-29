@@ -66,7 +66,7 @@
 			'{$field->getAttachmentHandler()->getTmpHashes()[0]|encodeJS}',
 			'{@$field->getAttachmentHandler()->getParentObjectID()}',
 			{@$field->getAttachmentHandler()->getMaxCount()},
-			'{@$field->getWysiwygId()}'
+			'{@$field->getPrefixedWysiwygId()}'
 		);
 		new WCF.Action.Delete('wcf\\data\\attachment\\AttachmentAction', '.formAttachmentList > li');
 	});
