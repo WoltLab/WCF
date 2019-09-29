@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.2.0 Beta 1</version> <!-- codename: hurricane -->
-		<date>2019-08-25</date>
+		<version>5.2.0 Beta 2</version> <!-- codename: hurricane -->
+		<date>2019-09-29</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -50,10 +50,13 @@
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="5.2.0 Alpha 4">
+	<instructions type="update" fromversion="5.2.0 Beta 1">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="sql">update_5.2_pre_sql_api.sql</instruction>
+		<instruction type="script">acp/update-com.woltlab.wcf_5.2.0_beta_2.php</instruction>
 		
 		<instruction type="language" />
 		
