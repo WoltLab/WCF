@@ -261,6 +261,30 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	/**
 	 * @inheritDoc
 	 */
+	public function alterColumns($tableName, $alterData) {
+		$queries = "";
+		foreach ($alterData as $columnName => $data) {
+			switch ($data['action']) {
+				case 'add':
+					$queries .= "ADD COLUMN {$this->buildColumnDefinition($columnName, $data['data'])},";
+					break;
+					
+				case 'alter':
+					$queries .= "CHANGE COLUMN `{$columnName}` {$this->buildColumnDefinition($data['oldColumnName'], $data['data'])},";
+					break;
+					
+				case 'drop':
+					$queries .= "DROP COLUMN `{$columnName}`,";
+					break;
+			}
+		}
+		
+		$this->dbObj->prepareStatement("ALTER TABLE `{$tableName}` " . rtrim($queries, ','))->execute();
+	}
+
+	/**
+	 * @inheritDoc
+	 */
 	public function dropColumn($tableName, $columnName) {
 		$sql = "ALTER TABLE `".$tableName."` DROP COLUMN `".$columnName."`";
 		$statement = $this->dbObj->prepareStatement($sql);
@@ -342,6 +366,7 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 		$definition = "`".$columnName."`";
 		// column type
 		$definition .= " ".$columnData['type'];
+		
 		// column length and decimals
 		if (!empty($columnData['length'])) {
 			$definition .= "(".$columnData['length'].(!empty($columnData['decimals']) ? ",".$columnData['decimals'] : "").")";

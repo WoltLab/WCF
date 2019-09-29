@@ -105,6 +105,16 @@ abstract class DatabaseEditor {
 	abstract public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData);
 	
 	/**
+	 * Adds, alters and drops multiple columns at once.
+	 * 
+	 * @param	string		$tableName
+	 * @param	array		$alterData
+	 */
+	public function alterColumns($tableName, $alterData) {
+		throw new NotImplementedException();
+	}
+	
+	/**
 	 * Drops an existing column.
 	 * 
 	 * @param	string		$tableName

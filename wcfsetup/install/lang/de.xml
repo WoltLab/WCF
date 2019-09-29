@@ -1941,6 +1941,26 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.search.status.refreshDatabase"><![CDATA[Die Paketlisten werden aktualisiert …]]></item>
 		<item name="wcf.acp.package.search.result.thirdParty"><![CDATA[{if $count === 0}Keine{elseif $count === 1}Ein{else}{#$count}{/if} Treffer in Paketquellen von Drittanbietern]]></item>
 		<item name="wcf.acp.package.search.result.trusted"><![CDATA[{if $count === 0}Keine{elseif $count === 1}Ein{else}{#$count}{/if} Treffer in offizielle Paketquellen]]></item>
+		<item name="wcf.acp.package.error.databaseChange"><![CDATA[Das Datenbanklayout konnte aufgrund folgender Fehler nicht aktualisiert werden:
+{implode from=$errors item=error glue=' '}
+	{if $error[type] === 'unregisteredTableDrop'}
+		Die unbekannte Tabelle {$error[tableName]} kann nicht gelöscht werden.
+	{else if $error[type] === 'foreignTableDrop'}
+		Die Tabelle {$error[tableName]} gehört zu einem anderen Paket und kann deshalb nicht gelöscht werden.
+	{else if $error[type] === 'unregisteredTableChange'}
+		Die unbekannte Tabelle {$error[tableName]} kann nicht verändert werden.
+	{else if $error[type] === 'foreignColumnDrop'}
+		Die Spalte {$error[tableName]}.{$error[columnName]} gehört zu einem anderen Paket und kann deshalb nicht gelöscht werden.
+	{else if $error[type] === 'foreignColumnChange'}
+		Die Spalte {$error[tableName]}.{$error[columnName]} gehört zu einem anderen Paket und kann deshalb nicht gelöscht werden.
+	{else if $error[type] === 'foreignIndexDrop'}
+		Der Index {$error[tableName]} ({$error[columnNames]}) gehört zu einem anderen Paket und kann deshalb nicht gelöscht werden.
+	{else if $error[type] === 'foreignForeignKeyDrop'}
+		Der Fremdschlüssel {$error[tableName]} ({$error[columnNames]}) gehört zu einem anderen Paket und kann deshalb nicht gelöscht werden.
+	{else}
+		Unbekannter Fehler.
+	{/if}
+{/implode}]]></item>
 	</category>
 	<category name="wcf.acp.page">
 		<item name="wcf.acp.page.add"><![CDATA[Seite hinzufügen]]></item>

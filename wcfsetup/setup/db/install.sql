@@ -9,6 +9,7 @@ CREATE TABLE wcf1_package_installation_sql_log (
 	sqlTable VARCHAR(100) NOT NULL DEFAULT '', 
 	sqlColumn VARCHAR(100) NOT NULL DEFAULT '', 
 	sqlIndex VARCHAR(100) NOT NULL DEFAULT '',
+	isDone TINYINT(1) NOT NULL DEFAULT 1,
 	UNIQUE KEY packageID (packageID, sqlTable, sqlColumn, sqlIndex) 
 );
 
