@@ -373,6 +373,10 @@ class DatabaseTableChangeProcessor {
 				}
 			}
 			else if (!in_array($tableName, $this->existingTableNames)) {
+				if ($table instanceof PartialDatabaseTable) {
+					throw new \LogicException("Partial table '{$tableName}' cannot be created.");
+				}
+				
 				$this->tablesToCreate[] = $table;
 				
 				$this->splitNodeMessage .= "Created table '{$tableName}'.";
