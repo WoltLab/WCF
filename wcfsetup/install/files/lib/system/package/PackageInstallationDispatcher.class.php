@@ -1220,7 +1220,6 @@ class PackageInstallationDispatcher {
 					];
 				}
 			}
-				
 		}
 		
 		return $errors;

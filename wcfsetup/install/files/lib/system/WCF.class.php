@@ -34,6 +34,7 @@ use wcf\system\style\StyleHandler;
 use wcf\system\template\EmailTemplateEngine;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
+use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -1127,6 +1128,79 @@ class WCF {
 	protected function initCronjobs() {
 		if (PACKAGE_ID) {
 			self::getTPL()->assign('executeCronjobs', CronjobScheduler::getInstance()->getNextExec() < TIME_NOW && defined('OFFLINE') && !OFFLINE);
+		}
+	}
+	
+	/**
+	 * Checks recursively that the most important system files of `com.woltlab.wcf` are writable.
+	 * 
+	 * @throws	\RuntimeException	if any relevant file or directory is not writable
+	 */
+	public static function checkWritability() {
+		$nonWritablePaths = [];
+		
+		$nonRecursiveDirectories = [
+			'',
+			'acp/',
+			'tmp/'
+		];
+		foreach ($nonRecursiveDirectories as $directory) {
+			$path = WCF_DIR . $directory;
+			if ($path === 'tmp/' && !is_dir($path)) {
+				continue;
+			}
+			
+			if (!is_writable($path)) {
+				$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $path);
+				continue;
+			}
+			
+			DirectoryUtil::getInstance($path, false)->executeCallback(function($file, \SplFileInfo $fileInfo) use ($path, &$nonWritablePaths) {
+				if ($fileInfo instanceof \DirectoryIterator) {
+					if (!is_writable($fileInfo->getPath())) {
+						$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath());
+					}
+				}
+				else if (!is_writable($fileInfo->getRealPath())) {
+					$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath()) . $fileInfo->getFilename();
+				}
+			});
+		}
+		
+		$recursiveDirectories = [
+			'acp/js/',
+			'acp/style/',
+			'acp/templates/',
+			'acp/uninstall/',
+			'js/',
+			'lib/',
+			'log/',
+			'style/',
+			'templates/'
+		];
+		foreach ($recursiveDirectories as $directory) {
+			$path = WCF_DIR . $directory;
+			
+			if (!is_writable($path)) {
+				$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $path);
+				continue;
+			}
+			
+			DirectoryUtil::getInstance($path)->executeCallback(function($file, \SplFileInfo $fileInfo) use ($path, &$nonWritablePaths) {
+				if ($fileInfo instanceof \DirectoryIterator) {
+					if (!is_writable($fileInfo->getPath())) {
+						$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath());
+					}
+				}
+				else if (!is_writable($fileInfo->getRealPath())) {
+					$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath()) . $fileInfo->getFilename();
+				}
+			});
+		}
+		
+		if (!empty($nonWritablePaths)) {
+			$maxPaths = 10;
+			throw new \RuntimeException('The following paths are not writable: ' . implode(',', array_slice($nonWritablePaths, 0, $maxPaths)) . (count($nonWritablePaths) > $maxPaths ? ',' . StringUtil::HELLIP : ''));
 		}
 	}
 }
