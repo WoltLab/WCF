@@ -1,9 +1,7 @@
 <?php
-use wcf\system\database\table\column\{
-	DefaultFalseBooleanDatabaseTableColumn,
-	DefaultTrueBooleanDatabaseTableColumn,
-	NotNullVarchar255DatabaseTableColumn
-};
+use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
+use wcf\system\database\table\column\DefaultTrueBooleanDatabaseTableColumn;
+use wcf\system\database\table\column\NotNullVarchar255DatabaseTableColumn;
 use wcf\system\database\table\DatabaseTable;
 use wcf\system\database\table\DatabaseTableChangeProcessor;
 use wcf\system\package\plugin\ScriptPackageInstallationPlugin;
