@@ -180,7 +180,7 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 				if (!_fields.has(id)) {
 					_fields.set(id, field);
 					
-					if (field.tagName === 'INPUT' && (field.type === 'checkbox' || field.type === 'radio')) {
+					if (field.tagName === 'INPUT' && (field.type === 'checkbox' || field.type === 'radio' || field.type === 'hidden')) {
 						field.addEventListener('change', this.checkDependencies.bind(this));
 					}
 					else {

@@ -6,7 +6,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Language/Chooser
  */
-define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/SimpleDropdown'], function(Dictionary, Language, DomTraverse, DomUtil, ObjectMap, UiSimpleDropdown) {
+define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/SimpleDropdown'], function(Core, Dictionary, Language, DomTraverse, DomUtil, ObjectMap, UiSimpleDropdown) {
 	"use strict";
 	
 	var _choosers = new Dictionary();
@@ -229,6 +229,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Dom/Util', 'ObjectMap', 'Ui/S
 			}
 			
 			chooser.element.value = languageId;
+			Core.triggerEvent(chooser.element, 'change');
 			
 			chooser.dropdownToggle.innerHTML = listItem.firstChild.innerHTML;
 			
