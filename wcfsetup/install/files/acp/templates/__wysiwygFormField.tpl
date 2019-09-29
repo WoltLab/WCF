@@ -17,7 +17,6 @@
 {include file='wysiwyg' wysiwygSelector=$field->getPrefixedId()}
 
 {if $field->supportsQuotes()}
-	{js application='wcf' file='WCF.Message' bundle='WCF.Combined'}
 	<script data-relocate="true">
 		// Bootstrap for window.__wcf_bc_eventHandler
 		require(['WoltLabSuite/Core/Bootstrap'], function(Bootstrap) {

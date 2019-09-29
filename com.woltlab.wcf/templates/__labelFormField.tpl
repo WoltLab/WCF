@@ -25,7 +25,6 @@
 	</select>
 </noscript>
 
-{js application='wcf' file='WCF.Label' bundle='WCF.Combined'}
 <script data-relocate="true">
 	require(['Dom/Util', 'Language', 'WoltLabSuite/Core/Form/Builder/Field/Controller/Label'], function(DomUtil, Language, FormBuilderFieldLabel) {
 		Language.addObject({

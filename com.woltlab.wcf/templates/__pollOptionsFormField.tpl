@@ -4,7 +4,6 @@
 
 {include file='__formFieldFooter'}
 
-{js application='wcf' file='WCF.Poll' bundle='WCF.Combined'}
 <script data-relocate="true">
 	require(['Dom/Traverse', 'Dom/Util', 'Language', 'WoltLabSuite/Core/Ui/Poll/Editor'], function(DomTraverse, DomUtil, Language, UiPollEditor) {
 		Language.addObject({

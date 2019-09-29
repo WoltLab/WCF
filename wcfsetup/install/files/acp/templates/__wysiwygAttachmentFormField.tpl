@@ -41,7 +41,6 @@
 </ul>
 <div id="{@$field->getPrefixedID()}_uploadButton" class="formAttachmentButtons" data-max-size="{@$field->getAttachmentHandler()->getMaxSize()}"></div>
 
-{js application='wcf' file='WCF.Attachment' bundle='WCF.Combined'}
 <script data-relocate="true">
 	$(function() {
 		WCF.Language.addObject({
