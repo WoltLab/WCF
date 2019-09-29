@@ -72,6 +72,6 @@
 	});
 </script>
 
-<input type="hidden" name="{@$field->getPrefixedID()}_tmpHash" value="{$field->getAttachmentHandler()->getTmpHashes()[0]}">
+<input type="hidden" id="{@$field->getPrefixedID()}_tmpHash" name="{@$field->getPrefixedID()}_tmpHash" value="{$field->getAttachmentHandler()->getTmpHashes()[0]}">
 
 {include file='__formFieldFooter'}

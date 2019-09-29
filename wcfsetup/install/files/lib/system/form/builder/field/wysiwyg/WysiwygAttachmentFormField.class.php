@@ -31,6 +31,11 @@ class WysiwygAttachmentFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Wysiwyg/Attachment';
+	
+	/**
+	 * @inheritDoc
+	 */
 	protected $templateName = '__wysiwygAttachmentFormField';
 	
 	/**
