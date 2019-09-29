@@ -156,7 +156,7 @@ trait TMultipleFormField {
 		parent::populate();
 		
 		if ($this->allowsMultiple()) {
-			$this->getDocument()->getDataHandler()->add(new CustomFormDataProcessor('multiple', function(IFormDocument $document, array $parameters) {
+			$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('multiple', function(IFormDocument $document, array $parameters) {
 				if ($this->checkDependencies() && !empty($this->getValue())) {
 					$parameters[$this->getObjectProperty()] = $this->getValue();
 				}
