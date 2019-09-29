@@ -401,7 +401,7 @@ class DatabaseTableChangeProcessor {
 						}
 						$this->columnsToAdd[$tableName][] = $column;
 					}
-					else if (!empty(array_diff($column->getData(), $existingColumns[$column->getName()]->getData()))) {
+					else if ($this->diffColumns($existingColumns[$column->getName()], $column)) {
 						if (!isset($this->columnsToAlter[$tableName])) {
 							$this->columnsToAlter[$tableName] = [];
 						}
@@ -648,6 +648,23 @@ class DatabaseTableChangeProcessor {
 			$this->package->packageID,
 			$table->getName()
 		]);
+	}
+	
+	/**
+	 * Returns `true` if the two columns differ.
+	 * 
+	 * @param	IDatabaseTableColumn	$oldColumn
+	 * @param	IDatabaseTableColumn	$newColumn
+	 * @return	bool
+	 */
+	protected function diffColumns(IDatabaseTableColumn $oldColumn, IDatabaseTableColumn $newColumn) {
+		if (!empty(array_diff($oldColumn->getData(), $newColumn->getData()))) {
+			return true;
+		}
+		
+		// default type has to be checked with a strict check to differentiate between having
+		// no default value (`null`) and having an empty string as default value
+		return $oldColumn->getDefaultValue() !== $newColumn->getDefaultValue();
 	}
 	
 	/**

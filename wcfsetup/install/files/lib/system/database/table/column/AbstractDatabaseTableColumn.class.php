@@ -54,7 +54,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn {
 	 */
 	public function getData() {
 		$data = [
-			'default' => $this->defaultValue,
+			'default' => $this->getDefaultValue() !== null ? "'" . str_replace(["'", '\\'], ["''", '\\\\'], $this->getDefaultValue()) . "'" : null,
 			'notNull' => $this->isNotNull() ? 1 : 0,
 			'type' => $this->getType()
 		];
