@@ -11,7 +11,7 @@
 		});
 		
 		new WCF.Message.DefaultPreview({
-			messageFieldID: '{@$button->getWysiwygId()}',
+			messageFieldID: '{@$button->getPrefixedWysiwygId()}',
 			previewButtonID: '{@$button->getPrefixedId()}',
 			messageObjectType: '{@$button->getObjectType()->objectType}',
 			messageObjectID: '{@$button->getObjectId()}'

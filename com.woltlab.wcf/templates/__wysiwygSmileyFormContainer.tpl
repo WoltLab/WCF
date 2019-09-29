@@ -3,9 +3,11 @@
 <script data-relocate="true">
 	$(function() {
 		{if $container->children()|count > 1}
-			new WCF.Message.SmileyCategories('{@$container->getWysiwygId()}');
+			new WCF.Message.SmileyCategories('{@$container->getPrefixedWysiwygId()}');
 		{/if}
 		
-		new WCF.Message.Smilies('{@$container->getWysiwygId()}');
+		require(['WoltLabSuite/Core/Ui/Smiley/Insert'], function(UiSmileyInsert) {
+			new UiSmileyInsert('{@$container->getPrefixedWysiwygId()}');
+		});
 	});
 </script>

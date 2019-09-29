@@ -19,6 +19,16 @@ trait TWysiwygFormNode {
 	protected $wysiwygId;
 	
 	/**
+	 * Returns the prefixed id of the related `WysiwygFormField` form field.
+	 * 
+	 * @return	string
+	 * @throws	\BadMethodCallException		if the id of the related `WysiwygFormField` form field is unknown
+	 */
+	public function getPrefixedWysiwygId() {
+		return $this->getDocument()->getPrefix() . $this->getWysiwygId();
+	}
+	
+	/**
 	 * Returns id of the related `WysiwygFormField` form field.
 	 * 
 	 * @return	string

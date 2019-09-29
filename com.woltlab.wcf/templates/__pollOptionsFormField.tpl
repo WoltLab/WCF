@@ -16,7 +16,7 @@
 		new UiPollEditor(
 			DomUtil.identify(DomTraverse.childByTag(elById('{@$field->getPrefixedId()}Container'), 'DD')),
 			[ {implode from=$field->getValue() item=pollOption}{ optionID: {@$pollOption[optionID]}, optionValue: '{$pollOption[optionValue]|encodeJS}' }{/implode} ],
-			'{@$field->getWysiwygId()}',
+			'{@$field->getPrefixedWysiwygId()}',
 			{
 				isAjax: {if $field->getDocument()->isAjax()}true{else}false{/if},
 				maxOptions: {@POLL_MAX_OPTIONS}
