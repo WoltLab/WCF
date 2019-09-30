@@ -106,7 +106,7 @@
 							{if $recipient->originIsSystem}
 								<span class="icon icon16 fa-times disabled"></span>
 							{else}
-								<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon icon16 fa-times" data-object-id="{@$recipient->recipientID}" data-confirm-message-html="{lang __encode=true}wcf.acp.contact.recipient.delete.confirmMessage{/lang}">
+								<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon icon16 fa-times pointer" data-object-id="{@$recipient->recipientID}" data-confirm-message-html="{lang __encode=true}wcf.acp.contact.recipient.delete.confirmMessage{/lang}">
 							{/if}
 							
 							{event name='itemButtons'}

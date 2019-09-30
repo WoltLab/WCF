@@ -283,7 +283,7 @@
 		<item name="wcf.acp.contact.option.edit"><![CDATA[Eingabefeld bearbeiten]]></item>
 		<item name="wcf.acp.contact.recipients"><![CDATA[Empfänger]]></item>
 		<item name="wcf.acp.contact.recipient.add"><![CDATA[Empfänger hinzufügen]]></item>
-		<item name="wcf.acp.contact.recipient.delete.confirmMessage"><![CDATA[Wollen Sie den Empfänger <span class="confirmationObject">{$recipient}</span> wirklich löschen?]]></item>
+		<item name="wcf.acp.contact.recipient.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Empfänger <span class="confirmationObject">{$recipient}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.contact.recipient.edit"><![CDATA[Empfänger bearbeiten]]></item>
 		<item name="wcf.acp.contact.recipient.isDisabled"><![CDATA[Empfänger deaktivieren]]></item>
 		<item name="wcf.acp.contact.recipient.name"><![CDATA[Angezeigter Name]]></item>
