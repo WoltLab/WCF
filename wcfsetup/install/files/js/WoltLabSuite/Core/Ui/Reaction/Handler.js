@@ -402,7 +402,6 @@ define(
 			 */
 			_react: function(reactionTypeId) {
 				this._options.parameters.reactionTypeID = reactionTypeId;
-				this._options.parameters.data.containerID = this._currentReactionTypeId;
 				this._options.parameters.data.objectID = this._popoverCurrentObjectId;
 				this._options.parameters.data.objectType = this._objectType;
 				

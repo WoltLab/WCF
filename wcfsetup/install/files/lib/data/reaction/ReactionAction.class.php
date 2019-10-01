@@ -129,7 +129,6 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 			throw new IllegalLinkException();
 		}
 		
-		$this->readString('containerID', false, 'data');
 		$this->readInteger('objectID', false, 'data');
 		$this->readString('objectType', false, 'data');
 		
@@ -165,7 +164,6 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 			'objectID' => $this->likeableObject->getObjectID(), 
 			'objectType' => $this->parameters['data']['objectType'],
 			'reactionTypeID' => $reactionData['reactionTypeID'],
-			'containerID' => $this->parameters['data']['containerID'],
 			'reputationCount' => $reactionData['cumulativeLikes']
 		];
 	}
