@@ -12,12 +12,12 @@
 	{capture assign='articleContent'}
 	<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
-			<td><a href="{link controller='User' object=$user isEmail=true}{/link}" title="{$article->username}">{@$user->getAvatar()->getImageTag($avatarSize)}</a></td>
+			<td><a href="{link controller='User' object=$user isHtmlEmail=true}{/link}" title="{$article->username}">{@$user->getAvatar()->getImageTag($avatarSize)}</a></td>
 			<td class="boxContent">
 				<div class="containerHeadline">
 					<h3>
 						{if $article->userID}
-							<a href="{link controller='User' object=$user isEmail=true}{/link}">{$article->username}</a>
+							<a href="{link controller='User' object=$user isHtmlEmail=true}{/link}">{$article->username}</a>
 						{else}
 							{$article->username}
 						{/if}
