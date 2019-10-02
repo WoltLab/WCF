@@ -7,7 +7,7 @@
 	{lang}wcf.user.lostPassword.mail.html.intro{/lang}
 
 	{capture assign=button}
-	<a href="{link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link}">
+	<a href="{link controller='NewPassword' object=$mailbox->getUser() isHtmlEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link}">
 		{lang}wcf.user.lostPassword.mail.html.reset{/lang}
 	</a>
 	{/capture}

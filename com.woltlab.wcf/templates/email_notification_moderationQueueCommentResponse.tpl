@@ -15,12 +15,12 @@
 	{capture assign='commentContent'}
 	<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
-			<td><a href="{link controller='User' object=$user isEmail=true}{/link}" title="{$comment->username}">{@$user->getAvatar()->getImageTag($avatarSize)}</a></td>
+			<td><a href="{link controller='User' object=$user isHtmlEmail=true}{/link}" title="{$comment->username}">{@$user->getAvatar()->getImageTag($avatarSize)}</a></td>
 			<td class="boxContent">
 				<div class="containerHeadline">
 					<h3>
 						{if $comment->userID}
-							<a href="{link controller='User' object=$user isEmail=true}{/link}">{$comment->username}</a>
+							<a href="{link controller='User' object=$user isHtmlEmail=true}{/link}">{$comment->username}</a>
 						{else}
 							{$comment->username}
 						{/if}

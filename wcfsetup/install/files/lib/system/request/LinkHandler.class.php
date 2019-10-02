@@ -76,8 +76,11 @@ class LinkHandler extends SingletonFactory {
 		$appendSession = false;
 		
 		// enforce a certain level of sanitation and protection for links embedded in emails
-		if (isset($parameters['isEmail']) && (bool)$parameters['isEmail']) {
-			$parameters['forceFrontend'] = true;
+		if (isset($parameters['isEmail'])) {
+			if ((bool)$parameters['isEmail']) {
+				$parameters['forceFrontend'] = true;
+			}
+			
 			unset($parameters['isEmail']);
 		}
 		
