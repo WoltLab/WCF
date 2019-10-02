@@ -2186,7 +2186,7 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[New Password for your Account for Website: {@PAGE_TITLE|language}]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-An administrator resetted your password. You are now required to set a new password to be able to use your
+An administrator has reset your password. You are now required to set a new password to be able to use your
 user account {@$mailbox->getUser()->username} on the website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] again:
 
     {link controller='NewPassword' object=$mailbox->getUser() isEmail=true}k={@$mailbox->getUser()->lostPasswordKey}{/link} {* this line ends with a space *}
@@ -2195,7 +2195,7 @@ If you read this message after {@$mailbox->getUser()->lastLostPasswordRequestTim
 the lost password form [URL:{link controller='LostPassword' isEmail=true}{/link}] for security reasons.]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.headline"><![CDATA[Dear {$mailbox->getUser()->username},]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.intro"><![CDATA[
-<p>An administrator resetted your password. You are now required to set a new password to be able to use your
+<p>An administrator has reset your password. You are now required to set a new password to be able to use your
 user account {$mailbox->getUser()->username} on the website <a href="{link isHtmlEmail=true}{/link}">{@PAGE_TITLE|language}</a> again:</p>]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.reset"><![CDATA[Choose new password]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.html.outro"><![CDATA[
