@@ -7,7 +7,7 @@
 	{lang}wcf.user.changeEmail.needReactivation.mail.html.intro{/lang}
 
 	{capture assign=button}
-	<a href="{link controller='EmailActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->reactivationCode}{/link}">
+	<a href="{link controller='EmailActivation' isHtmlEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->reactivationCode}{/link}">
 		{lang}wcf.user.changeEmail.needReactivation.mail.html.activate{/lang}
 	</a>
 	{/capture}

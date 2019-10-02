@@ -38,9 +38,21 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 			$tagArgs['encode'] = false;
 		}
 		
-		if (isset($tagArgs['encode']) && !$tagArgs['encode']) {
+		if (isset($tagArgs['isHtmlEmail'])) {
+			if ($tagArgs['isHtmlEmail']) {
+				$tagArgs['isEmail'] = true;
+				$tagArgs['encode'] = true;
+			}
+			
+			unset($tagArgs['isHtmlEmail']);
+		}
+		
+		if (isset($tagArgs['encode'])) {
+			if (!$tagArgs['encode']) {
+				return LinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent);
+			}
+			
 			unset($tagArgs['encode']);
-			return LinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent);
 		}
 		
 		return StringUtil::encodeHTML(LinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent));

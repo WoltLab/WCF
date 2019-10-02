@@ -95,7 +95,8 @@ class ContactOptionAction extends CustomOptionAction implements ISortableAction 
 			$options[] = [
 				'isMessage' => $object->isMessage(),
 				'title' => $object->getLocalizedName($defaultLanguage),
-				'value' => $object->getFormattedOptionValue(true)
+				'value' => $object->getFormattedOptionValue(true),
+				'htmlValue' => $object->getFormattedOptionValue(),
 			];
 		}
 		

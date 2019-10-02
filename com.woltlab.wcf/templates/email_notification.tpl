@@ -19,7 +19,7 @@
 	{/if}
 
 	{capture assign=button}
-	<a href="{link controller='NotificationConfirm' isEmail=true id=$event->getNotification()->notificationID}{/link}">
+	<a href="{link controller='NotificationConfirm' isHtmlEmail=true id=$event->getNotification()->notificationID}{/link}">
 		{lang}wcf.user.notification.markAsConfirmed{/lang}
 	</a>
 	{/capture}

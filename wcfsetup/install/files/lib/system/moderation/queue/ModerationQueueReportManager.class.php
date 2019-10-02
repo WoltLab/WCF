@@ -86,7 +86,10 @@ class ModerationQueueReportManager extends AbstractModerationQueueManager {
 	 * @inheritDoc
 	 */
 	public function getLink($queueID) {
-		return LinkHandler::getInstance()->getLink('ModerationReport', ['id' => $queueID]);
+		return LinkHandler::getInstance()->getLink('ModerationReport', [
+			'id' => $queueID,
+			'forceFrontend' => true
+		]);
 	}
 	
 	/**

@@ -42,7 +42,10 @@ class ModerationQueueActivationManager extends AbstractModerationQueueManager {
 	 * @inheritDoc
 	 */
 	public function getLink($queueID) {
-		return LinkHandler::getInstance()->getLink('ModerationActivation', ['id' => $queueID]);
+		return LinkHandler::getInstance()->getLink('ModerationActivation', [
+			'id' => $queueID,
+			'forceFrontend' => true
+		]);
 	}
 	
 	/**
