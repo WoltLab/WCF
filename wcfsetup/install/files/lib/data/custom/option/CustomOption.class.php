@@ -114,7 +114,7 @@ abstract class CustomOption extends Option {
 			case 'radioButton':
 			case 'select':
 				$selectOptions = OptionUtil::parseSelectOptions($this->selectOptions);
-				if (isset($selectOptions[$this->optionValue])) return WCF::getLanguage()->get($selectOptions[$this->optionValue]);
+				if (isset($selectOptions[$this->optionValue])) return WCF::getLanguage()->get(($forcePlaintext ? $selectOptions[$this->optionValue] : StringUtil::encodeHTML($selectOptions[$this->optionValue])));
 				return '';
 				
 			case 'multiSelect':
@@ -124,8 +124,11 @@ abstract class CustomOption extends Option {
 				$result = '';
 				foreach ($values as $value) {
 					if (isset($selectOptions[$value])) {
-						if (!empty($result)) $result .= "<br>\n";
-						$result .= WCF::getLanguage()->get($selectOptions[$value]);
+						if (!empty($result)) {
+							if ($forcePlaintext) $result .= "\n";
+							else $result .= "<br>";
+						}
+						$result .= WCF::getLanguage()->get(($forcePlaintext ? $selectOptions[$value] : StringUtil::encodeHTML($selectOptions[$value])));
 					}
 				}
 				return $result;
@@ -146,7 +149,8 @@ abstract class CustomOption extends Option {
 				// fallthrough
 				
 			default:
-				return StringUtil::encodeHTML($this->optionValue);
+				if (!$forcePlaintext) return StringUtil::encodeHTML($this->optionValue);
+				return $this->optionValue;
 		}
 	}
 	

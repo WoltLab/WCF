@@ -2549,8 +2549,7 @@ E-Mail-Adresse: {@$emailAddress} {* this line ends with a space *}
 <p><br></p>
 <p>E-Mail-Adresse: <a href="mailto:{$emailAddress}">{$emailAddress}</a></p>
 {foreach from=$options item=option}
-<p><strong>{@$option['title']}:</strong> {if !$option['isMessage']}{@$option['value']}{else}
-{@$option['value']|newlineToBreak}{/if}</p>
+<p><strong>{@$option['title']}:</strong> {@$option['htmlValue']}</p>
 {/foreach}]]></item>
 		<item name="wcf.contact.option1"><![CDATA[Betreff]]></item>
 		<item name="wcf.contact.optionDescription1"><![CDATA[Kurze, prägnante Beschreibung der Anfrage.]]></item>
