@@ -20,6 +20,6 @@ class TabTabMenuFormContainer extends TabMenuFormContainer implements ITabFormCo
 	 * @inheritDoc
 	 */
 	public function __construct() {
-		$this->addClass('tabMenuContainer')->addClass('tabMenuContent');
+		$this->addClasses(['tabMenuContainer', 'tabMenuContent']);
 	}
 }

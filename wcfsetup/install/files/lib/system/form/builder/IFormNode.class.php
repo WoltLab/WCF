@@ -23,6 +23,16 @@ interface IFormNode {
 	public function addClass($class);
 	
 	/**
+	 * Adds the given CSS classes to this node and returns this node.
+	 * 
+	 * @param	string[]	$classes	names added CSS classes
+	 * @return	static				this node
+	 * 
+	 * @throws	\InvalidArgumentException	if any of the given classes is invalid
+	 */
+	public function addClasses(array $classes);
+	
+	/**
 	 * Adds a dependency on the value of a `IFormField` so that this node is
 	 * only available if the field satisfies the given dependency and returns
 	 * this element.
