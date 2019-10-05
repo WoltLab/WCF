@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 <ul class="ratingList jsOnly">
 	{foreach from=$field->getRatings() item=rating}
 		<li data-rating="{@$rating}"><span class="icon icon24 {if $rating <= $field->getValue()}{implode from=$field->getActiveCssClasses() item=cssClass glue=' '}{@$cssClass}{/implode}{else}{implode from=$field->getDefaultCssClasses() item=cssClass glue=' '}{@$cssClass}{/implode}{/if} pointer jsTooltip" title="{lang maximumRating=$field->getMaximum()}wcf.form.field.rating.ratingTitle{/lang}"></span></li>
@@ -26,5 +24,3 @@
 		);
 	});
 </script>
-
-{include file='__formFieldFooter'}

@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 <textarea {*
 	*}id="{@$field->getPrefixedId()}" {*
 	*}name="{@$field->getPrefixedId()}" {*
@@ -38,5 +36,3 @@
 		});
 	</script>
 {/if}
-
-{include file='__formFieldFooter'}

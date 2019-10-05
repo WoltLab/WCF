@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 <input type="text" id="{@$field->getPrefixedId()}" name="{@$field->getPrefixedId()}" class="long"{if $field->isAutofocused()} autofocus{/if}{if $field->isImmutable()} disabled{/if}>
 
 <script data-relocate="true">
@@ -14,5 +12,3 @@
 		);
 	});
 </script>
-
-{include file='__formFieldFooter'}

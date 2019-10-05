@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 <span{if $field->getValue()} class="icon icon64 fa-{$field->getValue()}"{/if} id="{@$field->getPrefixedId()}_icon"></span>
 {if !$field->isImmutable()}
 	<a href="#" class="button small" id="{@$field->getPrefixedId()}_openIconDialog">{lang}wcf.global.button.edit{/lang}</a>
@@ -30,5 +28,3 @@
 		});
 	</script>
 {/if}
-
-{include file='__formFieldFooter'}

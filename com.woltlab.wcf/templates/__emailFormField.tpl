@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 <input type="email" {*
 	*}id="{@$field->getPrefixedId()}" {*
 	*}name="{@$field->getPrefixedId()}" {*
@@ -16,5 +14,3 @@
 {if $field->isI18n()}
 	{include file='multipleLanguageInputJavascript'}
 {/if}
-
-{include file='__formFieldFooter'}

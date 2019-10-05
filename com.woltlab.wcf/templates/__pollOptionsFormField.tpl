@@ -1,8 +1,4 @@
-{include file='__formFieldHeader'}
-
 <ol class="sortableList"></ol>
-
-{include file='__formFieldFooter'}
 
 <script data-relocate="true">
 	require(['Dom/Traverse', 'Dom/Util', 'Language', 'WoltLabSuite/Core/Ui/Poll/Editor'], function(DomTraverse, DomUtil, Language, UiPollEditor) {

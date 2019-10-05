@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 {if $field->getSuffix() !== null}
 	<div class="inputAddon">
 {/if}
@@ -23,5 +21,3 @@
 		<span class="inputSuffix">{@$field->getSuffix()}</span>
 	</div>
 {/if}
-
-{include file='__formFieldFooter'}

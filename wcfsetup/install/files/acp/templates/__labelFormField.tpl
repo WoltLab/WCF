@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 <ul class="labelList jsOnly" data-object-id="{@$field->getLabelGroup()->groupID}">
 	<li class="dropdown labelChooser" data-group-id="{@$field->getLabelGroup()->groupID}">
 		<div class="dropdownToggle" data-toggle="labelGroup{@$field->getLabelGroup()->groupID}">
@@ -41,5 +39,3 @@
 		);
 	});
 </script>
-
-{include file='__formFieldFooter'}

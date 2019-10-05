@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 {if $field->isFilterable()}
 	<script data-relocate="true">
 		require(['Language', 'WoltLabSuite/Core/Ui/ItemList/Filter'], function(Language, UiItemListFilter) {
@@ -42,5 +40,3 @@
 		{/foreach}
 	</select>
 {/if}
-
-{include file='__formFieldFooter'}

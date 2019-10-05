@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 <input id="{@$field->getPrefixedId()}" type="text" value="" class="long">
 
 <script data-relocate="true">
@@ -17,5 +15,3 @@
 		);
 	});
 </script>
-
-{include file='__formFieldFooter'}

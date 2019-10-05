@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 {if $field->isImmutable() && $field->getValue()}
 	{if $field->getMedia()->isImage && $field->getMedia()->hasThumbnail('small')}
 		<div id="{@$field->getPrefixedId()}_preview" class="selectedImagePreview">
@@ -37,5 +35,3 @@
 		});
 	</script>
 {/if}
-
-{include file='__formFieldFooter'}

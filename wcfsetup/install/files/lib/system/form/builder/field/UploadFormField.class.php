@@ -263,6 +263,18 @@ class UploadFormField extends AbstractFormField {
 	
 	/**
 	 * @inheritDoc
+	 * @throws      \BadMethodCallException         if the method is called, before the field is populated
+	 */
+	public function getFieldHtml() {
+		if (!$this->isPopulated) {
+			throw new \BadMethodCallException("The field must be populated, before calling this method.");
+		}
+		
+		return parent::getFieldHtml();
+	}
+	
+	/**
+	 * @inheritDoc
 	 * 
 	 * @throws \InvalidArgumentException    if the getter for the value provides invalid values
 	 */

@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 <ul id="{@$field->getPrefixedID()}_attachmentList" {*
 	*}class="formAttachmentList"{*
 	*}{if !$field->getAttachmentHandler()->getAttachmentList()|count} style="display: none"{/if} {*
@@ -72,5 +70,3 @@
 </script>
 
 <input type="hidden" id="{@$field->getPrefixedID()}_tmpHash" name="{@$field->getPrefixedID()}_tmpHash" value="{$field->getAttachmentHandler()->getTmpHashes()[0]}">
-
-{include file='__formFieldFooter'}

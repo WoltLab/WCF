@@ -33,6 +33,14 @@ interface IFormField extends IFormChildNode, IFormElement {
 	public function addValidator(IFormFieldValidator $validator);
 	
 	/**
+	 * Returns the html representation of the form field only without any of the surrounding
+	 * structural html elements.
+	 * 
+	 * @return	string		html representation of node
+	 */
+	public function getFieldHtml();
+	
+	/**
 	 * Returns the name of the object property this field represents.
 	 * 
 	 * If no object property has been explicitly set, the field's id is returned.

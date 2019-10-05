@@ -92,17 +92,32 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml() {
+	public function getFieldHtml() {
 		if ($this->templateName === null) {
 			throw new \LogicException("\$templateName property has not been set for class '" . static::class . "'.");
 		}
 		
+		return WCF::getTPL()->fetch(
+			$this->templateName,
+			'wcf',
+			array_merge($this->getHtmlVariables(), [
+				'field' => $this,
+				'javaScriptDataHandlerModule' => $this->javaScriptDataHandlerModule
+			]),
+			true
+		);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getHtml() {
 		if ($this->requiresLabel() && $this->getLabel() === null) {
 			throw new \UnexpectedValueException("Form field '{$this->getPrefixedId()}' requires a label.");
 		}
 		
 		return WCF::getTPL()->fetch(
-			$this->templateName,
+			'__formField',
 			'wcf',
 			array_merge($this->getHtmlVariables(), [
 				'field' => $this,

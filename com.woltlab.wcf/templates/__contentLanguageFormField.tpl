@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 <noscript>
 	<select name="{@$field->getPrefixedId()}" id="{@$field->getPrefixedId()}"{if $field->isImmutable()} disabled{/if}>
 		{if !$field->isRequired()}
@@ -32,5 +30,3 @@
 		)
 	});
 </script>
-
-{include file='__formFieldFooter'}

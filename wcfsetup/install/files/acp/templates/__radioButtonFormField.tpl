@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 {foreach from=$field->getOptions() key=$__fieldValue item=__fieldLabel}
 	<label>
 		<input {*
@@ -11,5 +9,3 @@
 		*}> {@$__fieldLabel}
 	</label>
 {/foreach}
-
-{include file='__formFieldFooter'}

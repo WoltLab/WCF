@@ -117,7 +117,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml() {
+	public function getFieldHtml() {
 		if ($this->supportsQuotes()) {
 			MessageQuoteManager::getInstance()->assignVariables();
 		}
@@ -133,7 +133,7 @@ class WysiwygFormField extends AbstractFormField implements IMaximumLengthFormFi
 			WCF::getSession()->getPermission($disallowedBBCodesPermission)
 		));
 		
-		return parent::getHtml();
+		return parent::getFieldHtml();
 	}
 	
 	/**

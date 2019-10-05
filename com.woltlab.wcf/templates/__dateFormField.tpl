@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 <input {*
 	*}type="{if $field->supportsTime()}datetime{else}date{/if}" {*
 	*}id="{@$field->getPrefixedId()}" {*
@@ -12,5 +10,3 @@
 	*}{if $field->getEarliestDate() !== null} min="{$dateFormFieldEarliestDate}"{/if}{*
 	*}{if $field->getLatestDate() !== null} max="{$dateFormFieldLatestDate}"{/if}{*
 *}>
-
-{include file='__formFieldFooter'}
