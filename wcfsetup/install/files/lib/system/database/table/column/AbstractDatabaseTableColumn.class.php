@@ -152,6 +152,7 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn {
 	
 	/**
 	 * @inheritDoc
+	 * @return	static
 	 */
 	public static function create($name) {
 		return (new static())->name($name);
