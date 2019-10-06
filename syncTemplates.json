@@ -32,6 +32,8 @@
     "__pollOptionsFormField",
     "__radioButtonFormField",
     "__ratingFormField",
+    "__rowFormContainer",
+    "__rowFormFieldContainer",
     "__singleMediaSelectionFormField",
     "__singleSelectionFormField",
     "__tabFormContainer",
