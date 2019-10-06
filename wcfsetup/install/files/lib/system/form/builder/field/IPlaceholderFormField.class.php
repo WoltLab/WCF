@@ -10,7 +10,7 @@ namespace wcf\system\form\builder\field;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface IPlaceholderFormField {
+interface IPlaceholderFormField extends IFormField {
 	/**
 	 * Returns the placeholder value of this field or `null` if no placeholder has
 	 * been set.

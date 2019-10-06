@@ -10,7 +10,7 @@ namespace wcf\system\form\builder\field;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface IMaximumFormField {
+interface IMaximumFormField extends IFormField {
 	/**
 	 * Returns the maximum of the values of this field or `null` if no maximum
 	 * has been set.

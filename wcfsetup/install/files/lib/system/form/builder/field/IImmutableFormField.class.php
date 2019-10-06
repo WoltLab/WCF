@@ -10,7 +10,7 @@ namespace wcf\system\form\builder\field;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface IImmutableFormField {
+interface IImmutableFormField extends IFormField {
 	/**
 	 * Sets whether the value of this field is immutable and returns this field.
 	 * 

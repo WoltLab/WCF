@@ -11,7 +11,7 @@ use wcf\data\DatabaseObjectList;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface ISelectionFormField {
+interface ISelectionFormField extends IFormField {
 	/**
 	 * Returns a structured array that can be used to generate the form field output.
 	 * 

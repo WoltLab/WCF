@@ -11,7 +11,7 @@ use wcf\data\language\Language;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface IMaximumLengthFormField {
+interface IMaximumLengthFormField extends IFormField {
 	/**
 	 * Returns the maximum length of the values of this field or `null` if no maximum
 	 * length has been set.

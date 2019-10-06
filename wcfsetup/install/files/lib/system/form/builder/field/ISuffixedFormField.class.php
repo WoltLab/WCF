@@ -10,7 +10,7 @@ namespace wcf\system\form\builder\field;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface ISuffixedFormField {
+interface ISuffixedFormField extends IFormField {
 	/**
 	 * Returns the suffix of this field or `null` if no suffix has been set.
 	 * 

@@ -10,7 +10,7 @@ namespace wcf\system\form\builder\field;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface INullableFormField {
+interface INullableFormField extends IFormField {
 	/**
 	 * Returns `true` if this field supports `null` as its value and returns `false`
 	 * otherwise.

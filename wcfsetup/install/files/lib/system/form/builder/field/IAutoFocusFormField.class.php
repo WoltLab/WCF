@@ -10,7 +10,7 @@ namespace wcf\system\form\builder\field;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface IAutoFocusFormField {
+interface IAutoFocusFormField extends IFormField {
 	/**
 	 * Sets whether this field is auto-focused and returns this field.
 	 *

@@ -10,7 +10,7 @@ namespace wcf\system\form\builder\field;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface IMultipleFormField {
+interface IMultipleFormField extends IFormField {
 	/**
 	 * value to indicate that there is no maximum number of values to be selected
 	 * or set

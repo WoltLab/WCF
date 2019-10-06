@@ -11,7 +11,7 @@ use wcf\data\language\Language;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface IMinimumLengthFormField {
+interface IMinimumLengthFormField extends IFormField {
 	/**
 	 * Returns the minimum length of the values of this field or `null` if no minimum
 	 * length has been set.

@@ -11,7 +11,7 @@ namespace wcf\system\form\builder\field;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface IPackagesFormField {
+interface IPackagesFormField extends IFormField {
 	/**
 	 * Returns the ids of the packages considered for this field. An empty
 	 * array is returned if all packages are considered.

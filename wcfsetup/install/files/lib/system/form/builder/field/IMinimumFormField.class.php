@@ -10,7 +10,7 @@ namespace wcf\system\form\builder\field;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface IMinimumFormField {
+interface IMinimumFormField extends IFormField {
 	/**
 	 * Returns the minimum of the values of this field or `null` if no minimum
 	 * has been set.
