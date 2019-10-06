@@ -666,9 +666,16 @@ class DatabaseTableChangeProcessor {
 			return true;
 		}
 		
-		// default type has to be checked with a strict check to differentiate between having
-		// no default value (`null`) and having an empty string as default value
-		return $oldColumn->getDefaultValue() !== $newColumn->getDefaultValue();
+		// default type has to be checked explicitly for `null` to properly detect changing
+		// from no default value (`null`) and to an empty string as default value (and vice
+		// versa)
+		if ($oldColumn->getDefaultValue() === null || $newColumn->getDefaultValue() === null) {
+			return $oldColumn->getDefaultValue() !== $newColumn->getDefaultValue();
+		}
+		
+		// for all other cases, use weak comparison so that `'1'` (from database) and `1`
+		// (from script PIP) match, for example 
+		return $oldColumn->getDefaultValue() != $newColumn->getDefaultValue();
 	}
 	
 	/**
