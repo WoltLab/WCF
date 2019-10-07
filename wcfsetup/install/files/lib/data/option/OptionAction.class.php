@@ -148,8 +148,6 @@ class OptionAction extends AbstractDatabaseObjectAction {
 			foreach ($dirs as $dir => $apps) {
 				if (strpos($dir, $test) !== false) {
 					unset($dirs[$dir]);
-					$insert = false;
-					break;
 				}
 				else if (strpos($test, $dir) !== false) {
 					$insert = false;
@@ -173,14 +171,16 @@ class OptionAction extends AbstractDatabaseObjectAction {
 			
 			foreach ($domainPaths as $domainPath => $value) {
 				$htaccess = "{$dir}.htaccess";
-				if (empty($rules['apache'][$htaccess])) {
-					$path = FileUtil::removeTrailingSlash(substr($value, strlen($dir)));
-					$rules['apache'][$htaccess] = <<<SNIPPET
+				$path = FileUtil::removeTrailingSlash(substr($value, strlen($dir)));
+				$content = <<<SNIPPET
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f
 RewriteRule ^/{$path}(.*)$ {$path}/index.php?$1 [L,QSA]
+
+
 SNIPPET;
-				}
+				if (empty($rules['apache'][$htaccess])) $rules['apache'][$htaccess] = $content;
+				else $rules['apache'][$htaccess] .= $content;
 			}
 		}
 		
