@@ -41,6 +41,14 @@ interface IFormField extends IFormChildNode, IFormElement {
 	public function getFieldHtml();
 	
 	/**
+	 * Returns the name of the JavaScript data handler module for this form field or `null` if
+	 * there is no such module.
+	 * 
+	 * @return	null|string
+	 */
+	public function getJavaScriptDataHandlerModule();
+	
+	/**
 	 * Returns the name of the object property this field represents.
 	 * 
 	 * If no object property has been explicitly set, the field's id is returned.

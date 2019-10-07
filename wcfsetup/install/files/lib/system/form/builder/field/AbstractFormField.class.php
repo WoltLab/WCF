@@ -101,8 +101,7 @@ abstract class AbstractFormField implements IFormField {
 			$this->templateName,
 			'wcf',
 			array_merge($this->getHtmlVariables(), [
-				'field' => $this,
-				'javaScriptDataHandlerModule' => $this->javaScriptDataHandlerModule
+				'field' => $this
 			]),
 			true
 		);
@@ -120,11 +119,17 @@ abstract class AbstractFormField implements IFormField {
 			'__formField',
 			'wcf',
 			array_merge($this->getHtmlVariables(), [
-				'field' => $this,
-				'javaScriptDataHandlerModule' => $this->javaScriptDataHandlerModule
+				'field' => $this
 			]),
 			true
 		);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getJavaScriptDataHandlerModule() {
+		return $this->javaScriptDataHandlerModule;
 	}
 	
 	/**

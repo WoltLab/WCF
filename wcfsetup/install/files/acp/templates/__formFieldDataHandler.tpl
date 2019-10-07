@@ -1,7 +1,7 @@
-{if $field->getDocument()->isAjax() && !$javaScriptDataHandlerModule|empty}
+{if $field->getDocument()->isAjax() && !$field->getJavaScriptDataHandlerModule()|empty}
 	<script data-relocate="true">
 		require([
-			'{$javaScriptDataHandlerModule}',
+			'{$field->getJavaScriptDataHandlerModule()}',
 			'WoltLabSuite/Core/Form/Builder/Manager'
 		], function(
 			FormBuilderField,
