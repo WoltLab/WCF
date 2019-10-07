@@ -4,6 +4,7 @@ use wcf\system\database\table\column\CharDatabaseTableColumn;
 use wcf\system\database\table\column\DateDatabaseTableColumn;
 use wcf\system\database\table\column\DatetimeDatabaseTableColumn;
 use wcf\system\database\table\column\DefaultFalseBooleanDatabaseTableColumn;
+use wcf\system\database\table\column\DefaultTrueBooleanDatabaseTableColumn;
 use wcf\system\database\table\column\EnumDatabaseTableColumn;
 use wcf\system\database\table\column\IntDatabaseTableColumn;
 use wcf\system\database\table\column\MediumtextDatabaseTableColumn;
@@ -44,6 +45,11 @@ $tables = [
 			DefaultFalseBooleanDatabaseTableColumn::create('delta2'),
 			DefaultFalseBooleanDatabaseTableColumn::create('delta3'),
 			DefaultFalseBooleanDatabaseTableColumn::create('delta4')
+		])
+		->indices([
+			DatabaseTableIndex::create('day')
+				->type(DatabaseTableIndex::UNIQUE_TYPE)
+				->columns(['date']),
 		]),
 	
 	DatabaseTable::create('wcf1_blacklist_entry')
@@ -79,11 +85,13 @@ $tables = [
 	DatabaseTable::create('wcf1_comment')
 		->columns([
 			MediumtextDatabaseTableColumn::create('message')
+				->notNull()
 		]),
 	
 	DatabaseTable::create('wcf1_comment_response')
 		->columns([
 			MediumtextDatabaseTableColumn::create('message')
+				->notNull()
 		]),
 	
 	DatabaseTable::create('wcf1_contact_attachment')
@@ -109,13 +117,6 @@ $tables = [
 	DatabaseTable::create('wcf1_like')
 		->columns([
 			NotNullInt10DatabaseTableColumn::create('reactionTypeID')
-		])
-		->foreignKeys([
-			DatabaseTableForeignKey::create()
-				->columns(['reactionTypeID'])
-				->referencedTable('wcf1_reaction_type')
-				->referencedColumns(['reactionTypeID'])
-				->onDelete('CASCADE')
 		]),
 	
 	DatabaseTable::create('wcf1_like_object')
@@ -154,7 +155,7 @@ $tables = [
 				->defaultValue(0),
 			NotNullVarchar255DatabaseTableColumn::create('iconFile')
 				->defaultValue(''),
-			DefaultFalseBooleanDatabaseTableColumn::create('isDisabled')
+			DefaultTrueBooleanDatabaseTableColumn::create('isAssignable')
 		])
 		->indices([
 			DatabaseTablePrimaryIndex::create()
@@ -164,7 +165,9 @@ $tables = [
 	DatabaseTable::create('wcf1_style')
 		->columns([
 			EnumDatabaseTableColumn::create('apiVersion')
+				->notNull()
 				->enumValues(['3.0', '3.1', '5.2'])
+				->defaultValue('3.0')
 		]),
 	
 	DatabaseTable::create('wcf1_trophy')
