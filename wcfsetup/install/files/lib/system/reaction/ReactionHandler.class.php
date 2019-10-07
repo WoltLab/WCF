@@ -327,6 +327,17 @@ class ReactionHandler extends SingletonFactory {
 					'reactionTypeID' => $reactionTypeID
 				]);
 				
+				$parameters = [
+					'likeable' => $likeable,
+					'likeObject' => $likeObject,
+					'like' => $like,
+					'user' => $user,
+					'reactionType' => $reaction,
+					'time' => $time,
+					'likeObjectData' => $likeObjectData
+				];
+				EventHandler::getInstance()->fireAction($this, 'createReaction', $parameters);
+				
 				if ($likeable->getUserID()) {
 					UserActivityPointHandler::getInstance()->fireEvent('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $like->likeID, $likeable->getUserID());
 				}
@@ -338,6 +349,17 @@ class ReactionHandler extends SingletonFactory {
 					'likeValue' => 1,
 					'reactionTypeID' => $reactionTypeID
 				]);
+				
+				$parameters = [
+					'likeable' => $likeable,
+					'likeObject' => $likeObject,
+					'like' => $like,
+					'user' => $user,
+					'reactionType' => $reaction,
+					'time' => $time,
+					'likeObjectData' => $likeObjectData
+				];
+				EventHandler::getInstance()->fireAction($this, 'updateReaction', $parameters);
 				
 				if ($likeable->getUserID()) {
 					UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$likeable->getUserID() => 1]);
@@ -462,10 +484,20 @@ class ReactionHandler extends SingletonFactory {
 			]);
 		}
 		
-		return [
-			'cumulativeLikes' => $cumulativeLikes, 
-			'cachedReactions' => $cachedReactions, 
+		$parameters = [
+			'likeable' => $likeable,
 			'likeObject' => $likeObject,
+			'like' => $like,
+			'reactionType' => $reactionType,
+			'cumulativeLikes' => $cumulativeLikes,
+			'cachedReactions' => $cachedReactions
+		];
+		EventHandler::getInstance()->fireAction($this, 'updateLikeObject', $parameters);
+		
+		return [
+			'cumulativeLikes' => $parameters['cumulativeLikes'],
+			'cachedReactions' => $parameters['cachedReactions'],
+			'likeObject' => $parameters['likeObject'],
 		]; 
 	}
 	
@@ -492,6 +524,14 @@ class ReactionHandler extends SingletonFactory {
 				$userEditor = new UserEditor(UserRuntimeCache::getInstance()->getObject($likeable->getUserID()));
 				$userEditor->updateCounters(['likesReceived' => $likesReceived]);
 			}
+			
+			$parameters = [
+				'likeable' => $likeable,
+				'likeObject' => $likeObject,
+				'like' => $like,
+				'reactionType' => $reactionType
+			];
+			EventHandler::getInstance()->fireAction($this, 'updateUsersLikeCounter', $parameters);
 		}
 	}
 	
@@ -526,6 +566,15 @@ class ReactionHandler extends SingletonFactory {
 			
 			// update object's like counter
 			$likeable->updateLikeCounter($likeObjectData['cumulativeLikes']);
+			
+			$parameters = [
+				'likeable' => $likeable,
+				'likeObject' => $likeObject,
+				'like' => $like,
+				'user' => $user,
+				'likeObjectData' => $likeObjectData
+			];
+			EventHandler::getInstance()->fireAction($this, 'revertReact', $parameters);
 			
 			// delete recent activity
 			if (UserActivityEventHandler::getInstance()->getObjectTypeID($likeable->getObjectType()->objectType.'.recentActivityEvent')) {
@@ -596,10 +645,18 @@ class ReactionHandler extends SingletonFactory {
 			$likeObjectEditor->update($updateData);
 		}
 		
+		$parameters = [
+			'likeObject' => $likeObject,
+			'like' => $like,
+			'cachedReactions' => $cachedReactions,
+			'cumulativeLikes' => $cumulativeLikes
+		];
+		EventHandler::getInstance()->fireAction($this, 'revertLikeObject', $parameters);
+		
 		return [
-			'cumulativeLikes' => $cumulativeLikes,
-			'cachedReactions' => $cachedReactions, 
-			'likeObject' => $likeObject
+			'cumulativeLikes' => $parameters['cumulativeLikes'],
+			'cachedReactions' => $parameters['cachedReactions'],
+			'likeObject' => $parameters['likeObject']
 		];
 	}
 	
@@ -677,6 +734,15 @@ class ReactionHandler extends SingletonFactory {
 		if (!empty($likeObjectIDs)) {
 			LikeObjectEditor::deleteAll($likeObjectIDs);
 		}
+		
+		$parameters = [
+			'objectType' => $objectTypeObj,
+			'objectIDs' => $objectIDs,
+			'notificationObjectTypes' => $notificationObjectTypes,
+			'likeObjectIDs' => $likeObjectIDs,
+			'likeObjects' => $likeObjects
+		];
+		EventHandler::getInstance()->fireAction($this, 'removeReactions', $parameters);
 		
 		// delete activity events
 		if (UserActivityEventHandler::getInstance()->getObjectTypeID($objectTypeObj->objectType.'.recentActivityEvent')) {
