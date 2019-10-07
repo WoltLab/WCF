@@ -36,6 +36,7 @@
     "__rowFormFieldContainer",
     "__singleMediaSelectionFormField",
     "__singleSelectionFormField",
+    "__suffixFormFieldContainer",
     "__tabFormContainer",
     "__tabMenuFormContainer",
     "__tabTabMenuFormContainer",
