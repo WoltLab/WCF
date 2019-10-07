@@ -11,11 +11,13 @@
 define([
 	'Core',
 	'Dictionary',
+	'EventHandler',
 	'./Field/Dependency/Manager',
 	'./Field/Field'
 ], function(
 	Core,
 	Dictionary,
+	EventHandler,
 	FormBuilderFieldDependencyManager,
 	FormBuilderField
 ) {
@@ -141,6 +143,10 @@ define([
 			
 			_forms.set(formId, form);
 			_fields.set(formId, new Dictionary());
+			
+			EventHandler.fire('WoltLabSuite/Core/Form/Builder/Manager', 'registerForm', {
+				formId: formId
+			});
 		},
 		
 		/**
@@ -153,6 +159,10 @@ define([
 				throw new Error("Unknown form with id '" + formId + "'.");
 			}
 			
+			EventHandler.fire('WoltLabSuite/Core/Form/Builder/Manager', 'beforeUnregisterForm', {
+				formId: formId
+			});
+			
 			_forms.delete(formId);
 			
 			_fields.get(formId).forEach(function(field) {
@@ -162,6 +172,10 @@ define([
 			_fields.delete(formId);
 			
 			FormBuilderFieldDependencyManager.unregister(formId);
+			
+			EventHandler.fire('WoltLabSuite/Core/Form/Builder/Manager', 'afterUnregisterForm', {
+				formId: formId
+			});
 		}
 	};
 });
