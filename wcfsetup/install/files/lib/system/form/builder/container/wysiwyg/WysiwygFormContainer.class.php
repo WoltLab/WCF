@@ -309,8 +309,8 @@ class WysiwygFormContainer extends FormContainer implements IMaximumLengthFormFi
 	}
 	
 	/**
-	 * Returns `true` if the wsyiwyg field has to be filled out and returns `false` otherwise.
-	 * By default, the wsyiwyg field does not have to be filled out.
+	 * Returns `true` if the wysiwyg field has to be filled out and returns `false` otherwise.
+	 * By default, the wysiwyg field does not have to be filled out.
 	 * 
 	 * @return	bool
 	 */
