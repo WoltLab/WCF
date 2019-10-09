@@ -76,7 +76,13 @@ define(['./Manager'], function(DependencyManager) {
 				}.bind(this));
 				
 				if (!this._fields.length) {
-					throw new Error("Unknown field with id '" + fieldId + "'.");
+					elBySelAll('input[type=checkbox][name="' + fieldId + '[]"]', undefined, function(field) {
+						this._fields.push(field);
+					}.bind(this));
+					
+					if (!this._fields.length) {
+						throw new Error("Unknown field with id '" + fieldId + "'.");
+					}
 				}
 			}
 			else {

@@ -34,13 +34,27 @@ class ValueFormFieldDependency extends AbstractFormFieldDependency {
 	 * @inheritDoc
 	 */
 	public function checkDependency() {
-		$inArray = in_array($this->getField()->getValue(), $this->getValues());
-		
-		if ($this->isNegated()) {
-			return !$inArray;
+		if (is_array($this->getField()->getValue())) {
+			$check = false;
+			// do not use `array_diff` because we use weak comparison
+			foreach ($this->getValues() as $possibleValue) {
+				foreach ($this->getField()->getValue() as $actualValue) {
+					if ($possibleValue == $actualValue) {
+						$check = true;
+						break;
+					}
+				}
+			}
+		}
+		else {
+			$check = in_array($this->getField()->getValue(), $this->getValues());
 		}
 		
-		return $inArray;
+		if ($this->isNegated()) {
+			return !$check;
+		}
+		
+		return $check;
 	}
 	
 	/**
