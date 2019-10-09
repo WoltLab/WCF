@@ -817,13 +817,13 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			$form
 		);
 		
-		if (!empty($data['visibilityExceptions'])) {
+		if (!empty($formData['visibilityExceptions'])) {
 			$box->appendChild($document->createElement('visibleEverywhere', (string)($data['visibleEverywhere'] ?? 0)));
 			
 			$visibilityExceptions = $document->createElement('visibilityExceptions');
 			
-			sort($data['visibilityExceptions']);
-			foreach ($data['visibilityExceptions'] as $page) {
+			sort($formData['visibilityExceptions']);
+			foreach ($formData['visibilityExceptions'] as $page) {
 				$visibilityExceptions->appendChild($document->createElement('page', $page));
 			}
 			

@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\form\builder\field;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\IFormDocument;
 
 /**
  * Implementation of a form field for selecting multiple values.
@@ -11,10 +13,9 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class MultipleSelectionFormField extends AbstractFormField implements IFilterableSelectionFormField, IImmutableFormField, INullableFormField {
+class MultipleSelectionFormField extends AbstractFormField implements IFilterableSelectionFormField, IImmutableFormField {
 	use TFilterableSelectionFormField;
 	use TImmutableFormField;
-	use TNullableFormField;
 	
 	/**
 	 * @inheritDoc
@@ -25,6 +26,40 @@ class MultipleSelectionFormField extends AbstractFormField implements IFilterabl
 	 * @inheritDoc
 	 */
 	protected $templateName = '__multipleSelectionFormField';
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $value = [];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function hasSaveValue() {
+		return false;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function populate() {
+		parent::populate();
+		
+		$this->getDocument()->getDataHandler()->addProcessor(
+			new CustomFormDataProcessor(
+				'multiple',
+				function(IFormDocument $document, array $parameters) {
+					if ($this->checkDependencies() && !empty($this->getValue())) {
+						$parameters[$this->getObjectProperty()] = $this->getValue();
+					}
+					
+					return $parameters;
+				}
+			)
+		);
+		
+		return $this;
+	}
 	
 	/**
 	 * @inheritDoc

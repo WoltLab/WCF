@@ -555,10 +555,11 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				}
 			}
 			
-			if (!empty($formData['data']['boxVisibilityExceptions'])) {
+			if (!empty($formData['boxVisibilityExceptions'])) {
 				$visibilityExceptions = $box->appendChild($document->createElement('visibilityExceptions'));
 				
-				foreach ($formData['data']['boxVisibilityExceptions'] as $pageIdentifier) {
+				sort($formData['boxVisibilityExceptions']);
+				foreach ($formData['boxVisibilityExceptions'] as $pageIdentifier) {
 					$visibilityExceptions->appendChild($document->createElement('page', $pageIdentifier));
 				}
 			}
