@@ -71,9 +71,6 @@ class MultipleSelectionFormField extends AbstractFormField implements IFilterabl
 			if (is_array($value)) {
 				$this->value = $value;
 			}
-			else if (!$this->isNullable()) {
-				$this->value = [];
-			}
 		}
 		
 		return $this;
