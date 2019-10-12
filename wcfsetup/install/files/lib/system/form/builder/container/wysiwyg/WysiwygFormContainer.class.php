@@ -7,8 +7,6 @@ use wcf\system\event\EventHandler;
 use wcf\system\form\builder\button\wysiwyg\WysiwygPreviewFormButton;
 use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\TabFormContainer;
-use wcf\system\form\builder\field\IMaximumLengthFormField;
-use wcf\system\form\builder\field\IMinimumLengthFormField;
 use wcf\system\form\builder\field\TMaximumLengthFormField;
 use wcf\system\form\builder\field\TMinimumLengthFormField;
 use wcf\system\form\builder\field\wysiwyg\WysiwygAttachmentFormField;
@@ -30,7 +28,7 @@ use wcf\system\form\builder\TWysiwygFormNode;
  * @package	WoltLabSuite\Core\System\Form\Builder\Container\Wysiwyg
  * @since	5.2
  */
-class WysiwygFormContainer extends FormContainer implements IMaximumLengthFormField, IMinimumLengthFormField {
+class WysiwygFormContainer extends FormContainer {
 	use TMaximumLengthFormField;
 	use TMinimumLengthFormField;
 	use TWysiwygFormNode;
