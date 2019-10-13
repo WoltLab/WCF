@@ -104,4 +104,18 @@
 		
 		<instruction type="language" />
 	</instructions>
+	<instructions type="update" fromversion="3.1.10 pl 1">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language" />
+	</instructions>
+	<instructions type="update" fromversion="3.1.10 pl 2">
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language" />
+	</instructions>
 </package>
