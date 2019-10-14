@@ -18,3 +18,5 @@
 {else}
 	<p>{lang}wcf.user.trophy.noTrophies{/lang}</p>
 {/if}
+
+{event name='groupedUserTrophyList'}
