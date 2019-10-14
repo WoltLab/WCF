@@ -2,6 +2,8 @@
 namespace wcf\data\reaction\type;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
+use wcf\data\IToggleAction;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\file\upload\UploadFile;
@@ -20,7 +22,9 @@ use wcf\system\WCF;
  * @method	ReactionTypeEditor[]		getObjects()
  * @method	ReactionTypeEditor		getSingleObject()
  */
-class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortableAction {
+class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -221,5 +225,16 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 		}
 		
 		return $returnValues;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function toggle() {
+		foreach ($this->getObjects() as $object) {
+			$object->update([
+				'isAssignable' => $object->isAssignable ? 0 : 1
+			]);
+		}
 	}
 }
