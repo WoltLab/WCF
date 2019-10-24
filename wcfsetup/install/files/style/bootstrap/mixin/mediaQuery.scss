@@ -56,7 +56,25 @@
 
 /* desktop */
 @mixin screen-lg() {
+	@media screen and (min-width: 1025px) and (max-width: 1280px) {
+		@content;
+	}
+}
+
+@mixin screen-lg-down() {
+	@media screen and (max-width: 1280px) {
+		@content;
+	}
+}
+
+@mixin screen-lg-up() {
 	@media screen and (min-width: 1025px), print {
+		@content;
+	}
+}
+
+@mixin screen-xl() {
+	@media screen and (min-width: 1281px) {
 		@content;
 	}
 }
