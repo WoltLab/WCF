@@ -3,6 +3,7 @@ namespace wcf\page;
 use wcf\data\trophy\category\TrophyCategory;
 use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\trophy\TrophyList;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
@@ -70,6 +71,10 @@ class TrophyListPage extends MultipleLinkPage {
 		parent::readParameters();
 		
 		$this->canonicalURL = LinkHandler::getInstance()->getLink('TrophyList', [], ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
+		
+		if (!count(TrophyCategoryCache::getInstance()->getEnabledCategories())) {
+			throw new IllegalLinkException();
+		}
 	}
 	
 	/**
