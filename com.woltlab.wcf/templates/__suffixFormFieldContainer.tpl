@@ -51,7 +51,7 @@
 {if $element->getSuffixField() !== null && $element->getSuffixField()->isAvailable() && !$element->getSuffixField()->isImmutable() && $element->suffixHasSelectableOptions()}
 <script data-relocate="true">
 	require(['WoltLabSuite/Core/Form/Builder/Container/SuffixFormField'], function(FormBuilderSuffixFormFieldContainer) {
-		new FormBuilderSuffixFormFieldContainer('{@$element->getSuffixField()->getPrefixedId()}');
+		new FormBuilderSuffixFormFieldContainer('{@$element->getDocument()->getId()}', '{@$element->getSuffixField()->getPrefixedId()}');
 	});
 </script>
 {/if}

@@ -1,7 +1,34 @@
+{capture assign='__contentHeader'}
+	<header class="contentHeader">
+		<div class="contentHeaderTitle">
+			<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.article.add{/lang}{else}{lang}wcf.acp.article.edit{/lang}{/if}</h1>
+		</div>
+		
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{if $action == 'edit'}
+					{if $article->canDelete()}
+						<li><a href="#" class="button jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.global.button.restore{/lang}</span></a></li>
+						<li><a href="#" class="button jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.delete{/lang}</span></a></li>
+						<li><a href="#" class="button jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.trash{/lang}</span></a></li>
+					{/if}
+					{if $languages|count > 1 || $article->isMultilingual}
+						<li><a href="#" class="button jsButtonToggleI18n"><span class="icon icon16 fa-flag"></span> <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></a></li>
+					{/if}
+					<li><a href="{$article->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.article.button.viewArticle{/lang}</span></a></li>
+				{/if}
+				<li><a href="{link controller='ArticleList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.article.list{/lang}</span></a></li>
+				
+				{event name='contentHeaderNavigation'}
+			</ul>
+		</nav>
+	</header>
+{/capture}
+
 {if $articleIsFrontend|empty}
 	{include file='header' pageTitle='wcf.acp.article.'|concat:$action}
 {else}
-	{include file='header' __disableContentHeader=true}
+	{include file='header' contentHeader=$__contentHeader}
 {/if}
 
 {if $__wcf->session->getPermission('admin.content.article.canManageArticle')}
@@ -58,30 +85,9 @@
 	</script>
 {/if}
 
-<header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.article.add{/lang}{else}{lang}wcf.acp.article.edit{/lang}{/if}</h1>
-	</div>
-	
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{if $action == 'edit'}
-				{if $article->canDelete()}
-					<li><a href="#" class="button jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.global.button.restore{/lang}</span></a></li>
-					<li><a href="#" class="button jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.delete{/lang}</span></a></li>
-					<li><a href="#" class="button jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.trash{/lang}</span></a></li>
-				{/if}
-				{if $languages|count > 1 || $article->isMultilingual}
-					<li><a href="#" class="button jsButtonToggleI18n"><span class="icon icon16 fa-flag"></span> <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></a></li>
-				{/if}
-				<li><a href="{$article->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.article.button.viewArticle{/lang}</span></a></li>
-			{/if}
-			<li><a href="{link controller='ArticleList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.article.list{/lang}</span></a></li>
-			
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
-</header>
+{if $articleIsFrontend|empty}
+	{@$__contentHeader}
+{/if}
 
 {include file='formError'}
 
