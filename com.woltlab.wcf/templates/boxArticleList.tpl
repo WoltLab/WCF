@@ -2,8 +2,8 @@
 	<ul class="sidebarItemList">
 		{foreach from=$boxArticleList item=boxArticle}
 			<li>
-				<a href="{$boxArticle->getLink()}" class="box64">
-					<span>{if $boxArticle->getTeaserImage()}{@$boxArticle->getTeaserImage()->getElementTag(64)}{/if}</span>
+				<a href="{$boxArticle->getLink()}"{if $boxArticle->getTeaserImage()} class="box64"{/if}>
+					{if $boxArticle->getTeaserImage()}<span>{@$boxArticle->getTeaserImage()->getElementTag(64)}</span>{/if}
 					
 					<div>
 						<h3>{$boxArticle->getTitle()}</h3>
