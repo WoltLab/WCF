@@ -119,7 +119,7 @@ class IndexPage extends AbstractPage {
 			ENABLE_DEBUG_MODE
 			&& ENABLE_DEVELOPER_TOOLS
 			&& file_exists(WCF_DIR . 'log/missingLanguageItems.txt')
-			&& mb_strlen(StringUtil::trim(file_get_contents(WCF_DIR . 'log/missingLanguageItems.txt'))) > 0
+			&& filesize(WCF_DIR . 'log/missingLanguageItems.txt') > 0
 		) {
 			$missingLanguageItemsMTime = filemtime(WCF_DIR . 'log/missingLanguageItems.txt');
 		}
