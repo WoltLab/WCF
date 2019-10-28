@@ -1940,7 +1940,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.search.status.noResults"><![CDATA[Die Suche ergab keine Treffer.]]></item>
 		<item name="wcf.acp.package.search.status.refreshDatabase"><![CDATA[Die Paketlisten werden aktualisiert …]]></item>
 		<item name="wcf.acp.package.search.result.thirdParty"><![CDATA[{if $count === 0}Keine{elseif $count === 1}Ein{else}{#$count}{/if} Treffer in Paketquellen von Drittanbietern]]></item>
-		<item name="wcf.acp.package.search.result.trusted"><![CDATA[{if $count === 0}Keine{elseif $count === 1}Ein{else}{#$count}{/if} Treffer in offizielle Paketquellen]]></item>
+		<item name="wcf.acp.package.search.result.trusted"><![CDATA[{if $count === 0}Keine{elseif $count === 1}Ein{else}{#$count}{/if} Treffer in offiziellen Paketquellen]]></item>
 		<item name="wcf.acp.package.error.databaseChange"><![CDATA[Das Datenbanklayout konnte aufgrund folgender Fehler nicht aktualisiert werden:
 {implode from=$errors item=error glue=' '}
 	{if $error[type] === 'unregisteredTableDrop'}
