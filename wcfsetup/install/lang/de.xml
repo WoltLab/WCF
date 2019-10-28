@@ -1392,7 +1392,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.option.recaptcha_publickey.description"><![CDATA[Einen eigenen Websiteschlüssel für die Nutzung der reCAPTCHA-Funktion {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} auf der Website von <a href="https://www.google.com/recaptcha/admin" class="externalURL">reCAPTCHA</a> beantragen.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey"><![CDATA[Geheimer Schlüssel (reCAPTCHA, Version 2)]]></item>
 		<item name="wcf.acp.option.recaptcha_publickey_invisible"><![CDATA[Websiteschlüssel (Unsichtbares reCAPTCHA)]]></item>
-		<item name="wcf.acp.option.recaptcha_publickey_invisible.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Trage{else}Tragen Sie{/if} hier <b>zusätzlich</b> zu den obigen Schlüsseln Schlüssel für das unsichtbare reCAPTCHA ein, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} diese Variante nutzen {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.]]></item>
+		<item name="wcf.acp.option.recaptcha_publickey_invisible.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Trage{else}Tragen Sie{/if} hier, <b>zusätzlich</b> zu den obigen Schlüsseln, Schlüssel für das unsichtbare reCAPTCHA ein, wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} diese Variante nutzen {if LANGUAGE_USE_INFORMAL_VARIANT}möchtest{else}möchten{/if}.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey_invisible"><![CDATA[Geheimer Schlüssel (Unsichtbares reCAPTCHA)]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Vorschaugrafiken von hochgeladenen Bilder erzeugen]]></item>
