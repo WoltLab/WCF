@@ -12,6 +12,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\image\ImageHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\upload\DefaultUploadFileValidationStrategy;
@@ -891,6 +892,8 @@ BROWSERCONFIG;
 			$styleEditor->update([
 				'styleDescription' => $styleDescription
 			]);
+			
+			LanguageFactory::getInstance()->deleteLanguageCache();
 		}
 		
 		// copy style variables
