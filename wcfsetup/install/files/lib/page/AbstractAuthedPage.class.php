@@ -46,8 +46,8 @@ abstract class AbstractAuthedPage extends AbstractPage {
 			}
 			else {
 				$user = new User($userID);
-				if (CryptoUtil::secureCompare($user->accessToken, $token)) {
-					// token is valid -> change user
+				if (CryptoUtil::secureCompare($user->accessToken, $token) && !$user->banned) {
+					// token is valid and user is not banned -> change user
 					SessionHandler::getInstance()->changeUser($user, true);
 				}
 				else {
