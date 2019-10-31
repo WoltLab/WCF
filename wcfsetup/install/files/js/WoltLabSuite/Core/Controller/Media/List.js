@@ -135,7 +135,7 @@ define([
 				var keys = Object.keys(data.media);
 				
 				if (keys.length) {
-					_mediaEditor.edit(this._media.get(~~data.media[keys[0]].mediaID));
+					_mediaEditor.edit(data.media[keys[0]]);
 				}
 			}
 		},
