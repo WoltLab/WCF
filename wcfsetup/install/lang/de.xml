@@ -3247,6 +3247,8 @@ Benutzerkontos nun in vollem Umfang nutzen.]]></item>
 		<item name="wcf.article.search.error.tooShort"><![CDATA[Der Suchbegriff ist zu kurz.]]></item>
 		<item name="wcf.article.search.name"><![CDATA[Titel durchsuchen]]></item>
 		<item name="wcf.article.search.results"><![CDATA[Suchergebnisse]]></item>
+		<item name="wcf.article.publicationStatus.0"><![CDATA[Dieser Artikel wurde noch nicht veröffentlicht.]]></item>
+		<item name="wcf.article.publicationStatus.2"><![CDATA[Dieser Artikel wird am {@$publicationDate|plainTime} veröffentlicht.]]></item>
 	</category>
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, <b>{#$attachment->downloads}</b> Mal heruntergeladen{if $attachment->downloads > 0}, zuletzt: {@$attachment->lastDownloadTime|time}{/if})]]></item>

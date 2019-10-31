@@ -9,6 +9,7 @@
 						<div class="contentItemBadges">
 							{content}
 								{if $article->isDeleted}<span class="badge label red contentItemBadge contentItemBadgeIsDeleted">{lang}wcf.message.status.deleted{/lang}</span>{/if}
+								{if !$article->isPublished()}<span class="badge label green contentItemBadge contentItemBadgeIsDisabled">{lang}wcf.message.status.disabled{/lang}</span>{/if}
 								{if ARTICLE_ENABLE_VISIT_TRACKING && $article->isNew()}<span class="badge label contentItemBadge contentItemBadgeNew">{lang}wcf.message.new{/lang}</span>{/if}
 								
 								{event name='contentItemBadges'}

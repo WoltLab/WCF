@@ -206,6 +206,14 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	}
 	
 	/**
+	 * @return bool
+	 * @since 5.2
+	 */
+	public function isPublished() {
+		return $this->publicationStatus == Article::PUBLISHED;
+	}
+	
+	/**
 	 * Returns the number of unread articles.
 	 *
 	 * @return	integer
