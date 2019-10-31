@@ -192,7 +192,7 @@ define(
 			}
 			
 			// captionEnableHtml
-			this._media.captionEnableHtml = ~~elBySel('input[name=captionEnableHtml]', content).checked;
+			if (captionEnableHtml) this._media.captionEnableHtml = ~~captionEnableHtml.checked;
 			
 			var aclValues = {
 				allowAll: ~~elById('mediaEditor_' + this._media.mediaID + '_aclAllowAll').checked,
