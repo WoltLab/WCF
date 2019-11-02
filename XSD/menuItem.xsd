@@ -42,6 +42,7 @@
 					<xs:element name="menu" type="woltlab_varchar" minOccurs="1" maxOccurs="1" />
 					<xs:element name="page" type="woltlab_varchar" minOccurs="1" maxOccurs="1" />
 					<xs:element name="parent" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
+					<xs:element name="externalURL" type="woltlab_varchar" minOccurs="0" maxOccurs="1" />
 				</xs:choice>
 			</xs:extension>
 		</xs:complexContent>
