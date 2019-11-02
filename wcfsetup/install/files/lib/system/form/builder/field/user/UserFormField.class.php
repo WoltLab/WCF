@@ -1,6 +1,8 @@
 <?php
 namespace wcf\system\form\builder\field\user;
 use wcf\data\user\UserProfile;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
 use wcf\system\form\builder\field\IAutoFocusFormField;
 use wcf\system\form\builder\field\IImmutableFormField;
@@ -11,6 +13,7 @@ use wcf\system\form\builder\field\TImmutableFormField;
 use wcf\system\form\builder\field\TMultipleFormField;
 use wcf\system\form\builder\field\TNullableFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\IFormDocument;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
@@ -38,6 +41,62 @@ class UserFormField extends AbstractFormField implements IAutoFocusFormField, II
 	 * @inheritDoc
 	 */
 	protected $templateName = '__userFormField';
+	
+	/**
+	 * user profiles of the entered users (and `null` for non-existing users; only relevant for
+	 * invalid inputs)
+	 * @var	UserProfile[]|null[]
+	 */
+	protected $users = [];
+	
+	/**
+	 * Returns the user profiles of the entered users (and `null` for non-existing users; only
+	 * relevant for invalid inputs).
+	 * 
+	 * @return	UserProfile[]|null[]
+	 */
+	public function getUsers() {
+		return $this->users;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getSaveValue() {
+		if (empty($this->getUsers())) {
+			return 0;
+		}
+		
+		return current($this->getUsers())->userID;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function hasSaveValue() {
+		return !$this->allowsMultiple() && !empty($this->getUsers());
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function populate() {
+		parent::populate();
+		
+		if ($this->allowsMultiple()) {
+			$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('multipleUsers', function(IFormDocument $document, array $parameters) {
+				if ($this->checkDependencies() && !empty($this->getUsers())) {
+					$parameters[$this->getObjectProperty()] = array_values(array_map(function(UserProfile $user) {
+						return $user->userID;
+					}, $this->getUsers()));
+				}
+				
+				return $parameters;
+			}));
+		}
+		
+		return $this;
+	}
 	
 	/**
 	 * @inheritDoc
@@ -95,11 +154,11 @@ class UserFormField extends AbstractFormField implements IAutoFocusFormField, II
 				}
 				else {
 					// validate users
-					$users = UserProfile::getUserProfilesByUsername($this->getValue());
+					$this->users = UserProfile::getUserProfilesByUsername($this->getValue());
 					
 					$nonExistentUsernames = [];
 					foreach ($this->getValue() as $username) {
-						if (!isset($users[$username])) {
+						if (!isset($this->users[$username])) {
 							$nonExistentUsernames[] = $username;
 						}
 					}
@@ -113,14 +172,47 @@ class UserFormField extends AbstractFormField implements IAutoFocusFormField, II
 					}
 				}
 			}
-			else if ($this->getValue() !== '' && UserProfile::getUserProfileByUsername($this->getValue()) === null) {
-				$this->addValidationError(new FormFieldValidationError(
-					'nonExistent',
-					'wcf.form.field.user.error.invalid'
-				));
+			else if ($this->getValue() !== '') {
+				$user = UserProfile::getUserProfileByUsername($this->getValue());
+				
+				if ($user === null) {
+					$this->addValidationError(new FormFieldValidationError(
+						'nonExistent',
+						'wcf.form.field.user.error.invalid'
+					));
+				}
+				else {
+					$this->users[] = $user;
+				}
 			}
 		}
 		
 		parent::validate();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function value($value) {
+		// ensure array value for form fields that actually support multiple values;
+		// allows enabling support for multiple values for existing fields
+		if ($this->allowsMultiple() && !is_array($value)) {
+			$value = [$value];
+		}
+		
+		if ($this->allowsMultiple()) {
+			$this->users = UserProfileRuntimeCache::getInstance()->getObjects($value);
+			
+			$value = array_map(function(UserProfile $user) {
+				return $user->username;
+			}, $this->users);
+		}
+		else {
+			$user = UserProfileRuntimeCache::getInstance()->getObject($value);
+			$this->users[] = $user;
+			$value = $user->username;
+		}
+		
+		return parent::value($value);
 	}
 }
