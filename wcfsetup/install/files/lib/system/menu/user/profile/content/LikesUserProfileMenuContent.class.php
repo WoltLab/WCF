@@ -36,6 +36,10 @@ class LikesUserProfileMenuContent extends SingletonFactory implements IUserProfi
 	 * @inheritDoc
 	 */
 	public function isVisible($userID) {
+		if (!WCF::getSession()->getPermission('user.like.canViewLike')) {
+			return false;
+		}
+		
 		return true;
 	}
 }
