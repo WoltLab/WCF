@@ -286,6 +286,22 @@
 						<dt><label for="signature">{lang}wcf.user.signature{/lang}</label></dt>
 						<dd>
 							<textarea name="signature" id="signature" cols="40" rows="10" class="wysiwygTextarea" data-disable-attachments="true">{$signature}</textarea>
+							{if $errorField == 'signature'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{elseif $errorType == 'tooLong'}
+										{lang}wcf.message.error.tooLong{/lang}
+									{elseif $errorType == 'censoredWordsFound'}
+										{lang}wcf.message.error.censoredWordsFound{/lang}
+									{elseif $errorType == 'disallowedBBCodes'}
+										{lang}wcf.message.error.disallowedBBCodes{/lang}
+									{else}
+										{lang}wcf.user.signature.error.{@$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+							
 							{include file='wysiwyg' wysiwygSelector='signature'}
 						</dd>
 					</dl>
