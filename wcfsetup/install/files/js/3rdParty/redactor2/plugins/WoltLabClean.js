@@ -17,7 +17,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 				// restore ampersands
 				//html = html.replace(/@@@WCF_AMPERSAND@@@/g, '&amp;');
 				html = html.replace(/&amp;WCF_AMPERSAND&(amp;)?/g, '&amp;');
-				html = html.replace(/@@@WCF_LITERAL_AMP@@@/, '&amp;amp;');
+				html = html.replace(/@@@WCF_LITERAL_AMP@@@/g, '&amp;amp;');
 				
 				var div = elCreate('div');
 				div.innerHTML = html;
