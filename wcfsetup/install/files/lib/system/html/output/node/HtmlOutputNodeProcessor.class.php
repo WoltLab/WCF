@@ -287,6 +287,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	protected function invokeHtmlNode(IHtmlNode $htmlNode) {
 		/** @var IHtmlOutputNode $htmlNode */
 		$htmlNode->setOutputType($this->outputType);
+		$htmlNode->setRemoveLinks($this->getHtmlProcessor()->removeLinks);
 		
 		parent::invokeHtmlNode($htmlNode);
 	}

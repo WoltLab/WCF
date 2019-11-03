@@ -53,6 +53,12 @@ class HtmlBBCodeParser extends BBCodeParser {
 	protected $validBBCodePattern = '~^[a-z](?:[a-z0-9\-_]+)?$~';
 	
 	/**
+	 * @var bool
+	 * @since 5.2
+	 */
+	protected $removeLinks;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function parse($text) {
@@ -412,6 +418,22 @@ class HtmlBBCodeParser extends BBCodeParser {
 		}
 		
 		return $bbcodes;
+	}
+	
+	/**
+	 * @param bool $removeLinks
+	 * @since 5.2
+	 */
+	public function setRemoveLinks($removeLinks) {
+		$this->removeLinks = $removeLinks;
+	}
+	
+	/**
+	 * @return bool
+	 * @since 5.2
+	 */
+	public function getRemoveLinks() {
+		return $this->removeLinks;
 	}
 	
 	/**

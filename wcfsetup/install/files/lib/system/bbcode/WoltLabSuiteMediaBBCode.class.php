@@ -32,9 +32,22 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode {
 			return '';
 		}
 		
+		$removeLinks = false;
+		if ($parser instanceof HtmlBBCodeParser && $parser->getRemoveLinks()) {
+			$removeLinks = true;
+		}
+		
 		/** @var ViewableMedia $media */
 		$media = MessageEmbeddedObjectManager::getInstance()->getObject('com.woltlab.wcf.media', $mediaID);
 		if ($media !== null && $media->isAccessible()) {
+			if ($removeLinks && !$media->isImage) {
+				if ($parser->getOutputType() === 'text/html' || $parser->getOutputType() === 'text/simplified-html') {
+					return StringUtil::encodeHTML($media->getTitle());
+				}
+				
+				return StringUtil::encodeHTML($this->getLink($media));
+			}
+			
 			if ($parser->getOutputType() == 'text/html') {
 				if ($media->isImage) {
 					$thumbnailSize = (!empty($openingTag['attributes'][1])) ? $openingTag['attributes'][1] : 'original';
@@ -48,6 +61,7 @@ class WoltLabSuiteMediaBBCode extends AbstractBBCode {
 					
 					return WCF::getTPL()->fetch('mediaBBCodeTag', 'wcf', [
 						'mediaLink' => $this->getLink($media),
+						'removeLinks' => $removeLinks,
 						'thumbnailLink' => $thumbnailSize !== 'original' ? $this->getThumbnailLink($media, $thumbnailSize) : ''
 					]);
 				}

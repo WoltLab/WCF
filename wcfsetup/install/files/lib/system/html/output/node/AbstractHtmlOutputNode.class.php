@@ -20,6 +20,11 @@ abstract class AbstractHtmlOutputNode extends AbstractHtmlNode implements IHtmlO
 	protected $outputType = 'text/html';
 	
 	/**
+	 * @var bool
+	 */
+	protected $removeLinks = false;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function isAllowed(AbstractHtmlNodeProcessor $htmlNodeProcessor) {
@@ -32,5 +37,13 @@ abstract class AbstractHtmlOutputNode extends AbstractHtmlNode implements IHtmlO
 	 */
 	public function setOutputType($outputType) {
 		$this->outputType = $outputType;
+	}
+	
+	/**
+	 * @param bool $removeLinks
+	 * @since 5.2
+	 */
+	public function setRemoveLinks($removeLinks) {
+		$this->removeLinks = $removeLinks;
 	}
 }
