@@ -96,6 +96,16 @@ $.Redactor.prototype.WoltLabBlock = function() {
 				
 				var replaced = mpFormatUncollapsed.call(this, tag, attr, value, type);
 				
+				// Convert any `<br>` inside `<pre>` with a plain newline character.
+				if (tag === 'pre') {
+					replaced.forEach(function(pre) {
+						elBySelAll('br', pre[0], function(br) {
+							br.parentNode.insertBefore(document.createTextNode('\n'), br);
+							elRemove(br);
+						});
+					});
+				}
+				
 				var block, firstBlock = null;
 				for (var i = 0, length = replaced.length; i < length; i++) {
 					block = replaced[i][0];
