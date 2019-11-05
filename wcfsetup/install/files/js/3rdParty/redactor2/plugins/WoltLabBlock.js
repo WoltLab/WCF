@@ -168,6 +168,14 @@ $.Redactor.prototype.WoltLabBlock = function() {
 						elRemove(block);
 					}
 				}
+
+				// Convert any `<br>` inside `<pre>` with a plain newline character.
+				if (firstBlock) {
+					elBySelAll('br', firstBlock, function(br) {
+						br.parentNode.insertBefore(document.createTextNode('\n'), br);
+						elRemove(br);
+					});
+				}
 				
 				return $(firstBlock);
 			}).bind(this);
