@@ -44,7 +44,7 @@
 						
 						<div class="htmlContent userMessage" itemprop="text">{@$comment->getFormattedMessage()}</div>
 
-						{if MODULE_LIKE && $likeData|isset}{include file="reactionSummaryList" isTiny=true reactionData=$likeData[comment] objectType="com.woltlab.wcf.comment" objectID=$comment->commentID}{else}<ul class="reactionSummaryList reactionSummaryListTiny jsOnly" data-object-type="com.woltlab.wcf.comment" data-object-id="{$comment->commentID}">{/if}
+					    {if MODULE_LIKE && $likeData|isset}{include file="reactionSummaryList" isTiny=true reactionData=$likeData[comment] objectType="com.woltlab.wcf.comment" objectID=$comment->commentID}{else}<a href="#" class="reactionSummaryList reactionSummaryListTiny jsOnly" data-object-type="com.woltlab.wcf.comment" data-object-id="{$comment->commentID}" title="{lang}wcf.reactions.summary.listReactions{/lang}" style="display: none;"></a>{/if}
 						
 						<nav class="jsMobileNavigation buttonGroupNavigation">
 							<ul class="buttonList iconList">
