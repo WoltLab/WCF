@@ -910,7 +910,7 @@ CREATE TABLE wcf1_package (
 	isApplication TINYINT(1) NOT NULL DEFAULT 0,
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
-	KEY package (package)
+	UNIQUE KEY package (package)
 );
 
 DROP TABLE IF EXISTS wcf1_package_compatibility;

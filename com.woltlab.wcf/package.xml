@@ -54,6 +54,7 @@
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
+		<instruction type="script">acp/update-com.woltlab.wcf_5.2.0_beta_3.php</instruction>
 		
 		<instruction type="language" />
 	</instructions>
