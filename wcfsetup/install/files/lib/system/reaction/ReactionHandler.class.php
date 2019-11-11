@@ -4,13 +4,13 @@ use wcf\data\like\ILikeObjectTypeProvider;
 use wcf\data\like\LikeList;
 use wcf\data\like\object\ILikeObject;
 use wcf\data\like\object\LikeObject;
-use wcf\data\like\object\LikeObjectEditor;
+use wcf\data\like\object\LikeObjectAction;
 use wcf\data\like\Like;
-use wcf\data\like\LikeEditor;
 use wcf\data\like\object\LikeObjectList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\reaction\object\IReactionObject;
+use wcf\data\reaction\ReactionAction;
 use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\User;
@@ -52,7 +52,7 @@ class ReactionHandler extends SingletonFactory {
 	
 	/**
 	 * Cache for likeable objects sorted by objectType.
-	 * @var ILikeObject[][] 
+	 * @var ILikeObject[][]
 	 */
 	private $likeableObjectsCache = [];
 	
@@ -64,22 +64,22 @@ class ReactionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns the JSON encoded JavaScript variable for the template. 
-	 * 
+	 * Returns the JSON encoded JavaScript variable for the template.
+	 *
 	 * @return string
 	 */
 	public function getReactionsJSVariable() {
 		$reactions = ReactionTypeCache::getInstance()->getReactionTypes();
 		
-		$returnValues = []; 
+		$returnValues = [];
 		
 		foreach ($reactions as $reaction) {
 			$returnValues[$reaction->reactionTypeID] = [
-				'title' => $reaction->getTitle(), 
-				'renderedIcon' => $reaction->renderIcon(), 
-				'iconPath' => $reaction->getIconPath(), 
-				'showOrder' => $reaction->showOrder, 
-				'reactionTypeID' => $reaction->reactionTypeID, 
+				'title' => $reaction->getTitle(),
+				'renderedIcon' => $reaction->renderIcon(),
+				'iconPath' => $reaction->getIconPath(),
+				'showOrder' => $reaction->showOrder,
+				'reactionTypeID' => $reaction->reactionTypeID,
 				'isAssignable' => $reaction->isAssignable,
 			];
 		}
@@ -88,8 +88,8 @@ class ReactionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns all enabled reaction types. 
-	 * 
+	 * Returns all enabled reaction types.
+	 *
 	 * @return      ReactionType[]
 	 */
 	public function getReactionTypes() {
@@ -97,8 +97,8 @@ class ReactionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Returns a reaction type by id. 
-	 * 
+	 * Returns a reaction type by id.
+	 *
 	 * @param       integer                 $reactionID
 	 * @return      ReactionType|null
 	 */
@@ -107,8 +107,8 @@ class ReactionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Builds the data attributes for the object container. 
-	 * 
+	 * Builds the data attributes for the object container.
+	 *
 	 * @param       string          $objectTypeName
 	 * @param       integer         $objectID
 	 * @return      string
@@ -142,8 +142,8 @@ class ReactionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Cache likeable objects. 
-	 * 
+	 * Cache likeable objects.
+	 *
 	 * @param       string          $objectTypeName
 	 * @param       integer[]       $objectIDs
 	 */
@@ -163,13 +163,13 @@ class ReactionHandler extends SingletonFactory {
 		}
 		
 		foreach ($objects as $object) {
-			$this->likeableObjectsCache[$objectTypeName][$object->getObjectID()] = $object; 
+			$this->likeableObjectsCache[$objectTypeName][$object->getObjectID()] = $object;
 		}
 	}
 	
 	/**
-	 * Get an likeable object from the internal cache. 
-	 * 
+	 * Get an likeable object from the internal cache.
+	 *
 	 * @param       string          $objectTypeName
 	 * @param       integer         $objectID
 	 * @return      ILikeObject
@@ -257,7 +257,7 @@ class ReactionHandler extends SingletonFactory {
 		
 		if (WCF::getUser()->userID) {
 			$sql = "SELECT		like_object.*,
-						COALESCE(like_table.reactionTypeID, 0) AS reactionTypeID, 
+						COALESCE(like_table.reactionTypeID, 0) AS reactionTypeID,
 						COALESCE(like_table.likeValue, 0) AS liked
 				FROM		wcf".WCF_N."_like_object like_object
 				LEFT JOIN	wcf".WCF_N."_like like_table
@@ -285,8 +285,8 @@ class ReactionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Add a reaction to an object. 
-	 * 
+	 * Add a reaction to an object.
+	 *
 	 * @param	ILikeObject	$likeable
 	 * @param	User		$user
 	 * @param	integer		$reactionTypeID
@@ -317,27 +317,28 @@ class ReactionHandler extends SingletonFactory {
 			
 			if (!$like->likeID) {
 				// save like
-				$like = LikeEditor::create([
+				$returnValues = (new ReactionAction([], 'create', ['data' => [
 					'objectID' => $likeable->getObjectID(),
 					'objectTypeID' => $likeable->getObjectType()->objectTypeID,
 					'objectUserID' => $likeable->getUserID() ?: null,
 					'userID' => $user->userID,
 					'time' => $time,
-					'likeValue' => 1, 
+					'likeValue' => 1,
 					'reactionTypeID' => $reactionTypeID
-				]);
+				]]))->executeAction();
+				
+				$like = $returnValues['returnValues'];
 				
 				if ($likeable->getUserID()) {
 					UserActivityPointHandler::getInstance()->fireEvent('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $like->likeID, $likeable->getUserID());
 				}
 			}
 			else {
-				$likeEditor = new LikeEditor($like);
-				$likeEditor->update([
+				(new ReactionAction([$like], 'update', ['data' => [
 					'time' => $time,
 					'likeValue' => 1,
 					'reactionTypeID' => $reactionTypeID
-				]);
+				]]))->executeAction();
 				
 				if ($likeable->getUserID()) {
 					UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$likeable->getUserID() => 1]);
@@ -346,7 +347,7 @@ class ReactionHandler extends SingletonFactory {
 			
 			// This interface should help to determine whether the plugin has been adapted to the API 5.2.
 			// If a LikeableObject does not implement this interface, no notification will be sent, because
-			// we assume, that the plugin has not been adapted to the new API. 
+			// we assume, that the plugin has not been adapted to the new API.
 			if ($likeable instanceof IReactionObject) {
 				$likeable->sendNotification($like);
 			}
@@ -370,8 +371,8 @@ class ReactionHandler extends SingletonFactory {
 			WCF::getDB()->commitTransaction();
 			
 			return [
-				'cachedReactions' => $likeObjectData['cachedReactions'], 
-				'reactionTypeID' => $reactionTypeID, 
+				'cachedReactions' => $likeObjectData['cachedReactions'],
+				'reactionTypeID' => $reactionTypeID,
 				'like' => $like,
 				'likeObject' => $likeObjectData['likeObject'],
 				'cumulativeLikes' => $likeObjectData['cumulativeLikes']
@@ -382,13 +383,13 @@ class ReactionHandler extends SingletonFactory {
 		}
 		
 		return [
-			'cachedReactions' => [], 
-		]; 
+			'cachedReactions' => [],
+		];
 	}
 	
 	/**
-	 * Creates or updates a LikeObject for an likable object. 
-	 * 
+	 * Creates or updates a LikeObject for an likable object.
+	 *
 	 * @param	ILikeObject	$likeable
 	 * @param	LikeObject	$likeObject
 	 * @param	Like		$like
@@ -441,8 +442,7 @@ class ReactionHandler extends SingletonFactory {
 			];
 			
 			// update data
-			$likeObjectEditor = new LikeObjectEditor($likeObject);
-			$likeObjectEditor->update($updateData);
+			(new LikeObjectAction([$likeObject], 'update', ['data' => $updateData]))->executeAction();
 		}
 		else {
 			$cumulativeLikes = 1;
@@ -451,7 +451,7 @@ class ReactionHandler extends SingletonFactory {
 			];
 			
 			// create cache
-			$likeObject = LikeObjectEditor::create([
+			$likeObjectActionReturnValues = (new LikeObjectAction([], 'create', ['data' => [
 				'objectTypeID' => $likeable->getObjectType()->objectTypeID,
 				'objectID' => $likeable->getObjectID(),
 				'objectUserID' => $likeable->getUserID() ?: null,
@@ -459,18 +459,19 @@ class ReactionHandler extends SingletonFactory {
 				'dislikes' => 0,
 				'cumulativeLikes' => $cumulativeLikes,
 				'cachedReactions' => serialize($cachedReactions),
-			]);
+			]]))->executeAction();
+			$likeObject = $likeObjectActionReturnValues['returnValues'];
 		}
 		
 		return [
-			'cumulativeLikes' => $cumulativeLikes, 
-			'cachedReactions' => $cachedReactions, 
+			'cumulativeLikes' => $cumulativeLikes,
+			'cachedReactions' => $cachedReactions,
 			'likeObject' => $likeObject,
-		]; 
+		];
 	}
 	
 	/**
-	 * Updates the like counter for a user. 
+	 * Updates the like counter for a user.
 	 *
 	 * @param	ILikeObject	$likeable
 	 * @param	LikeObject	$likeObject
@@ -496,8 +497,8 @@ class ReactionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Reverts a reaction for an object. 
-	 * 
+	 * Reverts a reaction for an object.
+	 *
 	 * @param	Like		$like
 	 * @param	ILikeObject	$likeable
 	 * @param	LikeObject	$likeObject
@@ -517,8 +518,7 @@ class ReactionHandler extends SingletonFactory {
 			// update owner's like counter
 			$this->updateUsersLikeCounter($likeable, $likeObject, $like, null);
 			
-			$likeEditor = new LikeEditor($like);
-			$likeEditor->delete();
+			(new ReactionAction([$like], 'delete'))->executeAction();
 			
 			if ($likeable->getUserID()) {
 				UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$likeable->getUserID() => 1]);
@@ -592,13 +592,12 @@ class ReactionHandler extends SingletonFactory {
 			];
 			
 			// update data
-			$likeObjectEditor = new LikeObjectEditor($likeObject);
-			$likeObjectEditor->update($updateData);
+			(new LikeObjectAction([$likeObject], 'update', ['data' => $updateData]))->executeAction();
 		}
 		
 		return [
 			'cumulativeLikes' => $cumulativeLikes,
-			'cachedReactions' => $cachedReactions, 
+			'cachedReactions' => $cachedReactions,
 			'likeObject' => $likeObject
 		];
 	}
@@ -670,12 +669,12 @@ class ReactionHandler extends SingletonFactory {
 			UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $likeData);
 			
 			// delete likes
-			LikeEditor::deleteAll(array_keys($likeData));
+			(new ReactionAction(array_keys($likeData), 'delete'))->executeAction();
 		}
 		
 		// delete like objects
 		if (!empty($likeObjectIDs)) {
-			LikeObjectEditor::deleteAll($likeObjectIDs);
+			(new LikeObjectAction([$likeObjectIDs], 'delete'))->executeAction();
 		}
 		
 		// delete activity events
@@ -713,7 +712,7 @@ class ReactionHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the first available reaction type.
-	 * 
+	 *
 	 * @return ReactionType|null
 	 */
 	public function getFirstReactionType() {
@@ -731,7 +730,7 @@ class ReactionHandler extends SingletonFactory {
 	
 	/**
 	 * Returns the first available reaction type's id.
-	 * 
+	 *
 	 * @return int|null
 	 */
 	public function getFirstReactionTypeID() {
@@ -741,8 +740,8 @@ class ReactionHandler extends SingletonFactory {
 	}
 	
 	/**
-	 * Removes deleted reactions from the reaction counter for the like object table. 
-	 * 
+	 * Removes deleted reactions from the reaction counter for the like object table.
+	 *
 	 * @param       array   $cachedReactions
 	 * @return      array
 	 */
