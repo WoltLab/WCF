@@ -31,7 +31,7 @@ class DevtoolsPackageArchive extends PackageArchive {
 	 * @inheritDoc
 	 */
 	public function openArchive() {
-		$projectDir = FileUtil::addTrailingSlash(dirname($this->packageXmlPath));
+		$projectDir = FileUtil::addTrailingSlash(realpath(dirname($this->packageXmlPath)));
 		
 		$readFiles = DirectoryUtil::getInstance($projectDir)->getFiles(
 			SORT_ASC,
