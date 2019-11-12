@@ -29,7 +29,7 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 		'screen-lg': '(min-width: 1025px)',                              /* desktop */
 		'screen-lg-only': '(min-width: 1025px) and (max-width: 1280px)',
 		'screen-lg-down': '(max-width: 1280)',
-		'screen-xl': '(min-width: 1281px)',
+		'screen-xl': '(min-width: 1281px)'
 	});
 	
 	// Microsoft Edge rewrites the media queries to whatever it
