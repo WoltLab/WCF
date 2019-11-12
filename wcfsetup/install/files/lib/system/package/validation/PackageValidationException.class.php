@@ -96,18 +96,21 @@ class PackageValidationException extends SystemException {
 	/**
 	 * the provided API version string is invalid and does not fall into the range from `2017` through `2099`
 	 * @var integer
+	 * @deprecated 5.2
 	 */
 	const INVALID_API_VERSION = 13;
 	
 	/**
 	 * the package is not compatible with the current API version or any other of the supported ones
 	 * @var integer
+	 * @deprecated 5.2
 	 */
 	const INCOMPATIBLE_API_VERSION = 14;
 	
 	/**
 	 * the package lacks any sort of API compatibility data
 	 * @var integer
+	 * @deprecated 5.2
 	 */
 	const MISSING_API_VERSION = 15;
 	

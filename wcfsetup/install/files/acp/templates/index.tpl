@@ -87,16 +87,6 @@
 				<dt>{lang}wcf.acp.index.system.software.version{/lang}</dt>
 				<dd>{@WCF_VERSION}</dd>
 			</dl>
-			<dl>
-				<dt>{lang}wcf.acp.index.system.software.apiVersion{/lang}</dt>
-				<dd>{@WSC_API_VERSION}</dd>
-			</dl>
-			{if !$__wcf->getSupportedLegacyApiVersions()|empty}
-				<dl>
-					<dt>{lang}wcf.acp.index.system.software.legacyApiVersions{/lang}</dt>
-					<dd><small>{implode from=$__wcf->getSupportedLegacyApiVersions() item=version glue=', '}{$version}{/implode}</small></dd>
-				</dl>
-			{/if}
 			
 			{event name='softwareFields'}
 			
