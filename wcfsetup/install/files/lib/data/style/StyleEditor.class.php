@@ -40,15 +40,13 @@ use wcf\util\XMLWriter;
  * @mixin	Style
  */
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
-	/**
-	 * @deprecated 3.1 use the compatibility api versions instead
-	 */
-	const EXCLUDE_WCF_VERSION = '3.2.0 Alpha 1';
+	const EXCLUDE_WCF_VERSION = '6.0.0 Alpha 1';
 	const INFO_FILE = 'style.xml';
 	
 	/**
 	 * list of compatible API versions
 	 * @var integer[]
+	 * @deprecated 5.2
 	 */
 	public static $compatibilityApiVersions = [2018];
 	
@@ -931,6 +929,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$xml->writeElement('requiredpackage', 'com.woltlab.wcf', ['minversion' => PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.wcf')->packageVersion]);
 			$xml->endElement();
 			
+			$xml->startElement('excludedpackages');
+			$xml->writeElement('excludedpackage', 'com.woltlab.wcf', ['version' => self::EXCLUDE_WCF_VERSION]);
+			$xml->endElement();
+			
+			// @deprecated 5.2
 			$xml->startElement('compatibility');
 			foreach (self::$compatibilityApiVersions as $apiVersion) {
 				$xml->writeElement('api', '', ['version' => $apiVersion]);
