@@ -310,16 +310,20 @@ html[dir="rtl"] {
 	@include screen-lg {
 		.articleList {
 			> li {
-				flex: 0 0 calc(100%/3 - 10px);
-				max-width: calc(100%/3 - 10px);
+				/* The `flex` shorthand fails in IE11 if `calc()` is used. */
+				flex-grow: 0;
+				flex-shrink: 0;
+				flex-basis: calc(100% / 3 - 10px);
 			}
 		}
 
 		.boxFullWidth {
 			.articleList {
 				> li {
-					flex: 0 0 calc(100%/6 - 10px);
-					max-width: calc(100%/6 - 10px);
+					/* The `flex` shorthand fails in IE11 if `calc()` is used. */
+					flex-grow: 0;
+					flex-shrink: 0;
+					flex-basis: calc(100% / 6 - 10px);
 				}
 			}
 		}
@@ -328,8 +332,10 @@ html[dir="rtl"] {
 	@include screen-sm-up {
 		.articleList {
 			> li {
-				flex: 0 0 calc(100%/3 - 10px);
-				max-width: calc(100%/3 - 10px);
+				/* The `flex` shorthand fails in IE11 if `calc()` is used. */
+				flex-grow: 0;
+				flex-shrink: 0;
+				flex-basis: calc(100% / 3 - 10px);
 			}
 		}
 	}

@@ -146,8 +146,10 @@
 				   items to be exactly 1 pixel wider than the available space.
 				   Reserving 21px covers all sort of rounding errors, without
 				   being visually noticeable */
-				flex: 0 0 calc(50% - 21px);
-				max-width: calc(50% - 21px); /* IE fix */
+				/* The `flex` shorthand fails in IE11 if `calc()` is used. */
+				flex-grow: 0;
+				flex-shrink: 0;
+				flex-basis: calc(50% - 21px);
 				margin-right: 20px;
 			}
 		}
