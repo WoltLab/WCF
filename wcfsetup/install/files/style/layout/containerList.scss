@@ -368,6 +368,7 @@
                 
                 > li {
                     display: inline-block;
+                    @include wcfFontSmall;
                 }
             }
         }
