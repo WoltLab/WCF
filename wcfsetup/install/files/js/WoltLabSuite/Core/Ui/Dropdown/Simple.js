@@ -413,12 +413,13 @@ define(
 			
 			var dropdown = _dropdowns.get(targetId), preventToggle = false;
 			if (dropdown !== undefined) {
-				var button;
+				var button, parent;
 				
 				// check if the dropdown is still the same, as some components (e.g. page actions)
 				// re-create the parent of a button
 				if (event) {
-					button = event.currentTarget, parent = button.parentNode;
+					button = event.currentTarget;
+					parent = button.parentNode;
 					if (parent !== dropdown) {
 						parent.classList.add('dropdown');
 						parent.id = dropdown.id;
