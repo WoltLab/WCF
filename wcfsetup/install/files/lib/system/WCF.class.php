@@ -52,6 +52,7 @@ if (!@ini_get('date.timezone')) {
 define('WCF_VERSION', '5.2.0 Beta 3');
 
 // define current API version
+// @deprecated 5.2
 define('WSC_API_VERSION', 2019);
 
 // define current unix timestamp
@@ -76,6 +77,7 @@ class WCF {
 	/**
 	 * list of supported legacy API versions
 	 * @var integer[]
+	 * @deprecated 5.2
 	 */
 	private static $supportedLegacyApiVersions = [2017, 2018];
 	
@@ -1108,6 +1110,7 @@ class WCF {
 	 * 
 	 * @param       integer         $apiVersion
 	 * @return      boolean
+	 * @deprecated 5.2
 	 */
 	public static function isSupportedApiVersion($apiVersion) {
 		return ($apiVersion == WSC_API_VERSION) || in_array($apiVersion, self::$supportedLegacyApiVersions);
@@ -1117,6 +1120,7 @@ class WCF {
 	 * Returns the list of supported legacy API versions.
 	 * 
 	 * @return      integer[]
+	 * @deprecated 5.2
 	 */
 	public static function getSupportedLegacyApiVersions() {
 		return self::$supportedLegacyApiVersions;
