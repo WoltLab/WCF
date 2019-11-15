@@ -172,7 +172,12 @@ class RequestHandler extends SingletonFactory {
 					exit;
 				}
 				
-				$classData = ControllerMap::getInstance()->resolve($application, $controller, $this->isACPRequest(), RouteHandler::getInstance()->isRenamedController());
+				$classApplication = $application;
+				if (!empty($routeData['isDefaultController']) && !empty($routeData['application']) && $routeData['application'] !== $application) {
+					$classApplication = $routeData['application'];
+				}
+				
+				$classData = ControllerMap::getInstance()->resolve($classApplication, $controller, $this->isACPRequest(), RouteHandler::getInstance()->isRenamedController());
 				if (is_string($classData)) {
 					$this->redirect($routeData, $application, $classData);
 				}
