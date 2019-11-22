@@ -745,7 +745,7 @@ class PackageInstallationNodeBuilder {
 	 * 
 	 * @param	integer		$processNo
 	 * @param	string		$node
-	 * @return	integer
+	 * @return	integer|null
 	 */
 	public function getQueueByNode($processNo, $node) {
 		$sql = "SELECT	queueID
@@ -758,6 +758,12 @@ class PackageInstallationNodeBuilder {
 			$node
 		]);
 		$row = $statement->fetchArray();
+		
+		if ($row === false) {
+			// PHP <7.4 _silently_ returns `null` when attempting to read an array index
+			// when the source value equals `false`.
+			return null;
+		}
 		
 		return $row['queueID'];
 	}
