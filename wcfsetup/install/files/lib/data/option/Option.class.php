@@ -94,7 +94,7 @@ class Option extends DatabaseObject {
 			$options = explode(',', $optionData);
 			
 			foreach ($options as $item) {
-				if ($item{0} == '!') {
+				if ($item[0] == '!') {
 					if (!empty($disableOptions)) $disableOptions .= ',';
 					$disableOptions .= "'".mb_substr($item, 1)."' ";
 				}
