@@ -61,6 +61,13 @@
 			<xs:element name="showHeader" type="woltlab_boolean" minOccurs="0" />
 			<xs:element name="cssClassName" type="woltlab_varchar" minOccurs="0" />
 			<xs:element name="visibleEverywhere" type="woltlab_boolean" minOccurs="0" />
+			<xs:element name="visibilityExceptions" type="visibilityExceptions_element" minOccurs="0" />
 		</xs:all>
+	</xs:complexType>
+	
+	<xs:complexType name="visibilityExceptions_element">
+		<xs:choice maxOccurs="unbounded">
+			<xs:element name="page" type="xs:string" minOccurs="1" />
+		</xs:choice>
 	</xs:complexType>
 </xs:schema>
