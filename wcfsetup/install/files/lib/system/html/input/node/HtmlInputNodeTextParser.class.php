@@ -735,7 +735,7 @@ class HtmlInputNodeTextParser {
 		$match = str_replace("''", "'", $match);
 		
 		// remove single quotation marks
-		if ($match{0} == "'") {
+		if ($match[0] == "'") {
 			$match = mb_substr($match, 1, -1);
 		}
 		else if ($trimTrailingSpecialCharacters) {
