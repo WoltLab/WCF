@@ -330,9 +330,37 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				}
 				// paragraphs
 				else if (this.keydown.block) {
+					// Firefox has the habit of keeping pointless `<br>` at the end of lines, which are mostly
+					// just a bit of noise. However, external links have an icon inserted behind them that is
+					// affected by the line break, effectively rendering it on the next line.
+					var firefoxCheckForArbitraryBrElement = null;
+					if (this.detect.isFirefox() && this.keydown.block.nodeName === 'P' && selection.isCollapsed) {
+						var link = elClosest(selection.getRangeAt(0).startContainer, 'a');
+						if (link !== null && elBySel('br', link) === null) {
+							firefoxCheckForArbitraryBrElement = this.keydown.block;
+						}
+					}
+					
 					setTimeout($.proxy(function () {
 						this.keydown.replaceToParagraph('DIV');
 						
+						// The target element was previously the original element at the time of the keypress,
+						// but is now the paragraph element of the next line. That said, we simply check the
+						// previous paragraph for a trailing link with a superfluous `<br>` element.
+						if (firefoxCheckForArbitraryBrElement !== null && firefoxCheckForArbitraryBrElement.previousElementSibling !== null) {
+							var links = [];
+							elBySelAll('a', firefoxCheckForArbitraryBrElement.previousElementSibling, function(link) {
+								links.push(link);
+							});
+							
+							if (links.length) {
+								var link = links[links.length - 1];
+								var br = elBySel('br', link);
+								if (br !== null) {
+									elRemove(br);
+								}
+							}
+						}
 					}, this), 1);
 					
 					// empty list exit
@@ -368,7 +396,6 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 							}
 						}
 					}
-					
 				}
 				// outside
 				else if (!this.keydown.block) {
