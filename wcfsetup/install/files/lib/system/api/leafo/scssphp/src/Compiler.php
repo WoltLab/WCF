@@ -2044,6 +2044,9 @@ class Compiler
      */
     protected function reduce($value, $inExp = false)
     {
+        if ($value === null) {
+            return $value;
+        }
 
         switch ($value[0]) {
             case Type::T_EXPRESSION:
