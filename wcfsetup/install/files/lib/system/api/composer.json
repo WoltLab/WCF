@@ -4,7 +4,7 @@
         "prepend-autoloader": false
     },
     "require": {
-        "ezyang/htmlpurifier": "4.9.*",
+        "ezyang/htmlpurifier": "4.12.*",
         "erusev/parsedown": "1.7.*",
         "pelago/emogrifier": "1.2.*",
         "pear/net_idna2": "^0.2.0"
