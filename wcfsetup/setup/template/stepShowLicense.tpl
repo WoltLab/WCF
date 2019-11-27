@@ -30,5 +30,7 @@
 		</div>
 	</section>
 </form>
-
+<script>
+if (typeof window._trackWcfSetupStep === 'function') window._trackWcfSetupStep('showLicense');
+</script>
 {include file='footer'}

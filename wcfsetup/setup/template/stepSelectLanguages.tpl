@@ -33,5 +33,7 @@
 		{/foreach}
 	</div>
 </form>
-
+<script>
+if (typeof window._trackWcfSetupStep === 'function') window._trackWcfSetupStep('selectLanguages');
+</script>
 {include file='footer'}

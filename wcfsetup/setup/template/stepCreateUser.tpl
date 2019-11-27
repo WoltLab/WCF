@@ -86,5 +86,7 @@
 		{/foreach}
 	</div>
 </form>
-
+<script>
+if (typeof window._trackWcfSetupStep === 'function') window._trackWcfSetupStep('createUser');
+</script>
 {include file='footer'}
