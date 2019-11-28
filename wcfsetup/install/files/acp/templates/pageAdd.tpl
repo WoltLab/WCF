@@ -50,7 +50,7 @@
 			{/if}
 		});
 	</script>
-{else}
+{elseif $page->pageType !== 'system'}
 	<script data-relocate="true">
 		require(['Language', 'WoltLabSuite/Core/Acp/Ui/Page/Copy'], function (Language, AcpUiPageCopy) {
 			Language.addObject({
@@ -79,7 +79,9 @@
 	<nav class="contentHeaderNavigation">
 		<ul>
 			{if $action == 'edit'}
-				<li><a href="#" class="button jsButtonCopyPage"><span class="icon icon16 fa-copy"></span> {lang}wcf.acp.page.button.copyPage{/lang}</a></li>
+				{if $page->pageType !== 'system'}
+					<li><a href="#" class="button jsButtonCopyPage"><span class="icon icon16 fa-copy"></span> {lang}wcf.acp.page.button.copyPage{/lang}</a></li>
+				{/if}
 				
 				{if !$page->requireObjectID}
 					<li><a href="{$page->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.page.button.viewPage{/lang}</span></a></li>

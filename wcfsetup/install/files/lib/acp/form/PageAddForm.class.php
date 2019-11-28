@@ -234,7 +234,7 @@ class PageAddForm extends AbstractForm {
 		if (isset($_GET['presetPageID'])) $this->presetPageID = intval($_GET['presetPageID']);
 		if ($this->presetPageID) {
 			$this->presetPage = new Page($this->presetPageID);
-			if (!$this->presetPage->pageID) {
+			if (!$this->presetPage->pageID || $this->presetPage->pageType === 'system') {
 				throw new IllegalLinkException();
 			}
 		}
