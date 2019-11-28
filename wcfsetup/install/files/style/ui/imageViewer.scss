@@ -210,6 +210,12 @@ $wcfImageViewerFontColor: rgba(211, 211, 211, 1);
 		&.loading:before {
 			@extend .icon48;
 			@extend .fa-spinner;
+			
+			content: "" !important;
+			display: block;
+			left: calc(50% - 34px);
+			position: absolute;
+			top: calc(50% - 34px);
 		}
 		
 		> img {
