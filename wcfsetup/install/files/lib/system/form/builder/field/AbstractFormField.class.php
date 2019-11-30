@@ -46,6 +46,12 @@ abstract class AbstractFormField implements IFormField {
 	protected $templateName;
 	
 	/**
+	 * name of the template's application used to output this field
+	 * @var	string
+	 */
+	protected $application = 'wcf';
+	
+	/**
 	 * validation errors of this field
 	 * @var	IFormFieldValidationError[]
 	 */
@@ -99,7 +105,7 @@ abstract class AbstractFormField implements IFormField {
 		
 		return WCF::getTPL()->fetch(
 			$this->templateName,
-			'wcf',
+			$this->application,
 			array_merge($this->getHtmlVariables(), [
 				'field' => $this
 			]),
