@@ -147,6 +147,13 @@ $tables = [
 				->onDelete('SET NULL')
 		]),
 	
+	DatabaseTable::create('wcf1_package')
+		->indices([
+			DatabaseTableIndex::create('package')
+				->type(DatabaseTableIndex::UNIQUE_TYPE)
+				->columns(['package'])
+		]),
+	
 	DatabaseTable::create('wcf1_reaction_type')
 		->columns([
 			ObjectIdDatabaseTableColumn::create('reactionTypeID'),
