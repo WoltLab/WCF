@@ -252,6 +252,7 @@
 1:wcf.user.access.registered
 2:wcf.user.access.following
 3:wcf.user.access.nobody</selectoptions>
+				<options>module_user_profile_wall</options>
 				<editable>3</editable>
 			</option>
 		</options>
