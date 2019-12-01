@@ -32,6 +32,12 @@ class FormContainer implements IFormContainer {
 	protected $templateName = '__formContainer';
 	
 	/**
+	 * name of the template's application used to output this container
+	 * @var	string
+	 */
+	protected $templateApplication = 'wcf';
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function __construct() {
@@ -42,9 +48,14 @@ class FormContainer implements IFormContainer {
 	 * @inheritDoc
 	 */
 	public function getHtml() {
-		return WCF::getTPL()->fetch($this->templateName, 'wcf', array_merge($this->getHtmlVariables(), [
-			'container' => $this
-		]), true);
+		return WCF::getTPL()->fetch(
+			$this->templateName,
+			$this->templateApplication,
+			array_merge($this->getHtmlVariables(), [
+				'container' => $this
+			]),
+			true
+		);
 	}
 	
 	/**
