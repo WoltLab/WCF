@@ -104,10 +104,11 @@ class LabelFormField extends AbstractFormField implements IObjectTypeFormNode {
 			static::$loadedLabels[$objectTypeID] = [];
 		}
 		if (!isset(static::$loadedLabels[$objectTypeID][$objectID])) {
-			static::$loadedLabels[$objectTypeID][$objectID] = LabelHandler::getInstance()->getAssignedLabels(
+			$assignedLabels = LabelHandler::getInstance()->getAssignedLabels(
 				$objectTypeID,
 				[$objectID]
-			)[$objectID];
+			);
+			static::$loadedLabels[$objectTypeID][$objectID] = isset($assignedLabels[$objectID]) ? $assignedLabels[$objectID] : [];
 		}
 		
 		$labelIDs = $this->getLabelGroup()->getLabelIDs();
