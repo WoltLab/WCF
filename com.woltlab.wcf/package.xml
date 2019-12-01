@@ -57,7 +57,9 @@
 		<instruction type="page" />
 	</instructions>
 	
-	<instructions type="update" fromversion="3.1.10 pl 2">
+	<instructions type="update" fromversion="3.1.*">
+		<!-- TODO: Add a check for the minimum version and the PHP requirements! -->
+		
 		<instruction type="sql">update_5.2_pre_sql_api.sql</instruction>
 		
 		<!-- contains 3 PIP-scripts, \wcf\data\option\OptionEditor, \wcf\system\cache\builder\RoutingCacheBuilder, \wcf\system\database\table\ -->
