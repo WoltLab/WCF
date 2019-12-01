@@ -257,7 +257,7 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 	 * Sets if not only the date, but also the time can be set.
 	 *
 	 * @param	bool		$supportsTime
-	 * @return	static		thsi field
+	 * @return	static		this field
 	 */
 	public function supportTime($supportsTime = true) {
 		$this->supportsTime = $supportsTime;
