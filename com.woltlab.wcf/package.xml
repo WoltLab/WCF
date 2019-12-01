@@ -56,4 +56,55 @@
 		
 		<instruction type="page" />
 	</instructions>
+	
+	<instructions type="update" fromversion="3.1.10 pl 2">
+		<instruction type="sql">update_5.2_pre_sql_api.sql</instruction>
+		
+		<!-- contains 3 PIP-scripts, \wcf\data\option\OptionEditor, \wcf\system\cache\builder\RoutingCacheBuilder, \wcf\system\database\table\ -->
+		<instruction type="file" run="standalone">files_pre.tar</instruction>
+		
+		<!-- we need some new categories for execution of reactionUpdate already -->
+		<instruction type="language" run="standalone" />
+		
+		<!-- update database structure using new api -->
+		<instruction type="script">acp/update-com.woltlab.wcf_5.2.php</instruction>
+		
+		<!-- convert likes to reactions -->
+		<instruction type="script">acp/update-com.woltlab.wcf_5.2_reactionUpdate.php</instruction>
+		
+		<!-- reload routing cache to avoid an exception because the new applicationOverride information is missing in cache -->
+		<instruction type="script" run="standalone">acp/update-com.woltlab.wcf_5.2_reloadRoutingCache.php</instruction>
+		
+		<instruction type="option" />
+		<!-- reload options using the new OptionEditor for providing the enterprise-mode option for further requests (required after file-PIP!) -->
+		<instruction type="script">acp/update-com.woltlab.wcf_5.2_reloadOptions.php</instruction>
+		
+		<instruction type="coreObject" />
+		
+		<instruction type="file" run="standalone" />
+		<instruction type="template" run="standalone" />
+		<instruction type="acpTemplate" run="standalone" />
+		
+		<instruction type="acpMenu" />
+		<instruction type="userGroupOption" />
+		<instruction type="cronjob" />
+		<instruction type="clipboardAction" />
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+		<instruction type="acpSearchProvider" />
+		
+		<instruction type="userOption" run="standalone" />
+		
+		<instruction type="bbcode" />
+		<instruction type="userMenu" />
+		<instruction type="userNotificationEvent" />
+		<instruction type="page" />
+		<instruction type="menu" />
+		<instruction type="menuItem" />
+		<instruction type="box" />
+		<instruction type="mediaProvider" />
+		<instruction type="templateListener" />
+		
+		<instruction type="style" run="standalone">defaultStyle.tar</instruction>
+	</instructions>
 </package>
