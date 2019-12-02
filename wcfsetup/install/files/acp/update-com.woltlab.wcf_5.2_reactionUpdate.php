@@ -90,7 +90,7 @@ try {
 			dislikes = 0";
 	WCF::getDB()->prepareStatement($sql)->execute();
 	
-	$statement = WCF::getDB()->prepareStatement('ALTER TABLE wcf'.WCF_N.'_like ADD FOREIGN KEY (reactionTypeID) REFERENCES wcf1_reaction_type (reactionTypeID) ON DELETE CASCADE');
+	$statement = WCF::getDB()->prepareStatement('ALTER TABLE wcf'.WCF_N.'_like ADD FOREIGN KEY (reactionTypeID) REFERENCES wcf'.WCF_N.'_reaction_type (reactionTypeID) ON DELETE CASCADE');
 	$statement->execute();
 	
 	WCF::getDB()->commitTransaction();

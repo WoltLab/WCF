@@ -5,7 +5,7 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.2.0 Beta 4</version> <!-- codename: hurricane -->
+		<version>5.2.0 RC 1</version> <!-- codename: hurricane -->
 		<date>2019-12-01</date>
 	</packageinformation>
 	
@@ -69,13 +69,10 @@
 		<instruction type="language" run="standalone" />
 		
 		<!-- update database structure using new api -->
-		<instruction type="script">acp/update-com.woltlab.wcf_5.2.php</instruction>
+		<instruction type="script" flushCache="false">acp/update-com.woltlab.wcf_5.2.php</instruction>
 		
 		<!-- convert likes to reactions -->
-		<instruction type="script">acp/update-com.woltlab.wcf_5.2_reactionUpdate.php</instruction>
-		
-		<!-- reload routing cache to avoid an exception because the new applicationOverride information is missing in cache -->
-		<instruction type="script" run="standalone">acp/update-com.woltlab.wcf_5.2_reloadRoutingCache.php</instruction>
+		<instruction type="script" flushCache="false">acp/update-com.woltlab.wcf_5.2_reactionUpdate.php</instruction>
 		
 		<instruction type="option" />
 		<!-- reload options using the new OptionEditor for providing the enterprise-mode option for further requests (required after file-PIP!) -->

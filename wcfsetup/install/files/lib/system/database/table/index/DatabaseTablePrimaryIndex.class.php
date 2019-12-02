@@ -17,9 +17,14 @@ class DatabaseTablePrimaryIndex extends DatabaseTableIndex {
 	/**
 	 * Returns a `PrimaryDatabaseTableIndex` object with `PRIMARY` as name and primary as type.
 	 * 
+	 * @inheritDoc
 	 * @return	$this
 	 */
-	public static function create() {
+	public static function create($name = '') {
+		if (!empty($name)) {
+			throw new \LogicException('The primary index cannot be assigned a name.');
+		}
+		
 		return parent::create('PRIMARY')
 			->type(static::PRIMARY_TYPE);
 	}
