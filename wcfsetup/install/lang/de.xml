@@ -2599,7 +2599,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.reactionType.type"><![CDATA[Reaktions-Typ]]></item>
 		<item name="wcf.acp.reactionType.image"><![CDATA[Reaktions-Datei]]></item>
 		<item name="wcf.acp.reactionType.showOrder.description"><![CDATA[Der Reaktions-Typ wird nach dem ausgewählten Reaktions-Typ angezeigt.]]></item>
-		<item name="wcf.acp.reactionType.isAssignable"><![CDATA[Kann verwendet werden]]></item>
+		<item name="wcf.acp.reactionType.isAssignable"><![CDATA[Verwendung erlauben]]></item>
 		<item name="wcf.acp.reactionType.isAssignable.description"><![CDATA[Wenn eine Reaktion nicht verwendet werden kann, können Benutzer nicht mit der Reaktion reagieren. Wurde auf einen Inhalt bereits mit der Reaktion reagiert, ist sie auch weiterhin für Benutzer sichtbar.]]></item>
 		<item name="wcf.acp.reactionType.allow"><![CDATA[Verwendung erlauben]]></item>
 		<item name="wcf.acp.reactionType.disallow"><![CDATA[Verwendung verbieten]]></item>
