@@ -282,6 +282,15 @@ class DatabaseTableChangeProcessor {
 			}
 		}
 		
+		foreach ($this->indicesToDrop as $tableName => $indices) {
+			foreach ($indices as $index) {
+				$appliedAnyChange = true;
+				
+				$this->dropIndex($tableName, $index);
+				$this->deleteIndexLog($tableName, $index);
+			}
+		}
+		
 		foreach ($this->indicesToAdd as $tableName => $indices) {
 			foreach ($indices as $index) {
 				$appliedAnyChange = true;
@@ -289,15 +298,6 @@ class DatabaseTableChangeProcessor {
 				$this->prepareIndexLog($tableName, $index);
 				$this->addIndex($tableName, $index);
 				$this->finalizeIndexLog($tableName, $index);
-			}
-		}
-		
-		foreach ($this->indicesToDrop as $tableName => $indices) {
-			foreach ($indices as $index) {
-				$appliedAnyChange = true;
-				
-				$this->dropIndex($tableName, $index);
-				$this->deleteIndexLog($tableName, $index);
 			}
 		}
 		
@@ -459,7 +459,7 @@ class DatabaseTableChangeProcessor {
 				foreach ($table->getIndices() as $index) {
 					$matchingExistingIndex = null;
 					foreach ($existingIndices as $existingIndex) {
-						if (empty(array_diff($index->getData(), $existingIndex->getData()))) {
+						if (!$this->diffIndices($existingIndex, $index)) {
 							$matchingExistingIndex = $existingIndex;
 							break;
 						}
@@ -479,7 +479,23 @@ class DatabaseTableChangeProcessor {
 							$this->deleteIndexLog($tableName, $index);
 						}
 					}
-					else if ($matchingExistingIndex === null) {
+					else if ($matchingExistingIndex !== null) {
+						// updating index type and index columns is supported with an
+						// explicit index name is given (automatically generated index
+						// names are not deterministic)
+						if (!$index->hasGeneratedName() && !empty(array_diff($matchingExistingIndex->getData(), $index->getData()))) {
+							if (!isset($this->indicesToDrop[$tableName])) {
+								$this->indicesToDrop[$tableName] = [];
+							}
+							$this->indicesToDrop[$tableName][] = $matchingExistingIndex;
+							
+							if (!isset($this->indicesToAdd[$tableName])) {
+								$this->indicesToAdd[$tableName] = [];
+							}
+							$this->indicesToAdd[$tableName][] = $index;
+						}
+					}
+					else {
 						if (!isset($this->indicesToAdd[$tableName])) {
 							$this->indicesToAdd[$tableName] = [];
 						}
@@ -676,6 +692,21 @@ class DatabaseTableChangeProcessor {
 		// for all other cases, use weak comparison so that `'1'` (from database) and `1`
 		// (from script PIP) match, for example 
 		return $oldColumn->getDefaultValue() != $newColumn->getDefaultValue();
+	}
+	
+	/**
+	 * Returns `true` if the two indices differ.
+	 * 
+	 * @param	DatabaseTableIndex	$oldIndex
+	 * @param	DatabaseTableIndex	$newIndex
+	 * @return	bool
+	 */
+	protected function diffIndices(DatabaseTableIndex $oldIndex, DatabaseTableIndex $newIndex) {
+		if ($newIndex->hasGeneratedName()) {
+			return !empty(array_diff($oldIndex->getData(), $newIndex->getData()));
+		}
+		
+		return $oldIndex->getName() !== $newIndex->getName();
 	}
 	
 	/**
