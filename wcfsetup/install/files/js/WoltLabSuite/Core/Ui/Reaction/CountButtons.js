@@ -11,12 +11,12 @@ define(
 	[
 		'Ajax',      'Core',          'Dictionary',         'Language',
 		'ObjectMap', 'StringUtil',    'Dom/ChangeListener', 'Dom/Util',
-		'Ui/Dialog'
+		'Ui/Dialog', 'EventHandler'
 	],
 	function(
 		Ajax,        Core,                        Dictionary,           Language,
 		ObjectMap,   StringUtil,                  DomChangeListener,    DomUtil,
-		UiDialog
+		UiDialog, EventHandler
 	)
 	{
 		"use strict";
@@ -194,6 +194,8 @@ define(
 			},
 			
 			_ajaxSuccess: function(data) {
+				EventHandler.fire('com.woltlab.wcf.ReactionCountButtons', 'openDialog', data);
+				
 				UiDialog.open(this, data.returnValues.template);
 				UiDialog.setTitle('userReactionOverlay-' + this._objectType, data.returnValues.title);
 			},
