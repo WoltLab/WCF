@@ -96,26 +96,28 @@ class LabelFormField extends AbstractFormField implements IObjectTypeFormNode {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValue(array $data, IStorableObject $object) {
-		$objectTypeID = $this->getObjectType()->objectTypeID;
-		$objectID = $object->{$object::getDatabaseTableIndexName()};
-		
-		if (!isset(static::$loadedLabels[$objectTypeID])) {
-			static::$loadedLabels[$objectTypeID] = [];
-		}
-		if (!isset(static::$loadedLabels[$objectTypeID][$objectID])) {
-			$assignedLabels = LabelHandler::getInstance()->getAssignedLabels(
-				$objectTypeID,
-				[$objectID]
-			);
-			static::$loadedLabels[$objectTypeID][$objectID] = isset($assignedLabels[$objectID]) ? $assignedLabels[$objectID] : [];
-		}
-		
-		$labelIDs = $this->getLabelGroup()->getLabelIDs();
-		/** @var Label $label */
-		foreach (static::$loadedLabels[$objectTypeID][$objectID] as $label) {
-			if (in_array($label->labelID, $labelIDs)) {
-				$this->value($label->labelID);
+	public function updatedObject(array $data, IStorableObject $object, $loadValues = true) {
+		if ($loadValues) {
+			$objectTypeID = $this->getObjectType()->objectTypeID;
+			$objectID = $object->{$object::getDatabaseTableIndexName()};
+			
+			if (!isset(static::$loadedLabels[$objectTypeID])) {
+				static::$loadedLabels[$objectTypeID] = [];
+			}
+			if (!isset(static::$loadedLabels[$objectTypeID][$objectID])) {
+				$assignedLabels = LabelHandler::getInstance()->getAssignedLabels(
+					$objectTypeID,
+					[$objectID]
+				);
+				static::$loadedLabels[$objectTypeID][$objectID] = isset($assignedLabels[$objectID]) ? $assignedLabels[$objectID] : [];
+			}
+			
+			$labelIDs = $this->getLabelGroup()->getLabelIDs();
+			/** @var Label $label */
+			foreach (static::$loadedLabels[$objectTypeID][$objectID] as $label) {
+				if (in_array($label->labelID, $labelIDs)) {
+					$this->value($label->labelID);
+				}
 			}
 		}
 		

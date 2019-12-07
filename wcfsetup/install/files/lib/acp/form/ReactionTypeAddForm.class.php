@@ -65,6 +65,7 @@ class ReactionTypeAddForm extends AbstractFormBuilderForm {
 				BooleanFormField::create('isAssignable')
 					->label('wcf.acp.reactionType.isAssignable')
 					->description('wcf.acp.reactionType.isAssignable.description')
+					->value(true)
 			]);
 		
 		$iconContainer = FormContainer::create('imageSection')

@@ -288,15 +288,17 @@ interface IFormDocument extends IFormParentNode {
 	public function invalid($invalid = true);
 	
 	/**
-	 * Loads the field values from the given object and returns this document.
+	 * Sets the updated object (and loads the field values from the given object) and returns
+	 * this document.
 	 * 
-	 * Per default, for each field, `IFormField::loadValueFromObject()` is called.
+	 * Per default, for each field, `IFormField::updatedObject()` is called.
 	 * This method automatically sets the form mode to `self::FORM_MODE_UPDATE`.
 	 * 
-	 * @param	IStorableObject		$object		object used to load field values
+	 * @param	IStorableObject		$object		updated object
+	 * @param	boolean			$loadValues	indicates if the object's values are loaded
 	 * @return	static					this document
 	 */
-	public function loadValuesFromObject(IStorableObject $object);
+	public function updatedObject(IStorableObject $object, $loadValues = true);
 	
 	/**
 	 * Sets the `method` property of the HTML `form` element and returns this document.

@@ -14,7 +14,9 @@
 		</div>
 	</form>
 </section>
-
+<script>
+if (typeof window._trackWcfSetupStep === 'function') window._trackWcfSetupStep('installPackages');
+</script>
 <script data-relocate="true">
 	window.onload = function() {
 		document.forms[0].submit();

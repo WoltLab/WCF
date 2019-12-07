@@ -336,6 +336,8 @@ WCF.ACP.Package.Installation = Class.extend({
 	_success: function(data, textStatus, jqXHR) {
 		this._shouldRender = false;
 		
+		if (typeof window._trackPackageStep === 'function') window._trackPackageStep(this._actionName, data);
+		
 		if (this._dialog === null) {
 			this._dialog = $('<div id="package' + (this._actionName === 'UninstallPackage' ? 'Uni' : 'I') + 'nstallationDialog" />').hide().appendTo(document.body);
 			this._dialog.wcfDialog({

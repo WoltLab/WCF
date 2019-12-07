@@ -674,7 +674,7 @@ class ReactionHandler extends SingletonFactory {
 		
 		// delete like objects
 		if (!empty($likeObjectIDs)) {
-			(new LikeObjectAction([$likeObjectIDs], 'delete'))->executeAction();
+			(new LikeObjectAction($likeObjectIDs, 'delete'))->executeAction();
 		}
 		
 		// delete activity events

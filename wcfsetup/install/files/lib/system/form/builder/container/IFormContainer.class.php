@@ -16,15 +16,17 @@ use wcf\system\form\builder\IFormParentNode;
  */
 interface IFormContainer extends IFormChildNode, IFormElement, IFormParentNode {
 	/**
-	 * This method is called by `IFormDocument::loadValue()` to inform the container that object
-	 * data is being loaded.
+	 * Informs the form container of the updated object and this method is called by
+	 * `IFormDocument::updatedObject()` to inform the container that object data is being loaded.
 	 * 
-	 * This method is *not* intended to generally call `IFormField::loadValue()` on its form field
-	 * children as these methods are already called by `IFormDocument::loadValuesFromObject()`.
-	 *
+	 * This method is *not* intended to generally call `IFormField::updatedObject()` on its form field
+	 * children as these methods are already called by `IFormDocument::updatedObject()`.
+	 * 
 	 * @param	array			$data		data from which the values are extracted
 	 * @param	IStorableObject		$object		object the data belongs to
+	 * @param	bool			$loadValues	
+	 *	
 	 * @return	static					this container
 	 */
-	public function loadValues(array $data, IStorableObject $object);
+	public function updatedObject(array $data, IStorableObject $object, $loadValues = true);
 }

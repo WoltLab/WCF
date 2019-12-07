@@ -341,22 +341,12 @@ class WysiwygFormContainer extends FormContainer {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValues(array $data, IStorableObject $object) {
+	public function updatedObject(array $data, IStorableObject $object, $loadValues = true) {
 		$this->objectId = $object->{$object::getDatabaseTableIndexName()};
 		
-		if ($this->attachmentData !== null) {
-			// updated attachment handler with object id
-			$this->attachmentField->attachmentHandler(
-				new AttachmentHandler(
-					$this->attachmentData['objectType'],
-					$this->getObjectId(),
-					'.',
-					$this->attachmentData['parentObjectID']
-				)
-			);
-		}
+		$this->setAttachmentHandler();
 		
-		return parent::loadValues($data, $object);
+		return parent::updatedObject($data, $object);
 	}
 	
 	/**
@@ -447,16 +437,7 @@ class WysiwygFormContainer extends FormContainer {
 		]);
 		
 		if ($this->attachmentData !== null) {
-			$this->attachmentField->attachmentHandler(
-				// the temporary hash may not be empty (at the same time as the
-				// object id) and it will be changed anyway by the called method
-				new AttachmentHandler(
-					$this->attachmentData['objectType'],
-					$this->getObjectId(),
-					'.',
-					$this->attachmentData['parentObjectID']
-				)
-			);
+			$this->setAttachmentHandler();
 		}
 		
 		$this->getDocument()->addButton(
@@ -521,6 +502,22 @@ class WysiwygFormContainer extends FormContainer {
 		$this->required = $required;
 		
 		return $this;
+	}
+	
+	/**
+	 * Sets the attachment handler of the attachment form field.
+	 */
+	protected function setAttachmentHandler() {
+		if ($this->attachmentData !== null) {
+			$this->attachmentField->attachmentHandler(
+				new AttachmentHandler(
+					$this->attachmentData['objectType'],
+					$this->getObjectId(),
+					'.',
+					$this->attachmentData['parentObjectID']
+				)
+			);
+		}
 	}
 	
 	/**

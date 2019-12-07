@@ -476,8 +476,11 @@ class PackageInstallationDispatcher {
 		}
 		unset($nodeData['requirements']);
 		
-		$applicationDirectory = $nodeData['applicationDirectory'];
-		unset($nodeData['applicationDirectory']);
+		$applicationDirectory = '';
+		if (isset($nodeData['applicationDirectory'])) {
+			$applicationDirectory = $nodeData['applicationDirectory'];
+			unset($nodeData['applicationDirectory']);
+		}
 		
 		// update package
 		if ($this->queue->packageID) {
@@ -578,15 +581,13 @@ class PackageInstallationDispatcher {
 			}
 		}
 		
-		if ($this->getPackage()->isApplication && $this->getPackage()->package != 'com.woltlab.wcf' && $this->getAction() == 'install') {
-			if (empty($this->getPackage()->packageDir)) {
-				$document = $this->promptPackageDir($applicationDirectory);
-				if ($document !== null && $document instanceof FormDocument) {
-					$installationStep->setDocument($document);
-				}
-				
-				$installationStep->setSplitNode();
+		if ($this->getPackage()->isApplication && $this->getPackage()->package != 'com.woltlab.wcf' && $this->getAction() == 'install' && empty($this->getPackage()->packageDir)) {
+			$document = $this->promptPackageDir($applicationDirectory);
+			if ($document !== null && $document instanceof FormDocument) {
+				$installationStep->setDocument($document);
 			}
+
+			$installationStep->setSplitNode();
 		}
 		
 		return $installationStep;

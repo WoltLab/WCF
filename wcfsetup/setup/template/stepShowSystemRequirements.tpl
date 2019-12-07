@@ -157,4 +157,7 @@
 	</div>
 </form>
 
+<script>
+if (typeof window._trackWcfSetupStep === 'function') window._trackWcfSetupStep('showSystemRequirements');
+</script>
 {include file='footer'}

@@ -117,9 +117,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	 */
 	public function readData() {
 		if ($this->formObject !== null) {
-			if (empty($_POST)) {
-				$this->setFormObjectData();
-			}
+			$this->setFormObjectData();
 		}
 		else if ($this->formAction === 'edit') {
 			throw new \UnexpectedValueException("Missing form object to update.");
@@ -209,7 +207,7 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 	 * Sets the form data based on the current form object.
 	 */
 	protected function setFormObjectData() {
-		$this->form->loadValuesFromObject($this->formObject);
+		$this->form->updatedObject($this->formObject, empty($_POST));
 	}
 	
 	/**

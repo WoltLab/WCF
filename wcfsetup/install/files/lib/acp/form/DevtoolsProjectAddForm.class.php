@@ -761,6 +761,10 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 						case 'language':
 							if ($value === 'language/*.xml') {
 								$directory = FileUtil::addTrailingSlash(dirname($path . $value));
+								if ($this->formObject !== null && $this->formObject->isCore()) {
+									$directory = FileUtil::addTrailingSlash(dirname($path . 'wcfsetup/install/lang/*.xml'));
+								}
+								
 								$directoryUtil = DirectoryUtil::getInstance($directory);
 								if (empty($directoryUtil->getFiles(SORT_ASC, Regex::compile('.+\.xml')))) {
 									$formField->addValidationError(

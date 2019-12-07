@@ -63,29 +63,31 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormNode {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValue(array $data, IStorableObject $object) {
-		$objectID = $object->{$object::getDatabaseTableIndexName()};
-		
-		if ($objectID === null) {
-			throw new \UnexpectedValueException("Cannot read object id from object of class '" . get_class($object). "'.");
-		}
-		
-		if ($this->getObjectType() === null) {
-			throw new \UnexpectedValueException("Missing taggable object type.");
-		}
-		
-		$languageIDs = [];
-		
-		/** @noinspection PhpUndefinedFieldInspection */
-		if (isset($data['languageID'])) {
-			$languageIDs[] = $data['languageID'];
-		}
-		
-		$tags = TagEngine::getInstance()->getObjectTags($this->getObjectType()->objectType, $objectID, $languageIDs);
-		
-		$this->value = [];
-		foreach ($tags as $tag) {
-			$this->value[] = $tag->name;
+	public function updatedObject(array $data, IStorableObject $object, $loadValues = true) {
+		if ($loadValues) {
+			$objectID = $object->{$object::getDatabaseTableIndexName()};
+			
+			if ($objectID === null) {
+				throw new \UnexpectedValueException("Cannot read object id from object of class '" . get_class($object). "'.");
+			}
+			
+			if ($this->getObjectType() === null) {
+				throw new \UnexpectedValueException("Missing taggable object type.");
+			}
+			
+			$languageIDs = [];
+			
+			/** @noinspection PhpUndefinedFieldInspection */
+			if (isset($data['languageID'])) {
+				$languageIDs[] = $data['languageID'];
+			}
+			
+			$tags = TagEngine::getInstance()->getObjectTags($this->getObjectType()->objectType, $objectID, $languageIDs);
+			
+			$this->value = [];
+			foreach ($tags as $tag) {
+				$this->value[] = $tag->name;
+			}
 		}
 		
 		return $this;

@@ -211,7 +211,7 @@ class DatabaseTable {
 			}
 			
 			if ($index->getName() === '') {
-				$index->name(md5($this->getName() . '_' . $index->getColumns()[0]));
+				$index->generatedName(md5($this->getName() . '_' . $index->getColumns()[0]));
 			}
 			
 			if (isset($this->foreignKeys[$index->getName()])) {

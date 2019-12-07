@@ -21,6 +21,12 @@ class DatabaseTableIndex {
 	protected $columns;
 	
 	/**
+	 * is `true` if index name has been automatically generated
+	 * @var	bool
+	 */
+	protected $generatedName = false;
+	
+	/**
 	 * name of index
 	 * @var	string
 	 */
@@ -54,6 +60,19 @@ class DatabaseTableIndex {
 	 */
 	public function columns($columns) {
 		$this->columns = array_values($columns);
+		
+		return $this;
+	}
+
+	/**
+	 * Sets the automatically generated name of the index.
+	 * 
+	 * @param	string		$name		index name
+	 * @return	$this				this index
+	 */
+	public function generatedName($name) {
+		$this->name($name);
+		$this->generatedName = true;
 		
 		return $this;
 	}
@@ -95,6 +114,15 @@ class DatabaseTableIndex {
 	 */
 	public function getType() {
 		return $this->type;
+	}
+	
+	/**
+	 * Returns `true` if the name of the index has been automatically generated.
+	 * 
+	 * @return	bool
+	 */
+	public function hasGeneratedName() {
+		return $this->generatedName;
 	}
 	
 	/**
