@@ -299,6 +299,17 @@ class ViewableArticle extends DatabaseObjectDecorator {
 				self::$unreadArticlesByCategory[$articleCategoryID] = 0;
 			}
 		}
+		else if (!isset(self::$unreadArticlesByCategory[$articleCategoryID])) {
+			if (WCF::getUser()->userID) {
+				self::$unreadArticlesByCategory[$articleCategoryID] = self::fetchUnreadArticlesForCategory($articleCategoryID);
+				
+				// update storage unreadEntries
+				UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadArticlesByCategory', serialize(self::$unreadArticlesByCategory));
+			}
+			else {
+				self::$unreadArticlesByCategory[$articleCategoryID] = 0;
+			}
+		}
 		
 		return self::$unreadArticlesByCategory[$articleCategoryID];
 	}
