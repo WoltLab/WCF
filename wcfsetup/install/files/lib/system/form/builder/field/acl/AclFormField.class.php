@@ -115,7 +115,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormNode {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValue(array $data, IStorableObject $object) {
+	public function updatedObject(array $data, IStorableObject $object, $loadValues = true) {
 		$this->objectID = $object->{$object::getDatabaseTableIndexName()};
 		
 		if ($this->objectID === null) {

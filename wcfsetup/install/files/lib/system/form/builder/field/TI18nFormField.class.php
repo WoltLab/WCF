@@ -249,8 +249,8 @@ trait TI18nFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValueFromObject(array $data, IStorableObject $object) {
-		if (isset($data[$this->getObjectProperty()])) {
+	public function updatedObject(array $data, IStorableObject $object, $loadValues = true) {
+		if ($loadValues && isset($data[$this->getObjectProperty()])) {
 			$value = $data[$this->getObjectProperty()];
 			
 			if ($this->isI18n()) {

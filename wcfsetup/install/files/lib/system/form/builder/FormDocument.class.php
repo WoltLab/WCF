@@ -530,7 +530,7 @@ class FormDocument implements IFormDocument {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValuesFromObject(IStorableObject $object) {
+	public function updatedObject(IStorableObject $object, $loadValues = true) {
 		if ($this->formMode === null) {
 			$this->formMode(self::FORM_MODE_UPDATE);
 		}
@@ -543,7 +543,7 @@ class FormDocument implements IFormDocument {
 				if ($node instanceof IFormField) {
 					if ($node->getObjectProperty() !== $node->getId()) {
 						try {
-							$node->loadValue($data, $object);
+							$node->updatedObject($data, $object, $loadValues);
 						}
 						catch (\InvalidArgumentException $e) {
 							// if an object property is explicitly set,
@@ -552,11 +552,11 @@ class FormDocument implements IFormDocument {
 						}
 					}
 					else {
-						$node->loadValue($data, $object);
+						$node->updatedObject($data, $object, $loadValues);
 					}
 				}
 				else if ($node instanceof IFormContainer) {
-					$node->loadValues($data, $object);
+					$node->updatedObject($data, $object, $loadValues);
 				}
 			}
 		}

@@ -203,8 +203,8 @@ abstract class AbstractFormField implements IFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValue(array $data, IStorableObject $object) {
-		if (isset($data[$this->getObjectProperty()])) {
+	public function updatedObject(array $data, IStorableObject $object, $loadValues = true) {
+		if ($loadValues && isset($data[$this->getObjectProperty()])) {
 			$this->value($data[$this->getObjectProperty()]);
 		}
 		

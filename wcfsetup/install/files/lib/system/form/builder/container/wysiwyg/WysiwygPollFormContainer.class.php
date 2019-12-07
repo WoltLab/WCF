@@ -226,8 +226,8 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValues(array $data, IStorableObject $object) {
-		if ($data instanceof IPollContainer && $data->getPollID() !== null) {
+	public function updatedObject(array $data, IStorableObject $object, $loadValues = true) {
+		if ($loadValues && $data instanceof IPollContainer && $data->getPollID() !== null) {
 			$this->poll = new Poll($data->getPollID());
 			if (!$this->poll->pollID) {
 				$this->poll = null;
@@ -247,7 +247,7 @@ class WysiwygPollFormContainer extends FormContainer implements IObjectTypeFormN
 			$this->getSortByVotesField()->value($this->poll->sortByVotes);
 		}
 		
-		return parent::loadValues($data, $object);
+		return parent::updatedObject($data, $object);
 	}
 	
 	/**
