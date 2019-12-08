@@ -5,6 +5,7 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObjectList;
 use wcf\system\condition\ConditionHandler;
+use wcf\system\condition\ICondition;
 use wcf\system\condition\IObjectListCondition;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
@@ -314,9 +315,11 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 		
 		if ($this->conditionDefinition) {
 			foreach ($this->box->getConditions() as $condition) {
-				/** @var IObjectListCondition $processor */
+				/** @var ICondition $processor */
 				$processor = $condition->getObjectType()->getProcessor();
-				$processor->addObjectListCondition($this->objectList, $condition->conditionData);
+				if ($processor instanceof IObjectListCondition) {
+					$processor->addObjectListCondition($this->objectList, $condition->conditionData);
+				}
 			}
 		}
 		
