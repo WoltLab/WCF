@@ -61,6 +61,12 @@ abstract class AbstractDatabaseTableColumn implements IDatabaseTableColumn {
 		
 		if ($this instanceof IAutoIncrementDatabaseTableColumn) {
 			$data['autoIncrement'] = $this->isAutoIncremented() ? 1 : 0;
+			
+			// MySQL requires that there is only a single auto column per table *AND*
+			// that this column is defined as the primary key.
+			if ($data['autoIncrement'] === 1) {
+				$data['key'] = 'PRIMARY';
+			}
 		}
 		
 		if ($this instanceof IDecimalsDatabaseTableColumn && $this->getDecimals() !== null) {

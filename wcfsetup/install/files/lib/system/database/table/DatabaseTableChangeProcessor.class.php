@@ -582,9 +582,15 @@ class DatabaseTableChangeProcessor {
 	 * @param	DatabaseTable		$table
 	 */
 	protected function createTable(DatabaseTable $table) {
-		$columnData = array_map(function(IDatabaseTableColumn $column) {
+		$hasPrimaryKey = false;
+		$columnData = array_map(function(IDatabaseTableColumn $column) use (&$hasPrimaryKey) {
+			$data = $column->getData();
+			if (isset($data['key']) && $data['key'] === 'PRIMARY') {
+				$hasPrimaryKey = true;
+			}
+			
 			return [
-				'data' => $column->getData(),
+				'data' => $data,
 				'name' => $column->getName()
 			];
 		}, $table->getColumns());
@@ -594,6 +600,13 @@ class DatabaseTableChangeProcessor {
 				'name' => $index->getName()
 			];
 		}, $table->getIndices());
+		
+		// Auto columns are implicitly defined as the primary key by MySQL.
+		if ($hasPrimaryKey) {
+			$indexData = array_filter($indexData, function($key) {
+				return $key !== 'PRIMARY';
+			}, ARRAY_FILTER_USE_KEY);
+		}
 		
 		$this->dbEditor->createTable($table->getName(), $columnData, $indexData);
 		
