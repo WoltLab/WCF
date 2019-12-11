@@ -116,8 +116,8 @@ class DatabaseTableForeignKey {
 	public function getData() {
 		return [
 			'columns' => implode(',', $this->getColumns()),
-			'ON DELETE' => $this->getOnDelete(),
-			'ON UPDATE' => $this->getOnUpdate(),
+			'ON DELETE' => $this->normalizeAction($this->getOnDelete()),
+			'ON UPDATE' => $this->normalizeAction($this->getOnUpdate()),
 			'referencedColumns' => implode(',', $this->getReferencedColumns()),
 			'referencedTable' => $this->getReferencedTable()
 		];
@@ -241,6 +241,22 @@ class DatabaseTableForeignKey {
 		$this->referencedTable = ApplicationHandler::insertRealDatabaseTableNames($referencedTable);
 		
 		return $this;
+	}
+	
+	/**
+	 * In MySQL, `ON * RESTRICT`, `ON * NO ACTION` or omitting it entirely, is completely the same. However,
+	 * MySQL 8 reports `NO ACTION` where MySQL 5.7 would identify the action as `null`. This method normalized
+	 * the action, by always setting it to null if the value is `RESTRICT` or `NO ACTION`.
+	 * 
+	 * @param string $action
+	 * @return string|null
+	 */
+	protected function normalizeAction($action) {
+		if ($action === 'RESTRICT' || $action === 'NO ACTION') {
+			return null;
+		}
+		
+		return $action;
 	}
 	
 	/**

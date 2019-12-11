@@ -147,13 +147,6 @@ $tables = [
 				->onDelete('SET NULL')
 		]),
 	
-	// Re-create the key to turn it into a unique key: https://github.com/WoltLab/WCF/issues/3116
-	DatabaseTable::create('wcf1_package')
-		->indices([
-			DatabaseTableIndex::create('package')
-				->columns(['package'])
-				->drop()
-		]),
 	DatabaseTable::create('wcf1_package')
 		->indices([
 			DatabaseTableIndex::create('package')
