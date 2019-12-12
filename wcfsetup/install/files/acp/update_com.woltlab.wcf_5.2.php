@@ -129,7 +129,7 @@ $tables = [
 			DefaultFalseBooleanDatabaseTableColumn::create('captionEnableHtml'),
 			NotNullInt10DatabaseTableColumn::create('downloads')
 				->defaultValue(0),
-			NotNullInt10DatabaseTableColumn::create('lastDownload')
+			NotNullInt10DatabaseTableColumn::create('lastDownloadTime')
 				->defaultValue(0)
 		]),
 	
