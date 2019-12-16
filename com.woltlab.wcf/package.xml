@@ -66,6 +66,9 @@
 		<!-- Convert likes to reactions. -->
 		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_5.2_reactionUpdate.php</instruction>
 		
+		<!-- Delete all likeable recent activity events, because they don't have the reactionType stored. -->
+		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_5.2_deleteRecentActivity.php</instruction>
+		
 		<instruction type="sql">update_5.2.sql</instruction>
 		
 		<instruction type="option" />
@@ -100,6 +103,7 @@
 		<instruction type="style" run="standalone">defaultStyle.tar</instruction>
 	</instructions>
 	
+	<!-- @TODO Add script to delete the likeable recent activities.  -->
 	<instructions type="update" fromversion="5.2.0 Beta 4">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
