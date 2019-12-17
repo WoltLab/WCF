@@ -217,9 +217,7 @@ class PackageValidationArchive implements \RecursiveIterator {
 				throw new PackageValidationException(PackageValidationException::INCOMPATIBLE_API_VERSION, ['isOlderVersion' => $isOlderVersion]);
 			}
 		}
-		else if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS && ($package === null || $package->package !== 'com.woltlab.wcf')) {
-			throw new PackageValidationException(PackageValidationException::MISSING_API_VERSION);
-		}
+		// Missing details on API compatibility are no longer an error.
 		
 		// package is not installed yet
 		if ($package === null) {

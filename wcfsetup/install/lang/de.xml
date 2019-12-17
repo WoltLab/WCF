@@ -384,12 +384,10 @@
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.devtools.project.name.error.notUnique"><![CDATA[Der Name wird bereits von einem anderen Projekt verwendet.]]></item>
 		<item name="wcf.acp.devtools.project.path"><![CDATA[Pfad]]></item>
-		<item name="wcf.acp.devtools.project.path.error.missingCompatibility"><![CDATA[Das Paket verfügt über keine Angaben zur API-Kompatibilität.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notInstalled"><![CDATA[Das Paket muss bereits installiert sein.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notFound"><![CDATA[Der Pfad ist ungültig.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notUnique"><![CDATA[Der Pfad wird bereits von einem anderen Projekt verwendet.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.packageXml"><![CDATA[Unter dem angegebenen Pfad konnte keine gültige <kbd>package.xml</kbd> gefunden werden.]]></item>
-		<item name="wcf.acp.devtools.project.path.error.unsupportedCompatibility"><![CDATA[Das Paket wurde für eine {if $isOlderVersion}ältere{else}neuere{/if} Version von WoltLab Suite entwickelt und ist nicht kompatibel.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.versionMismatch"><![CDATA[Die Version in der <kbd>package.xml</kbd> passt nicht zur installierten Version, möglicherweise wurde eine falsches Verzeichnis ausgewählt.]]></item>
 		<item name="wcf.acp.devtools.project.sync"><![CDATA[Daten-Abgleich]]></item>
 		<item name="wcf.acp.devtools.project.sync.pageTitle"><![CDATA[Daten-Abgleich - {$object->name}]]></item>
