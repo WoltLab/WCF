@@ -382,12 +382,10 @@
 		<item name="wcf.acp.devtools.project.name"><![CDATA[Name]]></item>
 		<item name="wcf.acp.devtools.project.name.error.notUnique"><![CDATA[The name is already used by another project.]]></item>
 		<item name="wcf.acp.devtools.project.path"><![CDATA[Path]]></item>
-		<item name="wcf.acp.devtools.project.path.error.missingCompatibility"><![CDATA[This package does not contain any data on API compatibility.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notInstalled"><![CDATA[The package has not been installed yet. <a href="#" {if $project->getPackageArchive()->getOpenRequirements()|empty}class="jsDevtoolsInstallPackage"{else}class="jsStaticDialog" data-dialog-id="openPackageRequirements"{/if}>Do you want to install the package?</a>]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notFound"><![CDATA[The path is invalid.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.notUnique"><![CDATA[The path is already used by another project.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.packageXml"><![CDATA[The path does not contain a valid <kbd>package.xml</kbd>.]]></item>
-		<item name="wcf.acp.devtools.project.path.error.unsupportedCompatibility"><![CDATA[This package was created for {if $isOlderVersion}an older{else}a newer{/if} version of WoltLab Suite and is not compatible.]]></item>
 		<item name="wcf.acp.devtools.project.path.error.versionMismatch"><![CDATA[The version shown in the <kbd>package.xml</kbd> does not match the installed version, you may have selected the wrong path.]]></item>
 		<item name="wcf.acp.devtools.project.sync"><![CDATA[Sync Data]]></item>
 		<item name="wcf.acp.devtools.project.sync.pageTitle"><![CDATA[Sync Data - {$object->name}]]></item>

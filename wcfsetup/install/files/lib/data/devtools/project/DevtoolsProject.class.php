@@ -138,27 +138,6 @@ class DevtoolsProject extends DatabaseObject {
 			]);
 		}
 		
-		if (!$this->isCore()) {
-			$compatibleVersions = $this->packageArchive->getCompatibleVersions();
-			if (empty($compatibleVersions)) {
-				return WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.project.path.error.missingCompatibility');
-			}
-			$isCompatible = $isOlderVersion = false;
-			foreach ($compatibleVersions as $version) {
-				if (WCF::isSupportedApiVersion($version)) {
-					$isCompatible = true;
-					break;
-				}
-				else if ($version < WSC_API_VERSION) {
-					$isOlderVersion = true;
-				}
-			}
-			
-			if (!$isCompatible) {
-				return WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.project.path.error.unsupportedCompatibility', ['isOlderVersion' => $isOlderVersion]);
-			}
-		}
-		
 		return '';
 	}
 	
