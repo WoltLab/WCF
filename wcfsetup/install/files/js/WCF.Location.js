@@ -835,7 +835,7 @@ WCF.Location.GoogleMaps.LocationSearch = WCF.Search.Base.extend({
 		
 		var $containerID = this._searchInput.parents('.dropdown').wcfIdentify();
 		if (!WCF.Dropdown.getDropdownMenu($containerID).hasClass('dropdownOpen')) {
-			WCF.Dropdown.toggleDropdown($containerID);
+			WCF.Dropdown.toggleDropdown($containerID, true);
 		}
 		
 		// pre-select first item
