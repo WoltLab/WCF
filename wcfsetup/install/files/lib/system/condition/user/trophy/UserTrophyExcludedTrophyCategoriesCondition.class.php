@@ -39,7 +39,7 @@ class UserTrophyExcludedTrophyCategoriesCondition extends AbstractMultiSelectCon
 			throw new \InvalidArgumentException("Object list is no instance of '".UserTrophyList::class."', instance of '".get_class($objectList)."' given.");
 		}
 		
-		$objectList->getConditionBuilder()->add('user_trophy.category NOT IN (?)', [$conditionData[$this->fieldName]]);
+		$objectList->getConditionBuilder()->add('trophy.categoryID NOT IN (?)', [$conditionData[$this->fieldName]]);
 	}
 	
 	/**
