@@ -15,10 +15,17 @@ $definitionList->getConditionBuilder()->add('definitionName = ?', ['com.woltlab.
 $definitionList->readObjects();
 $definition = $definitionList->current();
 
-$recentActivityList = new \wcf\data\user\activity\event\UserActivityEventList();
-$recentActivityList->getConditionBuilder()->add("objectTypeID IN (SELECT objectTypeID FROM wcf". WCF_N ."_object_type WHERE objectType LIKE '%likeable%' AND definitionID = ?)", [$definition->definitionID]);
-$recentActivityList->readObjectIDs();
+$sql = "SELECT  objectTypeID
+	FROM    wcf". WCF_N ."_object_type
+	WHERE   objectType LIKE '%likeable%'
+	AND     definitionID = ?";
+$statement = \wcf\system\WCF::getDB()->prepareStatement($sql);
+$statement->execute([$definition->definitionID]);
+$objectTypeIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 
-if (count($recentActivityList->getObjectIDs())) {
-	\wcf\data\user\activity\event\UserActivityEventEditor::deleteAll($recentActivityList->getObjectIDs());
-}
+$conditionBuilder = new \wcf\system\database\util\PreparedStatementConditionBuilder();
+$conditionBuilder->add('objectTypeID IN (?)', [$objectTypeIDs]);
+
+$sql = "DELETE FROM wcf". WCF_N ."_user_activity_event ".$conditionBuilder;
+$statement = \wcf\system\WCF::getDB()->prepareStatement($sql);
+$statement->execute($conditionBuilder->getParameters());
