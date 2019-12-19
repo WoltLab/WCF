@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.2.0 RC 1</version> <!-- codename: hurricane -->
-		<date>2019-12-12</date>
+		<version>5.2.0 RC 2</version> <!-- codename: hurricane -->
+		<date>2019-12-20</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -51,7 +51,8 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="3.1.*">
-		<!-- TODO: Add a check for the minimum version and the PHP requirements! -->
+		<instruction type="file">files_preUpdate.tar</instruction>
+		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_5.2_preUpdate.php</instruction>
 		
 		<!-- Contains a few PIP-scripts, \wcf\data\option\OptionEditor, \wcf\system\cache\builder\RoutingCacheBuilder and \wcf\system\database\table\* -->
 		<instruction type="file" run="standalone">files_pre.tar</instruction>
@@ -103,13 +104,14 @@
 		<instruction type="style" run="standalone">defaultStyle.tar</instruction>
 	</instructions>
 	
-	<!-- @TODO Add script to delete the likeable recent activities.  -->
-	<instructions type="update" fromversion="5.2.0 Beta 4">
-		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+	<instructions type="update" fromversion="5.2.0 RC 1">
 		<instruction type="file">files_update.tar</instruction>
+		
+		<instruction type="script">acp/update_com.woltlab.wcf_5.2.0_rc_2.php</instruction>
+		<instruction type="script">acp/update_com.woltlab.wcf_5.2_deleteRecentActivity.php</instruction>
 		
 		<instruction type="language" />
 		
-		<instruction type="userOption" />
+		<instruction type="bbcode" />
 	</instructions>
 </package>
