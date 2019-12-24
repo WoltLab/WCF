@@ -380,11 +380,12 @@ class ReactionHandler extends SingletonFactory {
 		}
 		catch (DatabaseQueryException $e) {
 			WCF::getDB()->rollBackTransaction();
+			
+			throw $e;
 		}
 		
-		return [
-			'cachedReactions' => [],
-		];
+		/** @noinspection PhpUnreachableStatementInspection */
+		throw new \LogicException('Unreachable');
 	}
 	
 	/**
