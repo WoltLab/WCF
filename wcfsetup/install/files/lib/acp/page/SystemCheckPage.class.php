@@ -78,8 +78,8 @@ class SystemCheckPage extends AbstractPage {
 	
 	public $phpVersions = [
 		'minimum' => '7.0.22',
-		'sufficient' => ['7.0'],
-		'recommended' => ['7.1', '7.2', '7.3'],
+		'sufficient' => ['7.0', '7.1'],
+		'recommended' => ['7.2', '7.3', '7.4'],
 	];
 	
 	public $foreignKeys = [
