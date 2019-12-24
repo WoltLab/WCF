@@ -634,8 +634,22 @@ if (COMPILER_TARGET_DEFAULT) {
 		 * Inserts all attachments at once.
 		 */
 		_insertAll: function () {
-			var selector = (this._useThumbnail()) ? '.jsButtonAttachmentInsertThumbnail, .jsButtonAttachmentInsertPlain' : '.jsButtonAttachmentInsertFull, .jsButtonAttachmentInsertPlain';
-			this._fileListSelector.children('li:not(.uploadFailed)').find(selector).trigger('click');
+			var attachment, button, preferThumbnail = this._useThumbnail();
+			for (var i = 0, length = this._fileListSelector[0].childNodes.length; i < length; i++) {
+				attachment = this._fileListSelector[0].childNodes[i];
+				if (attachment.nodeName === 'LI' && !attachment.classList.contains('uploadFailed')) {
+					button = null;
+					if (preferThumbnail) {
+						button = elBySel('.jsButtonAttachmentInsertThumbnail, .jsButtonAttachmentInsertPlain', attachment);
+					}
+
+					if (button === null) {
+						button = elBySel('.jsButtonAttachmentInsertFull, .jsButtonAttachmentInsertPlain', attachment);
+					}
+
+					window.jQuery(button).trigger('click');
+				}
+			}
 		},
 		
 		/**
