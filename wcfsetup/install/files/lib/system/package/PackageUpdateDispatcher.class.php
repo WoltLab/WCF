@@ -568,14 +568,14 @@ class PackageUpdateDispatcher extends SingletonFactory {
 							$excludeCore60 = '6.0.0 Alpha 1';
 							
 							$coreExclude = null;
-							$versionData['excludedPackages'] = array_filter($versionData['excludedPackages'], function($excludedPackage) use (&$coreExclude) {
-								if ($excludedPackage['excludedPackage'] === 'com.woltlab.wcf') {
-									$coreExclude = $excludedPackage['excludedPackageVersion'];
+							$versionData['excludedPackages'] = array_filter($versionData['excludedPackages'], function($excludedPackage, $excludedVersion) use (&$coreExclude) {
+								if ($excludedPackage === 'com.woltlab.wcf') {
+									$coreExclude = $excludedVersion;
 									return false;
 								}
 								
 								return true;
-							});
+							}, ARRAY_FILTER_USE_BOTH);
 							
 							if ($coreExclude === null || Package::compareVersion($coreExclude, $excludeCore60, '>')) {
 								$versionData['excludedPackages'][] = [
