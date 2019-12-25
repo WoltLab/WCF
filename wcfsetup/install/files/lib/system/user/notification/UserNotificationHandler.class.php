@@ -122,6 +122,7 @@ class UserNotificationHandler extends SingletonFactory {
 			'userProfile' => $userProfile,
 			'event' => $event
 		];
+		// @deprecated 5.2 This event exposes incomplete data and should not be used, please use the following events instead.
 		EventHandler::getInstance()->fireAction($this, 'fireEvent', $parameters);
 		
 		// find existing notifications
@@ -181,6 +182,11 @@ class UserNotificationHandler extends SingletonFactory {
 					]);
 				}
 				WCF::getDB()->commitTransaction();
+				
+				$triggerCountParameters = $parameters;
+				$triggerCountParameters['updateTriggerCount'] = $notificationIDs;
+				EventHandler::getInstance()->fireAction($this, 'updateTriggerCount', $parameters);
+				unset($triggerCountParameters);
 			}
 		}
 		
@@ -268,6 +274,10 @@ class UserNotificationHandler extends SingletonFactory {
 			
 			// reset notification count
 			UserStorageHandler::getInstance()->reset(array_keys($recipients), 'userNotificationCount');
+			
+			$parameters['notifications'] = $notifications;
+			$parameters['recipients'] = $recipients;
+			EventHandler::getInstance()->fireAction($this, 'createdNotification', $parameters);
 		}
 	}
 	
@@ -777,6 +787,14 @@ class UserNotificationHandler extends SingletonFactory {
 				UserStorageHandler::getInstance()->reset(array_unique($userIDs), 'userNotificationCount');
 			}
 			
+			$parameters = [
+				'eventIDs' => $eventIDs,
+				'objectIDs' => $objectIDs,
+				'objectType' => $objectType,
+				'userIDs' => $userIDs,
+			];
+			EventHandler::getInstance()->fireAction($this, 'removeNotifications', $parameters);
+			
 			// delete notifications
 			$sql = "DELETE FROM	wcf".WCF_N."_user_notification
 				".$conditions;
@@ -817,6 +835,15 @@ class UserNotificationHandler extends SingletonFactory {
 		array_unshift($parameters, TIME_NOW);
 		$statement->execute($parameters);
 		
+		$parameters = [
+			'event' => $event,
+			'eventName' => $eventName,
+			'objectIDs' => $objectIDs,
+			'objectType' => $objectType,
+			'recipientIDs' => $recipientIDs,
+		];
+		EventHandler::getInstance()->fireAction($this, 'markAsConfirmed', $parameters);
+		
 		// delete notification_to_user assignments (mimic legacy notification system)
 		$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
 			WHERE		notificationID NOT IN (
@@ -840,6 +867,7 @@ class UserNotificationHandler extends SingletonFactory {
 	 * Marks a single notification id as confirmed.
 	 * 
 	 * @param	integer		$notificationID
+	 * @deprecated 5.2 Please use `UserNotificationHandler::markAsConfirmedByIDs()` instead.
 	 */
 	public function markAsConfirmedByID($notificationID) {
 		$this->markAsConfirmedByIDs([$notificationID]);
@@ -866,6 +894,9 @@ class UserNotificationHandler extends SingletonFactory {
 		$parameters = $conditions->getParameters();
 		array_unshift($parameters, TIME_NOW);
 		$statement->execute($parameters);
+		
+		$parameters = ['notificationIDs' => $notificationIDs];
+		EventHandler::getInstance()->fireAction($this, 'markAsConfirmedByIDs', $parameters);
 		
 		// delete notification_to_user assignments (mimic legacy notification system)
 		$sql = "DELETE FROM	wcf".WCF_N."_user_notification_to_user
