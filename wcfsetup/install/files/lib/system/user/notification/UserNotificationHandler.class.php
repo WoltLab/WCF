@@ -110,6 +110,7 @@ class UserNotificationHandler extends SingletonFactory {
 		
 		// set object data
 		$event->setObject(new UserNotification(null, []), $notificationObject, $userProfile, $additionalData);
+		$event->setAuthors([$event->getAuthorID() => $event->getAuthor()]);
 		
 		$parameters = [
 			'eventName' => $eventName,
