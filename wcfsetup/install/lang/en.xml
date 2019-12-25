@@ -2534,8 +2534,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.description"><![CDATA[In order to ensure consistency, e.g. after a data import, it is highly recommended to perform all the actions below in their respective order, starting from top to bottom.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user"><![CDATA[Rebuild Users]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user.description"><![CDATA[Rebuilds the user counters and ranks.]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like"><![CDATA[Rebuild Likes]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.description"><![CDATA[Recalculates the likes.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like"><![CDATA[Rebuild Reactions]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.description"><![CDATA[Recalculates the reactions.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[Rebuild Attachments]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment.description"><![CDATA[Rebuilds the attachment preview images.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.media"><![CDATA[Rebuild Media]]></item>
