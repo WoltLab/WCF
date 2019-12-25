@@ -4941,7 +4941,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[„Aktiviert“ und „Nicht aktiviert“ können nicht gleichzeitig ausgewählt werden.]]></item>
 		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Nicht gesperrt]]></item>
 		<item name="wcf.user.condition.userTrophyIDs"><![CDATA[hat Trophäe]]></item>
-		<item name="wcf.user.condition.userTrophyIDs.description"><![CDATA[Benutzer müssen alle ausgewählten Trophäen mindestens ein mal erhalten haben.]]></item>
+		<item name="wcf.user.condition.userTrophyIDs.description"><![CDATA[Benutzer müssen alle ausgewählten Trophäen mindestens einmal erhalten haben.]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs"><![CDATA[hat nicht Trophäe]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs.description"><![CDATA[Benutzer dürfen keine der ausgewählten Trophäen erhalten haben.]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs.error.userTrophyIntersection"><![CDATA[Die ausgewählten Trophäen in „hat Trophäe“ und „hat nicht Trophäe“ sind widersprüchlich.]]></item>
