@@ -2707,8 +2707,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.stat.com.woltlab.wcf.user"><![CDATA[Benutzer]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[Dateianhänge-Speicherbedarf (MB)]]></item>
-		<item name="wcf.acp.stat.com.woltlab.wcf.like"><![CDATA[Likes]]></item>
-		<item name="wcf.acp.stat.com.woltlab.wcf.dislike"><![CDATA[Dislikes]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.like"><![CDATA[Reaktionen]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.userProfileComment"><![CDATA[Pinnwand-Kommentare]]></item>
 		<item name="wcf.acp.stat.dateGrouping"><![CDATA[Zeiteinheit]]></item>
 		<item name="wcf.acp.stat.dateGrouping.daily"><![CDATA[Tag]]></item>

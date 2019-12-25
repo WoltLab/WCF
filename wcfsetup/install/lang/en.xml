@@ -2635,8 +2635,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.stat.com.woltlab.wcf.user"><![CDATA[Users]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.attachment.diskUsage"><![CDATA[Attachments storage usage (MB)]]></item>
-		<item name="wcf.acp.stat.com.woltlab.wcf.like"><![CDATA[Likes]]></item>
-		<item name="wcf.acp.stat.com.woltlab.wcf.dislike"><![CDATA[Dislikes]]></item>
+		<item name="wcf.acp.stat.com.woltlab.wcf.like"><![CDATA[Reactions]]></item>
 		<item name="wcf.acp.stat.com.woltlab.wcf.userProfileComment"><![CDATA[Wall Comments]]></item>
 		<item name="wcf.acp.stat.dateGrouping"><![CDATA[Time Unit]]></item>
 		<item name="wcf.acp.stat.dateGrouping.daily"><![CDATA[Day]]></item>
