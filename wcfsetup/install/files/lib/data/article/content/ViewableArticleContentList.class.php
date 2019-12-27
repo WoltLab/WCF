@@ -34,8 +34,8 @@ class ViewableArticleContentList extends ArticleContentList {
 			if ($articleContent->imageID) {
 				$imageIDs[] = $articleContent->imageID;
 			}
-			if ($articleContent->thumbnailImageID) {
-				$imageIDs[] = $articleContent->thumbnailImageID;
+			if ($articleContent->teaserImageID) {
+				$imageIDs[] = $articleContent->teaserImageID;
 			}
 			if ($articleContent->hasEmbeddedObjects) {
 				$embeddedObjectPostIDs[] = $articleContent->articleContentID;
