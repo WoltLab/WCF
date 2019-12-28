@@ -6,7 +6,7 @@ use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
 use wcf\system\comment\CommentHandler;
 use wcf\system\email\Email;
-use wcf\system\user\notification\object\CommentUserNotificationObject;
+use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 
 /**
  * User notification event for article comment responses.
@@ -17,7 +17,7 @@ use wcf\system\user\notification\object\CommentUserNotificationObject;
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  * @since       5.2
  * 
- * @method	CommentUserNotificationObject	getUserNotificationObject()
+ * @method	CommentResponseUserNotificationObject	getUserNotificationObject()
  */
 class ArticleCommentResponseUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent {
 	use TTestableCommentResponseUserNotificationEvent;
