@@ -96,6 +96,7 @@ class I18nHandler extends SingletonFactory {
 	 * Reads plain and i18n values from request data.
 	 * 
 	 * @param	array|null	$requestData	used request data (if `null`, `$_POST` is used)
+	 * @throws	SystemException
 	 */
 	public function readValues(array $requestData = null) {
 		if ($requestData === null) {

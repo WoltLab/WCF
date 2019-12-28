@@ -292,6 +292,7 @@ class ReactionHandler extends SingletonFactory {
 	 * @param	integer		$reactionTypeID
 	 * @param 	integer		$time
 	 * @return	array
+	 * @throws	DatabaseQueryException
 	 */
 	public function react(ILikeObject $likeable, User $user, $reactionTypeID, $time = TIME_NOW) {
 		// verify if object is already liked by user
