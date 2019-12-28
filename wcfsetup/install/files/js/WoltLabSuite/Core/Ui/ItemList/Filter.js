@@ -219,7 +219,12 @@ define(['Core', 'EventKey', 'Language', 'List', 'StringUtil', 'Dom/Util', 'Ui/Si
 				}
 			});
 			
-			this._container.insertBefore(this._fragment.firstChild, this._container.firstChild);
+			if (this._options.filterPosition === 'bottom') {
+				this._container.insertBefore(this._fragment.firstChild, this._container.firstChild);
+			}
+			else {
+				this._container.appendChild(this._fragment.firstChild);
+			}
 			this._value = value;
 			
 			elInnerError(this._container, (hasVisibleItems) ? false : Language.get('wcf.global.filter.error.noMatches'));
