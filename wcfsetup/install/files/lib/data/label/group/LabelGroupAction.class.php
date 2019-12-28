@@ -72,6 +72,7 @@ class LabelGroupAction extends AbstractDatabaseObjectAction {
 		if (!empty($this->objects)) {
 			// identify i18n labels
 			$languageVariables = [];
+			/** @var LabelGroup $labelGroup */
 			foreach ($this->objects as $labelGroup) {
 				if ($labelGroup->groupName === 'wcf.acp.label.group' . $labelGroup->groupID) {
 					$languageVariables[] = $labelGroup->groupName;
