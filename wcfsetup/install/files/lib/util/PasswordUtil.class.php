@@ -228,6 +228,19 @@ final class PasswordUtil {
 	}
 	
 	/**
+	 * Compares two strings in a constant time manner.
+	 * This function effectively is a polyfill for the PHP 5.6 `hash_equals`.
+	 *
+	 * @param	string		$hash1
+	 * @param	string		$hash2
+	 * @return	boolean
+	 * @deprecated	Use \wcf\util\CryptoUtil::secureCompare()
+	 */
+	public static function secureCompare($hash1, $hash2) {
+		return \hash_equals($hash1, $hash2);
+	}
+	
+	/**
 	 * @deprecated	Use random_int()
 	 */
 	public static function secureRandomNumber($min, $max) {
