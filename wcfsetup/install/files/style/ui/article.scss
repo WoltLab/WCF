@@ -2,6 +2,10 @@
 	@include wcfFontBold;
 }
 
+.articleTeaser + .tableOfContentsWrapper {
+	margin-top: 20px;
+}
+
 .articleTeaserContainer + .section,
 .articleImageContainer + .section {
 	margin-top: 20px !important;
