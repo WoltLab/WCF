@@ -32,7 +32,6 @@ class AttachmentRebuildDataWorker extends AbstractRebuildDataWorker {
 		parent::initObjectList();
 		
 		$this->objectList->sqlOrderBy = 'attachment.attachmentID';
-		$this->objectList->getConditionBuilder()->add('attachment.isImage = ?', [1]);
 	}
 	
 	/**
@@ -41,11 +40,12 @@ class AttachmentRebuildDataWorker extends AbstractRebuildDataWorker {
 	public function execute() {
 		parent::execute();
 		
+		/** @var \wcf\data\attachment\Attachment $attachment */
 		foreach ($this->objectList as $attachment) {
+			$attachment->migrateStorage();
 			try {
 				$action = new AttachmentAction([$attachment], 'generateThumbnails');
 				$action->executeAction();
-				$attachment->migrateStorage();
 			}
 			catch (SystemException $e) {}
 		}
