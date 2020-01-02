@@ -157,7 +157,7 @@ class HtmlNodePlainLink {
 			}
 			
 			// Replace the top level parent with the link itself, which will be replaced with the bbcode afterwards.
-			$this->topLevelParent->insertBefore($this->link, $this->topLevelParent);
+			$this->topLevelParent->parentNode->insertBefore($this->link, $this->topLevelParent);
 			DOMUtil::removeNode($this->topLevelParent);
 		}
 		
