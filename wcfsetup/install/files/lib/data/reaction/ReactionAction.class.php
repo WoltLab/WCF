@@ -93,6 +93,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		$likeList->getConditionBuilder()->add('objectID = ?', [$this->parameters['data']['objectID']]);
 		$likeList->getConditionBuilder()->add('objectTypeID = ?', [$this->objectType->objectTypeID]);
 		$likeList->sqlOrderBy = 'time DESC';
+		$likeList->sqlLimit = 0;
 		$likeList->readObjects();
 		
 		$data = [];
