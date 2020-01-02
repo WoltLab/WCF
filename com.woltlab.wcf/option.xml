@@ -385,7 +385,7 @@
 			<option name="enable_production_debug_mode">
 				<categoryname>module.development</categoryname>
 				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
+				<defaultvalue>0</defaultvalue>
 			</option>
 			<option name="enable_benchmark">
 				<categoryname>module.development</categoryname>
