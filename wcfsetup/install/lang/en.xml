@@ -755,8 +755,8 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.group.option.user.profile.cannotBeIgnored"><![CDATA[Cannot be blocked]]></item>
 		<item name="wcf.acp.group.option.mod.general.canUseModeration"><![CDATA[Can access moderation]]></item>
 		<item name="wcf.acp.group.option.category.user.like"><![CDATA[Likes System]]></item>
-		<item name="wcf.acp.group.option.user.like.canViewLike"><![CDATA[Can view likes]]></item>
-		<item name="wcf.acp.group.option.user.like.canLike"><![CDATA[Can like content]]></item>
+		<item name="wcf.acp.group.option.user.like.canViewLike"><![CDATA[Can view reactions]]></item>
+		<item name="wcf.acp.group.option.user.like.canLike"><![CDATA[Can react to content]]></item>
 		<item name="wcf.acp.group.option.category.user.profileComment"><![CDATA[User Profile Wall]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canAddComment"><![CDATA[Can create comments]]></item>
 		<item name="wcf.acp.group.option.user.profileComment.canAddCommentWithoutModeration"><![CDATA[Can create comments without approval]]></item>
@@ -1491,13 +1491,13 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.option.user_cleanup_activity_event_lifetime.description"><![CDATA[Recent activities will be removed after the following days.]]></item>
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime"><![CDATA[Profile Visitors]]></item>
 		<item name="wcf.acp.option.user_cleanup_profile_visitor_lifetime.description"><![CDATA[Profile visitors will be removed after the following days.]]></item>
-		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Likes System]]></item>
-		<item name="wcf.acp.option.module_like"><![CDATA[Likes system]]></item>
-		<item name="wcf.acp.option.like_show_summary"><![CDATA[Display likes summary]]></item>
+		<item name="wcf.acp.option.category.message.general.likes"><![CDATA[Reaction System]]></item>
+		<item name="wcf.acp.option.module_like"><![CDATA[Reaction System]]></item>
+		<item name="wcf.acp.option.like_show_summary"><![CDATA[Display reaction summary]]></item>
 		<item name="wcf.acp.option.module_user_profile_wall"><![CDATA[User profile wall]]></item>
 		<item name="wcf.acp.option.category.message.sidebar"><![CDATA[Sidebar]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_online_status"><![CDATA[Display author’s online status]]></item>
-		<item name="wcf.acp.option.message_sidebar_enable_likes_received"><![CDATA[Display author’s likes received]]></item>
+		<item name="wcf.acp.option.message_sidebar_enable_likes_received"><![CDATA[Display author’s reactions received]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_activity_points"><![CDATA[Display author’s activity points]]></item>
 		<item name="wcf.acp.option.message_sidebar_enable_trophy_points"><![CDATA[Display author’s trophy received]]></item>
 		<item name="wcf.acp.option.message_sidebar_user_options"><![CDATA[Display Selected Author Profile Fields]]></item>
@@ -1628,7 +1628,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.option.category.cms.media"><![CDATA[Media]]></item>
 		<item name="wcf.acp.option.articles_per_page"><![CDATA[Articles per Page]]></item>
 		<item name="wcf.acp.option.article_enable_comments_default_value"><![CDATA[Enable comments (default value)]]></item>
-		<item name="wcf.acp.option.article_enable_like"><![CDATA[Enable likes]]></item>
+		<item name="wcf.acp.option.article_enable_like"><![CDATA[Enable reactions]]></item>
 		<item name="wcf.acp.option.article_related_articles"><![CDATA[Number of “Related Articles”]]></item>
 		<item name="wcf.acp.option.article_related_articles_match_threshold"><![CDATA[Similarity of Related Articles]]></item>
 		<item name="wcf.acp.option.article_related_articles_match_threshold.description"><![CDATA[The minimum amount of tags that both articles have in common.]]></item>
