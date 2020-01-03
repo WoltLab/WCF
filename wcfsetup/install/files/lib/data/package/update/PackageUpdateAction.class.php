@@ -680,7 +680,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 							// the Core upgrade must be the first package in the stack, but there appears to be
 							// at least one package in front of the queue, therefore there are outstanding
 							// updates for the previous version line
-							throw new SystemException(WCF::getLanguage()->get('wcf.acp.package.update.error.outstandingUpdates'));
+							throw new SystemException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.update.error.outstandingUpdates'));
 						}
 					}
 					
