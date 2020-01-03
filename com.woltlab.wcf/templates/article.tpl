@@ -133,7 +133,13 @@
 			<figure class="articleImage">
 				<div class="articleImageWrapper">{@$articleContent->getImage()->getThumbnailTag('large')}</div>
 				{if $articleContent->getImage()->caption}
-					<figcaption itemprop="description">{$articleContent->getImage()->caption}</figcaption>
+					<figcaption itemprop="description">
+						{if $articleContent->getImage()->captionEnableHtml}
+							{@$articleContent->getImage()->caption}
+						{else}
+							{$articleContent->getImage()->caption}
+						{/if}
+					</figcaption>
 				{/if}
 			</figure>
 			<meta itemprop="url" content="{$articleContent->getImage()->getThumbnailLink('large')}">

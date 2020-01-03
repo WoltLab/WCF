@@ -1536,6 +1536,10 @@
 		<!-- /trophy list box condition -->
 		<!-- media -->
 		<type>
+			<name>com.woltlab.wcf.media.caption</name>
+			<definitionname>com.woltlab.wcf.message</definitionname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.media</name>
 			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
 		</type>

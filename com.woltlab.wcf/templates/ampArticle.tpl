@@ -49,7 +49,13 @@
 		<figure class="articleImage">
 			<amp-img src="{$articleContent->getImage()->getThumbnailLink('large')}" alt="{$articleContent->getImage()->altText}" height="{@$articleContent->getImage()->getThumbnailHeight('large')}" width="{@$articleContent->getImage()->getThumbnailWidth('large')}" layout="responsive"></amp-img>
 			{if $articleContent->getImage()->caption}
-				<figcaption>{$articleContent->getImage()->caption}</figcaption>
+				<figcaption>
+					{if $articleContent->getImage()->captionEnableHtml}
+						{@$articleContent->getImage()->getAmpCaption()}
+					{else}
+						{$articleContent->getImage()->caption}
+					{/if}
+				</figcaption>
 			{/if}
 		</figure>
 	{/if}

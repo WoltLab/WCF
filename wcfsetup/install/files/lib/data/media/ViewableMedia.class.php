@@ -3,6 +3,7 @@ namespace wcf\data\media;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\html\output\AmpHtmlOutputProcessor;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
@@ -223,6 +224,19 @@ class ViewableMedia extends DatabaseObjectDecorator {
 		}
 		
 		return $this->userProfile;
+	}
+	
+	/**
+	 * Returns the amp version of the caption.
+	 * 
+	 * @return	string
+	 * @since	5.2
+	 */
+	public function getAmpCaption() {
+		$processor = new AmpHtmlOutputProcessor();
+		$processor->process($this->caption, 'com.woltlab.wcf.media.caption', $this->mediaID);
+		
+		return $processor->getHtml();
 	}
 	
 	/**
