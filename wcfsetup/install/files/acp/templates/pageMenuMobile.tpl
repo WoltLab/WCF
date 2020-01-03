@@ -55,7 +55,7 @@
 				<ol class="menuOverlayItemList">
 					{foreach from=$__wcf->getFrontendMenu()->getMenuItemNodeList() item=_menuItem}
 						{if !$_menuItem->parentItemID && $_menuItem->getPage()}
-							<li class="menuOverlayItem"><a href="{$_menuItem->getURL()}" class="menuOverlayItemLink">{lang}{$_menuItem->title}{/lang}</a></li>
+							<li class="menuOverlayItem"><a href="{$_menuItem->getURL()}" class="menuOverlayItemLink">{$_menuItem->getTitle()}</a></li>
 						{/if}
 					{/foreach}
 				</ol>
