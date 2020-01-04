@@ -94,7 +94,7 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
 					if ($userProfile === null) continue;
 					
 					// show a maximum of x users
-					if ($i == $this->box->limit) break;
+					if ($i == $this->limit) break;
 					
 					$birthdayUserOption->setUser($userProfile->getDecoratedObject());
 					
@@ -107,11 +107,6 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
 				if (!empty($visibleUserProfiles)) {
 					// sort users
 					DatabaseObject::sort($visibleUserProfiles, $this->sortField, $this->sortOrder);
-					
-					// apply limit
-					if (count($visibleUserProfiles) > $this->box->limit) {
-						$visibleUserProfiles = array_slice($visibleUserProfiles, 0, $this->box->limit);
-					}
 					
 					$this->content = WCF::getTPL()->fetch($this->templateName, 'wcf', [
 						'birthdayUserProfiles' => $visibleUserProfiles
