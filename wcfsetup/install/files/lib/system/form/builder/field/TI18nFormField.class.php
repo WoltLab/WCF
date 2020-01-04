@@ -7,7 +7,9 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
 use wcf\system\language\I18nHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
@@ -120,7 +122,19 @@ trait TI18nFormField {
 				return I18nHandler::getInstance()->getValue($this->getPrefixedId());
 			}
 			else if ($this->hasI18nValues()) {
-				return I18nHandler::getInstance()->getValues($this->getPrefixedId());
+				$values = I18nHandler::getInstance()->getValues($this->getPrefixedId());
+				
+				// handle legacy values from the past when multilingual values
+				// were available
+				if (count(LanguageFactory::getInstance()->getLanguages()) === 1) {
+					if (isset($values[WCF::getLanguage()->languageID])) {
+						return $values[WCF::getLanguage()->languageID];
+					}
+					
+					return current($values);
+				}
+				
+				return $values;
 			}
 			
 			return '';
