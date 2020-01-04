@@ -214,7 +214,7 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 		$this->objectList = $this->getObjectList();
 		
 		if ($this->limit) {
-			$this->objectList->sqlLimit = $this->box->limit;
+			$this->objectList->sqlLimit = $this->limit;
 		}
 		
 		if ($this->sortOrder && $this->sortField) {
@@ -287,11 +287,11 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 		parent::setBox($box);
 		
 		if ($setConditionData) {
-			if ($this->defaultLimit !== null) {
+			if ($this->defaultLimit !== null && $this->box->limit) {
 				$this->limit = $this->box->limit;
 			}
 			
-			if (!empty($this->validSortFields)) {
+			if (!empty($this->validSortFields) && $this->box->sortOrder && $this->box->sortField) {
 				$this->sortOrder = $this->box->sortOrder;
 				$this->sortField = $this->box->sortField;
 			}

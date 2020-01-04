@@ -72,8 +72,8 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController {
 	public function getLink() {
 		if (MODULE_MEMBERS_LIST) {
 			$parameters = '';
-			if ($this->box->sortField) {
-				$parameters = 'sortField='.$this->box->sortField.'&sortOrder='.$this->box->sortOrder;
+			if ($this->sortField) {
+				$parameters = 'sortField='.$this->sortField.'&sortOrder='.$this->sortOrder;
 			}
 			
 			return LinkHandler::getInstance()->getLink('MembersList', [], $parameters);
@@ -87,9 +87,9 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController {
 	 */
 	protected function getObjectList() {
 		// use specialized cache builders
-		if ($this->box->sortOrder && $this->box->sortField && isset($this->cacheBuilders[$this->box->sortField])) {
-			$this->userIDs = call_user_func([$this->cacheBuilders[$this->box->sortField], 'getInstance'])->getData([
-				'limit' => $this->box->limit,
+		if ($this->sortOrder && $this->sortField && isset($this->cacheBuilders[$this->sortField])) {
+			$this->userIDs = call_user_func([$this->cacheBuilders[$this->sortField], 'getInstance'])->getData([
+				'limit' => $this->limit,
 				'sortOrder' => $this->sortOrder
 			]);
 		}
