@@ -516,7 +516,7 @@ class Email {
 			// an event decided that this email should be skipped
 			if ($data['skip']) continue;
 			
-			$jobs[] = new EmailDeliveryBackgroundJob($mail, $data['sender'], $data['recipient']['mailbox']);
+			$jobs[] = new EmailDeliveryBackgroundJob($data['mail'], $data['sender'], $data['recipient']['mailbox']);
 		}
 		
 		return $jobs;
