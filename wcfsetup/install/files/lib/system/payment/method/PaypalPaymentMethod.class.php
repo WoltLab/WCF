@@ -48,7 +48,6 @@ class PaypalPaymentMethod extends AbstractPaymentMethod {
 			'CHF', // Swiss Franc
 			'TWD', // Taiwan New Dollar
 			'THB', // Thai Baht
-			'TRY', // Turkish Lira
 			'USD'  // U.S. Dollar
 		];
 	}
