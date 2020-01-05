@@ -652,9 +652,12 @@ class ReactionHandler extends SingletonFactory {
 		$likeList->readObjects();
 		
 		if (count($likeList)) {
-			$likeData = [];
+			$activityPoints = $likeData = [];
 			foreach ($likeList as $like) {
 				$likeData[$like->likeID] = $like->userID;
+				
+				if (!isset($activityPoints[$like->userID])) $activityPoints[$like->userID] = 0;
+				$activityPoints[$like->userID]++;
 			}
 			
 			// delete like notifications
@@ -668,7 +671,7 @@ class ReactionHandler extends SingletonFactory {
 			}
 			
 			// revoke activity points
-			UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $likeData);
+			UserActivityPointHandler::getInstance()->removeEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', $activityPoints);
 			
 			// delete likes
 			(new ReactionAction(array_keys($likeData), 'delete'))->executeAction();
