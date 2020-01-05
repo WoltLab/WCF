@@ -56,12 +56,6 @@ https?://vimeo\.com/groups/[^/]+/videos/(?P<ID>\d+)]]></regex>
 			<html><![CDATA[<blockquote class="instagram-media" data-instgrm-version="7"><a href="https://www.instagram.com/p/{$ID}/"></a></blockquote><script async defer src="//platform.instagram.com/en_US/embeds.js"></script>]]></html>
 		</provider>
 		
-		<provider name="imgur">
-			<title>Imgur</title>
-			<regex><![CDATA[https?://imgur.com/(?:gallery/)?(?P<ID>[a-zA-Z0-9-]+)]]></regex>
-			<html><![CDATA[<blockquote class="imgur-embed-pub" data-id="a/{$ID}"></blockquote><script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>]]></html>
-		</provider>
-		
 		<provider name="spotify-playlist">
 			<title>Spotify Playlist</title>
 			<regex><![CDATA[https?://play.spotify.com/user/(?<USER>[0-9a-zA-Z]+)/playlist/(?<ID>[0-9a-zA-Z]+)
@@ -98,5 +92,6 @@ https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<ID>[0-9]+)]]></regex>
 	
 	<delete>
 		<provider name="facebook-video" />
+		<provider name="imgur" />
 	</delete>
 </data>
