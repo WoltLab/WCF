@@ -79,6 +79,13 @@ $.Redactor.prototype.WoltLabLink = function() {
 			// is link
 			var $el = this.link.is();
 			
+			// build link
+			if (hasSelectedText) this.selection.restore();
+			
+			var link = this.link.buildLinkFromElement($el);
+			
+			if (hasSelectedText) this.selection.save();
+
 			// WoltLab START
 			// this.link.buildModal($el);
 			_dialogApi.showDialog({
@@ -99,13 +106,6 @@ $.Redactor.prototype.WoltLabLink = function() {
 				}).bind(this)
 			});
 			// WoltLab END
-			
-			// build link
-			if (hasSelectedText) this.selection.restore();
-			
-			var link = this.link.buildLinkFromElement($el);
-			
-			if (hasSelectedText) this.selection.save();
 			
 			// if link cut & paste inside editor browser added self host to a link
 			link.url = this.link.removeSelfHostFromUrl(link.url);
