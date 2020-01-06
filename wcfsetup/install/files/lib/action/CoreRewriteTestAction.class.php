@@ -13,6 +13,8 @@ use wcf\util\JSON;
  * @since       3.1
  */
 class CoreRewriteTestAction extends AbstractAction {
+	const AVAILABLE_DURING_OFFLINE_MODE = true;
+	
 	/**
 	 * @inheritDoc
 	 * 
