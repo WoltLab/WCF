@@ -51,7 +51,12 @@ class SystemCheckPage extends AbstractPage {
 	];
 	
 	public $mysqlVersions = [
-		'mysql' => '5.5.35',
+		'mysql' => [
+			// MySQL 8.0 < 8.0.14 contains a nasty bug
+			// https://bugs.mysql.com/bug.php?id=88718
+			'5' => '5.5.35',
+			'8' => '8.0.14',
+		],
 		'mariadb' => [
 			// MariaDB 5.5.47+ or 10.0.22+ are required
 			// https://jira.mariadb.org/browse/MDEV-8756
