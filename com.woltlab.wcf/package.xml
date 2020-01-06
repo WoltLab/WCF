@@ -54,7 +54,7 @@
 		<instruction type="file">files_preUpdate.tar</instruction>
 		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_5.2_preUpdate.php</instruction>
 		
-		<!-- Contains a few PIP-scripts, \wcf\data\option\OptionEditor, \wcf\system\cache\builder\RoutingCacheBuilder and \wcf\system\database\table\* -->
+		<!-- Contains a few PIP-scripts, \wcf\data\option\OptionEditor and \wcf\system\database\table\* -->
 		<instruction type="file" run="standalone">files_pre.tar</instruction>
 		
 		<!-- Required language categories for the reactions. -->
@@ -69,6 +69,8 @@
 		
 		<!-- Delete all likeable recent activity events, because they don't have the reactionType stored. -->
 		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_5.2_deleteRecentActivity.php</instruction>
+		
+		<instruction type="file" run="standalone">files_routingCacheBuilder.tar</instruction>
 		
 		<instruction type="sql">update_5.2.sql</instruction>
 		
