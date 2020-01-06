@@ -2,6 +2,7 @@
 namespace wcf\data\user\trophy;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
@@ -34,6 +35,11 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 	 * @inheritDoc
 	 */
 	protected $allowGuestAccess = ['getGroupedUserTrophyList'];
+	
+	/**
+	 * @var UserProfile
+	 */
+	public $userProfile;
 	
 	/**
 	 * @inheritDoc
