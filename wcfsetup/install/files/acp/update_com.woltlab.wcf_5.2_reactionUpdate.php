@@ -27,6 +27,12 @@ try {
 	
 	$reactions = ['like', 'thanks', 'haha', 'confused', 'sad'];
 	if (LIKE_ENABLE_DISLIKE) {
+		// Remove the existing phrase in case a previous upgrade attempt has failed.
+		$sql = "DELETE FROM     wcf".WCF_N."_language_item
+			WHERE           languageItem = ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute(['wcf.reactionType.title6']);
+		
 		$reactions[] = 'thumbsDown';
 		
 		$sql = "SELECT  languageCategoryID
@@ -50,9 +56,9 @@ try {
 		}
 	}
 	
-	$sql = "INSERT INTO     wcf".WCF_N."_reaction_type
-				(reactionTypeID, title, showOrder, iconFile)
-		VALUES          (?, ?, ?, ?)";
+	$sql = "INSERT IGNORE INTO      wcf".WCF_N."_reaction_type
+					(reactionTypeID, title, showOrder, iconFile)
+		VALUES                  (?, ?, ?, ?)";
 	$statement = WCF::getDB()->prepareStatement($sql);
 	for ($i = 0, $length = count($reactions); $i < $length; $i++) {
 		$reactionTypeID = $i + 1;
@@ -90,8 +96,33 @@ try {
 			dislikes = 0";
 	WCF::getDB()->prepareStatement($sql)->execute();
 	
-	$statement = WCF::getDB()->prepareStatement('ALTER TABLE wcf'.WCF_N.'_like ADD FOREIGN KEY (reactionTypeID) REFERENCES wcf'.WCF_N.'_reaction_type (reactionTypeID) ON DELETE CASCADE');
-	$statement->execute();
+	$dbEditor = WCF::getDB()->getEditor();
+	$foreignKeys = $dbEditor->getForeignKeys('wcf'.WCF_N.'_like');
+	$expectedKey = 'fe5076ee92a558ce8177e3afbfc3dafc_fk';
+	$hasExpectedKey = false;
+	
+	// Find the previously added foreign key, in case the upgrade was interrupted before.
+	foreach ($foreignKeys as $indexName => $definition) {
+		if ($indexName === $expectedKey) {
+			$hasExpectedKey = true;
+			break;
+		}
+		
+		if ($definition['referencedTable'] === 'wcf'.WCF_N.'_reaction_type') {
+			if (count($definition['columns']) === 1 && $definition['columns'][0] === 'reactionTypeID') {
+				$dbEditor->dropForeignKey('wcf'.WCF_N.'_like', $indexName);
+			}
+		}
+	}
+	
+	if (!$hasExpectedKey) {
+		$dbEditor->addForeignKey('wcf' . WCF_N . '_like', $expectedKey, [
+			'columns' => 'reactionTypeID',
+			'referencedColumns' => 'reactionTypeID',
+			'referencedTable' => 'wcf'.WCF_N.'_reaction_type',
+			'ON DELETE' => 'CASCADE',
+		]);
+	}
 	
 	WCF::getDB()->commitTransaction();
 }
