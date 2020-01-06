@@ -171,11 +171,12 @@ class OptionAction extends AbstractDatabaseObjectAction {
 			
 			foreach ($domainPaths as $domainPath => $value) {
 				$htaccess = "{$dir}.htaccess";
-				$path = FileUtil::removeTrailingSlash(substr($value, strlen($dir)));
+				$path = FileUtil::addTrailingSlash(substr($value, strlen($dir)));
+				if ($path == '/') $path = '';
 				$content = <<<SNIPPET
 RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteCond %{SCRIPT_FILENAME} !-f
-RewriteRule ^/{$path}(.*)$ {$path}/index.php?$1 [L,QSA]
+RewriteRule ^{$path}(.*)$ {$path}index.php?$1 [L,QSA]
 
 
 SNIPPET;
