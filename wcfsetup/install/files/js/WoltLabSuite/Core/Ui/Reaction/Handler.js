@@ -176,7 +176,7 @@ define(
 				var messageFooterGroup = element.closest('.messageFooterGroup');
 				
 				var button = elCreate('button');
-				button.classList = 'mobileReactButton';
+				button.className = 'mobileReactButton';
 				button.innerHTML = element.innerHTML;
 				
 				button.addEventListener(WCF_CLICK_EVENT, this._toggleReactPopover.bind(this, objectID, button));
@@ -316,7 +316,7 @@ define(
 						reactionTypeItem.title = reactionType.title;
 						
 						var reactionTypeItemSpan = elCreate('span');
-						reactionTypeItemSpan.classList = 'reactionTypeButtonTitle';
+						reactionTypeItemSpan.className = 'reactionTypeButtonTitle';
 						reactionTypeItemSpan.innerHTML = reactionType.title;
 
 						//noinspection JSUnresolvedVariable

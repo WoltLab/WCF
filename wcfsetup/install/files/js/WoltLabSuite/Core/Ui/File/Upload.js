@@ -74,7 +74,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 			var progress = elBySel('progress', element);
 			
 			var icon = elCreate('span');
-			icon.classList = 'icon icon64 fa-spinner';
+			icon.className = 'icon icon64 fa-spinner';
 			
 			var fileName = element.textContent;
 			element.textContent = "";
@@ -94,7 +94,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 			div.appendChild(innerDiv);
 			
 			var ul = elCreate('ul');
-			ul.classList = 'buttonGroup';
+			ul.className = 'buttonGroup';
 			div.appendChild(ul);
 			
 			// reset element textContent and replace with own element style
@@ -113,7 +113,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 				icon.classList.add('fa-ban');
 				
 				var innerError = elCreate('span');
-				innerError.classList = 'innerError';
+				innerError.className = 'innerError';
 				innerError.textContent = Language.get('wcf.upload.error.uploadFailed');
 				DomUtil.insertAfter(innerError, elBySel('small', this._fileElements[uploadId][i]));
 			}
@@ -168,7 +168,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 					
 					if (elBySel('.innerError', this._fileElements[uploadId][i]) === null) {
 						var innerError = elCreate('span');
-						innerError.classList = 'innerError';
+						innerError.className = 'innerError';
 						innerError.textContent = data['error'][i].errorMessage;
 						DomUtil.insertAfter(innerError, elBySel('small', this._fileElements[uploadId][i]));
 					}
@@ -201,7 +201,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 				
 				if (innerError === null) {
 					innerError = elCreate('small');
-					innerError.classList = 'innerError';
+					innerError.className = 'innerError';
 					DomUtil.insertAfter(innerError, this._buttonContainer);
 				}
 				
