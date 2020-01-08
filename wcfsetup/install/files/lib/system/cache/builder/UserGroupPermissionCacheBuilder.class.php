@@ -127,8 +127,7 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 				$accessibleGroupIDs = explode(',', $result);
 				if ($includesOwnerGroup) {
 					// Regardless of the actual permissions, the owner group has access to all groups.
-					
-					$accessibleGroupIDs[] = $ownerGroup->groupID;
+					$accessibleGroupIDs = array_keys(UserGroup::getAllGroups());
 				}
 				else if (!$includesOwnerGroup && in_array($ownerGroup->groupID, $accessibleGroupIDs)) {
 					$accessibleGroupIDs = array_diff($accessibleGroupIDs, [$ownerGroup->groupID]);
