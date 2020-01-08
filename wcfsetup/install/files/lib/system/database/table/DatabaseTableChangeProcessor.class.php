@@ -577,6 +577,26 @@ class DatabaseTableChangeProcessor {
 	}
 	
 	/**
+	 * Creates a done log entry for the given foreign key.
+	 * 
+	 * @param	string				$tableName
+	 * @param	DatabaseTableForeignKey		$foreignKey
+	 */
+	protected function createForeignKeyLog($tableName, DatabaseTableForeignKey $foreignKey) {
+		$sql = "INSERT INTO	wcf" . WCF_N . "_package_installation_sql_log
+					(packageID, sqlTable, sqlIndex, isDone)
+			VALUES		(?, ?, ?, ?)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		
+		$statement->execute([
+			$this->package->packageID,
+			$tableName,
+			$foreignKey->getName(),
+			1
+		]);
+	}
+	
+	/**
 	 * Creates the given table.
 	 * 
 	 * @param	DatabaseTable		$table
@@ -612,6 +632,9 @@ class DatabaseTableChangeProcessor {
 		
 		foreach ($table->getForeignKeys() as $foreignKey) {
 			$this->dbEditor->addForeignKey($table->getName(), $foreignKey->getName(), $foreignKey->getData());
+			
+			// foreign keys need to be explicitly logged for proper uninstallation
+			$this->createForeignKeyLog($table->getName(), $foreignKey);
 		}
 	}
 	
