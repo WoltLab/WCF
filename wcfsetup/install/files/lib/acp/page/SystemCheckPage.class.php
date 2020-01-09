@@ -215,8 +215,15 @@ class SystemCheckPage extends AbstractPage {
 				$this->results['mysql']['result'] = (version_compare($compareSQLVersion, $this->mysqlVersions['mariadb']['10']) >= 0);
 			}
 		}
-		else if (version_compare($compareSQLVersion, $this->mysqlVersions['mysql']) >= 0) {
-			$this->results['mysql']['result'] = true;
+		else {
+			// For MySQL 8.0, MySQL 8.0.14+ is required
+			// https://bugs.mysql.com/bug.php?id=88718
+			if ($compareSQLVersion[0] === '5') {
+				$this->results['mysql']['result'] = (version_compare($compareSQLVersion, $this->mysqlVersions['mysql']['5']) >= 0);
+			}
+			else {
+				$this->results['mysql']['result'] = (version_compare($compareSQLVersion, $this->mysqlVersions['mysql']['8']) >= 0);
+			}
 		}
 		
 		// check innodb support
