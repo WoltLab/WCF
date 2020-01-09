@@ -2,7 +2,6 @@
 namespace wcf\system\database\table;
 use wcf\system\WCF;
 
-
 /**
  * PHP representation of an existing database table or the intended layout of an non-existing or
  * existing database table.
