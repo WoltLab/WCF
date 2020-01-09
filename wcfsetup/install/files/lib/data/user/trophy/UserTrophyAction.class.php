@@ -69,9 +69,9 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 				
 				if (!$hasTrophy) {
 					$userProfileAction = new UserProfileAction([$userTrophy->getUserProfile()->getDecoratedObject()], 'updateSpecialTrophies', [
-						'trophyIDs' => array_merge(array_map(function($trophy) {
+						'trophyIDs' => array_unique(array_merge(array_map(function($trophy) {
 							return $trophy->trophyID;
-						}, $userTrophy->getUserProfile()->getSpecialTrophies()), [$userTrophy->trophyID])
+						}, $userTrophy->getUserProfile()->getSpecialTrophies()), [$userTrophy->trophyID]))
 					]);
 					$userProfileAction->executeAction();
 				}
