@@ -54,6 +54,12 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 			]);
 		}
 		
+		// The title cannot be empty by design, but cannot be filled proper if the
+		// multilingualism is enabled, therefore, we must fill the tilte with a dummy value.
+		if (!isset($this->parameters['data']['title']) && isset($this->parameters['title_i18n'])) {
+			$this->parameters['data']['title'] = 'wcf.reactionType.title';
+		}
+		
 		/** @var ReactionType $reactionType */
 		$reactionType = parent::create();
 		$reactionTypeEditor = new ReactionTypeEditor($reactionType);
