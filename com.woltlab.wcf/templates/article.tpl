@@ -180,7 +180,7 @@
 			
 			
 			<div class="col-xs-12 col-md-6 col-md{if !(MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canViewLike'))} col-md-offset-6{/if}">
-				<ul class="articleLikeButtons buttonGroup">
+				<ul class="articleLikeButtons buttonGroup buttonList smallButtons">
 					{if $__wcf->session->getPermission('user.profile.canReportContent')}
 						<li class="jsReportArticle jsOnly" data-object-id="{@$articleContent->articleID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
 					{/if}
