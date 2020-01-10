@@ -156,7 +156,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			
 			$this->boxData[$identifier] = [
 				'identifier' => $identifier,
-				'name' => $this->getI18nValues($data['elements']['title'], true),
+				'name' => $this->getI18nValues(!empty($data['elements']['box']['name']) ? $data['elements']['box']['name'] : $data['elements']['title'], true),
 				'boxType' => 'menu',
 				'position' => $position,
 				'showHeader' => !empty($data['elements']['box']['showHeader']) ? 1 : 0,
