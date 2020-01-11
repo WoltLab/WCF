@@ -7,6 +7,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\label\LabelHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -207,6 +208,7 @@ class ArticleListPage extends SortablePage {
 			'user' => $this->user,
 			'categoryID' => 0,
 			'showArticleAddDialog' => $this->showArticleAddDialog,
+			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 		]);
 	}
 }
