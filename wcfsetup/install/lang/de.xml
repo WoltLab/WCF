@@ -1719,7 +1719,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.option.log_missing_language_items.description"><![CDATA[Die fehlenden Sprachvariablen werden in der Datei <kbd>{'WCF_DIR'|constant}log/missingLanguageItems.txt</kbd> protokolliert.]]></item>
 		<item name="wcf.acp.option.category.general.system.ipAddress"><![CDATA[IP-Adressen]]></item>
 		<item name="wcf.acp.option.prune_ip_address"><![CDATA[Speicherzeit für IP-Adressen]]></item>
-		<item name="wcf.acp.option.prune_ip_address.description"><![CDATA[Zeitraum, nachdem alte IP-Adressen automatisch gelöscht werden. [0, um die Löschung zu deaktivieren]]></item>
+		<item name="wcf.acp.option.prune_ip_address.description"><![CDATA[Zeitraum, nachdem alte IP-Adressen automatisch gelöscht werden. [0, um die Löschung zu deaktivieren]]]></item>
 		<item name="wcf.acp.option.breadcrumbs_home_use_page_title"><![CDATA[Titel der Seite für die Startseite in den Breadcrumbs verwenden]]></item>
 		<item name="wcf.acp.option.category.message.contactForm"><![CDATA[Kontakt-Formular]]></item>
 		<item name="wcf.acp.option.contact_form_enable_attachments"><![CDATA[Dateianhänge im Kontakt-Formular aktivieren]]></item>
