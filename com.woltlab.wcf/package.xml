@@ -116,4 +116,6 @@
 		<instruction type="mediaProvider" />
 		<instruction type="objectType" />
 	</instructions>
+	
+	<!--<instruction type="script">acp/update_com.woltlab.wcf_5.2.2.php</instruction>-->
 </package>
