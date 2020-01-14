@@ -25,7 +25,9 @@ class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStra
 				$uploadFile->setValidationErrorType('tooSmall');
 				return false;
 			}
-			else if ($imageData[2] === IMAGETYPE_WEBP) {
+			// `IMAGETYPE_WEBP` is available since PHP 7.1, remove the first check as soon as we
+			// drop the support for ancient PHP versions.
+			else if (!defined('IMAGETYPE_WEBP') || $imageData[2] === IMAGETYPE_WEBP) {
 				// Reject WebP images regardless of any file extension restriction, they are
 				// neither supported in Safari nor in Internet Explorer 11. We can safely lift
 				// this restriction once Apple implements the support or if any sort of fall-
