@@ -2,6 +2,7 @@
 namespace wcf\system\upload;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\system\exception\SystemException;
+use wcf\util\FileUtil;
 
 /**
  * Validation strategy for avatar uploads.
@@ -25,15 +26,29 @@ class AvatarUploadFileValidationStrategy extends DefaultUploadFileValidationStra
 				$uploadFile->setValidationErrorType('tooSmall');
 				return false;
 			}
-			// `IMAGETYPE_WEBP` is available since PHP 7.1, remove the first check as soon as we
-			// drop the support for ancient PHP versions.
-			else if (!defined('IMAGETYPE_WEBP') || $imageData[2] === IMAGETYPE_WEBP) {
+			else {
 				// Reject WebP images regardless of any file extension restriction, they are
 				// neither supported in Safari nor in Internet Explorer 11. We can safely lift
 				// this restriction once Apple implements the support or if any sort of fall-
 				// back mechanism is implemented: https://github.com/WoltLab/WCF/issues/2838
-				$uploadFile->setValidationErrorType('invalidExtension');
-				return false;
+				$isWebP = false;
+				
+				// `IMAGETYPE_WEBP` is available since PHP 7.1, remove the first check as soon as we
+				// drop the support for ancient PHP versions.
+				if (!defined('IMAGETYPE_WEBP')) {
+					// The underlying fileinfo class is able to detect WebP.
+					if (FileUtil::getMimeType($uploadFile->getLocation()) === 'image/webp') {
+						$isWebP = true;
+					}
+				}
+				else if ($imageData[2] === IMAGETYPE_WEBP) {
+					$isWebP = true;
+				}
+				
+				if ($isWebP) {
+					$uploadFile->setValidationErrorType('invalidExtension');
+					return false;
+				}
 			}
 		}
 		catch (SystemException $e) {
