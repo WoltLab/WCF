@@ -28,6 +28,8 @@
 
 <a id="top"></a>
 
+{event name='beforePageContainer'}
+
 <div id="pageContainer" class="pageContainer">
 	{event name='beforePageHeader'}
 	
