@@ -189,7 +189,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			elBySelAll('.item > span', data.list, function(span) {
 				values.push({
 					objectId: ~~elData(span, 'object-id'),
-					value: span.textContent,
+					value: span.textContent.trim(),
 					type: elData(span, 'type')
 				});
 			});
