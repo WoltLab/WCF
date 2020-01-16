@@ -291,7 +291,7 @@
 			<ul>
 				{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
 					{if $menuItem->getContentManager()->isVisible($userID)}
-						<li><a href="{$__wcf->getAnchor($menuItem->getIdentifier())}">{lang}wcf.user.profile.menu.{@$menuItem->menuItem}{/lang}</a></li>
+						<li><a href="{@$__wcf->getAnchor($menuItem->getIdentifier())}">{lang}wcf.user.profile.menu.{@$menuItem->menuItem}{/lang}</a></li>
 					{/if}
 				{/foreach}
 			</ul>
