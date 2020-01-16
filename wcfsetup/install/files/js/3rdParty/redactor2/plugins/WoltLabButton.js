@@ -187,7 +187,7 @@ $.Redactor.prototype.WoltLabButton = function() {
 		},
 		
 		_disableToggleButton: function () {
-			if (_toggleButton.parentNode !== null) {
+			if (_toggleButton && _toggleButton.parentNode !== null) {
 				this.$toolbar[0].removeChild(_toggleButton);
 			}
 		},
