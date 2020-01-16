@@ -191,7 +191,7 @@ class ArticleEditForm extends ArticleAddForm {
 			'article' => $this->article,
 			'defaultLanguageID' => LanguageFactory::getInstance()->getDefaultLanguageID(),
 			'languages' => LanguageFactory::getInstance()->getLanguages(),
-			'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.article', $this->articleID)
+			'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.article', $this->articleID),
 		]);
 	}
 }
