@@ -549,7 +549,7 @@ define(
 		},
 		
 		_handleKeyDown: function(event) {
-			if (EventKey.Enter(event) || EventKey.Space(event)) {
+			if (EventKey.Enter(event) || (EventKey.Space(event) && event.currentTarget.nodeName !== 'INPUT')) {
 				event.preventDefault();
 				this._toggle(event);
 			}
