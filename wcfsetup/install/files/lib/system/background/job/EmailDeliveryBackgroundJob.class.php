@@ -17,7 +17,7 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 	/**
 	 * @inheritDoc
 	 */
-	const MAX_FAILURES = 24;
+	const MAX_FAILURES = 25;
 	
 	/**
 	 * email to send
@@ -75,19 +75,20 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 			9 => 6 * 60, // 30 hours
 			10 => 6 * 60, // 36 hours
 			11 => 6 * 60, // 42 hours
-			12 => 12 * 60, // 60 hours
-			13 => 12 * 60, // 72 hours
-			14 => 24 * 60, // 4 days
-			15 => 24 * 60, // 5 days
-			16 => 24 * 60, // 6 days
-			17 => 24 * 60, // 7 days
-			18 => 24 * 60, // 8 days
-			19 => 24 * 60, // 9 days
-			20 => 24 * 60, // 10 days
-			21 => 24 * 60, // 11 days
-			22 => 24 * 60, // 12 days
-			23 => 24 * 60, // 13 days
-			24 => 24 * 60, // 14 days
+			12 => 6 * 60, // 48 hours
+			13 => 12 * 60, // 60 hours
+			14 => 12 * 60, // 72 hours
+			15 => 24 * 60, // 4 days
+			16 => 24 * 60, // 5 days
+			17 => 24 * 60, // 6 days
+			18 => 24 * 60, // 7 days
+			19 => 24 * 60, // 8 days
+			20 => 24 * 60, // 9 days
+			21 => 24 * 60, // 10 days
+			22 => 24 * 60, // 11 days
+			23 => 24 * 60, // 12 days
+			24 => 24 * 60, // 13 days
+			25 => 24 * 60, // 14 days
 		];
 		
 		$result = 24 * 60;
