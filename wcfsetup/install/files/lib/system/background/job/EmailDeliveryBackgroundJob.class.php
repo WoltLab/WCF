@@ -75,7 +75,6 @@ class EmailDeliveryBackgroundJob extends AbstractBackgroundJob {
 			9 => 6 * 60, // 30 hours
 			10 => 6 * 60, // 36 hours
 			11 => 6 * 60, // 42 hours
-			11 => 6 * 60, // 48 hours
 			12 => 12 * 60, // 60 hours
 			13 => 12 * 60, // 72 hours
 			14 => 24 * 60, // 4 days
