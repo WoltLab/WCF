@@ -1096,6 +1096,23 @@ if (COMPILER_TARGET_DEFAULT) {
 				var startContainer = elClosest(range.startContainer, '.jsQuoteMessageContainer');
 				var endContainer = elClosest(range.endContainer, '.jsQuoteMessageContainer');
 				if (startContainer && startContainer === endContainer && !startContainer.classList.contains('jsInvalidQuoteTarget')) {
+					// Check if the selection is visible, such as text marked inside containers with an
+					// active overflow handling attached to it. This can be a side effect of the browser
+					// search which modifies the text selection, but cannot be distinguished from manual
+					// selections initiated by the user.
+					var commonAncestor = range.commonAncestorContainer;
+					if (commonAncestor.nodeType !== Node.ELEMENT_NODE) {
+						commonAncestor = commonAncestor.parentNode;
+					}
+					
+					var offsetParent = commonAncestor.offsetParent;
+					if (startContainer.contains(offsetParent)) {
+						if (offsetParent.scrollTop + offsetParent.clientHeight < commonAncestor.offsetTop) {
+							// The selected text is not visible to the user.
+							return;
+						}
+					}
+					
 					this._activeContainerID = startContainer.id;
 				}
 			}
