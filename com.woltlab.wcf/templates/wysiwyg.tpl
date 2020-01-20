@@ -256,6 +256,11 @@
 				}
 			};
 			
+			// The caret is misaligned in Safari 13+ when using \u200b. 
+			if (Environment.browser() === 'safari') {
+				config.emptyHtml = '<p><br></p>';
+			}
+			
 			// user mentions
 			if (elDataBool(element, 'support-mention')) {
 				config.plugins.push('WoltLabMention');
@@ -290,7 +295,7 @@
 			config.callbacks.init = function() {
 				// slight delay to allow Redactor to initialize itself
 				window.setTimeout(function() {
-					if (content === '' && Environment.platform() === 'ios') {
+					if (content === '' && (Environment.platform() === 'ios' || Environment.browser() === 'safari')) {
 						content = '<p><br></p>';
 					}
 					
