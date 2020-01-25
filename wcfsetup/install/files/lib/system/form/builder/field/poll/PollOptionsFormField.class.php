@@ -74,10 +74,10 @@ class PollOptionsFormField extends AbstractFormField {
 					'optionValue' => $pollOption->optionValue
 				];
 			}
-			else if (is_array($pollOption) && isset($pollOptions['optionID']) && isset($pollOptions['optionValue'])) {
+			else if (is_array($pollOption) && isset($pollOption['optionID']) && isset($pollOption['optionValue'])) {
 				$pollOptions[] = [
-					'optionID' => $pollOptions['optionID'],
-					'optionValue' => $pollOptions['optionValue']
+					'optionID' => $pollOption['optionID'],
+					'optionValue' => $pollOption['optionValue']
 				];
 			}
 			else {
@@ -85,7 +85,7 @@ class PollOptionsFormField extends AbstractFormField {
 			}
 		}
 		
-		return parent::value($value);
+		return parent::value($pollOptions);
 	}
 	
 	/**
@@ -96,7 +96,7 @@ class PollOptionsFormField extends AbstractFormField {
 		
 		// ensure maximum length that is already validated via JavaScript
 		foreach ($this->value as &$value) {
-			$value = mb_substr($value, 0, 255);
+			$value['optionValue'] = mb_substr($value['optionValue'], 0, 255);
 		}
 		unset($value);
 	}
