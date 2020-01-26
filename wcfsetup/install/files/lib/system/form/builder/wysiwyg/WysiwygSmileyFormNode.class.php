@@ -20,9 +20,7 @@ use wcf\system\WCF;
  */
 class WysiwygSmileyFormNode implements IFormChildNode {
 	use TFormChildNode;
-	use TFormNode {
-		isAvailable as traitIsAvailable;
-	}
+	use TFormNode;
 	
 	/**
 	 * list of available smilies
@@ -53,13 +51,6 @@ class WysiwygSmileyFormNode implements IFormChildNode {
 	 */
 	public function hasSaveValue() {
 		return false;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function isAvailable() {
-		return $this->traitIsAvailable() && !empty($this->smilies);
 	}
 	
 	/**

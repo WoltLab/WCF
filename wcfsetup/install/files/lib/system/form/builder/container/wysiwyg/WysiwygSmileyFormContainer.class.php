@@ -31,8 +31,7 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer {
 	 */
 	public function __construct() {
 		$this->attribute('data-preselect', 'true')
-			->attribute('data-collapsible', 'false')
-			->useAnchors(false);
+			->attribute('data-collapsible', 'false');
 	}
 	
 	/**
@@ -41,11 +40,18 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer {
 	public function populate() {
 		parent::populate();
 		
-		$smileyCategories = SmileyCache::getInstance()->getCategories();
+		$smileyCategories = array_values(SmileyCache::getInstance()->getCategories());
 		
-		foreach ($smileyCategories as $smileyCategory) {
+		foreach ($smileyCategories as $index => $smileyCategory) {
 			$smileyCategory->loadSmilies();
 			if (count($smileyCategory) > 0) {
+				// all of the smilies not in the first category are loaded via
+				// JavaScript
+				$smilies = [];
+				if (!$index) {
+					$smilies = SmileyCache::getInstance()->getCategorySmilies($smileyCategory->categoryID ?: null);
+				}
+				
 				$this->appendChild(
 					TabFormContainer::create($this->getId() . '_smileyCategoryTab' . $smileyCategory->categoryID)
 						->label(StringUtil::encodeHTML($smileyCategory->getTitle()))
@@ -56,7 +62,7 @@ class WysiwygSmileyFormContainer extends TabTabMenuFormContainer {
 								->removeClass('section')
 								->appendChild(
 									WysiwygSmileyFormNode::create($this->getId() . '_smileyCategory' . $smileyCategory->categoryID)
-										->smilies(SmileyCache::getInstance()->getCategorySmilies($smileyCategory->categoryID ?: null))
+										->smilies($smilies)
 								)
 						)
 				);

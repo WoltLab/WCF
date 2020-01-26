@@ -622,13 +622,15 @@ if (COMPILER_TARGET_DEFAULT) {
 		 *
 		 * @param        string                wysiwygSelector
 		 */
-		init: function (wysiwygSelector) {
+		init: function (wysiwygSelector, smiliesTabMenuId, formBuilderUsage) {
 			this._proxy = new WCF.Action.Proxy({
 				success: $.proxy(this._success, this)
 			});
 			this._wysiwygSelector = wysiwygSelector;
+			this._smiliesTabMenuId = smiliesTabMenuId || 'smilies-' + this._wysiwygSelector;
+			this._formBuilderUsage = formBuilderUsage || false;
 			
-			$('#smilies-' + this._wysiwygSelector).on('messagetabmenushow', $.proxy(this._click, this));
+			$('#' + this._smiliesTabMenuId).on('messagetabmenushow', $.proxy(this._click, this));
 		},
 		
 		/**
@@ -640,10 +642,30 @@ if (COMPILER_TARGET_DEFAULT) {
 		_click: function (event, data) {
 			event.preventDefault();
 			
-			var $categoryID = parseInt(data.activeTab.tab.data('smileyCategoryID'));
+			if (this._formBuilderUsage) {
+				var href = data.activeTab.tab.children('a').prop('href');
+				if (href.match(/#([a-zA-Z0-9_-]+)$/)) {
+					var anchor = RegExp.$1;
+					
+					if (anchor.match(this._smiliesTabMenuId.replace(/Container$/, '') + '_smileyCategoryTab(\\d+)Container')) {
+						var categoryID = parseInt(RegExp.$1);
+					}
+					else {
+						console.debug("[WCF.Message.SmileyCategories] Cannot extract category id for tab '" + data.activeTab.tab.wcfIdentify() + "'.");
+						return;
+					}
+				}
+				else {
+					console.debug("[WCF.Message.SmileyCategories] Cannot extract category id for tab '" + data.activeTab.tab.wcfIdentify() + "'.");
+					return;
+				}
+			}
+			else {
+				var categoryID = parseInt(data.activeTab.tab.data('smileyCategoryID'));
+			}
 			
 			// ignore global category, will always be pre-loaded
-			if (!$categoryID) {
+			if (!categoryID) {
 				return;
 			}
 			
@@ -653,8 +675,8 @@ if (COMPILER_TARGET_DEFAULT) {
 			}
 			
 			// cache exists
-			if (this._cache[$categoryID] !== undefined) {
-				data.activeTab.container.html(this._cache[$categoryID]);
+			if (this._cache[categoryID] !== undefined) {
+				data.activeTab.container.html(this._cache[categoryID]);
 				return;
 			}
 			
@@ -662,7 +684,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			this._proxy.setOption('data', {
 				actionName: 'getSmilies',
 				className: 'wcf\\data\\smiley\\category\\SmileyCategoryAction',
-				objectIDs: [$categoryID]
+				objectIDs: [categoryID]
 			});
 			this._proxy.sendRequest();
 		},
@@ -678,7 +700,12 @@ if (COMPILER_TARGET_DEFAULT) {
 			var $categoryID = parseInt(data.returnValues.smileyCategoryID);
 			this._cache[$categoryID] = data.returnValues.template;
 			
-			$('#smilies-' + this._wysiwygSelector + '-' + $categoryID).html(data.returnValues.template);
+			if (this._formBuilderUsage) {
+				$('#' + this._smiliesTabMenuId.replace(/Container$/, '') + '_smileyCategoryTab' + $categoryID + 'Container').html(data.returnValues.template);
+			}
+			else {
+				$('#smilies-' + this._wysiwygSelector + '-' + $categoryID).html(data.returnValues.template);
+			}
 		}
 	});
 	
