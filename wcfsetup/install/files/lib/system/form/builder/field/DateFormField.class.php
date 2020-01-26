@@ -360,10 +360,10 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 		}
 		
 		if ($this->supportsTime()) {
-			parent::value($dateTime->format('Y-m-d\TH:i:sP'));
+			parent::value($dateTime->format(static::TIME_FORMAT));
 		}
 		else {
-			parent::value($dateTime->format('Y-m-d'));
+			parent::value($dateTime->format(static::DATE_FORMAT));
 		}
 		
 		return $this;
