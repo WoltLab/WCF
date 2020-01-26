@@ -68,13 +68,21 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 		$this->earliestDate = $earliestDate;
 		
 		if ($this->earliestDate !== null) {
-			$earliestDateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->earliestDate);
+			$earliestDateTime = \DateTime::createFromFormat(
+				$this->getSaveValueFormat(),
+				$this->earliestDate,
+				new \DateTimeZone('UTC')
+			);
 			if ($earliestDateTime === false) {
 				throw new \InvalidArgumentException("Earliest date '{$this->earliestDate}' does not have save value format '{$this->getSaveValueFormat()}'.");
 			}
 			
 			if ($this->getLatestDate() !== null) {
-				$latestDateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->getLatestDate());
+				$latestDateTime = \DateTime::createFromFormat(
+					$this->getSaveValueFormat(),
+					$this->getLatestDate(),
+					new \DateTimeZone('UTC')
+				);
 				
 				if ($latestDateTime < $earliestDateTime) {
 					throw new \InvalidArgumentException("Earliest date '{$this->earliestDate}' cannot be later than latest date '{$this->getLatestDate()}'.");
@@ -112,7 +120,8 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 		if ($this->getEarliestDate() !== null) {
 			$formattedEarliestDate = \DateTime::createFromFormat(
 				$this->getSaveValueFormat(),
-				$this->getEarliestDate()
+				$this->getEarliestDate(),
+				new \DateTimeZone('UTC')
 			)->format($format);
 		}
 		
@@ -120,7 +129,8 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 		if ($this->getLatestDate() !== null) {
 			$formattedLatestDate = \DateTime::createFromFormat(
 				$this->getSaveValueFormat(),
-				$this->getLatestDate()
+				$this->getLatestDate(),
+				new \DateTimeZone('UTC')
 			)->format($format);
 		}
 		
@@ -164,10 +174,18 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 	 */
 	protected function getValueDateTimeObject() {
 		if ($this->supportsTime()) {
-			$dateTime = \DateTime::createFromFormat(static::TIME_FORMAT, $this->getValue());
+			$dateTime = \DateTime::createFromFormat(
+				static::TIME_FORMAT,
+				$this->getValue(),
+				new \DateTimeZone('UTC')
+			);
 		}
 		else {
-			$dateTime = \DateTime::createFromFormat(static::DATE_FORMAT, $this->getValue());
+			$dateTime = \DateTime::createFromFormat(
+				static::DATE_FORMAT,
+				$this->getValue(),
+				new \DateTimeZone('UTC')
+			);
 		}
 		
 		if ($dateTime === false) {
@@ -204,14 +222,22 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 		$this->latestDate = $latestDate;
 		
 		if ($this->latestDate !== null) {
-			$latestDateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->latestDate);
+			$latestDateTime = \DateTime::createFromFormat(
+				$this->getSaveValueFormat(),
+				$this->latestDate,
+				new \DateTimeZone('UTC')
+			);
 			
 			if ($latestDateTime === false) {
 				throw new \InvalidArgumentException("Latest date '{$this->latestDate}' does not have save value format '{$this->getSaveValueFormat()}'.");
 			}
 			
 			if ($this->getEarliestDate() !== null) {
-				$earliestDateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->getEarliestDate());
+				$earliestDateTime = \DateTime::createFromFormat(
+					$this->getSaveValueFormat(),
+					$this->getEarliestDate(),
+					new \DateTimeZone('UTC')
+				);
 				
 				if ($latestDateTime < $earliestDateTime) {
 					throw new \InvalidArgumentException("Latest date '{$this->latestDate}' cannot be earlier than earliest date '{$this->getEarliestDate()}'.");
@@ -297,7 +323,11 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 			}
 			
 			if ($this->getEarliestDate() !== null) {
-				$earliestDateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->getEarliestDate());
+				$earliestDateTime = \DateTime::createFromFormat(
+					$this->getSaveValueFormat(),
+					$this->getEarliestDate(),
+					new \DateTimeZone('UTC')
+				);
 				
 				if ($dateTime < $earliestDateTime) {
 					$format = DateUtil::DATE_FORMAT;
@@ -322,7 +352,11 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 			}
 			
 			if ($this->getLatestDate() !== null) {
-				$latestDateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->getLatestDate());
+				$latestDateTime = \DateTime::createFromFormat(
+					$this->getSaveValueFormat(),
+					$this->getLatestDate(),
+					new \DateTimeZone('UTC')
+				);
 				
 				if ($dateTime > $latestDateTime) {
 					$format = DateUtil::DATE_FORMAT;
@@ -354,7 +388,11 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 	public function value($value) {
 		parent::value($value);
 		
-		$dateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->getValue());
+		$dateTime = \DateTime::createFromFormat(
+			$this->getSaveValueFormat(),
+			$this->getValue(),
+			new \DateTimeZone('UTC')
+		);
 		if ($dateTime === false) {
 			throw new \InvalidArgumentException("Given value does not match format '{$this->getSaveValueFormat()}'.");
 		}
