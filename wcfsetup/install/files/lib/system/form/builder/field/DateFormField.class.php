@@ -293,8 +293,10 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 					'format',
 					'wcf.form.field.date.error.format'
 				));
+				return;
 			}
-			else if ($this->getEarliestDate() !== null) {
+			
+			if ($this->getEarliestDate() !== null) {
 				$earliestDateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->getEarliestDate());
 				
 				if ($dateTime < $earliestDateTime) {
@@ -315,9 +317,11 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 						'wcf.form.field.date.error.earliestDate',
 						['earliestDate' => DateUtil::format($earliestDateTime, $format)]
 					));
+					return;
 				}
 			}
-			else if ($this->getLatestDate() !== null) {
+			
+			if ($this->getLatestDate() !== null) {
 				$latestDateTime = \DateTime::createFromFormat($this->getSaveValueFormat(), $this->getLatestDate());
 				
 				if ($dateTime > $latestDateTime) {
@@ -336,8 +340,9 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 					$this->addValidationError(new FormFieldValidationError(
 						'minimum',
 						'wcf.form.field.date.error.latestDate',
-						['latestDateTime' => DateUtil::format($latestDateTime, $format)]
+						['latestDate' => DateUtil::format($latestDateTime, $format)]
 					));
+					return;
 				}
 			}
 		}
