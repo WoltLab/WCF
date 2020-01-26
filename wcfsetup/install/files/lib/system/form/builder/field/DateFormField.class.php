@@ -255,7 +255,7 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 	
 	/**
 	 * Sets if not only the date, but also the time can be set.
-	 *
+	 * 
 	 * @param	bool		$supportsTime
 	 * @return	static		this field
 	 */
@@ -268,6 +268,8 @@ class DateFormField extends AbstractFormField implements IAutoFocusFormField, II
 	/**
 	 * Returns `true` if not only the date, but also the time can be set, and
 	 * returns `false` otherwise.
+	 * 
+	 * By default, the time cannot be set.
 	 * 
 	 * @return	bool
 	 */
