@@ -109,7 +109,7 @@
 		<item name="wcf.acp.article.trash.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} {if $isArticleEdit|empty}den Artikel <span class="confirmationObject">{$article->getTitle()}</span>{else}diesen Artikel{/if} wirklich in den Papierkorb verschieben?]]></item>
 		<item name="wcf.acp.article.trash.notice"><![CDATA[Dieser Artikel befindet sich im Papierkorb und wird gegenwärtig nicht angezeigt.]]></item>
 		<item name="wcf.acp.article.views"><![CDATA[Zugriffe]]></item>
-		<item name="wcf.acp.article.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.article' objectID=$article->articleID isACP=true}{/link}">vorherige Versionen</a> dieses Artikels, die letzte Änderung erfolgte durch <a href="{link controller='UserEdit' id=$lastVersion->userID}{/link}">{$lastVersion->username}</a> ({@$lastVersion->time|time}).]]></item>
+		<item name="wcf.acp.article.lastVersion"><![CDATA[Es gibt <a href="{link controller='VersionTrackerList' objectType='com.woltlab.wcf.article' objectID=$article->articleID isACP=true}{/link}">vorherige Versionen</a> dieses Artikels, die letzte Änderung erfolgte durch „{$lastVersion->username}“ ({@$lastVersion->time|time}).]]></item>
 		<item name="wcf.acp.article.isDeleted"><![CDATA[Gelöscht]]></item>
 	</category>
 	<category name="wcf.acp.attachment">
