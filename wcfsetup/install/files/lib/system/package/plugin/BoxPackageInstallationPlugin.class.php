@@ -287,6 +287,13 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			$box = new Box(null, $row);
 		}
 		else {
+			// Updating 'system' type boxes is allowed, but we must not modify
+			// the visibility settings in order to preserve user modifications.
+			if (!empty($row) && $row['boxType'] === 'system') {
+				unset($data['visibleEverywhere']);
+				unset($this->visibilityExceptions[$data['identifier']]);
+			}
+			
 			$box = parent::import($row, $data);
 		}
 		
