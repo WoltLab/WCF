@@ -233,11 +233,23 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 			var bottom = 'auto';
 			var top = 'auto';
 			var result = true;
+
+			var pageHeaderOffset = 50;
+			var pageHeaderPanel = elById('pageHeaderPanel');
+			if (pageHeaderPanel !== null) {
+				var position = window.getComputedStyle(pageHeaderPanel).position;
+				if (position === 'fixed' || position === 'static') {
+					pageHeaderOffset = pageHeaderPanel.offsetHeight;
+				}
+				else {
+					pageHeaderOffset = 0;
+				}
+			}
 			
 			if (align === 'top') {
 				var bodyHeight = document.body.clientHeight;
 				bottom = (bodyHeight - refOffsets.top) + verticalOffset;
-				if (bodyHeight - (bottom + elDimensions.height) < (window.scrollY || window.pageYOffset)) {
+				if (bodyHeight - (bottom + elDimensions.height) < (window.scrollY || window.pageYOffset) + pageHeaderOffset) {
 					result = false;
 				}
 			}
