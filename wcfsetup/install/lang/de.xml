@@ -79,7 +79,7 @@
 		<item name="wcf.acp.article.list"><![CDATA[Artikel]]></item>
 		<item name="wcf.acp.article.author"><![CDATA[Autor]]></item>
 		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Mehrsprachigkeit]]></item>
-		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Vorschau anzeigen]]></item>
+		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Artikel anzeigen]]></item>
 		<item name="wcf.acp.article.category"><![CDATA[Kategorie]]></item>
 		<item name="wcf.acp.article.category.sortField"><![CDATA[Sortierung]]></item>
 		<item name="wcf.acp.article.category.sortField.publicationDate"><![CDATA[Veröffentlichungsdatum]]></item>
@@ -1973,7 +1973,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.page.boxOrder.pageEdit"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die Sortierung der angezeigten Boxen <a href="{link controller='PageBoxOrder' id=$page->pageID}{/link}">individuell festlegen</a>, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}speichere{else}speichern Sie{/if} zuvor {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Änderungen.]]></item>
 		<item name="wcf.acp.page.boxOrder.position.content"><![CDATA[(Inhalt)]]></item>
 		<item name="wcf.acp.page.button.boxOrder"><![CDATA[Boxen sortieren]]></item>
-		<item name="wcf.acp.page.button.viewPage"><![CDATA[Vorschau anzeigen]]></item>
+		<item name="wcf.acp.page.button.viewPage"><![CDATA[Seite anzeigen]]></item>
 		<item name="wcf.acp.page.button.copyPage"><![CDATA[Seite kopieren]]></item>
 		<item name="wcf.acp.page.content"><![CDATA[Inhalt]]></item>
 		<item name="wcf.acp.page.contents"><![CDATA[Inhalte]]></item>

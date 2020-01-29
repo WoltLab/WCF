@@ -79,7 +79,7 @@
 		<item name="wcf.acp.article.list"><![CDATA[Articles]]></item>
 		<item name="wcf.acp.article.author"><![CDATA[Author]]></item>
 		<item name="wcf.acp.article.button.toggleI18n"><![CDATA[Internationalization]]></item>
-		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Show Preview]]></item>
+		<item name="wcf.acp.article.button.viewArticle"><![CDATA[Show Article]]></item>
 		<item name="wcf.acp.article.category"><![CDATA[Category]]></item>
 		<item name="wcf.acp.article.category.sortField"><![CDATA[Show Order]]></item>
 		<item name="wcf.acp.article.category.sortField.publicationDate"><![CDATA[Publication Date]]></item>
@@ -4258,7 +4258,7 @@ Attachments:
 		<item name="wcf.acp.page.boxOrder.pageEdit"><![CDATA[You can set an individual <a href="{link controller='PageBoxOrder' id=$page->pageID}{/link}">sort order for boxes</a>, please save your changes before continuing.]]></item>
 		<item name="wcf.acp.page.boxOrder.position.content"><![CDATA[(Content)]]></item>
 		<item name="wcf.acp.page.button.boxOrder"><![CDATA[Sort Boxes]]></item>
-		<item name="wcf.acp.page.button.viewPage"><![CDATA[Show Preview]]></item>
+		<item name="wcf.acp.page.button.viewPage"><![CDATA[Show Page]]></item>
 		<item name="wcf.acp.page.button.copyPage"><![CDATA[Copy Page]]></item>
 		<item name="wcf.acp.page.content"><![CDATA[Content]]></item>
 		<item name="wcf.acp.page.contents"><![CDATA[Contents]]></item>
