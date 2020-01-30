@@ -478,12 +478,19 @@ class PackageInstallationScheduler {
 			]);
 			$packageVersions = $statement->fetchAll(\PDO::FETCH_COLUMN);
 			
-			if (count($packageVersions) > 1) {
+			$count = count($packageVersions);
+			if ($count > 1) {
 				// sort by version number
 				usort($packageVersions, [Package::class, 'compareVersion']);
 				
 				// get highest version
 				$version = array_pop($packageVersions);
+			}
+			else if ($count === 1 && $version !== $packageVersions[0]) {
+				// This may happen if there is a compatible but newer version of the required
+				// version, that also happens to be the only available version. For example,
+				// "5.2.0" is requested but there is only "5.2.0 pl 1".
+				$version = $packageVersions[0];
 			}
 		}
 		
