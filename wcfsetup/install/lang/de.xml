@@ -886,7 +886,7 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.group.option.user.profile.canEditUserProfile"><![CDATA[Kann eigenes Profil bearbeiten]]></item>
 		<item name="wcf.acp.group.allowMention"><![CDATA[Benutzergruppe kann erwähnt werden]]></item>
 		<item name="wcf.acp.group.type.owner"><![CDATA[Besitzer]]></item>
-		<item name="wcf.acp.group.type.owner.description"><![CDATA[Die Besitzer-Gruppe verfügt über nicht entziehbare Berechtigungen und kann von anderen Gruppen nicht bearbeitet werden, diese Gruppe kann nur durch die Besitzer-Gruppe selbst bearbeitet werden. Mitglieder dieser Benutzer können andere Benutzer zu dieser Gruppe hinzufügen, sich aber selbst nicht daraus entfernen.]]></item>
+		<item name="wcf.acp.group.type.owner.description"><![CDATA[Die Besitzer-Gruppe verfügt über nicht entziehbare Berechtigungen und kann von anderen Gruppen nicht bearbeitet werden, diese Gruppe kann nur durch die Besitzer-Gruppe selbst bearbeitet werden. Mitglieder dieser Gruppe können andere Benutzer zu dieser Gruppe hinzufügen, sich aber selbst nicht daraus entfernen.]]></item>
 		<item name="wcf.acp.group.ownerGroupPermission"><![CDATA[Die Besitzer-Gruppe verfügt immer über diese Berechtigung, sie kann nicht entzogen werden.]]></item>
 		<item name="wcf.acp.group.missingOwnerGroup"><![CDATA[Es wurde noch keine Besitzer-Gruppe festgelegt, <a href="{link controller='UserGroupPromoteOwner'}{/link}">bitte {if LANGUAGE_USE_INFORMAL_VARIANT}lege{else}legen Sie{/if} diese umgehend fest</a>.]]></item>
 		<item name="wcf.acp.group.promoteOwner"><![CDATA[Besitzer-Gruppe festlegen]]></item>
