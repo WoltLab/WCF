@@ -34,6 +34,11 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown', 'WoltLa
 			var dropdownMenu = UiSimpleDropdown.getDropdownMenu('userListDropdown' + userId);
 			var legacyButtonContainer = elBySel('.jsLegacyButtons', userRow);
 			
+			if (dropdownMenu.childElementCount === 0 && legacyButtonContainer.childElementCount === 0) {
+				elBySel('.dropdownToggle', userRow).classList.add('disabled');
+				return;
+			}
+			
 			UiSimpleDropdown.registerCallback('userListDropdown' + userId, (function (identifier, action) {
 				if (action === 'open') {
 					this._rebuild(userId, dropdownMenu, legacyButtonContainer);
