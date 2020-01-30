@@ -117,7 +117,7 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor {
 		$html = preg_replace_callback('/<img([^>]+)>/i', function($match) {
 			$attributes = str_replace('data-width="', 'width="', $match[1]);
 			$attributes = str_replace('data-height="', 'height="', $attributes);
-			return '<amp-img layout="flex-item"'.$attributes.'>';
+			return '<amp-img layout="responsive"'.$attributes.'>';
 		}, $html);
 		
 		$html = str_ireplace('<iframe', '<amp-iframe layout="responsive" width="480" height="300" sizes="(min-width: 480px) 480px, 100vw" ', $html);
