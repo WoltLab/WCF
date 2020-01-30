@@ -21,7 +21,7 @@ use wcf\system\database\table\index\DatabaseTablePrimaryIndex;
 use wcf\system\package\plugin\ScriptPackageInstallationPlugin;
 
 /**
- * Adds missing foreign keys from the 3.1 to 5.2.0 update.
+ * Adds missing foreign keys from the 3.1 to 5.2 update.
  *
  * @author	Matthias Schmidt
  * @copyright	2001-2020 WoltLab GmbH
