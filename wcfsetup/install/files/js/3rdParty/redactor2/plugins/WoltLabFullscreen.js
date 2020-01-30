@@ -35,6 +35,9 @@ $.Redactor.prototype.WoltLabFullscreen = function() {
 			_button.children[0].classList.toggle('fa-compress');
 			_button.children[0].classList.toggle('fa-expand');
 			
+			var anchorFixedHeader = elClosest(this.core.box()[0], '.anchorFixedHeader');
+			if (anchorFixedHeader) anchorFixedHeader.classList.toggle('disableAnchorFixedHeader');
+			
 			if (this.core.box()[0].classList.toggle('redactorBoxFullscreen')) {
 				WCF.System.DisableScrolling.disable();
 				_active = true;

@@ -38,7 +38,7 @@
 		}
 	}
 	
-	> .anchorFixedHeader:target {
+	> .anchorFixedHeader:not(.disableAnchorFixedHeader):target {
 		margin-top: -49px;
 		pointer-events: none;
 		position: relative;
