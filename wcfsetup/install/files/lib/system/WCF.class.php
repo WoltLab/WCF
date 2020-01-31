@@ -1001,10 +1001,10 @@ class WCF {
 		
 		if (self::$zendOpcacheEnabled) {
 			if (empty($script)) {
-				opcache_reset();
+				\opcache_reset();
 			}
 			else {
-				opcache_invalidate($script, true);
+				\opcache_invalidate($script, true);
 			}
 		}
 	}
