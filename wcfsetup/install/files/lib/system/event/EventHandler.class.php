@@ -191,7 +191,7 @@ class EventHandler extends SingletonFactory {
 				if (!class_exists($eventListener->listenerClassName)) {
 					throw new SystemException("Unable to find class '" . $eventListener->listenerClassName . "'");
 				}
-				if (!is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class) || !is_subclass_of($eventListener->listenerClassName, IDynamicInvocationEventListener::class)) {
+				if (!is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class) && !is_subclass_of($eventListener->listenerClassName, IDynamicInvocationEventListener::class)) {
 					// legacy event listeners
 					if (!is_subclass_of($eventListener->listenerClassName, IEventListener::class)) {
 						throw new ImplementationException($eventListener->listenerClassName, IParameterizedEventListener::class);
