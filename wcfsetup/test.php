@@ -255,6 +255,10 @@ $phrases = [
 		'de' => 'Arbeitsspeicher-Limit %s ist nicht ausreichend. 128M oder mehr wird benötigt.',
 		'en' => 'Memory limit %s is too low. It needs to be set to 128M or more.',
 	],
+	'php_opcache_failure' => [
+		'de' => 'OPcache ist aktiviert aber die erforderlichen Verwaltungsfunktionen (opcache_reset, opcache_invalidate) sind deaktiviert.',
+		'en' => 'OPcache is enabled but the required management functions (opcache_reset, opcache_invalidate) are disabled.',
+	],
 	'mysql_requirements' => [
 		'de' => 'MySQL',
 		'en' => 'MySQL Requirements'
@@ -335,7 +339,7 @@ function checkHashAlgorithms() {
 function checkResult() {
 	global $requiredExtensions;
 	
-	if (!checkPHPVersion() || !checkHashAlgorithms() || !checkMemoryLimit()) return false;
+	if (!checkPHPVersion() || !checkHashAlgorithms() || !checkMemoryLimit() || !checkOpcache()) return false;
 	
 	foreach ($requiredExtensions as $extension) {
 		if (!extension_loaded($extension)) return false;
@@ -347,6 +351,16 @@ function checkResult() {
 }
 function checkInstallFile() {
 	return @file_exists('install.php');
+}
+function checkOpcache() {
+	if (extension_loaded('Zend Opcache') && @ini_get('opcache.enable')) {
+		$disabledFunctions = explode(',', @ini_get('disable_functions'));
+		if (in_array('opcache_reset', $disabledFunctions) || in_array('opcache_invalidate', $disabledFunctions)) {
+			return false;
+		}
+	}
+	
+	return true;
 }
 ?>
 		<h2>WoltLab Suite System Requirements Test</h2>
@@ -386,6 +400,10 @@ function checkInstallFile() {
 				<li class="success"><?=getPhrase('php_memory_limit_success', [ini_get('memory_limit')])?></li>
 			<?php } else { ?>
 				<li class="failure"><?=getPhrase('php_memory_limit_failure', [ini_get('memory_limit')])?></li>
+			<?php } ?>
+			
+			<?php if (!checkOpcache()) { ?>
+				<li class="failure"><?=getPhrase('php_opcache_failure')?></li>
 			<?php } ?>
 		</ul>
 		
