@@ -1,7 +1,9 @@
 <?php
 namespace wcf\system\event;
+use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\event\listener\EventListener;
 use wcf\system\cache\builder\EventListenerCacheBuilder;
+use wcf\system\event\listener\IDynamicDatabaseObjectEventListener;
 use wcf\system\event\listener\IDynamicInvocationEventListener;
 use wcf\system\event\listener\IParameterizedEventListener;
 use wcf\system\event\IEventListener as ILegacyEventListener;
@@ -191,7 +193,7 @@ class EventHandler extends SingletonFactory {
 				if (!class_exists($eventListener->listenerClassName)) {
 					throw new SystemException("Unable to find class '" . $eventListener->listenerClassName . "'");
 				}
-				if (!is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class) && !is_subclass_of($eventListener->listenerClassName, IDynamicInvocationEventListener::class)) {
+				if (!is_subclass_of($eventListener->listenerClassName, IParameterizedEventListener::class)) {
 					// legacy event listeners
 					if (!is_subclass_of($eventListener->listenerClassName, IEventListener::class)) {
 						throw new ImplementationException($eventListener->listenerClassName, IParameterizedEventListener::class);
@@ -223,14 +225,16 @@ class EventHandler extends SingletonFactory {
 	protected function callEvent($eventObj, $actionObj, $className, $eventName, &$parameters) {
 		if ($actionObj instanceof IDynamicInvocationEventListener) {
 			$functionName = "on" . ucfirst($eventName);
-			if (!method_exists($actionObj, $functionName)) {
-				throw new \BadMethodCallException("Event listener '" . get_class($actionObj) . "' does not implement the function '$functionName'");
+			if (method_exists($actionObj, $functionName)) {
+				if (!is_callable([$actionObj, $functionName])) {
+					throw new \BadMethodCallException("The function '$functionName' is private or protected and can not called from outside in the event listener '" . get_class($actionObj) . "'");
+				}
+				$actionObj->{$functionName}($eventObj, $parameters);
+				
+				return;
 			}
-			if (!is_callable([$actionObj, $functionName])) {
-				throw new \BadMethodCallException("The function '$functionName' is private or protected and can not called from outside in the event listener '" . get_class($actionObj) . "'");
-			}
-			$actionObj->{$functionName}($eventObj, $parameters);
-		} else if ($actionObj instanceof IParameterizedEventListener) {
+		}
+		if ($actionObj instanceof IParameterizedEventListener) {
 			$actionObj->execute($eventObj, $className, $eventName, $parameters);
 			
 			if (!is_array($parameters)) {
