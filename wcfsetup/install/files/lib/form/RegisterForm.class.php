@@ -17,6 +17,7 @@ use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
 use wcf\system\email\Mailbox;
 use wcf\system\email\UserMailbox;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
@@ -423,6 +424,14 @@ class RegisterForm extends UserAddForm {
 			// create fake password
 			$this->password = bin2hex(\random_bytes(20));
 		}
+
+		$eventParameters = [
+			'saveOptions' => $saveOptions,
+			'registerVia3rdParty' => $registerVia3rdParty,
+		];
+		EventHandler::getInstance()->fireAction($this, 'registerVia3rdParty', $eventParameters);
+		$saveOptions = $eventParameters['saveOptions'];
+		$registerVia3rdParty = $eventParameters['registerVia3rdParty'];
 		
 		$this->additionalFields['languageID'] = $this->languageID;
 		if (LOG_IP_ADDRESS) $this->additionalFields['registrationIpAddress'] = WCF::getSession()->ipAddress;
