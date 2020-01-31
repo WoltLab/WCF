@@ -1,9 +1,7 @@
 <?php
 namespace wcf\system\event;
-use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\event\listener\EventListener;
 use wcf\system\cache\builder\EventListenerCacheBuilder;
-use wcf\system\event\listener\IDynamicDatabaseObjectEventListener;
 use wcf\system\event\listener\IDynamicInvocationEventListener;
 use wcf\system\event\listener\IParameterizedEventListener;
 use wcf\system\event\IEventListener as ILegacyEventListener;

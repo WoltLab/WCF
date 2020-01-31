@@ -18,7 +18,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @license      GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package      WoltLabSuite\Core\System\Event\Listener
  */
-abstract class IDynamicDatabaseObjectEventListener implements IDynamicInvocationEventListener {
+abstract class AbstractDynamicDatabaseObjectEventListener implements IDynamicInvocationEventListener {
 	
 	/**
 	 * @var AbstractDatabaseObjectAction
