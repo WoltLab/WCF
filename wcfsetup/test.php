@@ -354,8 +354,7 @@ function checkInstallFile() {
 }
 function checkOpcache() {
 	if (extension_loaded('Zend Opcache') && @ini_get('opcache.enable')) {
-		$disabledFunctions = explode(',', @ini_get('disable_functions'));
-		if (in_array('opcache_reset', $disabledFunctions) || in_array('opcache_invalidate', $disabledFunctions)) {
+		if (!function_exists('\opcache_reset') || !function_exists('\opcache_invalidate')) {
 			return false;
 		}
 	}
