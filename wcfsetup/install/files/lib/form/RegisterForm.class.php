@@ -404,12 +404,14 @@ class RegisterForm extends UserAddForm {
 			// create fake password
 			$this->password = StringUtil::getRandomID();
 		}
-		
-		$parameters = [
+
+		$data = [
 			'saveOptions' => $saveOptions,
 			'registerVia3rdParty' => $registerVia3rdParty
 		];
-		EventHandler::getInstance()->fireAction($this, 'externalAuthentication', $parameters);
+		EventHandler::getInstance()->fireAction($this, 'externalAuthentication', $data);
+		$saveOptions = $data['saveOptions'];
+		$registerVia3rdParty = $data['registerVia3rdParty'];
 		
 		$this->additionalFields['languageID'] = $this->languageID;
 		if (LOG_IP_ADDRESS) $this->additionalFields['registrationIpAddress'] = WCF::getSession()->ipAddress;
