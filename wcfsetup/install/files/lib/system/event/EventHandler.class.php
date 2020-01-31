@@ -200,9 +200,8 @@ class EventHandler extends SingletonFactory {
 				
 				$object = new $eventListener->listenerClassName;
 				$this->listenerObjects[$eventListener->listenerClassName] = $object;
-				
-				return $object;
 			}
+			return $object;
 		}
 		
 		return null;
