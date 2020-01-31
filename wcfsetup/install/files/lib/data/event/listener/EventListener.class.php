@@ -14,7 +14,7 @@ use wcf\data\TDatabaseObjectPermissions;
  *
  * @property-read	integer		$listenerID		unique id of the event listener
  * @property-read	integer		$packageID		id of the package which delivers the event listener
- * @property-read	string		$environment		environment in which the event listener is executed, possible values: 'user' or 'admin'
+ * @property-read	string		$environment		environment in which the event listener is executed, possible values: 'all', 'user' or 'admin'
  * @property-read	string		$listenerName		name and textual identifier of the event listener
  * @property-read	string		$eventClassName		name of the class in which the listened event is fired
  * @property-read	string		$eventName		name of the listened event
