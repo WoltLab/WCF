@@ -227,6 +227,9 @@ class EventHandler extends SingletonFactory {
 			if (!method_exists($actionObj, $functionName)) {
 				throw new \BadMethodCallException("Event listener '" . get_class($actionObj) . "' does not implement the function '$functionName'");
 			}
+			if (!is_callable([$actionObj, $functionName])) {
+				throw new \BadMethodCallException("The function '$functionName' is private or protected and can not called from outside in the event listener '" . get_class($actionObj) . "'");
+			}
 			$actionObj->{$functionName}($eventObj, $parameters);
 		} else if ($actionObj instanceof IParameterizedEventListener) {
 			$actionObj->execute($eventObj, $className, $eventName, $parameters);
