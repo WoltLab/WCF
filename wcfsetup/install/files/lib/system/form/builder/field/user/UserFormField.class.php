@@ -64,17 +64,14 @@ class UserFormField extends AbstractFormField implements IAutoFocusFormField, II
 	 */
 	public function getSaveValue() {
 		if (empty($this->getUsers())) {
+			if ($this->isNullable()) {
+				return null;
+			}
+			
 			return 0;
 		}
 		
 		return current($this->getUsers())->userID;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function hasSaveValue() {
-		return !$this->allowsMultiple() && !empty($this->getUsers());
 	}
 	
 	/**
@@ -85,7 +82,7 @@ class UserFormField extends AbstractFormField implements IAutoFocusFormField, II
 		
 		if ($this->allowsMultiple()) {
 			$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('multipleUsers', function(IFormDocument $document, array $parameters) {
-				if ($this->checkDependencies() && !empty($this->getUsers())) {
+				if ($this->checkDependencies()) {
 					$parameters[$this->getObjectProperty()] = array_values(array_map(function(UserProfile $user) {
 						return $user->userID;
 					}, $this->getUsers()));
@@ -103,6 +100,8 @@ class UserFormField extends AbstractFormField implements IAutoFocusFormField, II
 	 */
 	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
+			$this->users = [];
+			
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_string($value)) {
