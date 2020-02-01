@@ -4,18 +4,19 @@ use wcf\data\AbstractDatabaseObjectAction;
 
 /**
  * Special event listener for `\wcf\data\AbstractDatabaseObjectAction` events.
- * This appends behind the called function name the action of the database object
+ * When executed for the validateAction or finalizeAction event it will dispatch to a function specific
+ * to the current action value of the AbstractDatabaseObjectAction.
  *
- * Using:
+ * Example:
  *      - Event Name = finalizeAction
  *      - \wcf\data\AbstractDatabaseObjectAction::$action = create
  *      =>  ::onFinalizeActionCreate($eventObj, array &$parameters)
  *
- * @author       Olaf Braun
- * @copyright    2001-2019 WoltLab GmbH
- * @license      GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
- * @package      WoltLabSuite\Core\System\Event\Listener
- * @since	     5.3
+ * @author    Olaf Braun
+ * @copyright 2001-2019 WoltLab GmbH
+ * @license   GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @package   WoltLabSuite\Core\System\Event\Listener
+ * @since     5.3
  */
 abstract class AbstractDynamicDatabaseObjectEventListener extends AbstractDynamicInvocationEventListener {
 	/**
