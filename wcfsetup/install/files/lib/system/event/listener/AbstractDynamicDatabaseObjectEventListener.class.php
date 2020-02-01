@@ -15,19 +15,14 @@ use wcf\data\AbstractDatabaseObjectAction;
  * @copyright    2001-2019 WoltLab GmbH
  * @license      GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package      WoltLabSuite\Core\System\Event\Listener
+ * @since	     5.3
  */
 abstract class AbstractDynamicDatabaseObjectEventListener extends AbstractDynamicInvocationEventListener {
-	
-	/**
-	 * @var AbstractDatabaseObjectAction
-	 */
-	protected $eventObj;
-	
 	/**
 	 * @param AbstractDatabaseObjectAction $eventObj
 	 * @param array                        $parameters
 	 */
-	protected function onFinalizeAction($eventObj, &$parameters) {
+	protected function onFinalizeAction($eventObj, array &$parameters) {
 		$this->callDynamicActionEvent(__FUNCTION__, $eventObj, $parameters);
 	}
 	
@@ -35,7 +30,7 @@ abstract class AbstractDynamicDatabaseObjectEventListener extends AbstractDynami
 	 * @param AbstractDatabaseObjectAction $eventObj
 	 * @param array                        $parameters
 	 */
-	protected function onValidateAction($eventObj, &$parameters) {
+	protected function onValidateAction($eventObj, array &$parameters) {
 		$this->callDynamicActionEvent(__FUNCTION__, $eventObj, $parameters);
 	}
 	
@@ -46,13 +41,12 @@ abstract class AbstractDynamicDatabaseObjectEventListener extends AbstractDynami
 	 * @param AbstractDatabaseObjectAction $eventObj
 	 * @param array                        $parameters
 	 */
-	protected final function callDynamicActionEvent($functionName, $eventObj, &$parameters) {
-		if (!$eventObj instanceof AbstractDatabaseObjectAction) return;
+	protected final function callDynamicActionEvent($functionName, $eventObj, array &$parameters) {
+		if (!($eventObj instanceof AbstractDatabaseObjectAction)) return;
 		
-		$this->eventObj = $eventObj;
-		$functionName .= ucfirst($this->eventObj->getActionName());
+		$functionName .= ucfirst($eventObj->getActionName());
 		if (method_exists($this, $functionName)) {
-			$this->{$functionName}($parameters);
+			$this->{$functionName}($eventObj, $parameters);
 		}
 	}
 }
