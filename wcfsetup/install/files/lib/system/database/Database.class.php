@@ -263,8 +263,13 @@ abstract class Database {
 			if ($requestInformation === null) {
 				$requestInformation = '';
 				if (defined('ENABLE_PRODUCTION_DEBUG_MODE') && ENABLE_PRODUCTION_DEBUG_MODE && isset($_SERVER['REQUEST_URI'])) {
-					$requestInformation = substr($_SERVER['REQUEST_URI'].(\wcf\getRequestId() ? ' ('.\wcf\getRequestId().')' : ''), 0, 90);
+					$requestInformation = $_SERVER['REQUEST_URI'];
+					if ($requestId = \wcf\getRequestId()) {
+						$requestInformation = substr($requestInformation, 0, 70);
+						$requestInformation .= ' ('.$requestId.')';
+					}
 					if (isset($_REQUEST['className']) && isset($_REQUEST['actionName'])) {
+						$requestInformation = substr($requestInformation, 0, 90);
 						$requestInformation .= ' ('.$_REQUEST['className'].':'.$_REQUEST['actionName'].')';
 					}
 					$requestInformation = substr($requestInformation, 0, 180);
