@@ -259,13 +259,16 @@ abstract class Database {
 			// Note: This is meant to be run unconditionally in production to be
 			//       useful. Thus the code to retrieve the request information
 			//       must be absolutely lightweight.
-			$requestInformation = '';
-			if (defined('ENABLE_PRODUCTION_DEBUG_MODE') && ENABLE_PRODUCTION_DEBUG_MODE && isset($_SERVER['REQUEST_URI'])) {
-				$requestInformation = substr($_SERVER['REQUEST_URI'].(\wcf\getRequestId() ? ' ('.\wcf\getRequestId().')' : ''), 0, 90);
-				if (isset($_REQUEST['className']) && isset($_REQUEST['actionName'])) {
-					$requestInformation .= ' ('.$_REQUEST['className'].':'.$_REQUEST['actionName'].')';
+			static $requestInformation = null;
+			if ($requestInformation === null) {
+				$requestInformation = '';
+				if (defined('ENABLE_PRODUCTION_DEBUG_MODE') && ENABLE_PRODUCTION_DEBUG_MODE && isset($_SERVER['REQUEST_URI'])) {
+					$requestInformation = substr($_SERVER['REQUEST_URI'].(\wcf\getRequestId() ? ' ('.\wcf\getRequestId().')' : ''), 0, 90);
+					if (isset($_REQUEST['className']) && isset($_REQUEST['actionName'])) {
+						$requestInformation .= ' ('.$_REQUEST['className'].':'.$_REQUEST['actionName'].')';
+					}
+					$requestInformation = substr($requestInformation, 0, 180);
 				}
-				$requestInformation = substr($requestInformation, 0, 180);
 			}
 			
 			$pdoStatement = $this->pdo->prepare($statement.($requestInformation ? " -- ".$this->pdo->quote($requestInformation) : ''));
