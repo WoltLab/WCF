@@ -261,7 +261,7 @@ abstract class Database {
 			//       must be absolutely lightweight.
 			$requestInformation = '';
 			if (defined('ENABLE_PRODUCTION_DEBUG_MODE') && ENABLE_PRODUCTION_DEBUG_MODE && isset($_SERVER['REQUEST_URI'])) {
-				$requestInformation = substr($_SERVER['REQUEST_URI'], 0, 90);
+				$requestInformation = substr($_SERVER['REQUEST_URI'].(\wcf\getRequestId() ? ' ('.\wcf\getRequestId().')' : ''), 0, 90);
 				if (isset($_REQUEST['className']) && isset($_REQUEST['actionName'])) {
 					$requestInformation .= ' ('.$_REQUEST['className'].':'.$_REQUEST['actionName'].')';
 				}
