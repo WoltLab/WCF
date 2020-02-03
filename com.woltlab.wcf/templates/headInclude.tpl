@@ -7,7 +7,7 @@
 
 <!-- Stylesheets -->
 {if $__wcf->getStyleHandler()->getStyle()->getVariable('useGoogleFont')}
-	<link href='//fonts.googleapis.com/css?family={$__wcf->getStyleHandler()->getStyle()->getVariable('wcfFontFamilyGoogle')|urlencode}:400,300,600&amp;display=swap' rel='stylesheet' type='text/css'>
+	<link href='//fonts.googleapis.com/css?family={$__wcf->getStyleHandler()->getStyle()->getVariable('wcfFontFamilyGoogle')|urlencode}:400,300,600' rel='stylesheet' type='text/css'>
 {/if}
 {@$__wcf->getStyleHandler()->getStylesheet()}
 {event name='stylesheets'}
