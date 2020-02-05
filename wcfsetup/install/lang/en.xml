@@ -2576,6 +2576,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rewrite.apache"><![CDATA[Apache (.htaccess)]]></item>
 		<item name="wcf.acp.rewrite.generate"><![CDATA[Generate Rewrite-Rules]]></item>
 		<item name="wcf.acp.rewrite.description"><![CDATA[Generates the rewrite rules for necessary .htaccess-files. Please keep in mind, that you might have to provide different rules for special webserver configurations.]]></item>
+		<item name="wcf.acp.rewrite.filename"><![CDATA[Filename]]></item>
+		<item name="wcf.acp.rewrite.fileContent"><![CDATA[File Content]]></item>
 	</category>
 	<category name="wcf.acp.search">
 		<item name="wcf.acp.search.noResults"><![CDATA[No results]]></item>
