@@ -1031,6 +1031,11 @@ WCF.ACP.Package.Update.Search = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		if (typeof window._trackSearchForUpdates === 'function') {
+			window._trackSearchForUpdates(data);
+			return;
+		}
+		
 		if (data.returnValues.url) {
 			window.location = data.returnValues.url;
 		}
