@@ -227,16 +227,6 @@
 3:wcf.user.access.nobody</selectoptions>
 				<editable>3</editable>
 			</option>
-			<option name="canMail">
-				<categoryname>settings.privacy.messaging</categoryname>
-				<optiontype>select</optiontype>
-				<defaultvalue>1</defaultvalue>
-				<selectoptions>0:wcf.user.access.everyone
-1:wcf.user.access.registered
-2:wcf.user.access.following
-3:wcf.user.access.nobody</selectoptions>
-				<editable>3</editable>
-			</option>
 			<option name="adminCanMail">
 				<categoryname>settings.privacy.messaging</categoryname>
 				<optiontype>boolean</optiontype>
@@ -257,4 +247,7 @@
 			</option>
 		</options>
 	</import>
+	<delete>
+		<option name="canMail" />
+	</delete>
 </data>
