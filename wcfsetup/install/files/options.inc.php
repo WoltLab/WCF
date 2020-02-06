@@ -38,7 +38,7 @@ define('TIMEZONE', 'Europe/Berlin');
 define('ENABLE_DEBUG_MODE', 1);
 define('ENABLE_PRODUCTION_DEBUG_MODE', 1);
 define('ENABLE_BENCHMARK', 0);
-define('ENABLE_ENTERPRISE_MODE', 0);
+if (!defined('ENABLE_ENTERPRISE_MODE')) define('ENABLE_ENTERPRISE_MODE', 0);
 define('EXTERNAL_LINK_TARGET_BLANK', 0);
 define('URL_LEGACY_MODE', 0);
 define('URL_TO_LOWERCASE', 1);
