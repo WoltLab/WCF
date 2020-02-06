@@ -161,19 +161,6 @@
 				<title>Kennwort vergessen</title>
 			</content>
 		</page>
-		<page identifier="com.woltlab.wcf.Mail">
-			<pageType>system</pageType>
-			<controller>wcf\form\MailForm</controller>
-			<name language="de">E-Mail-Formular</name>
-			<name language="en">Mail Form</name>
-			<requireObjectID>1</requireObjectID>
-			<content language="en">
-				<title>Mail Form</title>
-			</content>
-			<content language="de">
-				<title>E-Mail-Formular</title>
-			</content>
-		</page>
 		<page identifier="com.woltlab.wcf.NewPassword">
 			<pageType>system</pageType>
 			<controller>wcf\form\NewPasswordForm</controller>
@@ -822,4 +809,7 @@ E-Mail: [E-Mail-Adresse der verantwortlichen Stelle]</p><p><br></p><p>Verantwort
 			</content>
 		</page>
 	</import>
+	<delete>
+		<page identifier="com.woltlab.wcf.Mail" />
+	</delete>
 </data>
