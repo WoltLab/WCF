@@ -129,8 +129,10 @@ class GithubAuthAction extends AbstractAction {
 						// search primary email
 						$email = $emails[0]['email'];
 						foreach ($emails as $tmp) {
-							if ($tmp['primary']) $email = $tmp['email'];
-							break;
+							if ($tmp['primary']) {
+								$email = $tmp['email'];
+								break;
+							}
 						}
 						WCF::getSession()->register('__email', $email);
 					}
