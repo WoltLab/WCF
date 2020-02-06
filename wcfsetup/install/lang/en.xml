@@ -734,7 +734,6 @@ This protocol file contains {$data[count]} new entries. The first three error me
 		<item name="wcf.acp.group.option.user.profile.avatar.maxSize"><![CDATA[Maximum Image File Size]]></item>
 		<item name="wcf.acp.group.option.user.profile.canChangeEmail"><![CDATA[Can change their email address]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserTitle"><![CDATA[Can edit their user title]]></item>
-		<item name="wcf.acp.group.option.user.profile.canMail"><![CDATA[Can send emails to users]]></item>
 		<item name="wcf.acp.group.option.user.profile.canQuit"><![CDATA[Can delete their user account]]></item>
 		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Can change their username]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Can view members list]]></item>
@@ -5172,7 +5171,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 		<item name="wcf.user.option.birthday"><![CDATA[Birthday]]></item>
 		<item name="wcf.user.option.birthdayShowYear"><![CDATA[Display year of birth]]></item>
 		<item name="wcf.user.option.birthdayShowYear.description"><![CDATA[Allows users to view your age.]]></item>
-		<item name="wcf.user.option.canMail"><![CDATA[Can Send Me Emails]]></item>
 		<item name="wcf.user.option.canViewEmailAddress"><![CDATA[Can View My Email Address]]></item>
 		<item name="wcf.user.option.canViewOnlineStatus"><![CDATA[Can View My Online Status]]></item>
 		<item name="wcf.user.option.canViewProfile"><![CDATA[Can View My Profile]]></item>

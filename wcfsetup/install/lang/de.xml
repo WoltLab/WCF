@@ -758,7 +758,6 @@ Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in 
 		<item name="wcf.acp.group.option.user.profile.avatar.maxSize"><![CDATA[Maximale Dateigröße]]></item>
 		<item name="wcf.acp.group.option.user.profile.canChangeEmail"><![CDATA[Kann E-Mail-Adresse ändern]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserTitle"><![CDATA[Kann eigenen Benutzertitel bearbeiten]]></item>
-		<item name="wcf.acp.group.option.user.profile.canMail"><![CDATA[Kann E-Mails an andere Benutzer senden]]></item>
 		<item name="wcf.acp.group.option.user.profile.canQuit"><![CDATA[Kann Benutzerkonto löschen]]></item>
 		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Kann Benutzernamen ändern]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Kann Mitglieder-Liste sehen]]></item>
@@ -5173,7 +5172,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.option.birthday"><![CDATA[Geburtstag]]></item>
 		<item name="wcf.user.option.birthdayShowYear"><![CDATA[Geburtsjahr im Profil anzeigen]]></item>
 		<item name="wcf.user.option.birthdayShowYear.description"><![CDATA[Mitglieder können dadurch {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Alter sehen.]]></item>
-		<item name="wcf.user.option.canMail"><![CDATA[Kann E-Mails senden]]></item>
 		<item name="wcf.user.option.canViewEmailAddress"><![CDATA[Kann E-Mail-Adresse sehen]]></item>
 		<item name="wcf.user.option.canViewOnlineStatus"><![CDATA[Kann Online-Status sehen]]></item>
 		<item name="wcf.user.option.canViewProfile"><![CDATA[Kann Benutzerprofil sehen]]></item>
