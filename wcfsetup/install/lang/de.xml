@@ -757,7 +757,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.option.user.profile.avatar.maxSize"><![CDATA[Maximale Dateigröße]]></item>
 		<item name="wcf.acp.group.option.user.profile.canChangeEmail"><![CDATA[Kann E-Mail-Adresse ändern]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserTitle"><![CDATA[Kann eigenen Benutzertitel bearbeiten]]></item>
-		<item name="wcf.acp.group.option.user.profile.canMail"><![CDATA[Kann E-Mails an andere Benutzer senden]]></item>
 		<item name="wcf.acp.group.option.user.profile.canQuit"><![CDATA[Kann Benutzerkonto löschen]]></item>
 		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Kann Benutzernamen ändern]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Kann Mitglieder-Liste sehen]]></item>
@@ -5192,7 +5191,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.option.birthday"><![CDATA[Geburtstag]]></item>
 		<item name="wcf.user.option.birthdayShowYear"><![CDATA[Geburtsjahr im Profil anzeigen]]></item>
 		<item name="wcf.user.option.birthdayShowYear.description"><![CDATA[Mitglieder können dadurch {if LANGUAGE_USE_INFORMAL_VARIANT}dein{else}Ihr{/if} Alter sehen.]]></item>
-		<item name="wcf.user.option.canMail"><![CDATA[Kann E-Mails senden]]></item>
 		<item name="wcf.user.option.canViewEmailAddress"><![CDATA[Kann E-Mail-Adresse sehen]]></item>
 		<item name="wcf.user.option.canViewOnlineStatus"><![CDATA[Kann Online-Status sehen]]></item>
 		<item name="wcf.user.option.canViewProfile"><![CDATA[Kann Benutzerprofil sehen]]></item>
@@ -5227,8 +5225,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.option.searchBooleanOption"><![CDATA[Auswahl des Benutzers bei „{$option->getTitle()}“:]]></item>
 	</category>
 	<category name="wcf.user.mail">
-		<item name="wcf.user.mail.information"><![CDATA[Informationen]]></item>
-		<item name="wcf.user.mail.mail.subject"><![CDATA[Nachricht von {@$username}: {@$subject}]]></item>
 		<item name="wcf.user.mail.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
 
 „{@$username}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über die Website {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] folgende Nachricht gesandt:
@@ -5239,11 +5235,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 <p>„{$username}“ hat {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if} über die Website <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a> folgende Nachricht gesandt:</p>
 
 <p>{@$message|newlineToBreak}</p>]]></item>
-		<item name="wcf.user.mail.message"><![CDATA[Nachricht]]></item>
-		<item name="wcf.user.mail.senderEmail"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} E-Mail-Adresse]]></item>
-		<item name="wcf.user.mail.sent"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Nachricht an {$user->username} wurde erfolgreich versandt.]]></item>
-		<item name="wcf.user.mail.showAddress"><![CDATA[Meine E-Mail-Adresse als Absender-Adresse benutzen. Der Empfänger kann direkt auf die Nachricht antworten.]]></item>
-		<item name="wcf.user.mail.subject"><![CDATA[Betreff]]></item>
 	</category>
 	<category name="wcf.user.rank">
 		<item name="wcf.user.rank.administrator"><![CDATA[Administrator]]></item>
