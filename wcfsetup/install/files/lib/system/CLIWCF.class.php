@@ -109,7 +109,7 @@ class CLIWCF extends WCF {
 	/**
 	 * @inheritDoc
 	 */
-	public static final function handleCLIException(\Exception $e) {
+	public static final function handleCLIException($e) {
 		die($e->getMessage()."\n".$e->getTraceAsString());
 	}
 	
