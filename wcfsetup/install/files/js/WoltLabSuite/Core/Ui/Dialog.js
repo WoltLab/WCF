@@ -893,6 +893,7 @@ define(
 					this.close(id);
 				}
 				
+				elRemove(_dialogs.get(id).dialog);
 				_dialogs.delete(id);
 				_dialogObjects.delete(callbackObject);
 			}
