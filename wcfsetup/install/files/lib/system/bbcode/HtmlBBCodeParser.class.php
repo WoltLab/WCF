@@ -429,8 +429,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 	}
 	
 	/**
-	 * @return bool
-	 * @since 5.2
+	 * @inheritDoc
 	 */
 	public function getRemoveLinks() {
 		return $this->removeLinks;

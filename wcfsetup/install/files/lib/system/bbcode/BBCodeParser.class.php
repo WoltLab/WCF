@@ -568,4 +568,12 @@ class BBCodeParser extends SingletonFactory {
 		
 		return $message;
 	}
+	
+	/**
+	 * @return bool
+	 * @since 5.2
+	 */
+	public function getRemoveLinks() {
+		return false;
+	}
 }
