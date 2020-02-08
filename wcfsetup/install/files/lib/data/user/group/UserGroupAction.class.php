@@ -207,6 +207,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 		UserGroupEditor::resetCache();
 		
 		return [
+			'groupID' => $group->groupID,
 			'redirectURL' => LinkHandler::getInstance()->getLink('UserGroupEdit', [
 				'id' => $group->groupID
 			])
