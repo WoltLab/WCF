@@ -65,19 +65,19 @@
 		</section>
 		
 		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.gdLib{/lang}</h2>
+			<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.graphicsLibrary{/lang}</h2>
 			
 			<div class="row rowColGap formGrid">
 				<dl class="col-xs-12 col-md-6">
 					<dt>{lang}wcf.global.systemRequirements.element.required{/lang}</dt>
-					<dd>2.0.0</dd>
+					<dd>{lang}wcf.global.systemRequirements.graphicsLibrary.requirement{/lang}</dd>
 				</dl>
 				
 				<dl class="col-xs-12 col-md-6">
 					<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
 					<dd>
-						<span class="badge {if !$system.gdLib.result}red{else}green{/if}">{$system.gdLib.value}</span>
-						{if !$system.gdLib.result}<small>{lang}wcf.global.systemRequirements.gdLib.description{/lang}</small>{/if}
+						<span class="badge {if !$system.graphicsLibrary.result}red{else}green{/if}">{if !$system.graphicsLibrary.result}{lang}wcf.global.systemRequirements.graphicsLibrary.notFound{/lang}{else}{$system.graphicsLibrary.value}{/if}</span>
+						{if !$system.graphicsLibrary.result}<small>{lang}wcf.global.systemRequirements.graphicsLibrary.description{/lang}</small>{/if}
 					</dd>
 				</dl>
 			</div>
@@ -127,29 +127,10 @@
 				</dl>
 			</div>
 		</section>
-		
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.global.systemRequirements.imagick{/lang}</h2>
-			
-			<div class="row rowColGap formGrid">
-				<dl class="col-xs-12 col-md-6">
-					<dt>{lang}wcf.global.systemRequirements.element.recommended{/lang}</dt>
-					<dd>{lang}wcf.global.systemRequirements.active{/lang}</dd>
-				</dl>
-				
-				<dl class="col-xs-12 col-md-6">
-					<dt>{lang}wcf.global.systemRequirements.element.yours{/lang}</dt>
-					<dd>
-						<span class="badge {if !$system.imagick.result}red{elseif !$system.imagick.supportsAnimatedGIFs}yellow{else}green{/if}">{if !$system.imagick.result}{lang}wcf.global.systemRequirements.notActive{/lang}{else}{$system.imagick.value}{/if}</span>
-						{if !$system.imagick.result}<small>{lang}wcf.global.systemRequirements.imagick.description{/lang}</small>{/if}
-					</dd>
-				</dl>
-			</div>
-		</section>
 	</section>
 
 	<div class="formSubmit">
-		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result || !$system.memoryLimit.result || (!$system.gdLib.result && !$system.imagick.result)} disabled{/if} accesskey="s">
+		<input type="submit" value="{lang}wcf.global.button.next{/lang}"{if !$system.phpVersion.result || !$system.sql.result || !$system.memoryLimit.result || !$system.graphicsLibrary.result} disabled{/if} accesskey="s">
 		<input type="hidden" name="step" value="{@$nextStep}">
 		<input type="hidden" name="tmpFilePrefix" value="{@$tmpFilePrefix}">
 		<input type="hidden" name="languageCode" value="{@$languageCode}">
