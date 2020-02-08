@@ -22,6 +22,20 @@ $.Redactor.prototype.WoltLabClean = function() {
 				var div = elCreate('div');
 				div.innerHTML = html;
 				
+				// Remove some leftover attributes that are not cleaned up.
+				elBySelAll('*', div, function(element) {
+					var attribute, removeAttributes = [];
+					for (var i = 0, length = element.attributes.length; i < length; i++) {
+						attribute = element.attributes[i];
+						if (attribute.name.indexOf('on') === 0) {
+							// `element.attributes` is a live collection.
+							removeAttributes.push(attribute.name);
+						}
+					}
+					
+					removeAttributes.forEach(element.removeAttribute.bind(element));
+				});
+				
 				// remove iframes smuggled into the HTML by the user
 				// they're removed on the server anyway, but keeping
 				// them in the wysiwyg may lead to false impressions
