@@ -211,6 +211,35 @@
 			.breadcrumbs li:nth-child(4) {
 				padding-left: 40px;
 			}
+			
+			.quoteBox {
+				align-items: center;
+				border: 1px solid {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfContentBorderInner')};
+				border-left-width: 5px;
+				display: flex;
+				flex-wrap: wrap;
+				margin: 0;
+				padding: 5px 10px;
+			}
+			.quoteBoxIcon {
+				border-radius: 50%;
+				flex: 0 0 16px;
+				margin-right: 5px;
+				overflow: hidden;
+			}
+			.quoteBoxTitle {
+				flex: 0 0 calc(100% - 21px); /* width + margin */
+			}
+			.quoteBoxContent {
+				flex: 0 0 100%;
+				font-style: italic;
+			}
+			
+			.article ~ .section {
+				border-top: 1px solid {@$__wcf->getStyleHandler()->getStyle()->getVariable('wcfContentBorder')};
+				margin-top: 20px;
+				padding: 20px 10px 0 10px;
+			}
 		</style>
 		{literal}<style amp-boilerplate>body{-webkit-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-moz-animation:-amp-start 8s steps(1,end) 0s 1 normal both;-ms-animation:-amp-start 8s steps(1,end) 0s 1 normal both;animation:-amp-start 8s steps(1,end) 0s 1 normal both}@-webkit-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-moz-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-ms-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@-o-keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}@keyframes -amp-start{from{visibility:hidden}to{visibility:visible}}</style><noscript><style amp-boilerplate>body{-webkit-animation:none;-moz-animation:none;-ms-animation:none;animation:none}</style></noscript>{/literal}
 		<script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script>
