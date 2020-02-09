@@ -311,6 +311,12 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				/** @var \DOMElement $element */
 				foreach ($elements as $element) {
 					$itemName = $element->getAttribute('name');
+					
+					// Safeguard against malformed phrases, an empty name has a strange side effect.
+					if (empty($itemName)) {
+						throw new \RuntimeException("The name attribute is missing or empty.");
+					}
+					
 					$itemValue = $element->nodeValue;
 					
 					$itemData[] = $this->languageID;
