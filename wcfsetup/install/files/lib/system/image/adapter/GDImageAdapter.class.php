@@ -478,6 +478,6 @@ class GDImageAdapter implements IImageAdapter {
 	 * @inheritDoc
 	 */
 	public static function isSupported() {
-		return true;
+		return function_exists('gd_info');
 	}
 }

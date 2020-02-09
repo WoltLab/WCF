@@ -28,11 +28,10 @@
 		<item name="wcf.global.systemRequirements.sql.description"><![CDATA[The “pdo_mysql” PHP extension is required to install this software.]]></item>
 		<item name="wcf.global.systemRequirements.uploadMaxFilesize"><![CDATA[Maximum Size for File Uploads]]></item>
 		<item name="wcf.global.systemRequirements.uploadMaxFilesize.description"><![CDATA[The current configuration of the installed “PHP” version does not allow file uploads. Due to this configuration, some features of this software will not be available.]]></item>
-		<item name="wcf.global.systemRequirements.gdLib"><![CDATA[Installed version of the graphics library “GDLib”]]></item>
-		<item name="wcf.global.systemRequirements.gdLib.description"><![CDATA[The graphics-library “GDLib” is needed to read images and for the dynamic image generation.]]></item>
-		<item name="wcf.global.systemRequirements.gdLib.notFound"><![CDATA[not found]]></item>
-		<item name="wcf.global.systemRequirements.imagick"><![CDATA[Installed version of the graphics library “ImageMagick”]]></item>
-		<item name="wcf.global.systemRequirements.imagick.description"><![CDATA[The graphics-library “ImageMagick” is used to read images and for the dynamic image generation. Supports for scaling of animated GIF files.]]></item>
+		<item name="wcf.global.systemRequirements.graphicsLibrary"><![CDATA[Graphics library]]></item>
+		<item name="wcf.global.systemRequirements.graphicsLibrary.requirement"><![CDATA[GD library or ImageMagick]]></item>
+		<item name="wcf.global.systemRequirements.graphicsLibrary.description"><![CDATA[A graphics library is needed to read images and for the dynamic image generation. The GD library or alternatively ImageMagick is required.]]></item>
+		<item name="wcf.global.systemRequirements.graphicsLibrary.notFound"><![CDATA[not found]]></item>
 		<item name="wcf.global.systemRequirements.active"><![CDATA[Enabled]]></item>
 		<item name="wcf.global.systemRequirements.notActive"><![CDATA[Not enabled]]></item>
 		<item name="wcf.global.systemRequirements.memoryLimit"><![CDATA[PHP memory limit]]></item>

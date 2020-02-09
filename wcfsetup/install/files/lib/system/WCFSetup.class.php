@@ -13,6 +13,7 @@ use wcf\system\database\MySQLDatabase;
 use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\image\adapter\GDImageAdapter;
 use wcf\system\image\adapter\ImagickImageAdapter;
 use wcf\system\io\File;
 use wcf\system\io\Tar;
@@ -360,26 +361,20 @@ class WCFSetup extends WCF {
 		$system['uploadMaxFilesize']['value'] = min(ini_get('upload_max_filesize'), ini_get('post_max_size'));
 		$system['uploadMaxFilesize']['result'] = (intval($system['uploadMaxFilesize']['value']) > 0);
 		
-		// gdlib version
-		$system['gdLib']['value'] = '0.0.0';
-		if (function_exists('gd_info')) {
-			$temp = gd_info();
-			$match = [];
-			if (preg_match('!([0-9]+\.[0-9]+(?:\.[0-9]+)?)!', $temp['GD Version'], $match)) {
-				if (preg_match('/^[0-9]+\.[0-9]+$/', $match[1])) $match[1] .= '.0';
-				$system['gdLib']['value'] = $match[1];
-			}
-		}
-		$system['gdLib']['result'] = (version_compare($system['gdLib']['value'], '2.0.0') >= 0);
-		
-		// ImageMagick
-		$system['imagick'] = ['result' => false];
-		if (ImagickImageAdapter::isSupported()) {
-			$system['imagick'] = [
+		// graphics library
+		$system['graphicsLibrary']['result'] = false;
+		$system['graphicsLibrary']['value'] = '';
+		if (ImagickImageAdapter::isSupported() && ImagickImageAdapter::supportsAnimatedGIFs(ImagickImageAdapter::getVersion())) {
+			$system['graphicsLibrary'] = [
 				'result' => true,
-				'value' => ImagickImageAdapter::getVersion(),
+				'value' => 'ImageMagick',
 			];
-			$system['imagick']['supportsAnimatedGIFs'] = ImagickImageAdapter::supportsAnimatedGIFs($system['imagick']['value']);
+		}
+		else if (GDImageAdapter::isSupported()) {
+			$system['graphicsLibrary'] = [
+				'result' => true,
+				'value' => 'GD Library',
+			];
 		}
 		
 		// memory limit
