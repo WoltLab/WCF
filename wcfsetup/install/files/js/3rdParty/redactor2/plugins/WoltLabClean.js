@@ -167,7 +167,11 @@ $.Redactor.prototype.WoltLabClean = function() {
 					
 					return WCF.String.escapeHTML(html);
 				}
-				
+
+				if (this.clean.isHtmlMsWord(html)) {
+					html = this.clean.cleanMsWord(html);
+				}
+
 				var div = elCreate('div');
 				div.innerHTML = html.replace(/@@@WOLTLAB-P-ALIGN-(?:left|right|center|justify)@@@/g, '');
 				
