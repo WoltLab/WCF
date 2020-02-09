@@ -313,7 +313,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 					
 					// Safeguard against malformed phrases, an empty name has a strange side effect.
 					if (empty($itemName)) {
-						throw new \RuntimeException("The name attribute is missing or empty.");
+						throw new \InvalidArgumentException("The name attribute is missing or empty.");
 					}
 					
 					$itemValue = $element->nodeValue;
