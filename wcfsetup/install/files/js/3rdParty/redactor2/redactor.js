@@ -25,6 +25,15 @@
 	
 	var uuid = 0;
 	
+	var Environment = null;
+	if (typeof window.require === 'function') {
+		// Load the Environment class for a better browser detection, guarded by a function check
+		// to avoid bricking any calls to this file in a different context.
+		require(['Environment'], function(Env) {
+			Environment = Env;
+		});
+	}
+	
 	// Plugin
 	$.fn.redactor = function (options) {
 		var val = [];
@@ -5713,9 +5722,13 @@
 					
 					// on Shift+Enter or Ctrl+Enter
 					if (key === this.keyCode.ENTER && (e.ctrlKey || e.shiftKey)) {
-						e.preventDefault();
-						
-						return this.keydown.onShiftEnter(e);
+						// iOS Safari will report the shift key to be pressed, if the caret is at the
+						// front of the line and the next character should be an uppercase character.
+						if (Environment === null || Environment.platform() !== 'ios') {
+							e.preventDefault();
+
+							return this.keydown.onShiftEnter(e);
+						}
 					}
 					
 					// on enter
