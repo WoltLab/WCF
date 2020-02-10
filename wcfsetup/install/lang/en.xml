@@ -612,9 +612,8 @@
 the following errors have been logged on your website {@PAGE_TITLE|language} since {$date|plainTime}:
 
 {foreach from=$files key=file item=data}
-log/{$file}.txt {* this line ends with a space *}
+log/{$file}.txt ({#$data[count]} error{if $data[count] > 1}s{/if}) {* this line ends with a space *}
 ==================
-
 {if $data[verdict]|isset}
 {if $data[verdict] == 'corrupt'}
 This protocol file is corrupted. Please check the protocol manually: {'WCF_DIR'|constant}log/{$file}.txt
@@ -622,13 +621,14 @@ This protocol file is corrupted. Please check the protocol manually: {'WCF_DIR'|
 This protocol file is very large. Please check the protocol manually: {'WCF_DIR'|constant}log/{$file}.txt
 {/if}
 {else}
-This protocol file contains {$data[count]} new entries. The first three error messages that are not yet listed in this email are:
 {foreach from=$data[messages] item=message}
 - {@$message} {* this line ends with a space *}
 {/foreach}
 {/if}
 {* this line is intentionally left empty *}
-{/foreach}]]></item>
+{/foreach}
+
+ATTENTION: The messages listed above are greatly shortened. You can view details of individual error messages in the administration interface under “Logs » Errors”.]]></item>
 	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Add User Group]]></item>

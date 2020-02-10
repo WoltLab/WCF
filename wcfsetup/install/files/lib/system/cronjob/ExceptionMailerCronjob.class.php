@@ -32,8 +32,8 @@ class ExceptionMailerCronjob extends AbstractCronjob {
 		}
 		$files[gmdate('Y-m-d', TIME_NOW)] = [];
 		
-		$seen = [];
 		foreach ($files as $file => $value) {
+			$seen = [];
 			$path = WCF_DIR.'log/'.$file.'.txt';
 			if (!file_exists($path)) {
 				unset($files[$file]);
@@ -64,7 +64,7 @@ class ExceptionMailerCronjob extends AbstractCronjob {
 				if ($exception['date'] < $timestamp) continue;
 				
 				$count++;
-				if (!isset($seen[$message]) && count($files[$file]['messages']) < 3) {
+				if (!isset($seen[$message]) && count($files[$file]['messages']) < 5) {
 					$files[$file]['messages'][] = StringUtil::truncate(preg_replace('/\s+/', ' ', $message), 140);
 					$seen[$message] = true;
 				}

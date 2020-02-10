@@ -636,9 +636,8 @@
 die folgenden Fehlermeldungen auf Ihrer Website {@PAGE_TITLE|language} wurden seit dem {$date|plainTime} protokolliert:
 
 {foreach from=$files key=file item=data}
-log/{$file}.txt {* this line ends with a space *}
+log/{$file}.txt ({#$data[count]} Fehlermeldung{if $data[count] > 1}en{/if}) {* this line ends with a space *}
 ==================
-
 {if $data[verdict]|isset}
 {if $data[verdict] == 'corrupt'}
 Das Fehlerprotokoll ist defekt. Bitte prüfen Sie das Protokoll händisch: {'WCF_DIR'|constant}log/{$file}.txt
@@ -646,13 +645,14 @@ Das Fehlerprotokoll ist defekt. Bitte prüfen Sie das Protokoll händisch: {'WCF
 Das Fehlerprotokoll ist sehr groß. Bitte prüfen Sie das Protokoll händisch: {'WCF_DIR'|constant}log/{$file}.txt
 {/if}
 {else}
-Das Fehlerprotokoll enthält {$data[count]} neue Einträge. Die ersten drei, in dieser E-Mail noch nicht genannten, Fehlermeldungen lauten:
 {foreach from=$data[messages] item=message}
 - {@$message} {* this line ends with a space *}
 {/foreach}
 {/if}
 {* this line is intentionally left empty *}
-{/foreach}]]></item>
+{/foreach}
+
+ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details zu einzelnen Fehlermeldungen in der Administrationsoberfläche unter „Protokoll » Fehler“ einsehen.]]></item>
 	</category>
 	<category name="wcf.acp.group">
 		<item name="wcf.acp.group.add"><![CDATA[Benutzergruppe hinzufügen]]></item>
