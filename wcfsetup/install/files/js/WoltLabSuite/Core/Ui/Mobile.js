@@ -416,7 +416,16 @@ define(
 		},
 		
 		_rebuildMobileNavigation: function (navigation) {
-			elBySelAll('.button:not(.ignoreMobileNavigation)', navigation, function (button) {
+			elBySelAll('.button', navigation, function (button) {
+				if (button.classList.contains('ignoreMobileNavigation')) {
+					// The reaction button was hidden up until 5.2.2, but was enabled again in 5.2.3. This check
+					// exists to make sure that there is no unexpected behavior in 3rd party apps or plugins that
+					// used the same code and hid the reaction button via a CSS class in the template.
+					if (!button.classList.contains('reactButton')) {
+						return;
+					}
+				}
+				
 				var item = elCreate('li');
 				if (button.classList.contains('active')) item.className = 'active';
 				item.innerHTML = '<a href="#">' + elBySel('span:not(.icon)', button).textContent + '</a>';

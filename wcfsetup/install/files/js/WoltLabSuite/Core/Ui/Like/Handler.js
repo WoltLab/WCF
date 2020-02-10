@@ -202,21 +202,10 @@ define(
 			var listItem = elCreate('li');
 			listItem.className = 'wcfReactButton';
 			
-			if (insertBefore) {
-				var jsMobileNavigation = insertBefore.parentElement.contains('jsMobileNavigation');
-			}
-			else {
-				var jsMobileNavigation = appendTo.classList.contains('jsMobileNavigation');
-			}
-			
 			var button = elCreate('a');
 			button.className = 'jsTooltip reactButton';
 			if (this._options.renderAsButton) {
 				button.classList.add('button');
-				
-				if (jsMobileNavigation) {
-					button.classList.add('ignoreMobileNavigation');
-				}
 			}
 			
 			button.href = '#';

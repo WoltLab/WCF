@@ -12,13 +12,13 @@ define(
 		'Ajax',      'Core',                            'Dictionary',           'Language',
 		'ObjectMap', 'StringUtil',                      'Dom/ChangeListener',   'Dom/Util',
 		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List',  'User',                 'WoltLabSuite/Core/Ui/Reaction/CountButtons',
-		'Ui/Alignment', 'Ui/CloseOverlay',              'Ui/Screen'
+		'Ui/Alignment', 'Ui/CloseOverlay'
 	],
 	function(
 		Ajax,        Core,              Dictionary,             Language,
 		ObjectMap,   StringUtil,        DomChangeListener,      DomUtil,
 		UiDialog,    UiUserList,        User,                   CountButtons,
-		UiAlignment, UiCloseOverlay,    UiScreen
+		UiAlignment, UiCloseOverlay
 	)
 	{
 		"use strict";
@@ -133,55 +133,7 @@ define(
 					textSpan.innerText = reaction.title;
 				}
 				
-				if (elementData.reactButton.closest('.messageFooterGroup > .jsMobileNavigation')) {
-					UiScreen.on('screen-sm-down', {
-						match: this._enableMobileView.bind(this, elementData.reactButton, elementData.objectId),
-						unmatch: this._disableMobileView.bind(this, elementData.reactButton, elementData.objectId),
-						setup: this._setupMobileView.bind(this, elementData.reactButton, elementData.objectId)
-					});
-				}
-				
 				elementData.reactButton.addEventListener(WCF_CLICK_EVENT, this._toggleReactPopover.bind(this, elementData.objectId, elementData.reactButton));
-			},
-			
-			/**
-			 * Enables the mobile view for the reaction button.
-			 * 
-			 * @param       {Element}       element
-			 */
-			_enableMobileView: function(element) {
-				var messageFooterGroup = element.closest('.messageFooterGroup');
-				
-				elShow(elBySel('.mobileReactButton', messageFooterGroup));
-			},
-			
-			/**
-			 * Disables the mobile view for the reaction button.
-			 * 
-			 * @param       {Element}       element
-			 */
-			_disableMobileView: function(element) {
-				var messageFooterGroup = element.closest('.messageFooterGroup');
-				
-				elHide(elBySel('.mobileReactButton', messageFooterGroup));
-			},
-			
-			/**
-			 * Setup the mobile view for the reaction button.
-			 * 
-			 * @param       {Element}       element
-			 * @param       {int}           objectID
-			 */
-			_setupMobileView: function(element, objectID) {
-				var messageFooterGroup = element.closest('.messageFooterGroup');
-				
-				var button = elCreate('button');
-				button.className = 'mobileReactButton';
-				button.innerHTML = element.innerHTML;
-				
-				button.addEventListener(WCF_CLICK_EVENT, this._toggleReactPopover.bind(this, objectID, button));
-				
-				messageFooterGroup.appendChild(button);
 			},
 			
 			_updateReactButton: function(objectID, reactionTypeID) {
