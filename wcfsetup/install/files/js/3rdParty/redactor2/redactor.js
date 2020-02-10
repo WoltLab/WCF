@@ -6353,8 +6353,25 @@
 						this.selection.restore();
 					}
 					else {
-						this.core.editor().html(this.opts.emptyHtml);
-						this.focus.start();
+						var updateHtml = function() {
+							this.core.editor().html(this.opts.emptyHtml);
+							this.focus.start();
+						}.bind(this);
+						
+						if (Environment !== null && Environment.platform() === 'ios') {
+							// In iOS Safari the backspace sometimes appears to be triggered twice if the editor
+							// is completely empty. After debugging for way too much time, and realizing that
+							// the remote debugger's breakpoints alter the behavior of async callbacks (*), this
+							// should solve the issue.
+							//
+							// (*) Set up a `console.log()` inside a MutationObserver and then make use of the
+							// `debugger;` statement to halt the execution flow. The observer is executed, but
+							// the output never appears on the console. Output works if there is no breakpoint.
+							setTimeout(updateHtml, 50);
+						}
+						else {
+							updateHtml();
+						}
 					}
 					
 					return false;
