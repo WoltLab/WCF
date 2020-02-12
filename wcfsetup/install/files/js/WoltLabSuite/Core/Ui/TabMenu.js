@@ -7,7 +7,7 @@
  * @module	Ui/TabMenu (alias)
  * @module	WoltLabSuite/Core/Ui/TabMenu
  */
-define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/CloseOverlay', 'Ui/Screen', './TabMenu/Simple'], function(Dictionary, EventHandler, DomChangeListener, DomUtil, UiCloseOverlay, UiScreen, SimpleTabMenu) {
+define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/CloseOverlay', 'Ui/Screen', 'Ui/Scroll', './TabMenu/Simple'], function(Dictionary, EventHandler, DomChangeListener, DomUtil, UiCloseOverlay, UiScreen, UiScroll, SimpleTabMenu) {
 	"use strict";
 	
 	var _activeList = null;
@@ -140,6 +140,41 @@ define(['Dictionary', 'EventHandler', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Clos
 							timeout = window.setTimeout(callback, 10);
 						});
 					}).bind(this));
+					
+					// The validation of input fields, e.g. [required], yields strange results when
+					// the erroneous element is hidden inside a tab. The submit button will appear
+					// to not work and a warning is displayed on the console. We can work around this
+					// by manually checking if the input fields validate on submit and display the
+					// parent tab ourselves.
+					var form = container.closest('form');
+					if (form !== null) {
+						var submitButton = elBySel('input[type="submit"]', form);
+						if (submitButton !== null) {
+							(function(container, submitButton) {
+								submitButton.addEventListener(WCF_CLICK_EVENT, function(event) {
+									if (!event.defaultPrevented) {
+										var element, elements = elBySelAll('input, select', container);
+										for (var i = 0, length = elements.length; i < length; i++) {
+											element = elements[i];
+											if (!element.checkValidity()) {
+												event.preventDefault();
+												
+												// Select the tab that contains the erroneous element.
+												var tabMenu = this.getTabMenu(element.closest('.tabMenuContainer').id);
+												tabMenu.select(elData(element.closest('.tabMenuContent'), 'name'));
+												
+												UiScroll.element(element, function() {
+													this.reportValidity();
+												}.bind(element));
+												
+												return;
+											}
+										}
+									}
+								}.bind(this));
+							}).bind(this)(container, submitButton);
+						}
+					}
 				}
 			}
 		},
