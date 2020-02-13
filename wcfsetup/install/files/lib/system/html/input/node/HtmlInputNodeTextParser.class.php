@@ -179,7 +179,6 @@ class HtmlInputNodeTextParser {
 		if (!empty($usernames)) {
 			$users = $this->lookupUsernames($usernames);
 			$groups = $this->lookupGroups($usernames);
-			
 		}
 		
 		$allowEmail = BBCodeHandler::getInstance()->isAvailableBBCode('email');
@@ -340,7 +339,7 @@ class HtmlInputNodeTextParser {
 			}
 		}
 		
-		return$groups;
+		return $groups;
 	}
 	
 	/**
