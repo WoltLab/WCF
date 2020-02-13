@@ -92,7 +92,7 @@ class MessageUtil {
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
-			while ($username = $statement->fetchSingleColumn()) {
+			while ($username = $statement->fetchColumn()) {
 				$usernames[] = $username;
 			}
 		}
