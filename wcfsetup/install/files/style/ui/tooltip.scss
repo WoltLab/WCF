@@ -41,5 +41,12 @@
 }
 
 #quoteManagerCopy {
+	/* Prevent the tooltip from being selected on touch devices. */
+	user-select: none;
+	
 	z-index: 350;
+	
+	@include screen-md-down {
+		@include wcfFontDefault;
+	}
 }
