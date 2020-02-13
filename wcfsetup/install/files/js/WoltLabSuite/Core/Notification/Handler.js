@@ -185,7 +185,7 @@ define(['Ajax', 'Core', 'EventHandler', 'StringUtil'], function(Ajax, Core, Even
 			var pollData = data.returnValues.pollData;
 			
 			// forward keep alive data
-			window.WCF.System.PushNotification.executeCallbacks(keepAliveData);
+			window.WCF.System.PushNotification.executeCallbacks({returnValues: keepAliveData});
 			
 			// store response data in local storage
 			try {
