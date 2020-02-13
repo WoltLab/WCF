@@ -6,6 +6,7 @@ use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\HTTPUnauthorizedException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\WCF;
@@ -560,7 +561,12 @@ class PackageInstallationScheduler {
 	 */
 	protected function findShortestUpdateThread($package, $fromversions, $currentVersion, $newVersion) {
 		if (!isset($fromversions[$newVersion])) {
-			throw new SystemException("An update of package ".$package." from version ".$currentVersion." to ".$newVersion." is not supported.");
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.update.path.unknown', [
+				'currentVersion' => $currentVersion,
+				'newVersion' => $newVersion,
+				'package' => $package,
+				'packageName' => PackageCache::getInstance()->getPackageByIdentifier($package)->getName(),
+			]));
 		}
 		
 		// find direct update
@@ -592,7 +598,12 @@ class PackageInstallationScheduler {
 		}
 		
 		if (empty($updateThreadList)) {
-			throw new SystemException("An update of package ".$package." from version ".$currentVersion." to ".$newVersion." is not supported.");
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.update.path.incoherent', [
+				'currentVersion' => $currentVersion,
+				'newVersion' => $newVersion,
+				'package' => $package,
+				'packageName' => PackageCache::getInstance()->getPackageByIdentifier($package)->getName(),
+			]));
 		}
 		
 		// sort by length

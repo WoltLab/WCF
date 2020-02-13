@@ -1584,6 +1584,8 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.package.update.excludedPackages.excluding"><![CDATA[Packages to be installed]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluding.description"><![CDATA[The following packages to be installed are not compatible with the currently installed packages.]]></item>
 		<item name="wcf.acp.package.update.excludedPackages.excluding.package"><![CDATA[“{$excludedPackage[packageName]}” in version “{$excludedPackage[packageVersion]}” cannot be installed because it is incompatible with the installed package “{$excludedPackage[existingPackageName]}”.]]></item>
+		<item name="wcf.acp.package.update.path.incoherent"><![CDATA[The update requires the newer version {$newVersion} of the package “{$packageName}” (installed version: {$currentVersion}), but there is no such update available.]]></item>
+		<item name="wcf.acp.package.update.path.unknown"><![CDATA[The update requires the newer version {$newVersion} of the package “{$packageName}” (installed version: {$currentVersion}), but no such update could be found. Perhaps you are missing the required package server?]]></item>
 		<item name="wcf.acp.package.version"><![CDATA[Version]]></item>
 		<item name="wcf.acp.package.packageDir.input"><![CDATA[Installation Directory]]></item>
 		<item name="wcf.acp.package.upload"><![CDATA[Upload package]]></item>
