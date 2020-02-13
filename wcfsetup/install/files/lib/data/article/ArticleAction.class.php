@@ -743,7 +743,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * @return      array   list of matching articles
 	 */
 	public function search() {
-		$sql = "SELECT          DISTINCT articleID
+		$sql = "SELECT          articleID
 			FROM            wcf".WCF_N."_article_content
 			WHERE           title LIKE ?
 					AND (
