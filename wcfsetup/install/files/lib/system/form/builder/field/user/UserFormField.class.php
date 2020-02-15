@@ -129,63 +129,62 @@ class UserFormField extends AbstractFormField implements IAutoFocusFormField, II
 		) {
 			$this->addValidationError(new FormFieldValidationError('empty'));
 		}
-		else if (!$this->isRequired()) {
-			if ($this->allowsMultiple()) {
-				if ($this->getMinimumMultiples() > 0 && count($this->getValue()) < $this->getMinimumMultiples()) {
-					$this->addValidationError(new FormFieldValidationError(
-						'minimumMultiples',
-						'wcf.form.field.user.error.minimumMultiples',
-						[
-							'minimumCount' => $this->getMinimumMultiples(),
-							'count' => count($this->getValue())
-						]
-					));
-				}
-				else if ($this->getMaximumMultiples() !== IMultipleFormField::NO_MAXIMUM_MULTIPLES && count($this->getValue()) > $this->getMaximumMultiples()) {
-					$this->addValidationError(new FormFieldValidationError(
-						'maximumMultiples',
-						'wcf.form.field.user.error.maximumMultiples',
-						[
-							'maximumCount' => $this->getMaximumMultiples(),
-							'count' => count($this->getValue())
-						]
-					));
-				}
-				else {
-					// validate users
-					$this->users = UserProfile::getUserProfilesByUsername($this->getValue());
-					
-					$nonExistentUsernames = [];
-					foreach ($this->getValue() as $username) {
-						if (!isset($this->users[$username])) {
-							$nonExistentUsernames[] = $username;
-						}
-					}
-					
-					if (!empty($nonExistentUsernames)) {
-						$this->addValidationError(new FormFieldValidationError(
-							'nonExistent',
-							'wcf.form.field.user.error.nonExistent',
-							['nonExistentUsernames' => $nonExistentUsernames]
-						));
-					}
-				}
+		
+		if ($this->allowsMultiple()) {
+			if ($this->getMinimumMultiples() > 0 && count($this->getValue()) < $this->getMinimumMultiples()) {
+				$this->addValidationError(new FormFieldValidationError(
+					'minimumMultiples',
+					'wcf.form.field.user.error.minimumMultiples',
+					[
+						'minimumCount' => $this->getMinimumMultiples(),
+						'count' => count($this->getValue())
+					]
+				));
 			}
-			else if ($this->getValue() !== '') {
-				$user = UserProfile::getUserProfileByUsername($this->getValue());
+			else if ($this->getMaximumMultiples() !== IMultipleFormField::NO_MAXIMUM_MULTIPLES && count($this->getValue()) > $this->getMaximumMultiples()) {
+				$this->addValidationError(new FormFieldValidationError(
+					'maximumMultiples',
+					'wcf.form.field.user.error.maximumMultiples',
+					[
+						'maximumCount' => $this->getMaximumMultiples(),
+						'count' => count($this->getValue())
+					]
+				));
+			}
+			else {
+				// validate users
+				$this->users = UserProfile::getUserProfilesByUsername($this->getValue());
 				
-				if ($user === null) {
+				$nonExistentUsernames = [];
+				foreach ($this->getValue() as $username) {
+					if (!isset($this->users[$username])) {
+						$nonExistentUsernames[] = $username;
+					}
+				}
+				
+				if (!empty($nonExistentUsernames)) {
 					$this->addValidationError(new FormFieldValidationError(
 						'nonExistent',
-						'wcf.form.field.user.error.invalid'
+						'wcf.form.field.user.error.nonExistent',
+						['nonExistentUsernames' => $nonExistentUsernames]
 					));
-				}
-				else {
-					$this->users[] = $user;
 				}
 			}
 		}
-		
+		else if ($this->getValue() !== '') {
+			$user = UserProfile::getUserProfileByUsername($this->getValue());
+			
+			if ($user === null) {
+				$this->addValidationError(new FormFieldValidationError(
+					'nonExistent',
+					'wcf.form.field.user.error.invalid'
+				));
+			}
+			else {
+				$this->users[] = $user;
+			}
+		}
+				
 		parent::validate();
 	}
 	
