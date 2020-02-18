@@ -321,6 +321,13 @@ if (COMPILER_TARGET_DEFAULT) {
 			// show container
 			this._container.show();
 			
+			// Because the container might have been hidden before, we must ensure that
+			// form builder field dependencies are checked again to avoid having ACL
+			// form fields not being shown in form builder forms.
+			require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager'], function(FormBuilderFieldDependencyManager) {
+				FormBuilderFieldDependencyManager.checkDependencies();
+			});
+			
 			// pre-select an entry
 			this._selectFirstEntry();
 		},
