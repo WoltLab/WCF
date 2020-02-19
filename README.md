@@ -1,17 +1,13 @@
-WoltLab Community Framework 2.1
-===============================
+# WoltLab Community Framework 2.1
 
 WoltLab Community Framework is a free web-framework, designed and developed for complex community applications. The framework applies the latest and most modern technologies, it is structured completly object-oriented, constantly enhanced and forms the base for all WoltLab products.
 
-Version notes
--------------
+## Version notes
 
-This is the **stable** tree of WCF, changes will be rejected unless they fix an existing issue without changing the API.
+WoltLab Community Framework 2.1 has reached its end of life as of [January 11th, 2020](https://community.woltlab.com/thread/274437-limited-support-for-burning-board-4-1/), this version
+will no longer receive any updates. Please refer to the `master` branch to learn more about newer versions.
 
-If you wish to access the **oldstable WCF 2.0.x** branch, please see here: [WCF 2.0.x](https://github.com/WoltLab/WCF/tree/2.0)
-
-About Redactor
---------------
+## About Redactor
 
 Redactor is a WYSIWYG-editor created by Imperavi LLC., Copyright (c) 2009-2015. You can make use of Redactor in any plugin or application for WCF 2.1 free of charge. You are not allowed to extract or re-use the editor (in entirety or in potions) for any other use unless you own a license for Redactor.
 
@@ -19,13 +15,11 @@ Please see http://imperavi.com/redactor/license/ for more information.
 
 Redactor is **NOT** free software!
 
-Contribution
-------------
+## Contribution
 
 For information on contributing to Community Framework refer to CONTRIBUTING.md in this folder.
 
-License
--------
+## License
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public License
