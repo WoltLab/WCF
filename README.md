@@ -1,22 +1,18 @@
-WoltLab Suite Core 5.2
-======================
+# WoltLab Suite Core 5.2
 
 WoltLab Suite Core is a free CMS and web-framework, designed for awesome websites and communities. Cutting-edge technologies and strict object-oriented programming makes it the ideal choice for developers and communities, and is actively maintained and improved by WoltLab.
 
 _Formerly known as [WoltLab Community Framework](https://community.woltlab.com/thread/249026-introducing-woltlab-suite-3-0/)_
 
-Version notes
--------------
+## Version notes
 
-This is the **development** tree of WoltLab Suite Core representing the upcoming version of WoltLab Suite.
+This is the **development** tree of WoltLab Suite Core representing the upcoming version of WoltLab Suite. Please use this branch for all pull requests, unless advised otherwise.
 
-Other versions:
-- **stable** branch: [WSC 3.0.x](https://github.com/WoltLab/WCF/tree/master)
-- **oldstable** branch: [WCF 2.1.x](https://github.com/WoltLab/WCF/tree/3.0)
-- **oldoldstable** branch: [WCF 2.0.x](https://github.com/WoltLab/WCF/tree/2.1)
+- **Stable** version 5.2: [WSC 5.2](https://github.com/WoltLab/WCF/tree/5.2)
+- **Legacy** version 3.1: [WSC 3.1](https://github.com/WoltLab/WCF/tree/3.1)
+- **Legacy** version 3.0: [WSC 3.0](https://github.com/WoltLab/WCF/tree/3.0)
 
-About Redactor II
------------------
+## About Redactor II
 
 Redactor II is a WYSIWYG-editor created by Imperavi LLC., Copyright (c) 2009-2017. You can make use of Redactor II in any plugin or app for WSC 5.2 free of charge. You are not allowed to extract or re-use the editor (in entirety or in potions) for any other use unless you own a license for Redactor II.
 
@@ -24,13 +20,11 @@ Please see http://imperavi.com/redactor/license/ for more information.
 
 Redactor II is **NOT** free software!
 
-Contribution
-------------
+## Contribution
 
 For information on contributing to WoltLab Suite Core refer to [CONTRIBUTING.md](CONTRIBUTING.md) in this folder.
 
-License
--------
+## License
 
 This library is free software; you can redistribute it and/or
 modify it under the terms of the GNU Lesser General Public License
