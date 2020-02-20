@@ -563,6 +563,8 @@ EXPLANATION;
 														return get_class($item);
 													case 'resource':
 														return 'resource('.get_resource_type($item).')';
+													case 'resource (closed)':
+														return 'resource (closed)';
 												}
 												
 												throw new \LogicException('Unreachable');
