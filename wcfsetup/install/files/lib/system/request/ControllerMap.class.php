@@ -83,6 +83,8 @@ class ControllerMap extends SingletonFactory {
 			if ($controller === 'AjaxProxy') $controller = 'AJAXProxy';
 			else if ($controller === 'AjaxUpload') $controller = 'AJAXUpload';
 			else if ($controller === 'AjaxInvoke') $controller = 'AJAXInvoke';
+			else if ($controller === 'AjaxFileUpload') $controller = 'AJAXFileUpload';
+			else if ($controller === 'AjaxFileDelete') $controller = 'AJAXFileDelete';
 			
 			// work-around for package installation during the upgrade 2.1 -> 3.0
 			if ($isAcpRequest && $controller === 'InstallPackage') $application = 'wcf';
