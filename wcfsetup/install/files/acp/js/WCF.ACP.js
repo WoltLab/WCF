@@ -2056,7 +2056,8 @@ WCF.ACP.Stat.Chart = Class.extend({
 					$("#chartTooltip").html(item.series.xaxis.tickFormatter(item.datapoint[0], item.series.xaxis) + ', ' + WCF.String.formatNumeric(item.datapoint[1]) + ' ' + item.series.label).show();
 					UiAlignment.set($("#chartTooltip")[0], span, {
 						verticalOffset: 5,
-						horizontal: 'center'
+						horizontal: 'center',
+						vertical: 'top'
 					});
 				}
 				else {
