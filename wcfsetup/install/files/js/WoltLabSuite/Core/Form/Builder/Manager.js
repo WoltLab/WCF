@@ -3,7 +3,7 @@
  * of the registered forms.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Form/Builder/Manager
  * @since	5.2
@@ -59,6 +59,21 @@ define([
 				
 				return data;
 			});
+		},
+		
+		/**
+		 * Returns the registered form field with given id.
+		 * 
+		 * @param	{string}	formId
+		 * @return	{WoltLabSuite/Core/Form/Builder/Field/Field}
+		 * @since	5.2.3
+		 */
+		getField: function(formId, fieldId) {
+			if (!this.hasField(formId, fieldId)) {
+				throw new Error("Unknown field with id '" + formId + "' for form with id '"  + fieldId + "'.");
+			}
+			
+			return _fields.get(formId).get(fieldId);
 		},
 		
 		/**

@@ -133,19 +133,24 @@ class ACLHandler extends SingletonFactory {
 	 * using form builder, you do not need this method.
 	 * 
 	 * @param	integer		$objectTypeID
+	 * @param	array|null	$valuesSource	array used to read the values from (if `null`, `$_POST['aclValues']` is used)
 	 * @since	5.2
 	 */
-	public function readValues($objectTypeID) {
+	public function readValues($objectTypeID, array $valuesSource = null) {
 		$this->__readValues[$objectTypeID] = [];
 		
-		if (isset($_POST['aclValues'])) {
+		if ($valuesSource === null && isset($_POST['aclValues'])) {
+			$valuesSource = $_POST['aclValues'];
+		}
+		
+		if (isset($valuesSource)) {
 			$options = ACLOption::getOptions($objectTypeID)->getObjects();
 			
 			foreach (['group', 'user'] as $type) {
-				if (isset($_POST['aclValues'][$type])) {
+				if (isset($valuesSource[$type])) {
 					$this->__readValues[$objectTypeID][$type] = [];
 					
-					foreach ($_POST['aclValues'][$type] as $typeID => $optionData) {
+					foreach ($valuesSource[$type] as $typeID => $optionData) {
 						$this->__readValues[$objectTypeID][$type][$typeID] = [];
 						
 						foreach ($optionData as $optionID => $optionValue) {
@@ -245,16 +250,21 @@ class ACLHandler extends SingletonFactory {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		
+		$objectTypeID = reset($options)->objectTypeID;
+		
 		// add new values if given
-		if (!isset($_POST['aclValues']) || !isset($_POST['aclValues'][$type])) {
-			return;
+		$values = [];
+		if (isset($this->__readValues[$objectTypeID]) && isset($this->__readValues[$objectTypeID][$type])) {
+			$values = $this->__readValues[$objectTypeID][$type];
+		}
+		else if (isset($_POST['aclValues']) && isset($_POST['aclValues'][$type])) {
+			$values = $_POST['aclValues'][$type];
 		}
 		
 		$sql = "INSERT INTO	wcf".WCF_N."_acl_option_to_".$type."
 					(optionID, objectID, ".$type."ID, optionValue)
 			VALUES		(?, ?, ?, ?)";
 		$statement = WCF::getDB()->prepareStatement($sql);
-		$values =& $_POST['aclValues'][$type];
 		
 		WCF::getDB()->beginTransaction();
 		foreach ($values as $typeID => $optionData) {
