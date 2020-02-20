@@ -28,9 +28,6 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 				// align the pointer element, expects .elementPointer as a direct child of given element
 				pointer: false,
 				
-				// offset from/left side, ignored for center alignment
-				pointerOffset: 4,
-				
 				// use static pointer positions, expects two items: class to move it to the bottom and the second to move it to the right
 				pointerClassNames: [],
 				
