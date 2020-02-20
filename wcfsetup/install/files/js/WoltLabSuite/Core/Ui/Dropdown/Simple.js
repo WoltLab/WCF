@@ -549,7 +549,13 @@ define(
 		},
 		
 		_handleKeyDown: function(event) {
-			if (EventKey.Enter(event) || (EventKey.Space(event) && event.currentTarget.nodeName !== 'INPUT')) {
+			// <input> elements are not valid targets for drop-down menus. However, some developers
+			// might still decide to combine them, in which case we try not to break things even more.
+			if (event.currentTarget.nodeName === 'INPUT') {
+				return;
+			}
+			
+			if (EventKey.Enter(event) || EventKey.Space(event)) {
 				event.preventDefault();
 				this._toggle(event);
 			}
