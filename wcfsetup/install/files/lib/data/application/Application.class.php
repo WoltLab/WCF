@@ -54,6 +54,19 @@ class Application extends DatabaseObject {
 	protected static $directories = null;
 	
 	/**
+	 * @inheritDoc
+	 */
+	protected function handleData($data) {
+		if (isset($data['domainPath'])) {
+			// The leading and trailing slashes are required and enforced through the admin panel,
+			// however, some users edit the database directly and omit them, causing incorrect urls.
+			$data['domainPath'] = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($data['domainPath']));
+		}
+		
+		parent::handleData($data);
+	}
+	
+	/**
 	 * Returns the abbreviation of the application.
 	 * 
 	 * @return	string
