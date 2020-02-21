@@ -10,7 +10,7 @@ if (COMPILER_TARGET_DEFAULT) {
 	 * ACL support for WCF
 	 *
 	 * @author        Alexander Ebert
-	 * @copyright	2001-2019 WoltLab GmbH
+	 * @copyright	2001-2020 WoltLab GmbH
 	 * @license        GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
 	 */
 	WCF.ACL.List = Class.extend({
@@ -599,6 +599,18 @@ if (COMPILER_TARGET_DEFAULT) {
 					}
 				}
 			}
+		},
+		
+		/**
+		 * Returns the ACL data stored for this list.
+		 * 
+		 * @return	object
+		 * @since	5.2.3
+		 */
+		getData: function() {
+			this._savePermissions();
+			
+			return this._values;
 		}
 	});
 }

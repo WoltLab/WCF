@@ -12,7 +12,7 @@ use wcf\system\form\builder\TObjectTypeFormNode;
  * Implementation of a form field for setting acl option values.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Acl
  * @since	5.2
@@ -25,6 +25,12 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormNode {
 	 * @var	null|string
 	 */
 	protected $categoryName;
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2.3
+	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Acl';
 	
 	/**
 	 * id of the edited object or `null` if no object is edited
@@ -144,7 +150,18 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormNode {
 	 * @inheritDoc
 	 */
 	public function readValue() {
-		ACLHandler::getInstance()->readValues($this->getObjectType()->objectTypeID);
+		$valueSource = $_POST;
+		if ($this->getDocument()->isAjax()) {
+			$valueSource = [];
+			if (
+				$this->getDocument()->hasRequestData($this->getPrefixedId())
+				&& is_array($this->getDocument()->getRequestData($this->getPrefixedId()))
+			) {
+				$valueSource = $this->getDocument()->getRequestData($this->getPrefixedId());
+			}
+		}
+		
+		ACLHandler::getInstance()->readValues($this->getObjectType()->objectTypeID, $valueSource);
 		
 		return $this;
 	}

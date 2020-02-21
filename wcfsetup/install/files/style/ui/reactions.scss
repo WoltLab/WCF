@@ -77,64 +77,77 @@
 		}
 	}
 	
-	> ul > li.reactionTypeButton > img {
+	.reactionTypeButton > img {
 		width: 24px;
 		height: 24px;
-	}
-	
-	> ul > li.reactionTypeButton > img:hover {
-		transform: scale(1.2);
+		
+		&:hover {
+			transform: scale(1.2);
+		}
 	}
 	
 	@include screen-md-down {
 		padding: 5px 0;
 		
-		> ul > li.reactionTypeButton {
+		.reactionTypeButton {
 			margin: 0;
 			display: block;
 			padding: 5px 25px;
-		}
-		
-		> ul > li.reactionTypeButton > .reactionTypeButtonTitle {
-			vertical-align: middle;
-			padding-left: 5px;
-		}
-		
-		> ul > li.reactionTypeButton.active {
-			background-color: $wcfContentBorderInner; // @TODO maybe find a better color value
+			
+			&.active {
+				background-color: $wcfContentBorderInner;
+			}
+			
+			> .reactionTypeButtonTitle {
+				vertical-align: middle;
+				padding-left: 5px;
+			}
 		}
 	}
 	
 	@include screen-lg {
 		padding: 5px 15px;
 		
-		> ul > li.reactionTypeButton > .reactionTypeButtonTitle {
-			display: none;
-		}
-		
-		> ul > li.reactionTypeButton {
+		.reactionTypeButton {
 			display: inline-block;
 			padding-top: 10px;
 			padding-bottom: 10px;
 			cursor: pointer;
 			margin-left: 10px;
+			
+			&:first-child {
+				margin-left: 0;
+			}
+			
+			&.active {
+				padding-left: 5px;
+				padding-right: 5px;
+				
+				> img {
+					transform: scale(1.4);
+					
+					&:hover {
+						transform: scale(1.2);
+					}
+				}
+				
+			}
+			
+			> .reactionTypeButtonTitle {
+				display: none;
+			}
 		}
+	}
+}
+
+@include screen-lg {
+	html.touch .reactionPopoverContent .reactionTypeButton {
+		display: block;
+		margin-left: 0;
 		
-		> ul > li.reactionTypeButton.active {
-			padding-left: 5px;
-			padding-right: 5px;
-		}
-		
-		> ul > li.reactionTypeButton.active > img {
-			transform: scale(1.4);
-		}
-		
-		> ul > li.reactionTypeButton.active > img:hover {
-			transform: scale(1.2);
-		}
-		
-		> ul > li.reactionTypeButton:first-child {
-			margin-left: 0;
+		> .reactionTypeButtonTitle {
+			display: inline;
+			margin-left: 10px;
 		}
 	}
 }
