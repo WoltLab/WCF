@@ -140,6 +140,18 @@
 	}
 }
 
+@include screen-lg {
+	html.touch .reactionPopoverContent .reactionTypeButton {
+		display: block;
+		margin-left: 0;
+		
+		> .reactionTypeButtonTitle {
+			display: inline;
+			margin-left: 10px;
+		}
+	}
+}
+
 @include screen-sm-down {
 	.reactionStatusContainer {
 		display: none;
