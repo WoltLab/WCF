@@ -494,6 +494,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	public function getSearchResultList() {
 		$mediaList = new MediaList();
 		$mediaList->addSearchConditions($this->parameters['searchString']);
+		if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+			$mediaList->getConditionBuilder()->add('media.userID = ?', [WCF::getUser()->userID]);
+		}
 		if ($this->parameters['imagesOnly']) {
 			$mediaList->getConditionBuilder()->add('media.isImage = ?', [1]);
 		}
