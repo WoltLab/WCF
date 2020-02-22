@@ -2,7 +2,9 @@
 namespace wcf\system\database\table;
 use wcf\data\package\Package;
 use wcf\system\database\editor\DatabaseEditor;
+use wcf\system\database\table\column\AbstractIntDatabaseTableColumn;
 use wcf\system\database\table\column\IDatabaseTableColumn;
+use wcf\system\database\table\column\TinyintDatabaseTableColumn;
 use wcf\system\database\table\index\DatabaseTableForeignKey;
 use wcf\system\database\table\index\DatabaseTableIndex;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -13,7 +15,7 @@ use wcf\system\WCF;
  * Processes a given set of changes to database tables.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Database\Table
  * @since	5.2
@@ -103,6 +105,14 @@ class DatabaseTableChangeProcessor {
 	protected $foreignKeysToDrop = [];
 	
 	/**
+	 * indicates if lengths of integer columns are ignored when comparing the columns
+	 * @var	boolean
+	 * @see	https://github.com/WoltLab/WCF/issues/3160
+	 * @since	5.2.3
+	 */
+	protected $ignoreIntLengths = false;
+	
+	/**
 	 * package that wants to apply the changes
 	 * @var	Package
 	 */
@@ -184,6 +194,14 @@ class DatabaseTableChangeProcessor {
 			}
 			else {
 				$this->indexPackageIDs[$row['sqlTable']][$row['sqlIndex']] = $row['packageID'];
+			}
+		}
+		
+		$sqlVersion = $dbEditor->getDatabase()->getVersion();
+		$compareSQLVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
+		if (!stripos($sqlVersion, 'MariaDB')) {
+			if (version_compare($compareSQLVersion, '8.0.19') >= 0) {
+				$this->ignoreIntLengths = true;
 			}
 		}
 	}
@@ -714,8 +732,23 @@ class DatabaseTableChangeProcessor {
 	 * @return	bool
 	 */
 	protected function diffColumns(IDatabaseTableColumn $oldColumn, IDatabaseTableColumn $newColumn) {
-		if (!empty(array_diff($oldColumn->getData(), $newColumn->getData()))) {
-			return true;
+		$diff = array_diff($oldColumn->getData(), $newColumn->getData());
+		if (!empty($diff)) {
+			if (
+				$this->ignoreIntLengths
+				&& array_key_exists('length', $diff)
+				&& $oldColumn instanceof AbstractIntDatabaseTableColumn
+				&& (
+					!($oldColumn instanceof TinyintDatabaseTableColumn)
+					|| $oldColumn->getLength() != 1
+				)
+			) {
+				unset($diff['length']);
+			}
+			
+			if (!empty($diff)) {
+				return true;
+			}
 		}
 		
 		// default type has to be checked explicitly for `null` to properly detect changing
