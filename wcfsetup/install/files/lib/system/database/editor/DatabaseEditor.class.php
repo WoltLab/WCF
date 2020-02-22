@@ -7,7 +7,7 @@ use wcf\system\exception\NotImplementedException;
  * Abstract implementation of a database editor.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2020 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Database\Editor
  */
@@ -25,16 +25,6 @@ abstract class DatabaseEditor {
 	 */
 	public function __construct(Database $dbObj) {
 		$this->dbObj = $dbObj;
-	}
-	
-	/**
-	 * Returns the database object the editor works with.
-	 * 
-	 * @return	Database
-	 * @since	5.2.3
-	 */
-	public function getDatabase() {
-		return $this->dbObj;
 	}
 	
 	/**

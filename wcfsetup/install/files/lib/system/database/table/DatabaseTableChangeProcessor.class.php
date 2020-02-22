@@ -105,14 +105,6 @@ class DatabaseTableChangeProcessor {
 	protected $foreignKeysToDrop = [];
 	
 	/**
-	 * indicates if lengths of integer columns are ignored when comparing the columns
-	 * @var	boolean
-	 * @see	https://github.com/WoltLab/WCF/issues/3160
-	 * @since	5.2.3
-	 */
-	protected $ignoreIntLengths = false;
-	
-	/**
 	 * package that wants to apply the changes
 	 * @var	Package
 	 */
@@ -194,14 +186,6 @@ class DatabaseTableChangeProcessor {
 			}
 			else {
 				$this->indexPackageIDs[$row['sqlTable']][$row['sqlIndex']] = $row['packageID'];
-			}
-		}
-		
-		$sqlVersion = $dbEditor->getDatabase()->getVersion();
-		$compareSQLVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', $sqlVersion);
-		if (!stripos($sqlVersion, 'MariaDB')) {
-			if (version_compare($compareSQLVersion, '8.0.19') >= 0) {
-				$this->ignoreIntLengths = true;
 			}
 		}
 	}
@@ -734,9 +718,9 @@ class DatabaseTableChangeProcessor {
 	protected function diffColumns(IDatabaseTableColumn $oldColumn, IDatabaseTableColumn $newColumn) {
 		$diff = array_diff($oldColumn->getData(), $newColumn->getData());
 		if (!empty($diff)) {
+			// see https://github.com/WoltLab/WCF/pull/3167
 			if (
-				$this->ignoreIntLengths
-				&& array_key_exists('length', $diff)
+				array_key_exists('length', $diff)
 				&& $oldColumn instanceof AbstractIntDatabaseTableColumn
 				&& (
 					!($oldColumn instanceof TinyintDatabaseTableColumn)
