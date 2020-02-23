@@ -628,7 +628,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					return;
 				}
 				
-				var container = this.$editor[0].closest('form, .message');
+				var container = this.$editor[0].closest('form, .message, .jsOuterEditorContainer');
 				if (container === null) return;
 				
 				var formSubmit = elBySel('.formSubmit', container);
