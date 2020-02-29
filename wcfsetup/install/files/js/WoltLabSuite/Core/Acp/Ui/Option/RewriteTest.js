@@ -27,6 +27,11 @@ define(['AjaxRequest', 'Language', 'Ui/Dialog'], function (AjaxRequest, Language
 		 * @param       {Dictionary}    apps
 		 */
 		init: function (apps) {
+			// This configuration part is unavailable when running in enterprise mode.
+			if (_option === null) {
+				return;
+			}
+			
 			if (_option.checked) {
 				// option is already enabled, ignore it
 				return;
