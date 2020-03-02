@@ -20,6 +20,13 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function (Ajax, Language, UiDialog) {
 		 * Initializes the generator for rewrite rules
 		 */
 		init: function () {
+			var urlOmitIndexPhp = elById('url_omit_index_php');
+			
+			// This configuration part is unavailable when running in enterprise mode.
+			if (urlOmitIndexPhp === null) {
+				return;
+			}
+			
 			_container = elCreate('dl');
 			var dt = elCreate('dt');
 			dt.classList.add('jsOnly');
@@ -38,7 +45,7 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function (Ajax, Language, UiDialog) {
 			_container.appendChild(dt);
 			_container.appendChild(dd);
 
-			var insertAfter = elById('url_omit_index_php').closest('dl');
+			var insertAfter = urlOmitIndexPhp.closest('dl');
 			insertAfter.parentNode.insertBefore(_container, insertAfter.nextSibling);
 		},
 

@@ -186,7 +186,7 @@ class UserNotificationHandler extends SingletonFactory {
 				
 				$triggerCountParameters = $parameters;
 				$triggerCountParameters['updateTriggerCount'] = $notificationIDs;
-				EventHandler::getInstance()->fireAction($this, 'updateTriggerCount', $parameters);
+				EventHandler::getInstance()->fireAction($this, 'updateTriggerCount', $triggerCountParameters);
 				unset($triggerCountParameters);
 			}
 		}
