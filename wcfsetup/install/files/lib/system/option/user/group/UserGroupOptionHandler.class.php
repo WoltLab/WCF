@@ -118,6 +118,7 @@ class UserGroupOptionHandler extends OptionHandler {
 	 * Returns true if current user has the permissions to edit every user group.
 	 * 
 	 * @return	boolean
+	 * @deprecated  5.2
 	 */
 	protected function isAdmin() {
 		if ($this->isAdmin === null) {
@@ -147,31 +148,12 @@ class UserGroupOptionHandler extends OptionHandler {
 	protected function validateOption(Option $option) {
 		parent::validateOption($option);
 		
-		if (!$this->isAdmin()) {
+		if (!$this->isOwner()) {
 			// get type object
 			$typeObj = $this->getTypeObject($option->optionType);
 			
 			if ($typeObj->compare($this->optionValues[$option->optionName], WCF::getSession()->getPermission($option->optionName)) == 1) {
 				throw new UserInputException($option->optionName, 'exceedsOwnPermission');
-			}
-		}
-		else if (!$this->isOwner() && $option->optionName == 'admin.user.accessibleGroups' && $this->group !== null && $this->group->isAdminGroup()) {
-			$hasOtherAdminGroup = false;
-			foreach (UserGroup::getGroupsByType() as $userGroup) {
-				if ($userGroup->groupID != $this->group->groupID && $userGroup->isAdminGroup()) {
-					$hasOtherAdminGroup = true;
-					break;
-				}
-			}
-			
-			// prevent users from dropping their own admin state
-			if (!$hasOtherAdminGroup) {
-				// get type object
-				$typeObj = $this->getTypeObject($option->optionType);
-				
-				if ($typeObj->compare($this->optionValues[$option->optionName], WCF::getSession()->getPermission($option->optionName)) == -1) {
-					throw new UserInputException($option->optionName, 'cannotDropPrivileges');
-				}
 			}
 		}
 	}
