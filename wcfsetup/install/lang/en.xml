@@ -685,7 +685,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.category.user"><![CDATA[General Permissions]]></item>
 		<item name="wcf.acp.group.option.category.user.message"><![CDATA[Messages]]></item>
 		<item name="wcf.acp.group.option.category.user.message.comment"><![CDATA[Comments]]></item>
-		<item name="wcf.acp.group.option.error.cannotDropPrivileges"><![CDATA[There must be at least one user group with full access, therefore it is not possible to drop these privileges.]]></item>
 		<item name="wcf.acp.group.option.error.exceedsOwnPermission"><![CDATA[You cannot grant user group permissions exceeding your own permissions.]]></item>
 		<item name="wcf.acp.group.option.error.tooHigh"><![CDATA[The set value is too high.{if $option->maxvalue !== null} The maximum value is {#$option->maxvalue}.{/if}]]></item>
 		<item name="wcf.acp.group.option.error.tooLow"><![CDATA[The set value is too low.{if $option->minvalue !== null} The minimum value is {#$option->minvalue}.{/if}]]></item>
