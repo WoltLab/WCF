@@ -168,6 +168,8 @@
 			{event name='javascriptInit'}
 			
 			$('form[method=get]').attr('method', 'post');
+			
+			WCF.DOMNodeInsertedHandler.execute();
 		});
 	</script>
 	{event name='javascriptInclude'}
