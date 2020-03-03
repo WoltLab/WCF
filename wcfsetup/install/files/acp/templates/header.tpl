@@ -210,6 +210,8 @@
 					link.rel = rel.join(' ');
 				}
 			});
+			
+			WCF.DOMNodeInsertedHandler.execute();
 		});
 	</script>
 	{event name='javascriptInclude'}
