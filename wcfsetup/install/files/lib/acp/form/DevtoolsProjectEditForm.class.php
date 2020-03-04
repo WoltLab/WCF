@@ -17,7 +17,7 @@ use wcf\system\WCF;
 
 /**
  * Shows the devtools project edit form.
- * 
+ *
  * @author	Alexander Ebert, Matthias Schmidt
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
@@ -29,94 +29,94 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.devtools.project.list';
-	
+
 	/**
 	 * @inheritDoc
 	 */
 	public $formAction = 'edit';
-	
+
 	/**
 	 * @var	bool
 	 */
 	public $hasBrokenPath = false;
-	
+
 	/**
 	 * list of missing XML elements that should be present
 	 * @var	string[]
 	 */
 	public $missingElements = [];
-	
+
 	/**
 	 * @inheritDoc
 	 */
 	public function assignVariables() {
 		parent::assignVariables();
-		
+
 		WCF::getTPL()->assign([
 			'hasBrokenPath' => $this->hasBrokenPath,
 			'missingElements' => $this->missingElements
 		]);
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
 	public function buildForm() {
 		parent::buildForm();
-		
+
 		// only show `name` and `path` field which are stored in database if path to
 		// `package.xml` file is broken
 		if ($this->hasBrokenPath) {
 			$this->tooglePackageXmlFieldAvailabilty(false);
 		}
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
 		parent::readParameters();
-		
+
 		if (isset($_REQUEST['id'])) {
 			$this->formObject = new DevtoolsProject($_REQUEST['id']);
 			if (!$this->formObject->projectID) {
 				throw new IllegalLinkException();
 			}
-			
+
 			if (!file_exists($this->formObject->getPackageXmlPath())) {
 				$this->hasBrokenPath = true;
 			}
 		}
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 * @since	5.2
 	 */
 	public function saved() {
 		parent::saved();
-		
+
 		if ($this->hasBrokenPath) {
 			$this->tooglePackageXmlFieldAvailabilty(true);
-			
+
 			$this->hasBrokenPath = false;
 		}
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 * @since	5.2
 	 */
 	protected function setFormObjectData() {
 		parent::setFormObjectData();
-		
+
 		if ($this->hasBrokenPath) {
 			return;
 		}
-		
+
 		// set additional data based on `package.xml` file
 		$packageArchive = $this->formObject->getPackageArchive();
-		
+
 		/** @var TextFormField $packageIdentifier */
 		$packageIdentifier = $this->form->getNodeById('packageIdentifier');
 		if ($packageArchive->getPackageInfo('name') !== null) {
@@ -125,7 +125,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		else {
 			$this->missingElements[] = 'name';
 		}
-		
+
 		/** @var TextFormField $packageName */
 		$packageName = $this->form->getNodeById('packageName');
 		$xmlPackageNames = $packageArchive->getPackageInfo('packageName');
@@ -137,7 +137,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 				$packageNames = [];
 				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 					$packageNames[$language->languageID] = '';
-					
+
 					if (isset($xmlPackageNames[$language->languageCode])) {
 						$packageNames[$language->languageID] = $xmlPackageNames[$language->languageCode];
 					}
@@ -145,14 +145,14 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 						$packageNames[$language->languageID] = $xmlPackageNames['default'];
 					}
 				}
-				
+
 				$packageName->value($packageNames);
 			}
 		}
 		else {
 			$this->missingElements[] = 'packageName';
 		}
-		
+
 		/** @var TextFormField $packageDescription */
 		$packageDescription = $this->form->getNodeById('packageDescription');
 		$xmlPackageDescriptions = $packageArchive->getPackageInfo('packageDescription');
@@ -164,33 +164,33 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 				$packageDescriptions = [];
 				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 					$packageDescriptions[$language->languageID] = '';
-					
+
 					if (isset($xmlPackageDescriptions[$language->languageCode])) {
 						$packageDescriptions[$language->languageID] = $xmlPackageDescriptions[$language->languageCode];
 					} else if (isset($xmlPackageDescriptions['default'])) {
 						$packageDescriptions[$language->languageID] = $xmlPackageDescriptions['default'];
 					}
 				}
-				
+
 				$packageDescription->value($packageDescriptions);
 			}
 		}
 		else {
 			$this->missingElements[] = 'packageDescription';
 		}
-		
+
 		if (!empty($packageArchive->getPackageInfo('isApplication'))) {
 			/** @var BooleanFormField $isApplication */
 			$isApplication = $this->form->getNodeById('isApplication');
 			$isApplication->value(1);
 		}
-		
+
 		if ($packageArchive->getPackageInfo('applicationDirectory') !== null) {
 			/** @var TextFormField $applicationDirectory */
 			$applicationDirectory = $this->form->getNodeById('applicationDirectory');
 			$applicationDirectory->value($packageArchive->getPackageInfo('applicationDirectory'));
 		}
-		
+
 		/** @var TextFormField $version */
 		$version = $this->form->getNodeById('version');
 		if ($packageArchive->getPackageInfo('version') !== null) {
@@ -199,7 +199,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		else {
 			$this->missingElements[] = 'packageDescription';
 		}
-		
+
 		/** @var DateFormField $date */
 		$date = $this->form->getNodeById('date');
 		if ($packageArchive->getPackageInfo('date') !== null) {
@@ -208,13 +208,13 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		else {
 			$this->missingElements[] = 'date';
 		}
-		
-		if ($packageArchive->getPackageInfo('packageurl') !== null) {
+
+		if ($packageArchive->getPackageInfo('packageURL') !== null) {
 			/** @var TextFormField $packageUrl */
-			$packageUrl = $this->form->getNodeById('packageurl');
-			$packageUrl->value($packageArchive->getPackageInfo('packageurl'));
+			$packageUrl = $this->form->getNodeById('packageUrl');
+			$packageUrl->value($packageArchive->getPackageInfo('packageURL'));
 		}
-		
+
 		/** @var TextFormField $license */
 		$license = $this->form->getNodeById('license');
 		$xmlLicenses = $packageArchive->getPackageInfo('license');
@@ -226,7 +226,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 				$licenses = [];
 				foreach (LanguageFactory::getInstance()->getLanguages() as $language) {
 					$licenses[$language->languageID] = '';
-					
+
 					if (isset($xmlLicenses[$language->languageCode])) {
 						$licenses[$language->languageID] = $xmlLicenses[$language->languageCode];
 					}
@@ -234,11 +234,11 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 						$licenses[$language->languageID] = $xmlLicenses['default'];
 					}
 				}
-				
+
 				$license->value($licenses);
 			}
 		}
-		
+
 		/** @var TextFormField $author */
 		$author = $this->form->getNodeById('author');
 		if ($packageArchive->getAuthorInfo('author') !== null) {
@@ -247,17 +247,17 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 		else {
 			$this->missingElements[] = 'author';
 		}
-		
+
 		if ($packageArchive->getAuthorInfo('authorURL') !== null) {
 			/** @var TextFormField $authorUrl */
 			$authorUrl = $this->form->getNodeById('authorUrl');
 			$authorUrl->value($packageArchive->getAuthorInfo('authorURL'));
 		}
-		
+
 		/** @var MultipleSelectionFormField $apiVersions */
 		$apiVersions = $this->form->getNodeById('apiVersions');
 		$apiVersions->value($packageArchive->getCompatibleVersions());
-		
+
 		$requirements = $packageArchive->getRequirements();
 		if (!empty($requirements)) {
 			$requirementData = [];
@@ -268,12 +268,12 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 					'packageIdentifier' => $optional['name']
 				];
 			}
-			
+
 			/** @var DevtoolsProjectRequiredPackagesFormField $requiredPackages */
 			$requiredPackages = $this->form->getNodeById('requiredPackages');
 			$requiredPackages->value($requirementData);
 		}
-		
+
 		$exclusions = $packageArchive->getExcludedPackages();
 		if (!empty($exclusions)) {
 			$exclusionData = [];
@@ -283,12 +283,12 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 					'version' => $exclusion['version'] ?? ''
 				];
 			}
-			
+
 			/** @var DevtoolsProjectExcludedPackagesFormField $excludedPackages */
 			$excludedPackages = $this->form->getNodeById('excludedPackages');
 			$excludedPackages->value($exclusionData);
 		}
-		
+
 		$optionals = $packageArchive->getOptionals();
 		if (!empty($optionals)) {
 			$exclusionData = [];
@@ -297,12 +297,12 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 					'packageIdentifier' => $optional['name']
 				];
 			}
-			
+
 			/** @var DevtoolsProjectOptionalPackagesFormField $optionalPackages */
 			$optionalPackages = $this->form->getNodeById('optionalPackages');
 			$optionalPackages->value($exclusionData);
 		}
-		
+
 		$installationInstructions = [];
 		foreach ($packageArchive->getInstallInstructions() as $instruction) {
 			$installationInstructions[] = [
@@ -318,10 +318,10 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 				'type' => 'install'
 			]
 		];
-		
+
 		foreach ($packageArchive->getUpdateInstructions() as $fromVersion => $updateInstructions) {
 			$versionUpdateInstructions = [];
-			
+
 			foreach ($updateInstructions as $instruction) {
 				$versionUpdateInstructions[] = [
 					'application' => $instruction['attributes']['application'] ?? '',
@@ -330,23 +330,23 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 					'value' => $instruction['value']
 				];
 			}
-			
+
 			$instructions[] = [
 				'fromVersion' => $fromVersion,
 				'instructions' => $versionUpdateInstructions,
 				'type' => 'update'
 			];
 		}
-		
+
 		/** @var DevtoolsProjectInstructionsFormField $instructionsField */
 		$instructionsField = $this->form->getNodeById('instructions');
 		$instructionsField->value($instructions);
 	}
-	
+
 	protected function tooglePackageXmlFieldAvailabilty($available) {
 		/** @var TabMenuFormContainer $tabMenu */
 		$tabMenu = $this->form->getNodeById('project');
-		
+
 		/** @var TabTabMenuFormContainer $tab */
 		foreach ($tabMenu->children() as $tab) {
 			if ($tab->getId() !== 'dataTab') {
@@ -361,7 +361,7 @@ class DevtoolsProjectEditForm extends DevtoolsProjectAddForm {
 			}
 		}
 	}
-	
+
 	/**
 	 * @inheritDoc
 	 */
