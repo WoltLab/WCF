@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\package\update\server;
+use blog\data\entry\Entry;
 use wcf\data\DatabaseObject;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\io\RemoteFile;
@@ -89,6 +90,13 @@ class PackageUpdateServer extends DatabaseObject {
 	 * @return	string[]
 	 */
 	public function getAuthData() {
+		if (ENABLE_ENTERPRISE_MODE && defined('ENTERPRISE_MODE_AUTH_DATA')) {
+			$host = Url::parse($this->serverURL)['host'];
+			if (!empty(ENTERPRISE_MODE_AUTH_DATA[$host])) {
+				return ENTERPRISE_MODE_AUTH_DATA[$host];
+			}
+		}
+		
 		$authData = [];
 		// database data
 		if ($this->loginUsername != '' && $this->loginPassword != '') {
