@@ -34,13 +34,22 @@
 				{/if}
 			</div>
 			
-			{if MODULE_USER_RANK && !$isReply}
-				{if $userProfile->getUserTitle()}
+			{if !$isReply}
+				{hascontent}
 					<div class="userTitle">
-						<span class="badge userTitleBadge{if $userProfile->getRank() && $userProfile->getRank()->cssClassName} {@$userProfile->getRank()->cssClassName}{/if}">{$userProfile->getUserTitle()}</span>
+						{content}
+							{event name='beforeUserTitle'}
+						
+							{if MODULE_USER_RANK && $userProfile->getUserTitle()}
+								<span class="badge userTitleBadge{if $userProfile->getRank() && $userProfile->getRank()->cssClassName} {@$userProfile->getRank()->cssClassName}{/if}">{$userProfile->getUserTitle()}</span>
+							{/if}
+						
+							{event name='afterUserTitle'}
+						{/content}
 					</div>
-				{/if}
-				{if $userProfile->getRank() && $userProfile->getRank()->rankImage}
+				{/hascontent}
+				
+				{if MODULE_USER_RANK && $userProfile->getRank() && $userProfile->getRank()->rankImage}
 					<div class="userRank">{@$userProfile->getRank()->getImage()}</div>
 				{/if}
 			{/if}
