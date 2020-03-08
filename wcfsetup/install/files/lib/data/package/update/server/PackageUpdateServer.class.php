@@ -1,6 +1,5 @@
 <?php
 namespace wcf\data\package\update\server;
-use blog\data\entry\Entry;
 use wcf\data\DatabaseObject;
 use wcf\system\cache\builder\PackageUpdateCacheBuilder;
 use wcf\system\io\RemoteFile;
