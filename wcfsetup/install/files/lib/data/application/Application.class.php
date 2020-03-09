@@ -63,12 +63,20 @@ class Application extends DatabaseObject {
 			$data['domainPath'] = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($data['domainPath']));
 		}
 		
+		parent::handleData($data);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function __get($name) {
 		if (ENABLE_ENTERPRISE_MODE && defined('ENTERPRISE_MODE_DOMAIN_OVERRIDE') && ENTERPRISE_MODE_DOMAIN_OVERRIDE === $_SERVER['HTTP_HOST']) {
-			$data['cookieDomain'] = ENTERPRISE_MODE_DOMAIN_OVERRIDE;
-			$data['domainName'] = ENTERPRISE_MODE_DOMAIN_OVERRIDE;
+			if ($name === 'cookieDomain' || $name === 'domainName') {
+				return ENTERPRISE_MODE_DOMAIN_OVERRIDE;
+			}
 		}
 		
-		parent::handleData($data);
+		return parent::__get($name);
 	}
 	
 	/**
@@ -111,8 +119,6 @@ class Application extends DatabaseObject {
 	 */
 	public function __wakeup() {
 		if (ENABLE_ENTERPRISE_MODE && defined('ENTERPRISE_MODE_DOMAIN_OVERRIDE') && ENTERPRISE_MODE_DOMAIN_OVERRIDE === $_SERVER['HTTP_HOST']) {
-			$this->data['cookieDomain'] = ENTERPRISE_MODE_DOMAIN_OVERRIDE;
-			$this->data['domainName'] = ENTERPRISE_MODE_DOMAIN_OVERRIDE;
 			$this->pageURL = '';
 		}
 	}
