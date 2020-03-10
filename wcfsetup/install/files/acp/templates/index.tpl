@@ -228,7 +228,7 @@
 			
 			<dl>
 				<dt></dt>
-				<dd>Copyright &copy; 2001-2018 WoltLab&reg; GmbH. All rights reserved.</dd>
+				<dd>Copyright &copy; 2001-{TIME_NOW|date:'Y'} WoltLab&reg; GmbH. All rights reserved.</dd>
 			</dl>
 			
 			<dl>
