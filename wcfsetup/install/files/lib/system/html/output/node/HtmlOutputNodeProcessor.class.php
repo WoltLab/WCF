@@ -33,12 +33,6 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	protected $outputType = 'text/html';
 	
 	/**
-	 * enables keyword highlighting
-	 * @var boolean
-	 */
-	protected $keywordHighlighting = true;
-	
-	/**
 	 * @var string[]
 	 */
 	protected $sourceBBCodes = [];
@@ -49,6 +43,12 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * @var string[]
 	 */
 	public static $plainTextNewlineTags = ['br', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li', 'td', 'tr'];
+	
+	/**
+	 * enables keyword highlighting
+	 * @var boolean
+	 */
+	public $keywordHighlighting = true;
 	
 	/**
 	 * HtmlOutputNodeProcessor constructor.
