@@ -110,7 +110,9 @@
 			{/if}
 		{/foreach}
 	{/if}
-	<link rel="amphtml" href="{link controller='ArticleAmp' object=$articleContent}{/link}">
+	{if MODULE_AMP}
+		<link rel="amphtml" href="{link controller='ArticleAmp' object=$articleContent}{/link}">
+	{/if}
 {/capture}
 
 {include file='header'}

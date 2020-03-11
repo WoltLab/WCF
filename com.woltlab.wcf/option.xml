@@ -307,6 +307,11 @@
 				<optiontype>boolean</optiontype>
 				<defaultvalue>1</defaultvalue>
 			</option>
+			<option name="module_amp">
+				<categoryname>module.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<option name="module_smiley">
 				<categoryname>module.customization</categoryname>
 				<optiontype>boolean</optiontype>
