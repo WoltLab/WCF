@@ -78,6 +78,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm {
 						
 						return $list;
 					}, false, false)
+					->required()
 					->filterable(),
 				
 				TextFormField::create('languageItem')
@@ -127,15 +128,15 @@ class LanguageItemAddForm extends AbstractFormBuilderForm {
 								/** @var SingleSelectionFormField $languageCategoryID */
 								$languageCategoryID = $formField->getDocument()->getNodeById('languageCategoryID');
 								
-								$languageCategory = LanguageFactory::getInstance()->getCategoryByID($languageCategoryID->getSaveValue());
-								
-								if (strpos($formField->getSaveValue(), $languageCategory->languageCategory) . '.' !== 0) {
-									$formField->addValidationError(
-										new FormFieldValidationError(
-											'prefixMismatch',
-											'wcf.acp.language.item.languageItem.error.prefixMismatch'
-										)
-									);
+								if ($languageCategory = LanguageFactory::getInstance()->getCategoryByID($languageCategoryID->getSaveValue())) {
+									if (strpos($formField->getSaveValue(), $languageCategory->languageCategory . '.') !== 0) {
+										$formField->addValidationError(
+											new FormFieldValidationError(
+												'prefixMismatch',
+												'wcf.acp.language.item.languageItem.error.prefixMismatch'
+											)
+										);
+									}
 								}
 								
 								break;
