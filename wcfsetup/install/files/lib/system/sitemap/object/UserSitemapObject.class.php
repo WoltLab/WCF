@@ -32,6 +32,6 @@ class UserSitemapObject extends AbstractSitemapObjectObjectType {
 	 * @inheritDoc
 	 */
 	public function isAvailableType() {
-		return WCF::getSession()->getPermission('user.profile.canViewUserProfile') && PageCache::getInstance()->getPageByIdentifier('com.woltlab.wcf.Article')->allowSpidersToIndex;
+		return WCF::getSession()->getPermission('user.profile.canViewUserProfile') && PageCache::getInstance()->getPageByIdentifier('com.woltlab.wcf.User')->allowSpidersToIndex;
 	}
 }

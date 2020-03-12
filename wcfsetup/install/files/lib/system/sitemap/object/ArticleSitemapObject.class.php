@@ -33,6 +33,6 @@ class ArticleSitemapObject extends AbstractSitemapObjectObjectType {
 	 * @inheritDoc
 	 */
 	public function isAvailableType() {
-		return MODULE_ARTICLE && PageCache::getInstance()->getPageByIdentifier('com.woltlab.wcf.User')->allowSpidersToIndex;
+		return MODULE_ARTICLE && PageCache::getInstance()->getPageByIdentifier('com.woltlab.wcf.Article')->allowSpidersToIndex;
 	}
 }
