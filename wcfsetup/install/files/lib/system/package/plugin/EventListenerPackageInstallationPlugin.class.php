@@ -12,6 +12,7 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
 use wcf\system\form\builder\field\IntegerFormField;
+use wcf\system\form\builder\field\ItemListFormField;
 use wcf\system\form\builder\field\option\OptionFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
 use wcf\system\form\builder\field\TextFormField;
@@ -232,7 +233,7 @@ class EventListenerPackageInstallationPlugin extends AbstractXMLPackageInstallat
 				->required()
 				->instantiable(false),
 			
-			TextFormField::create('eventName')
+			ItemListFormField::create('eventName')
 				->objectProperty('eventname')
 				->label('wcf.acp.pip.eventListener.eventName')
 				->description('wcf.acp.pip.eventListener.eventName.description')
