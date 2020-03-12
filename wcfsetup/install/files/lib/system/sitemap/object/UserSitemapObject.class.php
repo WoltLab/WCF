@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\sitemap\object;
+use wcf\data\page\PageCache;
 use wcf\data\user\User;
 use wcf\system\WCF;
 
@@ -31,6 +32,6 @@ class UserSitemapObject extends AbstractSitemapObjectObjectType {
 	 * @inheritDoc
 	 */
 	public function isAvailableType() {
-		return WCF::getSession()->getPermission('user.profile.canViewUserProfile');
+		return WCF::getSession()->getPermission('user.profile.canViewUserProfile') && PageCache::getInstance()->getPageByIdentifier('com.woltlab.wcf.User')->allowSpidersToIndex;
 	}
 }
