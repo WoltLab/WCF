@@ -2,6 +2,7 @@
 namespace wcf\system\sitemap\object;
 use wcf\data\article\content\ArticleContent;
 use wcf\data\DatabaseObject;
+use wcf\data\page\PageCache;
 
 /**
  * Article sitemap implementation. 
@@ -32,6 +33,6 @@ class ArticleSitemapObject extends AbstractSitemapObjectObjectType {
 	 * @inheritDoc
 	 */
 	public function isAvailableType() {
-		return MODULE_ARTICLE;
+		return MODULE_ARTICLE && PageCache::getInstance()->getPageByIdentifier('com.woltlab.wcf.User')->allowSpidersToIndex;
 	}
 }
