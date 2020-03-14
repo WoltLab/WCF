@@ -1807,7 +1807,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.package.description"><![CDATA[Beschreibung]]></item>
 		<item name="wcf.acp.package.error.cli.installIsApplication"><![CDATA[Apps können per CLI nicht installiert werden.]]></item>
 		<item name="wcf.acp.package.error.exceedsPhpLimit"><![CDATA[Die Datei ist größer als das PHP-Limit „upload_max_filesize“ und/oder „post_max_size“.]]></item>
-		<item name="wcf.acp.package.error.noUniqueAbbrevation"><![CDATA[Es ist bereits eine App installiert, die die gleiche Abkürzung besitzt.]]></item>
+		<item name="wcf.acp.package.error.noUniqueAbbreviation"><![CDATA[Es ist bereits eine App installiert, die die gleiche Abkürzung besitzt.]]></item>
 		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[Das angegebene Archiv ist kein gültiges Paket.]]></item>
 		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Existierende Tabellen überschreiben]]></item>
 		<item name="wcf.acp.package.error.sql.createTable.description"><![CDATA[Die oben genannten Tabellen existieren bereits und werden beim Fortfahren der Installation überschrieben. Alle Daten dieser Tabellen gehen unwiderruflich verloren.]]></item>

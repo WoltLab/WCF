@@ -143,7 +143,7 @@ class PackageCLICommand implements IArgumentedCLICommand {
 				$this->error('noValidInstall');
 			}
 			else if ($archive->getPackageInfo('isApplication') && $archive->hasUniqueAbbreviation()) {
-				$this->error('noUniqueAbbrevation');
+				$this->error('noUniqueAbbreviation');
 			}
 			else if ($archive->isAlreadyInstalled()) {
 				$this->error('uniqueAlreadyInstalled');

@@ -1792,7 +1792,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.package.description"><![CDATA[Description]]></item>
 		<item name="wcf.acp.package.error.cli.installIsApplication"><![CDATA[Apps cannot be installed via CLI.]]></item>
 		<item name="wcf.acp.package.error.exceedsPhpLimit"><![CDATA[The file exceeds the PHP limit “upload_max_filesize” and/or “post_max_size”.]]></item>
-		<item name="wcf.acp.package.error.noUniqueAbbrevation"><![CDATA[There is already an app installed which has the same abbreviation.]]></item>
+		<item name="wcf.acp.package.error.noUniqueAbbreviation"><![CDATA[There is already an app installed which has the same abbreviation.]]></item>
 		<item name="wcf.acp.package.error.noValidPackage"><![CDATA[The uploaded archive is invalid.]]></item>
 		<item name="wcf.acp.package.error.sql.createTable"><![CDATA[Overwrite Existing Tables]]></item>
 		<item name="wcf.acp.package.error.sql.createTable.description"><![CDATA[The tables above already exist and will be replaced during the installation. Any contained data will be lost.]]></item>
