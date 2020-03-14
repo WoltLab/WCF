@@ -5,7 +5,6 @@ use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
 use wcf\data\style\StyleEditor;
 use wcf\data\template\group\TemplateGroup;
-use wcf\data\template\group\TemplateGroupList;
 use wcf\form\AbstractForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
@@ -213,11 +212,7 @@ class StyleAddForm extends AbstractForm {
 			$this->readStyleVariables();
 		}
 		
-		$templateGroupList = new TemplateGroupList();
-		$templateGroupList->sqlOrderBy = "templateGroupName";
-		$templateGroupList->getConditionBuilder()->add('templateGroupFolderName <> ?', ['_wcf_email/']);
-		$templateGroupList->readObjects();
-		$this->availableTemplateGroups = $templateGroupList->getObjects();
+		$this->availableTemplateGroups = TemplateGroup::getSelectList([-1], 1);
 		
 		if (isset($_REQUEST['tmpHash'])) {
 			$this->tmpHash = StringUtil::trim($_REQUEST['tmpHash']);

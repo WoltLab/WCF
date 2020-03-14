@@ -294,9 +294,7 @@
 						<dd>
 							<select name="templateGroupID" id="templateGroupID">
 								<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
-								{foreach from=$availableTemplateGroups item=templateGroup}
-									<option value="{@$templateGroup->templateGroupID}"{if $templateGroup->templateGroupID == $templateGroupID} selected{/if}>{$templateGroup->getName()}</option>
-								{/foreach}
+							    	{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
 							</select>
 							{if $errorField == 'templateGroupID'}
 								<small class="innerError">
