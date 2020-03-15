@@ -852,9 +852,12 @@ class PackageInstallationDispatcher {
 	protected function promptPackageDir($applicationDirectory) {
 		// check for pre-defined directories originating from WCFSetup
 		$directory = WCF::getSession()->getVar('__wcfSetup_directories');
+		$abbreviation = Package::getAbbreviation($this->getPackage()->package);
 		if ($directory !== null) {
-			$abbreviation = Package::getAbbreviation($this->getPackage()->package);
-			$directory = isset($directory[$abbreviation]) ? $directory[$abbreviation] : null;
+			$directory = $directory[$abbreviation] ?? null;
+		}
+		else if (ENABLE_ENTERPRISE_MODE && defined('ENTERPRISE_MODE_APP_DIRECTORIES') && is_array(ENTERPRISE_MODE_APP_DIRECTORIES)) {
+			$directory = ENTERPRISE_MODE_APP_DIRECTORIES[$abbreviation] ?? null; 
 		}
 		
 		if ($directory === null && !PackageInstallationFormManager::findForm($this->queue, 'packageDir')) {
