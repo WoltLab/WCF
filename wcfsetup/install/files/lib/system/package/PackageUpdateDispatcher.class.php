@@ -856,7 +856,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		}
 		
 		// get versions
-		$sql = "SELECT		puv.*, pu.*, pus.loginUsername, pus.loginPassword
+		$sql = "SELECT		puv.*, pu.*, pus.serverURL, pus.loginUsername, pus.loginPassword
 			FROM		wcf".WCF_N."_package_update_version puv
 			LEFT JOIN	wcf".WCF_N."_package_update pu
 			ON		(pu.packageUpdateID = puv.packageUpdateID)

@@ -30,7 +30,11 @@
 
 {if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle')}
 	{capture assign='contentHeaderNavigation'}
-		<li><a href="#" class="button jsButtonArticleAdd"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+		{if $availableLanguages|count > 1}
+			<li><a href="#" class="button jsButtonArticleAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+		{else}
+			<li><a href="{link controller='ArticleAdd'}categoryID={@$category->categoryID}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+		{/if}
 	{/capture}
 {/if}
 
