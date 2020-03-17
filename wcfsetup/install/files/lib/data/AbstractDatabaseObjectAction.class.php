@@ -505,7 +505,13 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	protected function readValue($variableName, $allowEmpty, $arrayIndex, $type, $structure) {
 		if ($arrayIndex) {
 			if (!isset($this->parameters[$arrayIndex])) {
-				throw new SystemException("Corrupt parameters, index '".$arrayIndex."' is missing");
+				if ($allowEmpty) {
+					// Implicitly create the structure to permit implicitly defined values.
+					$this->parameters[$arrayIndex] = [];
+				}
+				else {
+					throw new SystemException("Corrupt parameters, index '" . $arrayIndex . "' is missing");
+				}
 			}
 			
 			$target =& $this->parameters[$arrayIndex];
