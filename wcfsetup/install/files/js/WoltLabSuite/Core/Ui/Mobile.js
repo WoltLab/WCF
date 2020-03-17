@@ -231,7 +231,7 @@ define(
 					if (quickOptions && navigation.childElementCount) {
 						quickOptions.classList.add('active');
 						quickOptions.addEventListener(WCF_CLICK_EVENT, (function (event) {
-							if (_enabled && event.target.nodeName !== 'LABEL' && event.target.nodeName !== 'INPUT') {
+							if (_enabled && UiScreen.is('screen-sm-down') && event.target.nodeName !== 'LABEL' && event.target.nodeName !== 'INPUT') {
 								event.preventDefault();
 								event.stopPropagation();
 								
