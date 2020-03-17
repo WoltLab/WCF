@@ -54,13 +54,27 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 			$this->parameters['data']['packageID'] = 1;
 		}
 		
-		foreach ($this->parameters['languageItemValue_i18n'] as $languageID => $value) {
+		if (!empty($this->parameters['languageItemValue_i18n'])) {
+			// multiple languages
+			foreach ($this->parameters['languageItemValue_i18n'] as $languageID => $value) {
+				(new LanguageItemAction([], 'create', [
+					'data' => array_merge(
+						$this->parameters['data'],
+						[
+							'languageID' => $languageID,
+							'languageItemValue' => $value
+						]
+					)
+				]))->executeAction();
+			}
+		}
+		else {
+			// single language
 			(new LanguageItemAction([], 'create', [
 				'data' => array_merge(
 					$this->parameters['data'],
 					[
-						'languageID' => $languageID,
-						'languageItemValue' => $value
+						'languageID' => LanguageFactory::getInstance()->getDefaultLanguageID()
 					]
 				)
 			]))->executeAction();
