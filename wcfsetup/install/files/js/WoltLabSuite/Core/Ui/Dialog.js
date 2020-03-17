@@ -836,6 +836,8 @@ define(
 				}
 			}
 			
+			UiScreen.pageOverlayClose();
+			
 			if (_activeDialog === null) {
 				elAttr(_container, 'aria-hidden', 'true');
 				elData(_container, 'close-on-click', 'false');
@@ -843,8 +845,6 @@ define(
 				if (data.closable) {
 					window.removeEventListener('keyup', _keyupListener);
 				}
-				
-				UiScreen.pageOverlayClose();
 			}
 			else {
 				data = _dialogs.get(_activeDialog);
