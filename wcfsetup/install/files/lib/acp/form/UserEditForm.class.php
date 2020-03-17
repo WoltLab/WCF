@@ -357,7 +357,12 @@ class UserEditForm extends UserAddForm {
 			'languageIDs' => $this->visibleLanguages,
 			'options' => $saveOptions
 		];
-
+		// handle changed username
+		if (mb_strtolower($this->username) != mb_strtolower($this->user->username)) {
+			$data['data']['lastUsernameChange'] = TIME_NOW;
+			$data['data']['oldUsername'] = $this->user->username;
+		}
+		
 		// handle ban
 		if (WCF::getSession()->getPermission('admin.user.canBanUser')) {
 			$data['data']['banned'] = $this->banned;
