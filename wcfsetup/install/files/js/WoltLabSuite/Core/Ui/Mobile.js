@@ -77,11 +77,11 @@ define(
 				setup: this._setupSidebarXS.bind(this)
 			});
 			
-			// On the iPad Pro the navigation is not usable, because there is not the mobile layout displayed, 
-			// but the normal one for the desktop. The navigation reacts to a hover status if a menu item has 
-			// several submenu items. Logically, this cannot be created with the iPad, so that we display the 
-			// submenu here after a single click and only follow the link after another click. 
-			if (Environment.touch() && Environment.platform() === 'ios' && (Environment.browser() === 'safari' || Environment.browser() === 'chrome')) {
+			// On the large tablets (e.g. iPad Pro) the navigation is not usable, because there is not the mobile
+			// layout displayed, but the normal one for the desktop. The navigation reacts to a hover status if a
+			// menu item has several submenu items. Logically, this cannot be created with the tablet, so that we
+			// display the submenu here after a single click and only follow the link after another click.
+			if (Environment.touch() && (Environment.platform() === 'ios' || Environment.platform() === 'android')) {
 				UiScreen.on('screen-lg', {
 					match: this._enableLGTouchNavigation.bind(this),
 					unmatch: this._disableLGTouchNavigation.bind(this),
@@ -244,7 +244,7 @@ define(
 					if (quickOptions && navigation.childElementCount) {
 						quickOptions.classList.add('active');
 						quickOptions.addEventListener(WCF_CLICK_EVENT, (function (event) {
-							if (_enabled && event.target.nodeName !== 'LABEL' && event.target.nodeName !== 'INPUT') {
+							if (_enabled && UiScreen.is('screen-sm-down') && event.target.nodeName !== 'LABEL' && event.target.nodeName !== 'INPUT') {
 								event.preventDefault();
 								event.stopPropagation();
 								
