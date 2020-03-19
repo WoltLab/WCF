@@ -3,7 +3,7 @@
 <div class="contentItemList">
 	{foreach from=$objects item='article' name='articles'}
 		<article class="contentItem contentItemMultiColumn" role="article">
-			<a href="{$article->getLink()}" class="contentItemLink">
+			<div class="contentItemLink">
 				<div class="contentItemImage contentItemImageLarge" style="background-image: url({if $article->getTeaserImage()}{$article->getTeaserImage()->getThumbnailLink('medium')}{else}{$__wcf->getStyleHandler()->getStyle()->getCoverPhotoURL()}{/if})">
 					{hascontent}
 						<div class="contentItemBadges">
@@ -33,7 +33,9 @@
 						{@$article->getFormattedTeaser()}
 					</div>
 				</div>
-			</a>
+				
+				<a href="{$article->getLink()}" class="contentItemLinkShadow"></a>
+			</div>
 			
 			<div class="contentItemMeta">
 				<a href="{$article->getUserProfile()->getLink()}" class="contentItemMetaImage" aria-hidden="true" tabindex="-1">

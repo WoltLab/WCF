@@ -423,6 +423,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 	/**
 	 * @param bool $removeLinks
 	 * @since 5.2
+	 * @deprecated 5.2 See https://github.com/WoltLab/WCF/issues/3189
 	 */
 	public function setRemoveLinks($removeLinks) {
 		$this->removeLinks = $removeLinks;
