@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\html\output;
 use wcf\system\bbcode\HtmlBBCodeParser;
+use wcf\system\html\output\node\AmpHtmlOutputNodeProcessor;
 use wcf\util\DOMUtil;
 
 /**
@@ -145,4 +146,16 @@ class AmpHtmlOutputProcessor extends HtmlOutputProcessor {
 		
 		return $badElements;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected function getHtmlOutputNodeProcessor() {
+		if ($this->htmlOutputNodeProcessor === null) {
+			$this->htmlOutputNodeProcessor = new AmpHtmlOutputNodeProcessor();
+		}
+		
+		return $this->htmlOutputNodeProcessor;
+	}
+	
 }
