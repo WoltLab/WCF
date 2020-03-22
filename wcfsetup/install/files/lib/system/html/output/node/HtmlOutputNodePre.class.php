@@ -57,7 +57,8 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 						'highlighter' => $element->getAttribute('data-highlighter'),
 						'line' => $element->hasAttribute('data-line') ? $element->getAttribute('data-line') : 1,
 						'skipInnerContent' => true,
-						'prefix' => $prefix
+						'prefix' => $prefix,
+						'isAmp' => ($htmlNodeProcessor instanceof AmpHtmlOutputNodeProcessor),
 					]);
 					
 					$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
@@ -182,7 +183,8 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 			'language' => $highlighter,
 			'filename' => $file,
 			'title' => $title,
-			'lines' => count($splitContent)
+			'lines' => count($splitContent),
+			'isAmp' => $data['isAmp'],
 		]);
 		
 		return WCF::getTPL()->fetch('codeMetaCode');
