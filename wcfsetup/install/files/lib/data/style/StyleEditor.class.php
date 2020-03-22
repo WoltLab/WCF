@@ -42,6 +42,7 @@ use wcf\util\XMLWriter;
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	const EXCLUDE_WCF_VERSION = '6.0.0 Alpha 1';
 	const INFO_FILE = 'style.xml';
+	const VALID_IMAGE_EXTENSIONS = ['.gif', '.jpg', '.jpeg', '.png'];
 	
 	/**
 	 * list of compatible API versions
@@ -403,6 +404,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				$contentList = $imagesTar->getContentList();
 				foreach ($contentList as $key => $val) {
 					if ($val['type'] == 'file') {
+						$fileExtension = mb_substr($val['filename'], mb_strrpos($val['filename'], '.'));
+						if (!in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS)) {
+							continue;
+						}
+						
 						$imagesTar->extract($key, $imagesLocation.basename($val['filename']));
 						FileUtil::makeWritable($imagesLocation.basename($val['filename']));
 					}
@@ -523,6 +529,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						
 						// copy templates
 						foreach ($templates as $template) {
+							if (!StringUtil::endsWith($template['filename'], '.tpl')) {
+								continue;
+							}
+							
 							$templatesTar->extract($template['index'], $templatesDir.$template['filename']);
 							
 							$templateName = str_replace('.tpl', '', $template['filename']);
@@ -591,6 +601,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		foreach (['image', 'image2x'] as $type) {
 			if (!empty($data[$type])) {
 				$fileExtension = mb_substr($data[$type], mb_strrpos($data[$type], '.'));
+				if (!in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS)) {
+					continue;
+				}
+				
 				$index = $tar->getIndexByFilename($data[$type]);
 				if ($index !== false) {
 					$filename = WCF_DIR . 'images/stylePreview-' . $style->styleID . ($type === 'image2x' ? '@2x' : '') . $fileExtension;
@@ -620,7 +634,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if (!empty($data['coverPhoto'])) {
 			$fileExtension = mb_substr($data['coverPhoto'], mb_strrpos($data['coverPhoto'], '.'));
 			$index = $tar->getIndexByFilename($data['coverPhoto']);
-			if ($index !== false) {
+			if ($index !== false && in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS)) {
 				$filename = WCF_DIR . 'images/coverPhotos/' . $style->styleID . $fileExtension;
 				$tar->extract($index, $filename);
 				FileUtil::makeWritable($filename);
