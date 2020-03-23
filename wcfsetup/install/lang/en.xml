@@ -2964,7 +2964,6 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.user.search.display.itemsPerPage"><![CDATA[Users per Page]]></item>
 		<item name="wcf.acp.user.search.display.sort"><![CDATA[Sort Order]]></item>
 		<item name="wcf.acp.user.search.error.noMatches"><![CDATA[No users matched your criteria.]]></item>
-		<item name="wcf.acp.user.search.matches"><![CDATA[{#$items} result{if $items != 1}s{/if}]]></item>
 		<item name="wcf.acp.user.sendMail"><![CDATA[Send Email to Users]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[Email All Users]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[Enable HTML code in email message]]></item>

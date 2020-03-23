@@ -3036,7 +3036,6 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.user.search.display.itemsPerPage"><![CDATA[Benutzer pro Seite]]></item>
 		<item name="wcf.acp.user.search.display.sort"><![CDATA[Sortierung]]></item>
 		<item name="wcf.acp.user.search.error.noMatches"><![CDATA[Zu den angegebenen Kriterien wurde kein Benutzer gefunden.]]></item>
-		<item name="wcf.acp.user.search.matches"><![CDATA[{if $items == 1}Ein Ergebnis{else}{#$items} Ergebnisse{/if}]]></item>
 		<item name="wcf.acp.user.sendMail"><![CDATA[E-Mail an Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.all"><![CDATA[E-Mail an alle Benutzer senden]]></item>
 		<item name="wcf.acp.user.sendMail.enableHTML"><![CDATA[E-Mail als HTML versenden]]></item>
