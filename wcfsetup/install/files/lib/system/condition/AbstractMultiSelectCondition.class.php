@@ -36,7 +36,7 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition {
 	protected function getFieldElement() {
 		$options = $this->getOptions();
 		
-		$fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple size="'.(count($options, COUNT_RECURSIVE) > 10 ? 10 : count($options)).'">';
+		$fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple size="'.(count($options, COUNT_RECURSIVE) > 10 ? 10 : count($options, COUNT_RECURSIVE)).'">';
 		foreach ($options as $key => $value) {
 			if (is_array($value)) {
 				$fieldElement .= $this->getOptGroupCode($key, $value);
