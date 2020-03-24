@@ -624,6 +624,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 */
 	public function getBlacklistMatchesTitle() {
 		return array_map(function($field) {
+			if ($field === 'ip') $field = 'ipAddress';
 			return WCF::getLanguage()->get('wcf.user.' . $field);
 		}, $this->getBlacklistMatches());
 	}
