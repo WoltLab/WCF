@@ -151,9 +151,9 @@ class UserClipboardAction extends AbstractClipboardAction {
 		$userToGroup = $statement->fetchMap('userID', 'groupID', false);
 		
 		// validate if user's group is accessible for current user
-		foreach ($userIDs as $userID) {
+		foreach ($userIDs as $index => $userID) {
 			if (!isset($userToGroup[$userID]) || !UserGroup::isAccessibleGroup($userToGroup[$userID])) {
-				unset($userIDs[$userID]);
+				unset($userIDs[$index]);
 			}
 		}
 		
