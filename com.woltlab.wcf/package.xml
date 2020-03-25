@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.2.3</version> <!-- codename: hurricane -->
-		<date>2020-02-23</date>
+		<version>5.2.4</version> <!-- codename: hurricane -->
+		<date>2020-03-26</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -106,7 +106,7 @@
 		<instruction type="style" run="standalone">defaultStyle.tar</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="5.2.2">
+	<instructions type="update" fromversion="5.2.3">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
