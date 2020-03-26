@@ -32,6 +32,11 @@ class MailForm extends AbstractCaptchaForm {
 	public $useCaptcha = PROFILE_MAIL_USE_CAPTCHA;
 	
 	/**
+	 * @inheritDoc
+	 */
+	public $forceCaptcha = true;
+	
+	/**
 	 * recipient's user id
 	 * @var	integer
 	 */

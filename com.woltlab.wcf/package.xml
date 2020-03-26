@@ -95,7 +95,11 @@
 		<instruction type="script" run="standalone" flushCache="false">acp/update_com.woltlab.wcf_3.1_postUpgrade.php</instruction>
 		
 		<instruction type="style">defaultStyle.tar</instruction>
+		
+		<instruction type="script">acp/update_com.woltlab.wcf_preventMailAbuse.php</instruction>
 	</instructions>
+	
+	<!-- Include: <instruction type="script">acp/update_com.woltlab.wcf_preventMailAbuse.php</instruction> -->
 	
 	<instructions type="update" fromversion="3.1.11">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
