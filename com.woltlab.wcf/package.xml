@@ -90,6 +90,7 @@
 		<instruction type="style">defaultStyle.tar</instruction>
 		
 		<instruction type="script">acp/update_com.woltlab.wcf_3.0_post_sql.php</instruction>
+		<instruction type="script">acp/update_com.woltlab.wcf_preventMailAbuse.php</instruction>
 	</instructions>
 	<instructions type="update" fromversion="2.1.24 pl 1">
 		<instruction type="file">files_pre_update.tar</instruction>
@@ -138,6 +139,7 @@
 		<instruction type="style">defaultStyle.tar</instruction>
 		
 		<instruction type="script">acp/update_com.woltlab.wcf_3.0_post_sql.php</instruction>
+		<instruction type="script">acp/update_com.woltlab.wcf_preventMailAbuse.php</instruction>
 	</instructions>
 	<instructions type="update" fromversion="2.1.24 pl 2">
 		<instruction type="file">files_pre_update.tar</instruction>
@@ -186,7 +188,10 @@
 		<instruction type="style">defaultStyle.tar</instruction>
 		
 		<instruction type="script">acp/update_com.woltlab.wcf_3.0_post_sql.php</instruction>
+		<instruction type="script">acp/update_com.woltlab.wcf_preventMailAbuse.php</instruction>
 	</instructions>
+	
+	<!-- Include: <instruction type="script">acp/update_com.woltlab.wcf_preventMailAbuse.php</instruction> -->
 	
 	<instructions type="update" fromversion="3.0.22">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
