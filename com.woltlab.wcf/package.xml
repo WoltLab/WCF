@@ -104,6 +104,8 @@
 		<instruction type="templateListener" />
 		
 		<instruction type="style" run="standalone">defaultStyle.tar</instruction>
+		
+		<instruction type="script">acp/update_com.woltlab.wcf_preventMailAbuse.php</instruction>
 	</instructions>
 	
 	<instructions type="update" fromversion="5.2.3">
@@ -114,5 +116,7 @@
 		<instruction type="language" />
 		
 		<instruction type="page" />
+		
+		<instruction type="script">acp/update_com.woltlab.wcf_preventMailAbuse.php</instruction>
 	</instructions>
 </package>
