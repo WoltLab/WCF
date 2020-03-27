@@ -2338,8 +2338,8 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.pip.eventListener.environment.description"><![CDATA[Die Umgebung entscheidet, ob der Event-Listener im Frontend (<kbd>user</kbd>) oder in der Administrationsoberfläche (<kbd>admin</kbd>) ausgeführt wird.]]></item>
 		<item name="wcf.acp.pip.eventListener.eventClassName"><![CDATA[PHP-Event-Klasse]]></item>
 		<item name="wcf.acp.pip.eventListener.eventClassName.description"><![CDATA[Die angegebene Klasse (ohne Backslash als erstes Zeichen) feuert das Event ab. Alternativ erbt die angegebene Klasse von der Klasse, die das Event abfeuert,]]></item>
-		<item name="wcf.acp.pip.eventListener.eventName"><![CDATA[Eventname]]></item>
-		<item name="wcf.acp.pip.eventListener.eventName.description"><![CDATA[Name des Events der relevanten Klasse, auf das der Event-Listener reagiert.]]></item>
+		<item name="wcf.acp.pip.eventListener.eventName"><![CDATA[Eventnamen]]></item>
+		<item name="wcf.acp.pip.eventListener.eventName.description"><![CDATA[Namen der Events der relevanten Klasse, auf die der Event-Listener reagiert.]]></item>
 		<item name="wcf.acp.pip.eventListener.inherit"><![CDATA[Vererbung unterstützen]]></item>
 		<item name="wcf.acp.pip.eventListener.inherit.description"><![CDATA[Wird Vererbung unterstützt, reagiert der Event-Listener nicht nur, wenn das Event von der oben angegebenen Klasse ausgelöst wird, sondern auch wenn es von Kindklassen der angegebenen Klasse ausgelöst wird.]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerClassName"><![CDATA[PHP-Event-Listener-Klasse]]></item>

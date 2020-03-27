@@ -2324,8 +2324,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pip.eventListener.listenerName.error.notUnique"><![CDATA[The entered identifier is already used by another event listener.]]></item>
 		<item name="wcf.acp.pip.eventListener.eventClassName"><![CDATA[PHP Event Class]]></item>
 		<item name="wcf.acp.pip.eventListener.eventClassName.description"><![CDATA[The entered class (without leading backslash) fires the event. Alternatively, the entered class inherits from the the class firing the event.]]></item>
-		<item name="wcf.acp.pip.eventListener.eventName"><![CDATA[Event Name]]></item>
-		<item name="wcf.acp.pip.eventListener.eventName.description"><![CDATA[Name of the event of the relevant class the event listener is listening to.]]></item>
+		<item name="wcf.acp.pip.eventListener.eventName"><![CDATA[Event Names]]></item>
+		<item name="wcf.acp.pip.eventListener.eventName.description"><![CDATA[Names of the event of the relevant class the event listener is listening to.]]></item>
 		<item name="wcf.acp.pip.eventListener.listenerClassName"><![CDATA[PHP Event Listener Class]]></item>
 		<item name="wcf.acp.pip.eventListener.environment"><![CDATA[Environment]]></item>
 		<item name="wcf.acp.pip.eventListener.environment.description"><![CDATA[The environment determines whether the event listener is executed in the frontend (<kbd>user</kbd>) or the ACP (<kbd>admin</kbd>).]]></item>
