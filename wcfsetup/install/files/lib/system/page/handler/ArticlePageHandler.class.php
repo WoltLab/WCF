@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\page\handler;
+use wcf\data\article\content\ViewableArticleContent;
 use wcf\data\article\ViewableArticleList;
 use wcf\data\page\Page;
 use wcf\data\user\online\UserOnline;
@@ -74,21 +75,17 @@ class ArticlePageHandler extends AbstractLookupPageHandler implements IOnlineLoc
 		if ($user->pageObjectID === null) {
 			return '';
 		}
-		
-		$article = ViewableArticleRuntimeCache::getInstance()->getObject($user->pageObjectID);
-		if ($article === null || !$article->canRead()) {
+				
+		$content = ViewableArticleContent::getArticleContent($user->pageObjectID);
+		if ($content === null || !$content->getArticle()->canRead()) {
 			return '';
 		}
 		
-		return WCF::getLanguage()->getDynamicVariable('wcf.page.onlineLocation.'.$page->identifier, ['article' => $article]);
+		return WCF::getLanguage()->getDynamicVariable('wcf.page.onlineLocation.'.$page->identifier, ['article' => $content]);
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
-	public function prepareOnlineLocation(/** @noinspection PhpUnusedParameterInspection */Page $page, UserOnline $user) {
-		if ($user->pageObjectID !== null) {
-			ViewableArticleRuntimeCache::getInstance()->cacheObjectID($user->pageObjectID);
-		}
-	}
+	public function prepareOnlineLocation(/** @noinspection PhpUnusedParameterInspection */Page $page, UserOnline $user) {}
 }
