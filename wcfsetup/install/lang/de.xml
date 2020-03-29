@@ -677,7 +677,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.option.admin.management.canViewLog"><![CDATA[Kann Protokolle abrufen]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.canManageApplication"><![CDATA[Kann Apps verwalten]]></item>
 		<item name="wcf.acp.group.option.admin.management.canManageCronjob"><![CDATA[Kann zeitgesteuerte Aufgaben verwalten]]></item>
-		<item name="wcf.acp.group.option.admin.configuration.package.canEditServer"><![CDATA[Kann Update-Server bearbeiten]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canEditServer"><![CDATA[Kann Paket-Server bearbeiten]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canInstallPackage"><![CDATA[Kann Pakete installieren]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canUninstallPackage"><![CDATA[Kann Pakete deinstallieren]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canUpdatePackage"><![CDATA[Kann Pakete aktualisieren]]></item>
@@ -1380,7 +1380,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Setzt das Attribut „target="_blank"“ auf externe Links und weist den Browser dadurch an, einen aufgerufenen Link in einem neuen Browser-Fenster zu öffnen.]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Benchmark aktivieren]]></item>
 		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[Erfasst zusätzliche Daten zur Ressourcennutzung von Komponenten. Diese Option sollte im Live-Betrieb abgeschaltet werden.]]></item>
-		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update-Server]]></item>
+		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Paket-Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentifizierung-Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deinen{else}Ihren{/if} Authentifizierung-Code {if LANGUAGE_USE_INFORMAL_VARIANT}findest du{else}finden Sie{/if} in {if LANGUAGE_USE_INFORMAL_VARIANT}deinem{else}Ihrem{/if} Kundenkonto auf woltlab.com.]]></item>
 		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[WoltLab-Nachrichten anzeigen]]></item>
@@ -2759,7 +2759,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Server <span class="confirmationObject">{$updateServer->serverURL}</span> wirklich löschen?]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Server bearbeiten]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Fehlermeldungen]]></item>
-		<item name="wcf.acp.updateServer.list"><![CDATA[Update-Server]]></item>
+		<item name="wcf.acp.updateServer.list"><![CDATA[Paket-Server]]></item>
 		<item name="wcf.acp.updateServer.lastErrorMessage"><![CDATA[Beim letzten Verbindungsversuch trat folgender Fehler auf:]]></item>
 		<item name="wcf.acp.updateServer.loginPassword"><![CDATA[Kennwort]]></item>
 		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Kennwort für Authentifizierung (optional)]]></item>

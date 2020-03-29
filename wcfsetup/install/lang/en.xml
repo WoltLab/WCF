@@ -653,7 +653,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.admin.management.canViewLog"><![CDATA[Can view log files]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.canManageApplication"><![CDATA[Can manage apps]]></item>
 		<item name="wcf.acp.group.option.admin.management.canManageCronjob"><![CDATA[Can manage cronjobs]]></item>
-		<item name="wcf.acp.group.option.admin.configuration.package.canEditServer"><![CDATA[Can edit update servers]]></item>
+		<item name="wcf.acp.group.option.admin.configuration.package.canEditServer"><![CDATA[Can edit package servers]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canInstallPackage"><![CDATA[Can install packages]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canUninstallPackage"><![CDATA[Can uninstall packages]]></item>
 		<item name="wcf.acp.group.option.admin.configuration.package.canUpdatePackage"><![CDATA[Can update packages]]></item>
@@ -1357,7 +1357,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.external_link_target_blank.description"><![CDATA[Appends the attribute “target="_blank"” to external links, causing the user’s browser to open the link in a new window.]]></item>
 		<item name="wcf.acp.option.enable_benchmark"><![CDATA[Enable benchmark]]></item>
 		<item name="wcf.acp.option.enable_benchmark.description"><![CDATA[Captures additional data on resource usage by individual components. It is strongly recommended to disable this option in production environments.]]></item>
-		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Update Server]]></item>
+		<item name="wcf.acp.option.category.general.system.packageServer"><![CDATA[Package Server]]></item>
 		<item name="wcf.acp.option.package_server_auth_code"><![CDATA[Authentication Code]]></item>
 		<item name="wcf.acp.option.package_server_auth_code.description"><![CDATA[Your authentication code is available in the customers area on woltlab.com.]]></item>
 		<item name="wcf.acp.option.enable_woltlab_news"><![CDATA[Display WoltLab news]]></item>
@@ -2000,14 +2000,14 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.pluginStore.purchasedItems"><![CDATA[Purchased Products (Plugin-Store)]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.noResults"><![CDATA[The search returned no results, because either you have not purchased any products yet, or your purchases are not compatible with this version.]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.update"><![CDATA[Newer Version Available]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.unavailable"><![CDATA[Update-Server not installed]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.status.unavailable"><![CDATA[Package server not installed]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.upToDate"><![CDATA[You already have the most recent version installed]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.status.requireUpdate"><![CDATA[Update-Server must be updated]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.status.requireUpdate"><![CDATA[Package server must be updated]]></item>
 		<item name="wcf.acp.pluginStore.purchasedItems.status.install.confirmMessage"><![CDATA[Do you really want to install the product <span class="confirmationObject">{$product[packageName]}</span>?]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.disabled"><![CDATA[The Update-Server for “{$wcfMajorRelease}” (“http://store.woltlab.com/{$wcfMajorRelease}/”) is disabled and cannot be used for new installs or updates.]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[The Update-Server for “{$wcfMajorRelease}” does not exist in your installation. If you wish to install the packages below, you must <a href="{link controller='PackageUpdateServerAdd'}{/link}">add it</a>.<br>The server address is: “http://store.woltlab.com/{$wcfMajorRelease}/”]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[The Update-Server for “{$wcfMajorRelease}” has not been queried yet, please search for updates to fetch the package list.]]></item>
-		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Update-Server for “{$wcfMajorRelease}”]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.disabled"><![CDATA[The package server for “{$wcfMajorRelease}” (“http://store.woltlab.com/{$wcfMajorRelease}/”) is disabled and cannot be used for new installs or updates.]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.missing"><![CDATA[The package server for “{$wcfMajorRelease}” does not exist in your installation. If you wish to install the packages below, you must <a href="{link controller='PackageUpdateServerAdd'}{/link}">add it</a>.<br>The server address is: “http://store.woltlab.com/{$wcfMajorRelease}/”]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.updateServer.requireUpdate"><![CDATA[The package server for “{$wcfMajorRelease}” has not been queried yet, please search for updates to fetch the package list.]]></item>
+		<item name="wcf.acp.pluginStore.purchasedItems.wcfMajorRelease"><![CDATA[Package server for “{$wcfMajorRelease}”]]></item>
 	</category>
 	<category name="wcf.acp.pip">
 		<item name="wcf.acp.pip.objectType.com.woltlab.wcf.adLocation.data.title"><![CDATA[Ad Location Data]]></item>
@@ -2686,7 +2686,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.updateServer.delete.sure"><![CDATA[Do you really want to delete the server <span class="confirmationObject">{$updateServer->serverURL}</span>?]]></item>
 		<item name="wcf.acp.updateServer.edit"><![CDATA[Edit Server]]></item>
 		<item name="wcf.acp.updateServer.errorMessage"><![CDATA[Error Message]]></item>
-		<item name="wcf.acp.updateServer.list"><![CDATA[Update-Servers]]></item>
+		<item name="wcf.acp.updateServer.list"><![CDATA[Package Servers]]></item>
 		<item name="wcf.acp.updateServer.lastErrorMessage"><![CDATA[Errors occurred on last connection attempt:]]></item>
 		<item name="wcf.acp.updateServer.loginPassword"><![CDATA[Password]]></item>
 		<item name="wcf.acp.updateServer.loginPassword.description"><![CDATA[Enter your authentication password (optional).]]></item>
