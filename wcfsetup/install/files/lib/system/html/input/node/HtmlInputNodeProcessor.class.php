@@ -268,11 +268,10 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			$node = $node->nextSibling;
 		}
 		
-		// remove style attributes from non-whitelisted elements
-		$elements = $this->getDocument()->getElementsByTagName('*');
-		for ($i = 0, $length = $elements->length; $i < $length; $i++) {
-			$element = $elements->item($i);
-			if ($element->hasAttribute('style') && !in_array($element->nodeName, self::$allowedStyleElements)) {
+		// Remove style attributes from non-whitelisted elements.
+		/** @var \DOMElement $element */
+		foreach ($this->getXPath()->query('//*[@style]') as $element) {
+			if (!in_array($element->nodeName, self::$allowedStyleElements)) {
 				$element->removeAttribute('style');
 			}
 		}
