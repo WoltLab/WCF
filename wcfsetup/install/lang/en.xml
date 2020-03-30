@@ -2535,7 +2535,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData"><![CDATA[Rebuild Data]]></item>
 		<item name="wcf.acp.rebuildData.description"><![CDATA[In order to ensure consistency, e.g. after a data import, it is highly recommended to perform all the actions below in their respective order, starting from top to bottom.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user"><![CDATA[Rebuild Users]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user.description"><![CDATA[Rebuilds the user counters and ranks.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.user.description"><![CDATA[Rebuilds the user counters.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like"><![CDATA[Rebuild Reactions]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.like.description"><![CDATA[Recalculates the reactions.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.attachment"><![CDATA[Rebuild Attachments]]></item>
@@ -2561,7 +2561,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointEvent"><![CDATA[Rebuilds Points per Activity]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointEvent.description"><![CDATA[Recalculates points per activity.]]></item>
 		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointItems"><![CDATA[Rebuilds Point Activities]]></item>
-		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointItems.description"><![CDATA[Recalculates the number of activities for which users get points.]]></item>
+		<item name="wcf.acp.rebuildData.com.woltlab.wcf.activityPointItems.description"><![CDATA[Recalculates the number of activities for which users get points and rebuilds user ranks.]]></item>
 	</category>
 	<category name="wcf.acp.rescueMode">
 		<item name="wcf.acp.rescueMode"><![CDATA[Rescue Mode]]></item>
