@@ -35,5 +35,8 @@ class ReactionTypeEditForm extends ReactionTypeAddForm {
 				throw new IllegalLinkException();
 			}
 		}
+		else {
+			throw new IllegalLinkException();
+		}
 	}
 }
