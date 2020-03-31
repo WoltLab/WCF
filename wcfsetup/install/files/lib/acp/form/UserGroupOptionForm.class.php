@@ -86,7 +86,7 @@ class UserGroupOptionForm extends AbstractForm {
 		
 		if (isset($_REQUEST['id'])) $this->userGroupOptionID = intval($_REQUEST['id']);
 		$this->userGroupOption = new UserGroupOption($this->userGroupOptionID);
-		if (!$this->userGroupOption) {
+		if (!$this->userGroupOption->optionID) {
 			throw new IllegalLinkException();
 		}
 		
