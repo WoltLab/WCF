@@ -187,7 +187,7 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 			}
 		}
 		
-		// sort by the lowest version and return all other sources for the same package
+		// Sort by the highest version and return all other sources for the same package.
 		$validPackageUpdateIDs = [];
 		foreach ($possiblePackages as $identifier => $packageSources) {
 			if (count($packageSources) > 1) {
@@ -212,8 +212,9 @@ class PackageUpdateAction extends AbstractDatabaseObjectAction {
 					];
 				}
 				
+				// Sort packages with the highest version ending up on top.
 				uasort($packageVersions, function($a, $b) {
-					return Package::compareVersion($a['packageVersion'], $b['packageVersion']);
+					return Package::compareVersion($b['packageVersion'], $a['packageVersion']);
 				});
 				
 				reset($packageVersions);
