@@ -97,13 +97,15 @@ trait TFormParentNode {
 	 * Cleans up after the form data has been saved and the form is not used anymore.
 	 * This method has to support being called multiple times.
 	 * 
-	 * This form should not clean up input fields.
+	 * This method is not meant to empty the value of input fields.
 	 * 
 	 * @return	static		this node
 	 */
 	public function cleanup() {
-		foreach ($this as $child) {
+		foreach ($this->children as $index => $child) {
 			$child->cleanup();
+			
+			unset($this->children[$index]);
 		}
 		
 		return $this;
