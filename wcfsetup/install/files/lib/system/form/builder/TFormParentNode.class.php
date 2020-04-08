@@ -102,24 +102,8 @@ trait TFormParentNode {
 	 * @return	static		this node
 	 */
 	public function cleanup() {
-		foreach ($this as $child) {
+		foreach ($this->children as $index => $child) {
 			$child->cleanup();
-		}
-		
-		return $this;
-	}
-	
-	/**
-	 * Destroys the node and unsets references to all child form nodes.
-	 * 
-	 * @since	5.2.5
-	 * @return	static		this node
-	 */
-	public function destroy() {
-		foreach ($this->children() as $index => $child) {
-			if ($child instanceof IFormParentNode) {
-				$child->destroy();
-			}
 			
 			unset($this->children[$index]);
 		}

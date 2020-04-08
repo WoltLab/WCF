@@ -177,7 +177,6 @@ abstract class AbstractFormBuilderForm extends AbstractForm {
 		// re-build form after having created a new object
 		if ($this->formAction === 'create') {
 			$this->form->cleanup();
-			$this->form->destroy();
 			
 			$this->buildForm();
 		}
