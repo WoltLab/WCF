@@ -52,7 +52,6 @@ class MessageHtmlInputFilter implements IHtmlInputFilter {
 			
 			$config->set('CSS.AllowedProperties', ['color', 'font-family', 'font-size']);
 			$config->set('HTML.ForbiddenAttributes', ['*@lang', '*@xml:lang']);
-			$config->set('HTML.Doctype', 'HTML 4.01 Strict');
 			
 			$allowedSchemes = $config->get('URI.AllowedSchemes');
 			$allowedSchemes['ts3server'] = true;
