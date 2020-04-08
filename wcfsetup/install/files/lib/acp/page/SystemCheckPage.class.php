@@ -77,6 +77,7 @@ class SystemCheckPage extends AbstractPage {
 		'gd',
 		'hash',
 		'exif',
+		'ctype',
 	];
 	
 	public $phpMemoryLimit = 128;
