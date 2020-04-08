@@ -54,6 +54,8 @@
 	{/hascontent}
 </header>
 
+<p class="success upgradeAvailable"><span class="icon icon16 fa-arrow-circle-up"></span> {lang}wcf.acp.package.upgradeAvailable{/lang}</p>
+
 {if $recentlyDisabledCustomValues > 0}
 	<p class="warning">{lang}wcf.acp.language.item.hasRecentlyDisabledCustomValues{/lang}</p>
 {/if}

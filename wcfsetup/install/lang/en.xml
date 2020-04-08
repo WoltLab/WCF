@@ -1614,6 +1614,7 @@ When prompted for the notification URL for the instant payment notifications, pl
 		<item name="wcf.acp.package.validation.errorCode.14"><![CDATA[This package was created for {if $isOlderVersion}an older{else}a newer{/if} version of WoltLab Suite and is not compatible.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[This package does not contain any data on API compatibility, the installation is prevented while the developer tools are enabled.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[The package cannot be installed, please review the validation results below.]]></item>
+		<item name="wcf.acp.package.upgradeAvailable"><![CDATA[<strong>Upgrade available!</strong> Visit <a href="https://www.woltlab.com/">woltlab.com</a> to learn about the new WoltLab Suite, packed with awesome innovations and improvements for your community.]]></item>
 	</category>
 	
 	<category name="wcf.acp.paidSubscription">
