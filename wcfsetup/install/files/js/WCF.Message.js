@@ -2209,7 +2209,7 @@ WCF.Message.Share.Content = Class.extend({
 			// remove dialog contents
 			var $dialogInitialized = false;
 			if (this._dialog === null) {
-				this._dialog = $('<div />').hide().appendTo(document.body);
+				this._dialog = $('<div id="shareContentDialog" />').hide().appendTo(document.body);
 				$dialogInitialized = true;
 			}
 			else {
