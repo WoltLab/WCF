@@ -881,6 +881,10 @@
 	<spider ident="PageBoy">
 		<name>PageBoy</name>
 	</spider>
+	<spider ident="Pandalytics">
+		<name>Pandalytics</name>
+		<url>https://domainsbot.com/pandalytics/</url>
+	</spider>
 	<spider ident="ParaSite">
 		<name>ParaSite</name>
 	</spider>
