@@ -62,6 +62,8 @@ class RemoteFile extends File {
 		if ($this->resource === false) {
 			throw new SystemException('Can not connect to ' . $host, 0, $this->errorDesc);
 		}
+		
+		stream_set_timeout($this->resource, $timeout);
 	}
 	
 	/**
