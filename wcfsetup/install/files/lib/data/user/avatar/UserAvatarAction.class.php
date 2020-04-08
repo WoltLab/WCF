@@ -139,23 +139,24 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			@unlink($filename);
 			return;
 		}
+		
 		$tmp = pathinfo($tmp['path']);
-		if (!isset($tmp['basename']) || !isset($tmp['extension'])) {
-			if (!isset($tmp['basename'])) {
-				$tmp['basename'] = basename($filename);
-			}
+		if (!isset($tmp['basename'])) {
+			$tmp['basename'] = basename($filename);
+		}
+		
+		$imageData = @getimagesize($filename);
+		if ($imageData !== false) {
+			$tmp['extension'] = ImageUtil::getExtensionByMimeType($imageData['mime']);
 			
-			if (!isset($tmp['extension'])) {
-				$imageData = @getimagesize($filename);
-				if ($imageData !== false) {
-					$tmp['extension'] = ImageUtil::getExtensionByMimeType($imageData['mime']);
-				}
-			}
-			
-			if (empty($tmp['extension'])) {
+			if (!in_array($tmp['extension'], ['jpeg', 'jpg', 'png', 'gif'])) {
 				@unlink($filename);
 				return;
 			}
+		}
+		else {
+			@unlink($filename);
+			return;
 		}
 		
 		$data = [
