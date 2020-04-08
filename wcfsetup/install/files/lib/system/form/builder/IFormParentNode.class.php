@@ -46,6 +46,14 @@ interface IFormParentNode extends \Countable, IFormNode, \RecursiveIterator {
 	public function contains($nodeId);
 	
 	/**
+	 * Destroys the node and unsets references to child form nodes.
+	 * 
+	 * @since	5.2.5
+	 * @return	static
+	 */
+	public function destroy();
+	
+	/**
 	 * Returns a recursive iterator for this node.
 	 * 
 	 * Note: A class cannot implement `\Iterator` and `\IteratorAggregate` at the same time.
