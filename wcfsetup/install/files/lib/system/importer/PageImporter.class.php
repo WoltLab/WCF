@@ -57,7 +57,7 @@ class PageImporter extends AbstractImporter {
 		}
 		
 		// check old id
-		if (is_numeric($oldID)) {
+		if (ctype_digit((string)$oldID)) {
 			$page = new Page($oldID);
 			if (!$page->pageID) $data['pageID'] = $oldID;
 		}
