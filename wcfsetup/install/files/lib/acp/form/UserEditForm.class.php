@@ -217,7 +217,15 @@ class UserEditForm extends UserAddForm {
 		
 		// get the user cover photo object
 		if ($this->user->coverPhotoHash) {
-			$this->userCoverPhoto = UserProfileRuntimeCache::getInstance()->getObject($this->userID)->getCoverPhoto(true);
+			$userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
+			
+			// If the editing user lacks the permissions to view the cover photo, the system
+			// will try to load the default cover photo. However, the default cover photo depends
+			// on the style, eventually triggering a change to the template group which will
+			// fail in the admin panel.
+			if ($userProfile->canSeeCoverPhoto()) {
+				$this->userCoverPhoto = UserProfileRuntimeCache::getInstance()->getObject($this->userID)->getCoverPhoto(true);
+			}
 		}
 	}
 	
