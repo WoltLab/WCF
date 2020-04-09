@@ -47,7 +47,7 @@ class AbstractAttachmentImporter extends AbstractImporter {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		
 		// check existing attachment id
-		if (is_numeric($oldID)) {
+		if (ctype_digit((string)$oldID)) {
 			$attachment = new Attachment($oldID);
 			if (!$attachment->attachmentID) $data['attachmentID'] = $oldID;
 		}

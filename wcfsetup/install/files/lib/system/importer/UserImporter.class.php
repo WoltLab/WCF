@@ -97,7 +97,7 @@ class UserImporter extends AbstractImporter {
 		}
 		
 		// check existing user id
-		if (is_numeric($oldID)) {
+		if (ctype_digit((string)$oldID)) {
 			$user = new User($oldID);
 			if (!$user->userID) $data['userID'] = $oldID;
 		}
