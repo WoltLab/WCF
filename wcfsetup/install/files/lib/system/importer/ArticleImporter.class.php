@@ -66,7 +66,7 @@ class ArticleImporter extends AbstractImporter {
 		}
 		
 		// check old id
-		if (is_numeric($oldID)) {
+		if (ctype_digit((string)$oldID)) {
 			$article = new Article($oldID);
 			if (!$article->articleID) $data['articleID'] = $oldID;
 		}
