@@ -520,6 +520,10 @@ class UserProfileAction extends UserAction {
 		
 		WCF::getSession()->checkPermissions(['user.profile.coverPhoto.canUploadCoverPhoto']);
 		
+		if (WCF::getUser()->disableCoverPhoto) {
+			throw new PermissionDeniedException();
+		}
+		
 		// validate uploaded file
 		if (!isset($this->parameters['__files']) || count($this->parameters['__files']->getFiles()) != 1) {
 			throw new UserInputException('files');
