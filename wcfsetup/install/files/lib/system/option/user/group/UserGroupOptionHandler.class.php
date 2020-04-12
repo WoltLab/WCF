@@ -170,7 +170,7 @@ class UserGroupOptionHandler extends OptionHandler {
 			return;
 		}
 		
-		if (ENABLE_ENTERPRISE_MODE && $this->isAdmin() && !in_array($option->optionName, $this->enterpriseBlacklist)) {
+		if ($this->isAdmin() && (!ENABLE_ENTERPRISE_MODE || !in_array($option->optionName, $this->enterpriseBlacklist))) {
 			return;
 		}
 		
