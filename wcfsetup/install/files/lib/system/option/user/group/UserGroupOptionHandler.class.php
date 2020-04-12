@@ -42,6 +42,25 @@ class UserGroupOptionHandler extends OptionHandler {
 	protected $isOwner = null;
 	
 	/**
+	 * List of permission names that may not be altered when the enterprise mode is active.
+	 * @var string[]
+	 */
+	protected $enterpriseBlacklist = [
+		// Configuration
+		'admin.configuration.canManageApplication',
+		'admin.configuration.package.canUpdatePackage',
+		'admin.configuration.package.canEditServer',
+		
+		// User
+		'admin.user.canMailUser',
+		
+		// Management
+		'admin.management.canImportData',
+		'admin.management.canManageCronjob',
+		'admin.management.canRebuildData',
+	];
+	
+	/**
 	 * Sets current user group.
 	 * 
 	 * @param	UserGroup	$group
@@ -118,7 +137,6 @@ class UserGroupOptionHandler extends OptionHandler {
 	 * Returns true if current user has the permissions to edit every user group.
 	 * 
 	 * @return	boolean
-	 * @deprecated  5.2
 	 */
 	protected function isAdmin() {
 		if ($this->isAdmin === null) {
@@ -148,13 +166,17 @@ class UserGroupOptionHandler extends OptionHandler {
 	protected function validateOption(Option $option) {
 		parent::validateOption($option);
 		
-		if (!$this->isOwner()) {
-			// get type object
-			$typeObj = $this->getTypeObject($option->optionType);
-			
-			if ($typeObj->compare($this->optionValues[$option->optionName], WCF::getSession()->getPermission($option->optionName)) == 1) {
-				throw new UserInputException($option->optionName, 'exceedsOwnPermission');
-			}
+		if ($this->isOwner()) {
+			return;
+		}
+		
+		if ($this->isAdmin() && (!ENABLE_ENTERPRISE_MODE || !in_array($option->optionName, $this->enterpriseBlacklist))) {
+			return;
+		}
+		
+		$typeObj = $this->getTypeObject($option->optionType);
+		if ($typeObj->compare($this->optionValues[$option->optionName], WCF::getSession()->getPermission($option->optionName)) == 1) {
+			throw new UserInputException($option->optionName, 'exceedsOwnPermission');
 		}
 	}
 }

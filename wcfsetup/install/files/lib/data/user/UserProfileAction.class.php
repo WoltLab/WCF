@@ -532,6 +532,9 @@ class UserProfileAction extends UserAction {
 		if (!$this->user->userID) {
 			throw new UserInputException('userID');
 		}
+		else if ($this->user->userID == WCF::getUser()->userID && WCF::getUser()->disableCoverPhoto) {
+			throw new PermissionDeniedException();
+		}
 		else if ($this->user->userID != WCF::getUser()->userID && (!$this->user->canEdit() || !WCF::getSession()->getPermission('admin.user.canDisableCoverPhoto'))) {
 			throw new PermissionDeniedException();
 		}
