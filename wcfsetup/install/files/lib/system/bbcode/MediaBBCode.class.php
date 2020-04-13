@@ -22,7 +22,12 @@ class MediaBBCode extends AbstractBBCode {
 		if ($parser->getOutputType() == 'text/html') {
 			foreach (BBCodeMediaProvider::getCache() as $provider) {
 				if ($provider->matches($content)) {
-					return $provider->getOutput($content);
+					if ($parser instanceof HtmlBBCodeParser && $parser->getIsGoogleAmp()) {
+						return StringUtil::getAnchorTag($content);
+					}
+					else {
+						return $provider->getOutput($content);
+					}
 				}
 			}
 		}
