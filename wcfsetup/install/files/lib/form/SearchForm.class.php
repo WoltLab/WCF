@@ -1,5 +1,6 @@
 <?php
 namespace wcf\form;
+use wcf\data\search\keyword\SearchKeywordAction;
 use wcf\data\search\Search;
 use wcf\data\search\SearchAction;
 use wcf\system\exception\IllegalLinkException;
@@ -370,7 +371,9 @@ class SearchForm extends AbstractCaptchaForm {
 		}
 		// save keyword
 		if (!empty($this->query)) {
-			SearchKeywordManager::getInstance()->add($this->query);
+			(new SearchKeywordAction([], 'upsert', ['data' => [
+				'keyword' => $this->query,
+			]]))->executeAction();
 		}
 		$this->saved();
 		

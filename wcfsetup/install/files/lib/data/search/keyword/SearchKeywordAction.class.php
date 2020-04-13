@@ -56,4 +56,21 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 		
 		return $list;
 	}
+	
+	/**
+	 * Inserts a new keyword if it does not already exist, or updates it if it does.
+	 */
+	public function upsert() {
+		$sql = "INSERT INTO             wcf".WCF_N."_search_keyword
+						(keyword, searches, lastSearchTime)
+			VALUES                  (?, ?, ?)
+			ON DUPLICATE KEY UPDATE searches = searches + VALUES(searches),
+						lastSearchTime = VALUES(lastSearchTime)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			mb_substr($this->parameters['data']['keyword'], 0, 191),
+			($this->parameters['data']['searches'] ?? 1),
+			($this->parameters['data']['lastSearchTime'] ?? TIME_NOW),
+		]);
+	}
 }
