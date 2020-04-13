@@ -2816,7 +2816,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.globalValues.description"><![CDATA[The CSS and SCSS entered below is applied to all styles, but custom values in styles take precedence.]]></item>
 		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individual CSS and SCSS]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Preview Image]]></item>
-		<item name="wcf.acp.style.image.description"><![CDATA[Upload a preview image for this style, acceptable image types are JPG and PNG. Dimensions should be 102px × 64px, exceeding images will be scaled.]]></item>
+		<item name="wcf.acp.style.image.description"><![CDATA[Upload a preview image for this style, acceptable image types are JPG and PNG. Dimensions should be 102×64 pixels, exceeding images will be scaled.]]></item>
 		<item name="wcf.acp.style.image2x"><![CDATA[Preview Image (HD)]]></item>
 		<item name="wcf.acp.style.image2x.description"><![CDATA[This image is used on high resolution displays such as the Apple Retina or 4K/UHD-displays. The image must be double times the dimensions of the normal image to work.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Image Path]]></item>
@@ -2862,8 +2862,8 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.globals.fontFamilyGoogle"><![CDATA[Font Face]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyFallback"><![CDATA[Font Face (Fallback)]]></item>
 		<item name="wcf.acp.style.favicon"><![CDATA[Individual Favicon]]></item>
-		<item name="wcf.acp.style.favicon.description"><![CDATA[Upload an 256px × 256px image, acceptable image types are JPG and PNG. The uploaded image will be used to derive all required favicon sizes.]]></item>
-		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[The image must be exactly 256px × 256px large.]]></item>
+		<item name="wcf.acp.style.favicon.description"><![CDATA[Upload an 256×256 pixels image, acceptable image types are JPG and PNG. The uploaded image will be used to derive all required favicon sizes.]]></item>
+		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[The image must be exactly 256×256 pixels large.]]></item>
 		<item name="wcf.acp.style.favicon.error.invalidExtension"><![CDATA[The file extension is invalid.]]></item>
 	</category>
 	<category name="wcf.acp.tag">
