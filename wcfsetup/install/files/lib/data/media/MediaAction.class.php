@@ -408,9 +408,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 				$statement->execute([
 					$media->mediaID,
 					$languageID,
-					isset($this->parameters['title'][$languageID]) ? $this->parameters['title'][$languageID] : '',
+					isset($this->parameters['title'][$languageID]) ? mb_substr($this->parameters['title'][$languageID], 0, 255) : '',
 					isset($this->parameters['caption'][$languageID]) ? $this->parameters['caption'][$languageID] : '',
-					isset($this->parameters['altText'][$languageID]) ? $this->parameters['altText'][$languageID] : ''
+					isset($this->parameters['altText'][$languageID]) ? mb_substr($this->parameters['altText'][$languageID], 0, 255) : ''
 				]);
 			}
 			else {
@@ -435,9 +435,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 					$statement->execute([
 						$media->mediaID,
 						$language->languageID,
-						$title,
+						mb_substr($title, 0, 255),
 						$caption,
-						$altText
+						mb_substr($altText, 0, 255)
 					]);
 				}
 			}
