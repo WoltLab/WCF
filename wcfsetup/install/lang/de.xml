@@ -2887,7 +2887,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.globalValues.description"><![CDATA[Das unten stehende CSS und SCSS wird auf alle Stile angewandt, die individuelle Anpassungen in den Stilen sind jedoch höherwertig.]]></item>
 		<item name="wcf.acp.style.globalValues.input"><![CDATA[Individuelles CSS und SCSS]]></item>
 		<item name="wcf.acp.style.image"><![CDATA[Vorschaubild]]></item>
-		<item name="wcf.acp.style.image.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102px × 64px anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
+		<item name="wcf.acp.style.image.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Lade{else}Laden Sie{/if} hier ein Vorschaubild dieses Stiles hoch, als Bildformate sind JPG und PNG zulässig. Es wird empfohlen Vorschaubilder immer mit der Größe 102×64 Pixel anzulegen, größere Grafiken werden automatisch skaliert.]]></item>
 		<item name="wcf.acp.style.image2x"><![CDATA[Vorschaubild (HD)]]></item>
 		<item name="wcf.acp.style.image2x.description"><![CDATA[Diese Grafik wird für hochauflösende Bildschirme (z. B. Apple Retina-Display oder 4K/UHD-Monitore) verwendet und muss doppelt so groß sein wie das normale Vorschaubild.]]></item>
 		<item name="wcf.acp.style.imagePath"><![CDATA[Bilder-Pfad]]></item>
@@ -2934,8 +2934,8 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.globals.fontFamilyFallback"><![CDATA[Schriftart (Fallback)]]></item>
 		<item name="wcf.acp.style.general.favicon"><![CDATA[Favicon]]></item>
 		<item name="wcf.acp.style.favicon"><![CDATA[Individuelles Favicon]]></item>
-		<item name="wcf.acp.style.favicon.description"><![CDATA[Laden Sie hier ein 256px × 256px großes Bild hoch, als Bildformate sind JPG und PNG zulässig. Das hochgeladene Bild wird für die Erzeugung aller notwendigen Grafiken verwendet.]]></item>
-		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[Das Bild muss exakt 256px × 256px groß sein.]]></item>
+		<item name="wcf.acp.style.favicon.description"><![CDATA[Laden Sie hier ein 256×256 Pixel großes Bild hoch, als Bildformate sind JPG und PNG zulässig. Das hochgeladene Bild wird für die Erzeugung aller notwendigen Grafiken verwendet.]]></item>
+		<item name="wcf.acp.style.favicon.error.dimensions"><![CDATA[Das Bild muss exakt 256×256 Pixel groß sein.]]></item>
 		<item name="wcf.acp.style.favicon.error.invalidExtension"><![CDATA[Die Datei hat eine ungültige Dateiendung.]]></item>
 	</category>
 	<category name="wcf.acp.tag">
