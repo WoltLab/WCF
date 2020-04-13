@@ -192,6 +192,7 @@ class UserGroupAddForm extends AbstractOptionListForm {
 		
 		// reset values
 		$this->groupName = '';
+		$this->userOnlineMarking = '%s';
 		$this->allowMention = $this->priority = $this->showOnTeamPage = 0;
 		
 		I18nHandler::getInstance()->reset();

@@ -88,7 +88,7 @@
 		<dl{if $errorType.groupName|isset} class="formError"{/if}>
 			<dt><label for="groupName">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus class="medium">
+				<input type="text" id="groupName" name="groupName" value="{$i18nPlainValues['groupName']}" autofocus maxlength="255" class="medium">
 				{if $errorType.groupName|isset}
 					<small class="innerError">
 						{if $errorType.groupName == 'empty'}
@@ -136,7 +136,7 @@
 			<dl{if $errorType.userOnlineMarking|isset} class="formError"{/if}>
 				<dt><label for="userOnlineMarking">{lang}wcf.acp.group.userOnlineMarking{/lang}</label></dt>
 				<dd>
-					<input type="text" id="userOnlineMarking" name="userOnlineMarking" value="{$userOnlineMarking}" class="long">
+					<input type="text" id="userOnlineMarking" name="userOnlineMarking" value="{$userOnlineMarking}" maxlength="255" class="long">
 					{if $errorType.userOnlineMarking|isset}
 						<small class="innerError">
 							{lang}wcf.acp.group.userOnlineMarking.error.{@$errorType.userOnlineMarking}{/lang}
