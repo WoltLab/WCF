@@ -11,7 +11,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchEngine;
-use wcf\system\search\SearchKeywordManager;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -371,7 +370,7 @@ class SearchForm extends AbstractCaptchaForm {
 		}
 		// save keyword
 		if (!empty($this->query)) {
-			(new SearchKeywordAction([], 'upsert', ['data' => [
+			(new SearchKeywordAction([], 'registerSearch', ['data' => [
 				'keyword' => $this->query,
 			]]))->executeAction();
 		}

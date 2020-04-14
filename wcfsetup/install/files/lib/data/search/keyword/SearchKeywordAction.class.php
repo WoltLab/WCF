@@ -60,7 +60,7 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 	/**
 	 * Inserts a new keyword if it does not already exist, or updates it if it does.
 	 */
-	public function upsert() {
+	public function registerSearch() {
 		$sql = "INSERT INTO             wcf".WCF_N."_search_keyword
 						(keyword, searches, lastSearchTime)
 			VALUES                  (?, ?, ?)
