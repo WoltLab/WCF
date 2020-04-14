@@ -137,6 +137,10 @@
 				margin-top: 30px;
 			}
 			
+			.article .articleContent p {
+				margin: 0;
+			}
+			
 			.article .articleTeaser {
 				font-weight: 600;
 			}
