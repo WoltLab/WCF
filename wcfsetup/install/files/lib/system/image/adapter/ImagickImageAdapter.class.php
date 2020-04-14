@@ -125,12 +125,12 @@ class ImagickImageAdapter implements IImageAdapter {
 			do {
 				if ($obtainDimensions) {
 					$thumbnail->thumbnailImage($maxWidth, $maxHeight, true);
+					$thumbnail->setImagePage(0, 0, 0, 0);
 				}
 				else {
 					$thumbnail->cropThumbnailImage($maxWidth, $maxHeight);
+					$thumbnail->setImagePage($maxWidth, $maxHeight, 0, 0);
 				}
-				
-				$thumbnail->setImagePage($maxWidth, $maxHeight, 0, 0);
 			}
 			while ($thumbnail->nextImage());
 		}
