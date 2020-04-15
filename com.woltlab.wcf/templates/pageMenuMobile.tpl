@@ -21,6 +21,25 @@
 						{@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
 					{/if}
 		{/foreach}
+
+                {foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.FooterMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
+                        {* Does not use `data-identifier` to prevent compatibility issues. See https://github.com/WoltLab/WCF/pull/2813 *}
+				<li class="menuOverlayItem" data-mobile-identifier="{@$menuItemNode->identifier}">
+                                    {assign var=__outstandingItems value=$menuItemNode->getOutstandingItems()}
+					<a href="{$menuItemNode->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}{if $menuItemNode->isActiveNode()} active{/if}"{if $menuItemNode->isExternalLink() && EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>
+						<span class="menuOverlayItemTitle">{$menuItemNode->getTitle()}</span>
+                                            {if $__outstandingItems}
+						    <span class="badge badgeUpdate">{#$__outstandingItems}</span>
+                                            {/if}
+					</a>
+
+                                    {if $menuItemNode->hasChildren()}<ol class="menuOverlayItemList">{else}</li>{/if}
+
+                                        {if !$menuItemNode->hasChildren() && $menuItemNode->isLastSibling()}
+                                            {@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
+                                        {/if}
+                {/foreach}
+
 		<li class="menuOverlayItemSpacer"></li>
 		<li class="menuOverlayItem" data-more="com.woltlab.wcf.search">
 			<a href="#" class="menuOverlayItemLink box24">
