@@ -87,10 +87,13 @@
 
 {include file='header'}
 
+{assign var='additionalLinkParameters' value=''}
+{if $labelIDs|count}{capture append='additionalLinkParameters'}{foreach from=$labelIDs key=labelGroupID item=labelID}&labelIDs[{@$labelGroupID}]={@$labelID}{/foreach}{/capture}{/if}
+
 {hascontent}
 	<div class="paginationTop">
 		{content}
-			{pages print=true assign='pagesLinks' controller='ArticleList' link="pageNo=%d"}
+			{pages print=true assign='pagesLinks' controller='ArticleList' link="pageNo=%d$additionalLinkParameters"}
 		{/content}
 	</div>
 {/hascontent}
