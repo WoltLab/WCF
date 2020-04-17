@@ -84,6 +84,12 @@ class UploadFormField extends AbstractFormField {
 	private $values = [];
 	
 	/**
+	 * Flag whether the field is already unregistered.
+	 * @var bool
+	 */
+	private $cleaned = false;
+	
+	/**
 	 * Unregisters the current field in the upload handler.
 	 */
 	private function unregisterField() {
@@ -350,7 +356,10 @@ class UploadFormField extends AbstractFormField {
 	 * @inheritDoc
 	 */
 	public function cleanup() {
-		$this->unregisterField();
+		if (!$this->cleaned) {
+			$this->unregisterField();
+			$this->cleaned = true;
+		}
 		
 		return $this;
 	}
