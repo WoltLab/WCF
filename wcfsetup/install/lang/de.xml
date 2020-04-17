@@ -1616,7 +1616,7 @@ Als Benachrichtigungs-URL in der Konfiguration der sofortigen Zahlungsbestätigu
 		<item name="wcf.acp.package.validation.errorCode.14"><![CDATA[Das Paket wurde für eine {if $isOlderVersion}ältere{else}neuere{/if} Version von WoltLab Suite entwickelt und ist nicht kompatibel.]]></item>
 		<item name="wcf.acp.package.validation.errorCode.15"><![CDATA[Das Paket verfügt über keine Angaben zur API-Kompatibilität, eine Installation  mit aktivierten Entwickler-Werkzeugen ist daher nicht möglich.]]></item>
 		<item name="wcf.acp.package.validation.failed"><![CDATA[Das hochgeladene Paket kann nicht installiert werden, bitte {if LANGUAGE_USE_INFORMAL_VARIANT}beachte{else}beachten Sie{/if} das unten stehende Prüfungsergebnis.]]></item>
-		<item name="wcf.acp.package.upgradeAvailable"><![CDATA[<strong>Upgrade verfügbar!</strong> Informieren Sie sich unverbindlich auf <a href="https://www.woltlab.com/de/">woltlab.com</a> über die neue WoltLab Suite, mit innovativen Neuerungen und Verbesserungen für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Community.]]></item>
+		<item name="wcf.acp.package.upgradeAvailable"><![CDATA[<strong>Upgrade verfügbar!</strong> {if LANGUAGE_USE_INFORMAL_VARIANT}Informiere dich{else}Informieren Sie sich{/if} unverbindlich auf <a href="https://www.woltlab.com/de/">woltlab.com</a> über die neue WoltLab Suite, mit innovativen Neuerungen und Verbesserungen für {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Community.]]></item>
 	</category>
 	
 	<category name="wcf.acp.page">
