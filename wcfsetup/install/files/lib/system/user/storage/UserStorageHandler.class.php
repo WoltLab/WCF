@@ -79,7 +79,18 @@ class UserStorageHandler extends SingletonFactory {
 				$this->cache[$row['userID']] = [];
 			}
 			
-			$this->cache[$row['userID']][$row['field']] = $row['fieldValue'];
+			// Skip the field, if the value is reset before the storage is loaded.
+			if (isset($this->resetFields[$row['userID']]) && in_array($row['field'], $this->resetFields[$row['userID']])) {
+				continue;
+			}
+			
+			// Use new value, if the field is updated before the storage is loaded.
+			if (isset($this->updateFields[$row['userID']][$row['field']])) {
+				$this->cache[$row['userID']][$row['field']] = $this->updateFields[$row['userID']][$row['field']];
+			}
+			else {
+				$this->cache[$row['userID']][$row['field']] = $row['fieldValue'];
+			}
 		}
 	}
 	
@@ -173,6 +184,11 @@ class UserStorageHandler extends SingletonFactory {
 		if (isset($this->cache[$userID])) {
 			$this->cache[$userID][$field] = $fieldValue;
 		}
+		
+		// The reset is superfluous, because the value is going to be updated.
+		if (isset($this->resetFields[$userID]) && in_array($field, $this->resetFields[$userID])) {
+			unset($this->resetFields[$userID][array_search($field, $this->resetFields[$userID])]);
+		}
 	}
 	
 	/**
@@ -194,6 +210,11 @@ class UserStorageHandler extends SingletonFactory {
 			
 			if (isset($this->cache[$userID][$field])) {
 				unset($this->cache[$userID][$field]);
+			}
+			
+			// The update is superfluous, because the value is going to be reset.
+			if (isset($this->updateFields[$userID][$field])) {
+				unset($this->updateFields[$userID][$field]);
 			}
 		}
 	}
@@ -217,6 +238,18 @@ class UserStorageHandler extends SingletonFactory {
 		foreach ($this->cache as $userID => $fields) {
 			if (isset($fields[$field])) {
 				unset($this->cache[$userID][$field]);
+			}
+		}
+		
+		foreach ($this->updateFields as $userID => $fields) {
+			if (isset($fields[$field])) {
+				unset($this->updateFields[$userID][$field]);
+			}
+		}
+		
+		foreach ($this->resetFields as $userID => $fields) {
+			if (in_array($field, $fields)) {
+				unset($this->resetFields[$userID][array_search($field, $this->resetFields[$userID])]);
 			}
 		}
 	}
@@ -326,7 +359,7 @@ class UserStorageHandler extends SingletonFactory {
 			return;
 		}
 		
-		$this->resetFields = $this->updateFields = [];
+		$this->resetFields = $this->updateFields = $this->cache = [];
 		
 		$sql = "DELETE FROM	wcf".WCF_N."_user_storage";
 		$statement = WCF::getDB()->prepareStatement($sql);
