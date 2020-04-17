@@ -79,12 +79,12 @@ class UserStorageHandler extends SingletonFactory {
 				$this->cache[$row['userID']] = [];
 			}
 			
-			// Skip the field, if the value is reset before the storage is loaded.
+			// Skip the field, if the value was reset before the storage had been loaded.
 			if (isset($this->resetFields[$row['userID']]) && in_array($row['field'], $this->resetFields[$row['userID']])) {
 				continue;
 			}
 			
-			// Use new value, if the field is updated before the storage is loaded.
+			// Use the new value, if the field was updated before the storage had been loaded.
 			if (isset($this->updateFields[$row['userID']][$row['field']])) {
 				$this->cache[$row['userID']][$row['field']] = $this->updateFields[$row['userID']][$row['field']];
 			}
