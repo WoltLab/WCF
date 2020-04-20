@@ -300,6 +300,10 @@
 	<spider ident="DNAbot/1.0">
 		<name>DNAbot</name>
 	</spider>
+	<spider ident="DotBot/1.1">
+		<name>Moz DotBot</name>
+		<url>http://www.opensiteexplorer.org/dotbot</url>
+	</spider>
 	<spider ident="DragonBot/1.0 libwww/5.0">
 		<name>DragonBot</name>
 	</spider>
@@ -500,6 +504,16 @@
 	<spider ident="GoogleStackdriverMonitoring-UptimeChecks">
 		<name>Google Stackdriver Monitoring</name>
 		<url>https://cloud.google.com/monitoring/alerts/uptime-checks</url>
+	</spider>
+	<spider ident="Google-Ads-Creatives-Assistant">
+		<name>Google-Ads-Creatives-Assistant</name>
+	</spider>
+	<spider ident="Google-AdWords-Express">
+		<name>Google-AdWords-Express</name>
+	</spider>
+	<spider ident="AdsBot-Google">
+		<name>Google Ads-Bot</name>
+		<url>http://www.google.com/adsbot.html</url>
 	</spider>
 	<spider ident="Gpostbot">
 		<name>Gpostbot</name>
