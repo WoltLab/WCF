@@ -931,7 +931,11 @@ class WCF {
 			return self::getPath();
 		}
 		
-		return self::getPath(ApplicationHandler::getInstance()->getAbbreviation(ApplicationHandler::getInstance()->getActiveApplication()->packageID));
+		// We cannot rely on the ApplicationHandler's `getActiveApplication()` because
+		// it uses the requested controller to determine the namespace. However, starting
+		// with WoltLab Suite 5.2, system pages can be virtually assigned to a different
+		// app, resolving against the target app without changing the namespace.
+		return self::getPath(ApplicationHandler::getInstance()->getAbbreviation(PACKAGE_ID));
 	}
 	
 	/**
