@@ -16,7 +16,7 @@ interface IParameterizedEventListener {
 	/**
 	 * Executes this action.
 	 * 
-	 * @param	object		$eventObj	Object firing the event
+	 * @param	mixed		$eventObj	Object firing the event
 	 * @param	string		$className	class name of $eventObj
 	 * @param	string		$eventName	name of the event fired
 	 * @param	array		&$parameters	given parameters
