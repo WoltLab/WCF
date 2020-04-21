@@ -1069,7 +1069,7 @@
 		<url>http://www.sensis.com.au/help.do</url>
 	</spider>
 	<spider ident="SentiBot">
-		<name>Google-AdWords-Express</name>
+		<name>SentiBot</name>
 		<url>http://www.sentibot.eu</url>
 	</spider>
 	<spider ident="SG-Scout">
