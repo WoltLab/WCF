@@ -1072,6 +1072,10 @@
 		<name>SentiBot</name>
 		<url>http://www.sentibot.eu</url>
 	</spider>
+	<spider ident="SeznamBot/3.2">
+		<name>Seznam Bot</name>
+		<url>http://napoveda.seznam.cz/en/seznambot-intro/</url>
+	</spider>
 	<spider ident="SG-Scout">
 		<name>SG-Scout</name>
 	</spider>
