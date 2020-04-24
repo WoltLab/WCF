@@ -366,7 +366,7 @@ class StyleAddForm extends AbstractForm {
 		$variables = $statement->fetchAll(\PDO::FETCH_COLUMN);
 		
 		$lines = explode("\n", StringUtil::unifyNewlines($this->variables[$variableName]));
-		$regEx = new Regex('^\$([a-zA-Z]+):\s*([@a-zA-Z0-9 ,\.\(\)\%\#-]+);$');
+		$regEx = new Regex('^\$([a-z-A-Z]+):\s*([@a-zA-Z0-9 ,\.\(\)\%\#-]+(\s*!default)?);$');
 		$errors = [];
 		foreach ($lines as $index => &$line) {
 			$line = StringUtil::trim($line);
