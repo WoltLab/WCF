@@ -82,4 +82,21 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 			'template' => WCF::getTPL()->fetch('groupedUserList')
 		];
 	}
+	
+	/**
+	 * Inserts a new visitor if it does not already exist, or updates it if it does.
+	 * @since       5.2
+	 */
+	public function registerVisitor() {
+		$sql = "INSERT INTO             wcf".WCF_N."_user_profile_visitor
+						(ownerID, userID, time)
+			VALUES                  (?, ?, ?)
+			ON DUPLICATE KEY UPDATE time = VALUES(time)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$this->parameters['data']['ownerID'],
+			$this->parameters['data']['userID'],
+			$this->parameters['data']['time'] ?? TIME_NOW,
+		]);
+	}
 }
