@@ -86,6 +86,7 @@ class OptionHandler implements IOptionHandler {
 			'security.general.secrets',
 		],
 		'options' => [
+			'mail_from_address',
 			'register_activation_method',
 		]
 	];
