@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\option\user\group;
 use wcf\data\option\Option;
+use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\UserGroup;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\exception\ImplementationException;
@@ -40,25 +41,6 @@ class UserGroupOptionHandler extends OptionHandler {
 	 * @since 5.2
 	 */
 	protected $isOwner = null;
-	
-	/**
-	 * List of permission names that may not be altered when the enterprise mode is active.
-	 * @var string[]
-	 */
-	protected $enterpriseBlacklist = [
-		// Configuration
-		'admin.configuration.canManageApplication',
-		'admin.configuration.package.canUpdatePackage',
-		'admin.configuration.package.canEditServer',
-		
-		// User
-		'admin.user.canMailUser',
-		
-		// Management
-		'admin.management.canImportData',
-		'admin.management.canManageCronjob',
-		'admin.management.canRebuildData',
-	];
 	
 	/**
 	 * Sets current user group.
@@ -170,7 +152,7 @@ class UserGroupOptionHandler extends OptionHandler {
 			return;
 		}
 		
-		if ($this->isAdmin() && (!ENABLE_ENTERPRISE_MODE || !in_array($option->optionName, $this->enterpriseBlacklist))) {
+		if ($this->isAdmin() && (!ENABLE_ENTERPRISE_MODE || !in_array($option->optionName, UserGroupOption::ENTERPRISE_BLACKLIST))) {
 			return;
 		}
 		
