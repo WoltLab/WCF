@@ -14,6 +14,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\user\group\IUserGroupGroupOptionType;
 use wcf\system\option\user\group\IUserGroupOptionType;
+use wcf\system\option\user\group\UserGroupOptionHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 
@@ -168,7 +169,15 @@ class UserGroupOptionForm extends AbstractForm {
 				$this->errorType[$groupID] = $e->getType();
 			}
 			
-			if (!WCF::getUser()->hasOwnerAccess() && $this->optionType->compare($optionValue, WCF::getSession()->getPermission($this->userGroupOption->optionName)) == 1) {
+			if (WCF::getUser()->hasOwnerAccess()) {
+				continue;
+			}
+			
+			if (WCF::getUser()->hasAdministrativeAccess() && (!ENABLE_ENTERPRISE_MODE || !in_array($this->userGroupOption->optionName, UserGroupOption::ENTERPRISE_BLACKLIST))) {
+				continue;
+			}
+			
+			if ($this->optionType->compare($optionValue, WCF::getSession()->getPermission($this->userGroupOption->optionName)) == 1) {
 				$this->errorType[$groupID] = 'exceedsOwnPermission';
 			}
 		}

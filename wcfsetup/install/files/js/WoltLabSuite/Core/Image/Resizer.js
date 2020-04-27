@@ -165,6 +165,10 @@ define([
 			
 			var canvas = document.createElement('canvas');
 			
+			var chromeBug = createImageBitmap(image).then(function (bitmap) {
+				if (bitmap.height != image.height) throw new Error('Chrome Bug #1069965');
+			});
+			
 			// Prevent upscaling
 			var newWidth = Math.min(maxWidth, image.width);
 			var newHeight = Math.min(maxHeight, image.height);
@@ -193,7 +197,9 @@ define([
 				alpha: true
 			};
 			
-			return pica.resize(image, canvas, options);
+			return chromeBug.then(function() {
+				return pica.resize(image, canvas, options)
+			});
 		}
 	};
 	

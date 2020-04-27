@@ -243,6 +243,10 @@ class WCFACP extends WCF {
 	 */
 	public static function checkMasterPassword() {
 		if (defined('MODULE_MASTER_PASSWORD') && MODULE_MASTER_PASSWORD == 1 && !WCF::getSession()->getVar('masterPassword')) {
+			if (ENABLE_ENTERPRISE_MODE && WCF::getUser()->hasOwnerAccess()) {
+				return;
+			}
+			
 			if (file_exists(WCF_DIR.'acp/masterPassword.inc.php')) {
 				require_once(WCF_DIR.'acp/masterPassword.inc.php');
 			}
