@@ -169,7 +169,7 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 									}
 									
 									if ($newImage !== null) {
-										if (IMAGE_ADAPTER_TYPE === 'imagick') {
+										if ($newImage instanceof \Imagick) {
 											$newImage->setImageOrientation(\Imagick::ORIENTATION_TOPLEFT);
 										}
 										
