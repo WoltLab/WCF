@@ -59,6 +59,11 @@ define(['Core', 'EventHandler', 'Language', './Abstract'], function(Core, EventH
 		},
 		
 		close: function (event) {
+			// The user menu is not initialized if there are no items to display.
+			if (this._menu === undefined) {
+				return;
+			}
+			
 			var dropdown = WCF.Dropdown.Interactive.Handler.getOpenDropdown();
 			if (dropdown) {
 				event.preventDefault();
