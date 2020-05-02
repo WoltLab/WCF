@@ -42,9 +42,16 @@
 
 #quoteManagerCopy {
 	/* Prevent the tooltip from being selected on touch devices. */
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
 	user-select: none;
 	
 	z-index: 350;
+	
+	&.touchForceInaccessible {
+		pointer-events: none !important;
+	}
 	
 	@include screen-md-down {
 		@include wcfFontDefault;
