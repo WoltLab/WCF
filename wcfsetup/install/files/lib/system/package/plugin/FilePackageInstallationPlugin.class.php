@@ -142,6 +142,6 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
 	 * @inheritDoc
 	 */
 	public static function getSyncDependencies() {
-		return [];
+		return ['option'];
 	}
 }
