@@ -98,7 +98,7 @@ class HtmlInputNodeFont extends AbstractHtmlInputNode {
 	
 	protected function convertToSpan(\DOMElement $element, $property, $value) {
 		$span = $element->ownerDocument->createElement('span');
-		$span->setAttribute('style',  "{$property}: {$value}");
+		$span->setAttribute('style', "{$property}: {$value}");
 		
 		$element->parentNode->insertBefore($span, $element);
 		$span->appendChild($element);
