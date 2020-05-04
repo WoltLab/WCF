@@ -87,6 +87,7 @@ class TemplateScriptingCompiler {
 		'mb_strtoupper',
 		'mb_substr',
 		'md5',
+		'method_exists',
 		'microtime',
 		'min',
 		'nl2br',
