@@ -108,7 +108,7 @@ $.Redactor.prototype.WoltLabBlock = function() {
 				
 				var block, firstBlock = null;
 				for (var i = 0, length = replaced.length; i < length; i++) {
-					block = replaced[i][0];
+					block = replaced[i][0] || replaced[i];
 					
 					this.WoltLabBlock._paragraphize(block);
 					
