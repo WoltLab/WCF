@@ -5198,7 +5198,6 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.option.occupation"><![CDATA[Beruf]]></item>
 		<item name="wcf.user.option.showSignature"><![CDATA[Persönliche Signatur anderer Mitglieder anzeigen]]></item>
 		<item name="wcf.user.option.timezone"><![CDATA[Zeitzone]]></item>
-		<item name="wcf.user.option.icq"><![CDATA[ICQ]]></item>
 		<item name="wcf.user.option.skype"><![CDATA[Skype]]></item>
 		<item name="wcf.user.option.facebook"><![CDATA[Facebook]]></item>
 		<item name="wcf.user.option.twitter"><![CDATA[Twitter]]></item>

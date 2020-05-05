@@ -120,16 +120,6 @@
 				<visible>15</visible>
 				<editable>3</editable>
 			</option>
-			<option name="icq">
-				<categoryname>profile.contact</categoryname>
-				<optiontype>text</optiontype>
-				<validationpattern>^$|^([0-9](-| )?)+[0-9]$</validationpattern>
-				<searchable>1</searchable>
-				<visible>15</visible>
-				<editable>3</editable>
-				<isdisabled>1</isdisabled>
-				<contentpattern>^(\d{3})-(\d{3})-(\d{3})$</contentpattern>
-			</option>
 			<option name="skype">
 				<categoryname>profile.contact</categoryname>
 				<optiontype>text</optiontype>
