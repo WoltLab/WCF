@@ -584,7 +584,7 @@
 		<page identifier="com.woltlab.wcf.Contact">
 			<pageType>system</pageType>
 			<controller>wcf\form\ContactForm</controller>
-			<name language="de">Kontakt-Formular</name>
+			<name language="de">Kontaktformular</name>
 			<name language="en">Contact Form</name>
 			<options>module_contact_form</options>
 			<content language="en">
