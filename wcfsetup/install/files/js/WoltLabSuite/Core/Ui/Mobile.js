@@ -7,8 +7,8 @@
  * @module	WoltLabSuite/Core/Ui/Mobile
  */
 define(
-	[        'Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeListener', 'Dom/Traverse', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User', 'WoltLabSuite/Core/Ui/Dropdown/Reusable'],
-	function(Core,    Environment,   EventHandler,   Language,   List,   DomChangeListener,    DomTraverse,    UiAlignment, UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser, UiDropdownReusable)
+	[        'Core', 'Environment', 'EventHandler', 'Language', 'List', 'Dom/ChangeListener', 'Dom/Traverse', 'Dom/Util', 'Ui/Alignment', 'Ui/CloseOverlay', 'Ui/Screen', './Page/Menu/Main', './Page/Menu/User', 'WoltLabSuite/Core/Ui/Dropdown/Reusable'],
+	function(Core,    Environment,   EventHandler,   Language,   List,   DomChangeListener,    DomTraverse,   DomUtil,    UiAlignment, UiCloseOverlay,    UiScreen,    UiPageMenuMain,     UiPageMenuUser, UiDropdownReusable)
 {
 	"use strict";
 	
@@ -384,10 +384,10 @@ define(
 			
 			elBySelAll('.boxMenuHasChildren > a', null, function (element) {
 				element.addEventListener('touchstart', function (event) {
-					if (_enabledLGTouchNavigation && !~~elData(event.target, 'dropdown-open')) {
+					if (_enabledLGTouchNavigation && elAttr(element, 'aria-expanded') === 'false') {
 						event.preventDefault();
 						
-						elData(event.target, 'dropdown-open', 1);
+						elAttr(element, 'aria-expanded', 'true');
 						
 						// Register an new event listener after the touch ended, which is triggered once when an 
 						// element on the page is pressed. This allows us to reset the touch status of the navigation 
@@ -395,7 +395,13 @@ define(
 						// click it again. 
 						element.addEventListener('touchend', function () {
 							document.body.addEventListener('touchstart', function () {
-								elData(event.target, 'dropdown-open', 0);
+								document.body.addEventListener('touchend', function (event) {
+									if (!DomUtil.contains(element.parentNode, event.target) && event.target !== element.parentNode) {
+										elAttr(element, 'aria-expanded', 'false');
+									}
+								}, {
+									once: true
+								});
 							}, {
 								once: true
 							});
