@@ -231,7 +231,7 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			
 			if (typeof options.success === 'function') {
 				var data = null;
-				if (xhr.getResponseHeader('Content-Type') === 'application/json') {
+				if (xhr.getResponseHeader('Content-Type').split(';', 1)[0].trim() === 'application/json') {
 					try {
 						data = JSON.parse(xhr.responseText);
 					}
