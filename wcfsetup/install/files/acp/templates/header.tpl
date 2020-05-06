@@ -35,7 +35,7 @@
 		var WSC_API_URL = '{@$__wcf->getActivePath()}acp/';
 		var SECURITY_TOKEN = '{@SECURITY_TOKEN}';
 		var LANGUAGE_ID = {@$__wcf->getLanguage()->languageID};
-		var LANGUAGE_CODE = '{@$__wcf->getLanguage()->languageCode}';
+		var LANGUAGE_CODE = '{@$__wcf->getLanguage()->getFixedLanguageCode()}';
 		var LANGUAGE_USE_INFORMAL_VARIANT = {if LANGUAGE_USE_INFORMAL_VARIANT}true{else}false{/if};
 		var TIME_NOW = {@TIME_NOW};
 		var LAST_UPDATE_TIME = {@LAST_UPDATE_TIME};
