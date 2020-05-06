@@ -5068,8 +5068,8 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[Neuer Kommentar an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponse"><![CDATA[Neue Antwort auf einen Kommentar von {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.notification.commentResponseOwner"><![CDATA[Neue Antwort auf einen Kommentar an {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Pinnwand]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Jemandem hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar reagiert]]></item>
-		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Jemandem hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar reagiert]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.like.notification.like"><![CDATA[Jemand hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deinen{else}Ihren{/if} Kommentar reagiert]]></item>
+		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.response.like.notification.like"><![CDATA[Jemand hat auf {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Antwort auf einen Kommentar reagiert]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.paidSubscription.user.expiring"><![CDATA[Eine {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Mitgliedschaften läuft bald ab]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.userTrophy.notification.received"><![CDATA[Trophäe erhalten]]></item>
 		<item name="wcf.user.notification.trophy.received.title"><![CDATA[Trophäe erhalten]]></item>
