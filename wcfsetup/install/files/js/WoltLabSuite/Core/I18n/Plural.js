@@ -25,7 +25,6 @@ define(['StringUtil'], function(StringUtil) {
 		 * @return	string
 		 */
 		getCategory: function(value, languageCode) {
-			languageCode = 'cs';
 			if (!languageCode) {
 				languageCode = LANGUAGE_CODE;
 			}
