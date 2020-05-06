@@ -23,11 +23,13 @@ class ModerationQueueCronjob extends AbstractCronjob {
 		
 		$sql = "SELECT	queueID
 			FROM	wcf".WCF_N."_moderation_queue
-			WHERE	status = ?
+			WHERE	status IN (?, ?, ?)
 				AND lastChangeTime < ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute([
 			ModerationQueue::STATUS_DONE,
+			ModerationQueue::STATUS_REJECTED,
+			ModerationQueue::STATUS_CONFIRMED,
 			TIME_NOW - (86400 * 30)
 		]);
 		$queueIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
