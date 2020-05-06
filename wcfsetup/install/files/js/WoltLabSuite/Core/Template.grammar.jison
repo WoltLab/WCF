@@ -20,6 +20,7 @@
 <command>\"([^"]|\\\.)*\" return 'T_QUOTED_STRING';
 <command>\'([^']|\\\.)*\' return 'T_QUOTED_STRING';
 <command>\$ return 'T_VARIABLE';
+<command>[0-9]+ { return 'T_DIGITS'; }
 <command>[_a-zA-Z][_a-zA-Z0-9]* { return 'T_VARIABLE_NAME'; }
 <command>"."	 return '.';
 <command>"["	 return '[';
@@ -40,6 +41,7 @@
 "{/lang}"   return '{/lang}';
 "{include " { this.begin('command'); return '{include'; }
 "{implode " { this.begin('command'); return '{implode'; }
+"{plural " { this.begin('command'); return '{plural'; }
 "{/implode}" return '{/implode}';
 "{foreach "  { this.begin('command'); return '{foreach'; }
 "{foreachelse}"  return '{foreachelse}';
@@ -122,6 +124,17 @@ COMMAND:
 		+ "}"
 		+ "return (looped ? result : " + ($5 || "''") + "); })()"
 	}
+|	'{plural' PLURAL_PARAMETER_LIST '}' {
+		$$ = "I18nPlural.getCategoryFromTemplateParmeters({"
+		var needsComma = false;
+		for (var key in $2) {
+			if (objOwns($2, key)) {
+				$$ += (needsComma ? ',' : '') + key + ': ' + $2[key];
+				needsComma = true;
+			}
+		}
+		$$ += "})";
+	}
 |	'{lang}' CHUNK_STAR '{/lang}' -> "Language.get(" + $2 + ", v)"
 |	'{' VARIABLE '}'  -> "StringUtil.escapeHTML(" + $2 + ")"
 |	'{#' VARIABLE '}' -> "StringUtil.formatNumeric(" + $2 + ")"
@@ -154,11 +167,18 @@ COMMAND_PARAMETER_LIST:
 |	T_VARIABLE_NAME '=' COMMAND_PARAMETER_VALUE { $$ = {}; $$[$1] = $3; }
 ;
 
-COMMAND_PARAMETER_VALUE: T_QUOTED_STRING | VARIABLE;
+COMMAND_PARAMETER_VALUE: T_QUOTED_STRING | T_DIGITS | VARIABLE;
 
 // COMMAND_PARAMETERS parses anything that is valid between a command name and the closing brace
 COMMAND_PARAMETERS: COMMAND_PARAMETER+ -> $1.join('')
 ;
-COMMAND_PARAMETER: T_ANY | T_WS | '=' | T_QUOTED_STRING | VARIABLE | T_VARIABLE_NAME
+COMMAND_PARAMETER: T_ANY | T_DIGITS | T_WS | '=' | T_QUOTED_STRING | VARIABLE | T_VARIABLE_NAME
 |	'(' COMMAND_PARAMETERS ')' -> $1 + ($2 || '') + $3
 ;
+
+PLURAL_PARAMETER_LIST:
+	T_PLURAL_PARAMETER_NAME '=' COMMAND_PARAMETER_VALUE T_WS PLURAL_PARAMETER_LIST { $$ = $5; $$[$1] = $3; }
+|	T_PLURAL_PARAMETER_NAME '=' COMMAND_PARAMETER_VALUE { $$ = {}; $$[$1] = $3; }
+;
+
+T_PLURAL_PARAMETER_NAME: T_DIGITS | T_VARIABLE_NAME;
