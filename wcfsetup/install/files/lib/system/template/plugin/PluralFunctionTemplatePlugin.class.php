@@ -54,7 +54,7 @@ class PluralFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		
 		$category = I18nPlural::getCategory($value);
 		if (!isset($tagArgs[$category])) {
-			$category = 'other';
+			$category = I18nPlural::PLURAL_OTHER;
 		}
 		
 		$string = $tagArgs[$category];
