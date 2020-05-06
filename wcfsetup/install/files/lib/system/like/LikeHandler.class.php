@@ -180,6 +180,16 @@ class LikeHandler extends SingletonFactory {
 			$likeObject->likeObjectID
 		]);
 		
-		return $statement->fetchArray();
+		$row = $statement->fetchSingleRow();
+		if ($row === false) {
+			$row = [
+				'likes' => 0,
+				'dislikes' => 0,
+				'cumulativeLikes' => 0,
+				'liked' => 0,
+			];
+		}
+		
+		return $row;
 	}
 }
