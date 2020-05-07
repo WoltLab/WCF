@@ -893,8 +893,13 @@ define(
 					this.close(id);
 				}
 				
-				elRemove(_dialogs.get(id).dialog);
-				_dialogs.delete(id);
+				// If the dialog is destroyed in the close callback, this method is
+				// called twice resulting in `_dialogs.get(id)` being undefined for
+				// the initial call.
+				if (_dialogs.has(id)) {
+					elRemove(_dialogs.get(id).dialog);
+					_dialogs.delete(id);
+				}
 				_dialogObjects.delete(callbackObject);
 			}
 		},
