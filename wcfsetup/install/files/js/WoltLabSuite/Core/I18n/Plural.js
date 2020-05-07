@@ -48,7 +48,7 @@ define(['StringUtil'], function(StringUtil) {
 		 * @param	{object}	parameters
 		 * @see		wcf\system\template\plugin\PluralFunctionTemplatePlugin::execute()
 		 */
-		getCategoryFromTemplateParmeters: function(parameters) {
+		getCategoryFromTemplateParameters: function(parameters) {
 			if (!parameters['value'] ) {
 				throw new Error('Missing parameter value');
 			}

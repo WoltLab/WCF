@@ -125,7 +125,7 @@ COMMAND:
 		+ "return (looped ? result : " + ($5 || "''") + "); })()"
 	}
 |	'{plural' PLURAL_PARAMETER_LIST '}' {
-		$$ = "I18nPlural.getCategoryFromTemplateParmeters({"
+		$$ = "I18nPlural.getCategoryFromTemplateParameters({"
 		var needsComma = false;
 		for (var key in $2) {
 			if (objOwns($2, key)) {

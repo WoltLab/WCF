@@ -85,7 +85,7 @@ case 11:
 break;
 case 12:
 
-		this.$ = "I18nPlural.getCategoryFromTemplateParmeters({"
+		this.$ = "I18nPlural.getCategoryFromTemplateParameters({"
 		var needsComma = false;
 		for (var key in $$[$0-1]) {
 			if (objOwns($$[$0-1], key)) {
