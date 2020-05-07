@@ -153,7 +153,7 @@ class RadioButtonOptionType extends AbstractOptionType implements ISearchableCon
 				$result = [];
 				
 				foreach ($options as $item) {
-					if ($item{0} == '!') {
+					if ($item[0] == '!') {
 						$result[] = $item;
 					}
 					else {
