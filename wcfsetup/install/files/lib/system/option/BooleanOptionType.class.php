@@ -112,7 +112,7 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
 		$result = [];
 		
 		foreach ($options as $item) {
-			if ($item{0} == '!') {
+			if ($item[0] == '!') {
 				if ($value) $result[] = $item;
 			}
 			else {
