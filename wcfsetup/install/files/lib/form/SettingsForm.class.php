@@ -130,6 +130,9 @@ class SettingsForm extends AbstractForm {
 			
 			Trophy::sort($this->availableTrophies, 'showOrder');
 		}
+		else if (empty($this->optionHandler->getOptionTree())) {
+			throw new IllegalLinkException();
+		}
 	}
 	
 	/**
