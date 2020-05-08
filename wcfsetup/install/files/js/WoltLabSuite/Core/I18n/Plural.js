@@ -26,7 +26,7 @@ define(['StringUtil'], function(StringUtil) {
 		 */
 		getCategory: function(value, languageCode) {
 			if (!languageCode) {
-				languageCode = LANGUAGE_CODE;
+				languageCode = document.documentElement.lang;
 			}
 			
 			// Fallback: handle unknown languages as English
