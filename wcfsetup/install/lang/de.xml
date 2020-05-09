@@ -4953,6 +4953,9 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.condition.coverPhoto"><![CDATA[Titelbild]]></item>
 		<item name="wcf.user.condition.coverPhoto.coverPhoto"><![CDATA[Hat Titelbild]]></item>
 		<item name="wcf.user.condition.coverPhoto.noCoverPhoto"><![CDATA[Hat kein Titelbild]]></item>
+		<item name="wcf.user.condition.signature"><![CDATA[Signatur]]></item>
+		<item name="wcf.user.condition.signature.signature"><![CDATA[Hat Signatur]]></item>
+		<item name="wcf.user.condition.signature.noSignature"><![CDATA[Hat kein Signatur]]></item>
 	</category>
 	<category name="wcf.user.coverPhoto">
 		<item name="wcf.user.coverPhoto"><![CDATA[Titelbild]]></item>

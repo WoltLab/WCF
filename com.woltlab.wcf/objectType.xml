@@ -660,6 +660,12 @@
 			<conditiongroup>general</conditiongroup>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.signature</name>
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+			<classname>wcf\system\condition\UserSignatureCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.coverPhoto</name>
 			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
 			<classname>wcf\system\condition\UserCoverPhotoCondition</classname>
@@ -749,6 +755,12 @@
 			<name>com.woltlab.wcf.avatar</name>
 			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
 			<classname>wcf\system\condition\UserAvatarCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.signature</name>
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+			<classname>wcf\system\condition\UserSignatureCondition</classname>
 			<conditiongroup>general</conditiongroup>
 		</type>
 		<type>
@@ -1288,6 +1300,12 @@
 			<conditiongroup>general</conditiongroup>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.signature</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname>wcf\system\condition\UserSignatureCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.coverPhoto</name>
 			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
 			<classname>wcf\system\condition\UserCoverPhotoCondition</classname>
@@ -1390,6 +1408,12 @@
 			<name>com.woltlab.wcf.avatar</name>
 			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
 			<classname>wcf\system\condition\UserAvatarCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.signature</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname>wcf\system\condition\UserSignatureCondition</classname>
 			<conditiongroup>general</conditiongroup>
 		</type>
 		<type>
