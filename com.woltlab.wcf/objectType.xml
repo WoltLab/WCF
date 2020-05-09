@@ -1380,6 +1380,13 @@
 			<conditiongroup>general</conditiongroup>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.lastActivityTime</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname>wcf\system\condition\UserTimestampPropertyCondition</classname>
+			<conditiongroup>general</conditiongroup>
+			<propertyname>lastActivityTime</propertyname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.avatar</name>
 			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
 			<classname>wcf\system\condition\UserAvatarCondition</classname>
