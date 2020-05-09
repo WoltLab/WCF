@@ -183,7 +183,15 @@
 			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
 		</definition>
 		<definition>
+			<name>com.woltlab.wcf.box.userList.condition</name>
+			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
+		</definition>
+		<definition>
 			<name>com.woltlab.wcf.box.userTrophyList.condition</name>
+			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
+		</definition>
+		<definition>
+			<name>com.woltlab.wcf.box.userOnlineList.condition</name>
 			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
 		</definition>
 		<!-- /box conditions -->

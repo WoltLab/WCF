@@ -23,6 +23,11 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
 	protected static $supportedPositions = ['footerBoxes', 'sidebarLeft', 'sidebarRight'];
 	
 	/**
+	 * @inheritDoc
+	 */
+	protected $conditionDefinition = 'com.woltlab.wcf.box.userOnlineList.condition';
+	
+	/**
 	 * enables the display of the user online record
 	 * @var boolean
 	 */

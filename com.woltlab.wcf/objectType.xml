@@ -1589,6 +1589,20 @@
 			<classname>wcf\system\condition\user\trophy\UserTrophyExcludedTrophyCategoriesCondition</classname>
 		</type>
 		<!-- /trophy list box condition -->
+		<!-- user list box condition -->
+		<type>
+			<name>com.woltlab.wcf.userGroup</name>
+			<definitionname>com.woltlab.wcf.box.userList.condition</definitionname>
+			<classname>wcf\system\condition\UserGroupCondition</classname>
+		</type>
+		<!-- /user list box condition -->
+		<!-- user online list box condition -->
+		<type>
+			<name>com.woltlab.wcf.userGroup</name>
+			<definitionname>com.woltlab.wcf.box.userOnlineList.condition</definitionname>
+			<classname>wcf\system\condition\UserGroupCondition</classname>
+		</type>
+		<!-- /user online list box condition -->
 		<!-- media -->
 		<type>
 			<name>com.woltlab.wcf.media.caption</name>
