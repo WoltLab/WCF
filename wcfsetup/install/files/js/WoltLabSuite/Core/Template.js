@@ -9,7 +9,7 @@
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Template
  */
-define(['./Template.grammar', './StringUtil', 'Language'], function(parser, StringUtil, Language) {
+define(['./Template.grammar', './StringUtil', 'Language', 'WoltLabSuite/Core/I18n/Plural'], function(parser, StringUtil, Language, I18nPlural) {
 	"use strict";
 	
 	// work around bug in AMD module generation of Jison
@@ -39,7 +39,7 @@ define(['./Template.grammar', './StringUtil', 'Language'], function(parser, Stri
 			+ "v.__wcf = window.WCF; v.__window = window;\n"
 			+ "return " + template;
 			
-			this.fetch = new Function("StringUtil", "Language", "v", template).bind(undefined, StringUtil, Language);
+			this.fetch = new Function("StringUtil", "Language", "I18nPlural", "v", template).bind(undefined, StringUtil, Language, I18nPlural);
 		}
 		catch (e) {
 			console.debug(e.message);
