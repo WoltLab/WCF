@@ -6,11 +6,11 @@
 	{if $container->getLabel() !== null}
 		{if $container->getDescription() !== null}
 			<header class="sectionHeader">
-				<h2 class="sectionTitle">{@$container->getLabel()}</h2>
+				<h2 class="sectionTitle">{@$container->getLabel()}{if $container->markAsRequired()} <span class="formFieldRequired">*</span>{/if}</h2>
 				<p class="sectionDescription">{@$container->getDescription()}</p>
 			</header>
 		{else}
-			<h2 class="sectionTitle">{@$container->getLabel()}</h2>
+			<h2 class="sectionTitle">{@$container->getLabel()}{if $container->markAsRequired()} <span class="formFieldRequired">*</span>{/if}</h2>
 		{/if}
 	{/if}
 	
