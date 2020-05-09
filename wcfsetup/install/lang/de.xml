@@ -4950,6 +4950,9 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.condition.notUserTrophyIDs.description"><![CDATA[Benutzer dürfen keine der ausgewählten Trophäen erhalten haben.]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs.error.userTrophyIntersection"><![CDATA[Die ausgewählten Trophäen in „hat Trophäe“ und „hat nicht Trophäe“ sind widersprüchlich.]]></item>
 		<item name="wcf.user.condition.trophyPoints"><![CDATA[Trophäen]]></item>
+		<item name="wcf.user.condition.coverPhoto"><![CDATA[Titelbild]]></item>
+		<item name="wcf.user.condition.coverPhoto.coverPhoto"><![CDATA[Hat Titelbild]]></item>
+		<item name="wcf.user.condition.coverPhoto.noCoverPhoto"><![CDATA[Hat kein Titelbild]]></item>
 	</category>
 	<category name="wcf.user.coverPhoto">
 		<item name="wcf.user.coverPhoto"><![CDATA[Titelbild]]></item>
