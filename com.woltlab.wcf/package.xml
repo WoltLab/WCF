@@ -109,7 +109,8 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="5.2.5">
-		<instruction type="script">acp/update_com.woltlab.wcf_5.2.6.php</instruction>
+		<instruction type="file">files_pre_5.2.6.tar</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.2.6.php</instruction>
 		
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
