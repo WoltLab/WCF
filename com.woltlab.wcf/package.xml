@@ -100,7 +100,8 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="3.1.13">
-		<instruction type="script">acp/update_com.woltlab.wcf_3.1.14.php</instruction>
+		<instruction type="file">files_pre_3.1.14.tar</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_3.1.14.php</instruction>
 		
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
