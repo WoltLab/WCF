@@ -115,6 +115,12 @@
 			<category>com.woltlab.wcf.page</category>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.likeableArticle.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\LikeUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.page</category>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.article.recentActivityEvent</name>
 			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
 			<classname>wcf\system\user\activity\event\ArticleUserActivityEvent</classname>
