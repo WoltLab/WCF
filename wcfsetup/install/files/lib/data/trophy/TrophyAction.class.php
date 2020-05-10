@@ -296,9 +296,10 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 			throw new UserInputException('structure');
 		}
 		
-		$adList = new TrophyList();
-		$adList->setObjectIDs($this->parameters['data']['structure'][0]);
-		if ($adList->countObjects() != count($this->parameters['data']['structure'][0])) {
+		$trophyList = new TrophyList();
+		$trophyList->setObjectIDs($this->parameters['data']['structure'][0]);
+		$trophyList->readObjects();
+		if (count($trophyList) !== count($this->parameters['data']['structure'][0])) {
 			throw new UserInputException('structure');
 		}
 		
