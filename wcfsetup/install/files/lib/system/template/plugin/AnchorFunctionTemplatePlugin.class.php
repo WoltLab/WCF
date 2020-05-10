@@ -64,11 +64,11 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			unset($tagArgs['link']);
 			
 			if (is_object($tagArgs['title'])) {
-				if (method_exists($tagArgs['title'], '__toString')) {
-					$title = (string)$tagArgs['title'];
-				}
-				else if ($tagArgs['title'] instanceof ITitledObject || ClassUtil::isDecoratedInstanceOf($tagArgs['title'], ITitledObject::class)) {
+				if ($tagArgs['title'] instanceof ITitledObject || ClassUtil::isDecoratedInstanceOf($tagArgs['title'], ITitledObject::class)) {
 					$title = $tagArgs['title']->getTitle();
+				}
+				else if (method_exists($tagArgs['title'], '__toString')) {
+					$title = (string)$tagArgs['title'];
 				}
 				else {
 					throw new \InvalidArgumentException("'title' object does not implement " . ITitledObject::class . ".");
