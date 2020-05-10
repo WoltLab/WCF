@@ -4049,7 +4049,7 @@ Attachments:
 		<item name="wcf.message.quote.manageQuotes"><![CDATA[Manage Quotes]]></item>
 		<item name="wcf.message.quote.quoteSelected"><![CDATA[Save Quote]]></item>
 		<item name="wcf.message.quote.quoteAndReply"><![CDATA[Insert Quote]]></item>
-		<item name="wcf.message.quote.showQuotes"><![CDATA[Quotes (#count#)]]></item>
+		<item name="wcf.message.quote.showQuotes"><![CDATA[{if $count == 1}One Quote{else}{#$count} Quotes{/if}]]></item>
 		<item name="wcf.message.quote.quoteMessage"><![CDATA[Quote]]></item>
 		<item name="wcf.message.quote.removeAllQuotes"><![CDATA[Remove All Quotes]]></item>
 		<item name="wcf.message.quote.removeSelectedQuotes"><![CDATA[Removed Marked Quotes]]></item>

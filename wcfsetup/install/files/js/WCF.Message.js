@@ -1833,7 +1833,9 @@ if (COMPILER_TARGET_DEFAULT) {
 						UiPageAction.add(buttonName, button);
 					}
 					
-					button.textContent = WCF.Language.get('wcf.message.quote.showQuotes').replace(/#count#/, this._count);
+					button.textContent = WCF.Language.get('wcf.message.quote.showQuotes', {
+						count: this._count
+					});
 					
 					UiPageAction.show(buttonName);
 				}

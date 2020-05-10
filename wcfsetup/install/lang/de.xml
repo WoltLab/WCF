@@ -4104,7 +4104,7 @@ Dateianhänge:
 		<item name="wcf.message.quote.manageQuotes"><![CDATA[Zitate verwalten]]></item>
 		<item name="wcf.message.quote.quoteSelected"><![CDATA[Zitat speichern]]></item>
 		<item name="wcf.message.quote.quoteAndReply"><![CDATA[Zitat einfügen]]></item>
-		<item name="wcf.message.quote.showQuotes"><![CDATA[Zitate (#count#)]]></item>
+		<item name="wcf.message.quote.showQuotes"><![CDATA[{if $count == 1}Ein Zitat{else}{#$count} Zitate{/if}]]></item>
 		<item name="wcf.message.quote.quoteMessage"><![CDATA[Zitieren]]></item>
 		<item name="wcf.message.quote.removeAllQuotes"><![CDATA[Alle Zitate entfernen]]></item>
 		<item name="wcf.message.quote.removeSelectedQuotes"><![CDATA[Markierte Zitate entfernen]]></item>
