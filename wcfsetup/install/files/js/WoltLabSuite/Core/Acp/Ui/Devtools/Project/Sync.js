@@ -1,4 +1,4 @@
-define(['Ajax', 'Dictionary', 'Language', 'Ui/Dialog'], function (Ajax, Dictionary, Language, UiDialog) {
+define(['Ajax', 'Dictionary', 'Language', 'Ui/Dialog', 'Ui/Notification'], function (Ajax, Dictionary, Language, UiDialog, UiNotification) {
 	"use strict";
 	
 	var _buttons = new Dictionary();
@@ -142,7 +142,8 @@ define(['Ajax', 'Dictionary', 'Language', 'Ui/Dialog'], function (Ajax, Dictiona
 			if (_queue.length === 0) {
 				_buttonSyncAll.classList.remove('disabled');
 				
-				// TODO: do stuff
+				UiNotification.show();
+				
 				return;
 			}
 			
