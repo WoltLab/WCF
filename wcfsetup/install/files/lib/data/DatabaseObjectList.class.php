@@ -359,4 +359,22 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 			return null;
 		}
 	}
+	
+	/**
+	 * Returns the only object in this list or `null` if the list is empty.
+	 * 
+	 * @return	DatabaseObject|null
+	 * @throws	\BadMethodCallException		if list contains more than one object
+	 */
+	public function getSingleObject() {
+		if (count($this->objects) > 1) {
+			throw new \BadMethodCallException("Cannot get a single object when the list contains " . count($this->objects) . " objects.");
+		}
+		
+		if (empty($this->objects)) {
+			return null;
+		}
+		
+		return reset($this->objects);
+	}
 }

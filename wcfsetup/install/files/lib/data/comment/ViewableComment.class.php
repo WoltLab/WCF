@@ -58,8 +58,7 @@ class ViewableComment extends DatabaseObjectDecorator {
 		$list = new ViewableCommentList();
 		$list->setObjectIDs([$commentID]);
 		$list->readObjects();
-		$objects = $list->getObjects();
-		if (isset($objects[$commentID])) return $objects[$commentID];
-		return null;
+		
+		return $list->getSingleObject();
 	}
 }
