@@ -109,11 +109,6 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 			throw new \RuntimeException("PIP '{$this->packageInstallationPlugin->pluginName}' is not allowed to throw a 'SplitNodeException'.");
 		}
 		
-		// clear cache
-		
-		// TODO: use a central method instead!
-		
-		// create search index tables
 		SearchIndexManager::getInstance()->createSearchIndices();
 		
 		VersionTracker::getInstance()->createStorageTables();
