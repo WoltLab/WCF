@@ -151,8 +151,16 @@ class FileReader {
 			// file type
 			$this->addHeader('Content-Type', $this->options['mimeType']);
 			
+			$filename = $this->sanitizeFilename($this->options['filename']);
+			$asciiFilename = $this->sanitizeFilename($this->getAsciiFilename($filename));
+			
 			// file name
-			$this->addHeader('Content-disposition', ($this->options['showInline'] ? 'inline' : 'attachment').'; filename="'.$this->options['filename'].'"');
+			$this->addHeader(
+				'Content-disposition',
+				($this->options['showInline'] ? 'inline' : 'attachment').'; '.
+					'filename="'.rawurlencode($asciiFilename).'"; '.
+					"filename*=UTF-8''".rawurlencode($filename)
+			);
 			
 			// range
 			if ($this->startByte > 0 || $this->endByte < $this->options['filesize'] - 1) {
@@ -177,6 +185,35 @@ class FileReader {
 				$this->addHeader('Last-Modified', gmdate('D, d M Y H:i:s', $this->options['lastModificationTime']).' GMT');
 			}
 		}
+	}
+	
+	/**
+	 * Returns an ASCII filename for the given filename.
+	 * 
+	 * @param	string	$filename
+	 * @return	string
+	 */
+	protected function getAsciiFilename($filename) {
+		// Attempt to use the intl extension if possible, this will result
+		// in more readable filenames for Umlauts, because they will be converted
+		// into the base character instead of an underscore.
+		if (function_exists('transliterator_transliterate')) {
+			return transliterator_transliterate('Latin-ASCII', $filename);
+		}
+		else {
+			return preg_replace('/[^\x20-\x7E]/', '_', $filename);
+		}
+	}
+	
+	/**
+	 * Sanitizes the given filename, removing special characters that will
+	 * cause issues on Windows.
+	 * 
+	 * @param	string	$filename
+	 * @return	string
+	 */
+	protected function sanitizeFilename($filename) {
+		return str_replace(['<', '>', ':', '"', '/', '\\', '|', '?', '*'], '_', $filename);
 	}
 	
 	/**
