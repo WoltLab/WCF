@@ -27,7 +27,7 @@ use wcf\util\StringUtil;
  * @property-read	string		$validationPattern	regular expression used to validate the value of the option
  * @property-read	string		$selectOptions		possible values of the option separated by newlines
  * @property-read	integer		$required		is `1` if the option has to be filled out, otherwise `0`
- * @property-read	integer		$showOrder		position of the option relation tp the other options
+ * @property-read	integer		$showOrder		position of the option in relation to the other options
  * @property-read	integer		$isDisabled		is `1` if the option is disabled, otherwise `0`
  * @property-read	integer		$originIsSystem		is `1` if the option has been delivered by a package, otherwise `0` (i.e. the option has been created in the ACP)
  */
