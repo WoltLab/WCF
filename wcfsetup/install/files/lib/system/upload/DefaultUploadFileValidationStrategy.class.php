@@ -52,13 +52,13 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 			return false;
 		}
 		
-		if ($uploadFile->getFilesize() > $this->maxFilesize) {
-			$uploadFile->setValidationErrorType('tooLarge');
+		if (!preg_match($this->fileExtensionRegex, mb_strtolower($uploadFile->getFilename()))) {
+			$uploadFile->setValidationErrorType('invalidExtension');
 			return false;
 		}
 		
-		if (!preg_match($this->fileExtensionRegex, mb_strtolower($uploadFile->getFilename()))) {
-			$uploadFile->setValidationErrorType('invalidExtension');
+		if ($uploadFile->getFilesize() > $this->maxFilesize) {
+			$uploadFile->setValidationErrorType('tooLarge');
 			return false;
 		}
 		
