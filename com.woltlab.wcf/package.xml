@@ -6,7 +6,7 @@
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
 		<version>5.2.6</version> <!-- codename: hurricane -->
-		<date>2020-04-08</date>
+		<date>2020-05-10</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -109,6 +109,9 @@
 	</instructions>
 	
 	<instructions type="update" fromversion="5.2.5">
+		<instruction type="file">files_pre_5.2.6.tar</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.2.6.php</instruction>
+		
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
