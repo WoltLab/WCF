@@ -4151,6 +4151,8 @@ Dateianhänge:
 		<item name="wcf.moderation.assignedUser.change"><![CDATA[Zugewiesenen Benutzer ändern]]></item>
 		<item name="wcf.moderation.assignedUser.error.notAffected"><![CDATA[Dieser Benutzer hat unzureichende Zugriffsrechte]]></item>
 		<item name="wcf.moderation.assignedUser.nobody"><![CDATA[Niemand]]></item>
+		<item name="wcf.moderation.assignedUsername"><![CDATA[Zugewiesener Benutzer]]></item>
+		<item name="wcf.moderation.filter"><![CDATA[Einträge filtern]]></item>
 		<item name="wcf.moderation.filterByType"><![CDATA[Typ]]></item>
 		<item name="wcf.moderation.filterByUser"><![CDATA[Zugewiesener Benutzer]]></item>
 		<item name="wcf.moderation.filterByUser.allEntries"><![CDATA[Alle Einträge]]></item>
@@ -4200,6 +4202,9 @@ Dateianhänge:
 		<item name="wcf.moderation.jumpToContent"><![CDATA[Zum Inhalt gehen]]></item>
 		<item name="wcf.moderation.markAllAsRead"><![CDATA[Alle Einträge als gelesen markieren]]></item>
 		<item name="wcf.moderation.markAsRead.doubleClick"><![CDATA[Eintrag durch Doppelklick als gelesen markieren]]></item>
+		<item name="wcf.moderation.comments"><![CDATA[Kommentare]]></item>
+		<item name="wcf.moderation.username"><![CDATA[Autor]]></item>
+		<item name="wcf.moderation.noEntries"><![CDATA[Es wurden keine Einträge gefunden.{if $hasActiveFilter} <a href="#" class="jsStaticDialog" data-dialog-id="moderationListSortFilter" role="button">Die aktiven Filter anpassen.</a>{/if}]]></item>
 	</category>
 	<category name="wcf.moderation.activation">
 		<item name="wcf.moderation.activation"><![CDATA[Freischaltung]]></item>

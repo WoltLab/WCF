@@ -4,7 +4,9 @@ use wcf\data\moderation\queue\ModerationQueue;
 use wcf\data\moderation\queue\ViewableModerationQueueList;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\moderation\queue\ModerationQueueManager;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\HeaderUtil;
 
 /**
  * List of moderation queue entries.
@@ -69,7 +71,13 @@ class ModerationListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $validSortFields = ['assignedUsername', 'lastChangeTime', 'queueID', 'time', 'username', 'comments'];
+	public $validSortFields = ['username', 'time', 'comments', 'assignedUsername', 'lastChangeTime'];
+	
+	/**
+	 * indicates if any filter is being used
+	 * @var	bool
+	 */
+	public $hasActiveFilter = false;
 	
 	/**
 	 * @inheritDoc
@@ -86,6 +94,16 @@ class ModerationListPage extends SortablePage {
 			if ($this->definitionID && !isset($this->availableDefinitions[$this->definitionID])) {
 				throw new IllegalLinkException();
 			}
+		}
+		
+		if ($this->assignedUserID !== -1 || $this->status !== -1 || $this->definitionID !== 0) {
+			$this->hasActiveFilter = true;
+		}
+		
+		if (!empty($_POST)) {
+			$url = http_build_query($_POST, '', '&');
+			HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(static::class, [], $url));
+			exit;
 		}
 	}
 	
@@ -128,7 +146,9 @@ class ModerationListPage extends SortablePage {
 			'assignedUserID' => $this->assignedUserID,
 			'availableDefinitions' => $this->availableDefinitions,
 			'definitionID' => $this->definitionID,
-			'status' => $this->status
+			'status' => $this->status,
+			'validSortFields' => $this->validSortFields,
+			'hasActiveFilter' => $this->hasActiveFilter,
 		]);
 	}
 }
