@@ -14,9 +14,7 @@ use wcf\util\StringUtil;
  * 	`object` (`ITitledLinkObject`)
  * or both:
  * 	`link` (`ILinkableObject`)
- * 	`title` (`ITitledObject` or string)
- * 
- * When `link` and `title` are used, `title` cannot also be used as a `title` attribute.
+ * 	`content` (`ITitledObject`, object with `__toString()` method, or string)
  * 
  * The only additional parameter that is treated in a special way is `append` whose value is appended
  * to the link.
@@ -29,8 +27,8 @@ use wcf\util\StringUtil;
  * 	{anchor object=$object data-foo='bar'}
  * 	{anchor object=$object}
  * 	{anchor object=$object append='#anchor'}
- * 	{anchor link=$linkObject title=$titleObject}
- * 	{anchor link=$linkObject title='Title'}
+ * 	{anchor link=$linkObject content=$titleObject}
+ * 	{anchor link=$linkObject content='Title'}
  * 
  * @author	Matthias Schmidt
  * @copyright	2001-2020 WoltLab GmbH
@@ -43,7 +41,7 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
-		$link = $title = null;
+		$link = $content = null;
 		if (isset($tagArgs['object'])) {
 			$object = $tagArgs['object'];
 			unset($tagArgs['object']);
@@ -53,9 +51,9 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			}
 			
 			$link = $object->getLink();
-			$title = $object->getTitle();
+			$content = $object->getTitle();
 		}
-		else if (isset($tagArgs['link']) && isset($tagArgs['title'])) {
+		else if (isset($tagArgs['link']) && isset($tagArgs['content'])) {
 			if (!($tagArgs['link'] instanceof ILinkableObject) && !ClassUtil::isDecoratedInstanceOf($tagArgs['link'], ITitledLinkObject::class)) {
 				throw new \InvalidArgumentException("'link' attribute does not implement interface '" . ILinkableObject::class . "'.");
 			}
@@ -63,27 +61,27 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			$link = $tagArgs['link']->getLink();
 			unset($tagArgs['link']);
 			
-			if (is_object($tagArgs['title'])) {
-				if ($tagArgs['title'] instanceof ITitledObject || ClassUtil::isDecoratedInstanceOf($tagArgs['title'], ITitledObject::class)) {
-					$title = $tagArgs['title']->getTitle();
+			if (is_object($tagArgs['content'])) {
+				if ($tagArgs['content'] instanceof ITitledObject || ClassUtil::isDecoratedInstanceOf($tagArgs['content'], ITitledObject::class)) {
+					$content = $tagArgs['content']->getTitle();
 				}
-				else if (method_exists($tagArgs['title'], '__toString')) {
-					$title = (string)$tagArgs['title'];
+				else if (method_exists($tagArgs['content'], '__toString')) {
+					$content = (string)$tagArgs['content'];
 				}
 				else {
-					throw new \InvalidArgumentException("'title' object does not implement " . ITitledObject::class . ".");
+					throw new \InvalidArgumentException("'content' object does not implement " . ITitledObject::class . ".");
 				}
 			}
-			else if (is_string($tagArgs['title']) || is_numeric($tagArgs['title'])) {
-				$title = $tagArgs['title'];
+			else if (is_string($tagArgs['content']) || is_numeric($tagArgs['content'])) {
+				$content = $tagArgs['content'];
 			}
 			else {
-				throw new \InvalidArgumentException("'title' attribute is of invalid type " . gettype($tagArgs['title']) . ".");
+				throw new \InvalidArgumentException("'content' attribute is of invalid type " . gettype($tagArgs['content']) . ".");
 			}
-			unset($tagArgs['title']);
+			unset($tagArgs['content']);
 		}
 		else {
-			throw new \InvalidArgumentException("Missing 'object' attribute or 'link' and 'title' attributes.");
+			throw new \InvalidArgumentException("Missing 'object' attribute or 'link' and 'content' attributes.");
 		}
 		
 		if (isset($tagArgs['href'])) {
@@ -105,6 +103,6 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			$additionalParameters .= ' ' . strtolower(preg_replace('~([A-Z])~', '-$1', $name)) . '="' . StringUtil::encodeHTML($value) . '"';
 		}
 		
-		return '<a href="' . StringUtil::encodeHTML($link . $append) . '"' . $additionalParameters . '>' . StringUtil::encodeHTML($title) . '</a>';
+		return '<a href="' . StringUtil::encodeHTML($link . $append) . '"' . $additionalParameters . '>' . StringUtil::encodeHTML($content) . '</a>';
 	}
 }
