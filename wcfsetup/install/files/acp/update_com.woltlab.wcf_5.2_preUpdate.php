@@ -11,7 +11,7 @@ use wcf\system\WCF;
  */
 if (Package::compareVersion(WCF_VERSION, '3.1.11', '<')) {
 	if (WCF::getLanguage()->getFixedLanguageCode() == 'de') {
-		throw new SystemException("Die Aktualisierung erfordert WoltLab Suite Core (com.woltlab.wcf) in Version 3.1.11 oder h&ouml;her.");
+		throw new SystemException("Die Aktualisierung erfordert WoltLab Suite Core (com.woltlab.wcf) in Version 3.1.11 oder höher.");
 	}
 	else {
 		throw new SystemException("The update requires WoltLab Suite Core (com.woltlab.wcf) in version 3.1.11 or newer.");
@@ -22,7 +22,7 @@ $requiredPHPVersion = '7.0.22';
 $comparePhpVersion = preg_replace('/^(\d+\.\d+\.\d+).*$/', '\\1', phpversion());
 if (version_compare($comparePhpVersion, $requiredPHPVersion) === -1) {
 	if (WCF::getLanguage()->getFixedLanguageCode() == 'de') {
-		throw new SystemException("Die Aktualisierung erfordert PHP in Version {$requiredPHPVersion} oder h&ouml;her.");
+		throw new SystemException("Die Aktualisierung erfordert PHP in Version {$requiredPHPVersion} oder höher.");
 	}
 	else {
 		throw new SystemException("The update requires PHP in version {$requiredPHPVersion} or newer.");
@@ -39,7 +39,7 @@ if (stripos($sqlVersion, 'MariaDB') === false) {
 		// MySQL 8.0.14+
 		if (!(version_compare($compareSQLVersion, '8.0.14') >= 0)) {
 			if (WCF::getLanguage()->getFixedLanguageCode() == 'de') {
-				throw new SystemException("Ihre eingesetzte Version von MySQL 8 enth&auml;lt einen bekannten Fehler und verhindert eine Aktualisierung, es wird mindestens MySQL 8.0.14 oder h&ouml;her ben&ouml;tigt.");
+				throw new SystemException("Ihre eingesetzte Version von MySQL 8 enthält einen bekannten Fehler und verhindert eine Aktualisierung, es wird mindestens MySQL 8.0.14 oder höher benötigt.");
 			}
 			else {
 				throw new SystemException("The version of MySQL 8 that you are using contains a known bug that prevents an upgrade, MySQL 8.0.14 or newer is required.");
