@@ -993,7 +993,7 @@ WCF.ACP.Package.Update.Search = Class.extend({
 		this._dialog = null;
 		
 		if (bindOnExistingButtons === true) {
-			$('.jsButtonPackageUpdate').click($.proxy(this._click, this));
+			$('.jsButtonSearchForUpdates').click($.proxy(this._click, this));
 		}
 		else {
 			var $button = $('<li><a class="button jsButtonSearchForUpdates"><span class="icon icon16 fa-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
