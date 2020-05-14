@@ -44,7 +44,7 @@
 			<ul>
 				{content}
 					{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
-						<li><a href="#" class="button jsButtonPackageUpdate"><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.acp.package.searchForUpdates{/lang}</span></a></li>
+						<li><a href="#" class="button jsButtonSearchForUpdates"><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.acp.package.searchForUpdates{/lang}</span></a></li>
 					{/if}
 
 					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
