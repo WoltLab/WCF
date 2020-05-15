@@ -11,3 +11,7 @@
 		</li>
 	{/foreach}
 </ol>
+
+{if $poll->endTime && !$poll->isFinished()}
+	<p><small>{lang}wcf.poll.endTimeInfo{/lang}</small></p>
+{/if}
