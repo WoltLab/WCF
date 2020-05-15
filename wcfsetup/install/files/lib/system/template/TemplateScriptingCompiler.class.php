@@ -76,6 +76,7 @@ class TemplateScriptingCompiler {
 		'intval',
 		'is_subclass_of',
 		'isset',
+		'json_encode',
 		'key',
 		'lcfirst',
 		'ltrim',
