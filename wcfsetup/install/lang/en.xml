@@ -4424,7 +4424,7 @@ Attachments:
 		<item name="wcf.tagging.taggedObjects.noResults"><![CDATA[No items matched this tag.]]></item>
 		<item name="wcf.tagging.objectType.com.woltlab.wcf.article"><![CDATA[Articles]]></item>
 		<item name="wcf.tagging.taggedObjects.com.woltlab.wcf.article"><![CDATA[Articles Tagged with “{$tag->name}”]]></item>
-		<item name="wcf.tagging.tags.error.unknownTags"><![CDATA[The following tags do no exist: {implode from=$unknownTags item=unknownTag}{$unknownTag}{/implode}.]]></item>
+		<item name="wcf.tagging.tags.error.unknownTags"><![CDATA[The following tags do not exist: {implode from=$unknownTags item=unknownTag}{$unknownTag}{/implode}.]]></item>
 	</category>
 	<category name="wcf.user">
 		<item name="wcf.user.confirmEmail"><![CDATA[Confirm Email]]></item>
