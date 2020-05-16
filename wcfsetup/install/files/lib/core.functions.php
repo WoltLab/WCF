@@ -127,12 +127,12 @@ namespace wcf\functions\exception {
 			return str_replace("\n", ' ', $item);
 		};
 		
-		// don't forget to update ExceptionLogViewPage, when changing the log file format
+		// don't forget to update ExceptionLogUtil / ExceptionLogViewPage, when changing the log file format
 		$message = gmdate('r', TIME_NOW)."\n".
 			'Message: '.$stripNewlines($e->getMessage())."\n".
 			'PHP version: '.phpversion()."\n".
 			'WoltLab Suite version: '.WCF_VERSION."\n".
-			'Request URI: '.$stripNewlines($_SERVER['REQUEST_URI'] ?? '').(\wcf\getRequestId() ? ' ('.\wcf\getRequestId().')' : '')."\n".
+			'Request URI: '.$stripNewlines(($_SERVER['REQUEST_METHOD'] ?? '').' '.($_SERVER['REQUEST_URI'] ?? '')).(\wcf\getRequestId() ? ' ('.\wcf\getRequestId().')' : '')."\n".
 			'Referrer: '.$stripNewlines($_SERVER['HTTP_REFERER'] ?? '')."\n".
 			'User Agent: '.$stripNewlines($_SERVER['HTTP_USER_AGENT'] ?? '')."\n".
 			'Peak Memory Usage: '.memory_get_peak_usage().'/'.FileUtil::getMemoryLimit()."\n";
@@ -457,7 +457,7 @@ EXPLANATION;
 							</li>
 							<li class="exceptionSystemInformation2">
 								<p class="exceptionFieldTitle">Request URI<span class="exceptionColon">:</span></p>
-								<p class="exceptionFieldValue"><?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?></p>
+								<p class="exceptionFieldValue"><?php if (isset($_SERVER['REQUEST_METHOD'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_METHOD']); ?> <?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?></p>
 							</li>
 							<li class="exceptionSystemInformation4">
 								<p class="exceptionFieldTitle">Referrer<span class="exceptionColon">:</span></p>
