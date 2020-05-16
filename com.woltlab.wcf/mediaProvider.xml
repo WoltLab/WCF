@@ -78,9 +78,8 @@ https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<ID>[0-9]+)]]></regex>
 		<provider name="twitter-tweet">
 			<title>Twitter Tweet</title>
 			<regex><![CDATA[https://twitter.com/(?<USERNAME>[0-9a-zA-Z_]+)/status/(?<ID>[0-9]+)]]></regex>
-			<html><![CDATA[<script>window.twttr=function(t,e,r){var n,i=t.getElementsByTagName(e)[0],w=window.twttr||{};return t.getElementById(r)?w:((n=t.createElement(e)).id=r,n.src="https://platform.twitter.com/widgets.js",i.parentNode.insertBefore(n,i),w._e=[],w.ready=function(t){w._e.push(t)},w)}(document,"script","twitter-wjs");</script>
-<div data-wsc-twitter-tweet="{$ID}"></div>
-<script>twttr.ready(function(t){elBySelAll("[data-wsc-twitter-tweet]",void 0,function(t){elData(t,"wsc-twitter-tweet")&&(twttr.widgets.createTweet(elData(t,"wsc-twitter-tweet"),t,{dnt:!0}),elData(t,"wsc-twitter-tweet",""))})});</script>]]></html>
+			<html><![CDATA[<div data-wsc-twitter-tweet="{$ID}"><a href="https://twitter.com/{$USERNAME}/status/{$ID}/">https://twitter.com/{$USERNAME}/status/{$ID}/</a></div>
+<script>require(["WoltLabSuite/Core/Ui/Message/TwitterEmbed"],function(t){elBySelAll("[data-wsc-twitter-tweet]",void 0,function(e){elData(e,"wsc-twitter-tweet")&&t.embedTweet(e,elData(e,"wsc-twitter-tweet"),!0),elData(e,"wsc-twitter-tweet","")})});</script>]]></html>
 		</provider>
 	</import>
 	
