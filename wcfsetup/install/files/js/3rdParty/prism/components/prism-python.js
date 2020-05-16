@@ -45,7 +45,7 @@ Prism.languages.python = {
 		lookbehind: true
 	},
 	'decorator': {
-		pattern: /(^\s*)@\w+(?:\.\w+)*/i,
+		pattern: /(^\s*)@\w+(?:\.\w+)*/im,
 		lookbehind: true,
 		alias: ['annotation', 'punctuation'],
 		inside: {
@@ -63,4 +63,5 @@ Prism.languages.python = {
 Prism.languages.python['string-interpolation'].inside['interpolation'].inside.rest = Prism.languages.python;
 
 Prism.languages.py = Prism.languages.python;
+
 return Prism; })

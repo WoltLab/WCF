@@ -56,7 +56,7 @@ define(["prism/prism","prism/components/prism-markup"], function () {
 			pattern: /(^|[^\\](?:\\\\)*)#@?(?:[a-z][\w-]*|{[a-z][\w-]*})(?:\s*\((?:[^()]|\([^()]*\))*\))?/i,
 			lookbehind: true,
 			inside: {
-				keyword: {
+				'keyword': {
 					pattern: /^#@?(?:[a-z][\w-]*|{[a-z][\w-]*})|\bin\b/,
 					inside: {
 						'punctuation': /[{}]/
@@ -71,4 +71,5 @@ define(["prism/prism","prism/components/prism-markup"], function () {
 	Prism.languages.velocity['tag'].inside['attr-value'].inside.rest = Prism.languages.velocity;
 
 }(Prism));
+
 return Prism; })

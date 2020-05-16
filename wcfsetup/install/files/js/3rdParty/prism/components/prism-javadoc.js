@@ -1,9 +1,9 @@
-define(["prism/prism","prism/components/prism-markup","prism/components/prism-java","prism/components/prism-javadoclike","prism/components/prism-scala"], function () {
+define(["prism/prism","prism/components/prism-markup","prism/components/prism-java","prism/components/prism-javadoclike"], function () {
 (function (Prism) {
 
 	var codeLines = {
 		'code': {
-			pattern: /(^(\s*(?:\*\s*)*)).*[^*\s].+$/m,
+			pattern: /(^(?:\s*(?:\*\s*)*)).*[^*\s].+$/m,
 			lookbehind: true,
 			inside: Prism.languages.java,
 			alias: 'language-java'

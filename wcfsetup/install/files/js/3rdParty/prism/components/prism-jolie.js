@@ -24,7 +24,7 @@ Prism.languages.insertBefore( 'jolie', 'keyword', {
 		pattern: /(\bAggregates\s*:\s*)(?:\w+(?:\s+with\s+\w+)?\s*,\s*)*\w+(?:\s+with\s+\w+)?/,
 		lookbehind: true,
 		inside: {
-			'withExtension': {
+			'with-extension': {
 				pattern: /\bwith\s+\w+/,
 				inside: {
 					'keyword' : /\bwith\b/
@@ -54,4 +54,5 @@ Prism.languages.insertBefore( 'jolie', 'keyword', {
 		}
 	}
 });
+
 return Prism; })

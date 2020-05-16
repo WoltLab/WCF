@@ -1,4 +1,4 @@
-define(["prism/prism","prism/components/prism-ruby","prism/components/prism-css","prism/components/prism-coffeescript","prism/components/prism-erb","prism/components/prism-javascript","prism/components/prism-less","prism/components/prism-markdown","prism/components/prism-ruby","prism/components/prism-scss","prism/components/prism-textile"], function () {
+define(["prism/prism","prism/components/prism-ruby"], function () {
 /* TODO
 	Handle multiline code after tag
 	    %foo= some |
@@ -21,16 +21,12 @@ define(["prism/prism","prism/components/prism-ruby","prism/components/prism-css"
 			{
 				pattern: /((?:^|\r?\n|\r)([\t ]*)(?:[~-]|[&!]?=)).*,[\t ]*(?:(?:\r?\n|\r)\2[\t ]+.*,[\t ]*)*(?:(?:\r?\n|\r)\2[\t ]+.+)/,
 				lookbehind: true,
-				inside: {
-					rest: Prism.languages.ruby
-				}
+				inside: Prism.languages.ruby
 			},
 			{
 				pattern: /((?:^|\r?\n|\r)([\t ]*)(?:[~-]|[&!]?=)).*\|[\t ]*(?:(?:\r?\n|\r)\2[\t ]+.*\|[\t ]*)*/,
 				lookbehind: true,
-				inside: {
-					rest: Prism.languages.ruby
-				}
+				inside: Prism.languages.ruby
 			}
 		],
 
@@ -49,9 +45,7 @@ define(["prism/prism","prism/components/prism-ruby","prism/components/prism-css"
 		'markup': {
 			pattern: /((?:^|\r?\n|\r)[\t ]*)<.+/,
 			lookbehind: true,
-			inside: {
-				rest: Prism.languages.markup
-			}
+			inside: Prism.languages.markup
 		},
 		'doctype': {
 			pattern: /((?:^|\r?\n|\r)[\t ]*)!!!(?: .+)?/,
@@ -68,9 +62,7 @@ define(["prism/prism","prism/components/prism-ruby","prism/components/prism-css"
 						// Allows for one nested group of braces
 						pattern: /(^|[^#])\{(?:\{[^}]+\}|[^}])+\}/,
 						lookbehind: true,
-						inside: {
-							rest: Prism.languages.ruby
-						}
+						inside: Prism.languages.ruby
 					},
 					{
 						pattern: /\([^)]+\)/,
@@ -85,9 +77,7 @@ define(["prism/prism","prism/components/prism-ruby","prism/components/prism-css"
 					},
 					{
 						pattern: /\[[^\]]+\]/,
-						inside: {
-							rest: Prism.languages.ruby
-						}
+						inside: Prism.languages.ruby
 					}
 				],
 				'punctuation': /[<>]/
@@ -96,9 +86,7 @@ define(["prism/prism","prism/components/prism-ruby","prism/components/prism-css"
 		'code': {
 			pattern: /((?:^|\r?\n|\r)[\t ]*(?:[~-]|[&!]?=)).+/,
 			lookbehind: true,
-			inside: {
-				rest: Prism.languages.ruby
-			}
+			inside: Prism.languages.ruby
 		},
 		// Interpolations in plain text
 		'interpolation': {
@@ -137,7 +125,7 @@ define(["prism/prism","prism/components/prism-ruby","prism/components/prism-css"
 		filter = typeof filter === 'string' ? {filter: filter, language: filter} : filter;
 		if (Prism.languages[filter.language]) {
 			all_filters['filter-' + filter.filter] = {
-				pattern: RegExp(filter_pattern.replace('{{filter_name}}', filter.filter)),
+				pattern: RegExp(filter_pattern.replace('{{filter_name}}', function () { return filter.filter; })),
 				lookbehind: true,
 				inside: {
 					'filter-name': {
@@ -153,4 +141,5 @@ define(["prism/prism","prism/components/prism-ruby","prism/components/prism-css"
 	Prism.languages.insertBefore('haml', 'filter', all_filters);
 
 }(Prism));
+
 return Prism; })
