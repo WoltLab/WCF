@@ -84,9 +84,8 @@ class ViewableArticle extends DatabaseObjectDecorator {
 		$list->enableContentLoading($enableContentLoading);
 		$list->setObjectIDs([$articleID]);
 		$list->readObjects();
-		$objects = $list->getObjects();
-		if (isset($objects[$articleID])) return $objects[$articleID];
-		return null;
+		
+		return $list->getSingleObject();
 	}
 	
 	/**

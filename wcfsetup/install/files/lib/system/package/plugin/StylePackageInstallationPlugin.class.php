@@ -69,11 +69,10 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			$styleList->sqlOrderBy = 'style.styleID ASC';
 			$styleList->sqlLimit = 1;
 			$styleList->readObjects();
-			$styles = $styleList->getObjects();
+			$style = $styleList->getSingleObject();
 			
-			if (!empty($styles)) {
-				$styleEditor = new StyleEditor(current($styles));
-				$styleEditor->setAsDefault();
+			if ($style !== null) {
+				(new StyleEditor($style))->setAsDefault();
 			}
 		}
 	}
