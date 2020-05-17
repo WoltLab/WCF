@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\language;
 use wcf\data\DatabaseObject;
+use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemAction;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -123,11 +124,10 @@ class Language extends DatabaseObject {
 			LOG_MISSING_LANGUAGE_ITEMS &&
 			preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
 		) {
-			$logFile = WCF_DIR . 'log/missingLanguageItems.txt';
-			\wcf\functions\exception\logThrowable(
-				new \Exception("Missing language item '{$item}'."),
-				$logFile
-			);
+			(new DevtoolsMissingLanguageItemAction([], 'logLanguageItem', [
+				'language' => $this,
+				'languageItem' => $item,
+			]))->executeAction();
 		}
 		
 		// return plain input
@@ -161,11 +161,10 @@ class Language extends DatabaseObject {
 			$staticItem === $item &&
 			preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
 		) {
-			$logFile = WCF_DIR . 'log/missingLanguageItems.txt';
-			\wcf\functions\exception\logThrowable(
-				new \Exception("Missing language item '{$item}'."),
-				$logFile
-			);
+			(new DevtoolsMissingLanguageItemAction([], 'logLanguageItem', [
+				'language' => $this,
+				'languageItem' => $item,
+			]))->executeAction();
 		}
 		
 		return $staticItem;
