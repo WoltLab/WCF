@@ -31,7 +31,7 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnPageID{if $sortField == 'menuID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='MenuList'}pageNo={@$pageNo}&sortField=menuID&sortOrder={if $sortField == 'menuID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnID columnMenuID{if $sortField == 'menuID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='MenuList'}pageNo={@$pageNo}&sortField=menuID&sortOrder={if $sortField == 'menuID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
 					<th class="columnTitle{if $sortField == 'title'} active {@$sortOrder}{/if}"><a href="{link controller='MenuList'}pageNo={@$pageNo}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.name{/lang}</a></th>
 					<th class="columnDigits columnItems{if $sortField == 'items'} active {@$sortOrder}{/if}"><a href="{link controller='MenuList'}pageNo={@$pageNo}&sortField=items&sortOrder={if $sortField == 'items' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.menu.item.list{/lang}</a></th>
 					<th class="columnText columnPosition{if $sortField == 'position'} active {@$sortOrder}{/if}"><a href="{link controller='MenuList'}pageNo={@$pageNo}&sortField=position&sortOrder={if $sortField == 'position' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.box.position{/lang}</a></th>
@@ -55,7 +55,7 @@
 							
 							{event name='rowButtons'}
 						</td>
-						<td class="columnID columnPageID">{@$menu->menuID}</td>
+						<td class="columnID columnMenuID">{@$menu->menuID}</td>
 						<td class="columnTitle"><a href="{link controller='MenuEdit' id=$menu->menuID}{/link}">{lang}{$menu->title}{/lang}</a></td>
 						<td class="columnDigits columnItems"><a href="{link controller='MenuItemList' id=$menu->menuID}{/link}">{#$menu->items}</a></td>
 						<td class="columnText columnPosition">{lang}wcf.acp.box.position.{@$menu->position}{/lang}</td>
