@@ -34,7 +34,7 @@ define(['https://platform.twitter.com/widgets.js'], function(Widgets) {
 					lang: document.documentElement.lang,
 				});
 			}).then(function (tweet) {
-				if (removeChildren) {
+				if (tweet && removeChildren) {
 					while (container.lastChild) {
 						container.removeChild(container.lastChild);
 					}
