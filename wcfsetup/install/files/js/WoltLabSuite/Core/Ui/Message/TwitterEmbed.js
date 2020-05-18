@@ -43,6 +43,19 @@ define(['https://platform.twitter.com/widgets.js'], function(Widgets) {
 				
 				return tweet;
 			});
+		},
+		/**
+		 * Embeds tweets into all elements with a data-wsc-twitter-tweet attribute, removing
+		 * existing children.
+		 */
+		embedAll: function() {
+			elBySelAll("[data-wsc-twitter-tweet]", undefined, function(container) {
+				var tweetId = elData(container, "wsc-twitter-tweet");
+				if (tweetId) {
+					this.embedTweet(container, tweetId, true);
+					elData(container, "wsc-twitter-tweet", "");
+				}
+			}.bind(this))
 		}
 	};
 });
