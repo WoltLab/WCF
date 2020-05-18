@@ -17,7 +17,7 @@ use wcf\data\comment\Comment;
  */
 interface IMultiRecipientCommentResponseOwnerUserNotificationObjectType {
 	/**
-	 * Returns the user ids of the comment owner.
+	 * Returns the user id of the comment owner.
 	 *
 	 * @param	Comment		$comment
 	 * @return	integer
