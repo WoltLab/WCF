@@ -44,6 +44,7 @@ define(['https://platform.twitter.com/widgets.js'], function(Widgets) {
 				return tweet;
 			});
 		},
+		
 		/**
 		 * Embeds tweets into all elements with a data-wsc-twitter-tweet attribute, removing
 		 * existing children.
