@@ -22,10 +22,10 @@ define(['https://platform.twitter.com/widgets.js'], function(Widgets) {
 		 * 
 		 * @param {HTMLElement} container
 		 * @param {string} tweetId
-		 * @param {boolean} clearContents Whether to remove existing children of the given container after embedding the tweet.
+		 * @param {boolean} removeChildren Whether to remove existing children of the given container after embedding the tweet.
 		 * @return {HTMLElement} The Tweet element created by Twitter.
 		 */
-		embedTweet: function (container, tweetId, removeChildren) {
+		embedTweet: function(container, tweetId, removeChildren) {
 			if (removeChildren === undefined) removeChildren = false;
 			
 			return twitterReady.then(function() {
@@ -33,7 +33,7 @@ define(['https://platform.twitter.com/widgets.js'], function(Widgets) {
 					dnt: true,
 					lang: document.documentElement.lang,
 				});
-			}).then(function (tweet) {
+			}).then(function(tweet) {
 				if (tweet && removeChildren) {
 					while (container.lastChild) {
 						container.removeChild(container.lastChild);
