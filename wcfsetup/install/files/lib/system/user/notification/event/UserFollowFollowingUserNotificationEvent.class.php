@@ -70,7 +70,7 @@ class UserFollowFollowingUserNotificationEvent extends AbstractUserNotificationE
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink('User', ['object' => $this->author]);
+		return $this->author->getLink();
 	}
 	
 	/**

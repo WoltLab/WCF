@@ -7,7 +7,6 @@ use wcf\data\like\object\LikeObject;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\comment\CommentHandler;
 use wcf\system\reaction\ReactionHandler;
-use wcf\system\request\LinkHandler;
 use wcf\system\MetaTagHandler;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -105,7 +104,7 @@ class ArticlePage extends AbstractArticlePage {
 		
 		// add meta/og tags
 		MetaTagHandler::getInstance()->addTag('og:title', 'og:title', $this->articleContent->getTitle() . ' - ' . WCF::getLanguage()->get(PAGE_TITLE), true);
-		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', LinkHandler::getInstance()->getLink('Article', ['object' => $this->articleContent]), true);
+		MetaTagHandler::getInstance()->addTag('og:url', 'og:url', $this->articleContent->getLink(), true);
 		MetaTagHandler::getInstance()->addTag('og:type', 'og:type', 'article', true);
 		MetaTagHandler::getInstance()->addTag('og:description', 'og:description', ($this->articleContent->teaser ?: StringUtil::decodeHTML(StringUtil::stripHTML($this->articleContent->getFormattedTeaser()))), true);
 		

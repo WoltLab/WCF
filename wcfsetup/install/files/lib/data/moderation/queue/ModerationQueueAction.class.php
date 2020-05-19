@@ -263,7 +263,7 @@ class ModerationQueueAction extends AbstractDatabaseObjectAction {
 		$username = $this->user->userID ? $this->user->username : WCF::getLanguage()->get('wcf.moderation.assignedUser.nobody');
 		$link = '';
 		if ($this->user->userID) {
-			$link = LinkHandler::getInstance()->getLink('User', ['object' => $this->user]);
+			$link = $this->user->getLink();
 		}
 		
 		$newStatus = '';

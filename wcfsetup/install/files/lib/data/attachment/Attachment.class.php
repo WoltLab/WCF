@@ -209,6 +209,9 @@ class Attachment extends DatabaseObject implements ILinkableObject, IRouteContro
 		if ($size == 'tiny') {
 			$parameters['tiny'] = 1;
 		}
+		else if ($size == 'thumbnail') {
+			$parameters['thumbnail'] = 1;
+		}
 		
 		return LinkHandler::getInstance()->getLink('Attachment', $parameters);
 	}

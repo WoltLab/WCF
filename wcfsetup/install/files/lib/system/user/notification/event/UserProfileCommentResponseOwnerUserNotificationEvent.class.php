@@ -5,7 +5,6 @@ use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\CommentHandler;
 use wcf\system\email\Email;
-use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 
 /**
@@ -123,11 +122,8 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink(
-			'User',
-			['object' => UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])],
-			'#wall/comment' . $this->getUserNotificationObject()->commentID
-		);
+		return UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() .
+			'#wall/comment' . $this->getUserNotificationObject()->commentID;
 	}
 	
 	/**
