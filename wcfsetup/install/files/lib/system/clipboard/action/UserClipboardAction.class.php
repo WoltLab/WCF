@@ -196,7 +196,8 @@ class UserClipboardAction extends AbstractClipboardAction {
 		
 		$userIDs = [];
 		foreach ($this->objects as $user) {
-			if ($user->activationCode) $userIDs[] = $user->userID;
+			/** @var User $user */
+			if ($user->isActivated()) $userIDs[] = $user->userID;
 		}
 		
 		return $userIDs;
@@ -234,7 +235,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 		
 		$userIDs = [];
 		foreach ($this->objects as $user) {
-			if ($user->activationCode) $userIDs[] = $user->userID;
+			if ($user->is) $userIDs[] = $user->userID;
 		}
 		
 		return $userIDs;

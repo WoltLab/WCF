@@ -4713,7 +4713,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 Benutzerkonto vollständig verwenden {if LANGUAGE_USE_INFORMAL_VARIANT}kannst{else}können{/if}, ist es notwendig, dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/if}:</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Benutzerkonto aktivieren]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
-<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: <kbd>{$mailbox->getUser()->activationCode}</kbd>.</p>
+<p>{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: <kbd>{$mailbox->getUser()->emailConfirmed}</kbd>.</p>
 <p>Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Probleme mit der Aktivierung {if LANGUAGE_USE_INFORMAL_VARIANT}deines{else}Ihres{/if} Benutzerkontos {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}wende dich{else}wenden Sie sich{/if} bitte an den Administrator
 unter: <a href="mailto:{MAIL_ADMIN_ADDRESS}">{MAIL_ADMIN_ADDRESS}</a>. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du dich{else}Sie sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if},
 dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.</p>]]></item>
@@ -4724,9 +4724,9 @@ Bevor {if LANGUAGE_USE_INFORMAL_VARIANT}du dein{else}Sie Ihr{/if} Benutzerkonto 
 dass {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} einmalig durch Klicken des folgenden Links die Gültigkeit {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} 
 E-Mail-Adresse {if LANGUAGE_USE_INFORMAL_VARIANT}bestätigst{else}bestätigen{/if}:
 
-    {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->activationCode}{/link} {* this line ends with a space *}
+    {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->emailConfirmed}{/link} {* this line ends with a space *}
 
-{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: {@$mailbox->getUser()->activationCode} {* this line ends with a space *}
+{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Aktivierungscode lautet: {@$mailbox->getUser()->emailConfirmed} {* this line ends with a space *}
 
 Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} Probleme mit der Aktivierung Ihres Benutzerkontos {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}wende
 dich{else}wenden

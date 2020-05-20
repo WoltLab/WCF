@@ -431,7 +431,9 @@ class RegisterForm extends UserAddForm {
 		$addDefaultGroups = true;
 		if (!empty($this->blacklistMatches) || (REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_USER && !$registerVia3rdParty) || REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_ADMIN) {
 			$activationCode = UserRegistrationUtil::getActivationCode();
+			$emailConfirmCode = bin2hex(\random_bytes(20));
 			$this->additionalFields['activationCode'] = $activationCode;
+			$this->additionalFields['emailConfirmed'] = $emailConfirmCode;
 			$addDefaultGroups = false;
 			$this->groupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::GUESTS]);
 		}

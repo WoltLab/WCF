@@ -145,7 +145,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			$user = $users[$userID];
 			
 			// no notifications for disabled or banned users
-			if ($user->activationCode) continue;
+			if (!$user->isEmailConfirmed()) continue;
 			if ($user->banned) continue;
 			
 			$notifications = array_map(function ($notificationID) use ($notificationObjects, $eventObjects, $user, $objectTypes, $authors, $authorToNotification, $unknownAuthor) {

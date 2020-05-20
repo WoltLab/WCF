@@ -82,10 +82,10 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 		/** @noinspection PhpUndefinedFieldInspection */
 		$userIsEnabled = $condition->userIsEnabled;
 		if ($userIsEnabled !== null) {
-			if ($userIsEnabled && $user->activationCode) {
+			if ($userIsEnabled && !$user->isActivated()) {
 				return false;
 			}
-			else if (!$userIsEnabled && !$user->activationCode) {
+			else if (!$userIsEnabled && $user->isActivated()) {
 				return false;
 			}
 		}

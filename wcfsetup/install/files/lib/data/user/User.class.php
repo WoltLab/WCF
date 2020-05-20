@@ -34,7 +34,8 @@ use wcf\util\UserUtil;
  * @property-read	integer		$banned				is `1` if the user is banned, otherwise `0`
  * @property-read	string		$banReason			reason why the user is banned
  * @property-read	integer		$banExpires			timestamp at which the banned user is automatically unbanned
- * @property-read	integer		$activationCode			code sent to the user's email address used for account activation
+ * @property-read	integer		$activationCode			flag which determines, whether the user is activated (for legacy reasons an random integer, if the user is *not* activated)
+ * @property-read	string		$emailConfirmed			code sent to the user's email address used for account activation
  * @property-read	integer		$lastLostPasswordRequestTime	timestamp at which the user has reported that they lost their password or 0 if password has not been reported as lost
  * @property-read	string		$lostPasswordKey		code used for authenticating setting new password after password loss or empty if password has not been reported as lost
  * @property-read	integer		$lastUsernameChange		timestamp at which the user changed their name the last time or 0 if username has not been changed
@@ -405,6 +406,26 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	}
 	
 	/**
+	 * Returns true if this user is activated.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function isActivated() {
+		return $this->activationCode == 0;
+	}
+	
+	/**
+	 * Returns true if the email is confirmed.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function isEmailConfirmed() {
+		return empty($this->emailConfirmed);
+	}
+	
+	/**
 	 * Returns the time zone of this user.
 	 * 
 	 * @return	\DateTimeZone
@@ -593,7 +614,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * @return      boolean
 	 */
 	public function canPurchasePaidSubscriptions() {
-		return WCF::getUser()->userID && WCF::getUser()->activationCode == 0;
+		return WCF::getUser()->userID && $this->isActivated();
 	}
 	
 	/**
@@ -604,7 +625,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * @since 5.2
 	 */
 	public function getBlacklistMatches() {
-		if ($this->activationCode && $this->blacklistMatches) {
+		if ($this->isActivated() && $this->blacklistMatches) {
 			$matches = JSON::decode($this->blacklistMatches);
 			if (is_array($matches)) {
 				return $matches;

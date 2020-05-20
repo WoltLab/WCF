@@ -10,6 +10,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
+use wcf\util\CryptoUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
@@ -79,12 +80,12 @@ class RegisterActivationForm extends AbstractForm {
 		}
 		
 		// user is already enabled
-		if ($this->user->activationCode == 0) {
+		if ($this->user->isEmailConfirmed()) {
 			throw new NamedUserException(WCF::getLanguage()->get('wcf.user.registerActivation.error.userAlreadyEnabled'));
 		}
 		
 		// check given activation code
-		if ($this->user->activationCode != $this->activationCode) {
+		if (\hash_equals($this->activationCode, $this->user->emailConfirmed)) {
 			throw new UserInputException('activationCode', 'invalid');
 		}
 		
@@ -100,7 +101,7 @@ class RegisterActivationForm extends AbstractForm {
 		parent::save();
 		
 		// enable user
-		$this->objectAction = new UserAction([$this->user], 'enable', ['skipNotification' => true]);
+		$this->objectAction = new UserAction([$this->user], 'confirmEmail', ['skipNotification' => true]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		

@@ -43,7 +43,7 @@ class PaidSubscriptionListPage extends AbstractPage {
 	public function checkPermissions() {
 		parent::checkPermissions();
 		
-		if (WCF::getUser()->activationCode != 0) {
+		if (!WCF::getUser()->isActivated()) {
 			throw new PermissionDeniedException();
 		}
 	}

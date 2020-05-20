@@ -4709,7 +4709,7 @@ not register with us.]]></item>
 user account to it’s full extent it is required that you confirm validity of your email address once:</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Confirm my email address]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
-<p>Your activation code is: <kbd>{$mailbox->getUser()->activationCode}</kbd>.</p>
+<p>Your activation code is: <kbd>{$mailbox->getUser()->emailConfirmed}</kbd>.</p>
 <p>If you have trouble confirming your email address, please contact the administrator at:
 <a href="mailto:{MAIL_ADMIN_ADDRESS}">{MAIL_ADMIN_ADDRESS}</a>. Please ignore this email if
 you did not register an account with us.</p>]]></item>
@@ -4719,7 +4719,7 @@ Thank you for registering at: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/l
 able to use your user account to it's full extent it is required that you
 confirm the validity of your email address once:
 
-    {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->activationCode}{/link} {* this line ends with a space *}
+    {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->emailConfirmed}{/link} {* this line ends with a space *}
 
 Your activation code is: {@$mailbox->getUser()->activationCode} {* this line ends with a space *}
 

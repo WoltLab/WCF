@@ -22,6 +22,7 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\request\RequestHandler;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
+use wcf\util\CryptoUtil;
 use wcf\util\UserRegistrationUtil;
 
 /**
@@ -619,6 +620,28 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
+	 * Marks the email address as confirmed and enables the user, iff the register method is user activation only.
+	 * @since 5.3 
+	 */
+	public function confirmEmail() {
+		if (empty($this->objects)) $this->readObjects();
+		
+		if (REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_ADMIN) {
+			$action = new UserAction($this->objects, 'update', [
+				'data' => [
+					'emailConfirmed' => null
+				]
+			]);
+			$action->executeAction();
+		}
+		else {
+			$this->enable();
+		}
+		
+		$this->unmarkItems();
+	}
+	
+	/**
 	 * Enables users.
 	 */
 	public function enable() {
@@ -628,6 +651,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			'data' => [
 				'activationCode' => 0,
 				'blacklistMatches' => '',
+				'emailConfirmed' => null
 			],
 			'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::GUESTS])
 		]);
@@ -670,7 +694,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		$action = new UserAction($this->objects, 'update', [
 			'data' => [
-				'activationCode' => UserRegistrationUtil::getActivationCode()
+				'activationCode' => UserRegistrationUtil::getActivationCode(),
+				'emailConfirmed' => bin2hex(\random_bytes(20))
 			],
 			'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::USERS])
 		]);
@@ -1009,7 +1034,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}  
 		
 		foreach ($this->objects as $object) {
-			if (!$object->activationCode) {
+			/** @var UserEditor $object */
+			if ($object->isActivated()) {
 				throw new UserInputException('objectIDs');
 			}
 		}
@@ -1024,7 +1050,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		foreach ($this->objects as $object) {
 			$action = new UserAction([$object], 'update', [
 				'data' => [
-					'activationCode' => UserRegistrationUtil::getActivationCode()
+					'emailConfirmed' => bin2hex(\random_bytes(20))
 				]
 			]);
 			$action->executeAction();
