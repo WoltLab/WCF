@@ -378,6 +378,7 @@ define(
 			if (options.closable) {
 				var closeButton = elCreate('a');
 				closeButton.className = 'dialogCloseButton jsTooltip';
+				closeButton.href = '#';
 				elAttr(closeButton, 'role', 'button');
 				elAttr(closeButton, 'tabindex', '0');
 				elAttr(closeButton, 'title', options.closeButtonLabel);
