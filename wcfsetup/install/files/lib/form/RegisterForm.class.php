@@ -429,7 +429,7 @@ class RegisterForm extends UserAddForm {
 		
 		// generate activation code
 		$addDefaultGroups = true;
-		if (!empty($this->blacklistMatches) || (REGISTER_ACTIVATION_METHOD == 1 && !$registerVia3rdParty) || REGISTER_ACTIVATION_METHOD == 2) {
+		if (!empty($this->blacklistMatches) || (REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_USER && !$registerVia3rdParty) || REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_ADMIN) {
 			$activationCode = UserRegistrationUtil::getActivationCode();
 			$this->additionalFields['activationCode'] = $activationCode;
 			$addDefaultGroups = false;
@@ -474,12 +474,12 @@ class RegisterForm extends UserAddForm {
 		}
 		
 		// activation management
-		if (REGISTER_ACTIVATION_METHOD == 0 && empty($this->blacklistMatches)) {
+		if (REGISTER_ACTIVATION_METHOD == UserProfile::REGISTER_ACTIVATION_NONE && empty($this->blacklistMatches)) {
 			$this->message = 'wcf.user.register.success';
 			
 			UserGroupAssignmentHandler::getInstance()->checkUsers([$user->userID]);
 		}
-		else if (REGISTER_ACTIVATION_METHOD == 1 && empty($this->blacklistMatches)) {
+		else if (REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_USER && empty($this->blacklistMatches)) {
 			// registering via 3rdParty leads to instant activation
 			if ($registerVia3rdParty) {
 				$this->message = 'wcf.user.register.success';
@@ -496,7 +496,7 @@ class RegisterForm extends UserAddForm {
 				$this->message = 'wcf.user.register.success.needActivation';
 			}
 		}
-		else if (REGISTER_ACTIVATION_METHOD == 2 || !empty($this->blacklistMatches)) {
+		else if (REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_ADMIN || !empty($this->blacklistMatches)) {
 			$this->message = 'wcf.user.register.success.awaitActivation';
 		}
 		

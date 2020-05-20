@@ -2,6 +2,7 @@
 namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
+use wcf\data\user\UserProfile;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
@@ -124,7 +125,7 @@ class RegisterActivationForm extends AbstractForm {
 	 * @inheritDoc
 	 */
 	public function show() {
-		if (REGISTER_ACTIVATION_METHOD != 1) {
+		if (!(REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_USER)) {
 			throw new IllegalLinkException();
 		}
 		

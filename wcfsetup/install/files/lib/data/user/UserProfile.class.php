@@ -111,6 +111,11 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	const ACCESS_FOLLOWING = 2;
 	const ACCESS_NOBODY = 3;
 	
+	const REGISTER_ACTIVATION_NONE = 0;
+	const REGISTER_ACTIVATION_USER = 1;
+	const REGISTER_ACTIVATION_ADMIN = 2;
+	const REGISTER_ACTIVATION_USER_AND_ADMIN = 3; // self::REGISTER_ACTIVATION_USER + self::REGISTER_ACTIVATION_ADMIN
+	
 	/**
 	 * @inheritDoc
 	 */

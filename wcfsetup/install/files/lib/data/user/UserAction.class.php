@@ -1004,7 +1004,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			throw new PermissionDeniedException();
 		}
 		
-		if (REGISTER_ACTIVATION_METHOD != 1) {
+		if (!(REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_USER)) {
 			throw new IllegalLinkException();
 		}  
 		

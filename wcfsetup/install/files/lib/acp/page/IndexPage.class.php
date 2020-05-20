@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\user\UserProfile;
 use wcf\page\AbstractPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
@@ -57,7 +58,7 @@ class IndexPage extends AbstractPage {
 		parent::assignVariables();
 		
 		$usersAwaitingApproval = 0;
-		if (REGISTER_ACTIVATION_METHOD == 2) {
+		if (REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_ADMIN) {
 			$sql = "SELECT	COUNT(*)
 				FROM	wcf".WCF_N."_user
 				WHERE	activationCode <> 0";

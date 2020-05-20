@@ -97,7 +97,8 @@ class EmailActivationForm extends AbstractForm {
 			'newEmail' => '',
 			'reactivationCode' => 0
 		];
-		if ($this->user->activationCode != 0 && REGISTER_ACTIVATION_METHOD == 1) {
+		if ($this->user->activationCode != 0 && REGISTER_ACTIVATION_METHOD & 1) {
+			// @TODO
 			$data['activationCode'] = 0;
 		}
 		
@@ -129,7 +130,7 @@ class EmailActivationForm extends AbstractForm {
 	 * @inheritDoc
 	 */
 	public function show() {
-		if (REGISTER_ACTIVATION_METHOD != 1) {
+		if (!(REGISTER_ACTIVATION_METHOD & 1)) {
 			throw new IllegalLinkException();
 		}
 		
