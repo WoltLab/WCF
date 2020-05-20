@@ -1240,7 +1240,8 @@ XING</selectoptions>
 				<defaultvalue>1</defaultvalue>
 				<selectoptions>0:wcf.acp.option.register_activation_method.disabled
 1:wcf.acp.option.register_activation_method.byUser
-2:wcf.acp.option.register_activation_method.byAdmin</selectoptions>
+2:wcf.acp.option.register_activation_method.byAdmin
+3:wcf.acp.option.register_activation_method.byUserAndAdmin</selectoptions>
 			</option>
 			<option name="register_username_min_length">
 				<categoryname>user.register</categoryname>

@@ -1482,6 +1482,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.register_activation_method"><![CDATA[Aktivierungsmethode]]></item>
 		<item name="wcf.acp.option.register_activation_method.byAdmin"><![CDATA[Aktivierung erfolgt durch Administrator]]></item>
 		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Benutzer aktiviert sich durch E-Mail-Bestätigung]]></item>
+		<item name="wcf.acp.option.register_activation_method.byUserAndAdmin"><![CDATA[Aktivierung erfolgt durch Administrator nach erfolgreicher E-Mail-Bestätigung]]></item>
 		<item name="wcf.acp.option.register_activation_method.disabled"><![CDATA[Keine Aktivierung notwendig]]></item>
 		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximale Höhe von Signatur-Bildern]]></item>
 		<item name="wcf.acp.option.sitemap_index_time_frame"><![CDATA[Zeitfenster der Indexierung]]></item>

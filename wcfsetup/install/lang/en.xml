@@ -1461,6 +1461,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.register_activation_method"><![CDATA[Registration Approval Method]]></item>
 		<item name="wcf.acp.option.register_activation_method.byAdmin"><![CDATA[Only administrators can approve registrations]]></item>
 		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Registrations are approved through an email confirmation]]></item>
+		<item name="wcf.acp.option.register_activation_method.byUserAndAdmin"><![CDATA[Administrators can approve registrations after an email confirmation]]></item>
 		<item name="wcf.acp.option.register_activation_method.disabled"><![CDATA[No approval required for registrations]]></item>
 		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximum Image Height]]></item>
 		<item name="wcf.acp.option.sitemap_index_time_frame"><![CDATA[Time frame of indexing]]></item>
