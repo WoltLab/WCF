@@ -47,7 +47,7 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function getRandomID() {
-		return self::getHash(microtime() . uniqid(mt_rand(), true));
+		return self::getHash(PasswordUtil::getRandomPassword(30));
 	}
 	
 	/**
