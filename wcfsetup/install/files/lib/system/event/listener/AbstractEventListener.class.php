@@ -17,7 +17,7 @@ use wcf\data\AbstractDatabaseObjectAction;
  *   eventName: initializeAction
  *   actionName: makeSnafucated
  *   derived method: onInitializeActionMakeSnafucated()
- *   ATTENTION: If this method does not exist, it will attempt to invoke `onMakeSnafucated()` instead. 
+ *   ATTENTION: If this method does not exist, it will attempt to invoke `onInitializeAction()` instead. 
  *
  * @author      Olaf Braun, Alexander Ebert
  * @copyright   2001-2020 WoltLab GmbH
