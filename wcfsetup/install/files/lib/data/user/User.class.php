@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\IPopoverObject;
 use wcf\data\language\Language;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObject;
@@ -73,7 +74,7 @@ use wcf\util\UserUtil;
  * @property-read	integer		$articles			number of articles written by the user
  * @property-read       string          $blacklistMatches               JSON string of an array with all matches in the blacklist, otherwise an empty string 
  */
-final class User extends DatabaseObject implements IRouteController, IUserContent {
+final class User extends DatabaseObject implements IPopoverObject, IRouteController, IUserContent {
 	/**
 	 * list of group ids
 	 * @var integer[]
@@ -627,5 +628,12 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 			if ($field === 'ip') $field = 'ipAddress';
 			return WCF::getLanguage()->get('wcf.user.' . $field);
 		}, $this->getBlacklistMatches());
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getPopoverLinkClass() {
+		return 'userLink';
 	}
 }

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\template\plugin;
 use wcf\data\ILinkableObject;
+use wcf\data\IPopoverObject;
 use wcf\data\ITitledLinkObject;
 use wcf\data\ITitledObject;
 use wcf\system\template\TemplateEngine;
@@ -41,7 +42,7 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 	 * @inheritDoc
 	 */
 	public function execute($tagArgs, TemplateEngine $tplObj) {
-		$link = $content = null;
+		$link = $content = $object = null;
 		if (isset($tagArgs['object'])) {
 			$object = $tagArgs['object'];
 			unset($tagArgs['object']);
@@ -94,13 +95,22 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			unset($tagArgs['append']);
 		}
 		
+		$classes = [];
 		$additionalParameters = '';
 		foreach ($tagArgs as $name => $value) {
 			if (!preg_match('~[a-z]+([A-z]+)+~', $name)) {
 				throw new \InvalidArgumentException("Invalid additional argument name '{$name}'.");
 			}
 			
+			if ($name === 'class') {
+				$classes = explode(' ', $value);
+			}
+			
 			$additionalParameters .= ' ' . strtolower(preg_replace('~([A-Z])~', '-$1', $name)) . '="' . StringUtil::encodeHTML($value) . '"';
+		}
+		
+		if ($object !== null && $object instanceof IPopoverObject && in_array($object->getPopoverLinkClass(), $classes)) {
+			$additionalParameters .= ' data-object-id="' . $object->getObjectID() . '"';
 		}
 		
 		return '<a href="' . StringUtil::encodeHTML($link . $append) . '"' . $additionalParameters . '>' . StringUtil::encodeHTML($content) . '</a>';

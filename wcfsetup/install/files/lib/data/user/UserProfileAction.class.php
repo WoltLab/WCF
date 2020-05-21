@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\IPopoverAction;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\group\UserGroup;
 use wcf\system\bbcode\BBCodeHandler;
@@ -30,11 +31,11 @@ use wcf\util\StringUtil;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
  */
-class UserProfileAction extends UserAction {
+class UserProfileAction extends UserAction implements IPopoverAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = ['getUserProfile', 'getDetailedActivityPointList'];
+	protected $allowGuestAccess = ['getUserProfile', 'getDetailedActivityPointList', 'getPopover'];
 	
 	/**
 	 * @var User
@@ -93,8 +94,28 @@ class UserProfileAction extends UserAction {
 	 * Validates user profile preview.
 	 * 
 	 * @throws	UserInputException
+	 * @deprecated	since 5.3, use `validateGetPopover()`
 	 */
 	public function validateGetUserProfile() {
+		$this->validateGetPopover();
+	}
+	
+	/**
+	 * Returns user profile preview.
+	 * 
+	 * @return	array
+	 * @deprecated	since 5.3, use `getPopover()`
+	 */
+	public function getUserProfile() {
+		return array_merge($this->getPopover(), [
+			'userID' => reset($this->objectIDs),
+		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateGetPopover() {
 		WCF::getSession()->checkPermissions(['user.profile.canViewUserProfile']);
 		
 		if (count($this->objectIDs) != 1) {
@@ -103,24 +124,21 @@ class UserProfileAction extends UserAction {
 	}
 	
 	/**
-	 * Returns user profile preview.
-	 * 
-	 * @return	array
+	 * @inheritDoc
 	 */
-	public function getUserProfile() {
+	public function getPopover() {
 		$userID = reset($this->objectIDs);
 		
 		if ($userID) {
 			$userProfileList = new UserProfileList();
 			$userProfileList->getConditionBuilder()->add("user_table.userID = ?", [$userID]);
 			$userProfileList->readObjects();
-			$userProfiles = $userProfileList->getObjects();
 			
-			if (empty($userProfiles)) {
-				WCF::getTPL()->assign('unknownUser', true);
+			if (count($userProfileList)) {
+				WCF::getTPL()->assign('user', $userProfileList->getSingleObject());
 			}
 			else {
-				WCF::getTPL()->assign('user', reset($userProfiles));
+				WCF::getTPL()->assign('unknownUser', true);
 			}
 		}
 		else {
@@ -129,7 +147,6 @@ class UserProfileAction extends UserAction {
 		
 		return [
 			'template' => WCF::getTPL()->fetch('userProfilePreview'),
-			'userID' => $userID
 		];
 	}
 	
