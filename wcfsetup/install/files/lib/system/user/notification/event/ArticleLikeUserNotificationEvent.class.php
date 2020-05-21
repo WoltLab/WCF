@@ -109,6 +109,14 @@ class ArticleLikeUserNotificationEvent extends AbstractSharedUserNotificationEve
 	/**
 	 * @inheritDoc
 	 */
+	public function getEventHash() {
+		return sha1($this->eventID . '-' . $this->additionalData['objectID']);
+	}
+	
+	/** @noinspection PhpMissingParentCallCommonInspection */
+	/**
+	 * @inheritDoc
+	 */
 	public function checkAccess() {
 		if (!ViewableArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)->canRead()) {
 			UserStorageHandler::getInstance()->reset([WCF::getUser()->userID], 'wbbUnreadWatchedThreads');
