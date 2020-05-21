@@ -217,7 +217,7 @@ class Language extends DatabaseObject {
 		$filename = WCF_DIR.'language/'.$this->languageID.'_'.$category.'.php';
 		if (!@file_exists($filename)) {
 			if (isset($this->categoriesBeingLoaded[$category])) {
-				throw new \LogicException("Cannot load category '{$category}' while it is already being loaded.");
+				throw new \LogicException("Circular dependency detected! Cannot load category '{$category}' while it is already being loaded.");
 			}
 			
 			if ($this->editor === null) {
