@@ -169,7 +169,9 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'comment' => $comment,
 							'articleContent' => $articleContents[$comment->objectID],
-							'like' => $like
+							'reaction' => $like,
+							// @deprecated 5.3 Use `$reaction` instead
+							'like' => $like,
 						]);
 						$like->setTitle($text);
 						
@@ -192,8 +194,10 @@ class ArticleCommentManager extends AbstractCommentManager implements IViewableL
 							'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'articleContent' => $articleContents[$comment->objectID],
+							'reaction' => $like,
+							// @deprecated 5.3 Use `$reaction` instead
 							'like' => $like,
-							'response' => $response
+							'response' => $response,
 						]);
 						$like->setTitle($text);
 						

@@ -71,7 +71,9 @@ class LikeableArticleProvider extends AbstractObjectTypeProvider implements ILik
 				// short output
 				$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.likeableArticle', [
 					'article' => $article,
-					'like' => $like
+					'reaction' => $like,
+					// @deprecated 5.3 Use `$reaction` instead
+					'like' => $like,
 				]);
 				$like->setTitle($text);
 				
