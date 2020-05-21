@@ -109,7 +109,11 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			$additionalParameters .= ' ' . strtolower(preg_replace('~([A-Z])~', '-$1', $name)) . '="' . StringUtil::encodeHTML($value) . '"';
 		}
 		
-		if ($object !== null && $object instanceof IPopoverObject && in_array($object->getPopoverLinkClass(), $classes)) {
+		if (
+			$object !== null
+			&& ($object instanceof IPopoverObject || ClassUtil::isDecoratedInstanceOf($object, IPopoverObject::class))
+			&& in_array($object->getPopoverLinkClass(), $classes)
+		) {
 			$additionalParameters .= ' data-object-id="' . $object->getObjectID() . '"';
 		}
 		
