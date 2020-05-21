@@ -317,6 +317,14 @@ class WysiwygFormContainer extends FormContainer {
 	}
 	
 	/**
+	 * @since	5.3
+	 * @inheritDoc
+	 */
+	public function markAsRequired() {
+		return $this->getWysiwygField()->isRequired();
+	}
+	
+	/**
 	 * Sets the message object type used by the wysiwyg form field.
 	 * 
 	 * @param	string		$messageObjectType	message object type for wysiwyg form field

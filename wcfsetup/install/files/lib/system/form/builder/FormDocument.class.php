@@ -529,6 +529,29 @@ class FormDocument implements IFormDocument {
 	
 	/**
 	 * @inheritDoc
+	 * @since	5.3
+	 */
+	public function needsRequiredFieldsInfo() {
+		/** @var IFormNode $node */
+		foreach ($this->getIterator() as $node) {
+			if (
+				$node->isAvailable()
+				&& $node instanceof IFormElement
+				&& $node->getLabel() !== null
+				&& (
+					($node instanceof IFormContainer && $node->markAsRequired())
+					|| ($node instanceof IFormField && $node->isRequired())
+				)
+			) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function updatedObject(IStorableObject $object, $loadValues = true) {
 		if ($this->formMode === null) {

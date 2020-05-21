@@ -60,6 +60,14 @@ class FormContainer implements IFormContainer {
 	
 	/**
 	 * @inheritDoc
+	 * @since	5.3
+	 */
+	public function markAsRequired() {
+		return false;
+	}
+	
+	/**
+	 * @inheritDoc
 	 */
 	public function updatedObject(array $data, IStorableObject $object, $loadValues = true) {
 		// does nothing
