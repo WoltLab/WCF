@@ -55,7 +55,7 @@ class UserFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 			if ($type === 'plain') {
 				$content = $object->getTitle();
 			}
-			else if (preg_match('~avatar(\d+)~', $type, $matches)) {
+			else if (preg_match('~^avatar(\d+)$~', $type, $matches)) {
 				$content = $object->getAvatar()->getImageTag($matches[1]);
 			}
 			else if ($type !== 'default') {
@@ -82,7 +82,7 @@ class UserFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		}
 		
 		foreach ($tagArgs as $name => $value) {
-			if (!preg_match('~[a-z]+([A-z]+)+~', $name)) {
+			if (!preg_match('~^[a-z]+([A-z]+)+$~', $name)) {
 				throw new \InvalidArgumentException("Invalid additional argument name '{$name}'.");
 			}
 			
