@@ -4602,6 +4602,7 @@ sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}
 		<item name="wcf.user.registerActivation"><![CDATA[Registrierung abschließen]]></item>
 		<item name="wcf.user.registerActivation.error.userAlreadyEnabled"><![CDATA[Dieser Benutzer ist bereits freigeschaltet.]]></item>
 		<item name="wcf.user.registerActivation.success"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto wurde erfolgreich freigeschaltet.]]></item>
+		<item name="wcf.user.registerActivation.success.awaitAdminActivation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} E-Mail-Adresse wurde erfolgreich freigeschaltet. {if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto muss nun noch von einem Administrator freigeschaltet werden.]]></item>
 		<item name="wcf.user.activationCode.error.invalid"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du hast{else}Sie haben{/if} einen ungültigen Aktivierungscode eingegeben. {if LANGUAGE_USE_INFORMAL_VARIANT}Klicke auf den unten stehenden Link, falls du einen neuen Aktivierungscode anfordern möchtest.{else}Klicken Sie auf den unten stehenden Link, falls Sie einen neuen Aktivierungscode anfordern möchten.{/if}]]></item>
 		<item name="wcf.user.registerNewActivationCode.email.description"><![CDATA[Optional {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} hier eine neue E-Mail-Adresse eintragen, an die der neue Aktivierungscode gesendet werden soll. {if LANGUAGE_USE_INFORMAL_VARIANT}Lasse{else}Lassen Sie{/if} dieses Feld frei, wenn der Aktivierungscode an die bestehende Adresse geschickt werden soll.]]></item>
 		<item name="wcf.user.newActivationCode.success"><![CDATA[Eine E-Mail mit dem neuen Aktivierungscode wurde an {$email} versendet.]]></item>
@@ -4733,6 +4734,8 @@ dich{else}wenden
 Sie sich{/if} bitte an den Administrator unter: {@MAIL_ADMIN_ADDRESS}. Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du
 dich{else}Sie
 sich{/if} nicht bei uns registriert {if LANGUAGE_USE_INFORMAL_VARIANT}hast{else}haben{/if}, dann {if LANGUAGE_USE_INFORMAL_VARIANT}kannst du{else}können Sie{/if} diese E-Mail ignorieren.]]></item>
+		<item name="wcf.user.register.needAdminActivation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Dein{else}Ihr{/if} Benutzerkonto muss noch von einem Administrator freigeschaltet werden, um den vollen Funktionsumfang dieser Seite nutzen zu können.]]></item>
+		<item name="wcf.user.register.needEmailConfirmation"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} E-Mail-Adresse muss noch aktiviert werden. <a href="{link controller='RegisterActivation'}{/link}">Aktivieren Sie jetzt Ihre E-Mail-Adresse</a>]]></item>
 		<!-- Success Messages -->
 		<item name="wcf.user.register.success"><![CDATA[Vielen Dank für die Registrierung, {$user->username}. {if LANGUAGE_USE_INFORMAL_VARIANT}Deine{else}Ihre{/if} Registrierung ist hiermit vollständig abgeschlossen.]]></item>
 		<item name="wcf.user.register.success.needActivation"><![CDATA[Vielen Dank für die Registrierung, {$user->username}.<br>

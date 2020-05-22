@@ -1,6 +1,6 @@
 {include file='header' __disableAds=true}
 
-{if $__wcf->user->userID && $__wcf->user->activationCode}<p class="info" role="status">{lang}wcf.user.registerActivation.info{/lang}</p>{/if}
+{if $__wcf->user->userID && !$__wcf->user->isEmailConfirmed()}<p class="info" role="status">{lang}wcf.user.registerActivation.info{/lang}</p>{/if}
 
 {include file='formError'}
 
@@ -21,7 +21,7 @@
 		<dl{if $errorField == 'activationCode'} class="formError"{/if}>
 			<dt><label for="activationCode">{lang}wcf.user.activationCode{/lang}</label></dt>
 			<dd>
-				<input type="text" id="activationCode" maxlength="9" name="activationCode" value="{@$activationCode}" required class="medium">
+				<input type="text" id="activationCode" maxlength="40" name="activationCode" value="{@$activationCode}" required class="medium">
 				{if $errorField == 'activationCode'}
 					<small class="innerError">
 						{if $errorType == 'invalid'}{lang}wcf.user.activationCode.error.invalid{/lang}{/if}

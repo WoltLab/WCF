@@ -4598,6 +4598,7 @@ not register with us.]]></item>
 		<item name="wcf.user.registerActivation"><![CDATA[Complete Registration]]></item>
 		<item name="wcf.user.registerActivation.error.userAlreadyEnabled"><![CDATA[The user is already activated.]]></item>
 		<item name="wcf.user.registerActivation.success"><![CDATA[The user account has been activated.]]></item>
+		<item name="wcf.user.registerActivation.success.awaitAdminActivation"><![CDATA[{The email address has been activated. Now your account must be activated by an administrator.]]></item>
 		<item name="wcf.user.activationCode.error.invalid"><![CDATA[You have provided an invalid activation code. Click the link below if you wish to request a new activation code.]]></item>
 		<item name="wcf.user.registerNewActivationCode.email.description"><![CDATA[You can provide a different email address or leave it empty to send the code to the same email address again.]]></item>
 		<item name="wcf.user.newActivationCode.success"><![CDATA[The activation code has been sent to “{$email}”.]]></item>
@@ -4726,6 +4727,8 @@ Your activation code is: {@$mailbox->getUser()->activationCode} {* this line end
 If you have trouble confirming your email address, please contact the
 administrator at: {@MAIL_ADMIN_ADDRESS}. Please ignore this email if you did
 not register with us.]]></item>
+		<item name="wcf.user.register.needAdminActivation"><![CDATA[Your account must be activated by an administrator in order to use the full scope of the website.]]></item>
+		<item name="wcf.user.register.needEmailConfirmation"><![CDATA[Your email address is not activated yet. <a href="{link controller='RegisterActivation'}{/link}">Activate now your email address</a>.]]></item>
 		<!-- Success Messages -->
 		<item name="wcf.user.register.success"><![CDATA[Thank you for registering, {$user->username}.<br>
 Your registration is now completed.]]></item>

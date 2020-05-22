@@ -31,7 +31,7 @@ class RegisterActivationForm extends AbstractForm {
 	
 	/**
 	 * activation code
-	 * @var	integer
+	 * @var	string
 	 */
 	public $activationCode = '';
 	
@@ -52,7 +52,7 @@ class RegisterActivationForm extends AbstractForm {
 			$this->user = new User($userID);
 			if ($this->user->userID) $this->username = $this->user->username;
 		}
-		if (!empty($_GET['a'])) $this->activationCode = intval($_GET['a']);
+		if (!empty($_GET['a'])) $this->activationCode = StringUtil::trim($_GET['a']);
 	}
 	
 	/**
@@ -65,7 +65,7 @@ class RegisterActivationForm extends AbstractForm {
 			$this->username = StringUtil::trim($_POST['username']);
 			$this->user = User::getUserByUsername($this->username);
 		}
-		if (isset($_POST['activationCode'])) $this->activationCode = intval($_POST['activationCode']);
+		if (isset($_POST['activationCode'])) $this->activationCode = StringUtil::trim($_POST['activationCode']);
 	}
 	
 	/**
@@ -79,13 +79,13 @@ class RegisterActivationForm extends AbstractForm {
 			throw new UserInputException('username', 'notFound');
 		}
 		
-		// user is already enabled
+		// user email is already confirmed
 		if ($this->user->isEmailConfirmed()) {
 			throw new NamedUserException(WCF::getLanguage()->get('wcf.user.registerActivation.error.userAlreadyEnabled'));
 		}
 		
 		// check given activation code
-		if (\hash_equals($this->activationCode, $this->user->emailConfirmed)) {
+		if (!\hash_equals($this->activationCode, $this->user->emailConfirmed)) {
 			throw new UserInputException('activationCode', 'invalid');
 		}
 		
@@ -106,7 +106,14 @@ class RegisterActivationForm extends AbstractForm {
 		$this->saved();
 		
 		// forward to index page
-		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success'), 10);
+		if (REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_ADMIN && !$this->user->isActivated()) {
+			$redirectText = WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success.awaitAdminActivation');
+		}
+		else {
+			$redirectText = WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success');
+		}
+		
+		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), $redirectText, 10);
 		exit;
 	}
 	
