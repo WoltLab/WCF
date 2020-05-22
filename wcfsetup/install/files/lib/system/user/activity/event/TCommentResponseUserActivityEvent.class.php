@@ -3,10 +3,10 @@ namespace wcf\system\user\activity\event;
 use wcf\data\comment\Comment;
 use wcf\data\comment\response\CommentResponse;
 use wcf\data\user\activity\event\ViewableUserActivityEvent;
-use wcf\data\user\User;
+use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\CommentResponseRuntimeCache;
 use wcf\system\cache\runtime\CommentRuntimeCache;
-use wcf\system\cache\runtime\UserRuntimeCache;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 
 /**
  * Provides a method to read the comment response, comment, and user objects related to comment
@@ -21,7 +21,7 @@ use wcf\system\cache\runtime\UserRuntimeCache;
 trait TCommentResponseUserActivityEvent {
 	/**
 	 * user objects for the comment authors
-	 * @var	User[]
+	 * @var	UserProfile[]
 	 */
 	protected $commentAuthors = [];
 	
@@ -71,7 +71,7 @@ trait TCommentResponseUserActivityEvent {
 			$this->commentObjectIDs[] = $comment->objectID;
 		}
 		if (!empty($userIDs)) {
-			$this->commentAuthors = UserRuntimeCache::getInstance()->getObjects($userIDs);
+			$this->commentAuthors = UserProfileRuntimeCache::getInstance()->getObjects($userIDs);
 		}
 	}
 }
