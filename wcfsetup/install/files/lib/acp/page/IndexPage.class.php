@@ -1,6 +1,6 @@
 <?php
 namespace wcf\acp\page;
-use wcf\data\user\UserProfile;
+use wcf\data\user\User;
 use wcf\page\AbstractPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
@@ -8,7 +8,6 @@ use wcf\system\io\RemoteFile;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Shows the welcome page in admin control panel.
@@ -58,7 +57,7 @@ class IndexPage extends AbstractPage {
 		parent::assignVariables();
 		
 		$usersAwaitingApproval = 0;
-		if (REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_ADMIN) {
+		if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) {
 			$sql = "SELECT	COUNT(*)
 				FROM	wcf".WCF_N."_user
 				WHERE	activationCode <> 0";

@@ -2,7 +2,6 @@
 namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
-use wcf\data\user\UserProfile;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\NamedUserException;
@@ -10,7 +9,6 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
-use wcf\util\CryptoUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
@@ -106,7 +104,7 @@ class RegisterActivationForm extends AbstractForm {
 		$this->saved();
 		
 		// forward to index page
-		if (REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_ADMIN && !$this->user->isActivated()) {
+		if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN && !$this->user->isActivated()) {
 			$redirectText = WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success.awaitAdminActivation');
 		}
 		else {
@@ -133,7 +131,7 @@ class RegisterActivationForm extends AbstractForm {
 	 * @inheritDoc
 	 */
 	public function show() {
-		if (!(REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_USER)) {
+		if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
 			throw new IllegalLinkException();
 		}
 		

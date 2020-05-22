@@ -4,7 +4,6 @@ use wcf\data\clipboard\action\ClipboardAction;
 use wcf\data\user\group\UserGroup;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
-use wcf\data\user\UserProfile;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
@@ -229,7 +228,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 	 */
 	protected function validateResendActivationMail() {
 		// check permissions
-		if (!WCF::getSession()->getPermission('admin.user.canEnableUser') || !(REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_USER)) {
+		if (!WCF::getSession()->getPermission('admin.user.canEnableUser') || !(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
 			return [];
 		}
 		

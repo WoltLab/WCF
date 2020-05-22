@@ -22,7 +22,6 @@ use wcf\system\language\LanguageFactory;
 use wcf\system\request\RequestHandler;
 use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
-use wcf\util\CryptoUtil;
 use wcf\util\UserRegistrationUtil;
 
 /**
@@ -626,7 +625,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public function confirmEmail() {
 		if (empty($this->objects)) $this->readObjects();
 		
-		if (REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_ADMIN) {
+		if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) {
 			$action = new UserAction($this->objects, 'update', [
 				'data' => [
 					'emailConfirmed' => null
@@ -1029,7 +1028,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			throw new PermissionDeniedException();
 		}
 		
-		if (!(REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_USER)) {
+		if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
 			throw new IllegalLinkException();
 		}  
 		

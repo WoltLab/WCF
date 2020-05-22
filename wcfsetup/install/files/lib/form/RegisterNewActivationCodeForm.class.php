@@ -2,7 +2,6 @@
 namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
-use wcf\data\user\UserProfile;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
@@ -199,7 +198,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 	 * @inheritDoc
 	 */
 	public function show() {
-		if (!(REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_USER)) {
+		if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
 			throw new IllegalLinkException();
 		}
 		

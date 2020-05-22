@@ -3,7 +3,6 @@ namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\data\user\UserList;
-use wcf\data\user\UserProfile;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
@@ -339,12 +338,12 @@ class AccountManagementForm extends AbstractForm {
 		
 		// email
 		if (WCF::getSession()->getPermission('user.profile.canChangeEmail') && $this->email != WCF::getUser()->email && $this->email != WCF::getUser()->newEmail) {
-			if (!(REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_USER) && mb_strtolower($this->email) == mb_strtolower(WCF::getUser()->email)) {
+			if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) && mb_strtolower($this->email) == mb_strtolower(WCF::getUser()->email)) {
 				// update email
 				$updateParameters['email'] = $this->email;
 				$success[] = 'wcf.user.changeEmail.success';
 			}
-			else if (REGISTER_ACTIVATION_METHOD & UserProfile::REGISTER_ACTIVATION_USER) {
+			else if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) {
 				// get reactivation code
 				$activationCode = UserRegistrationUtil::getActivationCode();
 				
