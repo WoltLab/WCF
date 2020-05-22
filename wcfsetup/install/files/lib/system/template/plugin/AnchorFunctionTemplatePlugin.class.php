@@ -98,7 +98,7 @@ class AnchorFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		$classes = [];
 		$additionalParameters = '';
 		foreach ($tagArgs as $name => $value) {
-			if (!preg_match('~[a-z]+([A-z]+)+~', $name)) {
+			if (!preg_match('~^[a-z]+([A-z]+)+$~', $name)) {
 				throw new \InvalidArgumentException("Invalid additional argument name '{$name}'.");
 			}
 			
