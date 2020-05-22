@@ -2,6 +2,8 @@
 namespace wcf\acp\action;
 use wcf\data\search\SearchEditor;
 use wcf\action\AbstractAction;
+use wcf\data\user\User;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\NamedUserException;
 use wcf\system\menu\acp\ACPMenu;
 use wcf\system\request\LinkHandler;
@@ -126,6 +128,26 @@ class UserQuickSearchAction extends AbstractAction {
 				$this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
 				break;
 			
+			case 'pendingActivation':
+				$conditionBuilder = new PreparedStatementConditionBuilder();
+				$conditionBuilder->add('activationCode <> ?', [0]);
+				if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) {
+					$conditionBuilder->add('emailConfirmed IS NULL');
+				}
+				
+				$this->sortField = 'registrationDate';
+				$this->sortOrder = 'DESC';
+				$sql = "SELECT		user_table.userID
+					FROM		wcf".WCF_N."_user user_table
+					LEFT JOIN	wcf".WCF_N."_user_option_value option_value
+					ON		(option_value.userID = user_table.userID)
+					". $conditionBuilder ."
+					ORDER BY	user_table.registrationDate DESC";
+				$statement = WCF::getDB()->prepareStatement($sql, $this->maxResults);
+				$statement->execute($conditionBuilder->getParameters());
+				$this->matches = $statement->fetchAll(\PDO::FETCH_COLUMN);
+				break;
+				
 			case 'disabledAvatars':
 				$sql = "SELECT		user_table.userID
 					FROM		wcf".WCF_N."_user user_table

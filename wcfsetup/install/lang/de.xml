@@ -3143,6 +3143,7 @@ Wenn {if LANGUAGE_USE_INFORMAL_VARIANT}du{else}Sie{/if} unter â€žKonfiguration Â
 		<item name="wcf.acp.user.disable"><![CDATA[Deaktivieren]]></item>
 		<item name="wcf.acp.user.enable"><![CDATA[Aktivieren]]></item>
 		<item name="wcf.acp.user.quickSearch.disabled"><![CDATA[Nicht aktivierte Benutzer]]></item>
+		<item name="wcf.acp.user.quickSearch.pendingActivation"><![CDATA[Benutzer die auf Freischaltung warten]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledAvatars"><![CDATA[Gesperrte Avatare]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Gesperrte Signaturen]]></item>
 		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{#$usersAwaitingApproval} Benutzer</a> {if $usersAwaitingApproval == 1}wartet auf seine{else}warten auf ihre{/if} Aktivierung.]]></item>
