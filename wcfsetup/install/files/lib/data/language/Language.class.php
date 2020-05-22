@@ -47,6 +47,12 @@ class Language extends DatabaseObject {
 	public $packageID = PACKAGE_ID;
 	
 	/**
+	 * contains categories currently being loaded as array keys
+	 * @var	bool[]
+	 */
+	protected $categoriesBeingLoaded = [];
+	
+	/**
 	 * Returns the name of this language.
 	 * 
 	 * @return	string
@@ -210,6 +216,10 @@ class Language extends DatabaseObject {
 		// search language file
 		$filename = WCF_DIR.'language/'.$this->languageID.'_'.$category.'.php';
 		if (!@file_exists($filename)) {
+			if (isset($this->categoriesBeingLoaded[$category])) {
+				throw new \LogicException("Circular dependency detected! Cannot load category '{$category}' while it is already being loaded.");
+			}
+			
 			if ($this->editor === null) {
 				$this->editor = new LanguageEditor($this);
 			}
@@ -220,7 +230,11 @@ class Language extends DatabaseObject {
 				return false;
 			}
 			
+			$this->categoriesBeingLoaded[$category] = true;
+			
 			$this->editor->updateCategory($languageCategory);
+			
+			unset($this->categoriesBeingLoaded[$category]);
 		}
 		
 		// include language file
