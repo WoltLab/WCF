@@ -4593,7 +4593,7 @@ If you have troubles confirming your email address, please contact the
 administrator at: {@MAIL_ADMIN_ADDRESS}. Please ignore this email if you did
 not register with us.]]></item>
 		<item name="wcf.user.changePassword.success"><![CDATA[The password has been changed.]]></item>
-		<item name="wcf.user.activationCode"><![CDATA[9-digit Activation Code]]></item>
+		<item name="wcf.user.activationCode"><![CDATA[Activation Code]]></item>
 		<item name="wcf.user.newActivationCode"><![CDATA[Request New Activation Code]]></item>
 		<item name="wcf.user.registerActivation"><![CDATA[Complete Registration]]></item>
 		<item name="wcf.user.registerActivation.error.userAlreadyEnabled"><![CDATA[The user is already activated.]]></item>
@@ -4604,7 +4604,7 @@ not register with us.]]></item>
 		<item name="wcf.user.newActivationCode.success"><![CDATA[The activation code has been sent to “{$email}”.]]></item>
 		<item name="wcf.user.emailActivation.error.emailAlreadyEnabled"><![CDATA[The email address is already activated.]]></item>
 		<item name="wcf.user.emailActivation.success"><![CDATA[The email address has been activated.]]></item>
-		<item name="wcf.user.registerActivation.info"><![CDATA[An email containing the 9-digit activation code has been sent to “{$__wcf->user->email}”.]]></item>
+		<item name="wcf.user.registerActivation.info"><![CDATA[An email containing the activation code has been sent to “{$__wcf->user->email}”.]]></item>
 		<item name="wcf.user.username.error.alreadyRenamed"><![CDATA[The username was already changed within the last {#$__wcf->getSession()->getPermission('user.profile.renamePeriod')} days.]]></item>
 		<item name="wcf.user.guest"><![CDATA[Guest]]></item>
 		<item name="wcf.user.signature"><![CDATA[Signature]]></item>
