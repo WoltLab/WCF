@@ -768,8 +768,8 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.option.user.signature.disallowedBBCodes.description"><![CDATA[Die hier ausgewählten BBCodes dürfen von Mitgliedern dieser Benutzergruppe in ihrer Signatur <em>nicht</em> verwendet werden.]]></item>
 		<item name="wcf.acp.group.priority"><![CDATA[Priorisierung]]></item>
 		<item name="wcf.acp.group.priority.description"><![CDATA[Bestimmt u.a. die Reihenfolge auf der Team-Seite sowie die Auswahl von Benutzerrängen und „Wer ist online“-Darstellungen auf Basis der höchsten Priorität.]]></item>
-		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[„Benutzer online“-Darstellung]]></item>
-		<item name="wcf.acp.group.userOnlineMarking.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die HTML-Formatierung für Mitglieder dieser Benutzergruppe in der „Wer ist online“-Anzeige anpassen. <em>&lt;strong&gt;%s&lt;/strong&gt;</em> stellt Mitglieder dieser Gruppe beispielsweise in Fettdruck dar.]]></item>
+		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[Benutzer-Darstellung]]></item>
+		<item name="wcf.acp.group.userOnlineMarking.description"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Du kannst{else}Sie können{/if} die HTML-Formatierung für Mitglieder dieser Benutzergruppe anpassen. <em>&lt;strong&gt;%s&lt;/strong&gt;</em> stellt Mitglieder dieser Gruppe beispielsweise in Fettdruck dar.]]></item>
 		<item name="wcf.acp.group.userOnlineMarking.error.invalid"><![CDATA[Die Darstellung muss „%s“ enthalten]]></item>
 		<item name="wcf.acp.group.showOnTeamPage"><![CDATA[Mitglieder dieser Benutzergruppe auf der Team-Seite anzeigen]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Kann Benutzer aktivieren]]></item>
