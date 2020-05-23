@@ -4,14 +4,13 @@ use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\session\SessionHandler;
 use wcf\system\WCF;
-use wcf\util\StringUtil;
 
 /**
  * Automatically authes the user for the current request via an access-token.
  * A missing token will be ignored, an invalid token results in a throw of a IllegalLinkException.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  */
