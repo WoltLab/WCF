@@ -5052,7 +5052,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.notification.com.woltlab.wcf.user.follow.following"><![CDATA[Jemand folgt {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}]]></item>
 		<item name="wcf.user.notification.follow.title"><![CDATA[Neuer Follower]]></item>
 		<item name="wcf.user.notification.follow.title.stacked"><![CDATA[{#$count} neue Follower]]></item>
-		<item name="wcf.user.notification.follow.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}Ein Gast{/if} folgt {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}.]]></item>
+		<item name="wcf.user.notification.follow.message"><![CDATA[<strong>{$author}</strong> folgt {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}.]]></item>
 		<item name="wcf.user.notification.follow.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} folgen {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}.]]></item>
 		<item name="wcf.user.notification.follow.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1}folgt{else}folgen{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}.]]></item>
 		<item name="wcf.user.notification.follow.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1}folgt{else}folgen{/if} {if LANGUAGE_USE_INFORMAL_VARIANT}dir{else}Ihnen{/if}:</p>]]></item>
