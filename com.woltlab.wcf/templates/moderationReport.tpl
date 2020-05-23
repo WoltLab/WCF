@@ -55,15 +55,6 @@
 {include file='formError'}
 
 <section class="section">
-	<header class="sectionHeader">
-		<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedContent{/lang}</h2>
-		<p class="sectionDescription">{lang}wcf.moderation.type.{@$queue->getObjectTypeName()}{/lang}</p>
-	</header>
-	
-	{@$reportedContent}
-</section>
-
-<section class="section">
 	<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedBy{/lang}</h2>
 	
 	<div class="box32">
@@ -91,6 +82,15 @@
 			<div class="containerContent">{@$queue->getFormattedMessage()}</div>
 		</div>
 	</div>
+</section>
+
+<section class="section">
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedContent{/lang}</h2>
+		<p class="sectionDescription">{lang}wcf.moderation.type.{@$queue->getObjectTypeName()}{/lang}</p>
+	</header>
+	
+	{@$reportedContent}
 </section>
 
 {include file='__commentJavaScript' commentContainerID='moderationQueueCommentList'}
