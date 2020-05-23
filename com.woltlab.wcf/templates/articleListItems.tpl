@@ -67,6 +67,8 @@
 							{$article->getDiscussionProvider()->getDiscussionCount()}
 						</span>
 					</div>
+					
+					{event name='contentItemMetaIcons'}
 				</div>
 			</div>
 		</article>
