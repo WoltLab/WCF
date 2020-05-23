@@ -9,8 +9,6 @@
 				{if $user->userID != $__wcf->user->userID}
 					{if $user->isAccessible('canViewEmailAddress')}
 						<li><a class="jsTooltip" href="mailto:{@$user->getEncodedEmail()}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 fa-envelope-o"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
-					{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}
-						<li><a class="jsTooltip" href="{link controller='Mail' object=$user}{/link}" title="{lang}wcf.user.button.mail{/lang}"><span class="icon icon16 fa-envelope-o"></span> <span class="invisible">{lang}wcf.user.button.mail{/lang}</span></a></li>
 					{/if}
 				{/if}
 				

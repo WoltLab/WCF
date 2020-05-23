@@ -273,8 +273,6 @@
 								{if $user->userID != $__wcf->user->userID}
 									{if $user->isAccessible('canViewEmailAddress') || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
 										<li><a href="mailto:{@$user->getEncodedEmail()}">{lang}wcf.user.button.mail{/lang}</a></li>
-									{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}
-										<li><a href="{link controller='Mail' object=$user}{/link}">{lang}wcf.user.button.mail{/lang}</a></li>
 									{/if}
 								{/if}
 								
