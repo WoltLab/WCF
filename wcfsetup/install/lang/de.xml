@@ -4958,6 +4958,9 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.condition.state.isEnabled"><![CDATA[Aktiviert]]></item>
 		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[„Aktiviert“ und „Nicht aktiviert“ können nicht gleichzeitig ausgewählt werden.]]></item>
 		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Nicht gesperrt]]></item>
+		<item name="wcf.user.condition.state.isEmailConfirmed"><![CDATA[Hat eine bestätigte E-Mail-Adresse]]></item>
+		<item name="wcf.user.condition.state.isEmailConfirmed.error.conflict"><![CDATA[„Hat eine bestätigte E-Mail-Adresse“ und „Hat keine bestätigte E-Mail-Adresse“ können nicht gleichzeitig ausgewählt werden.]]></item>
+		<item name="wcf.user.condition.state.isNotEmailConfirmed"><![CDATA[Hat keine bestätigte E-Mail-Adresse]]></item>
 		<item name="wcf.user.condition.userTrophyIDs"><![CDATA[hat Trophäe]]></item>
 		<item name="wcf.user.condition.userTrophyIDs.description"><![CDATA[Benutzer müssen alle ausgewählten Trophäen mindestens einmal erhalten haben.]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs"><![CDATA[hat nicht Trophäe]]></item>

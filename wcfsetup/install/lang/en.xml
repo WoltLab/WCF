@@ -4953,6 +4953,9 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.state.isEnabled"><![CDATA[Approved]]></item>
 		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[You cannot simultaneously select “Approved” and “Awaiting Approval”.]]></item>
 		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Not Banned]]></item>
+		<item name="wcf.user.condition.state.isEmailConfirmed"><![CDATA[Has a confirmed email address]]></item>
+		<item name="wcf.user.condition.state.isEmailConfirmed.error.conflict"><![CDATA[You cannot simultaneously select “Has a confirmed email address” and “Has not a confirmed email address”.]]></item>
+		<item name="wcf.user.condition.state.isNotEmailConfirmed"><![CDATA[Has not a confirmed email address]]></item>
 		<item name="wcf.user.condition.userTrophyIDs"><![CDATA[User has Trophy]]></item>
 		<item name="wcf.user.condition.userTrophyIDs.description"><![CDATA[User has received the selected trophies.]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs"><![CDATA[User does not have Trophy]]></item>
