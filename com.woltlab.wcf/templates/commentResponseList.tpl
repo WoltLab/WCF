@@ -4,7 +4,7 @@
 			<p class="info commentModerationDisabledComment">{lang}wcf.comment.moderation.disabledComment{/lang}</p>
 		</li>
 	{else}
-		<li class="commentResponse jsCommentResponse" data-object-id="{@$response->responseID}" data-response-id="{@$response->responseID}" data-object-type="com.woltlab.wcf.comment.response" {@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment.response', $response->responseID)} data-can-edit="{if $response->isEditable()}true{else}false{/if}" data-can-delete="{if $response->isDeletable()}true{else}false{/if}" data-user-id="{@$response->userID}">
+		<li class="commentResponse jsCommentResponse" data-response-id="{@$response->responseID}" {@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment.response', $response->responseID)} data-can-edit="{if $response->isEditable()}true{else}false{/if}" data-can-delete="{if $response->isDeletable()}true{else}false{/if}" data-user-id="{@$response->userID}">
 			<div class="box32{if $__wcf->getUserProfileHandler()->isIgnoredUser($response->userID)} ignoredUserContent{/if}">
 				{if $response->userID}
 					<a href="{link controller='User' object=$response->getUserProfile()}{/link}" title="{$response->getUserProfile()->username}">
