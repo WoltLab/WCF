@@ -508,7 +508,6 @@
 		<acpmenuitem name="wcf.acp.menu.link.attachment.list">
 			<controller>wcf\acp\page\AttachmentListPage</controller>
 			<parent>wcf.acp.menu.link.attachment</parent>
-			<options>module_attachment</options>
 			<permissions>admin.attachment.canManageAttachment</permissions>
 		</acpmenuitem>
 		<!-- /attachment -->

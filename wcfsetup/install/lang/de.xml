@@ -1406,7 +1406,6 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type"><![CDATA[Dateityp]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type.jpeg"><![CDATA[JPEG (verlustbehaftet, erzeugt in der Regel kleine Dateien)]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type.keep"><![CDATA[Dateityp beibehalten]]></item>
-		<item name="wcf.acp.option.module_attachment"><![CDATA[Dateianhänge]]></item>
 		<item name="wcf.acp.option.module_smiley"><![CDATA[Smileys]]></item>
 		<item name="wcf.acp.option.category.message.censorship"><![CDATA[Zensur-Funktion]]></item>
 		<item name="wcf.acp.option.censored_words"><![CDATA[Zu zensierende Wörter]]></item>

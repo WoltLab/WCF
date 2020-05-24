@@ -221,7 +221,6 @@
 			</category>
 			<category name="message.attachment">
 				<parent>message</parent>
-				<options>module_attachment</options>
 			</category>
 			<category name="message.attachment.autoscale">
 				<parent>message.attachment</parent>
