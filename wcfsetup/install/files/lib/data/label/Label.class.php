@@ -3,6 +3,7 @@ namespace wcf\data\label;
 use wcf\data\DatabaseObject;
 use wcf\system\request\IRouteController;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a label.
@@ -47,5 +48,18 @@ class Label extends DatabaseObject implements IRouteController {
 		}
 		
 		return $this->cssClassName;
+	}
+	
+	/**
+	 * Returns the HTML representation of the label.
+	 * 
+	 * @param       string          $additionalClasses
+	 * @return      string
+	 * @since       5.3
+	 */
+	public function render($additionalClasses = '') {
+		return '<span class="badge label' . ($this->getClassNames() ? ' ' . $this->getClassNames() : '')
+			. ($additionalClasses ? ' ' . $additionalClasses : '') . '">'
+			. StringUtil::encodeHTML($this->getTitle()) . '</span>';
 	}
 }

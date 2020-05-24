@@ -22,7 +22,7 @@
 					{if $article->hasLabels()}
 						<div class="contentItemLabels">
 							{foreach from=$article->getLabels() item=label}
-								<span class="label badge contentItemLabel{if $label->getClassNames()} {$label->getClassNames()}{/if}">{$label->getTitle()}</span>
+								{@$label->render('contentItemLabel')}
 							{/foreach}
 						</div>
 					{/if}
