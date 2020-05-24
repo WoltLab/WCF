@@ -8,7 +8,7 @@
  */
 define('LAST_UPDATE_TIME', TIME_NOW);
 
-$prefix = 'wsc31_';
+$prefix = 'wsc52_';
 if (file_exists(WCF_DIR . 'cookiePrefix.txt')) {
 	// randomized cookie prefix during setup
 	$prefix = file_get_contents(WCF_DIR . 'cookiePrefix.txt');
