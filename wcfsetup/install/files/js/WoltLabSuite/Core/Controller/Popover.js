@@ -339,7 +339,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 				
 				var handler = _handlers.get(elementData.identifier);
 				if (handler.loadCallback) {
-					handler.loadCallback(elementData.objectId, this);
+					handler.loadCallback(elementData.objectId, this, elementData.element);
 				}
 				else if (handler.dboAction) {
 					var callback = function(data) {
