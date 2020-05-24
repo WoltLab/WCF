@@ -1545,7 +1545,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Default Map Position (Longitude)]]></item>
 		<item name="wcf.acp.option.google_maps_access_user_location"><![CDATA[Use current user location]]></item>
 		<item name="wcf.acp.option.google_maps_access_user_location.description"><![CDATA[When entering a location, the current location of the user is used as start point on the map.]]></item>
-		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[Apply the users online marking for usernames]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Enable explanation on cookie usage]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Displays a notice on cookie usage according to EU Directive 2009/136/EG upon first visit.]]></item>
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Display a notice for outstanding updates on the frontend]]></item>

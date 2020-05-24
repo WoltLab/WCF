@@ -25,7 +25,7 @@
 			
 			<div class="messageAuthorContainer">
 				<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$userProfile->userID}"{if $enableMicrodata} itemprop="url"{/if}>
-					<span{if $enableMicrodata} itemprop="name"{/if}>{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$userProfile->getFormattedUsername()}{else}{$username}{/if}</span>
+					<span{if $enableMicrodata} itemprop="name"{/if}>{@$userProfile->getFormattedUsername()}</span>
 				</a>
 				{if !$isReply}
 					{if $userProfile->banned}<span class="icon icon16 fa-lock jsTooltip jsUserBanned" title="{lang user=$userProfile}wcf.user.banned{/lang}"></span>{/if}

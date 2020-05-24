@@ -211,7 +211,7 @@
 					{event name='afterAboutAuthorText'}
 					
 					<div class="articleAboutAuthorUsername">
-						<a href="{link controller='User' object=$article->getUserProfile()->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$article->getUserProfile()->userID}">{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$article->getUserProfile()->getFormattedUsername()}{else}{$article->getUserProfile()->username}{/if}</a>
+						<a href="{link controller='User' object=$article->getUserProfile()->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$article->getUserProfile()->userID}">{@$article->getUserProfile()->getFormattedUsername()}</a>
 						
 						{if MODULE_USER_RANK}
 							{if $article->getUserProfile()->getUserTitle()}

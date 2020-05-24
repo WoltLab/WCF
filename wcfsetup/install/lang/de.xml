@@ -1565,7 +1565,6 @@ GmbH=Gesellschaft mit beschränkter Haftung]]></item>
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Standard-Kartenposition (Längengrad)]]></item>
 		<item name="wcf.acp.option.google_maps_access_user_location"><![CDATA[Aktuelle Benutzerposition verwenden]]></item>
 		<item name="wcf.acp.option.google_maps_access_user_location.description"><![CDATA[Bei der Angabe von Positionen wird die aktuelle Position des Benutzers als Ausgangspunkt auf der Karte verwendet.]]></item>
-		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[„Benutzer online“-Darstellung für Benutzernamen verwenden]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Erklärung zum „Einsatz von Cookies“ aktivieren]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Weist Besucher beim ersten Aufruf der Seite gemäß EU-Richtlinie 2009/136/EG auf den Einsatz von Cookies hin.]]></item>
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Hinweis bei neuen Updates für Pakete im Frontend anzeigen]]></item>
