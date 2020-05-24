@@ -8,7 +8,6 @@ use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
-use function wcf\functions\exception\logThrowable;
 
 /**
  * Provides functions to execute cronjobs.
@@ -260,7 +259,8 @@ class CronjobScheduler extends SingletonFactory {
 	 */
 	protected function logResult(CronjobLogEditor $logEditor, $exception = null) {
 		if ($exception !== null) {
-			logThrowable($exception);
+			// Do not move this into an import, `use function` was introduced in PHP 5.6.
+			\wcf\functions\exception\logThrowable($exception);
 			
 			$errString = implode("\n", [
 				$exception->getMessage(),
