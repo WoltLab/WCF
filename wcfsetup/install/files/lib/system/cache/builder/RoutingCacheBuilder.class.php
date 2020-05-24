@@ -310,6 +310,8 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			if ($application->isTainted) continue;
+			
 			$controller = null;
 			
 			if ($application->packageID == 1) {
