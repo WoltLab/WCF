@@ -20,7 +20,7 @@
 		<p class="warning" role="status">{lang}wcf.user.register.needAdminActivation{/lang}</p>
 	{/if}
 	
-	{* user needs email activation w/o beeing disabled *}
+	{* user needs email activation w/o being disabled *}
 	{if !$__wcf->user->isEmailConfirmed() && REGISTER_ACTIVATION_METHOD & 1 && $__wcf->user->isActivated() && $templateName != 'registerActivation' && $templateName != 'register' && $templateName != 'redirect' && $__wcf->user->getBlacklistMatches()|empty}
 		<p class="warning" role="status">{lang}wcf.user.register.needEmailConfirmation{/lang}</p>
 	{/if}

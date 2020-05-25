@@ -635,19 +635,19 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
-	 * Marks the email address as confirmed and enables the user, iff the register method is user activation only.
-	 * @since 5.3 
+	 * Marks the email address as confirmed. It also enables the user, iff the register method is user activation only.
+
+	 * @since       5.3
 	 */
 	public function confirmEmail() {
 		if (empty($this->objects)) $this->readObjects();
 		
 		if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) {
-			$action = new UserAction($this->objects, 'update', [
+			(new UserAction($this->objects, 'update', [
 				'data' => [
-					'emailConfirmed' => null
+					'emailConfirmed' => null,
 				]
-			]);
-			$action->executeAction();
+			]))->executeAction();
 		}
 		else {
 			$this->enable();
@@ -684,7 +684,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 			'data' => [
 				'activationCode' => 0,
 				'blacklistMatches' => '',
-				'emailConfirmed' => null
+				'emailConfirmed' => null,
 			],
 			'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::GUESTS])
 		]);
@@ -728,7 +728,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$action = new UserAction($this->objects, 'update', [
 			'data' => [
 				'activationCode' => UserRegistrationUtil::getActivationCode(),
-				'emailConfirmed' => bin2hex(\random_bytes(20))
+				'emailConfirmed' => bin2hex(\random_bytes(20)),
 			],
 			'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::USERS])
 		]);
