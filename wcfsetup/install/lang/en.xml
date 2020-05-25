@@ -3130,6 +3130,8 @@ full extend.]]></item>
 		<item name="wcf.acp.user.action.sendMail"><![CDATA[Send Email]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Send New Password]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to this user?]]></item>
+		<item name="wcf.acp.user.action.confirmEmail"><![CDATA[Confirm Email Address]]></item>
+		<item name="wcf.acp.user.action.unconfirmEmail"><![CDATA[Unconfirm Email Address]]></item>
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Export Personal Data (GDPR)]]></item>
 		<item name="wcf.acp.user.coverPhoto.description"><![CDATA[You can upload a cover photo on their user profile page.]]></item>
 	</category>
@@ -3314,6 +3316,8 @@ Errors are:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[Send Email]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Send New Password ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to {#$count} user{if $count != 1}s{/if}?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.confirmEmail"><![CDATA[Confirm Email Address ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.unconfirmEmail"><![CDATA[Unconfirm Email Address ({#$count})]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.article.marked"><![CDATA[{if $count == 1}One Article{else}{#$count} Articles{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}One File{else}{#$count} Files{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}One Tag{else}{#$count} Tags{/if}]]></item>

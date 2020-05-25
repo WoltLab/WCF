@@ -619,6 +619,22 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
+	 * Validates the confirm email action.
+	 * @since       5.3
+	 */
+	public function validateConfirmEmail() {
+		$this->validateEnable();
+	}
+	
+	/**
+	 * Validates the unconfirm email action.
+	 * @since       5.3
+	 */
+	public function validateUnconfirmEmail() {
+		$this->validateEnable();
+	}
+	
+	/**
 	 * Marks the email address as confirmed and enables the user, iff the register method is user activation only.
 	 * @since 5.3 
 	 */
@@ -635,6 +651,24 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		}
 		else {
 			$this->enable();
+		}
+		
+		$this->unmarkItems();
+	}
+	
+	/**
+	 * Marks the email address as unconfirmed.
+	 * @since 5.3
+	 */
+	public function unconfirmEmail() {
+		if (empty($this->objects)) $this->readObjects();
+		
+		foreach ($this->objects as $object) {
+			(new UserAction([$object], 'update', [
+				'data' => [
+					'emailConfirmed' => bin2hex(\random_bytes(20))
+				]
+			]))->executeAction();
 		}
 		
 		$this->unmarkItems();
