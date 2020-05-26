@@ -65,6 +65,9 @@ class DevtoolsTar extends Tar {
 	 * @inheritDoc
 	 */
 	public function extract($index, $destination) {
+		// The source file is empty, if the file is a symlink, which yield to an error.
+		if (empty($this->files[$index])) return;
+		
 		copy($this->files[$index], $destination);
 	}
 	
