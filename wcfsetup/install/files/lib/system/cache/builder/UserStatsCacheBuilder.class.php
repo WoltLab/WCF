@@ -1,6 +1,6 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\data\user\User;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\WCF;
 
 /**
@@ -31,12 +31,12 @@ class UserStatsCacheBuilder extends AbstractCacheBuilder {
 		$data['members'] = $statement->fetchColumn();
 		
 		// newest member
-		$sql = "SELECT		*
+		$sql = "SELECT		userID
 			FROM		wcf".WCF_N."_user
 			ORDER BY	userID DESC";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		$statement->execute();
-		$data['newestMember'] = $statement->fetchObject(User::class);
+		$data['newestMember'] = UserProfileRuntimeCache::getInstance()->getObject($statement->fetchSingleColumn());
 		
 		return $data;
 	}
