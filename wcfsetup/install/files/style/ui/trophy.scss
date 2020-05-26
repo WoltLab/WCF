@@ -19,23 +19,24 @@
 .trophyIcon {
 	display: inline-block;
 	border-radius: 50%;
-	font-size: 27px;
 	
-	/* Factor: 0.5625 */
-	&.icon16 {
-		font-size: 9px;
-	}
-	
-	&.icon32 {
-		font-size: 18px;
-	}
-	
-	&.icon64 {
-		font-size: 36px;
-	}
-	
-	&.icon144 {
-		font-size: 81px;
+	&.icon {
+		/* Factor: 0.5625 */
+		&.icon16 {
+			font-size: 9px;
+		}
+		
+		&.icon32 {
+			font-size: 18px;
+		}
+		
+		&.icon64 {
+			font-size: 36px;
+		}
+		
+		&.icon144 {
+			font-size: 81px;
+		}
 	}
 }
 
