@@ -43,7 +43,12 @@ class UserFunctionTemplatePlugin implements IFunctionTemplatePlugin {
 		$object = $tagArgs['object'];
 		unset($tagArgs['object']);
 		if (!($object instanceof UserProfile) && !ClassUtil::isDecoratedInstanceOf($object, UserProfile::class)) {
-			throw new \InvalidArgumentException("'object' attribute is no '" . UserProfile::class . "' object.");
+			$type = gettype($object);
+			if (is_object($object)) {
+				$type = "'" . get_class($object) . "' object";
+			}
+			
+			throw new \InvalidArgumentException("'object' attribute is no '" . UserProfile::class . "' object, instead {$type} given.");
 		}
 		
 		$additionalParameters = '';
