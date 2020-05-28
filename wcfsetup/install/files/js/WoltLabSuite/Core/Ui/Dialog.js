@@ -683,7 +683,7 @@ define(
 				// 
 				// We can use `backface-visibility: hidden` to prevent the anti aliasing artifacts in
 				// WebKit/Blink, which will also prevent some weird font rendering issues when resizing.
-				if (data.content.parentNode !== null) data.content.parentNode.add('jsWebKitFractionalPixelFix');
+				data.content.parentNode.classList.add('jsWebKitFractionalPixelFix');
 			}
 			
 			var callbackObject = _dialogToObject.get(id);
