@@ -676,11 +676,14 @@ define(
 			// Chrome and Safari use heavy anti-aliasing when the dialog's width
 			// cannot be evenly divided, causing the whole text to become blurry
 			if (Environment.browser() === 'chrome' || Environment.browser() === 'safari') {
-				// `clientWidth` will report an integer value that isn't rounded properly (e.g. 0.59 -> 0)
-				var floatWidth = parseFloat(window.getComputedStyle(data.content).width);
-				var needsFix = (Math.round(floatWidth) % 2) !== 0;
-				
-				data.content.parentNode.classList[(needsFix ? 'add' : 'remove')]('jsWebKitFractionalPixel');
+				// The new Microsoft Edge is detected as "chrome", because effectively we're detecting
+				// Chromium rather than Chrome specifically. The workaround for fractional pixels does
+				// not work well in Edge, there seems to be a different logic for fractional positions,
+				// causing the text to be blurry.
+				// 
+				// We can use `backface-visibility: hidden` to prevent the anti aliasing artifacts in
+				// WebKit/Blink, which will also prevent some weird font rendering issues when resizing.
+				data.content.parentNode.classList.add('jsWebKitFractionalPixelFix');
 			}
 			
 			var callbackObject = _dialogToObject.get(id);
