@@ -78,7 +78,7 @@ https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<ID>[0-9]+)]]></regex>
 		<provider name="twitter-tweet">
 			<title>Twitter Tweet</title>
 			<regex><![CDATA[https://twitter.com/(?<USERNAME>[0-9a-zA-Z_]+)/status/(?<ID>[0-9]+)]]></regex>
-			<html><![CDATA[<div data-wsc-twitter-tweet="{$ID}"><a href="https://twitter.com/{$USERNAME}/status/{$ID}/">https://twitter.com/{$USERNAME}/status/{$ID}/</a></div>
+			<html><![CDATA[<div data-wsc-twitter-tweet="{$ID}"><a href="https://twitter.com/{$USERNAME}/status/{$ID}/" class="externalURL" rel="nofollow ugc">https://twitter.com/{$USERNAME}/status/{$ID}/</a></div>
 <script>require(["WoltLabSuite/Core/Ui/Message/TwitterEmbed"],function(t){t.embedAll()});</script>]]></html>
 		</provider>
 	</import>
