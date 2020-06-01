@@ -45,7 +45,7 @@
 				<div class="contentItemMetaContent">
 					<div class="contentItemMetaAuthor">
 						{if $article->userID}
-							<a href="{$article->getUserProfile()->getLink()}" class="userLink" data-user-id="{@$article->userID}">{$article->getUserProfile()->username}</a>
+							{user object=$article->getUserProfile()}
 						{else}
 							{$article->username}
 						{/if}

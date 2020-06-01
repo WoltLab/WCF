@@ -7,7 +7,7 @@
 				<div class="containerHeadline">
 					<h3>
 						{event name='beforeUsername'}
-						<a href="{link controller='User' object=$event->getUserProfile()}{/link}" class="userLink" data-user-id="{@$event->getUserProfile()->userID}">{$event->getUserProfile()->username}</a>
+						{user object=$event->getUserProfile()}
 						<small class="separatorLeft">{@$event->time|time}</small>
 					</h3>
 					<div>{@$event->getTitle()}</div>

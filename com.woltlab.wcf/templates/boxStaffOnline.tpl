@@ -6,7 +6,7 @@
 			<div class="sidebarItemTitle">
 				<h3>
 					{event name='beforeUsername'}
-					<a href="{link controller='User' object=$userOnline}{/link}" class="userLink" data-user-id="{@$userOnline->userID}">{$userOnline->username}</a>
+					{user object=$userOnline}
 				</h3>
 				{if MODULE_USER_RANK}
 					{if $userOnline->getUserTitle()}

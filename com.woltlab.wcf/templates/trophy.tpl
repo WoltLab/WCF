@@ -45,7 +45,7 @@
 				<div>{@$userTrophy->getUserProfile()->getAvatar()->getImageTag(64)}</div>
 
 				<div class="sidebarItemTitle">
-					<h3>{@$userTrophy->getUserProfile()->getAnchorTag()}</h3>
+					<h3>{user object=$userTrophy->getUserProfile()}</h3>
 					<small>{if !$userTrophy->getDescription()|empty}<span class="separatorRight">{@$userTrophy->getDescription()}</span> {/if}{@$userTrophy->time|time}</small>
 				</div>
 			</li>

@@ -12,7 +12,7 @@
 			{if $usersOnlineList|count}
 				<ul class="inlineList commaSeparated">
 					{foreach from=$usersOnlineList->getObjects() item=userOnline}
-						<li><a href="{link controller='User' object=$userOnline->getDecoratedObject()}{/link}" class="userLink" data-user-id="{@$userOnline->userID}">{@$userOnline->getFormattedUsername()}</a></li>
+						<li>{user object=$userOnline}</li>
 					{/foreach}
 				</ul>
 			{/if}

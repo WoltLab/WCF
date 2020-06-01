@@ -111,7 +111,13 @@
 							</h3>
 							
 							<ul class="inlineList dotSeparated small messageGroupInfo">
-								<li class="messageGroupAuthor">{if $entry->getAffectedObject()->getUserID()}<a href="{link controller='User' id=$entry->getAffectedObject()->getUserID() title=$entry->getAffectedObject()->getUsername()}{/link}" class="userLink" data-user-id="{@$entry->getAffectedObject()->getUserID()}">{$entry->getAffectedObject()->getUsername()}</a>{else}{$entry->getAffectedObject()->getUsername()}{/if}</li>
+								<li class="messageGroupAuthor">
+									{if $entry->getAffectedObject()->getUserID()}
+										{user object=$entry->getUserProfile()}
+									{else}
+										{$entry->getAffectedObject()->getUsername()}
+									{/if}
+								</li>
 								<li class="messageGroupTime">{@$entry->getAffectedObject()->getTime()|time}</li>
 								<li>{lang}wcf.moderation.type.{@$entry->getObjectTypeName()}{/lang}</li>
 								
@@ -125,7 +131,7 @@
 							
 							{if $entry->assignedUserID}
 								<small class="moderationQueueEntryAssignedUser">
-									{lang}wcf.moderation.assignedUser{/lang}: <a href="{link controller='User' id=$entry->assignedUserID}{/link}" class="userLink" data-user-id="{@$entry->assignedUserID}">{$entry->assignedUsername}</a>
+									{lang}wcf.moderation.assignedUser{/lang}: <a href="{link controller='User' id=$entry->assignedUserID}{/link}" class="userLink" data-object-id="{@$entry->assignedUserID}">{$entry->assignedUsername}</a>
 								</small>
 							{/if}
 							

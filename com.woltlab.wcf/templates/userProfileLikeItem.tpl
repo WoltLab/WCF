@@ -6,7 +6,7 @@
 			<div>
 				<div class="containerHeadline">
 					<h3>
-						<a href="{link controller='User' object=$like->getUserProfile()}{/link}" class="userLink" data-user-id="{@$like->getUserProfile()->userID}">{$like->getUserProfile()->username}</a>
+						{user object=$like->getUserProfile()}
 						<small class="separatorLeft">{@$like->time|time}</small>
 					</h3>
 					<div>{@$like->getTitle()}</div>

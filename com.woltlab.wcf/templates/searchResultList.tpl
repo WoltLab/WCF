@@ -28,7 +28,13 @@
 							{if $message->getUserProfile() || $message->getTime() || $message->getContainerTitle()}
 								<ul class="inlineList dotSeparated">
 									{if $message->getUserProfile()}
-										<li>{if $message->getUserProfile()->userID}<a href="{link controller='User' object=$message->getUserProfile()}{/link}" class="userLink" data-user-id="{@$message->getUserProfile()->userID}">{$message->getUserProfile()->username}</a>{else}{$message->getUserProfile()->username}{/if}</li>
+										<li>
+											{if $message->getUserProfile()->userID}
+												{user object=$message->getUserProfile()}
+											{else}
+												{$message->getUserProfile()->username}
+											{/if}
+										</li>
 									{/if}
 									{if $message->getTime()}
 										<li><small>{@$message->getTime()|time}</small></li>

@@ -1018,7 +1018,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	string
 	 */
 	public function getAnchorTag() {
-		return '<a href="'.$this->getLink().'" class="userLink" data-user-id="'.$this->userID.'">'.StringUtil::encodeHTML($this->username).'</a>';
+		return '<a href="'.$this->getLink().'" class="userLink" data-object-id="'.$this->userID.'">'.StringUtil::encodeHTML($this->username).'</a>';
 	}
 	
 	/**

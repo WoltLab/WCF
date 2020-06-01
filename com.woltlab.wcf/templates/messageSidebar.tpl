@@ -24,7 +24,7 @@
 			{/if}
 			
 			<div class="messageAuthorContainer">
-				<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$userProfile->userID}"{if $enableMicrodata} itemprop="url"{/if}>
+				<a href="{$userProfile->getLink()}" class="username userLink" data-object-id="{@$userProfile->userID}"{if $enableMicrodata} itemprop="url"{/if}>
 					<span{if $enableMicrodata} itemprop="name"{/if}>{@$userProfile->getFormattedUsername()}</span>
 				</a>
 				{if !$isReply}

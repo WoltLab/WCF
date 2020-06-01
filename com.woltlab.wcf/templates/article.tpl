@@ -21,8 +21,8 @@
 				<li itemprop="author" itemscope itemtype="http://schema.org/Person">
 					<span class="icon icon16 fa-user"></span>
 					{if $article->userID}
-						<a href="{link controller='User' id=$article->userID title=$article->username}{/link}" class="userLink" data-user-id="{@$article->userID}" itemprop="url">
-							<span itemprop="name">{$article->username}</span>
+						<a href="{$article->getUserProfile()->getLink()}" class="userLink" data-object-id="{@$article->userID}" itemprop="url">
+							<span itemprop="name">{@$article->getUserProfile()->getFormattedUsername()}</span>
 						</a>
 					{else}
 						<span itemprop="name">{$article->username}</span>
@@ -211,7 +211,7 @@
 					{event name='afterAboutAuthorText'}
 					
 					<div class="articleAboutAuthorUsername">
-						<a href="{link controller='User' object=$article->getUserProfile()->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$article->getUserProfile()->userID}">{@$article->getUserProfile()->getFormattedUsername()}</a>
+						{user object=$article->getUserProfile() class='username'}
 						
 						{if MODULE_USER_RANK}
 							{if $article->getUserProfile()->getUserTitle()}

@@ -28,8 +28,8 @@
 						<div class="containerHeadline">
 							<h3 itemprop="author" itemscope itemtype="http://schema.org/Person">
 								{if $comment->userID}
-									<a href="{link controller='User' object=$comment->getUserProfile()}{/link}" class="userLink" data-user-id="{@$comment->userID}" itemprop="url">
-										<span itemprop="name">{$comment->username}</span>
+									<a href="{$comment->getUserProfile()->getLink()}" class="userLink" data-object-id="{@$comment->userID}" itemprop="url">
+										<span itemprop="name">{@$comment->getUserProfile()->getFormattedUsername()}</span>
 									</a>
 								{else}
 									<span itemprop="name">{$comment->username}</span>
