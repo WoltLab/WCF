@@ -81,6 +81,13 @@ https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<ID>[0-9]+)]]></regex>
 			<html><![CDATA[<div data-wsc-twitter-tweet="{$ID}"><a href="https://twitter.com/{$USERNAME}/status/{$ID}/" class="externalURL" rel="nofollow ugc">https://twitter.com/{$USERNAME}/status/{$ID}/</a></div>
 <script>require(["WoltLabSuite/Core/Ui/Message/TwitterEmbed"],function(t){t.embedAll()});</script>]]></html>
 		</provider>
+		<provider name="facebook-video">
+			<title>Facebook Video</title>
+			<regex><![CDATA[(?<HREF>https?://(www\.)?facebook\.com/watch/\?v=(?<ID>[0-9]+))
+(?<HREF>https?://(www\.)?facebook\.com/[a-zA-Z0-9_-]+/videos/(?<ID>[0-9]+)/)]]></regex>
+			<html><![CDATA[<div class="fb-video" data-href="{$HREF}" data-allowfullscreen="true">{$HREF}</div>
+<script>require(['WoltLabSuite/Core/Wrapper/FacebookSdk'],function(FB){FB.XFBML.parse()})</script>]]></html>
+		</provider>
 	</import>
 	
 	<delete>
