@@ -549,7 +549,7 @@
 				<categoryname>general.system.ipAddress</categoryname>
 				<optiontype>boolean</optiontype>
 				<defaultvalue>0</defaultvalue>
-				<enableoptions>prune_ip_address,ip_address_search_engine</enableoptions>
+				<enableoptions>prune_ip_address</enableoptions>
 			</option>
 			<option name="prune_ip_address">
 				<categoryname>general.system.ipAddress</categoryname>
