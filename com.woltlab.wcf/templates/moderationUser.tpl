@@ -3,3 +3,5 @@
 		{include file='userListItem'}
 	</ol>
 </div>
+
+{event name='javascript'}
