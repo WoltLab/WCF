@@ -35,7 +35,7 @@ use wcf\util\UserUtil;
  * @property-read	string		$banReason			reason why the user is banned
  * @property-read	integer		$banExpires			timestamp at which the banned user is automatically unbanned
  * @property-read	integer		$activationCode			flag which determines, whether the user is activated (for legacy reasons an random integer, if the user is *not* activated)
- * @property-read	string		$emailConfirmed			code sent to the user's email address used for account activation
+ * @property-read	string		$emailConfirmed			code sent to the user's email address used for account activation or null if the email is confirmed
  * @property-read	integer		$lastLostPasswordRequestTime	timestamp at which the user has reported that they lost their password or 0 if password has not been reported as lost
  * @property-read	string		$lostPasswordKey		code used for authenticating setting new password after password loss or empty if password has not been reported as lost
  * @property-read	integer		$lastUsernameChange		timestamp at which the user changed their name the last time or 0 if username has not been changed

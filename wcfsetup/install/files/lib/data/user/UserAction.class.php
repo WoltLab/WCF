@@ -636,7 +636,6 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	
 	/**
 	 * Marks the email address as confirmed. It also enables the user, iff the register method is user activation only.
-
 	 * @since       5.3
 	 */
 	public function confirmEmail() {
@@ -658,7 +657,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	
 	/**
 	 * Marks the email address as unconfirmed.
-	 * @since 5.3
+	 * @since       5.3
 	 */
 	public function unconfirmEmail() {
 		if (empty($this->objects)) $this->readObjects();

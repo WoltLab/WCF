@@ -48,14 +48,14 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 	protected $userIsNotBanned = 0;
 	
 	/**
-	 * true if the the user is be email confirmed
+	 * true if the the user has confirmed their email address
 	 *
 	 * @var	integer
 	 */
 	protected $userIsEmailConfirmed = 0;
 	
 	/**
-	 * true if the the user is not be email confirmed
+	 * true if the the user has not confirmed their email address
 	 * @var	integer
 	 */
 	protected $userIsNotEmailConfirmed = 0;
