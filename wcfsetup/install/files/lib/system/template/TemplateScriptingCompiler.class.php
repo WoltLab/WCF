@@ -55,6 +55,7 @@ class TemplateScriptingCompiler {
 		'constant',
 		'count',
 		'currency',
+		'current',
 		'date',
 		'defined',
 		'empty',
