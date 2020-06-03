@@ -16,7 +16,7 @@ define([], function() {
 	 */
 	return {
 		observe: function() {
-			var container, toggleButtons;
+			var container, toggleButtons, overflowContainer;
 			while (_containers.length) {
 				container = _containers[0];
 				
@@ -28,6 +28,7 @@ define([], function() {
 						toggleButtons.push(button);
 					}
 				});
+				overflowContainer = elBySel('.collapsibleBbcodeOverflow', container) || container;
 				
 				if (toggleButtons.length > 0) {
 					(function (container, toggleButtons) {
@@ -74,10 +75,10 @@ define([], function() {
 						});
 						
 						// expand boxes that are initially scrolled
-						if (container.scrollTop !== 0) {
+						if (overflowContainer.scrollTop !== 0) {
 							toggle();
 						}
-						container.addEventListener('scroll', function () {
+						overflowContainer.addEventListener('scroll', function () {
 							if (container.classList.contains('collapsed')) {
 								toggle();
 							}
