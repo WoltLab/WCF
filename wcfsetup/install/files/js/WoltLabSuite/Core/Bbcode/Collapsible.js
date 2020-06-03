@@ -16,24 +16,26 @@ define([], function() {
 	 */
 	return {
 		observe: function() {
-			var container, toggleButton;
+			var container, toggleButtons;
 			while (_containers.length) {
 				container = _containers[0];
 				
 				// find the matching toggle button
-				toggleButton = null;
+				toggleButtons = [];
 				elBySelAll('.toggleButton:not(.jsToggleButtonEnabled)', container, function (button) {
 					//noinspection JSReferencingMutableVariableFromClosure
 					if (button.closest('.jsCollapsibleBbcode') === container) {
-						toggleButton = button;
+						toggleButtons.push(button);
 					}
 				});
 				
-				if (toggleButton) {
-					(function (container, toggleButton) {
+				if (toggleButtons.length > 0) {
+					(function (container, toggleButtons) {
 						var toggle = function (event) {
 							if (container.classList.toggle('collapsed')) {
-								toggleButton.textContent = elData(toggleButton, 'title-expand');
+								toggleButtons.forEach(function (toggleButton) {
+									toggleButton.textContent = elData(toggleButton, 'title-expand');
+								});
 								
 								if (event instanceof Event) {
 									// negative top value means the upper boundary is not within the viewport
@@ -46,12 +48,16 @@ define([], function() {
 								}
 							}
 							else {
-								toggleButton.textContent = elData(toggleButton, 'title-collapse');
+								toggleButtons.forEach(function (toggleButton) {
+									toggleButton.textContent = elData(toggleButton, 'title-collapse');
+								});
 							}
 						};
 						
-						toggleButton.classList.add('jsToggleButtonEnabled');
-						toggleButton.addEventListener(WCF_CLICK_EVENT, toggle);
+						toggleButtons.forEach(function (toggleButton) {
+							toggleButton.classList.add('jsToggleButtonEnabled');
+							toggleButton.addEventListener(WCF_CLICK_EVENT, toggle);
+						});
 						
 						// expand boxes that are initially scrolled
 						if (container.scrollTop !== 0) {
@@ -62,7 +68,7 @@ define([], function() {
 								toggle();
 							}
 						});
-					})(container, toggleButton);
+					})(container, toggleButtons);
 				}
 				
 				container.classList.remove('jsCollapsibleBbcode');
