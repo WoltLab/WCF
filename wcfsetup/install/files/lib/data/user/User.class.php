@@ -50,9 +50,7 @@ use wcf\util\UserUtil;
  * @property-read	integer		$enableGravatar			is `1` if the user uses a gravatar as avatar, otherwise `0`
  * @property-read	string		$gravatarFileExtension		extension of the user's gravatar file
  * @property-read	string		$signature			text of the user's signature
- * @property-read	integer		$signatureEnableBBCodes		is `1` if BBCodes will rendered in the user's signature, otherwise `0`
  * @property-read	integer		$signatureEnableHtml		is `1` if HTML will rendered in the user's signature, otherwise `0`
- * @property-read	integer		$signatureEnableSmilies		is `1` if smilies will rendered in the user's signature, otherwise `0`
  * @property-read	integer		$disableSignature		is `1` if the user's signature has been disabled, otherwise `0`
  * @property-read	string		$disableSignatureReason		reason why the user's signature is disabled
  * @property-read	integer		$disableSignatureExpires	timestamp at which the user's signature will automatically be enabled again
