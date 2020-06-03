@@ -20,7 +20,7 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			
 			var mpStart = this.caret.start;
 			this.caret.start = (function (node) {
-				if (_isSafari && _iOS) {
+				if (_isSafari) {
 					var sel, range;
 					node = this.caret.prepare(node);
 
