@@ -34,7 +34,14 @@ define([], function() {
 						var toggle = function (event) {
 							if (container.classList.toggle('collapsed')) {
 								toggleButtons.forEach(function (toggleButton) {
-									toggleButton.textContent = elData(toggleButton, 'title-expand');
+									if (toggleButton.classList.contains('icon')) {
+										toggleButton.classList.remove('fa-compress');
+										toggleButton.classList.add('fa-expand');
+										toggleButton.title = elData(toggleButton, 'title-expand');
+									}
+									else {
+										toggleButton.textContent = elData(toggleButton, 'title-expand');
+									}
 								});
 								
 								if (event instanceof Event) {
@@ -49,7 +56,14 @@ define([], function() {
 							}
 							else {
 								toggleButtons.forEach(function (toggleButton) {
-									toggleButton.textContent = elData(toggleButton, 'title-collapse');
+									if (toggleButton.classList.contains('icon')) {
+										toggleButton.classList.add('fa-compress');
+										toggleButton.classList.remove('fa-expand');
+										toggleButton.title = elData(toggleButton, 'title-collapse');
+									}
+									else {
+										toggleButton.textContent = elData(toggleButton, 'title-collapse');
+									}
 								});
 							}
 						};
