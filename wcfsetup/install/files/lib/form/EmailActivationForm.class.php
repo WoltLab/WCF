@@ -97,9 +97,12 @@ class EmailActivationForm extends AbstractForm {
 			'newEmail' => '',
 			'reactivationCode' => 0
 		];
-		if ($this->user->activationCode != 0 && REGISTER_ACTIVATION_METHOD & 1) {
-			// @TODO
-			$data['activationCode'] = 0;
+		if (!$this->user->isEmailConfirmed() && (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
+			$data['emailConfirmed'] = null;
+			
+			if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
+				$data['activationCode'] = 0;
+			}
 		}
 		
 		// enable new email
