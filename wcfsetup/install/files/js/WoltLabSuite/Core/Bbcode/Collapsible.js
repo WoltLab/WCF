@@ -76,9 +76,11 @@ define([], function() {
 						
 						// expand boxes that are initially scrolled
 						if (overflowContainer.scrollTop !== 0) {
+							overflowContainer.scrollTop = 0;
 							toggle();
 						}
 						overflowContainer.addEventListener('scroll', function () {
+							overflowContainer.scrollTop = 0;
 							if (container.classList.contains('collapsed')) {
 								toggle();
 							}
