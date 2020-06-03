@@ -427,7 +427,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * @since       5.3
 	 */
 	public function isEmailConfirmed() {
-		return empty($this->emailConfirmed);
+		return $this->emailConfirmed === null;
 	}
 	
 	/**
