@@ -429,7 +429,7 @@ class RegisterForm extends UserAddForm {
 		
 		// generate activation code
 		$addDefaultGroups = true;
-		if (!empty($this->blacklistMatches) || (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && !$registerVia3rdParty) || REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) {
+		if (!empty($this->blacklistMatches) || (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER && !$registerVia3rdParty) || (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
 			$activationCode = UserRegistrationUtil::getActivationCode();
 			$emailConfirmCode = bin2hex(\random_bytes(20));
 			$this->additionalFields['activationCode'] = $activationCode;

@@ -104,7 +104,7 @@ class RegisterActivationForm extends AbstractForm {
 		$this->saved();
 		
 		// forward to index page
-		if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN && !$this->user->isActivated()) {
+		if ((REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) && !$this->user->isActivated()) {
 			$redirectText = WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success.awaitAdminActivation');
 		}
 		else {
