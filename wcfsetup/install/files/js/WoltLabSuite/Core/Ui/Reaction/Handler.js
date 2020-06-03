@@ -353,6 +353,12 @@ define(
 			 * @param       {init}          reactionTypeId
 			 */
 			_react: function(reactionTypeId) {
+				if (~~this._popoverCurrentObjectId === 0) {
+					// Double clicking the reaction will cause the first click to go through, but
+					// causes the second to fail because the overlay is already closing.
+					return;
+				}
+				
 				this._options.parameters.reactionTypeID = reactionTypeId;
 				this._options.parameters.data.objectID = this._popoverCurrentObjectId;
 				this._options.parameters.data.objectType = this._objectType;
