@@ -542,6 +542,17 @@ CREATE TABLE wcf1_devtools_project (
 	UNIQUE KEY name (name)
 );
 
+DROP TABLE IF EXISTS wcf1_devtools_missing_language_item;
+CREATE TABLE wcf1_devtools_missing_language_item (
+	itemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	languageID INT(10),
+	languageItem VARCHAR(191) NOT NULL,
+	lastTime INT(10) NOT NULL,
+	stackTrace MEDIUMTEXT NOT NULL,
+	
+	UNIQUE KEY (languageID, languageItem)
+);
+
 DROP TABLE IF EXISTS wcf1_edit_history_entry;
 CREATE TABLE wcf1_edit_history_entry (
 	entryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -1938,6 +1949,8 @@ ALTER TABLE wcf1_core_object ADD FOREIGN KEY (packageID) REFERENCES wcf1_package
 ALTER TABLE wcf1_cronjob ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (packageID) ON DELETE CASCADE;
 
 ALTER TABLE wcf1_cronjob_log ADD FOREIGN KEY (cronjobID) REFERENCES wcf1_cronjob (cronjobID) ON DELETE CASCADE;
+
+ALTER TABLE wcf1_devtools_missing_language_item ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE SET NULL;
 
 ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;

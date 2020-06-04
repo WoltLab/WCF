@@ -576,6 +576,15 @@
 		<item name="wcf.acp.devtools.project.edit.error.brokenPath"><![CDATA[There is no <kbd>package.xml</kbd> in the given directory. The package files have either been deleted or moved.]]></item>
 		<item name="wcf.acp.devtools.project.edit.warning.missingElements"><![CDATA[The following information is missing from the <kbd>package.xml</kbd> file: {implode from=$missingElements item=missingElement}<kbd>{$missingElement}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.license"><![CDATA[License]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.languageID"><![CDATA[Language]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.languageItem"><![CDATA[Name of Phrase]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.lastTime"><![CDATA[Time of Last Occurence]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.delete.confirmMessage"><![CDATA[Do you really want to delete the entry?]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.stackTrace"><![CDATA[Stacktrace]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.showStackTrace"><![CDATA[Show Stacktrace]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.clearLog"><![CDATA[Delete all entries]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage"><![CDATA[Do you really want to delete all entries?]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat"><![CDATA[Toggle line breaks]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP Connection Test]]></item>
@@ -905,7 +914,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin Store]]></item>
 		<item name="wcf.acp.index.tinyBuild"><![CDATA[The accelerated guest view improves the page responsiveness and loading times for both visitors and search engines alike, please consider <a href="{link controller='Option' id=1 optionName="visitor_use_tiny_build"}#category_module.system{/link}">enabling it</a>.]]></item>
 		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Using reCAPTCHA without an individual website key is no longer supported by Google.<br><br>For further use you need to <a href="{$recaptchaKeyLink}">provide a key in your options</a>, please follow the instructions below the input field to obtain a key.]]></item>
-		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Missing language items have been detected (last time: {@$missingLanguageItemsMTime|time}). Check the file <kbd>{'WCF_DIR'|constant}log/missingLanguageItems.txt</kbd> for more information.]]></item>
+		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Missing language items have been detected (last time: {@$missingLanguageItemsMTime|time}). Check the <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">list of missing phrases</a> for more information.]]></item>
 	</category>
 	<category name="wcf.acp.label">
 		<item name="wcf.acp.label.add"><![CDATA[Add Label]]></item>
@@ -1163,6 +1172,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.menu.link.reactionType.edit"><![CDATA[Edit Reaction Type]]></item>
 		<item name="wcf.acp.menu.link.language.item.add"><![CDATA[Add Phrase]]></item>
 		<item name="wcf.acp.menu.link.systemCheck"><![CDATA[System Check]]></item>
+		<item name="wcf.acp.menu.link.devtools.missingLanguageItem.list"><![CDATA[Missing Phrases]]></item>
 	</category>
 	<category name="wcf.acp.modificationLog">
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Global Modification Log]]></item>

@@ -600,6 +600,15 @@
 		<item name="wcf.acp.devtools.project.edit.error.brokenPath"><![CDATA[Es existiert keine <kbd>package.xml</kbd> im angegebenen Pfad. Die Paket-Dateien wurden entweder gelöscht oder verschoben.]]></item>
 		<item name="wcf.acp.devtools.project.edit.warning.missingElements"><![CDATA[Die folgenden Informationen fehlen in der <kbd>package.xml</kbd>-Datei: {implode from=$missingElements item=missingElement}<kbd>{$missingElement}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.license"><![CDATA[Lizenz]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.languageID"><![CDATA[Sprache]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.languageItem"><![CDATA[Name des Texts]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.lastTime"><![CDATA[Zeitpunkt des letzten Auftretens]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.delete.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} den Eintrag wirklich löschen?]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.stackTrace"><![CDATA[Stacktrace]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.showStackTrace"><![CDATA[Stacktrace anzeigen]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.clearLog"><![CDATA[Alle Einträge löschen]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage"><![CDATA[{if LANGUAGE_USE_INFORMAL_VARIANT}Willst du{else}Wollen Sie{/if} wirklich alle Einträge löschen?]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat"><![CDATA[Zeilenumbrüche einschalten/ausschalten]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP-Verbindungstest]]></item>
@@ -928,7 +937,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin-Store]]></item>
 		<item name="wcf.acp.index.tinyBuild"><![CDATA[Die Seitenbeschleunigung für Gäste verbessert die Ladezeiten für Besucher und Suchmaschinen, es wird empfohlen diese <a href="{link controller='Option' id=1 optionName="visitor_use_tiny_build"}#category_module.system{/link}">zu aktivieren</a>.]]></item>
 		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Die Nutzung von reCAPTCHA ohne einen individuellen Website-Schlüssel wird von Google nicht mehr unterstützt.<br><br>Für eine weitere Nutzung {if LANGUAGE_USE_INFORMAL_VARIANT}musst du{else}müssen Sie{/if} <a href="{$recaptchaKeyLink}">einen Schlüssel in den Optionen hinterlegen</a>, unterhalb des Eingabefeldes befindet sich eine Anleitung zum Anfordern des Schlüssels.]]></item>
-		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Es wurden fehlende Sprachvariablen protokolliert (zuletzt: {@$missingLanguageItemsMTime|time}). {if LANGUAGE_USE_INFORMAL_VARIANT}Überprüfe{else}Überprüfen Sie{/if} die Datei <kbd>{'WCF_DIR'|constant}log/missingLanguageItems.txt</kbd> für weitere Informationen.]]></item>
+		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Es wurden fehlende Sprachvariablen protokolliert (zuletzt: {@$missingLanguageItemsMTime|time}). {if LANGUAGE_USE_INFORMAL_VARIANT}Überprüfe{else}Überprüfen Sie{/if} die <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">Liste der fehlenden Texten</a> für weitere Informationen.]]></item>
 	</category>
 	<category name="wcf.acp.label">
 		<item name="wcf.acp.label.add"><![CDATA[Label hinzufügen]]></item>
@@ -1186,6 +1195,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.menu.link.reactionType.edit"><![CDATA[Reaktions-Typ bearbeiten]]></item>
 		<item name="wcf.acp.menu.link.language.item.add"><![CDATA[Text hinzufügen]]></item>
 		<item name="wcf.acp.menu.link.systemCheck"><![CDATA[Systemüberprüfung]]></item>
+		<item name="wcf.acp.menu.link.devtools.missingLanguageItem.list"><![CDATA[Fehlende Texte]]></item>
 	</category>
 	<category name="wcf.acp.modificationLog">
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Globales Änderungsprotokoll]]></item>

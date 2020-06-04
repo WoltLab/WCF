@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
 use wcf\page\AbstractPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
@@ -120,7 +121,15 @@ class IndexPage extends AbstractPage {
 			&& file_exists(WCF_DIR . 'log/missingLanguageItems.txt')
 			&& filesize(WCF_DIR . 'log/missingLanguageItems.txt') > 0
 		) {
-			$missingLanguageItemsMTime = filemtime(WCF_DIR . 'log/missingLanguageItems.txt');
+			$logList = new DevtoolsMissingLanguageItemList();
+			$logList->sqlOrderBy = 'lastTime DESC';
+			$logList->sqlLimit = 1;
+			$logList->readObjects();
+			$logEntry = $logList->getSingleObject();
+			
+			if ($logEntry !== null) {
+				$missingLanguageItemsMTime = $logEntry->lastTime;
+			}
 		}
 		
 		WCF::getTPL()->assign([
