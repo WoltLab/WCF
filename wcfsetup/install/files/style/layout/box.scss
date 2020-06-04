@@ -598,7 +598,8 @@
 	padding-right: 10px;
 }
 
-@include screen-xs {
+/* collapsible sidebar for mobile devices */
+@include screen-md-down {
 	.main > .layoutBoundary {
 		display: flex;
 		flex-wrap: wrap;
