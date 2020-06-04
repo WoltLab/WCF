@@ -241,7 +241,7 @@ class UserRankAddForm extends AbstractForm {
 			'customCssClassName' => $this->customCssClassName,
 			'groupID' => $this->groupID,
 			'rankTitle' => $this->rankTitle,
-			'availableGroups' => UserGroup::getGroupsByType([], [UserGroup::GUESTS, UserGroup::EVERYONE]),
+			'availableGroups' => UserGroup::getSortedGroupsByType([], [UserGroup::GUESTS, UserGroup::EVERYONE]),
 			'requiredPoints' => $this->requiredPoints,
 			'rankImage' => $this->rankImage,
 			'repeatImage' => $this->repeatImage,

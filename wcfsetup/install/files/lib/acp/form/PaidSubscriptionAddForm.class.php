@@ -142,7 +142,7 @@ class PaidSubscriptionAddForm extends AbstractForm {
 		I18nHandler::getInstance()->register('title');
 		
 		// get available user groups
-		$this->availableUserGroups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
+		$this->availableUserGroups = UserGroup::getSortedAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
 		
 		if (!count(PaymentMethodHandler::getInstance()->getPaymentMethods())) {
 			throw new NamedUserException(WCF::getLanguage()->get('wcf.acp.paidSubscription.error.noPaymentMethods'));

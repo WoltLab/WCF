@@ -184,6 +184,6 @@ class UserAssignToGroupForm extends AbstractForm {
 	 * Get a list of available groups.
 	 */
 	protected function readGroups() {
-		$this->groups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
+		$this->groups = UserGroup::getSortedAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
 	}
 }
