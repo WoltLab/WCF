@@ -126,6 +126,22 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	}
 	
 	/**
+	 * Returns a sorted list of groups filtered by given type.
+	 *
+	 * @param	integer[]	$types
+	 * @param	integer[]	$invalidGroupTypes
+	 * @return	UserGroup[]
+	 * @since       5.3
+	 */
+	public static function getSortedGroupsByType(array $types = [], array $invalidGroupTypes = []) {
+		$userGroups = self::getGroupsByType($types, $invalidGroupTypes);
+		
+		self::sortGroups($userGroups);
+		
+		return $userGroups;
+	}
+	
+	/**
 	 * Returns unique group by given type. Only works for the default user groups.
 	 * 
 	 * @param	integer		$type
@@ -270,9 +286,7 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	public static function getSortedAccessibleGroups(array $groupTypes = [], array $invalidGroupTypes = []) {
 		$userGroups = self::getAccessibleGroups($groupTypes, $invalidGroupTypes);
 		
-		uasort($userGroups, function(UserGroup $groupA, UserGroup $groupB) {
-			return strcasecmp($groupA->getName(), $groupB->getName());
-		});
+		self::sortGroups($userGroups);
 		
 		return $userGroups;
 	}
@@ -544,5 +558,17 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 		}
 		
 		return self::$ownerGroup ? self::$ownerGroup->groupID : null;
+	}
+	
+	/**
+	 * Sorts the given user groups alphabetically.
+	 * 
+	 * @param       UserGroup[]     $userGroups
+	 * @since       5.3
+	 */
+	public static function sortGroups(array &$userGroups) {
+		uasort($userGroups, function(UserGroup $groupA, UserGroup $groupB) {
+			return strcasecmp($groupA->getName(), $groupB->getName());
+		});
 	}
 }

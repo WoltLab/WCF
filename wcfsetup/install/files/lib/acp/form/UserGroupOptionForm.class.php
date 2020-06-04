@@ -117,7 +117,7 @@ class UserGroupOptionForm extends AbstractForm {
 		}
 		
 		// read accessible groups
-		$this->groups = UserGroup::getAccessibleGroups();
+		$this->groups = UserGroup::getSortedAccessibleGroups();
 		if ($this->userGroupOption->usersOnly) {
 			$guestGroup = UserGroup::getGroupByType(UserGroup::GUESTS);
 			if (isset($this->groups[$guestGroup->groupID])) {
