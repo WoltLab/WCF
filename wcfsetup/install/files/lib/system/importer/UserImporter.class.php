@@ -176,7 +176,7 @@ class UserImporter extends AbstractImporter {
 			}
 		}
 		
-		if ($user->isActivated()) $defaultGroupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::USERS]);
+		if (!$user->pendingActivation()) $defaultGroupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::USERS]);
 		else $defaultGroupIDs = UserGroup::getGroupIDsByType([UserGroup::EVERYONE, UserGroup::GUESTS]);
 		
 		$groupIDs = array_merge($groupIDs, $defaultGroupIDs);

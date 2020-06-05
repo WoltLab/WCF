@@ -407,7 +407,7 @@ class UserProfileAction extends UserAction {
 				$fixUserGroupIDs[$user->userID] = [UserGroup::EVERYONE];
 				$groupIDs[] = UserGroup::EVERYONE;
 			}
-			if (!$user->isActivated()) {
+			if ($user->pendingActivation()) {
 				if (!in_array(UserGroup::GUESTS, $groupIDs)) {
 					if (!isset($fixUserGroupIDs[$user->userID])) $fixUserGroupIDs[$user->userID] = [];
 					$fixUserGroupIDs[$user->userID][] = UserGroup::GUESTS;

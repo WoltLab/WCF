@@ -4727,13 +4727,13 @@ confirm the validity of your email address once:
 
     {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->emailConfirmed}{/link} {* this line ends with a space *}
 
-Your activation code is: {@$mailbox->getUser()->activationCode} {* this line ends with a space *}
+Your activation code is: {@$mailbox->getUser()->emailConfirmed} {* this line ends with a space *}
 
 If you have trouble confirming your email address, please contact the
 administrator at: {@MAIL_ADMIN_ADDRESS}. Please ignore this email if you did
 not register with us.]]></item>
 		<item name="wcf.user.register.needAdminActivation"><![CDATA[Your account must be activated by an administrator in order to use the full scope of the website.]]></item>
-		<item name="wcf.user.register.needEmailConfirmation"><![CDATA[Your email address is not activated yet. <a href="{link controller='RegisterActivation'}{/link}">Activate now your email address</a>.]]></item>
+		<item name="wcf.user.register.needEmailConfirmation"><![CDATA[Your email address is not activated yet. <a href="{link controller='RegisterActivation'}{/link}">Activate now your email address</a>. {if $__wcf->user->canEmailConfirm()}<a href="{link controller='RegisterActivation'}{/link}">Confirm your email address</a>{else}To activate your email address contact the administrator of this site.{/if}.]]></item>
 		<!-- Success Messages -->
 		<item name="wcf.user.register.success"><![CDATA[Thank you for registering, {$user->username}.<br>
 Your registration is now completed.]]></item>

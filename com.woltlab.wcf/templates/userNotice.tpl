@@ -10,19 +10,14 @@
 		<p class="info" role="status">{lang}wcf.page.availableUpdates{/lang}</p>
 	{/if}
 	
-	{* user needs email confirmation to be activated *}
-	{if !$__wcf->user->isEmailConfirmed() && !$__wcf->user->isActivated() && REGISTER_ACTIVATION_METHOD & 1 && $templateName != 'registerActivation' && $templateName != 'register' && $templateName != 'redirect' && $__wcf->user->getBlacklistMatches()|empty}
-		<p class="warning" role="status">{lang}wcf.user.register.needActivation{/lang}</p>
-	{/if}
-	
-	{* user needs admin activation *}
-	{if $__wcf->user->isEmailConfirmed() && REGISTER_ACTIVATION_METHOD & 2 && !$__wcf->user->isActivated() && $templateName != 'registerActivation' && $templateName != 'register' && $templateName != 'redirect' && $__wcf->user->getBlacklistMatches()|empty}
-		<p class="warning" role="status">{lang}wcf.user.register.needAdminActivation{/lang}</p>
-	{/if}
-	
-	{* user needs email activation w/o being disabled *}
-	{if !$__wcf->user->isEmailConfirmed() && REGISTER_ACTIVATION_METHOD & 1 && $__wcf->user->isActivated() && $templateName != 'registerActivation' && $templateName != 'register' && $templateName != 'redirect' && $__wcf->user->getBlacklistMatches()|empty}
-		<p class="warning" role="status">{lang}wcf.user.register.needEmailConfirmation{/lang}</p>
+	{if $templateName != 'registerActivation' && $templateName != 'register' && $templateName != 'redirect' && $__wcf->user->getBlacklistMatches()|empty}
+		{if $__wcf->user->requiresEmailActivation()}
+			<p class="warning" role="status">{lang}wcf.user.register.needActivation{/lang}</p>
+		{elseif $__wcf->user->requiresAdminActivation()}
+			<p class="warning" role="status">{lang}wcf.user.register.needAdminActivation{/lang}</p>
+		{elseif !$__wcf->user->isEmailConfirmed()}
+			<p class="warning" role="status">{lang}wcf.user.register.needEmailConfirmation{/lang}</p>
+		{/if}
 	{/if}
 	
 	{hascontent}

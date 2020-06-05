@@ -1067,7 +1067,7 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		foreach ($this->objects as $object) {
 			/** @var UserEditor $object */
-			if ($object->isActivated()) {
+			if (!$object->requiresEmailActivation()) {
 				throw new UserInputException('objectIDs');
 			}
 		}

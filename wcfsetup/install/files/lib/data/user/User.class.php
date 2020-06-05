@@ -411,16 +411,6 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	}
 	
 	/**
-	 * Returns true if this user is activated.
-	 *
-	 * @return	boolean
-	 * @since       5.3
-	 */
-	public function isActivated() {
-		return $this->activationCode == 0;
-	}
-	
-	/**
 	 * Returns true if the email is confirmed.
 	 *
 	 * @return	boolean
@@ -619,7 +609,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * @return      boolean
 	 */
 	public function canPurchasePaidSubscriptions() {
-		return WCF::getUser()->userID && $this->isActivated();
+		return WCF::getUser()->userID && !$this->pendingActivation();
 	}
 	
 	/**
@@ -630,7 +620,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * @since 5.2
 	 */
 	public function getBlacklistMatches() {
-		if ($this->isActivated() && $this->blacklistMatches) {
+		if ($this->pendingActivation() && $this->blacklistMatches) {
 			$matches = JSON::decode($this->blacklistMatches);
 			if (is_array($matches)) {
 				return $matches;
@@ -653,5 +643,45 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 			if ($field === 'ip') $field = 'ipAddress';
 			return WCF::getLanguage()->get('wcf.user.' . $field);
 		}, $this->getBlacklistMatches());
+	}
+	
+	/**
+	 * Returns true if this user is not activated.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function pendingActivation() {
+		return $this->activationCode != 0;
+	}
+	
+	/**
+	 * Returns true if this user requires activation by the user.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function requiresEmailActivation() {
+		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && $this->pendingActivation() && !$this->isEmailConfirmed();
+	}
+	
+	/**
+	 * Returns true if this user requires the activation by an admin.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function requiresAdminActivation() {
+		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_ADMIN && $this->pendingActivation();
+	}
+	
+	/**
+	 * Returns true if this user can confirm the email themself.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function canEmailConfirm() {
+		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && !$this->isEmailConfirmed();
 	}
 }
