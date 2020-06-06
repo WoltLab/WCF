@@ -59,9 +59,7 @@
 	
 	<div class="box32">
 		{if $reportUser->userID}
-			<a href="{link controller='User' object=$reportUser}{/link}" title="{$reportUser->username}">
-				{@$reportUser->getAvatar()->getImageTag(32)}
-			</a>
+			{user object=$reportUser type='avatar32' title=$reportUser->username}
 		{else}
 			<span>{@$reportUser->getAvatar()->getImageTag(32)}</span>
 		{/if}

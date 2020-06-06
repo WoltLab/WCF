@@ -4,7 +4,13 @@
 		
 		<div>
 			<div class="containerHeadline">
-				<h3>{if $userProfile->userID}<a href="{link controller='User' object=$userProfile}{/link}">{$userProfile->username}</a>{else}{$userProfile->username}{/if}</h3>
+				<h3>
+					{if $userProfile->userID}
+						{user object=$userProfile}
+					{else}
+						{$userProfile->username}
+					{/if}
+				</h3>
 				{if MODULE_USER_RANK}
 					{if $userProfile->getUserTitle()}
 						<p><span class="badge userTitleBadge{if $userProfile->getRank() && $userProfile->getRank()->cssClassName} {@$userProfile->getRank()->cssClassName}{/if}">{$userProfile->getUserTitle()}</span></p>

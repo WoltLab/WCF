@@ -14,9 +14,7 @@
 		>
 			<div class="box48{if $__wcf->getUserProfileHandler()->isIgnoredUser($comment->userID)} ignoredUserContent{/if}">
 				{if $comment->userID}
-					<a href="{link controller='User' object=$comment->getUserProfile()}{/link}" title="{$comment->getUserProfile()->username}">
-						{@$comment->getUserProfile()->getAvatar()->getImageTag(48)}
-					</a>
+					{user object=$comment->getUserProfile() type='avatar48' title=$comment->getUserProfile()->username}
 				{else}
 					{@$comment->getUserProfile()->getAvatar()->getImageTag(48)}
 				{/if}

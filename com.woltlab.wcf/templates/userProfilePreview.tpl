@@ -2,7 +2,7 @@
 	<p>{lang}wcf.user.unknownUser{/lang}</p>
 {else}
 	<div class="box128 userProfilePreview">
-		<a href="{link controller='User' object=$user}{/link}" title="{$user->username}" class="userProfilePreviewAvatar">
+		<a href="{$user->getLink()}" title="{$user->username}" class="userProfilePreviewAvatar">
 			{@$user->getAvatar()->getImageTag(128)}
 			
 			{if $user->isOnline()}<span class="badge green badgeOnline">{lang}wcf.user.online{/lang}</span>{/if}
@@ -10,7 +10,7 @@
 		
 		<div class="userInformation">
 			{include file='userInformation' disableDialogLinks=true}
-
+			
 			{if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies') && ($user->isAccessible('canViewTrophies') || $user->userID == $__wcf->session->userID) && $user->getSpecialTrophies()|count}
 				<div class="specialTrophyUserContainer">
 					<ul>

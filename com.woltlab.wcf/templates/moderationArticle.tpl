@@ -3,7 +3,7 @@
 		<header class="messageHeader">
 			<div class="box32 messageHeaderWrapper">
 				{if $article->getUserProfile()->userID}
-					<a href="{link controller='User' object=$article->getUserProfile()->getDecoratedObject()}{/link}" aria-hidden="true">{@$article->getUserProfile()->getAvatar()->getImageTag(32)}</a>
+					{user object=$article->getUserProfile() type='avatar32' ariaHidden='true'}
 				{else}
 					<span>{@$article->getUserProfile()->getAvatar()->getImageTag(32)}</span>
 				{/if}
@@ -16,7 +16,7 @@
 					<ul class="messageHeaderMetaData">
 						<li>
 							{if $article->getUserProfile()->userID}
-								<a href="{link controller='User' object=$article->getUserProfile()->getDecoratedObject()}{/link}" class="username">{$article->getUserProfile()}</a>
+								{user object=$article->getUserProfile() class='username'}
 							{else}
 								{$article->getUserProfile()->username}
 							{/if}

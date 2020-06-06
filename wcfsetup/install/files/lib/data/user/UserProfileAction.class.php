@@ -130,12 +130,9 @@ class UserProfileAction extends UserAction implements IPopoverAction {
 		$userID = reset($this->objectIDs);
 		
 		if ($userID) {
-			$userProfileList = new UserProfileList();
-			$userProfileList->getConditionBuilder()->add("user_table.userID = ?", [$userID]);
-			$userProfileList->readObjects();
-			
-			if (count($userProfileList)) {
-				WCF::getTPL()->assign('user', $userProfileList->getSingleObject());
+			$userProfile = UserProfileRuntimeCache::getInstance()->getObject($userID);
+			if ($userProfile) {
+				WCF::getTPL()->assign('user', $userProfile);
 			}
 			else {
 				WCF::getTPL()->assign('unknownUser', true);

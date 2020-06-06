@@ -89,7 +89,7 @@
 			{* logged-in *}
 			<li class="menuOverlayTitle">{lang}wcf.menu.user{/lang}</li>
 			<li class="menuOverlayItem">
-				<a href="{link controller='User' object=$__wcf->user}{/link}" class="menuOverlayItemLink box24">
+				<a href="{$__wcf->user->getLink()}" class="menuOverlayItemLink box24">
 					{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)}
 					<span class="menuOverlayItemTitle">{$__wcf->user->username}</span>
 				</a>

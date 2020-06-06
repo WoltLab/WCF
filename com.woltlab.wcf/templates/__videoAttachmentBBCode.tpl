@@ -1,8 +1,8 @@
 <div id="attachmentVideo_{@$attachmentIdentifier}" class="videoContainer" style="display: none;">
-	<video src="{link controller='Attachment' object=$attachment}{/link}" controls></video>
+	<video src="{$attachment->getLink()}" controls></video>
 </div>
 
-<a id="attachmentVideoLink_{@$attachmentIdentifier}" href="{link controller='Attachment' object=$attachment}{/link}">{$attachment->filename}</a>
+<a id="attachmentVideoLink_{@$attachmentIdentifier}" href="{$attachment->getLink()}">{$attachment->filename}</a>
 
 <script data-relocate="true">
 	{* try to determine if browser might be able to play video *}

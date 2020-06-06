@@ -17,7 +17,7 @@
 			
 			{if $userProfile->getAvatar()}
 				<div class="userAvatar">
-					<a href="{link controller='User' object=$userProfile->getDecoratedObject()}{/link}" aria-hidden="true">{@$userProfile->getAvatar()->getImageTag(128)}</a>
+					{user object=$userProfile type='avatar128' ariaHidden='true'}
 					
 					{if MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS && !$isReply && $userProfile->isOnline()}<span class="badge green badgeOnline" title="{lang}wcf.user.online.title{/lang}">{lang}wcf.user.online{/lang}</span>{/if}
 				</div>
@@ -91,7 +91,7 @@
 					<dl class="plain dataList">
 						{content}
 							{if MODULE_LIKE && MESSAGE_SIDEBAR_ENABLE_LIKES_RECEIVED && !$isReply && $userProfile->likesReceived}
-								<dt><a href="{link controller='User' object=$userProfile}{/link}#likes" class="jsTooltip" title="{lang user=$userProfile}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.likesReceived{/lang}</a></dt>
+								<dt><a href="{$userProfile->getLink()}#likes" class="jsTooltip" title="{lang user=$userProfile}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.likesReceived{/lang}</a></dt>
 								<dd>{#$userProfile->likesReceived}</dd>
 							{/if}
 							

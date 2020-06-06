@@ -1,7 +1,7 @@
 <ul class="sidebarItemList">
 	{foreach from=$usersOnlineList item=userOnline}
 		<li class="box32">
-			<a href="{link controller='User' object=$userOnline}{/link}" aria-hidden="true">{@$userOnline->getAvatar()->getImageTag(32)}</a>
+			{user object=$userOnline type='avatar32' ariaHidden='true'}
 			
 			<div class="sidebarItemTitle">
 				<h3>
