@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\cronjob\CronjobList;
+use wcf\data\cronjob\I18nCronjobList;
 use wcf\data\cronjob\log\CronjobLogList;
 use wcf\page\SortablePage;
 use wcf\system\WCF;
@@ -108,8 +109,8 @@ class CronjobLogListPage extends SortablePage {
 	public function readData() {
 		parent::readData();
 		
-		$this->availableCronjobs = new CronjobList();
-		$this->availableCronjobs->sqlOrderBy = 'cronjobID';
+		$this->availableCronjobs = new I18nCronjobList();
+		$this->availableCronjobs->sqlOrderBy = 'descriptionI18n';
 		$this->availableCronjobs->readObjects();
 	}
 	
