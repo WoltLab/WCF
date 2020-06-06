@@ -163,7 +163,8 @@ class UserPage extends AbstractPage {
 			'visitors' => $this->visitorList !== null ? $this->visitorList->getObjects() : [],
 			'visitorCount' => $this->visitorList !== null ? $this->visitorList->countObjects() : 0,
 			'isAccessible' => UserGroup::isAccessibleGroup($this->user->getGroupIDs()),
-			'coverPhotoDimensions' => UserCoverPhoto::getCoverPhotoDimensions()
+			'coverPhotoDimensions' => UserCoverPhoto::getCoverPhotoDimensions(),
+			'specialTrophyCount' => (MODULE_TROPHY ? count($this->user->getSpecialTrophies()) : 0),
 		]);
 	}
 	

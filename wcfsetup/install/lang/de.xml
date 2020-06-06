@@ -4793,6 +4793,7 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.trophy.condition.excludedTrophies"><![CDATA[Ausgeschlossene Trophäen]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophyCategories"><![CDATA[Ausgeschlossene Trophäen Kategorien]]></item>
 		<item name="wcf.user.trophy.trophyAwarded"><![CDATA[{#$items} Mal vergeben]]></item>
+		<item name="wcf.user.trophy.showMoreTrophies"><![CDATA[und {#$trophyCount} weitere]]></item>
 	</category>
 	<category name="wcf.acp.trophy">
 		<item name="wcf.acp.trophy"><![CDATA[Trophäe]]></item>
