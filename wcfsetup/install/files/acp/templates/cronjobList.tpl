@@ -84,7 +84,7 @@
 							<td class="columnDate columnStartDom">{$cronjob->startDom|truncate:30}</td>
 							<td class="columnDate columnStartMonth">{$cronjob->startMonth|truncate:30}</td>
 							<td class="columnDate columnStartDow">{$cronjob->startDow|truncate:30}</td>
-							<td class="columnText columnDescription" title="{$cronjob->getDescription()}">
+							<td class="columnText columnDescription">
 								{if $cronjob->isEditable()}
 									<a title="{lang}wcf.acp.cronjob.edit{/lang}" href="{link controller='CronjobEdit' id=$cronjob->cronjobID}{/link}">{$cronjob->getDescription()}</a>
 								{else}
