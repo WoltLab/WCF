@@ -798,10 +798,9 @@ png</defaultvalue>
 			<option name="user.profile.trophy.maxUserSpecialTrophies">
 				<categoryname>user.profile.trophy</categoryname>
 				<optiontype>integer</optiontype>
-				<defaultvalue>3</defaultvalue>
+				<defaultvalue>5</defaultvalue>
 				<options>module_trophy</options>
 				<minvalue>0</minvalue>
-				<maxvalue>5</maxvalue>
 				<usersonly>1</usersonly>
 			</option>
 			<!-- /user.profile -->
