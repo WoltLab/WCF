@@ -1544,6 +1544,14 @@ ruby
 rust
 go</defaultvalue>
 			</option>
+			<option name="modification_log_expiration">
+				<categoryname>message.general</categoryname>
+				<optiontype>integer</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<minvalue>0</minvalue>
+				<maxvalue>365</maxvalue>
+				<suffix>days</suffix>
+			</option>
 			<!-- /message.general -->
 			<option name="search_results_per_page">
 				<categoryname>message.search</categoryname>

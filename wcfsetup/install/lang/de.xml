@@ -1762,6 +1762,8 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[Es besteht immer das Risiko eines fehlerhaften Eintrages, daher wird die Einstellung <strong>Deaktivierung, erfordert manuelle Freischaltung</strong> ausdrücklich empfohlen.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Deaktivierung, erfordert manuelle Freischaltung]]></item>
 		<item name="wcf.acp.option.module_amp"><![CDATA[<abbr title="Accelerated Mobile Pages">AMP</abbr>]]></item>
+		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Speicherzeit für Änderungen]]></item>
+		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Zeitraum, nachdem alte Änderungen aus dem Änderungsprotokoll entfernt werden [0, um die Entfernung gänzlich zu deaktivieren]]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Eingabefelder]]></item>
