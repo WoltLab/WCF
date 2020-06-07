@@ -227,11 +227,21 @@ class UserGroup extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns true if this is the 'Owner' group.
 	 * 
-	 * @return bool
-	 * @since 5.2
+	 * @return      bool
+	 * @since       5.2
 	 */
 	public function isOwner() {
 		return $this->groupType == self::OWNER;
+	}
+	
+	/**
+	 * Returns `true` if the active user can copy this user group.
+	 * 
+	 * @return      bool
+	 * @since       5.3
+	 */
+	public function canCopy() {
+		return WCF::getSession()->getPermission('admin.user.canAddGroup') && $this->isAccessible();
 	}
 	
 	/**
