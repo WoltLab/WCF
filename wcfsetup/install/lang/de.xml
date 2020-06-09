@@ -891,6 +891,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions.description"><![CDATA[Eine Dateiendung pro Zeile]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserProfile"><![CDATA[Kann eigenes Profil bearbeiten]]></item>
+		<item name="wcf.acp.group.option.user.profile.canHideOnlineStatus"><![CDATA[Kann Online-Status verbergen]]></item>
 		<item name="wcf.acp.group.allowMention"><![CDATA[Benutzergruppe kann erwähnt werden]]></item>
 		<item name="wcf.acp.group.type.owner"><![CDATA[Besitzer]]></item>
 		<item name="wcf.acp.group.type.owner.description"><![CDATA[Die Besitzer-Gruppe verfügt über nicht entziehbare Berechtigungen und kann von anderen Gruppen nicht bearbeitet werden, diese Gruppe kann nur durch die Besitzer-Gruppe selbst bearbeitet werden. Mitglieder dieser Gruppe können andere Benutzer zu dieser Gruppe hinzufügen, sich aber selbst nicht daraus entfernen.]]></item>
