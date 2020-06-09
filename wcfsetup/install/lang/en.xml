@@ -4431,7 +4431,7 @@ Attachments:
 		<item name="wcf.user.userAgent"><![CDATA[User Agent]]></item>
 		<item name="wcf.user.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[The login requires the acceptance of cookies, please enable cookies to proceed.]]></item>
-		<item name="wcf.user.login.forceLogin"><![CDATA[You must be logged-in to access to this page.]]></item>
+		<item name="wcf.user.login.forceLogin"><![CDATA[You must be logged-in to access this page.]]></item>
 		<item name="wcf.user.login.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.register"><![CDATA[Register]]></item>
 		<item name="wcf.user.login.register.teaser"><![CDATA[Don’t have an account yet? <a href="{link controller='Register'}{/link}">Register yourself now</a> and be a part of our community!]]></item>
