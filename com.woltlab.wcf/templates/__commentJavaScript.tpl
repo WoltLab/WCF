@@ -14,7 +14,7 @@
 			'wcf.moderation.report.success': '{lang}wcf.moderation.report.success{/lang}'
 		});
 		
-		new {if $commentHandlerClass|isset}{@$commentHandlerClass}{else}WCF.Comment.Handler{/if}('{$commentContainerID}');
+		new {if $commentHandlerClass|isset}{@$commentHandlerClass}{else}WCF.Comment.Handler{/if}('{@$commentContainerID}');
 		{if MODULE_LIKE && $commentList->getCommentManager()->supportsLike() && $__wcf->getSession()->getPermission('user.like.canViewLike')}
 			require(['WoltLabSuite/Core/Ui/Like/Handler'], function(UiLikeHandler) {
 				var canDislike = {if LIKE_ENABLE_DISLIKE}true{else}false{/if};
@@ -36,7 +36,7 @@
 					// selectors
 					badgeContainerSelector: '.commentContent:not(.commentResponseContent) > .containerHeadline > h3',
 					buttonAppendToSelector: '.commentContent .buttonList',
-					containerSelector: '.comment',
+					containerSelector: '#{@$commentContainerID} .comment',
 					summarySelector: ''
 				});
 				
@@ -55,15 +55,15 @@
 					// selectors
 					badgeContainerSelector: '.commentResponseContent > .containerHeadline > h3',
 					buttonAppendToSelector: '.commentContent .buttonList',
-					containerSelector: '.commentResponse',
+					containerSelector: '#{@$commentContainerID} .commentResponse',
 					summarySelector: ''
 				});
 			});
 		{/if}
 		
 		{if $commentList->getCommentManager()->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
-			new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.comment', '.jsReportCommentComment');
-			new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.response', '.jsReportCommentResponse');
+			new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.comment', '#{@$commentContainerID} .jsReportCommentComment');
+			new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.response', '#{@$commentContainerID} .jsReportCommentResponse');
 		{/if}
 	});
 </script>
