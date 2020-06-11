@@ -102,7 +102,7 @@ class WhoWasOnlineBoxController extends AbstractDatabaseObjectListBoxController 
 			});
 			foreach ($this->users as $key => $user) {
 				// remove invisible users
-				if (!UsersOnlineList::isVisible($user->userID, $user->canViewOnlineStatus)) {
+				if (!UsersOnlineList::isVisibleUser($user)) {
 					unset($this->users[$key]);
 				}
 			}

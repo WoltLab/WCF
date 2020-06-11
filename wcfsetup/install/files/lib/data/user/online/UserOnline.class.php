@@ -48,7 +48,10 @@ class UserOnline extends UserProfile {
 			$username = str_replace('%s', $username, $this->userOnlineMarking);
 		}
 		
-		if ($this->canViewOnlineStatus == 3) {
+		if (
+			$this->getPermission('user.profile.canHideOnlineStatus')
+			&& $this->canViewOnlineStatus == UserProfile::ACCESS_NOBODY
+		) {
 			$username .= WCF::getLanguage()->get('wcf.user.usersOnline.invisible');
 		}
 		
