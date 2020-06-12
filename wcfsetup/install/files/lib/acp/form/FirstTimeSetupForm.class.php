@@ -41,6 +41,7 @@ class FirstTimeSetupForm extends AbstractOptionListForm {
 		'mail_from_address',
 		'mail_admin_address',
 		'image_allow_external_source',
+		'message_enable_user_consent',
 		'module_contact_form',
 		'log_ip_address',
 		'package_server_auth_code',

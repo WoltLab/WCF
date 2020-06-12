@@ -1544,6 +1544,11 @@ ruby
 rust
 go</defaultvalue>
 			</option>
+			<option name="message_enable_user_consent">
+				<categoryname>message.general</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+			</option>
 			<!-- /message.general -->
 			<option name="search_results_per_page">
 				<categoryname>message.search</categoryname>

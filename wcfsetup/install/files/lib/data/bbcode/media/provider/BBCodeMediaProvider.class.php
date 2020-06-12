@@ -5,13 +5,15 @@ use wcf\system\bbcode\media\provider\IBBCodeMediaProvider;
 use wcf\system\cache\builder\BBCodeMediaProviderCacheBuilder;
 use wcf\system\request\IRouteController;
 use wcf\system\Regex;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
+use wcf\util\Url;
 
 /**
  * Represents a BBCode media provider.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Bbcode\Media\Provider
  *
@@ -98,14 +100,14 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 			if (!$regex->match($url)) continue;
 			
 			if ($this->getCallback() !== null) {
-				return $this->getCallback()->parse($url, $regex->getMatches());
+				return $this->getOutputForUserConsent($url, $this->getCallback()->parse($url, $regex->getMatches()) );
 			}
 			else {
 				$output = $this->html;
 				foreach ($regex->getMatches() as $name => $value) {
 					$output = str_replace('{$' . $name . '}', $value, $output);
 				}
-				return $output;
+				return $this->getOutputForUserConsent($url, $output);
 			}
 		}
 		
@@ -132,5 +134,28 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 		}
 		
 		return $this->callback;
+	}
+	
+	/**
+	 * Replaces embedded media with an approval dialog.
+	 * 
+	 * @param string $url
+	 * @param string $html
+	 * @return string
+	 */
+	protected function getOutputForUserConsent($url, $html) {
+		if (!MESSAGE_ENABLE_USER_CONSENT) {
+			return $html;
+		}
+		
+		if (WCF::getUser()->userID && WCF::getUser()->getUserOption('enableEmbeddedMedia')) {
+			return $html;
+		}
+		
+		return WCF::getTPL()->fetch('messageUserConsent', 'wcf', [
+			'host' => Url::parse($url)['host'],
+			'payload' => base64_encode($html),
+			'url' => $url,
+		]);
 	}
 }

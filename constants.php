@@ -263,3 +263,4 @@ define('BLACKLIST_SFS_EMAIL_ADDRESS', 'moreThanOnce');
 define('BLACKLIST_SFS_IP_ADDRESS', '90percentile');
 define('BLACKLIST_SFS_ACTION', 'disable');
 define('ENABLE_ENTERPRISE_MODE', 0);
+define('MESSAGE_ENABLE_USER_CONSENT', 1);
