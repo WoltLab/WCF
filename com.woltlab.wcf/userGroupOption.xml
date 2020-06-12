@@ -743,6 +743,12 @@ pdf</defaultvalue>
 				<defaultvalue>1</defaultvalue>
 				<usersonly>1</usersonly>
 			</option>
+			<option name="user.profile.canHideOnlineStatus">
+				<categoryname>user.profile</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<usersonly>1</usersonly>
+			</option>
 			<option name="user.profile.avatar.canSeeAvatars">
 				<categoryname>user.profile.avatar</categoryname>
 				<optiontype>boolean</optiontype>

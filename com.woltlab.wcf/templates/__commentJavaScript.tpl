@@ -14,19 +14,19 @@
 			'wcf.moderation.report.success': '{lang}wcf.moderation.report.success{/lang}'
 		});
 		
-		new {if $commentHandlerClass|isset}{@$commentHandlerClass}{else}WCF.Comment.Handler{/if}('{$commentContainerID}');
+		new {if $commentHandlerClass|isset}{@$commentHandlerClass}{else}WCF.Comment.Handler{/if}('{@$commentContainerID}');
 		{if MODULE_LIKE && $commentList->getCommentManager()->supportsLike() && $__wcf->getSession()->getPermission('user.like.canViewLike') || $__wcf->getSession()->getPermission('user.like.canLike')}
 			require(['WoltLabSuite/Core/Ui/Reaction/Handler'], function(UiReactionHandler) {
 				new UiReactionHandler('com.woltlab.wcf.comment', {
 					// selectors
-					containerSelector: 'li.comment',
+					containerSelector: '#{@$commentContainerID} li.comment',
 					summaryListSelector: '.reactionSummaryList',
 					isButtonGroupNavigation: true
 				});
 				
 				new UiReactionHandler('com.woltlab.wcf.comment.response', {
 					// selectors
-					containerSelector: '.commentResponse',
+					containerSelector: '#{@$commentContainerID} .commentResponse',
 					summaryListSelector: '.reactionSummaryList',
 					isButtonGroupNavigation: true
 				});
@@ -34,8 +34,8 @@
 		{/if}
 		
 		{if $commentList->getCommentManager()->supportsReport() && $__wcf->session->getPermission('user.profile.canReportContent')}
-			new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.comment', '.jsReportCommentComment');
-			new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.response', '.jsReportCommentResponse');
+			new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.comment', '#{@$commentContainerID} .jsReportCommentComment');
+			new WCF.Moderation.Report.Content('com.woltlab.wcf.comment.response', '#{@$commentContainerID} .jsReportCommentResponse');
 		{/if}
 	});
 </script>

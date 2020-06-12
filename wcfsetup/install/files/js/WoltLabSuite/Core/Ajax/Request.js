@@ -314,6 +314,10 @@ define(['Core', 'Language', 'Dom/ChangeListener', 'Dom/Util', 'Ui/Dialog', 'Wolt
 			var message = '';
 			
 			if (data !== null) {
+				if (data.returnValues && data.returnValues.description) {
+					details += '<br><p>Description:</p><p>' + data.returnValues.description + '</p>';
+				}
+				
 				if (data.file && data.line) {
 					details += '<br><p>File:</p><p>' + data.file + ' in line ' + data.line + '</p>';
 				}

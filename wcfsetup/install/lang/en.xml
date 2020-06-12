@@ -868,6 +868,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions.description"><![CDATA[Enter one extension per line.]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxCount"><![CDATA[Maximum Attachments per Message]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserProfile"><![CDATA[Can edit their profile]]></item>
+		<item name="wcf.acp.group.option.user.profile.canHideOnlineStatus"><![CDATA[Can hide their online status]]></item>
 		<item name="wcf.acp.group.allowMention"><![CDATA[User group can be mentioned]]></item>
 		<item name="wcf.acp.group.type.owner"><![CDATA[Owner]]></item>
 		<item name="wcf.acp.group.type.owner.description"><![CDATA[The owner group features a few irrevocable permissions and is protected from edits by other groups, only the owner group can edit itself. Members of this group can add other users to this group, but cannot remove themselves.]]></item>
@@ -1747,6 +1748,8 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Disable and require manual approval]]></item>
 		<item name="wcf.acp.option.module_amp"><![CDATA[<abbr title="Accelerated Mobile Pages">AMP</abbr>]]></item>
 		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Prompt users before displaying content from external sources]]></item>
+		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Storage Time for Modification Logs]]></item>
+		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Modification logs will be deleted after the entered amount of days. To disable deleting old modification logs, enter “0”.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>
@@ -4453,7 +4456,7 @@ Attachments:
 		<item name="wcf.user.userAgent"><![CDATA[User Agent]]></item>
 		<item name="wcf.user.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[The login requires the acceptance of cookies, please enable cookies to proceed.]]></item>
-		<item name="wcf.user.login.forceLogin"><![CDATA[You must be logged-in to access to this page.]]></item>
+		<item name="wcf.user.login.forceLogin"><![CDATA[You must be logged-in to access this page.]]></item>
 		<item name="wcf.user.login.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.register"><![CDATA[Register]]></item>
 		<item name="wcf.user.login.register.teaser"><![CDATA[Don’t have an account yet? <a href="{link controller='Register'}{/link}">Register yourself now</a> and be a part of our community!]]></item>

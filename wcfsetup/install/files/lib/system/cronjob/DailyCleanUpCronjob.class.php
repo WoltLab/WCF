@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
+use wcf\data\modification\log\ModificationLog;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
@@ -149,6 +150,15 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
 				TIME_NOW - 86400 * USER_AUTHENTICATION_FAILURE_EXPIRATION
+			]);
+		}
+		
+		if (MODIFICATION_LOG_EXPIRATION > 0) {
+			$sql = "DELETE FROM	wcf".WCF_N."_modification_log
+				WHERE		time < ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				TIME_NOW - 86400 * MODIFICATION_LOG_EXPIRATION
 			]);
 		}
 		

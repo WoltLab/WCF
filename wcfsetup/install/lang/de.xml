@@ -891,6 +891,7 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions.description"><![CDATA[Eine Dateiendung pro Zeile]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxCount"><![CDATA[Maximale Dateianhänge pro Nachricht]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserProfile"><![CDATA[Kann eigenes Profil bearbeiten]]></item>
+		<item name="wcf.acp.group.option.user.profile.canHideOnlineStatus"><![CDATA[Kann Online-Status verbergen]]></item>
 		<item name="wcf.acp.group.allowMention"><![CDATA[Benutzergruppe kann erwähnt werden]]></item>
 		<item name="wcf.acp.group.type.owner"><![CDATA[Besitzer]]></item>
 		<item name="wcf.acp.group.type.owner.description"><![CDATA[Die Besitzer-Gruppe verfügt über nicht entziehbare Berechtigungen und kann von anderen Gruppen nicht bearbeitet werden, diese Gruppe kann nur durch die Besitzer-Gruppe selbst bearbeitet werden. Mitglieder dieser Gruppe können andere Benutzer zu dieser Gruppe hinzufügen, sich aber selbst nicht daraus entfernen.]]></item>
@@ -1763,6 +1764,8 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Deaktivierung, erfordert manuelle Freischaltung]]></item>
 		<item name="wcf.acp.option.module_amp"><![CDATA[<abbr title="Accelerated Mobile Pages">AMP</abbr>]]></item>
 		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Inhalte von externen Anbietern erst nach Zustimmung anzuzeigen]]></item>
+		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Speicherzeit für Änderungen]]></item>
+		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Zeitraum, nachdem alte Änderungen aus dem Änderungsprotokoll entfernt werden [0, um die Entfernung gänzlich zu deaktivieren]]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Eingabefelder]]></item>

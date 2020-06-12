@@ -5,6 +5,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\InvalidSecurityTokenException;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\exception\ValidateActionException;
 use wcf\system\WCF;
@@ -99,14 +100,19 @@ trait TAJAXException {
 			);
 		}
 		else {
+			$returnValues = [
+				'file' => $e->getFile(),
+				'line' => $e->getLine(),
+			];
+			if ($e instanceof SystemException && $e->getDescription()) {
+				$returnValues['description'] = $e->getDescription();
+			}
+			
 			throw new AJAXException(
 				$e->getMessage(),
 				AJAXException::INTERNAL_ERROR,
 				$e->getTraceAsString(),
-				[
-					'file' => $e->getFile(),
-					'line' => $e->getLine()
-				],
+				$returnValues,
 				\wcf\functions\exception\logThrowable($e),
 				$e->getPrevious()
 			);

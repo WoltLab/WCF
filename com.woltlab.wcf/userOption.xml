@@ -183,6 +183,7 @@
 2:wcf.user.access.following
 3:wcf.user.access.nobody</selectoptions>
 				<editable>3</editable>
+				<permissions>user.profile.canHideOnlineStatus</permissions>
 			</option>
 			<option name="canViewProfile">
 				<categoryname>settings.privacy.content</categoryname>

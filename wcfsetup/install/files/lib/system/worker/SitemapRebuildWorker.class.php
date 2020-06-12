@@ -231,11 +231,8 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker {
 	protected function checkCache() {
 		$object = (isset($this->sitemapObjects[$this->workerData['sitemap']])) ? $this->sitemapObjects[$this->workerData['sitemap']] : false;
 		while ($object && file_exists(self::getSitemapPath() . $object->objectType . '.xml') && filectime(self::getSitemapPath() . $object->objectType . '.xml') > TIME_NOW - (($object->rebuildTime !== null) ? $object->rebuildTime : 60 * 60 * 24 * 7)) {
-			$files = @glob(self::getSitemapPath() . $object->objectType . '*');
-			if (is_array($files)) {
-				foreach ($files as $filename) {
-					$this->workerData['sitemaps'][] = self::getSitemapURL() . basename($filename);
-				}
+			foreach (array_merge(glob(self::getSitemapPath() . $object->objectType . '_*'), [self::getSitemapPath() . $object->objectType . '.xml']) as $filename) {
+				$this->workerData['sitemaps'][] = self::getSitemapURL() . basename($filename);
 			}
 			
 			$this->workerData['sitemap']++;
