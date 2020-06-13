@@ -4,6 +4,9 @@ use wcf\data\DatabaseObject;
 use wcf\data\user\option\UserOption;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\condition\ICondition;
+use wcf\system\condition\IObjectCondition;
+use wcf\system\condition\IObjectListCondition;
 use wcf\system\user\UserBirthdayCache;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -22,6 +25,12 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
 	 * @inheritDoc
 	 */
 	protected static $supportedPositions = ['sidebarLeft', 'sidebarRight'];
+	
+	/**
+	 * @inheritDoc
+	 * @since       5.3
+	 */
+	protected $conditionDefinition = 'com.woltlab.wcf.box.todaysBirthdays.condition';
 	
 	/**
 	 * template name
@@ -95,6 +104,14 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
 					
 					// show a maximum of x users
 					if ($i == $this->limit) break;
+					
+					foreach ($this->box->getConditions() as $condition) {
+						/** @var IObjectCondition $processor */
+						$processor = $condition->getObjectType()->getProcessor();
+						if (!$processor->checkObject($userProfile->getDecoratedObject(), $condition->conditionData)) {
+							continue 2;
+						}
+					}
 					
 					$birthdayUserOption->setUser($userProfile->getDecoratedObject());
 					

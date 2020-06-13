@@ -183,6 +183,14 @@
 			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
 		</definition>
 		<definition>
+			<name>com.woltlab.wcf.box.todaysBirthdays.condition</name>
+			<interfacename>wcf\system\condition\IObjectCondition</interfacename>
+		</definition>
+		<definition>
+			<name>com.woltlab.wcf.box.todaysFollowingBirthdays.condition</name>
+			<interfacename>wcf\system\condition\IObjectCondition</interfacename>
+		</definition>
+		<definition>
 			<name>com.woltlab.wcf.box.userList.condition</name>
 			<interfacename>wcf\system\condition\IObjectListCondition</interfacename>
 		</definition>

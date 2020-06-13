@@ -4976,6 +4976,10 @@ Die E-Mail-Adresse des neuen Benutzers lautet: {@$user->email}
 		<item name="wcf.user.condition.signature"><![CDATA[Signatur]]></item>
 		<item name="wcf.user.condition.signature.signature"><![CDATA[Hat Signatur]]></item>
 		<item name="wcf.user.condition.signature.noSignature"><![CDATA[Hat kein Signatur]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays"><![CDATA[Letzten Aktivität vor … Tagen]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays.error.endBeforeStart"><![CDATA[Der Endwert ist kleiner als der Startwert.]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays.error.invalidEnd"><![CDATA[Der Endwert ist ungültig.]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays.error.invalidStart"><![CDATA[Der Startwert ist ungültig.]]></item>
 	</category>
 	<category name="wcf.user.coverPhoto">
 		<item name="wcf.user.coverPhoto"><![CDATA[Titelbild]]></item>

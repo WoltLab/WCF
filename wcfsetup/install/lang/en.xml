@@ -4971,6 +4971,10 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.signature"><![CDATA[Signature]]></item>
 		<item name="wcf.user.condition.signature.signature"><![CDATA[Has Signature]]></item>
 		<item name="wcf.user.condition.signature.noSignature"><![CDATA[Has no Signature]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays"><![CDATA[Last Activity … Days Ago]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays.error.startBeforeEnd"><![CDATA[The end value is less than the start value.]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays.error.invalidEnd"><![CDATA[The end value is invalid.]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays.error.invalidStart"><![CDATA[The start value is invalid.]]></item>
 	</category>
 	<category name="wcf.user.coverPhoto">
 		<item name="wcf.user.coverPhoto"><![CDATA[Cover Photo]]></item>
