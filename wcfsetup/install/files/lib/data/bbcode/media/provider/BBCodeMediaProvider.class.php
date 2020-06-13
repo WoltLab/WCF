@@ -100,7 +100,7 @@ class BBCodeMediaProvider extends DatabaseObject implements IRouteController {
 			if (!$regex->match($url)) continue;
 			
 			if ($this->getCallback() !== null) {
-				return $this->getOutputForUserConsent($url, $this->getCallback()->parse($url, $regex->getMatches()) );
+				return $this->getOutputForUserConsent($url, $this->getCallback()->parse($url, $regex->getMatches()));
 			}
 			else {
 				$output = $this->html;

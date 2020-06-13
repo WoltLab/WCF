@@ -1,3 +1,11 @@
+/**
+ * Prompts the user for their consent before displaying external media.
+ * 
+ * @author      Alexander Ebert
+ * @copyright   2001-2020 WoltLab GmbH
+ * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module      WoltLabSuite/Core/Ui/Message/UserConsent
+ */
 define(['Ajax', 'Core', 'User', 'Dom/ChangeListener', 'Dom/Util'], function (Ajax, Core, User, DomChangeListener, DomUtil) {
 	var _enableAll = false;
 	var _knownButtons = (typeof window.WeakSet === 'function') ? new window.WeakSet() : new window.Set();
@@ -30,6 +38,9 @@ define(['Ajax', 'Core', 'User', 'Dom/ChangeListener', 'Dom/Util'], function (Aja
 			}
 		},
 		
+		/**
+		 * @param {Event} event
+		 */
 		_click: function (event) {
 			event.preventDefault();
 			
@@ -51,6 +62,9 @@ define(['Ajax', 'Core', 'User', 'Dom/ChangeListener', 'Dom/Util'], function (Aja
 			}
 		},
 		
+		/**
+		 * @param {Element} container
+		 */
 		_enableExternalMedia: function (container) {
 			var payload = atob(elData(container, 'payload'));
 			
