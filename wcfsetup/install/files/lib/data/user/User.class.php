@@ -684,4 +684,14 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	public function canEmailConfirm() {
 		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && !$this->isEmailConfirmed();
 	}
+	
+	/**
+	 * Returns true, if the user must confirm his email by themself. 
+	 * 
+	 * @return      boolean
+	 * @since       5.3
+	 */
+	public function mustSelfEmailConfirm() {
+		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER;
+	}
 }
