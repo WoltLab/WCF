@@ -58,9 +58,14 @@ class RemoteFile extends File {
 		if (!preg_match('/^[a-z0-9]+:/', $this->host)) $this->host = 'tcp://'.$this->host;
 		
 		$context = stream_context_create($options);
-		$this->resource = @stream_socket_client($this->host.':'.$this->port, $this->errorNumber, $this->errorDesc, $timeout, STREAM_CLIENT_CONNECT, $context);
-		if ($this->resource === false) {
-			throw new SystemException('Can not connect to ' . $host, 0, $this->errorDesc);
+		try {
+			$this->resource = stream_socket_client($this->host.':'.$this->port, $this->errorNumber, $this->errorDesc, $timeout, STREAM_CLIENT_CONNECT, $context);
+			if ($this->resource === false) {
+				throw new \Exception('stream_socket_client returned false: ' . $this->errorDesc, $this->errorNumber);
+			}
+		}
+		catch (\Exception $e) {
+			throw new SystemException('Can not connect to ' . $host, 0, $this->errorDesc, $e);
 		}
 		
 		stream_set_timeout($this->resource, $timeout);
