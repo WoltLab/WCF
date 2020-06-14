@@ -83,7 +83,7 @@ class RegisterActivationForm extends AbstractForm {
 		}
 		
 		// check given activation code
-		if (!\hash_equals($this->activationCode, $this->user->emailConfirmed)) {
+		if (!\hash_equals($this->user->emailConfirmed, $this->activationCode)) {
 			throw new UserInputException('activationCode', 'invalid');
 		}
 		
