@@ -1747,6 +1747,7 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[There is always the risk of a false-positive match, therefore it is highly recommended to set it to <strong>Disable and require manual approval</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Disable and require manual approval]]></item>
 		<item name="wcf.acp.option.module_amp"><![CDATA[<abbr title="Accelerated Mobile Pages">AMP</abbr>]]></item>
+		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Prompt users before displaying content from external sources]]></item>
 		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Storage Time for Modification Logs]]></item>
 		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Modification logs will be deleted after the entered amount of days. To disable deleting old modification logs, enter “0”.]]></item>
 	</category>
@@ -4092,6 +4093,10 @@ Attachments:
 		<item name="wcf.message.toc"><![CDATA[Contents]]></item>
 		<item name="wcf.message.toc.hide"><![CDATA[hide]]></item>
 		<item name="wcf.message.toc.show"><![CDATA[show]]></item>
+		<item name="wcf.message.user.consent.button.enable"><![CDATA[Display all external content]]></item>
+		<item name="wcf.message.user.consent.description"><![CDATA[Content embedded from external sources will not be displayed without your consent.]]></item>
+		<item name="wcf.message.user.consent.notice"><![CDATA[Through the activation of external content, you agree that personal data may be transferred to third party platforms. We have provided more information on this in our privacy policy.]]></item>
+		<item name="wcf.message.user.consent.title"><![CDATA[External Content]]></item>
 	</category>
 	<category name="wcf.menu">
 		<!-- category for menus and menu items -->
@@ -5236,6 +5241,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[User’s selection for “{$option->getTitle()}”:]]></item>
 		<item name="wcf.user.option.searchTextOption"><![CDATA[“{$option->getTitle()}” contains:]]></item>
 		<item name="wcf.user.option.searchBooleanOption"><![CDATA[User’s selection for “{$option->getTitle()}”:]]></item>
+		<item name="wcf.user.option.enableEmbeddedMedia"><![CDATA[Display all external content]]></item>
 	</category>
 	<category name="wcf.user.mail">
 		<item name="wcf.user.mail.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},

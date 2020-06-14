@@ -990,6 +990,21 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	}
 	
 	/**
+	 * @since 5.3
+	 */
+	public function validateSaveUserConsent() {}
+	
+	/**
+	 * @since 5.3
+	 */
+	public function saveUserConsent() {
+		$userEditor = new UserEditor(WCF::getUser());
+		$userEditor->updateUserOptions([
+			User::getUserOptionID('enableEmbeddedMedia') => 1,
+		]);
+	}
+	
+	/**
 	 * Validates the 'resendActivationMail' action.
 	 * 
 	 * @throws	IllegalLinkException

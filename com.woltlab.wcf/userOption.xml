@@ -207,6 +207,13 @@
 3:wcf.user.access.nobody</selectoptions>
 				<editable>3</editable>
 			</option>
+			<option name="enableEmbeddedMedia">
+				<categoryname>settings.privacy.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<editable>3</editable>
+				<options>message_enable_user_consent</options>
+			</option>
 			<!-- settings.privacy.messaging -->
 			<option name="canViewEmailAddress">
 				<categoryname>settings.privacy.messaging</categoryname>

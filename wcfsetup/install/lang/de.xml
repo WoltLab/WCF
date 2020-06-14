@@ -1763,6 +1763,7 @@ Die Datenbestände werden sorgfältig gepflegt, aber es ist nicht ausgeschlossen
 		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[Es besteht immer das Risiko eines fehlerhaften Eintrages, daher wird die Einstellung <strong>Deaktivierung, erfordert manuelle Freischaltung</strong> ausdrücklich empfohlen.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Deaktivierung, erfordert manuelle Freischaltung]]></item>
 		<item name="wcf.acp.option.module_amp"><![CDATA[<abbr title="Accelerated Mobile Pages">AMP</abbr>]]></item>
+		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Inhalte von externen Anbietern erst nach Zustimmung anzuzeigen]]></item>
 		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Speicherzeit für Änderungen]]></item>
 		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Zeitraum, nachdem alte Änderungen aus dem Änderungsprotokoll entfernt werden [0, um die Entfernung gänzlich zu deaktivieren]]]></item>
 	</category>
@@ -4147,6 +4148,10 @@ Dateianhänge:
 		<item name="wcf.message.toc"><![CDATA[Inhaltsverzeichnis]]></item>
 		<item name="wcf.message.toc.hide"><![CDATA[Verbergen]]></item>
 		<item name="wcf.message.toc.show"><![CDATA[Anzeigen]]></item>
+		<item name="wcf.message.user.consent.button.enable"><![CDATA[Alle externen Inhalte anzeigen]]></item>
+		<item name="wcf.message.user.consent.description"><![CDATA[Inhalte von externen Seiten werden ohne {if LANGUAGE_USE_INFORMAL_VARIANT}deine{else}Ihre{/if} Zustimmung nicht automatisch geladen und angezeigt.]]></item>
+		<item name="wcf.message.user.consent.notice"><![CDATA[Durch die Aktivierung der externen Inhalte {if LANGUAGE_USE_INFORMAL_VARIANT}erklärst du dich{else}erklären Sie sich{/if} damit einverstanden, dass personenbezogene Daten an Drittplattformen übermittelt werden. Mehr Informationen dazu haben wir in unserer Datenschutzerklärung zur Verfügung gestellt.]]></item>
+		<item name="wcf.message.user.consent.title"><![CDATA[Externer Inhalt]]></item>
 	</category>
 	<category name="wcf.menu">
 		<!-- category for menus and menu items -->
@@ -5238,6 +5243,7 @@ Benachrichtigungen auf <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|lang
 		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[Auswahl des Benutzers bei „{$option->getTitle()}“:]]></item>
 		<item name="wcf.user.option.searchTextOption"><![CDATA[„{$option->getTitle()}“ enthält:]]></item>
 		<item name="wcf.user.option.searchBooleanOption"><![CDATA[Auswahl des Benutzers bei „{$option->getTitle()}“:]]></item>
+		<item name="wcf.user.option.enableEmbeddedMedia"><![CDATA[Alle externen Inhalte anzeigen]]></item>
 	</category>
 	<category name="wcf.user.mail">
 		<item name="wcf.user.mail.mail.plaintext"><![CDATA[Hallo {@$mailbox->getUser()->username},
