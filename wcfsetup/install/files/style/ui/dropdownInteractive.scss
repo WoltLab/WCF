@@ -63,7 +63,7 @@
 	background-color: $wcfSidebarBackground;
 	color: $wcfSidebarHeadlineText;
 	display: flex;
-	padding: 10px 20px;
+	padding: 10px;
 	
 	a {
 		color: $wcfSidebarHeadlineLink;
@@ -111,7 +111,7 @@
 /* dropdown item list */
 .interactiveDropdownItems {
 	> li {
-		padding: 15px 20px;
+		padding: 10px;
 		position: relative;
 		
 		&:not(:last-child) {
@@ -133,6 +133,13 @@
 		.box48 {
 			align-items: center;
 			overflow: hidden;
+		}
+		
+		small {
+			align-items: center;
+			color: $wcfContentDimmedText;
+			display: flex;
+			margin-top: 3px;
 		}
 		
 		@include screen-sm-down {
@@ -163,8 +170,13 @@
 		flex: 1 1 auto;
 	}
 	
-	h3 {
-		font-weight: bold;
+	small::after {
+		background-color: rgb(49, 138, 220);
+		border-radius: 50%;
+		content: "";
+		height: 8px;
+		margin-left: 5px;
+		width: 8px;
 	}
 }
 
@@ -208,7 +220,7 @@
 	background-color: $wcfSidebarBackground;
 	color: $wcfSidebarHeadlineText;
 	display: block;
-	padding: 10px 20px;
+	padding: 10px;
 	text-align: center;
 	
 	&:hover {
