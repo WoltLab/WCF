@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\bbcode\media\provider;
 use wcf\system\application\ApplicationHandler;
+use wcf\util\Url;
 
 /**
  * Media provider callback for Twitch urls.
@@ -35,7 +36,7 @@ class TwitchBBCodeMediaProvider implements IBBCodeMediaProvider {
 		}
 		
 		if (!empty($src)) {
-			return '<div class="videoContainer"><iframe src="' . $src . '&parent=' . self::getParent() . '&autoplay=false" allowfullscreen></iframe></div>';
+			return '<div class="videoContainer"><iframe src="' . $src . '&amp;parent=' . self::getParent() . '&amp;autoplay=false" allowfullscreen></iframe></div>';
 		}
 		
 		return '';
@@ -46,7 +47,7 @@ class TwitchBBCodeMediaProvider implements IBBCodeMediaProvider {
 	 */
 	private static function getParent() {
 		if (self::$parent === null) {
-			self::$parent = parse_url(ApplicationHandler::getInstance()->getActiveApplication()->getPageURL())['host'];
+			self::$parent = Url::parse(ApplicationHandler::getInstance()->getActiveApplication()->getPageURL())['host'];
 		}
 		
 		return self::$parent;
