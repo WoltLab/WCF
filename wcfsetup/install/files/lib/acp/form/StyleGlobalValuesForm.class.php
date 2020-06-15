@@ -26,6 +26,12 @@ class StyleGlobalValuesForm extends AbstractForm {
 	 * @var string
 	 */
 	public $styles = '';
+
+	/**
+	 * current scroll offset before submitting the form
+	 * @var integer
+	 */
+	public $stylesScrollOffset = 0;
 	
 	/**
 	 * @inheritDoc
@@ -35,6 +41,9 @@ class StyleGlobalValuesForm extends AbstractForm {
 		
 		if (isset($_POST['styles'])) {
 			$this->styles = StringUtil::unifyNewlines(StringUtil::trim($_POST['styles']));
+		}
+		if (isset($_POST['stylesScrollOffset'])) {
+			$this->stylesScrollOffset = intval($_POST['stylesScrollOffset']);
 		}
 	}
 	
@@ -84,7 +93,8 @@ class StyleGlobalValuesForm extends AbstractForm {
 		parent::assignVariables();
 		
 		WCF::getTPL()->assign([
-			'styles' => $this->styles
+			'styles' => $this->styles,
+			'stylesScrollOffset' => $this->stylesScrollOffset,
 		]);
 	}
 }
