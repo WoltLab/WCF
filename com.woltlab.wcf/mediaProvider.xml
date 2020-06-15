@@ -59,21 +59,13 @@ https?://open.spotify.com/user/(?<USER>[0-9a-zA-Z]+)/playlist/(?<ID>[0-9a-zA-Z]+
 https?://open.spotify.com/(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)]]></regex>
 			<html><![CDATA[<iframe width="300" height="380" src="https://embed.spotify.com/?uri=spotify:{$TYPE}:{$ID}" frameborder="0" allowtransparency="true"></iframe>]]></html>
 		</provider>
-		<provider name="twitch-channel">
-			<title>Twitch Channel</title>
-			<regex><![CDATA[https?://www.twitch.tv/(?!videos)(?!.*/v/)(?<CHANNEL>[a-zA-Z0-9_]+)]]></regex>
-			<html><![CDATA[<div class="videoContainer"><iframe src="https://player.twitch.tv/?channel={$CHANNEL}&autoplay=false" frameborder="0" scrolling="no" allowfullscreen></iframe></div>]]></html>
-		</provider>
-		<provider name="twitch-clip">
-			<title>Twitch Clip</title>
-			<regex><![CDATA[https?://clips.twitch.tv/(?<AUTHOR>([a-zA-Z0-9_]+)/)?(?<VIDEO>[a-zA-Z0-9_]+)]]></regex>
-			<html><![CDATA[<div class="videoContainer"><iframe src="https://clips.twitch.tv/embed?clip={$AUTHOR}{$VIDEO}&autoplay=false" frameborder="0" scrolling="no" allowfullscreen></iframe></div>]]></html>
-		</provider>
-		<provider name="twitch-video">
-			<title>Twitch Video</title>
-			<regex><![CDATA[https?://www.twitch.tv/videos/(?<ID>[0-9]+)
-https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<ID>[0-9]+)]]></regex>
-			<html><![CDATA[<div class="videoContainer"><iframe src="https://player.twitch.tv/?video=v{$ID}&autoplay=false" frameborder="0" scrolling="no" allowfullscreen></iframe></div>]]></html>
+		<provider name="twitch">
+			<title>Twitch</title>
+			<regex><![CDATA[https?://www.twitch.tv/(?<AUTHOR>[a-zA-Z0-9_]+)/clip/(?<CLIP>[a-zA-Z0-9_]+)
+https?://www.twitch.tv/(?!videos)(?!.*/v/)(?<CHANNEL>[a-zA-Z0-9_]+)
+https?://www.twitch.tv/videos/(?<VIDEO>[0-9]+)
+https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<VIDEO>[0-9]+)]]></regex>
+			<className><![CDATA[wcf\system\bbcode\media\provider\TwitchBBCodeMediaProvider]]></className>
 		</provider>
 		<provider name="twitter-tweet">
 			<title>Twitter Tweet</title>
@@ -92,5 +84,8 @@ https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<ID>[0-9]+)]]></regex>
 	
 	<delete>
 		<provider name="imgur" />
+		<provider name="twitch-channel" />
+		<provider name="twitch-clip" />
+		<provider name="twitch-video" />
 	</delete>
 </data>
