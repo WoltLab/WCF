@@ -17,11 +17,6 @@
 https?://vimeo\.com/groups/[^/]+/videos/(?P<ID>\d+)]]></regex>
 			<html><![CDATA[<div class="videoContainer"><iframe src="https://player.vimeo.com/video/{$ID}" allowfullscreen></iframe></div>]]></html>
 		</provider>
-		<provider name="veoh">
-			<title>Veoh</title>
-			<regex><![CDATA[http://(?:www\.)?veoh\.com/watch/v(?P<ID>\d+[a-zA-Z0-9]+)]]></regex>
-			<html><![CDATA[<object width="410" height="341" id="veohFlashPlayer" name="veohFlashPlayer" type="application/x-shockwave-flash" data="http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1308&amp;permalinkId=v{$ID}&amp;player=videodetailsembedded&amp;videoAutoPlay=0&amp;id=anonymous"><param name="movie" value="http://www.veoh.com/swf/webplayer/WebPlayer.swf?version=AFrontend.5.7.0.1308&amp;permalinkId=v{$ID}&amp;player=videodetailsembedded&amp;videoAutoPlay=0&amp;id=anonymous" /><param name="allowFullScreen" value="true" /><param name="allowscriptaccess" value="always" /><param name="wmode" value="transparent" /></object>]]></html>
-		</provider>
 		<provider name="dailymotion">
 			<title>Dailymotion</title>
 			<regex><![CDATA[https?://(?:www\.)?dailymotion\.com/video/(?P<ID>[a-zA-Z0-9_-]+)]]></regex>
@@ -87,5 +82,6 @@ https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<VIDEO>[0-9]+)]]></regex>
 		<provider name="twitch-channel" />
 		<provider name="twitch-clip" />
 		<provider name="twitch-video" />
+		<provider name="veoh" />
 	</delete>
 </data>
