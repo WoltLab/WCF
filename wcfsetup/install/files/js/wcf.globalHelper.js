@@ -298,14 +298,21 @@
 			return f.apply(this, arguments);
 		};
 	};
+	window.deprecatedObject = function (message, o) {
+		if (window.Proxy !== undefined) {
+			return new window.Proxy(o, {
+				get: function (target, property) {
+					window.deprecatedFeature(message);
+					return target[property];
+				}
+			})
+		}
+
+		return o;
+	};
 	if (ENABLE_DEPRECATION_WARNINGS) {
 		window.deprecatedFeature = function(message) {
 			throw new Error("A deprecated feature is used, while 'ENABLE_DEPRECATION_WARNINGS' is enabled: " + message);
-		};
-		window.deprecatedFunction = function(message, f) {
-			return function() {
-				window.deprecatedFeature(message);
-			};
 		};
 	}
 	
