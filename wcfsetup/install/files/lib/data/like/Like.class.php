@@ -97,9 +97,10 @@ class Like extends DatabaseObject {
 	 * Returns true, if like value is a like.
 	 *
 	 * @return	boolean
-	 * @deprecated	5.2
+	 * @deprecated	5.2 Like values have been removed. Always returns true.
 	 */
 	public function isLike() {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		return true;
 	}
 	
@@ -107,9 +108,10 @@ class Like extends DatabaseObject {
 	 * Returns true, if like value is a dislike.
 	 *
 	 * @return	boolean
-	 * @deprecated	5.2
+	 * @deprecated	5.2 Like values have been removed. Always returns false.
 	 */
 	public function isDislike() {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		return false;
 	}
 	
