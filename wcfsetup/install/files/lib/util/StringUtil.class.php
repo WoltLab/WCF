@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Contains string-related functions.
  * 
  * @author	Oliver Kliebisch, Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -47,7 +47,7 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function getRandomID() {
-		return bin2hex(random_bytes(20));
+		return \bin2hex(\random_bytes(20));
 	}
 	
 	/**
@@ -59,17 +59,17 @@ final class StringUtil {
 		return sprintf(
 			'%04x%04x-%04x-%04x-%02x%02x-%04x%04x%04x',
 			// time_low
-			random_int(0, 0xffff), random_int(0, 0xffff),
+			\random_int(0, 0xffff), \random_int(0, 0xffff),
 			// time_mid
-			random_int(0, 0xffff), 
+			\random_int(0, 0xffff), 
 			// time_hi_and_version
-			random_int(0, 0x0fff) | 0x4000,
+			\random_int(0, 0x0fff) | 0x4000,
 			// clock_seq_hi_and_res
-			random_int(0, 0x3f) | 0x80,
+			\random_int(0, 0x3f) | 0x80,
 			// clock_seq_low
-			random_int(0, 0xff),
+			\random_int(0, 0xff),
 			// node
-			random_int(0, 0xffff), random_int(0, 0xffff), random_int(0, 0xffff)
+			\random_int(0, 0xffff), \random_int(0, 0xffff), \random_int(0, 0xffff)
 		);
 	}
 	
@@ -119,20 +119,8 @@ final class StringUtil {
 	 * @return	string
 	 */
 	public static function encodeJS($string) {
-		// unify newlines
 		$string = self::unifyNewlines($string);
-		
-		// escape backslash
-		$string = str_replace("\\", "\\\\", $string);
-		
-		// escape singe quote
-		$string = str_replace("'", "\'", $string);
-		
-		// escape new lines
-		$string = str_replace("\n", '\n', $string);
-		
-		// escape slashes
-		$string = str_replace("/", '\/', $string);
+		$string = str_replace(["\\", "'", "\n", "/"], ["\\\\", "\'", '\n', '\/'], $string);
 		
 		return $string;
 	}
@@ -421,19 +409,19 @@ final class StringUtil {
 	 */
 	public static function getCharValue($c) {
 		$ud = 0;
-		if (ord($c{0}) >= 0 && ord($c{0}) <= 127) 
-			$ud = ord($c{0});
-		if (ord($c{0}) >= 192 && ord($c{0}) <= 223) 
-			$ud = (ord($c{0}) - 192) * 64 + (ord($c{1}) - 128);
-		if (ord($c{0}) >= 224 && ord($c{0}) <= 239) 
-			$ud = (ord($c{0}) - 224) * 4096 + (ord($c{1}) - 128) * 64 + (ord($c{2}) - 128);
-		if (ord($c{0}) >= 240 && ord($c{0}) <= 247) 
-			$ud = (ord($c{0}) - 240) * 262144 + (ord($c{1}) - 128) * 4096 + (ord($c{2}) - 128) * 64 + (ord($c{3}) - 128);
-		if (ord($c{0}) >= 248 && ord($c{0}) <= 251) 
-			$ud = (ord($c{0}) - 248) * 16777216 + (ord($c{1}) - 128) * 262144 + (ord($c{2}) - 128) * 4096 + (ord($c{3}) - 128) * 64 + (ord($c{4}) - 128);
-		if (ord($c{0}) >= 252 && ord($c{0}) <= 253) 
-			$ud = (ord($c{0}) - 252) * 1073741824 + (ord($c{1}) - 128) * 16777216 + (ord($c{2}) - 128) * 262144 + (ord($c{3}) - 128) * 4096 + (ord($c{4}) - 128) * 64 + (ord($c{5}) - 128);
-		if (ord($c{0}) >= 254 && ord($c{0}) <= 255) 
+		if (ord($c[0]) >= 0 && ord($c[0]) <= 127) 
+			$ud = ord($c[0]);
+		if (ord($c[0]) >= 192 && ord($c[0]) <= 223) 
+			$ud = (ord($c[0]) - 192) * 64 + (ord($c[1]) - 128);
+		if (ord($c[0]) >= 224 && ord($c[0]) <= 239) 
+			$ud = (ord($c[0]) - 224) * 4096 + (ord($c[1]) - 128) * 64 + (ord($c[2]) - 128);
+		if (ord($c[0]) >= 240 && ord($c[0]) <= 247) 
+			$ud = (ord($c[0]) - 240) * 262144 + (ord($c[1]) - 128) * 4096 + (ord($c[2]) - 128) * 64 + (ord($c[3]) - 128);
+		if (ord($c[0]) >= 248 && ord($c[0]) <= 251) 
+			$ud = (ord($c[0]) - 248) * 16777216 + (ord($c[1]) - 128) * 262144 + (ord($c[2]) - 128) * 4096 + (ord($c[3]) - 128) * 64 + (ord($c[4]) - 128);
+		if (ord($c[0]) >= 252 && ord($c[0]) <= 253) 
+			$ud = (ord($c[0]) - 252) * 1073741824 + (ord($c[1]) - 128) * 16777216 + (ord($c[2]) - 128) * 262144 + (ord($c[3]) - 128) * 4096 + (ord($c[4]) - 128) * 64 + (ord($c[5]) - 128);
+		if (ord($c[0]) >= 254 && ord($c[0]) <= 255) 
 			$ud = false; // error
 		return $ud;
 	}

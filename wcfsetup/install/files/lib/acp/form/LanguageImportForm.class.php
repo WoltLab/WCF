@@ -14,7 +14,7 @@ use wcf\util\XML;
  * Shows the language import form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -116,6 +116,9 @@ class LanguageImportForm extends AbstractForm {
 			}
 		}
 		catch (SystemException $e) {
+			throw new UserInputException('languageUpload', $e->getMessage());
+		}
+		catch (\InvalidArgumentException $e) {
 			throw new UserInputException('languageUpload', $e->getMessage());
 		}
 	}

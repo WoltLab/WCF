@@ -3,6 +3,7 @@ namespace wcf\data\notice;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\system\condition\ConditionHandler;
 use wcf\system\exception\UserInputException;
 use wcf\system\user\storage\UserStorageHandler;
@@ -12,7 +13,7 @@ use wcf\system\WCF;
  * Executes notice-related actions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Notice
  * 
@@ -20,6 +21,8 @@ use wcf\system\WCF;
  * @method	NoticeEditor		getSingleObject()
  */
 class NoticeAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -107,28 +110,10 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 	}
 	
 	/**
-	 * @inheritDoc
-	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $notice) {
-			$notice->update([
-				'isDisabled' => $notice->isDisabled ? 0 : 1
-			]);
-		}
-	}
-	
-	/**
 	 * Validates the 'dismiss' action.
 	 */
 	public function validateDismiss() {
 		$this->getSingleObject();
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function validateToggle() {
-		parent::validateUpdate();
 	}
 	
 	/**
@@ -143,7 +128,8 @@ class NoticeAction extends AbstractDatabaseObjectAction implements ISortableActi
 		
 		$noticeList = new NoticeList();
 		$noticeList->setObjectIDs($this->parameters['data']['structure'][0]);
-		if ($noticeList->countObjects() != count($this->parameters['data']['structure'][0])) {
+		$noticeList->readObjects();
+		if (count($noticeList) !== count($this->parameters['data']['structure'][0])) {
 			throw new UserInputException('structure');
 		}
 		

@@ -2,14 +2,14 @@
  * Provides the touch-friendly fullscreen main menu.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Menu/Main
  */
 define(['Core', 'Language', 'Dom/Traverse', './Abstract'], function(Core, Language, DomTraverse, UiPageMenuAbstract) {
 	"use strict";
 	
-	var _container = null, _hasItems = null, _list = null, _navigationList = null, _spacer = null;
+	var _optionsTitle = null, _hasItems = null, _list = null, _navigationList = null, _callbackClose = null;
 	
 	/**
 	 * @constructor
@@ -27,21 +27,15 @@ define(['Core', 'Language', 'Dom/Traverse', './Abstract'], function(Core, Langua
 				'#pageHeader .mainMenu'
 			);
 			
-			_container = elById('pageMainMenuMobilePageOptionsContainer');
-			if (_container !== null) {
-				_list = DomTraverse.childByClass(_container, 'menuOverlayItemList');
+			_optionsTitle = elById('pageMainMenuMobilePageOptionsTitle');
+			if (_optionsTitle !== null) {
+				_list = DomTraverse.childByClass(_optionsTitle, 'menuOverlayItemList');
 				_navigationList = elBySel('.jsPageNavigationIcons');
-				//_spacer = _container.nextElementSibling;
 				
-				// remove placeholder item
-				elRemove(DomTraverse.childByClass(_list, 'jsMenuOverlayItemPlaceholder'));
-				
-				_list.addEventListener('click', (function (event) {
-					if (event.target !== _list && DomTraverse.parentByClass(event.target, 'menuOverlayItem', _list) !== null) {
-						this.close();
-						event.stopPropagation();
-					}
-				}).bind(this));
+				_callbackClose = (function(event) {
+					this.close();
+					event.stopPropagation();
+				}).bind(this);
 			}
 			
 			elAttr(this._button, 'aria-label', Language.get('wcf.menu.page'));
@@ -53,7 +47,7 @@ define(['Core', 'Language', 'Dom/Traverse', './Abstract'], function(Core, Langua
 				return false;
 			}
 			
-			if (_container === null) {
+			if (_optionsTitle === null) {
 				return true;
 			}
 			
@@ -65,6 +59,8 @@ define(['Core', 'Language', 'Dom/Traverse', './Abstract'], function(Core, Langua
 					item = _navigationList.children[0];
 					
 					item.classList.add('menuOverlayItem');
+					item.classList.add('menuOverlayItemOption');
+					item.addEventListener(WCF_CLICK_EVENT, _callbackClose);
 					
 					link = item.children[0];
 					link.classList.add('menuOverlayItemLink');
@@ -73,15 +69,13 @@ define(['Core', 'Language', 'Dom/Traverse', './Abstract'], function(Core, Langua
 					link.children[1].classList.remove('invisible');
 					link.children[1].classList.add('menuOverlayItemTitle');
 					
-					_list.appendChild(item);
+					_optionsTitle.parentNode.insertBefore(item, _optionsTitle.nextSibling);
 				}
 				
-				elShow(_container);
-				//elShow(_spacer);
+				elShow(_optionsTitle);
 			}
 			else {
-				elHide(_container);
-				//elHide(_spacer);
+				elHide(_optionsTitle);
 			}
 			
 			return true;
@@ -93,12 +87,14 @@ define(['Core', 'Language', 'Dom/Traverse', './Abstract'], function(Core, Langua
 			}
 			
 			if (_hasItems) {
-				elHide(_container);
-				//elHide(_spacer);
+				elHide(_optionsTitle);
 				
-				var item, link, title = DomTraverse.childByClass(_list, 'menuOverlayTitle');
-				while (item = title.nextElementSibling) {
+				var item = _optionsTitle.nextElementSibling;
+				var link;
+				while (item && item.classList.contains('menuOverlayItemOption')) {
 					item.classList.remove('menuOverlayItem');
+					item.classList.remove('menuOverlayItemOption');
+					item.removeEventListener(WCF_CLICK_EVENT, _callbackClose);
 					
 					link = item.children[0];
 					link.classList.remove('menuOverlayItemLink');
@@ -108,6 +104,8 @@ define(['Core', 'Language', 'Dom/Traverse', './Abstract'], function(Core, Langua
 					link.children[1].classList.remove('menuOverlayItemTitle');
 					
 					_navigationList.appendChild(item);
+					
+					item = item.nextElementSibling;
 				}
 			}
 			

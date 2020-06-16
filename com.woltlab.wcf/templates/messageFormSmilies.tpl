@@ -3,7 +3,7 @@
 	{foreach from=$smileyCategories item=smileyCategory}
 		{assign var=__tabCount value=$__tabCount + 1}
 		{assign var='__smileyAnchor' value='smilies-'|concat:$smileyCategory->categoryID}
-		<li data-name="smilies-{@$smileyCategory->categoryID}" data-smiley-category-id="{@$smileyCategory->categoryID}"><a>{$smileyCategory->title|language}</a></li>
+		<li data-name="smilies-{@$smileyCategory->categoryID}" data-smiley-category-id="{@$smileyCategory->categoryID}"><a>{$smileyCategory->getTitle()}</a></li>
 	{/foreach}
 {/capture}
 
@@ -42,8 +42,8 @@
 	{event name='fields'}
 	
 	<script data-relocate="true">
-		$(function() {
-			new WCF.Message.Smilies('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
+		require(['WoltLabSuite/Core/Ui/Smiley/Insert'], function (UiSmileyInsert) {
+			new UiSmileyInsert('{if $wysiwygSelector|isset}{$wysiwygSelector|encodeJS}{else}text{/if}');
 		});
 	</script>
 </div>

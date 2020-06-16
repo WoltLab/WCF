@@ -35,14 +35,15 @@ $.Redactor.prototype.WoltLabFullscreen = function() {
 			_button.children[0].classList.toggle('fa-compress');
 			_button.children[0].classList.toggle('fa-expand');
 			
+			var anchorFixedHeader = elClosest(this.core.box()[0], '.anchorFixedHeader');
+			if (anchorFixedHeader) anchorFixedHeader.classList.toggle('disableAnchorFixedHeader');
+			
 			if (this.core.box()[0].classList.toggle('redactorBoxFullscreen')) {
 				WCF.System.DisableScrolling.disable();
-				this.core.editor()[0].style.setProperty('height', 'calc(100% - ' + ~~this.core.toolbar()[0].clientHeight + 'px)', '');
 				_active = true;
 			}
 			else {
 				WCF.System.DisableScrolling.enable();
-				this.core.editor()[0].style.removeProperty('height');
 				_active = false;
 			}
 		}

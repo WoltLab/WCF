@@ -5,12 +5,12 @@ namespace wcf\system\form\builder\field;
  * Represents a form field that supports a placeholder value.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface IPlaceholderFormField {
+interface IPlaceholderFormField extends IFormField {
 	/**
 	 * Returns the placeholder value of this field or `null` if no placeholder has
 	 * been set.

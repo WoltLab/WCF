@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Compiles template sources into valid PHP code.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template
  */
@@ -36,6 +36,91 @@ class TemplateScriptingCompiler {
 		'system', 'exec', 'passthru', 'shell_exec', // command line execution
 		'include', 'require', 'include_once', 'require_once', // includes
 		'eval', 'virtual', 'call_user_func_array', 'call_user_func', 'assert' // code execution
+	];
+	
+	/**
+	 * PHP functions and modifiers that can be used in enterprise mode
+	 * @var	string[]
+	 */
+	protected $enterpriseFunctions = [
+		'addslashes',
+		'array_keys',
+		'array_pop',
+		'array_slice',
+		'array_values',
+		'base64_decode',
+		'base64_encode',
+		'ceil',
+		'concat',
+		'constant',
+		'count',
+		'currency',
+		'current',
+		'date',
+		'defined',
+		'doubleval',
+		'empty',
+		'end',
+		'explode',
+		'file_exists',
+		'filesize',
+		'floatval',
+		'floor',
+		'function_exists',
+		'gmdate',
+		'hash',
+		'htmlspecialchars',
+		'html_entity_decode',
+		'implode',
+		'in_array',
+		'is_array',
+		'is_numeric',
+		'is_object',
+		'intval',
+		'is_subclass_of',
+		'isset',
+		'json_encode',
+		'key',
+		'lcfirst',
+		'ltrim',
+		'max',
+		'mb_strpos',
+		'mb_strlen',
+		'mb_strpos',
+		'mb_strtolower',
+		'mb_strtoupper',
+		'mb_substr',
+		'md5',
+		'method_exists',
+		'microtime',
+		'min',
+		'nl2br',
+		'number_format',
+		'preg_match',
+		'preg_replace',
+		'print_r',
+		'rawurlencode',
+		'reset',
+		'round',
+		'sha1',
+		'spl_object_hash',
+		'sprintf',
+		'strip_tags',
+		'strlen',
+		'strpos',
+		'strtolower',
+		'strtotime',
+		'strtoupper',
+		'str_pad',
+		'str_repeat',
+		'str_replace',
+		'str_ireplace',
+		'substr',
+		'trim',
+		'ucfirst',
+		'urlencode',
+		'wcfDebug',
+		'wordwrap'
 	];
 	
 	/**
@@ -169,6 +254,17 @@ class TemplateScriptingCompiler {
 	 * @var	string[][]
 	 */
 	protected $staticIncludes = [];
+	
+	/**
+	 * data of all currently active `foreach` loops; entry data:
+	 * 
+	 * 	hash => unique foreach loop hash
+	 * 	itemVar => template code for the `item` variable
+	 * 	keyVar => (optional) template code for the `key` variable
+	 * 
+	 * @var	string[][]
+	 */
+	protected $foreachLoops = [];
 	
 	/**
 	 * Creates a new TemplateScriptingCompiler object.
@@ -379,7 +475,7 @@ class TemplateScriptingCompiler {
 						throw new SystemException(static::formatSyntaxError('unexpected {/foreach}', $this->currentIdentifier, $this->currentLineNo));
 					}
 					$this->popTag('foreach');
-					return "<?php } } ?>";
+					return $this->compileForeachEndTag();
 					
 				case 'section':
 					$this->pushTag('section');
@@ -455,7 +551,7 @@ class TemplateScriptingCompiler {
 		
 		$tagArgs = static::makeArgString($this->parseTagArgs($tagArgs, $tagCommand));
 		
-		return "<?php echo \$this->pluginObjects['".$className."']->execute(array(".$tagArgs."), \$this); ?>";
+		return "<?=\$this->pluginObjects['".$className."']->execute([".$tagArgs."], \$this);?>";
 	}
 	
 	/**
@@ -489,7 +585,7 @@ class TemplateScriptingCompiler {
 			
 			$tagArgs = static::makeArgString($this->parseTagArgs($tagArgs, $tagCommand));
 			
-			$phpCode = "<?php \$this->tagStack[] = array('".$tagCommand."', array(".$tagArgs."));\n";
+			$phpCode = "<?php \$this->tagStack[] = ['".$tagCommand."', [".$tagArgs."]];\n";
 			$phpCode .= "\$this->pluginObjects['".$className."']->init(\$this->tagStack[count(\$this->tagStack) - 1][1], \$this);\n";
 			$phpCode .= "while (\$this->pluginObjects['".$className."']->next(\$this)) { ob_start(); ?>";
 		}
@@ -616,7 +712,7 @@ class TemplateScriptingCompiler {
 		
 		$phpCode = "<?php\n";
 		$phpCode .= "if (".$args['loop'].") {\n";
-		$phpCode .= $sectionProp." = array();\n";
+		$phpCode .= $sectionProp." = [];\n";
 		$phpCode .= $sectionProp."['loop'] = (is_array(".$args['loop'].") ? count(".$args['loop'].") : max(0, (int)".$args['loop']."));\n";
 		$phpCode .= $sectionProp."['show'] = ".$args['show'].";\n";
 		if (!isset($args['step'])) {
@@ -689,27 +785,47 @@ class TemplateScriptingCompiler {
 			$foreachProp = "\$this->v['tpl']['foreach'][".$args['name']."]";
 		}
 		
-		$foreachHash = "\$_foreach_".StringUtil::getRandomID();
+		$hash = StringUtil::getRandomID();
+		$foreachHash = "\$_foreach_" . $hash;
+		$foreachData = ['hash' => $hash];
 		
 		$phpCode = "<?php\n";
 		$phpCode .= $foreachHash." = ".$args['from'].";\n";
-		$phpCode .= $foreachHash."_cnt = (".$foreachHash." !== null ? 1 : 0);\n";
-		$phpCode .= "if (is_array(".$foreachHash.") || (".$foreachHash." instanceof \\Countable)) {\n";
-		$phpCode .= $foreachHash."_cnt = count(".$foreachHash.");\n";
-		$phpCode .= "}\n";
 		
-		if (!empty($foreachProp)) {
+		if (empty($foreachProp)) {
+			$phpCode .= "if ((is_countable(".$foreachHash.") && count(".$foreachHash.") > 0) || (!is_countable(".$foreachHash.") && ".$foreachHash.")) {\n";
+		}
+		else {
+			$phpCode .= $foreachHash."_cnt = (".$foreachHash." !== null ? 1 : 0);\n";
+			$phpCode .= "if (is_countable(".$foreachHash.")) {\n";
+			$phpCode .= $foreachHash."_cnt = count(".$foreachHash.");\n";
+			$phpCode .= "}\n";
 			$phpCode .= $foreachProp."['total'] = ".$foreachHash."_cnt;\n";
 			$phpCode .= $foreachProp."['show'] = (".$foreachProp."['total'] > 0 ? true : false);\n";
 			$phpCode .= $foreachProp."['iteration'] = 0;\n";
+			$phpCode .= "if (".$foreachHash."_cnt > 0) {\n";
 		}
-		$phpCode .= "if (".$foreachHash."_cnt > 0) {\n";
+		
+		$itemVar = mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item'];
+		$foreachData['itemVar'] = $itemVar;
+		
+		$phpCode .= "\$this->foreachVars['{$hash}'] = [];\n";
+		$phpCode .= "if (isset({$itemVar})) {\n";
+		$phpCode .= "\$this->foreachVars['{$hash}']['item'] = {$itemVar};\n";
+		$phpCode .= "}\n";
 		
 		if (isset($args['key'])) {
-			$phpCode .= "foreach (".$foreachHash." as ".(mb_substr($args['key'], 0, 1) != '$' ? "\$this->v[".$args['key']."]" : $args['key'])." => ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
+			$keyVar = mb_substr($args['key'], 0, 1) != '$' ? "\$this->v[".$args['key']."]" : $args['key'];
+			$foreachData['keyVar'] = $keyVar;
+			
+			$phpCode .= "if (isset({$keyVar})) {\n";
+			$phpCode .= "\$this->foreachVars['{$hash}']['key'] = {$keyVar};\n";
+			$phpCode .= "}\n";
+			
+			$phpCode .= "foreach (".$foreachHash." as {$keyVar} => {$itemVar}) {\n";
 		}
 		else {
-			$phpCode .= "foreach (".$foreachHash." as ".(mb_substr($args['item'], 0, 1) != '$' ? "\$this->v[".$args['item']."]" : $args['item']).") {\n";
+			$phpCode .= "foreach (".$foreachHash." as {$itemVar}) {\n";
 		}
 		
 		if (!empty($foreachProp)) {
@@ -719,6 +835,38 @@ class TemplateScriptingCompiler {
 		}
 		
 		$phpCode .= "?>";
+		
+		$this->foreachLoops[] = $foreachData;
+		
+		return $phpCode;
+	}
+	
+	/**
+	 * Compiles a `/foreach` tag and returns the compiled PHP code.
+	 * 
+	 * @return	string
+	 * @since	5.2
+	 */
+	protected function compileForeachEndTag() {
+		$foreachData = array_pop($this->foreachLoops);
+		
+		// unset `item` and `key` variables and restore their sandboxed values
+		$phpCode = "<?php }\n";
+		$phpCode .= "unset({$foreachData['itemVar']});";
+		$phpCode .= "if (isset(\$this->foreachVars['{$foreachData['hash']}']['item'])) {\n";
+		$phpCode .= "{$foreachData['itemVar']} = \$this->foreachVars['{$foreachData['hash']}']['item'];\n";
+		$phpCode .= "}\n";
+		
+		if (isset($foreachData['keyVar'])) {
+			$phpCode .= "unset({$foreachData['keyVar']});";
+			$phpCode .= "if (isset(\$this->foreachVars['{$foreachData['hash']}']['key'])) {\n";
+			$phpCode .= "{$foreachData['keyVar']} = \$this->foreachVars['{$foreachData['hash']}']['key'];\n";
+			$phpCode .= "}\n";
+		}
+		
+		$phpCode .= "unset(\$this->foreachVars['{$foreachData['hash']}']);\n";
+		$phpCode .= " } ?>";
+		
 		return $phpCode;
 	}
 	
@@ -847,7 +995,7 @@ class TemplateScriptingCompiler {
 		if (strpos($application, '$') === false) {
 			$application = "'" . $application . "'";
 		}
-		$phpCode .= '$this->includeTemplate('.$file.', '.$application.', array('.$argString.'), '.($sandbox ? 1 : 0).');'."\n";
+		$phpCode .= '$this->includeTemplate('.$file.', '.$application.', ['.$argString.'], '.($sandbox ? 1 : 0).');'."\n";
 		
 		if ($assignVar !== false) {
 			$phpCode .= '$this->'.($append ? 'append' : 'assign').'('.$assignVar.', ob_get_clean());'."\n";
@@ -1088,7 +1236,7 @@ class TemplateScriptingCompiler {
 			$parsedTag = 'wcf\util\StringUtil::formatNumeric('.$parsedTag.')';
 		}
 		
-		return '<?php echo '.$parsedTag.'; ?>';
+		return '<?='.$parsedTag.';?>';
 	}
 	
 	/**
@@ -1116,7 +1264,7 @@ class TemplateScriptingCompiler {
 	 */
 	protected function compileModifier($data) {
 		if (isset($data['className'])) {
-			return "\$this->pluginObjects['".$data['className']."']->execute(array(".implode(',', $data['parameter'])."), \$this)";
+			return "\$this->pluginObjects['".$data['className']."']->execute([".implode(',', $data['parameter'])."], \$this)";
 		}
 		else {
 			return $data['name'].'('.implode(',', $data['parameter']).')';
@@ -1178,8 +1326,13 @@ class TemplateScriptingCompiler {
 						if (/*strpos($values[$i], '$') !== false || */strpos($values[$i], '@@') !== false) {
 							throw new SystemException(static::formatSyntaxError("unexpected '->".$values[$i]."' in tag '".$tag."'", $this->currentIdentifier, $this->currentLineNo));
 						}
-						if (strpos($values[$i], '$') !== false) $result .= '{'.$this->compileSimpleVariable($values[$i], $variableType).'}';
-						else $result .= $values[$i];
+						if (strpos($values[$i], '$') !== false) {
+							$result .= '{'.$this->compileSimpleVariable($values[$i], $variableType).'}';
+						}
+						else {
+							$result .= $values[$i];
+						}
+						
 						$statusStack[count($statusStack) - 1] = $status = 'object';
 					break;
 					
@@ -1202,7 +1355,7 @@ class TemplateScriptingCompiler {
 					break;
 					
 					case 'object method':
-					case 'left parenthesis':	
+					case 'left parenthesis':
 						$result .= $this->compileSimpleVariable($values[$i], $variableType);
 						$statusStack[] = $status = $variableType;
 					break;
@@ -1234,8 +1387,22 @@ class TemplateScriptingCompiler {
 							$modifierData['className'] = $className;
 							$this->autoloadPlugins[$modifierData['className']] = $modifierData['className'];
 						}
-						else if ((!function_exists($modifierData['name']) && !in_array($modifierData['name'], $this->unknownPHPFunctions)) || in_array($modifierData['name'], $this->disabledPHPFunctions)) {
-							throw new SystemException(static::formatSyntaxError("unknown modifier '".$values[$i]."'", $this->currentIdentifier, $this->currentLineNo));
+						else if (!function_exists($modifierData['name']) && !in_array($modifierData['name'], $this->unknownPHPFunctions)) {
+							throw new SystemException(static::formatSyntaxError(
+								"unknown modifier '".$values[$i]."'",
+								$this->currentIdentifier,
+								$this->currentLineNo
+							));
+						}
+						else if (
+							in_array($modifierData['name'], $this->disabledPHPFunctions)
+							|| (ENABLE_ENTERPRISE_MODE && !in_array($modifierData['name'], $this->enterpriseFunctions))
+						) {
+							throw new SystemException(static::formatSyntaxError(
+								"disabled function '".$values[$i]."'",
+								$this->currentIdentifier,
+								$this->currentLineNo
+							));
 						}
 						
 						$statusStack[count($statusStack) - 1] = $status = 'modifier end';
@@ -1641,9 +1808,9 @@ class TemplateScriptingCompiler {
 			$string = str_replace('<?php', '@@PHP_START_TAG@@', $string);
 			$string = str_replace('<?', '@@PHP_SHORT_START_TAG@@', $string);
 			$string = str_replace('?>', '@@PHP_END_TAG@@', $string);
-			$string = str_replace('@@PHP_END_TAG@@', "<?php echo '?>'; ?>\n", $string);
-			$string = str_replace('@@PHP_SHORT_START_TAG@@', "<?php echo '<?'; ?>\n", $string);
-			$string = str_replace('@@PHP_START_TAG@@', "<?php echo '<?php'; ?>\n", $string);
+			$string = str_replace('@@PHP_END_TAG@@', "<?='?>';?>\n", $string);
+			$string = str_replace('@@PHP_SHORT_START_TAG@@', "<?='<?';?>\n", $string);
+			$string = str_replace('@@PHP_START_TAG@@', "<?='<?php';?>\n", $string);
 		}
 		
 		return $string;

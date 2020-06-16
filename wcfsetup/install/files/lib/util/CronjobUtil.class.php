@@ -12,7 +12,7 @@ use wcf\system\exception\SystemException;
  * timezone set to the value of the `TIMEZONE` option.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -595,7 +595,6 @@ final class CronjobUtil {
 		// $longPattern = '/^'.$range.'+(,'.$range.')*$/i'; / does not work on some php installations
 		$longPattern = '/^'.$range.'(,'.$range.')*$/i';
 		
-		preg_match($longPattern, $value);
 		if ($value != '*' && !preg_match($longPattern, $value)) {
 			throw new SystemException("invalid value '".$value."' given for cronjob attribute '".$name."'");
 		}

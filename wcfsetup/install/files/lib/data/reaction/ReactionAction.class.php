@@ -14,6 +14,7 @@ use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
@@ -21,12 +22,13 @@ use wcf\system\reaction\ReactionHandler;
 use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\user\GroupedUserList;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Executes reaction-related actions.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Reaction
  * @since	5.2
@@ -39,7 +41,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 	/**
 	 * @inheritDoc
 	 */
-	protected $allowGuestAccess = ['getReactionDetails'];
+	protected $allowGuestAccess = ['getReactionDetails', 'load'];
 	
 	/**
 	 * @inheritDoc
@@ -50,25 +52,25 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 	 * likeable object
 	 * @var	ILikeObject
 	 */
-	public $likeableObject = null;
+	public $likeableObject;
 	
 	/**
 	 * object type object
 	 * @var	ObjectType
 	 */
-	public $objectType = null;
+	public $objectType;
 	
 	/**
 	 * like object type provider object
 	 * @var	ILikeObjectTypeProvider
 	 */
-	public $objectTypeProvider = null;
+	public $objectTypeProvider;
 	
 	/**
 	 * reaction type for the reaction
 	 * @var	ReactionType
 	 */
-	public $reactionType = null;
+	public $reactionType;
 	
 	/**
 	 * Validates parameters to fetch like details.
@@ -91,15 +93,14 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		$likeList->getConditionBuilder()->add('objectID = ?', [$this->parameters['data']['objectID']]);
 		$likeList->getConditionBuilder()->add('objectTypeID = ?', [$this->objectType->objectTypeID]);
 		$likeList->sqlOrderBy = 'time DESC';
+		$likeList->sqlLimit = 0;
 		$likeList->readObjects();
 		
 		$data = [];
 		foreach ($likeList as $item) {
-			if ($item->getReactionType()->isDisabled) continue; 
-			
 			// we cast the reactionTypeID to a string, so that we can sort the array
 			if (!isset($data[(string)$item->getReactionType()->reactionTypeID])) {
-				$data[(string)$item->getReactionType()->reactionTypeID] = new GroupedUserList($item->getReactionType()->getTitle());
+				$data[(string)$item->getReactionType()->reactionTypeID] = new GroupedUserList($item->getReactionType()->renderIcon() . ' ' . StringUtil::encodeHTML($item->getReactionType()->getTitle()));
 			}
 			
 			$data[(string)$item->getReactionType()->reactionTypeID]->addUserIDs([$item->userID]);
@@ -116,7 +117,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		});
 		
 		return [
-			'template' => WCF::getTPL()->fetch('groupedUserList', 'wcf', ['groupedUsers' => $data]),
+			'template' => WCF::getTPL()->fetch('groupedUserReactionList', 'wcf', ['groupedUsers' => $data]),
 			'title' => WCF::getLanguage()->get('wcf.reactions.summary.title')
 		];
 	}
@@ -129,7 +130,6 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 			throw new IllegalLinkException();
 		}
 		
-		$this->readString('containerID', false, 'data');
 		$this->readInteger('objectID', false, 'data');
 		$this->readString('objectType', false, 'data');
 		
@@ -165,7 +165,6 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 			'objectID' => $this->likeableObject->getObjectID(), 
 			'objectType' => $this->parameters['data']['objectType'],
 			'reactionTypeID' => $reactionData['reactionTypeID'],
-			'containerID' => $this->parameters['data']['containerID'],
 			'reputationCount' => $reactionData['cumulativeLikes']
 		];
 	}
@@ -180,7 +179,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		
 		$this->reactionType = ReactionTypeCache::getInstance()->getReactionTypeByID($this->parameters['reactionTypeID']);
 		
-		if (!$this->reactionType->reactionTypeID || $this->reactionType->isDisabled) {
+		if (!$this->reactionType->reactionTypeID) {
 			throw new IllegalLinkException();
 		}
 		
@@ -192,7 +191,7 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		// check if liking own content but forbidden by configuration
 		$this->likeableObject = $this->objectTypeProvider->getObjectByID($this->parameters['data']['objectID']);
 		$this->likeableObject->setObjectType($this->objectType);
-		if (!LIKE_ALLOW_FOR_OWN_CONTENT && ($this->likeableObject->getUserID() == WCF::getUser()->userID)) {
+		if ($this->likeableObject->getUserID() == WCF::getUser()->userID) {
 			throw new PermissionDeniedException();
 		}
 		
@@ -201,16 +200,39 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 				throw new PermissionDeniedException();
 			}
 		}
+		
+		if (!$this->reactionType->isAssignable) {
+			// check, if the reaction is reverted
+			$like = Like::getLike($this->likeableObject->getObjectType()->objectTypeID, $this->likeableObject->getObjectID(), WCF::getUser()->userID);
+			
+			if (!$like->likeID || $like->reactionTypeID !== $this->reactionType->reactionTypeID) {
+				throw new IllegalLinkException();
+			}
+		}
 	}
 	
 	/**
 	 * Validates parameters to load reactions.
 	 */
 	public function validateLoad() {
+		if (!MODULE_LIKE) {
+			throw new IllegalLinkException();
+		}
+		
 		$this->readInteger('lastLikeTime', true);
 		$this->readInteger('userID');
-		$this->readInteger('reactionTypeID');
+		$this->readInteger('reactionTypeID', true);
 		$this->readString('targetType');
+		
+		$user = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
+		
+		if ($user === null) {
+			throw new IllegalLinkException();
+		}
+		
+		if ($user->isProtected()) {
+			throw new PermissionDeniedException();
+		}
 	}
 	
 	/**
@@ -229,7 +251,9 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		else {
 			$likeList->getConditionBuilder()->add("like_table.userID = ?", [$this->parameters['userID']]);
 		}
-		$likeList->getConditionBuilder()->add("like_table.reactionTypeID = ?", [$this->parameters['reactionTypeID']]);
+		if ($this->parameters['reactionTypeID']) {
+			$likeList->getConditionBuilder()->add("like_table.reactionTypeID = ?", [$this->parameters['reactionTypeID']]);
+		}
 		$likeList->readObjects();
 		
 		if (empty($likeList)) {
@@ -301,49 +325,25 @@ class ReactionAction extends AbstractDatabaseObjectAction {
 		//
 		
 		if ($newLikeObject->objectUserID) {
-			$sql = "SELECT	COUNT(*) as count, like_table.reactionTypeID
-				FROM	wcf".WCF_N."_like like_table
-				WHERE	like_table.objectTypeID = ?
-					AND like_table.objectID = ?
-				GROUP BY like_table.reactionTypeID";
+			$sql = "SELECT  COUNT(*) as count
+				FROM    wcf".WCF_N."_like
+				WHERE   objectTypeID = ?
+					AND objectID = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([
 				$targetObjectType->objectTypeID,
 				$this->parameters['targetObjectID']
 			]);
-			
-			$updateValues = [
-				'positive' => 0,
-				'neutral' => 0, 
-				'negative' => 0
-			];
-			while ($row = $statement->fetchArray()) {
-				$reactionType = ReactionTypeCache::getInstance()->getReactionTypeByID($row['reactionTypeID']);
-				
-				if (!$reactionType->isDisabled) {
-					if ($reactionType->isPositive()) {
-						$updateValues['positive'] += $row['count'];
-					}
-					else if ($reactionType->isNegative()) {
-						$updateValues['negative'] += $row['count'];
-					}
-					else if ($reactionType->isNeutral()) {
-						$updateValues['neutral'] += $row['count'];
-					}
-				}
-			}
+			$count = $statement->fetchSingleColumn();
 			
 			// update received likes
 			$userEditor = new UserEditor(new User($newLikeObject->objectUserID));
 			$userEditor->updateCounters([
-				'likesReceived' => $updateValues['positive'],
-				'positiveReactionsReceived' => $updateValues['positive'],
-				'negativeReactionsReceived' => $updateValues['negative'],
-				'neutralReactionsReceived' => $updateValues['neutral']
+				'likesReceived' => $count,
 			]);
 			
 			// add activity points
-			UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$newLikeObject->objectUserID => $updateValues['positive']]);
+			UserActivityPointHandler::getInstance()->fireEvents('com.woltlab.wcf.like.activityPointEvent.receivedLikes', [$newLikeObject->objectUserID => $count]);
 		}
 	}
 }

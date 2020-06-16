@@ -2,6 +2,7 @@
 namespace wcf\system\edit;
 use wcf\data\edit\history\entry\EditHistoryEntryList;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
@@ -10,7 +11,7 @@ use wcf\system\WCF;
  * Manages the edit history.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Search
  */
@@ -77,13 +78,21 @@ class EditHistoryManager extends SingletonFactory {
 	public function delete($objectType, array $objectIDs) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
 		
-		$sql = "DELETE FROM	wcf".WCF_N."_edit_history_entry
-			WHERE		objectTypeID = ?
-				AND	objectID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
+		$itemsPerLoop = 1000;
+		$loopCount = ceil(count($objectIDs) / $itemsPerLoop);
+		
 		WCF::getDB()->beginTransaction();
-		foreach ($objectIDs as $objectID) {
-			$statement->execute([$objectTypeID, $objectID]);
+		for ($i = 0; $i < $loopCount; $i++) {
+			$batchObjectIDs = array_slice($objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
+			
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('objectTypeID = ?', [$objectTypeID]);
+			$conditionBuilder->add('objectID IN (?)', [$batchObjectIDs]);
+			
+			$sql = "DELETE FROM	wcf".WCF_N."_edit_history_entry
+				" . $conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
 		}
 		WCF::getDB()->commitTransaction();
 	}

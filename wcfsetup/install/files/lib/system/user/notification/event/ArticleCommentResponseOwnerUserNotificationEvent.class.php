@@ -4,21 +4,21 @@ use wcf\data\article\category\ArticleCategory;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
-use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
+use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
 use wcf\system\comment\CommentHandler;
 use wcf\system\email\Email;
-use wcf\system\user\notification\object\CommentUserNotificationObject;
+use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 
 /**
  * User notification event for article comment responses.
  *
- * @author	Joshua Rusweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @author	Joshua Ruesweg
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  * @since       5.2
  *
- * @method	CommentUserNotificationObject	getUserNotificationObject()
+ * @method	CommentResponseUserNotificationObject	getUserNotificationObject()
  */
 class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent {
 	use TTestableCommentResponseUserNotificationEvent;
@@ -67,7 +67,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractSharedUse
 				'author' => $this->author,
 				'authors' => array_values($authors),
 				'commentID' => $this->getUserNotificationObject()->commentID,
-				'article' => ViewableArticleRuntimeCache::getInstance()->getObject($this->additionalData['objectID']),
+				'article' => ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID']),
 				'count' => $count,
 				'others' => $count - 1,
 				'guestTimesTriggered' => $this->notification->guestTimesTriggered,
@@ -79,7 +79,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractSharedUse
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.articleComment.responseOwner.message', [
 			'author' => $this->author,
 			'commentID' => $this->getUserNotificationObject()->commentID,
-			'article' => ViewableArticleRuntimeCache::getInstance()->getObject($this->additionalData['objectID']),
+			'article' => ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID']),
 			'responseID' => $this->getUserNotificationObject()->responseID,
 			'commentAuthor' => $this->getCommentAuthorProfile()
 		]);
@@ -98,7 +98,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractSharedUse
 			'application' => 'wcf',
 			'variables' => [
 				'commentID' => $this->getUserNotificationObject()->commentID,
-				'article' => ViewableArticleRuntimeCache::getInstance()->getObject($this->additionalData['objectID']),
+				'article' => ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID']),
 				'languageVariablePrefix' => 'wcf.user.notification.articleComment.responseOwner',
 				'responseID' => $this->getUserNotificationObject()->responseID,
 				'commentAuthor' => $this->getCommentAuthorProfile(),
@@ -126,7 +126,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractSharedUse
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return ViewableArticleRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#comment'. $this->getUserNotificationObject()->commentID;
+		return ViewableArticleContentRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() . '#comment'. $this->getUserNotificationObject()->commentID .'/response'. $this->getUserNotificationObject()->responseID;
 	}
 	
 	/**
@@ -141,7 +141,7 @@ class ArticleCommentResponseOwnerUserNotificationEvent extends AbstractSharedUse
 	 */
 	protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author) {
 		return [
-			'objectID' => self::getTestArticle(self::createTestCategory(ArticleCategory::OBJECT_TYPE_NAME), $author)->articleID,
+			'objectID' => self::getTestArticle(self::createTestCategory(ArticleCategory::OBJECT_TYPE_NAME), $author)->getArticleContent()->articleContentID,
 			'objectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.articleComment')
 		];
 	}

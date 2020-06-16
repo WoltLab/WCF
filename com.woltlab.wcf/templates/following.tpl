@@ -16,8 +16,8 @@
 			{foreach from=$objects item=user}
 				<li class="jsFollowing">
 					<div class="box48">
-						<a href="{link controller='User' object=$user}{/link}" title="{$user->username}">{@$user->getAvatar()->getImageTag(48)}</a>
-							
+						{user object=$user type='avatar48' title=$user->username}
+						
 						<div class="details userInformation">
 							{include file='userInformationHeadline'}
 							
@@ -54,7 +54,7 @@
 		{/hascontent}
 	</footer>
 {else}
-	<p class="info">{lang}wcf.user.following.noUsers{/lang}</p>
+	<p class="info" role="status">{lang}wcf.user.following.noUsers{/lang}</p>
 {/if}
 
 <script data-relocate="true">

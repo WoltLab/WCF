@@ -2,8 +2,9 @@
  * List implementation relying on an array or if supported on a Set to hold values.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	List (alias)
  * @module	WoltLabSuite/Core/List
  */
 define([], function() {

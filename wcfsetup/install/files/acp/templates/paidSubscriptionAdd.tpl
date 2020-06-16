@@ -98,7 +98,7 @@
 				<dt>{lang}wcf.acp.paidSubscription.excludedSubscriptions{/lang}</dt>
 				<dd>
 					{foreach from=$availableSubscriptions item=availableSubscription}
-						<label><input type="checkbox" name="excludedSubscriptionIDs[]" value="{@$availableSubscription->subscriptionID}"{if $availableSubscription->subscriptionID|in_array:$excludedSubscriptionIDs} checked{/if}> {$availableSubscription->title|language}</label>
+						<label><input type="checkbox" name="excludedSubscriptionIDs[]" value="{@$availableSubscription->subscriptionID}"{if $availableSubscription->subscriptionID|in_array:$excludedSubscriptionIDs} checked{/if}> {$availableSubscription->getTitle()}</label>
 					{/foreach}
 					<small>{lang}wcf.acp.paidSubscription.excludedSubscriptions.description{/lang}</small>
 				</dd>
@@ -170,7 +170,7 @@
 			<dt><label>{lang}wcf.acp.paidSubscription.userGroups{/lang}</label></dt>
 			<dd>
 				{foreach from=$availableUserGroups item=userGroup}
-					<label><input type="checkbox" name="groupIDs[]" value="{@$userGroup->groupID}"{if $userGroup->groupID|in_array:$groupIDs} checked{/if}> {$userGroup->groupName|language}</label>
+					<label><input type="checkbox" name="groupIDs[]" value="{@$userGroup->groupID}"{if $userGroup->groupID|in_array:$groupIDs} checked{/if}> {$userGroup->getTitle()}</label>
 				{/foreach}
 				{if $errorField == 'groupIDs'}
 					<small class="innerError">

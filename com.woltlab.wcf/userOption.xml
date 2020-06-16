@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/userOption.xsd">
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/userOption.xsd">
 	<import>
 		<categories>
 			<category name="profile">
@@ -120,16 +120,6 @@
 				<visible>15</visible>
 				<editable>3</editable>
 			</option>
-			<option name="icq">
-				<categoryname>profile.contact</categoryname>
-				<optiontype>text</optiontype>
-				<validationpattern>^$|^([0-9](-| )?)+[0-9]$</validationpattern>
-				<searchable>1</searchable>
-				<visible>15</visible>
-				<editable>3</editable>
-				<isdisabled>1</isdisabled>
-				<contentpattern>^(\d{3})-(\d{3})-(\d{3})$</contentpattern>
-			</option>
 			<option name="skype">
 				<categoryname>profile.contact</categoryname>
 				<optiontype>text</optiontype>
@@ -157,17 +147,6 @@
 				<visible>15</visible>
 				<editable>3</editable>
 				<contentpattern>^https?://twitter.com/([A-Za-z0-9_]+)$</contentpattern>
-			</option>
-			<option name="googlePlus">
-				<categoryname>profile.contact</categoryname>
-				<optiontype>text</optiontype>
-				<validationpattern>^$|^\d{21}$|^\+\S[^/]+$</validationpattern>
-				<outputclass>wcf\system\option\user\GooglePlusUserOptionOutput</outputclass>
-				<searchable>1</searchable>
-				<visible>15</visible>
-				<editable>3</editable>
-				<isdisabled>1</isdisabled>
-				<contentpattern>^https?://(?:plus|www).google(?:apis)?.com(?:/\w+/\w+(?:/\w)?)?/(\d{21}|\+\S[^/]+)$</contentpattern>
 			</option>
 			<!-- /profile -->
 			<!-- settings -->
@@ -204,6 +183,7 @@
 2:wcf.user.access.following
 3:wcf.user.access.nobody</selectoptions>
 				<editable>3</editable>
+				<permissions>user.profile.canHideOnlineStatus</permissions>
 			</option>
 			<option name="canViewProfile">
 				<categoryname>settings.privacy.content</categoryname>
@@ -227,21 +207,18 @@
 3:wcf.user.access.nobody</selectoptions>
 				<editable>3</editable>
 			</option>
+			<option name="enableEmbeddedMedia">
+				<categoryname>settings.privacy.content</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>0</defaultvalue>
+				<editable>3</editable>
+				<options>message_enable_user_consent</options>
+			</option>
 			<!-- settings.privacy.messaging -->
 			<option name="canViewEmailAddress">
 				<categoryname>settings.privacy.messaging</categoryname>
 				<optiontype>select</optiontype>
 				<defaultvalue>3</defaultvalue>
-				<selectoptions>0:wcf.user.access.everyone
-1:wcf.user.access.registered
-2:wcf.user.access.following
-3:wcf.user.access.nobody</selectoptions>
-				<editable>3</editable>
-			</option>
-			<option name="canMail">
-				<categoryname>settings.privacy.messaging</categoryname>
-				<optiontype>select</optiontype>
-				<defaultvalue>1</defaultvalue>
 				<selectoptions>0:wcf.user.access.everyone
 1:wcf.user.access.registered
 2:wcf.user.access.following
@@ -263,8 +240,12 @@
 1:wcf.user.access.registered
 2:wcf.user.access.following
 3:wcf.user.access.nobody</selectoptions>
+				<options>module_user_profile_wall</options>
 				<editable>3</editable>
 			</option>
 		</options>
 	</import>
+	<delete>
+		<option name="canMail" />
+	</delete>
 </data>

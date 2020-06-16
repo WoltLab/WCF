@@ -4,7 +4,7 @@
  * Location-related classes for WCF
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Location = { };
@@ -131,10 +131,11 @@ WCF.Location.GoogleMaps.Map = Class.extend({
 		// fix maps in mobile sidebars by refreshing the map when displaying
 		// the map
 		if (this._mapContainer.parents('.sidebar').length) {
-			enquire.register('(max-width: 767px)', {
-				setup: $.proxy(this._addSidebarMapListener, this),
-				deferSetup: true
-			});
+			require(['Ui/Screen'], function(UiScreen) {
+				UiScreen.on('screen-sm-down', {
+					setup: $.proxy(this._addSidebarMapListener, this)
+				});
+			}.bind(this));
 		}
 		
 		this.refresh();
@@ -834,7 +835,7 @@ WCF.Location.GoogleMaps.LocationSearch = WCF.Search.Base.extend({
 		
 		var $containerID = this._searchInput.parents('.dropdown').wcfIdentify();
 		if (!WCF.Dropdown.getDropdownMenu($containerID).hasClass('dropdownOpen')) {
-			WCF.Dropdown.toggleDropdown($containerID);
+			WCF.Dropdown.toggleDropdown($containerID, true);
 		}
 		
 		// pre-select first item

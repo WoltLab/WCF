@@ -3,7 +3,7 @@
  * children that only considers the visibility of all of its children.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Container/Default
  * @see 	module:WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract

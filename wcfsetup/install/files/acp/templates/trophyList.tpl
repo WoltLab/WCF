@@ -42,6 +42,7 @@
 			{foreach from=$objects item='trophy'}
 				<li class="sortableNode sortableNoNesting trophyRow" data-object-id="{@$trophy->trophyID}">
 					<span class="sortableNodeLabel">
+						{@$trophy->renderTrophy(32)}
 						<a href="{link controller='TrophyEdit' object=$trophy}{/link}">{$trophy->getTitle()}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">
@@ -56,10 +57,10 @@
 				</li>
 			{/foreach}
 		</ol>
-		
-		<div class="formSubmit">
-			<button class="button" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
-		</div>
+	</div>
+	
+	<div class="formSubmit">
+		<button class="button buttonPrimary" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
 	</div>
 	
 	<footer class="contentFooter">

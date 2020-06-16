@@ -10,7 +10,7 @@ use wcf\system\template\TemplateScriptingCompiler;
  * 	{lang var=$x}foo{/lang}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
  */
@@ -23,7 +23,7 @@ class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 		
 		$tagArgs = $compiler::makeArgString($tagArgs);
 		return "<?php
-			\$this->tagStack[] = array('lang', array_merge(\$this->v, array($tagArgs)));
+			\$this->tagStack[] = ['lang', array_merge(\$this->v, [$tagArgs])];
 			ob_start();
 			?>";
 	}
@@ -34,36 +34,7 @@ class LangCompilerTemplatePlugin implements ICompilerTemplatePlugin {
 	public function executeEnd(TemplateScriptingCompiler $compiler) {
 		$compiler->popTag('lang');
 		return "<?php
-			\$__langCompilerTemplatePluginOutput = (
-				!empty(\$this->tagStack[count(\$this->tagStack) - 1][1]['__literal'])
-				?
-				wcf\system\WCF::getLanguage()->get(
-					ob_get_clean(),
-					(
-						isset(\$this->tagStack[count(\$this->tagStack) - 1][1]['__optional'])
-						?
-						\$this->tagStack[count(\$this->tagStack) - 1][1]['__optional']
-						:
-						false
-					)
-				)
-				:
-				wcf\system\WCF::getLanguage()->getDynamicVariable(
-					ob_get_clean(),
-					\$this->tagStack[count(\$this->tagStack) - 1][1],
-					(
-						isset(\$this->tagStack[count(\$this->tagStack) - 1][1]['__optional'])
-						?
-						\$this->tagStack[count(\$this->tagStack) - 1][1]['__optional']
-						:
-						false
-					)
-				)
-			);
-			
-			if (!empty(\$this->tagStack[count(\$this->tagStack) - 1][1]['__encode'])) \$__langCompilerTemplatePluginOutput = wcf\util\StringUtil::encodeHTML(\$__langCompilerTemplatePluginOutput);
-			echo \$__langCompilerTemplatePluginOutput;
-			
+			echo wcf\system\WCF::getLanguage()->tplGet(ob_get_clean(), \$this->tagStack[count(\$this->tagStack) - 1][1]);
 			array_pop(\$this->tagStack); ?>";
 	}
 }

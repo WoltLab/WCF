@@ -2,7 +2,7 @@
  * Class and function collection for WCF ACP
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -336,6 +336,8 @@ WCF.ACP.Package.Installation = Class.extend({
 	_success: function(data, textStatus, jqXHR) {
 		this._shouldRender = false;
 		
+		if (typeof window._trackPackageStep === 'function') window._trackPackageStep(this._actionName, data);
+		
 		if (this._dialog === null) {
 			this._dialog = $('<div id="package' + (this._actionName === 'UninstallPackage' ? 'Uni' : 'I') + 'nstallationDialog" />').hide().appendTo(document.body);
 			this._dialog.wcfDialog({
@@ -660,397 +662,6 @@ WCF.ACP.Package.Uninstallation = WCF.ACP.Package.Installation.extend({
 			packageID: this._packageID,
 			step: 'prepare'
 		};
-	}
-});
-
-/**
- * Manages package search.
- */
-WCF.ACP.Package.Search = Class.extend({
-	/**
-	 * search button
-	 * @var	jQuery
-	 */
-	_button: null,
-	
-	/**
-	 * list of cached pages
-	 * @var	object
-	 */
-	_cache: { },
-	
-	/**
-	 * search container
-	 * @var	jQuery
-	 */
-	_container: null,
-	
-	/**
-	 * dialog overlay
-	 * @var	jQuery
-	 */
-	_dialog: null,
-	
-	/**
-	 * package input field
-	 * @var	jQuery
-	 */
-	_package: null,
-	
-	/**
-	 * package description input field
-	 * @var	jQuery
-	 */
-	_packageDescription: null,
-	
-	/**
-	 * package name input field
-	 * @var	jQuery
-	 */
-	_packageName: null,
-	
-	/**
-	 * package search result container
-	 * @var	jQuery
-	 */
-	_packageSearchResultContainer: null,
-	
-	/**
-	 * package search result list
-	 * @var	jQuery
-	 */
-	_packageSearchResultList: null,
-	
-	/**
-	 * number of pages
-	 * @var	integer
-	 */
-	_pageCount: 0,
-	
-	/**
-	 * current page
-	 * @var	integer
-	 */
-	_pageNo: 1,
-	
-	/**
-	 * action proxy
-	 * @var	WCF.Action:proxy
-	 */
-	_proxy: null,
-	
-	/**
-	 * search id
-	 * @var	integer
-	 */
-	_searchID: 0,
-	
-	/**
-	 * currently selected package
-	 * @var	string
-	 */
-	_selectedPackage: '',
-	
-	/**
-	 * currently selected package's version
-	 */
-	_selectedPackageVersion: '',
-	
-	/**
-	 * Initializes the WCF.ACP.Package.Search class.
-	 */
-	init: function() {
-		this._button = null;
-		this._cache = { };
-		this._container = $('#packageSearch');
-		this._dialog = null;
-		this._package = null;
-		this._packageName = null;
-		this._packageSearchResultContainer = $('#packageSearchResultContainer');
-		this._packageSearchResultList = $('#packageSearchResultList');
-		this._pageCount = 0;
-		this._pageNo = 1;
-		this._searchDescription = null;
-		this._searchID = 0;
-		this._selectedPackage = '';
-		this._selectedPackageVersion = '';
-		
-		this._proxy = new WCF.Action.Proxy({
-			success: $.proxy(this._success, this)
-		});
-		
-		this._initElements();
-	},
-	
-	/**
-	 * Initializes search elements.
-	 */
-	_initElements: function() {
-		this._button = this._container.find('.formSubmit > button.jsButtonPackageSearch').disable().click($.proxy(this._search, this));
-		
-		this._package = $('#package').keyup($.proxy(this._keyUp, this));
-		this._packageDescription = $('#packageDescription').keyup($.proxy(this._keyUp, this));
-		this._packageName = $('#packageName').keyup($.proxy(this._keyUp, this));
-	},
-	
-	/**
-	 * Handles the 'keyup' event.
-	 */
-	_keyUp: function(event) {
-		if (this._package.val() === '' && this._packageDescription.val() === '' && this._packageName.val() === '') {
-			this._button.disable();
-		}
-		else {
-			this._button.enable();
-			
-			// submit on [Enter]
-			if (event.which === 13) {
-				this._button.trigger('click');
-			}
-		}
-	},
-	
-	/**
-	 * Performs a new search.
-	 */
-	_search: function() {
-		var $values = this._getSearchValues();
-		if (!this._validate($values)) {
-			return false;
-		}
-		
-		$values.pageNo = this._pageNo;
-		this._proxy.setOption('data', {
-			actionName: 'search',
-			className: 'wcf\\data\\package\\update\\PackageUpdateAction',
-			parameters: $values
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Returns search values.
-	 * 
-	 * @return	object
-	 */
-	_getSearchValues: function() {
-		return {
-			'package': $.trim(this._package.val()),
-			packageDescription: $.trim(this._packageDescription.val()),
-			packageName: $.trim(this._packageName.val())
-		};
-	},
-	
-	/**
-	 * Validates search values.
-	 * 
-	 * @param	object		values
-	 * @return	boolean
-	 */
-	_validate: function(values) {
-		if (values['package'] === '' && values['packageDescription'] === '' && values['packageName'] === '') {
-			return false;
-		}
-		
-		return true;
-	},
-	
-	/**
-	 * Handles successful AJAX requests.
-	 * 
-	 * @param	object		data
-	 * @param	string		textStatus
-	 * @param	jQuery		jqXHR
-	 */
-	_success: function(data, textStatus, jqXHR) {
-		switch (data.actionName) {
-			case 'getResultList':
-				this._insertTemplate(data.returnValues.template);
-			break;
-			
-			case 'prepareInstallation':
-				if (data.returnValues.queueID) {
-					if (this._dialog !== null) {
-						this._dialog.wcfDialog('close');
-					}
-					
-					var $installation = new WCF.ACP.Package.Installation(data.returnValues.queueID, undefined, false);
-					$installation.prepareInstallation();
-				}
-				else if (data.returnValues.template) {
-					if (this._dialog === null) {
-						this._dialog = $('<div>' + data.returnValues.template + '</div>').hide().appendTo(document.body);
-						this._dialog.wcfDialog({
-							title: WCF.Language.get('wcf.acp.package.update.unauthorized')
-						});
-					}
-					else {
-						this._dialog.html(data.returnValues.template).wcfDialog('open');
-					}
-					
-					this._dialog.find('.formSubmit > button').click($.proxy(this._submitAuthentication, this));
-				}
-			break;
-			
-			case 'search':
-				this._pageCount = data.returnValues.pageCount;
-				this._searchID = data.returnValues.searchID;
-				
-				this._insertTemplate(data.returnValues.template, (data.returnValues.count === undefined ? undefined : data.returnValues.count));
-				this._setupPagination();
-			break;
-		}
-	},
-	
-	/**
-	 * Submits authentication data for current update server.
-	 * 
-	 * @param	object		event
-	 */
-	_submitAuthentication: function(event) {
-		var $usernameField = $('#packageUpdateServerUsername');
-		var $passwordField = $('#packageUpdateServerPassword');
-		
-		// remove error messages if any
-		$usernameField.next('small.innerError').remove();
-		$passwordField.next('small.innerError').remove();
-		
-		var $continue = true;
-		if ($.trim($usernameField.val()) === '') {
-			$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter($usernameField);
-			$continue = false;
-		}
-		
-		if ($.trim($passwordField.val()) === '') {
-			$('<small class="innerError">' + WCF.Language.get('wcf.global.form.error.empty') + '</small>').insertAfter($passwordField);
-			$continue = false;
-		}
-		
-		if ($continue) {
-			this._prepareInstallation($(event.currentTarget).data('packageUpdateServerID'));
-		}
-	},
-	
-	/**
-	 * Inserts search result list template.
-	 * 
-	 * @param	string		template
-	 * @param	integer		count
-	 */
-	_insertTemplate: function(template, count) {
-		this._packageSearchResultContainer.show();
-		
-		this._packageSearchResultList.html(template);
-		if (count === undefined) {
-			this._content[this._pageNo] = template;
-		}
-		
-		// update badge count
-		if (count !== undefined) {
-			this._content = { 1: template };
-			this._packageSearchResultContainer.find('h2.sectionTitle > .badge').html(count);
-		}
-		
-		// bind listener
-		this._packageSearchResultList.find('.jsInstallPackage').click($.proxy(this._click, this));
-	},
-	
-	/**
-	 * Prepares a package installation.
-	 * 
-	 * @param	object		event
-	 */
-	_click: function(event) {
-		var $button = $(event.currentTarget);
-		WCF.System.Confirmation.show($button.data('confirmMessage'), $.proxy(function(action) {
-			if (action === 'confirm') {
-				this._selectedPackage = $button.data('package');
-				this._selectedPackageVersion = $button.data('packageVersion');
-				this._prepareInstallation();
-			}
-		}, this), undefined, undefined, true);
-	},
-	
-	/**
-	 * Prepares package installation.
-	 * 
-	 * @param	integer		packageUpdateServerID
-	 */
-	_prepareInstallation: function(packageUpdateServerID) {
-		var $parameters = {
-			'packages': { }
-		};
-		$parameters['packages'][this._selectedPackage] = this._selectedPackageVersion;
-		
-		if (packageUpdateServerID) {
-			$parameters.authData = {
-				packageUpdateServerID: packageUpdateServerID,
-				password: $.trim($('#packageUpdateServerPassword').val()),
-				saveCredentials: ($('#packageUpdateServerSaveCredentials:checked').length ? true : false),
-				username: $.trim($('#packageUpdateServerUsername').val())
-			};
-		}
-		
-		this._proxy.setOption('data', {
-			actionName: 'prepareInstallation',
-			className: 'wcf\\data\\package\\update\\PackageUpdateAction',
-			parameters: $parameters
-		});
-		this._proxy.sendRequest();
-	},
-	
-	/**
-	 * Setups pagination for current search.
-	 */
-	_setupPagination: function() {
-		// remove previous instances
-		this._content = { 1: this._packageSearchResultList.html() };
-		this._packageSearchResultContainer.find('.pagination').wcfPages('destroy').remove();
-		
-		if (this._pageCount > 1) {
-			var $contentFooter = $('<footer class="contentFooter"><div class="paginationBottom"><nav /></div></footer>').insertAfter(this._packageSearchResultList);
-			$contentFooter.find('nav').wcfPages({
-				activePage: this._pageNo,
-				maxPage: this._pageCount
-			}).on('wcfpagesswitched', $.proxy(this._showPage, this));
-		}
-	},
-	
-	/**
-	 * Displays requested pages or loads it.
-	 * 
-	 * @param	object		event
-	 * @param	object		data
-	 */
-	_showPage: function(event, data) {
-		if (data && data.activePage) {
-			this._pageNo = data.activePage;
-		}
-		
-		// validate page no
-		if (this._pageNo < 1 || this._pageNo > this._pageCount) {
-			console.debug("[WCF.ACP.Package.Search] Cannot access page " + this._pageNo + " of " + this._pageCount);
-			return;
-		}
-		
-		// load content
-		if (this._content[this._pageNo] === undefined) {
-			this._proxy.setOption('data', {
-				actionName: 'getResultList',
-				className: 'wcf\\data\\package\\update\\PackageUpdateAction',
-				parameters: {
-					pageNo: this._pageNo,
-					searchID: this._searchID
-				}
-			});
-			this._proxy.sendRequest();
-		}
-		else {
-			// show cached content
-			this._packageSearchResultList.html(this._content[this._pageNo]);
-			
-			WCF.DOMNodeInsertedHandler.execute();
-		}
 	}
 });
 
@@ -1382,10 +993,10 @@ WCF.ACP.Package.Update.Search = Class.extend({
 		this._dialog = null;
 		
 		if (bindOnExistingButtons === true) {
-			$('.jsButtonPackageUpdate').click($.proxy(this._click, this));
+			$('.jsButtonSearchForUpdates').click($.proxy(this._click, this));
 		}
 		else {
-			var $button = $('<li><a class="button"><span class="icon icon16 fa-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
+			var $button = $('<li><a class="button jsButtonSearchForUpdates"><span class="icon icon16 fa-refresh"></span> <span>' + WCF.Language.get('wcf.acp.package.searchForUpdates') + '</span></a></li>');
 			$button.click(this._click.bind(this)).prependTo($('.contentHeaderNavigation > ul'));
 		}
 	},
@@ -1420,6 +1031,11 @@ WCF.ACP.Package.Update.Search = Class.extend({
 	 * @param	jQuery		jqXHR
 	 */
 	_success: function(data, textStatus, jqXHR) {
+		if (typeof window._trackSearchForUpdates === 'function') {
+			window._trackSearchForUpdates(data);
+			return;
+		}
+		
 		if (data.returnValues.url) {
 			window.location = data.returnValues.url;
 		}
@@ -1678,6 +1294,8 @@ WCF.ACP.Category.Collapsible = WCF.Collapsible.SimpleRemote.extend({
  * @see	WCF.Search.Base
  */
 WCF.ACP.Search = WCF.Search.Base.extend({
+	_delay: 250,
+	
 	/**
 	 * name of the selected search provider
 	 * @var	string
@@ -1700,7 +1318,7 @@ WCF.ACP.Search = WCF.Search.Base.extend({
 		$dropdown.find('a[data-provider-name]').on('click', $.proxy(function(event) {
 			event.preventDefault();
 			var $button = $(event.target);
-			$('.pageHeaderSearchType > .button').text($button.text());
+			$('.pageHeaderSearchType > .button > .pageHeaderSearchTypeLabel').text($button.text());
 			
 			var $oldProviderName = this._providerName;
 			this._providerName = ($button.data('providerName') != 'everywhere' ? $button.data('providerName') : '');
@@ -2438,7 +2056,8 @@ WCF.ACP.Stat.Chart = Class.extend({
 					$("#chartTooltip").html(item.series.xaxis.tickFormatter(item.datapoint[0], item.series.xaxis) + ', ' + WCF.String.formatNumeric(item.datapoint[1]) + ' ' + item.series.label).show();
 					UiAlignment.set($("#chartTooltip")[0], span, {
 						verticalOffset: 5,
-						horizontal: 'center'
+						horizontal: 'center',
+						vertical: 'top'
 					});
 				}
 				else {
@@ -2471,48 +2090,34 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 	_pageConditions: null,
 	
 	/**
-	 * select element for the page controller condition
+	 * select elements for the page controller condition
 	 * @var	jQuery[]
 	 */
 	_pageInputs: [],
 	
 	/**
-	 * Initializes a new WCF.ACP.Ad.LocationHandler object.
+	 * page controller condition container
+	 * @var	jQuery[]
 	 */
-	init: function() {
+	_pageSelectionContainer: null,
+	
+	/**
+	 * Initializes a new WCF.ACP.Ad.LocationHandler object.
+	 * 
+	 * @param	{object}	variablesDescriptions
+	 */
+	init: function(variablesDescriptions) {
+		this._variablesDescriptions = variablesDescriptions;
+		
 		this._pageConditions = $('#pageConditions');
 		this._pageInputs = $('input[name="pageIDs[]"]');
 		
-		var dl = $(this._pageInputs[0]).parents('dl:eq(0)');
+		this._variablesDescriptionsList = $('#ad').next('small').children('ul');
+		
+		this._pageSelectionContainer = $(this._pageInputs[0]).parents('dl:eq(0)');
 		
 		// hide the page controller elements
-		dl.prev('dl').hide();
-		dl.hide();
-		
-		var section = dl.parent('section');
-		if (!section.children('dl:visible').length) {
-			section.hide();
-		}
-		
-		var nextSection = section.next('section');
-		if (nextSection) {
-			var marginTop = nextSection.css('margin-top');
-			nextSection.css('margin-top', 0);
-			
-			require(['EventHandler'], function(EventHandler) {
-				EventHandler.add('com.woltlab.wcf.pageConditionDependence', 'checkVisivility', function() {
-					if (section.is(':visible')) {
-						nextSection.css('margin-top', marginTop);
-					}
-					else {
-						nextSection.css('margin-top', 0);
-					}
-				});
-			});
-		}
-		
-		// fix the margin of a potentially next page condition element
-		dl.next('dl').css('margin-top', 0);
+		this._hidePageSelection(true);
 		
 		$('#objectTypeID').on('change', $.proxy(this._setPageController, this));
 		
@@ -2522,33 +2127,104 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 	},
 	
 	/**
+	 * Hides the page selection form field.
+	 * 
+	 * @since	5.2
+	 */
+	_hidePageSelection: function(addEventListeners) {
+		this._pageSelectionContainer.prev('dl').hide();
+		this._pageSelectionContainer.hide();
+		
+		// fix the margin of a potentially next page condition element
+		this._pageSelectionContainer.next('dl').css('margin-top', 0);
+		
+		var section = this._pageSelectionContainer.parent('section');
+		if (!section.children('dl:visible').length) {
+			section.hide();
+			
+			var nextSection = section.next('section');
+			if (nextSection) {
+				nextSection.css('margin-top', 0);
+				
+				if (addEventListeners) {
+					require(['EventHandler'], function(EventHandler) {
+						EventHandler.add('com.woltlab.wcf.pageConditionDependence', 'checkVisivility', function() {
+							if (section.is(':visible')) {
+								nextSection.css('margin-top', '40px');
+							}
+							else {
+								nextSection.css('margin-top', 0);
+							}
+						});
+					});
+				}
+			}
+		}
+	},
+	
+	/**
+	 * Shows the page selection form field.
+	 * 
+	 * @since	5.2
+	 */
+	_showPageSelection: function() {
+		this._pageSelectionContainer.prev('dl').show();
+		this._pageSelectionContainer.show();
+		this._pageSelectionContainer.next('dl').css('margin-top', '40px');
+		
+		var section = this._pageSelectionContainer.parent('section');
+		section.show();
+		
+		var nextSection = section.next('section');
+		if (nextSection) {
+			nextSection.css('margin-top', '40px');
+		}
+	},
+	
+	/**
 	 * Sets the page controller based on the selected ad location.
 	 */
 	_setPageController: function() {
 		var option = $('#objectTypeID').find('option:checked');
+		var parent = option.parent();
 		
-		require(['Core'], function(Core) {
-			var input, triggerEvent;
+		// the page controller can be explicitly set for global positions
+		if (parent.is('optgroup') && parent.data('categoryName') === 'com.woltlab.wcf.global') {
+			this._showPageSelection();
+		}
+		else {
+			this._hidePageSelection();
 			
-			// select the related page
-			for (var i = 0, length = this._pageInputs.length; i < length; i++) {
-				input = this._pageInputs[i];
-				triggerEvent = false;
+			require(['Core'], function(Core) {
+				var input, triggerEvent;
 				
-				if (option.data('page') && elData(input, 'identifier') === option.data('page')) {
-					if (!input.checked) triggerEvent = true;
+				// select the related page
+				for (var i = 0, length = this._pageInputs.length; i < length; i++) {
+					input = this._pageInputs[i];
+					triggerEvent = false;
 					
-					input.checked = true;
-				}
-				else {
-					if (input.checked) triggerEvent = true;
+					if (option.data('page') && elData(input, 'identifier') === option.data('page')) {
+						if (!input.checked) triggerEvent = true;
+						
+						input.checked = true;
+					}
+					else {
+						if (input.checked) triggerEvent = true;
+						
+						input.checked = false;
+					}
 					
-					input.checked = false;
+					if (triggerEvent) Core.triggerEvent(this._pageInputs[i], 'change');
 				}
-				
-				if (triggerEvent) Core.triggerEvent(this._pageInputs[i], 'change');
-			}
-		}.bind(this));
+			}.bind(this));
+		}
+		
+		this._variablesDescriptionsList.children(':not(.jsDefaultItem)').remove();
+		
+		var objectTypeId = $('#objectTypeID').val();
+		if (objectTypeId in this._variablesDescriptions) {
+			this._variablesDescriptionsList[0].innerHTML += this._variablesDescriptions[objectTypeId];
+		}
 	},
 	
 	/**
@@ -2560,7 +2236,7 @@ WCF.ACP.Ad.LocationHandler = Class.extend({
 			// of these conditions
 			this._pageConditions.find('select, input').remove();
 		}
-		else {
+		else if (this._pageSelectionContainer.is(':hidden')) {
 			// reset page controller conditions to avoid creation of
 			// unnecessary conditions
 			for (var i = 0, length = this._pageInputs.length; i < length; i++) {

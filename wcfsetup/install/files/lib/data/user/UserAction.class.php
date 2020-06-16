@@ -20,6 +20,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\RequestHandler;
+use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
 use wcf\system\WCF;
 use wcf\util\UserRegistrationUtil;
 
@@ -27,7 +28,7 @@ use wcf\util\UserRegistrationUtil;
  * Executes user-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
  * 
@@ -454,11 +455,17 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		if (isset($this->parameters['deleteOldGroups'])) $deleteOldGroups = $this->parameters['deleteOldGroups'];
 		if (isset($this->parameters['addDefaultGroups'])) $addDefaultGroups = $this->parameters['addDefaultGroups'];
 		
+		$userIDs = [];
 		foreach ($this->getObjects() as $userEditor) {
+			$userIDs[] = $userEditor->userID;
 			$userEditor->addToGroups($groupIDs, $deleteOldGroups, $addDefaultGroups);
 		}
 		
-		//reread objects
+		if (empty($this->parameters['ignoreUserGroupAssignments'])) {
+			UserGroupAssignmentHandler::getInstance()->checkUsers($userIDs);
+		}
+		
+		// reread objects
 		$this->objects = [];
 		UserEditor::resetCache();
 		$this->readObjects();
@@ -505,13 +512,19 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		$list = [];
 		
 		if ($this->parameters['data']['includeUserGroups']) {
-			$accessibleGroups = UserGroup::getAccessibleGroups();
+			if ($this->parameters['data']['scope'] === 'mention') {
+				$accessibleGroups = UserGroup::getMentionableGroups();
+			}
+			else {
+				$accessibleGroups = UserGroup::getAllGroups();
+			}
+			
 			foreach ($accessibleGroups as $group) {
 				if (!empty($this->parameters['data']['restrictUserGroupIDs']) && !in_array($group->groupID, $this->parameters['data']['restrictUserGroupIDs'])) {
 					continue;
 				}
 				
-				if ($this->parameters['data']['scope'] === 'mention' && !$group->canBeMentioned()) {
+				if ($this->parameters['data']['scope'] === 'mention' && (!WCF::getSession()->getPermission('user.message.canMentionGroups') || !$group->canBeMentioned())) {
 					continue;
 				}
 				
@@ -613,7 +626,8 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 		
 		$action = new UserAction($this->objects, 'update', [
 			'data' => [
-				'activationCode' => 0
+				'activationCode' => 0,
+				'blacklistMatches' => '',
 			],
 			'removeGroups' => UserGroup::getGroupIDsByType([UserGroup::GUESTS])
 		]);
@@ -638,6 +652,12 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 				$email->send();
 			}
 		}
+		
+		$userIDs = [];
+		foreach ($this->getObjects() as $user) {
+			$userIDs[] = $user->userID;
+		}
+		UserGroupAssignmentHandler::getInstance()->checkUsers($userIDs);
 		
 		$this->unmarkItems();
 	}
@@ -967,6 +987,21 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	 */
 	public function saveSocialNetworkPrivacySettings() {
 		// does nothing
+	}
+	
+	/**
+	 * @since 5.3
+	 */
+	public function validateSaveUserConsent() {}
+	
+	/**
+	 * @since 5.3
+	 */
+	public function saveUserConsent() {
+		$userEditor = new UserEditor(WCF::getUser());
+		$userEditor->updateUserOptions([
+			User::getUserOptionID('enableEmbeddedMedia') => 1,
+		]);
 	}
 	
 	/**

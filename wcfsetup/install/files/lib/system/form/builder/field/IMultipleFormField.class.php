@@ -5,12 +5,12 @@ namespace wcf\system\form\builder\field;
  * Represents a form field that support selecting or setting multiple values.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface IMultipleFormField {
+interface IMultipleFormField extends IFormField {
 	/**
 	 * value to indicate that there is no maximum number of values to be selected
 	 * or set

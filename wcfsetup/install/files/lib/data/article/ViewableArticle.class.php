@@ -18,7 +18,7 @@ use wcf\system\WCF;
  * Represents a viewable article.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
@@ -84,9 +84,8 @@ class ViewableArticle extends DatabaseObjectDecorator {
 		$list->enableContentLoading($enableContentLoading);
 		$list->setObjectIDs([$articleID]);
 		$list->readObjects();
-		$objects = $list->getObjects();
-		if (isset($objects[$articleID])) return $objects[$articleID];
-		return null;
+		
+		return $list->getSingleObject();
 	}
 	
 	/**
@@ -206,6 +205,14 @@ class ViewableArticle extends DatabaseObjectDecorator {
 	}
 	
 	/**
+	 * @return bool
+	 * @since 5.2
+	 */
+	public function isPublished() {
+		return $this->publicationStatus == Article::PUBLISHED;
+	}
+	
+	/**
 	 * Returns the number of unread articles.
 	 *
 	 * @return	integer
@@ -286,6 +293,17 @@ class ViewableArticle extends DatabaseObjectDecorator {
 						UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadArticlesByCategory', serialize(self::$unreadArticlesByCategory));
 					}
 				}
+			}
+			else {
+				self::$unreadArticlesByCategory[$articleCategoryID] = 0;
+			}
+		}
+		else if (!isset(self::$unreadArticlesByCategory[$articleCategoryID])) {
+			if (WCF::getUser()->userID) {
+				self::$unreadArticlesByCategory[$articleCategoryID] = self::fetchUnreadArticlesForCategory($articleCategoryID);
+				
+				// update storage unreadEntries
+				UserStorageHandler::getInstance()->update(WCF::getUser()->userID, 'unreadArticlesByCategory', serialize(self::$unreadArticlesByCategory));
 			}
 			else {
 				self::$unreadArticlesByCategory[$articleCategoryID] = 0;

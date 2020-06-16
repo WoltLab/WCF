@@ -7,7 +7,7 @@ use wcf\data\article\Article;
  * type of discussion being available. This provider is always being evaluated last.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Article\Discussion
  * @since       5.2
@@ -24,6 +24,13 @@ class VoidArticleDiscussionProvider extends AbstractArticleDiscussionProvider {
 	 * @inheritDoc
 	 */
 	public function getDiscussionCountPhrase() {
+		return '';
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getDiscussionLink() {
 		return '';
 	}
 	

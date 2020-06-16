@@ -8,7 +8,7 @@ use wcf\system\WCF;
  * Executes keyword-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Search\Keyword
  * 
@@ -55,5 +55,23 @@ class SearchKeywordAction extends AbstractDatabaseObjectAction implements ISearc
 		}
 		
 		return $list;
+	}
+	
+	/**
+	 * Inserts a new keyword if it does not already exist, or updates it if it does.
+	 * @since 5.2
+	 */
+	public function registerSearch() {
+		$sql = "INSERT INTO             wcf".WCF_N."_search_keyword
+						(keyword, searches, lastSearchTime)
+			VALUES                  (?, ?, ?)
+			ON DUPLICATE KEY UPDATE searches = searches + VALUES(searches),
+						lastSearchTime = VALUES(lastSearchTime)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			mb_substr($this->parameters['data']['keyword'], 0, 191),
+			($this->parameters['data']['searches'] ?? 1),
+			($this->parameters['data']['lastSearchTime'] ?? TIME_NOW),
+		]);
 	}
 }

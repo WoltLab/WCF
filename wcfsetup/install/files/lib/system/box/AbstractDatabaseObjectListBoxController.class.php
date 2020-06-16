@@ -5,6 +5,7 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObjectList;
 use wcf\system\condition\ConditionHandler;
+use wcf\system\condition\ICondition;
 use wcf\system\condition\IObjectListCondition;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\UserInputException;
@@ -21,7 +22,7 @@ use wcf\util\StringUtil;
  * Default implementation of a box controller based on an object list.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
@@ -299,10 +300,12 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 	 * @inheritDoc
 	 */
 	protected function loadContent() {
+		EventHandler::getInstance()->fireAction($this, 'beforeLoadContent');
+		
 		$this->objectList = $this->getObjectList();
 		
 		if ($this->limit) {
-			$this->objectList->sqlLimit = $this->box->limit;
+			$this->objectList->sqlLimit = $this->limit;
 		}
 		
 		if ($this->sortOrder && $this->sortField) {
@@ -312,15 +315,19 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 		
 		if ($this->conditionDefinition) {
 			foreach ($this->box->getConditions() as $condition) {
-				/** @var IObjectListCondition $processor */
+				/** @var ICondition $processor */
 				$processor = $condition->getObjectType()->getProcessor();
-				$processor->addObjectListCondition($this->objectList, $condition->conditionData);
+				if ($processor instanceof IObjectListCondition) {
+					$processor->addObjectListCondition($this->objectList, $condition->conditionData);
+				}
 			}
 		}
 		
 		$this->readObjects();
 		
 		$this->content = $this->getTemplate();
+		
+		EventHandler::getInstance()->fireAction($this, 'afterLoadContent');
 	}
 	
 	/**
@@ -373,11 +380,11 @@ abstract class AbstractDatabaseObjectListBoxController extends AbstractBoxContro
 		parent::setBox($box);
 		
 		if ($setConditionData) {
-			if ($this->defaultLimit !== null) {
+			if ($this->defaultLimit !== null && $this->box->limit) {
 				$this->limit = $this->box->limit;
 			}
 			
-			if (!empty($this->validSortFields)) {
+			if (!empty($this->validSortFields) && $this->box->sortOrder && $this->box->sortField) {
 				$this->sortOrder = $this->box->sortOrder;
 				$this->sortField = $this->box->sortField;
 			}

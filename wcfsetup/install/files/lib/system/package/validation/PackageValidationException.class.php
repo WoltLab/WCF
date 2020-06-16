@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * does not cause the details to be logged.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Validation
  */
@@ -96,18 +96,21 @@ class PackageValidationException extends SystemException {
 	/**
 	 * the provided API version string is invalid and does not fall into the range from `2017` through `2099`
 	 * @var integer
+	 * @deprecated 5.2
 	 */
 	const INVALID_API_VERSION = 13;
 	
 	/**
 	 * the package is not compatible with the current API version or any other of the supported ones
 	 * @var integer
+	 * @deprecated 5.2
 	 */
 	const INCOMPATIBLE_API_VERSION = 14;
 	
 	/**
 	 * the package lacks any sort of API compatibility data
 	 * @var integer
+	 * @deprecated 5.2
 	 */
 	const MISSING_API_VERSION = 15;
 	

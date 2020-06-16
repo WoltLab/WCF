@@ -72,6 +72,8 @@
 	}
 	
 	&[aria-hidden=true] {
+		/* Child elements with `visibility: visible` will not be visually rendered, but pointer events are recognized. */
+		pointer-events: none;
 		visibility: hidden;
 	}
 	
@@ -190,6 +192,7 @@
 			}
 			
 			> div,
+			> section,
 			> form {
 				> .section:first-child,
 				> fieldset:first-child {
@@ -200,8 +203,8 @@
 		
 		/* Chrome and Safari use heavy anti-aliasing when the dialog's width
 		   cannot be evenly divided, causing the whole text to become blurry */
-		&.jsWebKitFractionalPixel {
-			border-left: 1px solid transparent;
+		&.jsWebKitFractionalPixelFix {
+			backface-visibility: hidden;
 		}
 	}
 }

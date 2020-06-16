@@ -273,8 +273,6 @@
 								{if $user->userID != $__wcf->user->userID}
 									{if $user->isAccessible('canViewEmailAddress') || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
 										<li><a href="mailto:{@$user->getEncodedEmail()}">{lang}wcf.user.button.mail{/lang}</a></li>
-									{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}
-										<li><a href="{link controller='Mail' object=$user}{/link}">{lang}wcf.user.button.mail{/lang}</a></li>
 									{/if}
 								{/if}
 								
@@ -333,7 +331,7 @@
 			<ul>
 				{foreach from=$__wcf->getUserProfileMenu()->getMenuItems() item=menuItem}
 					{if $menuItem->getContentManager()->isVisible($userID)}
-						<li><a href="{$__wcf->getAnchor($menuItem->getIdentifier())}">{$menuItem}</a></li>
+						<li><a href="{@$__wcf->getAnchor($menuItem->getIdentifier())}">{$menuItem}</a></li>
 					{/if}
 				{/foreach}
 			</ul>
@@ -350,14 +348,14 @@
 		{/foreach}
 	</div>
 {else}
-	<p class="info">{lang}wcf.user.profile.protected{/lang}</p>
+	<p class="info" role="status">{lang}wcf.user.profile.protected{/lang}</p>
 {/if}
 
 {if MODULE_USER_COVER_PHOTO && ($user->userID == $__wcf->user->userID || $user->canEdit())}
 	{if $__wcf->getSession()->getPermission('user.profile.coverPhoto.canUploadCoverPhoto')}
 		<div id="userProfileCoverPhotoUpload" class="jsStaticDialogContent" data-title="{lang}wcf.user.coverPhoto.upload{/lang}">
 			{if $__wcf->user->disableCoverPhoto}
-				<p class="error">{lang}wcf.user.coverPhoto.error.disabled{/lang}</p>
+				<p class="error" role="alert">{lang}wcf.user.coverPhoto.error.disabled{/lang}</p>
 			{else}
 				<div id="coverPhotoUploadPreview"></div>
 				
@@ -371,11 +369,9 @@
 				Language.addObject({
 					'wcf.user.coverPhoto.delete.confirmMessage': '{lang}wcf.user.coverPhoto.delete.confirmMessage{/lang}',
 					'wcf.user.coverPhoto.upload.error.fileExtension': '{lang}wcf.user.coverPhoto.upload.error.fileExtension{/lang}',
-					'wcf.user.coverPhoto.upload.error.tooSmall': '{lang}wcf.user.coverPhoto.upload.error.tooSmall{/lang}',
 					'wcf.user.coverPhoto.upload.error.tooLarge': '{lang}wcf.user.coverPhoto.upload.error.tooLarge{/lang}',
 					'wcf.user.coverPhoto.upload.error.uploadFailed': '{lang}wcf.user.coverPhoto.upload.error.uploadFailed{/lang}',
-					'wcf.user.coverPhoto.upload.error.badImage': '{lang}wcf.user.coverPhoto.upload.error.badImage{/lang}',
-					'wcf.user.coverPhoto.upload.success': '{lang}wcf.user.coverPhoto.upload.success{/lang}'
+					'wcf.user.coverPhoto.upload.error.badImage': '{lang}wcf.user.coverPhoto.upload.error.badImage{/lang}'
 				});
 				
 				{if !$__wcf->user->disableCoverPhoto}

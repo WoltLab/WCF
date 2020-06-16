@@ -17,10 +17,24 @@ $.Redactor.prototype.WoltLabClean = function() {
 				// restore ampersands
 				//html = html.replace(/@@@WCF_AMPERSAND@@@/g, '&amp;');
 				html = html.replace(/&amp;WCF_AMPERSAND&(amp;)?/g, '&amp;');
-				html = html.replace(/@@@WCF_LITERAL_AMP@@@/, '&amp;amp;');
+				html = html.replace(/@@@WCF_LITERAL_AMP@@@/g, '&amp;amp;');
 				
 				var div = elCreate('div');
 				div.innerHTML = html;
+				
+				// Remove some leftover attributes that are not cleaned up.
+				elBySelAll('*', div, function(element) {
+					var attribute, removeAttributes = [];
+					for (var i = 0, length = element.attributes.length; i < length; i++) {
+						attribute = element.attributes[i];
+						if (attribute.name.indexOf('on') === 0) {
+							// `element.attributes` is a live collection.
+							removeAttributes.push(attribute.name);
+						}
+					}
+					
+					removeAttributes.forEach(element.removeAttribute.bind(element));
+				});
 				
 				// remove iframes smuggled into the HTML by the user
 				// they're removed on the server anyway, but keeping
@@ -71,14 +85,31 @@ $.Redactor.prototype.WoltLabClean = function() {
 				elBySelAll('p', div, function (p) {
 					var br = p.lastElementChild;
 					if (br && br.nodeName === 'BR') {
-						// check if there is only whitespace afterwards
-						if (br.nextSibling && br.nextSibling.textContent.replace(/[\r\n\t]/g, '').match(/^\u200B+$/)) {
-							var newP = elCreate('p');
-							newP.innerHTML = '<br>';
-							p.parentNode.insertBefore(newP, p.nextSibling);
-							
-							p.removeChild(br.nextSibling);
+						// Check if there is only whitespace afterwards.
+						if (br.nextSibling) {
+							if (br.nextSibling.textContent.replace(/[\r\n\t]/g, '').match(/^\u200B+$/)) {
+								var newP = elCreate('p');
+								newP.innerHTML = '<br>';
+								p.parentNode.insertBefore(newP, p.nextSibling);
+								
+								p.removeChild(br.nextSibling);
+								p.removeChild(br);
+							}
+						}
+						else if (br.previousElementSibling || (br.previousSibling && br.previousSibling.textContent.replace(/\u200B/g, '').trim() !== '')) {
+							// Firefox inserts bogus `<br>` at the end of paragraphs.
+							// See https://bugzilla.mozilla.org/show_bug.cgi?id=656626
 							p.removeChild(br);
+						}
+					}
+				});
+				
+				// Firefox inserts bogus linebreaks instead of spaces at the end of spans, if there is an adjacent span.
+				elBySelAll('span', div, function (span) {
+					if (span.childNodes.length > 0) {
+						var lastNode = span.childNodes[span.childNodes.length - 1];
+						if (lastNode.nodeType === Node.TEXT_NODE && lastNode.textContent.match(/\n$/)) {
+							lastNode.textContent = lastNode.textContent.replace(/\n+$/, (span.parentNode.lastChild === span ? '' : ' '));
 						}
 					}
 				});
@@ -135,6 +166,10 @@ $.Redactor.prototype.WoltLabClean = function() {
 					}
 					
 					return WCF.String.escapeHTML(html);
+				}
+
+				if (this.clean.isHtmlMsWord(html)) {
+					html = this.clean.cleanMsWord(html);
 				}
 				
 				var div = elCreate('div');
@@ -222,7 +257,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 					});
 				}
 				
-				elBySelAll('span', div, function (span) {
+				elBySelAll('span', div, (function (span) {
 					if (span.classList.contains('redactor-selection-marker')) return;
 					
 					if (span.hasAttribute('style') && span.style.length) {
@@ -233,6 +268,14 @@ $.Redactor.prototype.WoltLabClean = function() {
 						
 						var activeStyles = (color ? 1 : 0) + (fontFamily ? 1 : 0) + (fontSize ? 1 : 0);
 						while (activeStyles > 1) {
+							if (this.opts.pastePlainText) {
+								span.style.removeProperty('color');
+								span.style.removeProperty('font-family');
+								span.style.removeProperty('font-size');
+								
+								return;
+							}
+							
 							var newSpan = elCreate('span');
 							if (color) {
 								newSpan.style.setProperty('color', color, '');
@@ -264,7 +307,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 						
 						elRemove(span);
 					}
-				});
+				}).bind(this));
 				
 				elBySelAll('p', div, function (p) {
 					if (p.classList.contains('MsoNormal')) {
@@ -464,7 +507,7 @@ $.Redactor.prototype.WoltLabClean = function() {
 				if (data.links && this.opts.pasteLinks) {
 					elBySelAll('a', div, function(link) {
 						if (link.href) {
-							link.outerHTML = '#####[a href="' + link.href + '"]#####' + link.innerHTML + '#####[/a]#####';
+							link.outerHTML = '#@###[a href="' + link.href + '"]###@#' + link.innerHTML + '#@###[/a]###@#';
 						}
 					});
 					
@@ -531,6 +574,15 @@ $.Redactor.prototype.WoltLabClean = function() {
 					});
 					
 					html = div.innerHTML;
+				}
+
+				// The original code uses a slightly different pattern that did not distinguish between the
+				// opening and closing "#####" pattern, causing some degree of ambiguity and false-positives.
+				// links & images
+				if ((data.links && this.opts.pasteLinks) || (data.images && this.opts.pasteImages))
+				{
+					html = html.replace(new RegExp('#@###\\[', 'gi'), '<');
+					html = html.replace(new RegExp('\\]###@#', 'gi'), '>');
 				}
 				
 				return mpReconvertTags.call(this, html, data);
@@ -613,10 +665,15 @@ $.Redactor.prototype.WoltLabClean = function() {
 				'u'
 			];
 			elBySelAll(plainTags.join(','), this.$editor[0], function(element) {
-				if (elBySel(element.nodeName, element) !== null) {
-					removeElements.push(element);
-				}
+				elBySelAll(element.nodeName, element, function(child) {
+					removeElements.push(child);
+				});
 			});
+			
+			if (this.opts.pastePlainText) {
+				// Ignore any style attributes, they are removed anyway.
+				return;
+			}
 			
 			// Search for span[style] that contain styles that actually do nothing, because their set style
 			// equals the inherited style from its ancestors.

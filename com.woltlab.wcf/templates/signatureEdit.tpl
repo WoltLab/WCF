@@ -5,11 +5,11 @@
 {include file='formError'}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
+	<p class="success" role="status">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
 
 {if $__wcf->user->disableSignature}
-	<p class="error">{lang}wcf.user.signature.error.disabled{/lang}</p>
+	<p class="error" role="alert">{lang}wcf.user.signature.error.disabled{/lang}</p>
 {/if}
 
 <form method="post" action="{link controller='SignatureEdit'}{/link}">
@@ -17,7 +17,7 @@
 		<section class="section">
 			<h2 class="sectionTitle">{lang}wcf.user.signature.current{/lang}</h2>
 			
-			<div class="htmlContent">{@$signatureCache}</div>
+			<div class="htmlContent messageSignatureConstraints">{@$signatureCache}</div>
 		</section>
 	{/if}
 	
@@ -27,7 +27,7 @@
 				
 			<dl class="wide{if $errorField == 'text'} formError{/if}">
 				<dt><label for="text">{lang}wcf.user.signature{/lang}</label></dt>
-				<dd>
+				<dd class="messageSignatureConstraints">
 					<textarea id="text" class="wysiwygTextarea" name="text" rows="20" cols="40"
 					          data-disable-media="true"
 					>{$text}</textarea>

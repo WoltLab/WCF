@@ -22,7 +22,7 @@ use wcf\util\StringUtil;
  * Shows the user edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -128,6 +128,12 @@ class UserEditForm extends UserAddForm {
 	public $deleteCoverPhoto = 0;
 	
 	/**
+	 * true to delete the current auth data
+	 * @var	boolean
+	 */
+	public $disconnect3rdParty = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -159,7 +165,7 @@ class UserEditForm extends UserAddForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if (!WCF::getSession()->getPermission('admin.user.canEditPassword')) $this->password = $this->confirmPassword = '';
+		if (!WCF::getSession()->getPermission('admin.user.canEditPassword') || !empty($this->user->authData)) $this->password = $this->confirmPassword = '';
 		if (!WCF::getSession()->getPermission('admin.user.canEditMailAddress')) $this->email = $this->confirmEmail = $this->user->email;
 		
 		if (!empty($_POST['banned'])) $this->banned = 1;
@@ -186,6 +192,8 @@ class UserEditForm extends UserAddForm {
 				if (isset($_POST['disableCoverPhotoExpires'])) $this->disableCoverPhotoExpires = @strtotime(StringUtil::trim($_POST['disableCoverPhotoExpires']));
 			}
 		}
+		
+		if (WCF::getSession()->getPermission('admin.user.canEditPassword') && isset($_POST['disconnect3rdParty'])) $this->disconnect3rdParty = 1;
 	}
 	
 	/**
@@ -209,7 +217,15 @@ class UserEditForm extends UserAddForm {
 		
 		// get the user cover photo object
 		if ($this->user->coverPhotoHash) {
-			$this->userCoverPhoto = UserProfileRuntimeCache::getInstance()->getObject($this->userID)->getCoverPhoto(true);
+			$userProfile = UserProfileRuntimeCache::getInstance()->getObject($this->userID);
+			
+			// If the editing user lacks the permissions to view the cover photo, the system
+			// will try to load the default cover photo. However, the default cover photo depends
+			// on the style, eventually triggering a change to the template group which will
+			// fail in the admin panel.
+			if ($userProfile->canSeeCoverPhoto()) {
+				$this->userCoverPhoto = UserProfileRuntimeCache::getInstance()->getObject($this->userID)->getCoverPhoto(true);
+			}
 		}
 	}
 	
@@ -274,7 +290,8 @@ class UserEditForm extends UserAddForm {
 			'disableCoverPhoto' => $this->disableCoverPhoto,
 			'disableCoverPhotoReason' => $this->disableCoverPhotoReason,
 			'disableCoverPhotoExpires' => $this->disableCoverPhotoExpires,
-			'deleteCoverPhoto' => $this->deleteCoverPhoto
+			'deleteCoverPhoto' => $this->deleteCoverPhoto,
+			'ownerGroupID' => UserGroup::getOwnerGroupID(),
 		]);
 	}
 	
@@ -318,9 +335,13 @@ class UserEditForm extends UserAddForm {
 		
 		$this->additionalFields = array_merge($this->additionalFields, $avatarData);
 		
+		if ($this->disconnect3rdParty) {
+			$this->additionalFields['authData'] = '';
+		}
+		
 		// add default groups
 		$defaultGroups = UserGroup::getAccessibleGroups([UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
-		$oldGroupIDs = $this->user->getGroupIDs();
+		$oldGroupIDs = $this->user->getGroupIDs(true);
 		foreach ($oldGroupIDs as $oldGroupID) {
 			if (isset($defaultGroups[$oldGroupID])) {
 				$this->groupIDs[] = $oldGroupID;
@@ -344,7 +365,12 @@ class UserEditForm extends UserAddForm {
 			'languageIDs' => $this->visibleLanguages,
 			'options' => $saveOptions
 		];
-
+		// handle changed username
+		if (mb_strtolower($this->username) != mb_strtolower($this->user->username)) {
+			$data['data']['lastUsernameChange'] = TIME_NOW;
+			$data['data']['oldUsername'] = $this->user->username;
+		}
+		
 		// handle ban
 		if (WCF::getSession()->getPermission('admin.user.canBanUser')) {
 			$data['data']['banned'] = $this->banned;
@@ -409,8 +435,8 @@ class UserEditForm extends UserAddForm {
 		// reset password
 		$this->password = $this->confirmPassword = '';
 		
-		// reload user when deleting the cover photo
-		if ($this->deleteCoverPhoto) $this->user = new User($this->userID);
+		// reload user when deleting the cover photo or disconnecting from 3rd party auth provider
+		if ($this->deleteCoverPhoto || $this->disconnect3rdParty) $this->user = new User($this->userID);
 		
 		// show success message
 		WCF::getTPL()->assign('success', true);
@@ -483,6 +509,14 @@ class UserEditForm extends UserAddForm {
 	 * @inheritDoc
 	 */
 	public function validate() {
+		if ($this->user->userID == WCF::getUser()->userID && WCF::getUser()->hasOwnerAccess()) {
+			$ownerGroupID = UserGroup::getOwnerGroupID();
+			if ($ownerGroupID && !in_array($ownerGroupID, $this->groupIDs)) {
+				// Members of the owner group cannot remove themselves.
+				throw new PermissionDeniedException();
+			}
+		}
+		
 		$this->validateAvatar();
 		
 		parent::validate();

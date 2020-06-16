@@ -2,7 +2,7 @@
  * Highlights code in the Code bbcode.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Bbcode/Code
  */
@@ -126,7 +126,7 @@ define([
 				this.container.classList.add('highlighted');
 			}.bind(this))
 		}
-	}
+	};
 	
 	return Code;
 });

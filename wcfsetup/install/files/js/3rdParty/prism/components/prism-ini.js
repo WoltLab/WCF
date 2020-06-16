@@ -1,6 +1,6 @@
 define(["prism/prism"], function () {
 Prism.languages.ini= {
-	'comment': /^[ \t]*;.*$/m,
+	'comment': /^[ \t]*[;#].*$/m,
 	'selector': /^[ \t]*\[.*?\]/m,
 	'constant': /^[ \t]*[^\s=]+?(?=[ \t]*=)/m,
 	'attr-value': {
@@ -10,4 +10,5 @@ Prism.languages.ini= {
 		}
 	}
 };
+
 return Prism; })

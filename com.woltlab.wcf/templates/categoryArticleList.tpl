@@ -1,7 +1,7 @@
 {capture assign='pageTitle'}{$category->getTitle()}{/capture}
 
 {capture assign='contentTitle'}{$category->getTitle()}{/capture}
-{capture assign='contentDescription'}{$category->getDescription()}{/capture}
+{capture assign='contentDescription'}{if $category->descriptionUseHtml}{@$category->getDescription()}{else}{$category->getDescription()}{/if}{/capture}
 
 {capture assign='headContent'}
 	{if $pageNo < $pages}
@@ -20,17 +20,21 @@
 
 {capture assign='headerNavigation'}
 	<li><a rel="alternate" href="{if $__wcf->getUser()->userID}{link controller='ArticleFeed' id=$categoryID}at={@$__wcf->getUser()->userID}-{@$__wcf->getUser()->accessToken}{/link}{else}{link controller='ArticleFeed' id=$categoryID}{/link}{/if}" title="{lang}wcf.global.button.rss{/lang}" class="jsTooltip"><span class="icon icon16 fa-rss"></span> <span class="invisible">{lang}wcf.global.button.rss{/lang}</span></a></li>
-	{if ARTICLE_ENABLE_VISIT_TRACKING}
-		<li class="jsOnly"><a href="#" title="{lang}wcf.article.markAllAsRead{/lang}" class="markAllAsReadButton jsTooltip"><span class="icon icon16 fa-check"></span> <span class="invisible">{lang}wcf.article.markAllAsRead{/lang}</span></a></li>
-	{/if}
 	{if $__wcf->user->userID}
 		<li class="jsOnly"><a href="#" title="{lang}wcf.user.objectWatch.manageSubscription{/lang}" class="jsSubscribeButton jsTooltip" data-object-type="com.woltlab.wcf.article.category" data-object-id="{@$category->categoryID}"><span class="icon icon16 fa-bookmark{if !$category->isSubscribed()}-o{/if}"></span> <span class="invisible">{lang}wcf.user.objectWatch.manageSubscription{/lang}</span></a></li>
+	{/if}
+	{if ARTICLE_ENABLE_VISIT_TRACKING}
+		<li class="jsOnly"><a href="#" title="{lang}wcf.article.markAllAsRead{/lang}" class="markAllAsReadButton jsTooltip"><span class="icon icon16 fa-check"></span> <span class="invisible">{lang}wcf.article.markAllAsRead{/lang}</span></a></li>
 	{/if}
 {/capture}
 
 {if $__wcf->getSession()->getPermission('admin.content.article.canManageArticle')}
 	{capture assign='contentHeaderNavigation'}
-		<li><a href="#" class="button jsButtonArticleAdd"><span class="icon icon16 fa-pencil"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+		{if $availableLanguages|count > 1}
+			<li><a href="#" class="button jsButtonArticleAdd"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+		{else}
+			<li><a href="{link controller='ArticleAdd'}categoryID={@$category->categoryID}{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.article.add{/lang}</span></a></li>
+		{/if}
 	{/capture}
 {/if}
 
@@ -42,36 +46,7 @@
 				
 				<div class="boxContent">
 					<dl>
-						{foreach from=$labelGroups item=labelGroup}
-							{if $labelGroup|count}
-								<dt>{$labelGroup->getTitle()}</dt>
-								<dd>
-									<ul class="labelList jsOnly">
-										<li class="dropdown labelChooser" id="labelGroup{@$labelGroup->groupID}" data-group-id="{@$labelGroup->groupID}">
-											<div class="dropdownToggle" data-toggle="labelGroup{@$labelGroup->groupID}"><span class="badge label">{lang}wcf.label.none{/lang}</span></div>
-											<div class="dropdownMenu">
-												<ul class="scrollableDropdownMenu">
-													{foreach from=$labelGroup item=label}
-														<li data-label-id="{@$label->labelID}"><span><span class="badge label{if $label->getClassNames()} {@$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></span></li>
-													{/foreach}
-												</ul>
-											</div>
-										</li>
-									</ul>
-									<noscript>
-										{foreach from=$labelGroups item=labelGroup}
-											<select name="labelIDs[{@$labelGroup->groupID}]">
-												<option value="0">{lang}wcf.label.none{/lang}</option>
-												<option value="-1">{lang}wcf.label.withoutSelection{/lang}</option>
-												{foreach from=$labelGroup item=label}
-													<option value="{@$label->labelID}"{if $labelIDs[$labelGroup->groupID]|isset && $labelIDs[$labelGroup->groupID] == $label->labelID} selected{/if}>{lang}{$label->label}{/lang}</option>
-												{/foreach}
-											</select>
-										{/foreach}
-									</noscript>
-								</dd>
-							{/if}
-						{/foreach}
+						{include file='__labelSelection'}
 					</dl>
 					<div class="formSubmit">
 						<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
@@ -108,7 +83,7 @@
 		{include file='articleListItems'}
 	</div>
 {else}
-	<p class="info">{lang}wcf.global.noItems{/lang}</p>
+	<p class="info" role="status">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 <footer class="contentFooter">

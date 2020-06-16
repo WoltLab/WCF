@@ -6,7 +6,7 @@ use wcf\system\form\FormDocument;
  * Represents step information within an installation node.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */
@@ -16,6 +16,12 @@ class PackageInstallationStep {
 	 * @var	FormDocument
 	 */
 	protected $document = null;
+	
+	/**
+	 * exception causing node splitting
+	 * @var	null|SplitNodeException
+	 */
+	protected $exception;
 	
 	/**
 	 * next installation node
@@ -57,6 +63,16 @@ class PackageInstallationStep {
 	}
 	
 	/**
+	 * Returns the exception causing node splitting or `null` if the node has not been split
+	 * or if it was not split by an exception.
+	 * 
+	 * @return	null|SplitNodeException
+	 */
+	public function getException() {
+		return $this->exception;
+	}
+	
+	/**
 	 * Returns HTML-representation of form document object.
 	 * 
 	 * @return	string
@@ -76,9 +92,12 @@ class PackageInstallationStep {
 	
 	/**
 	 * Enforces node splitting.
+	 * 
+	 * @param	null|SplitNodeException		$splitNodeException
 	 */
-	public function setSplitNode() {
+	public function setSplitNode(SplitNodeException $splitNodeException = null) {
 		$this->splitNode = true;
+		$this->exception = $splitNodeException;
 	}
 	
 	/**

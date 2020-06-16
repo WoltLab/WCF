@@ -9,7 +9,7 @@ use wcf\system\cache\runtime\UserProfileRuntimeCache;
  * Represents a viewable comment response.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Comment\Response
  * 
@@ -58,8 +58,7 @@ class ViewableCommentResponse extends DatabaseObjectDecorator {
 		$list = new ViewableCommentResponseList();
 		$list->setObjectIDs([$responseID]);
 		$list->readObjects();
-		$objects = $list->getObjects();
-		if (isset($objects[$responseID])) return $objects[$responseID];
-		return null;
+		
+		return $list->getSingleObject();
 	}
 }

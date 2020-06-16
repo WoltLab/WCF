@@ -35,18 +35,18 @@ class Translator implements TranslatorInterface
     /**
      * @var ParserInterface[]
      */
-    private $shortcutParsers = array();
+    private $shortcutParsers = [];
 
     /**
      * @var Extension\ExtensionInterface[]
      */
-    private $extensions = array();
+    private $extensions = [];
 
-    private $nodeTranslators = array();
-    private $combinationTranslators = array();
-    private $functionTranslators = array();
-    private $pseudoClassTranslators = array();
-    private $attributeMatchingTranslators = array();
+    private $nodeTranslators = [];
+    private $combinationTranslators = [];
+    private $functionTranslators = [];
+    private $pseudoClassTranslators = [];
+    private $attributeMatchingTranslators = [];
 
     public function __construct(ParserInterface $parser = null)
     {
@@ -77,7 +77,7 @@ class Translator implements TranslatorInterface
         }
 
         $string = $element;
-        $parts = array();
+        $parts = [];
         while (true) {
             if (false !== $pos = strpos($string, "'")) {
                 $parts[] = sprintf("'%s'", substr($string, 0, $pos));
@@ -180,9 +180,7 @@ class Translator implements TranslatorInterface
     }
 
     /**
-     * @param string        $combiner
-     * @param NodeInterface $xpath
-     * @param NodeInterface $combinedXpath
+     * @param string $combiner
      *
      * @return XPathExpr
      *
@@ -212,8 +210,7 @@ class Translator implements TranslatorInterface
     }
 
     /**
-     * @param XPathExpr $xpath
-     * @param string    $pseudoClass
+     * @param string $pseudoClass
      *
      * @return XPathExpr
      *
@@ -229,10 +226,9 @@ class Translator implements TranslatorInterface
     }
 
     /**
-     * @param XPathExpr $xpath
-     * @param string    $operator
-     * @param string    $attribute
-     * @param string    $value
+     * @param string $operator
+     * @param string $attribute
+     * @param string $value
      *
      * @return XPathExpr
      *

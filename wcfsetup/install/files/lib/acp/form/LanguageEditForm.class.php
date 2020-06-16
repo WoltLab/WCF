@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the language edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -56,11 +56,11 @@ class LanguageEditForm extends LanguageAddForm {
 		AbstractForm::save();
 		
 		$editor = new LanguageEditor($this->language);
-		$editor->update([
+		$editor->update(array_merge($this->additionalFields, [
 			'countryCode' => mb_strtolower($this->countryCode),
 			'languageName' => $this->languageName,
 			'languageCode' => mb_strtolower($this->languageCode)
-		]);
+		]));
 		LanguageFactory::getInstance()->clearCache();
 		$this->saved();
 		

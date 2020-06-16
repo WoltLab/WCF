@@ -2,7 +2,7 @@
  * Provides interface elements to use reactions.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Reaction/Handler
  * @since       5.2
@@ -11,12 +11,12 @@ define(
 	[
 		'Ajax',      'Core',          'Dictionary',         'Language',
 		'ObjectMap', 'StringUtil',    'Dom/ChangeListener', 'Dom/Util',
-		'Ui/Dialog'
+		'Ui/Dialog', 'EventHandler'
 	],
 	function(
 		Ajax,        Core,                        Dictionary,           Language,
 		ObjectMap,   StringUtil,                  DomChangeListener,    DomUtil,
-		UiDialog
+		UiDialog, EventHandler
 	)
 	{
 		"use strict";
@@ -38,6 +38,7 @@ define(
 				}
 				
 				this._containers = new Dictionary();
+				this._objects = new Dictionary();
 				this._objectType = objectType;
 				
 				this._options = Core.extend({
@@ -64,21 +65,30 @@ define(
 				var element, elements = elBySelAll(this._options.containerSelector), elementData, triggerChange = false, objectId;
 				for (var i = 0, length = elements.length; i < length; i++) {
 					element = elements[i];
-					objectId = ~~elData(element, 'object-id');
-					if (this._containers.has(objectId)) {
+					if (this._containers.has(DomUtil.identify(element))) {
 						continue;
 					}
 					
+					objectId = ~~elData(element, 'object-id');
 					elementData = {
 						reactButton: null,
 						summary: null,
 						
-						objectId: ~~elData(element, 'object-id'), 
+						objectId: objectId, 
 						element: element
 					};
 					
-					this._containers.set(objectId, elementData);
+					this._containers.set(DomUtil.identify(element), elementData);
 					this._initReactionCountButtons(element, elementData);
+
+					var objects = [];
+					if (this._objects.has(objectId)) {
+						objects = this._objects.get(objectId);
+					}
+					
+					objects.push(elementData);
+					
+					this._objects.set(objectId, objects);
 					
 					triggerChange = true;
 				}
@@ -95,46 +105,49 @@ define(
 			 * @param       {object}        data
 			 */
 			updateCountButtons: function(objectId, data) {
-				var summaryList = elBySel(this._options.summaryListSelector, this._containers.get(objectId).element);
-				
-				var sortedElements = {}, elements = elBySelAll('li', summaryList);
-				for (var i = 0, length = elements.length; i < length; i++) {
-					if (data[elData(elements[i], 'reaction-type-id')] !== undefined) {
-						sortedElements[elData(elements[i], 'reaction-type-id')] = elements[i];
+				var triggerChange = false;
+				this._objects.get(objectId).forEach(function(elementData) {
+					var summaryList = elBySel(this._options.summaryListSelector, this._options.isSingleItem ? undefined : elementData.element);
+					
+					// summary list for the object not found; abort
+					if (summaryList === null) return; 
+					
+					var sortedElements = {}, elements = elBySelAll('.reactCountButton', summaryList);
+					for (var i = 0, length = elements.length; i < length; i++) {
+						var reactionTypeId = elData(elements[i], 'reaction-type-id');
+						if (data.hasOwnProperty(reactionTypeId)) {
+							sortedElements[reactionTypeId] = elements[i];
+						}
+						else {
+							// The reaction no longer has any reactions.
+							elRemove(elements[i]);
+						}
 					}
-					else {
-						// reaction has no longer reactions
-						elRemove(elements[i]);
-					}
-				}
-				
-				
-				var triggerChange = false; 
-				Object.keys(data).forEach(function(key) {
-					if (sortedElements[key] !== undefined) {
-						var reactionCount = elBySel('.reactionCount', sortedElements[key]);
-						reactionCount.innerHTML = StringUtil.shortUnit(data[key]);
-					}
-					else if (REACTION_TYPES[key] !== undefined) {
-						// create element 
-						var createdElement = elCreate('li');
-						createdElement.className = 'reactCountButton';
-						elData(createdElement, 'reaction-type-id', key);
-						
-						var countSpan = elCreate('span');
-						countSpan.className = 'reactionCount';
-						countSpan.innerHTML = StringUtil.shortUnit(data[key]);
-						createdElement.appendChild(countSpan);
-						
-						createdElement.innerHTML = createdElement.innerHTML + REACTION_TYPES[key].renderedIcon;
-						
-						summaryList.appendChild(createdElement);
-						
-						this._initReactionCountButton(createdElement, objectId);
-						
-						triggerChange = true; 
-					}
-				}, this);
+					
+					Object.keys(data).forEach(function(key) {
+						if (sortedElements[key] !== undefined) {
+							var reactionCount = elBySel('.reactionCount', sortedElements[key]);
+							reactionCount.innerHTML = StringUtil.shortUnit(data[key]);
+						}
+						else if (REACTION_TYPES[key] !== undefined) {
+							var createdElement = elCreate('span');
+							createdElement.className = 'reactCountButton';
+							createdElement.innerHTML = REACTION_TYPES[key].renderedIcon;
+							elData(createdElement, 'reaction-type-id', key);
+
+							var countSpan = elCreate('span');
+							countSpan.className = 'reactionCount';
+							countSpan.innerHTML = StringUtil.shortUnit(data[key]);
+							createdElement.appendChild(countSpan);
+							
+							summaryList.appendChild(createdElement);
+							
+							triggerChange = true;
+						}
+					}, this);
+					
+					window[(summaryList.childElementCount > 0 ? 'elShow' : 'elHide')](summaryList);
+				}.bind(this));
 				
 				if (triggerChange) {
 					DomChangeListener.trigger();
@@ -148,45 +161,27 @@ define(
 			 * @param       {object}        elementData
 			 */
 			_initReactionCountButtons: function(element, elementData) {
-				if (this._options.isSingleItem) {
-					var summaryList = elBySel(this._options.summaryListSelector);
-				}
-				else {
-					var summaryList = elBySel(this._options.summaryListSelector, element);
-				}
-				
+				var summaryList = elBySel(this._options.summaryListSelector, this._options.isSingleItem ? undefined : element);
 				if (summaryList !== null) {
-					var elements = elBySelAll('li', summaryList);
-					for (var i = 0, length = elements.length; i < length; i++) {
-						this._initReactionCountButton(elements[i], elementData.objectId);
-					}
+					summaryList.addEventListener(WCF_CLICK_EVENT, this._showReactionOverlay.bind(this, elementData.objectId));
 				}
-			},
-			
-			/**
-			 * Initialized a specific reaction count button for an object.
-			 *
-			 * @param       {element}        element
-			 * @param       {int}            objectId
-			 */
-			_initReactionCountButton: function(element, objectId) {
-				element.addEventListener(WCF_CLICK_EVENT, this._showReactionOverlay.bind(this, objectId));
 			},
 			
 			/**
 			 * Shows the reaction overly for a specific object. 
 			 *
-			 * @param       {int}        objectId
+			 * @param {int} objectId
+			 * @param {Event} event
 			 */
-			_showReactionOverlay: function(objectId) {
+			_showReactionOverlay: function(objectId, event) {
+				event.preventDefault();
+				
 				this._currentObjectId = objectId;
 				this._showOverlay();
 			},
 			
 			/**
-			 * Shows a specific page of the current opened reaction overlay. 
-			 *
-			 * @param       {int}        pageNo
+			 * Shows a specific page of the current opened reaction overlay.
 			 */
 			_showOverlay: function() {
 				this._options.parameters.data.containerID = this._objectType + '-' + this._currentObjectId;
@@ -199,6 +194,8 @@ define(
 			},
 			
 			_ajaxSuccess: function(data) {
+				EventHandler.fire('com.woltlab.wcf.ReactionCountButtons', 'openDialog', data);
+				
 				UiDialog.open(this, data.returnValues.template);
 				UiDialog.setTitle('userReactionOverlay-' + this._objectType, data.returnValues.title);
 			},

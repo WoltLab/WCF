@@ -85,7 +85,7 @@ define(['Core', 'Dom/Traverse', 'Dom/Util', 'Ui/Screen', 'Ui/SimpleDropdown', '.
 			}
 			
 			// update label
-			var button = elBySel('.pageHeaderSearchType > .button', elById('pageHeaderSearchInputContainer'));
+			var button = elBySel('.pageHeaderSearchType > .button > .pageHeaderSearchTypeLabel', elById('pageHeaderSearchInputContainer'));
 			button.textContent = event.currentTarget.textContent;
 		}
 	};

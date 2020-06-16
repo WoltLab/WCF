@@ -36,7 +36,7 @@
 <header class="contentHeader">
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.menu.item.list{/lang}</h1>
-		<p class="contentHeaderDescription">{lang}{$menu->title}{/lang}</p>
+		<p class="contentHeaderDescription">{$menu->getTitle()}</p>
 	</div>
 	
 	<nav class="contentHeaderNavigation">
@@ -56,7 +56,7 @@
 				{foreach from=$menuItemNodeList item=menuItemNode}
 					<li class="sortableNode" data-object-id="{@$menuItemNode->itemID}">
 						<span class="sortableNodeLabel">
-							<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}">{lang}{$menuItemNode->title}{/lang}</a>
+							<a href="{link controller='MenuItemEdit' id=$menuItemNode->itemID}{/link}">{$menuItemNode->getTitle()}</a>
 							<span class="statusDisplay sortableButtonContainer">
 								<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
 								{if $menuItemNode->canDisable()}

@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * Caches the merged user group options for a certain user group combination.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cache\Builder
  */
@@ -53,7 +53,8 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 		$conditions = new PreparedStatementConditionBuilder();
 		$conditions->add("option_value.groupID IN (?)", [$parameters]);
 		
-		$sql = "SELECT		option_table.optionName, option_table.optionType, option_value.optionValue
+		$optionData = [];
+		$sql = "SELECT		option_table.optionName, option_table.optionType, option_value.optionValue, option_value.groupID, option_table.enableOptions
 			FROM		wcf".WCF_N."_user_group_option_value option_value
 			LEFT JOIN	wcf".WCF_N."_user_group_option option_table
 			ON		(option_table.optionID = option_value.optionID)
@@ -61,11 +62,44 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 		$statement = WCF::getDB()->prepareStatement($sql);
 		$statement->execute($conditions->getParameters());
 		while ($row = $statement->fetchArray()) {
-			if (!isset($data[$row['optionName']])) {
-				$data[$row['optionName']] = ['type' => $row['optionType'], 'values' => []];
+			$optionData[$row['groupID']][$row['optionName']] = $row;
+		}
+		
+		foreach ($optionData as $groupID => $options) {
+			$optionBlacklist = [];
+			
+			foreach ($options as $option) {
+				if ($option['enableOptions']) {
+					$typeObj = $this->getTypeObject($option['optionType']);
+					$disabledOptions = $typeObj->getDisabledOptionNames($option['optionValue'], $option['enableOptions']);
+					if (!empty($disabledOptions)) {
+						$optionBlacklist = array_merge($optionBlacklist, $disabledOptions);
+					}
+				}
 			}
 			
-			$data[$row['optionName']]['values'][] = $row['optionValue'];
+			$options = array_filter($options, function($optionName) use (&$optionBlacklist) {
+				return !in_array($optionName, $optionBlacklist);
+			}, ARRAY_FILTER_USE_KEY);
+			
+			foreach ($options as $option) {
+				if (!isset($data[$option['optionName']])) {
+					$data[$option['optionName']] = ['type' => $option['optionType'], 'values' => []];
+				}
+				
+				$data[$option['optionName']]['values'][] = $option['optionValue'];
+			}
+		}
+		
+		$includesOwnerGroup = false;
+		$ownerGroup = UserGroup::getGroupByType(UserGroup::OWNER);
+		if ($ownerGroup && in_array($ownerGroup->groupID, $parameters)) {
+			$includesOwnerGroup = true;
+		}
+		
+		$forceGrantPermission = [];
+		if ($includesOwnerGroup) {
+			$forceGrantPermission = UserGroup::getOwnerPermissions();
 		}
 		
 		// merge values
@@ -87,6 +121,22 @@ class UserGroupPermissionCacheBuilder extends AbstractCacheBuilder {
 						$result = $newValue;
 					}
 				}
+			}
+			
+			if ($ownerGroup && $optionName === 'admin.user.accessibleGroups') {
+				$accessibleGroupIDs = explode(',', $result);
+				if ($includesOwnerGroup) {
+					// Regardless of the actual permissions, the owner group has access to all groups.
+					$accessibleGroupIDs = array_keys(UserGroup::getAllGroups());
+				}
+				else if (!$includesOwnerGroup && in_array($ownerGroup->groupID, $accessibleGroupIDs)) {
+					$accessibleGroupIDs = array_diff($accessibleGroupIDs, [$ownerGroup->groupID]);
+				}
+				
+				$result = implode(',', $accessibleGroupIDs);
+			}
+			else if ($includesOwnerGroup && in_array($optionName, $forceGrantPermission)) {
+				$result = 1;
 			}
 			
 			// handle special value 'Never' for boolean options

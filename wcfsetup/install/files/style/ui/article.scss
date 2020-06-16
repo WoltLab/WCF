@@ -1,13 +1,31 @@
-.articleImage {
+.articleTeaser {
+	@include wcfFontBold;
+}
+
+.articleTeaser + .tableOfContentsWrapper {
+	margin-top: 20px;
+}
+
+.articleTeaserContainer + .section,
+.articleImageContainer + .section {
+	margin-top: 20px !important;
+}
+
+.articleImage,
+.contentCoverPhotoImage {
 	/* work-around for IE 11 to properly align the image if overflowing */
 	display: flex;
 	flex-wrap: wrap;
 	
-	.articleImageWrapper {
+	.articleImageWrapper,
+	.contentCoverPhotoImageWrapper {
 		align-items: center;
+		border-radius: 3px;
+		box-shadow: 0 0 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
 		display: flex;
 		max-height: 300px;
 		overflow: hidden;
+		width: 100%;
 		
 		img {
 			height: auto !important;
@@ -26,12 +44,6 @@
 }
 
 .articleContent {
-	.articleTeaser {
-		@include wcfFontBold;
-		
-		margin-bottom: 20px;
-	}
-	
 	.articleTagList {
 		margin-top: 20px;
 	}
@@ -51,6 +63,13 @@
 	.articleLikesSummery:not(:empty),
 	.articleLikeButtons:not(:empty) {
 		margin-top: 20px;
+	}
+	
+	.anchorFixedHeader:target::before {
+		content: "";
+		display: block;
+		height: 50px;
+		margin-top: -50px;
 	}
 }
 
@@ -295,16 +314,20 @@ html[dir="rtl"] {
 	@include screen-lg {
 		.articleList {
 			> li {
-				flex: 0 0 calc(100%/3 - 10px);
-				max-width: calc(100%/3 - 10px);
+				/* The `flex` shorthand fails in IE11 if `calc()` is used. */
+				flex-grow: 0;
+				flex-shrink: 0;
+				flex-basis: calc(100% / 3 - 10px);
 			}
 		}
 
 		.boxFullWidth {
 			.articleList {
 				> li {
-					flex: 0 0 calc(100%/6 - 10px);
-					max-width: calc(100%/6 - 10px);
+					/* The `flex` shorthand fails in IE11 if `calc()` is used. */
+					flex-grow: 0;
+					flex-shrink: 0;
+					flex-basis: calc(100% / 6 - 10px);
 				}
 			}
 		}
@@ -313,8 +336,10 @@ html[dir="rtl"] {
 	@include screen-sm-up {
 		.articleList {
 			> li {
-				flex: 0 0 calc(100%/3 - 10px);
-				max-width: calc(100%/3 - 10px);
+				/* The `flex` shorthand fails in IE11 if `calc()` is used. */
+				flex-grow: 0;
+				flex-shrink: 0;
+				flex-basis: calc(100% / 3 - 10px);
 			}
 		}
 	}

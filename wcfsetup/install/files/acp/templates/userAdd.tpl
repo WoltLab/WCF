@@ -117,39 +117,54 @@
 			{/if}
 			
 			{if $action == 'add' || $__wcf->session->getPermission('admin.user.canEditPassword')}
-				<section class="section">
-					<h2 class="sectionTitle">{lang}wcf.user.password{/lang}</h2>
-					
-					<dl{if $errorType.password|isset} class="formError"{/if}>
-						<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
-						<dd>
-							<input type="password" id="password" name="password" value="{$password}" class="medium" autocomplete="off">
-							{if $errorType.password|isset}
-								<small class="innerError">
-									{if $errorType.password == 'empty'}
-										{lang}wcf.global.form.error.empty{/lang}
-									{else}
-										{lang}wcf.user.password.error.{@$errorType.password}{/lang}
-									{/if}
-								</small>
-							{/if}
-						</dd>
-					</dl>
-					
-					<dl{if $errorType.confirmPassword|isset} class="formError"{/if}>
-						<dt><label for="confirmPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
-						<dd>
-							<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" autocomplete="off">
-							{if $errorType.confirmPassword|isset}
-								<small class="innerError">
-									{lang}wcf.user.confirmPassword.error.{@$errorType.confirmPassword}{/lang}
-								</small>
-							{/if}
-						</dd>
-					</dl>
-					
-					{event name='passwordFields'}
-				</section>
+				{if $action == 'edit' && !$user->authData|empty}
+					<section class="section">
+						<h2 class="sectionTitle">{lang}wcf.user.3rdparty{/lang}</h2>
+						
+						<div class="info">{lang}wcf.user.3rdparty.connect.info{/lang}</div>
+						
+						<dl>
+							<dt></dt>
+							<dd>
+								<label><input type="checkbox" name="disconnect3rdParty" value="1"> {lang}wcf.user.3rdparty.{$user->getAuthProvider()}.disconnect{/lang}</label>
+							</dd>
+						</dl>
+					</section>
+				{else}
+					<section class="section">
+						<h2 class="sectionTitle">{lang}wcf.user.password{/lang}</h2>
+						
+						<dl{if $errorType.password|isset} class="formError"{/if}>
+							<dt><label for="password">{lang}wcf.user.password{/lang}</label></dt>
+							<dd>
+								<input type="password" id="password" name="password" value="{$password}" class="medium" autocomplete="new-password">
+								{if $errorType.password|isset}
+									<small class="innerError">
+										{if $errorType.password == 'empty'}
+											{lang}wcf.global.form.error.empty{/lang}
+										{else}
+											{lang}wcf.user.password.error.{@$errorType.password}{/lang}
+										{/if}
+									</small>
+								{/if}
+							</dd>
+						</dl>
+						
+						<dl{if $errorType.confirmPassword|isset} class="formError"{/if}>
+							<dt><label for="confirmPassword">{lang}wcf.user.confirmPassword{/lang}</label></dt>
+							<dd>
+								<input type="password" id="confirmPassword" name="confirmPassword" value="{$confirmPassword}" class="medium" autocomplete="new-password">
+								{if $errorType.confirmPassword|isset}
+									<small class="innerError">
+										{lang}wcf.user.confirmPassword.error.{@$errorType.confirmPassword}{/lang}
+									</small>
+								{/if}
+							</dd>
+						</dl>
+						
+						{event name='passwordFields'}
+					</section>
+				{/if}
 			{/if}
 			
 			{if $action == 'edit' && $__wcf->session->getPermission('admin.user.canBanUser') && $__wcf->user->userID != $userID}
@@ -286,6 +301,22 @@
 						<dt><label for="signature">{lang}wcf.user.signature{/lang}</label></dt>
 						<dd>
 							<textarea name="signature" id="signature" cols="40" rows="10" class="wysiwygTextarea" data-disable-attachments="true">{$signature}</textarea>
+							{if $errorField == 'signature'}
+								<small class="innerError">
+									{if $errorType == 'empty'}
+										{lang}wcf.global.form.error.empty{/lang}
+									{elseif $errorType == 'tooLong'}
+										{lang}wcf.message.error.tooLong{/lang}
+									{elseif $errorType == 'censoredWordsFound'}
+										{lang}wcf.message.error.censoredWordsFound{/lang}
+									{elseif $errorType == 'disallowedBBCodes'}
+										{lang}wcf.message.error.disallowedBBCodes{/lang}
+									{else}
+										{lang}wcf.user.signature.error.{@$errorType}{/lang}
+									{/if}
+								</small>
+							{/if}
+							
 							{include file='wysiwyg' wysiwygSelector='signature'}
 						</dd>
 					</dl>
@@ -601,5 +632,29 @@
 		{@SECURITY_TOKEN_INPUT_TAG}
 	</div>
 </form>
+
+{if $action === 'edit' && $ownerGroupID}
+	<script data-relocate="true">
+		(function() {
+			var input = elBySel('input[name="groupIDs[]"][value="{@$ownerGroupID}"]');
+			if (input) {
+				var icon = elCreate('span');
+				icon.className = 'icon icon16 fa-shield jsTooltip';
+				icon.title = '{lang}wcf.acp.group.type.owner{/lang}';
+				input.parentNode.appendChild(icon);
+				
+				{if $user->userID == $__wcf->user->userID}
+					var shadow = elCreate('input');
+					shadow.name = input.name;
+					shadow.type = 'hidden';
+					shadow.value = input.value;
+					
+					input.parentNode.appendChild(shadow);
+					input.disabled = true;
+				{/if}
+			}
+		})();
+	</script>
+{/if}
 
 {include file='footer'}

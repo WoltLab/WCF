@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Manages breadcrumbs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Breadcrumb
  */
@@ -58,7 +58,6 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * 
 	 * @param	Breadcrumb	$item
 	 * @param	integer		$index
-	 * @return	boolean
 	 * @deprecated  3.0
 	 */
 	public function replace(Breadcrumb $item, $index) {
@@ -69,7 +68,6 @@ class Breadcrumbs extends SingletonFactory implements \Countable, \Iterator {
 	 * Removes a breadcrumb, returns true if deletion was successful.
 	 * 
 	 * @param	integer		$index
-	 * @return	boolean
 	 * @deprecated  3.0
 	 */
 	public function remove($index) {

@@ -1,7 +1,7 @@
 <?php
 /**
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core
  */
@@ -88,9 +88,23 @@ namespace {
 	if (@ini_get('zlib.output_compression')) {
 		@ini_set('zlib.output_compression', '0');
 	}
+	
+	if (!function_exists('is_countable')) {
+		function is_countable($var) {
+			return is_array($var) || $var instanceof Countable || $var instanceof ResourceBundle || $var instanceof SimpleXmlElement;
+		}
+	}
 }
 
 // @codingStandardsIgnoreStart
+namespace wcf {
+	function getRequestId() {
+		if (!defined('WCF_REQUEST_ID_HEADER') || !WCF_REQUEST_ID_HEADER) return '';
+		
+		return $_SERVER[WCF_REQUEST_ID_HEADER] ?? '';
+	}
+}
+
 namespace wcf\functions {
 	use wcf\system\exception\IExtraInformationException;
 
@@ -209,9 +223,7 @@ namespace wcf\functions {
 		]);
 	}
 }
-// @codingStandardsIgnoreEnd
 
-// @codingStandardsIgnoreStart
 namespace wcf\functions\exception {
 	use wcf\system\WCF;
 	use wcf\system\exception\IExtraInformationException;
@@ -230,22 +242,26 @@ namespace wcf\functions\exception {
 		if ($logFile === null) $logFile = WCF_DIR . 'log/' . gmdate('Y-m-d', TIME_NOW) . '.txt';
 		touch($logFile);
 		
-		// don't forget to update ExceptionLogViewPage, when changing the log file format
+		$stripNewlines = function ($item) {
+			return str_replace("\n", ' ', $item);
+		};
+		
+		// don't forget to update ExceptionLogUtil / ExceptionLogViewPage, when changing the log file format
 		$message = gmdate('r', TIME_NOW)."\n".
-			'Message: '.str_replace("\n", ' ', $e->getMessage())."\n".
+			'Message: '.$stripNewlines($e->getMessage())."\n".
 			'PHP version: '.phpversion()."\n".
 			'WoltLab Suite version: '.WCF_VERSION."\n".
-			'Request URI: '.(isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '')."\n".
-			'Referrer: '.(isset($_SERVER['HTTP_REFERER']) ? str_replace("\n", ' ', $_SERVER['HTTP_REFERER']) : '')."\n".
-			'User Agent: '.(isset($_SERVER['HTTP_USER_AGENT']) ? str_replace("\n", ' ', $_SERVER['HTTP_USER_AGENT']) : '')."\n".
+			'Request URI: '.$stripNewlines(($_SERVER['REQUEST_METHOD'] ?? '').' '.($_SERVER['REQUEST_URI'] ?? '')).(\wcf\getRequestId() ? ' ('.\wcf\getRequestId().')' : '')."\n".
+			'Referrer: '.$stripNewlines($_SERVER['HTTP_REFERER'] ?? '')."\n".
+			'User Agent: '.$stripNewlines($_SERVER['HTTP_USER_AGENT'] ?? '')."\n".
 			'Peak Memory Usage: '.memory_get_peak_usage().'/'.FileUtil::getMemoryLimit()."\n";
 		$prev = $e;
 		do {
 			$message .= "======\n".
 			'Error Class: '.get_class($prev)."\n".
-			'Error Message: '.str_replace("\n", ' ', $prev->getMessage())."\n".
+			'Error Message: '.$stripNewlines($prev->getMessage())."\n".
 			'Error Code: '.intval($prev->getCode())."\n".
-			'File: '.str_replace("\n", ' ', $prev->getFile()).' ('.$prev->getLine().')'."\n".
+			'File: '.$stripNewlines($prev->getFile()).' ('.$prev->getLine().')'."\n".
 			'Extra Information: '.($prev instanceof IExtraInformationException ? base64_encode(serialize($prev->getExtraInformation())) : '-')."\n".
 			'Stack Trace: '.json_encode(array_map(function ($item) {
 				$item['args'] = array_map(function ($item) {
@@ -289,6 +305,7 @@ namespace wcf\functions\exception {
 	 */
 	function printThrowable($e) {
 		$exceptionID = logThrowable($e, $logFile);
+		if (\wcf\getRequestId()) $exceptionID .= '/'.\wcf\getRequestId();
 		
 		$exceptionTitle = $exceptionSubtitle = $exceptionExplanation = '';
 		$logFile = sanitizePath($logFile);
@@ -559,7 +576,7 @@ EXPLANATION;
 							</li>
 							<li class="exceptionSystemInformation2">
 								<p class="exceptionFieldTitle">Request URI<span class="exceptionColon">:</span></p>
-								<p class="exceptionFieldValue"><?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?></p>
+								<p class="exceptionFieldValue"><?php if (isset($_SERVER['REQUEST_METHOD'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_METHOD']); ?> <?php if (isset($_SERVER['REQUEST_URI'])) echo StringUtil::encodeHTML($_SERVER['REQUEST_URI']); ?></p>
 							</li>
 							<li class="exceptionSystemInformation4">
 								<p class="exceptionFieldTitle">Referrer<span class="exceptionColon">:</span></p>
@@ -665,6 +682,8 @@ EXPLANATION;
 														return get_class($item);
 													case 'resource':
 														return 'resource('.get_resource_type($item).')';
+													case 'resource (closed)':
+														return 'resource (closed)';
 												}
 												
 												throw new \LogicException('Unreachable');

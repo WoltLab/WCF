@@ -1,9 +1,9 @@
 {include file='header' __disableLoginLink=true __disableAds=true}
 
-{if $forceLoginRedirect}<p class="info">{lang}wcf.user.login.forceLogin{/lang}</p>{/if}
+{if $forceLoginRedirect}<p class="info" role="status">{lang}wcf.user.login.forceLogin{/lang}</p>{/if}
 
 {if !$errorField|empty && $errorField == 'cookie'}
-	<p class="error">{lang}wcf.user.login.error.cookieRequired{/lang}</p>
+	<p class="error" role="alert">{lang}wcf.user.login.error.cookieRequired{/lang}</p>
 {else}
 	{include file='formError'}
 {/if}
@@ -85,29 +85,29 @@
 				<dl>
 					<dt></dt>
 					<dd>
-						<ul class="buttonList smallButtons">
+						<ul class="buttonList">
 							{content}
-								{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
-									<li id="githubAuth" class="thirdPartyLogin">
-										<a href="{link controller='GithubAuth'}{/link}" class="button thirdPartyLoginButton githubLoginButton"><span class="icon icon16 fa-github"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
-									</li>
-								{/if}
-								
-								{if TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== ''}
-									<li id="twitterAuth" class="thirdPartyLogin">
-										<a href="{link controller='TwitterAuth'}{/link}" class="button thirdPartyLoginButton twitterLoginButton"><span class="icon icon16 fa-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.login{/lang}</span></a>
-									</li>
-								{/if}
-								
 								{if FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== ''}
 									<li id="facebookAuth" class="thirdPartyLogin">
-										<a href="{link controller='FacebookAuth'}{/link}" class="button thirdPartyLoginButton facebookLoginButton"><span class="icon icon16 fa-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.login{/lang}</span></a>
+										<a href="{link controller='FacebookAuth'}{/link}" class="button thirdPartyLoginButton facebookLoginButton"><span class="icon icon24 fa-facebook-official"></span> <span>{lang}wcf.user.3rdparty.facebook.login{/lang}</span></a>
 									</li>
 								{/if}
 								
 								{if GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== ''}
 									<li id="googleAuth" class="thirdPartyLogin">
-										<a href="{link controller='GoogleAuth'}{/link}" class="button thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
+										<a href="{link controller='GoogleAuth'}{/link}" class="button thirdPartyLoginButton googleLoginButton"><span class="icon icon24 fa-google"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
+									</li>
+								{/if}
+							
+								{if TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== ''}
+									<li id="twitterAuth" class="thirdPartyLogin">
+										<a href="{link controller='TwitterAuth'}{/link}" class="button thirdPartyLoginButton twitterLoginButton"><span class="icon icon24 fa-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.login{/lang}</span></a>
+									</li>
+								{/if}
+								
+								{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
+									<li id="githubAuth" class="thirdPartyLogin">
+										<a href="{link controller='GithubAuth'}{/link}" class="button thirdPartyLoginButton githubLoginButton"><span class="icon icon24 fa-github"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
 									</li>
 								{/if}
 								

@@ -4,7 +4,7 @@
  * Namespace for moderation related classes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Moderation = { };
@@ -179,7 +179,7 @@ if (COMPILER_TARGET_DEFAULT) {
 				case 'assignUser':
 					var $span = $('#moderationAssignedUserContainer > dd > span').empty();
 					if (data.returnValues.userID) {
-						$('<a href="' + data.returnValues.link + '" data-user-id="' + data.returnValues.userID + '" class="userLink">' + WCF.String.escapeHTML(data.returnValues.username) + '</a>').appendTo($span);
+						$('<a href="' + data.returnValues.link + '" data-object-id="' + data.returnValues.userID + '" class="userLink">' + WCF.String.escapeHTML(data.returnValues.username) + '</a>').appendTo($span);
 					}
 					else {
 						$span.append(data.returnValues.username);

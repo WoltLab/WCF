@@ -3,6 +3,7 @@ namespace wcf\data\media;
 use wcf\data\user\UserProfile;
 use wcf\data\DatabaseObjectDecorator;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\html\output\AmpHtmlOutputProcessor;
 use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
@@ -10,7 +11,7 @@ use wcf\util\StringUtil;
  * Represents a viewable media file.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Media
  * @since	3.0
@@ -127,6 +128,7 @@ class ViewableMedia extends DatabaseObjectDecorator {
 			$width = $size;
 			$height = $size;
 			$link = null;
+			$marginTop = 0;
 			
 			if ($this->tinyThumbnailType) {
 				$link = $this->getThumbnailLink('tiny');
@@ -222,6 +224,19 @@ class ViewableMedia extends DatabaseObjectDecorator {
 		}
 		
 		return $this->userProfile;
+	}
+	
+	/**
+	 * Returns the amp version of the caption.
+	 * 
+	 * @return	string
+	 * @since	5.2
+	 */
+	public function getAmpCaption() {
+		$processor = new AmpHtmlOutputProcessor();
+		$processor->process($this->caption, 'com.woltlab.wcf.media.caption', $this->mediaID);
+		
+		return $processor->getHtml();
 	}
 	
 	/**

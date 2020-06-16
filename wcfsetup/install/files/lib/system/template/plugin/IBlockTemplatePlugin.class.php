@@ -6,7 +6,7 @@ use wcf\system\template\TemplateEngine;
  * Block functions encloses a template block and operate on the contents of this block.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
  */

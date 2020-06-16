@@ -12,7 +12,7 @@ use wcf\util\ArrayUtil;
  * IMessageEmbeddedObjectHandler implementation for shared media.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Message\Embedded\Object
  */
@@ -46,7 +46,7 @@ class MediaMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObj
 		if ($contentLanguageID !== null) {
 			$mediaIDs = [];
 			foreach ($viewableMedia as $media) {
-				if ($media->localizedLanguageID != $contentLanguageID) {
+				if ($media !== null && $media->localizedLanguageID != $contentLanguageID) {
 					$mediaIDs[] = $media->getDecoratedObject()->mediaID;
 				}
 			}

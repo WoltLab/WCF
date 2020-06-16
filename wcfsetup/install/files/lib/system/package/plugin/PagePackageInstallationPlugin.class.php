@@ -42,7 +42,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes CMS pages.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
@@ -741,13 +741,38 @@ class PagePackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			
 			foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $contentProperty) {
 				if (!empty($data[$contentProperty])) {
-					$content[$contentProperty] = $data[$contentProperty];
+					foreach ($data[$contentProperty] as $languageID => $value) {
+						$languageCode = LanguageFactory::getInstance()->getLanguage($languageID)->languageCode;
+						
+						if (!isset($content[$languageCode])) {
+							$content[$languageCode] = [];
+						}
+						
+						$content[$languageCode][$contentProperty] = $value;
+					}
 				}
 				
 				unset($data[$contentProperty]);
 			}
 			
+			foreach ($content as $languageCode => $values) {
+				foreach (['title', 'content', 'customURL', 'metaDescription', 'metaKeywords'] as $contentProperty) {
+					if (!isset($values[$contentProperty])) {
+						$content[$languageCode][$contentProperty] = '';
+					}
+				}
+			}
+			
 			$data['content'] = $content;
+			
+			if (isset($data['parent'])) {
+				$parent = $data['parent'];
+				unset($data['parent']);
+				
+				if (!empty($parent)) {
+					$data['parentPageID'] = Page::getPageByIdentifier($parent)->pageID;
+				}
+			}
 		}
 		
 		return $data;

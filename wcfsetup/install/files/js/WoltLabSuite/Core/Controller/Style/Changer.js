@@ -2,7 +2,7 @@
  * Dialog based style changer.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Controller/Style/Changer
  */
@@ -17,10 +17,9 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function(Ajax, Language, UiDialog) {
 		 * Adds the style changer to the bottom navigation.
 		 */
 		setup: function() {
-			var link = elBySel('.jsButtonStyleChanger');
-			if (link) {
+			elBySelAll('.jsButtonStyleChanger', undefined, (function (link) {
 				link.addEventListener(WCF_CLICK_EVENT, this.showDialog.bind(this));
-			}
+			}).bind(this));
 		},
 		
 		/**

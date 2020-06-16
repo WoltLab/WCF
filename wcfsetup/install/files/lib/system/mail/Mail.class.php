@@ -7,14 +7,13 @@ use wcf\system\email\mime\PlainTextMimePart;
 use wcf\system\email\Email;
 use wcf\system\email\Mailbox;
 use wcf\system\WCF;
-use wcf\util\FileUtil;
 
 $_ = \wcf\functions\deprecatedClass(Mail::class);
 /**
  * This class represents an e-mail.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Mail
  * @deprecated	The Community Framework 2.x mail API is deprecated in favor of \wcf\system\email\*.

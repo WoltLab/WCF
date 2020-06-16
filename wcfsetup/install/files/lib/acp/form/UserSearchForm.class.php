@@ -19,7 +19,7 @@ use wcf\util\HeaderUtil;
  * Shows the user search form.
  * 
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -222,14 +222,8 @@ class UserSearchForm extends UserOptionListForm {
 				
 				// manually inject user group data for listing of group members
 				if ($this->groupID && $objectType->objectType == 'com.woltlab.wcf.userGroup') {
+					$userGroups = UserGroup::getSortedAccessibleGroups([], [UserGroup::EVERYONE, UserGroup::GUESTS]);
 					/** @var UserGroupCondition $processor */
-					
-					$userGroups = UserGroup::getAccessibleGroups([], [UserGroup::EVERYONE, UserGroup::GUESTS]);
-					
-					uasort($userGroups, function(UserGroup $groupA, UserGroup $groupB) {
-						return strcmp($groupA->getName(), $groupB->getName());
-					});
-					
 					$processor->setUserGroups($userGroups);
 					$processor->setData(new Condition(null, [
 						'conditionData' => serialize(['groupIDs' => [$this->groupID]])

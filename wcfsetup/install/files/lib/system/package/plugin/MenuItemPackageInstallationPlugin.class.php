@@ -29,7 +29,7 @@ use wcf\system\WCF;
  * Installs, updates and deletes menu items.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
@@ -56,11 +56,19 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
+		$sql = "DELETE FROM	wcf" . WCF_N . "_language_item
+			WHERE		languageItem = ?";
+		$languageItemStatement = WCF::getDB()->prepareStatement($sql);
+		
 		WCF::getDB()->beginTransaction();
 		foreach ($items as $item) {
 			$statement->execute([
 				$item['attributes']['identifier'],
 				$this->installation->getPackageID()
+			]);
+			
+			$languageItemStatement->execute([
+				'wcf.menu.item.' . $item['attributes']['identifier']
 			]);
 		}
 		WCF::getDB()->commitTransaction();
@@ -351,13 +359,23 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 					}
 					
 					return $nestedOptions;
-				}, true),
+				}, true)
+				->addDependency(
+					ValueFormFieldDependency::create('linkType')
+						->fieldId('linkType')
+						->values(['internal'])
+				),
 			
 			TextFormField::create('externalURL')
 				->label('wcf.acp.pip.menuItem.externalURL')
 				->description('wcf.acp.pip.menuItem.externalURL.description')
 				->required()
 				->i18n()
+				->addDependency(
+					ValueFormFieldDependency::create('linkType')
+						->fieldId('linkType')
+						->values(['external'])
+				)
 		]);
 		
 		/** @var SingleSelectionFormField $menuField */
@@ -405,22 +423,6 @@ class MenuItemPackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 				'linkType'
 			);
 		}
-		
-		// dependencies
-		
-		/** @var RadioButtonFormField $linkType */
-		$linkType = $form->getNodeById('linkType');
-		$form->getNodeById('menuItemPage')->addDependency(
-			ValueFormFieldDependency::create('linkType')
-				->field($linkType)
-				->values(['internal'])
-			);
-		
-		$form->getNodeById('externalURL')->addDependency(
-			ValueFormFieldDependency::create('linkType')
-				->field($linkType)
-				->values(['external'])
-		);
 	}
 	
 	/**

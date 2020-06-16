@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user\option;
+use wcf\data\ITitledObject;
 use wcf\data\option\Option;
 use wcf\data\user\User;
 use wcf\system\WCF;
@@ -8,7 +9,7 @@ use wcf\system\WCF;
  * Represents a user option.
  * 
  * @author	Joshua Ruesweg, Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Option
  * 
@@ -22,7 +23,7 @@ use wcf\system\WCF;
  * @property-read	integer		$isDisabled		is `1` if the user option is disabled and thus neither shown nor editable, otherwise `0`
  * @property-read	integer		$originIsSystem		is `1` if the user option was created by the system and not manually by an administrator, otherwise `0`
  */
-class UserOption extends Option {
+class UserOption extends Option implements ITitledObject {
 	/**
 	 * visible for no one (no valid bit)
 	 * @var	integer
@@ -113,6 +114,13 @@ class UserOption extends Option {
 	public $user = null;
 	
 	/**
+	 * @inheritDoc
+	 */
+	public function getTitle() {
+		return WCF::getLanguage()->get('wcf.user.option.' . $this->optionName);
+	}
+	
+	/**
 	 * Sets target user object.
 	 * 
 	 * @param	User	$user
@@ -191,5 +199,23 @@ class UserOption extends Option {
 		}
 		
 		return true;
+	}
+
+	/**
+	 * Allows modifications of editable option.
+	 *
+	 * @param int   $editableOption
+	 */
+	public function modifyEditableOption($editableOption) {
+		$this->data['editable'] = $editableOption;
+	}
+
+	/**
+	 * Allows modifications of visible option.
+	 *
+	 * @param int   $visibleOption
+	 */
+	public function modifyVisibleOption($visibleOption) {
+		$this->data['visible'] = $visibleOption;
 	}
 }

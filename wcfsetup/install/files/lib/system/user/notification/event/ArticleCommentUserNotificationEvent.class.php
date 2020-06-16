@@ -2,15 +2,15 @@
 namespace wcf\system\user\notification\event;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\user\UserProfile;
-use wcf\system\cache\runtime\ViewableArticleRuntimeCache;
+use wcf\system\cache\runtime\ViewableArticleContentRuntimeCache;
 use wcf\system\comment\CommentHandler;
 use wcf\system\user\notification\object\CommentUserNotificationObject;
 
 /**
  * User notification event for article comments.
  *
- * @author	Joshua Rusweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @author	Joshua Ruesweg
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  * @since       5.2
@@ -31,7 +31,7 @@ class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotification
 	 * @inheritDoc
 	 */
 	protected function prepare() {
-		ViewableArticleRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->objectID);
+		ViewableArticleContentRuntimeCache::getInstance()->cacheObjectID($this->getUserNotificationObject()->objectID);
 	}
 	
 	/**
@@ -64,7 +64,7 @@ class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotification
 				'author' => $this->author,
 				'authors' => array_values($authors),
 				'commentID' => $this->getUserNotificationObject()->commentID,
-				'article' => ViewableArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID),
+				'article' => ViewableArticleContentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID),
 				'count' => $count,
 				'others' => $count - 1,
 				'guestTimesTriggered' => $this->notification->guestTimesTriggered
@@ -74,7 +74,7 @@ class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotification
 		return $this->getLanguage()->getDynamicVariable('wcf.user.notification.articleComment.message', [
 			'author' => $this->author,
 			'commentID' => $this->getUserNotificationObject()->commentID,
-			'article' => ViewableArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)
+			'article' => ViewableArticleContentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)
 		]);
 	}
 	
@@ -88,7 +88,7 @@ class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotification
 			'application' => 'wcf',
 			'variables' => [
 				'commentID' => $this->getUserNotificationObject()->commentID,
-				'article' => ViewableArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID),
+				'article' => ViewableArticleContentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID),
 				'languageVariablePrefix' => 'wcf.user.notification.articleComment'
 			]
 		];
@@ -98,7 +98,7 @@ class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotification
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return ViewableArticleRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)->getLink() . '#comment'. $this->getUserNotificationObject()->commentID;
+		return ViewableArticleContentRuntimeCache::getInstance()->getObject($this->getUserNotificationObject()->objectID)->getLink() . '#comment'. $this->getUserNotificationObject()->commentID;
 	}
 	
 	/**
@@ -113,7 +113,7 @@ class ArticleCommentUserNotificationEvent extends AbstractSharedUserNotification
 	 */
 	protected static function getTestCommentObjectData(UserProfile $recipient, UserProfile $author) {
 		return [
-			'objectID' => self::getTestArticle(self::createTestCategory(ArticleCategory::OBJECT_TYPE_NAME), $author)->articleID,
+			'objectID' => self::getTestArticle(self::createTestCategory(ArticleCategory::OBJECT_TYPE_NAME), $author)->getArticleContent()->articleContentID,
 			'objectTypeID' => CommentHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.articleComment')
 		];
 	}

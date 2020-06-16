@@ -19,7 +19,7 @@ use wcf\util\ArrayUtil;
  * Shows the assign user to group form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -184,6 +184,6 @@ class UserAssignToGroupForm extends AbstractForm {
 	 * Get a list of available groups.
 	 */
 	protected function readGroups() {
-		$this->groups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
+		$this->groups = UserGroup::getSortedAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
 	}
 }

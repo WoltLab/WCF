@@ -9,7 +9,7 @@ use wcf\util\StringUtil;
  * Bulk processing action implementation for exporting mail addresses of users.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bulk\Processing\User
  * @since	3.0
@@ -34,12 +34,20 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
 	public $textSeparator = '"';
 	
 	/**
+	 * indicates whether output was generated (i.e. executeAction was called)
+	 * @var	boolean
+	 */
+	private $executed = false;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function executeAction(DatabaseObjectList $objectList) {
 		if (!($objectList instanceof UserList)) {
 			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
 		}
+		
+		$this->executed = true;
 		
 		// send content type
 		header('Content-Type: text/'.$this->fileType.'; charset=UTF-8');
@@ -102,6 +110,8 @@ class ExportMailAddressUserBulkProcessingAction extends AbstractUserBulkProcessi
 	 * @inheritDoc
 	 */
 	public function reset() {
+		if (!$this->executed) return;
+		$this->executed = false;
 		exit;
 	}
 }

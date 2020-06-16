@@ -5,7 +5,7 @@ namespace wcf\data;
  * Abstract class for all data holder classes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data
  */
@@ -31,7 +31,6 @@ interface IStorableObject {
 	/**
 	 * Returns the value of all object data variables.
 	 * 
-	 * @deprecated	This method was introduced for a function in AJAXProxy that is deprecated.
 	 * @return	mixed[]
 	 */
 	public function getData();

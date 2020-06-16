@@ -16,7 +16,7 @@ use wcf\system\form\builder\IFormDocument;
  * Installs, updates and deletes ACP menu items.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -49,6 +49,14 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 	 * @inheritDoc
 	 * @since	5.2
 	 */
+	protected function getXsdFilename() {
+		return 'acpMenu';
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
 	protected function addFormFields(IFormDocument $form) {
 		parent::addFormFields($form);
 		
@@ -69,15 +77,17 @@ class ACPMenuPackageInstallationPlugin extends AbstractMenuPackageInstallationPl
 			return $value === 0 || $value == 3;
 		}));
 		
-		$dataContainer->appendChild(IconFormField::create('icon')
+		$dataContainer->appendChild(
+			IconFormField::create('icon')
 			->label('wcf.acp.pip.acpMenu.icon')
-			->description('wcf.acp.pip.acpMenu.icon.description')
-			->required()
-			->addDependency(
-				ValueFormFieldDependency::create('parentMenuItem')
-					->field($parentMenuItemFormField)
-					->values($iconParentMenuItems)
-			));
+				->description('wcf.acp.pip.acpMenu.icon.description')
+				->required()
+				->addDependency(
+					ValueFormFieldDependency::create('parentMenuItem')
+						->field($parentMenuItemFormField)
+						->values($iconParentMenuItems)
+				)
+		);
 		
 		// add additional data to default fields
 		

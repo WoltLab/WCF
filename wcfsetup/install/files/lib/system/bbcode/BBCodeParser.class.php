@@ -9,7 +9,7 @@ use wcf\system\SingletonFactory;
  * Parses bbcode tags in text.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  */
@@ -543,7 +543,6 @@ class BBCodeParser extends SingletonFactory {
 	 * 
 	 * @param	string			$text
 	 * @param	string[]		$allowedBBCodes
-	 * @return	string[]
 	 * @deprecated  3.0 - please use HtmlInputProcessor::validate() instead
 	 */
 	public function validateBBCodes($text, array $allowedBBCodes) {
@@ -568,5 +567,14 @@ class BBCodeParser extends SingletonFactory {
 		}
 		
 		return $message;
+	}
+	
+	/**
+	 * @return bool
+	 * @since 5.2
+	 * @deprecated 5.2 See https://github.com/WoltLab/WCF/issues/3189
+	 */
+	public function getRemoveLinks() {
+		return false;
 	}
 }

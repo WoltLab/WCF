@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Represents a prepared statements based upon pdo statements.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Database\Statement
  * 
@@ -23,7 +23,7 @@ class PreparedStatement {
 	 * database object
 	 * @var	Database
 	 */
-	protected $database = null;
+	protected $database;
 	
 	/**
 	 * SQL query parameters
@@ -35,7 +35,7 @@ class PreparedStatement {
 	 * pdo statement object
 	 * @var	\PDOStatement
 	 */
-	protected $pdoStatement = null;
+	protected $pdoStatement;
 	
 	/**
 	 * SQL query
@@ -219,6 +219,27 @@ class PreparedStatement {
 		}
 		
 		return $map;
+	}
+	
+	/**
+	 * Returns a one-dimensional list of all rows holding only the value of the specified column. Please see
+	 * `fetchAll()` if you simply want to read all rows into an array. 
+	 * 
+	 * @param string $column
+	 * @return string[]|int[]|float[]
+	 */
+	public function fetchList($column) {
+		$list = [];
+		
+		while ($row = $this->fetchArray()) {
+			if (!array_key_exists($column, $row)) {
+				throw new \RuntimeException("The requested column '{$column}' is not contained in the result rows.");
+			}
+			
+			$list[] = $row[$column];
+		}
+		
+		return $list;
 	}
 	
 	/**

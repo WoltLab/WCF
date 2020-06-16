@@ -6,7 +6,7 @@ use wcf\data\page\PageCache;
  * Represents a page request.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  */
@@ -114,7 +114,7 @@ class Request {
 	/**
 	 * Returns request meta data.
 	 * 
-	 * @return	string[]
+	 * @return	array
 	 * @since	3.0
 	 */
 	public function getMetaData() {

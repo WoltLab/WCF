@@ -8,7 +8,7 @@
 	top: 0;
 	vertical-align: middle;
 	visibility: hidden;
-	z-index: 500;
+	z-index: 50;
 	
 	&.active {
 		animation: wcfPopover .3s;
@@ -25,15 +25,43 @@
 	}
 }
 
-img.reactionType {
-	width: 24px;
-	height: 24px;
+.reactionType {
+	width: 20px;
+	height: 20px;
 }
 
 .reactionSummaryList {
-	span.reactionCount::after {
+	display: inline-flex;
+	flex-wrap: wrap;
+	margin: -5px -5px 0 0;
+	
+	&.reactionSummaryListTiny .reactionType {
+		width: 16px;
+		height: 16px;
+	}
+	
+	&:hover {
+		.reactCountButton {
+			color: $wcfContentText;
+		}
+	}
+}
+
+.reactionCount{
+	@include wcfFontSmall;
+	
+	vertical-align: middle;
+	
+	&::before {
 		content: ' × ';
 	}
+}
+
+.reactCountButton {
+	color: $wcfContentDimmedText;
+	flex: 0 0 auto;
+	margin: 5px 5px 0 0;
+	white-space: nowrap;
 }
 
 .reactionPopoverContent {
@@ -49,116 +77,78 @@ img.reactionType {
 		}
 	}
 	
-	> ul > li.reactionTypeButton > img {
+	.reactionTypeButton > img {
 		width: 24px;
 		height: 24px;
-	}
-	
-	> ul > li.reactionTypeButton > img:hover {
-		transform: scale(1.2);
+		
+		&:hover {
+			transform: scale(1.2);
+		}
 	}
 	
 	@include screen-md-down {
-		padding: 5px 0px;
+		padding: 5px 0;
 		
-		> ul > li.reactionTypeButton {
-			margin: 0px;
+		.reactionTypeButton {
+			margin: 0;
 			display: block;
 			padding: 5px 25px;
-		}
-		
-		> ul > li.reactionTypeButton > .reactionTypeButtonTitle {
-			vertical-align: middle;
-			padding-left: 5px;
-		}
-		
-		> ul > li.reactionTypeButton.active {
-			background-color: $wcfContentBorderInner; // @TODO maybe find a better color value
+			
+			&.active {
+				background-color: $wcfContentBorderInner;
+			}
+			
+			> .reactionTypeButtonTitle {
+				vertical-align: middle;
+				padding-left: 5px;
+			}
 		}
 	}
 	
 	@include screen-lg {
 		padding: 5px 15px;
 		
-		> ul > li.reactionTypeButton > .reactionTypeButtonTitle {
-			display: none;
-		}
-		
-		> ul > li.reactionTypeButton {
+		.reactionTypeButton {
 			display: inline-block;
 			padding-top: 10px;
 			padding-bottom: 10px;
 			cursor: pointer;
 			margin-left: 10px;
-		}
-		
-		> ul > li.reactionTypeButton.active {
-			padding-left: 5px;
-			padding-right: 5px;
-		}
-		
-		> ul > li.reactionTypeButton.active > img {
-			transform: scale(1.4);
-		}
-		
-		> ul > li.reactionTypeButton.active > img:hover {
-			transform: scale(1.2);
-		}
-		
-		> ul > li.reactionTypeButton:first-child {
-			margin-left: 0px;
+			
+			&:first-child {
+				margin-left: 0;
+			}
+			
+			&.active {
+				padding-left: 5px;
+				padding-right: 5px;
+				
+				> img {
+					transform: scale(1.4);
+					
+					&:hover {
+						transform: scale(1.2);
+					}
+				}
+				
+			}
+			
+			> .reactionTypeButtonTitle {
+				display: none;
+			}
 		}
 	}
 }
 
-li.reactCountButton {
-	display: inline;
-	padding: 5px;
-	cursor: pointer;
-	color: $wcfContentDimmedText;
-}
-
-li.reactCountButton:hover {
-	color: $wcfContentText;
-}
-
-.reputationCounter {
-	color: $wcfContentDimmedText;
-	
-	&.positive {
-		color: #060 !important;
-	}
-	
-	&.negative {
-		color: #900 !important;
-	}
-	
-	&::before {
-		font-family: FontAwesome;
-		content: $fa-var-smile-o + "\00A0";
-		display: inline-block;
-	}
-	
-	&:empty {
-		display: none;	
-	}
-}
-
-.reactionSummaryListTiny {
-	display: inline;
-	
-	li.reactCountButton > img {
-		width: 16px;
-		height: 16px;
-	}
-	
-	span.reactionCount {
-		@include wcfFontSmall;
-	}
-	
-	li.reactCountButton {
-		background-color: transparent;
-		padding: 0px;
+@include screen-lg {
+	html.touch .reactionPopoverContent .reactionTypeButton {
+		display: block;
+		margin-left: 0;
+		
+		> .reactionTypeButtonTitle {
+			display: inline;
+			margin-left: 10px;
+		}
 	}
 }
 
@@ -168,7 +158,30 @@ li.reactCountButton:hover {
 	}
 }
 
-.messageFooterGroup > .mobileReactButton {
-	margin-left: auto;
-	margin-top: 20px;
+#likeList .likeTypeSelection {
+	display: flex;
+	justify-content: flex-end;
+	
+	.buttonGroup li {
+		display: flex;
+		justify-content: stretch;
+		
+		a {
+			display: flex;
+			align-items: center;
+		}
+	}
+}
+
+.topReactionFull,
+.topReactionShort {
+	> .reactionType {
+		vertical-align: bottom;
+	}
+}
+
+.topReactionTiny > .reactionType {
+	height: 16px;
+	vertical-align: top;
+	width: 16px;
 }

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\custom\option;
+use wcf\data\ITitledObject;
 use wcf\data\language\Language;
 use wcf\data\option\Option;
 use wcf\system\bbcode\MessageParser;
@@ -14,7 +15,7 @@ use wcf\util\StringUtil;
  * Default implementation for custom options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Custom\Option
  * @since	3.1
@@ -27,16 +28,47 @@ use wcf\util\StringUtil;
  * @property-read	string		$validationPattern	regular expression used to validate the value of the option
  * @property-read	string		$selectOptions		possible values of the option separated by newlines
  * @property-read	integer		$required		is `1` if the option has to be filled out, otherwise `0`
- * @property-read	integer		$showOrder		position of the option relation tp the other options
+ * @property-read	integer		$showOrder		position of the option in relation to the other options
  * @property-read	integer		$isDisabled		is `1` if the option is disabled, otherwise `0`
  * @property-read	integer		$originIsSystem		is `1` if the option has been delivered by a package, otherwise `0` (i.e. the option has been created in the ACP)
  */
-abstract class CustomOption extends Option {
+abstract class CustomOption extends Option implements ITitledObject {
 	/**
 	 * option value
 	 * @var	string
 	 */
 	protected $optionValue = '';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function __get($name) {
+		// Some options support empty values, such as "select", but the code checks for the
+		// property `allowEmptyValue`, which is the inverse value of `required`.
+		if ($name === 'allowEmptyValue') {
+			return !$this->required;
+		}
+		
+		return parent::__get($name);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	public function getTitle() {
+		return WCF::getLanguage()->get($this->optionTitle);
+	}
+
+	/**
+	 * Returns the option description in the active user's language.
+	 * 
+	 * @return	string
+	 * @since	5.2
+	 */
+	public function getDescription() {
+		return WCF::getLanguage()->get($this->optionDescription);
+	}
 	
 	/**
 	 * Returns true if the option is visible
@@ -114,7 +146,7 @@ abstract class CustomOption extends Option {
 			case 'radioButton':
 			case 'select':
 				$selectOptions = OptionUtil::parseSelectOptions($this->selectOptions);
-				if (isset($selectOptions[$this->optionValue])) return WCF::getLanguage()->get($selectOptions[$this->optionValue]);
+				if (isset($selectOptions[$this->optionValue])) return WCF::getLanguage()->get(($forcePlaintext ? $selectOptions[$this->optionValue] : StringUtil::encodeHTML($selectOptions[$this->optionValue])));
 				return '';
 				
 			case 'multiSelect':
@@ -124,8 +156,11 @@ abstract class CustomOption extends Option {
 				$result = '';
 				foreach ($values as $value) {
 					if (isset($selectOptions[$value])) {
-						if (!empty($result)) $result .= "<br>\n";
-						$result .= WCF::getLanguage()->get($selectOptions[$value]);
+						if (!empty($result)) {
+							if ($forcePlaintext) $result .= "\n";
+							else $result .= "<br>";
+						}
+						$result .= WCF::getLanguage()->get(($forcePlaintext ? $selectOptions[$value] : StringUtil::encodeHTML($selectOptions[$value])));
 					}
 				}
 				return $result;
@@ -146,7 +181,8 @@ abstract class CustomOption extends Option {
 				// fallthrough
 				
 			default:
-				return StringUtil::encodeHTML($this->optionValue);
+				if (!$forcePlaintext) return StringUtil::encodeHTML($this->optionValue);
+				return $this->optionValue;
 		}
 	}
 	

@@ -18,6 +18,25 @@ $.Redactor.prototype.WoltLabCaret = function() {
 				mpAfter.call(this, node);
 			}).bind(this);
 			
+			var mpStart = this.caret.start;
+			this.caret.start = (function (node) {
+				if (_isSafari) {
+					var sel, range;
+					node = this.caret.prepare(node);
+
+					if (!node) {
+						return;
+					}
+					
+					// iOS Safari offsets the caret by a half if the only content is an invisible space.
+					if (node.nodeName === 'P' && node.innerHTML === '\u200b') {
+						node.innerHTML = '<br>';
+					}
+				}
+				
+				mpStart.call(this, node);
+			}).bind(this);
+			
 			var editor = this.core.editor()[0];
 			require(['Environment'], (function (Environment) {
 				_iOS = (Environment.platform() === 'ios');
@@ -40,7 +59,11 @@ $.Redactor.prototype.WoltLabCaret = function() {
 					}).bind(this));
 				}
 				else {
-					editor.addEventListener(WCF_CLICK_EVENT, handleEditorClick);
+					editor.addEventListener(WCF_CLICK_EVENT, (function(event) {
+						this.WoltLabCaret._detectTripleClick(event);
+						
+						handleEditorClick(event);
+					}).bind(this));
 					editor.addEventListener('mouseup', handleEditorMouseUp);
 				}
 				
@@ -275,7 +298,12 @@ $.Redactor.prototype.WoltLabCaret = function() {
 			var sibling = block.nextElementSibling;
 			if (sibling && sibling.nodeName !== 'P') {
 				sibling = elCreate('p');
-				sibling.textContent = '\u200B';
+				if (this.opts.emptyHtml === '<p><br></p>') {
+					sibling.innerHTML = '<br>';
+				}
+				else {
+					sibling.textContent = '\u200B';
+				}
 				block.parentNode.insertBefore(sibling, block.nextSibling);
 			}
 			
@@ -418,6 +446,38 @@ $.Redactor.prototype.WoltLabCaret = function() {
 					})
 				}
 			}).bind(this));
+		},
+
+		/**
+		 * Many browsers will mark the entire line of text on triple click. However, the selection can
+		 * sometimes spill into an adjacent block, for example, highlighting an entire line will also
+		 * select the empty (!) start of the next line. For tables, this could cause the selection to
+		 * include the - again empty - start of the adjacent cell.
+		 * 
+		 * @param {MouseEvent} event
+		 * @protected
+		 */
+		_detectTripleClick: function(event) {
+			// Anything over 3 clicks behaves as a triple click.
+			if (event.detail < 3) {
+				return;
+			}
+			
+			var selection = window.getSelection();
+			if (!selection.isCollapsed) {
+				var range = selection.getRangeAt(0);
+				if (range.commonAncestorContainer.nodeName === 'TR') {
+					// The `<tr>` most likely indicates a selection that spans two cells, reduce the
+					// selection to only include the first cell.
+					var td = elClosest(range.startContainer, 'td');
+					
+					range = document.createRange();
+					range.selectNodeContents(td);
+					
+					selection.removeAllRanges();
+					selection.addRange(range);
+				}
+			}
 		},
 		
 		_handleEditorClick: function (event) {

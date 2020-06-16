@@ -13,7 +13,7 @@ use wcf\util\StringUtil;
  * Handles relative links within the wcf.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  */
@@ -48,7 +48,7 @@ class LinkHandler extends SingletonFactory {
 	 */
 	protected function init() {
 		$this->titleRegex = new Regex('[^\p{L}\p{N}]+', Regex::UTF_8);
-		$this->controllerRegex = new Regex('^(?P<application>[a-z]+)\\\\(?P<isAcp>acp\\\\)?.+\\\\(?P<controller>[^\\\\]+)(?:Action|Form|Page)$');
+		$this->controllerRegex = new Regex('^(?P<application>[a-z][a-z0-9]*)\\\\(?P<isAcp>acp\\\\)?.+\\\\(?P<controller>[^\\\\]+)(?:Action|Form|Page)$');
 		
 		if (defined('URL_TITLE_COMPONENT_REPLACEMENT') && URL_TITLE_COMPONENT_REPLACEMENT) {
 			$replacements = explode("\n", StringUtil::unifyNewlines(StringUtil::trim(URL_TITLE_COMPONENT_REPLACEMENT)));
@@ -113,8 +113,11 @@ class LinkHandler extends SingletonFactory {
 		$appendSession = false;
 		
 		// enforce a certain level of sanitation and protection for links embedded in emails
-		if (isset($parameters['isEmail']) && (bool)$parameters['isEmail']) {
-			$parameters['forceFrontend'] = true;
+		if (isset($parameters['isEmail'])) {
+			if ((bool)$parameters['isEmail']) {
+				$parameters['forceFrontend'] = true;
+			}
+			
 			unset($parameters['isEmail']);
 		}
 		
@@ -211,6 +214,7 @@ class LinkHandler extends SingletonFactory {
 		}
 		
 		$parameters['controller'] = $controller;
+		$abbreviation = ControllerMap::getInstance()->getApplicationOverride($abbreviation, $controller);
 		$routeURL = RouteHandler::getInstance()->buildRoute($abbreviation, $parameters, $isACP);
 		if (!$isRaw && !empty($url)) {
 			$routeURL .= (strpos($routeURL, '?') === false) ? '?' : '&';
@@ -222,8 +226,6 @@ class LinkHandler extends SingletonFactory {
 		}
 		
 		$url = $routeURL . $url;
-		
-		$abbreviation = ControllerMap::getInstance()->getApplicationOverride($abbreviation, $controller);
 		
 		// handle applications
 		if (!PACKAGE_ID) {

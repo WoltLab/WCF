@@ -9,11 +9,11 @@ use wcf\system\WCF;
  * Box for the tag cloud.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  */
-class TagCloudBoxController extends AbstractBoxController {
+abstract class TagCloudBoxController extends AbstractBoxController {
 	/**
 	 * @inheritDoc
 	 */

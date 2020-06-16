@@ -1,20 +1,14 @@
 <?php
 namespace wcf\system\request;
+use wcf\data\IIDObject;
 use wcf\data\ITitledObject;
 
 /**
  * Default interface for route controllers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  */
-interface IRouteController extends ITitledObject {
-	/**
-	 * Returns the id of the object.
-	 * 
-	 * @return	integer
-	 */
-	public function getObjectID();
-}
+interface IRouteController extends IIDObject, ITitledObject {}

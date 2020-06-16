@@ -5,7 +5,7 @@
 			<header class="messageHeader">
 				<div class="box32 messageHeaderWrapper">
 					{if $userProfiles[$message->getUserID()]|isset}
-						<a href="{link controller='User' object=$userProfiles[$message->getUserID()]}{/link}" aria-hidden="true">{@$userProfiles[$message->getUserID()]->getAvatar()->getImageTag(32)}</a>
+						{user object=$userProfiles[$message->getUserID()] type='avatar32' ariaHidden='true'}
 					{else}
 						<span><img src="{@$__wcf->getPath()}images/avatars/avatar-default.svg" alt="" class="userAvatarImage" style="width: 32px; height: 32px"></span>
 					{/if}
@@ -16,7 +16,13 @@
 						</h2>
 						
 						<ul class="messageHeaderMetaData">
-							<li>{if $userProfiles[$message->getUserID()]|isset}<a href="{link controller='User' object=$userProfiles[$message->getUserID()]}{/link}">{$message->getUsername()}</a>{else}<span class="username">{$message->getUsername()}</span>{/if}</li>
+							<li>
+								{if $userProfiles[$message->getUserID()]|isset}
+									{user object=$userProfiles[$message->getUserID()]}
+								{else}
+									<span class="username">{$message->getUsername()}</span>
+								{/if}
+							</li>
 							<li><span class="messagePublicationTime">{@$message->getTime()|time}</span></li>
 							
 							{event name='messageHeaderMetaData'}

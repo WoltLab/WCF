@@ -2,7 +2,7 @@
  * Manages code blocks.
  *
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Ui/Redactor/Code
  */
@@ -154,7 +154,7 @@ define(['EventHandler', 'EventKey', 'Language', 'StringUtil', 'Dom/Util', 'Ui/Di
 			    highlighter = elData(pre, 'highlighter');
 			
 			//noinspection JSUnresolvedVariable
-			highlighter = (this._editor.opts.woltlab.highlighters.hasOwnProperty(highlighter)) ? this._editor.opts.woltlab.highlighters[highlighter] : '';
+			highlighter = (this._editor.opts.woltlab.highlighters.indexOf(highlighter) !== -1) ? PrismMeta[highlighter].title : '';
 			
 			var title = Language.get('wcf.editor.code.title', {
 				file: file,

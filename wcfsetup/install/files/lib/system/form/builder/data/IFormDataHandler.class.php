@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\form\builder\data;
-use wcf\system\form\builder\field\data\processor\IFormFieldDataProcessor;
+use wcf\data\IStorableObject;
+use wcf\system\form\builder\data\processor\IFormDataProcessor;
 use wcf\system\form\builder\IFormDocument;
 
 /**
@@ -8,7 +9,7 @@ use wcf\system\form\builder\IFormDocument;
  * that can be passed to the constructor of a database object action.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Data
  * @since	5.2
@@ -18,10 +19,11 @@ interface IFormDataHandler {
 	 * Adds the given field data processor to this data handler and returns
 	 * this data handler.
 	 * 
-	 * @param	IFormFieldDataProcessor		$processor	added field data processor
+	 * @param	IFormDataProcessor $processor added field data processor
+	 *
 	 * @return	static						this data handler
 	 */
-	public function add(IFormFieldDataProcessor $processor);
+	public function addProcessor(IFormDataProcessor $processor);
 	
 	/**
 	 * Returns the data from the given form that is passed as the parameters
@@ -30,5 +32,15 @@ interface IFormDataHandler {
 	 * @param	IFormDocument	$document	processed form document
 	 * @return	array				data passed to database object action
 	 */
-	public function getData(IFormDocument $document);
+	public function getFormData(IFormDocument $document);
+	
+	/**
+	 * Returns the processed data of the given object that will be used to set the form fields'
+	 * value.
+	 *
+	 * @param	IFormDocument	$document	form document whose form field values will be set
+	 * @param	IStorableObject	$object		object from which the data is extracted
+	 * @return	array				processed object data
+	 */
+	public function getObjectData(IFormDocument $document, IStorableObject $object);
 }

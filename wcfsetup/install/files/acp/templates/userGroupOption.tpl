@@ -50,6 +50,41 @@
 				elHide(bbcodeHtml);
 			});
 		});
+		
+		{if $ownerGroupID}
+			{if $userGroupOption->optionName === 'admin.user.accessibleGroups'}
+				elBySelAll('dl[data-group-id]', container, function(dl) {
+					var groupId = parseInt(elData(dl, 'group-id'), 10);
+					
+					elBySelAll('input[name="values[' + groupId + '][]"', undefined, function(input) {
+						if (groupId === {@$ownerGroupID}) {
+							var shadow = elCreate('input');
+							shadow.type = 'hidden';
+							shadow.name = input.name;
+							shadow.value = input.value;
+							
+							input.parentNode.appendChild(shadow);
+							
+							input.disabled = true;
+						}
+						else {
+							if (parseInt(input.value, 10) === {@$ownerGroupID}) {
+								elRemove(input.closest('label'));
+							}
+						}
+					});
+				});
+			{elseif $userGroupOption->optionName|in_array:$ownerGroupPermissions}
+				elBySelAll('input[name="values[{@$ownerGroupID}]"]', undefined, function (input) {
+					if (input.value === '1') {
+						input.checked = true;
+					}
+					else {
+						input.disabled = true;
+					}
+				});
+			{/if}
+		{/if}
 	})();
 </script>
 
@@ -86,7 +121,11 @@
 		
 		{foreach from=$groups item=group}
 			<dl data-group-id="{@$group->groupID}">
-				<dt>{if VISITOR_USE_TINY_BUILD && $guestGroupID == $group->groupID && $userGroupOption->excludedInTinyBuild}<span class="icon icon16 fa-bolt red jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}"></span> {/if}<label for="userGroupOption{@$group->groupID}">{lang}{$group->groupName}{/lang}</label></dt>
+				<dt>
+					{if VISITOR_USE_TINY_BUILD && $guestGroupID == $group->groupID && $userGroupOption->excludedInTinyBuild}<span class="icon icon16 fa-bolt red jsTooltip" title="{lang}wcf.acp.group.excludedInTinyBuild{/lang}"></span> {/if}
+					{if $ownerGroupID == $group->groupID && $userGroupOption->optionName|in_array:$ownerGroupPermissions}<span class="icon icon16 fa-shield jsTooltip" title="{lang}wcf.acp.group.ownerGroupPermission{/lang}"></span> {/if}
+					<label for="userGroupOption{@$group->groupID}">{$group->getTitle()}</label>
+				</dt>
 				<dd>
 					{@$formElements[$group->groupID]}
 					

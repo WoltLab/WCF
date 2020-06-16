@@ -6,7 +6,7 @@ use wcf\util\StringUtil;
  * Parses the [email] bbcode tag.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  */
@@ -21,6 +21,12 @@ class EmailBBCode extends AbstractBBCode {
 		}
 		$email = StringUtil::decodeHTML($email);
 		
-		return '<a href="mailto:' . StringUtil::encodeAllChars($email) . '">' . StringUtil::encodeHTML($email) . '</a>';
+		/** @var HtmlBBCodeParser $parser */
+		if ($parser->getRemoveLinks()) {
+			return StringUtil::encodeHTML($email);
+		}
+		else {
+			return '<a href="mailto:' . StringUtil::encodeAllChars($email) . '">' . StringUtil::encodeHTML($email) . '</a>';
+		}
 	}
 }

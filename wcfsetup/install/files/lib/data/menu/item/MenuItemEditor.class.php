@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Provides functions to edit menu items.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Menu\Item
  * @since	3.0
@@ -77,6 +77,32 @@ class MenuItemEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		}
 		
 		return $menuItem;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function deleteAll(array $objectIDs = []) {
+		if (!empty($objectIDs)) {
+			// delete language items
+			$menuItemList = new MenuItemList();
+			$menuItemList->setObjectIDs($objectIDs);
+			$menuItemList->readObjects();
+			
+			if (count($menuItemList)) {
+				$sql = "DELETE FROM	wcf".WCF_N."_language_item
+					WHERE		languageItem = ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				
+				WCF::getDB()->beginTransaction();
+				foreach ($menuItemList as $menuItem) {
+					$statement->execute(['wcf.menu.item.' . $menuItem->identifier]);
+				}
+				WCF::getDB()->commitTransaction();
+			}
+		}
+		
+		return parent::deleteAll($objectIDs);
 	}
 	
 	/**

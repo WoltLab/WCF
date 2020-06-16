@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Executes profile visitor-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Profile\Visitor
  * 
@@ -81,5 +81,22 @@ class UserProfileVisitorAction extends AbstractDatabaseObjectAction implements I
 			'pageCount' => $pageCount,
 			'template' => WCF::getTPL()->fetch('groupedUserList')
 		];
+	}
+	
+	/**
+	 * Inserts a new visitor if it does not already exist, or updates it if it does.
+	 * @since       5.2
+	 */
+	public function registerVisitor() {
+		$sql = "INSERT INTO             wcf".WCF_N."_user_profile_visitor
+						(ownerID, userID, time)
+			VALUES                  (?, ?, ?)
+			ON DUPLICATE KEY UPDATE time = VALUES(time)";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute([
+			$this->parameters['data']['ownerID'],
+			$this->parameters['data']['userID'],
+			$this->parameters['data']['time'] ?? TIME_NOW,
+		]);
 	}
 }

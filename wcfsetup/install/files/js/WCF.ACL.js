@@ -10,7 +10,7 @@ if (COMPILER_TARGET_DEFAULT) {
 	 * ACL support for WCF
 	 *
 	 * @author        Alexander Ebert
-	 * @copyright        2001-2018 WoltLab GmbH
+	 * @copyright	2001-2020 WoltLab GmbH
 	 * @license        GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
 	 */
 	WCF.ACL.List = Class.extend({
@@ -321,6 +321,13 @@ if (COMPILER_TARGET_DEFAULT) {
 			// show container
 			this._container.show();
 			
+			// Because the container might have been hidden before, we must ensure that
+			// form builder field dependencies are checked again to avoid having ACL
+			// form fields not being shown in form builder forms.
+			require(['WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager'], function(FormBuilderFieldDependencyManager) {
+				FormBuilderFieldDependencyManager.checkDependencies();
+			});
+			
 			// pre-select an entry
 			this._selectFirstEntry();
 		},
@@ -592,6 +599,18 @@ if (COMPILER_TARGET_DEFAULT) {
 					}
 				}
 			}
+		},
+		
+		/**
+		 * Returns the ACL data stored for this list.
+		 * 
+		 * @return	object
+		 * @since	5.2.3
+		 */
+		getData: function() {
+			this._savePermissions();
+			
+			return this._values;
 		}
 	});
 }

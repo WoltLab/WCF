@@ -2,8 +2,9 @@
  * Provides the confirmation dialog overlay.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	Ui/Confirmation (alias)
  * @module	WoltLabSuite/Core/Ui/Confirmation
  */
 define(['Core', 'Language', 'Ui/Dialog'], function(Core, Language, UiDialog) {

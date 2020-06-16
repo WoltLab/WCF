@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * Handles facebook auth.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Action
  */
@@ -26,6 +26,17 @@ class FacebookAuthAction extends AbstractAction {
 	 * @inheritDoc
 	 */
 	public $neededModules = ['FACEBOOK_PUBLIC_KEY', 'FACEBOOK_PRIVATE_KEY'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		if (WCF::getSession()->spiderID) {
+			throw new IllegalLinkException();
+		}
+	}
 	
 	/**
 	 * @inheritDoc
@@ -147,7 +158,7 @@ class FacebookAuthAction extends AbstractAction {
 		// start auth by redirecting to facebook
 		$token = bin2hex(\random_bytes(20));
 		WCF::getSession()->register('__facebookInit', $token);
-		HeaderUtil::redirect("https://www.facebook.com/dialog/oauth?client_id=".StringUtil::trim(FACEBOOK_PUBLIC_KEY). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=email,user_birthday,user_location");
+		HeaderUtil::redirect("https://www.facebook.com/dialog/oauth?client_id=".StringUtil::trim(FACEBOOK_PUBLIC_KEY). "&redirect_uri=".rawurlencode($callbackURL)."&state=".$token."&scope=email");
 		$this->executed();
 		exit;
 	}

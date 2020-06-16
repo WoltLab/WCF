@@ -7,7 +7,7 @@ use wcf\data\article\content\ArticleContent;
  * Discussion provider for articles.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Article\Discussion
  * @since       5.2
@@ -27,6 +27,13 @@ interface IArticleDiscussionProvider {
 	 * @return      string
 	 */
 	public function getDiscussionCountPhrase();
+	
+	/**
+	 * Returns the permalink to the discussions or an empty string if there is none.
+	 * 
+	 * @return      string
+	 */
+	public function getDiscussionLink();
 	
 	/**
 	 * Renders the input and display section of the associated discussion.

@@ -220,9 +220,10 @@
 		}
 		
 		&.tripleColumned > li {
-			flex: 0 0 calc(100% / 3);
-			/* work-around for IE10 */
-			width: calc(100% / 3);
+			/* The `flex` shorthand fails in IE11 if `calc()` is used. */
+			flex-grow: 0;
+			flex-shrink: 0;
+			flex-basis: calc(100% / 3);
 			
 			&:nth-child(3n+1):nth-last-child(-n+3),
 			&:nth-child(3n+1):nth-last-child(-n+3) ~ li {
@@ -272,9 +273,10 @@
 		}
 		
 		&.tripleColumned > li {
-			flex: 0 0 calc(100% / 3);
-			/* work-around for IE10 */
-			width: calc(100% / 3);
+			/* The `flex` shorthand fails in IE11 if `calc()` is used. */
+			flex-grow: 0;
+			flex-shrink: 0;
+			flex-basis: calc(100% / 3);
 		}
 	}
 }
@@ -283,6 +285,10 @@
 	.box48 {
 		max-height: 500px;
 		overflow: hidden;
+		
+		> a:first-child {
+			align-self: flex-start;
+		}
 	}
 }
 
@@ -362,6 +368,7 @@
                 
                 > li {
                     display: inline-block;
+                    @include wcfFontSmall;
                 }
             }
         }

@@ -7,7 +7,7 @@
 		{if $__wcf->user->userID}
 			<!-- user menu -->
 			<li id="userMenu">
-				<a class="jsTooltip" href="{link controller='User' object=$__wcf->user}{/link}" title="{lang}wcf.user.controlPanel{/lang}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)} <span>{lang}wcf.user.userNote{/lang}</span></a>
+				<a class="jsTooltip" href="{$__wcf->user->getLink()}" title="{lang}wcf.user.controlPanel{/lang}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)} <span>{lang}wcf.user.userNote{/lang}</span></a>
 				<div class="interactiveDropdown interactiveDropdownStatic interactiveDropdownUserMenu">
 					<div class="interactiveDropdownHeader">
 						<span class="interactiveDropdownTitle">{lang}wcf.user.controlPanel{/lang}</span>
@@ -24,11 +24,11 @@
 						<ul class="interactiveDropdownItems interactiveDropdownItemsUserMenu">
 							<li>
 								<div class="box48">
-									<a href="{link controller='User' object=$__wcf->user}{/link}" aria-hidden="true">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(48)}</a>
+									{user object=$__wcf->getUserProfileHandler()->getUserProfile() type='avatar48' ariaHidden='true'}
 									
 									<div class="containerHeadline">
 										<h3>
-											<a href="{link controller='User' object=$__wcf->user}{/link}">{$__wcf->user->username}</a>
+											{user object=$__wcf->getUserProfileHandler()->getUserProfile()}
 											{if MODULE_USER_RANK}
 												{if $__wcf->getUserProfileHandler()->getUserTitle()}
 													<span class="badge userTitleBadge{if $__wcf->getUserProfileHandler()->getRank() && $__wcf->getUserProfileHandler()->getRank()->cssClassName} {@$__wcf->getUserProfileHandler()->getRank()->cssClassName}{/if}">{$__wcf->getUserProfileHandler()->getUserTitle()}</span>
@@ -40,7 +40,7 @@
 										</h3>
 										
 										<ul class="inlineList dotSeparated">
-											<li><a href="{link controller='User' object=$__wcf->user}{/link}">{lang}wcf.user.myProfile{/lang}</a></li>
+											<li><a href="{$__wcf->user->getLink()}">{lang}wcf.user.myProfile{/lang}</a></li>
 											{if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<li><a href="{link controller='User' object=$__wcf->user}editOnInit=true#about{/link}" class="jsUserPanelEditProfile">{lang}wcf.user.editProfile{/lang}</a></li>{/if}
 											{if $__wcf->session->getPermission('admin.general.canUseAcp')}<li><a href="{link isACP=true}{/link}">{lang}wcf.global.acp.short{/lang}</a></li>{/if}
 										</ul>
@@ -56,7 +56,7 @@
 										<div><span class="icon icon48 {@$menuCategory->getIconClassName()}"></span></div>
 										
 										<div class="containerHeadline">
-											<h3>{lang}{$menuCategory->menuItem}{/lang}</h3>
+											<h3>{$menuCategory->getTitle()}</h3>
 											
 											<ul class="inlineList dotSeparated">
 												{foreach from=$__wcf->getUserMenu()->getMenuItems($menuCategory->menuItem) item=menuItem}
@@ -199,29 +199,29 @@
 									<dl>
 										<dt></dt>
 										<dd>
-											<ul class="buttonList smallButtons">
+											<ul class="buttonList">
 												{content}
-													{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
-														<li id="githubAuth" class="thirdPartyLogin">
-															<a href="{link controller='GithubAuth'}{/link}" class="button thirdPartyLoginButton githubLoginButton"><span class="icon icon16 fa-github"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
-														</li>
-													{/if}
-													
-													{if TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== ''}
-														<li id="twitterAuth" class="thirdPartyLogin">
-															<a href="{link controller='TwitterAuth'}{/link}" class="button thirdPartyLoginButton twitterLoginButton"><span class="icon icon16 fa-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.login{/lang}</span></a>
-														</li>
-													{/if}
-													
 													{if FACEBOOK_PUBLIC_KEY !== '' && FACEBOOK_PRIVATE_KEY !== ''}
 														<li id="facebookAuth" class="thirdPartyLogin">
-															<a href="{link controller='FacebookAuth'}{/link}" class="button thirdPartyLoginButton facebookLoginButton"><span class="icon icon16 fa-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.login{/lang}</span></a>
+															<a href="{link controller='FacebookAuth'}{/link}" class="button thirdPartyLoginButton facebookLoginButton"><span class="icon icon24 fa-facebook-official"></span> <span>{lang}wcf.user.3rdparty.facebook.login{/lang}</span></a>
 														</li>
 													{/if}
 													
 													{if GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== ''}
 														<li id="googleAuth" class="thirdPartyLogin">
-															<a href="{link controller='GoogleAuth'}{/link}" class="button thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
+															<a href="{link controller='GoogleAuth'}{/link}" class="button thirdPartyLoginButton googleLoginButton"><span class="icon icon24 fa-google"></span> <span>{lang}wcf.user.3rdparty.google.login{/lang}</span></a>
+														</li>
+													{/if}
+												
+													{if TWITTER_PUBLIC_KEY !== '' && TWITTER_PRIVATE_KEY !== ''}
+														<li id="twitterAuth" class="thirdPartyLogin">
+															<a href="{link controller='TwitterAuth'}{/link}" class="button thirdPartyLoginButton twitterLoginButton"><span class="icon icon24 fa-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.login{/lang}</span></a>
+														</li>
+													{/if}
+													
+													{if GITHUB_PUBLIC_KEY !== '' && GITHUB_PRIVATE_KEY !== ''}
+														<li id="githubAuth" class="thirdPartyLogin">
+															<a href="{link controller='GithubAuth'}{/link}" class="button thirdPartyLoginButton githubLoginButton"><span class="icon icon24 fa-github"></span> <span>{lang}wcf.user.3rdparty.github.login{/lang}</span></a>
 														</li>
 													{/if}
 													
@@ -277,8 +277,15 @@
 		{/if}
 		
 		<!-- page search -->
-		<li class="jsOnly">
-			<a href="#" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
-		</li>
+		{if !SEARCH_USE_CAPTCHA || $__wcf->user->userID}
+			<li class="jsOnly">
+				<a href="#" id="userPanelSearchButton" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
+			</li>
+		{else}
+			<li>
+				<a href="{link controller='Search'}{/link}" class="jsTooltip" title="{lang}wcf.global.search{/lang}"><span class="icon icon32 fa-search"></span> <span>{lang}wcf.global.search{/lang}</span></a>
+				<span id="userPanelSearchButton" style="display: none"></span>
+			</li>
+		{/if}
 	</ul>
 </nav>

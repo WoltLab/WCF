@@ -59,7 +59,9 @@ html[dir="rtl"] #spTable th { text-align: right; }
 #spButtonPrimary { margin-top: 10px; }
 
 /* ### editor ### */
-#spEditorContent { border: 1px solid rgb(224, 224, 224); border-top-width: 0; height: 100px; }
+#spEditorContent { border: 1px solid rgb(224, 224, 224); border-top-width: 0; min-height: 100px; padding: 10px; }
+#spEditorTable { border-collapse: collapse; border-spacing: 0; margin: 10px 0; min-width: 60%; }
+#spEditorTable td { border: 1px solid rgb(221, 221, 221); padding: 10px; }
 
 /* ### dropdown ### */
 #spDropdown { display: inline-block; float: none; position: relative; visibility: visible; z-index: 10; }

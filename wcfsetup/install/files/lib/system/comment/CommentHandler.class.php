@@ -1,11 +1,14 @@
 <?php
 namespace wcf\system\comment;
+use wcf\data\comment\response\CommentResponse;
 use wcf\data\comment\response\CommentResponseList;
 use wcf\data\comment\CommentEditor;
 use wcf\data\comment\CommentList;
+use wcf\data\comment\StructuredComment;
 use wcf\data\comment\StructuredCommentList;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
+use wcf\data\user\notification\UserNotificationList;
 use wcf\system\comment\manager\ICommentManager;
 use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
@@ -21,7 +24,7 @@ use wcf\system\WCF;
  * Provides methods for comment object handling.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Comment
  */
@@ -227,6 +230,478 @@ class CommentHandler extends SingletonFactory {
 			]);
 			if (($row = $statement->fetchArray()) !== false) {
 				throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.comment.error.floodControl', ['lastCommentTime' => $row['time']]));
+			}
+		}
+	}
+	
+	/**
+	 * Marks all comment-related notifications for objects of the given object type and with
+	 * the given ids as confirmed for the active user.
+	 * 
+	 * @param	string		$objectType	comment object type name
+	 * @param	integer[]	$objectIDs	ids of the objects whose comment-related notifications will be marked as confirmed
+	 * @param	integer		$time		only notifications older than the given timestamp will be marked as confirmed
+	 * @throws	\InvalidArgumentException	if invalid comment object type name is given
+	 * @since	5.2
+	 */
+	public function markNotificationsAsConfirmed($objectType, array $objectIDs, $time = TIME_NOW) {
+		// notifications are only relevant for logged-in users
+		if (!WCF::getUser()->userID) {
+			return;
+		}
+		
+		if ($this->getObjectTypeID($objectType) === null) {
+			throw new \InvalidArgumentException("Unknown comment object type '{$objectType}'.");
+		}
+		
+		if (empty($objectIDs)) {
+			return;
+		}
+		
+		// 1. comments
+		
+		// mark comment notifications as confirmed
+		$commentEvents = [];
+		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType.'.notification')) {
+			foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.notification') as $event) {
+				$commentEvents[$event->eventID] = [
+					'eventName' => $event->eventName,
+					'objectType' => $objectType . '.notification'
+				];
+			}
+		}
+		
+		if (!empty($commentEvents)) {
+			$notificationList = new UserNotificationList();
+			$notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [array_keys($commentEvents)]);
+			$notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
+			$notificationList->sqlJoins .= "	LEFT JOIN	wcf" . WCF_N . "_comment comment
+								ON		(comment.commentID = user_notification.objectID
+										AND comment.objectTypeID = " . intval($this->getObjectTypeID($objectType)) . ")";
+			$notificationList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
+			$notificationList->getConditionBuilder()->add('comment.time <= ?', [$time]);
+			$notificationList->readObjects();
+			
+			$notificationObjectIDs = [];
+			foreach ($notificationList as $notification) {
+				if (!isset($notificationObjectIDs[$notification->eventID])) {
+					$notificationObjectIDs[$notification->eventID] = [];
+				}
+
+				$notificationObjectIDs[$notification->eventID][] = $notification->objectID;
+			}
+			
+			if (!empty($notificationObjectIDs)) {
+				foreach ($notificationObjectIDs as $eventID => $commentIDs) {
+					UserNotificationHandler::getInstance()->markAsConfirmed(
+						$commentEvents[$eventID]['eventName'],
+						$commentEvents[$eventID]['objectType'],
+						[WCF::getUser()->userID],
+						$commentIDs
+					);
+				}
+			}
+		}
+		
+		// mark comment reaction notifications as confirmed
+		$reactionCommentEvents = [];
+		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.like.notification') !== null) {
+			foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.like.notification') as $event) {
+				$reactionCommentEvents[$event->eventID] = [
+					'eventName' => $event->eventName,
+					'objectType' => $objectType . '.like.notification'
+				];
+			}
+		}
+		
+		if (!empty($reactionCommentEvents)) {
+			// the value of the `objectID` property of the notifications is the like object
+			// id which is currently unknown, thus it needs to be read from database
+			$notificationList = new UserNotificationList();
+			$notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [array_keys($reactionCommentEvents)]);
+			$notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
+			$notificationList->sqlJoins .= "	LEFT JOIN	wcf" . WCF_N . "_comment comment
+								ON		(comment.commentID = user_notification.baseObjectID
+										AND comment.objectTypeID = " . intval($this->getObjectTypeID($objectType)) . ")";
+			$notificationList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
+			$notificationList->getConditionBuilder()->add('comment.time <= ?', [$time]);
+			$notificationList->readObjects();
+			
+			$notificationObjectIDs = [];
+			foreach ($notificationList as $notification) {
+				if (!isset($notificationObjectIDs[$notification->eventID])) {
+					$notificationObjectIDs[$notification->eventID] = [];
+				}
+				
+				$notificationObjectIDs[$notification->eventID][] = $notification->objectID;
+			}
+			
+			if (!empty($notificationObjectIDs)) {
+				foreach ($notificationObjectIDs as $eventID => $reactionIDs) {
+					UserNotificationHandler::getInstance()->markAsConfirmed(
+						$reactionCommentEvents[$eventID]['eventName'],
+						$reactionCommentEvents[$eventID]['objectType'],
+						[WCF::getUser()->userID],
+						$reactionIDs
+					);
+				}
+			}
+		}
+		
+		// 2. responses
+		
+		// mark response notifications as confirmed
+		$responseEvents = [];
+		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType.'.response.notification')) {
+			foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.response.notification') as $event) {
+				$responseEvents[$event->eventID] = [
+					'eventName' => $event->eventName,
+					'objectType' => $objectType . '.response.notification'
+				];
+			}
+		}
+		
+		if (!empty($responseEvents)) {
+			$notificationList = new UserNotificationList();
+			$notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [array_keys($responseEvents)]);
+			$notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
+			$notificationList->sqlJoins .= "	LEFT JOIN	wcf" . WCF_N . "_comment_response comment_response
+								ON		(comment_response.responseID = user_notification.objectID)
+								LEFT JOIN	wcf" . WCF_N . "_comment comment
+								ON		(comment.commentID = comment_response.commentID)";
+			$notificationList->getConditionBuilder()->add('comment.objectTypeID IN (?)', [$this->getObjectTypeID($objectType)]);
+			$notificationList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
+			$notificationList->getConditionBuilder()->add('comment_response.time <= ?', [$time]);
+			$notificationList->readObjects();
+			
+			$notificationObjectIDs = [];
+			foreach ($notificationList as $notification) {
+				if (!isset($notificationObjectIDs[$notification->eventID])) {
+					$notificationObjectIDs[$notification->eventID] = [];
+				}
+				
+				$notificationObjectIDs[$notification->eventID][] = $notification->objectID;
+			}
+			
+			if (!empty($notificationObjectIDs)) {
+				foreach ($notificationObjectIDs as $eventID => $responseIDs) {
+					UserNotificationHandler::getInstance()->markAsConfirmed(
+						$responseEvents[$eventID]['eventName'],
+						$responseEvents[$eventID]['objectType'],
+						[WCF::getUser()->userID],
+						$responseIDs
+					);
+				}
+			}
+		}
+		
+		// mark comment response reaction notifications as confirmed
+		$reactionResponseEvents = [];
+		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.response.like.notification') !== null) {
+			foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.response.like.notification') as $event) {
+				$reactionResponseEvents[$event->eventID] = [
+					'eventName' => $event->eventName,
+					'objectType' => $objectType . '.response.like.notification'
+				];
+			}
+		}
+		
+		if (!empty($reactionResponseEvents)) {
+			// the value of the `objectID` property of the notifications is the like object
+			// id which is currently unknown, thus it needs to be read from database
+			$notificationList = new UserNotificationList();
+			$notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [array_keys($reactionResponseEvents)]);
+			$notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
+			$notificationList->sqlJoins .= "	LEFT JOIN	wcf" . WCF_N . "_comment_response comment_response
+								ON		(comment_response.responseID = user_notification.baseObjectID)
+								LEFT JOIN	wcf" . WCF_N . "_comment comment
+								ON		(comment.commentID = comment_response.commentID)";
+			$notificationList->getConditionBuilder()->add('comment.objectTypeID IN (?)', [$this->getObjectTypeID($objectType)]);
+			$notificationList->getConditionBuilder()->add('comment.objectID IN (?)', [$objectIDs]);
+			$notificationList->getConditionBuilder()->add('comment_response.time <= ?', [$time]);
+			$notificationList->readObjects();
+			
+			$notificationObjectIDs = [];
+			foreach ($notificationList as $notification) {
+				if (!isset($notificationObjectIDs[$notification->eventID])) {
+					$notificationObjectIDs[$notification->eventID] = [];
+				}
+				
+				$notificationObjectIDs[$notification->eventID][] = $notification->objectID;
+			}
+			
+			if (!empty($notificationObjectIDs)) {
+				foreach ($notificationObjectIDs as $eventID => $reactionIDs) {
+					UserNotificationHandler::getInstance()->markAsConfirmed(
+						$reactionResponseEvents[$eventID]['eventName'],
+						$reactionResponseEvents[$eventID]['objectType'],
+						[WCF::getUser()->userID],
+						$reactionIDs
+					);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Marks all comment-related notifications for objects of the given object type in the
+	 * given comment list as confirmed for the active user.
+	 * 
+	 * @param	string			$objectType	comment object type name
+	 * @param	StructuredComment[]	$comments	comments whose notifications will be marked as read
+	 * @throws	\InvalidArgumentException		if invalid comment object type name is given
+	 * @since	5.2
+	 */
+	public function markNotificationsAsConfirmedForComments($objectType, array $comments) {
+		// notifications are only relevant for logged-in users
+		if (!WCF::getUser()->userID) {
+			return;
+		}
+		
+		if ($this->getObjectTypeID($objectType) === null) {
+			throw new \InvalidArgumentException("Unknown comment object type '{$objectType}'.");
+		}
+		
+		if (count($comments) === 0) {
+			return;
+		}
+		
+		$commentIDs = [];
+		foreach ($comments as $comment) {
+			$commentIDs[] = $comment->commentID;
+		}
+		
+		// 1. comments
+		
+		// mark comment notifications as confirmed
+		$commentEvents = [];
+		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType.'.notification')) {
+			foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.notification') as $event) {
+				$commentEvents[$event->eventID] = [
+					'eventName' => $event->eventName,
+					'objectType' => $objectType . '.notification'
+				];
+			}
+		}
+		
+		if (!empty($commentEvents)) {
+			foreach ($commentEvents as $eventID => $eventData) {
+				UserNotificationHandler::getInstance()->markAsConfirmed(
+					$eventData['eventName'],
+					$eventData['objectType'],
+					[WCF::getUser()->userID],
+					$commentIDs
+				);
+			}
+		}
+		
+		// mark comment reaction notifications as confirmed
+		$reactionCommentEvents = [];
+		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.like.notification') !== null) {
+			foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.like.notification') as $event) {
+				$reactionCommentEvents[$event->eventID] = [
+					'eventName' => $event->eventName,
+					'objectType' => $objectType . '.like.notification'
+				];
+			}
+		}
+		
+		if (!empty($reactionCommentEvents)) {
+			// the value of the `objectID` property of the notifications is the like object
+			// id which is currently unknown, thus it needs to be read from database
+			$notificationList = new UserNotificationList();
+			$notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [array_keys($reactionCommentEvents)]);
+			$notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
+			$notificationList->getConditionBuilder()->add('user_notification.baseObjectID IN (?)', [$commentIDs]);
+			$notificationList->readObjects();
+			
+			$objectIDs = [];
+			foreach ($notificationList as $notification) {
+				if (!isset($objectIDs[$notification->eventID])) {
+					$objectIDs[$notification->eventID] = [];
+				}
+				
+				$objectIDs[$notification->eventID][] = $notification->objectID;
+			}
+			
+			if (!empty($objectIDs)) {
+				foreach ($objectIDs as $eventID => $reactionIDs) {
+					UserNotificationHandler::getInstance()->markAsConfirmed(
+						$reactionCommentEvents[$eventID]['eventName'],
+						$reactionCommentEvents[$eventID]['objectType'],
+						[WCF::getUser()->userID],
+						$reactionIDs
+					);
+				}
+			}
+		}
+		
+		// 2. responses
+		
+		$responseIDs = [];
+		foreach ($comments as $comment) {
+			// as we do not know whether `Comment::getUnfilteredResponseIDs()`
+			// or `Comment::getResponseIDs()` has been used, collect response
+			// ids manually
+			foreach ($comment as $response) {
+				$responseIDs[] = $response->responseID;
+			}
+		}
+		
+		if (!empty($responseIDs)) {
+			// mark response notifications as confirmed
+			$responseEvents = [];
+			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType.'.response.notification')) {
+				foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.response.notification') as $event) {
+					$responseEvents[$event->eventID] = [
+						'eventName' => $event->eventName,
+						'objectType' => $objectType . '.response.notification'
+					];
+				}
+			}
+			
+			if (!empty($responseEvents)) {
+				foreach ($responseEvents as $eventID => $eventData) {
+					UserNotificationHandler::getInstance()->markAsConfirmed(
+						$eventData['eventName'],
+						$eventData['objectType'],
+						[WCF::getUser()->userID],
+						$responseIDs
+					);
+				}
+			}
+			
+			// mark comment response reaction notifications as confirmed
+			$reactionResponseEvents = [];
+			if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.response.like.notification') !== null) {
+				foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.response.like.notification') as $event) {
+					$reactionResponseEvents[$event->eventID] = [
+						'eventName' => $event->eventName,
+						'objectType' => $objectType . '.response.like.notification'
+					];
+				}
+			}
+			
+			if (!empty($reactionResponseEvents)) {
+				// the value of the `objectID` property of the notifications is the like object
+				// id which is currently unknown, thus it needs to be read from database
+				$notificationList = new UserNotificationList();
+				$notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [array_keys($reactionResponseEvents)]);
+				$notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
+				$notificationList->getConditionBuilder()->add('user_notification.baseObjectID IN (?)', [$responseIDs]);
+				$notificationList->readObjects();
+				
+				$objectIDs = [];
+				foreach ($notificationList as $notification) {
+					if (!isset($objectIDs[$notification->eventID])) {
+						$objectIDs[$notification->eventID] = [];
+					}
+					
+					$objectIDs[$notification->eventID][] = $notification->objectID;
+				}
+				
+				if (!empty($objectIDs)) {
+					foreach ($objectIDs as $eventID => $reactionIDs) {
+						UserNotificationHandler::getInstance()->markAsConfirmed(
+							$reactionResponseEvents[$eventID]['eventName'],
+							$reactionResponseEvents[$eventID]['objectType'],
+							[WCF::getUser()->userID],
+							$reactionIDs
+						);
+					}
+				}
+			}
+		}
+	}
+	
+	/**
+	 * Marks all comment response-related notifications for objects of the given object type in
+	 * the given comment response list as confirmed for the active user.
+	 * 
+	 * @param	string			$objectType	comment object type name
+	 * @param	CommentResponse[]	$responses	comment responses whose notifications will be marked as read
+	 * 
+	 * @throws	\InvalidArgumentException		if invalid comment object type name is given
+	 * @since	5.2
+	 */
+	public function markNotificationsAsConfirmedForResponses($objectType, array $responses) {
+		// notifications are only relevant for logged-in users
+		if (!WCF::getUser()->userID) {
+			return;
+		}
+		
+		if ($this->getObjectTypeID($objectType) === null) {
+			throw new \InvalidArgumentException("Unknown comment object type '{$objectType}'.");
+		}
+		
+		if (count($responses) === 0) {
+			return;
+		}
+		
+		$responseIDs = [];
+		foreach ($responses as $response) {
+			$responseIDs[] = $response->responseID;
+		}
+		
+		$responseEvents = [];
+		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType.'.response.notification')) {
+			foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.response.notification') as $event) {
+				$responseEvents[$event->eventID] = [
+					'eventName' => $event->eventName,
+					'objectType' => $objectType . '.response.notification'
+				];
+			}
+		}
+		
+		if (!empty($responseEvents)) {
+			foreach ($responseEvents as $eventID => $eventData) {
+				UserNotificationHandler::getInstance()->markAsConfirmed(
+					$eventData['eventName'],
+					$eventData['objectType'],
+					[WCF::getUser()->userID],
+					$responseIDs
+				);
+			}
+		}
+		
+		// mark comment response reaction notifications as confirmed
+		$reactionResponseEvents = [];
+		if (UserNotificationHandler::getInstance()->getObjectTypeID($objectType . '.response.like.notification') !== null) {
+			foreach (UserNotificationHandler::getInstance()->getEvents($objectType . '.response.like.notification') as $event) {
+				$reactionResponseEvents[$event->eventID] = [
+					'eventName' => $event->eventName,
+					'objectType' => $objectType . '.response.like.notification'
+				];
+			}
+		}
+		
+		if (!empty($reactionResponseEvents)) {
+			// the value of the `objectID` property of the notifications is the like object
+			// id which is currently unknown, thus it needs to be read from database
+			$notificationList = new UserNotificationList();
+			$notificationList->getConditionBuilder()->add('user_notification.eventID IN (?)', [array_keys($reactionResponseEvents)]);
+			$notificationList->getConditionBuilder()->add('user_notification.userID = ?', [WCF::getUser()->userID]);
+			$notificationList->getConditionBuilder()->add('user_notification.baseObjectID IN (?)', [$responseIDs]);
+			$notificationList->readObjects();
+			
+			$objectIDs = [];
+			foreach ($notificationList as $notification) {
+				if (!isset($objectIDs[$notification->eventID])) {
+					$objectIDs[$notification->eventID] = [];
+				}
+				
+				$objectIDs[$notification->eventID][] = $notification->objectID;
+			}
+			
+			if (!empty($objectIDs)) {
+				foreach ($objectIDs as $eventID => $reactionIDs) {
+					UserNotificationHandler::getInstance()->markAsConfirmed(
+						$reactionResponseEvents[$eventID]['eventName'],
+						$reactionResponseEvents[$eventID]['objectType'],
+						[WCF::getUser()->userID],
+						$reactionIDs
+					);
+				}
 			}
 		}
 	}

@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * User group option type implementation for a user group select list.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option\User\Group
  */
@@ -24,11 +24,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 		$selectedGroups = explode(',', $value);
 		
 		// get all groups
-		$groups = UserGroup::getGroupsByType();
-		
-		usort($groups, function(UserGroup $groupA, UserGroup $groupB) {
-			return strcasecmp($groupA->getName(), $groupB->getName());
-		});
+		$groups = UserGroup::getSortedGroupsByType();
 		
 		// generate html
 		$html = '';

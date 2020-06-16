@@ -29,7 +29,7 @@ use wcf\system\WCF;
  * Executes article related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
@@ -305,6 +305,22 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			
 			if (!empty($usersToArticles)) {
 				ArticleEditor::updateArticleCounter($usersToArticles);
+			}
+		}
+		
+		// update author in recent activities
+		if (isset($this->parameters['data']['userID'])) {
+			$sql = "UPDATE wcf".WCF_N."_user_activity_event SET userID = ? WHERE objectTypeID = ? AND objectID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($this->objects as $articleEditor) {
+				if ($articleEditor->userID != $this->parameters['data']['userID']) {
+					$statement->execute([
+						$this->parameters['data']['userID'],
+						UserActivityEventHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article.recentActivityEvent'),
+						$articleEditor->articleID,
+					]);
+				}
 			}
 		}
 	}
@@ -743,7 +759,7 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 	 * @return      array   list of matching articles
 	 */
 	public function search() {
-		$sql = "SELECT          DISTINCT articleID
+		$sql = "SELECT          articleID
 			FROM            wcf".WCF_N."_article_content
 			WHERE           title LIKE ?
 					AND (

@@ -15,7 +15,7 @@ use wcf\util\DirectoryUtil;
  * Represents a devtools project.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Devtools\Project
  * @since	3.1
@@ -123,7 +123,7 @@ class DevtoolsProject extends DatabaseObject {
 		
 		if ($this->getPackage() === null) {
 			return WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.project.path.error.notInstalled', [
-				'package' => $this->packageArchive->getPackageInfo('name')
+				'project' => $this
 			]);
 		}
 		
@@ -136,27 +136,6 @@ class DevtoolsProject extends DatabaseObject {
 				'version' => $this->packageArchive->getPackageInfo('version'),
 				'packageVersion' => $this->package->packageVersion
 			]);
-		}
-		
-		if (!$this->isCore()) {
-			$compatibleVersions = $this->packageArchive->getCompatibleVersions();
-			if (empty($compatibleVersions)) {
-				return WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.project.path.error.missingCompatibility');
-			}
-			$isCompatible = $isOlderVersion = false;
-			foreach ($compatibleVersions as $version) {
-				if (WCF::isSupportedApiVersion($version)) {
-					$isCompatible = true;
-					break;
-				}
-				else if ($version < WSC_API_VERSION) {
-					$isOlderVersion = true;
-				}
-			}
-			
-			if (!$isCompatible) {
-				return WCF::getLanguage()->getDynamicVariable('wcf.acp.devtools.project.path.error.unsupportedCompatibility', ['isOlderVersion' => $isOlderVersion]);
-			}
 		}
 		
 		return '';

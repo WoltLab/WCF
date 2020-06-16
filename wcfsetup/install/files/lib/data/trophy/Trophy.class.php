@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * Represents a user trophy.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Trophy
  * @since	3.1
@@ -53,6 +53,16 @@ class Trophy extends DatabaseObject implements ITitledLinkObject, IRouteControll
 	 * The default icon size. 
 	 */
 	const DEFAULT_SIZE = 32;
+	
+	/**
+	 * Returns the title of the trophy.
+	 * 
+	 * @return      string
+	 * @since       5.3
+	 */
+	public function __toString() {
+		return $this->getTitle();
+	}
 	
 	/**
 	 * @inheritDoc

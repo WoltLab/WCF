@@ -57,7 +57,7 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					
 					{foreach from=$menuItemNodeList item=menuItemNode}
-						<option value="{@$menuItemNode->itemID}"{if $menuItemNode->itemID == $parentItemID} selected{/if}>{if $menuItemNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{lang}{$menuItemNode->title}{/lang}</option>
+						<option value="{@$menuItemNode->itemID}"{if $menuItemNode->itemID == $parentItemID} selected{/if}>{if $menuItemNode->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($menuItemNode->getDepth() - 1)}{/if}{$menuItemNode->getTitle()}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'parentItemID'}
@@ -75,7 +75,7 @@
 		<dl{if $errorField == 'title'} class="formError"{/if}>
 			<dt><label for="title">{lang}wcf.global.name{/lang}</label></dt>
 			<dd>
-				<input type="text" name="title" id="title" value="{$title}" class="long" required>
+				<input type="text" name="title" id="title" value="{$i18nPlainValues['title']}" class="long" required>
 				{if $errorField == 'title'}
 					<small class="innerError">
 						{if $errorType == 'empty' || $errorType == 'multilingual'}

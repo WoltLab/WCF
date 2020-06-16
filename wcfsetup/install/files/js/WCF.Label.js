@@ -280,6 +280,16 @@ WCF.Label.Chooser = Class.extend({
 		// replace button
 		label = label.find('span > span');
 		$group.find('.dropdownToggle > span').removeClass().addClass(label.attr('class')).text(label.text());
+		
+		// Submit the form if the label chooser is the only form element.
+		if (!onInit && this._container[0] && this._container[0].nodeName === 'FORM') {
+			if (elBySel('input:not([type="hidden"]):not([type="submit"]):not([type="reset"]), select, textarea', this._container[0]) === null) {
+				setTimeout((function () {
+					this._container.trigger('submit');
+					//this._container[0].submit();
+				}).bind(this), 100);
+			}
+		}
 	},
 	
 	/**

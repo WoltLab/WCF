@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user\menu\item;
+use wcf\data\ITitledObject;
 use wcf\data\ProcessibleDatabaseObject;
 use wcf\system\menu\user\DefaultUserMenuItemProvider;
 use wcf\system\menu\user\IUserMenuItemProvider;
@@ -12,7 +13,7 @@ use wcf\system\WCF;
  * Represents an user menu item.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Menu\Item
  *
@@ -28,7 +29,7 @@ use wcf\system\WCF;
  * @property-read	string		$className		name of the class implementing the user menu item provider interface or empty if there is no specific user menu item provider
  * @property-read	string		$iconClassName		FontAwesome CSS class name for user menu items on the first level
  */
-class UserMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
+class UserMenuItem extends ProcessibleDatabaseObject implements ITitledObject, ITreeMenuItem {
 	/**
 	 * @inheritDoc
 	 */
@@ -73,6 +74,14 @@ class UserMenuItem extends ProcessibleDatabaseObject implements ITreeMenuItem {
 		
 		$this->parseController();
 		return LinkHandler::getInstance()->getLink($this->controller, ['application' => $this->application], $this->menuItemLink);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	public function getTitle() {
+		return WCF::getLanguage()->get($this->menuItem);
 	}
 	
 	/**

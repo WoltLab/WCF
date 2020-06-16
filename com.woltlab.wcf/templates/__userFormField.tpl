@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 <input type="text" {*
 	*}id="{@$field->getPrefixedId()}" {*
 	*}name="{@$field->getPrefixedId()}" {*
@@ -18,5 +16,3 @@
 		});
 	});
 </script>
-
-{include file='__formFieldFooter'}

@@ -9,7 +9,7 @@ use wcf\system\Regex;
  * Implementation of a form field for the attributes of a form field.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\BBCode
  * @since	5.2
@@ -25,7 +25,7 @@ class BBCodeAttributesFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected $__value = [];
+	protected $value = [];
 	
 	/**
 	 * @inheritDoc
@@ -39,7 +39,7 @@ class BBCodeAttributesFormField extends AbstractFormField {
 	 */
 	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId()) && is_array($this->getDocument()->getRequestData($this->getPrefixedId()))) {
-			$this->__value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			$this->value = $this->getDocument()->getRequestData($this->getPrefixedId());
 		}
 	}
 	

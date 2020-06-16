@@ -6,16 +6,18 @@ use wcf\data\application\ApplicationList;
 use wcf\data\package\Package;
 use wcf\data\package\PackageList;
 use wcf\system\cache\builder\ApplicationCacheBuilder;
+use wcf\system\request\RequestHandler;
 use wcf\system\request\RouteHandler;
 use wcf\system\Regex;
 use wcf\system\SingletonFactory;
+use wcf\system\WCF;
 use wcf\util\FileUtil;
 
 /**
  * Handles multi-application environments.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Application
  */
@@ -119,10 +121,18 @@ class ApplicationHandler extends SingletonFactory {
 			return new Application(null, [
 				'domainName' => $host,
 				'domainPath' => $path,
-				'cookieDomain' => $host
+				'cookieDomain' => $host,
 			]);
 		}
-		else if (isset($this->cache['application'][PACKAGE_ID])) {
+		
+		$request = RequestHandler::getInstance()->getActiveRequest();
+		if ($request !== null) {
+			$abbreviation = substr($request->getClassName(), 0, mb_strpos($request->getClassName(), '\\'));
+			
+			return $this->getApplication($abbreviation);
+		}
+		
+		if (isset($this->cache['application'][PACKAGE_ID])) {
 			return $this->cache['application'][PACKAGE_ID];
 		}
 		
@@ -202,7 +212,7 @@ class ApplicationHandler extends SingletonFactory {
 		}
 		
 		// relative urls contain no protocol, including implied
-		if (!preg_match('~^([a-z]+)?://~', $url)) {
+		if (!preg_match('~^([a-zA-Z0-9]+)?://~', $url)) {
 			return true;
 		}
 		
@@ -229,6 +239,23 @@ class ApplicationHandler extends SingletonFactory {
 		}
 		
 		return $this->isMultiDomain;
+	}
+	
+	/**
+	 * @since 5.2
+	 */
+	public function rebuildActiveApplication() {
+		/** @var AbstractApplication $application */
+		foreach ($this->cache['application'] as $application) {
+			if ($application->getPackage()->package === 'com.woltlab.wcf') {
+				continue;
+			}
+			
+			$appObject = WCF::getApplicationObject($application);
+			if ($appObject instanceof AbstractApplication) {
+				$appObject->rebuildActiveApplication();
+			}
+		}
 	}
 	
 	/**

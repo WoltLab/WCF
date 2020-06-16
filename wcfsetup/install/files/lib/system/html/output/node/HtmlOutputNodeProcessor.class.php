@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * Processes a HTML string and renders the final output for display.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
@@ -89,6 +89,13 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 		
 		// dynamic node handlers
 		$this->invokeNodeHandlers('wcf\system\html\output\node\HtmlOutputNode', ['woltlab-metacode']);
+		
+		if ($this->getHtmlProcessor()->removeLinks) {
+			$links = $this->getDocument()->getElementsByTagName('a');
+			while ($links->length) {
+				DOMUtil::removeNode($links->item(0), true);
+			}
+		}
 		
 		if ($this->outputType !== 'text/html') {
 			// convert `<p>...</p>` into `...<br><br>`
@@ -280,6 +287,7 @@ class HtmlOutputNodeProcessor extends AbstractHtmlNodeProcessor {
 	protected function invokeHtmlNode(IHtmlNode $htmlNode) {
 		/** @var IHtmlOutputNode $htmlNode */
 		$htmlNode->setOutputType($this->outputType);
+		$htmlNode->setRemoveLinks($this->getHtmlProcessor()->removeLinks);
 		
 		parent::invokeHtmlNode($htmlNode);
 	}

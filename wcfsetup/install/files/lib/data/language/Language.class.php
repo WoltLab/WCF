@@ -1,14 +1,16 @@
 <?php
 namespace wcf\data\language;
 use wcf\data\DatabaseObject;
+use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemAction;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a language.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Language
  * 
@@ -44,6 +46,12 @@ class Language extends DatabaseObject {
 	 * @var	integer
 	 */
 	public $packageID = PACKAGE_ID;
+	
+	/**
+	 * contains categories currently being loaded as array keys
+	 * @var	bool[]
+	 */
+	protected $categoriesBeingLoaded = [];
 	
 	/**
 	 * Returns the name of this language.
@@ -122,11 +130,10 @@ class Language extends DatabaseObject {
 			LOG_MISSING_LANGUAGE_ITEMS &&
 			preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
 		) {
-			$logFile = WCF_DIR . 'log/missingLanguageItems.txt';
-			\wcf\functions\exception\logThrowable(
-				new \Exception("Missing language item '{$item}'."),
-				$logFile
-			);
+			(new DevtoolsMissingLanguageItemAction([], 'logLanguageItem', [
+				'language' => $this,
+				'languageItem' => $item,
+			]))->executeAction();
 		}
 		
 		// return plain input
@@ -160,14 +167,38 @@ class Language extends DatabaseObject {
 			$staticItem === $item &&
 			preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
 		) {
-			$logFile = WCF_DIR . 'log/missingLanguageItems.txt';
-			\wcf\functions\exception\logThrowable(
-				new \Exception("Missing language item '{$item}'."),
-				$logFile
-			);
+			(new DevtoolsMissingLanguageItemAction([], 'logLanguageItem', [
+				'language' => $this,
+				'languageItem' => $item,
+			]))->executeAction();
 		}
 		
 		return $staticItem;
+	}
+	
+	/**
+	 * Shortcut method to reduce the code repetition in the compiled template code.
+	 * 
+	 * @param string $item
+	 * @param mixed[] $tagStackData
+	 * @return string
+	 * @since 5.2
+	 */
+	public function tplGet($item, array &$tagStackData) {
+		$optional = !empty($tagStackData['__optional']);
+		
+		if (!empty($tagStackData['__literal'])) {
+			$value = $this->get($item, $optional);
+		}
+		else {
+			$value = $this->getDynamicVariable($item, $tagStackData, $optional);
+		}
+		
+		if (!empty($tagStackData['__encode'])) {
+			return StringUtil::encodeHTML($value);
+		}
+		
+		return $value;
 	}
 	
 	/**
@@ -184,6 +215,10 @@ class Language extends DatabaseObject {
 		// search language file
 		$filename = WCF_DIR.'language/'.$this->languageID.'_'.$category.'.php';
 		if (!@file_exists($filename)) {
+			if (isset($this->categoriesBeingLoaded[$category])) {
+				throw new \LogicException("Circular dependency detected! Cannot load category '{$category}' while it is already being loaded.");
+			}
+			
 			if ($this->editor === null) {
 				$this->editor = new LanguageEditor($this);
 			}
@@ -194,7 +229,11 @@ class Language extends DatabaseObject {
 				return false;
 			}
 			
+			$this->categoriesBeingLoaded[$category] = true;
+			
 			$this->editor->updateCategory($languageCategory);
+			
+			unset($this->categoriesBeingLoaded[$category]);
 		}
 		
 		// include language file

@@ -9,6 +9,7 @@ CREATE TABLE wcf1_package_installation_sql_log (
 	sqlTable VARCHAR(100) NOT NULL DEFAULT '', 
 	sqlColumn VARCHAR(100) NOT NULL DEFAULT '', 
 	sqlIndex VARCHAR(100) NOT NULL DEFAULT '',
+	isDone TINYINT(1) NOT NULL DEFAULT 1,
 	UNIQUE KEY packageID (packageID, sqlTable, sqlColumn, sqlIndex) 
 );
 
@@ -288,6 +289,28 @@ CREATE TABLE wcf1_bbcode_media_provider (
 	UNIQUE KEY name (name, packageID)
 );
 
+DROP TABLE IF EXISTS wcf1_blacklist_status;
+CREATE TABLE wcf1_blacklist_status (
+	date DATE NOT NULL,
+	delta1 TINYINT(1) NOT NULL DEFAULT 0,
+	delta2 TINYINT(1) NOT NULL DEFAULT 0,
+	delta3 TINYINT(1) NOT NULL DEFAULT 0,
+	delta4 TINYINT(1) NOT NULL DEFAULT 0,
+	
+	UNIQUE KEY day (date)
+);
+
+DROP TABLE IF EXISTS wcf1_blacklist_entry;
+CREATE TABLE wcf1_blacklist_entry (
+	type ENUM('email', 'ipv4','ipv6','username'),
+	hash BINARY(32),
+	lastSeen DATETIME NOT NULL,
+	occurrences SMALLINT(5) NOT NULL,
+	
+	UNIQUE KEY entry (type, hash),
+	KEY numberOfReports (type, occurrences)
+);
+
 DROP TABLE IF EXISTS wcf1_box;
 CREATE TABLE wcf1_box (
 	boxID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -350,6 +373,7 @@ CREATE TABLE wcf1_category (
 	parentCategoryID INT(10) NOT NULL DEFAULT 0,
 	title VARCHAR(255) NOT NULL,
 	description TEXT,
+	descriptionUseHtml TINYINT(1) NOT NULL DEFAULT 0,
 	showOrder INT(10) NOT NULL DEFAULT 0,
 	time INT(10) NOT NULL DEFAULT 0,
 	isDisabled TINYINT(1) NOT NULL DEFAULT 0,
@@ -518,6 +542,17 @@ CREATE TABLE wcf1_devtools_project (
 	UNIQUE KEY name (name)
 );
 
+DROP TABLE IF EXISTS wcf1_devtools_missing_language_item;
+CREATE TABLE wcf1_devtools_missing_language_item (
+	itemID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	languageID INT(10),
+	languageItem VARCHAR(191) NOT NULL,
+	lastTime INT(10) NOT NULL,
+	stackTrace MEDIUMTEXT NOT NULL,
+	
+	UNIQUE KEY (languageID, languageItem)
+);
+
 DROP TABLE IF EXISTS wcf1_edit_history_entry;
 CREATE TABLE wcf1_edit_history_entry (
 	entryID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY,
@@ -655,7 +690,6 @@ CREATE TABLE wcf1_like_object (
 	objectUserID INT(10),
 	likes MEDIUMINT(7) NOT NULL DEFAULT 0,
 	dislikes MEDIUMINT(7) NOT NULL DEFAULT 0,
-	neutralReactions MEDIUMINT(7) NOT NULL DEFAULT 0,
 	cumulativeLikes MEDIUMINT(7) NOT NULL DEFAULT 0,
 	cachedUsers TEXT,
 	cachedReactions TEXT,
@@ -887,7 +921,7 @@ CREATE TABLE wcf1_package (
 	isApplication TINYINT(1) NOT NULL DEFAULT 0,
 	author VARCHAR(255) NOT NULL DEFAULT '',
 	authorURL VARCHAR(255) NOT NULL DEFAULT '',
-	KEY package (package)
+	UNIQUE KEY package (package)
 );
 
 DROP TABLE IF EXISTS wcf1_package_compatibility;
@@ -1177,11 +1211,10 @@ CREATE TABLE wcf1_poll_option_vote (
 DROP TABLE IF EXISTS wcf1_reaction_type; 
 CREATE TABLE wcf1_reaction_type (
 	reactionTypeID INT(10) NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-	title VARCHAR(255), 
-	type TINYINT(1),
+	title VARCHAR(255) NOT NULL, 
 	showOrder INT(10) NOT NULL DEFAULT 0,
-	iconFile MEDIUMTEXT,
-	isDisabled TINYINT(1) NOT NULL DEFAULT 0
+	iconFile VARCHAR(255) NOT NULL DEFAULT '', 
+	isAssignable TINYINT(1) NOT NULL DEFAULT 1
 );
 
 DROP TABLE IF EXISTS wcf1_registry;
@@ -1301,7 +1334,7 @@ CREATE TABLE wcf1_style (
 	isTainted TINYINT(1) NOT NULL DEFAULT 0,
 	hasFavicon TINYINT(1) NOT NULL DEFAULT 0,
 	coverPhotoExtension VARCHAR(4) NOT NULL DEFAULT '',
-	apiVersion ENUM('3.0', '3.1') NOT NULL DEFAULT '3.0' 
+	apiVersion ENUM('3.0', '3.1', '5.2') NOT NULL DEFAULT '3.0' 
 );
 
 DROP TABLE IF EXISTS wcf1_style_variable;
@@ -1465,9 +1498,7 @@ CREATE TABLE wcf1_user (
 	disableCoverPhotoReason TEXT,
 	disableCoverPhotoExpires INT(10) NOT NULL DEFAULT 0,
 	articles INT(10) NOT NULL DEFAULT 0,
-	positiveReactionsReceived INT(10) NOT NULL DEFAULT 0,
-	negativeReactionsReceived INT(10) NOT NULL DEFAULT 0,
-	neutralReactionsReceived INT(10) NOT NULL DEFAULT 0,
+	blacklistMatches VARCHAR(255) NOT NULL DEFAULT '',
 	
 	KEY username (username),
 	KEY email (email),
@@ -1477,9 +1508,6 @@ CREATE TABLE wcf1_user (
 	KEY registrationData (registrationIpAddress, registrationDate),
 	KEY activityPoints (activityPoints),
 	KEY likesReceived (likesReceived),
-	KEY positiveReactionsReceived (positiveReactionsReceived),
-	KEY negativeReactionsReceived (negativeReactionsReceived),
-	KEY neutralReactionsReceived (neutralReactionsReceived),
 	KEY authData (authData),
 	KEY trophyPoints (trophyPoints)
 );
@@ -1922,6 +1950,8 @@ ALTER TABLE wcf1_cronjob ADD FOREIGN KEY (packageID) REFERENCES wcf1_package (pa
 
 ALTER TABLE wcf1_cronjob_log ADD FOREIGN KEY (cronjobID) REFERENCES wcf1_cronjob (cronjobID) ON DELETE CASCADE;
 
+ALTER TABLE wcf1_devtools_missing_language_item ADD FOREIGN KEY (languageID) REFERENCES wcf1_language (languageID) ON DELETE SET NULL;
+
 ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (objectTypeID) REFERENCES wcf1_object_type (objectTypeID) ON DELETE CASCADE;
 ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (userID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
 ALTER TABLE wcf1_edit_history_entry ADD FOREIGN KEY (obsoletedByUserID) REFERENCES wcf1_user (userID) ON DELETE SET NULL;
@@ -2200,7 +2230,7 @@ ALTER TABLE wcf1_notice_dismissed ADD FOREIGN KEY (userID) REFERENCES wcf1_user 
 INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (1, 'wcf.acp.group.group1', 1); -- Everyone
 INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (2, 'wcf.acp.group.group2', 2); -- Guests
 INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (3, 'wcf.acp.group.group3', 3); -- Registered Users
-INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (4, 'wcf.acp.group.group4', 4); -- Administrators
+INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (4, 'wcf.acp.group.group4', 9); -- Administrators
 INSERT INTO wcf1_user_group (groupID, groupName, groupType) VALUES (5, 'wcf.acp.group.group5', 4); -- Moderators
 
 -- default user group options
@@ -2217,8 +2247,10 @@ INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES
 INSERT INTO wcf1_user_group_option_value (groupID, optionID, optionValue) VALUES (4, 3, '1');	-- Administrators
 
 -- default update servers
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/2019/', 'online', 0, NULL, 0, '', '');
 INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/vortex/', 'online', 0, NULL, 0, '', '');
 INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://update.woltlab.com/tornado/', 'online', 0, NULL, 0, '', '');
+INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/2019/', 'online', 0, NULL, 0, '', '');
 INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/vortex/', 'online', 0, NULL, 0, '', '');
 INSERT INTO wcf1_package_update_server (serverURL, status, isDisabled, errorMessage, lastUpdateTime, loginUsername, loginPassword) VALUES ('http://store.woltlab.com/tornado/', 'online', 0, NULL, 0, '', '');
 
@@ -2268,6 +2300,7 @@ INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorB
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonText', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonTextActive', 'rgba(255, 255, 255, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorButtonTextDisabled', 'rgba(165, 165, 165, 1)');
+INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfEditorTableBorder', 'rgba(221, 221, 221, 1)');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontFamilyFallback', '"Segoe UI", "DejaVu Sans", "Lucida Grande", "Helvetica", sans-serif');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontFamilyGoogle', 'Open Sans');
 INSERT INTO wcf1_style_variable (variableName, defaultValue) VALUES ('wcfFontLineHeight', '1.48');
@@ -2402,8 +2435,8 @@ INSERT INTO wcf1_contact_option (optionID, optionTitle, optionDescription, optio
 INSERT INTO wcf1_contact_recipient (recipientID, name, email, isAdministrator, originIsSystem) VALUES (1, 'wcf.contact.recipient.name1', '', 1, 1);
 
 -- default reaction type
-INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title1', 1, 1, 'like.svg');
-INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title2', 1, 2, 'haha.svg');
-INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title3', -1, 3, 'sad.svg');
-INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title4', 0, 4, 'confused.svg');
-INSERT INTO wcf1_reaction_type (title, type, showOrder, iconFile) VALUES ('wcf.reactionType.title5', 1, 5, 'thanks.svg');
+INSERT INTO wcf1_reaction_type (reactionTypeID, title, showOrder, iconFile) VALUES (1, 'wcf.reactionType.title1', 1, 'like.svg');
+INSERT INTO wcf1_reaction_type (reactionTypeID, title, showOrder, iconFile) VALUES (2, 'wcf.reactionType.title2', 2, 'thanks.svg');
+INSERT INTO wcf1_reaction_type (reactionTypeID, title, showOrder, iconFile) VALUES (3, 'wcf.reactionType.title3', 3, 'haha.svg');
+INSERT INTO wcf1_reaction_type (reactionTypeID, title, showOrder, iconFile) VALUES (4, 'wcf.reactionType.title4', 4, 'confused.svg');
+INSERT INTO wcf1_reaction_type (reactionTypeID, title, showOrder, iconFile) VALUES (5, 'wcf.reactionType.title5', 5, 'sad.svg');

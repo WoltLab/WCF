@@ -7,7 +7,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * Provides default implementations of `IMaximumLengthFormField` methods.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
@@ -17,7 +17,7 @@ trait TMaximumLengthFormField {
 	 * maximum length of the field value
 	 * @var	null|int
 	 */
-	protected $__maximumLength;
+	protected $maximumLength;
 	
 	/**
 	 * Returns the maximum length of the values of this field or `null` if no placeholder
@@ -26,7 +26,7 @@ trait TMaximumLengthFormField {
 	 * @return	null|int
 	 */
 	public function getMaximumLength() {
-		return $this->__maximumLength;
+		return $this->maximumLength;
 	}
 	
 	/**
@@ -56,7 +56,7 @@ trait TMaximumLengthFormField {
 			}
 		}
 		
-		$this->__maximumLength = $maximumLength;
+		$this->maximumLength = $maximumLength;
 		
 		return $this;
 	}
@@ -64,14 +64,15 @@ trait TMaximumLengthFormField {
 	/**
 	 * Validates the maximum length of the given text.
 	 * 
-	 * @param	string		$text		validated text
-	 * @param	null|Language	$language	language of the validated text
+	 * @param	string		$text			validated text
+	 * @param	null|Language	$language		language of the validated text
+	 * @param	string		$errorLanguageItem
 	 */
-	public function validateMaximumLength($text, Language $language = null) {
+	public function validateMaximumLength($text, Language $language = null, $errorLanguageItem = 'wcf.form.field.text.error.maximumLength') {
 		if ($this->getMaximumLength() !== null && mb_strlen($text) > $this->getMaximumLength()) {
 			$this->addValidationError(new FormFieldValidationError(
 				'maximumLength',
-				'wcf.form.field.text.error.maximumLength',
+				$errorLanguageItem,
 				[
 					'language' => $language,
 					'length' => mb_strlen($text),

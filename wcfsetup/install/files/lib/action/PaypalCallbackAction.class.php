@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Handles Paypal callbacks.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Action
  */
@@ -56,7 +56,7 @@ class PaypalCallbackAction extends AbstractAction {
 			
 			// Check that receiver_email is your Primary PayPal email
 			if (strtolower($_POST['receiver_email']) != strtolower(PAYPAL_EMAIL_ADDRESS)) {
-				throw new SystemException('invalid receiver_email');
+				throw new SystemException("Mismatching receiver_email '" . $_POST['receiver_email'] . "', expected '".PAYPAL_EMAIL_ADDRESS."'.");
 			}
 			
 			// get token

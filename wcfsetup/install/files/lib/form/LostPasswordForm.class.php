@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * Shows the lost password form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -80,9 +80,12 @@ class LostPasswordForm extends AbstractCaptchaForm {
 			}
 		}
 		
-		// check if using 3rd party @author dtdesign
+		// check if using 3rd party
 		if ($this->user->authData) {
-			throw new UserInputException('username', '3rdParty');
+			HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(ucfirst($this->user->getAuthProvider()) . 'Auth'), WCF::getLanguage()->getDynamicVariable('wcf.user.username.error.3rdParty.redirect', [
+				'provider' => WCF::getLanguage()->get('wcf.user.3rdparty.'. $this->user->getAuthProvider())
+			]), 5, 'info');
+			exit;
 		}
 		
 		// check whether a lost password request was sent in the last 24 hours

@@ -9,6 +9,7 @@ use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
@@ -61,6 +62,34 @@ class OptionHandler implements IOptionHandler {
 	 * @var	string
 	 */
 	public $categoryName = '';
+	
+	/**
+	 * list of options and option categories that are only accessible for owners in enterprise
+	 * mode
+	 * this blacklist only applies to options, not other types of options like user options
+	 *
+	 * @var	string[][]
+	 * @since	5.2
+	 */
+	protected $enterpriseBlacklist = [
+		'categories' => [
+			'general.cache',
+			'general.mail.send',
+			'general.page.seo',
+			'general.system.cookie',
+			'general.system.http',
+			'general.system.image',
+			'general.system.packageServer',
+			'general.system.proxy',
+			'general.system.search',
+			'module.development',
+			'security.general.secrets',
+		],
+		'options' => [
+			'mail_from_address',
+			'register_activation_method',
+		]
+	];
 	
 	/**
 	 * options of the active category
@@ -468,7 +497,15 @@ class OptionHandler implements IOptionHandler {
 	 * @return	boolean
 	 */
 	protected function checkCategory(OptionCategory $category) {
-		return $category->validateOptions() && $category->validatePermissions();
+		if (!$category->validateOptions() || !$category->validatePermissions()) {
+			return false;
+		}
+		
+		if (ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess() && get_class($category) === OptionCategory::class) {
+			return !in_array($category->categoryName, $this->enterpriseBlacklist['categories']);
+		}
+		
+		return true;
 	}
 	
 	/**
@@ -488,6 +525,14 @@ class OptionHandler implements IOptionHandler {
 	 * @return	boolean
 	 */
 	protected function checkVisibility(Option $option) {
-		return $option->isVisible();
+		if (!$option->isVisible()) {
+			return false;
+		}
+		
+		if (ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess() && get_class($option) === Option::class) {
+			return !in_array($option->optionName, $this->enterpriseBlacklist['options']);
+		}
+		
+		return true;
 	}
 }

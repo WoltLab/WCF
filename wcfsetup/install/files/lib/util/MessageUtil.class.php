@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Contains message-related functions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -42,9 +42,72 @@ class MessageUtil {
 	
 	/**
 	 * Returns the mentioned users in the given text.
+	 *
+	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance
+	 * @return      int[]                   ids of the mentioned users
+	 * @since       5.3
+	 */
+	public static function getMentionedUserIDs(HtmlInputProcessor $htmlInputProcessor) {
+		$userIDs = [];
+		$groups = [];
+		
+		$elements = $htmlInputProcessor->getHtmlInputNodeProcessor()->getDocument()->getElementsByTagName('woltlab-metacode');
+		/** @var \DOMElement $element */
+		foreach ($elements as $element) {
+			$type = $element->getAttribute('data-name');
+			if ($type !== 'user' && $type !== 'group') {
+				continue;
+			}
+			
+			if (DOMUtil::hasParent($element, 'woltlab-quote')) {
+				// ignore mentions within quotes
+				continue;
+			}
+			
+			$attributes = $htmlInputProcessor->getHtmlInputNodeProcessor()->parseAttributes(
+				$element->getAttribute('data-attributes')
+			);
+			
+			if ($type === 'user') {
+				if (!empty($attributes[0])) {
+					$userIDs[] = $attributes[0];
+				}
+			}
+			else if ($type === 'group' && WCF::getSession()->getPermission('user.message.canMentionGroups')) {
+				if (!empty($attributes[0])) {
+					$group = UserGroup::getGroupByID($attributes[0]);
+					if ($group !== null && $group->canBeMentioned() && !isset($groups[$group->groupID])) {
+						$groups[$group->groupID] = $group;
+					}
+				}
+			}
+		}
+		
+		$userIDs = array_unique($userIDs);
+		if (!empty($groups)) {
+			$conditions = new PreparedStatementConditionBuilder();
+			$conditions->add('groupID IN (?)', [array_keys($groups)]);
+			if (!empty($userIDs)) $conditions->add('userID NOT IN (?)', [$userIDs]);
+			
+			$sql = "SELECT  userID
+				FROM    wcf".WCF_N."_user_to_group
+				".$conditions;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditions->getParameters());
+			while ($userID = $statement->fetchColumn()) {
+				$userIDs[] = $userID;
+			}
+		}
+		
+		return $userIDs;
+	}
+	
+	/**
+	 * Returns the mentioned users in the given text.
 	 * 
 	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance
 	 * @return      string[]                mentioned usernames
+	 * @deprecated  5.3
 	 */
 	public static function getMentionedUsers(HtmlInputProcessor $htmlInputProcessor) {
 		$usernames = [];
@@ -66,7 +129,7 @@ class MessageUtil {
 			if ($type === 'user') {
 				$usernames[] = $element->textContent;
 			}
-			else if ($type === 'group') {
+			else if ($type === 'group' && WCF::getSession()->getPermission('user.message.canMentionGroups')) {
 				$attributes = $htmlInputProcessor->getHtmlInputNodeProcessor()->parseAttributes(
 					$element->getAttribute('data-attributes')
 				);
@@ -92,7 +155,7 @@ class MessageUtil {
 				".$conditions;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditions->getParameters());
-			while ($username = $statement->fetchSingleColumn()) {
+			while ($username = $statement->fetchColumn()) {
 				$usernames[] = $username;
 			}
 		}

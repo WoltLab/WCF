@@ -16,7 +16,7 @@ use wcf\util\DateUtil;
  * Shows the article edit form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since	3.0
@@ -26,6 +26,11 @@ class ArticleEditForm extends ArticleAddForm {
 	 * @inheritDoc
 	 */
 	public $activeMenuItem = 'wcf.acp.menu.link.article.list';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $neededPermissions = [];
 	
 	/**
 	 * article id
@@ -191,7 +196,7 @@ class ArticleEditForm extends ArticleAddForm {
 			'article' => $this->article,
 			'defaultLanguageID' => LanguageFactory::getInstance()->getDefaultLanguageID(),
 			'languages' => LanguageFactory::getInstance()->getLanguages(),
-			'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.article', $this->articleID)
+			'lastVersion' => VersionTracker::getInstance()->getLastVersion('com.woltlab.wcf.article', $this->articleID),
 		]);
 	}
 }

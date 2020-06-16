@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Shows the style edit form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -154,6 +154,9 @@ class StyleEditForm extends StyleAddForm {
 			unset($this->variables['individualScssCustom']);
 			unset($this->variables['overrideScssCustom']);
 		}
+		
+		// Remove control characters that break the SCSS parser, see https://stackoverflow.com/a/23066553
+		$this->variables['individualScss'] = preg_replace('/[^\PC\s]/u', '', $this->variables['individualScss']);
 		
 		$this->objectAction = new StyleAction([$this->style], 'update', [
 			'data' => array_merge($this->additionalFields, [

@@ -8,7 +8,7 @@ use wcf\system\form\builder\field\TDefaultIdFormField;
  * Form field implementation for the optional packages of a devtools project.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Devtools\Project
  * @since	5.2
@@ -24,17 +24,17 @@ class DevtoolsProjectOptionalPackagesFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected $__value = [];
+	protected $value = [];
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId()) && is_array($this->getDocument()->getRequestData($this->getPrefixedId()))) {
-			$this->__value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			$this->value = $this->getDocument()->getRequestData($this->getPrefixedId());
 		}
 		else {
-			$this->__value = [];
+			$this->value = [];
 		}
 	}
 	

@@ -3,7 +3,7 @@
  * Defines constants for autocompletion in IDEs. This file is not meant to be actively used anywhere! 
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core
  */
@@ -186,8 +186,8 @@ define('USERS_ONLINE_RECORD_TIME', 0);
 define('USER_CLEANUP_NOTIFICATION_LIFETIME', 14);
 define('USER_CLEANUP_ACTIVITY_EVENT_LIFETIME', 60);
 define('USER_CLEANUP_PROFILE_VISITOR_LIFETIME', 60);
-define('LIKE_ALLOW_FOR_OWN_CONTENT', 1);
-define('LIKE_ENABLE_DISLIKE', 1);
+define('LIKE_ALLOW_FOR_OWN_CONTENT', 0);
+define('LIKE_ENABLE_DISLIKE', 0);
 define('LIKE_SHOW_SUMMARY', 1);
 define('MESSAGE_SIDEBAR_ENABLE_ONLINE_STATUS', 1);
 define('MESSAGE_SIDEBAR_ENABLE_LIKES_RECEIVED', 1);
@@ -244,6 +244,11 @@ define('MESSAGE_SIDEBAR_ENABLE_ARTICLES', 1);
 define('IMAGE_PROXY_ENABLE_PRUNE', 1);
 define('SEARCH_ENABLE_PAGES', 1);
 define('SEARCH_ENABLE_ARTICLES', 1);
+define("ATTACHMENT_IMAGE_AUTOSCALE", 1);
+define("ATTACHMENT_IMAGE_AUTOSCALE_MAX_WIDTH", 1024);
+define("ATTACHMENT_IMAGE_AUTOSCALE_MAX_HEIGHT", 1024);
+define("ATTACHMENT_IMAGE_AUTOSCALE_FILE_TYPE", '');
+define("ATTACHMENT_IMAGE_AUTOSCALE_QUALITY", 80);
 define('LOG_MISSING_LANGUAGE_ITEMS', 0);
 define('PRUNE_IP_ADDRESS', 30);
 define('BREADCRUMBS_HOME_USE_PAGE_TITLE', 1);
@@ -251,3 +256,12 @@ define('CONTACT_FORM_ENABLE_ATTACHMENTS', 0);
 define('CONTACT_FORM_PRUNE_ATTACHMENTS', 180);
 define('IMAGE_EXTERNAL_SOURCE_WHITELIST', '');
 define('SEARCH_MAX_COMBINED_TAGS', 3);
+define('ENABLE_PRODUCTION_DEBUG_MODE', 0);
+define('BLACKLIST_SFS_ENABLE', 1);
+define('BLACKLIST_SFS_USERNAME', '90percentile');
+define('BLACKLIST_SFS_EMAIL_ADDRESS', 'moreThanOnce');
+define('BLACKLIST_SFS_IP_ADDRESS', '90percentile');
+define('BLACKLIST_SFS_ACTION', 'disable');
+define('ENABLE_ENTERPRISE_MODE', 0);
+define('MESSAGE_ENABLE_USER_CONSENT', 1);
+define('MODIFICATION_LOG_EXPIRATION', 0);

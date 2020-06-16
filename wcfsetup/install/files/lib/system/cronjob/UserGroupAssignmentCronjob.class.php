@@ -9,11 +9,13 @@ use wcf\system\user\group\assignment\UserGroupAssignmentHandler;
  * Executes automatic user group assignments.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob
  */
 class UserGroupAssignmentCronjob extends AbstractCronjob {
+	const MAXIMUM_ASSIGNMENTS = 1000;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -22,12 +24,20 @@ class UserGroupAssignmentCronjob extends AbstractCronjob {
 		
 		$assignments = UserGroupAssignmentCacheBuilder::getInstance()->getData();
 		$usersToGroup = [];
+		
+		$assignmentCount = 0;
 		foreach ($assignments as $assignment) {
 			if (!isset($usersToGroup[$assignment->groupID])) {
 				$usersToGroup[$assignment->groupID] = [];
 			}
 			
-			$usersToGroup[$assignment->groupID] = array_merge($usersToGroup[$assignment->groupID], UserGroupAssignmentHandler::getInstance()->getUsers($assignment));
+			$newUsers = UserGroupAssignmentHandler::getInstance()->getUsers($assignment, self::MAXIMUM_ASSIGNMENTS);
+			$usersToGroup[$assignment->groupID] = array_merge($usersToGroup[$assignment->groupID], $newUsers);
+			
+			$assignmentCount += count($newUsers);
+			if ($assignmentCount > self::MAXIMUM_ASSIGNMENTS) {
+				break;
+			}
 		}
 		
 		foreach ($usersToGroup as $groupID => $users) {
@@ -35,7 +45,8 @@ class UserGroupAssignmentCronjob extends AbstractCronjob {
 				$userAction = new UserAction(array_unique($users), 'addToGroups', [
 					'addDefaultGroups' => false,
 					'deleteOldGroups' => false,
-					'groups' => [$groupID]
+					'groups' => [$groupID],
+					'ignoreUserGroupAssignments' => true
 				]);
 				$userAction->executeAction();
 			}

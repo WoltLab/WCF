@@ -3,13 +3,14 @@ namespace wcf\system\bbcode;
 use wcf\data\attachment\GroupedAttachmentList;
 use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
 use wcf\system\request\LinkHandler;
+use wcf\system\WCF;
 use wcf\util\StringUtil;
 
 /**
  * Parses the [attach] bbcode tag.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  */
@@ -39,7 +40,11 @@ class AttachmentBBCode extends AbstractBBCode {
 		}
 		
 		$hasParentLink = false;
-		if (!empty($closingTag['__parents'])) {
+		/** @var HtmlBBCodeParser $parser */
+		if ($parser->getRemoveLinks()) {
+			$hasParentLink = true;
+		}
+		else if (!empty($closingTag['__parents'])) {
 			/** @var \DOMElement $parent */
 			foreach ($closingTag['__parents'] as $parent) {
 				if ($parent->nodeName === 'a') {
@@ -102,7 +107,7 @@ class AttachmentBBCode extends AbstractBBCode {
 						$class = 'messageFloatObject'.ucfirst($alignment);
 					}
 					
-					$source = StringUtil::encodeHTML(LinkHandler::getInstance()->getLink('Attachment', ['object' => $attachment]));
+					$source = StringUtil::encodeHTML($attachment->getLink());
 					$title = StringUtil::encodeHTML($attachment->filename);
 					
 					if ($parser instanceof HtmlBBCodeParser && $parser->getIsGoogleAmp()) {
@@ -152,11 +157,15 @@ class AttachmentBBCode extends AbstractBBCode {
 				
 				return $result;
 			}
+			else if (substr($attachment->fileType, 0, 6) === 'video/' && $parser->getOutputType() == 'text/html') {
+				return WCF::getTPL()->fetch('__videoAttachmentBBCode', 'wcf', [
+					'attachment' => $attachment,
+					'attachmentIdentifier' => StringUtil::getRandomID()
+				]);
+			}
 			else {
 				// file
-				return StringUtil::getAnchorTag(LinkHandler::getInstance()->getLink('Attachment', [
-					'object' => $attachment
-				]), $attachment->filename);
+				return StringUtil::getAnchorTag($attachment->getLink(), $attachment->filename);
 			}
 		}
 		

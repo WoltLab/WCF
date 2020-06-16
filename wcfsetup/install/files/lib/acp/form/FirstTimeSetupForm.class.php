@@ -2,14 +2,13 @@
 namespace wcf\acp\form;
 use wcf\data\option\OptionAction;
 use wcf\system\option\OptionHandler;
-use wcf\system\style\StyleHandler;
 use wcf\system\WCF;
 
 /**
  * Shows the option edit form.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\Acp\Form
  * 
@@ -42,9 +41,12 @@ class FirstTimeSetupForm extends AbstractOptionListForm {
 		'mail_from_address',
 		'mail_admin_address',
 		'image_allow_external_source',
+		'message_enable_user_consent',
 		'module_contact_form',
 		'log_ip_address',
 		'package_server_auth_code',
+		'recaptcha_publickey',
+		'recaptcha_privatekey'
 	];
 	
 	/**

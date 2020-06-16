@@ -13,7 +13,7 @@ use wcf\util\HeaderUtil;
  * Shows members page.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * 
@@ -54,7 +54,7 @@ class MembersListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $validSortFields = ['username', 'registrationDate', 'activityPoints', 'reactionReputation', 'lastActivityTime'];
+	public $validSortFields = ['username', 'registrationDate', 'activityPoints', 'likesReceived', 'lastActivityTime'];
 	
 	/**
 	 * @inheritDoc
@@ -133,10 +133,6 @@ class MembersListPage extends SortablePage {
 	 * @inheritDoc
 	 */
 	protected function readObjects() {
-		if ($this->sortField === 'reactionReputation') {
-			$this->sqlOrderBy = '(user_table.positiveReactionsReceived - user_table.negativeReactionsReceived) '. $this->sortOrder;
-		}
-		
 		parent::readObjects();
 		
 		$userIDs = [];

@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Represents a list of articles.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
@@ -46,9 +46,8 @@ class ViewableArticleList extends ArticleList {
 			$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_tracked_visit tracked_visit ON (tracked_visit.objectTypeID = ".VisitTracker::getInstance()->getObjectTypeID('com.woltlab.wcf.article')." AND tracked_visit.objectID = article.articleID AND tracked_visit.userID = ".WCF::getUser()->userID.")";
 		}
 		
-		// get like status
 		if (!empty($this->sqlSelects)) $this->sqlSelects .= ',';
-		$this->sqlSelects .= "like_object.likes, like_object.dislikes, like_object.neutralReactions";
+		$this->sqlSelects .= "like_object.cachedReactions";
 		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_like_object like_object ON (like_object.objectTypeID = ".ReactionHandler::getInstance()->getObjectType('com.woltlab.wcf.likeableArticle')->objectTypeID." AND like_object.objectID = article.articleID)";
 	}
 	

@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Trophy category type.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Category
  * @since	3.1
@@ -71,5 +71,13 @@ class TrophyCategoryType extends AbstractCategoryType {
 		
 		$userTrophyAction = new UserTrophyAction($userTrophyList->getObjects(), 'delete');
 		$userTrophyAction->executeAction(); 
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	public function supportsHtmlDescription() {
+		return true;
 	}
 }

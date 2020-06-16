@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\poll;
+use wcf\data\IPollContainer;
 use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\poll\option\PollOptionList;
@@ -19,7 +20,7 @@ use wcf\util\StringUtil;
  * Provides methods to create and manage polls.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Poll
  */
@@ -205,12 +206,12 @@ class PollManager extends SingletonFactory {
 	 */
 	public function validate() {
 		$count = count($this->pollOptions);
-
+		
 		// if no question and no options are given, ignore poll completely
 		if (empty($this->pollData['question']) && !$count) {
 			return;
 		}
-
+		
 		// no question given
 		if (empty($this->pollData['question'])) {
 			throw new UserInputException('pollQuestion');
@@ -296,6 +297,45 @@ class PollManager extends SingletonFactory {
 		}
 		
 		return $this->poll->pollID;
+	}
+	
+	/**
+	 * Saves the poll for the given poll container using the given poll data and returns the id
+	 * of the relevant poll or `null` if the poll container has no poll after the update.
+	 * 
+	 * This method either creates a new poll or updates or deletes an existing poll.
+	 * 
+	 * @param	IPollContainer		$pollContainer		object the poll belongs to
+	 * @param	array			$pollData		poll data
+	 * @return	null|integer					id of the poll
+	 * @since	5.2
+	 */
+	public function savePoll(IPollContainer $pollContainer, array $pollData) {
+		// backup internal data
+		$backupData = [
+			'objectID' => $this->objectID,
+			'poll' => $this->poll,
+			'pollData' => $this->pollData,
+			'pollOptions' => $this->pollOptions
+		];
+		
+		if ($pollContainer->getPollID() !== null) {
+			$this->poll = new Poll($pollContainer->getPollID());
+		}
+		
+		$this->pollOptions = $pollData['options'];
+		unset($pollData['options']);
+		$this->pollData = $pollData;
+		
+		$pollID = $this->save($pollContainer->getObjectID());
+		
+		// restore internal data
+		$this->objectID = $backupData['objectID'];
+		$this->poll = $backupData['poll'];
+		$this->pollData = $backupData['pollData'];
+		$this->pollOptions = $backupData['pollOptions'];
+		
+		return $pollID ?: null;
 	}
 	
 	/**

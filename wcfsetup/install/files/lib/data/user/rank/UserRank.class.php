@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\user\rank;
 use wcf\data\DatabaseObject;
+use wcf\data\ITitledObject;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
 
@@ -8,7 +9,7 @@ use wcf\util\StringUtil;
  * Represents a user rank.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Rank
  *
@@ -22,7 +23,7 @@ use wcf\util\StringUtil;
  * @property-read	integer		$requiredGender		numeric representation of the user's gender required for the user rank (see `UserProfile::GENDER_*` constants) or 0 if no specific gender is required
  * @property-read	integer		$hideTitle		hides the generic title of the rank, but not custom titles, `0` to show the title at all times
  */
-class UserRank extends DatabaseObject {
+class UserRank extends DatabaseObject implements ITitledObject {
 	/**
 	 * Returns the image of this user rank.
 	 * 
@@ -36,6 +37,14 @@ class UserRank extends DatabaseObject {
 		}
 		
 		return '';
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2
+	 */
+	public function getTitle() {
+		return WCF::getLanguage()->get($this->rankTitle);
 	}
 	
 	/**

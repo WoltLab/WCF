@@ -24,7 +24,7 @@
 		{/if}
 		
 		<dt>{lang}wcf.media.uploader{/lang}</dt>
-		<dd id="mediaUploader">{@$media->getUserProfile()->getAnchorTag()}</dd>
+		<dd id="mediaUploader">{user object=$media->getUserProfile()}</dd>
 		
 		<dt>{lang}wcf.media.downloads{/lang}</dt>
 		<dd id="mediaDownloads">{#$media->downloads}</dd>

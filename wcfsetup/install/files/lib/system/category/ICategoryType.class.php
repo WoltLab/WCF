@@ -6,7 +6,7 @@ use wcf\data\category\CategoryEditor;
  * Every category type has to implement this interface.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Category
  */
@@ -141,4 +141,12 @@ interface ICategoryType {
 	 * @return	boolean
 	 */
 	public function hasDescription();
+	
+	/**
+	 * Returns `true` if the descriptions of categories of this type support HTML.
+	 * 
+	 * @return	boolean
+	 * @since	5.2
+	 */
+	public function supportsHtmlDescription();
 }

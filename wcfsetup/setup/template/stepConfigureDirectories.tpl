@@ -76,5 +76,7 @@
 		}
 	})();
 </script>
-
+<script>
+if (typeof window._trackWcfSetupStep === 'function') window._trackWcfSetupStep('configureDirectories');
+</script>
 {include file='footer'}

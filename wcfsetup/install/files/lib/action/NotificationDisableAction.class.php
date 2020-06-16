@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Allows a user to disable notifications by a direct link.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Action
  */
@@ -69,7 +69,7 @@ class NotificationDisableAction extends AbstractAction {
 		}
 		
 		if (isset($_REQUEST['token'])) $this->token = StringUtil::trim($_REQUEST['token']);
-		if (empty($this->token) || \hash_equals($this->user->notificationMailToken, $this->token)) {
+		if (empty($this->token) || !\hash_equals($this->user->notificationMailToken, $this->token)) {
 			throw new IllegalLinkException();
 		}
 	}

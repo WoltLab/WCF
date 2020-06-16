@@ -7,7 +7,7 @@ use wcf\util\StringUtil;
  * Converts table bbcodes into `<table>`, `<tr>` and `<td>`.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Metacode\Converter
  * @since       3.0

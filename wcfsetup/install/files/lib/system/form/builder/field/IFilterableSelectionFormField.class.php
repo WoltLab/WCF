@@ -1,13 +1,12 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\data\DatabaseObjectList;
 
 /**
  * Represents a form field that consists of a predefined set of possible values
  * which also support filtering when the user selects their value(s).
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2

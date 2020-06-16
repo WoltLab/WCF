@@ -5,18 +5,18 @@ use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\comment\CommentHandler;
 use wcf\system\email\Email;
-use wcf\system\user\notification\object\CommentUserNotificationObject;
+use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 
 /**
  * User notification event for page comments.
  *
- * @author	Joshua Rusweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @author	Joshua Ruesweg
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  * @since       5.2
  *
- * @method	CommentUserNotificationObject	getUserNotificationObject()
+ * @method	CommentResponseUserNotificationObject	getUserNotificationObject()
  */
 class PageCommentResponseOwnerUserNotificationEvent extends AbstractSharedUserNotificationEvent implements ITestableUserNotificationEvent {
 	use TTestableCommentResponseUserNotificationEvent;

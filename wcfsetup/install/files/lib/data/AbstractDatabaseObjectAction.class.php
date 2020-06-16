@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * Default implementation for DatabaseObject-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data
  */
@@ -504,7 +504,13 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 	protected function readValue($variableName, $allowEmpty, $arrayIndex, $type, $structure) {
 		if ($arrayIndex) {
 			if (!isset($this->parameters[$arrayIndex])) {
-				throw new SystemException("Corrupt parameters, index '".$arrayIndex."' is missing");
+				if ($allowEmpty) {
+					// Implicitly create the structure to permit implicitly defined values.
+					$this->parameters[$arrayIndex] = [];
+				}
+				else {
+					throw new SystemException("Corrupt parameters, index '" . $arrayIndex . "' is missing");
+				}
 			}
 			
 			$target =& $this->parameters[$arrayIndex];

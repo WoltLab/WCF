@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * Customizable contact form with selectable recipients.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -232,6 +232,7 @@ class ContactForm extends AbstractCaptchaForm {
 			'name' => $this->name,
 			'options' => $this->optionHandler->getOptions(),
 			'recipientList' => $this->recipientList,
+			'recipientID' => $this->recipientID,
 			'privacyPolicyConfirmed' => $this->privacyPolicyConfirmed,
 			'attachmentHandler' => $this->attachmentHandler,
 			'attachmentObjectID' => 0,

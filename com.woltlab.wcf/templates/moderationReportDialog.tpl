@@ -1,5 +1,5 @@
 {if $alreadyReported}
-	<p class="info">{lang}wcf.moderation.report.alreadyReported{/lang}</p>
+	<p class="info" role="status">{lang}wcf.moderation.report.alreadyReported{/lang}</p>
 {else}
 	<section class="section">
 		<h2 class="sectionTitle">{lang}wcf.moderation.report.reason{/lang}</h2>

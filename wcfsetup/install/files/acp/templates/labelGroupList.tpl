@@ -32,9 +32,48 @@
 	</nav>
 </header>
 
+<form action="{link controller='LabelGroupList'}{/link}" method="post">
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.acp.label.filter{/lang}</h2>
+		
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input type="text" id="groupName" name="groupName" value="{$groupName}" placeholder="{lang}wcf.global.title{/lang}" class="long">
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<input type="text" id="groupDescription" name="groupDescription" value="{$groupDescription}" placeholder="{lang}wcf.global.description{/lang}"  class="long">
+				</dd>
+			</dl>
+		</div>
+	</section>
+	
+	<div class="formSubmit">
+		<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+		{@SECURITY_TOKEN_INPUT_TAG}
+	</div>
+</form>
+
 {hascontent}
 	<div class="paginationTop">
-		{content}{pages print=true assign=pagesLinks controller="LabelGroupList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+		{content}
+	                {assign var='linkParameters' value=''}
+	                {if $groupName}
+				{append var='linkParameters' value='&groupName='}
+				{append var='linkParameters' value=$groupName|rawurlencode}
+	                {/if}
+	                {if $groupDescription}
+				{append var='linkParameters' value='&groupDescription='}
+				{append var='linkParameters' value=$groupDescription|rawurlencode}
+	                {/if}
+		    
+			{pages print=true assign=pagesLinks controller="LabelGroupList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}
+		{/content}
 	</div>
 {/hascontent}
 
@@ -43,10 +82,11 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnID columnLabelGroupID{if $sortField == 'groupID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='LabelGroupList'}pageNo={@$pageNo}&sortField=groupID&sortOrder={if $sortField == 'groupID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-					<th class="columnTitle columnGroupName{if $sortField == 'groupName'} active {@$sortOrder}{/if}"><a href="{link controller='LabelGroupList'}pageNo={@$pageNo}&sortField=groupName&sortOrder={if $sortField == 'groupName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.title{/lang}</a></th>
-					<th class="columnText columnGroupDescription{if $sortField == 'groupDescription'} active {@$sortOrder}{/if}"><a href="{link controller='LabelGroupList'}pageNo={@$pageNo}&sortField=groupDescription&sortOrder={if $sortField == 'groupDescription' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.description{/lang}</a></th>
-					<th class="columnDigits columnShowOrder{if $sortField == 'showOrder'} active {@$sortOrder}{/if}"><a href="{link controller='LabelGroupList'}pageNo={@$pageNo}&sortField=showOrder&sortOrder={if $sortField == 'showOrder' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.showOrder{/lang}</a></th>
+					<th class="columnID columnLabelGroupID{if $sortField == 'groupID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='LabelGroupList'}pageNo={@$pageNo}&sortField=groupID&sortOrder={if $sortField == 'groupID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnTitle columnGroupName{if $sortField == 'groupName'} active {@$sortOrder}{/if}"><a href="{link controller='LabelGroupList'}pageNo={@$pageNo}&sortField=groupName&sortOrder={if $sortField == 'groupName' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.title{/lang}</a></th>
+					<th class="columnText columnGroupDescription{if $sortField == 'groupDescription'} active {@$sortOrder}{/if}"><a href="{link controller='LabelGroupList'}pageNo={@$pageNo}&sortField=groupDescription&sortOrder={if $sortField == 'groupDescription' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.description{/lang}</a></th>
+					<th class="columnDigits columnLabels{if $sortField == 'labels'} active {@$sortOrder}{/if}"><a href="{link controller='LabelGroupList'}pageNo={@$pageNo}&sortField=labels&sortOrder={if $sortField == 'labels' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.label.list{/lang}</a></th>
+					<th class="columnDigits columnShowOrder{if $sortField == 'showOrder'} active {@$sortOrder}{/if}"><a href="{link controller='LabelGroupList'}pageNo={@$pageNo}&sortField=showOrder&sortOrder={if $sortField == 'showOrder' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.showOrder{/lang}</a></th>
 					
 					{event name='columnHeads'}
 				</tr>
@@ -64,6 +104,7 @@
 						<td class="columnID">{@$group->groupID}</td>
 						<td class="columnTitle columnGroupName"><a href="{link controller='LabelGroupEdit' object=$group}{/link}">{$group}</a></td>
 						<td class="columnText columnGroupDescription">{$group->groupDescription}</td>
+						<td class="columnDigits columnLabels"><a href="{link controller='LabelList' id=$group->groupID}{/link}">{#$group->labels}</a></td>
 						<td class="columnDigits columnShowOrder">{@$group->showOrder}</td>
 						
 						{event name='columns'}

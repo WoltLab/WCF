@@ -1,8 +1,8 @@
 <ul class="sidebarItemList">
 	{foreach from=$subscriptions item=subscription}
 		<li>
-			<div class="sidebarItemTitle" title="{$subscription->description|language}">
-				<h3>{$subscription->title|language}</h3>
+			<div class="sidebarItemTitle">
+				<h3>{$subscription->getTitle()}</h3>
 				<small>{lang}wcf.paidSubscription.formattedCost{/lang}</small>
 			</div>
 			

@@ -3,7 +3,7 @@
 {include file='formError'}
 
 {if $errorMessage|isset}
-	<p class="error">{@$errorMessage}</p>
+	<p class="error" role="alert">{@$errorMessage}</p>
 {/if}
 
 <form method="post" action="{link controller='Search'}{/link}">

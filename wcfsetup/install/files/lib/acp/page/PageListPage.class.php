@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Shows a list of pages.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  * @since	3.0
@@ -141,7 +141,7 @@ class PageListPage extends SortablePage {
 			$this->objectList->getConditionBuilder()->add('page.pageID IN (SELECT pageID FROM wcf'.WCF_N.'_page_content WHERE content LIKE ?)', ['%'.$this->content.'%']);
 		}
 		if (!empty($this->applicationPackageID)) {
-			$this->objectList->getConditionBuilder()->add('page.applicationPackageID = ?', [$this->applicationPackageID]);
+			$this->objectList->getConditionBuilder()->add('((page.applicationPackageID = ? AND page.overrideApplicationPackageID IS NULL) OR page.overrideApplicationPackageID = ?)', [$this->applicationPackageID, $this->applicationPackageID]);
 		}
 		if (!empty($this->pageType)) {
 			$this->objectList->getConditionBuilder()->add('page.pageType = (?)', [$this->pageType]);

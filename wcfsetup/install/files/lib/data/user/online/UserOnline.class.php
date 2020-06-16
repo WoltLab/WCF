@@ -14,7 +14,7 @@ use wcf\util\UserUtil;
  * Represents a user who is online.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Online
  *
@@ -48,7 +48,10 @@ class UserOnline extends UserProfile {
 			$username = str_replace('%s', $username, $this->userOnlineMarking);
 		}
 		
-		if ($this->canViewOnlineStatus == 3) {
+		if (
+			$this->getPermission('user.profile.canHideOnlineStatus')
+			&& $this->canViewOnlineStatus == UserProfile::ACCESS_NOBODY
+		) {
 			$username .= WCF::getLanguage()->get('wcf.user.usersOnline.invisible');
 		}
 		
@@ -192,7 +195,7 @@ class UserOnline extends UserProfile {
 		}
 		
 		// firefox mobile
-		if (preg_match('~mobile.*firefox/([\d\.]+)|fennec/([\d\.]+)~i', $this->userAgent, $match)) {
+		if (preg_match('~(?:mobile.*firefox|fxios)/([\d\.]+)|fennec/([\d\.]+)~i', $this->userAgent, $match)) {
 			return 'Firefox Mobile '.(isset($match[2]) ? $match[2] : $match[1]);
 		}
 		

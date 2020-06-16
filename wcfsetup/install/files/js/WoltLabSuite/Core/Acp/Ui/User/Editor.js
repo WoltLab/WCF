@@ -2,7 +2,7 @@
  * User editing capabilities for the user list.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/User/Editor
  * @since       3.1
@@ -33,6 +33,11 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown', 'WoltLa
 			var userId = ~~elData(userRow, 'object-id');
 			var dropdownMenu = UiSimpleDropdown.getDropdownMenu('userListDropdown' + userId);
 			var legacyButtonContainer = elBySel('.jsLegacyButtons', userRow);
+			
+			if (dropdownMenu.childElementCount === 0 && legacyButtonContainer.childElementCount === 0) {
+				elBySel('.dropdownToggle', userRow).classList.add('disabled');
+				return;
+			}
 			
 			UiSimpleDropdown.registerCallback('userListDropdown' + userId, (function (identifier, action) {
 				if (action === 'open') {

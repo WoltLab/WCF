@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Provides functions to edit cronjobs.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Cronjob
  * 
@@ -142,6 +142,26 @@ class CronjobEditor extends DatabaseObjectEditor implements IEditableCachedObjec
 		if (!empty($descriptions)) {
 			$this->saveDescriptions($descriptions);
 		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public static function deleteAll(array $objectIDs = []) {
+		// delete language items
+		if (!empty($objectIDs)) {
+			$sql = "DELETE FROM	wcf".WCF_N."_language_item
+				WHERE		languageItem = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			WCF::getDB()->beginTransaction();
+			foreach ($objectIDs as $cronjobID) {
+				$statement->execute(['wcf.acp.cronjob.description.cronjob' . $cronjobID]);
+			}
+			WCF::getDB()->commitTransaction();
+		}
+		
+		return parent::deleteAll($objectIDs);
 	}
 	
 	/**

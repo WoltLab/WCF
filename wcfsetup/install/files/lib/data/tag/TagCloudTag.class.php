@@ -6,7 +6,7 @@ use wcf\data\DatabaseObjectDecorator;
  * Represents a tag in a tag cloud.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Tag
  * 
@@ -31,7 +31,6 @@ class TagCloudTag extends DatabaseObjectDecorator {
 	 * Sets the weight of the tag.
 	 *
 	 * @param	double		$weight
-	 * @deprecated  3.0
 	 */
 	public function setWeight($weight) {
 		$this->weight = $weight;

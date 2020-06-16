@@ -16,12 +16,6 @@
 	</nav>
 </header>
 
-{include file='formError'}
-
-{if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
-{/if}
-
 {@$pipObject->getPip()->getAdditionalTemplateCode()}
 
 {@$form->getHtml()}

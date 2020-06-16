@@ -2,7 +2,7 @@
  * Automatic URL rewrite support testing.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Option/RewriteTest
  */
@@ -27,6 +27,11 @@ define(['AjaxRequest', 'Language', 'Ui/Dialog'], function (AjaxRequest, Language
 		 * @param       {Dictionary}    apps
 		 */
 		init: function (apps) {
+			// This configuration part is unavailable when running in enterprise mode.
+			if (_option === null) {
+				return;
+			}
+			
 			if (_option.checked) {
 				// option is already enabled, ignore it
 				return;

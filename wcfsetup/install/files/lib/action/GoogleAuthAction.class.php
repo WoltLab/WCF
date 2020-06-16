@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * Handles google auth.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Action
  */
@@ -26,6 +26,17 @@ class GoogleAuthAction extends AbstractAction {
 	 * @inheritDoc
 	 */
 	public $neededModules = ['GOOGLE_PUBLIC_KEY', 'GOOGLE_PRIVATE_KEY'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		if (WCF::getSession()->spiderID) {
+			throw new IllegalLinkException();
+		}
+	}
 	
 	/**
 	 * @inheritDoc

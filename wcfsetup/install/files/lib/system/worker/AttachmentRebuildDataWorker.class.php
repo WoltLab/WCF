@@ -8,7 +8,7 @@ use wcf\system\exception\SystemException;
  * Worker implementation for updating attachments.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Worker
  * 
@@ -32,7 +32,6 @@ class AttachmentRebuildDataWorker extends AbstractRebuildDataWorker {
 		parent::initObjectList();
 		
 		$this->objectList->sqlOrderBy = 'attachment.attachmentID';
-		$this->objectList->getConditionBuilder()->add('attachment.isImage = ?', [1]);
 	}
 	
 	/**
@@ -41,7 +40,9 @@ class AttachmentRebuildDataWorker extends AbstractRebuildDataWorker {
 	public function execute() {
 		parent::execute();
 		
+		/** @var \wcf\data\attachment\Attachment $attachment */
 		foreach ($this->objectList as $attachment) {
+			$attachment->migrateStorage();
 			try {
 				$action = new AttachmentAction([$attachment], 'generateThumbnails');
 				$action->executeAction();

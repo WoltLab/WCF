@@ -2,7 +2,7 @@
  * Handles main menu overflow and a11y.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Header/Menu
  */
@@ -180,6 +180,7 @@ define(['Environment', 'Language', 'Ui/Screen'], function(Environment, Language,
 			_buttonShowNext.className = 'mainMenuShowNext';
 			_buttonShowNext.href = '#';
 			_buttonShowNext.innerHTML = '<span class="icon icon32 fa-angle-right"></span>';
+			elAttr(_buttonShowNext, 'aria-hidden', 'true');
 			_buttonShowNext.addEventListener(WCF_CLICK_EVENT, this._showNext.bind(this));
 			
 			_menu.parentNode.appendChild(_buttonShowNext);
@@ -188,6 +189,7 @@ define(['Environment', 'Language', 'Ui/Screen'], function(Environment, Language,
 			_buttonShowPrevious.className = 'mainMenuShowPrevious';
 			_buttonShowPrevious.href = '#';
 			_buttonShowPrevious.innerHTML = '<span class="icon icon32 fa-angle-left"></span>';
+			elAttr(_buttonShowPrevious, 'aria-hidden', 'true');
 			_buttonShowPrevious.addEventListener(WCF_CLICK_EVENT, this._showPrevious.bind(this));
 			
 			_menu.parentNode.insertBefore(_buttonShowPrevious, _menu.parentNode.firstChild);

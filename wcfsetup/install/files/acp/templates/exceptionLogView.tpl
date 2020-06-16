@@ -79,7 +79,7 @@
 				
 				<dl>
 					<dt>{lang}wcf.acp.exceptionLog.exception.date{/lang}</dt>
-					<dd>{$exception[date]|strtotime|plainTime}</dd>
+					<dd>{$exception[date]|plainTime}</dd>
 				</dl>
 				
 				<dl>
@@ -111,6 +111,14 @@
 					<dt>{lang}wcf.acp.exceptionLog.exception.file{/lang}</dt>
 					<dd>{$chain[file]} ({$chain[line]})</dd>
 				</dl>
+				{if !$chain[information]|empty}
+					{foreach from=$chain[information] item=extraInformation}
+						<dl>
+							<dt>{$extraInformation[0]}</dt>
+							<dd>{$extraInformation[1]}</dd>
+						</dl>
+					{/foreach}
+				{/if}
 				<dl>
 					<dt>{lang}wcf.acp.exceptionLog.exception.stacktrace{/lang}</dt>
 					<dd>

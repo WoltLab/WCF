@@ -10,6 +10,7 @@ use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\ISearchableConditionUserOption;
 use wcf\system\option\OptionHandler;
+use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\MessageUtil;
 
@@ -17,7 +18,7 @@ use wcf\util\MessageUtil;
  * Handles user options.
  * 
  * @author	Alexander Ebert, Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option\User
  * 
@@ -226,7 +227,10 @@ class UserOptionHandler extends OptionHandler {
 		parent::validateOption($option);
 		
 		if ($option->required && $option->optionType != 'boolean' && empty($this->optionValues[$option->optionName])) {
-			throw new UserInputException($option->optionName);
+			// Do not throw an error if the current user is an administrator and is not editing themselves.
+			if (!WCF::getUser()->hasAdministrativeAccess() || ($this->user && $this->user->userID == WCF::getUser()->userID)) {
+				throw new UserInputException($option->optionName);
+			}
 		}
 		
 		if (REGISTER_MIN_USER_AGE) {

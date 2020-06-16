@@ -2,15 +2,15 @@
 	<p>{lang}wcf.user.unknownUser{/lang}</p>
 {else}
 	<div class="box128 userProfilePreview">
-		<a href="{link controller='User' object=$user}{/link}" title="{$user->username}" class="userProfilePreviewAvatar">
+		<a href="{$user->getLink()}" title="{$user->username}" class="userProfilePreviewAvatar">
 			{@$user->getAvatar()->getImageTag(128)}
 			
 			{if $user->isOnline()}<span class="badge green badgeOnline">{lang}wcf.user.online{/lang}</span>{/if}
 		</a>
 		
 		<div class="userInformation">
-			{include file='userInformation'}
-
+			{include file='userInformation' disableDialogLinks=true}
+			
 			{if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies') && ($user->isAccessible('canViewTrophies') || $user->userID == $__wcf->session->userID) && $user->getSpecialTrophies()|count}
 				<div class="specialTrophyUserContainer">
 					<ul>
@@ -32,13 +32,13 @@
 				<dl class="plain inlineDataList userFields">
 					{content}
 						{if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile') && $user->isAccessible('canViewProfile')}
-							{if $user->occupation}
+							{if $user->getUserOption('occupation', true)}
 								<dt>{lang}wcf.user.option.occupation{/lang}</dt>
-								<dd>{$user->occupation}</dd>
+								<dd>{$user->getUserOption('occupation', true)}</dd>
 							{/if}
-							{if $user->hobbies}
+							{if $user->getUserOption('hobbies', true)}
 								<dt>{lang}wcf.user.option.hobbies{/lang}</dt>
-								<dd>{$user->hobbies}</dd>
+								<dd>{$user->getUserOption('hobbies', true)}</dd>
 							{/if}
 						{/if}
 						{event name='userFields'}

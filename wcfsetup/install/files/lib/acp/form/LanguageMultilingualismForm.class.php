@@ -14,7 +14,7 @@ use wcf\util\ArrayUtil;
  * Shows the language multilingualism form.
  * 
  * @author	Jean-Marc Licht
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -46,6 +46,11 @@ class LanguageMultilingualismForm extends AbstractForm {
 	 * @var	Language[]
 	 */
 	public $languages = [];
+	
+	/**
+	 * indicates that this page is only accessible to owners in enterprise mode
+	 */
+	const BLACKLISTED_IN_ENTERPRISE_MODE = true;
 	
 	/**
 	 * @inheritDoc

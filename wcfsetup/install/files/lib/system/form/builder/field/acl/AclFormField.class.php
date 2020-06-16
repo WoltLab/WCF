@@ -2,29 +2,35 @@
 namespace wcf\system\form\builder\field\acl;
 use wcf\data\IStorableObject;
 use wcf\system\acl\ACLHandler;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
-use wcf\system\form\builder\field\IObjectTypeFormField;
-use wcf\system\form\builder\field\TObjectTypeFormField;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\IObjectTypeFormNode;
+use wcf\system\form\builder\TObjectTypeFormNode;
 
 /**
  * Implementation of a form field for setting acl option values.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Acl
  * @since	5.2
  */
-class AclFormField extends AbstractFormField implements IObjectTypeFormField {
-	use TObjectTypeFormField;
+class AclFormField extends AbstractFormField implements IObjectTypeFormNode {
+	use TObjectTypeFormNode;
 	
 	/**
-	 * name of/filter for the name(s) of the shown acl option categories 
+	 * name of/filter for the name(s) of the shown acl option categories
 	 * @var	null|string
 	 */
-	protected $__categoryName;
+	protected $categoryName;
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.2.3
+	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Acl';
 	
 	/**
 	 * id of the edited object or `null` if no object is edited
@@ -58,7 +64,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 			throw new \InvalidArgumentException("Invalid category name given.");
 		}
 		
-		$this->__categoryName = $categoryName;
+		$this->categoryName = $categoryName;
 		
 		return $this;
 	}
@@ -70,7 +76,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 	 * @return	null|string
 	 */
 	public function getCategoryName() {
-		return $this->__categoryName;
+		return $this->categoryName;
 	}
 	
 	/**
@@ -115,7 +121,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValueFromObject(IStorableObject $object) {
+	public function updatedObject(array $data, IStorableObject $object, $loadValues = true) {
 		$this->objectID = $object->{$object::getDatabaseTableIndexName()};
 		
 		if ($this->objectID === null) {
@@ -131,7 +137,7 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 	public function populate() {
 		parent::populate();
 		
-		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('acl', function(IFormDocument $document, array $parameters) {
+		$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('acl', function(IFormDocument $document, array $parameters) {
 			$parameters[$this->getObjectProperty() . '_aclObjectTypeID'] = $this->getObjectType()->objectTypeID;
 			
 			return $parameters;
@@ -144,7 +150,18 @@ class AclFormField extends AbstractFormField implements IObjectTypeFormField {
 	 * @inheritDoc
 	 */
 	public function readValue() {
-		ACLHandler::getInstance()->readValues($this->getObjectType()->objectTypeID);
+		$valueSource = $_POST;
+		if ($this->getDocument()->isAjax()) {
+			$valueSource = [];
+			if (
+				$this->getDocument()->hasRequestData($this->getPrefixedId())
+				&& is_array($this->getDocument()->getRequestData($this->getPrefixedId()))
+			) {
+				$valueSource = $this->getDocument()->getRequestData($this->getPrefixedId());
+			}
+		}
+		
+		ACLHandler::getInstance()->readValues($this->getObjectType()->objectTypeID, $valueSource);
 		
 		return $this;
 	}

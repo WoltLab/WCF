@@ -2,7 +2,7 @@
  * Form field dependency implementation that requires a field to have a certain value.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Value
  * @see 	module:WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
@@ -28,13 +28,13 @@ define(['./Abstract', 'Core', './Manager'], function(Abstract, Core, Manager) {
 				throw new Error("Values have not been set.");
 			}
 			
-			var value;
+			var values = [];
 			if (this._field) {
 				if (Manager.isHiddenByDependencies(this._field)) {
 					return false;
 				}
 				
-				value = this._field.value;
+				values.push(this._field.value);
 			}
 			else {
 				for (var i = 0, length = this._fields.length, field; i < length; i++) {
@@ -45,21 +45,21 @@ define(['./Abstract', 'Core', './Manager'], function(Abstract, Core, Manager) {
 							return false;
 						}
 						
-						value = field.value;
-						
-						break;
+						values.push(field.value);
 					}
 				}
 			}
 			
 			// do not use `Array.prototype.indexOf()` as we use a weak comparision
 			for (var i = 0, length = this._values.length; i < length; i++) {
-				if (this._values[i] == value) {
-					if (this._isNegated) {
-						return false;
+				for (var j = 0, length2 = values.length; j < length2; j++) {
+					if (this._values[i] == values[j]) {
+						if (this._isNegated) {
+							return false;
+						}
+						
+						return true;
 					}
-					
-					return true;
 				}
 			}
 			

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\email;
+use TrueBV\Exception\OutOfBoundsException;
 use TrueBV\Punycode;
 use wcf\data\language\Language;
 use wcf\system\language\LanguageFactory;
@@ -8,7 +9,7 @@ use wcf\system\language\LanguageFactory;
  * Represents a RFC 5322 mailbox.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Email
  * @since	3.0
@@ -52,13 +53,18 @@ class Mailbox {
 		
 		// We don't support SMTPUTF8
 		for ($i = 0; $i < $atSign; $i++) {
-			if (ord($localpart{$i}) & 0b10000000) {
+			if (ord($localpart[$i]) & 0b10000000) {
 				throw new \DomainException("The localpart of the given email address '".$address."' contains 8-bit characters.");
 			}
 		}
 		
-		// punycode the domain ...
-		$domain = (new Punycode())->encode($domain);
+		try {
+			// punycode the domain ...
+			$domain = (new Punycode())->encode($domain);
+		}
+		catch (OutOfBoundsException $e) {
+			throw new \DomainException($e->getMessage(), 0, $e);
+		}
 		
 		// ... and rebuild address.
 		$address = $localpart.'@'.$domain;

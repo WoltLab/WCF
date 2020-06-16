@@ -1,22 +1,41 @@
 <?php
 namespace wcf\system\form\builder\field;
 use wcf\system\captcha\ICaptchaHandler;
-use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
+use wcf\system\form\builder\field\validation\FormFieldValidationError;
+use wcf\system\form\builder\IObjectTypeFormNode;
+use wcf\system\form\builder\TObjectTypeFormNode;
 
 /**
  * Implementation of a form field for a captcha.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-class CaptchaFormField extends AbstractFormField implements IObjectTypeFormField {
+class CaptchaFormField extends AbstractFormField implements IObjectTypeFormNode {
 	use TDefaultIdFormField;
-	use TObjectTypeFormField {
+	use TObjectTypeFormNode {
 		objectType as defaultObjectType;
 	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Captcha';
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $templateName = '__captchaFormField';
+	
+	/**
+	 * exception thrown by the captcha API during validation
+	 * @var	null|UserInputException
+	 */
+	protected $validationException;
 	
 	/**
 	 * @inheritDoc
@@ -38,11 +57,18 @@ class CaptchaFormField extends AbstractFormField implements IObjectTypeFormField
 	/**
 	 * @inheritDoc
 	 */
-	public function getHtml() {
-		/** @var ICaptchaHandler $captcha */
-		$captcha = $this->getObjectType()->getProcessor();
+	public function getHtmlVariables() {
+		$variables = [
+			'ajaxCaptcha' => $this->getDocument()->isAjax(),
+			'captchaID' => $this->getPrefixedId()
+		];
 		
-		return $captcha->getFormElement();
+		if ($this->validationException !== null) {
+			$variables['errorField'] = $this->validationException->getField();
+			$variables['errorType'] = $this->validationException->getType();
+		}
+		
+		return $variables;
 	}
 	
 	/**
@@ -50,6 +76,13 @@ class CaptchaFormField extends AbstractFormField implements IObjectTypeFormField
 	 */
 	public function getObjectTypeDefinition() {
 		return 'com.woltlab.wcf.captcha';
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function isAvailable() {
+		return $this->objectType !== null && parent::isAvailable();
 	}
 	
 	/**
@@ -102,7 +135,13 @@ class CaptchaFormField extends AbstractFormField implements IObjectTypeFormField
 		/** @var ICaptchaHandler $captcha */
 		$captcha = $this->getObjectType()->getProcessor();
 		
-		$captcha->validate();
+		try {
+			$captcha->validate();
+		}
+		catch (UserInputException $e) {
+			$this->validationException = $e;
+			$this->addValidationError(new FormFieldValidationError($e->getType()));
+		}
 	}
 	
 	/**

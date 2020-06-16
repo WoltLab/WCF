@@ -516,6 +516,26 @@
 			.boxMenuDepth2 .boxMenuLink {
 				padding-left: 60px;
 			}
+			
+			.boxMenuItem .boxMenuLink {
+				padding-left: 100px;
+			}
+			
+			.boxMenuItemDepth1 .boxMenuLink {
+				padding-left: 20px;
+			}
+			
+			.boxMenuItemDepth2 .boxMenuLink {
+				padding-left: 40px;
+			}
+			
+			.boxMenuItemDepth3 .boxMenuLink {
+				padding-left: 60px;
+			}
+			
+			.boxMenuItemDepth4 .boxMenuLink {
+				padding-left: 80px;
+			}
 		}
 	}
 	
@@ -578,7 +598,8 @@
 	padding-right: 10px;
 }
 
-@include screen-xs {
+/* collapsible sidebar for mobile devices */
+@include screen-md-down {
 	.main > .layoutBoundary {
 		display: flex;
 		flex-wrap: wrap;
@@ -672,6 +693,28 @@
 			&:hover {
 				color: $wcfContentHeadlineLinkActive;
 			}
+		}
+	}
+	
+	.boxInfo {
+		background-color: $wcfStatusInfoBackground;
+		color: $wcfStatusInfoText;
+		padding: 20px;
+		text-align: center;
+		
+		a:not(.button) {
+			color: $wcfStatusInfoLink;
+			
+			@include wcfFontBold;
+			
+			&:hover {
+				color: $wcfStatusInfoLinkActive;
+				text-decoration: underline;
+			}
+		}
+		
+		.formSubmit {
+			margin-top: 20px;
 		}
 	}
 	

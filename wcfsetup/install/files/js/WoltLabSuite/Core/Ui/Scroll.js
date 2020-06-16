@@ -2,8 +2,9 @@
  * Smoothly scrolls to an element while accounting for potential sticky headers.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	Ui/Scroll (alias)
  * @module	WoltLabSuite/Core/Ui/Scroll
  */
 define(['Dom/Util'], function(DomUtil) {

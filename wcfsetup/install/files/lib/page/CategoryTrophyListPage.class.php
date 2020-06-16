@@ -5,13 +5,14 @@ use wcf\data\trophy\category\TrophyCategoryCache;
 use wcf\data\trophy\TrophyList;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
+use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 
 /**
  * Represents a trophy page.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * @since       5.2
@@ -48,6 +49,10 @@ class CategoryTrophyListPage extends TrophyListPage {
 		if (!$this->category->isAccessible()) {
 			throw new PermissionDeniedException();
 		}
+		
+		$this->canonicalURL = LinkHandler::getInstance()->getLink('CategoryTrophyList', [
+			'object' => $this->category
+		], ($this->pageNo > 1 ? 'pageNo=' . $this->pageNo : ''));
 	}
 	
 	/**
@@ -56,6 +61,7 @@ class CategoryTrophyListPage extends TrophyListPage {
 	protected function initObjectList() {
 		MultipleLinkPage::initObjectList();
 		
+		$this->objectList->sqlSelects = '(SELECT COUNT(*) FROM wcf'.WCF_N.'_user_trophy WHERE trophyID = trophy.trophyID) AS awarded';
 		$this->objectList->getConditionBuilder()->add('isDisabled = ?', [0]);
 		$this->objectList->getConditionBuilder()->add('categoryID = ?', [$this->categoryID]);
 	}

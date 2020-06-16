@@ -24,7 +24,7 @@ use wcf\util\DOMUtil;
  * This PIP installs, updates or deletes acl options.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -404,7 +404,7 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 			->objectProperty('objecttype')
 			->label('wcf.acp.pip.aclOption.objectType')
 			->description('wcf.acp.pip.aclOption.objectType.' . $this->entryType . '.description')
-			->options($objectTypes)
+			->options($objectTypes, false, false)
 			->required()
 			->addValidator(new FormFieldValidator('nameUniqueness', function(SingleSelectionFormField $formField) use($entryType) {
 				/** @var TextFormField $nameField */
@@ -484,13 +484,12 @@ class ACLOptionPackageInstallationPlugin extends AbstractOptionPackageInstallati
 						->objectProperty('categoryname')
 						->label('wcf.acp.pip.aclOption.options.categoryName')
 						->description('wcf.acp.pip.aclOption.options.categoryName.description')
-						->options(['' => 'wcf.global.noSelection'] + $categories[$objectTypeID]);
-					
-					$categoryNameField->addDependency(
-						ValueFormFieldDependency::create('objectType')
-							->field($objectTypeFormField)
-							->values([$objectType])
-					);
+						->options(['' => 'wcf.global.noSelection'] + $categories[$objectTypeID])
+						->addDependency(
+							ValueFormFieldDependency::create('objectType')
+								->field($objectTypeFormField)
+								->values([$objectType])
+						);
 					
 					$dataContainer->appendChild($categoryNameField);
 				}

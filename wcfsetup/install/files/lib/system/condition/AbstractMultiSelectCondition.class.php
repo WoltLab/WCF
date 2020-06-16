@@ -8,7 +8,7 @@ use wcf\util\ArrayUtil;
  * Abstract implementation of a condition with multi select options.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
@@ -36,7 +36,7 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition {
 	protected function getFieldElement() {
 		$options = $this->getOptions();
 		
-		$fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple size="'.(count($options, COUNT_RECURSIVE) > 10 ? 10 : count($options)).'">';
+		$fieldElement = '<select name="'.$this->fieldName.'[]" id="'.$this->fieldName.'" multiple size="'.(count($options, COUNT_RECURSIVE) > 10 ? 10 : count($options, COUNT_RECURSIVE)).'">';
 		foreach ($options as $key => $value) {
 			if (is_array($value)) {
 				$fieldElement .= $this->getOptGroupCode($key, $value);

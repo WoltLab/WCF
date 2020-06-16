@@ -4,12 +4,13 @@ use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a like of an object.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Like
  *
@@ -34,6 +35,26 @@ class Like extends DatabaseObject {
 	 * @var	integer
 	 */
 	const DISLIKE = -1;
+	
+	/**
+	 * Returns the title of the associated reaction type.
+	 * 
+	 * @return      string
+	 * @since       5.3
+	 */
+	public function __toString() {
+		return $this->getReactionType()->getTitle();
+	}
+	
+	/**
+	 * Renders the like by showing the associated reaction type's icon.
+	 * 
+	 * @return      string
+	 * @since       5.3
+	 */
+	public function render() {
+		return '<span title="' . StringUtil::encodeHTML($this) . '" class="jsTooltip">' . $this->getReactionType()->renderIcon() . '</span>';
+	}
 	
 	/**
 	 * Returns the like with given type, object id and user id.
@@ -74,22 +95,22 @@ class Like extends DatabaseObject {
 	
 	/**
 	 * Returns true, if like value is a like.
-	 * 
+	 *
 	 * @return	boolean
 	 * @deprecated	5.2
 	 */
 	public function isLike() {
-		return $this->getReactionType()->isPositive();
+		return true;
 	}
 	
 	/**
 	 * Returns true, if like value is a dislike.
-	 * 
+	 *
 	 * @return	boolean
 	 * @deprecated	5.2
 	 */
 	public function isDislike() {
-		return $this->getReactionType()->isNegative();
+		return false;
 	}
 	
 	/**

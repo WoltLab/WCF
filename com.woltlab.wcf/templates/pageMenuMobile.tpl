@@ -9,7 +9,7 @@
 			<li class="menuOverlayItem" data-mobile-identifier="{@$menuItemNode->identifier}">
 				{assign var=__outstandingItems value=$menuItemNode->getOutstandingItems()}
 				<a href="{$menuItemNode->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}{if $menuItemNode->isActiveNode()} active{/if}"{if $menuItemNode->isExternalLink() && EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>
-					<span class="menuOverlayItemTitle">{lang}{$menuItemNode->title}{/lang}</span>
+					<span class="menuOverlayItemTitle">{$menuItemNode->getTitle()}</span>
 					{if $__outstandingItems}
 						<span class="badge badgeUpdate">{#$__outstandingItems}</span>
 					{/if}
@@ -17,10 +17,36 @@
 				
 				{if $menuItemNode->hasChildren()}<ol class="menuOverlayItemList">{else}</li>{/if}
 					
-					{if !$menuItemNode->hasChildren() && $menuItemNode->isLastSibling()}
-						{@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
-					{/if}
+				{if !$menuItemNode->hasChildren() && $menuItemNode->isLastSibling()}
+					{@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
+				{/if}
 		{/foreach}
+
+                {if $__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.FooterMenu')}
+			{hascontent}
+				<li class="menuOverlayItemSpacer"></li>
+				{content}	
+			                {foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.FooterMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
+			                        {* Does not use `data-identifier` to prevent compatibility issues. See https://github.com/WoltLab/WCF/pull/2813 *}
+						<li class="menuOverlayItem" data-mobile-identifier="{@$menuItemNode->identifier}">
+			                                {assign var=__outstandingItems value=$menuItemNode->getOutstandingItems()}
+							<a href="{$menuItemNode->getURL()}" class="menuOverlayItemLink{if $__outstandingItems} menuOverlayItemBadge{/if}{if $menuItemNode->isActiveNode()} active{/if}"{if $menuItemNode->isExternalLink() && EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>
+								<span class="menuOverlayItemTitle">{$menuItemNode->getTitle()}</span>
+			                                        {if $__outstandingItems}
+									<span class="badge badgeUpdate">{#$__outstandingItems}</span>
+			                                        {/if}
+							</a>
+			
+			                                {if $menuItemNode->hasChildren()}<ol class="menuOverlayItemList">{else}</li>{/if}
+			
+			                                {if !$menuItemNode->hasChildren() && $menuItemNode->isLastSibling()}
+			                                        {@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
+			                                {/if}
+			                {/foreach}
+				{/content}
+			{/hascontent}
+		{/if}
+
 		<li class="menuOverlayItemSpacer"></li>
 		<li class="menuOverlayItem" data-more="com.woltlab.wcf.search">
 			<a href="#" class="menuOverlayItemLink box24">
@@ -28,15 +54,7 @@
 				<span class="menuOverlayItemTitle">{lang}wcf.global.search{/lang}</span>
 			</a>
 		</li>
-		<li class="menuOverlayItem" id="pageMainMenuMobilePageOptionsContainer">
-			<a href="#" class="menuOverlayItemLink box24">
-				<span class="icon icon24 fa-gears"></span>
-				<span class="menuOverlayItemTitle">{lang}wcf.menu.page.options{/lang}</span>
-			</a>
-			<ol class="menuOverlayItemList">
-				<li class="menuOverlayItem jsMenuOverlayItemPlaceholder"><a href="#">(placeholder)</a></li>
-			</ol>
-		</li>
+		<li class="menuOverlayTitle" id="pageMainMenuMobilePageOptionsTitle">{lang}wcf.menu.page.options{/lang}</li>
 		
 		{event name='menuItems'}
 		
@@ -71,7 +89,7 @@
 			{* logged-in *}
 			<li class="menuOverlayTitle">{lang}wcf.menu.user{/lang}</li>
 			<li class="menuOverlayItem">
-				<a href="{link controller='User' object=$__wcf->user}{/link}" class="menuOverlayItemLink box24">
+				<a href="{$__wcf->user->getLink()}" class="menuOverlayItemLink box24">
 					{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(24)}
 					<span class="menuOverlayItemTitle">{$__wcf->user->username}</span>
 				</a>
@@ -85,7 +103,7 @@
 					{event name='userMenuItemsBefore'}
 					
 					{foreach from=$__wcf->getUserMenu()->getMenuItems('') item=menuCategory}
-						<li class="menuOverlayTitle">{lang}{$menuCategory->menuItem}{/lang}</li>
+						<li class="menuOverlayTitle">{$menuCategory->getTitle()}</li>
 						{foreach from=$__wcf->getUserMenu()->getMenuItems($menuCategory->menuItem) item=menuItem}
 							<li class="menuOverlayItem">
 								<a href="{$menuItem->getProcessor()->getLink()}" class="menuOverlayItemLink">{@$menuItem}</a>

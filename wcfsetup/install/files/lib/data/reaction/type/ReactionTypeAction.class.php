@@ -2,8 +2,11 @@
 namespace wcf\data\reaction\type;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
+use wcf\data\IToggleAction;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
+use wcf\system\file\upload\UploadFile;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
@@ -11,7 +14,7 @@ use wcf\system\WCF;
  * ReactionType related actions.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Reaction\Type
  * @since	5.2
@@ -19,7 +22,9 @@ use wcf\system\WCF;
  * @method	ReactionTypeEditor[]		getObjects()
  * @method	ReactionTypeEditor		getSingleObject()
  */
-class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortableAction {
+class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -39,6 +44,22 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 	 * @inheritDoc
 	 */
 	public function create() {
+		if (isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] !== null) {
+			$sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+					SET	showOrder = showOrder + 1
+					WHERE	showOrder >= ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				$this->parameters['data']['showOrder']
+			]);
+		}
+		
+		// The title cannot be empty by design, but cannot be filled proper if the
+		// multilingualism is enabled, therefore, we must fill the tilte with a dummy value.
+		if (!isset($this->parameters['data']['title']) && isset($this->parameters['title_i18n'])) {
+			$this->parameters['data']['title'] = 'wcf.reactionType.title';
+		}
+		
 		/** @var ReactionType $reactionType */
 		$reactionType = parent::create();
 		$reactionTypeEditor = new ReactionTypeEditor($reactionType);
@@ -56,6 +77,24 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 			$updateData['title'] = 'wcf.reactionType.title' . $reactionType->reactionTypeID;
 		}
 		
+		// image
+		if (isset($this->parameters['iconFile']) && is_array($this->parameters['iconFile'])) {
+			$iconFile = reset($this->parameters['iconFile']);
+			if (!($iconFile instanceof UploadFile)) {
+				throw new \InvalidArgumentException("The parameter 'image' is no instance of '". UploadFile::class ."', instance of '". get_class($iconFile) ."' given.");
+			}
+			
+			// save new image
+			if (!$iconFile->isProcessed()) {
+				$fileName = $reactionType->reactionTypeID . '-' . $iconFile->getFilename();
+				
+				rename($iconFile->getLocation(), WCF_DIR . '/images/reaction/' . $fileName);
+				$iconFile->setProcessed(WCF_DIR . '/images/reaction/' . $fileName);
+				
+				$updateData['iconFile'] = $fileName;
+			}
+		}
+		
 		if (!empty($updateData)) {
 			$reactionTypeEditor->update($updateData);
 		}
@@ -69,8 +108,10 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 	public function update() {
 		parent::update();
 		
-		// i18n
 		foreach ($this->getObjects() as $object) {
+			$updateData = [];
+			
+			// i18n
 			if (isset($this->parameters['title_i18n'])) {
 				I18nHandler::getInstance()->save(
 					$this->parameters['title_i18n'],
@@ -79,10 +120,59 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 					1
 				);
 				
-				$object->update([
-					'title' => 'wcf.reactionType.title' . $object->reactionTypeID
+				$updateData['title'] = 'wcf.reactionType.title' . $object->reactionTypeID;
+			}
+			
+			// delete orphaned images
+			if (isset($this->parameters['iconFile_removedFiles']) && is_array($this->parameters['iconFile_removedFiles'])) {
+				/** @var UploadFile $file */
+				foreach ($this->parameters['iconFile_removedFiles'] as $file) {
+					@unlink($file->getLocation());
+				}
+			}
+			
+			// image
+			if (isset($this->parameters['iconFile']) && is_array($this->parameters['iconFile'])) {
+				$iconFile = reset($this->parameters['iconFile']);
+				if (!($iconFile instanceof UploadFile)) {
+					throw new \InvalidArgumentException("The parameter 'image' is no instance of '". UploadFile::class ."', instance of '". get_class($iconFile) ."' given.");
+				}
+				
+				// save new image
+				if (!$iconFile->isProcessed()) {
+					$fileName = $object->reactionTypeID . '-' . $iconFile->getFilename();
+					
+					rename($iconFile->getLocation(), WCF_DIR . '/images/reaction/' . $fileName);
+					$iconFile->setProcessed(WCF_DIR . '/images/reaction/' . $fileName);
+					
+					$updateData['iconFile'] = $fileName;
+				}
+			}
+			
+			// update show order
+			if (isset($this->parameters['data']['showOrder']) && $this->parameters['data']['showOrder'] !== null) {
+				$sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+					SET	showOrder = showOrder + 1
+					WHERE	showOrder >= ?
+					AND     reactionTypeID <> ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					$this->parameters['data']['showOrder'],
+					$object->reactionTypeID
+				]);
+				
+				$sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+					SET	showOrder = showOrder - 1
+					WHERE	showOrder > ?";
+				$statement = WCF::getDB()->prepareStatement($sql);
+				$statement->execute([
+					$object->showOrder
 				]);
 			}
+			
+			if (!empty($updateData)) {
+				$object->update($updateData);
+			} 
 		}
 	}
 	
@@ -122,5 +212,35 @@ class ReactionTypeAction extends AbstractDatabaseObjectAction implements ISortab
 			$editor->update(['showOrder' => $i++]);
 		}
 		WCF::getDB()->commitTransaction();
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function delete() {
+		$returnValues = parent::delete();
+		
+		$sql = "UPDATE  wcf" . WCF_N . "_reaction_type
+				SET	showOrder = showOrder - 1
+				WHERE	showOrder > ?";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		foreach ($this->getObjects() as $object) {
+			$statement->execute([
+				$object->showOrder
+			]);
+		}
+		
+		return $returnValues;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function toggle() {
+		foreach ($this->getObjects() as $object) {
+			$object->update([
+				'isAssignable' => $object->isAssignable ? 0 : 1
+			]);
+		}
 	}
 }

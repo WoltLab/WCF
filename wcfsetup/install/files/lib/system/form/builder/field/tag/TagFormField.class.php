@@ -1,12 +1,13 @@
 <?php
 namespace wcf\system\form\builder\field\tag;
-use wcf\data\tag\Tag;
 use wcf\data\IStorableObject;
+use wcf\data\tag\Tag;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
-use wcf\system\form\builder\field\IObjectTypeFormField;
-use wcf\system\form\builder\field\TObjectTypeFormField;
+use wcf\system\form\builder\field\TDefaultIdFormField;
 use wcf\system\form\builder\IFormDocument;
+use wcf\system\form\builder\IObjectTypeFormNode;
+use wcf\system\form\builder\TObjectTypeFormNode;
 use wcf\system\tagging\TagEngine;
 use wcf\util\ArrayUtil;
 
@@ -14,16 +15,23 @@ use wcf\util\ArrayUtil;
  * Implementation of a form field for tags.
  * 
  * This field uses the `wcf.tagging.tags` and `wcf.tagging.tags.description` language
- * item as the default form field label and description, respectively.
+ * item as the default form field label and description, respectively. The default id
+ * of fields of this class is `tags`.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Tag
  * @since	5.2
  */
-class TagFormField extends AbstractFormField implements IObjectTypeFormField {
-	use TObjectTypeFormField;
+class TagFormField extends AbstractFormField implements IObjectTypeFormNode {
+	use TDefaultIdFormField;
+	use TObjectTypeFormNode;
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/Tag';
 	
 	/**
 	 * @inheritDoc
@@ -55,27 +63,31 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValueFromObject(IStorableObject $object) {
-		$objectID = $object->{$object::getDatabaseTableIndexName()};
-		
-		if ($objectID === null) {
-			throw new \UnexpectedValueException("Cannot read object id from object of class '" . get_class($object). "'.");
-		}
-		
-		if ($this->getObjectType() === null) {
-			throw new \UnexpectedValueException("Missing taggable object type.");
-		}
-		
-		$languageIDs = [];
-		if ($object->languageID !== null) {
-			$languageIDs[] = $object->languageID;
-		}
-		
-		$tags = TagEngine::getInstance()->getObjectTags($this->getObjectType()->objectType, $objectID, $languageIDs);
-		
-		$this->__value = [];
-		foreach ($tags as $tag) {
-			$this->__value[] = $tag->name;
+	public function updatedObject(array $data, IStorableObject $object, $loadValues = true) {
+		if ($loadValues) {
+			$objectID = $object->{$object::getDatabaseTableIndexName()};
+			
+			if ($objectID === null) {
+				throw new \UnexpectedValueException("Cannot read object id from object of class '" . get_class($object). "'.");
+			}
+			
+			if ($this->getObjectType() === null) {
+				throw new \UnexpectedValueException("Missing taggable object type.");
+			}
+			
+			$languageIDs = [];
+			
+			/** @noinspection PhpUndefinedFieldInspection */
+			if (isset($data['languageID'])) {
+				$languageIDs[] = $data['languageID'];
+			}
+			
+			$tags = TagEngine::getInstance()->getObjectTags($this->getObjectType()->objectType, $objectID, $languageIDs);
+			
+			$this->value = [];
+			foreach ($tags as $tag) {
+				$this->value[] = $tag->name;
+			}
 		}
 		
 		return $this;
@@ -87,7 +99,7 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 	public function populate() {
 		parent::populate();
 		
-		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('acl', function(IFormDocument $document, array $parameters) {
+		$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('acl', function(IFormDocument $document, array $parameters) {
 			if ($this->checkDependencies() && $this->getValue() !== null && !empty($this->getValue())) {
 				$parameters[$this->getObjectProperty()] = $this->getValue();
 			}
@@ -106,7 +118,7 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_array($value)) {
-				$this->__value = ArrayUtil::trim($value);
+				$this->value = ArrayUtil::trim($value);
 			}
 		}
 		
@@ -153,5 +165,12 @@ class TagFormField extends AbstractFormField implements IObjectTypeFormField {
 		}
 		
 		return parent::value($stringTags);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected static function getDefaultId() {
+		return 'tags';
 	}
 }

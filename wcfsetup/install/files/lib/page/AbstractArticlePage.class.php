@@ -19,7 +19,7 @@ use wcf\system\WCF;
  * Abstract implementation of the article page.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * @since	3.0
@@ -137,29 +137,24 @@ abstract class AbstractArticlePage extends AbstractPage {
 		if (MODULE_TAGGING && ARTICLE_RELATED_ARTICLES) {
 			if (!empty($this->tags)) {
 				$conditionBuilder = new PreparedStatementConditionBuilder();
-				$conditionBuilder->add('objectTypeID = ?', [TagEngine::getInstance()->getObjectTypeID('com.woltlab.wcf.article')]);
-				$conditionBuilder->add('tagID IN (?)', [array_keys($this->tags)]);
-				$conditionBuilder->add('objectID <> ?', [$this->articleContentID]);
-				$sql = "SELECT		objectID, COUNT(*) AS count
-					FROM		wcf" . WCF_N . "_tag_to_object
+				$conditionBuilder->add('tag_to_object.objectTypeID = ?', [TagEngine::getInstance()->getObjectTypeID('com.woltlab.wcf.article')]);
+				$conditionBuilder->add('tag_to_object.tagID IN (?)', [array_keys($this->tags)]);
+				$conditionBuilder->add('tag_to_object.objectID <> ?', [$this->articleContentID]);
+				$sql = "SELECT		article.articleID, COUNT(*) AS count
+					FROM		wcf" . WCF_N . "_tag_to_object tag_to_object
+					INNER JOIN	wcf" . WCF_N . "_article_content article_content
+					ON		tag_to_object.objectID = article_content.articleContentID
+					INNER JOIN	wcf" . WCF_N . "_article article
+					ON		article_content.articleID = article.articleID
 					" . $conditionBuilder . "
-					GROUP BY	objectID
+					GROUP BY	tag_to_object.objectID
 					HAVING		COUNT(*) >= " . round(count($this->tags) * ARTICLE_RELATED_ARTICLES_MATCH_THRESHOLD / 100) . "
-					ORDER BY	count DESC";
+					ORDER BY	count DESC, article.time DESC";
 				$statement = WCF::getDB()->prepareStatement($sql, ARTICLE_RELATED_ARTICLES);
 				$statement->execute($conditionBuilder->getParameters());
-				$articleContentIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
+				$articleIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
 				
-				if (!empty($articleContentIDs)) {
-					$conditionBuilder = new PreparedStatementConditionBuilder();
-					$conditionBuilder->add('articleContentID IN (?)', [$articleContentIDs]);
-					$sql = "SELECT		articleID
-						FROM		wcf" . WCF_N . "_article_content
-						" . $conditionBuilder;
-					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute($conditionBuilder->getParameters());
-					$articleIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-					
+				if (!empty($articleIDs)) {
 					$this->relatedArticles = new AccessibleArticleList();
 					$this->relatedArticles->getConditionBuilder()->add('article.articleID IN (?)', [$articleIDs]);
 					$this->relatedArticles->sqlOrderBy = 'article.time';

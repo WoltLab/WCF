@@ -10,9 +10,9 @@ use wcf\data\user\option\UserOptionEditor;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\exception\SystemException;
 use wcf\system\form\builder\container\IFormContainer;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\BooleanFormField;
 use wcf\system\form\builder\field\ClassNameFormField;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\SingleSelectionFormField;
@@ -30,7 +30,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes user options.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -220,7 +220,12 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 				->objectProperty('selectoptions')
 				->label('wcf.acp.pip.abstractOption.options.selectOptions')
 				->description('wcf.acp.pip.abstractOption.options.selectOptions.description')
-				->rows(5);
+				->rows(5)
+				->addDependency(
+					ValueFormFieldDependency::create('optionType')
+						->field($optionType)
+						->values($this->selectOptionOptionTypes)
+				);
 			
 			$dataContainer->insertBefore($selectOptions, 'enableOptions');
 			
@@ -314,14 +319,8 @@ class UserOptionPackageInstallationPlugin extends AbstractOptionPackageInstallat
 					),
 			]);
 			
-			$selectOptions->addDependency(
-				ValueFormFieldDependency::create('optionType')
-					->field($optionType)
-					->values($this->selectOptionOptionTypes)
-			);
-			
 			// ensure proper normalization of select options
-			$form->getDataHandler()->add(new CustomFormFieldDataProcessor('selectOptions', function(IFormDocument $document, array $parameters) {
+			$form->getDataHandler()->addProcessor(new CustomFormDataProcessor('selectOptions', function(IFormDocument $document, array $parameters) {
 				if (isset($parameters['data']['selectoptions'])) {
 					$parameters['data']['selectoptions'] = StringUtil::unifyNewlines($parameters['data']['selectoptions']);
 				}

@@ -17,6 +17,7 @@ use wcf\data\page\PageNodeTree;
 use wcf\data\smiley\SmileyCache;
 use wcf\form\AbstractForm;
 use wcf\system\acl\simple\SimpleAclHandler;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\UserInputException;
 use wcf\system\html\input\HtmlInputProcessor;
@@ -33,7 +34,7 @@ use wcf\util\StringUtil;
  * Shows the page add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since	3.0
@@ -233,7 +234,7 @@ class PageAddForm extends AbstractForm {
 		if (isset($_GET['presetPageID'])) $this->presetPageID = intval($_GET['presetPageID']);
 		if ($this->presetPageID) {
 			$this->presetPage = new Page($this->presetPageID);
-			if (!$this->presetPage->pageID) {
+			if (!$this->presetPage->pageID || $this->presetPage->pageType === 'system') {
 				throw new IllegalLinkException();
 			}
 		}
@@ -589,12 +590,29 @@ class PageAddForm extends AbstractForm {
 		
 		// add page to main menu
 		if ($this->addPageToMainMenu) {
+			// select maximum showOrder value so that new menu item will be appened
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			if ($this->parentMenuItemID) {
+				$conditionBuilder->add('parentItemID = ?', [$this->parentMenuItemID]);
+			}
+			else {
+				$conditionBuilder->add('parentItemID IS NULL');
+			}
+			
+			$sql = "SELECT	MAX(showOrder)
+				FROM	wcf" . WCF_N . "_menu_item
+				" . $conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			$maxShowOrder = $statement->fetchSingleColumn() ?? 0;
+			
 			$menuItemAction = new MenuItemAction([], 'create', ['data' => [
 				'isDisabled' => $this->isDisabled ? 1 : 0,
 				'title' => (!$this->isMultilingual ? $this->title[0] : ''),
 				'pageID' => $page->pageID,
 				'menuID' => MenuCache::getInstance()->getMainMenuID(),
 				'parentItemID' => $this->parentMenuItemID,
+				'showOrder' => $maxShowOrder + 1,
 				'identifier' => StringUtil::getRandomID(),
 				'packageID' => 1
 			]]);
@@ -621,7 +639,8 @@ class PageAddForm extends AbstractForm {
 		WCF::getTPL()->assign('success', true);
 		
 		// reset variables
-		$this->parentPageID = $this->isDisabled = $this->isLandingPage = $this->availableDuringOfflineMode = $this->enableShareButtons = 0;
+		$this->parentPageID = $this->isDisabled = $this->isLandingPage = $this->availableDuringOfflineMode = $this->enableShareButtons = $this->addPageToMainMenu = 0;
+		$this->parentMenuItemID = null;
 		$this->applicationPackageID = 1;
 		$this->cssClassName = $this->name = '';
 		$this->customURL = $this->title = $this->content = $this->metaDescription = $this->metaKeywords = $this->aclValues = [];

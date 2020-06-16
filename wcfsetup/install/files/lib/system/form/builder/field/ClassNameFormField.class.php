@@ -11,7 +11,7 @@ use wcf\system\SingletonFactory;
  * form field label and uses `className` as the default node id.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
@@ -23,25 +23,25 @@ class ClassNameFormField extends TextFormField {
 	 * `true` if the entered class must exist
 	 * @var	bool
 	 */
-	protected $__classExists = true;
+	protected $classExists = true;
 	
 	/**
 	 * name of the interface the entered class must implement
 	 * @var	string
 	 */
-	protected $__implementedInterface = '';
+	protected $implementedInterface = '';
 	
 	/**
 	 * `true` if the entered class must be instantiable
 	 * @var	bool
 	 */
-	protected $__instantiable = true;
+	protected $instantiable = true;
 	
 	/**
 	 * name of the class the entered class must extend
 	 * @var	string
 	 */
-	protected $__parentClass = '';
+	protected $parentClass = '';
 	
 	/**
 	 * Creates a new instance of `ClassNameFormField`.
@@ -57,7 +57,7 @@ class ClassNameFormField extends TextFormField {
 	 * @return	static				this field
 	 */
 	public function classExists($classExists = true) {
-		$this->__classExists = $classExists;
+		$this->classExists = $classExists;
 		
 		return $this;
 	}
@@ -69,7 +69,7 @@ class ClassNameFormField extends TextFormField {
 	 * @return	bool
 	 */
 	public function getClassExists() {
-		return $this->__classExists;
+		return $this->classExists;
 	}
 	
 	/**
@@ -80,7 +80,7 @@ class ClassNameFormField extends TextFormField {
 	 * @return	string
 	 */
 	public function getImplementedInterface() {
-		return $this->__implementedInterface;
+		return $this->implementedInterface;
 	}
 	
 	/**
@@ -91,7 +91,7 @@ class ClassNameFormField extends TextFormField {
 	 * @return	string
 	 */
 	public function getParentClass() {
-		return $this->__parentClass;
+		return $this->parentClass;
 	}
 	
 	/**
@@ -111,12 +111,12 @@ class ClassNameFormField extends TextFormField {
 			throw new \InvalidArgumentException("Interface '{$interface}' does not exist.");
 		}
 		
-		$this->__implementedInterface = $interface;
+		$this->implementedInterface = $interface;
 		
 		if ($this->getDescription() === null) {
 			$this->description(
 				'wcf.form.field.className.description.interface',
-				['interface' => $this->__implementedInterface]
+				['interface' => $this->implementedInterface]
 			);
 		}
 		
@@ -130,7 +130,7 @@ class ClassNameFormField extends TextFormField {
 	 * @return	static				this field
 	 */
 	public function instantiable($instantiable = true) {
-		$this->__instantiable = $instantiable;
+		$this->instantiable = $instantiable;
 		
 		return $this;
 	}
@@ -142,7 +142,7 @@ class ClassNameFormField extends TextFormField {
 	 * @return	bool
 	 */
 	public function isInstantiable() {
-		return $this->__instantiable;
+		return $this->instantiable;
 	}
 	
 	/**
@@ -158,12 +158,12 @@ class ClassNameFormField extends TextFormField {
 			throw new \InvalidArgumentException("Class '{$parentClass}' does not exist.");
 		}
 		
-		$this->__parentClass = $parentClass;
+		$this->parentClass = $parentClass;
 		
 		if ($this->getDescription() === null) {
 			$this->description(
 				'wcf.form.field.className.description.parentClass',
-				['parentClass' => $this->__parentClass]
+				['parentClass' => $this->parentClass]
 			);
 		}
 		

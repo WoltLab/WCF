@@ -2,7 +2,7 @@
  * Provides the touch-friendly fullscreen user menu.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Menu/User
  */
@@ -59,6 +59,11 @@ define(['Core', 'EventHandler', 'Language', './Abstract'], function(Core, EventH
 		},
 		
 		close: function (event) {
+			// The user menu is not initialized if there are no items to display.
+			if (this._menu === undefined) {
+				return;
+			}
+			
 			var dropdown = WCF.Dropdown.Interactive.Handler.getOpenDropdown();
 			if (dropdown) {
 				event.preventDefault();

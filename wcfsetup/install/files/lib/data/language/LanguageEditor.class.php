@@ -23,7 +23,7 @@ use wcf\util\XML;
  * Provides functions to edit languages.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Language
  * 
@@ -130,7 +130,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 		echo "\xEF\xBB\xBF";
 		
 		// header
-		echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<language xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/vortex/language.xsd\" languagecode=\"".$this->languageCode."\" languagename=\"".$this->languageName."\" countrycode=\"".$this->countryCode."\">\n";
+		echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<language xmlns=\"http://www.woltlab.com\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.woltlab.com http://www.woltlab.com/XSD/" . WSC_API_VERSION . "/language.xsd\" languagecode=\"".$this->languageCode."\" languagename=\"".$this->languageName."\" countrycode=\"".$this->countryCode."\">\n";
 		
 		// get items
 		$items = [];
@@ -238,6 +238,7 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 	 * @param	integer		$packageID
 	 * @param	boolean		$updateFiles
 	 * @param	boolean		$updateExistingItems
+	 * @throws	\InvalidArgumentException	if given XML file is invalid
 	 */
 	public function updateFromXML(XML $xml, $packageID, $updateFiles = true, $updateExistingItems = true) {
 		$xpath = $xml->xpath();
@@ -311,6 +312,22 @@ class LanguageEditor extends DatabaseObjectEditor implements IEditableCachedObje
 				/** @var \DOMElement $element */
 				foreach ($elements as $element) {
 					$itemName = $element->getAttribute('name');
+					
+					// Safeguard against malformed phrases, an empty name has a strange side effect.
+					if (empty($itemName)) {
+						throw new \InvalidArgumentException("The name attribute is missing or empty.");
+					}
+					
+					if ($itemName !== $categoryName && strpos($itemName, $categoryName . '.') !== 0) {
+						throw new \InvalidArgumentException(WCF::getLanguage()->getDynamicVariable(
+							'wcf.acp.language.import.error.categoryMismatch',
+							[
+								'categoryName' => $categoryName,
+								'languageItem' => $itemName
+							]
+						));
+					}
+					
 					$itemValue = $element->nodeValue;
 					
 					$itemData[] = $this->languageID;

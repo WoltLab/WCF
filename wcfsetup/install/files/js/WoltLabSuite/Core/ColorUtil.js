@@ -2,8 +2,9 @@
  * Helper functions to convert between different color formats.
  *
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	ColorUtil (alias)
  * @module      WoltLabSuite/Core/ColorUtil
  */
 define([], function () {
@@ -197,7 +198,7 @@ define([], function () {
 			var charList = "0123456789ABCDEF";
 			
 			if (g === undefined) {
-				if (r.toString().match(/^rgba?\((\d+), ?(\d+), ?(d\+)(?:, ?[0-9.]+)?\)$/)) {
+				if (r.toString().match(/^rgba?\((\d+), ?(\d+), ?(\d+)(?:, ?[0-9.]+)?\)$/)) {
 					r = RegExp.$1;
 					g = RegExp.$2;
 					b = RegExp.$3;

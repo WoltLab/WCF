@@ -8,7 +8,7 @@ use wcf\util\FileUtil;
  * Basic implementation of IExporter.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Exporter
  */
@@ -104,7 +104,7 @@ abstract class AbstractExporter implements IExporter {
 	public function init() {
 		$host = $this->databaseHost;
 		$port = 0;
-		if (preg_match('~^([0-9.]+):([0-9]{1,5})$~', $host, $matches)) {
+		if (preg_match('/^(.+?):(\d+)$/', $host, $matches)) {
 			// simple check, does not care for valid ip addresses
 			$host = $matches[1];
 			$port = $matches[2];

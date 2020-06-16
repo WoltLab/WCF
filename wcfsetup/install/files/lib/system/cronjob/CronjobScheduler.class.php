@@ -8,12 +8,13 @@ use wcf\system\exception\ImplementationException;
 use wcf\system\exception\SystemException;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use function wcf\functions\exception\logThrowable;
 
 /**
  * Provides functions to execute cronjobs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob
  */
@@ -260,6 +261,8 @@ class CronjobScheduler extends SingletonFactory {
 	 */
 	protected function logResult(CronjobLogEditor $logEditor, $exception = null) {
 		if ($exception !== null) {
+			logThrowable($exception);
+			
 			$errString = implode("\n", [
 				$exception->getMessage(),
 				$exception->getCode(),

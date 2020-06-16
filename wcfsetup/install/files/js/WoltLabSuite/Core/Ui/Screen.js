@@ -2,8 +2,9 @@
  * Provides consistent support for media queries and body scrolling.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	Ui/Screen (alias)
  * @module	WoltLabSuite/Core/Ui/Screen
  */
 define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environment) {
@@ -14,17 +15,21 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 	var _scrollDisableCounter = 0;
 	var _scrollOffsetFrom = null;
 	var _scrollTop = 0;
+	var _pageOverlayCounter = 0;
 	
 	var _mqMap = Dictionary.fromObject({
-		'screen-xs': '(max-width: 544px)',                              /* smartphone */
-		'screen-sm': '(min-width: 545px) and (max-width: 768px)',       /* tablet (portrait) */
-		'screen-sm-down': '(max-width: 768px)',                         /* smartphone + tablet (portrait) */
-		'screen-sm-up': '(min-width: 545px)',                           /* tablet (portrait) + tablet (landscape) + desktop */
-		'screen-sm-md': '(min-width: 545px) and (max-width: 1024px)',   /* tablet (portrait) + tablet (landscape) */
-		'screen-md': '(min-width: 769px) and (max-width: 1024px)',      /* tablet (landscape) */
-		'screen-md-down': '(max-width: 1024px)',                        /* smartphone + tablet (portrait) + tablet (landscape) */
-		'screen-md-up': '(min-width: 769px)',                           /* tablet (landscape) + desktop */
-		'screen-lg': '(min-width: 1025px)'                              /* desktop */
+		'screen-xs': '(max-width: 544px)',                               /* smartphone */
+		'screen-sm': '(min-width: 545px) and (max-width: 768px)',        /* tablet (portrait) */
+		'screen-sm-down': '(max-width: 768px)',                          /* smartphone + tablet (portrait) */
+		'screen-sm-up': '(min-width: 545px)',                            /* tablet (portrait) + tablet (landscape) + desktop */
+		'screen-sm-md': '(min-width: 545px) and (max-width: 1024px)',    /* tablet (portrait) + tablet (landscape) */
+		'screen-md': '(min-width: 769px) and (max-width: 1024px)',       /* tablet (landscape) */
+		'screen-md-down': '(max-width: 1024px)',                         /* smartphone + tablet (portrait) + tablet (landscape) */
+		'screen-md-up': '(min-width: 769px)',                            /* tablet (landscape) + desktop */
+		'screen-lg': '(min-width: 1025px)',                              /* desktop */
+		'screen-lg-only': '(min-width: 1025px) and (max-width: 1280px)',
+		'screen-lg-down': '(max-width: 1280px)',
+		'screen-xl': '(min-width: 1281px)'
 	});
 	
 	// Microsoft Edge rewrites the media queries to whatever it
@@ -150,6 +155,39 @@ define(['Core', 'Dictionary', 'Environment'], function(Core, Dictionary, Environ
 					}
 				}
 			}
+		},
+		
+		/**
+		 * Indicates that at least one page overlay is currently open.
+		 */
+		pageOverlayOpen: function() {
+			if (_pageOverlayCounter === 0) {
+				document.documentElement.classList.add('pageOverlayActive');
+			}
+			
+			_pageOverlayCounter++;
+		},
+		
+		/**
+		 * Marks one page overlay as closed.
+		 */
+		pageOverlayClose: function() {
+			if (_pageOverlayCounter) {
+				_pageOverlayCounter--;
+				
+				if (_pageOverlayCounter === 0) {
+					document.documentElement.classList.remove('pageOverlayActive');
+				}
+			}
+		},
+		
+		/**
+		 * Returns true if at least one page overlay is currently open.
+		 * 
+		 * @returns {boolean}
+		 */
+		pageOverlayIsActive: function() {
+			return _pageOverlayCounter > 0;
 		},
 		
 		/**

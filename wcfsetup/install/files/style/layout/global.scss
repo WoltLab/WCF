@@ -147,7 +147,10 @@ ol.nativeList {
 		/* slight margin to prevent visual merge with adjacent words */
 		margin-right: 2px;
 	}
-	
+}
+
+.containerContent,
+.htmlContent {
 	hr {
 		border: 0;
 		border-top: 1px solid $wcfContentBorderInner;
@@ -188,4 +191,10 @@ a.externalURL::after {
 	overflow: hidden !important;
 	position: absolute !important;
 	width: 1px !important;
+}
+
+/* Hide the focus ring for mouse interactions, but support them for keyboard navigation.
+   See https://github.com/WICG/focus-visible and https://developer.mozilla.org/en-US/docs/Web/CSS/:focus-visible */
+.js-focus-visible :focus:not(.focus-visible) {
+	outline: none;
 }

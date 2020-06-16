@@ -2,19 +2,20 @@
  * Modal dialog handler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	Ui/Dialog (alias)
  * @module	WoltLabSuite/Core/Ui/Dialog
  */
 define(
 	[
-		'enquire',      'Ajax',       'Core',      'Dictionary',
+		'Ajax',         'Core',       'Dictionary',
 		'Environment',  'Language',   'ObjectMap', 'Dom/ChangeListener',
 		'Dom/Traverse', 'Dom/Util',   'Ui/Confirmation', 'Ui/Screen', 'Ui/SimpleDropdown',
 		'EventHandler', 'List',       'EventKey'
 	],
 	function(
-		enquire,        Ajax,         Core,        Dictionary,
+		Ajax,           Core,         Dictionary,
 		Environment,    Language,     ObjectMap,   DomChangeListener,
 		DomTraverse,    DomUtil,      UiConfirmation, UiScreen, UiSimpleDropdown,
 		EventHandler,   List,         EventKey
@@ -65,7 +66,7 @@ define(
 			_container = elCreate('div');
 			_container.classList.add('dialogOverlay');
 			elAttr(_container, 'aria-hidden', 'true');
-			_container.addEventListener(WCF_CLICK_EVENT, this._closeOnBackdrop.bind(this));
+			_container.addEventListener('mousedown', this._closeOnBackdrop.bind(this));
 			_container.addEventListener('wheel', function (event) {
 				if (event.target === _container) {
 					event.preventDefault();
@@ -97,17 +98,13 @@ define(
 			
 			UiScreen.setDialogContainer(_container);
 			
-			// mobile safari dynamically shows/hides the bottom browser bar
-			// causing the window height to differ significantly
-			if (Environment.platform() === 'ios') {
-				window.addEventListener('resize', (function () {
-					_dialogs.forEach((function (dialog) {
-						if (!elAttrBool(dialog.dialog, 'aria-hidden')) {
-							this.rebuild(elData(dialog.dialog, 'id'));
-						}
-					}).bind(this));
+			window.addEventListener('resize', (function () {
+				_dialogs.forEach((function (dialog) {
+					if (!elAttrBool(dialog.dialog, 'aria-hidden')) {
+						this.rebuild(elData(dialog.dialog, 'id'));
+					}
 				}).bind(this));
-			}
+			}).bind(this));
 		},
 		
 		_initStaticDialogs: function() {
@@ -236,7 +233,7 @@ define(
 		 * @return	{object<string, *>}		dialog data
 		 */
 		openStatic: function(id, html, options, createOnly) {
-			document.documentElement.classList.add('pageOverlayActive');
+			UiScreen.pageOverlayOpen();
 			
 			if (Environment.platform() !== 'desktop') {
 				if (!this.isOpen(id)) {
@@ -381,6 +378,7 @@ define(
 			if (options.closable) {
 				var closeButton = elCreate('a');
 				closeButton.className = 'dialogCloseButton jsTooltip';
+				closeButton.href = '#';
 				elAttr(closeButton, 'role', 'button');
 				elAttr(closeButton, 'tabindex', '0');
 				elAttr(closeButton, 'title', options.closeButtonLabel);
@@ -563,7 +561,7 @@ define(
 		_maintainFocus: function(event) {
 			if (_activeDialog) {
 				var data = _dialogs.get(_activeDialog);
-				if (!data.dialog.contains(event.target) && !event.target.closest('.dropdownMenuContainer')) {
+				if (!data.dialog.contains(event.target) && !event.target.closest('.dropdownMenuContainer') && !event.target.closest('.datePicker')) {
 					this._setFocusToFirstItem(data.dialog, true);
 				}
 			}
@@ -585,7 +583,23 @@ define(
 					}
 				}
 				
-				if (focusElement) focusElement.focus();
+				if (focusElement) {
+					// Setting the focus to a select element in iOS is pretty strange, because
+					// it focuses it, but also displays the keyboard for a fraction of a second,
+					// causing it to pop out from below and immediately vanish.
+					// 
+					// iOS will only show the keyboard if an input element is focused *and* the
+					// focus is an immediate result of an user interaction. This method must be
+					// assumed to be called from within a click event, but we want to set the
+					// focus without triggering the keyboard.
+					// 
+					// We can break the condition by wrapping it in a setTimeout() call,
+					// effectively tricking iOS into focusing the element without showing the
+					// keyboard.
+					setTimeout(function() {
+						focusElement.focus();
+					}, 1);
+				}
 			}
 		},
 		
@@ -662,11 +676,14 @@ define(
 			// Chrome and Safari use heavy anti-aliasing when the dialog's width
 			// cannot be evenly divided, causing the whole text to become blurry
 			if (Environment.browser() === 'chrome' || Environment.browser() === 'safari') {
-				// `clientWidth` will report an integer value that isn't rounded properly (e.g. 0.59 -> 0)
-				var floatWidth = parseFloat(window.getComputedStyle(data.content).width);
-				var needsFix = (Math.round(floatWidth) % 2) !== 0;
-				
-				data.content.parentNode.classList[(needsFix ? 'add' : 'remove')]('jsWebKitFractionalPixel');
+				// The new Microsoft Edge is detected as "chrome", because effectively we're detecting
+				// Chromium rather than Chrome specifically. The workaround for fractional pixels does
+				// not work well in Edge, there seems to be a different logic for fractional positions,
+				// causing the text to be blurry.
+				// 
+				// We can use `backface-visibility: hidden` to prevent the anti aliasing artifacts in
+				// WebKit/Blink, which will also prevent some weird font rendering issues when resizing.
+				data.content.parentNode.classList.add('jsWebKitFractionalPixelFix');
 			}
 			
 			var callbackObject = _dialogToObject.get(id);
@@ -823,6 +840,8 @@ define(
 				}
 			}
 			
+			UiScreen.pageOverlayClose();
+			
 			if (_activeDialog === null) {
 				elAttr(_container, 'aria-hidden', 'true');
 				elData(_container, 'close-on-click', 'false');
@@ -830,7 +849,6 @@ define(
 				if (data.closable) {
 					window.removeEventListener('keyup', _keyupListener);
 				}
-				document.documentElement.classList.remove('pageOverlayActive');
 			}
 			else {
 				data = _dialogs.get(_activeDialog);
@@ -879,7 +897,13 @@ define(
 					this.close(id);
 				}
 				
-				_dialogs.delete(id);
+				// If the dialog is destroyed in the close callback, this method is
+				// called twice resulting in `_dialogs.get(id)` being undefined for
+				// the initial call.
+				if (_dialogs.has(id)) {
+					elRemove(_dialogs.get(id).dialog);
+					_dialogs.delete(id);
+				}
 				_dialogObjects.delete(callbackObject);
 			}
 		},

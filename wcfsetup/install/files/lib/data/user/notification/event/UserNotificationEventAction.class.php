@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Executes user notification event-related actions.
  * 
  * @author	Marcel Werk, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Notification\Event
  * 
@@ -99,7 +99,6 @@ class UserNotificationEventAction extends AbstractDatabaseObjectAction {
 		$getRenderedException = function($e) {
 			\wcf\functions\exception\logThrowable($e);
 			
-			// TODO: output could/should be improved in the future
 			return $e->getMessage();
 		};
 		

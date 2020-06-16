@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Abstract class for a list of database objects.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data
  */
@@ -358,5 +358,23 @@ abstract class DatabaseObjectList implements \Countable, ITraversableObject {
 		catch (SystemException $e) {
 			return null;
 		}
+	}
+	
+	/**
+	 * Returns the only object in this list or `null` if the list is empty.
+	 * 
+	 * @return	DatabaseObject|null
+	 * @throws	\BadMethodCallException		if list contains more than one object
+	 */
+	public function getSingleObject() {
+		if (count($this->objects) > 1) {
+			throw new \BadMethodCallException("Cannot get a single object when the list contains " . count($this->objects) . " objects.");
+		}
+		
+		if (empty($this->objects)) {
+			return null;
+		}
+		
+		return reset($this->objects);
 	}
 }

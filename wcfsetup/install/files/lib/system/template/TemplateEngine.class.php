@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Loads and displays template.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template
  */
@@ -79,6 +79,19 @@ class TemplateEngine extends SingletonFactory {
 	 * @var	mixed[][]
 	 */
 	protected $v = [];
+	
+	/**
+	 * sandboxed values of currently active foreach loops' `item` and `key` variables
+	 * 
+	 * for each currently active `foreach` loop, an array is added:
+	 *	$foreachHash => [
+	 *		(optional) 'item' => sandboxed value of an existing variable with the same name,
+	 * 		(optional) 'key' => (optional) sandboxed value of an existing variable with the same name
+	 * 	]
+	 * 
+	 * @var	mixed[][][]
+	 */
+	protected $foreachVars = [];
 	
 	/**
 	 * all cached variables for usage after execution in sandbox

@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Manages the background queue.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Background\Job
  * @since	3.0
@@ -104,7 +104,6 @@ class BackgroundQueueHandler extends SingletonFactory {
 				throw $e;
 			}
 			
-			// gotta catch 'em all
 			$job->fail();
 			
 			if ($job->getFailures() <= $job::MAX_FAILURES) {
@@ -115,6 +114,8 @@ class BackgroundQueueHandler extends SingletonFactory {
 				}
 			}
 			else {
+				$job->onFinalFailure();
+				
 				// job failed too often: log
 				\wcf\functions\exception\logThrowable($e);
 			}

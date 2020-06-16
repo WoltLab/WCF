@@ -22,6 +22,8 @@ $.Redactor.prototype.WoltLabObserve = function() {
 					}
 					
 					button.classList.remove('redactor-act');
+					if (button.rel !== 'html') elAttr(button, 'tabindex', -1);
+					elAttr(button, 'aria-pressed', false);
 				}
 			}).bind(this);
 			
@@ -77,6 +79,14 @@ $.Redactor.prototype.WoltLabObserve = function() {
 					this.button.enable('spoiler');
 					this.button.enable('woltlabHtml');
 					this.button.enable('woltlabQuote');
+				}
+				
+				if (isSource) {
+					this.button.setActive('html');
+				}
+				
+				if (this.core.box()[0].classList.contains('redactorBoxFullscreen')) {
+					this.button.setActive('woltlabFullscreen');
 				}
 				
 				// WoltLab modification: we know that there will be quite a few

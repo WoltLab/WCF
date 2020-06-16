@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * ACP search provider implementation for options (and option categories).
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Search\Acp
  */
@@ -53,7 +53,7 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 			}
 		}
 		
-		if (empty($optionNames) && empty($categoryNames)) {
+		if (empty($optionNames) && empty($categoryNames) && !(ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS)) {
 			return [];
 		}
 		
@@ -63,6 +63,9 @@ class OptionACPSearchResultProvider extends AbstractCategorizedACPSearchResultPr
 		}
 		if (!empty($optionNames)) {
 			$conditions->add('optionName IN (?)', [$optionNames]);
+		}
+		if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+			$conditions->add('optionName LIKE ?', ['%'.$query.'%']);
 		}
 		
 		$sql = "SELECT	optionName, categoryName, options, permissions, hidden

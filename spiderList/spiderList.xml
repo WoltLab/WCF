@@ -10,7 +10,6 @@
 	</spider>
 	<spider ident="abot/">
 		<name>abot</name>
-		<url>http://www.abot.com/</url>
 	</spider>
 	<spider ident="Accelatech RSSCrawler">
 		<name>Accelatech</name>
@@ -294,11 +293,23 @@
 		<name>Discovery</name>
 		<url>http://discoveryengine.com/discobot.html</url>
 	</spider>
+	<spider ident="Discordbot">
+		<name>Discord</name>
+		<url>https://discordapp.com/</url>
+	</spider>
 	<spider ident="DNAbot/1.0">
 		<name>DNAbot</name>
 	</spider>
+	<spider ident="DotBot/1.1">
+		<name>Moz DotBot</name>
+		<url>http://www.opensiteexplorer.org/dotbot</url>
+	</spider>
 	<spider ident="DragonBot/1.0 libwww/5.0">
 		<name>DragonBot</name>
+	</spider>
+	<spider ident="DuckDuckBot">
+		<name>DuckDuckGo</name>
+		<url>https://duckduckgo.com/</url>
 	</spider>
 	<spider ident="DWCP/2.0">
 		<name>DWCP (Dridus' Web Cataloging Project)</name>
@@ -493,6 +504,16 @@
 	<spider ident="GoogleStackdriverMonitoring-UptimeChecks">
 		<name>Google Stackdriver Monitoring</name>
 		<url>https://cloud.google.com/monitoring/alerts/uptime-checks</url>
+	</spider>
+	<spider ident="Google-Ads-Creatives-Assistant">
+		<name>Google-Ads-Creatives-Assistant</name>
+	</spider>
+	<spider ident="Google-AdWords-Express">
+		<name>Google-AdWords-Express</name>
+	</spider>
+	<spider ident="AdsBot-Google">
+		<name>Google Ads-Bot</name>
+		<url>http://www.google.com/adsbot.html</url>
 	</spider>
 	<spider ident="Gpostbot">
 		<name>Gpostbot</name>
@@ -874,6 +895,10 @@
 	<spider ident="PageBoy">
 		<name>PageBoy</name>
 	</spider>
+	<spider ident="Pandalytics">
+		<name>Pandalytics</name>
+		<url>https://domainsbot.com/pandalytics/</url>
+	</spider>
 	<spider ident="ParaSite">
 		<name>ParaSite</name>
 	</spider>
@@ -1043,6 +1068,14 @@
 		<name>Sensis Web Crawler</name>
 		<url>http://www.sensis.com.au/help.do</url>
 	</spider>
+	<spider ident="SentiBot">
+		<name>SentiBot</name>
+		<url>http://www.sentibot.eu</url>
+	</spider>
+	<spider ident="SeznamBot/3.2">
+		<name>Seznam Bot</name>
+		<url>http://napoveda.seznam.cz/en/seznambot-intro/</url>
+	</spider>
 	<spider ident="SG-Scout">
 		<name>SG-Scout</name>
 	</spider>
@@ -1054,6 +1087,10 @@
 	</spider>
 	<spider ident="SimBot/1.0">
 		<name>Simmany Robot Ver1.0</name>
+	</spider>
+	<spider ident="SkypeUriPreview">
+		<name>Skype Preview</name>
+		<url>https://www.skype.com/</url>
 	</spider>
 	<spider ident="ssearcher100">
 		<name>Site Searcher</name>
@@ -1073,6 +1110,10 @@
 	</spider>
 	<spider ident="aWapClient">
 		<name>Skymob.com</name>
+	</spider>
+	<spider ident="Slack">
+		<name>Slackbot</name>
+		<url>https://api.slack.com/robots</url>
 	</spider>
 	<spider ident="SLCrawler">
 		<name>SLCrawler</name>
@@ -1141,7 +1182,7 @@
 	<spider ident="Black Widow">
 		<name>TACH Black Widow</name>
 	</spider>
-	<spider ident"Tapatalk CloudSearch">
+	<spider ident="Tapatalk CloudSearch">
 		<name>Tapatalk CloudSearch</name>
 	</spider>
 	<spider ident="Tarantula">
@@ -1183,6 +1224,10 @@
 		<name>Pixray</name>
 		<url>http://www.pixray.com/pixraybot/</url>
 	</spider>
+	<spider ident="TelegramBot (like TwitterBot)">
+		<name>TelegramBot (like TwitterBot)</name>
+		<url>https://telegram.org/</url>
+	</spider>
 	<spider ident="thumbshots-de-Bot">
 		<name>thumbshots-de-Bot</name>
 	</spider>
@@ -1220,6 +1265,10 @@
 	<spider ident="Twiceler">
 		<name>Twiceler</name>
 		<url>http://www.cuill.com/twiceler/robot.html</url>
+	</spider>
+	<spider ident="Twitterbot">
+		<name>Twitterbot</name>
+		<url>https://twitter.com/</url>
 	</spider>
 	<spider ident="UCSD-Crawler">
 		<name>UCSD Crawl</name>

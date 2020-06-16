@@ -2,8 +2,8 @@
 	<ul class="sidebarItemList">
 		{foreach from=$boxArticleList item=boxArticle}
 			<li>
-				<a href="{$boxArticle->getLink()}" class="box64">
-					<span>{if $boxArticle->getTeaserImage()}{@$boxArticle->getTeaserImage()->getElementTag(64)}{/if}</span>
+				<a href="{$boxArticle->getLink()}"{if $boxArticle->getTeaserImage()} class="box64"{/if}>
+					{if $boxArticle->getTeaserImage()}<span>{@$boxArticle->getTeaserImage()->getElementTag(64)}</span>{/if}
 					
 					<div>
 						<h3>{$boxArticle->getTitle()}</h3>
@@ -15,8 +15,8 @@
 							{elseif $boxSortField == 'comments'}
 								{$boxArticle->getDiscussionProvider()->getDiscussionCountPhrase()}
 							{elseif $boxSortField == 'cumulativeLikes'}
-								{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && ($boxArticle->likes || $boxArticle->dislikes)}
-									<span class="reputationCounter {if $boxArticle->cumulativeLikes > 0}positive{elseif $boxArticle->cumulativeLikes < 0}negative{else}neutral{/if}">{if $boxArticle->cumulativeLikes > 0}+{elseif $boxArticle->cumulativeLikes == 0}±{/if}{#$boxArticle->cumulativeLikes}</span>
+								{if MODULE_LIKE && $__wcf->getSession()->getPermission('user.like.canViewLike') && $boxArticle->cachedReactions}
+									{include file='__topReaction' cachedReactions=$boxArticle->cachedReactions render='full'}
 								{/if}
 							{/if}
 						</small>
@@ -51,5 +51,5 @@
 		{/foreach}
 	</ul>
 {else}
-	{include file='articleListItems' objects=$boxArticleList}
+	{include file='articleListItems' objects=$boxArticleList disableAds=true}
 {/if}

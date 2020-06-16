@@ -2,7 +2,7 @@
  * Provides interface elements to display and review likes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Like/Handler
  * @deprecated  5.2 use ReactionHandler instead 
@@ -147,10 +147,9 @@ define(
 					countSpan.innerHTML = StringUtil.shortUnit(elementData.users[key]);
 					createdElement.appendChild(countSpan);
 					
-					createdElement.innerHTML = createdElement.innerHTML + REACTION_TYPES[key].renderedIcon;
+					createdElement.innerHTML = REACTION_TYPES[key].renderedIcon + createdElement.innerHTML;
 					
 					summaryList.appendChild(createdElement);
-					
 				}
 				
 				if (isSummaryPosition) {
@@ -203,21 +202,10 @@ define(
 			var listItem = elCreate('li');
 			listItem.className = 'wcfReactButton';
 			
-			if (insertBefore) {
-				var jsMobileNavigation = insertBefore.parentElement.contains('jsMobileNavigation');
-			}
-			else {
-				var jsMobileNavigation = appendTo.classList.contains('jsMobileNavigation');
-			}
-			
 			var button = elCreate('a');
 			button.className = 'jsTooltip reactButton';
 			if (this._options.renderAsButton) {
 				button.classList.add('button');
-				
-				if (jsMobileNavigation) {
-					button.classList.add('ignoreMobileNavigation');
-				}
 			}
 			
 			button.href = '#';

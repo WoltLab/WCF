@@ -1,5 +1,5 @@
 <div class="row rowColGap formGrid">
-	<dl class="col-xs-12 col-md-11">
+	<dl class="col-xs-12 col-md-10">
 		<dt></dt>
 		<dd>
 			<select id="{@$field->getPrefixedId()}_instructionsType">
@@ -18,10 +18,10 @@
 		</dd>
 	</dl>
 	
-	<dl class="col-xs-12 col-md-1">
+	<dl class="col-xs-12 col-md-2 text-right">
 		<dt></dt>
 		<dd>
-			<button class="button small" id="{@$field->getPrefixedId()}_addButton">{lang}wcf.global.button.add{/lang}</button>
+			<a href="#" class="button small" id="{@$field->getPrefixedId()}_addButton">{lang}wcf.global.button.add{/lang}</a>
 		</dd>
 	</dl>
 </div>
@@ -77,7 +77,7 @@
 			</dd>
 		</dl>
 		
-		<dl class="col-xs-12 col-md-11">
+		<dl class="col-xs-12 col-md-10">
 			<dt></dt>
 			<dd>
 				<label><input type="checkbox" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_runStandalone" value="1"> {lang}wcf.acp.devtools.project.instruction.runStandalone{/lang}</label>
@@ -85,10 +85,10 @@
 			</dd>
 		</dl>
 		
-		<dl class="col-xs-12 col-md-1">
+		<dl class="col-xs-12 col-md-2 text-right">
 			<dt></dt>
 			<dd>
-				<button class="button small" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_addButton">{lang}wcf.global.button.add{/lang}</button>
+				<a href="#" class="button small" id="{@$field->getPrefixedId()}_instructions{literal}{$instructionsId}{/literal}_addButton">{lang}wcf.global.button.add{/lang}</a>
 			</dd>
 		</dl>
 	</div>
@@ -161,7 +161,7 @@
 <script data-relocate="true">
 	require([
 		'Language',
-		'WoltLabSuite/Core/Form/Builder/Field/Devtools/Project/Instructions',
+		'WoltLabSuite/Core/Acp/Form/Builder/Field/Devtools/Project/Instructions',
 		'WoltLabSuite/Core/Template'
 	], function(
 		Language,

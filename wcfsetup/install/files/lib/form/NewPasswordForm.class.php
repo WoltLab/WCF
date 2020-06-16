@@ -2,8 +2,8 @@
 namespace wcf\form;
 use wcf\data\user\User;
 use wcf\data\user\UserAction;
-use wcf\data\user\UserEditor;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\request\LinkHandler;
@@ -16,7 +16,7 @@ use wcf\util\UserRegistrationUtil;
  * Shows the new password form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -67,25 +67,31 @@ class NewPasswordForm extends AbstractForm {
 			$this->user = new User($this->userID);
 			if (!$this->user->userID) throw new IllegalLinkException();
 			
-			if (!$this->user->lostPasswordKey) throw new IllegalLinkException();
-			if (\hash_equals($this->user->lostPasswordKey, $this->lostPasswordKey)) {
-				throw new IllegalLinkException();
+			if (!$this->user->lostPasswordKey) {
+				$this->throwInvalidLinkException(); 
+			}
+			if (!\hash_equals($this->user->lostPasswordKey, $this->lostPasswordKey)) {
+				$this->throwInvalidLinkException();
 			}
 			// expire lost password requests after a day
-			if ($this->user->lastLostPasswordRequestTime < TIME_NOW - 86400) throw new IllegalLinkException();
+			if ($this->user->lastLostPasswordRequestTime < TIME_NOW - 86400) {
+				$this->throwInvalidLinkException();
+			}
 			
-			(new UserEditor($this->user))->update([
-				'lastLostPasswordRequestTime' => 0,
-				'lostPasswordKey' => null
+			WCF::getSession()->register('lostPasswordRequest', [
+				'userID' => $this->user->userID,
+				'key' => $this->user->lostPasswordKey
 			]);
-			WCF::getSession()->register('lostPasswordRequest', $this->user->userID);
 		}
 		else {
-			if (!WCF::getSession()->getVar('lostPasswordRequest')) throw new PermissionDeniedException();
-			$this->userID = intval(WCF::getSession()->getVar('lostPasswordRequest'));
+			if (!is_array(WCF::getSession()->getVar('lostPasswordRequest'))) throw new PermissionDeniedException();
+			$this->userID = intval(WCF::getSession()->getVar('lostPasswordRequest')['userID']);
 			
 			$this->user = new User($this->userID);
 			if (!$this->user->userID) throw new IllegalLinkException();
+			if (!\hash_equals($this->user->lostPasswordKey, WCF::getSession()->getVar('lostPasswordRequest')['key'])) {
+				$this->throwInvalidLinkException();
+			}
 		}
 	}
 	
@@ -157,5 +163,9 @@ class NewPasswordForm extends AbstractForm {
 			'confirmNewPassword' => $this->confirmNewPassword,
 			'passwordRulesAttributeValue' => UserRegistrationUtil::getPasswordRulesAttributeValue()
 		]);
+	}
+	
+	private function throwInvalidLinkException() {
+		throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.user.newPassword.error.invalidLink'));
 	}
 }

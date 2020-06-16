@@ -1,8 +1,8 @@
 <?php
 namespace wcf\system\form\builder\field\acl\simple;
 use wcf\system\acl\simple\SimpleAclHandler;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\AbstractFormField;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
 use wcf\system\form\builder\IFormDocument;
 
 /**
@@ -12,7 +12,7 @@ use wcf\system\form\builder\IFormDocument;
  * as its output already generates `.section` elements.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Acl\Simple
  * @since	5.2
@@ -21,7 +21,12 @@ class SimpleAclFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected $templateName = 'aclSimple';
+	protected $javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/SimpleAcl';
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $templateName = '__simpleAclFormField';
 	
 	/**
 	 * @inheritDoc
@@ -47,7 +52,7 @@ class SimpleAclFormField extends AbstractFormField {
 	public function populate() {
 		parent::populate();
 		
-		$this->getDocument()->getDataHandler()->add(new CustomFormFieldDataProcessor('i18n', function(IFormDocument $document, array $parameters) {
+		$this->getDocument()->getDataHandler()->addProcessor(new CustomFormDataProcessor('i18n', function(IFormDocument $document, array $parameters) {
 			if ($this->checkDependencies() && is_array($this->getValue()) && !empty($this->getValue())) {
 				$parameters[$this->getObjectProperty()] = $this->getValue();
 			}
@@ -66,7 +71,7 @@ class SimpleAclFormField extends AbstractFormField {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_array($value)) {
-				$this->__value = $value;
+				$this->value = $value;
 			}
 		}
 		

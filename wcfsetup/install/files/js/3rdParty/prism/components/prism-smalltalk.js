@@ -1,7 +1,7 @@
 define(["prism/prism"], function () {
 Prism.languages.smalltalk = {
-	'comment': /"(?:""|[^"])+"/,
-	'string': /'(?:''|[^'])+'/,
+	'comment': /"(?:""|[^"])*"/,
+	'string': /'(?:''|[^'])*'/,
 	'symbol': /#[\da-z]+|#(?:-|([+\/\\*~<>=@%|&?!])\1?)|#(?=\()/i,
 	'block-arguments': {
 		pattern: /(\[\s*):[^\[|]*\|/,
@@ -30,4 +30,5 @@ Prism.languages.smalltalk = {
 	'operator': /[<=]=?|:=|~[~=]|\/\/?|\\\\|>[>=]?|[!^+\-*&|,@]/,
 	'punctuation': /[.;:?\[\](){}]/
 };
+
 return Prism; })

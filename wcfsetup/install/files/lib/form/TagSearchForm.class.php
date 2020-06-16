@@ -15,7 +15,7 @@ use wcf\util\HeaderUtil;
  * Shows the tag search form.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2019 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\Form
  * @since       5.2
@@ -84,7 +84,13 @@ class TagSearchForm extends AbstractCaptchaForm {
 		
 		if (!empty($this->tagNames)) {
 			$this->tags = TagEngine::getInstance()->getTagsByName($this->tagNames, $this->languageID);
-			if (empty($this->tags)) {
+			if (count($this->tagNames) !== count($this->tags)) {
+				WCF::getTPL()->assign('unknownTags', array_diff($this->tagNames, array_map(function(Tag $tag) {
+					return $tag->getTitle();
+				}, $this->tags)));
+				throw new UserInputException('tags', 'unknownTags');
+			}
+			else if (empty($this->tags)) {
 				throw new UserInputException('tags');
 			}
 		}

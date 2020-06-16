@@ -5,7 +5,6 @@ use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
 use wcf\data\style\StyleEditor;
 use wcf\data\template\group\TemplateGroup;
-use wcf\data\template\group\TemplateGroupList;
 use wcf\form\AbstractForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
@@ -21,7 +20,7 @@ use wcf\util\StringUtil;
  * Shows the style add form.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -140,7 +139,10 @@ class StyleAddForm extends AbstractForm {
 		'wcfEditorButtonBackgroundActive' => '3.1',
 		'wcfEditorButtonText' => '3.1',
 		'wcfEditorButtonTextActive' => '3.1',
-		'wcfEditorButtonTextDisabled' => '3.1'
+		'wcfEditorButtonTextDisabled' => '3.1',
+		
+		// 5.2
+		'wcfEditorTableBorder' => '5.2',
 	];
 	
 	/**
@@ -210,11 +212,7 @@ class StyleAddForm extends AbstractForm {
 			$this->readStyleVariables();
 		}
 		
-		$templateGroupList = new TemplateGroupList();
-		$templateGroupList->sqlOrderBy = "templateGroupName";
-		$templateGroupList->getConditionBuilder()->add('templateGroupFolderName <> ?', ['_wcf_email/']);
-		$templateGroupList->readObjects();
-		$this->availableTemplateGroups = $templateGroupList->getObjects();
+		$this->availableTemplateGroups = TemplateGroup::getSelectList([-1], 1);
 		
 		if (isset($_REQUEST['tmpHash'])) {
 			$this->tmpHash = StringUtil::trim($_REQUEST['tmpHash']);
@@ -482,7 +480,7 @@ class StyleAddForm extends AbstractForm {
 			'wcfTabularBox' => 'wcfTabularBox',
 			'wcfInput' => ['wcfInput', 'wcfInputDisabled'],
 			'wcfButton' => ['wcfButton', 'wcfButtonPrimary', 'wcfButtonDisabled'],
-			'wcfEditor' =>'wcfEditorButton',
+			'wcfEditor' => ['wcfEditorButton', 'wcfEditorTable'],
 			'wcfDropdown' => 'wcfDropdown',
 			'wcfStatus' => ['wcfStatusInfo', 'wcfStatusSuccess', 'wcfStatusWarning', 'wcfStatusError'],
 			'wcfFooterBox' => ['wcfFooterBox', 'wcfFooterBoxHeadline'],
@@ -509,6 +507,7 @@ class StyleAddForm extends AbstractForm {
 			'wcfButtonPrimary' => ['background', 'text', 'backgroundActive', 'textActive'],
 			'wcfButtonDisabled' => ['background', 'text'],
 			'wcfEditorButton' => ['background', 'backgroundActive', 'text', 'textActive', 'textDisabled'],
+			'wcfEditorTable' => ['border'],
 			'wcfDropdown' => ['background', 'borderInner', 'text', 'link', 'backgroundActive', 'linkActive'],
 			'wcfStatusInfo' => ['background', 'border', 'text', 'link', 'linkActive'],
 			'wcfStatusSuccess' => ['background', 'border', 'text', 'link', 'linkActive'],
@@ -567,6 +566,9 @@ class StyleAddForm extends AbstractForm {
 	 */
 	public function save() {
 		parent::save();
+		
+		// Remove control characters that break the SCSS parser, see https://stackoverflow.com/a/23066553
+		$this->variables['individualScss'] = preg_replace('/[^\PC\s]/u', '', $this->variables['individualScss']);
 		
 		$this->objectAction = new StyleAction([], 'create', [
 			'data' => array_merge($this->additionalFields, [

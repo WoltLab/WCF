@@ -2,6 +2,7 @@
 namespace wcf\data\user\trophy;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
+use wcf\data\user\UserProfile;
 use wcf\data\user\UserProfileAction;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -17,7 +18,7 @@ use wcf\system\WCF;
  * Provides user trophy actions. 
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Trophy
  * @since	3.1
@@ -37,6 +38,11 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 	protected $allowGuestAccess = ['getGroupedUserTrophyList'];
 	
 	/**
+	 * @var UserProfile
+	 */
+	public $userProfile;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function create() {
@@ -54,7 +60,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 			// checks if the user still has space to add special trophies
 			if (count($userTrophy->getUserProfile()->getSpecialTrophies()) < $userTrophy->getUserProfile()->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
 				$hasTrophy = false;
-				foreach (UserTrophyList::getUserTrophies([WCF::getUser()->userID])[WCF::getUser()->userID] as $trophy) {
+				foreach (UserTrophyList::getUserTrophies([$userTrophy->getUserProfile()->userID])[$userTrophy->getUserProfile()->userID] as $trophy) {
 					if ($trophy->trophyID == $userTrophy->trophyID && $trophy->userTrophyID !== $userTrophy->userTrophyID) {
 						$hasTrophy = true; 
 						break; 
@@ -63,9 +69,9 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 				
 				if (!$hasTrophy) {
 					$userProfileAction = new UserProfileAction([$userTrophy->getUserProfile()->getDecoratedObject()], 'updateSpecialTrophies', [
-						'trophyIDs' => array_merge(array_map(function($trophy) {
+						'trophyIDs' => array_unique(array_merge(array_map(function($trophy) {
 							return $trophy->trophyID;
-						}, $userTrophy->getUserProfile()->getSpecialTrophies()), [$userTrophy->trophyID])
+						}, $userTrophy->getUserProfile()->getSpecialTrophies()), [$userTrophy->trophyID]))
 					]);
 					$userProfileAction->executeAction();
 				}

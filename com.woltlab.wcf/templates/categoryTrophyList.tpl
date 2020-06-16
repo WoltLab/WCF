@@ -5,7 +5,7 @@
 		<div class="contentHeaderTitle">
 			<h1 class="contentTitle">{$category->getTitle()}</h1>
 			{if $category && $category->getDescription()}
-				<p class="contentHeaderDescription">{$category->getDescription()}</p>
+				<p class="contentHeaderDescription">{if $category->descriptionUseHtml}{@$category->getDescription()}{else}{$category->getDescription()}{/if}</p>
 			{/if}
 		</div>
 	</header>
@@ -30,26 +30,25 @@
 	</div>
 {/hascontent}
 
-<div class="section">
-	<div{if $categories|count > 1} class="tabMenuContent"{/if}>
-		{if $objects|count}
-			<ol class="section containerList trophyCategoryList tripleColumned">
-				{foreach from=$objects item=trophy}
-					<li class="box64">
-						<div>{@$trophy->renderTrophy(64)}</div>
-
-						<div class="sidebarItemTitle">
-							<h3><a href="{$trophy->getLink()}">{@$trophy->getTitle()}</a></h3>
-							{if !$trophy->getDescription()|empty}<small>{@$trophy->getDescription()}</small>{/if}
-						</div>
-					</li>
-				{/foreach}
-			</ol>
-		{else}
-			<p class="info">{lang}wcf.global.noItems{/lang}</p>
-		{/if}
+{if $objects|count}
+	<div class="section sectionContainerList">
+		<ol class="containerList trophyCategoryList doubleColumned">
+			{foreach from=$objects item=trophy}
+				<li class="box64">
+					<div>{@$trophy->renderTrophy(64)}</div>
+					
+					<div class="containerHeadline">
+						<h3><a href="{$trophy->getLink()}">{@$trophy->getTitle()}</a></h3>
+						{if !$trophy->getDescription()|empty}<p><small>{@$trophy->getDescription()}</small></p>{/if}
+						<p><small>{lang items=$trophy->awarded}wcf.user.trophy.trophyAwarded{/lang}</small></p>
+					</div>
+				</li>
+			{/foreach}
+		</ol>
 	</div>
-</div>
+{else}
+	<p class="info" role="status">{lang}wcf.global.noItems{/lang}</p>
+{/if}
 
 <footer class="contentFooter">
 	{hascontent}

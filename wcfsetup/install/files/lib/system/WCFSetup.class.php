@@ -13,6 +13,7 @@ use wcf\system\database\MySQLDatabase;
 use wcf\system\devtools\DevtoolsSetup;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\image\adapter\GDImageAdapter;
 use wcf\system\image\adapter\ImagickImageAdapter;
 use wcf\system\io\File;
 use wcf\system\io\Tar;
@@ -39,12 +40,13 @@ define('CACHE_SOURCE_TYPE', 'disk');
 define('MODULE_MASTER_PASSWORD', 1);
 define('ENABLE_DEBUG_MODE', 1);
 define('ENABLE_BENCHMARK', 0);
+define('ENABLE_ENTERPRISE_MODE', 0);
 
 /**
  * Executes the installation of the basic WCF systems.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
@@ -359,26 +361,20 @@ class WCFSetup extends WCF {
 		$system['uploadMaxFilesize']['value'] = min(ini_get('upload_max_filesize'), ini_get('post_max_size'));
 		$system['uploadMaxFilesize']['result'] = (intval($system['uploadMaxFilesize']['value']) > 0);
 		
-		// gdlib version
-		$system['gdLib']['value'] = '0.0.0';
-		if (function_exists('gd_info')) {
-			$temp = gd_info();
-			$match = [];
-			if (preg_match('!([0-9]+\.[0-9]+(?:\.[0-9]+)?)!', $temp['GD Version'], $match)) {
-				if (preg_match('/^[0-9]+\.[0-9]+$/', $match[1])) $match[1] .= '.0';
-				$system['gdLib']['value'] = $match[1];
-			}
-		}
-		$system['gdLib']['result'] = (version_compare($system['gdLib']['value'], '2.0.0') >= 0);
-		
-		// ImageMagick
-		$system['imagick'] = ['result' => false];
-		if (ImagickImageAdapter::isSupported()) {
-			$system['imagick'] = [
+		// graphics library
+		$system['graphicsLibrary']['result'] = false;
+		$system['graphicsLibrary']['value'] = '';
+		if (ImagickImageAdapter::isSupported() && ImagickImageAdapter::supportsAnimatedGIFs(ImagickImageAdapter::getVersion())) {
+			$system['graphicsLibrary'] = [
 				'result' => true,
-				'value' => ImagickImageAdapter::getVersion(),
+				'value' => 'ImageMagick',
 			];
-			$system['imagick']['supportsAnimatedGIFs'] = ImagickImageAdapter::supportsAnimatedGIFs($system['imagick']['value']);
+		}
+		else if (GDImageAdapter::isSupported()) {
+			$system['graphicsLibrary'] = [
+				'result' => true,
+				'value' => 'GD Library',
+			];
 		}
 		
 		// memory limit
@@ -681,12 +677,26 @@ class WCFSetup extends WCF {
 					$db = new MySQLDatabase($dbHostWithoutPort, $dbUser, $dbPassword, $dbName, $dbPort, true, !!(self::$developerMode));
 				}
 				catch (DatabaseException $e) {
-					// work-around for older MySQL versions that don't know utf8mb4
-					if ($e->getPrevious()->getCode() == 1115) {
-						throw new SystemException("Insufficient MySQL version. Version '5.5.35' or greater is needed.");
+					switch ($e->getPrevious()->getCode()) {
+						// try to manually create non-existing database
+						case 1049:
+							try {
+								$db = new MySQLDatabase($dbHostWithoutPort, $dbUser, $dbPassword, $dbName, $dbPort, true, true);
+							}
+							catch (DatabaseException $e) {
+								throw new SystemException("Unknown database '{$dbName}'. Please create the database manually.");
+							}
+							
+							break;
+						
+						// work-around for older MySQL versions that don't know utf8mb4
+						case 1115:
+							throw new SystemException("Insufficient MySQL version. Version '5.5.35' or greater is needed.");
+							break;
+							
+						default:
+							throw $e;
 					}
-					
-					throw $e;
 				}
 				
 				// check sql version
@@ -707,9 +717,17 @@ class WCFSetup extends WCF {
 					}
 				}
 				else {
-					// MySQL 5.5.35+
-					if (!(version_compare($compareSQLVersion, '5.5.35') >= 0)) {
-						throw new SystemException("Insufficient MySQL version '".$compareSQLVersion."'. Version '5.5.35' or greater is needed.");
+					// MySQL 5.5.35+ or MySQL 8.0.14+ are required
+					// https://bugs.mysql.com/bug.php?id=88718
+					if ($compareSQLVersion[0] === '8') {
+						// MySQL 8.0.14+
+						if (!(version_compare($compareSQLVersion, '8.0.14') >= 0)) {
+							throw new SystemException("Insufficient MySQL version '".$compareSQLVersion."'. Version '5.5.35' or greater, or version '8.0.14' or greater is needed.");
+						}
+					}
+					else if (!(version_compare($compareSQLVersion, '5.5.35') >= 0)) {
+						// MySQL 5.5.35+
+						throw new SystemException("Insufficient MySQL version '".$compareSQLVersion."'. Version '5.5.35' or greater, or version '8.0.14' or greater is needed.");
 					}
 				}
 				
@@ -1250,7 +1268,7 @@ class WCFSetup extends WCF {
 			$useRandomCookiePrefix = false;
 		}
 		
-		$prefix = 'wsc31_';
+		$prefix = 'wsc52_';
 		if ($useRandomCookiePrefix) {
 			$cookieNames = array_keys($_COOKIE);
 			while (true) {

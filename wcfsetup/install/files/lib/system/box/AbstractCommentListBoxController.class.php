@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Abstract box controller implementation for a list of comments for a certain type of objects.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
@@ -86,7 +86,7 @@ abstract class AbstractCommentListBoxController extends AbstractDatabaseObjectLi
 		$this->applyObjectTypeFilters($commentList);
 		
 		if (!empty(UserProfileHandler::getInstance()->getIgnoredUsers())) {
-			$commentList->getConditionBuilder()->add("comment.userID NOT IN (?)", [UserProfileHandler::getInstance()->getIgnoredUsers()]);
+			$commentList->getConditionBuilder()->add("(comment.userID IS NULL OR comment.userID NOT IN (?))", [UserProfileHandler::getInstance()->getIgnoredUsers()]);
 		}
 		
 		return $commentList;

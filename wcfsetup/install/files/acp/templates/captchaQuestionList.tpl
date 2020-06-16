@@ -63,7 +63,7 @@
 								{event name='rowButtons'}
 							</td>
 							<td class="columnID columnQuestionID">{$question->questionID}</td>
-							<td class="columnText columnQuestion"><a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}">{lang}{$question->question}{/lang}</a></td>
+							<td class="columnText columnQuestion"><a href="{link controller='CaptchaQuestionEdit' id=$question->questionID}{/link}">{$question->getQuestion()}</a></td>
 							
 							{event name='columns'}
 						</tr>

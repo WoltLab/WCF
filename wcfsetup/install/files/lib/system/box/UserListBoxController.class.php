@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * Box controller for a list of users.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
@@ -29,6 +29,11 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController {
 		'likesReceived' => MostLikedMembersCacheBuilder::class,
 		'registrationDate' => NewestMembersCacheBuilder::class
 	];
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $conditionDefinition = 'com.woltlab.wcf.box.userList.condition';
 	
 	/**
 	 * @inheritDoc
@@ -72,8 +77,8 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController {
 	public function getLink() {
 		if (MODULE_MEMBERS_LIST) {
 			$parameters = '';
-			if ($this->box->sortField) {
-				$parameters = 'sortField='.$this->box->sortField.'&sortOrder='.$this->box->sortOrder;
+			if ($this->sortField) {
+				$parameters = 'sortField='.$this->sortField.'&sortOrder='.$this->sortOrder;
 			}
 			
 			return LinkHandler::getInstance()->getLink('MembersList', [], $parameters);
@@ -87,9 +92,9 @@ class UserListBoxController extends AbstractDatabaseObjectListBoxController {
 	 */
 	protected function getObjectList() {
 		// use specialized cache builders
-		if ($this->box->sortOrder && $this->box->sortField && isset($this->cacheBuilders[$this->box->sortField])) {
-			$this->userIDs = call_user_func([$this->cacheBuilders[$this->box->sortField], 'getInstance'])->getData([
-				'limit' => $this->box->limit,
+		if ($this->sortOrder && $this->sortField && isset($this->cacheBuilders[$this->sortField])) {
+			$this->userIDs = call_user_func([$this->cacheBuilders[$this->sortField], 'getInstance'])->getData([
+				'limit' => $this->limit,
 				'sortOrder' => $this->sortOrder
 			]);
 		}

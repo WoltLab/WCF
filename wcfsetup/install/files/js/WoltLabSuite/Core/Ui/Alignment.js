@@ -2,8 +2,9 @@
  * Utility class to align elements relatively to another.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	Ui/Alignment (alias)
  * @module	WoltLabSuite/Core/Ui/Alignment
  */
 define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language, DomTraverse, DomUtil) {
@@ -27,9 +28,6 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 				
 				// align the pointer element, expects .elementPointer as a direct child of given element
 				pointer: false,
-				
-				// offset from/left side, ignored for center alignment
-				pointerOffset: 4,
 				
 				// use static pointer positions, expects two items: class to move it to the bottom and the second to move it to the right
 				pointerClassNames: [],
@@ -232,11 +230,23 @@ define(['Core', 'Language', 'Dom/Traverse', 'Dom/Util'], function(Core, Language
 			var bottom = 'auto';
 			var top = 'auto';
 			var result = true;
+
+			var pageHeaderOffset = 50;
+			var pageHeaderPanel = elById('pageHeaderPanel');
+			if (pageHeaderPanel !== null) {
+				var position = window.getComputedStyle(pageHeaderPanel).position;
+				if (position === 'fixed' || position === 'static') {
+					pageHeaderOffset = pageHeaderPanel.offsetHeight;
+				}
+				else {
+					pageHeaderOffset = 0;
+				}
+			}
 			
 			if (align === 'top') {
 				var bodyHeight = document.body.clientHeight;
 				bottom = (bodyHeight - refOffsets.top) + verticalOffset;
-				if (bodyHeight - (bottom + elDimensions.height) < (window.scrollY || window.pageYOffset)) {
+				if (bodyHeight - (bottom + elDimensions.height) < (window.scrollY || window.pageYOffset) + pageHeaderOffset) {
 					result = false;
 				}
 			}

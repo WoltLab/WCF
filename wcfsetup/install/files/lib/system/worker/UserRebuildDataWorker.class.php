@@ -1,6 +1,5 @@
 <?php
 namespace wcf\system\worker;
-use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\user\avatar\UserAvatar;
 use wcf\data\user\avatar\UserAvatarEditor;
@@ -14,14 +13,13 @@ use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\SystemException;
 use wcf\system\html\input\HtmlInputProcessor;
 use wcf\system\image\ImageHandler;
-use wcf\system\user\activity\point\UserActivityPointHandler;
 use wcf\system\WCF;
 
 /**
  * Worker implementation for updating users.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Worker
  * 
@@ -68,9 +66,6 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 		}
 		
 		if (!empty($userIDs)) {
-			// update activity points
-			UserActivityPointHandler::getInstance()->updateUsers($userIDs);
-			
 			// update article counter
 			$conditionBuilder = new PreparedStatementConditionBuilder();
 			$conditionBuilder->add('user_table.userID IN (?)', [$userIDs]);
@@ -86,67 +81,21 @@ class UserRebuildDataWorker extends AbstractRebuildDataWorker {
 			
 			// update like counter
 			if (MODULE_LIKE) {
-				$positiveReactionTypes = $negativeReactionTypes = $neutralReactionTypes = [];
-				
-				foreach (ReactionTypeCache::getInstance()->getEnabledReactionTypes() as $reactionType) {
-					switch ($reactionType->type) {
-						case ReactionType::REACTION_TYPE_POSITIVE: 
-							$positiveReactionTypes[] = $reactionType->reactionTypeID;
-							break;
-						
-						case ReactionType::REACTION_TYPE_NEGATIVE: 
-							$negativeReactionTypes[] = $reactionType->reactionTypeID;
-							break;
-							
-						case ReactionType::REACTION_TYPE_NEUTRAL:
-							$neutralReactionTypes[] = $reactionType->reactionTypeID;
-							break;
-							
-						default: 
-							throw new \LogicException('Unreachable');
-					}
-				}
-				
 				$sql = "UPDATE	wcf".WCF_N."_user user_table SET";
-					
-				if (!empty($positiveReactionTypes)) {
+				
+				$reactionTypeIDs = array_keys(ReactionTypeCache::getInstance()->getReactionTypes());
+				if (!empty($reactionTypeIDs)) {
 					$sql .= " likesReceived = (
 							SELECT	COUNT(*)
 							FROM	wcf".WCF_N."_like
 							WHERE	objectUserID = user_table.userID
-								AND reactionTypeID IN (". implode(',', $positiveReactionTypes) .")
-						), positiveReactionsReceived = (
-							SELECT	COUNT(*)
-							FROM	wcf".WCF_N."_like
-							WHERE	objectUserID = user_table.userID
-								AND reactionTypeID IN (". implode(',', $positiveReactionTypes) ."))";
+								AND reactionTypeID IN (". implode(',', $reactionTypeIDs) .")
+						)";
 				}
 				else {
-					$sql .= " likesReceived = 0, positiveReactionsReceived = 0";
+					$sql .= " likesReceived = 0";
 				}
 				
-				if (!empty($negativeReactionTypes)) {
-					$sql .= ", negativeReactionsReceived = (
-							SELECT	COUNT(*)
-							FROM	wcf".WCF_N."_like
-							WHERE	objectUserID = user_table.userID
-								AND reactionTypeID IN (". implode(',', $negativeReactionTypes) ."))";
-				}
-				else {
-					$sql .= ", negativeReactionsReceived = 0";
-				}
-					
-				if (!empty($neutralReactionTypes)) {
-					$sql .= ", neutralReactionsReceived = (
-							SELECT	COUNT(*)
-							FROM	wcf".WCF_N."_like
-							WHERE	objectUserID = user_table.userID
-								AND reactionTypeID IN (". implode(',', $neutralReactionTypes) ."))";
-				}
-				else {
-					$sql .= ", neutralReactionsReceived = 0";
-				}
-					
 				$sql .= " ".$conditionBuilder;
 				$statement = WCF::getDB()->prepareStatement($sql);
 				$statement->execute($conditionBuilder->getParameters());

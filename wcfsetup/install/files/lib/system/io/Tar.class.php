@@ -15,7 +15,7 @@ use wcf\util\FileUtil;
  * }
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Io
  */
@@ -314,7 +314,7 @@ class Tar implements IArchive {
 		$data = unpack($format, $binaryData);
 		
 		// Extract the properties
-		$header['checksum'] = octdec(trim($data['checksum']));
+		$header['checksum'] = @octdec(trim($data['checksum']));
 		if ($header['checksum'] == $checksum) {
 			$header['filename'] = trim($data['filename']);
 			$header['mode'] = octdec(trim($data['mode']));

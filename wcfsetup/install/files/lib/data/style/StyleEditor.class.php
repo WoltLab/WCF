@@ -32,7 +32,7 @@ use wcf\util\XMLWriter;
  * Provides functions to edit, import, export and delete a style.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Style
  * 
@@ -40,15 +40,14 @@ use wcf\util\XMLWriter;
  * @mixin	Style
  */
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
-	/**
-	 * @deprecated 3.1 use the compatibility api versions instead
-	 */
-	const EXCLUDE_WCF_VERSION = '3.2.0 Alpha 1';
+	const EXCLUDE_WCF_VERSION = '6.0.0 Alpha 1';
 	const INFO_FILE = 'style.xml';
+	const VALID_IMAGE_EXTENSIONS = ['.gif', '.jpg', '.jpeg', '.png', '.svg'];
 	
 	/**
 	 * list of compatible API versions
 	 * @var integer[]
+	 * @deprecated 5.2
 	 */
 	public static $compatibilityApiVersions = [2018];
 	
@@ -405,6 +404,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 				$contentList = $imagesTar->getContentList();
 				foreach ($contentList as $key => $val) {
 					if ($val['type'] == 'file') {
+						$fileExtension = mb_substr($val['filename'], mb_strrpos($val['filename'], '.'));
+						if (!in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS)) {
+							continue;
+						}
+						
 						$imagesTar->extract($key, $imagesLocation.basename($val['filename']));
 						FileUtil::makeWritable($imagesLocation.basename($val['filename']));
 					}
@@ -525,6 +529,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 						
 						// copy templates
 						foreach ($templates as $template) {
+							if (!StringUtil::endsWith($template['filename'], '.tpl')) {
+								continue;
+							}
+							
 							$templatesTar->extract($template['index'], $templatesDir.$template['filename']);
 							
 							$templateName = str_replace('.tpl', '', $template['filename']);
@@ -593,6 +601,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		foreach (['image', 'image2x'] as $type) {
 			if (!empty($data[$type])) {
 				$fileExtension = mb_substr($data[$type], mb_strrpos($data[$type], '.'));
+				if (!in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS)) {
+					continue;
+				}
+				
 				$index = $tar->getIndexByFilename($data[$type]);
 				if ($index !== false) {
 					$filename = WCF_DIR . 'images/stylePreview-' . $style->styleID . ($type === 'image2x' ? '@2x' : '') . $fileExtension;
@@ -622,7 +634,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if (!empty($data['coverPhoto'])) {
 			$fileExtension = mb_substr($data['coverPhoto'], mb_strrpos($data['coverPhoto'], '.'));
 			$index = $tar->getIndexByFilename($data['coverPhoto']);
-			if ($index !== false) {
+			if ($index !== false && in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS)) {
 				$filename = WCF_DIR . 'images/coverPhotos/' . $style->styleID . $fileExtension;
 				$tar->extract($index, $filename);
 				FileUtil::makeWritable($filename);
@@ -763,7 +775,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// create style info file
 		$xml = new XMLWriter();
-		$xml->beginDocument('style', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/vortex/style.xsd');
+		$xml->beginDocument('style', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/style.xsd');
 		
 		// general block
 		$xml->startElement('general');
@@ -802,7 +814,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$styleTar->addString(self::INFO_FILE, $xml->endDocument());
 		
 		// create variable list
-		$xml->beginDocument('variables', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/vortex/styleVariables.xsd');
+		$xml->beginDocument('variables', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/styleVariables.xsd');
 		
 		// get variables
 		$sql = "SELECT		variable.variableName, value.variableValue
@@ -908,7 +920,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$packageTar->add($styleTarName, '', FileUtil::addTrailingSlash(dirname($styleTarName)));
 			
 			// create package.xml
-			$xml->beginDocument('package', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/vortex/package.xsd', ['name' => $packageName]);
+			$xml->beginDocument('package', 'http://www.woltlab.com', 'http://www.woltlab.com/XSD/' . WSC_API_VERSION . '/package.xsd', ['name' => $packageName]);
 			
 			$xml->startElement('packageinformation');
 			$xml->writeElement('packagename', $this->styleName);
@@ -931,6 +943,11 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$xml->writeElement('requiredpackage', 'com.woltlab.wcf', ['minversion' => PackageCache::getInstance()->getPackageByIdentifier('com.woltlab.wcf')->packageVersion]);
 			$xml->endElement();
 			
+			$xml->startElement('excludedpackages');
+			$xml->writeElement('excludedpackage', 'com.woltlab.wcf', ['version' => self::EXCLUDE_WCF_VERSION]);
+			$xml->endElement();
+			
+			// @deprecated 5.2
 			$xml->startElement('compatibility');
 			foreach (self::$compatibilityApiVersions as $apiVersion) {
 				$xml->writeElement('api', '', ['version' => $apiVersion]);

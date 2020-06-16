@@ -7,7 +7,7 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
-use wcf\system\image\ImageHandler;
+use wcf\system\upload\AvatarUploadFileSaveStrategy;
 use wcf\system\upload\AvatarUploadFileValidationStrategy;
 use wcf\system\upload\UploadFile;
 use wcf\system\user\storage\UserStorageHandler;
@@ -21,7 +21,7 @@ use wcf\util\Url;
  * Executes avatar-related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Avatar
  * 
@@ -72,77 +72,21 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 	 * Handles uploaded attachments.
 	 */
 	public function upload() {
-		/** @var UploadFile[] $files */
+		/** @var UploadFile $file */
+		$file = $this->parameters['__files']->getFiles()[0];
+		$saveStrategy = new AvatarUploadFileSaveStrategy((!empty($this->parameters['userID']) ? intval($this->parameters['userID']) : WCF::getUser()->userID));
 		/** @noinspection PhpUndefinedMethodInspection */
-		$files = $this->parameters['__files']->getFiles();
-		$userID = (!empty($this->parameters['userID']) ? intval($this->parameters['userID']) : WCF::getUser()->userID);
-		$user = ($userID != WCF::getUser()->userID ? new User($userID) : WCF::getUser());
-		$file = $files[0];
+		$this->parameters['__files']->saveFiles($saveStrategy);
 		
-		try {
-			if (!$file->getValidationErrorType()) {
-				// shrink avatar if necessary
-				$fileLocation = $this->enforceDimensions($file->getLocation());
-				$imageData = getimagesize($fileLocation);
-				
-				$data = [
-					'avatarName' => $file->getFilename(),
-					'avatarExtension' => $file->getFileExtension(),
-					'width' => $imageData[0],
-					'height' => $imageData[1],
-					'userID' => $userID,
-					'fileHash' => sha1_file($fileLocation)
-				];
-				
-				// create avatar
-				$avatar = UserAvatarEditor::create($data);
-				
-				// check avatar directory
-				// and create subdirectory if necessary
-				$dir = dirname($avatar->getLocation());
-				if (!@file_exists($dir)) {
-					FileUtil::makePath($dir);
-				}
-				
-				// move uploaded file
-				if (@copy($fileLocation, $avatar->getLocation())) {
-					@unlink($fileLocation);
-					
-					// delete old avatar
-					if ($user->avatarID) {
-						$action = new UserAvatarAction([$user->avatarID], 'delete');
-						$action->executeAction();
-					}
-					
-					// update user
-					$userEditor = new UserEditor($user);
-					$userEditor->update([
-						'avatarID' => $avatar->avatarID,
-						'enableGravatar' => 0
-					]);
-					
-					// reset user storage
-					UserStorageHandler::getInstance()->reset([$userID], 'avatar');
-					
-					// return result
-					return [
-						'avatarID' => $avatar->avatarID,
-						'url' => $avatar->getURL(96)
-					];
-				}
-				else {
-					// moving failed; delete avatar
-					$editor = new UserAvatarEditor($avatar);
-					$editor->delete();
-					throw new UserInputException('avatar', 'uploadFailed');
-				}
-			}
+		if ($file->getValidationErrorType()) {
+			return ['errorType' => $file->getValidationErrorType()];
 		}
-		catch (UserInputException $e) {
-			$file->setValidationErrorType($e->getType());
+		else {
+			return [
+				'avatarID' => $saveStrategy->getAvatar()->avatarID,
+				'url' => $saveStrategy->getAvatar()->getURL(96)
+			];
 		}
-		
-		return ['errorType' => $file->getValidationErrorType()];
 	}
 	
 	/**
@@ -195,23 +139,24 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 			@unlink($filename);
 			return;
 		}
+		
 		$tmp = pathinfo($tmp['path']);
-		if (!isset($tmp['basename']) || !isset($tmp['extension'])) {
-			if (!isset($tmp['basename'])) {
-				$tmp['basename'] = basename($filename);
-			}
+		if (!isset($tmp['basename'])) {
+			$tmp['basename'] = basename($filename);
+		}
+		
+		$imageData = @getimagesize($filename);
+		if ($imageData !== false) {
+			$tmp['extension'] = ImageUtil::getExtensionByMimeType($imageData['mime']);
 			
-			if (!isset($tmp['extension'])) {
-				$imageData = @getimagesize($filename);
-				if ($imageData !== false) {
-					$tmp['extension'] = ImageUtil::getExtensionByMimeType($imageData['mime']);
-				}
-			}
-			
-			if (empty($tmp['extension'])) {
+			if (!in_array($tmp['extension'], ['jpeg', 'jpg', 'png', 'gif'])) {
 				@unlink($filename);
 				return;
 			}
+		}
+		else {
+			@unlink($filename);
+			return;
 		}
 		
 		$data = [
@@ -276,23 +221,17 @@ class UserAvatarAction extends AbstractDatabaseObjectAction {
 	 * @throws	UserInputException
 	 */
 	protected function enforceDimensions($filename) {
-		$imageData = getimagesize($filename);
-		if ($imageData[0] > UserAvatar::AVATAR_SIZE || $imageData[1] > UserAvatar::AVATAR_SIZE) {
-			try {
-				$adapter = ImageHandler::getInstance()->getAdapter();
-				$adapter->loadFile($filename);
-				$filename = FileUtil::getTemporaryFilename();
-				$thumbnail = $adapter->createThumbnail(UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE, false);
-				$adapter->writeImage($thumbnail, $filename);
-			}
-			catch (SystemException $e) {
-				throw new UserInputException('avatar', 'tooLarge');
-			}
-			
-			// check filesize (after shrink)
-			if (@filesize($filename) > WCF::getSession()->getPermission('user.profile.avatar.maxSize')) {
-				throw new UserInputException('avatar', 'tooLarge');
-			}
+		try {
+			$filename = ImageUtil::enforceDimensions($filename, UserAvatar::AVATAR_SIZE, UserAvatar::AVATAR_SIZE);
+		}
+			/** @noinspection PhpRedundantCatchClauseInspection */
+		catch (SystemException $e) {
+			throw new UserInputException('avatar', 'tooLarge');
+		}
+		
+		// check filesize (after shrink)
+		if (@filesize($filename) > WCF::getSession()->getPermission('user.profile.avatar.maxSize')) {
+			throw new UserInputException('avatar', 'tooLarge');
 		}
 		
 		return $filename;

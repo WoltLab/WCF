@@ -14,6 +14,7 @@ use wcf\system\form\builder\container\FormContainer;
 use wcf\system\form\builder\container\TabFormContainer;
 use wcf\system\form\builder\container\TabMenuFormContainer;
 use wcf\system\form\builder\field\BooleanFormField;
+use wcf\system\form\builder\field\DateFormField;
 use wcf\system\form\builder\field\dependency\NonEmptyFormFieldDependency;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\devtools\project\DevtoolsProjectExcludedPackagesFormField;
@@ -37,7 +38,7 @@ use wcf\util\FileUtil;
  * Shows the devtools project add form.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since	3.1
@@ -136,6 +137,14 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 					->label('wcf.acp.devtools.project.path')
 					->required()
 					->addValidator(new FormFieldValidator('validPath', function (TextFormField $formField) {
+						// ensure that unified directory separators are used
+						// and that there is a trailing slash
+						$formField->value(
+							FileUtil::addTrailingSlash(
+								FileUtil::unifyDirSeparator($formField->getSaveValue() ?? '')
+							)
+						);
+						
 						$path = $formField->getSaveValue();
 						
 						/** @var RadioButtonFormField $modeField */
@@ -269,16 +278,22 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 					->required()
 					->maximumLength(255),
 				
-				TextFormField::create('date')
+				DateFormField::create('date')
 					->label('wcf.acp.devtools.project.packageDate')
 					->description('wcf.acp.devtools.project.packageDate.description')
 					->required()
-					->maximumLength(255),
+					->saveValueFormat('Y-m-d'),
 				
 				UrlFormField::create('packageUrl')
 					->label('wcf.acp.devtools.project.packageUrl')
 					->description('wcf.acp.devtools.project.packageUrl.description')
+					->maximumLength(255),
+				
+				TextFormField::create('license')
+					->label('wcf.acp.devtools.project.license')
 					->maximumLength(255)
+					->i18n()
+					->languageItemPattern('__NONE__')
 			])
 			->addDependency(
 				ValueFormFieldDependency::create('mode')
@@ -746,6 +761,10 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 						case 'language':
 							if ($value === 'language/*.xml') {
 								$directory = FileUtil::addTrailingSlash(dirname($path . $value));
+								if ($this->formObject !== null && $this->formObject->isCore()) {
+									$directory = FileUtil::addTrailingSlash(dirname($path . 'wcfsetup/install/lang/*.xml'));
+								}
+								
 								$directoryUtil = DirectoryUtil::getInstance($directory);
 								if (empty($directoryUtil->getFiles(SORT_ASC, Regex::compile('.+\.xml')))) {
 									$formField->addValidationError(
@@ -944,19 +963,24 @@ class DevtoolsProjectAddForm extends AbstractFormBuilderForm {
 		}
 		
 		if ($data['data']['mode'] !== 'import') {
-			$xmlData = array_merge($data, $data['data']);
-			unset($xmlData['data'], $xmlData['mode']);
-			$packageXmlWriter = new DevtoolsPackageXmlWriter($project, $xmlData);
-			$packageXmlWriter->write();
+			$this->writePackageXml($project, $data);
 		}
 		
 		$this->saved();
 		
-		// re-build form after having created a new object
-		if ($this->formAction === 'create') {
-			$this->buildForm();
-		}
-		
 		WCF::getTPL()->assign('success', true);
+	}
+	
+	/**
+	 * Writes the updated `package.xml` file for the given project using the given data.
+	 *
+	 * @param	DevtoolsProject		$project
+	 * @param	array			$data
+	 */
+	protected function writePackageXml(DevtoolsProject $project, array $data) {
+		$xmlData = array_merge($data, $data['data']);
+		unset($xmlData['data'], $xmlData['mode']);
+		$packageXmlWriter = new DevtoolsPackageXmlWriter($project, $xmlData);
+		$packageXmlWriter->write();
 	}
 }

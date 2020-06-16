@@ -6,6 +6,7 @@ use wcf\data\package\Package;
 use wcf\data\package\PackageCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\HTTPUnauthorizedException;
+use wcf\system\exception\NamedUserException;
 use wcf\system\exception\SystemException;
 use wcf\system\io\File;
 use wcf\system\WCF;
@@ -16,7 +17,7 @@ use wcf\util\HTTPRequest;
  * Contains business logic related to preparation of package installations.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */
@@ -478,12 +479,19 @@ class PackageInstallationScheduler {
 			]);
 			$packageVersions = $statement->fetchAll(\PDO::FETCH_COLUMN);
 			
-			if (count($packageVersions) > 1) {
+			$count = count($packageVersions);
+			if ($count > 1) {
 				// sort by version number
 				usort($packageVersions, [Package::class, 'compareVersion']);
 				
 				// get highest version
 				$version = array_pop($packageVersions);
+			}
+			else if ($count === 1 && $version !== $packageVersions[0]) {
+				// This may happen if there is a compatible but newer version of the required
+				// version, that also happens to be the only available version. For example,
+				// "5.2.0" is requested but there is only "5.2.0 pl 1".
+				$version = $packageVersions[0];
 			}
 		}
 		
@@ -553,7 +561,12 @@ class PackageInstallationScheduler {
 	 */
 	protected function findShortestUpdateThread($package, $fromversions, $currentVersion, $newVersion) {
 		if (!isset($fromversions[$newVersion])) {
-			throw new SystemException("An update of package ".$package." from version ".$currentVersion." to ".$newVersion." is not supported.");
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.update.path.unknown', [
+				'currentVersion' => $currentVersion,
+				'newVersion' => $newVersion,
+				'package' => $package,
+				'packageName' => PackageCache::getInstance()->getPackageByIdentifier($package)->getName(),
+			]));
 		}
 		
 		// find direct update
@@ -585,7 +598,12 @@ class PackageInstallationScheduler {
 		}
 		
 		if (empty($updateThreadList)) {
-			throw new SystemException("An update of package ".$package." from version ".$currentVersion." to ".$newVersion." is not supported.");
+			throw new NamedUserException(WCF::getLanguage()->getDynamicVariable('wcf.acp.package.update.path.incoherent', [
+				'currentVersion' => $currentVersion,
+				'newVersion' => $newVersion,
+				'package' => $package,
+				'packageName' => PackageCache::getInstance()->getPackageByIdentifier($package)->getName(),
+			]));
 		}
 		
 		// sort by length

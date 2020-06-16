@@ -3,8 +3,9 @@
  * or the deprecated `Event.which`.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	EventKey (alias)
  * @module	WoltLabSuite/Core/Event/Key
  */
 define([], function() {
@@ -23,7 +24,7 @@ define([], function() {
 	 */
 	return {
 		/**
-		 * Returns true if pressed key equals 'ArrowDown'.
+		 * Returns true if the pressed key equals 'ArrowDown'.
 		 * 
 		 * @param       {Event}         event           event object
 		 * @return      {boolean}
@@ -33,7 +34,7 @@ define([], function() {
 		},
 		
 		/**
-		 * Returns true if pressed key equals 'ArrowLeft'.
+		 * Returns true if the pressed key equals 'ArrowLeft'.
 		 * 
 		 * @param       {Event}         event           event object
 		 * @return      {boolean}
@@ -43,7 +44,7 @@ define([], function() {
 		},
 		
 		/**
-		 * Returns true if pressed key equals 'ArrowRight'.
+		 * Returns true if the pressed key equals 'ArrowRight'.
 		 * 
 		 * @param       {Event}         event           event object
 		 * @return      {boolean}
@@ -53,7 +54,7 @@ define([], function() {
 		},
 		
 		/**
-		 * Returns true if pressed key equals 'ArrowUp'.
+		 * Returns true if the pressed key equals 'ArrowUp'.
 		 * 
 		 * @param       {Event}         event           event object
 		 * @return      {boolean}
@@ -63,7 +64,7 @@ define([], function() {
 		},
 		
 		/**
-		 * Returns true if pressed key equals 'Comma'.
+		 * Returns true if the pressed key equals 'Comma'.
 		 * 
 		 * @param       {Event}         event           event object
 		 * @return      {boolean}
@@ -73,7 +74,17 @@ define([], function() {
 		},
 		
 		/**
-		 * Returns true if pressed key equals 'Enter'.
+		 * Returns true if the pressed key equals 'End'.
+		 *
+		 * @param       {Event}         event           event object
+		 * @return      {boolean}
+		 */
+		End: function(event) {
+			return _isKey(event, 'End', 35);
+		},
+		
+		/**
+		 * Returns true if the pressed key equals 'Enter'.
 		 * 
 		 * @param       {Event}         event           event object
 		 * @return      {boolean}
@@ -83,7 +94,7 @@ define([], function() {
 		},
 		
 		/**
-		 * Returns true if pressed key equals 'Escape'.
+		 * Returns true if the pressed key equals 'Escape'.
 		 * 
 		 * @param       {Event}         event           event object
 		 * @return      {boolean}
@@ -93,7 +104,27 @@ define([], function() {
 		},
 		
 		/**
-		 * Returns true if pressed key equals 'Tab'.
+		 * Returns true if the pressed key equals 'Home'.
+		 *
+		 * @param       {Event}         event           event object
+		 * @return      {boolean}
+		 */
+		Home: function(event) {
+			return _isKey(event, 'Home', 36);
+		},
+		
+		/**
+		 * Returns true if the pressed key equals 'Space'.
+		 *
+		 * @param       {Event}         event           event object
+		 * @return      {boolean}
+		 */
+		Space: function(event) {
+			return _isKey(event, 'Space', 32);
+		},
+		
+		/**
+		 * Returns true if the pressed key equals 'Tab'.
 		 * 
 		 * @param       {Event}         event           event object
 		 * @return      {boolean}

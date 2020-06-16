@@ -7,6 +7,7 @@ use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\user\User;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\label\LabelHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
@@ -15,7 +16,7 @@ use wcf\util\HeaderUtil;
  * Shows a list of cms articles.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Page
  * @since	3.0
@@ -207,6 +208,7 @@ class ArticleListPage extends SortablePage {
 			'user' => $this->user,
 			'categoryID' => 0,
 			'showArticleAddDialog' => $this->showArticleAddDialog,
+			'availableLanguages' => LanguageFactory::getInstance()->getLanguages(),
 		]);
 	}
 }

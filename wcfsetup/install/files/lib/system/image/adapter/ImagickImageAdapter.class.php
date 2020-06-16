@@ -1,12 +1,14 @@
 <?php
 namespace wcf\system\image\adapter;
+use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
+use wcf\util\StringUtil;
 
 /**
  * Image adapter for ImageMagick imaging library.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Image\Adapter
  */
@@ -124,12 +126,12 @@ class ImagickImageAdapter implements IImageAdapter {
 			do {
 				if ($obtainDimensions) {
 					$thumbnail->thumbnailImage($maxWidth, $maxHeight, true);
+					$thumbnail->setImagePage(0, 0, 0, 0);
 				}
 				else {
 					$thumbnail->cropThumbnailImage($maxWidth, $maxHeight);
+					$thumbnail->setImagePage($maxWidth, $maxHeight, 0, 0);
 				}
-				
-				$thumbnail->setImagePage($maxWidth, $maxHeight, 0, 0);
 			}
 			while ($thumbnail->nextImage());
 		}
@@ -179,7 +181,7 @@ class ImagickImageAdapter implements IImageAdapter {
 		else {
 			$this->clip($originX, $originY, $originWidth, $originHeight);
 			
-			$this->imagick->resizeImage($targetWidth, $targetHeight, \Imagick::FILTER_POINT, 0);
+			$this->imagick->resizeImage($targetWidth, $targetHeight, $this->getResizeFilter(), 0);
 		}
 	}
 	
@@ -204,7 +206,7 @@ class ImagickImageAdapter implements IImageAdapter {
 		$draw->setFillOpacity($opacity);
 		$draw->setTextAntialias(true);
 		$draw->setFont($font);
-		$draw->setFontSize($size);
+		$draw->setFontSize($size * 4 / 3);
 		
 		// draw text
 		$draw->annotation($x, $y, $text);
@@ -226,10 +228,17 @@ class ImagickImageAdapter implements IImageAdapter {
 	 * @inheritDoc
 	 */
 	public function drawTextRelative($text, $position, $margin, $offsetX, $offsetY, $font, $size, $opacity = 1.0) {
+		// split text into multiple lines
+		$lines = explode("\n", StringUtil::unifyNewlines($text));
+				
 		$draw = new \ImagickDraw();
 		$draw->setFont($font);
-		$draw->setFontSize($size);
+		$draw->setFontSize($size * 4 / 3);
 		$metrics = $this->imagick->queryFontMetrics($draw, $text);
+		$textWidth = $metrics['textWidth'];
+		$textHeight = $metrics['textHeight'];
+		$firstLineMetrics = $this->imagick->queryFontMetrics($draw, $lines[0]);
+		$firstLineHeight = $firstLineMetrics['textHeight'];
 		
 		// calculate x coordinate
 		$x = 0;
@@ -243,13 +252,13 @@ class ImagickImageAdapter implements IImageAdapter {
 			case 'topCenter':
 			case 'middleCenter':
 			case 'bottomCenter':
-				$x = floor(($this->getWidth() - $metrics['textWidth']) / 2);
+				$x = floor(($this->getWidth() - $textWidth) / 2);
 			break;
 			
 			case 'topRight':
 			case 'middleRight':
 			case 'bottomRight':
-				$x = $this->getWidth() - $metrics['textWidth'] - $margin;
+				$x = $this->getWidth() - $textWidth - $margin;
 			break;
 		}
 		
@@ -259,19 +268,19 @@ class ImagickImageAdapter implements IImageAdapter {
 			case 'topLeft':
 			case 'topCenter':
 			case 'topRight':
-				$y = $margin;
+				$y = $margin + $firstLineHeight;
 			break;
 			
 			case 'middleLeft':
 			case 'middleCenter':
 			case 'middleRight':
-				$y = floor(($this->getHeight() - $metrics['textHeight']) / 2);
+				$y = floor(($this->getHeight() - $textHeight) / 2) + $firstLineHeight;
 			break;
 			
 			case 'bottomLeft':
 			case 'bottomCenter':
 			case 'bottomRight':
-				$y = $this->getHeight() - $metrics['textHeight'] - $margin;
+				$y = $this->getHeight() - $textHeight + $firstLineHeight - $margin;
 			break;
 		}
 		
@@ -285,7 +294,7 @@ class ImagickImageAdapter implements IImageAdapter {
 	public function textFitsImage($text, $margin, $font, $size) {
 		$draw = new \ImagickDraw();
 		$draw->setFont($font);
-		$draw->setFontSize($size);
+		$draw->setFontSize($size * 4 / 3);
 		$metrics = $this->imagick->queryFontMetrics($draw, $text);
 		
 		return ($metrics['textWidth'] + 2 * $margin <= $this->getWidth() && $metrics['textHeight'] + 2 * $margin <= $this->getHeight());
@@ -414,6 +423,24 @@ class ImagickImageAdapter implements IImageAdapter {
 	 */
 	public function overlayImageRelative($file, $position, $margin, $opacity) {
 		// does nothing
+	}
+	
+	/**
+	 * Returns the preferred image filter used during image resizing.
+	 * 
+	 * @return int
+	 */
+	protected function getResizeFilter() {
+		static $filter;
+		
+		if ($filter === null) {
+			$parameters = ['filter' => null];
+			EventHandler::getInstance()->fireAction($this, 'getResizeFilter', $parameters);
+			
+			$filter = $parameters['filter'] ?? \Imagick::FILTER_POINT;
+		}
+		
+		return $filter;
 	}
 	
 	/**

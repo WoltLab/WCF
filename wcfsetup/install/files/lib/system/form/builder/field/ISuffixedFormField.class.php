@@ -5,12 +5,12 @@ namespace wcf\system\form\builder\field;
  * Represents a form field that supports displaying a suffix.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface ISuffixedFormField {
+interface ISuffixedFormField extends IFormField {
 	/**
 	 * Returns the suffix of this field or `null` if no suffix has been set.
 	 * 

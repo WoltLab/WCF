@@ -4,7 +4,7 @@
  * Message related classes for WCF
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Message = { };
@@ -622,13 +622,15 @@ if (COMPILER_TARGET_DEFAULT) {
 		 *
 		 * @param        string                wysiwygSelector
 		 */
-		init: function (wysiwygSelector) {
+		init: function (wysiwygSelector, smiliesTabMenuId, formBuilderUsage) {
 			this._proxy = new WCF.Action.Proxy({
 				success: $.proxy(this._success, this)
 			});
 			this._wysiwygSelector = wysiwygSelector;
+			this._smiliesTabMenuId = smiliesTabMenuId || 'smilies-' + this._wysiwygSelector;
+			this._formBuilderUsage = formBuilderUsage || false;
 			
-			$('#smilies-' + this._wysiwygSelector).on('messagetabmenushow', $.proxy(this._click, this));
+			$('#' + this._smiliesTabMenuId).on('messagetabmenushow', $.proxy(this._click, this));
 		},
 		
 		/**
@@ -640,10 +642,30 @@ if (COMPILER_TARGET_DEFAULT) {
 		_click: function (event, data) {
 			event.preventDefault();
 			
-			var $categoryID = parseInt(data.activeTab.tab.data('smileyCategoryID'));
+			if (this._formBuilderUsage) {
+				var href = data.activeTab.tab.children('a').prop('href');
+				if (href.match(/#([a-zA-Z0-9_-]+)$/)) {
+					var anchor = RegExp.$1;
+					
+					if (anchor.match(this._smiliesTabMenuId.replace(/Container$/, '') + '_smileyCategoryTab(\\d+)Container')) {
+						var categoryID = parseInt(RegExp.$1);
+					}
+					else {
+						console.debug("[WCF.Message.SmileyCategories] Cannot extract category id for tab '" + data.activeTab.tab.wcfIdentify() + "'.");
+						return;
+					}
+				}
+				else {
+					console.debug("[WCF.Message.SmileyCategories] Cannot extract category id for tab '" + data.activeTab.tab.wcfIdentify() + "'.");
+					return;
+				}
+			}
+			else {
+				var categoryID = parseInt(data.activeTab.tab.data('smileyCategoryID'));
+			}
 			
 			// ignore global category, will always be pre-loaded
-			if (!$categoryID) {
+			if (!categoryID) {
 				return;
 			}
 			
@@ -653,8 +675,8 @@ if (COMPILER_TARGET_DEFAULT) {
 			}
 			
 			// cache exists
-			if (this._cache[$categoryID] !== undefined) {
-				data.activeTab.container.html(this._cache[$categoryID]);
+			if (this._cache[categoryID] !== undefined) {
+				data.activeTab.container.html(this._cache[categoryID]);
 				return;
 			}
 			
@@ -662,7 +684,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			this._proxy.setOption('data', {
 				actionName: 'getSmilies',
 				className: 'wcf\\data\\smiley\\category\\SmileyCategoryAction',
-				objectIDs: [$categoryID]
+				objectIDs: [categoryID]
 			});
 			this._proxy.sendRequest();
 		},
@@ -678,46 +700,23 @@ if (COMPILER_TARGET_DEFAULT) {
 			var $categoryID = parseInt(data.returnValues.smileyCategoryID);
 			this._cache[$categoryID] = data.returnValues.template;
 			
-			$('#smilies-' + this._wysiwygSelector + '-' + $categoryID).html(data.returnValues.template);
+			if (this._formBuilderUsage) {
+				$('#' + this._smiliesTabMenuId.replace(/Container$/, '') + '_smileyCategoryTab' + $categoryID + 'Container').html(data.returnValues.template);
+			}
+			else {
+				$('#smilies-' + this._wysiwygSelector + '-' + $categoryID).html(data.returnValues.template);
+			}
 		}
 	});
 	
 	/**
-	 * Handles smiley clicks.
-	 *
-	 * @param        string                wysiwygSelector
+	 * @deprecated 5.2 Use `WoltLabSuite/Core/Ui/Smiley/Insert` instead.
 	 */
 	WCF.Message.Smilies = Class.extend({
-		/**
-		 * wysiwyg editor id
-		 * @var        string
-		 */
-		_editorId: '',
-		
-		/**
-		 * Initializes the smiley handler.
-		 *
-		 * @param        {string}        editorId
-		 */
 		init: function (editorId) {
-			this._editorId = editorId;
-			
-			$('.messageTabMenu[data-wysiwyg-container-id=' + this._editorId + ']').on('mousedown', '.jsSmiley', this._smileyClick.bind(this));
-		},
-		
-		/**
-		 * Handles tab smiley clicks.
-		 *
-		 * @param        {Event}                event
-		 */
-		_smileyClick: function (event) {
-			event.preventDefault();
-			
-			require(['EventHandler'], (function (EventHandler) {
-				EventHandler.fire('com.woltlab.wcf.redactor2', 'insertSmiley_' + this._editorId, {
-					img: event.currentTarget.children[0]
-				});
-			}).bind(this));
+			require(['WoltLabSuite/Core/Ui/Smiley/Insert'], function(UiSmileyInsert) {
+				new UiSmileyInsert(editorId);
+			});
 		}
 	});
 	
@@ -1077,6 +1076,26 @@ if (COMPILER_TARGET_DEFAULT) {
 			
 			// register with DOMNodeInsertedHandler
 			WCF.DOMNodeInsertedHandler.addCallback('WCF.Message.Quote.Handler' + objectType.hashCode(), $.proxy(this._initContainers, this));
+			
+			// Prevent the tooltip from being selectable while the touch pointer is being moved.
+			var timer = null;
+			window.addEventListener('touchmove', (function() {
+				if (!this._copyQuote[0].classList.contains('active')) {
+					return;
+				}
+				
+				this._copyQuote[0].classList.add('touchForceInaccessible');
+				
+				if (timer !== null) {
+					window.clearTimeout(timer);
+				}
+				
+				timer = window.setTimeout((function() {
+					this._copyQuote[0].classList.remove('touchForceInaccessible');
+					
+					timer = null;
+				}).bind(this), 50);
+			}).bind(this));
 		},
 		
 		/**
@@ -1124,6 +1143,23 @@ if (COMPILER_TARGET_DEFAULT) {
 				var startContainer = elClosest(range.startContainer, '.jsQuoteMessageContainer');
 				var endContainer = elClosest(range.endContainer, '.jsQuoteMessageContainer');
 				if (startContainer && startContainer === endContainer && !startContainer.classList.contains('jsInvalidQuoteTarget')) {
+					// Check if the selection is visible, such as text marked inside containers with an
+					// active overflow handling attached to it. This can be a side effect of the browser
+					// search which modifies the text selection, but cannot be distinguished from manual
+					// selections initiated by the user.
+					var commonAncestor = range.commonAncestorContainer;
+					if (commonAncestor.nodeType !== Node.ELEMENT_NODE) {
+						commonAncestor = commonAncestor.parentNode;
+					}
+					
+					var offsetParent = commonAncestor.offsetParent;
+					if (startContainer.contains(offsetParent)) {
+						if (offsetParent.scrollTop + offsetParent.clientHeight < commonAncestor.offsetTop) {
+							// The selected text is not visible to the user.
+							return;
+						}
+					}
+					
 					this._activeContainerID = startContainer.id;
 				}
 			}
@@ -1245,7 +1281,10 @@ if (COMPILER_TARGET_DEFAULT) {
 						continue;
 					}
 					
-					$text += $node.nodeValue.replace(/\n/g, '');
+					// Firefox loves to arbitrarily wrap pasted text at weird line lengths, causing
+					// pointless linebreaks to be inserted. Replacing them with a simple space will
+					// preserve the spacing between words that would otherwise be lost.
+					$text += $node.nodeValue.replace(/\n/g, ' ');
 				}
 				
 			}
@@ -1330,6 +1369,15 @@ if (COMPILER_TARGET_DEFAULT) {
 			var $coordinates = this._getBoundingRectangle($container, window.getSelection());
 			var $dimensions = this._copyQuote.getDimensions('outer');
 			var $left = ($coordinates.right - $coordinates.left) / 2 - ($dimensions.width / 2) + $coordinates.left;
+			
+			// Prevent the overlay from overflowing the left or right boundary of the container.
+			var containerBoundaries = $container[0].getBoundingClientRect();
+			if ($left < containerBoundaries.left) {
+				$left = containerBoundaries.left;
+			}
+			else if ($left + $dimensions.width > containerBoundaries.right) {
+				$left = containerBoundaries.right - $dimensions.width;
+			}
 			
 			this._copyQuote.css({
 				top: $coordinates.bottom + 7 + 'px',
@@ -1785,7 +1833,9 @@ if (COMPILER_TARGET_DEFAULT) {
 						UiPageAction.add(buttonName, button);
 					}
 					
-					button.textContent = WCF.Language.get('wcf.message.quote.showQuotes').replace(/#count#/, this._count);
+					button.textContent = WCF.Language.get('wcf.message.quote.showQuotes', {
+						count: this._count
+					});
 					
 					UiPageAction.show(buttonName);
 				}
@@ -2182,9 +2232,18 @@ WCF.Message.Share.Content = Class.extend({
 	_dialog: null,
 	
 	/**
-	 * Initializes the WCF.Message.Share.Content class.
+	 * template containing the social media share buttons
+	 * @var	string
 	 */
-	init: function() {
+	_shareButtonsTemplate: '',
+	
+	/**
+	 * Initializes the WCF.Message.Share.Content class.
+	 * 
+	 * @param	{string?}	shareButtonsTemplate
+	 */
+	init: function(shareButtonsTemplate) {
+		this._shareButtonsTemplate = shareButtonsTemplate || '';
 		this._cache = { };
 		this._dialog = null;
 		
@@ -2216,7 +2275,7 @@ WCF.Message.Share.Content = Class.extend({
 			// remove dialog contents
 			var $dialogInitialized = false;
 			if (this._dialog === null) {
-				this._dialog = $('<div />').hide().appendTo(document.body);
+				this._dialog = $('<div id="shareContentDialog" />').hide().appendTo(document.body);
 				$dialogInitialized = true;
 			}
 			else {
@@ -2234,6 +2293,12 @@ WCF.Message.Share.Content = Class.extend({
 			// permalink (HTML)
 			var $section = $('<section class="section"><h2 class="sectionTitle"><label for="__sharePermalinkHTML">' + WCF.Language.get('wcf.message.share.permalink.html') + '</label></h2></section>').appendTo(this._dialog);
 			$('<input type="text" id="__sharePermalinkHTML" class="long" readonly />').attr('value', '<a href="' + $link + '">' + WCF.String.escapeHTML($title) + '</a>').appendTo($section);
+			
+			// share buttons
+			if (this._shareButtonsTemplate !== '') {
+				$section = $('<section class="section"><h2 class="sectionTitle">' + WCF.Language.get('wcf.message.share') + '</h2>'  + this._shareButtonsTemplate + '</section>').appendTo(this._dialog);
+				elData($section.children('.jsMessageShareButtons')[0], 'url', WCF.String.escapeHTML($link));
+			}
 			
 			this._cache[$key] = this._dialog.html();
 			
@@ -2353,7 +2418,6 @@ $.widget('wcf.messageTabMenu', {
 				
 				if ($name === undefined) {
 					$name = $tab.wcfIdentify();
-					console.debug("[wcf.messageTabMenu] Missing name attribute, assuming generic ID '" + $name + "'");
 				}
 			}
 			

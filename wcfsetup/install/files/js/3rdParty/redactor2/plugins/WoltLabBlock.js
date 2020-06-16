@@ -2,6 +2,8 @@ $.Redactor.prototype.WoltLabBlock = function() {
 	"use strict";
 	
 	return {
+		preserveBlocks: ['pre', 'woltlab-quote', 'woltlab-spoiler'],
+		
 		init: function() {
 			this.block.tags = ['p', 'blockquote', 'pre', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'figure'];
 			
@@ -76,8 +78,8 @@ $.Redactor.prototype.WoltLabBlock = function() {
 				return replaced;
 			}).bind(this);
 			
-			var mpFormatUncollapsed = this.block.formatUncollapsed;
 			this.block.formatUncollapsed = (function(tag, attr, value, type) {
+				var block, i;
 				this.selection.save();
 				
 				this.selection.blocks().forEach(function(block) {
@@ -94,11 +96,64 @@ $.Redactor.prototype.WoltLabBlock = function() {
 				
 				this.selection.restore();
 				
-				var replaced = mpFormatUncollapsed.call(this, tag, attr, value, type);
+				this.selection.save();
 				
-				var block, firstBlock = null;
-				for (var i = 0, length = replaced.length; i < length; i++) {
-					block = replaced[i][0];
+				var replaced = [];
+				var blocks = this.selection.blocks();
+				
+				if (blocks[0] && ($(blocks[0]).hasClass('redactor-in') || $(blocks[0]).hasClass(
+					'redactor-box'))) {
+					blocks = this.core.editor().find(this.opts.blockTags.join(', '));
+				}
+				
+				var len = blocks.length;
+				for (i = 0; i < len; i++) {
+					var currentTag = blocks[i].tagName.toLowerCase();
+					if ($.inArray(currentTag, this.block.tags) !== -1 && currentTag !== 'figure') {
+						if (tag !== 'pre' && this.WoltLabBlock.preserveBlocks.indexOf(blocks[i].nodeName.toLowerCase()) !== -1) {
+							block = elCreate(tag);
+							blocks[i].parentNode.insertBefore(block, blocks[i]);
+							block.appendChild(blocks[i]);
+							block = $(block);
+						}
+						else {
+							block = this.utils.replaceToTag(blocks[i], tag);
+						}
+						
+						if (typeof attr === 'object') {
+							type = value;
+							for (var key in attr) {
+								block = this.block.setAttr(block, key, attr[key], type);
+							}
+						}
+						else {
+							block = this.block.setAttr(block, attr, value, type);
+						}
+						
+						replaced.push(block);
+						this.block.removeInlineTags(block);
+					}
+				}
+				
+				this.selection.restore();
+				
+				// combine pre
+				if (tag === 'pre' && replaced.length !== 0) {
+					var first = replaced[0];
+					$.each(replaced, function (i, s) {
+						if (i !== 0) {
+							$(first).append("\n" + $.trim(s.html()));
+							$(s).remove();
+						}
+					});
+					
+					replaced = [];
+					replaced.push(first);
+				}
+				
+				var length, firstBlock = null;
+				for (i = 0, length = replaced.length; i < length; i++) {
+					block = replaced[i][0] || replaced[i];
 					
 					this.WoltLabBlock._paragraphize(block);
 					
@@ -112,6 +167,14 @@ $.Redactor.prototype.WoltLabBlock = function() {
 						
 						elRemove(block);
 					}
+				}
+
+				// Convert any `<br>` inside `<pre>` with a plain newline character.
+				if (firstBlock) {
+					elBySelAll('br', firstBlock, function(br) {
+						br.parentNode.insertBefore(document.createTextNode('\n'), br);
+						elRemove(br);
+					});
 				}
 				
 				return $(firstBlock);
@@ -185,12 +248,41 @@ $.Redactor.prototype.WoltLabBlock = function() {
 				return;
 			}
 			
-			var paragraph = elCreate('p');
-			while (block.childNodes.length) {
-				paragraph.appendChild(block.childNodes[0]);
+			// Check if there is at least one child that is not a block itself.
+			var child, hasNonBlocks = false;
+			for (var i = 0, length = block.childNodes.length; i < length; i++) {
+				child = block.childNodes[i];
+				if (child.nodeType === Node.TEXT_NODE) {
+					hasNonBlocks = true;
+					break;
+				}
+				else if (child.nodeType === Node.ELEMENT_NODE && this.block.tags.indexOf(child.nodeName.toLowerCase()) === -1) {
+					hasNonBlocks = true;
+					break;
+				}
 			}
 			
-			block.appendChild(paragraph);
+			if (!hasNonBlocks) {
+				return;
+			}
+			
+			var node = block.childNodes[0], nextNode, p = null;
+			while (node) {
+				nextNode = node.nextSibling;
+				if (node.nodeType !== Node.ELEMENT_NODE || this.block.tags.indexOf(node.nodeName.toLowerCase()) === -1) {
+					if (p === null) {
+						p = elCreate('p');
+						block.insertBefore(p, node);
+					}
+					
+					p.appendChild(node);
+				}
+				else if (p !== null) {
+					p = null;
+				}
+				
+				node = nextNode;
+			}
 		}
 	}
 };

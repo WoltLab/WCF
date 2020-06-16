@@ -2,11 +2,11 @@
  * Wrapper around the web browser's various clipboard APIs.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Clipboard
  */
-define([], function() {
+define(['Environment', 'Ui/Screen'], function(Environment, UiScreen) {
 	"use strict";
 	
 	return {
@@ -18,7 +18,20 @@ define([], function() {
 				var textarea = elCreate('textarea');
 				textarea.contentEditable = true;
 				textarea.readOnly = false;
-				textarea.style.cssText = 'position: absolute; left: -9999px; top: -9999px; width: 0; height: 0;';
+				
+				// iOS has some implicit restrictions that, if crossed, cause the browser to scroll to the top.
+				var scrollDisabled = false;
+				if (Environment.platform() === 'ios') {
+					scrollDisabled = true;
+					UiScreen.scrollDisable();
+					
+					var topPx = (~~(window.innerHeight / 4) + window.pageYOffset);
+					textarea.style.cssText = 'font-size: 16px; position: absolute; left: 1px; top: ' + topPx + 'px; width: 50px; height: 50px; overflow: hidden;border: 5px solid red;';
+				}
+				else {
+					textarea.style.cssText = 'position: absolute; left: -9999px; top: -9999px; width: 0; height: 0;';
+				}
+				
 				document.body.appendChild(textarea);
 				try {
 					// see: https://stackoverflow.com/a/34046084/782822
@@ -36,6 +49,10 @@ define([], function() {
 				}
 				finally {
 					elRemove(textarea);
+					
+					if (scrollDisabled) {
+						UiScreen.scrollEnable();
+					}
 				}
 			}
 			

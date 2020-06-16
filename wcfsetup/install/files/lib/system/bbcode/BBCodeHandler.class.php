@@ -2,14 +2,16 @@
 namespace wcf\system\bbcode;
 use wcf\data\bbcode\BBCode;
 use wcf\data\bbcode\BBCodeCache;
+use wcf\system\application\ApplicationHandler;
 use wcf\system\SingletonFactory;
+use wcf\util\ArrayUtil;
 use wcf\util\JSON;
 
 /**
  * Handles BBCodes displayed as buttons within the WYSIWYG editor.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  */
@@ -120,7 +122,7 @@ class BBCodeHandler extends SingletonFactory {
 	/**
 	 * Returns metadata about the highlighters.
 	 * 
-	 * @return	string[]
+	 * @return	string[][]
 	 */
 	public function getHighlighterMeta() {
 		if ($this->highlighterMeta === null) {
@@ -137,5 +139,25 @@ class BBCodeHandler extends SingletonFactory {
 	 */
 	public function getHighlighters() {
 		return array_keys($this->getHighlighterMeta());
+	}
+	
+	/**
+	 * Returns a list of hostnames that are permitted as image sources.
+	 * 
+	 * @return string[]
+	 * @since 5.2
+	 */
+	public function getImageExternalSourceWhitelist() {
+		$hosts = [];
+		// Hide these hosts unless external sources are actually denied.
+		if (!IMAGE_ALLOW_EXTERNAL_SOURCE) {
+			$hosts = ArrayUtil::trim(explode("\n", IMAGE_EXTERNAL_SOURCE_WHITELIST));
+		}
+		
+		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			$hosts[] = $application->domainName;
+		}
+		
+		return array_unique($hosts);
 	}
 }

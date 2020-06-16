@@ -12,7 +12,7 @@ use wcf\system\WCFACP;
  * Resolves incoming requests and performs lookups for controller to url mappings.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  * @since	3.0
@@ -47,7 +47,6 @@ class ControllerMap extends SingletonFactory {
 	
 	/**
 	 * @inheritDoc
-	 * @throws	SystemException
 	 */
 	protected function init() {
 		$this->applicationOverrides = RoutingCacheBuilder::getInstance()->getData([], 'applicationOverrides');
@@ -84,6 +83,8 @@ class ControllerMap extends SingletonFactory {
 			if ($controller === 'AjaxProxy') $controller = 'AJAXProxy';
 			else if ($controller === 'AjaxUpload') $controller = 'AJAXUpload';
 			else if ($controller === 'AjaxInvoke') $controller = 'AJAXInvoke';
+			else if ($controller === 'AjaxFileUpload') $controller = 'AJAXFileUpload';
+			else if ($controller === 'AjaxFileDelete') $controller = 'AJAXFileDelete';
 			
 			// work-around for package installation during the upgrade 2.1 -> 3.0
 			if ($isAcpRequest && $controller === 'InstallPackage') $application = 'wcf';
@@ -134,6 +135,10 @@ class ControllerMap extends SingletonFactory {
 	 * @return	array		empty array if there is no exact match
 	 */
 	public function resolveCustomController($application, $controller) {
+		if (isset($this->applicationOverrides['lookup'][$application][$controller])) {
+			$application = $this->applicationOverrides['lookup'][$application][$controller];
+		}
+		
 		if (isset($this->customUrls['lookup'][$application]) && isset($this->customUrls['lookup'][$application][$controller])) {
 			$data = $this->customUrls['lookup'][$application][$controller];
 			if (preg_match('~^__WCF_CMS__(?P<pageID>\d+)-(?P<languageID>\d+)$~', $data, $matches)) {
@@ -254,7 +259,7 @@ class ControllerMap extends SingletonFactory {
 			}
 			
 			// different application, redirect instead
-			if ($cmsPageData['application'] !== $application) {
+			if ($cmsPageData['application'] !== $application && $this->getApplicationOverride($application, $cmsPageData['controller']) !== $application) {
 				return ['redirect' => LinkHandler::getInstance()->getCmsLink($matches['pageID'])];
 			}
 			else {

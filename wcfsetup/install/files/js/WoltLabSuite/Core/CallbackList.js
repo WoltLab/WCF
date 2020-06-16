@@ -2,8 +2,9 @@
  * Simple API to store and invoke multiple callbacks per identifier.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	CallbackList (alias)
  * @module	WoltLabSuite/Core/CallbackList
  */
 define(['Dictionary'], function(Dictionary) {

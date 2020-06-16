@@ -3,7 +3,6 @@ namespace wcf\system\user\notification\event;
 use wcf\data\user\UserProfile;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\CommentHandler;
-use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\LikeUserNotificationObject;
 use wcf\system\WCF;
 
@@ -11,7 +10,7 @@ use wcf\system\WCF;
  * User notification event for profile comment response likes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  * 
@@ -103,11 +102,7 @@ class UserProfileCommentResponseLikeUserNotificationEvent extends AbstractShared
 			$owner = UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID']);
 		}
 		
-		return LinkHandler::getInstance()->getLink(
-			'User',
-			['object' => $owner],
-			'#wall/comment' . $this->additionalData['commentID'] . '/response' . $this->getResponseID()
-		);
+		return $owner->getLink() . '#wall/comment' . $this->additionalData['commentID'] . '/response' . $this->getResponseID();
 	}
 	
 	/**

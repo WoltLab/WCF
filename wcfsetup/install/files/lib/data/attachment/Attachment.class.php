@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\attachment;
+use wcf\data\ILinkableObject;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\data\IThumbnailFile;
@@ -7,12 +8,13 @@ use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\StringUtil;
 
 /**
  * Represents an attachment.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Attachment
  *
@@ -41,7 +43,7 @@ use wcf\util\FileUtil;
  * @property-read	integer		$uploadTime		timestamp at which the attachment has been uploaded
  * @property-read	integer		$showOrder		position of the attachment in relation to the other attachment to the same message
  */
-class Attachment extends DatabaseObject implements IRouteController, IThumbnailFile {
+class Attachment extends DatabaseObject implements ILinkableObject, IRouteController, IThumbnailFile {
 	/**
 	 * indicates if the attachment is embedded
 	 * @var	boolean
@@ -53,6 +55,17 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	 * @var	boolean[]
 	 */
 	protected $permissions = [];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getLink() {
+		// Do not use `LinkHandler::getControllerLink()` or `forceFrontend` as attachment
+		// links can be opened in the frontend and in the ACP.
+		return LinkHandler::getInstance()->getLink('Attachment', [
+			'object' => $this,
+		]);
+	}
 	
 	/**
 	 * Returns true if a user has the permission to download this attachment.
@@ -123,7 +136,7 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	 * @inheritDoc
 	 */
 	public function getLocation() {
-		return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-' . $this->fileHash;
+		return $this->getLocationHelper(self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-' . $this->fileHash);
 	}
 	
 	/**
@@ -140,10 +153,49 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 	 */
 	public function getThumbnailLocation($size = '') {
 		if ($size == 'tiny') {
-			return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-tiny-' . $this->fileHash;
+			$location = self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-tiny-' . $this->fileHash;
+		}
+		else {
+			$location = self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-thumbnail-' . $this->fileHash;
 		}
 		
-		return self::getStorage() . substr($this->fileHash, 0, 2) . '/' . $this->attachmentID . '-thumbnail-' . $this->fileHash;
+		return $this->getLocationHelper($location);
+	}
+	
+	/**
+	 * Migrates the storage location of this attachment to
+	 * include the `.bin` suffix.
+	 * 
+	 * @since	5.2
+	 */
+	public function migrateStorage() {
+		foreach ([$this->getLocation(), $this->getThumbnailLocation(), $this->getThumbnailLocation('tiny')] as $location) {
+			if (!StringUtil::endsWith($location, '.bin')) {
+				rename($location, $location.'.bin');
+			}
+		}
+	}
+	
+	/**
+	 * Returns the appropriate location with or without extension.
+	 * 
+	 * Files are suffixed with `.bin` since 5.2, but they are recognized
+	 * without the extension for backward compatibility.
+	 * 
+	 * @param	string $location
+	 * @return	string
+	 * @since	5.2
+	 */
+	protected final function getLocationHelper($location) {
+		if (is_readable($location.'.bin')) {
+			return $location.'.bin';
+		}
+		else if (is_readable($location)) {
+			return $location;
+		}
+		
+		// Assume that the attachment has not been uploaded yet.
+		return $location.'.bin';
 	}
 	
 	/**
@@ -156,6 +208,9 @@ class Attachment extends DatabaseObject implements IRouteController, IThumbnailF
 		
 		if ($size == 'tiny') {
 			$parameters['tiny'] = 1;
+		}
+		else if ($size == 'thumbnail') {
+			$parameters['thumbnail'] = 1;
 		}
 		
 		return LinkHandler::getInstance()->getLink('Attachment', $parameters);

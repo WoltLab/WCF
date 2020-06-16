@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Represents a bbcode.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Bbcode
  * 
@@ -76,6 +76,16 @@ class BBCode extends ProcessibleDatabaseObject implements IRouteController {
 	 */
 	public function getTitle() {
 		return $this->bbcodeTag;
+	}
+	
+	/**
+	 * Returns the button label in the active user's language.
+	 * 
+	 * @return	string
+	 * @since	5.2
+	 */
+	public function getButtonLabel() {
+		return WCF::getLanguage()->get($this->buttonLabel);
 	}
 	
 	/**

@@ -4,7 +4,7 @@
  * and runs modules that are needed on page load.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Bootstrap
  */
@@ -103,11 +103,11 @@ define(
 		},
 		
 		_initA11y: function() {
-			elBySelAll('nav:not([aria-label]):not([role])', undefined, function(element) {
+			elBySelAll('nav:not([aria-label]):not([aria-labelledby]):not([role])', undefined, function(element) {
 				elAttr(element, 'role', 'presentation');
 			});
 			
-			elBySelAll('article:not([aria-label]):not([role])', undefined, function(element) {
+			elBySelAll('article:not([aria-label]):not([aria-labelledby]):not([role])', undefined, function(element) {
 				elAttr(element, 'role', 'presentation');
 			});
 		}

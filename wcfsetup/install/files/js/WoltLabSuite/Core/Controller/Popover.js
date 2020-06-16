@@ -2,7 +2,7 @@
  * Versatile popover manager.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Controller/Popover
  */
@@ -118,6 +118,7 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			
 			_handlers.set(options.identifier, {
 				attributeName: options.attributeName,
+				dboAction: options.dboAction,
 				elements: options.legacy ? options.className : elByClass(options.className),
 				legacy: options.legacy,
 				loadCallback: options.loadCallback
@@ -336,7 +337,26 @@ define(['Ajax', 'Dictionary', 'Environment', 'Dom/ChangeListener', 'Dom/Util', '
 			else if (data.state === STATE_NONE) {
 				data.state = STATE_LOADING;
 				
-				_handlers.get(elementData.identifier).loadCallback(elementData.objectId, this);
+				var handler = _handlers.get(elementData.identifier);
+				if (handler.loadCallback) {
+					handler.loadCallback(elementData.objectId, this, elementData.element);
+				}
+				else if (handler.dboAction) {
+					var callback = function(data) {
+						this.setContent(
+							elementData.identifier,
+							elementData.objectId,
+							data.returnValues.template
+						);
+					}.bind(this);
+					
+					this.ajaxApi({
+						actionName: 'getPopover',
+						className: handler.dboAction,
+						interfaceName: 'wcf\\data\\IPopoverAction',
+						objectIDs: [ elementData.objectId ]
+					}, callback, callback);
+				}
 			}
 		},
 		

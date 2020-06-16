@@ -14,7 +14,7 @@ use wcf\util\StyleUtil;
  * Installs, updates and deletes files.
  * 
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -142,6 +142,6 @@ class FilePackageInstallationPlugin extends AbstractPackageInstallationPlugin im
 	 * @inheritDoc
 	 */
 	public static function getSyncDependencies() {
-		return [];
+		return ['option'];
 	}
 }

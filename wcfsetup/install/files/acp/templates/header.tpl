@@ -40,6 +40,7 @@
 		var LAST_UPDATE_TIME = {@LAST_UPDATE_TIME};
 		var URL_LEGACY_MODE = false;
 		var ENABLE_DEBUG_MODE = {if ENABLE_DEBUG_MODE}true{else}false{/if};
+		var ENABLE_PRODUCTION_DEBUG_MODE = {if ENABLE_PRODUCTION_DEBUG_MODE}true{else}false{/if};
 		var ENABLE_DEVELOPER_TOOLS = {if ENABLE_DEVELOPER_TOOLS}true{else}false{/if};
 		var ENABLE_DEPRECATION_WARNINGS = {if ENABLE_DEVELOPER_TOOLS && ENABLE_DEPRECATION_WARNINGS}true{else}false{/if};
 		var WSC_API_VERSION = {@WSC_API_VERSION};
@@ -118,6 +119,7 @@
 				'wcf.global.form.error.lessThan': '{lang __literal=true}wcf.global.form.error.lessThan{/lang}',
 				'wcf.global.form.error.multilingual': '{lang}wcf.global.form.error.multilingual{/lang}',
 				'wcf.global.form.input.maxItems': '{lang}wcf.global.form.input.maxItems{/lang}',
+				'wcf.global.language.noSelection': '{lang}wcf.global.language.noSelection{/lang}',
 				'wcf.global.loading': '{lang}wcf.global.loading{/lang}',
 				'wcf.global.noSelection': '{lang}wcf.global.noSelection{/lang}',
 				'wcf.global.select': '{lang}wcf.global.select{/lang}',
@@ -135,7 +137,14 @@
 				'wcf.global.thousandsSeparator': '{capture assign=thousandsSeparator}{lang}wcf.global.thousandsSeparator{/lang}{/capture}{@$thousandsSeparator|encodeJS}',
 				'wcf.page.pagePosition': '{lang __literal=true}wcf.page.pagePosition{/lang}',
 				'wcf.menu.page': '{lang}wcf.menu.page{/lang}',
-				'wcf.menu.user': '{lang}wcf.menu.user{/lang}'
+				'wcf.menu.user': '{lang}wcf.menu.user{/lang}',
+				'wcf.date.datePicker': '{lang}wcf.date.datePicker{/lang}',
+				'wcf.date.datePicker.previousMonth': '{lang}wcf.date.datePicker.previousMonth{/lang}',
+				'wcf.date.datePicker.nextMonth': '{lang}wcf.date.datePicker.nextMonth{/lang}',
+				'wcf.date.datePicker.month': '{lang}wcf.date.datePicker.month{/lang}',
+				'wcf.date.datePicker.year': '{lang}wcf.date.datePicker.year{/lang}',
+				'wcf.date.datePicker.hour': '{lang}wcf.date.datePicker.hour{/lang}',
+				'wcf.date.datePicker.minute': '{lang}wcf.date.datePicker.minute{/lang}'
 				{event name='javascriptLanguageImport'}
 			});
 			
@@ -160,6 +169,7 @@
 	{js application='wcf' lib='jquery-ui'}
 	{js application='wcf' lib='jquery-ui' file='touchPunch' bundle='WCF.Combined'}
 	{js application='wcf' lib='jquery-ui' file='nestedSortable' bundle='WCF.Combined'}
+	{js application='wcf' lib='polyfill' file='focus-visible' bundle='WCF.Combined' hasTiny=true}
 	{js application='wcf' file='WCF.Assets' bundle='WCF.Combined'}
 	{js application='wcf' file='WCF' bundle='WCF.Combined'}
 	{js application='wcf' acp='true' file='WCF.ACP'}
@@ -168,6 +178,10 @@
 		$.holdReady(true);
 		WCF.User.init({$__wcf->user->userID}, '{@$__wcf->user->username|encodeJS}');
 	</script>
+	{js application='wcf' file='WCF.Attachment' bundle='WCF.Combined'}
+	{js application='wcf' file='WCF.Message' bundle='WCF.Combined'}
+	{js application='wcf' file='WCF.Label' bundle='WCF.Combined'}
+	{js application='wcf' file='WCF.Poll' bundle='WCF.Combined'}
 	<script>
 		$(function() {
 			if (jQuery.browser.touch) $('html').addClass('touch');
@@ -197,6 +211,8 @@
 					link.rel = rel.join(' ');
 				}
 			});
+			
+			WCF.DOMNodeInsertedHandler.execute();
 		});
 	</script>
 	{event name='javascriptInclude'}

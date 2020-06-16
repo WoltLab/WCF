@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Executes language item-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Language\Item
  * 
@@ -54,13 +54,27 @@ class LanguageItemAction extends AbstractDatabaseObjectAction {
 			$this->parameters['data']['packageID'] = 1;
 		}
 		
-		foreach ($this->parameters['languageItemValue_i18n'] as $languageID => $value) {
+		if (!empty($this->parameters['languageItemValue_i18n'])) {
+			// multiple languages
+			foreach ($this->parameters['languageItemValue_i18n'] as $languageID => $value) {
+				(new LanguageItemAction([], 'create', [
+					'data' => array_merge(
+						$this->parameters['data'],
+						[
+							'languageID' => $languageID,
+							'languageItemValue' => $value
+						]
+					)
+				]))->executeAction();
+			}
+		}
+		else {
+			// single language
 			(new LanguageItemAction([], 'create', [
 				'data' => array_merge(
 					$this->parameters['data'],
 					[
-						'languageID' => $languageID,
-						'languageItemValue' => $value
+						'languageID' => LanguageFactory::getInstance()->getDefaultLanguageID()
 					]
 				)
 			]))->executeAction();

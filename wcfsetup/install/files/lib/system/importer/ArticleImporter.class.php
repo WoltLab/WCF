@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Imports cms articles.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Importer
  */
@@ -51,11 +51,17 @@ class ArticleImporter extends AbstractImporter {
 				$imageID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.media', $contentData['imageID']);
 			}
 			
+			$teaserImageID = null;
+			if (!empty($contentData['teaserImageID'])) {
+				$teaserImageID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.media', $contentData['teaserImageID']);
+			}
+			
 			$contents[$languageID] = [
 				'title' => (!empty($contentData['title']) ? $contentData['title'] : ''),
 				'teaser' => (!empty($contentData['teaser']) ? $contentData['teaser'] : ''),
 				'content' => (!empty($contentData['content']) ? $contentData['content'] : ''),
 				'imageID' => $imageID,
+				'teaserImageID' => $teaserImageID,
 				'tags' => (!empty($contentData['tags']) ? $contentData['tags'] : [])
 				
 			];
@@ -66,7 +72,7 @@ class ArticleImporter extends AbstractImporter {
 		}
 		
 		// check old id
-		if (is_numeric($oldID)) {
+		if (ctype_digit((string)$oldID)) {
 			$article = new Article($oldID);
 			if (!$article->articleID) $data['articleID'] = $oldID;
 		}
@@ -95,7 +101,8 @@ class ArticleImporter extends AbstractImporter {
 				'title' => $contentData['title'],
 				'teaser' => $contentData['teaser'],
 				'content' => $contentData['content'],
-				'imageID' => $contentData['imageID']
+				'imageID' => $contentData['imageID'],
+				'teaserImageID' => $contentData['teaserImageID']
 			]);
 			
 			// save tags

@@ -4,7 +4,7 @@
  * User-related classes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -165,6 +165,21 @@ if (COMPILER_TARGET_DEFAULT) {
 		_triggerElement: null,
 		
 		/**
+		 * @var        Element
+		 */
+		_button: null,
+		
+		/**
+		 * @var        Function
+		 */
+		 _callbackFocus: null,
+		
+		/**
+		 * @var        boolean
+		 */
+		_wasInsideDropdown: false,
+		
+		/**
 		 * Initializes the WCF.User.Panel.Abstract class.
 		 *
 		 * @param        jQuery                triggerElement
@@ -177,6 +192,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			this._identifier = identifier;
 			this._triggerElement = triggerElement;
 			this._options = options;
+			this._callbackFocus = null;
 			
 			this._proxy = new WCF.Action.Proxy({
 				showLoadingOverlay: false,
@@ -184,6 +200,13 @@ if (COMPILER_TARGET_DEFAULT) {
 			});
 			
 			this._triggerElement.click($.proxy(this.toggle, this));
+			this._button = elBySel('a', this._triggerElement[0]);
+			if (this._button) {
+				elAttr(this._button, 'role', 'button');
+				elAttr(this._button, 'tabindex', '0');
+				elAttr(this._button, 'aria-haspopup', true);
+				elAttr(this._button, 'aria-expanded', false);
+			}
 			
 			if (this._options.showAllLink) {
 				this._triggerElement.dblclick($.proxy(this._dblClick, this));
@@ -230,6 +253,16 @@ if (COMPILER_TARGET_DEFAULT) {
 					this._loadData = false;
 					this._load();
 				}
+				
+				elAttr(this._button, 'aria-expanded', true);
+				if (this._callbackFocus === null) {
+					this._callbackFocus = this._maintainFocus.bind(this);
+				}
+				document.body.addEventListener('focus', this._callbackFocus, { capture: true });
+			}
+			else {
+				elAttr(this._button, 'aria-expanded', false);
+				document.body.removeEventListener('focus', this._callbackFocus);
 			}
 			
 			return false;
@@ -415,6 +448,26 @@ if (COMPILER_TARGET_DEFAULT) {
 			if (this._dropdown !== null) {
 				this._dropdown.resetItems();
 				this._loadData = true;
+			}
+		},
+		
+		/**
+		 * @param {Event} event
+		 */
+		_maintainFocus: function(event) {
+			var dropdown = this._dropdown.getContainer()[0];
+			
+			if (!dropdown.contains(event.target)) {
+				if (this._wasInsideDropdown) {
+					this._button.focus();
+					this._wasInsideDropdown = false;
+				}
+				else {
+					elBySel('a', dropdown).focus();
+				}
+			}
+			else {
+				this._wasInsideDropdown = true;
 			}
 		}
 	});
@@ -1650,7 +1703,7 @@ WCF.User.Registration.LostPassword = Class.extend({
  * Notification system for WCF.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 WCF.Notification = { };
@@ -1771,7 +1824,7 @@ if (COMPILER_TARGET_DEFAULT) {
 			// get preview container
 			var $preview = $('#previewContainer');
 			if (!$preview.length) {
-				$preview = $('<section class="section" id="previewContainer"><h2 class="sectionTitle">' + WCF.Language.get('wcf.global.preview') + '</h2><div class="htmlContent"></div></section>').insertBefore($('#signatureContainer')).wcfFadeIn();
+				$preview = $('<section class="section" id="previewContainer"><h2 class="sectionTitle">' + WCF.Language.get('wcf.global.preview') + '</h2><div class="htmlContent messageSignatureConstraints"></div></section>').insertBefore($('#signatureContainer')).wcfFadeIn();
 			}
 			
 			$preview.children('div').first().html(data.returnValues.message);
@@ -2112,6 +2165,7 @@ WCF.User.LikeLoader = Class.extend({
  * Loads user profile previews.
  * 
  * @see	WCF.Popover
+ * @deprecated	since 5.3, taken care of by `WoltLabSuite/Core/BootstrapFrontend` via `WoltLabSuite/Core/Controller/Popover`
  */
 WCF.User.ProfilePreview = WCF.Popover.extend({
 	/**

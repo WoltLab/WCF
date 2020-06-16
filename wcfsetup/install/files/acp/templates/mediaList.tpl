@@ -127,8 +127,8 @@
 				<tr class="jsMediaRow jsClipboardObject">
 					<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$media->mediaID}"></td>
 					<td class="columnIcon">
-						<span class="icon icon24 fa-pencil mediaEditButton jsMediaEditButton jsTooltip pointer" title="{lang}wcf.global.button.edit{/lang}" data-object-id="{@$media->mediaID}"></span>
-						<span class="icon icon24 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$media->mediaID}" data-confirm-message-html="{lang title=$media->filename __encode=true}wcf.media.delete.confirmMessage{/lang}"></span>
+						<span class="icon icon16 fa-pencil mediaEditButton jsMediaEditButton jsTooltip pointer" title="{lang}wcf.global.button.edit{/lang}" data-object-id="{@$media->mediaID}"></span>
+						<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$media->mediaID}" data-confirm-message-html="{lang title=$media->filename __encode=true}wcf.media.delete.confirmMessage{/lang}"></span>
 						
 						{event name='rowButtons'}
 					</td>
@@ -155,8 +155,8 @@
 				<tr class="jsMediaRow jsClipboardObject">
 					<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="0"></td>
 					<td class="columnIcon">
-						<span class="icon icon24 fa-pencil mediaEditButton jsMediaEditButton jsTooltip pointer" title="{lang}wcf.global.button.edit{/lang}" data-object-id="0"></span>
-						<span class="icon icon24 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="0"></span>
+						<span class="icon icon16 fa-pencil mediaEditButton jsMediaEditButton jsTooltip pointer" title="{lang}wcf.global.button.edit{/lang}" data-object-id="0"></span>
+						<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="0"></span>
 						
 						{event name='rowButtons'}
 					</td>

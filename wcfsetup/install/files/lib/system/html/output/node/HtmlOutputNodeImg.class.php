@@ -17,7 +17,7 @@ use wcf\util\Url;
  * Processes images.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
@@ -123,8 +123,10 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 						$srcset = '';
 						foreach ($sources as $source) {
 							$tmp = preg_split('~\s+~', StringUtil::trim($source));
-							if (!empty($srcset)) $srcset .= ', ';
-							$srcset .= $this->getProxyLink($tmp[0]) . ' ' . $tmp[1];
+							if (count($tmp) === 2) {
+								if (!empty($srcset)) $srcset .= ', ';
+								$srcset .= $this->getProxyLink($tmp[0]) . ' ' . $tmp[1];
+							}
 						}
 						
 						$element->setAttribute('srcset', $srcset);

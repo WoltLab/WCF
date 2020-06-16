@@ -12,7 +12,7 @@
 	<div class="contentHeaderTitle">
 		<h1 class="contentTitle">{lang}wcf.acp.paidSubscription.user.{$action}{/lang}</h1>
 		{if $action == 'add'}
-			<p class="contentHeaderDescription">{$subscription->title|language}</p>
+			<p class="contentHeaderDescription">{$subscription->getTitle()}</p>
 		{else}
 			<p class="contentHeaderDescription">{$subscriptionUser->getUser()->username}</p>
 		{/if}

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\option\user\group;
 use wcf\data\option\Option;
+use wcf\data\user\group\option\UserGroupOption;
 use wcf\data\user\group\UserGroup;
 use wcf\system\cache\builder\UserGroupOptionCacheBuilder;
 use wcf\system\exception\ImplementationException;
@@ -12,7 +13,7 @@ use wcf\system\WCF;
  * Handles user group options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option\User\Group
  */
@@ -26,13 +27,20 @@ class UserGroupOptionHandler extends OptionHandler {
 	 * user group object
 	 * @var	UserGroup
 	 */
-	protected $group = null;
+	protected $group;
 	
 	/**
 	 * true if current user can edit every user group
 	 * @var	boolean
 	 */
 	protected $isAdmin = null;
+	
+	/**
+	 * true if the user is part of the owner group
+	 * @var bool
+	 * @since 5.2
+	 */
+	protected $isOwner = null;
 	
 	/**
 	 * Sets current user group.
@@ -114,17 +122,24 @@ class UserGroupOptionHandler extends OptionHandler {
 	 */
 	protected function isAdmin() {
 		if ($this->isAdmin === null) {
-			$this->isAdmin = false;
-			
-			foreach (WCF::getUser()->getGroupIDs() as $groupID) {
-				if (UserGroup::getGroupByID($groupID)->isAdminGroup()) {
-					$this->isAdmin = true;
-					break;
-				}
-			}
+			$this->isAdmin = WCF::getUser()->hasAdministrativeAccess();
 		}
 		
 		return $this->isAdmin;
+	}
+	
+	/**
+	 * Returns true, if the current user is a member of the owner group.
+	 * 
+	 * @return bool
+	 * @since 5.2
+	 */
+	protected function isOwner() {
+		if ($this->isOwner === null) {
+			$this->isOwner = WCF::getUser()->hasOwnerAccess();
+		}
+		
+		return $this->isOwner;
 	}
 	
 	/**
@@ -133,32 +148,17 @@ class UserGroupOptionHandler extends OptionHandler {
 	protected function validateOption(Option $option) {
 		parent::validateOption($option);
 		
-		if (!$this->isAdmin()) {
-			// get type object
-			$typeObj = $this->getTypeObject($option->optionType);
-			
-			if ($typeObj->compare($this->optionValues[$option->optionName], WCF::getSession()->getPermission($option->optionName)) == 1) {
-				throw new UserInputException($option->optionName, 'exceedsOwnPermission');
-			}
+		if ($this->isOwner()) {
+			return;
 		}
-		else if ($option->optionName == 'admin.user.accessibleGroups' && $this->group !== null && $this->group->isAdminGroup()) {
-			$hasOtherAdminGroup = false;
-			foreach (UserGroup::getGroupsByType() as $userGroup) {
-				if ($userGroup->groupID != $this->group->groupID && $userGroup->isAdminGroup()) {
-					$hasOtherAdminGroup = true;
-					break;
-				}
-			}
-			
-			// prevent users from dropping their own admin state
-			if (!$hasOtherAdminGroup) {
-				// get type object
-				$typeObj = $this->getTypeObject($option->optionType);
-				
-				if ($typeObj->compare($this->optionValues[$option->optionName], WCF::getSession()->getPermission($option->optionName)) == -1) {
-					throw new UserInputException($option->optionName, 'cannotDropPrivileges');
-				}
-			}
+		
+		if ($this->isAdmin() && (!ENABLE_ENTERPRISE_MODE || !in_array($option->optionName, UserGroupOption::ENTERPRISE_BLACKLIST))) {
+			return;
+		}
+		
+		$typeObj = $this->getTypeObject($option->optionType);
+		if ($typeObj->compare($this->optionValues[$option->optionName], WCF::getSession()->getPermission($option->optionName)) == 1) {
+			throw new UserInputException($option->optionName, 'exceedsOwnPermission');
 		}
 	}
 }

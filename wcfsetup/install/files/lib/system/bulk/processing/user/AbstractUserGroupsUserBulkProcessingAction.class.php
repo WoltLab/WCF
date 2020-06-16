@@ -15,7 +15,7 @@ use wcf\util\ArrayUtil;
  * user groups.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bulk\Processing\User
  * @since	3.0
@@ -45,11 +45,7 @@ abstract class AbstractUserGroupsUserBulkProcessingAction extends AbstractUserBu
 	public function __construct(DatabaseObject $object) {
 		parent::__construct($object);
 		
-		$this->availableUserGroups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
-		
-		uasort($this->availableUserGroups, function(UserGroup $groupA, UserGroup $groupB) {
-			return strcmp($groupA->getName(), $groupB->getName());
-		});
+		$this->availableUserGroups = UserGroup::getSortedAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::OWNER, UserGroup::USERS]);
 	}
 	
 	/**

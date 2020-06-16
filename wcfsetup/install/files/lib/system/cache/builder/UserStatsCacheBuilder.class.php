@@ -1,13 +1,13 @@
 <?php
 namespace wcf\system\cache\builder;
-use wcf\data\user\User;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\WCF;
 
 /**
  * Caches the number of members and the newest member.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cache\Builder
  */
@@ -31,12 +31,12 @@ class UserStatsCacheBuilder extends AbstractCacheBuilder {
 		$data['members'] = $statement->fetchColumn();
 		
 		// newest member
-		$sql = "SELECT		*
+		$sql = "SELECT		userID
 			FROM		wcf".WCF_N."_user
 			ORDER BY	userID DESC";
 		$statement = WCF::getDB()->prepareStatement($sql, 1);
 		$statement->execute();
-		$data['newestMember'] = $statement->fetchObject(User::class);
+		$data['newestMember'] = UserProfileRuntimeCache::getInstance()->getObject($statement->fetchSingleColumn());
 		
 		return $data;
 	}

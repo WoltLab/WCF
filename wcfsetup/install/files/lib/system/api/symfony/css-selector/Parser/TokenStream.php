@@ -29,12 +29,12 @@ class TokenStream
     /**
      * @var Token[]
      */
-    private $tokens = array();
+    private $tokens = [];
 
     /**
      * @var Token[]
      */
-    private $used = array();
+    private $used = [];
 
     /**
      * @var int
@@ -154,8 +154,8 @@ class TokenStream
             return $next->getValue();
         }
 
-        if ($next->isDelimiter(array('*'))) {
-            return;
+        if ($next->isDelimiter(['*'])) {
+            return null;
         }
 
         throw SyntaxErrorException::unexpectedToken('identifier or "*"', $next);

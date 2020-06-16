@@ -12,7 +12,7 @@ use wcf\util\FileUtil;
  * Specialized implementation to emulate a regular package installation.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Devtools\Package
  * @since       3.1
@@ -31,8 +31,7 @@ class DevtoolsPackageArchive extends PackageArchive {
 	 * @inheritDoc
 	 */
 	public function openArchive() {
-		$projectDir = FileUtil::addTrailingSlash(dirname($this->packageXmlPath));
-		
+		$projectDir = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator(realpath(dirname($this->packageXmlPath))));
 		$readFiles = DirectoryUtil::getInstance($projectDir)->getFiles(
 			SORT_ASC,
 			// ignore folders whose contents are delivered as archives by default

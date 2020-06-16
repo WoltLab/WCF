@@ -1,12 +1,13 @@
 <?php
 namespace wcf\system\database\editor;
 use wcf\system\database\Database;
+use wcf\system\exception\NotImplementedException;
 
 /**
  * Abstract implementation of a database editor.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Database\Editor
  */
@@ -42,12 +43,31 @@ abstract class DatabaseEditor {
 	abstract public function getColumns($tableName);
 	
 	/**
-	 * Returns the indices of a table.
+	 * Returns information on the foreign keys of a table.
+	 * 
+	 * @return	array
+	 */
+	public function getForeignKeys($tableName) {
+		throw new NotImplementedException();
+	}
+	
+	/**
+	 * Returns the names of the indices of a table.
 	 * 
 	 * @param	string		$tableName
-	 * @return	array		$indices
+	 * @return	string[]	$indices
 	 */
 	abstract public function getIndices($tableName);
+	
+	/**
+	 * Returns information on the indices of a table.
+	 * 
+	 * @param	string		$tableName
+	 * @return	array
+	 */
+	public function getIndexInformation($tableName) {
+		throw new NotImplementedException();
+	}
 	
 	/**
 	 * Creates a new database table.
@@ -83,6 +103,16 @@ abstract class DatabaseEditor {
 	 * @param	array		$newColumnData
 	 */
 	abstract public function alterColumn($tableName, $oldColumnName, $newColumnName, $newColumnData);
+	
+	/**
+	 * Adds, alters and drops multiple columns at once.
+	 * 
+	 * @param	string		$tableName
+	 * @param	array		$alterData
+	 */
+	public function alterColumns($tableName, $alterData) {
+		throw new NotImplementedException();
+	}
 	
 	/**
 	 * Drops an existing column.

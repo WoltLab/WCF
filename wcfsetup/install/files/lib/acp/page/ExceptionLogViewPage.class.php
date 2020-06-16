@@ -4,17 +4,19 @@ use wcf\page\AbstractPage;
 use wcf\page\MultipleLinkPage;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\registry\RegistryHandler;
+use wcf\system\request\LinkHandler;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\DirectoryUtil;
-use wcf\util\JSON;
+use wcf\util\ExceptionLogUtil;
 use wcf\util\StringUtil;
 
 /**
  * Shows the exception log.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  */
@@ -39,6 +41,11 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	 * @var	string
 	 */
 	public $exceptionID = '';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $forceCanonicalURL = true;
 	
 	/**
 	 * active logfile
@@ -66,6 +73,16 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		
 		if (isset($_REQUEST['exceptionID'])) $this->exceptionID = StringUtil::trim($_REQUEST['exceptionID']);
 		if (isset($_REQUEST['logFile'])) $this->logFile = StringUtil::trim($_REQUEST['logFile']);
+		
+		$parameters = [];
+		if ($this->exceptionID !== '') {
+			$parameters['exceptionID'] = $this->exceptionID;
+		}
+		else if ($this->logFile !== '') {
+			$parameters['logFile'] = $this->logFile;
+		}
+		
+		$this->canonicalURL = LinkHandler::getInstance()->getControllerLink(self::class, $parameters);
 	}
 	
 	/**
@@ -73,6 +90,9 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 	 */
 	public function readData() {
 		AbstractPage::readData();
+		
+		// mark notifications as read
+		RegistryHandler::getInstance()->set('com.woltlab.wcf', 'exceptionMailerTimestamp', TIME_NOW);
 		
 		$fileNameRegex = new Regex('(?:^|/)\d{4}-\d{2}-\d{2}\.txt$');
 		$this->logFiles = DirectoryUtil::getInstance(WCF_DIR.'log/')->getFiles(SORT_DESC, $fileNameRegex);
@@ -107,48 +127,20 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 			return;
 		}
 		
-		// unify newlines
-		$contents = StringUtil::unifyNewlines($contents);
-		
-		// split contents
-		$split = new Regex('(?:^|\n<<<<\n\n)(?:<<<<<<<<([a-f0-9]{40})<<<<\n|$)');
-		$contents = $split->split($contents, Regex::SPLIT_NON_EMPTY_ONLY | Regex::CAPTURE_SPLIT_DELIMITER);
-		
-		// even items become keys, odd items become values
 		try {
-			$this->exceptions = call_user_func_array('array_merge', array_map(
-				function($v) {
-					return [$v[0] => $v[1]];
-				},
-				array_chunk($contents, 2)
-			));
+			$this->exceptions = ExceptionLogUtil::splitLog($contents);
 		}
 		catch (\Exception $e) {
-			// logfile contents are pretty malformed, abort
 			return;
 		}
+		
+		// show latest exceptions first
+		$this->exceptions = array_reverse($this->exceptions, true);
 		
 		if ($this->exceptionID) $this->searchPage($this->exceptionID);
 		$this->calculateNumberOfPages();
 		
 		$i = 0;
-		$exceptionRegex = new Regex("(?P<date>[MTWFS][a-z]{2}, \d{1,2} [JFMASOND][a-z]{2} \d{4} \d{2}:\d{2}:\d{2} [+-]\d{4})\s*\n".
-"Message: (?P<message>.*?)\s*\n".
-"PHP version: (?P<phpVersion>.*?)\s*\n".
-"WoltLab Suite version: (?P<wcfVersion>.*?)\s*\n".
-"Request URI: (?P<requestURI>.*?)\s*\n".
-"Referrer: (?P<referrer>.*?)\s*\n".
-"User Agent: (?P<userAgent>.*?)\s*\n".
-"Peak Memory Usage: (?<peakMemory>\d+)/(?<maxMemory>(?:\d+|-1))\s*\n".
-"(?<chain>======\n".
-".*)", Regex::DOT_ALL);
-		$chainRegex = new Regex("======\n".
-"Error Class: (?P<class>.*?)\s*\n".
-"Error Message: (?P<message>.*?)\s*\n".
-"Error Code: (?P<code>\d+)\s*\n".
-"File: (?P<file>.*?) \((?P<line>\d+)\)\s*\n".
-"Extra Information: (?P<information>(?:-|[a-zA-Z0-9+/]+={0,2}))\s*\n".
-"Stack Trace: (?P<stack>\[[^\n]+\])", Regex::DOT_ALL);
 		
 		foreach ($this->exceptions as $key => $val) {
 			$i++;
@@ -156,29 +148,12 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 				unset($this->exceptions[$key]);
 				continue;
 			}
-			
-			if (!$exceptionRegex->match($val)) {
-				unset($this->exceptions[$key]);
-				continue;
+			try {
+				$this->exceptions[$key] = ExceptionLogUtil::parseException($val);
 			}
-			$matches = $exceptionRegex->getMatches();
-			$chainRegex->match($matches['chain'], true, Regex::ORDER_MATCH_BY_SET);
-			
-			$chainMatches = array_map(function ($item) {
-				if ($item['information'] === '-') {
-					$item['information'] = null;
-				}
-				else {
-					$item['information'] = unserialize(base64_decode($item['information']), ['allowed_classes' => false]);
-				}
-				
-				$item['stack'] = JSON::decode($item['stack']);
-				
-				return $item;
-			}, $chainRegex->getMatches());
-			
-			$matches['chain'] = $chainMatches;
-			$this->exceptions[$key] = $matches;
+			catch (\InvalidArgumentException $e) {
+				unset($this->exceptions[$key]);
+			}
 		}
 	}
 	

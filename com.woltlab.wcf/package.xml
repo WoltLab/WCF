@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package name="com.woltlab.wcf" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/tornado/package.xsd">
+<package name="com.woltlab.wcf" xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/package.xsd">
 	<packageinformation>
 		<packagename>WoltLab Suite Core</packagename>
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>5.2.0 Alpha 1</version> <!-- codename: hurricane -->
-		<date>2019-01-01</date>
+		<version>5.2.6</version> <!-- codename: hurricane -->
+		<date>2020-05-10</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -48,5 +48,80 @@
 		<instruction type="templateListener" />
 		
 		<instruction type="script">acp/post_install.php</instruction>
+	</instructions>
+
+	<instructions type="update" fromversion="5.2.*">
+		<!-- Delete wcfsetup/install/files/lib/form/MailForm.class.php during the upgrade to make it 100% non-functional. -->
+	</instructions>
+
+	<instructions type="update" fromversion="3.1.*">
+		<instruction type="file">files_preUpdate.tar</instruction>
+		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_5.2_preUpdate.php</instruction>
+		
+		<!-- Contains a few PIP-scripts, \wcf\data\option\OptionEditor and \wcf\system\database\table\* -->
+		<instruction type="file" run="standalone">files_pre.tar</instruction>
+		
+		<!-- Required language categories for the reactions. -->
+		<instruction type="language" run="standalone" />
+		
+		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_5.2_prePhpApi.php</instruction>
+		
+		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_5.2.php</instruction>
+		
+		<!-- Convert likes to reactions. -->
+		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_5.2_reactionUpdate.php</instruction>
+		
+		<!-- Delete all likeable recent activity events, because they don't have the reactionType stored. -->
+		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_5.2_deleteRecentActivity.php</instruction>
+		
+		<instruction type="file" run="standalone">files_routingCacheBuilder.tar</instruction>
+		
+		<instruction type="sql">update_5.2.sql</instruction>
+		
+		<instruction type="option" />
+		<instruction type="script">acp/update_com.woltlab.wcf_5.2_reloadOptions.php</instruction>
+		
+		<instruction type="coreObject" />
+		
+		<instruction type="file" run="standalone" />
+		<instruction type="template" run="standalone" />
+		<instruction type="acpTemplate" run="standalone" />
+		
+		<instruction type="acpMenu" />
+		<instruction type="userGroupOption" />
+		<instruction type="cronjob" />
+		<instruction type="clipboardAction" />
+		<instruction type="objectTypeDefinition" />
+		<instruction type="objectType" />
+		<instruction type="acpSearchProvider" />
+		
+		<instruction type="userOption" run="standalone" />
+		
+		<instruction type="bbcode" />
+		<instruction type="userMenu" />
+		<instruction type="userNotificationEvent" />
+		<instruction type="page" />
+		<instruction type="menu" />
+		<instruction type="menuItem" />
+		<instruction type="box" />
+		<instruction type="mediaProvider" />
+		<instruction type="templateListener" />
+		
+		<instruction type="style" run="standalone">defaultStyle.tar</instruction>
+		
+		<instruction type="script">acp/update_com.woltlab.wcf_preventMailAbuse.php</instruction>
+	</instructions>
+	
+	<instructions type="update" fromversion="5.2.5">
+		<instruction type="file">files_pre_5.2.6.tar</instruction>
+		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_5.2.6.php</instruction>
+		
+		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
+		<instruction type="file">files_update.tar</instruction>
+		<instruction type="template">templates_update.tar</instruction>
+		
+		<instruction type="language" />
+		
+		<instruction type="page" />
 	</instructions>
 </package>

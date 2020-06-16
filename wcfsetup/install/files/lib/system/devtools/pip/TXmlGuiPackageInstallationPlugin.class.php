@@ -19,7 +19,7 @@ use wcf\util\XML;
  * interface for an xml-based package installation plugin.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Devtools\Pip
  * @since	5.2
@@ -76,10 +76,7 @@ trait TXmlGuiPackageInstallationPlugin {
 		
 		$this->saveObject($newElement);
 		
-		/** @var DevtoolsProject $project */
-		$project = $this->installation->getProject();
-		
-		$xml->write($this->getXmlFileLocation($project));
+		$xml->write($this->getXmlFileLocation());
 	}
 	
 	/**
@@ -208,16 +205,17 @@ trait TXmlGuiPackageInstallationPlugin {
 		
 		DOMUtil::removeNode($element);
 		
-		/** @var DevtoolsProject $project */
-		$project = $this->installation->getProject();
-		
 		$deleteFile = $this->sanitizeXmlFileAfterDeleteEntry($document);
 		
 		if ($deleteFile) {
-			unlink($this->getXmlFileLocation($project));
+			unlink($this->getXmlFileLocation());
 		}
 		else {
-			$xml->write($this->getXmlFileLocation($project));
+			$xml->write($this->getXmlFileLocation());
+		}
+		
+		if (is_subclass_of($this->className, IEditableCachedObject::class)) {
+			call_user_func([$this->className, 'resetCache']);
 		}
 	}
 	
@@ -289,10 +287,7 @@ trait TXmlGuiPackageInstallationPlugin {
 		
 		$this->saveObject($newElement, $element);
 		
-		/** @var DevtoolsProject $project */
-		$project = $this->installation->getProject();
-		
-		$xml->write($this->getXmlFileLocation($project));
+		$xml->write($this->getXmlFileLocation());
 		
 		return $this->getElementIdentifier($newElement);
 	}
@@ -390,10 +385,11 @@ trait TXmlGuiPackageInstallationPlugin {
 	 */
 	protected function getEmptyXml() {
 		$xsdFilename = $this->getXsdFilename();
+		$apiVersion = WSC_API_VERSION;
 		
 		return <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/{$xsdFilename}.xsd">
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/{$apiVersion}/{$xsdFilename}.xsd">
 	<import></import>
 </data>
 XML;

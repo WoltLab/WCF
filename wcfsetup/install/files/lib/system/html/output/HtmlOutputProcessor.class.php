@@ -9,18 +9,25 @@ use wcf\system\message\embedded\object\MessageEmbeddedObjectManager;
  * Processes stored HTML for final display.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output
  * @since       3.0
  */
 class HtmlOutputProcessor extends AbstractHtmlProcessor {
 	/**
-	 * generate the table of contents
-	 * @var bool
+	 * Generate the table of contents, implicitly enable this for certain object types on demand.
+	 * @var bool|null
 	 * @since	5.2
 	 */
-	public $enableToc = false;
+	public $enableToc;
+	
+	/**
+	 * Removes any link contained inside the message text.
+	 * @var bool
+	 * @since 5.2
+	 */
+	public $removeLinks = false;
 	
 	/**
 	 * output node processor instance
@@ -89,7 +96,9 @@ class HtmlOutputProcessor extends AbstractHtmlProcessor {
 		
 		MessageEmbeddedObjectManager::getInstance()->setActiveMessage($objectType, $objectID, $this->languageID);
 		$objectType = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.message', $objectType);
-		$this->enableToc = (!empty($objectType->additionalData['enableToc']));
+		if ($this->enableToc === null) {
+			$this->enableToc = (!empty($objectType->additionalData['enableToc']));
+		}
 	}
 	
 	/**

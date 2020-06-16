@@ -14,7 +14,7 @@ use wcf\util\FileUtil;
  * Provides functions to edit options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Option
  * 
@@ -141,8 +141,17 @@ class OptionEditor extends DatabaseObjectEditor implements IEditableCachedObject
 		// file header
 		$writer->write("<?php\n/**\n* generated at ".gmdate('r')."\n*/\n");
 		
+		// Secret options cannot be enabled through the regular options, they need to be manually
+		// defined in the Core's `config.inc.php` to be activated.
+		$attachmentStorage = new Option(null, ['optionName' => 'attachment_storage', 'optionType' => 'text', 'optionValue' => null]);
+		$enableEnterpriseMode = new Option(null, ['optionName' => 'enable_enterprise_mode', 'optionType' => 'integer', 'optionValue' => 0]);
+		$secretOptions = [
+			$attachmentStorage->getConstantName() => $attachmentStorage,
+			$enableEnterpriseMode->getConstantName() => $enableEnterpriseMode
+		];
+		
 		// get all options
-		$options = Option::getOptions();
+		$options = $secretOptions + Option::getOptions();
 		foreach ($options as $optionName => $option) {
 			$writeValue = $option->optionValue;
 			if ($writeValue === null) {

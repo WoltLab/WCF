@@ -2,6 +2,7 @@
 namespace wcf\system\search\mysql;
 use wcf\data\object\type\ObjectType;
 use wcf\system\database\exception\DatabaseQueryExecutionException;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\search\AbstractSearchIndexManager;
 use wcf\system\search\SearchIndexManager;
 use wcf\system\WCF;
@@ -10,7 +11,7 @@ use wcf\system\WCF;
  * Search engine using MySQL's FULLTEXT index.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Search
  */
@@ -44,12 +45,21 @@ class MysqlSearchIndexManager extends AbstractSearchIndexManager {
 	 * @inheritDoc
 	 */
 	public function delete($objectType, array $objectIDs) {
-		$sql = "DELETE FROM	" . SearchIndexManager::getTableName($objectType) . "
-			WHERE		objectID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
+		$itemsPerLoop = 1000;
+		$loopCount = ceil(count($objectIDs) / $itemsPerLoop);
+		$tableName = SearchIndexManager::getTableName($objectType);
+		
 		WCF::getDB()->beginTransaction();
-		foreach ($objectIDs as $objectID) {
-			$statement->execute([$objectID]);
+		for ($i = 0; $i < $loopCount; $i++) {
+			$batchObjectIDs = array_slice($objectIDs, $i * $itemsPerLoop, $itemsPerLoop);
+			
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('objectID  IN (?)', [$batchObjectIDs]);
+			
+			$sql = "DELETE FROM	" . $tableName . "
+				" . $conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
 		}
 		WCF::getDB()->commitTransaction();
 	}

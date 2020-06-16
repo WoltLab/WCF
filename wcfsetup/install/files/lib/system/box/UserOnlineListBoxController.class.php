@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Box controller for a list of registered users who are currently online.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
@@ -21,6 +21,11 @@ class UserOnlineListBoxController extends AbstractDatabaseObjectListBoxControlle
 	 * @inheritDoc
 	 */
 	protected static $supportedPositions = ['footerBoxes', 'sidebarLeft', 'sidebarRight'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	protected $conditionDefinition = 'com.woltlab.wcf.box.userOnlineList.condition';
 	
 	/**
 	 * enables the display of the user online record

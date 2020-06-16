@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Shows the language add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -137,11 +137,11 @@ class LanguageAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
-		$this->language = LanguageEditor::create([
+		$this->language = LanguageEditor::create(array_merge($this->additionalFields, [
 			'countryCode' => mb_strtolower($this->countryCode),
 			'languageName' => $this->languageName,
 			'languageCode' => mb_strtolower($this->languageCode)
-		]);
+		]));
 		$languageEditor = new LanguageEditor($this->sourceLanguage);
 		$languageEditor->copy($this->language);
 		

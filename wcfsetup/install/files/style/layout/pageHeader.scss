@@ -353,13 +353,10 @@
 			display: flex;
 			max-width: 200px;
 			min-width: 140px;
-			overflow: hidden;
 			padding: 4px 8px;
 			position: relative;
 			text-align: left;
-			text-overflow: ellipsis;
 			text-transform: none;
-			white-space: nowrap;
 			
 			&::after {
 				color: inherit;
@@ -368,6 +365,13 @@
 				font-family: FontAwesome;
 				margin-left: 10px;
 				text-align: right;
+			}
+			
+			> .pageHeaderSearchTypeLabel {
+				flex: 0 auto;
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
 			}
 		}
 		
@@ -424,14 +428,15 @@
 		}
 	}
 	
-	.pageHeaderSearchInputButton {
+	/* Increases the specificity to overrule the CSS for <button>. */
+	.pageHeaderSearchInputButton.pageHeaderSearchInputButton {
 		background-color: $wcfHeaderMenuLinkBackground;
 		border-radius: 0 0 2px 0;
 		color: $wcfHeaderMenuLink;
 		padding: 4px 9px;
 		
 		&:hover {
-			background: $wcfHeaderMenuLinkBackgroundActive;
+			background-color: $wcfHeaderMenuLinkBackgroundActive;
 			color: $wcfHeaderMenuLinkActive;
 		}
 	}

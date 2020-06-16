@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Creates a logical node-based installation tree.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */
@@ -27,7 +27,7 @@ class PackageInstallationNodeBuilder {
 	 * active package installation dispatcher
 	 * @var	PackageInstallationDispatcher
 	 */
-	public $installation = null;
+	public $installation;
 	
 	/**
 	 * current installation node
@@ -396,7 +396,6 @@ class PackageInstallationNodeBuilder {
 		
 		$this->node = $this->getToken();
 		
-		// calculate the number of instances of this package
 		$sql = "INSERT INTO	wcf".WCF_N."_package_installation_node
 					(queueID, processNo, sequenceNo, node, parentNode, nodeType, nodeData)
 			VALUES		(?, ?, ?, ?, ?, ?, ?)";
@@ -420,7 +419,8 @@ class PackageInstallationNodeBuilder {
 				'authorURL' => $this->installation->getArchive()->getAuthorInfo('authorURL') !== null ? $this->installation->getArchive()->getAuthorInfo('authorURL') : '',
 				'installDate' => TIME_NOW,
 				'updateDate' => TIME_NOW,
-				'requirements' => $this->requirements
+				'requirements' => $this->requirements,
+				'applicationDirectory' => $this->installation->getArchive()->getPackageInfo('applicationDirectory') ?: '',
 			])
 		]);
 	}
@@ -507,6 +507,10 @@ class PackageInstallationNodeBuilder {
 					// higher version number, thus update/replace the existing
 					// package installation queue
 				}
+			}
+			
+			if ($archive->getPackageInfo('name') === 'com.woltlab.wcf') {
+				WCF::checkWritability();
 			}
 			
 			// create new queue
@@ -745,7 +749,7 @@ class PackageInstallationNodeBuilder {
 	 * 
 	 * @param	integer		$processNo
 	 * @param	string		$node
-	 * @return	integer
+	 * @return	integer|null
 	 */
 	public function getQueueByNode($processNo, $node) {
 		$sql = "SELECT	queueID
@@ -758,6 +762,12 @@ class PackageInstallationNodeBuilder {
 			$node
 		]);
 		$row = $statement->fetchArray();
+		
+		if ($row === false) {
+			// PHP <7.4 _silently_ returns `null` when attempting to read an array index
+			// when the source value equals `false`.
+			return null;
+		}
 		
 		return $row['queueID'];
 	}

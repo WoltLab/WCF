@@ -2,7 +2,7 @@
  * Initializes modules required for media list view.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Controller/Media/List
  */
@@ -49,7 +49,8 @@ define([
 			options = options || {};
 			_upload = new MediaListUpload('uploadButton', 'mediaListTableBody', {
 				categoryId: options.categoryId,
-				multiple: true
+				multiple: true,
+				elementTagSize: 48
 			});
 			
 			MediaClipboard.init(
@@ -134,7 +135,7 @@ define([
 				var keys = Object.keys(data.media);
 				
 				if (keys.length) {
-					_mediaEditor.edit(this._media.get(~~data.media[keys[0]].mediaID));
+					_mediaEditor.edit(data.media[keys[0]]);
 				}
 			}
 		},

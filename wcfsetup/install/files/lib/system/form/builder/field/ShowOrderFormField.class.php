@@ -23,13 +23,19 @@ use wcf\system\WCF;
  * for the field options.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
 class ShowOrderFormField extends SingleSelectionFormField {
 	use TDefaultIdFormField;
+	
+	/**
+	 * is `true` if `(first position)` option was added
+	 * @var	bool
+	 */
+	protected $addedFirstPositionOption = false;
 	
 	/**
 	 * Creates a new instance of `ShowOrderFormField`.
@@ -42,8 +48,8 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	 * @inheritDoc
 	 */
 	public function getSaveValue() {
-		if ($this->__value !== null) {
-			$index = array_search($this->__value, array_keys($this->getOptions()));
+		if ($this->value !== null) {
+			$index = array_search($this->value, array_keys($this->getOptions()));
 			
 			if ($index !== false) {
 				return $index + 1;
@@ -52,7 +58,7 @@ class ShowOrderFormField extends SingleSelectionFormField {
 			return null;
 		}
 		
-		return $this->__value;
+		return $this->value;
 	}
 	
 	/**
@@ -66,13 +72,16 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	public function options($options, $nestedOptions = false, $labelLanguageItems = true) {
 		parent::options($options, $nestedOptions, $labelLanguageItems);
 		
-		$this->__options = [0 => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition')] + $this->__options;
-		if ($nestedOptions) {
-			array_unshift($this->__nestedOptions, [
+		if (!$this->addedFirstPositionOption) {
+			$this->options = [0 => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition')] + $this->options;
+			array_unshift($this->nestedOptions, [
 				'depth' => 0,
 				'label' => WCF::getLanguage()->get('wcf.form.field.showOrder.firstPosition'),
+				'isSelectable' => true,
 				'value' => 0
 			]);
+			
+			$this->addedFirstPositionOption = true;
 		}
 		
 		return $this;
@@ -84,14 +93,16 @@ class ShowOrderFormField extends SingleSelectionFormField {
 	public function value($value) {
 		$keys = array_keys($this->getOptions());
 		
-		// when editing an objects, the value has to be reduced by one to determine the
+		// when editing an object, the value has to be reduced by one to determine the
 		// relevant sibling as the edited object is shown after its previous sibling 
 		if ($this->getDocument()->getFormMode() === IFormDocument::FORM_MODE_UPDATE) {
 			$value--;
 		}
 		
 		if (count($keys) <= $value) {
-			throw new \InvalidArgumentException("Unknown value '{$value}' as only " . count($keys) . " values are available.");
+			// outdated `showOrder` values might cause errors; simply ignore those
+			// outdated values
+			return $this;
 		}
 		
 		return parent::value($keys[$value]);

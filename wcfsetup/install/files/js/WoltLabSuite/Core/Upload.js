@@ -2,8 +2,9 @@
  * Uploads file via AJAX.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	Upload (alias)
  * @module	WoltLabSuite/Core/Upload
  */
 define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Dom/Traverse'], function(AjaxRequest, Core, DomChangeListener, Language, DomUtil, DomTraverse) {
@@ -92,6 +93,14 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			
 			this._button = elCreate('p');
 			this._button.className = 'button uploadButton';
+			elAttr(this._button, 'role', 'button');
+
+			this._fileUpload.addEventListener('focus', (function() {
+				if (this._fileUpload.classList.contains('focus-visible')) {
+					this._button.classList.add('active');
+				}
+			}).bind(this));
+			this._fileUpload.addEventListener('blur', (function() { this._button.classList.remove('active'); }).bind(this));
 			
 			var span = elCreate('span');
 			span.textContent = Language.get('wcf.global.button.upload');
@@ -194,6 +203,16 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 		},
 		
 		/**
+		 * Return additional form data for upload requests.
+		 * 
+		 * @return	{object<string, *>}	additional form data
+		 * @since       5.2
+		 */
+		_getFormData: function() {
+			return {};
+		},
+		
+		/**
 		 * Inserts the created button to upload files into the button container.
 		 */
 		_insertButton: function() {
@@ -284,7 +303,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 				files = this._fileUpload.files;
 			}
 			
-			if (files.length) {
+			if (files.length && this.validateUpload(files)) {
 				if (this._options.singleFileRequests) {
 					uploadId = [];
 					for (var i = 0, length = files.length; i < length; i++) {
@@ -307,6 +326,17 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			this._createButton();
 			
 			return uploadId;
+		},
+		
+		/**
+		 * Validates the upload before uploading them.
+		 * 
+		 * @param       {(FileList|Array.<File>)}	files		uploaded files
+		 * @return	{boolean}
+		 * @since       5.2
+		 */
+		validateUpload: function(files) {
+			return true;
 		},
 		
 		/**
@@ -350,15 +380,18 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 				
 				for (var name in parameters) {
 					if (typeof parameters[name] === 'object') {
-						appendFormData(parameters[name], prefix + '[' + name + ']');
+						var newPrefix = prefix.length === 0 ? name : prefix + '[' + name + ']';
+						appendFormData(parameters[name], newPrefix);
 					}
 					else {
-						formData.append('parameters' + prefix + '[' + name + ']', parameters[name]);
+						var dataName = prefix.length === 0 ? name : prefix + '[' + name + ']';
+						formData.append(dataName, parameters[name]);
 					}
 				}
 			};
 			
-			appendFormData(this._getParameters());
+			appendFormData(this._getParameters(), 'parameters');
+			appendFormData(this._getFormData());
 			
 			var request = new AjaxRequest({
 				data: formData,

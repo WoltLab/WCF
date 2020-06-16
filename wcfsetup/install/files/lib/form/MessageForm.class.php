@@ -18,7 +18,7 @@ use wcf\util\StringUtil;
  * MessageForm is an abstract form implementation for a message with optional captcha support.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -270,7 +270,7 @@ abstract class MessageForm extends AbstractCaptchaForm {
 	 */
 	public function readData() {
 		// get attachments
-		if (MODULE_ATTACHMENT && $this->attachmentObjectType) {
+		if ($this->attachmentObjectType) {
 			$this->attachmentHandler = new AttachmentHandler($this->attachmentObjectType, $this->attachmentObjectID, $this->tmpHash, $this->attachmentParentObjectID);
 		}
 		

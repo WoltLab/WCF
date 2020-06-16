@@ -4,6 +4,7 @@ use wcf\data\condition\Condition;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObjectList;
+use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 
 /**
@@ -11,7 +12,7 @@ use wcf\system\WCF;
  * a user.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
@@ -77,5 +78,18 @@ class UserRegistrationDateIntervalCondition extends AbstractIntegerCondition imp
 		if (!WCF::getUser()->userID) return false;
 		
 		return $this->checkUser($condition, WCF::getUser());
+	}
+	
+	/**
+	 * @inheritDoc
+	 * 
+	 * @since	3.0
+	 */
+	protected function validateConflictingValues() {
+		if ($this->lessThan !== null && $this->greaterThan !== null && $this->greaterThan >= $this->lessThan) {
+			$this->errorMessage = 'wcf.condition.greaterThan.error.lessThan';
+			
+			throw new UserInputException('greaterThan', 'lessThan');
+		}
 	}
 }

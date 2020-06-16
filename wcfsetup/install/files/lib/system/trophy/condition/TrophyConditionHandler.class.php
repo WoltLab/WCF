@@ -12,7 +12,7 @@ use wcf\system\SingletonFactory;
  * Handles trophy conditions. 
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Trophy\Condition
  * @since	3.1
@@ -137,6 +137,7 @@ class TrophyConditionHandler extends SingletonFactory {
 	 * Returns the userTrophyIDs of the users, which no longer fulfills the trophy conditions. 
 	 * 
 	 * @param       Trophy          $trophy
+	 * @param       integer         $maxTrophyIDs		maximum number of trophies that are processed
 	 * @return      integer[]
 	 * @since       5.2
 	 */
@@ -181,6 +182,9 @@ class TrophyConditionHandler extends SingletonFactory {
 		// In order not to get all users who do not fulfill the conditions (in case of
 		// doubt there can be many), we filter for users who have received the trophy. 
 		$userList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?))', [$trophy->trophyID]);
+		
+		// Prevents us from getting faulty UserTrophyIDs.
+		$userList->getConditionBuilder()->add('user_trophy.trophyID = ?', [$trophy->trophyID]);
 		$userList->readObjects();
 		
 		// We now return an array of userTrophyIDs instead of user objects to remove them directly via DBOAction. 

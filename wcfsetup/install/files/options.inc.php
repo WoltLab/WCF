@@ -3,12 +3,12 @@
  * Default options.inc.php for package installation of package com.woltlab.wcf.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 define('LAST_UPDATE_TIME', TIME_NOW);
 
-$prefix = 'wsc31_';
+$prefix = 'wsc52_';
 if (file_exists(WCF_DIR . 'cookiePrefix.txt')) {
 	// randomized cookie prefix during setup
 	$prefix = file_get_contents(WCF_DIR . 'cookiePrefix.txt');
@@ -36,7 +36,9 @@ define('MODULE_MASTER_PASSWORD', 0);
 define('TIMEZONE', 'Europe/Berlin');
 
 define('ENABLE_DEBUG_MODE', 1);
+define('ENABLE_PRODUCTION_DEBUG_MODE', 1);
 define('ENABLE_BENCHMARK', 0);
+if (!defined('ENABLE_ENTERPRISE_MODE')) define('ENABLE_ENTERPRISE_MODE', 0);
 define('EXTERNAL_LINK_TARGET_BLANK', 0);
 define('URL_LEGACY_MODE', 0);
 define('URL_TO_LOWERCASE', 1);

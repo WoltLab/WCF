@@ -41,7 +41,7 @@
 			{foreach from=$subscriptions item=subscription}
 				<li>
 					<div class="containerHeadline">
-						<h3>{$subscription->title|language} <span class="badge label">{lang}wcf.paidSubscription.formattedCost{/lang}</span></h3>
+						<h3>{$subscription->getTitle()} <span class="badge label">{lang}wcf.paidSubscription.formattedCost{/lang}</span></h3>
 						<div class="htmlContent">{@$subscription->getFormattedDescription()}</div>
 					</div>
 					
@@ -66,7 +66,7 @@
 			{foreach from=$userSubscriptions item=userSubscription}
 				<li>
 					<div class="containerHeadline">
-						<h3>{$userSubscription->getSubscription()->title|language}</h3>
+						<h3>{$userSubscription->getSubscription()->getTitle()}</h3>
 						<div class="htmlContent">{@$userSubscription->getSubscription()->getFormattedDescription()}</div>
 					</div>
 					
@@ -85,7 +85,7 @@
 {/if}
 
 {if !$subscriptions|count && !$userSubscriptions|count}
-	<p class="info">{lang}wcf.global.noItems{/lang}</p>
+	<p class="info" role="status">{lang}wcf.global.noItems{/lang}</p>
 {/if}
 
 <footer class="contentFooter">

@@ -7,7 +7,7 @@
  *  - Chrome sometimes does not properly cache fonts, resulting in strange rendering bugs
  * 
  * @author	Alexander Ebert, Sascha Greuel
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -46,7 +46,7 @@ if (!empty($_GET['type'])) {
 			// allow font fetching from all domains (CORS)
 			header('Access-Control-Allow-Origin: *');
 			header('Content-Type: ' . $types[$type]);
-			header('Cache-Control: max-age=31536000, private');
+			header('Cache-Control: max-age=31536000, public');
 			header('ETag: ' . $etag);
 			header('Expires: ' . gmdate("D, d M Y H:i:s", time() + 31536000) . ' GMT');
 			header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $filemtime) . ' GMT');

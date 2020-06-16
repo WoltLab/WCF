@@ -1,17 +1,17 @@
 <?php
 namespace wcf\acp\page;
-use wcf\data\cronjob\CronjobList;
+use wcf\data\cronjob\I18nCronjobList;
 use wcf\page\SortablePage;
 
 /**
  * Shows information about configured cron jobs.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  * 
- * @property	CronjobList	$objectList
+ * @property	I18nCronjobList	$objectList
  */
 class CronjobListPage extends SortablePage {
 	/**
@@ -27,17 +27,22 @@ class CronjobListPage extends SortablePage {
 	/**
 	 * @inheritDoc
 	 */
-	public $defaultSortField = 'cronjobID';
+	public $defaultSortField = 'descriptionI18n';
 	
 	/**
 	 * @inheritDoc
 	 */
-	public $validSortFields = ['cronjobID', 'nextExec', 'startMinute', 'startHour', 'startDom', 'startMonth', 'startDow'];
+	public $itemsPerPage = 100;
 	
 	/**
 	 * @inheritDoc
 	 */
-	public $objectListClassName = CronjobList::class;
+	public $validSortFields = ['cronjobID', 'nextExec', 'startMinute', 'startHour', 'startDom', 'startMonth', 'startDow', 'descriptionI18n'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public $objectListClassName = I18nCronjobList::class;
 	
 	/**
 	 * @inheritDoc

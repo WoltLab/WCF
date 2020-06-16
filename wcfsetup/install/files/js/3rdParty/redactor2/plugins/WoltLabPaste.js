@@ -327,6 +327,18 @@ $.Redactor.prototype.WoltLabPaste = function() {
 				var div = elCreate('div');
 				div.innerHTML = html;
 				
+				// Some browsers implicitly convert links into `<a>` elements.
+				if (div.childElementCount === 1 && div.children[0].nodeName === 'A') {
+					var link = div.children[0];
+					if (div.firstChild === link && div.lastChild === link && link.href === link.textContent) {
+						while (link.childNodes.length) {
+							div.insertBefore(link.childNodes[0], link);
+						}
+						
+						div.removeChild(link);
+					}
+				}
+				
 				var pastedImages = [];
 				if (!data.pre && !data.text) {
 					elBySelAll('img', div, (function(img) {

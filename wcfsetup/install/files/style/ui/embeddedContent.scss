@@ -1,0 +1,73 @@
+.embeddedContent {
+	background-color: $wcfContentBackground;
+	border: 1px solid $wcfContentBorderInner;
+	border-radius: 3px;
+	margin: 10px 0;
+}
+
+.embeddedContentLink {
+	display: block;
+	padding: 10px;
+}
+
+.embeddedContentCategory {
+	color: $wcfContentDimmedText;
+	text-transform: uppercase;
+	
+	@include wcfFontSmall;
+}
+
+.embeddedContentTitle {
+	color: $wcfContentHeadlineText;
+	margin-bottom: 20px;
+	
+	@include wcfFontHeadline;
+	@include wcfFontBold;
+}
+
+.embeddedContentDescription {
+	color: $wcfContentText;
+	max-height: 120px;
+	overflow: hidden;
+	position: relative;
+}
+.embeddedContentDescription::after {
+	background-image: linear-gradient(to top, $wcfContentBackground, transparent);
+	bottom: 0;
+	content: "";
+	left: 0;
+	position: absolute;
+	right: 0;
+	top: 100px;
+}
+
+.embeddedContentMeta {
+	align-items: center;
+	border-top: 1px solid $wcfContentBorderInner;
+	color: $wcfContentDimmedText;
+	display: flex;
+	padding: 10px;
+	
+	@include wcfFontSmall;
+}
+
+.embeddedContentMetaImage {
+	flex: 0 auto;
+	margin-right: 10px;
+}
+
+.embeddedContentMetaContent {
+	flex: 1 auto;
+}
+
+.embeddedContentMetaAuthor {
+	color: $wcfContentText;
+	
+	> a {
+		color: inherit;
+		
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}

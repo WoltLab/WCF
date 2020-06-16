@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Shows the user option edit form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -56,9 +56,7 @@ class UserOptionEditForm extends UserOptionAddForm {
 	public function readFormParameters() {
 		parent::readFormParameters();
 		
-		if ($this->userOption->optionName === 'aboutMe') {
-			$this->optionType = 'aboutMe';
-		}
+		$this->optionType = $this->userOption->optionType;
 	}
 	
 	/**

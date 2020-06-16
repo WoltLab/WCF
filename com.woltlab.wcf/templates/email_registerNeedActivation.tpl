@@ -7,7 +7,7 @@
 	{lang}wcf.user.register.needActivation.mail.html.intro{/lang}
 
 	{capture assign=button}
-	<a href="{link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->activationCode}{/link}">
+	<a href="{link controller='RegisterActivation' isHtmlEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->activationCode}{/link}">
 		{lang}wcf.user.register.needActivation.mail.html.activate{/lang}
 	</a>
 	{/capture}

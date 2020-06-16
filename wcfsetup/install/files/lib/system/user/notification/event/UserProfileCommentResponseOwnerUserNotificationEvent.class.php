@@ -5,14 +5,13 @@ use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\comment\CommentHandler;
 use wcf\system\email\Email;
-use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\object\CommentResponseUserNotificationObject;
 
 /**
  * User notification event for profile's owner for comment responses.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  *
@@ -123,11 +122,8 @@ class UserProfileCommentResponseOwnerUserNotificationEvent extends AbstractShare
 	 * @inheritDoc
 	 */
 	public function getLink() {
-		return LinkHandler::getInstance()->getLink(
-			'User',
-			['object' => UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])],
-			'#wall/comment' . $this->getUserNotificationObject()->commentID
-		);
+		return UserProfileRuntimeCache::getInstance()->getObject($this->additionalData['objectID'])->getLink() .
+			'#wall/comment' . $this->getUserNotificationObject()->commentID;
 	}
 	
 	/**

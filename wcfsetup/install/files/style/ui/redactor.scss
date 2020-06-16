@@ -147,23 +147,17 @@
 	}
 }
 
-.redactor-dropdown {
-	> .dropdownMenu {
-		display: block;
-		position: relative;
-		visibility: visible;
+.redactor-dropdown-menu {
+	@include screen-lg {
 		
-		@include screen-lg {
-			top: 1px;
-		}
-		
-		> li:hover {
-			background-color: transparent !important;
-		}
-		
-		a:hover {
-			background-color: $wcfDropdownBackgroundActive;
-		}
+	}
+	
+	> li:hover {
+		background-color: transparent !important;
+	}
+	
+	a:hover {
+		background-color: $wcfDropdownBackgroundActive;
 	}
 	
 	.redactor-dropdown-link-inactive {
@@ -233,6 +227,11 @@
 					background-color: $wcfHeaderMenuLinkBackgroundActive;
 					color: $wcfHeaderMenuLinkActive;
 				}
+			}
+			
+			&:focus {
+				background-color: $wcfHeaderMenuLinkBackgroundActive;
+				color: $wcfHeaderMenuLinkActive;
 			}
 		}
 		
@@ -305,7 +304,7 @@
 	padding: 7px 14px 7px;
 }
 
-.redactor-dropdown-box-fontcolor {
+.redactor-dropdown-menu-fontcolor {
 	width: 200px;
 	
 	> li.redactorColorPallet {
@@ -408,16 +407,14 @@
 }
 
 /* text color selection */
-.redactor-dropdown-box-woltlabColor {
-	> ul {
-		display: flex !important;
-		flex-wrap: wrap;
-		width: 272px;
-		
-		> .dropdownDivider,
-		> .dropdownDivider + li {
-			flex: 0 0 100%;
-		}
+.redactor-dropdown-menu-woltlabColor {
+	display: flex !important;
+	flex-wrap: wrap;
+	width: 272px;
+	
+	> .dropdownDivider,
+	> .dropdownDivider + li {
+		flex: 0 0 100%;
 	}
 	
 	.woltlab-color-selection {
@@ -590,14 +587,31 @@
 
 .redactorBoxFullscreen {
 	bottom: 0;
+	display: flex;
+	flex-direction: column;
 	left: 0;
 	position: fixed;
 	right: 0;
 	top: 0;
 	z-index: 310;
 	
-	.redactor-layer {
+	.redactor-toolbar-box {
+		flex: 0 auto;
+	}
+	
+	.redactor-layer,
+	.redactor-layer + textarea {
+		flex: 1 auto;
 		max-height: none !important;
 		min-height: 0 !important;
+	}
+}
+
+.editorImageBlocked {
+	filter: brightness(25%);
+	transition: filter .12s linear;
+	
+	&:hover {
+		filter: brightness(75%);
 	}
 }

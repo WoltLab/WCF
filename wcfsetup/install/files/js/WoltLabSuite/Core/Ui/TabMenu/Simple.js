@@ -2,11 +2,11 @@
  * Simple tab menu implementation with a straight-forward logic.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/TabMenu/Simple
  */
-define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dictionary, EventHandler, DomTraverse, DomUtil) {
+define(['Dictionary', 'Environment', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dictionary, Environment, EventHandler, DomTraverse, DomUtil) {
 	"use strict";
 	
 	/**
@@ -124,6 +124,33 @@ define(['Dictionary', 'EventHandler', 'Dom/Traverse', 'Dom/Util'], function(Dict
 			this._tabs.forEach((function(tab) {
 				if (!oldTabs || oldTabs.get(elData(tab, 'name')) !== tab) {
 					tab.children[0].addEventListener(WCF_CLICK_EVENT, this._onClick.bind(this));
+					
+					// iOS 13 changed the behavior for click events after scrolling the menu. It prevents
+					// the synthetic mouse events like "click" from triggering for a short duration after
+					// a scrolling has occurred. If the user scrolls to the end of the list and immediately
+					// attempts to click the tab, nothing will happen. However, if the user waits for some
+					// time, the tap will trigger a "click" event again.
+					// 
+					// A "click" event is basically the result of a touch without any (significant) finger
+					// movement indicated by a "touchmove" event. This changes allows the user to scroll
+					// both the menu and the page normally, but still benefit from snappy reactions when
+					// tapping a menu item.
+					if (Environment.platform() === 'ios') {
+						var isClick = false;
+						tab.children[0].addEventListener('touchstart', function () { isClick = true; });
+						tab.children[0].addEventListener('touchmove', function () { isClick = false; });
+						tab.children[0].addEventListener('touchend', (function (event) {
+							if (isClick) {
+								isClick = false;
+								
+								// This will block the regular click event from firing.
+								event.preventDefault();
+								
+								// Invoke the click callback manually.
+								this._onClick(event);
+							}
+						}).bind(this));
+					}
 				}
 			}).bind(this));
 			

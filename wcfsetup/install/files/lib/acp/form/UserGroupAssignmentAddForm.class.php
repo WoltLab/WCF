@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * Shows the form to create a new automatic user group assignment.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -79,20 +79,17 @@ class UserGroupAssignmentAddForm extends AbstractForm {
 	 * @inheritDoc
 	 */
 	public function readData() {
-		$this->userGroups = UserGroup::getGroupsByType([], [
+		$this->userGroups = UserGroup::getSortedGroupsByType([], [
 			UserGroup::EVERYONE,
 			UserGroup::GUESTS,
-			UserGroup::USERS
+			UserGroup::OWNER,
+			UserGroup::USERS,
 		]);
 		foreach ($this->userGroups as $key => $userGroup) {
 			if (!$userGroup->isAccessible()) {
 				unset($this->userGroups[$key]);
 			}
 		}
-		
-		uasort($this->userGroups, function(UserGroup $groupA, UserGroup $groupB) {
-			return strcmp($groupA->getName(), $groupB->getName());
-		});
 		
 		$this->conditions = UserGroupAssignmentHandler::getInstance()->getGroupedObjectTypes();
 		

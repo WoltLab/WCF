@@ -13,7 +13,7 @@ use wcf\util\XML;
  * Represents the archive of a package.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */
@@ -69,6 +69,7 @@ class PackageArchive {
 	/**
 	 * list of compatible API versions
 	 * @var integer[]
+	 * @deprecated 5.2
 	 */
 	protected $compatibility = [];
 	
@@ -299,6 +300,32 @@ class PackageArchive {
 			}
 			
 			$this->compatibility[] = $version;
+		}
+		
+		// API compatibility implies an exclude of `com.woltlab.wcf` in version `6.0.0 Alpha 1`, unless a lower version is explicitly excluded.
+		if (!empty($this->compatibility)) {
+			$excludeCore60 = '6.0.0 Alpha 1';
+			
+			$coreExclude = '';
+			foreach ($this->excludedPackages as $excludedPackage) {
+				if ($excludedPackage['name'] === 'com.woltlab.wcf') {
+					$coreExclude = $excludedPackage['version'];
+					break;
+				}
+			}
+			
+			if (!$coreExclude || Package::compareVersion($coreExclude, $excludeCore60, '>')) {
+				if ($coreExclude) {
+					$this->excludedPackages = array_filter($this->excludedPackages, function($exclude) {
+						return $exclude['name'] !== 'com.woltlab.wcf';
+					});
+				}
+				
+				$this->excludedPackages[] = [
+					'name' => 'com.woltlab.wcf',
+					'version' => $excludeCore60,
+				];
+			}
 		}
 		
 		// get instructions
@@ -554,6 +581,7 @@ class PackageArchive {
 	 * Returns the list of compatible API versions.
 	 * 
 	 * @return      integer[]
+	 * @deprecated 5.2
 	 */
 	public function getCompatibleVersions() {
 		return $this->compatibility;

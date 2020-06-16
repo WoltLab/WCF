@@ -8,7 +8,7 @@ use wcf\system\option\IntegerOptionType;
  * The merge of option values returns the lowest value.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option\User\Group
  */

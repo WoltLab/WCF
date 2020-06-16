@@ -6,7 +6,7 @@ use wcf\data\option\Option;
  * Provides a default implementation for object types.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -55,5 +55,12 @@ abstract class AbstractOptionType implements IOptionType {
 	 */
 	public function hideLabelInSearch() {
 		return false;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getDisabledOptionNames($value, $enableOptions) {
+		return [];
 	}
 }

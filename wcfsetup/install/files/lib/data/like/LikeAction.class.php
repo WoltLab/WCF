@@ -3,6 +3,8 @@ namespace wcf\data\like;
 use wcf\data\reaction\ReactionAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IGroupedUserListAction;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\like\LikeHandler;
@@ -14,7 +16,7 @@ use wcf\system\WCF;
  * Executes like-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Like
  * @deprecated	since 5.2, use \wcf\data\reaction\ReactionAction instead
@@ -122,7 +124,7 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 		// check if liking own content but forbidden by configuration
 		$this->likeableObject = $this->objectTypeProvider->getObjectByID($this->parameters['data']['objectID']);
 		$this->likeableObject->setObjectType($this->objectType);
-		if (!LIKE_ALLOW_FOR_OWN_CONTENT && ($this->likeableObject->getUserID() == WCF::getUser()->userID)) {
+		if ($this->likeableObject->getUserID() == WCF::getUser()->userID) {
 			throw new PermissionDeniedException();
 		}
 	}
@@ -138,11 +140,8 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	 * @inheritDoc
 	 */
 	public function validateDislike() {
-		if (!LIKE_ENABLE_DISLIKE) {
-			throw new PermissionDeniedException();
-		}
-		
-		$this->validateLike();
+		// No longer supported since 5.2.
+		throw new PermissionDeniedException();
 	}
 	
 	/**
@@ -289,10 +288,24 @@ class LikeAction extends AbstractDatabaseObjectAction implements IGroupedUserLis
 	 * Validates parameters to load likes.
 	 */
 	public function validateLoad() {
+		if (!MODULE_LIKE) {
+			throw new IllegalLinkException();
+		}
+		
 		$this->readInteger('lastLikeTime', true);
 		$this->readInteger('userID');
 		$this->readInteger('likeValue');
 		$this->readString('likeType');
+		
+		$user = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['userID']);
+		
+		if ($user === null) {
+			throw new IllegalLinkException();
+		}
+		
+		if ($user->isProtected()) {
+			throw new PermissionDeniedException();
+		}
 	}
 	
 	/**

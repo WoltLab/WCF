@@ -3,7 +3,7 @@
  * increasing request delay on inactivity.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Notification/Handler
  */
@@ -185,7 +185,7 @@ define(['Ajax', 'Core', 'EventHandler', 'StringUtil'], function(Ajax, Core, Even
 			var pollData = data.returnValues.pollData;
 			
 			// forward keep alive data
-			window.WCF.System.PushNotification.executeCallbacks(keepAliveData);
+			window.WCF.System.PushNotification.executeCallbacks({returnValues: keepAliveData});
 			
 			// store response data in local storage
 			try {

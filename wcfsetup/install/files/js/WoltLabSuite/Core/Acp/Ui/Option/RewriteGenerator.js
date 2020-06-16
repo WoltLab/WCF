@@ -2,7 +2,7 @@
  * Automatic URL rewrite rule generation.
  *
  * @author	Florian Gail
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Acp/Ui/Option/RewriteTest
  */
@@ -20,12 +20,21 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function (Ajax, Language, UiDialog) {
 		 * Initializes the generator for rewrite rules
 		 */
 		init: function () {
+			var urlOmitIndexPhp = elById('url_omit_index_php');
+			
+			// This configuration part is unavailable when running in enterprise mode.
+			if (urlOmitIndexPhp === null) {
+				return;
+			}
+			
 			_container = elCreate('dl');
 			var dt = elCreate('dt');
 			dt.classList.add('jsOnly');
 			var dd = elCreate('dd');
 
-			_buttonGenerate = elCreate('button');
+			_buttonGenerate = elCreate('a');
+			_buttonGenerate.className = 'button';
+			_buttonGenerate.href = '#';
 			_buttonGenerate.textContent = Language.get('wcf.acp.rewrite.generate');
 			_buttonGenerate.addEventListener(WCF_CLICK_EVENT, this._onClick.bind(this));
 			dd.appendChild(_buttonGenerate);
@@ -36,7 +45,7 @@ define(['Ajax', 'Language', 'Ui/Dialog'], function (Ajax, Language, UiDialog) {
 			_container.appendChild(dt);
 			_container.appendChild(dd);
 
-			var insertAfter = elById('url_omit_index_php').closest('dl');
+			var insertAfter = urlOmitIndexPhp.closest('dl');
 			insertAfter.parentNode.insertBefore(_container, insertAfter.nextSibling);
 		},
 

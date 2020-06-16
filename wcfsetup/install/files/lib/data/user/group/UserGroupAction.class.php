@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Executes user group-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Group
  * 
@@ -94,7 +94,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 		$this->readBoolean('copyUserGroupOptions');
 		
 		$this->groupEditor = $this->getSingleObject();
-		if (!$this->groupEditor->isAccessible() || $this->groupEditor->groupType != UserGroup::OTHER) {
+		if (!$this->groupEditor->canCopy()) {
 			throw new PermissionDeniedException();
 		}
 	}
@@ -120,18 +120,25 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 		
 		$optionValues = $statement->fetchMap('optionID', 'optionValue');
 		
-		$groupAction = new UserGroupAction([], 'create', [
+		$groupType = $this->groupEditor->groupType;
+		// When copying special user groups of which only one may exist,
+		// change the group type to 'other'.
+		if (in_array($groupType, [UserGroup::EVERYONE, UserGroup::GUESTS, UserGroup::USERS, UserGroup::OWNER])) {
+			$groupType = UserGroup::OTHER;
+		}
+		
+		/** @var UserGroup $group */
+		$group = (new UserGroupAction([], 'create', [
 			'data' => [
 				'groupName' => $this->groupEditor->groupName,
 				'groupDescription' => $this->groupEditor->groupDescription,
 				'priority' => $this->groupEditor->priority,
 				'userOnlineMarking' => $this->groupEditor->userOnlineMarking,
-				'showOnTeamPage' => $this->groupEditor->showOnTeamPage
+				'showOnTeamPage' => $this->groupEditor->showOnTeamPage,
+				'groupType' => $groupType,
 			],
-			'options' => $optionValues
-		]);
-		$returnValues = $groupAction->executeAction();
-		$group = $returnValues['returnValues'];
+			'options' => $optionValues,
+		]))->executeAction()['returnValues'];
 		$groupEditor = new UserGroupEditor($group);
 		
 		// update group name
@@ -169,7 +176,7 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 		
 		$groupEditor->update([
 			'groupDescription' => $groupDescription,
-			'groupName' => $groupName
+			'groupName' => $groupName,
 		]);
 		
 		// copy members
@@ -207,9 +214,26 @@ class UserGroupAction extends AbstractDatabaseObjectAction {
 		UserGroupEditor::resetCache();
 		
 		return [
+			'groupID' => $group->groupID,
 			'redirectURL' => LinkHandler::getInstance()->getLink('UserGroupEdit', [
-				'id' => $group->groupID
-			])
+				'id' => $group->groupID,
+			]),
 		];
+	}
+	
+	public function promoteOwner() {
+		if (UserGroup::getOwnerGroupID() !== null) {
+			throw new \LogicException('There is already an owner group.');
+		}
+		else if (count($this->objects) !== 1) {
+			throw new \InvalidArgumentException('Only a single group can be promoted to be the owner group.');
+		}
+		
+		$groupEditor = reset($this->objects);
+		$groupEditor->update([
+			'groupType' => UserGroup::OWNER,
+		]);
+		
+		UserGroupEditor::resetCache();
 	}
 }

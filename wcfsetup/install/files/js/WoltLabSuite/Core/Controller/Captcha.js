@@ -2,7 +2,7 @@
  * Provides data of the active user.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Controller/Captcha
  */
@@ -43,7 +43,7 @@ define(['Dictionary'], function(Dictionary) {
 				throw new Error("Unknown captcha with id '" + captchaId + "'.");
 			}
 			
-			_captchas.delete(captchaId)();
+			_captchas.delete(captchaId);
 		},
 		
 		/**

@@ -2,7 +2,7 @@
  * Abstract implementation of a form field dependency.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
  * @since	5.2
@@ -76,7 +76,13 @@ define(['./Manager'], function(DependencyManager) {
 				}.bind(this));
 				
 				if (!this._fields.length) {
-					throw new Error("Unknown field with id '" + fieldId + "'.");
+					elBySelAll('input[type=checkbox][name="' + fieldId + '[]"]', undefined, function(field) {
+						this._fields.push(field);
+					}.bind(this));
+					
+					if (!this._fields.length) {
+						throw new Error("Unknown field with id '" + fieldId + "'.");
+					}
 				}
 			}
 			else {

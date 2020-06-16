@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/objectType.xsd">
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/objectType.xsd">
 	<import>
 		<!-- clipboard items -->
 		<type>
@@ -115,6 +115,12 @@
 			<category>com.woltlab.wcf.page</category>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.likeableArticle.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\LikeUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.page</category>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.article.recentActivityEvent</name>
 			<definitionname>com.woltlab.wcf.user.recentActivityEvent</definitionname>
 			<classname>wcf\system\user\activity\event\ArticleUserActivityEvent</classname>
@@ -135,6 +141,7 @@
 		<type>
 			<name>com.woltlab.wcf.user.signature</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
+			<disallowedBBCodesPermission>user.signature.disallowedBBCodes</disallowedBBCodesPermission>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.signature</name>
@@ -144,10 +151,12 @@
 		<type>
 			<name>com.woltlab.wcf.comment</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
+			<disallowedBBCodesPermission>user.comment.disallowedBBCodes</disallowedBBCodesPermission>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.comment.response</name>
 			<definitionname>com.woltlab.wcf.message</definitionname>
+			<disallowedBBCodesPermission>user.comment.disallowedBBCodes</disallowedBBCodesPermission>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.paidSubscription</name>
@@ -173,6 +182,12 @@
 			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
 			<classname>wcf\system\user\notification\object\type\UserFollowUserNotificationObjectType</classname>
 			<category>com.woltlab.wcf.user</category>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.user.registration.notification</name>
+			<definitionname>com.woltlab.wcf.notification.objectType</definitionname>
+			<classname>wcf\system\user\notification\object\type\UserRegistrationUserNotificationObjectType</classname>
+			<category>com.woltlab.wcf.administration</category>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.recentActivityEvent.follow</name>
@@ -443,9 +458,19 @@
 			<classname>wcf\system\importer\ArticleImporter</classname>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.media.category</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\MediaCategoryImporter</classname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.media</name>
 			<definitionname>com.woltlab.wcf.importer</definitionname>
 			<classname>wcf\system\importer\MediaImporter</classname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.page</name>
+			<definitionname>com.woltlab.wcf.importer</definitionname>
+			<classname>wcf\system\importer\PageImporter</classname>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.article.comment</name>
@@ -510,10 +535,22 @@
 			<nicevalue>60</nicevalue>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.activityPointEvent</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname>wcf\system\worker\UserActivityPointUpdateEventsWorker</classname>
+			<nicevalue>65</nicevalue>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.user</name>
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
 			<classname>wcf\system\worker\UserRebuildDataWorker</classname>
 			<nicevalue>70</nicevalue>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.activityPointItems</name>
+			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+			<classname>wcf\system\worker\UserActivityPointItemsRebuildDataWorker</classname>
+			<nicevalue>75</nicevalue>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.attachment</name>
@@ -579,12 +616,6 @@
 			<categoryname>com.woltlab.wcf.user</categoryname>
 		</type>
 		<type>
-			<name>com.woltlab.wcf.dislike</name>
-			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
-			<classname>wcf\system\stat\DislikeStatDailyHandler</classname>
-			<categoryname>com.woltlab.wcf.user</categoryname>
-		</type>
-		<type>
 			<name>com.woltlab.wcf.userProfileComment</name>
 			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
 			<classname>wcf\system\stat\UserProfileCommentStatDailyHandler</classname>
@@ -635,6 +666,18 @@
 			<conditiongroup>general</conditiongroup>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.signature</name>
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+			<classname>wcf\system\condition\UserSignatureCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.coverPhoto</name>
+			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
+			<classname>wcf\system\condition\UserCoverPhotoCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.state</name>
 			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
 			<classname>wcf\system\condition\UserStateCondition</classname>
@@ -653,30 +696,8 @@
 			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>positiveReactionsReceived</propertyname>
+			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.negativeReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>negativeReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.neutralReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>neutralReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userReputation</name>
-			<definitionname>com.woltlab.wcf.condition.userGroupAssignment</definitionname>
-			<classname>wcf\system\condition\UserReputationCondition</classname>
-			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.userOptions</name>
@@ -743,6 +764,18 @@
 			<conditiongroup>general</conditiongroup>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.signature</name>
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+			<classname>wcf\system\condition\UserSignatureCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.coverPhoto</name>
+			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
+			<classname>wcf\system\condition\UserCoverPhotoCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.state</name>
 			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
 			<classname>wcf\system\condition\UserStateCondition</classname>
@@ -761,30 +794,8 @@
 			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>positiveReactionsReceived</propertyname>
+			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.negativeReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>negativeReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.neutralReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>neutralReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userReputation</name>
-			<definitionname>com.woltlab.wcf.condition.trophy</definitionname>
-			<classname>wcf\system\condition\UserReputationCondition</classname>
-			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.userOptions</name>
@@ -912,33 +923,8 @@
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>positiveReactionsReceived</propertyname>
+			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.negativeReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>negativeReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.neutralReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>neutralReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userReputation</name>
-			<definitionname>com.woltlab.wcf.condition.notice</definitionname>
-			<classname>wcf\system\condition\UserReputationCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.userOptions</name>
@@ -1000,6 +986,42 @@
 			<definitionname>com.woltlab.wcf.adLocation</definitionname>
 			<categoryname>com.woltlab.wcf.global</categoryname>
 			<cssclassname>wcfAdLocationFooterBottom</cssclassname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.inArticle</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.article</categoryname>
+			<cssclassname>wcfAdLocationInArticle</cssclassname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.after1stArticle</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.article</categoryname>
+			<cssclassname>wcfAdLocationArticleList wcfAdLocationAfter1stArticle</cssclassname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.afterEvery2ndArticle</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.article</categoryname>
+			<cssclassname>wcfAdLocationArticleList wcfAdLocationAfterEvery2ndArticle</cssclassname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.afterEvery3rdArticle</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.article</categoryname>
+			<cssclassname>wcfAdLocationArticleList wcfAdLocationAfterEvery3rdArticle</cssclassname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.afterEvery5thArticle</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.article</categoryname>
+			<cssclassname>wcfAdLocationArticleList wcfAdLocationAfterEvery5thArticle</cssclassname>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.article.afterEvery10thArticle</name>
+			<definitionname>com.woltlab.wcf.adLocation</definitionname>
+			<categoryname>com.woltlab.wcf.article</categoryname>
+			<cssclassname>wcfAdLocationArticleList wcfAdLocationAfterEvery10thArticle</cssclassname>
 		</type>
 		<!-- /ad locations -->
 		<!-- ad conditions -->
@@ -1100,33 +1122,8 @@
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditionobject>com.woltlab.wcf.user</conditionobject>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>positiveReactionsReceived</propertyname>
+			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.negativeReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>negativeReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.neutralReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>neutralReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userReputation</name>
-			<definitionname>com.woltlab.wcf.condition.ad</definitionname>
-			<classname>wcf\system\condition\UserReputationCondition</classname>
-			<conditionobject>com.woltlab.wcf.user</conditionobject>
-			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.user.userOptions</name>
@@ -1309,6 +1306,18 @@
 			<conditiongroup>general</conditiongroup>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.signature</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname>wcf\system\condition\UserSignatureCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.coverPhoto</name>
+			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
+			<classname>wcf\system\condition\UserCoverPhotoCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.state</name>
 			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
 			<classname>wcf\system\condition\UserStateCondition</classname>
@@ -1327,30 +1336,8 @@
 			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>positiveReactionsReceived</propertyname>
+			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.negativeReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>negativeReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.neutralReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>neutralReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userReputation</name>
-			<definitionname>com.woltlab.wcf.bulkProcessing.user.condition</definitionname>
-			<classname>wcf\system\condition\UserReputationCondition</classname>
-			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.userOptions</name>
@@ -1417,9 +1404,28 @@
 			<conditiongroup>general</conditiongroup>
 		</type>
 		<type>
+			<name>com.woltlab.wcf.lastActivityTime</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname>wcf\system\condition\UserTimestampPropertyCondition</classname>
+			<conditiongroup>general</conditiongroup>
+			<propertyname>lastActivityTime</propertyname>
+		</type>
+		<type>
 			<name>com.woltlab.wcf.avatar</name>
 			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
 			<classname>wcf\system\condition\UserAvatarCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.signature</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname>wcf\system\condition\UserSignatureCondition</classname>
+			<conditiongroup>general</conditiongroup>
+		</type>
+		<type>
+			<name>com.woltlab.wcf.coverPhoto</name>
+			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
+			<classname>wcf\system\condition\UserCoverPhotoCondition</classname>
 			<conditiongroup>general</conditiongroup>
 		</type>
 		<type>
@@ -1441,30 +1447,8 @@
 			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
 			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
 			<conditiongroup>contents</conditiongroup>
-			<propertyname>positiveReactionsReceived</propertyname>
+			<propertyname>likesReceived</propertyname>
 			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.negativeReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>negativeReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.neutralReactionsReceived</name>
-			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
-			<classname>wcf\system\condition\UserIntegerPropertyCondition</classname>
-			<conditiongroup>contents</conditiongroup>
-			<propertyname>neutralReactionsReceived</propertyname>
-			<minvalue>0</minvalue>
-		</type>
-		<type>
-			<name>com.woltlab.wcf.userReputation</name>
-			<definitionname>com.woltlab.wcf.condition.userSearch</definitionname>
-			<classname>wcf\system\condition\UserReputationCondition</classname>
-			<conditiongroup>contents</conditiongroup>
 		</type>
 		<type>
 			<name>com.woltlab.wcf.userOptions</name>
@@ -1611,7 +1595,41 @@
 			<classname>wcf\system\condition\user\trophy\UserTrophyExcludedTrophyCategoriesCondition</classname>
 		</type>
 		<!-- /trophy list box condition -->
+		<!-- today's birthday list box condition -->
+		<type>
+			<name>com.woltlab.wcf.lastActivityTimeIntervalDays</name>
+			<definitionname>com.woltlab.wcf.box.todaysBirthdays.condition</definitionname>
+			<classname>wcf\system\condition\user\UserLastActivityTimeIntervalDaysCondition</classname>
+			<ignoreZeroTime>1</ignoreZeroTime>
+		</type>
+		<!-- /today's birthday box condition -->
+		<!-- today's birthday of followed users list box condition -->
+		<type>
+			<name>com.woltlab.wcf.lastActivityTimeIntervalDays</name>
+			<definitionname>com.woltlab.wcf.box.todaysFollowingBirthdays.condition</definitionname>
+			<classname>wcf\system\condition\user\UserLastActivityTimeIntervalDaysCondition</classname>
+			<ignoreZeroTime>1</ignoreZeroTime>
+		</type>
+		<!-- /today's birthday of followed box condition -->
+		<!-- user list box condition -->
+		<type>
+			<name>com.woltlab.wcf.userGroup</name>
+			<definitionname>com.woltlab.wcf.box.userList.condition</definitionname>
+			<classname>wcf\system\condition\UserGroupCondition</classname>
+		</type>
+		<!-- /user list box condition -->
+		<!-- user online list box condition -->
+		<type>
+			<name>com.woltlab.wcf.userGroup</name>
+			<definitionname>com.woltlab.wcf.box.userOnlineList.condition</definitionname>
+			<classname>wcf\system\condition\UserGroupCondition</classname>
+		</type>
+		<!-- /user online list box condition -->
 		<!-- media -->
+		<type>
+			<name>com.woltlab.wcf.media.caption</name>
+			<definitionname>com.woltlab.wcf.message</definitionname>
+		</type>
 		<type>
 			<name>com.woltlab.wcf.media</name>
 			<definitionname>com.woltlab.wcf.acl.simple</definitionname>
@@ -1722,6 +1740,9 @@
 	<delete>
 		<type name="com.woltlab.wcf.like.user">
 			<definitionname>com.woltlab.wcf.rebuildData</definitionname>
+		</type>
+		<type name="com.woltlab.wcf.dislike">
+			<definitionname>com.woltlab.wcf.statDailyHandler</definitionname>
 		</type>
 	</delete>
 </data>

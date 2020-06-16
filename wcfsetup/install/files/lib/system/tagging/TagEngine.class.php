@@ -6,15 +6,15 @@ use wcf\data\tag\TagAction;
 use wcf\data\tag\TagList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\InvalidObjectTypeException;
-use wcf\system\language\LanguageFactory;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 
 /**
  * Manages the tagging of objects.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Tagging
  */
@@ -30,7 +30,9 @@ class TagEngine extends SingletonFactory {
 	 */
 	public function addObjectTags($objectType, $objectID, array $tags, $languageID, $replace = true) {
 		$objectTypeID = $this->getObjectTypeID($objectType);
-		$tags = array_unique($tags);
+		$tags = array_unique(array_reduce(ArrayUtil::trim(array_map(function($tag) {
+			return explode(',', $tag);
+		}, $tags)), 'array_merge', []));
 		
 		// remove tags prior to apply the new ones (prevents duplicate entries)
 		if ($replace) {

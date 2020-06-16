@@ -5,12 +5,13 @@ use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
+use wcf\util\ArrayUtil;
 
 /**
  * Option type implementation for boolean values.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -101,5 +102,24 @@ class BooleanOptionType extends AbstractOptionType implements ISearchableConditi
 		}
 		
 		return $value1 ? 1 : -1;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getDisabledOptionNames($value, $enableOptions) {
+		$options = ArrayUtil::trim(explode(',', $enableOptions));
+		$result = [];
+		
+		foreach ($options as $item) {
+			if ($item[0] == '!') {
+				if ($value) $result[] = $item;
+			}
+			else {
+				if (!$value) $result[] = $item;
+			}
+		}
+		
+		return $result;
 	}
 }

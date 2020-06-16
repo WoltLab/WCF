@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Option type implementation for selecting a captcha type.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -57,7 +57,7 @@ class CaptchaSelectOptionType extends AbstractOptionType {
 				$tmp = explode(',', $optionData);
 				
 				foreach ($tmp as $item) {
-					if ($item{0} == '!') {
+					if ($item[0] == '!') {
 						if (!empty($disableOptions)) $disableOptions .= ',';
 						$disableOptions .= "{ value: '".$key."', option: '".mb_substr($item, 1)."' }";
 					}

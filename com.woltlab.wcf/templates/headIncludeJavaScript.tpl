@@ -42,6 +42,12 @@ requirejs.config({
 	}
 	{/hascontent}
 });
+{* Safari ignores the HTTP cache headers for the back/forward navigation. *}
+window.addEventListener('pageshow', function(event) {
+	if (event.persisted) {
+		window.location.reload();
+	}
+});
 {event name='requireConfig'}
 </script>
 <script data-relocate="true">
@@ -119,7 +125,14 @@ requirejs.config({
 			'wcf.menu.page': '{lang}wcf.menu.page{/lang}',
 			'wcf.menu.user': '{lang}wcf.menu.user{/lang}',
 			'wcf.global.button.showMenu': '{lang}wcf.global.button.showMenu{/lang}',
-			'wcf.global.button.hideMenu': '{lang}wcf.global.button.hideMenu{/lang}'
+			'wcf.global.button.hideMenu': '{lang}wcf.global.button.hideMenu{/lang}',
+			'wcf.date.datePicker': '{lang}wcf.date.datePicker{/lang}',
+			'wcf.date.datePicker.previousMonth': '{lang}wcf.date.datePicker.previousMonth{/lang}',
+			'wcf.date.datePicker.nextMonth': '{lang}wcf.date.datePicker.nextMonth{/lang}',
+			'wcf.date.datePicker.month': '{lang}wcf.date.datePicker.month{/lang}',
+			'wcf.date.datePicker.year': '{lang}wcf.date.datePicker.year{/lang}',
+			'wcf.date.datePicker.hour': '{lang}wcf.date.datePicker.hour{/lang}',
+			'wcf.date.datePicker.minute': '{lang}wcf.date.datePicker.minute{/lang}'
 			{if MODULE_LIKE}
 				,'wcf.like.button.like': '{lang}wcf.like.button.like{/lang}',
 				'wcf.like.button.dislike': '{lang}wcf.like.button.dislike{/lang}',
@@ -155,6 +168,7 @@ requirejs.config({
 {js application='wcf' lib='jquery-ui' hasTiny=true}
 {js application='wcf' lib='jquery-ui' file='touchPunch' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' lib='jquery-ui' file='nestedSortable' bundle='WCF.Combined' hasTiny=true}
+{js application='wcf' lib='polyfill' file='focus-visible' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF.Assets' bundle='WCF.Combined' hasTiny=true}
 {js application='wcf' file='WCF' bundle='WCF.Combined' hasTiny=true}
 

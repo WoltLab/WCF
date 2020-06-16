@@ -2,7 +2,7 @@
  * I18n interface for input and textarea fields.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module      WoltLabSuite/Core/Language/Input
  */
@@ -70,6 +70,21 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 		},
 		
 		/**
+		 * Unregisters the element with the given id.
+		 * 
+		 * @param	{string}	elementId
+		 * @since	5.2
+		 */
+		unregister: function(elementId) {
+			if (!_values.has(elementId)) {
+				throw new Error("Unknown element id '" + elementId + "'.");
+			}
+			
+			_values.delete(elementId);
+			_elements.delete(elementId);
+		},
+		
+		/**
 		 * Caches common event listener callbacks.
 		 */
 		_setup: function() {
@@ -97,8 +112,15 @@ define(['Core', 'Dictionary', 'Language', 'ObjectMap', 'StringUtil', 'Dom/Traver
 				//noinspection JSCheckFunctionSignatures
 				elData(container, 'input-id', elementId);
 				
+				var hasFocus = document.activeElement === element;
+				
+				// DOM manipulation causes focused element to lose focus
 				element.parentNode.insertBefore(container, element);
 				container.appendChild(element);
+				
+				if (hasFocus) {
+					element.focus();
+				}
 			}
 			
 			container.classList.add('dropdown');

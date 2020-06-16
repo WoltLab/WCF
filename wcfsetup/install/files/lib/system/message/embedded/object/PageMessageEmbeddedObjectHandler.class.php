@@ -3,12 +3,13 @@ namespace wcf\system\message\embedded\object;
 use wcf\data\page\Page;
 use wcf\data\page\PageCache;
 use wcf\system\html\input\HtmlInputProcessor;
+use wcf\util\ArrayUtil;
 
 /**
  * Parses embedded pages and outputs their link or title.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Message\Embedded\Object
  */
@@ -47,6 +48,11 @@ class PageMessageEmbeddedObjectHandler extends AbstractSimpleMessageEmbeddedObje
 	 * @inheritDoc
 	 */
 	public function validateValues($objectType, $objectID, array $values) {
+		// Pages can be referenced as `123#Some Text`, where everything after the number
+		// is a comment for better readability. Converting the values to integers via
+		// `intval()` will discard the everything after the ID.
+		$values = ArrayUtil::toIntegerArray($values);
+		
 		return array_filter($values, function($value) {
 			return (PageCache::getInstance()->getPage($value) !== null);
 		});

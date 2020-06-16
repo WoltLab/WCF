@@ -37,80 +37,101 @@ $shareXingBackground: rgba(0, 101, 103, 1);
 	.jsShareFacebook {
 		background-color: $shareFacebookBackground;
 		color: rgba(255, 255, 255, 1);
-		
-		&:hover {
-			background-color: darken($shareFacebookBackground, 10%);
-			color: rgba(255, 255, 255, 1);
-		}
 	}
 	
 	.jsShareTwitter {
 		background-color: $shareTwitterBackground;
 		color: rgba(255, 255, 255, 1);
-		
-		&:hover {
-			background-color: darken($shareTwitterBackground, 10%);
-			color: rgba(255, 255, 255, 1);
-		}
 	}
 	
 	.jsShareGoogle {
 		background-color: $shareGoogleBackground;
 		color: rgba(255, 255, 255, 1);
-		
-		&:hover {
-			background-color: darken($shareGoogleBackground, 10%);
-			color: rgba(255, 255, 255, 1);
-		}
 	}
 	
 	.jsShareReddit {
 		background-color: $shareRedditBackground;
 		color: rgba(255, 255, 255, 1);
-		
-		&:hover {
-			background-color: darken($shareRedditBackground, 10%);
-			color: rgba(255, 255, 255, 1);
-		}
 	}
 	
 	.jsShareWhatsApp {
 		background-color: $shareWhatsAppBackground;
 		color: rgba(255, 255, 255, 1);
-		
-		&:hover {
-			background-color: darken($shareWhatsAppBackground, 10%);
-			color: rgba(255, 255, 255, 1);
-		}
 	}
 	
 	.jsShareLinkedIn {
 		background-color: $shareLinkedInBackground;
 		color: rgba(255, 255, 255, 1);
-		
-		&:hover {
-			background-color: darken($shareLinkedInBackground, 10%);
-			color: rgba(255, 255, 255, 1);
-		}
 	}
 	
 	.jsSharePinterest {
 		background-color: $sharePinterestBackground;
 		color: rgba(255, 255, 255, 1);
-		
-		&:hover {
-			background-color: darken($sharePinterestBackground, 10%);
-			color: rgba(255, 255, 255, 1);
-		}
 	}
 	
 	.jsShareXing {
 		background-color: $shareXingBackground;
 		color: rgba(255, 255, 255, 1);
+	}
+}
+
+/* hover states are only applied to non-touch devices to avoid "leftover" hover states after taps */
+html:not(.touch) {
+	.messageShareButtons {
+		.jsShareFacebook {
+			&:hover {
+				background-color: darken($shareFacebookBackground, 10%);
+				color: rgba(255, 255, 255, 1);
+			}
+		}
 		
-		&:hover {
-			background-color: darken($shareXingBackground, 10%);
-			color: rgba(255, 255, 255, 1);
+		.jsShareTwitter {
+			&:hover {
+				background-color: darken($shareTwitterBackground, 10%);
+				color: rgba(255, 255, 255, 1);
+			}
+		}
+		
+		.jsShareGoogle {
+			&:hover {
+				background-color: darken($shareGoogleBackground, 10%);
+				color: rgba(255, 255, 255, 1);
+			}
+		}
+		
+		.jsShareReddit {
+			&:hover {
+				background-color: darken($shareRedditBackground, 10%);
+				color: rgba(255, 255, 255, 1);
+			}
+		}
+		
+		.jsShareWhatsApp {
+			&:hover {
+				background-color: darken($shareWhatsAppBackground, 10%);
+				color: rgba(255, 255, 255, 1);
+			}
+		}
+		
+		.jsShareLinkedIn {
+			&:hover {
+				background-color: darken($shareLinkedInBackground, 10%);
+				color: rgba(255, 255, 255, 1);
+			}
+		}
+		
+		.jsSharePinterest {
+			&:hover {
+				background-color: darken($sharePinterestBackground, 10%);
+				color: rgba(255, 255, 255, 1);
+			}
+		}
+		
+		.jsShareXing {
+			&:hover {
+				background-color: darken($shareXingBackground, 10%);
+				color: rgba(255, 255, 255, 1);
+			}
 		}
 	}
 }

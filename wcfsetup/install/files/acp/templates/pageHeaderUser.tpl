@@ -5,7 +5,7 @@
 				<li id="userMenu" class="dropdown">
 					<a href="#" class="dropdownToggle jsTooltip" title="{$__wcf->user->username}">{@$__wcf->getUserProfileHandler()->getAvatar()->getImageTag(32)}</a>
 					<ul class="dropdownMenu" data-dropdown-alignment-horizontal="right">
-						<li><a href="{link controller='User' object=$__wcf->user forceFrontend=true}{/link}">{lang}wcf.user.myProfile{/lang}</a></li>
+						<li><a href="{$__wcf->user->getLink()}">{lang}wcf.user.myProfile{/lang}</a></li>
 						{if $__wcf->getUserProfileHandler()->canEditOwnProfile()}<li><a href="{link controller='User' object=$__wcf->user forceFrontend=true}editOnInit=true#about{/link}">{lang}wcf.user.editProfile{/lang}</a></li>{/if}
 						<li><a href="{link controller='Settings' forceFrontend=true}{/link}">{lang}wcf.user.menu.settings{/lang}</a></li>
 						
@@ -21,7 +21,7 @@
 					<ul class="dropdownMenu" data-dropdown-alignment-horizontal="right">
 						{foreach from=$__wcf->getFrontendMenu()->getMenuItemNodeList() item=_menuItem}
 							{if !$_menuItem->parentItemID && $_menuItem->getPage()}
-								<li><a href="{$_menuItem->getURL()}">{lang}{$_menuItem->title}{/lang}</a></li>
+								<li><a href="{$_menuItem->getURL()}">{$_menuItem->getTitle()}</a></li>
 							{/if}
 						{/foreach}
 					</ul>

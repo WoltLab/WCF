@@ -21,7 +21,7 @@ use wcf\system\WCF;
  * Executes package installation plugin-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package\Installation\Plugin
  * 
@@ -109,11 +109,6 @@ class PackageInstallationPluginAction extends AbstractDatabaseObjectAction {
 			throw new \RuntimeException("PIP '{$this->packageInstallationPlugin->pluginName}' is not allowed to throw a 'SplitNodeException'.");
 		}
 		
-		// clear cache
-		
-		// TODO: use a central method instead!
-		
-		// create search index tables
 		SearchIndexManager::getInstance()->createSearchIndices();
 		
 		VersionTracker::getInstance()->createStorageTables();

@@ -2,6 +2,7 @@
 namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\online\UsersOnlineList;
 use wcf\data\user\User;
 use wcf\data\user\UserList;
 use wcf\data\DatabaseObjectList;
@@ -14,7 +15,7 @@ use wcf\util\ArrayUtil;
  * of and the user groups a user may not be a member of.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
@@ -59,15 +60,20 @@ class UserGroupCondition extends AbstractMultipleFieldsCondition implements ICon
 	 * @inheritDoc
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
-		if (!($objectList instanceof UserList)) {
-			throw new \InvalidArgumentException("Object list is no instance of '".UserList::class."', instance of '".get_class($objectList)."' given.");
+		if (!($objectList instanceof UserList) && !($objectList instanceof UsersOnlineList)) {
+			throw new \InvalidArgumentException("Object list is neither an instance of '".UserList::class."' nor of '".UsersOnlineList::class."', instance of '".get_class($objectList)."' given.");
+		}
+		
+		$tableName = 'user_table';
+		if ($objectList instanceof UsersOnlineList) {
+			$tableName = 'session';
 		}
 		
 		if (isset($conditionData['groupIDs'])) {
-			$objectList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)', [$conditionData['groupIDs'], count($conditionData['groupIDs'])]);
+			$objectList->getConditionBuilder()->add($tableName . '.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)', [$conditionData['groupIDs'], count($conditionData['groupIDs'])]);
 		}
 		if (isset($conditionData['notGroupIDs'])) {
-			$objectList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID IN (?))', [$conditionData['notGroupIDs']]);
+			$objectList->getConditionBuilder()->add($tableName . '.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID IN (?))', [$conditionData['notGroupIDs']]);
 		}
 	}
 	
@@ -168,11 +174,7 @@ HTML;
 				$invalidGroupTypes[] = UserGroup::GUESTS;
 			}
 			
-			$this->userGroups = UserGroup::getAccessibleGroups([], $invalidGroupTypes);
-			
-			uasort($this->userGroups, function(UserGroup $groupA, UserGroup $groupB) {
-				return strcmp($groupA->getName(), $groupB->getName());
-			});
+			$this->userGroups = UserGroup::getSortedAccessibleGroups([], $invalidGroupTypes);
 		}
 		
 		return $this->userGroups;

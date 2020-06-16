@@ -25,7 +25,7 @@
 		{/if}
 		
 		{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
-			new WCF.ACP.Package.Update.Search();
+			new WCF.ACP.Package.Update.Search(true);
 		{/if}
 		
 		{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
@@ -43,6 +43,10 @@
 		<nav class="contentHeaderNavigation">
 			<ul>
 				{content}
+					{if $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
+						<li><a href="#" class="button jsButtonSearchForUpdates"><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.acp.package.searchForUpdates{/lang}</span></a></li>
+					{/if}
+
 					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage')}
 						<li><a href="{link controller='PackageStartInstall'}action=install{/link}" class="button"><span class="icon icon16 fa-plus"></span> <span>{lang}wcf.acp.package.startInstall{/lang}</span></a></li>
 					{/if}
@@ -81,7 +85,7 @@
 			
 			<tbody>
 				{foreach from=$objects item=$package}
-					<tr class="jsPackageRow">
+					<tr class="jsPackageRow" data-package="{$package->package}">
 						<td class="columnIcon">
 							{if $package->canUninstall()}
 								<span class="icon icon16 fa-times pointer jsUninstallButton jsTooltip" title="{lang}wcf.acp.package.button.uninstall{/lang}" data-object-id="{@$package->packageID}" data-confirm-message="{lang __encode=true}wcf.acp.package.uninstallation.confirm{/lang}" data-is-required="{if $package->isRequired()}true{else}false{/if}" data-is-application="{if $package->isApplication}true{else}false{/if}"></span>
@@ -92,7 +96,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{@$package->packageID}</td>
-						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->packageDescription|language}">
+						<td id="packageName{@$package->packageID}" class="columnTitle" title="{$package->getDescription()}">
 							<a href="{link controller='Package' id=$package->packageID}{/link}"><span>{$package}</span></a>
 						</td>
 						<td class="columnText">{if $package->authorURL}<a href="{$package->authorURL}" class="externalURL">{$package->author}</a>{else}{$package->author}{/if}</td>

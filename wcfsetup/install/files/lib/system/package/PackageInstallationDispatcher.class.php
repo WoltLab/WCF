@@ -36,16 +36,16 @@ use wcf\system\setup\Installer;
 use wcf\system\style\StyleHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
-use wcf\util\exception\CryptoException;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
+use wcf\util\JSON;
 use wcf\util\StringUtil;
 
 /**
  * PackageInstallationDispatcher handles the whole installation process.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */
@@ -133,6 +133,7 @@ class PackageInstallationDispatcher {
 		$step = null;
 		foreach ($nodes as $data) {
 			$nodeData = unserialize($data['nodeData']);
+			$this->logInstallationStep($data);
 			
 			switch ($data['nodeType']) {
 				case 'package':
@@ -153,6 +154,12 @@ class PackageInstallationDispatcher {
 			}
 			
 			if ($step->splitNode()) {
+				$log = 'split node';
+				if ($step->getException() !== null && $step->getException()->getMessage()) {
+					$log .= ': ' . $step->getException()->getMessage();
+				}
+				
+				$this->logInstallationStep($data, $log);
 				$this->nodeBuilder->cloneNode($node, $data['sequenceNo']);
 				break;
 			}
@@ -167,6 +174,8 @@ class PackageInstallationDispatcher {
 		
 		// perform post-install/update actions
 		if ($node == '') {
+			$this->logInstallationStep([], 'start cleanup');
+			
 			// update "last update time" option
 			$sql = "UPDATE	wcf".WCF_N."_option
 				SET	optionValue = ?
@@ -227,7 +236,7 @@ class PackageInstallationDispatcher {
 							'signature_secret'
 						]);
 					}
-					catch (CryptoException $e) {
+					catch (\Throwable $e) {
 						// ignore, the secret will stay empty and crypto operations
 						// depending on it will fail
 					}
@@ -242,7 +251,7 @@ class PackageInstallationDispatcher {
 							'exception_privacy'
 						]);
 						$statement->execute([
-							'debug',
+							'debugFolder',
 							'mail_send_method'
 						]);
 						$statement->execute([
@@ -351,9 +360,43 @@ class PackageInstallationDispatcher {
 				WHERE		processNo = ?";
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute([$this->queue->processNo]);
+			
+			$this->logInstallationStep([], 'finished cleanup');
 		}
 		
 		return $step;
+	}
+	
+	/**
+	 * Logs an installation step.
+	 * 
+	 * @param	array		$node	data of the executed node
+	 * @param	string		$log	optional additional log text
+	 */
+	protected function logInstallationStep(array $node = [], $log = '') {
+		$logEntry = "[" . TIME_NOW . "]\n";
+		if (!empty($node)) {
+			$logEntry .= 'sequenceNo: ' . $node['sequenceNo'] . "\n";
+			$logEntry .= 'nodeType: ' . $node['nodeType'] . "\n";
+			$logEntry .= "nodeData:\n";
+			
+			$nodeData = unserialize($node['nodeData']);
+			foreach ($nodeData as $index => $value) {
+				$logEntry .= "\t" . $index . ': ' . (!is_object($value) && !is_array($value) ? $value : JSON::encode($value)) . "\n";
+			}
+		}
+		
+		if ($log) {
+			$logEntry .= 'additional information: ' . $log . "\n";
+		}
+		
+		$logEntry .= str_repeat('-', 30) . "\n\n";
+		
+		file_put_contents(
+			WCF_DIR . 'log/' . date('Y-m-d', TIME_NOW) . '-update-' . $this->queue->queueID . '.txt',
+			$logEntry,
+			FILE_APPEND
+		);
 	}
 	
 	/**
@@ -432,6 +475,12 @@ class PackageInstallationDispatcher {
 			}
 		}
 		unset($nodeData['requirements']);
+		
+		$applicationDirectory = '';
+		if (isset($nodeData['applicationDirectory'])) {
+			$applicationDirectory = $nodeData['applicationDirectory'];
+			unset($nodeData['applicationDirectory']);
+		}
 		
 		// update package
 		if ($this->queue->packageID) {
@@ -532,15 +581,13 @@ class PackageInstallationDispatcher {
 			}
 		}
 		
-		if ($this->getPackage()->isApplication && $this->getPackage()->package != 'com.woltlab.wcf' && $this->getAction() == 'install') {
-			if (empty($this->getPackage()->packageDir)) {
-				$document = $this->promptPackageDir();
-				if ($document !== null && $document instanceof FormDocument) {
-					$installationStep->setDocument($document);
-				}
-				
-				$installationStep->setSplitNode();
+		if ($this->getPackage()->isApplication && $this->getPackage()->package != 'com.woltlab.wcf' && $this->getAction() == 'install' && empty($this->getPackage()->packageDir)) {
+			$document = $this->promptPackageDir($applicationDirectory);
+			if ($document !== null && $document instanceof FormDocument) {
+				$installationStep->setDocument($document);
 			}
+
+			$installationStep->setSplitNode();
 		}
 		
 		return $installationStep;
@@ -696,7 +743,7 @@ class PackageInstallationDispatcher {
 			$document = $plugin->{$this->action}();
 		}
 		catch (SplitNodeException $e) {
-			$step->setSplitNode();
+			$step->setSplitNode($e);
 		}
 		
 		if ($document !== null && ($document instanceof FormDocument)) {
@@ -799,14 +846,18 @@ class PackageInstallationDispatcher {
 	/**
 	 * Prompts for a text input for package directory (applies for applications only)
 	 * 
+	 * @param       string          $applicationDirectory
 	 * @return	FormDocument
 	 */
-	protected function promptPackageDir() {
+	protected function promptPackageDir($applicationDirectory) {
 		// check for pre-defined directories originating from WCFSetup
 		$directory = WCF::getSession()->getVar('__wcfSetup_directories');
+		$abbreviation = Package::getAbbreviation($this->getPackage()->package);
 		if ($directory !== null) {
-			$abbreviation = Package::getAbbreviation($this->getPackage()->package);
-			$directory = isset($directory[$abbreviation]) ? $directory[$abbreviation] : null;
+			$directory = $directory[$abbreviation] ?? null;
+		}
+		else if (ENABLE_ENTERPRISE_MODE && defined('ENTERPRISE_MODE_APP_DIRECTORIES') && is_array(ENTERPRISE_MODE_APP_DIRECTORIES)) {
+			$directory = ENTERPRISE_MODE_APP_DIRECTORIES[$abbreviation] ?? null; 
 		}
 		
 		if ($directory === null && !PackageInstallationFormManager::findForm($this->queue, 'packageDir')) {
@@ -841,7 +892,10 @@ class PackageInstallationDispatcher {
 			if ($isParent === false) {
 				$defaultPath = dirname(WCF_DIR);
 			}
-			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($defaultPath)) . Package::getAbbreviation($this->getPackage()->package) . '/';
+			if (!$applicationDirectory) {
+				$applicationDirectory = Package::getAbbreviation($this->getPackage()->package);
+			}
+			$defaultPath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($defaultPath)) . $applicationDirectory . '/';
 			
 			$packageDir->setValue($defaultPath);
 			$container->appendChild($packageDir);
@@ -1170,7 +1224,6 @@ class PackageInstallationDispatcher {
 					];
 				}
 			}
-				
 		}
 		
 		return $errors;

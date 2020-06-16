@@ -2,11 +2,11 @@
  * Provides buttons to share a page through multiple social community sites.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Message/Share
  */
-define(['EventHandler'], function(EventHandler) {
+define(['EventHandler', 'StringUtil'], function(EventHandler, StringUtil) {
 	"use strict";
 	
 	/**
@@ -25,39 +25,66 @@ define(['EventHandler'], function(EventHandler) {
 			elBySelAll('.jsMessageShareButtons', null, (function(container) {
 				container.classList.remove('jsMessageShareButtons');
 				
+				var pageUrl = encodeURIComponent(StringUtil.unescapeHTML(elData(container, 'url') || ''));
+				if (!pageUrl) {
+					pageUrl = this._pageUrl;
+				}
+				
 				var providers = {
 					facebook: {
 						link: elBySel('.jsShareFacebook', container),
-						share: (function() { this._share('facebook', 'https://www.facebook.com/sharer.php?u={pageURL}&t={text}', true); }).bind(this)
+						share: (function(event) {
+							event.preventDefault();
+							this._share('facebook', 'https://www.facebook.com/sharer.php?u={pageURL}&t={text}', true, pageUrl);
+						}).bind(this)
 					},
 					google: {
 						link: elBySel('.jsShareGoogle', container),
-						share: (function() { this._share('google', 'https://plus.google.com/share?url={pageURL}', false); }).bind(this)
+						share: (function(event) {
+							event.preventDefault();
+							this._share('google', 'https://plus.google.com/share?url={pageURL}', false, pageUrl);
+						}).bind(this)
 					},
 					reddit: {
 						link: elBySel('.jsShareReddit', container),
-						share: (function() { this._share('reddit', 'https://ssl.reddit.com/submit?url={pageURL}', false); }).bind(this)
+						share: (function(event) {
+							event.preventDefault();
+							this._share('reddit', 'https://ssl.reddit.com/submit?url={pageURL}', false, pageUrl);
+						}).bind(this)
 					},
 					twitter: {
 						link: elBySel('.jsShareTwitter', container),
-						share: (function() { this._share('twitter', 'https://twitter.com/share?url={pageURL}&text={text}', false); }).bind(this)
+						share: (function(event) {
+							event.preventDefault();
+							this._share('twitter', 'https://twitter.com/share?url={pageURL}&text={text}', false, pageUrl);
+						}).bind(this)
 					},
 					linkedIn: {
 						link: elBySel('.jsShareLinkedIn', container),
-						share: (function() { this._share('linkedIn', 'https://www.linkedin.com/cws/share?url={pageURL}', false); }).bind(this)
+						share: (function(event) {
+							event.preventDefault();
+							this._share('linkedIn', 'https://www.linkedin.com/cws/share?url={pageURL}', false, pageUrl);
+						}).bind(this)
 					},
 					pinterest: {
 						link: elBySel('.jsSharePinterest', container),
-						share: (function() { this._share('pinterest', 'https://www.pinterest.com/pin/create/link/?url={pageURL}&description={text}', false); }).bind(this)
+						share: (function(event) {
+							event.preventDefault();
+							this._share('pinterest', 'https://www.pinterest.com/pin/create/link/?url={pageURL}&description={text}', false, pageUrl);
+						}).bind(this)
 					},
 					xing: {
 						link: elBySel('.jsShareXing', container),
-						share: (function() { this._share('xing', 'https://www.xing.com/social_plugins/share?url={pageURL}', false); }).bind(this)
+						share: (function(event) {
+							event.preventDefault();
+							this._share('xing', 'https://www.xing.com/social_plugins/share?url={pageURL}', false, pageUrl);
+						}).bind(this)
 					},
 					whatsApp: {
 						link: elBySel('.jsShareWhatsApp', container),
-						share: (function() {
-							window.location.href = 'whatsapp://send?text=' + this._pageDescription + '%20' + this._pageUrl;
+						share: (function(event) {
+							event.preventDefault();
+							window.location.href = 'https://api.whatsapp.com/send?text=' + this._pageDescription + '%20' + this._pageUrl;
 						}).bind(this)
 					}
 				};
@@ -79,8 +106,17 @@ define(['EventHandler'], function(EventHandler) {
 			}).bind(this));
 		},
 		
-		_share: function(objectName, url, appendURL) {
-			window.open(url.replace(/\{pageURL}/, this._pageUrl).replace(/\{text}/, this._pageDescription + (appendURL ? "%20" + this._pageUrl : "")), objectName, 'height=600,width=600');
+		_share: function(objectName, url, appendUrl, pageUrl) {
+			// fallback for plugins
+			if (!pageUrl) {
+				pageUrl = this._pageUrl;
+			}
+			
+			window.open(
+				url.replace(/\{pageURL}/, pageUrl).replace(/\{text}/, this._pageDescription + (appendUrl ? "%20" + pageUrl : "")),
+				objectName,
+				'height=600,width=600'
+			);
 		}
 	};
 });

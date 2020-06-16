@@ -2,7 +2,7 @@
  * Flexible UI element featuring both a list of items and an input field with suggestion support.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Suggestion
  */
@@ -250,7 +250,7 @@ define(['Ajax', 'Core', 'Ui/SimpleDropdown'], function(Ajax, Core, UiSimpleDropd
 					this._dropdownMenu.appendChild(listItem);
 				}
 				
-				UiSimpleDropdown.open(this._element.id);
+				UiSimpleDropdown.open(this._element.id, true);
 			}
 			else {
 				UiSimpleDropdown.close(this._element.id);

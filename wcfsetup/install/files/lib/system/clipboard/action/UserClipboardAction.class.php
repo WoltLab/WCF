@@ -2,6 +2,7 @@
 namespace wcf\system\clipboard\action;
 use wcf\data\clipboard\action\ClipboardAction;
 use wcf\data\user\group\UserGroup;
+use wcf\data\user\User;
 use wcf\data\user\UserAction;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\request\LinkHandler;
@@ -11,7 +12,7 @@ use wcf\system\WCF;
  * Prepares clipboard editor items for user objects.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Clipboard\Action
  */
@@ -151,9 +152,9 @@ class UserClipboardAction extends AbstractClipboardAction {
 		$userToGroup = $statement->fetchMap('userID', 'groupID', false);
 		
 		// validate if user's group is accessible for current user
-		foreach ($userIDs as $userID) {
+		foreach ($userIDs as $index => $userID) {
 			if (!isset($userToGroup[$userID]) || !UserGroup::isAccessibleGroup($userToGroup[$userID])) {
-				unset($userIDs[$userID]);
+				unset($userIDs[$index]);
 			}
 		}
 		
@@ -171,7 +172,13 @@ class UserClipboardAction extends AbstractClipboardAction {
 			return [];
 		}
 		
-		return $this->__validateAccessibleGroups(array_keys($this->objects));
+		$userIDs = [];
+		/** @var User $user */
+		foreach ($this->objects as $user) {
+			if (empty($user->authData)) $userIDs[] = $user->userID;
+		}
+		
+		return $this->__validateAccessibleGroups($userIDs);
 	}
 	
 	/**

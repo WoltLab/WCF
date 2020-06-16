@@ -36,7 +36,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes boxes.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
@@ -313,6 +313,13 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			$box = new Box(null, $row);
 		}
 		else {
+			// Updating 'system' type boxes is allowed, but we must not modify
+			// the visibility settings in order to preserve user modifications.
+			if (!empty($row) && $row['boxType'] === 'system') {
+				unset($data['visibleEverywhere']);
+				unset($this->visibilityExceptions[$data['identifier']]);
+			}
+			
 			$box = parent::import($row, $data);
 		}
 		
@@ -525,7 +532,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 					asort($options);
 					
 					return $options;
-				}),
+				})
+				->addDependency(
+					ValueFormFieldDependency::create('boxType')
+						->fieldId('boxType')
+						->values(['system'])
+				),
 			
 			SingleSelectionFormField::create('position')
 				->label('wcf.acp.pip.box.position')
@@ -579,6 +591,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				->i18n()
 				->i18nRequired()
 				->languageItemPattern('__NONE__')
+				->addDependency(
+					ValueFormFieldDependency::create('boxType')
+						->fieldId('boxType')
+						->values(['system'])
+						->negate()
+				)
 		]);
 		
 		// add box controller-specific form fields 
@@ -590,24 +608,6 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				$boxController->addPipGuiFormFields($form, $objectType->objectType);
 			}
 		}
-		
-		// add dependencies
-		
-		/** @var SingleSelectionFormField $boxType */
-		$boxType = $dataContainer->getNodeById('boxType');
-		
-		$dataContainer->getNodeById('objectType')->addDependency(
-			ValueFormFieldDependency::create('boxType')
-				->field($boxType)
-				->values(['system'])
-		);
-		
-		$contentContainer->getNodeById('contentContent')->addDependency(
-			ValueFormFieldDependency::create('pageType')
-				->field($boxType)
-				->values(['system'])
-				->negate()
-		);
 	}
 	
 	/**
@@ -725,7 +725,12 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 				$objectType = $data['objectType'];
 				unset($data['objectType']);
 				
-				$data['objectTypeID'] = ObjectTypeCache::getInstance()->getObjectTypeByName('com.woltlab.wcf.boxController', $objectType)->objectTypeID;
+				if (!empty($objectType)) {
+					$data['objectTypeID'] = ObjectTypeCache::getInstance()->getObjectTypeByName(
+						'com.woltlab.wcf.boxController',
+						$objectType
+					)->objectTypeID;
+				}
 			}
 			
 			if (isset($data['visibilityExceptions'])) {
@@ -734,18 +739,32 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			}
 			
 			$content = [];
-			if (isset($data['content'])) {
-				$content['content'] = $data['content'];
-				unset($data['content']);
-			}
-			if (isset($data['title'])) {
-				$content['title'] = $data['title'];
-				unset($data['title']);
+			
+			foreach (['title', 'content'] as $contentProperty) {
+				if (!empty($data[$contentProperty])) {
+					foreach ($data[$contentProperty] as $languageID => $value) {
+						$languageCode = LanguageFactory::getInstance()->getLanguage($languageID)->languageCode;
+						
+						if (!isset($content[$languageCode])) {
+							$content[$languageCode] = [];
+						}
+						
+						$content[$languageCode][$contentProperty] = $value;
+					}
+				}
+				
+				unset($data[$contentProperty]);
 			}
 			
-			if (!empty($content)) {
-				$data['content'] = $content;
+			foreach ($content as $languageCode => $values) {
+				foreach (['title', 'content'] as $contentProperty) {
+					if (!isset($values[$contentProperty])) {
+						$content[$languageCode][$contentProperty] = '';
+					}
+				}
 			}
+			
+			$data['content'] = $content;
 		}
 		
 		return $data;
@@ -805,13 +824,13 @@ class BoxPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin 
 			$form
 		);
 		
-		if (!empty($data['visibilityExceptions'])) {
+		if (!empty($formData['visibilityExceptions'])) {
 			$box->appendChild($document->createElement('visibleEverywhere', (string)($data['visibleEverywhere'] ?? 0)));
 			
 			$visibilityExceptions = $document->createElement('visibilityExceptions');
 			
-			sort($data['visibilityExceptions']);
-			foreach ($data['visibilityExceptions'] as $page) {
+			sort($formData['visibilityExceptions']);
+			foreach ($formData['visibilityExceptions'] as $page) {
 				$visibilityExceptions->appendChild($document->createElement('page', $page));
 			}
 			

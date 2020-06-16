@@ -12,7 +12,7 @@ use wcf\util\StringUtil;
  * Provides internationalization support for input fields.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Language
  */
@@ -94,20 +94,27 @@ class I18nHandler extends SingletonFactory {
 	
 	/**
 	 * Reads plain and i18n values from request data.
+	 * 
+	 * @param	array|null	$requestData	used request data (if `null`, `$_POST` is used)
+	 * @throws	SystemException
 	 */
-	public function readValues() {
+	public function readValues(array $requestData = null) {
+		if ($requestData === null) {
+			$requestData = $_POST;
+		}
+		
 		foreach ($this->elementIDs as $elementID) {
-			if (isset($_POST[$elementID])) {
+			if (isset($requestData[$elementID])) {
 				// you should trim the string before using it; prevents unwanted newlines
-				$this->plainValues[$elementID] = StringUtil::unifyNewlines(StringUtil::trim($_POST[$elementID]));
+				$this->plainValues[$elementID] = StringUtil::unifyNewlines(StringUtil::trim($requestData[$elementID]));
 				continue;
 			}
 			
 			$i18nElementID = $elementID . '_i18n';
-			if (isset($_POST[$i18nElementID]) && is_array($_POST[$i18nElementID])) {
+			if (isset($requestData[$i18nElementID]) && is_array($requestData[$i18nElementID])) {
 				$this->i18nValues[$elementID] = [];
 				
-				foreach ($_POST[$i18nElementID] as $languageID => $value) {
+				foreach ($requestData[$i18nElementID] as $languageID => $value) {
 					$this->i18nValues[$elementID][$languageID] = StringUtil::unifyNewlines(StringUtil::trim($value));
 				}
 				

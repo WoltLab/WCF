@@ -19,7 +19,6 @@
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabCode.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabColor.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabDragAndDrop.js?v={@LAST_UPDATE_TIME}',
-			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabDropdown.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabEvent.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabFont.js?v={@LAST_UPDATE_TIME}',
 			'{@$__wcf->getPath()}js/3rdParty/redactor2/plugins/WoltLabFullscreen.js?v={@LAST_UPDATE_TIME}',
@@ -86,6 +85,7 @@
 				'wcf.editor.image.float.left': '{lang}wcf.editor.image.float.left{/lang}',
 				'wcf.editor.image.float.right': '{lang}wcf.editor.image.float.right{/lang}',
 				'wcf.editor.image.source': '{lang}wcf.editor.image.source{/lang}',
+				'wcf.editor.image.source.error.blocked': '{lang}wcf.editor.image.source.error.blocked{/lang}',
 				'wcf.editor.image.source.error.insecure': '{lang}wcf.editor.image.source.error.insecure{/lang}',
 				'wcf.editor.image.source.error.invalid': '{lang}wcf.editor.image.source.error.invalid{/lang}',
 				
@@ -199,7 +199,6 @@
 					
 					// WoltLab specials
 					'WoltLabBlock',
-					'WoltLabDropdown',
 					'WoltLabEvent',
 					'WoltLabKeydown',
 					
@@ -238,6 +237,7 @@
 				woltlab: {
 					allowImages: {if $__wcf->getBBCodeHandler()->isAvailableBBCode('img')}true{else}false{/if},
 					attachments: (elDataBool(element, 'disable-attachments') === false),
+					attachmentThumbnailWidth: {@ATTACHMENT_THUMBNAIL_WIDTH},
 					autosave: autosave,
 					allowedInlineStyles: allowedInlineStyles,
 					buttons: buttonOptions,
@@ -245,10 +245,22 @@
 					customButtons: customButtons,
 					forceSecureImages: {if MESSAGE_FORCE_SECURE_IMAGES}true{else}false{/if},
 					highlighters: highlighters,
+					images: {
+						external: {if IMAGE_ALLOW_EXTERNAL_SOURCE}true{else}false{/if},
+						secureOnly: {if MESSAGE_FORCE_SECURE_IMAGES}true{else}false{/if},
+						whitelist: [
+							{implode from=$__wcf->getBBCodeHandler()->getImageExternalSourceWhitelist() item=$hostname}'{$hostname|encodeJS}'{/implode}
+						]
+					},
 					media: {if $__wcf->session->getPermission('admin.content.cms.canUseMedia')}true{else}false{/if},
 					mediaUrl: '{link controller='Media' id=-123456789 thumbnail='void' forceFrontend=true}{/link}'
 				}
 			};
+			
+			// The caret is misaligned in Safari 13+ when using \u200b. 
+			if (Environment.browser() === 'safari') {
+				config.emptyHtml = '<p><br></p>';
+			}
 			
 			// user mentions
 			if (elDataBool(element, 'support-mention')) {
@@ -284,7 +296,7 @@
 			config.callbacks.init = function() {
 				// slight delay to allow Redactor to initialize itself
 				window.setTimeout(function() {
-					if (content === '' && Environment.platform() === 'ios') {
+					if (content === '' && (Environment.platform() === 'ios' || Environment.browser() === 'safari')) {
 						content = '<p><br></p>';
 					}
 					
@@ -294,6 +306,7 @@
 					
 					// set code
 					redactor.code.start(content);
+					redactor.WoltLabImage.validateImages();
 					
 					// set value
 					redactor.core.textarea().val(redactor.clean.onSync(redactor.$editor.html()));

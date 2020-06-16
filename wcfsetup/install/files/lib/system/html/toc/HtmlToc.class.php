@@ -8,7 +8,7 @@ use wcf\util\StringUtil;
  * Generates a table of contents for a message.
  *
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Toc
  * @since       5.2
@@ -51,6 +51,10 @@ class HtmlToc {
 			// significant changes to the phrasing. Worst of all, it would no longer work without
 			// the need of user interactions, making it a somewhat cumbersome experience. KISS.
 			$id = "{$idPrefix}-{$id}";
+			
+			$classes = $hElement->getAttribute('class');
+			if (!empty($classes)) $classes .= ' ';
+			$hElement->setAttribute('class', $classes . 'anchorFixedHeader');
 			
 			$hElement->setAttribute('id', $id);
 			

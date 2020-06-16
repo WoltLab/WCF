@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 {if $field->isFilterable()}
 	<script data-relocate="true">
 		require(['Language', 'WoltLabSuite/Core/Ui/ItemList/Filter'], function(Language, UiItemListFilter) {
@@ -24,14 +22,21 @@
 						*}type="checkbox" {*
 						*}name="{@$field->getPrefixedId()}[]" {*
 						*}value="{$__fieldNestedOption[value]}"{*
-						*}{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue()} checked{/if}{*
-						*}{if $field->isImmutable()} disabled{/if}{*
+						*}{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue() && $__fieldNestedOption[isSelectable]} checked{/if}{*
+						*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
 					*}> {@$__fieldNestedOption[label]}</label>
 			</li>
 		{/foreach}
 	</ul>
 {else}
-	{htmlCheckboxes options=$field->getOptions() name=$field->getPrefixedId() selected=$field->getValue() disabled=$field->isImmutable() disableEncoding=true}
+	{foreach from=$field->getNestedOptions() item=__fieldNestedOption}
+		<label{if $__fieldNestedOption[depth] > 0} style="margin-left: {$__fieldNestedOption[depth]*20}px"{/if}>
+			<input type="checkbox" {*
+				*}name="{@$field->getPrefixedId()}[]" {*
+				*}value="{$__fieldNestedOption[value]}"{*
+				*}{if $field->getValue() !== null && $__fieldNestedOption[value]|in_array:$field->getValue() && $__fieldNestedOption[isSelectable]} checked{/if}{*
+				*}{if $field->isImmutable() || !$__fieldNestedOption[isSelectable]} disabled{/if}{*
+			*}> {@$__fieldNestedOption[label]}
+		</label>
+	{/foreach}
 {/if}
-
-{include file='__formFieldFooter'}

@@ -2,7 +2,7 @@
  * Flexible UI element featuring both a list of items and an input field with suggestion support.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/ItemList
  */
@@ -97,6 +97,13 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 					}
 					
 					form.addEventListener('submit', (function() {
+						if (this._acceptsNewItems(elementId)) {
+							var value = _data.get(elementId).element.value.trim();
+							if (value.length) {
+								this._addItem(elementId, { objectId: 0, value: value });
+							}
+						}
+						
 						var values = this.getValues(elementId);
 						if (options.submitFieldName.length) {
 							var input;
@@ -113,6 +120,16 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 							options.callbackSubmit(form, values);
 						}
 					}).bind(this));
+				}
+				else {
+					form.addEventListener('submit', function() {
+						if (this._acceptsNewItems(elementId)) {
+							var value = _data.get(elementId).element.value.trim();
+							if (value.length) {
+								this._addItem(elementId, {objectId: 0, value: value});
+							}
+						}
+					}.bind(this));
 				}
 			}
 			
@@ -172,7 +189,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 			elBySelAll('.item > span', data.list, function(span) {
 				values.push({
 					objectId: ~~elData(span, 'object-id'),
-					value: span.textContent,
+					value: span.textContent.trim(),
 					type: elData(span, 'type')
 				});
 			});
@@ -543,21 +560,19 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'WoltLabSu
 		 * @param	{object}	event		event object
 		 */
 		_blur: function(event) {
-			var data = _data.get(event.currentTarget.id);
+			var input = event.currentTarget;
+			var data = _data.get(input.id);
 			if (data.options.restricted) {
 				// restricted item lists only allow results from the dropdown to be picked
 				return;
 			}
 			
-			var currentTarget = event.currentTarget;
-			window.setTimeout(function() {
-				var value = currentTarget.value.trim();
-				if (value.length) {
-					if (!data.suggestion || !data.suggestion.isActive()) {
-						this._addItem(currentTarget.id, { objectId: 0, value: value });
-					}
+			var value = input.value.trim();
+			if (value.length) {
+				if (!data.suggestion || !data.suggestion.isActive()) {
+					this._addItem(input.id, { objectId: 0, value: value });
 				}
-			}.bind(this), 100);
+			}
 		}
 	};
 });

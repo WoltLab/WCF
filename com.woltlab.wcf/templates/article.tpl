@@ -12,7 +12,7 @@
 						<span class="icon icon16 fa-tags"></span>
 						<ul class="labelList">
 							{foreach from=$article->getLabels() item=label}
-								<li><span class="label badge{if $label->getClassNames()} {$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></li>
+								<li>{@$label->render()}</li>
 							{/foreach}
 						</ul>
 					</li>
@@ -21,8 +21,8 @@
 				<li itemprop="author" itemscope itemtype="http://schema.org/Person">
 					<span class="icon icon16 fa-user"></span>
 					{if $article->userID}
-						<a href="{link controller='User' id=$article->userID title=$article->username}{/link}" class="userLink" data-user-id="{@$article->userID}" itemprop="url">
-							<span itemprop="name">{$article->username}</span>
+						<a href="{$article->getUserProfile()->getLink()}" class="userLink" data-object-id="{@$article->userID}" itemprop="url">
+							<span itemprop="name">{@$article->getUserProfile()->getFormattedUsername()}</span>
 						</a>
 					{else}
 						<span itemprop="name">{$article->username}</span>
@@ -38,8 +38,10 @@
 				
 				{if $article->getDiscussionProvider()->getDiscussionCountPhrase()}
 					<li itemprop="interactionStatistic" itemscope itemtype="http://schema.org/InteractionCounter">
-						<span class="icon icon16 fa-comments"></span>
-						<span>{$article->getDiscussionProvider()->getDiscussionCountPhrase()}</span>
+                                                <span class="icon icon16 fa-comments"></span>
+                                                {if $article->getDiscussionProvider()->getDiscussionLink()}<a href="{$article->getDiscussionProvider()->getDiscussionLink()}">{else}<span>{/if}
+							{$article->getDiscussionProvider()->getDiscussionCountPhrase()}
+                                                {if $article->getDiscussionProvider()->getDiscussionLink()}</a>{else}</span>{/if}
 						<meta itemprop="interactionType" content="http://schema.org/CommentAction">
 						<meta itemprop="userInteractionCount" content="{@$article->getDiscussionProvider()->getDiscussionCount()}">
 					</li>
@@ -108,18 +110,38 @@
 			{/if}
 		{/foreach}
 	{/if}
-	<link rel="amphtml" href="{link controller='ArticleAmp' object=$articleContent}{/link}">
+	{if MODULE_AMP}
+		<link rel="amphtml" href="{link controller='ArticleAmp' object=$articleContent}{/link}">
+	{/if}
 {/capture}
 
 {include file='header'}
 
+{if !$article->isPublished()}
+	<p class="info">{lang publicationDate=$article->publicationDate}wcf.article.publicationStatus.{@$article->publicationStatus}{/lang}</p>
+{/if}
+
 <div class="section">
+	{if $articleContent->teaser}
+		<div class="section articleTeaserContainer">
+			<div class="htmlContent">
+				<p class="articleTeaser">{@$articleContent->getFormattedTeaser()}</p>
+			</div>
+		</div>
+	{/if}
+	
 	{if $articleContent->getImage() && $articleContent->getImage()->hasThumbnail('large')}
-		<div class="section" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
+		<div class="section articleImageContainer" itemprop="image" itemscope itemtype="http://schema.org/ImageObject">
 			<figure class="articleImage">
 				<div class="articleImageWrapper">{@$articleContent->getImage()->getThumbnailTag('large')}</div>
 				{if $articleContent->getImage()->caption}
-					<figcaption itemprop="description">{$articleContent->getImage()->caption}</figcaption>
+					<figcaption itemprop="description">
+						{if $articleContent->getImage()->captionEnableHtml}
+							{@$articleContent->getImage()->caption}
+						{else}
+							{$articleContent->getImage()->caption}
+						{/if}
+					</figcaption>
 				{/if}
 			</figure>
 			<meta itemprop="url" content="{$articleContent->getImage()->getThumbnailLink('large')}">
@@ -132,10 +154,10 @@
 	
 	<div class="section articleContent" {@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.likeableArticle', $article->articleID)}>
 		<div class="htmlContent">
-			{if $articleContent->teaser}
-				<p class="articleTeaser">{@$articleContent->getFormattedTeaser()}</p>
+			{if MODULE_WCF_AD}
+				{@$__wcf->getAdHandler()->getAds('com.woltlab.wcf.article.inArticle')}
 			{/if}
-		
+			
 			{@$articleContent->getFormattedContent()}
 			
 			{event name='htmlArticleContent'}
@@ -149,26 +171,27 @@
 			</ul>
 		{/if}
 		
-		{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && ($__wcf->session->getPermission('user.like.canLike') || $__wcf->session->getPermission('user.like.canViewLike'))}
-			<div class="row articleLikeSection">
-				{if $__wcf->session->getPermission('user.like.canViewLike')}
-					<div class="col-xs-12 col-md-6">
-						<div class="articleLikesSummery">
-							{include file="reactionSummaryList" reactionData=$articleLikeData objectType="com.woltlab.wcf.likeableArticle" objectID=$article->articleID}
-						</div>
+		<div class="row articleLikeSection">
+			{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canViewLike')}
+				<div class="col-xs-12 col-md-6">
+					<div class="articleLikesSummery">
+						{include file="reactionSummaryList" reactionData=$articleLikeData objectType="com.woltlab.wcf.likeableArticle" objectID=$article->articleID}
 					</div>
-				{/if}
-				
-				{if MODULE_LIKE && $__wcf->session->getPermission('user.like.canLike') && (LIKE_ALLOW_FOR_OWN_CONTENT || $article->userID != $__wcf->user->userID)}
-					<div class="col-xs-12 col-md-6">
-						<ul class="articleLikeButtons buttonGroup">
-							<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{$articleLikeData[$article->articleID]->reactionTypeID}{else}0{/if}"><span class="icon icon16 fa-smile-o"></span> <span class="invisible">{lang}wcf.reactions.react{/lang}</span></span></li>
-							<li class="jsReportArticle jsOnly" data-object-id="{@$articleContent->articleContentID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
-						</ul>
-					</div>
-				{/if}
+				</div>
+			{/if}
+			
+			
+			<div class="col-xs-12 col-md-6 col-md{if !(MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canViewLike'))} col-md-offset-6{/if}">
+				<ul class="articleLikeButtons buttonGroup buttonList smallButtons">
+					{if $__wcf->session->getPermission('user.profile.canReportContent')}
+						<li class="jsReportArticle jsOnly" data-object-id="{@$articleContent->articleID}"><a href="#" title="{lang}wcf.moderation.report.reportContent{/lang}" class="button jsTooltip"><span class="icon icon16 fa-exclamation-triangle"></span> <span class="invisible">{lang}wcf.moderation.report.reportContent{/lang}</span></a></li>
+					{/if}
+					{if MODULE_LIKE && ARTICLE_ENABLE_LIKE && $__wcf->session->getPermission('user.like.canLike') && $article->userID != $__wcf->user->userID}
+						<li class="jsOnly"><span class="button reactButton{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID} active{/if}" title="{lang}wcf.reactions.react{/lang}" data-reaction-type-id="{if $articleLikeData[$article->articleID]|isset && $articleLikeData[$article->articleID]->reactionTypeID}{$articleLikeData[$article->articleID]->reactionTypeID}{else}0{/if}"><span class="icon icon16 fa-smile-o"></span> <span class="invisible">{lang}wcf.reactions.react{/lang}</span></span></li>
+					{/if}
+				</ul>
 			</div>
-		{/if}
+		</div>
 	</div>
 	
 	{event name='afterArticleContent'}
@@ -188,7 +211,7 @@
 					{event name='afterAboutAuthorText'}
 					
 					<div class="articleAboutAuthorUsername">
-						<a href="{link controller='User' object=$article->getUserProfile()->getDecoratedObject()}{/link}" class="username userLink" data-user-id="{@$article->getUserProfile()->userID}">{if MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING}{@$article->getUserProfile()->getFormattedUsername()}{else}{$article->getUserProfile()->username}{/if}</a>
+						{user object=$article->getUserProfile() class='username'}
 						
 						{if MODULE_USER_RANK}
 							{if $article->getUserProfile()->getUserTitle()}
@@ -337,7 +360,7 @@
 			new UiReactionHandler('com.woltlab.wcf.likeableArticle', {
 				// permissions
 				canReact: {if $__wcf->getUser()->userID}true{else}false{/if},
-				canReactToOwnContent: {if LIKE_ALLOW_FOR_OWN_CONTENT}true{else}false{/if},
+				canReactToOwnContent: false,
 				canViewReactions: {if LIKE_SHOW_SUMMARY}true{else}false{/if},
 				
 				// selectors

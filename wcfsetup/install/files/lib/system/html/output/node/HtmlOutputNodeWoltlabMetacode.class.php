@@ -8,7 +8,7 @@ use wcf\util\StringUtil;
  * Processes bbcodes represented by `<woltlab-metacode>`.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
@@ -46,6 +46,16 @@ class HtmlOutputNodeWoltlabMetacode extends AbstractHtmlOutputNode {
 	public function replaceTag(array $data) {
 		HtmlBBCodeParser::getInstance()->setOutputType($this->outputType);
 		
-		return HtmlBBCodeParser::getInstance()->getHtmlOutput($data['name'], $data['attributes'], $data['element']);
+		if ($this->removeLinks) {
+			HtmlBBCodeParser::getInstance()->setRemoveLinks($this->removeLinks);
+		}
+		
+		$output = HtmlBBCodeParser::getInstance()->getHtmlOutput($data['name'], $data['attributes'], $data['element']);
+		
+		if ($this->removeLinks) {
+			HtmlBBCodeParser::getInstance()->setRemoveLinks(false);
+		}
+		
+		return $output;
 	}
 }

@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\package\update;
+use wcf\data\package\update\server\PackageUpdateServer;
 use wcf\data\package\update\version\PackageUpdateVersion;
 use wcf\data\DatabaseObjectDecorator;
 
@@ -7,7 +8,7 @@ use wcf\data\DatabaseObjectDecorator;
  * Provides a viewable package update object.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Package\Update
  * 
@@ -24,13 +25,18 @@ class ViewablePackageUpdate extends DatabaseObjectDecorator {
 	 * latest accessible package update version object
 	 * @var	PackageUpdateVersion
 	 */
-	protected $accessibleVersion = null;
+	protected $accessibleVersion;
 	
 	/**
 	 * latest package update version object
 	 * @var	PackageUpdateVersion
 	 */
-	protected $latestVersion = null;
+	protected $latestVersion;
+	
+	/**
+	 * @var PackageUpdateServer
+	 */
+	protected $updateServer;
 	
 	/**
 	 * Sets latest accessible package update version object.
@@ -66,5 +72,21 @@ class ViewablePackageUpdate extends DatabaseObjectDecorator {
 	 */
 	public function getLatestVersion() {
 		return $this->latestVersion;
+	}
+	
+	/**
+	 * @param PackageUpdateServer $updateServer
+	 * @since 5.2
+	 */
+	public function setUpdateServer(PackageUpdateServer $updateServer) {
+		$this->updateServer = $updateServer;
+	}
+	
+	/**
+	 * @return PackageUpdateServer
+	 * @since 5.2
+	 */
+	public function getUpdateServer() {
+		return $this->updateServer;
 	}
 }

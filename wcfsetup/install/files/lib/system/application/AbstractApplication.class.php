@@ -9,7 +9,7 @@ use wcf\system\WCF;
  * Abstract implementation of a WoltLab Suite application.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Application
  */
@@ -69,10 +69,7 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 		
 		$this->packageID = $application->packageID;
 		
-		// check if current application is active (directly invoked, not dependent)
-		if ($application->packageID == ApplicationHandler::getInstance()->getActiveApplication()->packageID) {
-			$this->isActiveApplication = true;
-		}
+		$this->rebuildActiveApplication();
 	}
 	
 	/**
@@ -117,6 +114,13 @@ abstract class AbstractApplication extends SingletonFactory implements IApplicat
 	 */
 	public function getPrimaryController() {
 		return $this->primaryController;
+	}
+	
+	/**
+	 * @since 5.2
+	 */
+	public function rebuildActiveApplication() {
+		$this->isActiveApplication = ($this->packageID == ApplicationHandler::getInstance()->getActiveApplication()->packageID);
 	}
 	
 	/**

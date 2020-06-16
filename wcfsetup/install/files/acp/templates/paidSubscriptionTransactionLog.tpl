@@ -29,7 +29,7 @@
 		
 		{if $log->subscriptionID}
 			<dt>{lang}wcf.acp.paidSubscription.subscription{/lang}</dt>
-			<dd>{$log->getSubscription()->title|language}</dd>
+			<dd>{$log->getSubscription()->getTitle()}</dd>
 		{/if}
 		
 		<dt>{lang}wcf.acp.paidSubscription.transactionLog.paymentMethod{/lang}</dt>

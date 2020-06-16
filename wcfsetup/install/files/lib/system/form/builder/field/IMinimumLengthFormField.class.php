@@ -6,12 +6,12 @@ use wcf\data\language\Language;
  * Represents a form field that supports setting the minimum length of the field value.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface IMinimumLengthFormField {
+interface IMinimumLengthFormField extends IFormField {
 	/**
 	 * Returns the minimum length of the values of this field or `null` if no minimum
 	 * length has been set.

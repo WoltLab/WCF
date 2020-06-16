@@ -1,15 +1,18 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\IPopoverObject;
 use wcf\data\language\Language;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObject;
 use wcf\data\IUserContent;
+use wcf\data\user\option\UserOption;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\IRouteController;
 use wcf\system\request\LinkHandler;
 use wcf\system\user\storage\UserStorageHandler;
 use wcf\system\WCF;
+use wcf\util\JSON;
 use wcf\util\PasswordUtil;
 use wcf\util\UserUtil;
 
@@ -17,7 +20,7 @@ use wcf\util\UserUtil;
  * Represents a user.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
  * 
@@ -48,9 +51,7 @@ use wcf\util\UserUtil;
  * @property-read	integer		$enableGravatar			is `1` if the user uses a gravatar as avatar, otherwise `0`
  * @property-read	string		$gravatarFileExtension		extension of the user's gravatar file
  * @property-read	string		$signature			text of the user's signature
- * @property-read	integer		$signatureEnableBBCodes		is `1` if BBCodes will rendered in the user's signature, otherwise `0`
  * @property-read	integer		$signatureEnableHtml		is `1` if HTML will rendered in the user's signature, otherwise `0`
- * @property-read	integer		$signatureEnableSmilies		is `1` if smilies will rendered in the user's signature, otherwise `0`
  * @property-read	integer		$disableSignature		is `1` if the user's signature has been disabled, otherwise `0`
  * @property-read	string		$disableSignatureReason		reason why the user's signature is disabled
  * @property-read	integer		$disableSignatureExpires	timestamp at which the user's signature will automatically be enabled again
@@ -62,44 +63,45 @@ use wcf\util\UserUtil;
  * @property-read	integer		$activityPoints			total number of the user's activity points
  * @property-read	string		$notificationMailToken		token used for authenticating requests by the user to disable notification emails
  * @property-read	string		$authData			data of the third party used for authentication
- * @property-read	integer		$likesReceived			cumulative result of likes (counting +1) and dislikes (counting -1) the user's contents have received
+ * @property-read	integer		$likesReceived			cumulative result of likes (counting +1) the user's contents have received
  * @property-read       string          $coverPhotoHash                 hash of the user's cover photo
  * @property-read	string		$coverPhotoExtension		extension of the user's cover photo file
  * @property-read       integer         $disableCoverPhoto              is `1` if the user's cover photo has been disabled, otherwise `0`
  * @property-read	string		$disableCoverPhotoReason	reason why the user's cover photo is disabled
  * @property-read	integer		$disableCoverPhotoExpires	timestamp at which the user's cover photo will automatically be enabled again
  * @property-read	integer		$articles			number of articles written by the user
+ * @property-read       string          $blacklistMatches               JSON string of an array with all matches in the blacklist, otherwise an empty string 
  */
-final class User extends DatabaseObject implements IRouteController, IUserContent {
+final class User extends DatabaseObject implements IPopoverObject, IRouteController, IUserContent {
 	/**
 	 * list of group ids
 	 * @var integer[]
 	 */
-	protected $groupIDs = null;
+	protected $groupIDs;
 	
 	/**
 	 * true, if user has access to the ACP
 	 * @var	boolean
 	 */
-	protected $hasAdministrativePermissions = null;
+	protected $hasAdministrativePermissions;
 	
 	/**
 	 * list of language ids
 	 * @var	integer[]
 	 */
-	protected $languageIDs = null;
+	protected $languageIDs;
 	
 	/**
 	 * date time zone object
 	 * @var	\DateTimeZone
 	 */
-	protected $timezoneObj = null;
+	protected $timezoneObj;
 	
 	/**
 	 * list of user options
-	 * @var	string[]
+	 * @var	UserOption[]
 	 */
-	protected static $userOptions = null;
+	protected static $userOptions;
 	
 	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
@@ -262,11 +264,15 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 * Returns the value of the user option with the given name.
 	 * 
 	 * @param	string		$name		user option name
+	 * @param       boolean         $filterDisabled suppress values for disabled options
 	 * @return	mixed				user option value
 	 */
-	public function getUserOption($name) {
+	public function getUserOption($name, $filterDisabled = false) {
 		$optionID = self::getUserOptionID($name);
 		if ($optionID === null) {
+			return null;
+		}
+		else if ($filterDisabled && self::$userOptions[$name]->isDisabled) {
 			return null;
 		}
 		
@@ -367,6 +373,20 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 		if (!$row) $row = [];
 
 		return new User(null, $row);
+	}
+	
+	/**
+	 * Returns 3rd party auth provider name.
+	 *
+	 * @return	string
+	 * @since       5.2
+	 */
+	public function getAuthProvider() {
+		if (!$this->authData) {
+			return '';
+		}
+		
+		return mb_substr($this->authData, 0, mb_strpos($this->authData, ':'));
 	}
 	
 	/**
@@ -471,8 +491,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 			$this->hasAdministrativePermissions = false;
 			
 			if ($this->userID) {
-				foreach ($this->getGroupIDs() as $groupID) {
-					$group = UserGroup::getGroupByID($groupID);
+				foreach (UserGroup::getGroupsByIDs($this->getGroupIDs()) as $group) {
 					if ($group->isAdminGroup()) {
 						$this->hasAdministrativePermissions = true;
 						break;
@@ -482,6 +501,29 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 		}
 		
 		return $this->hasAdministrativePermissions;
+	}
+	
+	/**
+	 * Returns true, if this user is a member of the owner group.
+	 * 
+	 * @return bool
+	 * @since 5.2
+	 */
+	public function hasOwnerAccess() {
+		static $isOwner;
+		
+		if ($isOwner === null) {
+			$isOwner = false;
+			
+			foreach (UserGroup::getGroupsByIDs($this->getGroupIDs()) as $group) {
+				if ($group->isOwner()) {
+					$isOwner = true;
+					break;
+				}
+			}
+		}
+		
+		return $isOwner;
 	}
 	
 	/**
@@ -551,5 +593,45 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 */
 	public function canPurchasePaidSubscriptions() {
 		return WCF::getUser()->userID && WCF::getUser()->activationCode == 0;
+	}
+	
+	/**
+	 * Returns the list of fields that had matches in the blacklist. An empty list is
+	 * returned if the user has been approved, regardless of any known matches.
+	 * 
+	 * @return string[]
+	 * @since 5.2
+	 */
+	public function getBlacklistMatches() {
+		if ($this->activationCode && $this->blacklistMatches) {
+			$matches = JSON::decode($this->blacklistMatches);
+			if (is_array($matches)) {
+				return $matches;
+			}
+		}
+		
+		return [];
+	}
+	
+	/**
+	 * Returns a human readable list of fields that have positive matches against the
+	 * blacklist. If you require the raw field names, please use `getBlacklistMatches()`
+	 * instead.
+	 * 
+	 * @return string[]
+	 * @since 5.2
+	 */
+	public function getBlacklistMatchesTitle() {
+		return array_map(function($field) {
+			if ($field === 'ip') $field = 'ipAddress';
+			return WCF::getLanguage()->get('wcf.user.' . $field);
+		}, $this->getBlacklistMatches());
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getPopoverLinkClass() {
+		return 'userLink';
 	}
 }

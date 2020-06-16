@@ -8,7 +8,7 @@ use wcf\system\option\user\UserOptionHandler;
  * This class provides default implementations for a list of dynamic user options.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -26,21 +26,10 @@ abstract class UserOptionListForm extends AbstractOptionListForm {
 	/**
 	 * Returns a list of all available user groups.
 	 * 
-	 * @return	array
+	 * @return	UserGroup[]
 	 */
 	protected function getAvailableGroups() {
-		$userGroups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
-		
-		// work-around for PHP 5.3.3 randomly failing in uasort()
-		foreach ($userGroups as $userGroup) {
-			$userGroup->getName();
-		}
-		
-		uasort($userGroups, function(UserGroup $groupA, UserGroup $groupB) {
-			return strcasecmp($groupA->getName(), $groupB->getName());
-		});
-		
-		return $userGroups;
+		return UserGroup::getSortedAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE, UserGroup::USERS]);
 	}
 	
 	/**

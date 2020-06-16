@@ -32,7 +32,7 @@ use wcf\system\WCF;
  * Installs, updates and deletes menus.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Package\Plugin
  * @since	3.0
@@ -71,11 +71,19 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					AND packageID = ?";
 		$statement = WCF::getDB()->prepareStatement($sql);
 		
+		$sql = "DELETE FROM	wcf" . WCF_N . "_language_item
+			WHERE		languageItem = ?";
+		$languageItemStatement = WCF::getDB()->prepareStatement($sql);
+		
 		WCF::getDB()->beginTransaction();
 		foreach ($items as $item) {
 			$statement->execute([
 				$item['attributes']['identifier'],
 				$this->installation->getPackageID()
+			]);
+			
+			$languageItemStatement->execute([
+				'wcf.menu.' . $item['attributes']['identifier']
 			]);
 		}
 		WCF::getDB()->commitTransaction();
@@ -148,7 +156,7 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			
 			$this->boxData[$identifier] = [
 				'identifier' => $identifier,
-				'name' => $this->getI18nValues($data['elements']['title'], true),
+				'name' => $this->getI18nValues(!empty($data['elements']['box']['name']) ? $data['elements']['box']['name'] : $data['elements']['title'], true),
 				'boxType' => 'menu',
 				'position' => $position,
 				'showHeader' => !empty($data['elements']['box']['showHeader']) ? 1 : 0,
@@ -351,7 +359,13 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 			SingleSelectionFormField::create('boxPosition')
 				->label('wcf.acp.pip.menu.boxPosition')
 				->description('wcf.acp.pip.menu.boxPosition.description')
-				->options(array_combine(Box::$availablePositions, Box::$availablePositions)),
+				->options(array_combine(Box::$availablePositions, Box::$availablePositions))
+				->addDependency(
+					ValueFormFieldDependency::create('identifier')
+						->fieldId('identifier')
+						->values(['com.woltlab.wcf.MainMenu'])
+						->negate()
+				),
 			
 			BooleanFormField::create('boxShowHeader')
 				->label('wcf.acp.pip.menu.boxShowHeader'),
@@ -392,15 +406,6 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 					->field($createBox)
 			);
 		}
-		
-		/** @var TextFormField $identifier */
-		$identifier = $form->getNodeById('identifier');
-		$form->getNodeById('boxPosition')->addDependency(
-			ValueFormFieldDependency::create('identifier')
-				->field($identifier)
-				->values(['com.woltlab.wcf.MainMenu'])
-				->negate()
-		);
 	}
 	
 	/**
@@ -550,10 +555,11 @@ class MenuPackageInstallationPlugin extends AbstractXMLPackageInstallationPlugin
 				}
 			}
 			
-			if (!empty($formData['data']['boxVisibilityExceptions'])) {
+			if (!empty($formData['boxVisibilityExceptions'])) {
 				$visibilityExceptions = $box->appendChild($document->createElement('visibilityExceptions'));
 				
-				foreach ($formData['data']['boxVisibilityExceptions'] as $pageIdentifier) {
+				sort($formData['boxVisibilityExceptions']);
+				foreach ($formData['boxVisibilityExceptions'] as $pageIdentifier) {
 					$visibilityExceptions->appendChild($document->createElement('page', $pageIdentifier));
 				}
 			}

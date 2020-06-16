@@ -1,11 +1,16 @@
 $.Redactor.prototype.WoltLabKeydown = function() {
 	"use strict";
 	
+	var _isSafari = false;
 	var _tags = [];
 	
 	return {
 		init: function () {
 			var selection = window.getSelection();
+
+			require(['Environment'], function (Environment) {
+				_isSafari = (Environment.browser() === 'safari');
+			});
 			
 			var mpInit = this.keydown.init;
 			this.keydown.init = (function (e) {
@@ -99,6 +104,28 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 									return;
 								}
 							}
+						}
+						else if (e.originalEvent.which === this.keyCode.DELETE && ['H1', 'H2', 'H3', 'H4', 'H5', 'H6'].indexOf(container.nodeName) !== -1 && this.utils.isEmpty(container.innerHTML)) {
+							// Pressing the [DEL] key inside an empty heading should remove the heading entirely, instead
+							// of moving the next element's content into it. There are two situations that need to be handled:
+							// 
+							//   1. There is adjacent content, remove the heading and set the caret at the beginning of it.
+							//   2. The heading is the last element, replace it with a `<p>` and move the caret inside of it.
+							var nextElement = container.nextElementSibling;
+							if (nextElement) {
+								nextElement = container.nextElementSibling;
+							}
+							else {
+								nextElement = elCreate('p');
+								nextElement.innerHTML = this.opts.invisibleSpace;
+								container.parentNode.appendChild(nextElement);
+							}
+							
+							container.parentNode.removeChild(container);
+							this.caret.start(nextElement);
+							
+							e.originalEvent.preventDefault();
+							return;
 						}
 						else if (this.detect.isWebkit() && container.nodeName === 'LI' && e.which === this.keyCode.DELETE) {
 							// check if caret is at the end of the list item, and if there is an adjacent list item
@@ -303,9 +330,37 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 				}
 				// paragraphs
 				else if (this.keydown.block) {
+					// Firefox has the habit of keeping pointless `<br>` at the end of lines, which are mostly
+					// just a bit of noise. However, external links have an icon inserted behind them that is
+					// affected by the line break, effectively rendering it on the next line.
+					var firefoxCheckForArbitraryBrElement = null;
+					if (this.detect.isFirefox() && this.keydown.block.nodeName === 'P' && selection.isCollapsed) {
+						var link = elClosest(selection.getRangeAt(0).startContainer, 'a');
+						if (link !== null && elBySel('br', link) === null) {
+							firefoxCheckForArbitraryBrElement = this.keydown.block;
+						}
+					}
+					
 					setTimeout($.proxy(function () {
 						this.keydown.replaceToParagraph('DIV');
 						
+						// The target element was previously the original element at the time of the keypress,
+						// but is now the paragraph element of the next line. That said, we simply check the
+						// previous paragraph for a trailing link with a superfluous `<br>` element.
+						if (firefoxCheckForArbitraryBrElement !== null && firefoxCheckForArbitraryBrElement.previousElementSibling !== null) {
+							var links = [];
+							elBySelAll('a', firefoxCheckForArbitraryBrElement.previousElementSibling, function(link) {
+								links.push(link);
+							});
+							
+							if (links.length) {
+								var link = links[links.length - 1];
+								var br = elBySel('br', link);
+								if (br !== null) {
+									elRemove(br);
+								}
+							}
+						}
 					}, this), 1);
 					
 					// empty list exit
@@ -319,14 +374,27 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 						// they do not recognize this at all times, in particular certain white-spaces
 						// and <br> may not always play well.
 						if (this.utils.isRedactorParent(listItem) && this.utils.isEmpty(listItem.innerHTML)) {
-							// the current item is empty and there is no adjacent one, force clear the
-							// contents to enable browser recognition
+							// The current item is empty and there is no adjacent one, force clear the
+							// contents to enable browser recognition.
+							// 
+							// Unless this is Safari, which absolutely loves empty lines containing only
+							// a `<br>` and freaks out when a block element is completely empty.
 							if (listItem.nextElementSibling === null) {
-								listItem.innerHTML = '';
+								listItem.innerHTML = (_isSafari) ? '<br>' : '';
+								
+								// If this is Safari, we'll move the caret behind the `<br>`, otherwise
+								// nothing will happen.
+								if (_isSafari) {
+									var range = document.createRange();
+									range.selectNodeContents(listItem);
+									range.collapse(false);
+									
+									selection.removeAllRanges();
+									selection.addRange(range);
+								}
 							}
 						}
 					}
-					
 				}
 				// outside
 				else if (!this.keydown.block) {
@@ -559,7 +627,7 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					return;
 				}
 				
-				var container = this.$editor[0].closest('form, .message');
+				var container = this.$editor[0].closest('form, .message, .jsOuterEditorContainer');
 				if (container === null) return;
 				
 				var formSubmit = elBySel('.formSubmit', container);
@@ -905,8 +973,50 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 						}
 					});
 				});
+			}).bind(this);
+			
+			var firefoxCustomElementCounter = 0;
+			var firefoxUnwrapDuplicatedCustomElements = (function () {
+				var checkForInvalidNesting = false;
+				elBySelAll(getSelectorForCustomElements(), this.core.editor()[0], function(element) {
+					var index = elData(element, 'firefox-duplication-bug');
+					if (index !== '') {
+						var expectedElement = firefoxKnownCustomElements[parseInt(index, 10)];
+						if (expectedElement !== null && expectedElement.parentNode !== null) {
+							// Deleting contents inside block-styled inline elements causes Firefox to
+							// nest bogus elements by duplicating the parent node.
+							// See https://bugzilla.mozilla.org/show_bug.cgi?id=1329639
+							if (element !== expectedElement && expectedElement.contains(element)) {
+								while (element.childNodes.length) {
+									element.parentNode.insertBefore(element.childNodes[0], element);
+								}
+								
+								element.parentNode.removeChild(element);
+								
+								checkForInvalidNesting = true;
+								return;
+							}
+						}
+						
+						element.removeAttribute('data-firefox-duplication-bug');
+					}
+				});
 				
-				firefoxKnownCustomElements = [];
+				// The duplication bug prevents some normalization to not take place, causing
+				// paragraphs nested inside headlines.
+				if (checkForInvalidNesting) {
+					elBySelAll('h1,h2,h3,h4,h5,h6', this.core.editor()[0], function(heading) {
+						elBySelAll('p', heading, function(element) {
+							while (element.childNodes.length) {
+								element.parentNode.insertBefore(element.childNodes[0], element);
+							}
+							
+							element.parentNode.removeChild(element);
+						});
+					});
+				}
+				
+				firefoxCustomElementCounter = 0;
 			}).bind(this);
 			
 			this.keydown.onBackspaceAndDeleteAfter = (function (e) {
@@ -923,7 +1033,9 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					else {
 						if (e.which === this.keyCode.BACKSPACE || e.which === this.keyCode.DELETE) {
 							elBySelAll(getSelectorForCustomElements(), this.core.editor()[0], function(element) {
-								firefoxKnownCustomElements.push(element);	
+								firefoxKnownCustomElements.push(element);
+								
+								elData(element, 'firefox-duplication-bug', firefoxCustomElementCounter++);
 							});
 						}
 					}
@@ -943,7 +1055,14 @@ $.Redactor.prototype.WoltLabKeydown = function() {
 					var current;
 					
 					if (firefoxKnownCustomElements.length > 0) {
+						this.selection.save();
+						
 						firefoxDetectSplitCustomElements();
+						firefoxUnwrapDuplicatedCustomElements();
+						
+						this.selection.restore();
+						
+						firefoxKnownCustomElements = [];
 					}
 					
 					// The caret was previously inside a `<pre>`, check if we have backspaced out

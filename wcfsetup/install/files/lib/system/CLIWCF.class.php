@@ -28,7 +28,7 @@ set_exception_handler([CLIWCF::class, 'handleCLIException']);
  * Extends WCF class with functions for CLI.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
@@ -109,7 +109,7 @@ class CLIWCF extends WCF {
 	/**
 	 * @inheritDoc
 	 */
-	public static final function handleCLIException(\Exception $e) {
+	public static final function handleCLIException($e) {
 		die($e->getMessage()."\n".$e->getTraceAsString());
 	}
 	

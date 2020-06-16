@@ -1,13 +1,15 @@
 <?php
 namespace wcf\system\form\builder\field;
-use wcf\data\language\item\LanguageItemList;
 use wcf\data\IStorableObject;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
+use wcf\data\language\item\LanguageItemList;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\IFormNode;
 use wcf\system\language\I18nHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\Regex;
+use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\StringUtil;
 
@@ -17,7 +19,7 @@ use wcf\util\StringUtil;
  * This trait can only to be used in combination with `TFormField`.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
@@ -29,19 +31,25 @@ trait TI18nFormField {
 	 * `true` if this field supports i18n input and `false` otherwise
 	 * @var	bool
 	 */
-	protected $__i18n = false;
+	protected $i18n = false;
 	
 	/**
 	 * `true` if this field requires i18n input and `false` otherwise
 	 * @var	bool
 	 */
-	protected $__i18nRequired = false;
+	protected $i18nRequired = false;
 	
 	/**
 	 * pattern for the language item used to save the i18n values
 	 * @var	null|string
 	 */
-	protected $__languageItemPattern;
+	protected $languageItemPattern;
+	
+	/**
+	 * name of the nin-i18n JavaScript data handler module used for Ajax dialogs
+	 * @var	null|string
+	 */
+	protected $nonI18nJavaScriptDataHandlerModule;
 	
 	/**
 	 * Returns additional template variables used to generate the html representation
@@ -74,11 +82,11 @@ trait TI18nFormField {
 			throw new \BadMethodCallException("You can only get the language item pattern for fields with i18n enabled.");
 		}
 		
-		if ($this->__languageItemPattern === null) {
+		if ($this->languageItemPattern === null) {
 			throw new \BadMethodCallException("Language item pattern has not been set.");
 		}
 		
-		return $this->__languageItemPattern;
+		return $this->languageItemPattern;
 	}
 	
 	/**
@@ -114,13 +122,25 @@ trait TI18nFormField {
 				return I18nHandler::getInstance()->getValue($this->getPrefixedId());
 			}
 			else if ($this->hasI18nValues()) {
-				return I18nHandler::getInstance()->getValues($this->getPrefixedId());
+				$values = I18nHandler::getInstance()->getValues($this->getPrefixedId());
+				
+				// handle legacy values from the past when multilingual values
+				// were available
+				if (count(LanguageFactory::getInstance()->getLanguages()) === 1) {
+					if (isset($values[WCF::getLanguage()->languageID])) {
+						return $values[WCF::getLanguage()->languageID];
+					}
+					
+					return current($values);
+				}
+				
+				return $values;
 			}
 			
 			return '';
 		}
 		
-		return $this->__value;
+		return $this->value;
 	}
 	
 	/**
@@ -165,7 +185,17 @@ trait TI18nFormField {
 	 * @return	II18nFormField			this field
 	 */
 	public function i18n($i18n = true) {
-		$this->__i18n = $i18n;
+		if ($this->javaScriptDataHandlerModule) {
+			if ($this->isI18n() && !$i18n) {
+				$this->javaScriptDataHandlerModule = $this->nonI18nJavaScriptDataHandlerModule;
+			}
+			else if (!$this->isI18n() && $i18n) {
+				$this->nonI18nJavaScriptDataHandlerModule = $this->javaScriptDataHandlerModule;
+				$this->javaScriptDataHandlerModule = 'WoltLabSuite/Core/Form/Builder/Field/ValueI18n';
+			}
+		}
+		
+		$this->i18n = $i18n;
 		
 		return $this;
 	}
@@ -180,7 +210,7 @@ trait TI18nFormField {
 	 * @return	static					this field
 	 */
 	public function i18nRequired($i18nRequired = true) {
-		$this->__i18nRequired = $i18nRequired;
+		$this->i18nRequired = $i18nRequired;
 		$this->i18n();
 		
 		return $this;
@@ -193,7 +223,7 @@ trait TI18nFormField {
 	 * @return	bool
 	 */
 	public function isI18n() {
-		return $this->__i18n;
+		return $this->i18n;
 	}
 	
 	/**
@@ -203,7 +233,7 @@ trait TI18nFormField {
 	 * @return	bool
 	 */
 	public function isI18nRequired() {
-		return $this->__i18nRequired;
+		return $this->i18nRequired;
 	}
 	
 	/**
@@ -225,7 +255,7 @@ trait TI18nFormField {
 			throw new \InvalidArgumentException("Given pattern is invalid.");
 		}
 		
-		$this->__languageItemPattern = $pattern;
+		$this->languageItemPattern = $pattern;
 		
 		return $this;
 	}
@@ -233,9 +263,9 @@ trait TI18nFormField {
 	/**
 	 * @inheritDoc
 	 */
-	public function loadValueFromObject(IStorableObject $object) {
-		if (isset($object->{$this->getId()})) {
-			$value = $object->{$this->getId()};
+	public function updatedObject(array $data, IStorableObject $object, $loadValues = true) {
+		if ($loadValues && isset($data[$this->getObjectProperty()])) {
+			$value = $data[$this->getObjectProperty()];
 			
 			if ($this->isI18n()) {
 				// do not use `I18nHandler::setOptions()` because then `I18nHandler` only
@@ -244,7 +274,7 @@ trait TI18nFormField {
 				$this->setStringValue($value);
 			}
 			else {
-				$this->__value = $value;
+				$this->value = $value;
 			}
 		}
 		
@@ -270,7 +300,7 @@ trait TI18nFormField {
 			
 			/** @var IFormDocument $document */
 			$document = $this->getDocument();
-			$document->getDataHandler()->add(new CustomFormFieldDataProcessor('i18n', function(IFormDocument $document, array $parameters) {
+			$document->getDataHandler()->addProcessor(new CustomFormDataProcessor('i18n', function(IFormDocument $document, array $parameters) {
 				if ($this->checkDependencies() && $this->hasI18nValues()) {
 					$parameters[$this->getObjectProperty() . '_i18n'] = $this->getValue();
 				}
@@ -289,13 +319,13 @@ trait TI18nFormField {
 	 */
 	public function readValue() {
 		if ($this->isI18n()) {
-			I18nHandler::getInstance()->readValues();
+			I18nHandler::getInstance()->readValues($this->getDocument()->getRequestData());
 		}
 		else if ($this->getDocument()->hasRequestData($this->getPrefixedId())) {
 			$value = $this->getDocument()->getRequestData($this->getPrefixedId());
 			
 			if (is_string($value)) {
-				$this->__value = StringUtil::trim($value);
+				$this->value = StringUtil::trim($value);
 			}
 		}
 		

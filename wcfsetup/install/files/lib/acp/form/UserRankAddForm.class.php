@@ -14,7 +14,7 @@ use wcf\util\StringUtil;
  * Shows the user rank add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -241,7 +241,7 @@ class UserRankAddForm extends AbstractForm {
 			'customCssClassName' => $this->customCssClassName,
 			'groupID' => $this->groupID,
 			'rankTitle' => $this->rankTitle,
-			'availableGroups' => UserGroup::getGroupsByType([], [UserGroup::GUESTS, UserGroup::EVERYONE]),
+			'availableGroups' => UserGroup::getSortedGroupsByType([], [UserGroup::GUESTS, UserGroup::EVERYONE]),
 			'requiredPoints' => $this->requiredPoints,
 			'rankImage' => $this->rankImage,
 			'repeatImage' => $this->repeatImage,

@@ -2,8 +2,9 @@
  * Provides utility functions for date operations.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	DateUtil (alias)
  * @module	WoltLabSuite/Core/Date/Util
  */
 define(['Language'], function(Language) {

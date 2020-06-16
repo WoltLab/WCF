@@ -13,7 +13,7 @@ use wcf\system\SingletonFactory;
  * Handles user group assignment-related matters.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Group\Assignment
  */
@@ -69,7 +69,8 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 				$userAction = new UserAction([$user], 'addToGroups', [
 					'addDefaultGroups' => false,
 					'deleteOldGroups' => false,
-					'groups' => $newGroupIDs
+					'groups' => $newGroupIDs,
+					'ignoreUserGroupAssignments' => true
 				]);
 				$userAction->executeAction();
 			}
@@ -90,13 +91,17 @@ class UserGroupAssignmentHandler extends SingletonFactory {
 	 * assignment.
 	 * 
 	 * @param	UserGroupAssignment	$assignment
+	 * @param	integer			$maxUsers
 	 * @return	User[]
 	 */
-	public function getUsers(UserGroupAssignment $assignment) {
+	public function getUsers(UserGroupAssignment $assignment, $maxUsers = null) {
 		$userList = new UserList();
 		$userList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_to_group WHERE groupID = ?)', [
 			$assignment->groupID
 		]);
+		if ($maxUsers !== null) {
+			$userList->sqlLimit = $maxUsers;
+		}
 		
 		$conditions = $assignment->getConditions();
 		foreach ($conditions as $condition) {

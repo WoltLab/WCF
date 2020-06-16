@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Shows the bbcode add form.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -168,10 +168,7 @@ class BBCodeAddForm extends AbstractForm {
 		}
 		
 		// check whether the tag is in use
-		$bbcode = BBCode::getBBCodeByTag($this->bbcodeTag);
-		if ((!isset($this->bbcode) && $bbcode->bbcodeID) || (isset($this->bbcode) && $bbcode->bbcodeID != $this->bbcode->bbcodeID)) {
-			throw new UserInputException('bbcodeTag', 'inUse');
-		}
+		$this->validateBBCodeTagUsage();
 		
 		// validate class
 		if (!empty($this->className) && !class_exists($this->className)) {
@@ -205,6 +202,17 @@ class BBCodeAddForm extends AbstractForm {
 		}
 		else {
 			$this->buttonLabel = '';
+		}
+	}
+	
+	/**
+	 * Validates the bbcode tag usage.
+	 * @throws UserInputException
+	 */
+	protected function validateBBCodeTagUsage() {
+		$bbcode = BBCode::getBBCodeByTag($this->bbcodeTag);
+		if ($bbcode->bbcodeID) {
+			throw new UserInputException('bbcodeTag', 'inUse');
 		}
 	}
 	

@@ -13,7 +13,7 @@ use wcf\system\form\builder\field\validation\FormFieldValidationError;
  * Form field implementation for the instructions of a devtools project.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field\Devtools\Project
  * @since	5.2
@@ -41,7 +41,7 @@ class DevtoolsProjectInstructionsFormField extends AbstractFormField {
 	/**
 	 * @inheritDoc
 	 */
-	protected $__value = [];
+	protected $value = [];
 	
 	/**
 	 * names of package installation plugins that support the `application`
@@ -110,10 +110,10 @@ class DevtoolsProjectInstructionsFormField extends AbstractFormField {
 	 */
 	public function readValue() {
 		if ($this->getDocument()->hasRequestData($this->getPrefixedId()) && is_array($this->getDocument()->getRequestData($this->getPrefixedId()))) {
-			$this->__value = $this->getDocument()->getRequestData($this->getPrefixedId());
+			$this->value = $this->getDocument()->getRequestData($this->getPrefixedId());
 		}
 		else {
-			$this->__value = [];
+			$this->value = [];
 		}
 	}
 	

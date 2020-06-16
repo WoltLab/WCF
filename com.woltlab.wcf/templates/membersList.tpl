@@ -52,7 +52,7 @@
 		<div class="containerListDisplayOptions">
 			<div class="containerListSortOptions">
 				<a rel="nofollow" href="{link controller='MembersList' id=$searchID}pageNo={@$pageNo}&sortField={$sortField}&sortOrder={if $sortOrder == 'ASC'}DESC{else}ASC{/if}{if $letter}&letter={$letter}{/if}{/link}">
-					<span class="icon icon16 fa-sort-amount-{$sortOrder|strtolower} jsTooltip" title="{lang}wcf.user.members.sortBy{/lang} ({lang}wcf.global.sortOrder.{if $sortOrder === 'ASC'}ascending{else}descending{/if}{/lang})"></span>
+					<span class="icon icon16 fa-sort-amount-{$sortOrder|strtolower} jsTooltip" title="{lang}wcf.global.sorting{/lang} ({lang}wcf.global.sortOrder.{if $sortOrder === 'ASC'}ascending{else}descending{/if}{/lang})"></span>
 				</a>
 				<span class="dropdown">
 					<span class="dropdownToggle">{lang}wcf.user.sortField.{$sortField}{/lang}</span>
@@ -104,13 +104,14 @@
 			
 			<div class="formSubmit">
 				<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+				<a href="{link controller='MembersList'}{/link}" class="button">{lang}wcf.global.button.reset{/lang}</a>
 				<input type="hidden" name="sortField" value="{$sortField}">
 				<input type="hidden" name="sortOrder" value="{$sortOrder}">
 			</div>
 		</form>
 	</div>
 {else}
-	<p class="info">{lang}wcf.user.members.noMembers{/lang}</p>
+	<p class="info" role="status">{lang}wcf.user.members.noMembers{/lang}</p>
 {/if}
 
 <footer class="contentFooter">

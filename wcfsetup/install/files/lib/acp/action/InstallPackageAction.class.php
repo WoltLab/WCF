@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Handles an AJAX-based package installation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Action
  */
@@ -152,6 +152,10 @@ class InstallPackageAction extends AbstractDialogAction {
 		
 		// clean-up previously created nodes
 		$this->installation->nodeBuilder->purgeNodes();
+		
+		if ($this->installation->getAction() === 'update' && $this->queue->package === 'com.woltlab.wcf') {
+			WCF::checkWritability();
+		}
 		
 		// create node tree
 		$this->installation->nodeBuilder->buildNodes();

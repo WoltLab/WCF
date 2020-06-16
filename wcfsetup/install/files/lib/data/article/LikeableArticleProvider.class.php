@@ -10,7 +10,7 @@ use wcf\system\WCF;
  * Like Object type provider for cms articles.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Article
  * @since	3.0
@@ -71,7 +71,9 @@ class LikeableArticleProvider extends AbstractObjectTypeProvider implements ILik
 				// short output
 				$text = WCF::getLanguage()->getDynamicVariable('wcf.like.title.com.woltlab.wcf.likeableArticle', [
 					'article' => $article,
-					'like' => $like
+					'reaction' => $like,
+					// @deprecated 5.3 Use `$reaction` instead
+					'like' => $like,
 				]);
 				$like->setTitle($text);
 				

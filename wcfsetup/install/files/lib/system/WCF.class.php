@@ -34,6 +34,7 @@ use wcf\system\style\StyleHandler;
 use wcf\system\template\EmailTemplateEngine;
 use wcf\system\template\TemplateEngine;
 use wcf\system\user\storage\UserStorageHandler;
+use wcf\util\DirectoryUtil;
 use wcf\util\FileUtil;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -48,9 +49,10 @@ if (!@ini_get('date.timezone')) {
 }
 
 // define current woltlab suite version
-define('WCF_VERSION', '5.2.0 Alpha 1');
+define('WCF_VERSION', '5.2.6');
 
 // define current API version
+// @deprecated 5.2
 define('WSC_API_VERSION', 2019);
 
 // define current unix timestamp
@@ -67,7 +69,7 @@ if (!defined('NO_IMPORTS')) {
  * It holds the database connection, access to template and language engine.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
@@ -75,6 +77,7 @@ class WCF {
 	/**
 	 * list of supported legacy API versions
 	 * @var integer[]
+	 * @deprecated 5.2
 	 */
 	private static $supportedLegacyApiVersions = [2017, 2018];
 	
@@ -345,19 +348,29 @@ class WCF {
 		// get configuration
 		$dbHost = $dbUser = $dbPassword = $dbName = '';
 		$dbPort = 0;
+		$defaultDriverOptions = [];
 		require(WCF_DIR.'config.inc.php');
 		
 		// create database connection
-		self::$dbObj = new MySQLDatabase($dbHost, $dbUser, $dbPassword, $dbName, $dbPort);
+		self::$dbObj = new MySQLDatabase($dbHost, $dbUser, $dbPassword, $dbName, $dbPort, false, false, $defaultDriverOptions);
 	}
 	
 	/**
 	 * Loads the options file, automatically created if not exists.
 	 */
 	protected function loadOptions() {
-		// the attachment module is always enabled since 5.2
+		// The attachment module is always enabled since 5.2.
 		// https://github.com/WoltLab/WCF/issues/2531
 		define('MODULE_ATTACHMENT', 1);
+		
+		// Users cannot react to their own content since 5.2.
+		// https://github.com/WoltLab/WCF/issues/2975
+		define('LIKE_ALLOW_FOR_OWN_CONTENT', 0);
+		define('LIKE_ENABLE_DISLIKE', 0);
+		
+		// User markings are always applied in sidebars since 5.3.
+		// https://github.com/WoltLab/WCF/issues/3330
+		define('MESSAGE_SIDEBAR_ENABLE_USER_ONLINE_MARKING', 1);
 		
 		$filename = WCF_DIR.'options.inc.php';
 		
@@ -382,6 +395,10 @@ class WCF {
 				OptionEditor::rebuild();
 				
 				require($filename);
+			}
+			
+			if (ENABLE_DEBUG_MODE) {
+				self::$dbObj->enableDebugMode();
 			}
 		}
 	}
@@ -483,7 +500,7 @@ class WCF {
 		}
 		
 		// handle banned users
-		if (self::getUser()->userID && self::getUser()->banned) {
+		if (self::getUser()->userID && self::getUser()->banned && !self::getUser()->hasOwnerAccess()) {
 			if ($isAjax) {
 				throw new AJAXException(self::getLanguage()->getDynamicVariable('wcf.user.error.isBanned'), AJAXException::INSUFFICIENT_PERMISSIONS);
 			}
@@ -705,9 +722,15 @@ class WCF {
 	 * Assigns some default variables to the template engine.
 	 */
 	protected function assignDefaultTemplateVariables() {
+		$wcf = $this;
+		
+		if (ENABLE_ENTERPRISE_MODE) {
+			$wcf = new TemplateScriptingCore($wcf);
+		}
+		
 		self::getTPL()->registerPrefilter(['event', 'hascontent', 'lang']);
 		self::getTPL()->assign([
-			'__wcf' => $this,
+			'__wcf' => $wcf,
 			'__wcfVersion' => LAST_UPDATE_TIME // @deprecated 2.1, use LAST_UPDATE_TIME directly
 		]);
 		
@@ -725,7 +748,7 @@ class WCF {
 		
 		EmailTemplateEngine::getInstance()->registerPrefilter(['event', 'hascontent', 'lang']);
 		EmailTemplateEngine::getInstance()->assign([
-			'__wcf' => $this
+			'__wcf' => $wcf
 		]);
 	}
 	
@@ -789,9 +812,10 @@ class WCF {
 			}
 			if (isset(self::$autoloadDirectories[$applicationPrefix])) {
 				$classPath = self::$autoloadDirectories[$applicationPrefix] . implode('/', $namespaces) . '.class.php';
-				if (file_exists($classPath)) {
-					require_once($classPath);
-				}
+				
+				// PHP will implicitly check if the file exists when including it, which means that we can save a
+				// redundant syscall/fs access by not checking for existence ourselves. Do not use require_once()!
+				@include_once($classPath);
 			}
 		}
 	}
@@ -805,7 +829,7 @@ class WCF {
 			return self::__callStatic($name, $arguments);
 		}
 		
-		return $this->$name($arguments);
+		throw new \BadMethodCallException("Call to undefined method WCF::{$name}().");
 	}
 	
 	/**
@@ -911,7 +935,11 @@ class WCF {
 			return self::getPath();
 		}
 		
-		return self::getPath(ApplicationHandler::getInstance()->getAbbreviation(ApplicationHandler::getInstance()->getActiveApplication()->packageID));
+		// We cannot rely on the ApplicationHandler's `getActiveApplication()` because
+		// it uses the requested controller to determine the namespace. However, starting
+		// with WoltLab Suite 5.2, system pages can be virtually assigned to a different
+		// app, resolving against the target app without changing the namespace.
+		return self::getPath(ApplicationHandler::getInstance()->getAbbreviation(PACKAGE_ID));
 	}
 	
 	/**
@@ -981,10 +1009,10 @@ class WCF {
 		
 		if (self::$zendOpcacheEnabled) {
 			if (empty($script)) {
-				opcache_reset();
+				\opcache_reset();
 			}
 			else {
-				opcache_invalidate($script, true);
+				\opcache_invalidate($script, true);
 			}
 		}
 	}
@@ -1090,6 +1118,7 @@ class WCF {
 	 * 
 	 * @param       integer         $apiVersion
 	 * @return      boolean
+	 * @deprecated 5.2
 	 */
 	public static function isSupportedApiVersion($apiVersion) {
 		return ($apiVersion == WSC_API_VERSION) || in_array($apiVersion, self::$supportedLegacyApiVersions);
@@ -1099,6 +1128,7 @@ class WCF {
 	 * Returns the list of supported legacy API versions.
 	 * 
 	 * @return      integer[]
+	 * @deprecated 5.2
 	 */
 	public static function getSupportedLegacyApiVersions() {
 		return self::$supportedLegacyApiVersions;
@@ -1110,6 +1140,79 @@ class WCF {
 	protected function initCronjobs() {
 		if (PACKAGE_ID) {
 			self::getTPL()->assign('executeCronjobs', CronjobScheduler::getInstance()->getNextExec() < TIME_NOW && defined('OFFLINE') && !OFFLINE);
+		}
+	}
+	
+	/**
+	 * Checks recursively that the most important system files of `com.woltlab.wcf` are writable.
+	 * 
+	 * @throws	\RuntimeException	if any relevant file or directory is not writable
+	 */
+	public static function checkWritability() {
+		$nonWritablePaths = [];
+		
+		$nonRecursiveDirectories = [
+			'',
+			'acp/',
+			'tmp/'
+		];
+		foreach ($nonRecursiveDirectories as $directory) {
+			$path = WCF_DIR . $directory;
+			if ($path === 'tmp/' && !is_dir($path)) {
+				continue;
+			}
+			
+			if (!is_writable($path)) {
+				$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $path);
+				continue;
+			}
+			
+			DirectoryUtil::getInstance($path, false)->executeCallback(function($file, \SplFileInfo $fileInfo) use ($path, &$nonWritablePaths) {
+				if ($fileInfo instanceof \DirectoryIterator) {
+					if (!is_writable($fileInfo->getPath())) {
+						$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath());
+					}
+				}
+				else if (!is_writable($fileInfo->getRealPath())) {
+					$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath()) . $fileInfo->getFilename();
+				}
+			});
+		}
+		
+		$recursiveDirectories = [
+			'acp/js/',
+			'acp/style/',
+			'acp/templates/',
+			'acp/uninstall/',
+			'js/',
+			'lib/',
+			'log/',
+			'style/',
+			'templates/'
+		];
+		foreach ($recursiveDirectories as $directory) {
+			$path = WCF_DIR . $directory;
+			
+			if (!is_writable($path)) {
+				$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $path);
+				continue;
+			}
+			
+			DirectoryUtil::getInstance($path)->executeCallback(function($file, \SplFileInfo $fileInfo) use ($path, &$nonWritablePaths) {
+				if ($fileInfo instanceof \DirectoryIterator) {
+					if (!is_writable($fileInfo->getPath())) {
+						$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath());
+					}
+				}
+				else if (!is_writable($fileInfo->getRealPath())) {
+					$nonWritablePaths[] = FileUtil::getRelativePath($_SERVER['DOCUMENT_ROOT'], $fileInfo->getPath()) . $fileInfo->getFilename();
+				}
+			});
+		}
+		
+		if (!empty($nonWritablePaths)) {
+			$maxPaths = 10;
+			throw new \RuntimeException('The following paths are not writable: ' . implode(',', array_slice($nonWritablePaths, 0, $maxPaths)) . (count($nonWritablePaths) > $maxPaths ? ',' . StringUtil::HELLIP : ''));
 		}
 	}
 }

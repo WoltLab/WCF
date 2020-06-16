@@ -3,7 +3,7 @@
 {capture assign='authorList'}{lang}wcf.user.notification.mail.authorList.plaintext{/lang}{/capture}
 {lang}{$notificationContent[variables][languageItemPrefix]}.comment.mail.plaintext{/lang}{if $count == 1 && !$guestTimesTriggered}
 
-{$event->getUserNotificationObject()->message}{/if} {* this line ends with a space *}
+{@$event->getUserNotificationObject()->getMailText($mimeType)}{/if} {* this line ends with a space *}
 {else}
 	{capture assign='authorList'}{lang}wcf.user.notification.mail.authorList.html{/lang}{/capture}
 	{lang}{$notificationContent[variables][languageItemPrefix]}.comment.mail.html{/lang}
@@ -15,12 +15,12 @@
 	{capture assign='commentContent'}
 	<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
-			<td><a href="{link controller='User' object=$user isEmail=true}{/link}" title="{$comment->username}">{@$user->getAvatar()->getImageTag($avatarSize)}</a></td>
+			<td><a href="{link controller='User' object=$user isHtmlEmail=true}{/link}" title="{$comment->username}">{@$user->getAvatar()->getImageTag($avatarSize)}</a></td>
 			<td class="boxContent">
 				<div class="containerHeadline">
 					<h3>
 						{if $comment->userID}
-							<a href="{link controller='User' object=$user isEmail=true}{/link}">{$comment->username}</a>
+							<a href="{link controller='User' object=$user isHtmlEmail=true}{/link}">{$comment->username}</a>
 						{else}
 							{$comment->username}
 						{/if}
@@ -29,7 +29,7 @@
 					</h3>
 				</div>
 				<div>
-					{$comment->message}
+					{@$comment->getMailText($mimeType)}
 				</div>
 			</td>
 		</tr>

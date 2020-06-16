@@ -69,7 +69,7 @@
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID">{@$option->optionID}</td>
-						<td class="columnTitle columnOptionTitle"><a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}">{$option->optionTitle|language}</a></td>
+						<td class="columnTitle columnOptionTitle"><a href="{link controller='ContactOptionEdit' id=$option->optionID}{/link}">{$option->getTitle()}</a></td>
 						<td class="columnText columnOptionType">{lang}wcf.acp.customOption.optionType.{$option->optionType}{/lang}</td>
 						<td class="columnDigits columnShowOrder">{#$option->showOrder}</td>
 						
@@ -78,10 +78,10 @@
 				{/foreach}
 			</tbody>
 		</table>
-		
-		<div class="formSubmit">
-			<button class="button" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
-		</div>
+	</div>
+	
+	<div class="formSubmit">
+		<button class="button buttonPrimary" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
 	</div>
 </section>
 
@@ -93,7 +93,7 @@
 			{foreach from=$recipientList item=recipient}
 				<li class="sortableNode sortableNoNesting jsRecipient" data-object-id="{@$recipient->recipientID}">
 					<span class="sortableNodeLabel">
-						<a href="{link controller='ContactRecipientEdit' id=$recipient->recipientID}{/link}">{lang}{$recipient}{/lang}</a>
+						<a href="{link controller='ContactRecipientEdit' id=$recipient->recipientID}{/link}">{$recipient}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">
 							<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
@@ -106,7 +106,7 @@
 							{if $recipient->originIsSystem}
 								<span class="icon icon16 fa-times disabled"></span>
 							{else}
-								<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon icon16 fa-times" data-object-id="{@$recipient->recipientID}" data-confirm-message-html="{lang __encode=true}wcf.acp.contact.recipient.delete.confirmMessage{/lang}">
+								<span title="{lang}wcf.global.button.delete{/lang}" class="jsDeleteButton jsTooltip icon icon16 fa-times pointer" data-object-id="{@$recipient->recipientID}" data-confirm-message-html="{lang __encode=true}wcf.acp.contact.recipient.delete.confirmMessage{/lang}">
 							{/if}
 							
 							{event name='itemButtons'}
@@ -115,9 +115,10 @@
 				</li>
 			{/foreach}
 		</ol>
-		<div class="formSubmit">
-			<button class="button" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
-		</div>
+	</div>
+	
+	<div class="formSubmit">
+		<button class="button buttonPrimary" data-type="submit">{lang}wcf.global.button.saveSorting{/lang}</button>
 	</div>
 </section>
 

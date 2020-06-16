@@ -2,7 +2,7 @@
  * Form field dependency implementation that requires the value of a field not to be empty.
  *
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/NonEmpty
  * @see 	module:WoltLabSuite/Core/Form/Builder/Field/Dependency/Abstract
@@ -26,7 +26,6 @@ define(['./Abstract', 'Core'], function(Abstract, Core) {
 				case 'INPUT':
 					switch (this._field.type) {
 						case 'checkbox':
-							// TODO: check if working
 							return this._field.checked;
 						
 						case 'radio':
@@ -41,11 +40,13 @@ define(['./Abstract', 'Core'], function(Abstract, Core) {
 					}
 				
 				case 'SELECT':
-					// TODO: check if working for multiselect
-					return this._field.value.length !== 0;
+					if (this._field.multiple) {
+						return elBySelAll('option:checked', this._field).length !== 0;
+					}
+					
+					return this._field.value != 0 && this._field.value.length !== 0;
 				
 				case 'TEXTAREA':
-					// TODO: check if working
 					return this._field.value.trim().length !== 0;
 			}
 		}

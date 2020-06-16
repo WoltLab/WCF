@@ -5,8 +5,8 @@ use wcf\data\language\item\LanguageItemAction;
 use wcf\data\language\item\LanguageItemList;
 use wcf\form\AbstractFormBuilderForm;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
-use wcf\system\form\builder\field\data\processor\VoidFormFieldDataProcessor;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
+use wcf\system\form\builder\data\processor\VoidFormDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\RadioButtonFormField;
@@ -21,7 +21,7 @@ use wcf\system\language\LanguageFactory;
  * Shows the form to create a new language item.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since	5.2
@@ -78,6 +78,7 @@ class LanguageItemAddForm extends AbstractFormBuilderForm {
 						
 						return $list;
 					}, false, false)
+					->required()
 					->filterable(),
 				
 				TextFormField::create('languageItem')
@@ -127,15 +128,15 @@ class LanguageItemAddForm extends AbstractFormBuilderForm {
 								/** @var SingleSelectionFormField $languageCategoryID */
 								$languageCategoryID = $formField->getDocument()->getNodeById('languageCategoryID');
 								
-								$languageCategory = LanguageFactory::getInstance()->getCategoryByID($languageCategoryID->getSaveValue());
-								
-								if (strpos($formField->getSaveValue(), $languageCategory->languageCategory) . '.' !== 0) {
-									$formField->addValidationError(
-										new FormFieldValidationError(
-											'prefixMismatch',
-											'wcf.acp.language.item.languageItem.error.prefixMismatch'
-										)
-									);
+								if ($languageCategory = LanguageFactory::getInstance()->getCategoryByID($languageCategoryID->getSaveValue())) {
+									if (strpos($formField->getSaveValue(), $languageCategory->languageCategory . '.') !== 0) {
+										$formField->addValidationError(
+											new FormFieldValidationError(
+												'prefixMismatch',
+												'wcf.acp.language.item.languageItem.error.prefixMismatch'
+											)
+										);
+									}
 								}
 								
 								break;
@@ -166,10 +167,10 @@ class LanguageItemAddForm extends AbstractFormBuilderForm {
 		
 		// `languageCategoryIDMode` is an internal field not meant to be
 		// treated as real data
-		$this->form->getDataHandler()->add(new VoidFormFieldDataProcessor('languageCategoryIDMode'));
+		$this->form->getDataHandler()->addProcessor(new VoidFormDataProcessor('languageCategoryIDMode'));
 		
-		$this->form->getDataHandler()->add(
-			new CustomFormFieldDataProcessor('languageItemOriginIsSystem', function(IFormDocument $document, array $parameters) {
+		$this->form->getDataHandler()->addProcessor(
+			new CustomFormDataProcessor('languageItemOriginIsSystem', function(IFormDocument $document, array $parameters) {
 				$parameters['data']['languageItemOriginIsSystem'] = 0;
 				$parameters['data']['isCustomLanguageItem'] = 1;
 				

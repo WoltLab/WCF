@@ -2,8 +2,9 @@
  * Allows to be informed when a click event bubbled up to the document's body.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	Ui/CloseOverlay (alias)
  * @module	WoltLabSuite/Core/Ui/CloseOverlay
  */
 define(['CallbackList'], function(CallbackList) {

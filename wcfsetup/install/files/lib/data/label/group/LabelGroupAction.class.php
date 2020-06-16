@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Executes label group-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Label\Group
  * 
@@ -72,6 +72,7 @@ class LabelGroupAction extends AbstractDatabaseObjectAction {
 		if (!empty($this->objects)) {
 			// identify i18n labels
 			$languageVariables = [];
+			/** @var LabelGroup $labelGroup */
 			foreach ($this->objects as $labelGroup) {
 				if ($labelGroup->groupName === 'wcf.acp.label.group' . $labelGroup->groupID) {
 					$languageVariables[] = $labelGroup->groupName;

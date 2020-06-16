@@ -8,7 +8,7 @@ use wcf\data\user\group\UserGroupEditor;
  * Imports user groups.
  * 
  * @author	Alexander Ebert, Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Importer
  */
@@ -26,6 +26,11 @@ class UserGroupImporter extends AbstractImporter {
 			$newGroupID = UserGroup::getGroupByType($data['groupType'])->groupID;
 		}
 		else {
+			// Imported owner groups must be degraded, there can be only one owner group.
+			if ($data['groupType'] == UserGroup::OWNER) {
+				$data['groupType'] = UserGroup::OTHER;
+			}
+			
 			$action = new UserGroupAction([], 'create', [
 				'data' => $data
 			]);

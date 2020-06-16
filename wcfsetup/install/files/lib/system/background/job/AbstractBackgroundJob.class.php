@@ -6,7 +6,7 @@ namespace wcf\system\background\job;
  * the background queue.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Background\Job
  * @since	3.0
@@ -40,6 +40,8 @@ abstract class AbstractBackgroundJob {
 	 */
 	public final function fail() {
 		$this->failures++;
+		
+		$this->onFailure();
 	}
 
 	/**
@@ -57,4 +59,31 @@ abstract class AbstractBackgroundJob {
 	 * cronjob comes along).
 	 */
 	abstract public function perform();
+	
+	/**
+	 * Called when the job failed.
+	 * 
+	 * Note: This method MUST NOT throw any exceptions. Doing so will lead to this job immediately
+	 * being failed completely.
+	 * 
+	 * @see AbstractBackgroundJob::fail()
+	 */
+	public function onFailure() {
+		// empty
+	}
+	
+	/**
+	 * Called when the job failed too often. This method can be used to perform additional
+	 * logging for highly important jobs (e.g. into a dedicated failed_jobs table).
+	 * 
+	 * Note: This method MUST NOT throw any exceptions. Doing so will lead to this job immediately
+	 * being failed completely.
+	 * 
+	 * Note: Both onFailure() and onFinalFailure() will be called on the final failure.
+	 * 
+	 * @see AbstractBackgroundJob::onFailure()
+	 */
+	public function onFinalFailure() {
+		// empty
+	}
 }

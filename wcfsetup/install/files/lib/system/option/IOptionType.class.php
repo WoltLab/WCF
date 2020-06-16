@@ -6,7 +6,7 @@ use wcf\data\option\Option;
  * Any option type has to implement this interface.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Option
  */
@@ -48,7 +48,7 @@ interface IOptionType {
 	public function getCSSClassName();
 	
 	/**
-	 * Returns true if options supports internationalization .
+	 * Returns true if options supports internationalization.
 	 * 
 	 * @return	boolean
 	 */
@@ -74,4 +74,14 @@ interface IOptionType {
 	 * @return	boolean
 	 */
 	public function hideLabelInSearch();
+	
+	/**
+	 * Determines disabled options by given option value.
+	 * 
+	 * @param       mixed           $value
+	 * @param       string          $enableOptions
+	 * @return      string[]
+	 * @since       5.2
+	 */
+	public function getDisabledOptionNames($value, $enableOptions);
 }

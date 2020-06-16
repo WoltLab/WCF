@@ -4,6 +4,9 @@ use wcf\data\DatabaseObject;
 use wcf\data\user\option\UserOption;
 use wcf\system\cache\builder\UserOptionCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\condition\ICondition;
+use wcf\system\condition\IObjectCondition;
+use wcf\system\condition\IObjectListCondition;
 use wcf\system\user\UserBirthdayCache;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
@@ -12,7 +15,7 @@ use wcf\util\DateUtil;
  * Shows today's birthdays.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  * @since	3.0
@@ -22,6 +25,12 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
 	 * @inheritDoc
 	 */
 	protected static $supportedPositions = ['sidebarLeft', 'sidebarRight'];
+	
+	/**
+	 * @inheritDoc
+	 * @since       5.3
+	 */
+	protected $conditionDefinition = 'com.woltlab.wcf.box.todaysBirthdays.condition';
 	
 	/**
 	 * template name
@@ -94,7 +103,15 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
 					if ($userProfile === null) continue;
 					
 					// show a maximum of x users
-					if ($i == $this->box->limit) break;
+					if ($i == $this->limit) break;
+					
+					foreach ($this->box->getConditions() as $condition) {
+						/** @var IObjectCondition $processor */
+						$processor = $condition->getObjectType()->getProcessor();
+						if (!$processor->checkObject($userProfile->getDecoratedObject(), $condition->conditionData)) {
+							continue 2;
+						}
+					}
 					
 					$birthdayUserOption->setUser($userProfile->getDecoratedObject());
 					
@@ -107,11 +124,6 @@ class TodaysBirthdaysBoxController extends AbstractDatabaseObjectListBoxControll
 				if (!empty($visibleUserProfiles)) {
 					// sort users
 					DatabaseObject::sort($visibleUserProfiles, $this->sortField, $this->sortOrder);
-					
-					// apply limit
-					if (count($visibleUserProfiles) > $this->box->limit) {
-						$visibleUserProfiles = array_slice($visibleUserProfiles, 0, $this->box->limit);
-					}
 					
 					$this->content = WCF::getTPL()->fetch($this->templateName, 'wcf', [
 						'birthdayUserProfiles' => $visibleUserProfiles

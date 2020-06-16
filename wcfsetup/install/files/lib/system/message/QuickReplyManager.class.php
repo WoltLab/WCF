@@ -21,7 +21,7 @@ use wcf\util\StringUtil;
  * Manages quick replies and stored messages.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Message
  */
@@ -200,7 +200,7 @@ class QuickReplyManager extends SingletonFactory {
 		$parameters['data'][$tableIndexName] = $parameters['objectID'];
 		$parameters['data']['time'] = TIME_NOW;
 		
-		if (!isset($parameters['data']['userID'])) {
+		if (!array_key_exists('userID', $parameters['data'])) {
 			$parameters['data']['userID'] = WCF::getUser()->userID ?: null;
 		}
 		
@@ -211,7 +211,7 @@ class QuickReplyManager extends SingletonFactory {
 		$parameters['data'] = array_merge($additionalFields, $parameters['data']);
 		
 		// attachment support
-		if (MODULE_ATTACHMENT && !empty($parameters['tmpHash']) && $object instanceof IAttachmentMessageQuickReplyAction) {
+		if (!empty($parameters['tmpHash']) && $object instanceof IAttachmentMessageQuickReplyAction) {
 			$parameters['attachmentHandler'] = $object->getAttachmentHandler($this->container);
 		}
 		

@@ -13,7 +13,7 @@ use wcf\util\FileUtil;
  * Represents an application.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Application
  *
@@ -54,6 +54,34 @@ class Application extends DatabaseObject {
 	protected static $directories = null;
 	
 	/**
+	 * @inheritDoc
+	 */
+	protected function handleData($data) {
+		if (isset($data['domainPath'])) {
+			// The leading and trailing slashes are required and enforced through the admin panel,
+			// however, some users edit the database directly and omit them, causing incorrect urls.
+			$data['domainPath'] = FileUtil::addLeadingSlash(FileUtil::addTrailingSlash($data['domainPath']));
+		}
+		
+		parent::handleData($data);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function __get($name) {
+		if (ENABLE_ENTERPRISE_MODE && defined('ENTERPRISE_MODE_DOMAIN_OVERRIDE') && PHP_SAPI !== 'cli') {
+			if (ENTERPRISE_MODE_DOMAIN_OVERRIDE === $_SERVER['HTTP_HOST']) {
+				if ($name === 'cookieDomain' || $name === 'domainName') {
+					return ENTERPRISE_MODE_DOMAIN_OVERRIDE;
+				}
+			}
+		}
+		
+		return parent::__get($name);
+	}
+	
+	/**
 	 * Returns the abbreviation of the application.
 	 * 
 	 * @return	string
@@ -86,6 +114,15 @@ class Application extends DatabaseObject {
 		}
 		
 		return $this->pageURL;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function __wakeup() {
+		if (ENABLE_ENTERPRISE_MODE && defined('ENTERPRISE_MODE_DOMAIN_OVERRIDE') && ENTERPRISE_MODE_DOMAIN_OVERRIDE === $_SERVER['HTTP_HOST']) {
+			$this->pageURL = '';
+		}
 	}
 	
 	/**

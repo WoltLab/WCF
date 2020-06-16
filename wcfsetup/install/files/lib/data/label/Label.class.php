@@ -3,12 +3,13 @@ namespace wcf\data\label;
 use wcf\data\DatabaseObject;
 use wcf\system\request\IRouteController;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a label.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Label
  *
@@ -47,5 +48,18 @@ class Label extends DatabaseObject implements IRouteController {
 		}
 		
 		return $this->cssClassName;
+	}
+	
+	/**
+	 * Returns the HTML representation of the label.
+	 * 
+	 * @param       string          $additionalClasses
+	 * @return      string
+	 * @since       5.3
+	 */
+	public function render($additionalClasses = '') {
+		return '<span class="badge label' . ($this->getClassNames() ? ' ' . $this->getClassNames() : '')
+			. ($additionalClasses ? ' ' . $additionalClasses : '') . '">'
+			. StringUtil::encodeHTML($this->getTitle()) . '</span>';
 	}
 }

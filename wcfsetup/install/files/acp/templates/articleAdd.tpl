@@ -1,7 +1,34 @@
+{capture assign='__contentHeader'}
+	<header class="contentHeader">
+		<div class="contentHeaderTitle">
+			<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.article.add{/lang}{else}{lang}wcf.acp.article.edit{/lang}{/if}</h1>
+		</div>
+		
+		<nav class="contentHeaderNavigation">
+			<ul>
+				{if $action == 'edit'}
+					{if $article->canDelete()}
+						<li><a href="#" class="button jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.global.button.restore{/lang}</span></a></li>
+						<li><a href="#" class="button jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.delete{/lang}</span></a></li>
+						<li><a href="#" class="button jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.trash{/lang}</span></a></li>
+					{/if}
+					{if $languages|count > 1 || $article->isMultilingual}
+						<li><a href="#" class="button jsButtonToggleI18n"><span class="icon icon16 fa-flag"></span> <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></a></li>
+					{/if}
+					<li><a href="{$article->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.article.button.viewArticle{/lang}</span></a></li>
+				{/if}
+				<li><a href="{link controller='ArticleList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.article.list{/lang}</span></a></li>
+				
+				{event name='contentHeaderNavigation'}
+			</ul>
+		</nav>
+	</header>
+{/capture}
+
 {if $articleIsFrontend|empty}
 	{include file='header' pageTitle='wcf.acp.article.'|concat:$action}
 {else}
-	{include file='header' __disableContentHeader=true}
+	{include file='header' contentHeader=$__contentHeader}
 {/if}
 
 {if $__wcf->session->getPermission('admin.content.article.canManageArticle')}
@@ -58,41 +85,20 @@
 	</script>
 {/if}
 
-<header class="contentHeader">
-	<div class="contentHeaderTitle">
-		<h1 class="contentTitle">{if $action == 'add'}{lang}wcf.acp.article.add{/lang}{else}{lang}wcf.acp.article.edit{/lang}{/if}</h1>
-	</div>
-	
-	<nav class="contentHeaderNavigation">
-		<ul>
-			{if $action == 'edit'}
-				{if $article->canDelete()}
-					<li><a href="#" class="button jsButtonRestore" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.restore.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-refresh"></span> <span>{lang}wcf.global.button.restore{/lang}</span></a></li>
-					<li><a href="#" class="button jsButtonDelete" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.delete.confirmMessage{/lang}"{if !$article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.delete{/lang}</span></a></li>
-					<li><a href="#" class="button jsButtonTrash" data-confirm-message-html="{lang __encode=true isArticleEdit=true}wcf.acp.article.trash.confirmMessage{/lang}"{if $article->isDeleted} style="display: none"{/if}><span class="icon icon16 fa-times"></span> <span>{lang}wcf.global.button.trash{/lang}</span></a></li>
-				{/if}
-				{if $languages|count > 1 || $article->isMultilingual}
-					<li><a href="#" class="button jsButtonToggleI18n"><span class="icon icon16 fa-flag"></span> <span>{lang}wcf.acp.article.button.toggleI18n{/lang}</span></a></li>
-				{/if}
-				<li><a href="{$article->getLink()}" class="button"><span class="icon icon16 fa-search"></span> <span>{lang}wcf.acp.article.button.viewArticle{/lang}</span></a></li>
-			{/if}
-			<li><a href="{link controller='ArticleList'}{/link}" class="button"><span class="icon icon16 fa-list"></span> <span>{lang}wcf.acp.menu.link.article.list{/lang}</span></a></li>
-			
-			{event name='contentHeaderNavigation'}
-		</ul>
-	</nav>
-</header>
+{if $articleIsFrontend|empty}
+	{@$__contentHeader}
+{/if}
 
 {include file='formError'}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.success.{$action}{/lang}</p>
+	<p class="success" role="status">{lang}wcf.global.success.{$action}{/lang}</p>
 {/if}
 
 {if $action == 'edit'}
 	<p class="info jsArticleNoticeTrash"{if !$article->isDeleted} style="display: none;"{/if}>{lang}wcf.acp.article.trash.notice{/lang}</p>
 	
-	{if $lastVersion}<p class="info">{lang}wcf.acp.article.lastVersion{/lang}</p>{/if}
+	{if $lastVersion && $__wcf->session->getPermission('admin.general.canUseAcp')}<p class="info" role="status">{lang}wcf.acp.article.lastVersion{/lang}</p>{/if}
 {/if}
 
 <form class="articleAddForm" method="post" action="{if $action == 'add'}{link controller='ArticleAdd'}{/link}{else}{link controller='ArticleEdit' id=$articleID}{/link}{/if}">
@@ -104,7 +110,7 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					
 					{foreach from=$categoryNodeList item=category}
-						<option value="{@$category->categoryID}"{if $category->categoryID == $categoryID} selected{/if}>{if $category->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($category->getDepth() - 1)}{/if}{$category->getTitle()}</option>
+						<option value="{@$category->categoryID}"{if !$category->categoryID|in_array:$accessibleCategoryIDs} disabled{elseif $category->categoryID == $categoryID} selected{/if}>{if $category->getDepth() > 1}{@"&nbsp;&nbsp;&nbsp;&nbsp;"|str_repeat:($category->getDepth() - 1)}{/if}{$category->getTitle()}</option>
 					{/foreach}
 				</select>
 				{if $errorField == 'categoryID'}
@@ -133,7 +139,7 @@
 									<div class="dropdownMenu">
 										<ul class="scrollableDropdownMenu">
 											{foreach from=$labelGroup item=label}
-												<li data-label-id="{@$label->labelID}"><span><span class="badge label{if $label->getClassNames()} {@$label->getClassNames()}{/if}">{lang}{$label->label}{/lang}</span></span></li>
+												<li data-label-id="{@$label->labelID}"><span>{@$label->render()}</span></li>
 											{/foreach}
 										</ul>
 									</div>
@@ -142,7 +148,7 @@
 							<noscript>
 								<select name="labelIDs[{@$labelGroup->groupID}]">
 									{foreach from=$labelGroup item=label}
-										<option value="{@$label->labelID}">{lang}{$label->label}{/lang}</option>
+										<option value="{@$label->labelID}">{$label->getTitle()}</option>
 									{/foreach}
 								</select>
 							</noscript>

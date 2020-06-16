@@ -8,6 +8,7 @@ use wcf\form\AbstractForm;
 use wcf\system\acl\ACLHandler;
 use wcf\system\category\CategoryHandler;
 use wcf\system\category\CategoryPermissionHandler;
+use wcf\system\category\ICategoryType;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
@@ -19,7 +20,7 @@ use wcf\util\ArrayUtil;
  * Abstract implementation of a form to create categories.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -47,6 +48,12 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	 * @var	UncachedCategoryNodeTree
 	 */
 	public $categoryNodeTree = null;
+	
+	/**
+	 * is `1` if HTML is used in the description
+	 * @var	integer
+	 */
+	public $descriptionUseHtml = 0;
 	
 	/**
 	 * indicates if the category is disabled
@@ -145,6 +152,7 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 			'addController' => $this->addController,
 			'additionalData' => $this->additionalData,
 			'categoryNodeList' => $this->categoryNodeTree->getIterator(),
+			'descriptionUseHtml' => $this->descriptionUseHtml,
 			'editController' => $this->editController,
 			'isDisabled' => $this->isDisabled,
 			'listController' => $this->listController,
@@ -221,6 +229,9 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 		if (isset($_POST['isDisabled'])) {
 			$this->isDisabled = 1;
 		}
+		if (isset($_POST['descriptionUseHtml'])) {
+			$this->descriptionUseHtml = 1;
+		}
 		if (isset($_POST['parentCategoryID'])) {
 			$this->parentCategoryID = intval($_POST['parentCategoryID']);
 		}
@@ -235,10 +246,14 @@ abstract class AbstractCategoryAddForm extends AbstractForm {
 	public function save() {
 		parent::save();
 		
+		/** @var ICategoryType $categoryType */
+		$categoryType = $this->objectType->getProcessor();
+		
 		$this->objectAction = new CategoryAction([], 'create', [
 			'data' => array_merge($this->additionalFields, [
 				'additionalData' => serialize($this->additionalData),
-				'description' => ($this->objectType->getProcessor()->hasDescription() && I18nHandler::getInstance()->isPlainValue('description')) ? I18nHandler::getInstance()->getValue('description') : '',
+				'description' => ($categoryType->hasDescription() && I18nHandler::getInstance()->isPlainValue('description')) ? I18nHandler::getInstance()->getValue('description') : '',
+				'descriptionUseHtml' => $categoryType->supportsHtmlDescription() ? $this->descriptionUseHtml : 0,
 				'isDisabled' => $this->isDisabled,
 				'objectTypeID' => $this->objectType->objectTypeID,
 				'parentCategoryID' => $this->parentCategoryID,

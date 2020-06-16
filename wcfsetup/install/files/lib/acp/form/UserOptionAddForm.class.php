@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Shows the user option add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -208,6 +208,11 @@ class UserOptionAddForm extends AbstractForm {
 		}
 		if ($this->optionType == 'float') {
 			$this->defaultValue = floatval($this->defaultValue);
+		}
+		if ($this->optionType == 'date') {
+			if (!preg_match('/\d{4}-\d{2}-\d{2}/', $this->defaultValue)) {
+				$this->defaultValue = '';
+			}
 		}
 
 		$this->setDefaultOutputClass();

@@ -171,27 +171,27 @@ a > span.fa:not(.pointer) {
 	100% { transform: rotate(359deg); }
 }
 
-.fa-rotate-90:before {
+.fa-rotate-90 {
 	-webkit-transform: rotate(90deg);
 	transform: rotate(90deg);
 }
 
-.fa-rotate-180:before {
+.fa-rotate-180 {
 	-webkit-transform: rotate(180deg);
 	transform: rotate(180deg);
 }
 
-.fa-rotate-270:before {
+.fa-rotate-270 {
 	-webkit-transform: rotate(270deg);
 	transform: rotate(270deg);
 }
 
-.fa-flip-horizontal:before {
+.fa-flip-horizontal {
 	-webkit-transform: scale(-1, 1);
 	transform: scale(-1, 1);
 }
 
-.fa-flip-vertical:before {
+.fa-flip-vertical {
 	-webkit-transform: scale(1, -1);
 	transform: scale(1, -1);
 }
@@ -214,6 +214,18 @@ a > span.fa:not(.pointer) {
 /* EmojiOne's Emoji Keyboard (2016) for Chrome uses an excessively high `z-index` value */
 .emojione-emoji {
 	z-index: auto !important;
+}
+
+/* This icon is too wide and overflows its boundaries. */
+.fa-free-code-camp {
+	&.icon16 { font-size: 10px; }
+	&.icon24 { font-size: 16px; }
+	&.icon32 { font-size: 22px; }
+	&.icon48 { font-size: 34px; }
+	&.icon64 { font-size: 46px; }
+	&.icon96 { font-size: 70px; }
+	&.icon128 { font-size: 94px; }
+	&.icon144 { font-size: 108px; }
 }
 
 @import "variables";

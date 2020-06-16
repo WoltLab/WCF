@@ -1,5 +1,3 @@
-{include file='__formFieldHeader'}
-
 <textarea id="{@$field->getPrefixedId()}" {*
 	*}name="{@$field->getPrefixedId()}" {*
 	*}rows="{@$field->getRows()}"{*
@@ -14,5 +12,3 @@
 {if $field->isI18n()}
 	{include file='multipleLanguageInputJavascript'}
 {/if}
-
-{include file='__formFieldFooter'}

@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * Processes code listings.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Output\Node
  * @since       3.0
@@ -49,7 +49,7 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 					$prefix = '';
 					// Create a unique prefix if possible
 					if (isset($context['objectType']) && isset($context['objectID'])) {
-						$prefix = $context['objectType'].'_'.$context['objectID'].'_';
+						$prefix = str_replace('.', '_', $context['objectType']).'_'.$context['objectID'].'_';
 					}
 					$htmlNodeProcessor->addNodeData($this, $nodeIdentifier, [
 						'content' => $element->textContent,
@@ -57,7 +57,8 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 						'highlighter' => $element->getAttribute('data-highlighter'),
 						'line' => $element->hasAttribute('data-line') ? $element->getAttribute('data-line') : 1,
 						'skipInnerContent' => true,
-						'prefix' => $prefix
+						'prefix' => $prefix,
+						'isAmp' => ($htmlNodeProcessor instanceof AmpHtmlOutputNodeProcessor),
 					]);
 					
 					$htmlNodeProcessor->renameTag($element, 'wcfNode-' . $nodeIdentifier);
@@ -145,6 +146,9 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 			else if (mb_strpos($content, '\\documentclass') !== false) {
 				$highlighter = 'latex';
 			}
+			else if (mb_strpos($content, '!important;') !== false) {
+				$highlighter = 'css';
+			}
 		}
 		$eventData = [
 			'highlighter' => $highlighter,
@@ -179,7 +183,8 @@ class HtmlOutputNodePre extends AbstractHtmlOutputNode {
 			'language' => $highlighter,
 			'filename' => $file,
 			'title' => $title,
-			'lines' => count($splitContent)
+			'lines' => count($splitContent),
+			'isAmp' => $data['isAmp'],
 		]);
 		
 		return WCF::getTPL()->fetch('codeMetaCode');

@@ -6,7 +6,7 @@ use wcf\data\option\Option;
  * Represents a user group option.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Group\Option
  *
@@ -18,4 +18,23 @@ class UserGroupOption extends Option {
 	 * @inheritDoc
 	 */
 	protected static $databaseTableName = 'user_group_option';
+	
+	/**
+	 * List of permission names that may not be altered when the enterprise mode is active.
+	 * @var string[]
+	 */
+	const ENTERPRISE_BLACKLIST = [
+		// Configuration
+		'admin.configuration.canManageApplication',
+		'admin.configuration.package.canUpdatePackage',
+		'admin.configuration.package.canEditServer',
+		
+		// User
+		'admin.user.canMailUser',
+		
+		// Management
+		'admin.management.canImportData',
+		'admin.management.canManageCronjob',
+		'admin.management.canRebuildData',
+	];
 }

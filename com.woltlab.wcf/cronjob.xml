@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/cronjob.xsd">
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/cronjob.xsd">
 	<import>
 		<cronjob name="com.woltlab.wcf.refreshPackageUpdates">
 			<classname>wcf\system\cronjob\GetUpdateInfoCronjob</classname>
@@ -133,7 +133,7 @@
 			<classname>wcf\system\cronjob\UserGroupAssignmentCronjob</classname>
 			<description>Automatically assigns users to user groups</description>
 			<description language="de">Ordnet Benutzer automatisch Benutzergruppen zu</description>
-			<startminute>*/30</startminute>
+			<startminute>*/10</startminute>
 			<starthour>*</starthour>
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
@@ -197,6 +197,29 @@
 			<description language="de">Entfernt alte IP-Adressen</description>
 			<startminute>0</startminute>
 			<starthour>3</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+			<canbedisabled>0</canbedisabled>
+		</cronjob>
+		<cronjob name="com.woltlab.wcf.exceptionMailer">
+			<classname>wcf\system\cronjob\ExceptionMailerCronjob</classname>
+			<description>Sends out notifications about new logged errors.</description>
+			<description language="de">Versendet Benachrichtigungen über neue protokollierte Fehler.</description>
+			<startminute>0</startminute>
+			<starthour>5</starthour>
+			<startdom>*</startdom>
+			<startmonth>*</startmonth>
+			<startdow>*</startdow>
+		</cronjob>
+		<cronjob name="com.woltlab.wcf.updateBlacklist">
+			<classname>wcf\system\cronjob\UpdateBlacklistCronjob</classname>
+			<description>Refreshes the blacklist for spam prevention</description>
+			<description language="de">Aktualisiert die Sperrlisten zur Spambekämpfung</description>
+			<!-- Runs once every hour, even though the data is only refreshed every 6 hours,
+			     but allows instances to catch up when it misses some updates. -->
+			<startminute>15</startminute>
+			<starthour>*</starthour>
 			<startdom>*</startdom>
 			<startmonth>*</startmonth>
 			<startdow>*</startdow>

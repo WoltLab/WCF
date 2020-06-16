@@ -10,7 +10,7 @@ use wcf\util\StringUtil;
  * Captcha handler for captcha questions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Captcha
  */
@@ -106,7 +106,7 @@ class CaptchaQuestionHandler implements ICaptchaHandler {
 		$questionID = WCF::getSession()->getVar('captchaQuestion_'.$this->captchaQuestion);
 		
 		if ($questionID === null || !isset($this->questions[$questionID])) {
-			throw new UserInputException('captchaQuestion');
+			throw new UserInputException('captchaAnswer');
 		}
 		
 		$this->question = $this->questions[$questionID];

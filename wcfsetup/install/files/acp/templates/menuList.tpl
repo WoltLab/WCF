@@ -31,7 +31,7 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnPageID{if $sortField == 'menuID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='MenuList'}pageNo={@$pageNo}&sortField=menuID&sortOrder={if $sortField == 'menuID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnID columnMenuID{if $sortField == 'menuID'} active {@$sortOrder}{/if}" colspan="2"><a href="{link controller='MenuList'}pageNo={@$pageNo}&sortField=menuID&sortOrder={if $sortField == 'menuID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
 					<th class="columnTitle{if $sortField == 'title'} active {@$sortOrder}{/if}"><a href="{link controller='MenuList'}pageNo={@$pageNo}&sortField=title&sortOrder={if $sortField == 'title' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.name{/lang}</a></th>
 					<th class="columnDigits columnItems{if $sortField == 'items'} active {@$sortOrder}{/if}"><a href="{link controller='MenuList'}pageNo={@$pageNo}&sortField=items&sortOrder={if $sortField == 'items' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.menu.item.list{/lang}</a></th>
 					<th class="columnText columnPosition{if $sortField == 'position'} active {@$sortOrder}{/if}"><a href="{link controller='MenuList'}pageNo={@$pageNo}&sortField=position&sortOrder={if $sortField == 'position' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.box.position{/lang}</a></th>
@@ -45,18 +45,18 @@
 				{foreach from=$objects item=menu}
 					<tr class="jsMenuRow">
 						<td class="columnIcon">
-							<a href="{link controller='MenuEdit' id=$menu->menuID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon24 fa-pencil"></span></a>
-							<a href="{link controller='MenuItemList' id=$menu->menuID}{/link}" title="{lang}wcf.acp.menu.item.list{/lang}" class="jsTooltip"><span class="icon icon24 fa-list"></span></a>
+							<a href="{link controller='MenuEdit' id=$menu->menuID}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
+							<a href="{link controller='MenuItemList' id=$menu->menuID}{/link}" title="{lang}wcf.acp.menu.item.list{/lang}" class="jsTooltip"><span class="icon icon16 fa-list"></span></a>
 							{if $menu->canDelete()}
-								<span class="icon icon24 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menu->menuID}" data-confirm-message-html="{lang __encode=true}wcf.acp.menu.delete.confirmMessage{/lang}"></span>
+								<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$menu->menuID}" data-confirm-message-html="{lang __encode=true}wcf.acp.menu.delete.confirmMessage{/lang}"></span>
 							{else}
-								<span class="icon icon24 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
+								<span class="icon icon16 fa-times disabled" title="{lang}wcf.global.button.delete{/lang}"></span>
 							{/if}
 							
 							{event name='rowButtons'}
 						</td>
-						<td class="columnID columnPageID">{@$menu->menuID}</td>
-						<td class="columnTitle"><a href="{link controller='MenuEdit' id=$menu->menuID}{/link}">{lang}{$menu->title}{/lang}</a></td>
+						<td class="columnID columnMenuID">{@$menu->menuID}</td>
+						<td class="columnTitle"><a href="{link controller='MenuEdit' id=$menu->menuID}{/link}">{$menu->getTitle()}</a></td>
 						<td class="columnDigits columnItems"><a href="{link controller='MenuItemList' id=$menu->menuID}{/link}">{#$menu->items}</a></td>
 						<td class="columnText columnPosition">{lang}wcf.acp.box.position.{@$menu->position}{/lang}</td>
 						<td class="columnDigits columnShowOrder">{#$menu->showOrder}</td>

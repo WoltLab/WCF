@@ -41,7 +41,7 @@
 			{if $package->packageDescription|language}
 				<dl>
 					<dt>{lang}wcf.acp.package.description{/lang}</dt>
-					<dd>{$package->packageDescription|language}</dd>
+					<dd>{$package->getDescription()}</dd>
 				</dl>
 			{/if}
 			
@@ -142,7 +142,7 @@
 											{/if}
 										</td>
 										<td class="columnID">{@$requiredPackage->packageID}</td>
-										<td class="columnTitle" title="{$requiredPackage->packageDescription|language}"><a href="{link controller='Package' id=$requiredPackage->packageID}{/link}">{$requiredPackage}</a></td>
+										<td class="columnTitle" title="{$requiredPackage->getDescription()}"><a href="{link controller='Package' id=$requiredPackage->packageID}{/link}">{$requiredPackage}</a></td>
 										<td class="columnText">{if $requiredPackage->authorURL}<a href="{$requiredPackage->authorURL}" class="externalURL">{$requiredPackage->author}</a>{else}{$requiredPackage->author}{/if}</td>
 										<td class="columnText">{$requiredPackage->packageVersion}</td>
 										<td class="columnDate">{@$requiredPackage->packageDate|date}</td>
@@ -183,7 +183,7 @@
 											{/if}
 										</td>
 										<td class="columnID">{@$dependentPackage->packageID}</td>
-										<td class="columnTitle" title="{$dependentPackage->packageDescription|language}"><a href="{link controller='Package' id=$dependentPackage->packageID}{/link}">{$dependentPackage}</a></td>
+										<td class="columnTitle" title="{$dependentPackage->getDescription()}"><a href="{link controller='Package' id=$dependentPackage->packageID}{/link}">{$dependentPackage}</a></td>
 										<td class="columnText">{if $dependentPackage->authorURL}<a href="{$dependentPackage->authorURL}" class="externalURL">{$dependentPackage->author}</a>{else}{$dependentPackage->author}{/if}</td>
 										<td class="columnText">{$dependentPackage->packageVersion}</td>
 										<td class="columnDate">{@$dependentPackage->packageDate|date}</td>

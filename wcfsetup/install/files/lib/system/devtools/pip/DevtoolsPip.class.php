@@ -13,7 +13,7 @@ use wcf\util\JSON;
  * Wrapper class for package installation plugins for use with the sync feature.
  *
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Devtools\Pip
  * @since       3.1
@@ -274,7 +274,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						$filter = new \RecursiveCallbackFilterIterator($directory, function ($current) {
 							/** @var \SplFileInfo $current */
 							$filename = $current->getFilename();
-							if ($filename[0] === '.') {
+							if ($filename[0] === '.' && $filename !== '.gitignore' && $filename !== '.htaccess') {
 								// ignore dot files and files/directories starting with a dot
 								return false;
 							}
@@ -358,7 +358,7 @@ class DevtoolsPip extends DatabaseObjectDecorator {
 						$filter = new \RecursiveCallbackFilterIterator($directory, function ($current) {
 							/** @var \SplFileInfo $current */
 							$filename = $current->getFilename();
-							if ($filename[0] === '.') {
+							if ($filename[0] === '.' && $filename !== '.gitignore' && $filename !== '.htaccess') {
 								// ignore dot files and files/directories starting with a dot
 								return false;
 							}

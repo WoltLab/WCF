@@ -27,5 +27,7 @@
 		</div>
 	</section>
 </form>
-
+<script>
+if (typeof window._trackWcfSetupStep === 'function') window._trackWcfSetupStep('selectSetupLanguage');
+</script>
 {include file='footer'}

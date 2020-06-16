@@ -21,7 +21,7 @@ use wcf\util\XML;
  * Provides functions to manage package updates.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package
  */
@@ -552,12 +552,38 @@ class PackageUpdateDispatcher extends SingletonFactory {
 					}
 					
 					// register compatibility versions of this update package version.
+					// @deprecated 5.2
 					if (isset($versionData['compatibility'])) {
 						foreach ($versionData['compatibility'] as $version) {
 							$compatibilityInserts[] = [
 								'packageUpdateVersionID' => $packageUpdateVersionID,
 								'version' => $version
 							];
+						}
+						
+						// The API compatibility versions are deprecated, any package that exposes them must
+						// exclude at most `com.woltlab.wcf` in version `6.0.0 Alpha 1`.
+						if (!empty($compatibilityInserts)) {
+							if (!isset($versionData['excludedPackages'])) $versionData['excludedPackages'] = [];
+							$excludeCore60 = '6.0.0 Alpha 1';
+							
+							$coreExclude = null;
+							$versionData['excludedPackages'] = array_filter($versionData['excludedPackages'], function($excludedPackage, $excludedVersion) use (&$coreExclude) {
+								if ($excludedPackage === 'com.woltlab.wcf') {
+									$coreExclude = $excludedVersion;
+									return false;
+								}
+								
+								return true;
+							}, ARRAY_FILTER_USE_BOTH);
+							
+							if ($coreExclude === null || Package::compareVersion($coreExclude, $excludeCore60, '>')) {
+								$versionData['excludedPackages'][] = [
+									'packageUpdateVersionID' => $packageUpdateVersionID,
+									'excludedPackage' => 'com.woltlab.wcf',
+									'excludedPackageVersion' => $excludeCore60,
+								];
+							}
 						}
 					}
 				}
@@ -633,6 +659,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		}
 		
 		// insert compatibility versions
+		// @deprecated 5.2
 		if (!empty($compatibilityInserts)) {
 			$sql = "INSERT INTO     wcf".WCF_N."_package_update_compatibility
 						(packageUpdateVersionID, version)
@@ -829,7 +856,7 @@ class PackageUpdateDispatcher extends SingletonFactory {
 		}
 		
 		// get versions
-		$sql = "SELECT		puv.*, pu.*, pus.loginUsername, pus.loginPassword
+		$sql = "SELECT		puv.*, pu.*, pus.serverURL, pus.loginUsername, pus.loginPassword
 			FROM		wcf".WCF_N."_package_update_version puv
 			LEFT JOIN	wcf".WCF_N."_package_update pu
 			ON		(pu.packageUpdateID = puv.packageUpdateID)

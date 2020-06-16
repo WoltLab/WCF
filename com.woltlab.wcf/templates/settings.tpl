@@ -9,7 +9,7 @@
 {include file='formError'}
 
 {if $success|isset}
-	<p class="success">{lang}wcf.global.success.edit{/lang}</p>
+	<p class="success" role="status">{lang}wcf.global.success.edit{/lang}</p>
 {/if}
 
 <form method="post" action="{link controller='Settings'}{/link}">
@@ -70,7 +70,7 @@
 		
 		{if $availableStyles|count > 1}
 			<section class="section">
-				<h2 class="sectionTitle">{lang}wcf.user.style{/lang}</h2>
+				<h2 class="sectionTitle">{lang}wcf.user.styles{/lang}</h2>
 				
 				<dl>
 					<dt><label for="styleID">{lang}wcf.user.style{/lang}</label></dt>

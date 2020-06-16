@@ -9,7 +9,7 @@ use wcf\system\template\TemplateEngine;
  * This template plugin is intended for internal use only.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
  * @since	3.0

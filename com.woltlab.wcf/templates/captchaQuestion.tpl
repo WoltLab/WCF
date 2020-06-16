@@ -6,7 +6,7 @@
 		</header>
 		
 		<dl class="{if (($errorType|isset && $errorType|is_array && $errorType[captchaAnswer]|isset) || ($errorField|isset && $errorField == 'captchaAnswer'))} formError{/if}">
-			<dt><label for="captchaAnswer">{lang}{$captchaQuestionObject->question}{/lang}</label></dt>
+			<dt><label for="captchaAnswer">{$captchaQuestionObject->getQuestion()}</label></dt>
 			<dd>
 				<input type="text" id="captchaAnswer" name="captchaAnswer" class="medium">
 				{if (($errorType|isset && $errorType|is_array && $errorType[captchaAnswer]|isset) || ($errorField|isset && $errorField == 'captchaAnswer'))}

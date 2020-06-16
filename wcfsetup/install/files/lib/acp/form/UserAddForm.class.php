@@ -17,7 +17,7 @@ use wcf\util\UserUtil;
  * Shows the user add form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -254,7 +254,8 @@ class UserAddForm extends UserOptionListForm {
 				'email' => $this->email,
 				'password' => $this->password,
 				'userTitle' => $this->userTitle,
-				'signature' => $this->htmlInputProcessor->getHtml()
+				'signature' => $this->htmlInputProcessor->getHtml(),
+				'signatureEnableHtml' => 1,
 			]),
 			'groups' => $this->groupIDs,
 			'languageIDs' => $this->visibleLanguages,

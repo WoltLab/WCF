@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Imports cms media.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Importer
  */
@@ -34,25 +34,27 @@ class MediaImporter extends AbstractImporter {
 		$data['userID'] = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.user', $data['userID']);
 		
 		$contents = [];
-		foreach ($additionalData['contents'] as $languageCode => $contentData) {
-			$languageID = 0;
-			if (!$languageCode) {
-				if (($language = LanguageFactory::getInstance()->getLanguageByCode($languageCode)) !== null) {
-					$languageID = $language->languageID;
+		if (!empty($additionalData['contents'])) {
+			foreach ($additionalData['contents'] as $languageCode => $contentData) {
+				$languageID = 0;
+				if (!$languageCode) {
+					if (($language = LanguageFactory::getInstance()->getLanguageByCode($languageCode)) !== null) {
+						$languageID = $language->languageID;
+					}
+					else {
+						continue;
+					}
 				}
-				else {
-					continue;
-				}
+				
+				$contents[$languageID] = [
+					'title' => (!empty($contentData['title']) ? $contentData['title'] : ''),
+					'caption' => (!empty($contentData['caption']) ? $contentData['caption'] : ''),
+					'altText' => (!empty($contentData['altText']) ? $contentData['altText'] : '')
+				];
 			}
-			
-			$contents[$languageID] = [
-				'title' => (!empty($contentData['title']) ? $contentData['title'] : ''),
-				'caption' => (!empty($contentData['caption']) ? $contentData['caption'] : ''),
-				'altText' => (!empty($contentData['altText']) ? $contentData['altText'] : '')
-			];
-		}
-		if (count($contents) > 1) {
-			$data['isMultilingual'] = 1;
+			if (count($contents) > 1) {
+				$data['isMultilingual'] = 1;
+			}
 		}
 		
 		// handle language
@@ -63,9 +65,18 @@ class MediaImporter extends AbstractImporter {
 		}
 		
 		// check old id
-		if (is_numeric($oldID)) {
+		if (ctype_digit((string)$oldID)) {
 			$media = new Media($oldID);
 			if (!$media->mediaID) $data['mediaID'] = $oldID;
+		}
+		
+		// category
+		$categoryID = null;
+		if (!empty($data['categoryID'])) {
+			$categoryID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.media.category', $data['categoryID']);
+		}
+		if ($categoryID !== null) {
+			$data['categoryID'] = $categoryID;
 		}
 		
 		// save media

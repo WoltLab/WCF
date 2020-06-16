@@ -7,7 +7,7 @@ use wcf\data\user\trophy\UserTrophyEditor;
  * Represents a user trophy importer.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Importer
  * @since	3.1

@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * User activity event handler.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Activity\Event
  */
@@ -97,6 +97,49 @@ class UserActivityEventHandler extends SingletonFactory {
 		$returnValues = $eventAction->executeAction();
 		
 		return $returnValues['returnValues'];
+	}
+	
+	/**
+	 * Fires multiple new activity events for the same activity event type.
+	 * 
+	 * This method is intended for bulk processing.
+	 * 
+	 * @param	string		$objectType
+	 * @param	array		$eventData
+	 * @throws	SystemException
+	 */
+	public function fireEvents($objectType, array $eventData) {
+		$objectTypeID = $this->getObjectTypeID($objectType);
+		if ($objectTypeID === null) {
+			throw new SystemException("Unknown recent activity event '".$objectType."'");
+		}
+		
+		$itemsPerLoop = 1000;
+		$loopCount = ceil(count($eventData) / $itemsPerLoop);
+		
+		WCF::getDB()->beginTransaction();
+		for ($i = 0; $i < $loopCount; $i++) {
+			$batchEventData = array_slice($eventData, $i * $itemsPerLoop, $itemsPerLoop);
+			
+			$parameters = [];
+			foreach ($batchEventData as $data) {
+				$parameters = array_merge($parameters, [
+					$objectTypeID,
+					$data['objectID'],
+					$data['languageID'] ?? null,
+					$data['userID'] ?? WCF::getUser()->userID,
+					$data['time'] ?? TIME_NOW,
+					serialize($data['additionalData'] ?? [])
+				]);
+			}
+			
+			$sql = "INSERT INTO	wcf" . WCF_N . "_user_activity_event
+						(objectTypeID, objectID, languageID, userID, time, additionalData)
+				VALUES		(?, ?, ?, ?, ?, ?)" . str_repeat(', (?, ?, ?, ?, ?, ?)', count($batchEventData) - 1);
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($parameters);
+		}
+		WCF::getDB()->commitTransaction();
 	}
 	
 	/**

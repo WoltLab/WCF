@@ -37,19 +37,7 @@
 				</dd>
 			</dl>
 			
-			<dl class="col-xs-12 col-md-4">
-				<dt></dt>
-				<dd>
-					<select name="packageID" id="packageID">
-						<option value="0"{if $packageID === 0} selected{/if}>{lang}wcf.acp.modificationLog.package.all{/lang}</option>
-						{foreach from=$packages item=package}
-							<option value="{@$package->packageID}"{if $packageID == $package->packageID} selected{/if}>{$package}</option>
-						{/foreach}
-					</select>
-				</dd>
-			</dl>
-			
-			<dl class="col-xs-12 col-md-4">
+			<dl class="col-xs-12 col-md-8">
 				<dt></dt>
 				<dd>
 					<select name="action" id="action">
@@ -59,11 +47,10 @@
 						{foreach from=$actions key=_packageID item=$availableActions}
 							{assign var=_package value=$packages[$_packageID]}
 							
-							<optgroup label="{$_package}" data-package-id="{@$_package->packageID}">
-								{foreach from=$availableActions key=actionName item=actionLabel}
-									<option value="{$actionName}"{if $action === $actionName} selected{/if}>{$actionLabel}</option>
-								{/foreach}
-							</optgroup>
+							<option value="{@$_package->packageID}"{if $action == $_package->packageID} selected{/if}>{lang package=$_package}wcf.acp.modificationLog.action.allPackageActions{/lang}</option>
+							{foreach from=$availableActions key=actionName item=actionLabel}
+								<option value="{$actionName}"{if $action === $actionName} selected{/if}>{@'&nbsp;'|str_repeat:4}{$actionLabel}</option>
+							{/foreach}
 						{/foreach}
 					</select>
 				</dd>
@@ -93,7 +80,7 @@
 	</section>
 </form>
 
-{capture assign=pageParameters}{if $username}&username={$username}{/if}{if $packageID}&packageID={@$packageID}{/if}{if $action}&action={$action}{/if}{if $afterDate}&afterDate={$afterDate}{/if}{if $beforeDate}&beforeDate={$beforeDate}{/if}{/capture}
+{capture assign=pageParameters}{if $username}&username={$username}{/if}{if $action}&action={$action}{/if}{if $afterDate}&afterDate={$afterDate}{/if}{if $beforeDate}&beforeDate={$beforeDate}{/if}{/capture}
 {hascontent}
 	<div class="paginationTop">
 		{content}{pages print=true assign=pagesLinks controller="ModificationLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$pageParameters"}{/content}
@@ -121,7 +108,7 @@
 					
 					<tr>
 						<td class="columnID columnLogID">{@$modificationLog->logID}</td>
-						<td class="columnText columnUsername">{if $modificationLog->userID}<a href="{link controller='User' id=$modificationLog->userID}{/link}">{$modificationLog->username}</a>{else}{$modificationLog->username}{/if}</td>
+						<td class="columnText columnUsername">{if $modificationLog->userID}<a href="{link controller='User' id=$modificationLog->userID title=$modificationLog->username forceFrontend=true}{/link}">{$modificationLog->username}</a>{else}{$modificationLog->username}{/if}</td>
 						<td class="columnText columnAction">{lang}wcf.acp.modificationLog.{$_objectType->objectType}.{$modificationLog->action}{/lang}</td>
 						<td class="columnText columnAffectedObject" title="{lang}wcf.acp.modificationLog.affectedObject.id{/lang}">
 							{if $modificationLog->getAffectedObject()}

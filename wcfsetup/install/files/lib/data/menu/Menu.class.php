@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\menu;
 use wcf\data\box\Box;
+use wcf\data\ITitledObject;
 use wcf\data\menu\item\MenuItemNodeTree;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
@@ -9,7 +10,7 @@ use wcf\system\WCF;
  * Represents a menu.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Menu
  * @since	3.0
@@ -20,7 +21,7 @@ use wcf\system\WCF;
  * @property-read	integer		$originIsSystem		is `1` if the menu has been delivered by a package, otherwise `0` (if the menu has been created by an admin in the ACP)
  * @property-read	integer		$packageID		id of the package the which delivers the menu or `1` if it has been created in the ACP
  */
-class Menu extends DatabaseObject {
+class Menu extends DatabaseObject implements ITitledObject {
 	/**
 	 * menu item node tree
 	 * @var	MenuItemNodeTree
@@ -65,9 +66,8 @@ class Menu extends DatabaseObject {
 	}
 	
 	/**
-	 * Returns the title for the rendered version of this menu.
-	 *
-	 * @return	string
+	 * @inheritDoc
+	 * @since	5.2
 	 */
 	public function getTitle() {
 		return WCF::getLanguage()->get($this->title);

@@ -7,7 +7,7 @@ use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
  * This is the database implementation for MySQL 5.1 or higher using PDO.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Database
  */
@@ -24,13 +24,10 @@ class MySQLDatabase extends Database {
 		if (!$this->port) $this->port = 3306; // mysql default port
 		
 		try {
-			$driverOptions = [
-				\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8mb4'"
-			];
+			$driverOptions = $this->defaultDriverOptions;
+			$driverOptions[\PDO::MYSQL_ATTR_INIT_COMMAND] = "SET NAMES 'utf8mb4'";
 			if (!$this->failsafeTest) {
-				$driverOptions = [
-					\PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8mb4', SESSION sql_mode = 'ANSI,ONLY_FULL_GROUP_BY,STRICT_ALL_TABLES'"
-				];
+				$driverOptions[\PDO::MYSQL_ATTR_INIT_COMMAND] = "SET NAMES 'utf8mb4', SESSION sql_mode = 'ANSI,ONLY_FULL_GROUP_BY,STRICT_ALL_TABLES,NO_ZERO_IN_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'";
 			}
 			
 			// disable prepared statement emulation since MySQL 5.1.17 is the minimum required version

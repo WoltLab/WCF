@@ -116,15 +116,12 @@
 								<span class="icon icon16 fa-arrows sortableNodeHandle"></span>
 								
 								{if $objectType->getProcessor()->canEditCategory()}
+									<span class="icon icon16 fa-{if !$category->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$category->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$category->categoryID}"></span>
 									<a href="{link controller=$editController application=$objectType->getProcessor()->getApplication() id=$category->categoryID title=$category->getTitle()}{/link}" title="{lang}wcf.global.button.edit{/lang}" class="jsTooltip"><span class="icon icon16 fa-pencil"></span></a>
 								{/if}
 								
 								{if $objectType->getProcessor()->canDeleteCategory()}
 									<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$category->categoryID}" data-confirm-message="{@$objectType->getProcessor()->getLanguageVariable('delete.sure')}"></span>
-								{/if}
-								
-								{if $objectType->getProcessor()->canEditCategory()}
-									<span class="icon icon16 fa-{if !$category->isDisabled}check-{/if}square-o jsToggleButton jsTooltip pointer" title="{lang}wcf.global.button.{if !$category->isDisabled}disable{else}enable{/if}{/lang}" data-object-id="{@$category->categoryID}"></span>
 								{/if}
 								
 								{event name='itemButtons'}

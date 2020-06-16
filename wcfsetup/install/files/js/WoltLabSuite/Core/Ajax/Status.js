@@ -2,7 +2,7 @@
  * Provides the AJAX status overlay.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ajax/Status
  */
@@ -23,6 +23,7 @@ define(['Language'], function(Language) {
 		_init: function() {
 			_overlay = elCreate('div');
 			_overlay.classList.add('spinner');
+			elAttr(_overlay, 'role', 'status');
 			
 			var icon = elCreate('span');
 			icon.className = 'icon icon48 fa-spinner';

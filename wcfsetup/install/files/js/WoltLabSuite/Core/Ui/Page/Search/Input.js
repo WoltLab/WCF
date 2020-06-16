@@ -2,7 +2,7 @@
  * Suggestions for page object ids with external response data processing.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Page/Search/Input
  * @extends     module:WoltLabSuite/Core/Ui/Search/Input

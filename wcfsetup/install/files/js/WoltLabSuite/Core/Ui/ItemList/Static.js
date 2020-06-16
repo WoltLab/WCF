@@ -2,7 +2,7 @@
  * Flexible UI element featuring both a list of items and an input field.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/ItemList/Static
  */
@@ -116,13 +116,14 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'Ui/Simple
 			values = (data.values.length) ? data.values : values;
 			if (Array.isArray(values)) {
 				var value;
+				var forceRemoveIcon = !data.element.disabled;
 				for (var i = 0, length = values.length; i < length; i++) {
 					value = values[i];
 					if (typeof value === 'string') {
 						value = { objectId: 0, value: value };
 					}
 					
-					this._addItem(elementId, value);
+					this._addItem(elementId, value, forceRemoveIcon);
 				}
 			}
 		},
@@ -384,10 +385,11 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'Ui/Simple
 		/**
 		 * Adds an item to the list.
 		 *
-		 * @param	{string}	elementId	input element id
-		 * @param	{object}	value		item value
+		 * @param	{string}	elementId		input element id
+		 * @param	{object}	value			item value
+		 * @param	{?boolean}	forceRemoveIcon		if `true`, the icon to remove the item will be added in every case
 		 */
-		_addItem: function(elementId, value) {
+		_addItem: function(elementId, value, forceRemoveIcon) {
 			var data = _data.get(elementId);
 			
 			var listItem = elCreate('li');
@@ -399,7 +401,7 @@ define(['Core', 'Dictionary', 'Language', 'Dom/Traverse', 'EventKey', 'Ui/Simple
 			content.textContent = value.value;
 			listItem.appendChild(content);
 			
-			if (!data.element.disabled) {
+			if (forceRemoveIcon || !data.element.disabled) {
 				var button = elCreate('a');
 				button.className = 'icon icon16 fa-times';
 				button.addEventListener(WCF_CLICK_EVENT, _callbackRemoveItem);

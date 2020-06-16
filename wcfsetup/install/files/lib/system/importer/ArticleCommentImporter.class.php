@@ -7,7 +7,7 @@ use wcf\data\object\type\ObjectTypeCache;
  * Imports article comments.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Importer
  */
@@ -29,7 +29,7 @@ class ArticleCommentImporter extends AbstractCommentImporter {
 	 * @inheritDoc
 	 */
 	public function import($oldID, array $data, array $additionalData = []) {
-		$articleID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.article', $additionalData['articleID']);
+		$articleID = ImportHandler::getInstance()->getNewID('com.woltlab.wcf.article', $data['objectID'] ?? $additionalData['articleID']);
 		if (!$articleID) return 0;
 		$article = new Article($articleID);
 		$contents = $article->getArticleContents();

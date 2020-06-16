@@ -100,23 +100,23 @@
 				{foreach from=$objects item=attachment}
 					<tr class="jsAttachmentRow">
 						<td class="columnIcon">
-							<span class="icon icon24 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$attachment->attachmentID}" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}"></span>
+							<span class="icon icon16 fa-times jsDeleteButton jsTooltip pointer" title="{lang}wcf.global.button.delete{/lang}" data-object-id="{@$attachment->attachmentID}" data-confirm-message="{lang}wcf.attachment.delete.sure{/lang}"></span>
 							
 							{event name='rowButtons'}
 						</td>
 						<td class="columnID columnAttachmentID">{@$attachment->attachmentID}</td>
 						<td class="columnTitle columnFilename">
 							<div class="box64">
-								<a href="{link controller='Attachment' id=$attachment->attachmentID}{/link}"{if $attachment->isImage} class="jsImageViewer" title="{$attachment->filename}"{/if}>
+								<a href="{$attachment->getLink()}"{if $attachment->isImage} class="jsImageViewer" title="{$attachment->filename}"{/if}>
 									{if $attachment->tinyThumbnailType}
-										<img src="{link controller='Attachment' id=$attachment->attachmentID}tiny=1{/link}" class="attachmentTinyThumbnail" alt="">
+										<img src="{$attachment->getThumbnailLink('tiny')}" class="attachmentTinyThumbnail" alt="">
 									{else}
 										<span class="icon icon64 fa-{@$attachment->getIconName()}"></span>
 									{/if}
 								</a>
 								
 								<div>
-									<p><a href="{link controller='Attachment' id=$attachment->attachmentID}{/link}">{$attachment->filename|tableWordwrap}</a></p>
+									<p><a href="{$attachment->getLink()}">{$attachment->filename|tableWordwrap}</a></p>
 									<p><small>{if $attachment->userID}{if $__wcf->session->getPermission('admin.user.canEditUser')}<a href="{link controller='UserEdit' id=$attachment->userID}{/link}">{$attachment->username}</a>{else}{$attachment->username}{/if}{else}{lang}wcf.user.guest{/lang}{/if}</small></p>
 									{if $attachment->getContainerObject()}<p><small><a href="{$attachment->getContainerObject()->getLink()}">{$attachment->getContainerObject()->getTitle()|tableWordwrap}</a></small></p>{/if}
 								</div>

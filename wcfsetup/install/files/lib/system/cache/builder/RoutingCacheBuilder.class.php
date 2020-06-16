@@ -14,7 +14,7 @@ use wcf\util\FileUtil;
  * Caches routing data.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cache\Builder
  * @since	3.0
@@ -41,6 +41,8 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 		
 		$data['customUrls'] = $this->getCustomUrls($data['landingPages']);
 		$data['applicationOverrides'] = $this->getApplicationOverrides($data['customUrls']);
+		
+		$this->handleLandingPageWithOverriddenApplication($data);
 		
 		return $data;
 	}
@@ -72,7 +74,7 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 			$languageIDs[] = $language->languageID;
 		}
 		
-		$sql = "SELECT  pageID, pageType, controller, applicationPackageID, overrideApplicationPackageID
+		$sql = "SELECT  pageID, pageType, controller, controllerCustomURL, applicationPackageID, overrideApplicationPackageID
 			FROM    wcf".WCF_N."_page
 			WHERE   overrideApplicationPackageID IS NOT NULL";
 		$statement = WCF::getDB()->prepareStatement($sql);
@@ -86,6 +88,16 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 				$controller = preg_replace('/(?:Action|Form|Page)$/', '', array_pop($tmp));
 				$data['lookup'][$overrideApplication][$controller] = $application;
 				$data['reverse'][$application][$controller] = $overrideApplication;
+				
+				$controllerCustomURL = $row['controllerCustomURL'];
+				if ($controllerCustomURL) {
+					$data['lookup'][$overrideApplication][$controllerCustomURL] = $application;
+					
+					// Copy the custom url to the new application.
+					if (isset($customUrls['reverse'][$application][$controller])) {
+						$customUrls['reverse'][$overrideApplication][$controller] = $customUrls['reverse'][$application][$controller];
+					}
+				}
 			}
 			else {
 				foreach ($languageIDs as $languageID) {
@@ -249,6 +261,10 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 			else {
 				$cmsIdentifier = '__WCF_CMS__' . $row['pageID'] . '-' . ($row['languageID'] ?: 0);
 				
+				// Discard the custom url if this CMS page is the landing page of its associated app.
+				if (!empty($landingPages[$abbreviations[$packageID]]) && $landingPages[$abbreviations[$packageID]][0] === '__WCF_CMS__' . $row['pageID'] && !$row['languageID']) {
+					$customUrl = '';
+				}
 				$data['reverse'][$abbreviations[$packageID]][$cmsIdentifier] = $customUrl;
 				
 				if ($cmsPageID && $abbreviations[$packageID] === 'wcf') {
@@ -293,6 +309,8 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		foreach (ApplicationHandler::getInstance()->getApplications() as $application) {
+			if ($application->isTainted) continue;
+			
 			$controller = null;
 			
 			if ($application->packageID == 1) {
@@ -343,5 +361,32 @@ class RoutingCacheBuilder extends AbstractCacheBuilder {
 		}
 		
 		return $data;
+	}
+	
+	protected function handleLandingPageWithOverriddenApplication(array &$data) {
+		if (!PACKAGE_ID) {
+			return;
+		}
+		
+		$landingPageController = $data['landingPages']['wcf'][0];
+		$controllers = [$landingPageController];
+		
+		// The controller may be the custom url of a CMS page.
+		if (strpos($landingPageController, '__WCF_CMS__') === 0) {
+			$controllers = array_filter($data['customUrls']['reverse']['wcf'], function($controller) use ($landingPageController) {
+				return strpos($controller, "{$landingPageController}-") === 0;
+			}, ARRAY_FILTER_USE_KEY);
+		}
+		
+		foreach ($controllers as $controller) {
+			if (isset($data['applicationOverrides']['reverse']['wcf'][$controller])) {
+				$overriddenApplication = $data['applicationOverrides']['reverse']['wcf'][$controller];
+				
+				// The original landing page of the target app has been implicitly overridden, thus we need to
+				// replace the data of the affected app. This is necessary in order to avoid the original landing
+				// page to be conflicting with the global landing page, eventually overshadowing it.
+				$data['landingPages'][$overriddenApplication] = array_slice($data['landingPages']['wcf'], 0);
+			}
+		}
 	}
 }

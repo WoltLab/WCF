@@ -16,7 +16,7 @@ use wcf\util\StringUtil;
  * not allowed to be directly provided by a user. 
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Bbcode
  * @since	3.0
@@ -51,6 +51,12 @@ class HtmlBBCodeParser extends BBCodeParser {
 	 * @var string
 	 */
 	protected $validBBCodePattern = '~^[a-z](?:[a-z0-9\-_]+)?$~';
+	
+	/**
+	 * @var bool
+	 * @since 5.2
+	 */
+	protected $removeLinks;
 	
 	/**
 	 * @inheritDoc
@@ -412,6 +418,22 @@ class HtmlBBCodeParser extends BBCodeParser {
 		}
 		
 		return $bbcodes;
+	}
+	
+	/**
+	 * @param bool $removeLinks
+	 * @since 5.2
+	 * @deprecated 5.2 See https://github.com/WoltLab/WCF/issues/3189
+	 */
+	public function setRemoveLinks($removeLinks) {
+		$this->removeLinks = $removeLinks;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getRemoveLinks() {
+		return $this->removeLinks;
 	}
 	
 	/**

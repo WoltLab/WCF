@@ -4,10 +4,10 @@
 
 {include file='formError'}
 
-<p class="warning">{lang}wcf.user.accountManagement.warning{/lang}</p>
+<p class="warning" role="status">{lang}wcf.user.accountManagement.warning{/lang}</p>
 
 {if $success|isset && $success|count > 0}
-	<div class="success">
+	<div class="success" role="status">
 		{foreach from=$success item=successMessage}
 			<p>{lang}{@$successMessage}{/lang}</p>
 		{/foreach}
@@ -194,7 +194,7 @@
 								{if $__wcf->getSession()->getVar('__githubToken')}
 									<label><input type="checkbox" name="githubConnect" value="1"{if $githubConnect} checked{/if}> {lang}wcf.user.3rdparty.github.connect{/lang}</label>
 								{else}
-									<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton"><span class="icon icon16 fa-github"></span> <span>{lang}wcf.user.3rdparty.github.connect{/lang}</span></a>
+									<a href="{link controller='GithubAuth'}{/link}" class="thirdPartyLoginButton githubLoginButton button"><span class="icon icon24 fa-github"></span> <span>{lang}wcf.user.3rdparty.github.connect{/lang}</span></a>
 								{/if}
 							</dd>
 						</dl>
@@ -207,7 +207,7 @@
 								{if $__wcf->getSession()->getVar('__twitterData')}
 									<label><input type="checkbox" name="twitterConnect" value="1"{if $twitterConnect} checked{/if}> {lang}wcf.user.3rdparty.twitter.connect{/lang}</label>
 								{else}
-									<a href="{link controller='TwitterAuth'}{/link}" class="thirdPartyLoginButton twitterLoginButton"><span class="icon icon16 fa-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.connect{/lang}</span></a>
+									<a href="{link controller='TwitterAuth'}{/link}" class="thirdPartyLoginButton twitterLoginButton button"><span class="icon icon24 fa-twitter"></span> <span>{lang}wcf.user.3rdparty.twitter.connect{/lang}</span></a>
 								{/if}
 							</dd>
 						</dl>
@@ -220,7 +220,7 @@
 								{if $__wcf->getSession()->getVar('__facebookData')}
 									<label><input type="checkbox" name="facebookConnect" value="1"{if $facebookConnect} checked{/if}> {lang}wcf.user.3rdparty.facebook.connect{/lang}</label>
 								{else}
-									<a href="{link controller='FacebookAuth'}{/link}" class="thirdPartyLoginButton facebookLoginButton"><span class="icon icon16 fa-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.connect{/lang}</span></a>
+									<a href="{link controller='FacebookAuth'}{/link}" class="thirdPartyLoginButton facebookLoginButton button"><span class="icon icon24 fa-facebook"></span> <span>{lang}wcf.user.3rdparty.facebook.connect{/lang}</span></a>
 								{/if}
 							</dd>
 						</dl>
@@ -233,7 +233,7 @@
 								{if $__wcf->getSession()->getVar('__googleData')}
 									<label><input type="checkbox" name="googleConnect" value="1"{if $googleConnect} checked{/if}> {lang}wcf.user.3rdparty.google.connect{/lang}</label>
 								{else}
-									<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton"><span class="icon icon16 fa-google"></span> <span>{lang}wcf.user.3rdparty.google.connect{/lang}</span></a>
+									<a href="{link controller='GoogleAuth'}{/link}" class="thirdPartyLoginButton googleLoginButton button"><span class="icon icon24 fa-google"></span> <span>{lang}wcf.user.3rdparty.google.connect{/lang}</span></a>
 								{/if}
 							</dd>
 						</dl>

@@ -30,7 +30,7 @@ use wcf\util\StringUtil;
  * Decorates the user object and provides functions to retrieve data for user profiles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User
  * 
@@ -406,7 +406,10 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	boolean
 	 */
 	public function canViewOnlineStatus() {
-		return (WCF::getUser()->userID == $this->userID || WCF::getSession()->getPermission('admin.user.canViewInvisible') || $this->isAccessible('canViewOnlineStatus'));
+		return WCF::getUser()->userID == $this->userID
+			|| WCF::getSession()->getPermission('admin.user.canViewInvisible')
+			|| !$this->getPermission('user.profile.canHideOnlineStatus')
+			|| $this->isAccessible('canViewOnlineStatus');
 	}
 	
 	/**
@@ -939,11 +942,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	string
 	 */
 	public function getAuthProvider() {
-		if (!$this->authData) {
-			return '';
-		}
-		
-		return mb_substr($this->authData, 0, mb_strpos($this->authData, ':'));
+		return $this->getDecoratedObject()->getAuthProvider();
 	}
 	
 	/**
@@ -1022,7 +1021,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	string
 	 */
 	public function getAnchorTag() {
-		return '<a href="'.$this->getLink().'" class="userLink" data-user-id="'.$this->userID.'">'.StringUtil::encodeHTML($this->username).'</a>';
+		return '<a href="'.$this->getLink().'" class="userLink" data-object-id="'.$this->userID.'">'.StringUtil::encodeHTML($this->username).'</a>';
 	}
 	
 	/**

@@ -15,7 +15,7 @@ use wcf\util\StringUtil;
  * Parses all text nodes searching for links, media, mentions or smilies.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Html\Input\Node
  * @since	3.0
@@ -179,7 +179,6 @@ class HtmlInputNodeTextParser {
 		if (!empty($usernames)) {
 			$users = $this->lookupUsernames($usernames);
 			$groups = $this->lookupGroups($usernames);
-			
 		}
 		
 		$allowEmail = BBCodeHandler::getInstance()->isAvailableBBCode('email');
@@ -340,7 +339,7 @@ class HtmlInputNodeTextParser {
 			}
 		}
 		
-		return$groups;
+		return $groups;
 	}
 	
 	/**
@@ -735,7 +734,7 @@ class HtmlInputNodeTextParser {
 		$match = str_replace("''", "'", $match);
 		
 		// remove single quotation marks
-		if ($match{0} == "'") {
+		if ($match[0] == "'") {
 			$match = mb_substr($match, 1, -1);
 		}
 		else if ($trimTrailingSpecialCharacters) {

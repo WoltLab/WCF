@@ -5,12 +5,12 @@ namespace wcf\system\form\builder\field;
  * Represents a form field that supports setting the maximum of the field value.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface IMaximumFormField {
+interface IMaximumFormField extends IFormField {
 	/**
 	 * Returns the maximum of the values of this field or `null` if no maximum
 	 * has been set.

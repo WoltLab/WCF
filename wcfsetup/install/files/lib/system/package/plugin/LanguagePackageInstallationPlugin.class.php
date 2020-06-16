@@ -35,7 +35,7 @@ use wcf\util\XML;
  * Installs, updates and deletes languages, their categories and items.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -357,7 +357,12 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 					
 					return $categories;
 				}, false, false)
-				->filterable(),
+				->filterable()
+				->addDependency(
+					ValueFormFieldDependency::create('languageCategoryIDMode')
+						->fieldId('languageCategoryIDMode')
+						->values(['selection'])
+				),
 			
 			TextFormField::create('languageCategory')
 				->label('wcf.acp.language.item.languageCategoryID')
@@ -376,7 +381,12 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 							)
 						);
 					}
-				})),
+				}))
+				->addDependency(
+					ValueFormFieldDependency::create('languageCategoryIDMode')
+						->fieldId('languageCategoryIDMode')
+						->values(['new'])
+				),
 			
 			TextFormField::create('languageItem')
 				->label('wcf.acp.language.item.languageItem')
@@ -487,21 +497,6 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 					->description($description)
 			);
 		}
-		
-		// add dependencies
-		/** @var SingleSelectionFormField $languageCategoryIDMode */
-		$languageCategoryIDMode = $dataContainer->getNodeById('languageCategoryIDMode');
-		
-		$dataContainer->getNodeById('languageCategoryID')->addDependency(
-			ValueFormFieldDependency::create('languageCategoryIDMode')
-				->field($languageCategoryIDMode)
-				->values(['selection'])
-		);
-		$dataContainer->getNodeById('languageCategory')->addDependency(
-			ValueFormFieldDependency::create('languageCategoryIDMode')
-				->field($languageCategoryIDMode)
-				->values(['new'])
-		);
 	}
 	
 	/**
@@ -621,6 +616,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 	 */
 	protected function getEmptyXml($languageCode) {
 		$xsdFilename = $this->getXsdFilename();
+		$apiVersion = WSC_API_VERSION;
 		
 		$language = LanguageFactory::getInstance()->getLanguageByCode($languageCode);
 		if ($language === null) {
@@ -629,7 +625,7 @@ class LanguagePackageInstallationPlugin extends AbstractXMLPackageInstallationPl
 		
 		return <<<XML
 <?xml version="1.0" encoding="UTF-8"?>
-<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/{$xsdFilename}.xsd" languagecode="{$language->languageCode}" languagename="{$language->languageName}" countrycode="{$language->countryCode}">
+<language xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/{$apiVersion}/{$xsdFilename}.xsd" languagecode="{$language->languageCode}" languagename="{$language->languageName}" countrycode="{$language->countryCode}">
 </language>
 XML;
 	}

@@ -11,16 +11,16 @@ use wcf\system\devtools\pip\IDevtoolsPipEntryList;
 use wcf\system\devtools\pip\IGuiPackageInstallationPlugin;
 use wcf\system\devtools\pip\TXmlGuiPackageInstallationPlugin;
 use wcf\system\form\builder\container\FormContainer;
-use wcf\system\form\builder\field\data\processor\CustomFormFieldDataProcessor;
+use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\dependency\ValueFormFieldDependency;
 use wcf\system\form\builder\field\IntegerFormField;
+use wcf\system\form\builder\field\MultilineTextFormField;
 use wcf\system\form\builder\field\option\OptionFormField;
+use wcf\system\form\builder\field\SingleSelectionFormField;
+use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\field\user\group\option\UserGroupOptionFormField;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\field\validation\FormFieldValidator;
-use wcf\system\form\builder\field\MultilineTextFormField;
-use wcf\system\form\builder\field\SingleSelectionFormField;
-use wcf\system\form\builder\field\TextFormField;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -29,7 +29,7 @@ use wcf\util\StringUtil;
  * Installs, updates and deletes template listeners.
  * 
  * @author	Alexander Ebert, Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -209,60 +209,6 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 					}
 				})),
 			
-			SingleSelectionFormField::create('frontendTemplateName')
-				->objectProperty('templatename')
-				->label('wcf.acp.pip.templateListener.templateName')
-				->description('wcf.acp.pip.templateListener.templateName.description')
-				->required()
-				->options(array_combine(array_keys($templateEvents), array_keys($templateEvents)))
-				->filterable(),
-			
-			SingleSelectionFormField::create('acpTemplateName')
-				->objectProperty('templatename')
-				->label('wcf.acp.pip.templateListener.templateName')
-				->description('wcf.acp.pip.templateListener.templateName.description')
-				->required()
-				->options(array_combine(array_keys($acpTemplateEvents), array_keys($acpTemplateEvents)))
-				->filterable()
-		]);
-		
-		/** @var SingleSelectionFormField $frontendTemplateName */
-		$frontendTemplateName = $form->getNodeById('frontendTemplateName');
-		foreach ($templateEvents as $templateName => $events) {
-			$dataContainer->appendChild(
-				SingleSelectionFormField::create($templateName . '_eventName')
-					->objectProperty('eventname')
-					->label('wcf.acp.pip.templateListener.eventName')
-					->description('wcf.acp.pip.templateListener.eventName.description')
-					->required()
-					->options(array_combine($events, $events))
-					->addDependency(
-						ValueFormFieldDependency::create('templateName')
-							->field($frontendTemplateName)
-							->values([$templateName])
-					)
-			);
-		}
-		
-		/** @var SingleSelectionFormField $acpTemplateName */
-		$acpTemplateName = $form->getNodeById('acpTemplateName');
-		foreach ($acpTemplateEvents as $templateName => $events) {
-			$dataContainer->appendChild(
-				SingleSelectionFormField::create('acp_' . $templateName . '_eventName')
-					->objectProperty('eventname')
-					->label('wcf.acp.pip.templateListener.eventName')
-					->description('wcf.acp.pip.templateListener.eventName.description')
-					->required()
-					->options(array_combine($events, $events))
-					->addDependency(
-						ValueFormFieldDependency::create('acpTemplateName')
-							->field($acpTemplateName)
-							->values([$templateName])
-					)
-			);
-		}
-		
-		$dataContainer->appendChildren([
 			SingleSelectionFormField::create('environment')
 				->label('wcf.acp.pip.templateListener.environment')
 				->description('wcf.acp.pip.templateListener.environment.description')
@@ -307,7 +253,8 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 							
 							/** @var SingleSelectionFormField $eventNameField */
 							$eventNameField = $formField->getDocument()->getNodeById('acp_' . $templateNameField->getSaveValue() . '_eventName');
-						} else {
+						}
+						else {
 							/** @var SingleSelectionFormField $templateNameField */
 							$templateNameField = $formField->getDocument()->getNodeById('frontendTemplateName');
 							
@@ -333,6 +280,70 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 					}
 				})),
 			
+			SingleSelectionFormField::create('frontendTemplateName')
+				->objectProperty('templatename')
+				->label('wcf.acp.pip.templateListener.templateName')
+				->description('wcf.acp.pip.templateListener.templateName.description')
+				->required()
+				->options(array_combine(array_keys($templateEvents), array_keys($templateEvents)))
+				->filterable()
+				->addDependency(
+					ValueFormFieldDependency::create('environment')
+						->fieldId('environment')
+						->values(['user'])
+				),
+			
+			SingleSelectionFormField::create('acpTemplateName')
+				->objectProperty('templatename')
+				->label('wcf.acp.pip.templateListener.templateName')
+				->description('wcf.acp.pip.templateListener.templateName.description')
+				->required()
+				->options(array_combine(array_keys($acpTemplateEvents), array_keys($acpTemplateEvents)))
+				->filterable()
+				->addDependency(
+					ValueFormFieldDependency::create('environment')
+						->fieldId('environment')
+						->values(['admin'])
+				)
+		]);
+		
+		/** @var SingleSelectionFormField $frontendTemplateName */
+		$frontendTemplateName = $form->getNodeById('frontendTemplateName');
+		foreach ($templateEvents as $templateName => $events) {
+			$dataContainer->appendChild(
+				SingleSelectionFormField::create($templateName . '_eventName')
+					->objectProperty('eventname')
+					->label('wcf.acp.pip.templateListener.eventName')
+					->description('wcf.acp.pip.templateListener.eventName.description')
+					->required()
+					->options(array_combine($events, $events))
+					->addDependency(
+						ValueFormFieldDependency::create('templateName')
+							->field($frontendTemplateName)
+							->values([$templateName])
+					)
+			);
+		}
+		
+		/** @var SingleSelectionFormField $acpTemplateName */
+		$acpTemplateName = $form->getNodeById('acpTemplateName');
+		foreach ($acpTemplateEvents as $templateName => $events) {
+			$dataContainer->appendChild(
+				SingleSelectionFormField::create('acp_' . $templateName . '_eventName')
+					->objectProperty('eventname')
+					->label('wcf.acp.pip.templateListener.eventName')
+					->description('wcf.acp.pip.templateListener.eventName.description')
+					->required()
+					->options(array_combine($events, $events))
+					->addDependency(
+						ValueFormFieldDependency::create('acpTemplateName')
+							->field($acpTemplateName)
+							->values([$templateName])
+					)
+			);
+		}
+		
+		$dataContainer->appendChildren([
 			MultilineTextFormField::create('templateCode')
 				->objectProperty('templatecode')
 				->label('wcf.acp.pip.templateListener.templateCode')
@@ -362,22 +373,8 @@ class TemplateListenerPackageInstallationPlugin extends AbstractXMLPackageInstal
 				))
 		]);
 		
-		/** @var SingleSelectionFormField $environment */
-		$environment = $form->getNodeById('environment');
-		
-		$form->getNodeById('frontendTemplateName')->addDependency(
-			ValueFormFieldDependency::create('environment')
-				->field($environment)
-				->values(['user'])
-		);
-		$form->getNodeById('acpTemplateName')->addDependency(
-			ValueFormFieldDependency::create('environment')
-				->field($environment)
-				->values(['admin'])
-		);
-		
 		// ensure proper normalization of template code
-		$form->getDataHandler()->add(new CustomFormFieldDataProcessor('templateCode', function(IFormDocument $document, array $parameters) {
+		$form->getDataHandler()->addProcessor(new CustomFormDataProcessor('templateCode', function(IFormDocument $document, array $parameters) {
 			$parameters['data']['templatecode'] = StringUtil::unifyNewlines(StringUtil::escapeCDATA($parameters['data']['templatecode']));
 			
 			return $parameters;

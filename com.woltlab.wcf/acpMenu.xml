@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/vortex/acpMenu.xsd">
+<data xmlns="http://www.woltlab.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.woltlab.com http://www.woltlab.com/XSD/2019/acpMenu.xsd">
 	<import>
 		<!-- configuration -->
 		<acpmenuitem name="wcf.acp.menu.link.configuration">
@@ -101,9 +101,15 @@
 			<permissions>admin.configuration.package.canInstallPackage</permissions>
 			<icon>fa-plus</icon>
 		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.devtools.missingLanguageItem.list">
+			<controller>wcf\acp\page\DevtoolsMissingLanguageItemListPage</controller>
+			<parent>wcf.acp.menu.link.devtools</parent>
+			<permissions>admin.configuration.package.canInstallPackage</permissions>
+		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.devtools.notificationTest">
 			<controller>wcf\acp\page\DevtoolsNotificationTestPage</controller>
 			<parent>wcf.acp.menu.link.devtools</parent>
+			<permissions>admin.configuration.package.canInstallPackage</permissions>
 		</acpmenuitem>
 		<!-- /devtools -->
 		<!-- /configuration -->
@@ -507,7 +513,6 @@
 		<acpmenuitem name="wcf.acp.menu.link.attachment.list">
 			<controller>wcf\acp\page\AttachmentListPage</controller>
 			<parent>wcf.acp.menu.link.attachment</parent>
-			<options>module_attachment</options>
 			<permissions>admin.attachment.canManageAttachment</permissions>
 		</acpmenuitem>
 		<!-- /attachment -->
@@ -688,17 +693,23 @@
 			<parent>wcf.acp.menu.link.management</parent>
 			<showorder>1</showorder>
 		</acpmenuitem>
+		<acpmenuitem name="wcf.acp.menu.link.systemCheck">
+			<controller>wcf\acp\page\SystemCheckPage</controller>
+			<parent>wcf.acp.menu.link.maintenance</parent>
+			<permissions>admin.configuration.package.canInstallPackage</permissions>
+			<showorder>1</showorder>
+		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.cronjob.list">
 			<controller>wcf\acp\page\CronjobListPage</controller>
 			<parent>wcf.acp.menu.link.maintenance</parent>
 			<permissions>admin.management.canManageCronjob</permissions>
-			<showorder>1</showorder>
+			<showorder>2</showorder>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.cronjob.add">
 			<controller>wcf\acp\form\CronjobAddForm</controller>
 			<parent>wcf.acp.menu.link.cronjob.list</parent>
 			<permissions>admin.management.canManageCronjob</permissions>
-			<showorder>2</showorder>
+			<showorder>3</showorder>
 			<icon>fa-plus</icon>
 		</acpmenuitem>
 		<acpmenuitem name="wcf.acp.menu.link.maintenance.cache">

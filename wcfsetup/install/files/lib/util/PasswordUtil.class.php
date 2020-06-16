@@ -8,7 +8,7 @@ use wcf\util\exception\CryptoException;
  * Provides functions to compute password hashes.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  */
@@ -225,6 +225,20 @@ final class PasswordUtil {
 		}
 		
 		return $password;
+	}
+	
+	/**
+	 * Compares two strings in a constant time manner.
+	 * This function effectively is a polyfill for the PHP 5.6 `hash_equals`.
+	 *
+	 * @param	string		$hash1
+	 * @param	string		$hash2
+	 * @return	boolean
+	 * @deprecated	Use \wcf\util\CryptoUtil::secureCompare()
+	 */
+	public static function secureCompare($hash1, $hash2) {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
+		return \hash_equals($hash1, $hash2);
 	}
 	
 	/**
@@ -562,7 +576,7 @@ final class PasswordUtil {
 	 * @return	boolean
 	 */
 	protected static function wcf2($username, $password, $salt, $dbHash) {
-		return \hash_equals($dbHash, self::getDoubleSaltedHash($password, $salt));
+		return \hash_equals($dbHash, self::getDoubleSaltedHash($password, $dbHash));
 	}
 	
 	/**

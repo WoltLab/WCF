@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\trophy;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\data\user\trophy\UserTrophyAction;
 use wcf\data\user\trophy\UserTrophyList;
 use wcf\data\user\UserAction;
@@ -20,7 +21,7 @@ use wcf\system\WCF;
  * Trophy related actions. 
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Trophy
  * @since	3.1
@@ -29,6 +30,8 @@ use wcf\system\WCF;
  * @method	TrophyEditor		getSingleObject()
  */
 class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction, IUploadAction, ISortableAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -123,7 +126,6 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 			$trophy->update(['isDisabled' => $trophy->isDisabled ? 0 : 1]);
 			
 			if (!$trophy->isDisabled) {
-				
 				$disabledTrophyIDs[] = $trophy->trophyID;
 			}
 			else {
@@ -180,22 +182,6 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 		}
 		
 		UserStorageHandler::getInstance()->resetAll('specialTrophies');
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function validateToggle() {
-		WCF::getSession()->checkPermissions(['admin.trophy.canManageTrophy']);
-		
-		// read objects
-		if (empty($this->objects)) {
-			$this->readObjects();
-			
-			if (empty($this->objects)) {
-				throw new UserInputException('objectIDs');
-			}
-		}
 	}
 	
 	/**
@@ -310,9 +296,10 @@ class TrophyAction extends AbstractDatabaseObjectAction implements IToggleAction
 			throw new UserInputException('structure');
 		}
 		
-		$adList = new TrophyList();
-		$adList->setObjectIDs($this->parameters['data']['structure'][0]);
-		if ($adList->countObjects() != count($this->parameters['data']['structure'][0])) {
+		$trophyList = new TrophyList();
+		$trophyList->setObjectIDs($this->parameters['data']['structure'][0]);
+		$trophyList->readObjects();
+		if (count($trophyList) !== count($this->parameters['data']['structure'][0])) {
 			throw new UserInputException('structure');
 		}
 		

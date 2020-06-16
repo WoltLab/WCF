@@ -4,8 +4,9 @@
  * If you're looking for a dictionary with object keys, please see `WoltLabSuite/Core/ObjectMap`.
  * 
  * @author	Tim Duesterhus, Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
+ * @module	Dictionary (alias)
  * @module	WoltLabSuite/Core/Dictionary
  */
 define(['Core'], function(Core) {

@@ -4,6 +4,7 @@ use wcf\data\package\installation\queue\PackageInstallationQueue;
 use wcf\data\package\installation\queue\PackageInstallationQueueEditor;
 use wcf\data\package\Package;
 use wcf\form\AbstractForm;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\package\validation\PackageValidationException;
@@ -18,7 +19,7 @@ use wcf\util\FileUtil;
  * Shows the package install and update form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -98,6 +99,10 @@ class PackageStartInstallForm extends AbstractForm {
 			}
 		}
 		else if (!empty($this->uploadPackage['name'])) {
+			if (ENABLE_ENTERPRISE_MODE && !WCF::getUser()->hasOwnerAccess()) {
+				throw new IllegalLinkException();
+			}
+			
 			$this->validateUploadPackage();
 		}
 		else {

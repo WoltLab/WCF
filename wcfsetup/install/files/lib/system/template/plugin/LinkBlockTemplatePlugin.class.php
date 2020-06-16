@@ -11,7 +11,7 @@ use wcf\util\StringUtil;
  * 	{link application='wcf'}index.php{/link}
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
  */
@@ -38,9 +38,22 @@ class LinkBlockTemplatePlugin implements IBlockTemplatePlugin {
 			$tagArgs['encode'] = false;
 		}
 		
-		if (isset($tagArgs['encode']) && !$tagArgs['encode']) {
+		if (isset($tagArgs['isHtmlEmail'])) {
+			if ($tagArgs['isHtmlEmail']) {
+				$tagArgs['isEmail'] = true;
+				$tagArgs['encode'] = true;
+			}
+			
+			unset($tagArgs['isHtmlEmail']);
+		}
+		
+		if (isset($tagArgs['encode'])) {
+			$encode = $tagArgs['encode'];
 			unset($tagArgs['encode']);
-			return LinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent);
+
+			if (!$encode) {
+				return LinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent);
+			}
 		}
 		
 		return StringUtil::encodeHTML(LinkHandler::getInstance()->getLink($tagArgs['controller'], $tagArgs, $blockContent));

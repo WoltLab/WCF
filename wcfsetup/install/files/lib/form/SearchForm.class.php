@@ -1,5 +1,6 @@
 <?php
 namespace wcf\form;
+use wcf\data\search\keyword\SearchKeywordAction;
 use wcf\data\search\Search;
 use wcf\data\search\SearchAction;
 use wcf\system\exception\IllegalLinkException;
@@ -10,7 +11,6 @@ use wcf\system\exception\UserInputException;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\search\SearchEngine;
-use wcf\system\search\SearchKeywordManager;
 use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
@@ -19,7 +19,7 @@ use wcf\util\StringUtil;
  * Shows the search form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -370,7 +370,9 @@ class SearchForm extends AbstractCaptchaForm {
 		}
 		// save keyword
 		if (!empty($this->query)) {
-			SearchKeywordManager::getInstance()->add($this->query);
+			(new SearchKeywordAction([], 'registerSearch', ['data' => [
+				'keyword' => $this->query,
+			]]))->executeAction();
 		}
 		$this->saved();
 		

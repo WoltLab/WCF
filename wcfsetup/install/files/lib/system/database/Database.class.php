@@ -5,6 +5,7 @@ use wcf\system\database\editor\DatabaseEditor;
 use wcf\system\database\exception\DatabaseException as GenericDatabaseException;
 use wcf\system\database\exception\DatabaseQueryException;
 use wcf\system\database\exception\DatabaseTransactionException;
+use wcf\system\database\statement\DebugPreparedStatement;
 use wcf\system\database\statement\PreparedStatement;
 use wcf\system\WCF;
 
@@ -12,7 +13,7 @@ use wcf\system\WCF;
  * Abstract implementation of a database access class using PDO.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Database
  */
@@ -96,6 +97,12 @@ abstract class Database {
 	protected $tryToCreateDatabase = false;
 	
 	/**
+	 * default driver options passed to the PDO constructor
+	 * @var array
+	 */
+	protected $defaultDriverOptions = [];
+	
+	/**
 	 * Creates a Database Object.
 	 * 
 	 * @param	string		$host			SQL database server host address
@@ -104,9 +111,10 @@ abstract class Database {
 	 * @param	string		$database		SQL database server database name
 	 * @param	integer		$port			SQL database server port
 	 * @param	boolean		$failsafeTest
-	 * @param       boolean         $tryToCreateDatabase
+	 * @param	boolean		$tryToCreateDatabase
+	 * @param	array		$defaultDriverOptions
 	 */
-	public function __construct($host, $user, $password, $database, $port, $failsafeTest = false, $tryToCreateDatabase = false) {
+	public function __construct($host, $user, $password, $database, $port, $failsafeTest = false, $tryToCreateDatabase = false, $defaultDriverOptions = []) {
 		$this->host = $host;
 		$this->port = $port;
 		$this->user = $user;
@@ -114,9 +122,14 @@ abstract class Database {
 		$this->database = $database;
 		$this->failsafeTest = $failsafeTest;
 		$this->tryToCreateDatabase = $tryToCreateDatabase;
+		$this->defaultDriverOptions = $defaultDriverOptions;
 		
 		// connect database
 		$this->connect();
+	}
+	
+	public function enableDebugMode() {
+		$this->preparedStatementClassName = DebugPreparedStatement::class;
 	}
 	
 	/**
@@ -246,13 +259,21 @@ abstract class Database {
 			// Note: This is meant to be run unconditionally in production to be
 			//       useful. Thus the code to retrieve the request information
 			//       must be absolutely lightweight.
-			$requestInformation = '';
-			if (defined('ENABLE_PRODUCTION_DEBUG_MODE') && ENABLE_PRODUCTION_DEBUG_MODE && isset($_SERVER['REQUEST_URI'])) {
-				$requestInformation = substr($_SERVER['REQUEST_URI'], 0, 90);
-				if (isset($_REQUEST['className']) && isset($_REQUEST['actionName'])) {
-					$requestInformation .= ' ('.$_REQUEST['className'].':'.$_REQUEST['actionName'].')';
+			static $requestInformation = null;
+			if ($requestInformation === null) {
+				$requestInformation = '';
+				if (defined('ENABLE_PRODUCTION_DEBUG_MODE') && ENABLE_PRODUCTION_DEBUG_MODE && isset($_SERVER['REQUEST_URI'])) {
+					$requestInformation = $_SERVER['REQUEST_URI'];
+					if ($requestId = \wcf\getRequestId()) {
+						$requestInformation = substr($requestInformation, 0, 70);
+						$requestInformation .= ' ('.$requestId.')';
+					}
+					if (isset($_REQUEST['className']) && isset($_REQUEST['actionName'])) {
+						$requestInformation = substr($requestInformation, 0, 90);
+						$requestInformation .= ' ('.$_REQUEST['className'].':'.$_REQUEST['actionName'].')';
+					}
+					$requestInformation = substr($requestInformation, 0, 180);
 				}
-				$requestInformation = substr($requestInformation, 0, 180);
 			}
 			
 			$pdoStatement = $this->pdo->prepare($statement.($requestInformation ? " -- ".$this->pdo->quote($requestInformation) : ''));

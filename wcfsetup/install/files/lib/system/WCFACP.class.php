@@ -4,6 +4,7 @@ use wcf\acp\form\MasterPasswordForm;
 use wcf\acp\form\MasterPasswordInitForm;
 use wcf\data\menu\Menu;
 use wcf\data\menu\MenuCache;
+use wcf\data\user\group\UserGroup;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\ACPSearchProviderCacheBuilder;
 use wcf\system\event\EventHandler;
@@ -22,7 +23,7 @@ use wcf\util\HeaderUtil;
  * Extends WCF class with functions for the ACP.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System
  */
@@ -176,6 +177,10 @@ class WCFACP extends WCF {
 				self::$overrideDebugMode = true;
 			}
 		}
+		
+		if (PACKAGE_ID && WCF::getUser()->userID && WCF::getSession()->getPermission('admin.configuration.package.canInstallPackage') && UserGroup::getOwnerGroupID() === null) {
+			self::getTPL()->assign(['__wscMissingOwnerGroup' => true]);
+		}
 	}
 	
 	/**
@@ -238,6 +243,10 @@ class WCFACP extends WCF {
 	 */
 	public static function checkMasterPassword() {
 		if (defined('MODULE_MASTER_PASSWORD') && MODULE_MASTER_PASSWORD == 1 && !WCF::getSession()->getVar('masterPassword')) {
+			if (ENABLE_ENTERPRISE_MODE && WCF::getUser()->hasOwnerAccess()) {
+				return;
+			}
+			
 			if (file_exists(WCF_DIR.'acp/masterPassword.inc.php')) {
 				require_once(WCF_DIR.'acp/masterPassword.inc.php');
 			}

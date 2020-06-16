@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\form\builder\container;
+use wcf\data\IStorableObject;
 use wcf\system\form\builder\IFormChildNode;
 use wcf\system\form\builder\IFormDocument;
 use wcf\system\form\builder\TFormChildNode;
@@ -11,7 +12,7 @@ use wcf\system\WCF;
  * Represents a default container.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Container
  * @since	5.2
@@ -31,12 +32,47 @@ class FormContainer implements IFormContainer {
 	protected $templateName = '__formContainer';
 	
 	/**
+	 * name of the template's application used to output this container
+	 * @var	string
+	 */
+	protected $templateApplication = 'wcf';
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function __construct() {
+		$this->addClass('section');
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function getHtml() {
-		return WCF::getTPL()->fetch($this->templateName, 'wcf', array_merge($this->getHtmlVariables(), [
-			'container' => $this
-		]), true);
+		return WCF::getTPL()->fetch(
+			$this->templateName,
+			$this->templateApplication,
+			array_merge($this->getHtmlVariables(), [
+				'container' => $this
+			]),
+			true
+		);
+	}
+	
+	/**
+	 * @inheritDoc
+	 * @since	5.3
+	 */
+	public function markAsRequired() {
+		return false;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function updatedObject(array $data, IStorableObject $object, $loadValues = true) {
+		// does nothing
+		
+		return $this;
 	}
 	
 	/**

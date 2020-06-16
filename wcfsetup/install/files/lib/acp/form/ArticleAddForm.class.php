@@ -27,7 +27,7 @@ use wcf\util\StringUtil;
  * Shows the article add form.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  * @since	3.0
@@ -278,11 +278,17 @@ class ArticleAddForm extends AbstractForm {
 				if ($image !== null && $image->isImage) {
 					$this->images[$languageID] = $image;
 				}
+				else {
+					unset($this->imageID[$languageID]);
+				}
 			}
 			foreach ($this->teaserImageID as $languageID => $imageID) {
 				$image = $mediaList->search($imageID);
 				if ($image !== null && $image->isImage) {
 					$this->teaserImages[$languageID] = $image;
+				}
+				else {
+					unset($this->teaserImageID[$languageID]);
 				}
 			}
 		}
@@ -299,7 +305,7 @@ class ArticleAddForm extends AbstractForm {
 			throw new UserInputException('categoryID');
 		}
 		$category = ArticleCategory::getCategory($this->categoryID);
-		if ($category === null) {
+		if ($category === null || !$category->isAccessible()) {
 			throw new UserInputException('categoryID', 'invalid');
 		}
 		
@@ -403,7 +409,7 @@ class ArticleAddForm extends AbstractForm {
 					'content' => !empty($this->content[$language->languageID]) ? $this->content[$language->languageID] : '',
 					'htmlInputProcessor' => isset($this->htmlInputProcessors[$language->languageID]) ? $this->htmlInputProcessors[$language->languageID] : null,
 					'imageID' => !empty($this->imageID[$language->languageID]) ? $this->imageID[$language->languageID] : null,
-					'teaserImageID' => !empty($this->teaserImageID[$language->languageID]) ? $this->teaserImageID[$language->languageID] : null
+					'teaserImageID' => !empty($this->teaserImageID[$language->languageID]) ? $this->teaserImageID[$language->languageID] : null,
 				];
 			}
 		}
@@ -415,7 +421,7 @@ class ArticleAddForm extends AbstractForm {
 				'content' => !empty($this->content[0]) ? $this->content[0] : '',
 				'htmlInputProcessor' => isset($this->htmlInputProcessors[0]) ? $this->htmlInputProcessors[0] : null,
 				'imageID' => !empty($this->imageID[0]) ? $this->imageID[0] : null,
-				'teaserImageID' => !empty($this->teaserImageID[0]) ? $this->teaserImageID[0] : null
+				'teaserImageID' => !empty($this->teaserImageID[0]) ? $this->teaserImageID[0] : null,
 			];
 		}
 		
@@ -428,14 +434,20 @@ class ArticleAddForm extends AbstractForm {
 			'userID' => $this->author->userID,
 			'username' => $this->author->username,
 			'isMultilingual' => $this->isMultilingual,
-			'hasLabels' => empty($this->labelIDs) ? 0 : 1
+			'hasLabels' => empty($this->labelIDs) ? 0 : 1,
 		];
 		
 		$this->objectAction = new ArticleAction([], 'create', ['data' => array_merge($this->additionalFields, $data), 'content' => $content]);
+		/** @var Article $article */
 		$article = $this->objectAction->executeAction()['returnValues'];
 		// save labels
 		if (!empty($this->labelIDs)) {
 			ArticleLabelObjectHandler::getInstance()->setLabels($this->labelIDs, $article->articleID);
+		}
+		
+		// mark published article as read
+		if (ARTICLE_ENABLE_VISIT_TRACKING && $article->publicationStatus == Article::PUBLISHED) {
+			(new ArticleAction([$article], 'markAsRead'))->executeAction();
 		}
 		
 		// call saved event
@@ -509,9 +521,10 @@ class ArticleAddForm extends AbstractForm {
 			'content' => $this->content,
 			'availableLanguages' => $this->availableLanguages,
 			'categoryNodeList' => (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator(),
+			'accessibleCategoryIDs' => ArticleCategory::getAccessibleCategoryIDs(),
 			'labelIDs' => $this->labelIDs,
 			'labelGroups' => $this->labelGroups,
-			'labelGroupsToCategories' => $this->labelGroupsToCategories
+			'labelGroupsToCategories' => $this->labelGroupsToCategories,
 		]);
 	}
 }

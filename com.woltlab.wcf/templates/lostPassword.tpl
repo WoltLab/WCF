@@ -1,6 +1,6 @@
 {include file='header' __disableAds=true}
 
-<p class="info">{lang}wcf.user.lostPassword.description{/lang}</p>
+<p class="info" role="status">{lang}wcf.user.lostPassword.description{/lang}</p>
 
 {include file='formError'}
 

@@ -20,7 +20,7 @@ use wcf\util\UserUtil;
  * Shows the account management form.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Form
  */
@@ -409,7 +409,7 @@ class AccountManagementForm extends AbstractForm {
 		if (GOOGLE_PUBLIC_KEY !== '' && GOOGLE_PRIVATE_KEY !== '') {
 			if ($this->googleConnect && WCF::getSession()->getVar('__googleData')) {
 				$googleData = WCF::getSession()->getVar('__googleData');
-				$updateParameters['authData'] = 'google:'.$googleData['id'];
+				$updateParameters['authData'] = 'google:'.$googleData['sub'];
 				$success[] = 'wcf.user.3rdparty.google.connect.success';
 				
 				WCF::getSession()->unregister('__googleData');

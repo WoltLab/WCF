@@ -8,7 +8,7 @@
 				{foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.MainMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
 					{if $menuItemNode->getDepth() == 1 || $menuItemNode->getParentNode()->isActiveNode()}
 					<li>
-						<a href="{$menuItemNode->getURL()}">{lang}{$menuItemNode->title}{/lang}</a>
+						<a href="{$menuItemNode->getURL()}">{$menuItemNode->getTitle()}</a>
 					
 						{if $menuItemNode->hasChildren() && $menuItemNode->isActiveNode()}<ol>{else}</li>{/if}
 						
@@ -19,11 +19,24 @@
 				{/foreach}
 			</ol>
 			{if $__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.FooterMenu')}
-				<ol>
-					{foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.FooterMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
-						<li><a href="{$menuItemNode->getURL()}">{lang}{$menuItemNode->title}{/lang}</a></li>
-					{/foreach}
-				</ol>
+				{hascontent}
+					<ol>
+						{content}	
+							{foreach from=$__wcf->getBoxHandler()->getBoxByIdentifier('com.woltlab.wcf.FooterMenu')->getMenu()->getMenuItemNodeList() item=menuItemNode}
+		                                                {if $menuItemNode->getDepth() == 1 || $menuItemNode->getParentNode()->isActiveNode()}
+								<li>
+									<a href="{$menuItemNode->getURL()}">{$menuItemNode->getTitle()}</a>
+		
+									{if $menuItemNode->hasChildren() && $menuItemNode->isActiveNode()}<ol>{else}</li>{/if}
+		
+		                                                        {if !$menuItemNode->hasChildren() && $menuItemNode->isLastSibling()}
+		                                                                {@"</ol></li>"|str_repeat:$menuItemNode->getOpenParentNodes()}
+		                                                        {/if}
+		                                                {/if}
+							{/foreach}
+						{/content}
+					</ol>
+				{/hascontent}
 			{/if}
 			<h3>{lang}wcf.menu.page.location{/lang}</h3>
 			<ol class="breadcrumbs">

@@ -2,7 +2,7 @@
  * Manages form field dependencies.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Form/Builder/Field/Dependency/Manager
  * @since	5.2
@@ -180,7 +180,7 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 				if (!_fields.has(id)) {
 					_fields.set(id, field);
 					
-					if (field.tagName === 'INPUT' && (field.type === 'checkbox' || field.type === 'radio')) {
+					if (field.tagName === 'INPUT' && (field.type === 'checkbox' || field.type === 'radio' || field.type === 'hidden')) {
 						field.addEventListener('change', this.checkDependencies.bind(this));
 					}
 					else {
@@ -300,19 +300,53 @@ define(['Dictionary', 'Dom/ChangeListener', 'EventHandler', 'List', 'Dom/Travers
 			if (form === null) {
 				throw new Error("Unknown element with id '" + formId + "'");
 			}
-			if (form.tagName !== 'FORM') {
-				var dialogContent = DomTraverse.parentByClass(form, 'dialogContent');
-				
-				if (dialogContent === null) {
-					throw new Error("Element with id '" + formId + "' is no form.");
-				}
-			}
 			
 			if (_forms.has(form)) {
 				throw new Error("Form with id '" + formId + "' has already been registered.");
 			}
 			
 			_forms.add(form);
+		},
+		
+		/**
+		 * Unregisters the form with the given id and all of its dependencies.
+		 * 
+		 * @param	{string}	formId		id of unregistered form
+		 */
+		unregister: function(formId) {
+			var form = elById(formId);
+			
+			if (form === null) {
+				throw new Error("Unknown element with id '" + formId + "'");
+			}
+			
+			if (!_forms.has(form)) {
+				throw new Error("Form with id '" + formId + "' has not been registered.");
+			}
+			
+			_forms.delete(form);
+			
+			_dependencyHiddenNodes.forEach(function(hiddenNode) {
+				if (form.contains(hiddenNode)) {
+					_dependencyHiddenNodes.delete(hiddenNode);
+				}
+			});
+			_nodeDependencies.forEach(function(dependencies, nodeId) {
+				if (form.contains(elById(nodeId))) {
+					_nodeDependencies.delete(nodeId);
+				}
+				
+				for (var i = 0, length = dependencies.length; i < length; i++) {
+					var fields = dependencies[i].getFields();
+					for (var j = 0, fieldsLength = fields.length; j < fieldsLength; j++) {
+						var field = fields[j];
+						
+						_fields.delete(field.id);
+						
+						_validatedFieldProperties.delete(field);
+					}
+				}
+			});
 		}
 	};
 });

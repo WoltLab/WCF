@@ -10,7 +10,7 @@ use wcf\system\form\builder\IFormElement;
  * Represents an actual form field storing a value.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
@@ -25,20 +25,28 @@ interface IFormField extends IFormChildNode, IFormElement {
 	public function addValidationError(IFormFieldValidationError $error);
 	
 	/**
-	 * Sets whether this field is auto-focused and returns this field.
-	 * 
-	 * @param	bool		$autoFocus	determines if field is auto-focused
-	 * @return	static				this field
-	 */
-	public function autoFocus($autoFocus = true);
-	
-	/**
 	 * Adds the given validation error to this field and returns this field.
 	 * 
 	 * @param	IFormFieldValidator	$validator
 	 * @return	static			this field
 	 */
 	public function addValidator(IFormFieldValidator $validator);
+	
+	/**
+	 * Returns the html representation of the form field only without any of the surrounding
+	 * structural html elements.
+	 * 
+	 * @return	string		html representation of node
+	 */
+	public function getFieldHtml();
+	
+	/**
+	 * Returns the name of the JavaScript data handler module for this form field or `null` if
+	 * there is no such module.
+	 * 
+	 * @return	null|string
+	 */
+	public function getJavaScriptDataHandlerModule();
 	
 	/**
 	 * Returns the name of the object property this field represents.
@@ -108,14 +116,6 @@ interface IFormField extends IFormChildNode, IFormElement {
 	public function hasSaveValue();
 	
 	/**
-	 * Returns `true` if this field is auto-focused and returns `false` otherwise.
-	 * By default, fields are not auto-focused.
-	 * 
-	 * @return	bool
-	 */
-	public function isAutoFocused();
-	
-	/**
 	 * Returns `true` if this field has to be filled out and returns `false` otherwise.
 	 * By default, fields do not have to be filled out.
 	 * 
@@ -124,12 +124,18 @@ interface IFormField extends IFormChildNode, IFormElement {
 	public function isRequired();
 	
 	/**
-	 * Loads the field value from the given object and returns this field.
+	 * Informs the form field of the updated object (and loads the field value from the given data)
+	 * and returns this field.
 	 * 
-	 * @param	IStorableObject		$object		object used to load field value
+	 * It is important to extract the value from the `$data` array instead of getting it directly
+	 * from the object as the entries of `$data` have been processed by the data processors.
+	 * 
+	 * @param	array			$data		object data
+	 * @param	IStorableObject		$object		updated object
+	 * @param	bool			$loadValues	indicates if object data is loaded
 	 * @return	static					this field
 	 */
-	public function loadValueFromObject(IStorableObject $object);
+	public function updatedObject(array $data, IStorableObject $object, $loadValues = true);
 	
 	/**
 	 * Sets the name of the object property this field represents. If an empty

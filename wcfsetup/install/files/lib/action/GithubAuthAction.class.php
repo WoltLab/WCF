@@ -17,7 +17,7 @@ use wcf\util\StringUtil;
  * Handles github auth.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Action
  */
@@ -26,6 +26,17 @@ class GithubAuthAction extends AbstractAction {
 	 * @inheritDoc
 	 */
 	public $neededModules = ['GITHUB_PUBLIC_KEY', 'GITHUB_PRIVATE_KEY'];
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function readParameters() {
+		parent::readParameters();
+		
+		if (WCF::getSession()->spiderID) {
+			throw new IllegalLinkException();
+		}
+	}
 	
 	/**
 	 * @inheritDoc
@@ -63,7 +74,8 @@ class GithubAuthAction extends AbstractAction {
 			
 			try {
 				// fetch userdata
-				$request = new HTTPRequest('https://api.github.com/user?access_token='.$data['access_token']);
+				$request = new HTTPRequest('https://api.github.com/user');
+				$request->addHeader('Authorization', 'token '.$data['access_token']);
 				$request->execute();
 				$reply = $request->getReply();
 				$userData = JSON::decode(StringUtil::trim($reply['body']));
@@ -119,7 +131,8 @@ class GithubAuthAction extends AbstractAction {
 					WCF::getSession()->register('__username', $userData['login']);
 					
 					try {
-						$request = new HTTPRequest('https://api.github.com/user/emails?access_token='.$data['access_token']);
+						$request = new HTTPRequest('https://api.github.com/user/emails');
+						$request->addHeader('Authorization', 'token '.$data['access_token']);
 						$request->execute();
 						$reply = $request->getReply();
 						$emails = JSON::decode(StringUtil::trim($reply['body']));
@@ -127,8 +140,10 @@ class GithubAuthAction extends AbstractAction {
 						// search primary email
 						$email = $emails[0]['email'];
 						foreach ($emails as $tmp) {
-							if ($tmp['primary']) $email = $tmp['email'];
-							break;
+							if ($tmp['primary']) {
+								$email = $tmp['email'];
+								break;
+							}
 						}
 						WCF::getSession()->register('__email', $email);
 					}

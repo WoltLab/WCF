@@ -2,7 +2,7 @@
  * Handles email notification type for user notification settings.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Controller/User/Notification/Settings
  */
@@ -95,7 +95,7 @@ define(['Dictionary', 'Language', 'Dom/Traverse', 'Ui/SimpleDropdown'], function
 				button.parentNode.classList.add('dropdown');
 				button.parentNode.appendChild(data.dropdownMenu);
 				
-				UiSimpleDropdown.init(button, true);
+				UiSimpleDropdown.init(button, event);
 			}
 			else {
 				var items = DomTraverse.childrenByTag(data.dropdownMenu, 'LI'), value = data.mailValue.value;

@@ -2,7 +2,7 @@
  * Provides interface elements to use reactions.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Reaction/Handler
  * @since       5.2
@@ -11,14 +11,14 @@ define(
 	[
 		'Ajax',      'Core',                            'Dictionary',           'Language',
 		'ObjectMap', 'StringUtil',                      'Dom/ChangeListener',   'Dom/Util',
-		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List',  'User',                 'WoltLabSuite/Core/Ui/Reaction/CountButtons', 
-		'Ui/Alignment', 'Ui/CloseOverlay',              'Ui/Screen'
+		'Ui/Dialog', 'WoltLabSuite/Core/Ui/User/List',  'User',                 'WoltLabSuite/Core/Ui/Reaction/CountButtons',
+		'Ui/Alignment', 'Ui/CloseOverlay'
 	],
 	function(
 		Ajax,        Core,              Dictionary,             Language,
 		ObjectMap,   StringUtil,        DomChangeListener,      DomUtil,
-		UiDialog,    UiUserList,        User,                   CountButtons, 
-		UiAlignment, UiCloseOverlay,    UiScreen
+		UiDialog,    UiUserList,        User,                   CountButtons,
+		UiAlignment, UiCloseOverlay
 	)
 	{
 		"use strict";
@@ -30,7 +30,7 @@ define(
 		UiReactionHandler.prototype = {
 			/**
 			 * Initializes the reaction handler.
-			 *
+			 * 
 			 * @param	{string}	objectType	object type
 			 * @param	{object}	options		initialization options
 			 */
@@ -40,17 +40,17 @@ define(
 				}
 				
 				this._containers = new Dictionary();
-				this._details = new ObjectMap();
 				this._objectType = objectType;
 				this._cache = new Dictionary();
+				this._objects = new Dictionary();
 				
 				this._popoverCurrentObjectId = 0;
 				
-				this._popover = null; 
+				this._popover = null;
 				
 				this._options = Core.extend({
 					// selectors
-					buttonSelector: '.reactButton', 
+					buttonSelector: '.reactButton',
 					containerSelector: '',
 					isButtonGroupNavigation: false,
 					isSingleItem: false,
@@ -76,19 +76,28 @@ define(
 				var element, elements = elBySelAll(this._options.containerSelector), elementData, triggerChange = false, objectId;
 				for (var i = 0, length = elements.length; i < length; i++) {
 					element = elements[i];
-					objectId = ~~elData(element, 'object-id');
-					if (this._containers.has(objectId)) {
+					if (this._containers.has(DomUtil.identify(element))) {
 						continue;
 					}
 					
+					objectId = ~~elData(element, 'object-id');
 					elementData = {
 						reactButton: null,
-						objectId: ~~elData(element, 'object-id'), 
+						objectId: objectId,
 						element: element
 					};
 					
-					this._containers.set(objectId, elementData);
+					this._containers.set(DomUtil.identify(element), elementData);
 					this._initReactButton(element, elementData);
+
+					var objects = [];
+					if (this._objects.has(objectId)) {
+						objects = this._objects.get(objectId);
+					}
+					
+					objects.push(elementData);
+					
+					this._objects.set(objectId, objects);
 					
 					triggerChange = true;
 				}
@@ -111,103 +120,92 @@ define(
 				}
 				
 				if (elementData.reactButton === null || elementData.reactButton.length === 0) {
-					// the element may have no react button 
-					return; 
+					// The element may have no react button. 
+					return;
 				}
 				
-				if (elementData.reactButton.closest('.messageFooterGroup > .jsMobileNavigation')) {
-					UiScreen.on('screen-sm-down', {
-						match: this._enableMobileView.bind(this, elementData.reactButton, elementData.objectId),
-						unmatch: this._disableMobileView.bind(this, elementData.reactButton, elementData.objectId),
-						setup: this._setupMobileView.bind(this, elementData.reactButton, elementData.objectId)
-					});
+				//noinspection JSUnresolvedVariable
+				if (Object.keys(REACTION_TYPES).length === 1) {
+					//noinspection JSUnresolvedVariable
+					var reaction = REACTION_TYPES[Object.keys(REACTION_TYPES)[0]];
+					elementData.reactButton.title = reaction.title;
+					var textSpan = elBySel('.invisible', elementData.reactButton);
+					textSpan.innerText = reaction.title;
 				}
 				
 				elementData.reactButton.addEventListener(WCF_CLICK_EVENT, this._toggleReactPopover.bind(this, elementData.objectId, elementData.reactButton));
 			},
 			
-			/**
-			 * Enables the mobile view for the reaction button.
-			 * 
-			 * @param       {Element}       element
-			 */
-			_enableMobileView: function(element) {
-				var messageFooterGroup = element.parentElement.parentElement.parentElement;
-				
-				elShow(elBySel('.mobileReactButton', messageFooterGroup));
-			},
-			
-			/**
-			 * Disables the mobile view for the reaction button.
-			 *
-			 * @param       {Element}       element
-			 */
-			_disableMobileView: function(element) {
-				var messageFooterGroup = element.parentElement.parentElement.parentElement;
-				
-				elHide(elBySel('.mobileReactButton', messageFooterGroup));
-			},
-			
-			/**
-			 * Setup the mobile view for the reaction button.
-			 *
-			 * @param       {Element}       element
-			 * @param       {int}           objectID
-			 */
-			_setupMobileView: function(element, objectID) {
-				var messageFooterGroup = element.parentElement.parentElement.parentElement;
-				
-				var button = elCreate('button');
-				button.classList = 'mobileReactButton';
-				button.innerHTML = element.innerHTML;
-				
-				button.addEventListener(WCF_CLICK_EVENT, this._toggleReactPopover.bind(this, objectID, button));
-				
-				messageFooterGroup.appendChild(button);
-			},
-			
 			_updateReactButton: function(objectID, reactionTypeID) {
-				if (reactionTypeID) {
-					this._containers.get(objectID).reactButton.classList.add('active');
-					elData(this._containers.get(objectID).reactButton, 'reaction-type-id', reactionTypeID);
-				}
-				else {
-					elData(this._containers.get(objectID).reactButton, 'reaction-type-id', 0);
-					this._containers.get(objectID).reactButton.classList.remove('active');
-				}
+				this._objects.get(objectID).forEach(function (elementData) {
+					if (elementData.reactButton !== null) {
+						if (reactionTypeID) {
+							elementData.reactButton.classList.add('active');
+							elData(elementData.reactButton, 'reaction-type-id', reactionTypeID);
+						}
+						else {
+							elData(elementData.reactButton, 'reaction-type-id', 0);
+							elementData.reactButton.classList.remove('active');
+						}
+					}
+				});
 			},
 			
 			_markReactionAsActive: function() {
-				var reactionTypeID = elData(this._containers.get(this._popoverCurrentObjectId).reactButton, 'reaction-type-id');
+				var reactionTypeID = null;
+				this._objects.get(this._popoverCurrentObjectId).forEach(function (element) {
+					if (element.reactButton !== null) {
+						reactionTypeID = ~~elData(element.reactButton, 'reaction-type-id');
+					}
+				});
 				
-				//  clear old active state
-				var elements = elBySelAll('.reactionTypeButton.active', this._getPopover());
-				for (var i = 0, length = elements.length; i < length; i++) {
-					elements[i].classList.remove('active');
+				if (reactionTypeID === null) {
+					throw new Error("Unable to find react button for current popover.");
 				}
 				
-				if (reactionTypeID != 0) {
-					elBySel('.reactionTypeButton[data-reaction-type-id="'+reactionTypeID+'"]', this._getPopover()).classList.add('active');
+				//  Clear the old active state.
+				elBySelAll('.reactionTypeButton.active', this._getPopover(), function(element) {
+					element.classList.remove('active');
+				});
+				
+				if (reactionTypeID) {
+					var reactionTypeButton = elBySel('.reactionTypeButton[data-reaction-type-id="' + reactionTypeID + '"]', this._getPopover());
+					reactionTypeButton.classList.add('active');
+					
+					if (~~elData(reactionTypeButton, 'is-assignable') === 0) {
+						elShow(reactionTypeButton);
+					}
 				}
 			},
 			
 			/**
-			 * Toggle the visibility of the react popover. 
+			 * Toggle the visibility of the react popover.
 			 * 
 			 * @param       {int}           objectId
 			 * @param       {Element}       element
+			 * @param       {?Event}        event
 			 */
 			_toggleReactPopover: function(objectId, element, event) {
 				if (event !== null) {
 					event.preventDefault();
 					event.stopPropagation();
 				}
-				
-				if (this._popoverCurrentObjectId === 0 || this._popoverCurrentObjectId !== objectId) {
-					this._openReactPopover(objectId, element);
+
+				//noinspection JSUnresolvedVariable
+				if (Object.keys(REACTION_TYPES).length === 1) {
+					//noinspection JSUnresolvedVariable
+					var reaction = REACTION_TYPES[Object.keys(REACTION_TYPES)[0]];
+					this._popoverCurrentObjectId = objectId;
+					
+					this._react(reaction.reactionTypeID);
 				}
 				else {
-					this._closePopover(objectId, element);
+					if (this._popoverCurrentObjectId === 0 || this._popoverCurrentObjectId !== objectId) {
+						this._openReactPopover(objectId, element);
+					}
+					else {
+						this._closePopover(objectId, element);
+					}
 				}
 			},
 			
@@ -218,9 +216,8 @@ define(
 			 * @param       {Element}	element 		container element
 			 */
 			_openReactPopover: function(objectId, element) {
-				// first close old popover, if exists 
 				if (this._popoverCurrentObjectId !== 0) {
-					this._closePopover(this._popoverCurrentObjectId, this._containers.get(this._popoverCurrentObjectId).reactButton);
+					this._closePopover();
 				}
 				
 				this._popoverCurrentObjectId = objectId;
@@ -233,9 +230,7 @@ define(
 				});
 				
 				if (this._options.isButtonGroupNavigation) {
-					// find nav element
-					var nav = element.closest('nav');
-					nav.style.opacity = "1";
+					element.closest('nav').style.setProperty('opacity', '1', '');
 				}
 				
 				this._getPopover().classList.remove('forceHide');
@@ -243,7 +238,7 @@ define(
 			},
 			
 			/**
-			 * Returns the react popover element. 
+			 * Returns the react popover element.
 			 * 
 			 * @returns {Element}
 			 */
@@ -268,17 +263,24 @@ define(
 						reactionTypeItem.className = 'reactionTypeButton jsTooltip';
 						elData(reactionTypeItem, 'reaction-type-id', reactionType.reactionTypeID);
 						elData(reactionTypeItem, 'title', reactionType.title);
+						elData(reactionTypeItem, 'is-assignable', ~~reactionType.isAssignable);
+						
 						reactionTypeItem.title = reactionType.title;
 						
 						var reactionTypeItemSpan = elCreate('span');
-						reactionTypeItemSpan.classList = 'reactionTypeButtonTitle';
+						reactionTypeItemSpan.className = 'reactionTypeButtonTitle';
 						reactionTypeItemSpan.innerHTML = reactionType.title;
-						
+
+						//noinspection JSUnresolvedVariable
 						reactionTypeItem.innerHTML = reactionType.renderedIcon;
 						
 						reactionTypeItem.appendChild(reactionTypeItemSpan);
 						
 						reactionTypeItem.addEventListener(WCF_CLICK_EVENT, this._react.bind(this, reactionType.reactionTypeID));
+						
+						if (!reactionType.isAssignable) {
+							elHide(reactionTypeItem);
+						}
 						
 						popoverContentHTML.appendChild(reactionTypeItem);
 					}
@@ -296,11 +298,11 @@ define(
 					DomChangeListener.trigger();
 				}
 				
-				return this._popover; 
+				return this._popover;
 			},
 			
 			/**
-			 * Sort the reaction types by the showOrder field. 
+			 * Sort the reaction types by the showOrder field.
 			 * 
 			 * @returns     {Array}         the reaction types sorted by showOrder
 			 */
@@ -308,35 +310,37 @@ define(
 				var sortedReactionTypes = [];
 				
 				// convert our reaction type object to an array
+				//noinspection JSUnresolvedVariable
 				for (var key in REACTION_TYPES) {
-					if (!REACTION_TYPES.hasOwnProperty(key)) continue;
-					sortedReactionTypes.push(REACTION_TYPES[key]);
+					//noinspection JSUnresolvedVariable
+					if (REACTION_TYPES.hasOwnProperty(key)) {
+						//noinspection JSUnresolvedVariable
+						sortedReactionTypes.push(REACTION_TYPES[key]);
+					}
 				}
 				
 				// sort the array
-				sortedReactionTypes.sort(function (a, b) { 
-					if (a.showOrder > b.showOrder) {
-						return 1;
-					}
-					else {
-						return -1;
-					}
+				sortedReactionTypes.sort(function (a, b) {
+					//noinspection JSUnresolvedVariable
+					return a.showOrder - b.showOrder;
 				});
 				
 				return sortedReactionTypes;
 			},
 			
 			/**
-			 * Closes the react popover. 
+			 * Closes the react popover.
 			 */
 			_closePopover: function() {
 				if (this._popoverCurrentObjectId !== 0) {
 					this._getPopover().classList.remove('active');
 					
+					elBySelAll('.reactionTypeButton[data-is-assignable="0"]', this._getPopover(), elHide);
+					
 					if (this._options.isButtonGroupNavigation) {
-						// find nav element
-						var nav = this._containers.get(this._popoverCurrentObjectId).reactButton.closest('nav');
-						nav.style.cssText = "";
+						this._objects.get(this._popoverCurrentObjectId).forEach(function (elementData) {
+							elementData.reactButton.closest('nav').style.cssText = "";
+						});
 					}
 					
 					this._popoverCurrentObjectId = 0;
@@ -349,8 +353,13 @@ define(
 			 * @param       {init}          reactionTypeId
 			 */
 			_react: function(reactionTypeId) {
+				if (~~this._popoverCurrentObjectId === 0) {
+					// Double clicking the reaction will cause the first click to go through, but
+					// causes the second to fail because the overlay is already closing.
+					return;
+				}
+				
 				this._options.parameters.reactionTypeID = reactionTypeId;
-				this._options.parameters.data.containerID = this._currentReactionTypeId;
 				this._options.parameters.data.objectID = this._popoverCurrentObjectId;
 				this._options.parameters.data.objectType = this._objectType;
 				
@@ -358,16 +367,16 @@ define(
 					parameters: this._options.parameters
 				});
 				
-				this._closePopover(this._popoverCurrentObjectId, this._containers.get(this._popoverCurrentObjectId).reactButton);
+				this._closePopover();
 			},
 			
 			_ajaxSuccess: function(data) {
+				//noinspection JSUnresolvedVariable
 				this.countButtons.updateCountButtons(data.returnValues.objectID, data.returnValues.reactions);
 				
-				// update react button status
 				this._updateReactButton(data.returnValues.objectID, data.returnValues.reactionTypeID);
 			},
-				
+			
 			_ajaxSetup: function() {
 				return {
 					data: {

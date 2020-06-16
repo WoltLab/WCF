@@ -1,6 +1,7 @@
 <?php
 namespace wcf\system\cronjob;
 use wcf\data\cronjob\Cronjob;
+use wcf\data\modification\log\ModificationLog;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\system\visitTracker\VisitTracker;
 use wcf\system\WCF;
@@ -10,7 +11,7 @@ use wcf\util\FileUtil;
  * Cronjob for a daily system cleanup.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cronjob
  */
@@ -152,11 +153,20 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 			]);
 		}
 		
+		if (MODIFICATION_LOG_EXPIRATION > 0) {
+			$sql = "DELETE FROM	wcf".WCF_N."_modification_log
+				WHERE		time < ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				TIME_NOW - 86400 * MODIFICATION_LOG_EXPIRATION
+			]);
+		}
+		
 		// clean up error logs
 		$files = @glob(WCF_DIR.'log/*.txt');
 		if (is_array($files)) {
 			foreach ($files as $filename) {
-				if (filectime($filename) < TIME_NOW - 86400 * 14) {
+				if (filemtime($filename) < TIME_NOW - 86400 * 14) {
 					@unlink($filename);
 				}
 			}
@@ -185,6 +195,24 @@ class DailyCleanUpCronjob extends AbstractCronjob {
 					@unlink($file->getPathname());
 				}
 			}
+		}
+		
+		if (BLACKLIST_SFS_ENABLE) {
+			$timeLimit = TIME_NOW - 31 * 86400;
+			
+			$sql = "DELETE FROM     wcf".WCF_N."_blacklist_entry
+				WHERE           lastSeen < ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				gmdate('Y-m-d H:i:s', $timeLimit)
+			]);
+			
+			$sql = "DELETE FROM     wcf".WCF_N."_blacklist_status
+				WHERE           date < ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				gmdate('Y-m-d', $timeLimit)
+			]);
 		}
 	}
 }

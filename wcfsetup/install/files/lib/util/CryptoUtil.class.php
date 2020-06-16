@@ -8,7 +8,7 @@ use wcf\util\exception\CryptoException;
  * - Creating secure signatures based on the Keyed-Hash Message Authentication Code algorithm
  * 
  * @author	Tim Duesterhus, Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Util
  * @since	3.0
@@ -86,7 +86,7 @@ final class CryptoUtil {
 	 */
 	public static function randomBytes($n) {
 		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
-		return random_bytes($n);
+		return \random_bytes($n);
 	}
 	
 	/**
@@ -100,7 +100,7 @@ final class CryptoUtil {
 			throw new CryptoException("Cannot generate a secure random number, min and max are the same");
 		}
 
-		return random_int($min, $max);
+		return \random_int($min, $max);
 	}
 	
 	/**

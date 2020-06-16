@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * ACP search provider implementation for user group options.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Search\Acp
  */
@@ -50,12 +50,17 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
 			$languageItems[$itemName] = $languageItem;
 		}
 		
-		if (empty($languageItems)) {
+		if (empty($languageItems) && !(ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS)) {
 			return [];
 		}
 		
-		$conditions = new PreparedStatementConditionBuilder();
-		$conditions->add("optionName IN (?)", [array_keys($languageItems)]);
+		$conditions = new PreparedStatementConditionBuilder(true, 'OR');
+		if (!empty($languageItems)) {
+			$conditions->add("optionName IN (?)", [array_keys($languageItems)]);
+		}
+		if (ENABLE_DEBUG_MODE && ENABLE_DEVELOPER_TOOLS) {
+			$conditions->add('optionName LIKE ?', ['%'.$query.'%']);
+		}
 		
 		$sql = "SELECT	optionID, optionName, categoryName, permissions, options
 			FROM	wcf".WCF_N."_user_group_option
@@ -85,8 +90,15 @@ class UserGroupOptionACPSearchResultProvider extends AbstractCategorizedACPSearc
 				$categoryName = $optionCategories[$categoryName]->parentCategoryName;
 			}
 			
+			if (isset($languageItems[$userGroupOption->optionName])) {
+				$languageItem = $languageItems[$userGroupOption->optionName];
+			}
+			else {
+				$languageItem = 'wcf.acp.group.option.' . $userGroupOption->optionName;
+			}
+			
 			$results[] = new ACPSearchResult(
-				WCF::getLanguage()->getDynamicVariable($languageItems[$userGroupOption->optionName]),
+				WCF::getLanguage()->getDynamicVariable($languageItem),
 				$link,
 				WCF::getLanguage()->getDynamicVariable('wcf.acp.search.result.subtitle', ['pieces' => $parentCategories])
 			);

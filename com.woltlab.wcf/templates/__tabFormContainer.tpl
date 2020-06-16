@@ -1,4 +1,8 @@
-<div id="{@$container->getPrefixedId()}Container" class="tabMenuContent{foreach from=$container->getClasses() item='class'} {$class}{/foreach}"{foreach from=$container->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{if !$container->checkDependencies()} style="display: none;"{/if}>
+<div id="{@$container->getPrefixedId()}Container"{*
+	*}{if !$container->getClasses()|empty} class="{implode from=$container->getClasses() item='class' glue=' '}{$class}{/implode}" {/if}{*
+	*}{foreach from=$container->getAttributes() key='attributeName' item='attributeValue'} {$attributeName}="{$attributeValue}"{/foreach}{*
+	*}{if !$container->checkDependencies()} style="display: none;"{/if}{*
+*}>
 	{include file='__formContainerChildren'}
 </div>
 

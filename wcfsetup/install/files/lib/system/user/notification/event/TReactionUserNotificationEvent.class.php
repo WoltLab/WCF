@@ -9,10 +9,8 @@ use wcf\system\WCF;
  * This trait can be used in likeable user notification events to determine the reactionType counts
  * for a specific user notification object. 
  * 
- * @TODO backport to WSC 3.1
- *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\User\Notification\Event
  * @since	5.2

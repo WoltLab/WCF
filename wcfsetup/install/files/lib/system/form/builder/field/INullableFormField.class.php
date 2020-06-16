@@ -5,12 +5,12 @@ namespace wcf\system\form\builder\field;
  * Represents a form field that support `null` as its value.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder\Field
  * @since	5.2
  */
-interface INullableFormField {
+interface INullableFormField extends IFormField {
 	/**
 	 * Returns `true` if this field supports `null` as its value and returns `false`
 	 * otherwise.

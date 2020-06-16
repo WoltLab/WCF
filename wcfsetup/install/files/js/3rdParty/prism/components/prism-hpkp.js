@@ -6,7 +6,7 @@ define(["prism/prism"], function () {
  */
 
 Prism.languages.hpkp = {
-	'directive':  {
+	'directive': {
 		pattern: /\b(?:(?:includeSubDomains|preload|strict)(?: |;)|pin-sha256="[a-zA-Z\d+=/]+"|(?:max-age|report-uri)=|report-to )/,
 		alias: 'keyword'
 	},
@@ -15,8 +15,9 @@ Prism.languages.hpkp = {
 		alias: 'selector'
 	},
 	'unsafe': {
-		pattern: /\d{0,6}/,
+		pattern: /\d{1,6}/,
 		alias: 'function'
 	}
 };
+
 return Prism; })

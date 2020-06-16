@@ -3,6 +3,8 @@ namespace wcf\data\user\profile\menu\item;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\system\cache\builder\UserProfileMenuCacheBuilder;
+use wcf\system\cache\runtime\UserProfileRuntimeCache;
+use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\UserInputException;
 use wcf\system\menu\user\profile\UserProfileMenu;
@@ -13,7 +15,7 @@ use wcf\util\ArrayUtil;
  * Executes user profile menu item-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\User\Profile\Menu\Item
  * 
@@ -51,6 +53,16 @@ class UserProfileMenuItemAction extends AbstractDatabaseObjectAction implements 
 			throw new UserInputException('menuItem');
 		}
 		if (!$this->menuItem->getContentManager()->isVisible($this->parameters['data']['userID'])) {
+			throw new PermissionDeniedException();
+		}
+		
+		$user = UserProfileRuntimeCache::getInstance()->getObject($this->parameters['data']['userID']);
+		
+		if ($user === null) {
+			throw new IllegalLinkException();
+		}
+		
+		if ($user->isProtected()) {
 			throw new PermissionDeniedException();
 		}
 	}

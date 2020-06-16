@@ -51,7 +51,7 @@
 					<select name="recipientID" id="recipientID">
 						<option value="">{lang}wcf.global.noSelection{/lang}</option>
 						{foreach from=$recipientList item=recipient}
-							<option value="{@$recipient->recipientID}">{$recipient}</option>
+							<option value="{@$recipient->recipientID}"{if $recipient->recipientID == $recipientID} selected{/if}>{$recipient}</option>
 						{/foreach}
 					</select>
 					{if $errorField == 'recipientID'}
@@ -73,7 +73,7 @@
 		
 		{if CONTACT_FORM_ENABLE_ATTACHMENTS && !$attachmentHandler|empty && $attachmentHandler->canUpload()}
 			<div class="contactFormAttachments">
-				{include file='messageFormAttachments'}
+				{include file='messageFormAttachments' wysiwygSelector=''}
 			</div>
 		{/if}
 		

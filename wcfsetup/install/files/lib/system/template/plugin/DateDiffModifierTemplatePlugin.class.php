@@ -13,7 +13,7 @@ use wcf\util\DateUtil;
  *	{$endTimestamp|dateDiff:$startTimestamp:$fullInterval}
  * 
  * @author	Matthias Schmidt, Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Template\Plugin
  * @deprecated	since 3.1, use `DateIntervalFunctionTemplatePlugin`

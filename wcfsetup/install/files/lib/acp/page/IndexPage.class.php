@@ -1,5 +1,6 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
 use wcf\page\AbstractPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
@@ -12,7 +13,7 @@ use wcf\system\WCF;
  * Shows the welcome page in admin control panel.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  */
@@ -35,6 +36,7 @@ class IndexPage extends AbstractPage {
 			'mySQLVersion' => WCF::getDB()->getVersion(),
 			'load' => '',
 			'memoryLimit' => @ini_get('memory_limit'),
+			'upload_max_filesize' => @ini_get('upload_max_filesize'),
 			'postMaxSize' => @ini_get('post_max_size'),
 			'sslSupport' => RemoteFile::supportsSSL()
 		];
@@ -112,13 +114,32 @@ class IndexPage extends AbstractPage {
 			}
 		}
 		
+		$missingLanguageItemsMTime = 0;
+		if (
+			ENABLE_DEBUG_MODE
+			&& ENABLE_DEVELOPER_TOOLS
+			&& file_exists(WCF_DIR . 'log/missingLanguageItems.txt')
+			&& filesize(WCF_DIR . 'log/missingLanguageItems.txt') > 0
+		) {
+			$logList = new DevtoolsMissingLanguageItemList();
+			$logList->sqlOrderBy = 'lastTime DESC';
+			$logList->sqlLimit = 1;
+			$logList->readObjects();
+			$logEntry = $logList->getSingleObject();
+			
+			if ($logEntry !== null) {
+				$missingLanguageItemsMTime = $logEntry->lastTime;
+			}
+		}
+		
 		WCF::getTPL()->assign([
 			'recaptchaWithoutKey' => $recaptchaWithoutKey,
 			'recaptchaKeyLink' => $recaptchaKeyLink,
 			'server' => $this->server,
 			'usersAwaitingApproval' => $usersAwaitingApproval,
 			'evaluationExpired' => $evaluationExpired,
-			'evaluationPending' => $evaluationPending
+			'evaluationPending' => $evaluationPending,
+			'missingLanguageItemsMTime' => $missingLanguageItemsMTime
 		]);
 	}
 	

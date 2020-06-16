@@ -31,6 +31,10 @@
 	<p class="info">{lang}wcf.acp.user.usersAwaitingApprovalInfo{/lang}</p>
 {/if}
 
+{if $missingLanguageItemsMTime}
+	<p class="warning">{lang}wcf.acp.index.missingLanguageItems{/lang}</p>
+{/if}
+
 {event name='userNotice'}
 
 {*if ENABLE_PLUGINSTORE_WIDGET}
@@ -83,16 +87,6 @@
 				<dt>{lang}wcf.acp.index.system.software.version{/lang}</dt>
 				<dd>{@WCF_VERSION}</dd>
 			</dl>
-			<dl>
-				<dt>{lang}wcf.acp.index.system.software.apiVersion{/lang}</dt>
-				<dd>{@WSC_API_VERSION}</dd>
-			</dl>
-			{if !$__wcf->getSupportedLegacyApiVersions()|empty}
-				<dl>
-					<dt>{lang}wcf.acp.index.system.software.legacyApiVersions{/lang}</dt>
-					<dd><small>{implode from=$__wcf->getSupportedLegacyApiVersions() item=version glue=', '}{$version}{/implode}</small></dd>
-				</dl>
-			{/if}
 			
 			{event name='softwareFields'}
 			
@@ -102,71 +96,80 @@
 			</dl>
 		</section>
 		
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.acp.index.system.server{/lang}</h2>
-			
-			<dl>
-				<dt>{lang}wcf.acp.index.system.os{/lang}</dt>
-				<dd>{$server[os]}</dd>
-			</dl>
-			
-			<dl>
-				<dt>{lang}wcf.acp.index.system.webserver{/lang}</dt>
-				<dd>{$server[webserver]}</dd>
-			</dl>
-			
-			<dl>
-				<dt>{lang}wcf.acp.index.system.mySQLVersion{/lang}</dt>
-				<dd>{$server[mySQLVersion]}</dd>
-			</dl>
-			
-			{if $server[load]}
+		{if !ENABLE_ENTERPRISE_MODE || $__wcf->getUser()->hasOwnerAccess()}
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.acp.index.system.server{/lang}</h2>
+				
 				<dl>
-					<dt>{lang}wcf.acp.index.system.load{/lang}</dt>
-					<dd>{$server[load]}</dd>
+					<dt>{lang}wcf.acp.index.system.os{/lang}</dt>
+					<dd>{$server[os]}</dd>
 				</dl>
-			{/if}
-			
-			{event name='serverFields'}
-		</section>
+				
+				<dl>
+					<dt>{lang}wcf.acp.index.system.webserver{/lang}</dt>
+					<dd>{$server[webserver]}</dd>
+				</dl>
+				
+				<dl>
+					<dt>{lang}wcf.acp.index.system.mySQLVersion{/lang}</dt>
+					<dd>{$server[mySQLVersion]}</dd>
+				</dl>
+				
+				{if $server[load]}
+					<dl>
+						<dt>{lang}wcf.acp.index.system.load{/lang}</dt>
+						<dd>{$server[load]}</dd>
+					</dl>
+				{/if}
+				
+				{event name='serverFields'}
+			</section>
 		
-		<section class="section">
-			<h2 class="sectionTitle">{lang}wcf.acp.index.system.php{/lang}</h2>
-			
-			<dl>
-				<dt>{lang}wcf.acp.index.system.php.version{/lang}</dt>
-				<dd>
-					{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
-						<a href="{link controller='PHPInfo'}{/link}">{PHP_VERSION}</a>
-					{else}
-						{PHP_VERSION}
-					{/if}
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt>memory_limit</dt>
-				<dd>
-					{$server[memoryLimit]}
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt>post_max_size</dt>
-				<dd>
-					{$server[postMaxSize]}
-				</dd>
-			</dl>
-			
-			<dl>
-				<dt>{lang}wcf.acp.index.system.php.sslSupport{/lang}</dt>
-				<dd>
-					{if $server[sslSupport]}{lang}wcf.acp.index.system.php.sslSupport.available{/lang}{else}{lang}wcf.acp.index.system.php.sslSupport.notAvailable{/lang}{/if}
-				</dd>
-			</dl>
-			
-			{event name='phpFields'}
-		</section>
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.acp.index.system.php{/lang}</h2>
+				
+				<dl>
+					<dt>{lang}wcf.acp.index.system.php.version{/lang}</dt>
+					<dd>
+						{if $__wcf->session->getPermission('admin.configuration.package.canInstallPackage') && $__wcf->session->getPermission('admin.configuration.package.canUpdatePackage')}
+							<a href="{link controller='PHPInfo'}{/link}">{PHP_VERSION}</a>
+						{else}
+							{PHP_VERSION}
+						{/if}
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt>memory_limit</dt>
+					<dd>
+						{$server[memoryLimit]}
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt>post_max_size</dt>
+					<dd>
+						{$server[postMaxSize]}
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt>upload_max_filesize</dt>
+					<dd>
+						{$server[upload_max_filesize]}
+					</dd>
+				</dl>
+				
+				<dl>
+					<dt>{lang}wcf.acp.index.system.php.sslSupport{/lang}</dt>
+					<dd>
+						{if $server[sslSupport]}{lang}wcf.acp.index.system.php.sslSupport.available{/lang}{else}{lang}wcf.acp.index.system.php.sslSupport.notAvailable{/lang}{/if}
+					</dd>
+				</dl>
+				
+				{event name='phpFields'}
+			</section>
+		{/if}
 		
 		{event name='systemFieldsets'}
 	</div>
@@ -225,7 +228,7 @@
 			
 			<dl>
 				<dt></dt>
-				<dd>Copyright &copy; 2001-2018 WoltLab&reg; GmbH. All rights reserved.</dd>
+				<dd>Copyright &copy; 2001-{TIME_NOW|date:'Y'} WoltLab&reg; GmbH. All rights reserved.</dd>
 			</dl>
 			
 			<dl>

@@ -7,6 +7,7 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISearchAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\system\comment\CommentHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
@@ -22,7 +23,7 @@ use wcf\system\WCF;
  * Executes page related actions.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Page
  * @since	3.0
@@ -31,6 +32,8 @@ use wcf\system\WCF;
  * @method	PageEditor	getSingleObject()
  */
 class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, ISortableAction, IToggleAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * @inheritDoc
 	 */
@@ -296,15 +299,6 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 			if (!$object->canDisable()) {
 				throw new PermissionDeniedException();
 			}
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $object) {
-			$object->update(['isDisabled' => $object->isDisabled ? 0 : 1]);
 		}
 	}
 	

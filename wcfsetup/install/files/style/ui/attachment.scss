@@ -121,7 +121,7 @@
 
 /* attachments tab in editor */
 .formAttachmentContent {
-	> .formAttachmentList {
+	.formAttachmentList {
 		display: flex;
 		flex-wrap: wrap;
 		margin-left: 0 !important;
@@ -138,7 +138,7 @@
 	}
 	
 	@include screen-md-up {
-		> .formAttachmentList {
+		.formAttachmentList {
 			margin-right: -20px;
 			
 			> li {
@@ -146,8 +146,10 @@
 				   items to be exactly 1 pixel wider than the available space.
 				   Reserving 21px covers all sort of rounding errors, without
 				   being visually noticeable */
-				flex: 0 0 calc(50% - 21px);
-				max-width: calc(50% - 21px); /* IE fix */
+				/* The `flex` shorthand fails in IE11 if `calc()` is used. */
+				flex-grow: 0;
+				flex-shrink: 0;
+				flex-basis: calc(50% - 21px);
 				margin-right: 20px;
 			}
 		}
@@ -155,22 +157,23 @@
 	
 	> dl {
 		margin-top: 0 !important;
+	}
+	
+	> dl > dd > div,
+	.formAttachmentButtons {
+		align-items: center;
+		display: flex;
 		
-		> dd > div {
-			align-items: center;
-			display: flex;
+		> .button {
+			flex: 0 0 auto;
 			
-			> .button {
-				flex: 0 0 auto;
-				
-				&:not(:first-child) {
-					margin-left: 10px;
-				}
+			&:not(:first-child) {
+				margin-left: 10px;
 			}
-			
-			& + small {
-				margin-top: 10px !important;
-			}
+		}
+		
+		& + small {
+			margin-top: 10px !important;
 		}
 	}
 }
@@ -185,6 +188,7 @@
 .embeddedImageLink {
 	border: 1px solid $wcfContentBorderInner;
 	display: inline-block;
+	margin: 2px 0;
 	max-width: 100%;
 	min-height: 48px;
 	padding: 2px;

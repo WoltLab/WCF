@@ -5,6 +5,7 @@ use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\ISortableAction;
 use wcf\data\IToggleAction;
 use wcf\data\IToggleContainerAction;
+use wcf\data\TDatabaseObjectToggle;
 use wcf\system\category\CategoryHandler;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\exception\PermissionDeniedException;
@@ -17,7 +18,7 @@ use wcf\system\WCF;
  * Executes category-related actions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Category
  * 
@@ -26,6 +27,8 @@ use wcf\system\WCF;
  * @method	CategoryEditor		getSingleObject()
  */
 class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAction, IToggleAction, IToggleContainerAction {
+	use TDatabaseObjectToggle;
+	
 	/**
 	 * categorized object type
 	 * @var	\wcf\data\object\type\ObjectType
@@ -84,17 +87,6 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 		}
 		
 		return $returnValue;
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function toggle() {
-		foreach ($this->getObjects() as $categoryEditor) {
-			$categoryEditor->update([
-				'isDisabled' => 1 - $categoryEditor->isDisabled
-			]);
-		}
 	}
 	
 	/**
@@ -224,13 +216,6 @@ class CategoryAction extends AbstractDatabaseObjectAction implements ISortableAc
 				throw new PermissionDeniedException();
 			}
 		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function validateToggle() {
-		$this->validateUpdate();
 	}
 	
 	/**

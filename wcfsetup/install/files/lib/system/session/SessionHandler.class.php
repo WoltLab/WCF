@@ -28,7 +28,7 @@ use wcf\util\UserUtil;
  * Handles sessions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Session
  *
@@ -987,6 +987,24 @@ class SessionHandler extends SingletonFactory {
 		
 		// disable update
 		$this->disableUpdate();
+	}
+	
+	/**
+	 * Deletes this session if:
+	 * - it is newly created in this request, and
+	 * - it belongs to a guest.
+	 * 
+	 * This method is useful if you have controllers that are likely to be
+	 * accessed by a user agent that is not going to re-use sessions (e.g.
+	 * curl in a cronjob). It immediately remove the session that was created
+	 * just for that request and that is not going to be used ever again.
+	 * 
+	 * @since 5.2
+	 */
+	public function deleteIfNew() {
+		if ($this->isFirstVisit() && !$this->getUser()->userID) {
+			$this->delete();
+		}
 	}
 	
 	/**

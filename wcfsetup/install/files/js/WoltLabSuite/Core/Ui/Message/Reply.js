@@ -2,7 +2,7 @@
  * Handles user interaction with the quick reply feature.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/Message/Reply
  */
@@ -62,7 +62,7 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			
 			// handle submit button
 			var submitCallback = this._submit.bind(this);
-			var submitButton = elBySel('button[data-type="save"]');
+			var submitButton = elBySel('button[data-type="save"]', this._container);
 			submitButton.addEventListener(WCF_CLICK_EVENT, submitCallback);
 			
 			// bind reply button
@@ -321,6 +321,9 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			//noinspection JSUnresolvedVariable
 			if (data.returnValues.url) {
 				//noinspection JSUnresolvedVariable
+				if (window.location == data.returnValues.url) {
+					window.location.reload();
+				}
 				window.location = data.returnValues.url;
 			}
 			else {
@@ -375,6 +378,11 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Dom/ChangeListener', 'Dom/U
 			if (!User.userId && data.returnValues.guestDialog) {
 				UiDialog.openStatic(data.returnValues.guestDialogID, data.returnValues.guestDialog, {
 					closable: false,
+					onClose: function() {
+						if (ControllerCaptcha.has(data.returnValues.guestDialogID)) {
+							ControllerCaptcha.delete(data.returnValues.guestDialogID);
+						}
+					},
 					title: Language.get('wcf.global.confirmation.title')
 				});
 				

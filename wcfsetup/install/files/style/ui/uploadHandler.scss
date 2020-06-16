@@ -1,0 +1,57 @@
+.formUploadHandlerContent {
+	> .formUploadHandlerList {
+		display: flex;
+		flex-wrap: wrap;
+		margin-left: 0 !important;
+		
+		> li {
+			display: flex;
+			flex: 0 0 100%;
+			margin-bottom: 20px;
+		}
+	}
+	
+	@include screen-md-up {
+		> .formUploadHandlerList {
+			margin-right: -20px;
+			
+			> li {
+				/* Safari sometimes trips over fractional values, causing two
+				   items to be exactly 1 pixel wider than the available space.
+				   Reserving 21px covers all sort of rounding errors, without
+				   being visually noticeable */
+				/* The `flex` shorthand fails in IE11 if `calc()` is used. */
+				flex-grow: 0;
+				flex-shrink: 0;
+				flex-basis: calc(50% - 21px);
+				margin-right: 20px;
+			}
+		}
+	}
+}
+
+.selectedImagePreview {
+	> img {
+		margin-bottom: 5px;
+		border: 1px solid #ccc;
+		background-color: #fff;
+		background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAABlBMVEX////MzMw46qqDAAAAD0lEQVQI12P4z4Ad4ZAAAH6/D/Hgw85/AAAAAElFTkSuQmCC);
+	}
+}
+
+.uploadButtonDiv {
+	.button {
+		overflow: hidden;
+		position: relative;
+	}
+	
+	.uploadButton {
+		> input {
+			bottom: 0;
+			left: 0;
+			opacity: 0;
+			position: absolute;
+			top: 0;
+		}
+	}
+}

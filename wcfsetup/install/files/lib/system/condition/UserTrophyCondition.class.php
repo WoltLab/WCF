@@ -15,7 +15,7 @@ use wcf\util\ArrayUtil;
  * Condition implementation for trophies.
  *
  * @author	Joshua Ruesweg
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Condition
  */
@@ -65,7 +65,7 @@ class UserTrophyCondition extends AbstractMultipleFieldsCondition implements ICo
 		}
 		
 		if (isset($conditionData['userTrophyIDs'])) {
-			$objectList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?) GROUP BY userID HAVING COUNT(userID) = ?)', [$conditionData['userTrophyIDs'], count($conditionData['userTrophyIDs'])]);
+			$objectList->getConditionBuilder()->add('user_table.userID IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?) GROUP BY userID HAVING COUNT(DISTINCT trophyID) = ?)', [$conditionData['userTrophyIDs'], count($conditionData['userTrophyIDs'])]);
 		}
 		if (isset($conditionData['notUserTrophyIDs'])) {
 			$objectList->getConditionBuilder()->add('user_table.userID NOT IN (SELECT userID FROM wcf'.WCF_N.'_user_trophy WHERE trophyID IN (?))', [$conditionData['notUserTrophyIDs']]);

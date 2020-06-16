@@ -11,7 +11,7 @@ use wcf\system\WCF;
  * Handles page locations for use with menu active markings.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Page
  * @since	3.0
@@ -99,7 +99,7 @@ class PageLocationManager extends SingletonFactory {
 			$title = $page->getTitle();
 		}
 		
-		if ($page->isLandingPage) {
+		if ($page->isLandingPage && BREADCRUMBS_HOME_USE_PAGE_TITLE) {
 			$title = WCF::getLanguage()->get(PAGE_TITLE);
 		}
 		
@@ -141,7 +141,7 @@ class PageLocationManager extends SingletonFactory {
 					$page = PageCache::getInstance()->getPage($page->parentPageID);
 					if (!$page->isVisible()) continue;
 					
-					if ($page->isLandingPage) {
+					if ($page->isLandingPage && BREADCRUMBS_HOME_USE_PAGE_TITLE) {
 						$title = WCF::getLanguage()->get(PAGE_TITLE);
 					}
 					else {

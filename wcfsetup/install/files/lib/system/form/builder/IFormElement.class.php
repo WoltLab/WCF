@@ -5,7 +5,7 @@ namespace wcf\system\form\builder;
  * Represents an element of a form that can have a description, a label and dependencies.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder
  * @since	5.2

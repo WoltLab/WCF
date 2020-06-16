@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Imports users.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Importer
  */
@@ -97,7 +97,7 @@ class UserImporter extends AbstractImporter {
 		}
 		
 		// check existing user id
-		if (is_numeric($oldID)) {
+		if (ctype_digit((string)$oldID)) {
 			$user = new User($oldID);
 			if (!$user->userID) $data['userID'] = $oldID;
 		}

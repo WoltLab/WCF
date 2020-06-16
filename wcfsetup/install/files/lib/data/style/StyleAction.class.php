@@ -12,6 +12,7 @@ use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\image\ImageHandler;
+use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\upload\DefaultUploadFileValidationStrategy;
@@ -25,7 +26,7 @@ use wcf\util\FileUtil;
  * Executes style-related actions.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Style
  * 
@@ -891,6 +892,8 @@ BROWSERCONFIG;
 			$styleEditor->update([
 				'styleDescription' => $styleDescription
 			]);
+			
+			LanguageFactory::getInstance()->deleteLanguageCache();
 		}
 		
 		// copy style variables
@@ -1028,8 +1031,6 @@ BROWSERCONFIG;
 	
 	/**
 	 * Changes user style.
-	 * 
-	 * @return	string[]
 	 */
 	public function changeStyle() {
 		StyleHandler::getInstance()->changeStyle($this->style->styleID);

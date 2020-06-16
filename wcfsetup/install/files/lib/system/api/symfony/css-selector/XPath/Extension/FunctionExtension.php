@@ -35,21 +35,19 @@ class FunctionExtension extends AbstractExtension
      */
     public function getFunctionTranslators()
     {
-        return array(
-            'nth-child' => array($this, 'translateNthChild'),
-            'nth-last-child' => array($this, 'translateNthLastChild'),
-            'nth-of-type' => array($this, 'translateNthOfType'),
-            'nth-last-of-type' => array($this, 'translateNthLastOfType'),
-            'contains' => array($this, 'translateContains'),
-            'lang' => array($this, 'translateLang'),
-        );
+        return [
+            'nth-child' => [$this, 'translateNthChild'],
+            'nth-last-child' => [$this, 'translateNthLastChild'],
+            'nth-of-type' => [$this, 'translateNthOfType'],
+            'nth-last-of-type' => [$this, 'translateNthLastOfType'],
+            'contains' => [$this, 'translateContains'],
+            'lang' => [$this, 'translateLang'],
+        ];
     }
 
     /**
-     * @param XPathExpr    $xpath
-     * @param FunctionNode $function
-     * @param bool         $last
-     * @param bool         $addNameTest
+     * @param bool $last
+     * @param bool $addNameTest
      *
      * @return XPathExpr
      *
@@ -93,7 +91,7 @@ class FunctionExtension extends AbstractExtension
             $expr .= ' - '.$b;
         }
 
-        $conditions = array(sprintf('%s %s 0', $expr, $sign));
+        $conditions = [sprintf('%s %s 0', $expr, $sign)];
 
         if (1 !== $a && -1 !== $a) {
             $conditions[] = sprintf('(%s) mod %d = 0', $expr, $a);

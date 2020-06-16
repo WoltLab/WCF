@@ -21,7 +21,6 @@
 	<rule ref="Generic.Functions.FunctionCallArgumentSpacing" />
 	<rule ref="Generic.NamingConventions.UpperCaseConstantName" />
 	<rule ref="Generic.PHP.CharacterBeforePHPOpeningTag" />
-	<rule ref="Generic.PHP.DisallowShortOpenTag" />
 	<rule ref="Generic.PHP.LowerCaseConstant" />
 	<rule ref="Generic.PHP.LowerCaseKeyword" />
 	<rule ref="Generic.WhiteSpace.DisallowSpaceIndent" />
@@ -39,10 +38,9 @@
 	<rule ref="Squiz.Scope.MethodScope" />
 	<rule ref="Squiz.Strings.EchoedStrings" />
 	<rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace" />
-	<!--<rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing" />-->
 	<rule ref="WCF.Classes.ClassFileName" />
 	<rule ref="WCF.ControlStructures.ControlSignature" />
-	<!--TODO:<rule ref="WCF.Functions.OpeningFunctionBraceKernighanRitchie" />-->
+	<rule ref="WCF.Functions.OpeningFunctionBraceKernighanRitchie" />
 	<rule ref="WCF.Methods.MethodDeclaration" />
 	<rule ref="WCF.Namespaces.ClassMustBeImported" />
 	<rule ref="WCF.Namespaces.UseDeclaration" />

@@ -15,12 +15,13 @@ use wcf\system\exception\UserInputException;
 use wcf\system\option\user\group\IUserGroupGroupOptionType;
 use wcf\system\option\user\group\IUserGroupOptionType;
 use wcf\system\WCF;
+use wcf\system\WCFACP;
 
 /**
  * Shows the user group option form to edit a single option.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -85,7 +86,7 @@ class UserGroupOptionForm extends AbstractForm {
 		
 		if (isset($_REQUEST['id'])) $this->userGroupOptionID = intval($_REQUEST['id']);
 		$this->userGroupOption = new UserGroupOption($this->userGroupOptionID);
-		if (!$this->userGroupOption) {
+		if (!$this->userGroupOption->optionID) {
 			throw new IllegalLinkException();
 		}
 		
@@ -116,7 +117,7 @@ class UserGroupOptionForm extends AbstractForm {
 		}
 		
 		// read accessible groups
-		$this->groups = UserGroup::getAccessibleGroups();
+		$this->groups = UserGroup::getSortedAccessibleGroups();
 		if ($this->userGroupOption->usersOnly) {
 			$guestGroup = UserGroup::getGroupByType(UserGroup::GUESTS);
 			if (isset($this->groups[$guestGroup->groupID])) {
@@ -150,13 +151,7 @@ class UserGroupOptionForm extends AbstractForm {
 	public function validate() {
 		parent::validate();
 		
-		$isAdmin = false;
-		foreach (WCF::getUser()->getGroupIDs() as $groupID) {
-			if (UserGroup::getGroupByID($groupID)->isAdminGroup()) {
-				$isAdmin = true;
-				break;
-			}
-		}
+		$this->errorType = [];
 		
 		// validate option values
 		foreach ($this->values as $groupID => &$optionValue) {
@@ -173,7 +168,15 @@ class UserGroupOptionForm extends AbstractForm {
 				$this->errorType[$groupID] = $e->getType();
 			}
 			
-			if (!$isAdmin && $this->optionType->compare($optionValue, WCF::getSession()->getPermission($this->userGroupOption->optionName)) == 1) {
+			if (WCF::getUser()->hasOwnerAccess()) {
+				continue;
+			}
+			
+			if (WCF::getUser()->hasAdministrativeAccess() && (!ENABLE_ENTERPRISE_MODE || !in_array($this->userGroupOption->optionName, UserGroupOption::ENTERPRISE_BLACKLIST))) {
+				continue;
+			}
+			
+			if ($this->optionType->compare($optionValue, WCF::getSession()->getPermission($this->userGroupOption->optionName)) == 1) {
 				$this->errorType[$groupID] = 'exceedsOwnPermission';
 			}
 		}
@@ -251,7 +254,7 @@ class UserGroupOptionForm extends AbstractForm {
 	public function assignVariables() {
 		parent::assignVariables();
 		
-		$everyoneGroupID = $guestGroupID = $userGroupID = 0;
+		$everyoneGroupID = $guestGroupID = $ownerGroupID = $userGroupID = 0;
 		foreach ($this->groups as $group) {
 			if ($group->groupType == UserGroup::EVERYONE) {
 				$everyoneGroupID = $group->groupID;
@@ -259,9 +262,18 @@ class UserGroupOptionForm extends AbstractForm {
 			else if ($group->groupType == UserGroup::GUESTS) {
 				$guestGroupID = $group->groupID;
 			}
+			else if ($group->groupType == UserGroup::OWNER) {
+				$ownerGroupID = $group->groupID;
+			}
 			else if ($group->groupType == UserGroup::USERS) {
 				$userGroupID = $group->groupID;
 			}
+		}
+		
+		$ownerGroupPermissions = [];
+		if ($ownerGroupID) {
+			$ownerGroupPermissions = UserGroup::getOwnerPermissions();
+			$ownerGroupPermissions[] = 'admin.user.accessibleGroups';
 		}
 		
 		WCF::getTPL()->assign([
@@ -272,8 +284,20 @@ class UserGroupOptionForm extends AbstractForm {
 			'values' => $this->values,
 			'everyoneGroupID' => $everyoneGroupID,
 			'guestGroupID' => $guestGroupID,
-			'userGroupID' => $userGroupID
+			'userGroupID' => $userGroupID,
+			'ownerGroupID' => $ownerGroupID,
+			'ownerGroupPermissions' => $ownerGroupPermissions,
 		]);
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function show() {
+		// check master password
+		WCFACP::checkMasterPassword();
+		
+		parent::show();
 	}
 	
 	/**

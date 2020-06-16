@@ -3,6 +3,7 @@ namespace wcf\system\html\input\node;
 use wcf\system\bbcode\BBCodeHandler;
 use wcf\system\event\EventHandler;
 use wcf\system\html\node\AbstractHtmlNodeProcessor;
+use wcf\system\html\node\HtmlNodePlainLink;
 use wcf\system\html\node\IHtmlNode;
 use wcf\util\DOMUtil;
 use wcf\util\StringUtil;
@@ -11,7 +12,7 @@ use wcf\util\StringUtil;
  * Processes HTML nodes and handles bbcodes.
  * 
  * @author      Alexander Ebert
- * @copyright   2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license     GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package     WoltLabSuite\Core\System\Html\Input\Node
  * @since       3.0
@@ -30,12 +31,12 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			'messageFloatObjectLeft', 'messageFloatObjectRight',
 			
 			// built-in
-			'smiley', 'woltlabAttachment', 'woltlabSuiteMedia'
+			'smiley', 'woltlabAttachment', 'woltlabSuiteMedia',
 		],
 		'li' => ['text-center', 'text-justify', 'text-right'],
 		'p' => ['text-center', 'text-justify', 'text-right'],
 		'pre' => ['woltlabHtml'],
-		'td' => ['text-center', 'text-justify', 'text-right']
+		'td' => ['text-center', 'text-justify', 'text-right'],
 	];
 	
 	/**
@@ -48,7 +49,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * @var string[]
 	 */
 	public static $allowedStyleElements = [
-		'span'
+		'span',
 	];
 	
 	/**
@@ -71,8 +72,26 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		'ul', 'ol', 'li',
 		
 		// other
-		'a', 'kbd', 'woltlab-quote', 'woltlab-spoiler', 'pre', 'sub', 'sup'
+		'a', 'kbd', 'woltlab-quote', 'woltlab-spoiler', 'pre', 'sub', 'sup',
 	];
+	
+	/**
+	 * list of tag names that represent inline content in the HTML 5 standard
+	 * @var string[]
+	 */
+	public static $inlineElements = [
+		'a', 'abbr', 'acronym', 'audio', 'b', 'bdi', 'bdo', 'big', 'br', 'button',
+		'canvas', 'cite', 'code', 'data', 'datalist', 'del', 'dfn', 'em', 'embed',
+		'i', 'iframe', 'img', 'input', 'ins', 'kbd', 'label', 'map', 'mark', 'meter',
+		'noscript', 'object', 'output', 'picture', 'progress', 'q', 'ruby', 's',
+		'samp', 'script', 'select', 'slot', 'small', 'span', 'strong', 'sub', 'sup',
+		'svg', 'template', 'textarea', 'time', 'u', 'tt', 'var', 'video', 'wbr',
+	];
+	
+	/**
+	 * @var HtmlNodePlainLink[]
+	 */
+	public $plainLinks = [];
 	
 	/**
 	 * list of embedded content grouped by type
@@ -89,6 +108,8 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	 * @inheritDoc
 	 */
 	public function process() {
+		$this->plainLinks = [];
+		
 		EventHandler::getInstance()->fireAction($this, 'beforeProcess');
 		
 		// fix invalid html such as metacode markers outside of block elements
@@ -153,6 +174,8 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		}
 		
 		EventHandler::getInstance()->fireAction($this, 'beforeEmbeddedProcess');
+		
+		$this->convertPlainLinks();
 		
 		// extract embedded content
 		$this->processEmbeddedContent();
@@ -236,6 +259,9 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			if ($node->nodeType === XML_ELEMENT_NODE && $node->nodeName === 'woltlab-metacode-marker') {
 				$node = $appendToPreviousParagraph($node);
 			}
+			else if ($node->nodeType === XML_ELEMENT_NODE && in_array($node->nodeName, self::$inlineElements)) {
+				$node = $appendToPreviousParagraph($node);
+			}
 			else if ($node->nodeType === XML_TEXT_NODE) {
 				// text node contains only a line break
 				if ($node->textContent === "\n" || $node->textContent === "\r\n") {
@@ -252,11 +278,10 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			$node = $node->nextSibling;
 		}
 		
-		// remove style attributes from non-whitelisted elements
-		$elements = $this->getDocument()->getElementsByTagName('*');
-		for ($i = 0, $length = $elements->length; $i < $length; $i++) {
-			$element = $elements->item($i);
-			if ($element->hasAttribute('style') && !in_array($element->nodeName, self::$allowedStyleElements)) {
+		// Remove style attributes from non-whitelisted elements.
+		/** @var \DOMElement $element */
+		foreach ($this->getXPath()->query('//*[@style]') as $element) {
+			if (!in_array($element->nodeName, self::$allowedStyleElements)) {
 				$element->removeAttribute('style');
 			}
 		}
@@ -411,11 +436,8 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		
 		// handle custom nodes that have no dedicated handler
 		$customTags = [
-			'color' => 'woltlab-color',
-			'font' => 'woltlab-size',
-			'size' => 'woltlab-size',
 			'spoiler' => 'woltlab-spoiler',
-			'url' => 'a'
+			'url' => 'a',
 		];
 		
 		foreach ($customTags as $bbcode => $tagName) {
@@ -425,6 +447,31 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 			
 			if ($this->getDocument()->getElementsByTagName($tagName)->length) {
 				$result[] = $bbcode;
+			}
+		}
+		
+		$inlineStyles = [
+			'color' => 'color',
+			'font' => 'font-family',
+			'size' => 'font-size',
+		];
+		foreach ($inlineStyles as $bbcode => $property) {
+			if (BBCodeHandler::getInstance()->isAvailableBBCode($bbcode)) {
+				unset($inlineStyles[$bbcode]);
+			}
+		}
+		
+		if (!empty($inlineStyles)) {
+			$styles = [];
+			/** @var \DOMElement $element */
+			foreach ($this->getXPath()->query('//*[@style]') as $element) {
+				$tmp = array_filter(explode(';', $element->getAttribute('style')));
+				foreach ($tmp as $style) {
+					$property = explode(':', $style, 2)[0];
+					if (in_array($property, $inlineStyles) && !in_array($property, $result)) {
+						$result[] = $property;
+					}
+				}
 			}
 		}
 		
@@ -504,7 +551,7 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 	}
 	
 	/**
-	 * Parses embedded content containedin metacode elements.
+	 * Parses embedded content contained in metacode elements.
 	 */
 	protected function parseEmbeddedContent() {
 		// handle `woltlab-metacode`
@@ -540,5 +587,75 @@ class HtmlInputNodeProcessor extends AbstractHtmlNodeProcessor {
 		$element->setAttribute('data-attributes', base64_encode(json_encode($attributes)));
 		
 		return $element;
+	}
+	
+	/**
+	 * Detects links that contain nothing but their link target. Additionally, standalone links, i. e.
+	 * those that are the only content in their line, are offered separately.
+	 * 
+	 * @since 5.2
+	 */
+	protected function convertPlainLinks() {
+		/** @var \DOMElement $link */
+		foreach ($this->getDocument()->getElementsByTagName('a') as $link) {
+			$href = $link->getAttribute('href');
+			if ($href !== $link->textContent) {
+				continue;
+			}
+			
+			$plainLink = new HtmlNodePlainLink($link, $href);
+			
+			// Check if the line appears to only contain the link text.
+			$parent = $link;
+			while ($parent->parentNode->nodeName !== 'body') {
+				$parent = $parent->parentNode;
+			}
+			
+			if ($parent->nodeName === 'p' && $parent->textContent === $link->textContent) {
+				// The line may contain nothing but the link, exceptions include basic formatting
+				// and up to a single `<br>` element.
+				$mayContainOtherContent = false;
+				$linebreaks = 0;
+				/** @var \DOMElement $element */
+				foreach ($parent->getElementsByTagName('*') as $element) {
+					switch ($element->nodeName) {
+						case 'br':
+							$linebreaks++;
+							break;
+							
+						case 'span':
+							if ($element->getAttribute('class')) {
+								$mayContainOtherContent = true;
+								break 2;
+							}
+							
+							// `<span>` is used to hold text formatting.
+							break;
+							
+						case 'a':
+						case 'b':
+						case 'em':
+						case 'i':
+						case 'strong':
+						case 'u':
+							// These elements are perfectly fine.
+							break;
+							
+						default:
+							$mayContainOtherContent = true;
+							break 2;
+					}
+				}
+				
+				if (!$mayContainOtherContent || $linebreaks <= 1) {
+					$this->plainLinks[] = $plainLink->setIsStandalone($parent);
+					continue;
+				}
+			}
+			
+			$this->plainLinks[] = $plainLink->setIsInline();
+		}
+		
+		EventHandler::getInstance()->fireAction($this, 'convertPlainLinks');
 	}
 }

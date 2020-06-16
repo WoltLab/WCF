@@ -2,15 +2,16 @@
  * Date picker with time support.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Date/Picker
  */
-define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment', 'WoltLabSuite/Core/Ui/CloseOverlay'], function(DateUtil, EventHandler, Language, ObjectMap, DomChangeListener, UiAlignment, UiCloseOverlay) {
+define(['DateUtil', 'Dom/Traverse', 'Dom/Util', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener', 'Ui/Alignment', 'WoltLabSuite/Core/Ui/CloseOverlay'], function(DateUtil, DomTraverse, DomUtil, EventHandler, Language, ObjectMap, DomChangeListener, UiAlignment, UiCloseOverlay) {
 	"use strict";
 	
 	var _didInit = false;
 	var _firstDayOfWeek = 0;
+	var _wasInsidePicker = false;
 	
 	var _data = new ObjectMap();
 	var _input = null;
@@ -29,6 +30,7 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 	var _datePicker = null;
 	
 	var _callbackOpen = null;
+	var _callbackFocus = null;
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Date/Picker
@@ -162,8 +164,15 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 					container.className = 'inputAddon';
 					
 					var button = elCreate('a');
-					button.href = '#';
+					
 					button.className = 'inputSuffix button jsTooltip';
+					button.href = '#';
+					elAttr(button, 'role', 'button');
+					elAttr(button, 'tabindex', '0');
+					elAttr(button, 'title', Language.get('wcf.date.datePicker'));
+					elAttr(button, 'aria-label', Language.get('wcf.date.datePicker'));
+					elAttr(button, 'aria-haspopup', true);
+					elAttr(button, 'aria-expanded', false);
 					button.addEventListener(WCF_CLICK_EVENT, _callbackOpen);
 					container.appendChild(button);
 					
@@ -252,7 +261,7 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 				value = new Date(value).getTime();
 			}
 			else {
-				value = new Date((isMinDate ? 1970 : 2038), 0, 1).getTime();
+				value = new Date((isMinDate ? 1902 : 2038), 0, 1).getTime();
 			}
 			
 			elAttr(element, attribute, value);
@@ -283,9 +292,23 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			
 			this._createPicker();
 			
+			if (_callbackFocus === null) {
+				_callbackFocus = this._maintainFocus.bind(this);
+				document.body.addEventListener('focus', _callbackFocus, { capture: true });
+			}
+			
 			var input = (event.currentTarget.nodeName === 'INPUT') ? event.currentTarget : event.currentTarget.previousElementSibling;
 			if (input === _input) {
+				this._close();
 				return;
+			}
+			
+			var dialogContent = DomTraverse.parentByClass(input, 'dialogContent');
+			if (dialogContent !== null) {
+				if (!elDataBool(dialogContent, 'has-datepicker-scroll-listener')) {
+					dialogContent.addEventListener('scroll', this._onDialogScroll.bind(this));
+					elData(dialogContent, 'has-datepicker-scroll-listener', 1);
+				}
 			}
 			
 			_input = input;
@@ -305,11 +328,12 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			_minDate = elData(_input, 'min-date');
 			if (_minDate.match(/^datePicker-(.+)$/)) _minDate = elData(elById(RegExp.$1), 'value');
 			_minDate = new Date(+_minDate);
+			if (_minDate.getTime() > date.getTime()) date = _minDate;
 			
 			_maxDate = elData(_input, 'max-date');
 			if (_maxDate.match(/^datePicker-(.+)$/)) _maxDate = elData(elById(RegExp.$1), 'value');
 			_maxDate = new Date(+_maxDate);
-			
+						
 			if (data.isDateTime) {
 				_dateHour.value = date.getHours();
 				_dateMinute.value = date.getMinutes();
@@ -325,6 +349,10 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			this._renderPicker(date.getDate(), date.getMonth(), date.getFullYear());
 			
 			UiAlignment.set(_datePicker, _input);
+			
+			elAttr(_input.nextElementSibling, 'aria-expanded', true);
+			
+			_wasInsidePicker = false;
 		},
 		
 		/**
@@ -341,9 +369,48 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 				
 				EventHandler.fire('WoltLabSuite/Core/Date/Picker', 'close', {element: _input});
 				
+				elAttr(_input.nextElementSibling, 'aria-expanded', false);
 				_input = null;
 				_minDate = 0;
 				_maxDate = 0;
+			}
+		},
+		
+		/**
+		 * Updates the position of the date picker in a dialog if the dialog content
+		 * is scrolled.
+		 * 
+		 * @param	{Event}		event	scroll event
+		 */
+		_onDialogScroll: function(event) {
+			if (_input === null) {
+				return;
+			}
+			
+			var dialogContent = event.currentTarget;
+			
+			var offset = DomUtil.offset(_input);
+			var dialogOffset = DomUtil.offset(dialogContent);
+			
+			// check if date picker input field is still (partially) visible
+			if (offset.top + _input.clientHeight <= dialogOffset.top) {
+				// top check
+				this._close();
+			}
+			else if (offset.top >= dialogOffset.top + dialogContent.offsetHeight) {
+				// bottom check
+				this._close();
+			}
+			else if (offset.left <= dialogOffset.left) {
+				// left check
+				this._close();
+			}
+			else if (offset.left >= dialogOffset.left + dialogContent.offsetWidth) {
+				// right check
+				this._close();
+			}
+			else {
+				UiAlignment.set(_datePicker, _input);
 			}
 		},
 		
@@ -448,6 +515,14 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 					}
 					
 					cell.classList[selectable ? 'remove' : 'add']('otherMonth');
+					if (selectable) {
+						cell.href = '#';
+						elAttr(cell, 'role', 'button');
+						elAttr(cell, 'tabindex', '0');
+						elAttr(cell, 'title', DateUtil.formatDate(date));
+						elAttr(cell, 'aria-label', DateUtil.formatDate(date));
+					}
+					
 					date.setDate(date.getDate() + 1);
 				}
 				
@@ -505,7 +580,7 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 		 * Sets the visible and shadow value
 		 */
 		_formatValue: function() {
-			var data = _data.get(_input), date, value, shadowValue;
+			var data = _data.get(_input), date;
 			
 			if (elData(_input, 'empty') === 'true') {
 				return;
@@ -519,19 +594,6 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 					_dateHour.value,
 					_dateMinute.value
 				);
-				
-				if (data.isTimeOnly) {
-					value = DateUtil.formatTime(date);
-					shadowValue = DateUtil.format(date, 'H:i');
-				}
-				else if (data.ignoreTimezone) {
-					value = DateUtil.formatDateTime(date);
-					shadowValue = DateUtil.format(date, 'Y-m-dTH:i:s');
-				}
-				else {
-					value = DateUtil.formatDateTime(date);
-					shadowValue = DateUtil.format(date, 'c');
-				}
 			}
 			else {
 				date = new Date(
@@ -539,15 +601,9 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 					elData(_dateGrid, 'month'),
 					elData(_dateGrid, 'day')
 				);
-				
-				value = DateUtil.formatDate(date);
-				shadowValue = DateUtil.format(date, 'Y-m-d');
 			}
-			
-			_input.value = value;
-			elData(_input, 'value', date.getTime());
-			if (!data.disableClear) data.clearButton.style.removeProperty('visibility');
-			data.shadow.value = shadowValue;
+
+			this.setDate(_input, date);
 		},
 		
 		/**
@@ -566,7 +622,12 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			_datePicker.appendChild(header);
 			
 			_dateMonthPrevious = elCreate('a');
-			_dateMonthPrevious.className = 'previous';
+			_dateMonthPrevious.className = 'previous jsTooltip';
+			_dateMonthPrevious.href = '#';
+			elAttr(_dateMonthPrevious, 'role', 'button');
+			elAttr(_dateMonthPrevious, 'tabindex', '0');
+			elAttr(_dateMonthPrevious, 'title', Language.get('wcf.date.datePicker.previousMonth'));
+			elAttr(_dateMonthPrevious, 'aria-label', Language.get('wcf.date.datePicker.previousMonth'));
 			_dateMonthPrevious.innerHTML = '<span class="icon icon16 fa-arrow-left"></span>';
 			_dateMonthPrevious.addEventListener(WCF_CLICK_EVENT, this.previousMonth.bind(this));
 			header.appendChild(_dateMonthPrevious);
@@ -575,7 +636,9 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			header.appendChild(monthYearContainer);
 			
 			_dateMonth = elCreate('select');
-			_dateMonth.className = 'month';
+			_dateMonth.className = 'month jsTooltip';
+			elAttr(_dateMonth, 'title', Language.get('wcf.date.datePicker.month'));
+			elAttr(_dateMonth, 'aria-label', Language.get('wcf.date.datePicker.month'));
 			_dateMonth.addEventListener('change', this._changeMonth.bind(this));
 			monthYearContainer.appendChild(_dateMonth);
 			
@@ -586,12 +649,19 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			_dateMonth.innerHTML = months;
 			
 			_dateYear = elCreate('select');
-			_dateYear.className = 'year';
+			_dateYear.className = 'year jsTooltip';
+			elAttr(_dateYear, 'title', Language.get('wcf.date.datePicker.year'));
+			elAttr(_dateYear, 'aria-label', Language.get('wcf.date.datePicker.year'));
 			_dateYear.addEventListener('change', this._changeYear.bind(this));
 			monthYearContainer.appendChild(_dateYear);
 			
 			_dateMonthNext = elCreate('a');
-			_dateMonthNext.className = 'next';
+			_dateMonthNext.className = 'next jsTooltip';
+			_dateMonthNext.href = '#';
+			elAttr(_dateMonthNext, 'role', 'button');
+			elAttr(_dateMonthNext, 'tabindex', '0');
+			elAttr(_dateMonthNext, 'title', Language.get('wcf.date.datePicker.nextMonth'));
+			elAttr(_dateMonthNext, 'aria-label', Language.get('wcf.date.datePicker.nextMonth'));
 			_dateMonthNext.innerHTML = '<span class="icon icon16 fa-arrow-right"></span>';
 			_dateMonthNext.addEventListener(WCF_CLICK_EVENT, this.nextMonth.bind(this));
 			header.appendChild(_dateMonthNext);
@@ -633,6 +703,8 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			
 			_dateHour = elCreate('select');
 			_dateHour.className = 'hour';
+			elAttr(_dateHour, 'title', Language.get('wcf.date.datePicker.hour'));
+			elAttr(_dateHour, 'aria-label', Language.get('wcf.date.datePicker.hour'));
 			_dateHour.addEventListener('change', this._formatValue.bind(this));
 			
 			var tmp = '';
@@ -650,6 +722,8 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			
 			_dateMinute = elCreate('select');
 			_dateMinute.className = 'minute';
+			elAttr(_dateMinute, 'title', Language.get('wcf.date.datePicker.minute'));
+			elAttr(_dateMinute, 'aria-label', Language.get('wcf.date.datePicker.minute'));
 			_dateMinute.addEventListener('change', this._formatValue.bind(this));
 			
 			tmp = '';
@@ -666,7 +740,9 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 		/**
 		 * Shows the previous month.
 		 */
-		previousMonth: function() {
+		previousMonth: function(event) {
+			event.preventDefault();
+			
 			if (_dateMonth.value === '0') {
 				_dateMonth.value = 11;
 				_dateYear.value = ~~_dateYear.value - 1;
@@ -681,7 +757,9 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 		/**
 		 * Shows the next month.
 		 */
-		nextMonth: function() {
+		nextMonth: function(event) {
+			event.preventDefault();
+			
 			if (_dateMonth.value === '11') {
 				_dateMonth.value = 0;
 				_dateYear.value = ~~_dateYear.value + 1;
@@ -717,6 +795,8 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 		 * @param	{object}	event		event object
 		 */
 		_click: function(event) {
+			event.preventDefault();
+			
 			if (event.currentTarget.classList.contains('otherMonth')) {
 				return;
 			}
@@ -725,7 +805,10 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			
 			this._renderGrid(event.currentTarget.textContent);
 			
-			this._close();
+			var data = _data.get(_input);
+			if (!data.isDateTime) {
+				this._close();
+			}
 		},
 		
 		/**
@@ -755,20 +838,34 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			var data = _data.get(element);
 			
 			elData(element, 'value', date.getTime());
-			element.value = DateUtil['formatDate' + (data.isDateTime ? 'Time' : '')](date);
-			
-			var format = '';
-			if (data.ignoreTimezone) {
-				format = 'Y-m-dTH:i:s';
-			}
-			else if (data.isDateTime) {
-				format = 'c';
+
+			var format = '', value;
+			if (data.isDateTime) {
+				if (data.isTimeOnly) {
+					value = DateUtil.formatTime(date);
+					format = 'H:i';
+				}
+				else if (data.ignoreTimezone) {
+					value = DateUtil.formatDateTime(date);
+					format = 'Y-m-dTH:i:s';
+				}
+				else {
+					value = DateUtil.formatDateTime(date);
+					format = 'c';
+				}
 			}
 			else {
+				value = DateUtil.formatDate(date);
 				format = 'Y-m-d';
 			}
-			
+
+			element.value = value;
 			data.shadow.value = DateUtil.format(date, format);
+
+			// show clear button
+			if (!data.disableClear) {
+				data.clearButton.style.removeProperty('visibility');
+			}
 		},
 		
 		/**
@@ -856,6 +953,26 @@ define(['DateUtil', 'EventHandler', 'Language', 'ObjectMap', 'Dom/ChangeListener
 			}
 			
 			return element;
+		},
+		
+		/**
+		 * @param {Event} event
+		 */
+		_maintainFocus: function(event) {
+			if (_datePicker !== null && _datePicker.classList.contains('active')) {
+				if (!_datePicker.contains(event.target)) {
+					if (_wasInsidePicker) {
+						_input.nextElementSibling.focus();
+						_wasInsidePicker = false;
+					}
+					else {
+						elBySel('.previous', _datePicker).focus();
+					}
+				}
+				else {
+					_wasInsidePicker = true;
+				}
+			}
 		}
 	};
 	

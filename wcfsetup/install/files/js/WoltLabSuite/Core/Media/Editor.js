@@ -2,7 +2,7 @@
  * Handles editing media files via dialog.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Media/Editor
  */
@@ -192,7 +192,7 @@ define(
 			}
 			
 			// captionEnableHtml
-			this._media.captionEnableHtml = ~~elBySel('input[name=captionEnableHtml]', content).checked;
+			if (captionEnableHtml) this._media.captionEnableHtml = ~~captionEnableHtml.checked;
 			
 			var aclValues = {
 				allowAll: ~~elById('mediaEditor_' + this._media.mediaID + '_aclAllowAll').checked,

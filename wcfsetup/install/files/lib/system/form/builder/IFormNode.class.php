@@ -6,7 +6,7 @@ use wcf\system\form\builder\field\dependency\IFormFieldDependency;
  * Represents a general form node providing common methods of all nodes.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Form\Builder
  * @since	5.2
@@ -21,6 +21,16 @@ interface IFormNode {
 	 * @throws	\InvalidArgumentException	if the given class is invalid
 	 */
 	public function addClass($class);
+	
+	/**
+	 * Adds the given CSS classes to this node and returns this node.
+	 * 
+	 * @param	string[]	$classes	names added CSS classes
+	 * @return	static				this node
+	 * 
+	 * @throws	\InvalidArgumentException	if any of the given classes is invalid
+	 */
+	public function addClasses(array $classes);
 	
 	/**
 	 * Adds a dependency on the value of a `IFormField` so that this node is
@@ -71,10 +81,10 @@ interface IFormNode {
 	public function available($available = true);
 	
 	/**
-	 * Cleans up after the whole form is not used anymore.
+	 * Cleans up after the form data has been saved and the form is not used anymore.
 	 * This method has to support being called multiple times.
 	 * 
-	 * This form should not clean up input fields. 
+	 * This method is not meant to empty the value of input fields.
 	 *
 	 * @return	static		this node
 	 */

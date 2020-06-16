@@ -294,9 +294,7 @@
 						<dd>
 							<select name="templateGroupID" id="templateGroupID">
 								<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
-								{foreach from=$availableTemplateGroups item=templateGroup}
-									<option value="{@$templateGroup->templateGroupID}"{if $templateGroup->templateGroupID == $templateGroupID} selected{/if}>{$templateGroup->getName()}</option>
-								{/foreach}
+							    	{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
 							</select>
 							{if $errorField == 'templateGroupID'}
 								<small class="innerError">
@@ -347,25 +345,26 @@
 					
 					{event name='faviconFields'}
 				</section>
-			
-				{if MODULE_USER_COVER_PHOTO}
-					<section class="section">
+				
+				<section class="section">
+					<header class="sectionHeader">
 						<h2 class="sectionTitle">{lang}wcf.acp.style.general.coverPhoto{/lang}</h2>
-						
-						<dl>
-							<dt><label for="coverPhoto">{lang}wcf.acp.style.coverPhoto{/lang}</label></dt>
-							<dd>
-								<div id="coverPhotoPreview" style="background-image: url({@$__wcf->getPath()}images/coverPhotos/{@$style->getCoverPhoto()})"></div>
-								<div id="uploadCoverPhoto">
-									<a href="#" class="button jsButtonDeleteCoverPhoto"{if !$style->coverPhotoExtension} style="display:none"{/if}>{lang}wcf.global.button.delete{/lang}</a>
-								</div>
-								<small>{lang}wcf.acp.style.coverPhoto.description{/lang}</small>
-							</dd>
-						</dl>
-						
-						{event name='coverPhotoFields'}
-					</section>
-				{/if}
+						<p class="sectionDescription">{lang}wcf.acp.style.general.coverPhoto.description{/lang}</p>
+					</header>
+					
+					<dl>
+						<dt><label for="coverPhoto">{lang}wcf.acp.style.coverPhoto{/lang}</label></dt>
+						<dd>
+							<div id="coverPhotoPreview" style="background-image: url({@$__wcf->getPath()}images/coverPhotos/{@$style->getCoverPhoto()})"></div>
+							<div id="uploadCoverPhoto">
+								<a href="#" class="button jsButtonDeleteCoverPhoto"{if !$style->coverPhotoExtension} style="display:none"{/if}>{lang}wcf.global.button.delete{/lang}</a>
+							</div>
+							<small>{lang}wcf.acp.style.coverPhoto.description{/lang}</small>
+						</dd>
+					</dl>
+					
+					{event name='coverPhotoFields'}
+				</section>
 			{/if}
 			
 			{event name='generalFieldsets'}
@@ -705,7 +704,20 @@
 												<li><a><span class="icon icon16 fa-strikethrough"></span></a></li>
 											</ul>
 										</div>
-										<div id="spEditorContent"></div>
+										<div id="spEditorContent">
+											<table id="spEditorTable" data-region="wcfEditorTable">
+												<tr>
+													<td>Lorem</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>Ipsum</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+											</table>
+										</div>
 									</div>
 									
 									<div class="spHeadline">Dropdown</div>
@@ -829,6 +841,7 @@
 								<p>{lang}wcf.acp.style.colors.description{/lang}</p>
 								<p><br></p>
 								<p><sup class="spApiVersion">3.1</sup> <small>{lang version='3.1'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
+								<p><sup class="spApiVersion">5.2</sup> <small>{lang version='5.2'}wcf.acp.style.colors.description.apiVersion{/lang}</small></p>
 							</div>
 							
 							{foreach from=$colors key=spCategory item=spColors}
@@ -927,6 +940,7 @@
 				'wcfEditorButtonText': '#spEditor .redactor-toolbar a { color: VALUE; }',
 				'wcfEditorButtonTextActive': '#spEditor .redactor-toolbar a:hover, #spEditor .redactor-toolbar a.dropact { color: VALUE; }',
 				'wcfEditorButtonTextDisabled': '#spEditor .redactor-toolbar a.redactor-button-disabled { color: VALUE; }',
+				'wcfEditorTableBorder': '#spEditorTable td { border-color: VALUE; }',
 				'wcfDropdownBackground': '#spDropdown { background-color: VALUE; } __COMBO_RULE__ #spDropdown::before { border-bottom-color: VALUE; }',
 				'wcfDropdownBorderInner': '#spDropdown .dropdownDivider { border-color: VALUE; }',
 				'wcfDropdownText': '#spDropdown li { color: VALUE; }',

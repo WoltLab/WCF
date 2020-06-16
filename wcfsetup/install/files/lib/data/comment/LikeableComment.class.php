@@ -12,7 +12,7 @@ use wcf\system\WCF;
  * Likeable object implementation for comments.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Comment
  * 
@@ -62,7 +62,8 @@ class LikeableComment extends AbstractLikeObject implements IReactionObject {
 					[
 						'objectID' => $this->getDecoratedObject()->objectID,
 						'objectOwnerID' => $this->userID
-					]
+					],
+					$this->commentID
 				);
 			}
 		}

@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * Page comment manager implementation.
  *
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Comment\Manager
  */
@@ -163,7 +163,9 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'comment' => $comment,
 							'page' => $pages[$comment->objectID],
-							'like' => $like
+							'reaction' => $like,
+							// @deprecated 5.3 Use `$reaction` instead
+							'like' => $like,
 						]);
 						$like->setTitle($text);
 						
@@ -186,6 +188,8 @@ class PageCommentManager extends AbstractCommentManager implements IViewableLike
 							'responseAuthor' => $comment->userID ? $users[$response->userID] : null,
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'page' => $pages[$comment->objectID],
+							'reaction' => $like,
+							// @deprecated 5.3 Use `$reaction` instead
 							'like' => $like,
 							'response' => $response
 						]);

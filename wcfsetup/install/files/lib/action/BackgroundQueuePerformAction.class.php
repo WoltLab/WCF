@@ -1,12 +1,13 @@
 <?php
 namespace wcf\action;
 use wcf\system\background\BackgroundQueueHandler;
+use wcf\system\WCF;
 
 /**
  * Performs background queue jobs.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Action
  * @since	3.0
@@ -32,6 +33,7 @@ class BackgroundQueuePerformAction extends AbstractAction {
 			}
 		}
 		echo BackgroundQueueHandler::getInstance()->getRunnableCount();
+		WCF::getSession()->deleteIfNew();
 		exit;
 	}
 }

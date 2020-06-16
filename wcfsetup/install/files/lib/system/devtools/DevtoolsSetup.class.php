@@ -9,7 +9,7 @@ use wcf\util\JSON;
  * in the document root. Requires the developer mode to work.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Devtools\Package
  * @since       3.1
@@ -19,7 +19,7 @@ class DevtoolsSetup extends SingletonFactory {
 	 * configuration file in the server's document root
 	 * @var string
 	 */
-	const CONFIGURATION_FILE = 'wsc-dev-config-31.json';
+	const CONFIGURATION_FILE = 'wsc-dev-config-52.json';
 	
 	/**
 	 * configuration data

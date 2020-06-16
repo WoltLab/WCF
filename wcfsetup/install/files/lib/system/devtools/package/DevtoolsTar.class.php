@@ -6,7 +6,7 @@ use wcf\system\io\Tar;
  * Specialized implementation to emulate a regular package installation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Devtools\Package
  * @since       3.1
@@ -65,6 +65,9 @@ class DevtoolsTar extends Tar {
 	 * @inheritDoc
 	 */
 	public function extract($index, $destination) {
+		// The source file is empty, if the file is a symlink, which yield to an error.
+		if (empty($this->files[$index])) return;
+		
 		copy($this->files[$index], $destination);
 	}
 	

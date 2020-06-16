@@ -14,7 +14,7 @@ use wcf\system\WCF;
  * User profile comment manager implementation.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Comment\Manager
  */
@@ -212,7 +212,9 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'comment' => $comment,
 							'user' => $users[$comment->objectID],
-							'like' => $like
+							'reaction' => $like,
+							// @deprecated 5.3 Use `$reaction` instead
+							'like' => $like,
 						]);
 						$like->setTitle($text);
 						
@@ -235,6 +237,8 @@ class UserProfileCommentManager extends AbstractCommentManager implements IViewa
 							'responseAuthor' => $response->userID ? $users[$response->userID] : null,
 							'commentAuthor' => $comment->userID ? $users[$comment->userID] : null,
 							'user' => $users[$comment->objectID],
+							'reaction' => $like,
+							// @deprecated 5.3 Use `$reaction` instead
 							'like' => $like,
 							'response' => $response
 						]);

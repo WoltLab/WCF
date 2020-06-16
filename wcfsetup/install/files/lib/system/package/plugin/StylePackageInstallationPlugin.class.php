@@ -9,7 +9,7 @@ use wcf\system\style\StyleHandler;
  * Installs, updates and deletes styles.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Package\Plugin
  */
@@ -69,11 +69,10 @@ class StylePackageInstallationPlugin extends AbstractPackageInstallationPlugin {
 			$styleList->sqlOrderBy = 'style.styleID ASC';
 			$styleList->sqlLimit = 1;
 			$styleList->readObjects();
-			$styles = $styleList->getObjects();
+			$style = $styleList->getSingleObject();
 			
-			if (!empty($styles)) {
-				$styleEditor = new StyleEditor(current($styles));
-				$styleEditor->setAsDefault();
+			if ($style !== null) {
+				(new StyleEditor($style))->setAsDefault();
 			}
 		}
 	}

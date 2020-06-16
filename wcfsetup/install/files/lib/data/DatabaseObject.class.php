@@ -6,11 +6,11 @@ use wcf\system\WCF;
  * Abstract class for all data holder classes.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data
  */
-abstract class DatabaseObject implements IStorableObject {
+abstract class DatabaseObject implements IIDObject, IStorableObject {
 	/**
 	 * database table for this object
 	 * @var	string
@@ -116,8 +116,7 @@ abstract class DatabaseObject implements IStorableObject {
 	}
 	
 	/**
-	 * @deprecated	This method was introduced for a function in AJAXProxy that is deprecated.
-	 * @see	\wcf\data\IStorableObject::getData()
+	 * @inheritDoc
 	 */
 	public function getData() {
 		return $this->data;

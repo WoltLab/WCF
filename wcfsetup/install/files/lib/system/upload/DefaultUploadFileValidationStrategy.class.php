@@ -5,7 +5,7 @@ namespace wcf\system\upload;
  * Default implementation of a file validation strategy for uploaded files.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Upload
  */
@@ -52,13 +52,13 @@ class DefaultUploadFileValidationStrategy implements IUploadFileValidationStrate
 			return false;
 		}
 		
-		if ($uploadFile->getFilesize() > $this->maxFilesize) {
-			$uploadFile->setValidationErrorType('tooLarge');
+		if (!preg_match($this->fileExtensionRegex, mb_strtolower($uploadFile->getFilename()))) {
+			$uploadFile->setValidationErrorType('invalidExtension');
 			return false;
 		}
 		
-		if (!preg_match($this->fileExtensionRegex, mb_strtolower($uploadFile->getFilename()))) {
-			$uploadFile->setValidationErrorType('invalidExtension');
+		if ($uploadFile->getFilesize() > $this->maxFilesize) {
+			$uploadFile->setValidationErrorType('tooLarge');
 			return false;
 		}
 		

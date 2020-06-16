@@ -29,8 +29,7 @@ a.button { // a.button is required to override link formatting, such as drop-dow
 		color: inherit;
 	}
 	
-	&.active,
-	&:hover {
+	&.active {
 		background-color: $wcfButtonBackgroundActive;
 		color: $wcfButtonTextActive;
 		text-decoration: none;
@@ -60,10 +59,36 @@ a.button.buttonPrimary { // a.button is required to override link formatting, su
 	background-color: $wcfButtonPrimaryBackground;
 	color: $wcfButtonPrimaryText;
 	
-	&.active,
-	&:hover {
+	&.active {
 		background-color: $wcfButtonPrimaryBackgroundActive;
 		color: $wcfButtonPrimaryTextActive;
+	}
+}
+
+/* hover states are only applied to non-touch devices to avoid "leftover" hover states after taps */
+html:not(.touch) {
+	button,
+	input[type="button"],
+	input[type="reset"],
+	input[type="submit"],
+	.button,
+	a.button {
+		&:hover {
+			background-color: $wcfButtonBackgroundActive;
+			color: $wcfButtonTextActive;
+			text-decoration: none;
+		}
+	}
+	
+	button.buttonPrimary,
+	input[type="button"].buttonPrimary,
+	input[type="submit"],
+	.button.buttonPrimary,
+	a.button.buttonPrimary { // a.button is required to override link formatting, such as dropdown buttons
+		&:hover {
+			background-color: $wcfButtonPrimaryBackgroundActive;
+			color: $wcfButtonPrimaryTextActive;
+		}
 	}
 }
 

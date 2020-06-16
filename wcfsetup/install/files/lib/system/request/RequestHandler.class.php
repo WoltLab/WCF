@@ -16,7 +16,7 @@ use wcf\util\HeaderUtil;
  * Handles http requests.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Request
  */
@@ -70,6 +70,17 @@ class RequestHandler extends SingletonFactory {
 			
 			// build request
 			$this->buildRequest($application);
+			
+			// enforce that certain ACP pages are not available for non-owners in enterprise mode
+			if (
+				$isACPRequest
+				&& ENABLE_ENTERPRISE_MODE
+				&& !WCF::getUser()->hasOwnerAccess()
+				&& defined($this->activeRequest->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
+				&& constant($this->activeRequest->getClassName() . '::BLACKLISTED_IN_ENTERPRISE_MODE')
+			) {
+				throw new IllegalLinkException();
+			}
 			
 			// handle offline mode
 			if (!$isACPRequest && defined('OFFLINE') && OFFLINE) {
@@ -161,7 +172,12 @@ class RequestHandler extends SingletonFactory {
 					exit;
 				}
 				
-				$classData = ControllerMap::getInstance()->resolve($application, $controller, $this->isACPRequest(), RouteHandler::getInstance()->isRenamedController());
+				$classApplication = $application;
+				if (!empty($routeData['isDefaultController']) && !empty($routeData['application']) && $routeData['application'] !== $application) {
+					$classApplication = $routeData['application'];
+				}
+				
+				$classData = ControllerMap::getInstance()->resolve($classApplication, $controller, $this->isACPRequest(), RouteHandler::getInstance()->isRenamedController());
 				if (is_string($classData)) {
 					$this->redirect($routeData, $application, $classData);
 				}
@@ -213,6 +229,8 @@ class RequestHandler extends SingletonFactory {
 					$this->activeRequest->setIsLandingPage();
 				}
 			}
+			
+			ApplicationHandler::getInstance()->rebuildActiveApplication();
 		}
 		catch (SystemException $e) {
 			if (defined('ENABLE_DEBUG_MODE') && ENABLE_DEBUG_MODE && defined('ENABLE_DEVELOPER_TOOLS') && ENABLE_DEVELOPER_TOOLS) {
@@ -269,13 +287,16 @@ class RequestHandler extends SingletonFactory {
 			exit;
 		}
 		else if (!empty($data['application']) && $data['application'] !== $application) {
-			HeaderUtil::redirect(
-				LinkHandler::getInstance()->getLink(
-					ControllerMap::getInstance()->resolve($data['application'], $data['controller'], false)['controller'],
-					['application' => $data['application']]
-				), true, true
-			);
-			exit;
+			$override = ControllerMap::getInstance()->getApplicationOverride($application, $data['controller']);
+			if ($application !== $override) {
+				HeaderUtil::redirect(
+					LinkHandler::getInstance()->getLink(
+						ControllerMap::getInstance()->resolve($data['application'], $data['controller'], false)['controller'],
+						['application' => $data['application']]
+					), true, true
+				);
+				exit;
+			}
 		}
 		
 		// copy route data

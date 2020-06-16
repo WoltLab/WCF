@@ -24,7 +24,7 @@ use wcf\util\FileUtil;
  * Executes media file-related actions.
  * 
  * @author	Matthias Schmidt
- * @copyright	2001-2018 WoltLab GmbH
+ * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Data\Media
  * @since	3.0
@@ -93,7 +93,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			}
 			
 			// fetch media objects from database
-			$mediaList = new MediaList();
+			$mediaList = new ViewableMediaList();
 			$mediaList->setObjectIDs($mediaIDs);
 			$mediaList->readObjects();
 			
@@ -147,6 +147,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			'caption' => $media instanceof ViewableMedia ? $media->caption : [],
 			'captionEnableHtml' => $media->captionEnableHtml,
 			'categoryID' => $media->categoryID,
+			'elementTag' => $media instanceof ViewableMedia ? $media->getElementTag($this->parameters['elementTagSize'] ?? 144) : '',
 			'fileHash' => $media->fileHash,
 			'filename' => $media->filename,
 			'filesize' => $media->filesize,
@@ -425,9 +426,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 				$statement->execute([
 					$media->mediaID,
 					$languageID,
-					isset($this->parameters['title'][$languageID]) ? $this->parameters['title'][$languageID] : '',
+					isset($this->parameters['title'][$languageID]) ? mb_substr($this->parameters['title'][$languageID], 0, 255) : '',
 					isset($this->parameters['caption'][$languageID]) ? $this->parameters['caption'][$languageID] : '',
-					isset($this->parameters['altText'][$languageID]) ? $this->parameters['altText'][$languageID] : ''
+					isset($this->parameters['altText'][$languageID]) ? mb_substr($this->parameters['altText'][$languageID], 0, 255) : ''
 				]);
 			}
 			else {
@@ -452,9 +453,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 					$statement->execute([
 						$media->mediaID,
 						$language->languageID,
-						$title,
+						mb_substr($title, 0, 255),
 						$caption,
-						$altText
+						mb_substr($altText, 0, 255)
 					]);
 				}
 			}
@@ -493,6 +494,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	public function getSearchResultList() {
 		$mediaList = new MediaList();
 		$mediaList->addSearchConditions($this->parameters['searchString']);
+		if (WCF::getSession()->getPermission('admin.content.cms.canOnlyAccessOwnMedia')) {
+			$mediaList->getConditionBuilder()->add('media.userID = ?', [WCF::getUser()->userID]);
+		}
 		if ($this->parameters['imagesOnly']) {
 			$mediaList->getConditionBuilder()->add('media.isImage = ?', [1]);
 		}
