@@ -426,6 +426,7 @@ class HtmlBBCodeParser extends BBCodeParser {
 	 * @deprecated 5.2 See https://github.com/WoltLab/WCF/issues/3189
 	 */
 	public function setRemoveLinks($removeLinks) {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		$this->removeLinks = $removeLinks;
 	}
 	
