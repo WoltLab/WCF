@@ -5,6 +5,7 @@ use wcf\data\like\Like;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\WCF;
 
+$_ = \wcf\functions\deprecatedClass(LikeUserRebuildDataWorker::class);
 /**
  * Worker implementation for updating like users.
  * 
@@ -12,7 +13,8 @@ use wcf\system\WCF;
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Worker
- * @deprecated  since 5.2 (the worker has been removed)
+ * @deprecated  5.2 The worker has been removed from the ACP due to the replacement of the like
+ * 		system by the reaction system. This class does not have a direct replacement.
  * 
  * @method	LikeObjectList	getObjectList()
  */
