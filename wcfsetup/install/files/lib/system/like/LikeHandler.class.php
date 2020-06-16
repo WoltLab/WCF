@@ -9,6 +9,7 @@ use wcf\system\reaction\ReactionHandler;
 use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
+$_ = \wcf\functions\deprecatedClass(LikeHandler::class);
 /**
  * Handles the likes of liked objects.
  * 
@@ -24,7 +25,8 @@ use wcf\system\WCF;
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Like
- * @deprecated  The LikeHandler is deprecated since 5.2 in favor of the \wcf\system\reaction\ReactionHandler
+ * @deprecated	5.2 The LikeHandler is deprecated in favor of the \wcf\system\reaction\ReactionHandler.
+ * 		Most methods have directs replacements. Refer to the source code of LikeHandler if necessary.
  */
 class LikeHandler extends SingletonFactory {
 	/**
