@@ -22,11 +22,10 @@ class UserNotificationEditor extends DatabaseObjectEditor {
 	protected static $baseClass = UserNotification::class;
 	
 	/**
-	 * Marks this notification as confirmed.
-	 * 
-	 * @deprecated 5.2 Please use `UserNotificationHandler::markAsConfirmedByIDs()` instead.
+	 * @deprecated 5.2 Use `UserNotificationHandler::getInstance()->markAsConfirmedByIDs([$notificationID]);` instead.
 	 */
 	public function markAsConfirmed() {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		UserNotificationHandler::getInstance()->markAsConfirmedByIDs([$this->notificationID]);
 	}
 }
