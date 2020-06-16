@@ -94,7 +94,7 @@ class UserProfileAction extends UserAction implements IPopoverAction {
 	 * Validates user profile preview.
 	 * 
 	 * @throws	UserInputException
-	 * @deprecated	since 5.3, use `validateGetPopover()`
+	 * @deprecated	5.3 Use `validateGetPopover()` instead (direct replacement).
 	 */
 	public function validateGetUserProfile() {
 		$this->validateGetPopover();
@@ -104,7 +104,8 @@ class UserProfileAction extends UserAction implements IPopoverAction {
 	 * Returns user profile preview.
 	 * 
 	 * @return	array
-	 * @deprecated	since 5.3, use `getPopover()`
+	 * @deprecated	5.3 Use `getPopover()` instead (direct replacement, except for
+	 * 		the missing 'userID' key in the return value).
 	 */
 	public function getUserProfile() {
 		return array_merge($this->getPopover(), [
