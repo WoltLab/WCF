@@ -58,9 +58,10 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
 	 * @param	Regex				$regex
 	 * @param	ITitledObject[]			$objects
 	 * @param	string				$bbcodeName
-	 * @deprecated 5.2 Use `replaceLinks()` instead.
+	 * @deprecated	5.2 Use `replaceLinks()` instead. It takes the same parameters, except for the $regex.
 	 */
 	protected function replaceLinksWithBBCode(HtmlInputNodeProcessor $processor, Regex $regex, array $objects, $bbcodeName) {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		$this->replaceLinks($processor, $objects, $bbcodeName);
 	}
 	
@@ -72,9 +73,10 @@ abstract class AbstractHtmlInputNodeProcessorListener implements IParameterizedE
 	 * @param	Regex				$regex
 	 * @param	ITitledObject[]			$objects
 	 * @throws	ImplementationException
-	 * @deprecated 5.2 Use `replaceLinks()` instead.
+	 * @deprecated	5.2 Use `replaceLinks()` instead. It takes the same parameters, except for the $regex.
 	 */
 	protected function setObjectTitles(HtmlInputNodeProcessor $processor, Regex $regex, array $objects) {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		$this->replaceLinks($processor, $objects);
 	}
 	
