@@ -4,6 +4,7 @@ use wcf\system\cache\runtime\CommentRuntimeCache;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\SingletonFactory;
 
+$_ = \wcf\functions\deprecatedClass(CommentDataHandler::class);
 /**
  * Handles common data resources for comment-related user notifications
  * 
@@ -11,7 +12,10 @@ use wcf\system\SingletonFactory;
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Comment
- * @deprecated	3.0, use CommentRuntimeCache and UserProfileRuntimeCache
+ * @deprecated	3.0 Use CommentRuntimeCache to replace cacheCommentID() and getComment().
+ *		Use UserProfileRuntimeCache to replace cacheUserID() and getUser().
+ *		The cache*() methods are to be replaced by cacheObjectID() and the get*() methods
+ *		are to be replaced by getObject().
  */
 class CommentDataHandler extends SingletonFactory {
 	/**
