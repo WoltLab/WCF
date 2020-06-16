@@ -27,9 +27,10 @@ final class DatabaseTableUtil {
 	 * @param	integer			$packageID
 	 * @param	DatabaseTable[]		$tables
 	 * 
-	 * @deprecated	this method is only relevant for updates from 5.2.0 to 5.2.1
+	 * @deprecated	5.2.1 This method is only relevant for updates from 5.2.0 to 5.2.1.
 	 */
 	public static function addMissingForeignKeys($packageID, array $tables) {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		$foreignKeys = [];
 		foreach ($tables as $table) {
 			if ($table instanceof DatabaseTable && !($table instanceof PartialDatabaseTable)) {
