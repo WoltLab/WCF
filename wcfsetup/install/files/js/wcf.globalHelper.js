@@ -290,7 +290,7 @@
 	};
 	
 	window.deprecatedFeature = function(message) {
-		console.log("A deprecated feature is used, while 'ENABLE_DEPRECATION_WARNINGS' is enabled: " + message);
+		console.log(new Error("A deprecated feature is used, while 'ENABLE_DEPRECATION_WARNINGS' is enabled: " + message));
 	};
 	window.deprecatedFunction = function(message, f) {
 		return function() {
