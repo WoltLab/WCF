@@ -293,8 +293,10 @@
 		console.log("A deprecated feature is used, while 'ENABLE_DEPRECATION_WARNINGS' is enabled: " + message);
 	};
 	window.deprecatedFunction = function(f, message) {
-		window.deprecatedFeature(message);
-		return f;
+		return function() {
+			window.deprecatedFeature(message);
+			return f.apply(this, arguments);
+		};
 	};
 	if (ENABLE_DEPRECATION_WARNINGS) {
 		window.deprecatedFeature = function(message) {
