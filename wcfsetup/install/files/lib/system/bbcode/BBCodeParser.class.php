@@ -575,6 +575,7 @@ class BBCodeParser extends SingletonFactory {
 	 * @deprecated 5.2 See https://github.com/WoltLab/WCF/issues/3189
 	 */
 	public function getRemoveLinks() {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		return false;
 	}
 }
