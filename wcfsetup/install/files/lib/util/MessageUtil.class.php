@@ -107,9 +107,11 @@ class MessageUtil {
 	 * 
 	 * @param       HtmlInputProcessor      $htmlInputProcessor     html input processor instance
 	 * @return      string[]                mentioned usernames
-	 * @deprecated  5.3
+	 * @deprecated  5.3 Use `MessageUtil::getMentionedUserIDs()` instead. It takes the same parameter
+	 * 		and returns the userIDs of mentioned users instead of their usernames.
 	 */
 	public static function getMentionedUsers(HtmlInputProcessor $htmlInputProcessor) {
+		\wcf\functions\deprecatedMethod(__CLASS__, __FUNCTION__);
 		$usernames = [];
 		$groups = [];
 		
