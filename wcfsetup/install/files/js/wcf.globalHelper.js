@@ -293,18 +293,23 @@
 		console.log(new Error("A deprecated feature is used, while 'ENABLE_DEPRECATION_WARNINGS' is enabled: " + message));
 	};
 	window.deprecatedFunction = function(message, f) {
+		var didWarn = false;
 		return function() {
-			window.deprecatedFeature(message);
+			if (!didWarn) {
+				window.deprecatedFeature(message);
+				// In error mode the line above would have thrown and the warning would not be disabled.
+				// This is intentional to actually block using the function.
+				didWarn = true;
+			}
 			return f.apply(this, arguments);
 		};
 	};
 	window.deprecatedObject = function (message, o) {
 		if (window.Proxy !== undefined) {
 			return new window.Proxy(o, {
-				get: function (target, property) {
-					window.deprecatedFeature(message);
+				get: window.deprecatedFunction(message, function (target, property) {
 					return target[property];
-				}
+				})
 			})
 		}
 
