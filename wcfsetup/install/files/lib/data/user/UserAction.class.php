@@ -729,6 +729,10 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public function disable() {
 		if (empty($this->objects)) $this->readObjects();
 		
+		// We reset the activationCode (which indicates, that the user is not enabled) AND disable the email
+		// confirm status, because if the user can enable himself by an email confirmation and we do not reset 
+		// the email confirmed status, the behavior is undefined, because an user exists, which is not enabled
+		// but has a valid email address (Which doesn't usually happen). 
 		$action = new UserAction($this->objects, 'update', [
 			'data' => [
 				'activationCode' => UserRegistrationUtil::getActivationCode(),
