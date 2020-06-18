@@ -106,6 +106,17 @@
 					}
 				});
 			}
+			
+			var scrollOffsetStorage = element;
+			do {
+				scrollOffsetStorage = scrollOffsetStorage.nextElementSibling;
+			} while (scrollOffsetStorage && !scrollOffsetStorage.classList.contains('codeMirrorScrollOffset'));
+			if (scrollOffsetStorage) {
+				element.codemirror.scrollTo(null, scrollOffsetStorage.value);
+				element.codemirror.on('scroll', function (cm) {
+					scrollOffsetStorage.value = cm.getScrollInfo().top;
+				});
+			}
 		});
 	});
 </script>
