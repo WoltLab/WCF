@@ -108,7 +108,7 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	const REGISTER_ACTIVATION_NONE = 0;
 	const REGISTER_ACTIVATION_USER = 1;
 	const REGISTER_ACTIVATION_ADMIN = 2;
-	const REGISTER_ACTIVATION_USER_AND_ADMIN = self::REGISTER_ACTIVATION_USER | self::REGISTER_ACTIVATION_ADMIN
+	const REGISTER_ACTIVATION_USER_AND_ADMIN = self::REGISTER_ACTIVATION_USER | self::REGISTER_ACTIVATION_ADMIN;
 	
 	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
