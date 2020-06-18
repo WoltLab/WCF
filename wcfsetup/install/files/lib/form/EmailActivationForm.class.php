@@ -97,19 +97,20 @@ class EmailActivationForm extends AbstractForm {
 			'newEmail' => '',
 			'reactivationCode' => 0
 		];
-		if (!$this->user->isEmailConfirmed() && (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
-			$data['emailConfirmed'] = null;
-			
-			if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
-				$data['activationCode'] = 0;
-			}
-		}
 		
 		// enable new email
 		$this->objectAction = new UserAction([$this->user], 'update', [
 			'data' => array_merge($this->additionalFields, $data)
 		]);
 		$this->objectAction->executeAction();
+		
+		// confirm email
+		if (!$this->user->isEmailConfirmed() && empty($this->user->blacklistMatches)) {
+			// enable new email
+			$this->objectAction = new UserAction([$this->user], 'confirmEmail');
+			$this->objectAction->executeAction();
+		}
+		
 		$this->saved();
 		
 		// forward to index page
