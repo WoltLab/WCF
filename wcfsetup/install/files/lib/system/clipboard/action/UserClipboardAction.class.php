@@ -277,7 +277,7 @@ class UserClipboardAction extends AbstractClipboardAction {
 		$userIDs = [];
 		foreach ($this->objects as $user) {
 			/** @var User $user */
-			if ($user->requiresEmailActivation()) $userIDs[] = $user->userID;
+			if ($user->canEmailConfirm()) $userIDs[] = $user->userID;
 		}
 		
 		return $userIDs;
