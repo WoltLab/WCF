@@ -1,6 +1,6 @@
-<div id="attachmentVideo_{@$attachmentIdentifier}" class="videoContainer" style="display: none;">
+<span id="attachmentVideo_{@$attachmentIdentifier}" class="videoContainer" style="display: none;">
 	<video src="{$attachment->getLink()}" controls></video>
-</div>
+</span>
 
 <a id="attachmentVideoLink_{@$attachmentIdentifier}" href="{$attachment->getLink()}">{$attachment->filename}</a>
 
