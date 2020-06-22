@@ -160,6 +160,7 @@ class AttachmentBBCode extends AbstractBBCode {
 			else if (substr($attachment->fileType, 0, 6) === 'video/' && $parser->getOutputType() == 'text/html') {
 				return WCF::getTPL()->fetch('__videoAttachmentBBCode', 'wcf', [
 					'attachment' => $attachment,
+					'attachmentIdentifier' => StringUtil::getRandomID(),
 				]);
 			}
 			else {
