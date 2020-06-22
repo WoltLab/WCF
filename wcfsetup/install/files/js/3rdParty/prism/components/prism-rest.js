@@ -187,7 +187,7 @@ Prism.languages.rest = {
 			}
 		},
 		{
-			pattern: /(?:\b[a-z\d](?:[_.:+]?[a-z\d]+)*_?_|`[^`]+`_?_|_`[^`]+`)(?=[\s\-.,:;!?\\\/'")\]}]|$)/i,
+			pattern: /(?:\b[a-z\d]+(?:[_.:+][a-z\d]+)*_?_|`[^`]+`_?_|_`[^`]+`)(?=[\s\-.,:;!?\\\/'")\]}]|$)/i,
 			alias: 'string',
 			inside: {
 				'punctuation': /^_?`|`$|`?_?_$/
@@ -204,4 +204,5 @@ Prism.languages.rest = {
 		lookbehind: true
 	}
 };
+
 return Prism; })

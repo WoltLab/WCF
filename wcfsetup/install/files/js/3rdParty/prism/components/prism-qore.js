@@ -6,7 +6,7 @@ Prism.languages.qore = Prism.languages.extend('clike', {
 	},
 	// Overridden to allow unescaped multi-line strings
 	'string': {
-		pattern: /("|')(\\[\s\S]|(?!\1)[^\\])*\1/,
+		pattern: /("|')(?:\\[\s\S]|(?!\1)[^\\])*\1/,
 		greedy: true
 	},
 	'variable': /\$(?!\d)\w+\b/,
@@ -19,4 +19,5 @@ Prism.languages.qore = Prism.languages.extend('clike', {
 	},
 	'function': /\$?\b(?!\d)\w+(?=\()/
 });
+
 return Prism; })

@@ -48,7 +48,7 @@ Prism.languages.livescript = {
 	],
 	'regex': [
 		{
-			pattern: /\/\/(\[.+?]|\\.|(?!\/\/)[^\\])+\/\/[gimyu]{0,5}/,
+			pattern: /\/\/(?:\[.+?]|\\.|(?!\/\/)[^\\])+\/\/[gimyu]{0,5}/,
 			greedy: true,
 			inside: {
 				'comment': {
@@ -58,7 +58,7 @@ Prism.languages.livescript = {
 			}
 		},
 		{
-			pattern: /\/(\[.+?]|\\.|[^/\\\r\n])+\/[gimyu]{0,5}/,
+			pattern: /\/(?:\[.+?]|\\.|[^/\\\r\n])+\/[gimyu]{0,5}/,
 			greedy: true
 		}
 	],
@@ -118,4 +118,5 @@ Prism.languages.livescript = {
 };
 
 Prism.languages.livescript['interpolated-string'].inside['interpolation'].inside.rest = Prism.languages.livescript;
+
 return Prism; })

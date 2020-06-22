@@ -43,7 +43,7 @@ define(["prism/prism","prism/components/prism-clike"], function () {
 		{
 			pattern: /\$\{[^}]+\}/,
 			inside: {
-				delimiter: {
+				'delimiter': {
 					pattern: /^\$\{|\}$/,
 					alias: 'variable'
 				},

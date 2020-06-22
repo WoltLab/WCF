@@ -1,9 +1,5 @@
 define(["prism/prism","prism/components/prism-clike"], function () {
 Prism.languages.reason = Prism.languages.extend('clike', {
-	'comment': {
-		pattern: /(^|[^\\])\/\*[\s\S]*?\*\//,
-		lookbehind: true
-	},
 	'string': {
 		pattern: /"(?:\\(?:\r\n|[\s\S])|[^\\\r\n"])*"/,
 		greedy: true
@@ -31,4 +27,5 @@ Prism.languages.insertBefore('reason', 'class-name', {
 
 // We can't match functions property, so let's not even try.
 delete Prism.languages.reason.function;
+
 return Prism; })

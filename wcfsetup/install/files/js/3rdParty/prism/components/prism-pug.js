@@ -1,4 +1,4 @@
-define(["prism/prism","prism/components/prism-markup","prism/components/prism-javascript","prism/components/prism-coffeescript","prism/components/prism-ejs","prism/components/prism-handlebars","prism/components/prism-less","prism/components/prism-livescript","prism/components/prism-markdown","prism/components/prism-scss","prism/components/prism-stylus","prism/components/prism-twig"], function () {
+define(["prism/prism","prism/components/prism-markup","prism/components/prism-javascript"], function () {
 (function(Prism) {
 	// TODO:
 	// - Add CSS highlighting inside <style> tags
@@ -23,9 +23,7 @@ define(["prism/prism","prism/components/prism-markup","prism/components/prism-ja
 		'multiline-script': {
 			pattern: /(^([\t ]*)script\b.*\.[\t ]*)(?:(?:\r?\n|\r(?!\n))(?:\2[\t ]+.+|\s*?(?=\r?\n|\r)))+/m,
 			lookbehind: true,
-			inside: {
-				rest: Prism.languages.javascript
-			}
+			inside: Prism.languages.javascript
 		},
 
 		// See at the end of the file for known filters
@@ -47,9 +45,7 @@ define(["prism/prism","prism/components/prism-markup","prism/components/prism-ja
 		'markup': {
 			pattern: /(^[\t ]*)<.+/m,
 			lookbehind: true,
-			inside: {
-				rest: Prism.languages.markup
-			}
+			inside: Prism.languages.markup
 		},
 		'doctype': {
 			pattern: /((?:^|\n)[\t ]*)doctype(?: .+)?/,
@@ -99,16 +95,14 @@ define(["prism/prism","prism/components/prism-markup","prism/components/prism-ja
 						pattern: /^\+\w+/,
 						alias: 'function'
 					},
-					'rest': Prism.languages.javascript
+					rest: Prism.languages.javascript
 				}
 			}
 		],
 		'script': {
 			pattern: /(^[\t ]*script(?:(?:&[^(]+)?\([^)]+\))*[\t ]+).+/m,
 			lookbehind: true,
-			inside: {
-				rest: Prism.languages.javascript
-			}
+			inside: Prism.languages.javascript
 		},
 
 		'plain-text': {
@@ -122,9 +116,7 @@ define(["prism/prism","prism/components/prism-markup","prism/components/prism-ja
 				'attributes': [
 					{
 						pattern: /&[^(]+\([^)]+\)/,
-						inside: {
-							rest: Prism.languages.javascript
-						}
+						inside: Prism.languages.javascript
 					},
 					{
 						pattern: /\([^)]+\)/,
@@ -132,9 +124,7 @@ define(["prism/prism","prism/components/prism-markup","prism/components/prism-ja
 							'attr-value': {
 								pattern: /(=\s*)(?:\{[^}]*\}|[^,)\r\n]+)/,
 								lookbehind: true,
-								inside: {
-									rest: Prism.languages.javascript
-								}
+								inside: Prism.languages.javascript
 							},
 							'attr-name': /[\w-]+(?=\s*!?=|\s*[,)])/,
 							'punctuation': /[!=(),]+/
@@ -148,9 +138,7 @@ define(["prism/prism","prism/components/prism-markup","prism/components/prism-ja
 			{
 				pattern: /(^[\t ]*(?:-|!?=)).+/m,
 				lookbehind: true,
-				inside: {
-					rest: Prism.languages.javascript
-				}
+				inside: Prism.languages.javascript
 			}
 		],
 		'punctuation': /[.\-!=|]+/
@@ -176,7 +164,7 @@ define(["prism/prism","prism/components/prism-markup","prism/components/prism-ja
 		filter = typeof filter === 'string' ? {filter: filter, language: filter} : filter;
 		if (Prism.languages[filter.language]) {
 			all_filters['filter-' + filter.filter] = {
-				pattern: RegExp(filter_pattern.replace('{{filter_name}}', filter.filter), 'm'),
+				pattern: RegExp(filter_pattern.replace('{{filter_name}}', function () { return filter.filter; }), 'm'),
 				lookbehind: true,
 				inside: {
 					'filter-name': {
