@@ -38,7 +38,7 @@
 						<div class="notificationSettingsEmail">
 							{if $event->supportsEmailNotification()}
 								<input type="hidden" id="settings_{$event->eventID}_mailNotificationType" name="settings[{@$event->eventID}][mailNotificationType]" value="{$settings[$event->eventID][mailNotificationType]}">
-								<a href="#" class="notificationSettingsEmailType" role="button" aria-label="{lang}wcf.user.notification.mailNotificationType.{@$settings[$event->eventID][mailNotificationType]}{/lang}" data-object-id="{@$event->eventID}">
+								<a href="#" class="notificationSettingsEmailType jsTooltip" role="button" title="{lang}wcf.user.notification.mailNotificationType.{@$settings[$event->eventID][mailNotificationType]}{/lang}" data-object-id="{@$event->eventID}">
 									{if $settings[$event->eventID][mailNotificationType] === 'none'}
 										<span class="icon icon24 fa-times red jsIconNotificationSettingsEmailType"></span>
 									{else}

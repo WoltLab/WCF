@@ -96,11 +96,7 @@ define(['Language', 'Ui/ReusableDropdown'], function (Language, UiReusableDropdo
 			this._getEmailTypeInputElement().value = value;
 			
 			var button = elBySel('.notificationSettingsEmailType[data-object-id="' + _objectId + '"]');
-			elAttr(
-				button,
-				'aria-label',
-				Language.get('wcf.user.notification.mailNotificationType.' + value)
-			);
+			button.title = Language.get('wcf.user.notification.mailNotificationType.' + value);
 			
 			var icon = elBySel('.jsIconNotificationSettingsEmailType', button);
 			icon.classList.remove('fa-clock-o');
