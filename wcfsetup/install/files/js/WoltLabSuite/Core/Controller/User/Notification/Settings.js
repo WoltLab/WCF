@@ -24,9 +24,24 @@ define(['Language', 'Ui/ReusableDropdown'], function (Language, UiReusableDropdo
 		 * Binds event listeners for all notifications supporting emails.
 		 */
 		init: function () {
+			elBySelAll('.jsCheckboxNotificationSettingsState', undefined, (function (checkbox) {
+				checkbox.addEventListener('change', this._stateChange.bind(this));
+			}).bind(this));
+			
 			elBySelAll('.notificationSettingsEmailType', undefined, (function (button) {
 				button.addEventListener('click', this._click.bind(this));
 			}).bind(this));
+		},
+		
+		/**
+		 * @param {Event} event
+		 */
+		_stateChange: function (event) {
+			var objectId = elData(event.currentTarget, 'object-id');
+			var emailSettingsType = elBySel('.notificationSettingsEmailType[data-object-id="' + objectId + '"]');
+			if (emailSettingsType !== null) {
+				emailSettingsType.classList[event.currentTarget.checked ? 'remove' : 'add']('disabled');
+			}
 		},
 		
 		/**
