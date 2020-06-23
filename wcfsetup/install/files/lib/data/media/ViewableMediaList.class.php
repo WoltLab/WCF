@@ -23,13 +23,19 @@ class ViewableMediaList extends MediaList {
 	public $decoratorClassName = ViewableMedia::class;
 	
 	/**
-	 * @inheritDoc
+	 * Creates a new ViewableMediaList object.
+	 *
+	 * @param       int|null        $languageID
 	 */
-	public function __construct() {
+	public function __construct($languageID = null) {
 		parent::__construct();
 		
+		if ($languageID === null) {
+			$languageID = WCF::getLanguage()->languageID;
+		}
+		
 		// fetch content data
-		$this->sqlSelects .= "media_content.*, COALESCE(media.languageID, ".WCF::getLanguage()->languageID.") AS localizedLanguageID";
-		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_media_content media_content ON (media_content.mediaID = media.mediaID AND media_content.languageID = COALESCE(media.languageID, ".WCF::getLanguage()->languageID."))";
+		$this->sqlSelects .= "media_content.*, COALESCE(media.languageID, ".$languageID.") AS localizedLanguageID";
+		$this->sqlJoins .= " LEFT JOIN wcf".WCF_N."_media_content media_content ON (media_content.mediaID = media.mediaID AND media_content.languageID = COALESCE(media.languageID, ".$languageID."))";
 	}
 }
