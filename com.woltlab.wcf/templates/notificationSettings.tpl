@@ -20,8 +20,8 @@
 			<div class="notificationSettings">
 				<div class="notificationSettingsCategory">
 					<div class="notificationSettingsEvent">{lang}wcf.user.notification.{$eventCategory}{/lang}</div>
-					<div class="notificationSettingsState">Aktiv</div>
-					<div class="notificationSettingsEmail">E-Mail</div>
+					<div class="notificationSettingsState">{lang}wcf.user.notification.status.active{/lang}</div>
+					<div class="notificationSettingsEmail">{lang}wcf.user.notification.status.email{/lang}</div>
 				</div>
 				{foreach from=$eventList item=event}
 					<div class="notificationSettingsItem">
