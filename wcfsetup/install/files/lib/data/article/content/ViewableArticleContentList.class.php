@@ -42,9 +42,14 @@ class ViewableArticleContentList extends ArticleContentList {
 			}
 		}
 		
+		$contentLanguageID = null;
+		if (count($this->objects) === 1) {
+			$contentLanguageID = reset($this->objects)->languageID;
+		}
+		
 		// cache images
 		if (!empty($imageIDs)) {
-			$mediaList = new ViewableMediaList();
+			$mediaList = new ViewableMediaList($contentLanguageID);
 			$mediaList->setObjectIDs($imageIDs);
 			$mediaList->readObjects();
 			$images = $mediaList->getObjects();
@@ -61,9 +66,6 @@ class ViewableArticleContentList extends ArticleContentList {
 		
 		// load embedded objects
 		if (!empty($embeddedObjectPostIDs)) {
-			$contentLanguageID = null;
-			if (count($embeddedObjectPostIDs) === 1) $contentLanguageID = reset($this->objects)->languageID;
-			
 			MessageEmbeddedObjectManager::getInstance()->loadObjects('com.woltlab.wcf.article.content', $embeddedObjectPostIDs, $contentLanguageID);
 		}
 	}
