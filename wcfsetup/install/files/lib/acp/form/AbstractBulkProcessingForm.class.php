@@ -164,6 +164,10 @@ abstract class AbstractBulkProcessingForm extends AbstractForm {
 				}
 			}
 		}
+		
+		// Set a limit to avoid the 'Prepared statement contains too many placeholders' error
+		$this->objectList->sqlLimit = 65000;
+		
 		$this->objectList->readObjects();
 		
 		// execute action
