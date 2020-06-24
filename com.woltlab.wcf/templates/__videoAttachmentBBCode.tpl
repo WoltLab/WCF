@@ -7,14 +7,16 @@
 </span>
 
 <script data-relocate="true">
-	{* try to determine if browser might be able to play video *}
-	var video = elById('attachmentVideo_{@$attachmentIdentifier}');
-	var canPlayType = elCreate('video').canPlayType('{$attachment->fileType}');
-	
-	if (canPlayType === '') {
-		elRemove(video);
-	}
-	else {
-		elShow(video);
-	}
+	(function () {
+		{* try to determine if browser might be able to play video *}
+		var video = elById('attachmentVideo_{@$attachmentIdentifier}');
+		var canPlayType = video.canPlayType('{$attachment->fileType}');
+		
+		if (canPlayType === '') {
+			elRemove(video);
+		}
+		else {
+			elShow(video);
+		}
+	})();
 </script>
