@@ -163,6 +163,12 @@ class AttachmentBBCode extends AbstractBBCode {
 					'attachmentIdentifier' => StringUtil::getRandomID(),
 				]);
 			}
+			else if (substr($attachment->fileType, 0, 6) === 'audio/' && $parser->getOutputType() == 'text/html') {
+				return WCF::getTPL()->fetch('__audioAttachmentBBCode', 'wcf', [
+					'attachment' => $attachment,
+					'attachmentIdentifier' => StringUtil::getRandomID(),
+				]);
+			}
 			else {
 				// file
 				return StringUtil::getAnchorTag($attachment->getLink(), $attachment->filename);
