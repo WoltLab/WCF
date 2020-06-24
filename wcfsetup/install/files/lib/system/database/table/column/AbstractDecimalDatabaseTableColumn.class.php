@@ -12,4 +12,16 @@ namespace wcf\system\database\table\column;
  */
 abstract class AbstractDecimalDatabaseTableColumn extends AbstractDatabaseTableColumn implements IDecimalsDatabaseTableColumn {
 	use TDecimalsDatabaseTableColumn;
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getDefaultValue() {
+		$defaultValue = parent::getDefaultValue();
+		if ($defaultValue === null) {
+			return $defaultValue;
+		}
+		
+		return number_format($defaultValue, $this->getDecimals() ?? 0, '.', '');
+	}
 }
