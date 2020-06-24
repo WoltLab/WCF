@@ -4796,6 +4796,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.trophy.condition.excludedTrophies"><![CDATA[Excluded Trophies]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophyCategories"><![CDATA[Excluded Trophy Categories]]></item>
 		<item name="wcf.user.trophy.trophyAwarded"><![CDATA[{if $items == 1}Awarded once{else}Awarded {#$items} times{/if}]]></item>
+		<item name="wcf.user.trophy.showMoreTrophies"><![CDATA[and {#$trophyCount} more]]></item>
 	</category>
 	<category name="wcf.acp.trophy">
 		<item name="wcf.acp.trophy"><![CDATA[Trophy]]></item>

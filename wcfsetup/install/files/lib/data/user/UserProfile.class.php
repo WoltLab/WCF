@@ -429,7 +429,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	}
 	
 	/**
-	 * Returns the special trophies for the user. 
+	 * Returns the special trophies for the user.
 	 *
 	 * @return	Trophy[]
 	 */
@@ -462,14 +462,14 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 			$conditionBuilder->add('trophyID IN (?)', [$trophyDeleteIDs]);
 			
 			// reset the user special trophies 
-			$sql = "DELETE FROM wcf".WCF_N."_user_special_trophy ".$conditionBuilder; 
+			$sql = "DELETE FROM wcf".WCF_N."_user_special_trophy ".$conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditionBuilder->getParameters());
 			
 			UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', serialize($specialTrophies));
 		}
 		$trophies = TrophyCache::getInstance()->getTrophiesByID($specialTrophies);
-		Trophy::sort($trophies, 'showOrder'); 
+		Trophy::sort($trophies, 'showOrder');
 		
 		return $trophies;
 	}
