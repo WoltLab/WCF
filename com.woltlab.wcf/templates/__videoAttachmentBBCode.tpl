@@ -1,8 +1,10 @@
-<span id="attachmentVideo_{@$attachmentIdentifier}" class="videoContainer" style="display: none;">
-	<video src="{$attachment->getLink()}" controls></video>
+<span class="mediaBBCode">
+	<video src="{$attachment->getLink()}" style="display: none;" id="attachmentVideo_{$attachmentIdentifier}" controls></video>
+	
+	<span class="mediaBBCodeCaption">
+		<a href="{$attachment->getLink()}">{$attachment->filename}</a>
+	</span>
 </span>
-
-<a id="attachmentVideoLink_{@$attachmentIdentifier}" href="{$attachment->getLink()}">{$attachment->filename}</a>
 
 <script data-relocate="true">
 	{* try to determine if browser might be able to play video *}
@@ -14,6 +16,5 @@
 	}
 	else {
 		elShow(video);
-		elRemove(elById('attachmentVideoLink_{@$attachmentIdentifier}'));
 	}
 </script>
