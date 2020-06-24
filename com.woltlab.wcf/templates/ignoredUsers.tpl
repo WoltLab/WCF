@@ -16,8 +16,8 @@
 			{foreach from=$objects item=user}
 				<li class="jsIgnoredUser">
 					<div class="box48">
-						<a href="{link controller='User' object=$user}{/link}" title="{$user->username}">{@$user->getAvatar()->getImageTag(48)}</a>
-							
+						{user object=$user type='avatar48' title=$user->username}
+						
 						<div class="details userInformation">
 							{include file='userInformationHeadline'}
 							

@@ -1,6 +1,7 @@
 <?php
 namespace wcf\data\language;
 use wcf\data\DatabaseObject;
+use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemAction;
 use wcf\system\language\LanguageFactory;
 use wcf\system\WCF;
 use wcf\util\StringUtil;
@@ -45,6 +46,12 @@ class Language extends DatabaseObject {
 	 * @var	integer
 	 */
 	public $packageID = PACKAGE_ID;
+	
+	/**
+	 * contains categories currently being loaded as array keys
+	 * @var	bool[]
+	 */
+	protected $categoriesBeingLoaded = [];
 	
 	/**
 	 * Returns the name of this language.
@@ -123,11 +130,10 @@ class Language extends DatabaseObject {
 			LOG_MISSING_LANGUAGE_ITEMS &&
 			preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
 		) {
-			$logFile = WCF_DIR . 'log/missingLanguageItems.txt';
-			\wcf\functions\exception\logThrowable(
-				new \Exception("Missing language item '{$item}'."),
-				$logFile
-			);
+			(new DevtoolsMissingLanguageItemAction([], 'logLanguageItem', [
+				'language' => $this,
+				'languageItem' => $item,
+			]))->executeAction();
 		}
 		
 		// return plain input
@@ -161,11 +167,10 @@ class Language extends DatabaseObject {
 			$staticItem === $item &&
 			preg_match('~^([a-zA-Z0-9-_]+\.)+[a-zA-Z0-9-_]+$~', $item)
 		) {
-			$logFile = WCF_DIR . 'log/missingLanguageItems.txt';
-			\wcf\functions\exception\logThrowable(
-				new \Exception("Missing language item '{$item}'."),
-				$logFile
-			);
+			(new DevtoolsMissingLanguageItemAction([], 'logLanguageItem', [
+				'language' => $this,
+				'languageItem' => $item,
+			]))->executeAction();
 		}
 		
 		return $staticItem;
@@ -210,6 +215,10 @@ class Language extends DatabaseObject {
 		// search language file
 		$filename = WCF_DIR.'language/'.$this->languageID.'_'.$category.'.php';
 		if (!@file_exists($filename)) {
+			if (isset($this->categoriesBeingLoaded[$category])) {
+				throw new \LogicException("Circular dependency detected! Cannot load category '{$category}' while it is already being loaded.");
+			}
+			
 			if ($this->editor === null) {
 				$this->editor = new LanguageEditor($this);
 			}
@@ -220,7 +229,11 @@ class Language extends DatabaseObject {
 				return false;
 			}
 			
+			$this->categoriesBeingLoaded[$category] = true;
+			
 			$this->editor->updateCategory($languageCategory);
+			
+			unset($this->categoriesBeingLoaded[$category]);
 		}
 		
 		// include language file

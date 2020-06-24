@@ -14,7 +14,6 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\option\user\group\IUserGroupGroupOptionType;
 use wcf\system\option\user\group\IUserGroupOptionType;
-use wcf\system\option\user\group\UserGroupOptionHandler;
 use wcf\system\WCF;
 use wcf\system\WCFACP;
 
@@ -22,7 +21,7 @@ use wcf\system\WCFACP;
  * Shows the user group option form to edit a single option.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Form
  */
@@ -118,7 +117,7 @@ class UserGroupOptionForm extends AbstractForm {
 		}
 		
 		// read accessible groups
-		$this->groups = UserGroup::getAccessibleGroups();
+		$this->groups = UserGroup::getSortedAccessibleGroups();
 		if ($this->userGroupOption->usersOnly) {
 			$guestGroup = UserGroup::getGroupByType(UserGroup::GUESTS);
 			if (isset($this->groups[$guestGroup->groupID])) {

@@ -13,7 +13,7 @@ use wcf\system\WCF;
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Box
  */
-class TagCloudBoxController extends AbstractBoxController {
+abstract class TagCloudBoxController extends AbstractBoxController {
 	/**
 	 * @inheritDoc
 	 */

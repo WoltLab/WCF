@@ -70,9 +70,11 @@ class Application extends DatabaseObject {
 	 * @inheritDoc
 	 */
 	public function __get($name) {
-		if (ENABLE_ENTERPRISE_MODE && defined('ENTERPRISE_MODE_DOMAIN_OVERRIDE') && ENTERPRISE_MODE_DOMAIN_OVERRIDE === $_SERVER['HTTP_HOST']) {
-			if ($name === 'cookieDomain' || $name === 'domainName') {
-				return ENTERPRISE_MODE_DOMAIN_OVERRIDE;
+		if (ENABLE_ENTERPRISE_MODE && defined('ENTERPRISE_MODE_DOMAIN_OVERRIDE') && PHP_SAPI !== 'cli') {
+			if (ENTERPRISE_MODE_DOMAIN_OVERRIDE === $_SERVER['HTTP_HOST']) {
+				if ($name === 'cookieDomain' || $name === 'domainName') {
+					return ENTERPRISE_MODE_DOMAIN_OVERRIDE;
+				}
 			}
 		}
 		

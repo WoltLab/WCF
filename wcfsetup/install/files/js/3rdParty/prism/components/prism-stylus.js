@@ -45,7 +45,7 @@ define(["prism/prism"], function () {
 
 	Prism.languages.stylus = {
 		'comment': {
-			pattern: /(^|[^\\])(\/\*[\s\S]*?\*\/|\/\/.*)/,
+			pattern: /(^|[^\\])(?:\/\*[\s\S]*?\*\/|\/\/.*)/,
 			lookbehind: true
 		},
 		'atrule-declaration': {
@@ -69,7 +69,7 @@ define(["prism/prism"], function () {
 			pattern: /(^[ \t]*)(?:if|else|for|return|unless)[ \t]+.+/m,
 			lookbehind: true,
 			inside: {
-				keyword: /^\S+/,
+				'keyword': /^\S+/,
 				rest: inside
 			}
 		},
@@ -77,7 +77,7 @@ define(["prism/prism"], function () {
 		// A property/value pair cannot end with a comma or a brace
 		// It cannot have indented content unless it ended with a semicolon
 		'property-declaration': {
-			pattern: /((?:^|\{)([ \t]*))(?:[\w-]|\{[^}\r\n]+\})+(?:\s*:\s*|[ \t]+)[^{\r\n]*(?:;|[^{\r\n,](?=$)(?!(\r?\n|\r)(?:\{|\2[ \t]+)))/m,
+			pattern: /((?:^|\{)([ \t]*))(?:[\w-]|\{[^}\r\n]+\})+(?:\s*:\s*|[ \t]+)[^{\r\n]*(?:;|[^{\r\n,](?=$)(?!(?:\r?\n|\r)(?:\{|\2[ \t]+)))/m,
 			lookbehind: true,
 			inside: {
 				'property': {
@@ -110,4 +110,5 @@ define(["prism/prism"], function () {
 		'punctuation': /[{}()\[\];:.]/
 	};
 }(Prism));
+
 return Prism; })

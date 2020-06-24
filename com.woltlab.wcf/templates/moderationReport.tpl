@@ -17,7 +17,7 @@
 				<dd>
 					<span>
 						{if $queue->assignedUserID}
-							<a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-user-id="{@$assignedUserID}">{$queue->assignedUsername}</a>
+							<a href="{link controller='User' id=$assignedUserID}{/link}" class="userLink" data-object-id="{@$assignedUserID}">{$queue->assignedUsername}</a>
 						{else}
 							{lang}wcf.moderation.assignedUser.nobody{/lang}
 						{/if}
@@ -55,22 +55,11 @@
 {include file='formError'}
 
 <section class="section">
-	<header class="sectionHeader">
-		<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedContent{/lang}</h2>
-		<p class="sectionDescription">{lang}wcf.moderation.type.{@$queue->getObjectTypeName()}{/lang}</p>
-	</header>
-	
-	{@$reportedContent}
-</section>
-
-<section class="section">
 	<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedBy{/lang}</h2>
 	
 	<div class="box32">
 		{if $reportUser->userID}
-			<a href="{link controller='User' object=$reportUser}{/link}" title="{$reportUser->username}">
-				{@$reportUser->getAvatar()->getImageTag(32)}
-			</a>
+			{user object=$reportUser type='avatar32' title=$reportUser->username}
 		{else}
 			<span>{@$reportUser->getAvatar()->getImageTag(32)}</span>
 		{/if}
@@ -79,7 +68,7 @@
 			<div class="containerHeadline">
 				<h3>
 					{if $reportUser->userID}
-						<a href="{link controller='User' object=$reportUser}{/link}" class="userLink" data-user-id="{@$reportUser->userID}">{$reportUser->username}</a>
+						{user object=$reportUser}
 					{else}
 						{lang}wcf.user.guest{/lang}
 					{/if}
@@ -91,6 +80,15 @@
 			<div class="containerContent">{@$queue->getFormattedMessage()}</div>
 		</div>
 	</div>
+</section>
+
+<section class="section">
+	<header class="sectionHeader">
+		<h2 class="sectionTitle">{lang}wcf.moderation.report.reportedContent{/lang}</h2>
+		<p class="sectionDescription">{lang}wcf.moderation.type.{@$queue->getObjectTypeName()}{/lang}</p>
+	</header>
+	
+	{@$reportedContent}
 </section>
 
 {include file='__commentJavaScript' commentContainerID='moderationQueueCommentList'}

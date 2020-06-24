@@ -4,6 +4,7 @@ use wcf\data\reaction\type\ReactionType;
 use wcf\data\reaction\type\ReactionTypeCache;
 use wcf\data\DatabaseObject;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Represents a like of an object.
@@ -34,6 +35,26 @@ class Like extends DatabaseObject {
 	 * @var	integer
 	 */
 	const DISLIKE = -1;
+	
+	/**
+	 * Returns the title of the associated reaction type.
+	 * 
+	 * @return      string
+	 * @since       5.3
+	 */
+	public function __toString() {
+		return $this->getReactionType()->getTitle();
+	}
+	
+	/**
+	 * Renders the like by showing the associated reaction type's icon.
+	 * 
+	 * @return      string
+	 * @since       5.3
+	 */
+	public function render() {
+		return '<span title="' . StringUtil::encodeHTML($this) . '" class="jsTooltip">' . $this->getReactionType()->renderIcon() . '</span>';
+	}
 	
 	/**
 	 * Returns the like with given type, object id and user id.

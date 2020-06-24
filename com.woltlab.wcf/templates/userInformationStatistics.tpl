@@ -3,7 +3,7 @@
 {event name='statistics'}
 
 {if MODULE_LIKE && $user->likesReceived}
-	<dt>{if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile') && !$user->isProtected()}<a href="{link controller='User' object=$user}{/link}#likes" class="jsTooltip" title="{lang}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.reactionsReceived{/lang}</a>{else}{lang}wcf.like.reactionsReceived{/lang}{/if}</dt>
+	<dt>{if $__wcf->getSession()->getPermission('user.profile.canViewUserProfile') && !$user->isProtected()}<a href="{$user->getLink()}#likes" class="jsTooltip" title="{lang}wcf.like.showLikesReceived{/lang}">{lang}wcf.like.reactionsReceived{/lang}</a>{else}{lang}wcf.like.reactionsReceived{/lang}{/if}</dt>
 	<dd>{#$user->likesReceived}</dd>
 {/if}
 

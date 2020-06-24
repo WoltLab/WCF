@@ -35,7 +35,10 @@ trait TUserOnlineLocationPageHandler {
 			return '';
 		}
 		
-		return WCF::getLanguage()->getDynamicVariable('wcf.page.onlineLocation.'.$page->identifier, ['user' => $userObject]);
+		return WCF::getLanguage()->getDynamicVariable('wcf.page.onlineLocation.'.$page->identifier, [
+			'user' => $userObject,
+			'userOnline' => $user,
+		]);
 	}
 	
 	/**

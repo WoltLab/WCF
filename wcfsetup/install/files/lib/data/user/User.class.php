@@ -1,5 +1,6 @@
 <?php
 namespace wcf\data\user;
+use wcf\data\IPopoverObject;
 use wcf\data\language\Language;
 use wcf\data\user\group\UserGroup;
 use wcf\data\DatabaseObject;
@@ -51,9 +52,7 @@ use wcf\util\UserUtil;
  * @property-read	integer		$enableGravatar			is `1` if the user uses a gravatar as avatar, otherwise `0`
  * @property-read	string		$gravatarFileExtension		extension of the user's gravatar file
  * @property-read	string		$signature			text of the user's signature
- * @property-read	integer		$signatureEnableBBCodes		is `1` if BBCodes will rendered in the user's signature, otherwise `0`
  * @property-read	integer		$signatureEnableHtml		is `1` if HTML will rendered in the user's signature, otherwise `0`
- * @property-read	integer		$signatureEnableSmilies		is `1` if smilies will rendered in the user's signature, otherwise `0`
  * @property-read	integer		$disableSignature		is `1` if the user's signature has been disabled, otherwise `0`
  * @property-read	string		$disableSignatureReason		reason why the user's signature is disabled
  * @property-read	integer		$disableSignatureExpires	timestamp at which the user's signature will automatically be enabled again
@@ -74,7 +73,7 @@ use wcf\util\UserUtil;
  * @property-read	integer		$articles			number of articles written by the user
  * @property-read       string          $blacklistMatches               JSON string of an array with all matches in the blacklist, otherwise an empty string 
  */
-final class User extends DatabaseObject implements IRouteController, IUserContent {
+final class User extends DatabaseObject implements IPopoverObject, IRouteController, IUserContent {
 	/**
 	 * list of group ids
 	 * @var integer[]
@@ -693,5 +692,12 @@ final class User extends DatabaseObject implements IRouteController, IUserConten
 	 */
 	public function mustSelfEmailConfirm() {
 		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER;
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function getPopoverLinkClass() {
+		return 'userLink';
 	}
 }

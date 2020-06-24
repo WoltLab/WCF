@@ -171,6 +171,26 @@ class PreparedStatement {
 	}
 	
 	/**
+	 * Fetches the next row from a result set in a database object.
+	 * Closes the 'cursor' afterwards to free up the connection
+	 * for new queries.
+	 * Note: It is not possible to fetch further rows after calling
+	 * this method!
+	 *
+	 * @param	string			$className
+	 * @return	DatabaseObject|null
+	 * @since       5.3
+	 */
+	public function fetchSingleObject($className) {
+		$row = $this->fetchSingleRow();
+		if ($row !== false) {
+			return new $className(null, $row);
+		}
+		
+		return null;
+	}
+	
+	/**
 	 * Fetches the all rows from a result set into database objects.
 	 * 
 	 * @param	string		$className

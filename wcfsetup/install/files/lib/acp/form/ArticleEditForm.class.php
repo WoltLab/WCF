@@ -28,6 +28,11 @@ class ArticleEditForm extends ArticleAddForm {
 	public $activeMenuItem = 'wcf.acp.menu.link.article.list';
 	
 	/**
+	 * @inheritDoc
+	 */
+	public $neededPermissions = [];
+	
+	/**
 	 * article id
 	 * @var	integer
 	 */

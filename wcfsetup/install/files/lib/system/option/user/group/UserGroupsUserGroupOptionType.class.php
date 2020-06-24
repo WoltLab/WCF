@@ -24,11 +24,7 @@ class UserGroupsUserGroupOptionType extends AbstractOptionType implements IUserG
 		$selectedGroups = explode(',', $value);
 		
 		// get all groups
-		$groups = UserGroup::getGroupsByType();
-		
-		usort($groups, function(UserGroup $groupA, UserGroup $groupB) {
-			return strcasecmp($groupA->getName(), $groupB->getName());
-		});
+		$groups = UserGroup::getSortedGroupsByType();
 		
 		// generate html
 		$html = '';

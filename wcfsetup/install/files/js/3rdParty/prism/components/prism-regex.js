@@ -1,4 +1,4 @@
-define(["prism/prism","prism/components/prism-actionscript","prism/components/prism-coffeescript","prism/components/prism-flow","prism/components/prism-javascript","prism/components/prism-typescript","prism/components/prism-vala"], function () {
+define(["prism/prism"], function () {
 (function (Prism) {
 
 	var specialEscape = {

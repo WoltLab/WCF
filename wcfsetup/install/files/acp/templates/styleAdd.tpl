@@ -294,9 +294,7 @@
 						<dd>
 							<select name="templateGroupID" id="templateGroupID">
 								<option value="0">{lang}wcf.acp.template.group.default{/lang}</option>
-								{foreach from=$availableTemplateGroups item=templateGroup}
-									<option value="{@$templateGroup->templateGroupID}"{if $templateGroup->templateGroupID == $templateGroupID} selected{/if}>{$templateGroup->getName()}</option>
-								{/foreach}
+							    	{htmlOptions options=$availableTemplateGroups selected=$templateGroupID disableEncoding=true}
 							</select>
 							{if $errorField == 'templateGroupID'}
 								<small class="innerError">
@@ -1020,6 +1018,7 @@
 							<dd>
 								<div dir="ltr">
 									<textarea id="individualScssCustom" rows="20" cols="40" name="individualScssCustom">{$variables[individualScssCustom]}</textarea>
+									<input class="codeMirrorScrollOffset" name="scrollOffsets[individualScssCustom]" value="{if $scrollOffsets[individualScssCustom]|isset}{$scrollOffsets[individualScssCustom]}{else}0{/if}" type="hidden">
 								</div>
 								<small>{lang}wcf.acp.style.advanced.individualScss.description{/lang}</small>
 							</dd>
@@ -1034,6 +1033,7 @@
 							<dd>
 								<div dir="ltr">
 									<textarea id="overrideScssCustom" rows="20" cols="40" name="overrideScssCustom">{$variables[overrideScssCustom]}</textarea>
+									<input class="codeMirrorScrollOffset" name="scrollOffsets[overrideScssCustom]" value="{if $scrollOffsets[overrideScssCustom]|isset}{$scrollOffsets[overrideScssCustom]}{else}0{/if}" type="hidden">
 								</div>
 								{if $errorField == 'overrideScssCustom'}
 									<small class="innerError">
@@ -1062,6 +1062,7 @@
 					<dd>
 						<div dir="ltr">
 							<textarea id="individualScss" rows="20" cols="40" name="individualScss">{$variables[individualScss]}</textarea>
+							<input class="codeMirrorScrollOffset" name="scrollOffsets[individualScss]" value="{if $scrollOffsets[individualScss]|isset}{$scrollOffsets[individualScss]}{else}0{/if}" type="hidden">
 						</div>
 						<small>{lang}wcf.acp.style.advanced.individualScss.description{/lang}</small>
 					</dd>
@@ -1076,6 +1077,7 @@
 					<dd>
 						<div dir="ltr">
 							<textarea id="overrideScss" rows="20" cols="40" name="overrideScss">{$variables[overrideScss]}</textarea>
+							<input class="codeMirrorScrollOffset" name="scrollOffsets[overrideScss]" value="{if $scrollOffsets[overrideScss]|isset}{$scrollOffsets[overrideScss]}{else}0{/if}" type="hidden">
 						</div>
 						{if $errorField == 'overrideScss'}
 							<small class="innerError">

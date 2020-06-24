@@ -1,4 +1,4 @@
-define(["prism/prism","prism/components/prism-javascript","prism/components/prism-javadoclike","prism/components/prism-actionscript","prism/components/prism-coffeescript"], function () {
+define(["prism/prism","prism/components/prism-javascript","prism/components/prism-javadoclike"], function () {
 (function (Prism) {
 
 	var javascript = Prism.languages.javascript;

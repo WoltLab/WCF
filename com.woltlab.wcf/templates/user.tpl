@@ -197,12 +197,15 @@
 			</h1>
 			
 			<div class="contentHeaderDescription">
-				{if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies') && ($user->isAccessible('canViewTrophies') || $user->userID == $__wcf->session->userID) && $user->getSpecialTrophies()|count}
+				{if MODULE_TROPHY && $__wcf->session->getPermission('user.profile.trophy.canSeeTrophies') && ($user->isAccessible('canViewTrophies') || $user->userID == $__wcf->session->userID) && $specialTrophyCount}
 					<div class="specialTrophyUserContainer">
 						<ul>
 							{foreach from=$user->getSpecialTrophies() item=trophy}
 								<li><a href="{@$trophy->getLink()}">{@$trophy->renderTrophy(32, true)}</a></li>
 							{/foreach}
+							{if $user->trophyPoints > $specialTrophyCount}
+								<li><a href="#" class="jsTooltip userTrophyOverlayList" data-user-id="{$user->userID}" title="{lang}wcf.user.trophy.showTrophies{/lang}" role="button">{lang trophyCount=$user->trophyPoints-$specialTrophyCount}wcf.user.trophy.showMoreTrophies{/lang}</a></li>
+							{/if}
 						</ul>
 					</div>
 				{/if}
@@ -273,8 +276,6 @@
 								{if $user->userID != $__wcf->user->userID}
 									{if $user->isAccessible('canViewEmailAddress') || $__wcf->session->getPermission('admin.user.canEditMailAddress')}
 										<li><a href="mailto:{@$user->getEncodedEmail()}">{lang}wcf.user.button.mail{/lang}</a></li>
-									{elseif $user->isAccessible('canMail') && $__wcf->session->getPermission('user.profile.canMail')}
-										<li><a href="{link controller='Mail' object=$user}{/link}">{lang}wcf.user.button.mail{/lang}</a></li>
 									{/if}
 								{/if}
 								

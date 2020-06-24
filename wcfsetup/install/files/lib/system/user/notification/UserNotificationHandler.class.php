@@ -9,6 +9,8 @@ use wcf\data\user\notification\UserNotificationAction;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
+use wcf\system\background\job\NotificationEmailDeliveryBackgroundJob;
+use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\cache\builder\UserNotificationEventCacheBuilder;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
@@ -726,7 +728,11 @@ class UserNotificationHandler extends SingletonFactory {
 			]));
 		}
 		
-		$email->send();
+		$jobs = $email->getJobs();
+		foreach ($jobs as $job) {
+			$wrappedJob = new NotificationEmailDeliveryBackgroundJob($job, $notification, $user);
+			BackgroundQueueHandler::getInstance()->enqueueIn($wrappedJob);
+		}
 	}
 	
 	/**

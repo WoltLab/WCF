@@ -39,18 +39,20 @@
 {/hascontent}
 
 {if $objects|count}
-	<ol class="section containerList trophyCategoryList tripleColumned">
-		{foreach from=$objects item=userTrophy}
-			<li class="box64">
-				<div>{@$userTrophy->getUserProfile()->getAvatar()->getImageTag(64)}</div>
-
-				<div class="sidebarItemTitle">
-					<h3>{@$userTrophy->getUserProfile()->getAnchorTag()}</h3>
-					<small>{if !$userTrophy->getDescription()|empty}<span class="separatorRight">{@$userTrophy->getDescription()}</span> {/if}{@$userTrophy->time|time}</small>
-				</div>
-			</li>
-		{/foreach}
-	</ol>
+	<div class="section sectionContainerList">
+		<ol class="containerList trophyCategoryList doubleColumned">
+			{foreach from=$objects item=userTrophy}
+				<li class="box64">
+					<div>{@$userTrophy->getUserProfile()->getAvatar()->getImageTag(64)}</div>
+	
+					<div class="containerHeadline">
+						<h3>{user object=$userTrophy->getUserProfile()}</h3>
+						<small>{if !$userTrophy->getDescription()|empty}<span class="separatorRight">{@$userTrophy->getDescription()}</span> {/if}{@$userTrophy->time|time}</small>
+					</div>
+				</li>
+			{/foreach}
+		</ol>
+	</div>
 {else}
 	<p class="info" role="status">{lang}wcf.global.noItems{/lang}</p>
 {/if}

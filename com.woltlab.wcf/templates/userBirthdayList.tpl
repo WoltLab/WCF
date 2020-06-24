@@ -4,11 +4,11 @@
 			{foreach from=$users item=user}
 				<li data-object-id="{@$user->userID}">
 					<div class="box48">
-						<a href="{link controller='User' object=$user}{/link}" title="{$user->username}" aria-hidden="true">{@$user->getAvatar()->getImageTag(48)}</a>
+						{user object=$user type='avatar48' title=$user->username ariaHidden='true'}
 						
 						<div class="details userInformation">
 							<div class="containerHeadline">
-								<h3><a href="{link controller='User' object=$user}{/link}">{$user->username}</a>{if MODULE_USER_RANK}
+								<h3>{user object=$user}{if MODULE_USER_RANK}
 									{if $user->getUserTitle()}
 										<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>
 									{/if}

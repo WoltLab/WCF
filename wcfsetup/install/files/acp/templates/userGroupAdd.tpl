@@ -4,7 +4,7 @@
 	$(function() {
 		new WCF.Option.Handler();
 		
-		{if $action == 'edit' && $group->groupType == 4 && $__wcf->session->getPermission('admin.user.canAddGroup')}
+		{if $action == 'edit' && $group->canCopy()}
 			WCF.Language.addObject({
 				'wcf.acp.group.copy.confirmMessage': '{lang}wcf.acp.group.copy.confirmMessage{/lang}',
 				'wcf.acp.group.copy.copyACLOptions': '{lang}wcf.acp.group.copy.copyACLOptions{/lang}',
@@ -53,7 +53,7 @@
 					</li>
 				{/if}
 				
-				{if $__wcf->session->getPermission('admin.user.canAddGroup') && $group->groupType == 4}
+				{if $group->canCopy()}
 					<li><a class="jsButtonUserGroupCopy button"><span class="icon icon16 fa-copy"></span> <span>{lang}wcf.acp.group.button.copy{/lang}</span></a></li>
 				{/if}
 			{/if}

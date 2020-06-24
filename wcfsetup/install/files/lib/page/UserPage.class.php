@@ -94,7 +94,7 @@ class UserPage extends AbstractPage {
 		
 		if (isset($_REQUEST['editOnInit'])) $this->editOnInit = true;
 		
-		$this->canonicalURL = LinkHandler::getInstance()->getLink('User', ['object' => $this->user]);
+		$this->canonicalURL = $this->user->getLink();
 	}
 	
 	/**
@@ -163,7 +163,8 @@ class UserPage extends AbstractPage {
 			'visitors' => $this->visitorList !== null ? $this->visitorList->getObjects() : [],
 			'visitorCount' => $this->visitorList !== null ? $this->visitorList->countObjects() : 0,
 			'isAccessible' => UserGroup::isAccessibleGroup($this->user->getGroupIDs()),
-			'coverPhotoDimensions' => UserCoverPhoto::getCoverPhotoDimensions()
+			'coverPhotoDimensions' => UserCoverPhoto::getCoverPhotoDimensions(),
+			'specialTrophyCount' => (MODULE_TROPHY ? count($this->user->getSpecialTrophies()) : 0),
 		]);
 	}
 	

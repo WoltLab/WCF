@@ -626,21 +626,22 @@ class CommentAction extends AbstractDatabaseObjectAction implements IMessageInli
 					$recipientIDs = array_diff($recipientIDs, [WCF::getUser()->userID]);
 					
 					if ($notificationObjectType instanceof IMultiRecipientCommentResponseOwnerUserNotificationObjectType) {
-						if ($notificationObjectType->getCommentOwnerID($comment)) {
+						$userID = $notificationObjectType->getCommentOwnerID($comment);
+						if ($userID && $userID != WCF::getUser()->userID) {
 							UserNotificationHandler::getInstance()->fireEvent(
 								'commentResponseOwner',
 								$objectType->objectType . '.response.notification',
 								$notificationObject,
-								[$notificationObjectType->getCommentOwnerID($comment)],
+								[$userID],
 								[
 									'commentID' => $comment->commentID,
 									'objectID' => $comment->objectID,
-									'objectUserID' => $notificationObjectType->getCommentOwnerID($comment),
+									'objectUserID' => $userID,
 									'userID' => $comment->userID
 								]
 							);
 							
-							$recipientIDs = array_diff($recipientIDs, [$notificationObjectType->getCommentOwnerID($comment)]);
+							$recipientIDs = array_diff($recipientIDs, [$userID]);
 						}
 					}
 					

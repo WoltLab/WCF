@@ -1595,6 +1595,22 @@
 			<classname>wcf\system\condition\user\trophy\UserTrophyExcludedTrophyCategoriesCondition</classname>
 		</type>
 		<!-- /trophy list box condition -->
+		<!-- today's birthday list box condition -->
+		<type>
+			<name>com.woltlab.wcf.lastActivityTimeIntervalDays</name>
+			<definitionname>com.woltlab.wcf.box.todaysBirthdays.condition</definitionname>
+			<classname>wcf\system\condition\user\UserLastActivityTimeIntervalDaysCondition</classname>
+			<ignoreZeroTime>1</ignoreZeroTime>
+		</type>
+		<!-- /today's birthday box condition -->
+		<!-- today's birthday of followed users list box condition -->
+		<type>
+			<name>com.woltlab.wcf.lastActivityTimeIntervalDays</name>
+			<definitionname>com.woltlab.wcf.box.todaysFollowingBirthdays.condition</definitionname>
+			<classname>wcf\system\condition\user\UserLastActivityTimeIntervalDaysCondition</classname>
+			<ignoreZeroTime>1</ignoreZeroTime>
+		</type>
+		<!-- /today's birthday of followed box condition -->
 		<!-- user list box condition -->
 		<type>
 			<name>com.woltlab.wcf.userGroup</name>

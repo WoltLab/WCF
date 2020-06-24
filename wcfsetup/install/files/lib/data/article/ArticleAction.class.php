@@ -307,6 +307,22 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 				ArticleEditor::updateArticleCounter($usersToArticles);
 			}
 		}
+		
+		// update author in recent activities
+		if (isset($this->parameters['data']['userID'])) {
+			$sql = "UPDATE wcf".WCF_N."_user_activity_event SET userID = ? WHERE objectTypeID = ? AND objectID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			
+			foreach ($this->objects as $articleEditor) {
+				if ($articleEditor->userID != $this->parameters['data']['userID']) {
+					$statement->execute([
+						$this->parameters['data']['userID'],
+						UserActivityEventHandler::getInstance()->getObjectTypeID('com.woltlab.wcf.article.recentActivityEvent'),
+						$articleEditor->articleID,
+					]);
+				}
+			}
+		}
 	}
 	
 	/**

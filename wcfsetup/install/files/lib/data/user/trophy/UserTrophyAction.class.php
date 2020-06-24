@@ -60,7 +60,7 @@ class UserTrophyAction extends AbstractDatabaseObjectAction {
 			// checks if the user still has space to add special trophies
 			if (count($userTrophy->getUserProfile()->getSpecialTrophies()) < $userTrophy->getUserProfile()->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
 				$hasTrophy = false;
-				foreach (UserTrophyList::getUserTrophies([WCF::getUser()->userID])[WCF::getUser()->userID] as $trophy) {
+				foreach (UserTrophyList::getUserTrophies([$userTrophy->getUserProfile()->userID])[$userTrophy->getUserProfile()->userID] as $trophy) {
 					if ($trophy->trophyID == $userTrophy->trophyID && $trophy->userTrophyID !== $userTrophy->userTrophyID) {
 						$hasTrophy = true; 
 						break; 

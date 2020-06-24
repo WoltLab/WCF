@@ -576,6 +576,15 @@
 		<item name="wcf.acp.devtools.project.edit.error.brokenPath"><![CDATA[There is no <kbd>package.xml</kbd> in the given directory. The package files have either been deleted or moved.]]></item>
 		<item name="wcf.acp.devtools.project.edit.warning.missingElements"><![CDATA[The following information is missing from the <kbd>package.xml</kbd> file: {implode from=$missingElements item=missingElement}<kbd>{$missingElement}</kbd>{/implode}.]]></item>
 		<item name="wcf.acp.devtools.project.license"><![CDATA[License]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.languageID"><![CDATA[Language]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.languageItem"><![CDATA[Name of Phrase]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.lastTime"><![CDATA[Time of Last Occurence]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.delete.confirmMessage"><![CDATA[Do you really want to delete the entry?]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.stackTrace"><![CDATA[Stacktrace]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.showStackTrace"><![CDATA[Show Stacktrace]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.clearLog"><![CDATA[Delete all entries]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.clearLog.confirmMessage"><![CDATA[Do you really want to delete all entries?]]></item>
+		<item name="wcf.acp.devtools.missingLanguageItem.stackTrace.toggleOutputFormat"><![CDATA[Toggle line breaks]]></item>
 	</category>
 	<category name="wcf.acp.email">
 		<item name="wcf.acp.email.smtp.test"><![CDATA[SMTP Connection Test]]></item>
@@ -733,7 +742,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.user.profile.avatar.maxSize"><![CDATA[Maximum Image File Size]]></item>
 		<item name="wcf.acp.group.option.user.profile.canChangeEmail"><![CDATA[Can change their email address]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserTitle"><![CDATA[Can edit their user title]]></item>
-		<item name="wcf.acp.group.option.user.profile.canMail"><![CDATA[Can send emails to users]]></item>
 		<item name="wcf.acp.group.option.user.profile.canQuit"><![CDATA[Can delete their user account]]></item>
 		<item name="wcf.acp.group.option.user.profile.canRename"><![CDATA[Can change their username]]></item>
 		<item name="wcf.acp.group.option.user.profile.canViewMembersList"><![CDATA[Can view members list]]></item>
@@ -744,8 +752,8 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.user.signature.disallowedBBCodes.description"><![CDATA[Selected BBCodes <em>cannot</em> be used in the signature.]]></item>
 		<item name="wcf.acp.group.priority"><![CDATA[Priority]]></item>
 		<item name="wcf.acp.group.priority.description"><![CDATA[Determines the display order on the team page, user rank, and ‘users online’ marking based on highest priority.]]></item>
-		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[Users Online Marking]]></item>
-		<item name="wcf.acp.group.userOnlineMarking.description"><![CDATA[Adjust the HTML formatting for members of this user group in the ‘users online’ list. <em>&lt;strong&gt;%s&lt;/strong&gt;</em> results in a bolder appearance.]]></item>
+		<item name="wcf.acp.group.userOnlineMarking"><![CDATA[User Marking]]></item>
+		<item name="wcf.acp.group.userOnlineMarking.description"><![CDATA[Adjust the HTML formatting for members of this user group. <em>&lt;strong&gt;%s&lt;/strong&gt;</em> results in a bolder appearance.]]></item>
 		<item name="wcf.acp.group.userOnlineMarking.error.invalid"><![CDATA[There must be an occurrence of “%s”.]]></item>
 		<item name="wcf.acp.group.showOnTeamPage"><![CDATA[Display members on team page]]></item>
 		<item name="wcf.acp.group.option.admin.user.canEnableUser"><![CDATA[Can approve users]]></item>
@@ -860,6 +868,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.user.contactForm.attachment.allowedExtensions.description"><![CDATA[Enter one extension per line.]]></item>
 		<item name="wcf.acp.group.option.user.contactForm.attachment.maxCount"><![CDATA[Maximum Attachments per Message]]></item>
 		<item name="wcf.acp.group.option.user.profile.canEditUserProfile"><![CDATA[Can edit their profile]]></item>
+		<item name="wcf.acp.group.option.user.profile.canHideOnlineStatus"><![CDATA[Can hide their online status]]></item>
 		<item name="wcf.acp.group.allowMention"><![CDATA[User group can be mentioned]]></item>
 		<item name="wcf.acp.group.type.owner"><![CDATA[Owner]]></item>
 		<item name="wcf.acp.group.type.owner.description"><![CDATA[The owner group features a few irrevocable permissions and is protected from edits by other groups, only the owner group can edit itself. Members of this group can add other users to this group, but cannot remove themselves.]]></item>
@@ -906,7 +915,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.index.woltlab.pluginStore"><![CDATA[Plugin Store]]></item>
 		<item name="wcf.acp.index.tinyBuild"><![CDATA[The accelerated guest view improves the page responsiveness and loading times for both visitors and search engines alike, please consider <a href="{link controller='Option' id=1 optionName="visitor_use_tiny_build"}#category_module.system{/link}">enabling it</a>.]]></item>
 		<item name="wcf.acp.index.recaptchaWithoutKey"><![CDATA[Using reCAPTCHA without an individual website key is no longer supported by Google.<br><br>For further use you need to <a href="{$recaptchaKeyLink}">provide a key in your options</a>, please follow the instructions below the input field to obtain a key.]]></item>
-		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Missing language items have been detected (last time: {@$missingLanguageItemsMTime|time}). Check the file <kbd>{'WCF_DIR'|constant}log/missingLanguageItems.txt</kbd> for more information.]]></item>
+		<item name="wcf.acp.index.missingLanguageItems"><![CDATA[Missing language items have been detected (last time: {@$missingLanguageItemsMTime|time}). Check the <a href="{link controller='DevtoolsMissingLanguageItemList'}{/link}">list of missing phrases</a> for more information.]]></item>
 	</category>
 	<category name="wcf.acp.label">
 		<item name="wcf.acp.label.add"><![CDATA[Add Label]]></item>
@@ -1164,6 +1173,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.menu.link.reactionType.edit"><![CDATA[Edit Reaction Type]]></item>
 		<item name="wcf.acp.menu.link.language.item.add"><![CDATA[Add Phrase]]></item>
 		<item name="wcf.acp.menu.link.systemCheck"><![CDATA[System Check]]></item>
+		<item name="wcf.acp.menu.link.devtools.missingLanguageItem.list"><![CDATA[Missing Phrases]]></item>
 	</category>
 	<category name="wcf.acp.modificationLog">
 		<item name="wcf.acp.modificationLog.list"><![CDATA[Global Modification Log]]></item>
@@ -1384,7 +1394,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type"><![CDATA[File type]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type.jpeg"><![CDATA[JPEG (lossy, usually the generated files are small)]]></item>
 		<item name="wcf.acp.option.attachment_image_autoscale_file_type.keep"><![CDATA[Keep the file type]]></item>
-		<item name="wcf.acp.option.module_attachment"><![CDATA[Attachments]]></item>
 		<item name="wcf.acp.option.module_smiley"><![CDATA[Smilies]]></item>
 		<item name="wcf.acp.option.category.message.censorship"><![CDATA[Censorship]]></item>
 		<item name="wcf.acp.option.censored_words"><![CDATA[Censored Words]]></item>
@@ -1547,7 +1556,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.google_maps_default_longitude"><![CDATA[Default Map Position (Longitude)]]></item>
 		<item name="wcf.acp.option.google_maps_access_user_location"><![CDATA[Use current user location]]></item>
 		<item name="wcf.acp.option.google_maps_access_user_location.description"><![CDATA[When entering a location, the current location of the user is used as start point on the map.]]></item>
-		<item name="wcf.acp.option.message_sidebar_enable_user_online_marking"><![CDATA[Apply the users online marking for usernames]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page"><![CDATA[Enable explanation on cookie usage]]></item>
 		<item name="wcf.acp.option.module_cookie_policy_page.description"><![CDATA[Displays a notice on cookie usage according to EU Directive 2009/136/EG upon first visit.]]></item>
 		<item name="wcf.acp.option.show_update_notice_frontend"><![CDATA[Display a notice for outstanding updates on the frontend]]></item>
@@ -1740,6 +1748,9 @@ The database is carefully maintained, but there will be always be a margin of er
 		<item name="wcf.acp.option.blacklist_sfs_action.description"><![CDATA[There is always the risk of a false-positive match, therefore it is highly recommended to set it to <strong>Disable and require manual approval</strong>.]]></item>
 		<item name="wcf.acp.option.blacklist_sfs_action.disable"><![CDATA[Disable and require manual approval]]></item>
 		<item name="wcf.acp.option.module_amp"><![CDATA[<abbr title="Accelerated Mobile Pages">AMP</abbr>]]></item>
+		<item name="wcf.acp.option.message_enable_user_consent"><![CDATA[Prompt users before displaying content from external sources]]></item>
+		<item name="wcf.acp.option.modification_log_expiration"><![CDATA[Storage Time for Modification Logs]]></item>
+		<item name="wcf.acp.option.modification_log_expiration.description"><![CDATA[Modification logs will be deleted after the entered amount of days. To disable deleting old modification logs, enter “0”.]]></item>
 	</category>
 	<category name="wcf.acp.customOption">
 		<item name="wcf.acp.customOption.list"><![CDATA[Option Fields]]></item>
@@ -2611,7 +2622,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.sitemap.rebuildTime.description"><![CDATA[Time interval after which the sitemap has to be rebuilt.]]></item>
 		<item name="wcf.acp.sitemap.isDisabled"><![CDATA[Disable Sitemap]]></item>
 		<item name="wcf.acp.sitemap.edit"><![CDATA[Edit Sitemap]]></item>
-		<item name="wcf.acp.sitemap.cliInfo"><![CDATA[You can rebuild the sitemap using CLI. For that, execute <kbd>worker wcf\system\worker\SitemapRebuildWorker</kbd> in a CLI session.]]></item>
+		<item name="wcf.acp.sitemap.cliInfo"><![CDATA[You can rebuild the sitemap using CLI. For that, execute <kbd>worker wcf\\system\\worker\\SitemapRebuildWorker</kbd> in a CLI session.]]></item>
 		<item name="wcf.acp.sitemap.submitToSearchEngines"><![CDATA[<p>The generated sitemap needs to be submitted once to the search engines, please provide this link: <kbd>{$__wcf->getPath()}sitemaps/sitemap.xml</kbd>.</p>
 <p><br></p>
 <p>Instructions for submitting the sitemap:</p>
@@ -3180,8 +3191,8 @@ full extend.]]></item>
 		<item name="wcf.article.publicationStatus.2"><![CDATA[This article will be published on {@$publicationDate|plainTime}.]]></item>
 		<item name="wcf.article.like.notification.title"><![CDATA[Reaction to your article]]></item>
 		<item name="wcf.article.like.notification.title.stacked"><![CDATA[{#$count} users reacted to your article]]></item>
-		<item name="wcf.article.like.notification.message"><![CDATA[{@$author->getAnchorTag()} reacted to your article <a href="{$article->getLink()}">{$article->getTitle()}</a> ({implode from=$reactions key=reactionID item=count}{@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}×{#$count}{/implode}).]]></item>
-		<item name="wcf.article.like.notification.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} reacted to article <a href="{$article->getLink()}">{$article->getTitle()}</a> ({implode from=$reactions key=reactionID item=count}{@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}×{#$count}{/implode}).]]></item>
+		<item name="wcf.article.like.notification.message"><![CDATA[<strong>{$author}</strong> reacted to your article <strong>{$article->getTitle()}</strong> ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+		<item name="wcf.article.like.notification.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} reacted to article <strong>{$article->getTitle()}</strong> ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 	</category>
 	<category name="wcf.attachment">
 		<item name="wcf.attachment.file.info"><![CDATA[({@$attachment->filesize|filesize}, downloaded <b>{#$attachment->downloads}</b> times{if $attachment->downloads > 0}, last: {@$attachment->lastDownloadTime|time}{/if})]]></item>
@@ -3437,7 +3448,7 @@ Attachments:
 		<item name="wcf.date.interval.weeks.past"><![CDATA[{if $weeks > 1}{#$weeks} weeks{else}A week{/if} ago]]></item>
 		<item name="wcf.date.interval.years.past"><![CDATA[{if $years > 1}{#$years} years{else}A year{/if} ago]]></item>
 		<item name="wcf.date.interval.days.past.inSentence"><![CDATA[{if $days > 1}{#$days} days{else}a day{/if} ago]]></item>
-		<item name="wcf.date.interval.full.past.inSentence"><![CDATA[{if $years}{if $years > 1}{#$years} years{else}a year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{if $months > 1}{#$months} months{else}a month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}{if $firstElement == 'weeks'}a{else}a{/if} week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}{if $firstElement == 'days'}{else}a{/if} day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}{if $firstElement == 'hours'}an{else}an{/if} hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}{if $firstElement == 'minutes'}a{else}a{/if} minute{/if}{/if} ago]]></item>
+		<item name="wcf.date.interval.full.past.inSentence"><![CDATA[{if $years}{if $years > 1}{#$years} years{else}a year{/if}{/if}{if $months}{if $firstElement != 'months'}{if $lastElement == 'months'} and {else}, {/if}{/if}{if $months > 1}{#$months} months{else}a month{/if}{/if}{if $weeks}{if $firstElement != 'weeks'}{if $lastElement == 'weeks'} and {else}, {/if}{/if}{if $weeks > 1}{#$weeks} weeks{else}a week{/if}{/if}{if $days}{if $firstElement != 'days'}{if $lastElement == 'days'} and {else}, {/if}{/if}{if $days > 1}{#$days} days{else}a day{/if}{/if}{if $hours}{if $firstElement != 'hours'}{if $lastElement == 'hours'} and {else}, {/if}{/if}{if $hours > 1}{#$hours} hours{else}an hour{/if}{/if}{if $minutes}{if $firstElement != 'minutes' && $lastElement == 'minutes'} and {/if}{if $minutes > 1}{#$minutes} minutes{else}a minute{/if}{/if} ago]]></item>
 		<item name="wcf.date.interval.hours.past.inSentence"><![CDATA[{if $hours > 1}{#$hours} hours{else}an hour{/if} ago]]></item>
 		<item name="wcf.date.interval.minutes.past.inSentence"><![CDATA[{if $minutes > 1}{#$minutes} minutes{else}a minute{/if} ago]]></item>
 		<item name="wcf.date.interval.months.past.inSentence"><![CDATA[{if $months > 1}{#$months} months{else}a month{/if} ago]]></item>
@@ -3969,14 +3980,14 @@ Attachments:
 		<item name="wcf.like.likes.noMoreEntries"><![CDATA[There are no new likes at the moment.]]></item>
 		<item name="wcf.like.dislikes.more"><![CDATA[More Dislikes]]></item>
 		<item name="wcf.like.dislikes.noMoreEntries"><![CDATA[There are no new dislikes at the moment.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{$comment->getLink()}">{$user->username}’s wall</a>.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{$response->getLink()}">{$user->username}’s wall</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment"><![CDATA[Reacted with {@$reaction->render()} to the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{$comment->getLink()}">{$user->username}’s wall</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.user.profileComment.response"><![CDATA[Reacted with {@$reaction->render()} to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on <a href="{$response->getLink()}">{$user->username}’s wall</a>.]]></item>
 		<item name="wcf.like.objectType.com.woltlab.wcf.likeableArticle"><![CDATA[Article]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.likeableArticle"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.articleComment"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the article <a href="{$comment->getLink()}">{$articleContent->getTitle()}</a>.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.articleComment.response"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the article <a href="{$response->getLink()}">{$articleContent->getTitle()}</a>.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.pageComment"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the page <a href="{$comment->getLink()}">{$page->getTitle()}</a>.]]></item>
-		<item name="wcf.like.title.com.woltlab.wcf.pageComment.response"><![CDATA[Reacted with <span title="{$like->getReactionType()->getTitle()}" class="jsTooltip">{@$like->getReactionType()->renderIcon()}</span> to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the page <a href="{$response->getLink()}">{$page->getTitle()}</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.likeableArticle"><![CDATA[Reacted with {@$reaction->render()} to the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.articleComment"><![CDATA[Reacted with {@$reaction->render()} to the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the article <a href="{$comment->getLink()}">{$articleContent->getTitle()}</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.articleComment.response"><![CDATA[Reacted with {@$reaction->render()} to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the article <a href="{$response->getLink()}">{$articleContent->getTitle()}</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.pageComment"><![CDATA[Reacted with {@$reaction->render()} to the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the page <a href="{$comment->getLink()}">{$page->getTitle()}</a>.]]></item>
+		<item name="wcf.like.title.com.woltlab.wcf.pageComment.response"><![CDATA[Reacted with {@$reaction->render()} to the response by {if $responseAuthor}<a href="{link controller='User' object=$responseAuthor}{/link}">{$responseAuthor->username}</a>{else}a guest{/if} on the comment by {if $commentAuthor}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}a guest{/if} on the page <a href="{$response->getLink()}">{$page->getTitle()}</a>.]]></item>
 		<item name="wcf.like.reaction.label"><![CDATA[{#$reactions} reaction{if $reactions != 1}s{/if}]]></item>
 		<item name="wcf.like.reaction.more"><![CDATA[More Reactions]]></item>
 		<item name="wcf.like.reaction.noMoreEntries"><![CDATA[There are no new reactions at the moment.]]></item>
@@ -4088,6 +4099,10 @@ Attachments:
 		<item name="wcf.message.toc"><![CDATA[Contents]]></item>
 		<item name="wcf.message.toc.hide"><![CDATA[hide]]></item>
 		<item name="wcf.message.toc.show"><![CDATA[show]]></item>
+		<item name="wcf.message.user.consent.button.enable"><![CDATA[Display all external content]]></item>
+		<item name="wcf.message.user.consent.description"><![CDATA[Content embedded from external sources will not be displayed without your consent.]]></item>
+		<item name="wcf.message.user.consent.notice"><![CDATA[Through the activation of external content, you agree that personal data may be transferred to third party platforms. We have provided more information on this in our privacy policy.]]></item>
+		<item name="wcf.message.user.consent.title"><![CDATA[External Content]]></item>
 	</category>
 	<category name="wcf.menu">
 		<!-- category for menus and menu items -->
@@ -4116,14 +4131,14 @@ Attachments:
 		<item name="wcf.moderation.noMoreItems"><![CDATA[You have no recent items.]]></item>
 		<item name="wcf.moderation.notification.comment.title"><![CDATA[New comment (Moderation)]]></item>
 		<item name="wcf.moderation.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} new comments (Moderation)]]></item>
-		<item name="wcf.moderation.notification.comment.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} commented on the moderation entry <a href="{@$moderationQueue->getLink()}#comment{@$commentID}">{$moderationQueue->getTitle()}</a>.]]></item>
-		<item name="wcf.moderation.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} commented on the moderation entry <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a>.]]></item>
+		<item name="wcf.moderation.notification.comment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} commented on the moderation entry <strong>{$moderationQueue}</strong>.]]></item>
+		<item name="wcf.moderation.notification.comment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} commented on the moderation entry <strong>{$moderationQueue}</strong>.]]></item>
 		<item name="wcf.moderation.notification.comment.mail.plaintext"><![CDATA[{@$authorList} commented on the moderation entry {@$notificationContent[variables][moderationQueue]->getTitle()} [URL:{@$notificationContent[variables][moderationQueue]->getLink()}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.notification.comment.mail.html"><![CDATA[<p>{@$authorList} commented on the moderation entry <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a>:</p>]]></item>
 		<item name="wcf.moderation.notification.commentResponse.title"><![CDATA[New reply (Moderation)]]></item>
 		<item name="wcf.moderation.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} new replies (Moderation)]]></item>
-		<item name="wcf.moderation.notification.commentResponse.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} replied to a comment by {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}" class="userLink" data-user-id="{@$commentAuthor->userID}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} on the moderation entry <a href="{@$moderationQueue->getLink()}#comment{@$commentID}/response{@$responseID}">{$moderationQueue->getTitle()}</a>.]]></item>
-		<item name="wcf.moderation.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} replied to comments on the moderation entry <a href="{@$moderationQueue->getLink()}#comment{@$commentID}">{$moderationQueue->getTitle()}</a>.]]></item>
+		<item name="wcf.moderation.notification.commentResponse.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} replied to a comment by <strong>{$commentAuthor}</strong> on the moderation entry <strong>{$moderationQueue}</strong>.]]></item>
+		<item name="wcf.moderation.notification.commentResponse.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to comments on the moderation entry <strong>{$moderationQueue}</strong>.]]></item>
 		<item name="wcf.moderation.notification.commentResponse.mail.plaintext"><![CDATA[{@$authorList} replied to {@$notificationContent[variables][commentAuthor]->username}’s{if $notificationContent[variables][commentAuthor]->userID} [URL:{link controller='User' object=$notificationContent[variables][commentAuthor] isEmail=true}{/link}]{/if} comment on the moderation entry {@$notificationContent[variables][moderationQueue]->getTitle()} [URL:{@$notificationContent[variables][moderationQueue]->getLink()}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.notification.commentResponse.mail.html"><![CDATA[<p>{@$authorList} replied to {if $notificationContent[variables][commentAuthor]->userID}<a href="{link controller='User' object=$notificationContent[variables][commentAuthor] isHtmlEmail=true}{/link}">{$notificationContent[variables][commentAuthor]->username}</a>{else}{$notificationContent[variables][commentAuthor]->username}{/if}’s comment on the moderation entry <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a>:</p>]]></item>
 		<item name="wcf.moderation.status"><![CDATA[Status]]></item>
@@ -4165,14 +4180,14 @@ Attachments:
 		<item name="wcf.moderation.activation.enableContent.confirmMessage"><![CDATA[Do you really want to approve this content?]]></item>
 		<item name="wcf.moderation.activation.notification.comment.title"><![CDATA[New comment (Approval)]]></item>
 		<item name="wcf.moderation.activation.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} new comments (Approval)]]></item>
-		<item name="wcf.moderation.activation.notification.comment.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} commented on <a href="{@$moderationQueue->getLink()}#comment{@$commentID}">{$moderationQueue->getTitle()}</a> waiting for approval.]]></item>
-		<item name="wcf.moderation.activation.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} commented on <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a> waiting for approval.]]></item>
+		<item name="wcf.moderation.activation.notification.comment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} commented on <strong>{$moderationQueue}</strong> waiting for approval.]]></item>
+		<item name="wcf.moderation.activation.notification.comment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} commented on <strong>{$moderationQueue}</strong> waiting for approval.]]></item>
 		<item name="wcf.moderation.activation.notification.comment.mail.plaintext"><![CDATA[{@$authorList} commented on {@$notificationContent[variables][moderationQueue]->getTitle()} [URL:{@$notificationContent[variables][moderationQueue]->getLink()}] waiting for approval{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.activation.notification.comment.mail.html"><![CDATA[<p>{@$authorList} commented on the moderation entry <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a> waiting for approval:</p>]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.title"><![CDATA[New reply (Approval)]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} new replies (Approval)]]></item>
-		<item name="wcf.moderation.activation.notification.commentResponse.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} replied to a comment by {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}" class="userLink" data-user-id="{@$commentAuthor->userID}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} on <a href="{@$moderationQueue->getLink()}#comment{@$commentID}/response{@$responseID}">{$moderationQueue->getTitle()}</a> waiting for approval.]]></item>
-		<item name="wcf.moderation.activation.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} replied to comments on <a href="{@$moderationQueue->getLink()}#comment{@$commentID}">{$moderationQueue->getTitle()}</a> waiting for approval.]]></item>
+		<item name="wcf.moderation.activation.notification.commentResponse.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} replied to a comment by <strong>{$commentAuthor}</strong> on <strong>{$moderationQueue}</strong> waiting for approval.]]></item>
+		<item name="wcf.moderation.activation.notification.commentResponse.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to comments on <strong>{$moderationQueue}</strong> waiting for approval.]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.mail.plaintext"><![CDATA[{@$authorList} replied to {@$notificationContent[variables][commentAuthor]->username}’s{if $notificationContent[variables][commentAuthor]->userID} [URL:{link controller='User' object=$notificationContent[variables][commentAuthor] isEmail=true}{/link}]{/if} comment on {@$notificationContent[variables][moderationQueue]->getTitle()} [URL:{@$notificationContent[variables][moderationQueue]->getLink()}] waiting for approval{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.activation.notification.commentResponse.mail.html"><![CDATA[<p>{@$authorList} replied to {if $notificationContent[variables][commentAuthor]->userID}<a href="{link controller='User' object=$notificationContent[variables][commentAuthor] isHtmlEmail=true}{/link}">{$notificationContent[variables][commentAuthor]->username}</a>{else}{$notificationContent[variables][commentAuthor]->username}{/if}’s comment on <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a>  waiting for approval:</p>]]></item>
 		<item name="wcf.moderation.activation.removeContent"><![CDATA[Delete Content]]></item>
@@ -4184,14 +4199,14 @@ Attachments:
 		<item name="wcf.moderation.report.details"><![CDATA[Information]]></item>
 		<item name="wcf.moderation.report.notification.comment.title"><![CDATA[New comment (Report)]]></item>
 		<item name="wcf.moderation.report.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} new comments (Report)]]></item>
-		<item name="wcf.moderation.report.notification.comment.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} commented on the report <a href="{@$moderationQueue->getLink()}#comment{@$commentID}">{$moderationQueue->getTitle()}</a>.]]></item>
-		<item name="wcf.moderation.report.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} commented on the report <a href="{@$moderationQueue->getLink()}">{$moderationQueue->getTitle()}</a>.]]></item>
+		<item name="wcf.moderation.report.notification.comment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} commented on the report <strong>{$moderationQueue}</strong>.]]></item>
+		<item name="wcf.moderation.report.notification.comment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} commented on the report <strong>{$moderationQueue}</strong>.]]></item>
 		<item name="wcf.moderation.report.notification.comment.mail.plaintext"><![CDATA[{@$authorList} commented on the report {@$notificationContent[variables][moderationQueue]->getTitle()} [URL:{@$notificationContent[variables][moderationQueue]->getLink()}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.report.notification.comment.mail.html"><![CDATA[<p>{@$authorList} commented on the report <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a>:</p>]]></item>
 		<item name="wcf.moderation.report.notification.commentResponse.title"><![CDATA[New reply (Report)]]></item>
 		<item name="wcf.moderation.report.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} new replies (Report)]]></item>
-		<item name="wcf.moderation.report.notification.commentResponse.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} replied to a comment by {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}" class="userLink" data-user-id="{@$commentAuthor->userID}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if} on the report <a href="{@$moderationQueue->getLink()}#comment{@$commentID}/response{@$responseID}">{$moderationQueue->getTitle()}</a>.]]></item>
-		<item name="wcf.moderation.report.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} replied to comments on the report <a href="{@$moderationQueue->getLink()}#comment{@$commentID}">{$moderationQueue->getTitle()}</a>.]]></item>
+		<item name="wcf.moderation.report.notification.commentResponse.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} replied to a comment by <strong>{$commentAuthor->username}</strong> on the report <strong>{$moderationQueue}</strong>.]]></item>
+		<item name="wcf.moderation.report.notification.commentResponse.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to comments on the report <strong>{$moderationQueue->getTitle()}</strong>.]]></item>
 		<item name="wcf.moderation.report.notification.commentResponse.mail.plaintext"><![CDATA[{@$authorList} replied to {@$notificationContent[variables][commentAuthor]->username}’s{if $notificationContent[variables][commentAuthor]->userID} [URL:{link controller='User' object=$notificationContent[variables][commentAuthor] isEmail=true}{/link}]{/if} comment on the report {@$notificationContent[variables][moderationQueue]->getTitle()} [URL:{@$notificationContent[variables][moderationQueue]->getLink()}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.moderation.report.notification.commentResponse.mail.html"><![CDATA[<p>{@$authorList} replied to {if $notificationContent[variables][commentAuthor]->userID}<a href="{link controller='User' object=$notificationContent[variables][commentAuthor] isHtmlEmail=true}{/link}">{$notificationContent[variables][commentAuthor]->username}</a>{else}{$notificationContent[variables][commentAuthor]->username}{/if}’s comment on the report <a href="{$notificationContent[variables][moderationQueue]->getLink()}">{$notificationContent[variables][moderationQueue]->getTitle()}</a>:</p>]]></item>
 		<item name="wcf.moderation.report.reason"><![CDATA[Reason]]></item>
@@ -4222,7 +4237,7 @@ Attachments:
 		<item name="wcf.page.copyright"><![CDATA[<a href="https://www.woltlab.com" rel="nofollow"{if EXTERNAL_LINK_TARGET_BLANK} target="_blank"{/if}>Powered by <strong>WoltLab Suite&trade;{if SHOW_VERSION_NUMBER} {@WCF_VERSION}{/if}</strong></a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.Article"><![CDATA[Article <a href="{$article->getLink()}">{$article->getTitle()}</a>]]></item>
 		<item name="wcf.page.onlineLocation.com.woltlab.wcf.CategoryArticleList"><![CDATA[Article category <a href="{$category->getLink()}">{$category->getTitle()}</a>]]></item>
-		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[User profile of <a href="{link controller='User' object=$user}{/link}" class="userLink" data-user-id="{@$user->userID}">{$user->username}</a>]]></item>
+		<item name="wcf.page.onlineLocation.com.woltlab.wcf.User"><![CDATA[User profile of {user object=$userOnline}]]></item>
 		<item name="wcf.page.availableUpdates"><![CDATA[There are <a href="{link controller='PackageUpdate' isACP=true}{/link}">updates available</a> for installed packages.]]></item>
 		<item name="wcf.page.error.permissionDenied"><![CDATA[Access denied. You’re not authorized to view this page.]]></item>
 		<item name="wcf.page.error.permissionDenied.title"><![CDATA[Access Denied]]></item>
@@ -4328,9 +4343,9 @@ Attachments:
 		<item name="wcf.paidSubscription.confirmTOS"><![CDATA[I agree to the <a href="{PAID_SUBSCRIPTION_TOS_URL}">Terms of Service</a>]]></item>
 		<item name="wcf.paidSubscription.button.moreInformation"><![CDATA[More Details]]></item>
 		<item name="wcf.paidSubscription.expiringSubscription.notification.title"><![CDATA[Expiring Subscription]]></item>
-		<item name="wcf.paidSubscription.expiringSubscription.notification.message"><![CDATA[Your subscription “{$userNotificationObject->getTitle()}” will expire {dateInterval start=$notification->time end=$userNotificationObject->endDate format='sentence'} (on {$userNotificationObject->endDate|date:'F jS'}).]]></item>
-		<item name="wcf.paidSubscription.expiringSubscription.notification.mail.plaintext"><![CDATA[Your subscription “{@$subscription->getTitle()}” will expire {dateInterval start=$notification->time end=$subscription->endDate format='sentence'} (on {@$subscription->endDate|date:'F jS'}).]]></item>
-		<item name="wcf.paidSubscription.expiringSubscription.notification.mail.html"><![CDATA[Your subscription “{$subscription->getTitle()}” will expire <b>{dateInterval start=$notification->time end=$subscription->endDate format='sentence'}</b> (on {$subscription->endDate|date:'F jS'}).]]></item>
+		<item name="wcf.paidSubscription.expiringSubscription.notification.message"><![CDATA[Your subscription <strong>{$userNotificationObject->getTitle()}</strong> will expire {dateInterval start=$notification->time end=$userNotificationObject->endDate full=true format='sentence'} (on {$userNotificationObject->endDate|date:'F jS'}).]]></item>
+		<item name="wcf.paidSubscription.expiringSubscription.notification.mail.plaintext"><![CDATA[Your subscription “{@$subscription->getTitle()}” will expire {dateInterval start=$notification->time end=$subscription->endDate full=true format='sentence'} (on {@$subscription->endDate|date:'F jS'}).]]></item>
+		<item name="wcf.paidSubscription.expiringSubscription.notification.mail.html"><![CDATA[Your subscription “{$subscription->getTitle()}” will expire <b>{dateInterval start=$notification->time end=$subscription->endDate full=true format='sentence'}</b> (on {$subscription->endDate|date:'F jS'}).]]></item>
 	</category>
 	<category name="wcf.payment">
 		<item name="wcf.payment.com.woltlab.wcf.payment.method.paypal"><![CDATA[Use PayPal]]></item>
@@ -4368,6 +4383,7 @@ Attachments:
 		<item name="wcf.reactions.summary.noReactions"><![CDATA[There are no reactions at the moment.]]></item>
 		<item name="wcf.reactions.summary.listReactions"><![CDATA[List Reactions]]></item>
 		<item name="wcf.reactions.react"><![CDATA[React]]></item>
+		<item name="wcf.reactions.reactionTypeCount"><![CDATA[{@$reaction->renderIcon()}×{#$count}]]></item>
 	</category>
 	<category name="wcf.reactionType">
 		<item name="wcf.reactionType.title1"><![CDATA[Like]]></item>
@@ -4446,7 +4462,7 @@ Attachments:
 		<item name="wcf.user.userAgent"><![CDATA[User Agent]]></item>
 		<item name="wcf.user.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.error.cookieRequired"><![CDATA[The login requires the acceptance of cookies, please enable cookies to proceed.]]></item>
-		<item name="wcf.user.login.forceLogin"><![CDATA[You must be logged-in to access to this page.]]></item>
+		<item name="wcf.user.login.forceLogin"><![CDATA[You must be logged-in to access this page.]]></item>
 		<item name="wcf.user.login.login"><![CDATA[Login]]></item>
 		<item name="wcf.user.login.register"><![CDATA[Register]]></item>
 		<item name="wcf.user.login.register.teaser"><![CDATA[Don’t have an account yet? <a href="{link controller='Register'}{/link}">Register yourself now</a> and be a part of our community!]]></item>
@@ -4789,6 +4805,7 @@ Open the link below to access the user profile:
 		<item name="wcf.user.trophy.condition.excludedTrophies"><![CDATA[Excluded Trophies]]></item>
 		<item name="wcf.user.trophy.condition.excludedTrophyCategories"><![CDATA[Excluded Trophy Categories]]></item>
 		<item name="wcf.user.trophy.trophyAwarded"><![CDATA[{if $items == 1}Awarded once{else}Awarded {#$items} times{/if}]]></item>
+		<item name="wcf.user.trophy.showMoreTrophies"><![CDATA[and {#$trophyCount} more]]></item>
 	</category>
 	<category name="wcf.acp.trophy">
 		<item name="wcf.acp.trophy"><![CDATA[Trophy]]></item>
@@ -4972,6 +4989,10 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.signature"><![CDATA[Signature]]></item>
 		<item name="wcf.user.condition.signature.signature"><![CDATA[Has Signature]]></item>
 		<item name="wcf.user.condition.signature.noSignature"><![CDATA[Has no Signature]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays"><![CDATA[Last Activity … Days Ago]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays.error.startBeforeEnd"><![CDATA[The end value is less than the start value.]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays.error.invalidEnd"><![CDATA[The end value is invalid.]]></item>
+		<item name="wcf.user.condition.lastActivityTimeIntervalDays.error.invalidStart"><![CDATA[The start value is invalid.]]></item>
 	</category>
 	<category name="wcf.user.coverPhoto">
 		<item name="wcf.user.coverPhoto"><![CDATA[Cover Photo]]></item>
@@ -5054,39 +5075,40 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 <p>You can <a href="{link controller='NotificationDisable' isHtmlEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}">disable all email notifications</a> as well.</p>]]></item>
 		<item name="wcf.user.notification.mail.authorList.plaintext"><![CDATA[{if !$event->getAuthor()->userID}{if $guestTimesTriggered > 1}Guests{else}A guest{/if}{else}{@$event->getAuthor()->username} [URL:{link controller='User' object=$event->getAuthor() isEmail=true}{/link}]{/if}{if $count > 1 && $count < 4}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->username} [URL:{link controller='User' object=$authors[1] isEmail=true}{/link}]{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if}{@$authors[2]->username} [URL:{link controller='User' object=$authors[2] isEmail=true}{/link}]{/if}{elseif $count >= 4}{if $guestTimesTriggered},{else} and{/if} {#$count-1} other users{/if}{if $event->getAuthor()->userID && $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}{#$guestTimesTriggered} guests{/if}{/if}]]></item>
 		<item name="wcf.user.notification.mail.authorList.html"><![CDATA[{if !$event->getAuthor()->userID}{if $guestTimesTriggered > 1}Guests{else}A guest{/if}{else}<a href="{link controller='User' object=$event->getAuthor() isHtmlEmail=true}{/link}">{$event->getAuthor()->username}</a>{/if}{if $count > 1 && $count < 4}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}<a href="{link controller='User' object=$authors[1] isHtmlEmail=true}{/link}">{$authors[1]->username}</a>{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if}<a href="{link controller='User' object=$authors[2] isHtmlEmail=true}{/link}">{$authors[2]->username}</a>{/if}{elseif $count >= 4}{if $guestTimesTriggered},{else} and{/if} {#$count-1} other users{/if}{if $event->getAuthor()->userID && $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}{#$guestTimesTriggered} guests{/if}{/if}]]></item>
+		<item name="wcf.user.notification.stacked.authorList"><![CDATA[{if !$guestTimesTriggered|isset}{assign var=guestTimesTriggered value=0}{/if}{if $count < 4}<strong>{$authors[0]}</strong>{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}<strong>{$authors[1]}</strong>{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} <strong>{$authors[2]}</strong>{/if}{/if}{if $guestTimesTriggered} and {plural value=$guestTimesTriggered one='a guest' other='# guests'}{/if}{else}<strong>{$authors[0]}</strong>{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {plural value=$guestTimesTriggered one='a guest' other='# guests'}{/if}{/if}]]></item>
 		<!-- Notifications -->
 		<item name="wcf.user.notification.com.woltlab.wcf.user"><![CDATA[User Profiles]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.follow.following"><![CDATA[Notify me of new followers]]></item>
 		<item name="wcf.user.notification.follow.title"><![CDATA[New Follower]]></item>
 		<item name="wcf.user.notification.follow.title.stacked"><![CDATA[{#$count} new followers]]></item>
-		<item name="wcf.user.notification.follow.message"><![CDATA[{@$author->getAnchorTag()} follows you.]]></item>
-		<item name="wcf.user.notification.follow.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} follow you.]]></item>
+		<item name="wcf.user.notification.follow.message"><![CDATA[<strong>{$author}</strong> follows you.]]></item>
+		<item name="wcf.user.notification.follow.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} follow you.]]></item>
 		<item name="wcf.user.notification.follow.mail.plaintext"><![CDATA[{@$authorList} {if $authors|count == 1}follows{else}follow{/if} you.]]></item>
 		<item name="wcf.user.notification.follow.mail.html"><![CDATA[<p>{@$authorList} {if $authors|count == 1}follows{else}follow{/if} you:</p>]]></item>
 		<item name="wcf.user.notification.comment.title"><![CDATA[New Comment (Wall)]]></item>
 		<item name="wcf.user.notification.comment.title.stacked"><![CDATA[{#$timesTriggered} new comments (Wall)]]></item>
-		<item name="wcf.user.notification.comment.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} commented on <a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}{/link}">your wall</a>.]]></item>
-		<item name="wcf.user.notification.comment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} commented on <a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}{/link}">your wall</a>.]]></item>
+		<item name="wcf.user.notification.comment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} commented on your wall.]]></item>
+		<item name="wcf.user.notification.comment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} commented on your wall.]]></item>
 		<item name="wcf.user.notification.comment.mail.plaintext"><![CDATA[{@$authorList} commented on your wall [URL:{link controller='User' object=$notificationContent[variables][owner] isEmail=true}#wall/comment{@$commentID}{/link}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.comment.mail.html"><![CDATA[<p>{@$authorList} commented on <a href="{link controller='User' object=$notificationContent[variables][owner] isHtmlEmail=true}#wall/comment{@$commentID}{/link}">your wall</a>:</p>]]></item>
 		<item name="wcf.user.notification.comment.like.title"><![CDATA[Reaction to a comment (Wall)]]></item>
 		<item name="wcf.user.notification.comment.like.title.stacked"><![CDATA[{#$count} users reacted to your comment (Wall)]]></item>
-		<item name="wcf.user.notification.comment.like.message"><![CDATA[{@$author->getAnchorTag()} reacted to your comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall/comment{@$commentID}{/link}">{$owner->username}’s wall</a>{/if} ({implode from=$reactions key=reactionID item=count}{@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}×{#$count}{/implode}).]]></item>
-		<item name="wcf.user.notification.comment.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} reacted to your comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall/comment{@$commentID}{/link}">{$owner->username}’s wall</a>{/if} ({implode from=$reactions key=reactionID item=count}{@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}×{#$count}{/implode}).]]></item>
+		<item name="wcf.user.notification.comment.like.message"><![CDATA[<strong>{$author}</strong> reacted to your comment on {if $owner === null}your wall{else}<strong>{$owner}</strong>’s</a>{/if} ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+		<item name="wcf.user.notification.comment.like.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} reacted to your comment on {if $owner === null}your wall{else}<strong>{$owner}</strong>’s wall{/if} ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.user.notification.commentResponse.title"><![CDATA[New Reply (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponse.title.stacked"><![CDATA[{#$timesTriggered} new replies (Wall)]]></item>
-		<item name="wcf.user.notification.commentResponse.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} replied to your comment on <a href="{link controller='User' object=$owner}#wall/comment{@$commentID}/response{@$responseID}{/link}">{if $owner->userID == $__wcf->getUser()->userID}your{else}{$owner->username}’s{/if} wall</a>.]]></item>
-		<item name="wcf.user.notification.commentResponse.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} replied to your comment on <a href="{link controller='User' object=$owner}#wall/comment{@$commentID}{/link}">{if $owner->userID == $__wcf->getUser()->userID}your{else}{$owner->username}’s{/if} wall</a>.]]></item>
+		<item name="wcf.user.notification.commentResponse.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} replied to your comment on {if $owner->userID == $__wcf->getUser()->userID}your{else}<strong>{$owner}</strong>’s{/if} wall.]]></item>
+		<item name="wcf.user.notification.commentResponse.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to your comment on {if $owner->userID == $__wcf->getUser()->userID}your{else}<strong>{$owner}</strong>’s{/if} wall.]]></item>
 		<item name="wcf.user.notification.commentResponse.mail.plaintext"><![CDATA[{@$authorList} replied to your comment on {if $mailbox->getUser()->userID == $notificationContent[variables][owner]->userID}your{else}{@$notificationContent[variables][owner]->username}’s{/if} wall [URL:{link controller='User' object=$notificationContent[variables][owner] isEmail=true}#wall/comment{@$commentID}/response{@$responseID}{/link}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.commentResponse.mail.html"><![CDATA[<p>{@$authorList} replied to your comment on <a href="{link controller='User' object=$notificationContent[variables][owner] isHtmlEmail=true}#wall/comment{@$commentID}/response{@$responseID}{/link}">{if $mailbox->getUser()->userID == $notificationContent[variables][owner]->userID}your{else}{$notificationContent[variables][owner]->username}’s{/if} wall</a>:</p>]]></item>
 		<item name="wcf.user.notification.commentResponse.like.title"><![CDATA[Likes your reply to a comment (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponse.like.title.stacked"><![CDATA[{#$count} users reacted to your reply to a comment (Wall)]]></item>
-		<item name="wcf.user.notification.commentResponse.like.message"><![CDATA[{@$author->getAnchorTag()} reacted to your reply to a comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}/response{@$responseID}{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall/comment{@$commentID}/response{@$responseID}{/link}">{$owner->username}’s wall</a>{/if} ({implode from=$reactions key=reactionID item=count}{@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}×{#$count}{/implode}).]]></item>
-		<item name="wcf.user.notification.commentResponse.like.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} reacted to your reply to a comment on {if $owner === null}<a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}/response{@$responseID}{/link}">your wall</a>{else}<a href="{link controller='User' object=$owner}#wall/comment{@$commentID}/response{@$responseID}{/link}">{$owner->username}’s wall</a>{/if} ({implode from=$reactions key=reactionID item=count}{@$__wcf->getReactionHandler()->getReactionTypeByID($reactionID)->renderIcon()}×{#$count}{/implode}).]]></item>
+		<item name="wcf.user.notification.commentResponse.like.message"><![CDATA[<strong>{$author}</strong> reacted to your reply to a comment on {if $owner === null}your wall{else}<strong>{$owner}</strong>’s wall{/if} ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
+		<item name="wcf.user.notification.commentResponse.like.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} reacted to your reply to a comment on {if $owner === null}your wall{else}<strong>{$owner}</strong>’s wall{/if} ({@$__wcf->getReactionHandler()->renderInlineList($reactions)}).]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title"><![CDATA[New Reply (Wall)]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.title.stacked"><![CDATA[{#$timesTriggered} new replies (Wall)]]></item>
-		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} replied to {$commentAuthor->username}’s comment on <a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}/response{@$responseID}{/link}">your wall</a>.]]></item>
-		<item name="wcf.user.notification.commentResponseOwner.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} replied to the comment by {if $author->userID}<a href="{link controller='User' object=$author}{/link}" class="userLink" data-user-id="{@$author->userID}">{$author->username}</a>{else}{$author->username}{/if} on <a href="{link controller='User' object=$__wcf->getUser()}#wall/comment{@$commentID}{/link}">your wall</a>.]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} replied to <strong>{$commentAuthor}</strong>’s comment on your wall.]]></item>
+		<item name="wcf.user.notification.commentResponseOwner.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to the comment by <strong>{$author}</strong> on your wall.]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.mail.plaintext"><![CDATA[{@$authorList} replied to {@$notificationContent[variables][commentAuthor]->username}’s{if $notificationContent[variables][commentAuthor]->userID} [URL:{link controller='User' object=$notificationContent[variables][commentAuthor] isEmail=true}{/link}]{/if} comment on your wall [URL:{link controller='User' object=$notificationContent[variables][owner] isEmail=true}#wall/comment{@$commentID}/response{@$responseID}{/link}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.commentResponseOwner.mail.html"><![CDATA[<p>{@$authorList} replied to {if $notificationContent[variables][commentAuthor]->userID}<a href="{link controller='User' object=$notificationContent[variables][commentAuthor] isHtmlEmail=true}{/link}">{$notificationContent[variables][commentAuthor]->username}</a>{else}{$notificationContent[variables][commentAuthor]->username}{/if}’s comment on <a href="{link controller='User' object=$notificationContent[variables][owner] isHtmlEmail=true}#wall/comment{@$commentID}/response{@$responseID}{/link}">your wall</a>:</p>]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.profileComment.notification.comment"><![CDATA[Notify me of new comments on my wall]]></item>
@@ -5097,7 +5119,7 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 		<item name="wcf.user.notification.com.woltlab.wcf.paidSubscription.user.expiring"><![CDATA[Notify me before a subscription will expire]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.userTrophy.notification.received"><![CDATA[Notify me when I receive a trophy]]></item>
 		<item name="wcf.user.notification.trophy.received.title"><![CDATA[Trophy received]]></item>
-		<item name="wcf.user.notification.trophy.received.message"><![CDATA[You received the trophy <a href="{$userTrophy->getTrophy()->getLink()}">{$userTrophy->getTrophy()->getTitle()}</a>.]]></item>
+		<item name="wcf.user.notification.trophy.received.message"><![CDATA[You received the trophy <strong>{$userTrophy->getTrophy()}</strong>.]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.administration"><![CDATA[Administration]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.user.registration.notification.registration"><![CDATA[Notify me of new user registrations]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.moderation"><![CDATA[Moderation]]></item>
@@ -5110,20 +5132,20 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 		<item name="wcf.user.notification.com.woltlab.wcf.likeableArticle.notification.like"><![CDATA[Notify me when someone reacted to my articles]]></item>
 		<item name="wcf.user.notification.pageComment.title"><![CDATA[New Comment (Page)]]></item>
 		<item name="wcf.user.notification.pageComment.title.stacked"><![CDATA[{#$timesTriggered} new comments (Page)]]></item>
-		<item name="wcf.user.notification.pageComment.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} commented on the page <a href="{$page->getLink()}#comment{@$commentID}">{$page->getTitle()}</a>.]]></item>
-		<item name="wcf.user.notification.pageComment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} commented on the page <a href="{$page->getLink()}#comment{@$commentID}">{$page->getTitle()}</a>.]]></item>
+		<item name="wcf.user.notification.pageComment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} commented on the page <strong>{$page->getTitle()}</strong>.]]></item>
+		<item name="wcf.user.notification.pageComment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} commented on the page <strong>{$page->getTitle()}</strong>.]]></item>
 		<item name="wcf.user.notification.pageComment.mail.plaintext"><![CDATA[{@$authorList} commented on the page “{@$notificationContent[variables][page]->getTitle()}” [URL:{@$notificationContent[variables][page]->getLink()}#comment{@$commentID}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.pageComment.mail.html"><![CDATA[<p>{@$authorList} commented on the page <a href="{$notificationContent[variables][page]->getLink()}#comment{@$commentID}">{$notificationContent[variables][page]->getTitle()}</a>:</p>]]></item>
 		<item name="wcf.user.notification.pageComment.response.title"><![CDATA[New Reply (Page)]]></item>
 		<item name="wcf.user.notification.pageComment.response.title.stacked"><![CDATA[{#$timesTriggered} new replies (Page)]]></item>
-		<item name="wcf.user.notification.pageComment.response.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} replied to {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if}’s comment on the page <a href="{$page->getLink()}#comment{@$commentID}/response{@$responseID}">{$page->getTitle()}</a>.]]></item>
-		<item name="wcf.user.notification.pageComment.response.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} replied to {if $commentAuthor->userID}<a href="{link controller='User' object=$commentAuthor}{/link}">{$commentAuthor->username}</a>{else}{$commentAuthor->username}{/if}’s comment on the page <a href="{$page->getLink()}#comment{@$commentID}">{$page->getTitle()}</a>.]]></item>
+		<item name="wcf.user.notification.pageComment.response.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} replied to <strong>{$commentAuthor}</strong>’s comment on the page {$page->getTitle()}.]]></item>
+		<item name="wcf.user.notification.pageComment.response.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to <strong>{$commentAuthor}</strong>’s comment on the page {$page->getTitle()}.]]></item>
 		<item name="wcf.user.notification.pageComment.response.mail.plaintext"><![CDATA[{@$authorList} replied to {@$notificationContent[variables][commentAuthor]->username}’s comment on the page “{@$notificationContent[variables][page]->getTitle()}” [URL:{@$notificationContent[variables][page]->getLink()}#comment{@$commentID}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.pageComment.response.mail.html"><![CDATA[<p>{@$authorList} replied to {@$notificationContent[variables][commentAuthor]->username}’s comment on the page <a href="{$notificationContent[variables][page]->getLink()}#comment{@$commentID}">{$notificationContent[variables][page]->getTitle()}</a>:</p>]]></item>
 		<item name="wcf.user.notification.pageComment.response.title"><![CDATA[New Reply (Page)]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.title.stacked"><![CDATA[{#$timesTriggered} new replies (Page)]]></item>
-		<item name="wcf.user.notification.pageComment.responseOwner.message"><![CDATA[{if !$author->userID}A guest{else}{@$author->getAnchorTag()}{/if} replied to your comment on the page <a href="{$page->getLink()}#comment{@$commentID}/response{@$responseID}">{$page->getTitle()}</a>.]]></item>
-		<item name="wcf.user.notification.pageComment.responseOwner.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} replied to your comment on the page <a href="{$page->getLink()}#comment{@$commentID}">{$page->getTitle()}</a>.]]></item>
+		<item name="wcf.user.notification.pageComment.responseOwner.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} replied to your comment on the page <strong>{$page->getTitle()}</strong>.]]></item>
+		<item name="wcf.user.notification.pageComment.responseOwner.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to your comment on the page <strong>{$page->getTitle()}</strong>.]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.mail.plaintext"><![CDATA[{@$authorList} replied to your comment on the page “{@$notificationContent[variables][page]->getTitle()}” [URL:{@$notificationContent[variables][page]->getLink()}#comment{@$commentID}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.pageComment.responseOwner.mail.html"><![CDATA[<p>{@$authorList} replied to your comment on the page <a href="{$notificationContent[variables][page]->getLink()}#comment{@$commentID}">{$notificationContent[variables][page]->getTitle()}</a>:</p>]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.article.comment.notification.comment"><![CDATA[Notify me of new comments on my articles]]></item>
@@ -5131,25 +5153,25 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 		<item name="wcf.user.notification.com.woltlab.wcf.article.comment.response.notification.commentResponseOwner"><![CDATA[Notify me of new replies to comments on my articles]]></item>
 		<item name="wcf.user.notification.articleComment.title"><![CDATA[New Comment (Article)]]></item>
 		<item name="wcf.user.notification.articleComment.title.stacked"><![CDATA[{#$timesTriggered} new Comments (Article)]]></item>
-		<item name="wcf.user.notification.articleComment.message"><![CDATA[{if $author->userID}{@$author->getAnchorTag()}{else}A guest{/if} commented on your article <a href="{link controller='Article' object=$article}#comments/comment{@$commentID}{/link}">{$article->getTitle()}</a>.]]></item>
-		<item name="wcf.user.notification.articleComment.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} commented on your article <a href="{link controller='Article' object=$article}{/link}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.user.notification.articleComment.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} commented on your article <strong>{$article->getTitle()}</strong>.]]></item>
+		<item name="wcf.user.notification.articleComment.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} commented on your article <strong>{$article->getTitle()}</strong>.]]></item>
 		<item name="wcf.user.notification.articleComment.mail.plaintext"><![CDATA[{@$authorList} commented on your article “{@$article->getTitle()}” [URL:{link controller='Article' object=$article isEmail=true}#comment{@$commentID}{/link}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.articleComment.mail.html"><![CDATA[<p>{@$authorList} commented on your article <a href="{link controller='Article' object=$article isHtmlEmail=true}#comments/comment{@$commentID}{/link}">{$article->getTitle()}</a>:</p>]]></item>
 		<item name="wcf.user.notification.articleComment.response.title"><![CDATA[New Reply (Article)]]></item>
 		<item name="wcf.user.notification.articleComment.response.title.stacked"><![CDATA[{#$timesTriggered} new Replies (Article)]]></item>
-		<item name="wcf.user.notification.articleComment.response.message"><![CDATA[{if $author->userID}{@$author->getAnchorTag()}{else}A guest{/if} replied to your comment on the article <a href="{link controller='Article' object=$article}#comments/comment{@$commentID}/response{@$responseID}{/link}">{$article->getTitle()}</a>.]]></item>
-		<item name="wcf.user.notification.articleComment.response.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} replied to your comment on the article <a href="{link controller='Article' object=$article}#comments/comment{@$commentID}{/link}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.user.notification.articleComment.response.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} replied to your comment on the article <strong>{$article->getTitle()}</strong>.]]></item>
+		<item name="wcf.user.notification.articleComment.response.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to your comment on the article <strong>{$article->getTitle()}</strong>.]]></item>
 		<item name="wcf.user.notification.articleComment.response.mail.plaintext"><![CDATA[{@$authorList} replied to your comment on the article “{@$article->getTitle()}” [URL:{link controller='Article' object=$article isEmail=true}#comments/comment{@$commentID}/response{@$responseID}{/link}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.articleComment.response.mail.html"><![CDATA[<p>{@$authorList} replied to your comment on the article <a href="{link controller='Article' object=$article isHtmlEmail=true}#comments/comment{@$commentID}/response{@$responseID}{/link}">{$article->getTitle()}</a>:</p>]]></item>
 		<item name="wcf.user.notification.articleComment.responseOwner.title"><![CDATA[New Reply (Article)]]></item>
 		<item name="wcf.user.notification.articleComment.responseOwner.title.stacked"><![CDATA[{#$timesTriggered} new Replies (Article)]]></item>
-		<item name="wcf.user.notification.articleComment.responseOwner.message"><![CDATA[{if $author->userID}{@$author->getAnchorTag()}{else}A guest{/if} replied to a comment by {$commentAuthor->username} on your article <a href="{link controller='Article' object=$article}#comments/comment{@$commentID}/response{@$responseID}{/link}">{$article->getTitle()}</a>.]]></item>
-		<item name="wcf.user.notification.articleComment.responseOwner.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} {@$authors[2]->getAnchorTag()}{/if}{/if}{if $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{else}{@$authors[0]->getAnchorTag()}{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {if $guestTimesTriggered == 1}a guest{else}guests{/if}{/if}{/if} replied to a comment by {if $author->userID}<a href="{link controller='User' object=$author}{/link}" class="userLink" data-user-id="{@$author->userID}">{$author->username}</a>{else}{$author->username}{/if} on your article <a href="{link controller='Article' object=$article}#comments/comment{@$commentID}{/link}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.user.notification.articleComment.responseOwner.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} replied to a comment by <strong>{$commentAuthor}</strong> on your article <strong>{$article->getTitle()}</strong>.]]></item>
+		<item name="wcf.user.notification.articleComment.responseOwner.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} replied to a comment by <strong>{$commentAuthor}</strong> on your article <strong>{$article->getTitle()}</strong>.]]></item>
 		<item name="wcf.user.notification.articleComment.responseOwner.mail.plaintext"><![CDATA[{@$authorList} replied to {@$notificationContent[variables][commentAuthor]->username}’s{if $notificationContent[variables][commentAuthor]->userID} [URL:{link controller='User' object=$notificationContent[variables][commentAuthor] isEmail=true}{/link}]{/if} comment on your article “{@$article->getTitle()}” [URL:{link controller='Article' object=$article isEmail=true}#comments/comment{@$commentID}/response{@$responseID}{/link}]{if $count == 1 && !$guestTimesTriggered}:{else}.{/if}]]></item>
 		<item name="wcf.user.notification.articleComment.responseOwner.mail.html"><![CDATA[<p>{@$authorList} replied to {if $notificationContent[variables][commentAuthor]->userID}<a href="{link controller='User' object=$notificationContent[variables][commentAuthor] isHtmlEmail=true}{/link}">{$notificationContent[variables][commentAuthor]->username}</a>{else}{$notificationContent[variables][commentAuthor]->username}{/if}’s comment on your article <a href="{link controller='Article' object=$article isHtmlEmail=true}#comments/comment{@$commentID}/response{@$responseID}{/link}">{$article->getTitle()}</a>:</p>]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.article.notification.article"><![CDATA[Notify me of new articles in watched categories]]></item>
 		<item name="wcf.user.notification.article.title"><![CDATA[New Article]]></item>
-		<item name="wcf.user.notification.article.message"><![CDATA[{if $author->userID}{@$author->getAnchorTag()}{else}A guest{/if} wrote the article <a href="{$article->getLink()}">{$article->getTitle()}</a>.]]></item>
+		<item name="wcf.user.notification.article.message"><![CDATA[{if $author->userID}<strong>{$author}</strong>{else}A guest{/if} wrote the article <strong>{$article->getTitle()}</strong>.]]></item>
 		<item name="wcf.user.notification.article.mail.plaintext"><![CDATA[{if $event->getAuthor()->userID}{@$event->getAuthor()->username} [URL:{link controller='User' object=$event->getAuthor() isEmail=true}{/link}]{else}A guest{/if} wrote the article “{@$notificationContent[variables][articleContent]->getTitle()}” [URL:{link controller='Article' object=$notificationContent[variables][articleContent] isEmail=true}{/link}]:]]></item>
 		<item name="wcf.user.notification.article.mail.html"><![CDATA[<p>{if $event->getAuthor()->userID}<a href="{link controller='User' object=$event->getAuthor() isHtmlEmail=true}{/link}">{$event->getAuthor()->username}</a>{else}A guest{/if} wrote the article <a href="{link controller='Article' object=$notificationContent[variables][articleContent] isHtmlEmail=true}{/link}">{$notificationContent[variables][articleContent]->getTitle()}</a>:</p>]]></item>
 		<item name="wcf.user.notification.com.woltlab.wcf.articleComment.response.notification.commentResponseOwner"><![CDATA[Notify me of new replies to comments on my articles]]></item>
@@ -5158,10 +5180,12 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 		<item name="wcf.user.notification.pageComment.responseOwner.title"><![CDATA[New reply (Page)]]></item>
 		<item name="wcf.user.notification.userRegistration.title"><![CDATA[New user registration]]></item>
 		<item name="wcf.user.notification.userRegistration.title.stacked"><![CDATA[{#$count} new user registrations]]></item>
-		<item name="wcf.user.notification.userRegistration.message"><![CDATA[{@$author->getAnchorTag()} has registered.]]></item>
-		<item name="wcf.user.notification.userRegistration.message.stacked"><![CDATA[{if $count < 4}{@$authors[0]->getAnchorTag()}{if $count == 2} and {else}, {/if}{@$authors[1]->getAnchorTag()}{if $count == 3} and {@$authors[2]->getAnchorTag()}{/if}{else}{@$authors[0]->getAnchorTag()} and {#$others} other users{/if} have registered.]]></item>
+		<item name="wcf.user.notification.userRegistration.message"><![CDATA[<strong>{$author}</strong> has registered.]]></item>
+		<item name="wcf.user.notification.userRegistration.message.stacked"><![CDATA[{@'wcf.user.notification.stacked.authorList'|language} have registered.]]></item>
 		<item name="wcf.user.notification.userRegistration.mail.plaintext"><![CDATA[{@$authorList} {if $count == 1}has{else}have{/if} registered.]]></item>
 		<item name="wcf.user.notification.userRegistration.mail.html"><![CDATA[<p>{@$authorList} {if $count == 1}has{else}have{/if} registered:</p>]]></item>
+		<item name="wcf.user.notification.status.active"><![CDATA[Active]]></item>
+		<item name="wcf.user.notification.status.email"><![CDATA[Email]]></item>
 	</category>
 	<category name="wcf.user.profile">
 		<item name="wcf.user.profile.content.about.noPublicData"><![CDATA[{if $userID == $__wcf->getUser()->userID}You have not provided any details yet.{else}There are no details visible to you.{/if}]]></item>
@@ -5200,7 +5224,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 		<item name="wcf.user.option.birthday"><![CDATA[Birthday]]></item>
 		<item name="wcf.user.option.birthdayShowYear"><![CDATA[Display year of birth]]></item>
 		<item name="wcf.user.option.birthdayShowYear.description"><![CDATA[Allows users to view your age.]]></item>
-		<item name="wcf.user.option.canMail"><![CDATA[Can Send Me Emails]]></item>
 		<item name="wcf.user.option.canViewEmailAddress"><![CDATA[Can View My Email Address]]></item>
 		<item name="wcf.user.option.canViewOnlineStatus"><![CDATA[Can View My Online Status]]></item>
 		<item name="wcf.user.option.canViewProfile"><![CDATA[Can View My Profile]]></item>
@@ -5233,10 +5256,9 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 		<item name="wcf.user.option.searchRadioButtonOption"><![CDATA[User’s selection for “{$option->getTitle()}”:]]></item>
 		<item name="wcf.user.option.searchTextOption"><![CDATA[“{$option->getTitle()}” contains:]]></item>
 		<item name="wcf.user.option.searchBooleanOption"><![CDATA[User’s selection for “{$option->getTitle()}”:]]></item>
+		<item name="wcf.user.option.enableEmbeddedMedia"><![CDATA[Display all external content]]></item>
 	</category>
 	<category name="wcf.user.mail">
-		<item name="wcf.user.mail.information"><![CDATA[Details]]></item>
-		<item name="wcf.user.mail.mail.subject"><![CDATA[Message From {@$username}: {@$subject}]]></item>
 		<item name="wcf.user.mail.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
 “{@$username}” sent you a message on {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}]:
@@ -5247,11 +5269,6 @@ your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|langu
 <p>„{$username}“ sent you a message on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a>:</p>
 
 <p>{@$message|newlineToBreak}</p>]]></item>
-		<item name="wcf.user.mail.message"><![CDATA[Message]]></item>
-		<item name="wcf.user.mail.senderEmail"><![CDATA[Your email address]]></item>
-		<item name="wcf.user.mail.sent"><![CDATA[The message has been sent to {$user->username}.]]></item>
-		<item name="wcf.user.mail.showAddress"><![CDATA[Use my email address as sender address, the recipient can directly reply to me.]]></item>
-		<item name="wcf.user.mail.subject"><![CDATA[Subject]]></item>
 	</category>
 	<category name="wcf.user.rank">
 		<item name="wcf.user.rank.administrator"><![CDATA[Administrator]]></item>

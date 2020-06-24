@@ -28,6 +28,7 @@
 			<dd>
 				<div dir="ltr">
 					<textarea id="styles" rows="20" cols="40" name="styles" style="visibility: hidden">{$styles}</textarea>
+					<input class="codeMirrorScrollOffset" name="stylesScrollOffset" value="{$stylesScrollOffset}" type="hidden">
 				</div>
 			</dd>
 		</dl>

@@ -2,7 +2,7 @@ define(["prism/prism","prism/components/prism-clike"], function () {
 // issues: nested multiline comments
 Prism.languages.swift = Prism.languages.extend('clike', {
 	'string': {
-		pattern: /("|')(\\(?:\((?:[^()]|\([^)]+\))+\)|\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
+		pattern: /("|')(?:\\(?:\((?:[^()]|\([^)]+\))+\)|\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
 		greedy: true,
 		inside: {
 			'interpolation': {

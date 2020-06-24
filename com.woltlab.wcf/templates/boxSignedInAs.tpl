@@ -5,7 +5,7 @@
 		<div class="containerHeadline">
 			<h3>
 				{event name='beforeUsername'}
-				<a href="{link controller='User' object=$__wcf->user}{/link}">{$__wcf->user->username}</a>
+				{user object=$__wcf->getUserProfileHandler()->getUserProfile()}
 			</h3>
 			{if MODULE_USER_RANK}
 				{if $__wcf->getUserProfileHandler()->getUserTitle()}

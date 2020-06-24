@@ -209,7 +209,7 @@ class UserMailForm extends AbstractForm {
 			$this->userList->readObjects();
 		}
 		
-		$this->groups = UserGroup::getAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE]);
+		$this->groups = UserGroup::getSortedAccessibleGroups([], [UserGroup::GUESTS, UserGroup::EVERYONE]);
 	}
 	
 	/**

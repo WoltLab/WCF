@@ -21,12 +21,12 @@ define(
 	var _knownMessages = new List();
 	var _main = null;
 	var _messages = elByClass('message');
+	var _mobileSidebarEnabled = false;
 	var _options = {};
 	var _pageMenuMain = null;
 	var _pageMenuUser = null;
 	var _messageGroups = null;
 	var _sidebars = [];
-	var _sidebarXsEnabled = false;
 	
 	/**
 	 * @exports	WoltLabSuite/Core/Ui/Mobile
@@ -71,10 +71,10 @@ define(
 				setup: this.enableShadow.bind(this)
 			});
 			
-			UiScreen.on('screen-xs', {
-				match: this._enableSidebarXS.bind(this),
-				unmatch: this._disableSidebarXS.bind(this),
-				setup: this._setupSidebarXS.bind(this)
+			UiScreen.on('screen-md-down', {
+				match: this._enableMobileSidebar.bind(this),
+				unmatch: this._disableMobileSidebar.bind(this),
+				setup: this._setupMobileSidebar.bind(this)
 			});
 			
 			// On the large tablets (e.g. iPad Pro) the navigation is not usable, because there is not the mobile
@@ -310,22 +310,22 @@ define(
 			}
 		},
 		
-		_enableSidebarXS: function() {
-			_sidebarXsEnabled = true;
+		_enableMobileSidebar: function() {
+			_mobileSidebarEnabled = true;
 		},
 		
-		_disableSidebarXS: function() {
-			_sidebarXsEnabled = false;
+		_disableMobileSidebar: function() {
+			_mobileSidebarEnabled = false;
 			
 			_sidebars.forEach(function (sidebar) {
 				sidebar.classList.remove('open');
 			});
 		},
 		
-		_setupSidebarXS: function() {
+		_setupMobileSidebar: function() {
 			_sidebars.forEach(function (sidebar) {
 				sidebar.addEventListener('mousedown', function(event) {
-					if (_sidebarXsEnabled && event.target === sidebar) {
+					if (_mobileSidebarEnabled && event.target === sidebar) {
 						event.preventDefault();
 						
 						sidebar.classList.toggle('open');
@@ -333,7 +333,7 @@ define(
 				});
 			});
 			
-			_sidebarXsEnabled = true;
+			_mobileSidebarEnabled = true;
 		},
 		
 		_toggleMobileNavigation: function (message, quickOptions, navigation) {

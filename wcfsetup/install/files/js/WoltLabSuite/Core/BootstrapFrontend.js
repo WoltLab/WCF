@@ -9,11 +9,13 @@
 define(
 	[
 	 	'WoltLabSuite/Core/BackgroundQueue', 'WoltLabSuite/Core/Bootstrap', 'WoltLabSuite/Core/Controller/Style/Changer',
-	 	'WoltLabSuite/Core/Controller/Popover', 'WoltLabSuite/Core/Ui/User/Ignore', 'WoltLabSuite/Core/Ui/Page/Header/Menu'
+	 	'WoltLabSuite/Core/Controller/Popover', 'WoltLabSuite/Core/Ui/User/Ignore', 'WoltLabSuite/Core/Ui/Page/Header/Menu',
+		'WoltLabSuite/Core/Ui/Message/UserConsent'
 	],
 	function(
 		BackgroundQueue, Bootstrap, ControllerStyleChanger,
-		ControllerPopover, UiUserIgnore, UiPageHeaderMenu
+		ControllerPopover, UiUserIgnore, UiPageHeaderMenu,
+		UiMessageUserConsent
 	)
 {
 	"use strict";
@@ -52,6 +54,8 @@ define(
 			if (COMPILER_TARGET_DEFAULT) {
 				UiUserIgnore.init();
 			}
+			
+			UiMessageUserConsent.init();
 		},
 		
 		/**
@@ -59,20 +63,17 @@ define(
 		 */
 		_initUserPopover: function() {
 			ControllerPopover.init({
+				className: 'userLink',
+				dboAction: 'wcf\\data\\user\\UserProfileAction',
+				identifier: 'com.woltlab.wcf.user'
+			});
+			
+			// @deprecated since 5.3
+			ControllerPopover.init({
 				attributeName: 'data-user-id',
 				className: 'userLink',
-				identifier: 'com.woltlab.wcf.user',
-				loadCallback: function(objectId, popover) {
-					var callback = function(data) {
-						popover.setContent('com.woltlab.wcf.user', objectId, data.returnValues.template);
-					};
-					
-					popover.ajaxApi({
-						actionName: 'getUserProfile',
-						className: 'wcf\\data\\user\\UserProfileAction',
-						objectIDs: [ objectId ]
-					}, callback, callback);
-				}
+				dboAction: 'wcf\\data\\user\\UserProfileAction',
+				identifier: 'com.woltlab.wcf.user.deprecated'
 			});
 		}
 	};

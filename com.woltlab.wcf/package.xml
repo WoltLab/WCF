@@ -49,7 +49,11 @@
 		
 		<instruction type="script">acp/post_install.php</instruction>
 	</instructions>
-	
+
+	<instructions type="update" fromversion="5.2.*">
+		<!-- Delete wcfsetup/install/files/lib/form/MailForm.class.php during the upgrade to make it 100% non-functional. -->
+	</instructions>
+
 	<instructions type="update" fromversion="3.1.*">
 		<instruction type="file">files_preUpdate.tar</instruction>
 		<instruction type="script" flushCache="false">acp/update_com.woltlab.wcf_5.2_preUpdate.php</instruction>

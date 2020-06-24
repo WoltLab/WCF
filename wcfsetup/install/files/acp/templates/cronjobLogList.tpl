@@ -31,9 +31,51 @@
 	{/hascontent}
 </header>
 
+<form method="post" action="{link controller='CronjobLogList'}{/link}">
+	<section class="section">
+		<h2 class="sectionTitle">{lang}wcf.global.filter{/lang}</h2>
+		
+		<div class="row rowColGap formGrid">
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<select name="cronjobID" aria-label="{lang}wcf.acp.cronjob.description{/lang}">
+						<option value="0">{lang}wcf.acp.cronjob.description{/lang}</option>
+						{foreach from=$availableCronjobs item=availableCronjob}
+							<option value="{@$availableCronjob->cronjobID}"{if $availableCronjob->cronjobID == $cronjobID} selected{/if}>{$availableCronjob->description|language}</option>
+						{/foreach}
+					</select>
+				</dd>
+			</dl>
+			
+			<dl class="col-xs-12 col-md-4">
+				<dt></dt>
+				<dd>
+					<select name="success" aria-label="{lang}wcf.acp.cronjob.log.status{/lang}">
+						<option value="-1">{lang}wcf.acp.cronjob.log.status{/lang}</option>
+						<option value="1"{if $success == 1} selected{/if}>{lang}wcf.acp.cronjob.log.success{/lang}</option>
+						<option value="0"{if $success == 0} selected{/if}>{lang}wcf.acp.cronjob.log.error{/lang}</option>
+					</select>
+				</dd>
+			</dl>
+			
+			{event name='filterFields'}
+		</div>
+		
+		<div class="formSubmit">
+			<input type="submit" value="{lang}wcf.global.button.submit{/lang}" accesskey="s">
+			{@SECURITY_TOKEN_INPUT_TAG}
+		</div>
+	</section>
+</form>
+
+{assign var='linkParameters' value=''}
+{if $cronjobID}{capture append=linkParameters}&cronjobID={@$cronjobID}{/capture}{/if}
+{if $success != -1}{capture append=linkParameters}&success={@$success}{/capture}{/if}
+
 {hascontent}
 	<div class="paginationTop">
-		{content}{pages print=true assign=pagesLinks controller="CronjobLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder"}{/content}
+		{content}{pages print=true assign=pagesLinks controller="CronjobLogList" link="pageNo=%d&sortField=$sortField&sortOrder=$sortOrder$linkParameters"}{/content}
 	</div>
 {/hascontent}
 
@@ -42,11 +84,11 @@
 		<table class="table">
 			<thead>
 				<tr>
-					<th class="columnID columnCronjobID{if $sortField == 'cronjobID'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=cronjobID&sortOrder={if $sortField == 'cronjobID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
-					<th class="columnTitle columnClassName{if $sortField == 'className'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=className&sortOrder={if $sortField == 'className' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.className{/lang}</a></th>
-					<th class="columnText columnDescription{if $sortField == 'description'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=description&sortOrder={if $sortField == 'description' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.description{/lang}</a></th>
-					<th class="columnDate columnExecTime{if $sortField == 'execTime'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=execTime&sortOrder={if $sortField == 'execTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.log.execTime{/lang}</a></th>
-					<th class="columnText columnSuccess{if $sortField == 'success'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=success&sortOrder={if $sortField == 'success' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{/link}">{lang}wcf.acp.cronjob.log.status{/lang}</a></th>
+					<th class="columnID columnCronjobID{if $sortField == 'cronjobID'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=cronjobID&sortOrder={if $sortField == 'cronjobID' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.global.objectID{/lang}</a></th>
+					<th class="columnTitle columnClassName{if $sortField == 'className'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=className&sortOrder={if $sortField == 'className' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.cronjob.className{/lang}</a></th>
+					<th class="columnText columnDescription{if $sortField == 'description'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=description&sortOrder={if $sortField == 'description' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.cronjob.description{/lang}</a></th>
+					<th class="columnDate columnExecTime{if $sortField == 'execTime'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=execTime&sortOrder={if $sortField == 'execTime' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.cronjob.log.execTime{/lang}</a></th>
+					<th class="columnText columnSuccess{if $sortField == 'success'} active {@$sortOrder}{/if}"><a href="{link controller='CronjobLogList'}pageNo={@$pageNo}&sortField=success&sortOrder={if $sortField == 'success' && $sortOrder == 'ASC'}DESC{else}ASC{/if}{@$linkParameters}{/link}">{lang}wcf.acp.cronjob.log.status{/lang}</a></th>
 					
 					{event name='columnHeads'}
 				</tr>

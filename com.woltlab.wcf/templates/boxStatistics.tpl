@@ -11,6 +11,6 @@
 	
 	{if $statistics[newestMember]}
 		<dt>{lang}wcf.user.newestMember{/lang}</dt>
-		<dd><a href="{link controller='User' object=$statistics[newestMember]}{/link}" class="userLink" data-user-id="{$statistics[newestMember]->userID}">{$statistics[newestMember]}</a></dd>
+		<dd>{user object=$statistics[newestMember]}</dd>
 	{/if}
 </dl>

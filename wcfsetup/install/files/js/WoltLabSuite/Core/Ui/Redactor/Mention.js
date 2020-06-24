@@ -67,7 +67,6 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function(Ajax, 
 				default:
 					this._hideDropdown();
 					return;
-					break;
 			}
 			
 			event.preventDefault();
@@ -190,7 +189,14 @@ define(['Ajax', 'Environment', 'StringUtil', 'Ui/CloseOverlay'], function(Ajax, 
 			range.deleteContents();
 			range.collapse(true);
 			
-			var text = document.createTextNode('@' + elData(item, 'username') + '\u00A0');
+			// Mentions only allow for one whitespace per match, putting the username in apostrophes
+			// will allow an arbitrary number of spaces.
+			var username = elData(item, 'username').trim();
+			if (username.split(/\s/g).length > 2) {
+				username = "'" + username.replace(/'/g, "''") + "'";
+			}
+			
+			var text = document.createTextNode('@' + username + '\u00A0');
 			range.insertNode(text);
 			
 			range = document.createRange();

@@ -174,11 +174,7 @@ HTML;
 				$invalidGroupTypes[] = UserGroup::GUESTS;
 			}
 			
-			$this->userGroups = UserGroup::getAccessibleGroups([], $invalidGroupTypes);
-			
-			uasort($this->userGroups, function(UserGroup $groupA, UserGroup $groupB) {
-				return strcmp($groupA->getName(), $groupB->getName());
-			});
+			$this->userGroups = UserGroup::getSortedAccessibleGroups([], $invalidGroupTypes);
 		}
 		
 		return $this->userGroups;

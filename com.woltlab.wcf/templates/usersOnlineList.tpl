@@ -109,11 +109,11 @@
 		{capture append=usersOnlineList}
 			<li>
 				<div class="box48">
-					<a href="{link controller='User' object=$user}{/link}" title="{$user->username}" aria-hidden="true">{@$user->getAvatar()->getImageTag(48)}</a>
+					{user object=$user type='avatar48' title=$user->username ariaHidden='true'}
 					
 					<div class="details userInformation">
 						<div class="containerHeadline">
-							<h3><a href="{link controller='User' object=$user}{/link}" class="username">{@$user->getFormattedUsername()}</a>
+							<h3>{user object=$user}
 								{if MODULE_USER_RANK}
 									{if $user->getUserTitle()}
 										<span class="badge userTitleBadge{if $user->getRank() && $user->getRank()->cssClassName} {@$user->getRank()->cssClassName}{/if}">{$user->getUserTitle()}</span>

@@ -22,7 +22,7 @@
 					{if $article->hasLabels()}
 						<div class="contentItemLabels">
 							{foreach from=$article->getLabels() item=label}
-								<span class="label badge contentItemLabel{if $label->getClassNames()} {$label->getClassNames()}{/if}">{$label->getTitle()}</span>
+								{@$label->render('contentItemLabel')}
 							{/foreach}
 						</div>
 					{/if}
@@ -45,7 +45,7 @@
 				<div class="contentItemMetaContent">
 					<div class="contentItemMetaAuthor">
 						{if $article->userID}
-							<a href="{$article->getUserProfile()->getLink()}" class="userLink" data-user-id="{@$article->userID}">{$article->getUserProfile()->username}</a>
+							{user object=$article->getUserProfile()}
 						{else}
 							{$article->username}
 						{/if}
@@ -67,6 +67,8 @@
 							{$article->getDiscussionProvider()->getDiscussionCount()}
 						</span>
 					</div>
+					
+					{event name='contentItemMetaIcons'}
 				</div>
 			</div>
 		</article>

@@ -406,7 +406,10 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	boolean
 	 */
 	public function canViewOnlineStatus() {
-		return (WCF::getUser()->userID == $this->userID || WCF::getSession()->getPermission('admin.user.canViewInvisible') || $this->isAccessible('canViewOnlineStatus'));
+		return WCF::getUser()->userID == $this->userID
+			|| WCF::getSession()->getPermission('admin.user.canViewInvisible')
+			|| !$this->getPermission('user.profile.canHideOnlineStatus')
+			|| $this->isAccessible('canViewOnlineStatus');
 	}
 	
 	/**
@@ -426,7 +429,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	}
 	
 	/**
-	 * Returns the special trophies for the user. 
+	 * Returns the special trophies for the user.
 	 *
 	 * @return	Trophy[]
 	 */
@@ -459,14 +462,14 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 			$conditionBuilder->add('trophyID IN (?)', [$trophyDeleteIDs]);
 			
 			// reset the user special trophies 
-			$sql = "DELETE FROM wcf".WCF_N."_user_special_trophy ".$conditionBuilder; 
+			$sql = "DELETE FROM wcf".WCF_N."_user_special_trophy ".$conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
 			$statement->execute($conditionBuilder->getParameters());
 			
 			UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', serialize($specialTrophies));
 		}
 		$trophies = TrophyCache::getInstance()->getTrophiesByID($specialTrophies);
-		Trophy::sort($trophies, 'showOrder'); 
+		Trophy::sort($trophies, 'showOrder');
 		
 		return $trophies;
 	}
@@ -1018,7 +1021,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 * @return	string
 	 */
 	public function getAnchorTag() {
-		return '<a href="'.$this->getLink().'" class="userLink" data-user-id="'.$this->userID.'">'.StringUtil::encodeHTML($this->username).'</a>';
+		return '<a href="'.$this->getLink().'" class="userLink" data-object-id="'.$this->userID.'">'.StringUtil::encodeHTML($this->username).'</a>';
 	}
 	
 	/**

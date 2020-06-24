@@ -1,6 +1,7 @@
 <?php
 namespace wcf\acp\page;
 use wcf\data\user\User;
+use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
 use wcf\page\AbstractPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
@@ -14,7 +15,7 @@ use wcf\system\WCF;
  * Shows the welcome page in admin control panel.
  * 
  * @author	Marcel Werk
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Acp\Page
  */
@@ -128,7 +129,15 @@ class IndexPage extends AbstractPage {
 			&& file_exists(WCF_DIR . 'log/missingLanguageItems.txt')
 			&& filesize(WCF_DIR . 'log/missingLanguageItems.txt') > 0
 		) {
-			$missingLanguageItemsMTime = filemtime(WCF_DIR . 'log/missingLanguageItems.txt');
+			$logList = new DevtoolsMissingLanguageItemList();
+			$logList->sqlOrderBy = 'lastTime DESC';
+			$logList->sqlLimit = 1;
+			$logList->readObjects();
+			$logEntry = $logList->getSingleObject();
+			
+			if ($logEntry !== null) {
+				$missingLanguageItemsMTime = $logEntry->lastTime;
+			}
 		}
 		
 		WCF::getTPL()->assign([

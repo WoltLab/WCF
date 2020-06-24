@@ -3,7 +3,6 @@ namespace wcf\acp\form;
 use wcf\data\article\category\ArticleCategory;
 use wcf\data\article\Article;
 use wcf\data\article\ArticleAction;
-use wcf\data\category\CategoryNode;
 use wcf\data\category\CategoryNodeTree;
 use wcf\data\label\group\ViewableLabelGroup;
 use wcf\data\language\Language;
@@ -502,12 +501,6 @@ class ArticleAddForm extends AbstractForm {
 		parent::assignVariables();
 		
 		SmileyCache::getInstance()->assignVariables();
-		
-		$accessibleCategoryIDs = ArticleCategory::getAccessibleCategoryIDs();
-		$categoryNodeList = (new CategoryNodeTree('com.woltlab.wcf.article.category'))->getIterator();
-		$categoryNodes = array_filter(iterator_to_array($categoryNodeList), function(CategoryNode $categoryNode) use (&$accessibleCategoryIDs) {
-			return in_array($categoryNode->categoryID, $accessibleCategoryIDs);
-		});
 		
 		WCF::getTPL()->assign([
 			'action' => 'add',

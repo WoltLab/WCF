@@ -1,4 +1,4 @@
-define(["prism/prism","prism/components/prism-javascript","prism/components/prism-actionscript","prism/components/prism-coffeescript","prism/components/prism-flow","prism/components/prism-n4js","prism/components/prism-typescript"], function () {
+define(["prism/prism","prism/components/prism-javascript"], function () {
 (function (Prism) {
 
 	Prism.languages.insertBefore('javascript', 'function-variable', {
@@ -61,7 +61,7 @@ define(["prism/prism","prism/components/prism-javascript","prism/components/pris
 
 	Prism.languages.insertBefore('javascript', 'punctuation', {
 		'property-access': {
-			pattern: /(\.\s*)[_$a-zA-Z\xA0-\uFFFF][$\w\xA0-\uFFFF]*/,
+			pattern: /(\.\s*)#?[_$a-zA-Z\xA0-\uFFFF][$\w\xA0-\uFFFF]*/,
 			lookbehind: true
 		},
 		'maybe-class-name': {

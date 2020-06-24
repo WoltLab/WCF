@@ -7,15 +7,14 @@
 		</li>
 	{else}
 		<li class="comment jsComment"
-		    data-object-id="{@$comment->commentID}" data-comment-id="{@$comment->commentID}" data-object-type="com.woltlab.wcf.comment"
+			data-comment-id="{@$comment->commentID}"
 			{@$__wcf->getReactionHandler()->getDataAttributes('com.woltlab.wcf.comment', $comment->commentID)}
-		    data-can-edit="{if $comment->isEditable()}true{else}false{/if}" data-can-delete="{if $comment->isDeletable()}true{else}false{/if}"
-		    data-responses="{@$comment->responses}" data-last-response-time="{if $commentLastResponseTime|empty}{@$comment->getLastResponseTime()}{else}{@$commentLastResponseTime}{/if}" data-user-id="{@$comment->userID}" data-is-disabled="{@$comment->isDisabled}">
+			data-can-edit="{if $comment->isEditable()}true{else}false{/if}" data-can-delete="{if $comment->isDeletable()}true{else}false{/if}"
+			data-responses="{@$comment->responses}" data-last-response-time="{if $commentLastResponseTime|empty}{@$comment->getLastResponseTime()}{else}{@$commentLastResponseTime}{/if}" data-user-id="{@$comment->userID}" data-is-disabled="{@$comment->isDisabled}"
+		>
 			<div class="box48{if $__wcf->getUserProfileHandler()->isIgnoredUser($comment->userID)} ignoredUserContent{/if}">
 				{if $comment->userID}
-					<a href="{link controller='User' object=$comment->getUserProfile()}{/link}" title="{$comment->getUserProfile()->username}">
-						{@$comment->getUserProfile()->getAvatar()->getImageTag(48)}
-					</a>
+					{user object=$comment->getUserProfile() type='avatar48' title=$comment->getUserProfile()->username}
 				{else}
 					{@$comment->getUserProfile()->getAvatar()->getImageTag(48)}
 				{/if}
@@ -27,8 +26,8 @@
 						<div class="containerHeadline">
 							<h3 itemprop="author" itemscope itemtype="http://schema.org/Person">
 								{if $comment->userID}
-									<a href="{link controller='User' object=$comment->getUserProfile()}{/link}" class="userLink" data-user-id="{@$comment->userID}" itemprop="url">
-										<span itemprop="name">{$comment->username}</span>
+									<a href="{$comment->getUserProfile()->getLink()}" class="userLink" data-object-id="{@$comment->userID}" itemprop="url">
+										<span itemprop="name">{@$comment->getUserProfile()->getFormattedUsername()}</span>
 									</a>
 								{else}
 									<span itemprop="name">{$comment->username}</span>

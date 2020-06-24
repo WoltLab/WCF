@@ -42,6 +42,7 @@
 			{foreach from=$objects item='trophy'}
 				<li class="sortableNode sortableNoNesting trophyRow" data-object-id="{@$trophy->trophyID}">
 					<span class="sortableNodeLabel">
+						{@$trophy->renderTrophy(32)}
 						<a href="{link controller='TrophyEdit' object=$trophy}{/link}">{$trophy->getTitle()}</a>
 						
 						<span class="statusDisplay sortableButtonContainer">

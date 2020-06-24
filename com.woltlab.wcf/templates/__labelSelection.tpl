@@ -1,6 +1,6 @@
 {foreach from=$labelGroups item=labelGroup}
 	{if $labelGroup|count}
-		<dt>##<label>{$labelGroup->getTitle()}</label></dt>
+		<dt><label>{$labelGroup->getTitle()}</label></dt>
 		<dd>
 			<ul class="labelList jsOnly">
 				<li class="dropdown labelChooser" id="labelGroup{@$labelGroup->groupID}" data-group-id="{@$labelGroup->groupID}">
@@ -8,7 +8,7 @@
 					<div class="dropdownMenu">
 						<ul class="scrollableDropdownMenu">
 							{foreach from=$labelGroup item=label}
-								<li data-label-id="{@$label->labelID}"><span><span class="badge label{if $label->getClassNames()} {@$label->getClassNames()}{/if}">{$label->getTitle()}</span></span></li>
+								<li data-label-id="{@$label->labelID}"><span>{@$label->render()}</span></li>
 							{/foreach}
 						</ul>
 					</div>

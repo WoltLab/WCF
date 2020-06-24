@@ -288,6 +288,14 @@ interface IFormDocument extends IFormParentNode {
 	public function invalid($invalid = true);
 	
 	/**
+	 * Returns `true` if the information about required fields has to be shown below the form.
+	 * 
+	 * @return	bool
+	 * @since	5.3
+	 */
+	public function needsRequiredFieldsInfo();
+	
+	/**
 	 * Sets the updated object (and loads the field values from the given object) and returns
 	 * this document.
 	 * 

@@ -1,4 +1,4 @@
-define(["prism/prism","prism/components/prism-javascript","prism/components/prism-markup"], function () {
+define(["prism/prism","prism/components/prism-javascript"], function () {
 Prism.languages.actionscript = Prism.languages.extend('javascript',  {
 	'keyword': /\b(?:as|break|case|catch|class|const|default|delete|do|else|extends|finally|for|function|if|implements|import|in|instanceof|interface|internal|is|native|new|null|package|private|protected|public|return|super|switch|this|throw|try|typeof|use|var|void|while|with|dynamic|each|final|get|include|namespace|native|override|set|static)\b/,
 	'operator': /\+\+|--|(?:[+\-*\/%^]|&&?|\|\|?|<<?|>>?>?|[!=]=?)=?|[~?@]/
@@ -10,10 +10,9 @@ if (Prism.languages.markup) {
 		'xml': {
 			pattern: /(^|[^.])<\/?\w+(?:\s+[^\s>\/=]+=("|')(?:\\[\s\S]|(?!\2)[^\\])*\2)*\s*\/?>/,
 			lookbehind: true,
-			inside: {
-				rest: Prism.languages.markup
-			}
+			inside: Prism.languages.markup
 		}
 	});
 }
+
 return Prism; })

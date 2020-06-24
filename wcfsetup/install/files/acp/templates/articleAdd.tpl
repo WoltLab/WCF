@@ -139,7 +139,7 @@
 									<div class="dropdownMenu">
 										<ul class="scrollableDropdownMenu">
 											{foreach from=$labelGroup item=label}
-												<li data-label-id="{@$label->labelID}"><span><span class="badge label{if $label->getClassNames()} {@$label->getClassNames()}{/if}">{$label->getTitle()}</span></span></li>
+												<li data-label-id="{@$label->labelID}"><span>{@$label->render()}</span></li>
 											{/foreach}
 										</ul>
 									</div>
