@@ -103,12 +103,6 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	 */
 	protected $coverPhoto;
 	
-	/**
-	 * @var Trophy[]
-	 * @since 5.3
-	 */
-	protected $specialTrophies;
-	
 	const GENDER_MALE = 1;
 	const GENDER_FEMALE = 2;
 	
@@ -432,61 +426,49 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	}
 	
 	/**
-	 * Returns the special trophies for the user. 
+	 * Returns the special trophies for the user.
 	 *
 	 * @return	Trophy[]
 	 */
 	public function getSpecialTrophies() {
-		$this->loadSpecialTrophies();
+		$specialTrophies = UserStorageHandler::getInstance()->getField('specialTrophies', $this->userID);
 		
-		return $this->specialTrophies;
-	}
-	
-	/**
-	 * Loads the special trophies for this user.
-	 *
-	 * @since       5.3
-	 */
-	protected function loadSpecialTrophies() {
-		if ($this->specialTrophies === null) {
-			$specialTrophyIDs = UserStorageHandler::getInstance()->getField('specialTrophies', $this->userID);
+		if ($specialTrophies === null) {
+			// load special trophies for the user
+			$sql = "SELECT trophyID FROM wcf".WCF_N."_user_special_trophy WHERE userID = ?";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([$this->userID]);
+			$specialTrophies = $statement->fetchAll(\PDO::FETCH_COLUMN);
 			
-			if ($specialTrophyIDs === null) {
-				// load special trophies for the user
-				$sql = "SELECT trophyID FROM wcf".WCF_N."_user_special_trophy WHERE userID = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute([$this->userID]);
-				$specialTrophyIDs = $statement->fetchAll(\PDO::FETCH_COLUMN);
-				
-				UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', serialize($specialTrophyIDs));
-			}
-			else {
-				$specialTrophyIDs = unserialize($specialTrophyIDs);
-			}
-			
-			// check if the user has the permission to store these number of trophies,
-			// otherwise, delete the last trophies
-			if (count($specialTrophyIDs) > $this->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
-				$trophyDeleteIDs = [];
-				while (count($specialTrophyIDs) > $this->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
-					$trophyDeleteIDs[] = array_pop($specialTrophyIDs);
-				}
-				
-				$conditionBuilder = new PreparedStatementConditionBuilder();
-				$conditionBuilder->add('userID = ?', [$this->userID]);
-				$conditionBuilder->add('trophyID IN (?)', [$trophyDeleteIDs]);
-				
-				// reset the user special trophies 
-				$sql = "DELETE FROM wcf".WCF_N."_user_special_trophy ".$conditionBuilder;
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute($conditionBuilder->getParameters());
-				
-				UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', serialize($specialTrophyIDs));
-			}
-			
-			$this->specialTrophies = TrophyCache::getInstance()->getTrophiesByID($specialTrophyIDs);
-			Trophy::sort($this->specialTrophies, 'showOrder');
+			UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', serialize($specialTrophies));
 		}
+		else {
+			$specialTrophies = unserialize($specialTrophies);
+		}
+		
+		// check if the user has the permission to store these number of trophies,
+		// otherwise, delete the last trophies
+		if (count($specialTrophies) > $this->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
+			$trophyDeleteIDs = [];
+			while (count($specialTrophies) > $this->getPermission('user.profile.trophy.maxUserSpecialTrophies')) {
+				$trophyDeleteIDs[] = array_pop($specialTrophies);
+			}
+			
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('userID = ?', [$this->userID]);
+			$conditionBuilder->add('trophyID IN (?)', [$trophyDeleteIDs]);
+			
+			// reset the user special trophies 
+			$sql = "DELETE FROM wcf".WCF_N."_user_special_trophy ".$conditionBuilder;
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute($conditionBuilder->getParameters());
+			
+			UserStorageHandler::getInstance()->update($this->userID, 'specialTrophies', serialize($specialTrophies));
+		}
+		$trophies = TrophyCache::getInstance()->getTrophiesByID($specialTrophies);
+		Trophy::sort($trophies, 'showOrder');
+		
+		return $trophies;
 	}
 	
 	/**
