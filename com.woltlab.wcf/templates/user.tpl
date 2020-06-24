@@ -204,7 +204,7 @@
 								<li><a href="{@$trophy->getLink()}">{@$trophy->renderTrophy(32, true)}</a></li>
 							{/foreach}
 							{if $user->trophyPoints > $specialTrophyCount}
-								<li><a href="#" class="jsTooltip userTrophyOverlayList" data-user-id="{$user->userID}" title="{lang}wcf.user.trophy.showTrophies{/lang}">{lang trophyCount=$user->trophyPoints-$specialTrophyCount}wcf.user.trophy.showMoreTrophies{/lang}</a></li>
+								<li><a href="#" class="jsTooltip userTrophyOverlayList" data-user-id="{$user->userID}" title="{lang}wcf.user.trophy.showTrophies{/lang}" role="button">{lang trophyCount=$user->trophyPoints-$specialTrophyCount}wcf.user.trophy.showMoreTrophies{/lang}</a></li>
 							{/if}
 						</ul>
 					</div>
