@@ -18,7 +18,7 @@ class UrlFormField extends TextFormField {
 	 * @inheritDoc
 	 */
 	protected function validateText($text, Language $language = null) {
-		if ($this->isRequired() && ($this->getValue() === null || $this->getValue() === '')) {
+		if ($this->isRequired() || !empty($this->getValue())) {
 			if (!Url::is($text)) {
 				$this->addValidationError(new FormFieldValidationError(
 					'invalid',
