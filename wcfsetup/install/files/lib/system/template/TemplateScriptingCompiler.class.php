@@ -96,6 +96,7 @@ class TemplateScriptingCompiler {
 		'min',
 		'nl2br',
 		'number_format',
+		'parse_url',
 		'preg_match',
 		'preg_replace',
 		'print_r',
