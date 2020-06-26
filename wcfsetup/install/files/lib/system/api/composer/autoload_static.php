@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab
+class ComposerStaticInitf07e6bf6487a19c1ad4a7f66aa2be118
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -61,10 +61,6 @@ class ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab
             array (
                 0 => __DIR__ . '/..' . '/erusev/parsedown',
             ),
-            'PEAR' => 
-            array (
-                0 => __DIR__ . '/..' . '/pear/pear_exception',
-            ),
         ),
         'N' => 
         array (
@@ -83,16 +79,17 @@ class ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab
     );
 
     public static $classMap = array (
+        'PEAR_Exception' => __DIR__ . '/..' . '/pear/pear_exception/PEAR/Exception.php',
         'PHP_ICO' => __DIR__ . '/..' . '/chrisjean/php-ico/class-php-ico.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInit4a4e0e985ef68770d710dc260edc44ab::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInitf07e6bf6487a19c1ad4a7f66aa2be118::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInitf07e6bf6487a19c1ad4a7f66aa2be118::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInitf07e6bf6487a19c1ad4a7f66aa2be118::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInitf07e6bf6487a19c1ad4a7f66aa2be118::$classMap;
 
         }, null, ClassLoader::class);
     }
