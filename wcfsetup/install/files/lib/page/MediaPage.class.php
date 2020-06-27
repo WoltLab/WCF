@@ -92,9 +92,9 @@ class MediaPage extends AbstractPage {
 			'filesize' => $filesize,
 			'showInline' => in_array($mimeType, self::$inlineMimeTypes),
 			'enableRangeSupport' => $this->thumbnail ? true : false,
-			'lastModificationTime' => $this->media->uploadTime,
+			'lastModificationTime' => $this->media->fileUpdateTime ?? $this->media->uploadTime,
 			'expirationDate' => TIME_NOW + 31536000,
-			'maxAge' => 31536000
+			'maxAge' => 31536000,
 		]);
 		
 		if ($this->eTag !== null) {

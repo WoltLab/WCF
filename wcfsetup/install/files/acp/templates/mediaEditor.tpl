@@ -1,3 +1,7 @@
+<ul class="mediaEditorButtons buttonGroup">
+	<li><div class="mediaManagerMediaReplaceButton"></div></li>
+</ul>
+
 {if $media->isImage && $media->hasThumbnail('small')}
 	<div class="mediaThumbnail">
 		{@$media->getThumbnailTag('small')}

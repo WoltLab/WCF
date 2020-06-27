@@ -4064,6 +4064,7 @@ Dateianhänge:
 	<category name="wcf.media">
 		<item name="wcf.media.altText"><![CDATA[Alternativ-Text]]></item>
 		<item name="wcf.media.button.insert"><![CDATA[Einfügen]]></item>
+		<item name="wcf.media.button.replaceFile"><![CDATA[Datei ersetzen]]></item>
 		<item name="wcf.media.button.select"><![CDATA[Auswählen]]></item>
 		<item name="wcf.media.caption"><![CDATA[Bildunterschrift]]></item>
 		<item name="wcf.media.caption.enableHtml"><![CDATA[HTML in der Bildunterschrift verwenden]]></item>
@@ -4090,6 +4091,8 @@ Dateianhänge:
 		<item name="wcf.media.media.pageTitle"><![CDATA[{if $__wcf->session->getPermission('admin.content.cms.canOnlyAccessOwnMedia')}Eigene {/if}Medien]]></item>
 		<item name="wcf.media.search.cancel"><![CDATA[Suche abbrechen]]></item>
 		<item name="wcf.media.search.placeholder"><![CDATA[Datei suchen]]></item>
+		<item name="wcf.media.upload.error.differentFileExtension"><![CDATA[Die neue Datei muss die gleiche Dateiendung haben wie die aktuelle Datei.]]></item>
+		<item name="wcf.media.upload.error.differentFileType"><![CDATA[Die neue Datei muss vom gleichen Dateityp sein wie die aktuelle Datei.]]></item>
 		<item name="wcf.media.upload.error.noImage"><![CDATA[Die hochgeladene Datei ist kein Bild.]]></item>
 		<item name="wcf.media.upload.error.uploadFailed"><![CDATA[Beim Hochladen der Datei ist ein unbekannter Fehler aufgetreten.]]></item>
 		<item name="wcf.media.upload.success"><![CDATA[Die Datei wurde erfolgreich hochgeladen.]]></item>
