@@ -5,8 +5,8 @@
 		<packagedescription>Free CMS and web-framework, designed for awesome websites and communities.</packagedescription>
 		<packagedescription language="de">Freies CMS und Web-Framework, das eindrucksvolle Websites und Communities ermöglicht.</packagedescription>
 		<isapplication>1</isapplication>
-		<version>3.1.14</version> <!-- codename: tornado -->
-		<date>2020-05-10</date>
+		<version>3.1.15</version> <!-- codename: tornado -->
+		<date>2020-06-27</date>
 	</packageinformation>
 	
 	<authorinformation>
@@ -99,16 +99,13 @@
 		<instruction type="script">acp/update_com.woltlab.wcf_preventMailAbuse.php</instruction>
 	</instructions>
 	
-	<instructions type="update" fromversion="3.1.13">
-		<instruction type="file">files_pre_3.1.14.tar</instruction>
-		<instruction type="script" run="standalone">acp/update_com.woltlab.wcf_3.1.14.php</instruction>
-		
+	<instructions type="update" fromversion="3.1.14">
 		<instruction type="acpTemplate">acptemplates_update.tar</instruction>
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
 		
 		<instruction type="language" />
 		
-		<instruction type="page" />
+		<instruction type="mediaProvider" />
 	</instructions>
 </package>
