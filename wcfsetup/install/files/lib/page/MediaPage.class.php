@@ -85,7 +85,10 @@ class MediaPage extends AbstractPage {
 			$this->eTag = $this->mediaID;
 		}
 		
+		$this->eTag .= '_' . $this->media->fileHash;
+		
 		// init file reader
+		$maxAge = 3600;
 		$this->fileReader = new FileReader($location, [
 			'filename' => $this->media->filename,
 			'mimeType' => $mimeType,
@@ -93,8 +96,8 @@ class MediaPage extends AbstractPage {
 			'showInline' => in_array($mimeType, self::$inlineMimeTypes),
 			'enableRangeSupport' => $this->thumbnail ? true : false,
 			'lastModificationTime' => $this->media->fileUpdateTime ?? $this->media->uploadTime,
-			'expirationDate' => TIME_NOW + 31536000,
-			'maxAge' => 31536000,
+			'expirationDate' => TIME_NOW + $maxAge,
+			'maxAge' => $maxAge,
 		]);
 		
 		if ($this->eTag !== null) {
