@@ -3,7 +3,7 @@ namespace wcf\util;
 use wcf\system\Regex;
 
 /**
- * Contains header-related functions.
+ * Contains helper functions to process the Exception log.
  * 
  * @author	Tim Duesterhus
  * @copyright	2001-2019 WoltLab GmbH
@@ -82,6 +82,14 @@ final class ExceptionLogUtil {
 			
 			return $item;
 		}, $chainRegex->getMatches());
+		
+		$matches['stackHash'] = sha1(implode("\0", array_map(function ($item) {
+			$result = "";
+			foreach ($item['stack'] as $stack) {
+				$result .= $stack['file']."\t".$stack['line']."\t".$stack['class'].$stack['type'].$stack['function']."\n";
+			}
+			return $result;
+		}, $chainMatches)));
 		
 		$matches['date'] = strtotime($matches['date']);
 		$matches['chain'] = $chainMatches;

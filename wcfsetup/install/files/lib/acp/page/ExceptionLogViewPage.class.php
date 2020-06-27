@@ -141,15 +141,22 @@ class ExceptionLogViewPage extends MultipleLinkPage {
 		$this->calculateNumberOfPages();
 		
 		$i = 0;
-		
+		$seenHashes = [];
 		foreach ($this->exceptions as $key => $val) {
 			$i++;
+			
+			$parsed = ExceptionLogUtil::parseException($val);
+			if (isset($seenHashes[$parsed['stackHash']])) {
+				$parsed['collapsed'] = true;
+			}
+			$seenHashes[$parsed['stackHash']] = true;
+			
 			if ($i < $this->startIndex || $i > $this->endIndex) {
 				unset($this->exceptions[$key]);
 				continue;
 			}
 			try {
-				$this->exceptions[$key] = ExceptionLogUtil::parseException($val);
+				$this->exceptions[$key] = $parsed;
 			}
 			catch (\InvalidArgumentException $e) {
 				unset($this->exceptions[$key]);

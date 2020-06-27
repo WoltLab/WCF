@@ -15,6 +15,20 @@
 		$('.jsCopyException').click(function () {
 			$(this).select();
 		});
+		
+		elBySelAll('.exceptionContainer', undefined, function (container) {
+			var button = elBySel('.collapsibleButton', container);
+			button.addEventListener('click', function (event) {
+				if (container.classList.toggle('collapsed')) {
+					button.classList.add('fa-chevron-right');
+					button.classList.remove('fa-chevron-down');
+				}
+				else {
+					button.classList.remove('fa-chevron-right');
+					button.classList.add('fa-chevron-down');
+				}
+			});
+		})
 	});
 </script>
 
@@ -74,66 +88,71 @@
 {if !$logFiles|empty}
 	{if $logFile}
 		{foreach from=$exceptions item='exception' key='exceptionKey'}
-			<section id="{$exceptionKey}" class="section">
-				<h2 class="sectionTitle">{$exception[message]}</h2>
+			<section id="{$exceptionKey}" class="section exceptionContainer{if $exception[collapsed]|isset && $exception[collapsed]} collapsed{/if}">
+				<h2 class="sectionTitle">
+					<span class="collapsibleButton jsTooltip pointer icon icon16 fa-chevron-{if $exception[collapsed]|isset && $exception[collapsed]}right{else}down{/if}" title="{lang}wcf.global.button.collapsible{/lang}"></span>
+					{$exception[message]}
+				</h2>
 				
-				<dl>
-					<dt>{lang}wcf.acp.exceptionLog.exception.date{/lang}</dt>
-					<dd>{$exception[date]|plainTime}</dd>
-				</dl>
-				
-				<dl>
-					<dt>{lang}wcf.acp.exceptionLog.exception.requestURI{/lang}</dt>
-					<dd>{$exception[requestURI]}</dd>
-				</dl>
-				<dl>
-					<dt>{lang}wcf.acp.exceptionLog.exception.referrer{/lang}</dt>
-					<dd>{$exception[referrer]}</dd>
-				</dl>
-				<dl>
-					<dt>{lang}wcf.acp.exceptionLog.exception.userAgent{/lang}</dt>
-					<dd>{$exception[userAgent]}</dd>
-				</dl>
-				<dl>
-					<dt>{lang}wcf.acp.exceptionLog.exception.memory{/lang}</dt>
-					<dd>{$exception[peakMemory]|filesizeBinary} / {if $exception[maxMemory] == -1}&infin;{else}{$exception[maxMemory]|filesizeBinary}{/if}</dd>
-				</dl>
-				{foreach from=$exception[chain] item=chain}
-				<dl>
-					<dt>{lang}wcf.acp.exceptionLog.exception.message{/lang}</dt>
-					<dd>{$chain[message]}</dd>
-				</dl>
-				<dl>
-					<dt>{lang}wcf.acp.exceptionLog.exception.class{/lang}</dt>
-					<dd>{$chain[class]}</dd>
-				</dl>
-				<dl>
-					<dt>{lang}wcf.acp.exceptionLog.exception.file{/lang}</dt>
-					<dd>{$chain[file]} ({$chain[line]})</dd>
-				</dl>
-				{if !$chain[information]|empty}
-					{foreach from=$chain[information] item=extraInformation}
-						<dl>
-							<dt>{$extraInformation[0]}</dt>
-							<dd>{$extraInformation[1]}</dd>
-						</dl>
+				<div class="exceptionDetails">
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.date{/lang}</dt>
+						<dd>{$exception[date]|plainTime}</dd>
+					</dl>
+					
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.requestURI{/lang}</dt>
+						<dd>{$exception[requestURI]}</dd>
+					</dl>
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.referrer{/lang}</dt>
+						<dd>{$exception[referrer]}</dd>
+					</dl>
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.userAgent{/lang}</dt>
+						<dd>{$exception[userAgent]}</dd>
+					</dl>
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.memory{/lang}</dt>
+						<dd>{$exception[peakMemory]|filesizeBinary} / {if $exception[maxMemory] == -1}&infin;{else}{$exception[maxMemory]|filesizeBinary}{/if}</dd>
+					</dl>
+					{foreach from=$exception[chain] item=chain}
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.message{/lang}</dt>
+						<dd>{$chain[message]}</dd>
+					</dl>
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.class{/lang}</dt>
+						<dd>{$chain[class]}</dd>
+					</dl>
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.file{/lang}</dt>
+						<dd>{$chain[file]} ({$chain[line]})</dd>
+					</dl>
+					{if !$chain[information]|empty}
+						{foreach from=$chain[information] item=extraInformation}
+							<dl>
+								<dt>{$extraInformation[0]}</dt>
+								<dd>{$extraInformation[1]}</dd>
+							</dl>
+						{/foreach}
+					{/if}
+					<dl>
+						<dt>{lang}wcf.acp.exceptionLog.exception.stacktrace{/lang}</dt>
+						<dd>
+							<ol start="0" class="nativeList">
+								{foreach from=$chain[stack] item=stack}
+								<li>{$stack[file]} ({$stack[line]}): {$stack[class]}{$stack[type]}{$stack[function]}(&hellip;)</li>
+								{/foreach}
+							</ol>
+						</dd>
+					</dl>
 					{/foreach}
-				{/if}
-				<dl>
-					<dt>{lang}wcf.acp.exceptionLog.exception.stacktrace{/lang}</dt>
-					<dd>
-						<ol start="0" class="nativeList">
-							{foreach from=$chain[stack] item=stack}
-							<li>{$stack[file]} ({$stack[line]}): {$stack[class]}{$stack[type]}{$stack[function]}(&hellip;)</li>
-							{/foreach}
-						</ol>
-					</dd>
-				</dl>
-				{/foreach}
-				<dl>
-					<dt><label for="copyException{$exceptionKey}">{lang}wcf.acp.exceptionLog.exception.copy{/lang}</label></dt>
-					<dd><textarea id="copyException{$exceptionKey}" rows="5" cols="40" class="jsCopyException" readonly>{$exception[0]}</textarea></dd>
-				</dl>
+					<dl>
+						<dt><label for="copyException{$exceptionKey}">{lang}wcf.acp.exceptionLog.exception.copy{/lang}</label></dt>
+						<dd><textarea id="copyException{$exceptionKey}" rows="5" cols="40" class="jsCopyException" readonly>{$exception[0]}</textarea></dd>
+					</dl>
+				</div>
 			</section>
 		{/foreach}
 
