@@ -3,6 +3,7 @@ namespace wcf\system\condition;
 use wcf\data\condition\Condition;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
+use wcf\util\StringUtil;
 
 /**
  * Abstract implementation of a condition with select options.
@@ -79,7 +80,7 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition {
 	 * @return	string
 	 */
 	protected function getOptGroupCode($label, array $options) {
-		$html = '<optgroup label="'.$label.'">';
+		$html = '<optgroup label="' . StringUtil::encodeHTML($label) . '">';
 		foreach ($options as $key => $value) {
 			$html .= $this->getOptionCode($key, $value);
 		}
@@ -96,7 +97,7 @@ abstract class AbstractSelectCondition extends AbstractSingleFieldCondition {
 	 * @return	string
 	 */
 	protected function getOptionCode($value, $label) {
-		return '<option value="'.$value.'"'.($this->fieldValue == $value ? ' selected' : '').'>'.WCF::getLanguage()->get($label).'</option>';
+		return '<option value="'.$value.'"'.($this->fieldValue == $value ? ' selected' : '').'>' . StringUtil::encodeHTML(WCF::getLanguage()->get($label)) . '</option>';
 	}
 	
 	/**
