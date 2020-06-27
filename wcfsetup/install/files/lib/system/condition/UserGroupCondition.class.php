@@ -8,6 +8,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\StringUtil;
 
 /**
  * Condition implementation for all of the user groups a user has to be a member
@@ -147,7 +148,7 @@ HTML;
 		$returnValue = "";
 		foreach ($userGroups as $userGroup) {
 			/** @noinspection PhpVariableVariableInspection */
-			$returnValue .= "<label><input type=\"checkbox\" name=\"".$identifier."[]\" value=\"".$userGroup->groupID."\"".(in_array($userGroup->groupID, $this->$identifier) ? ' checked' : "")."> ".$userGroup->getName()."</label>";
+			$returnValue .= "<label><input type=\"checkbox\" name=\"".$identifier."[]\" value=\"".$userGroup->groupID."\"".(in_array($userGroup->groupID, $this->$identifier) ? ' checked' : "")."> " . StringUtil::encodeHTML($userGroup->getName()) . "</label>";
 		}
 		
 		return $returnValue;
