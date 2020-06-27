@@ -118,6 +118,6 @@
 		
 		<instruction type="language" />
 		
-		<instruction type="page" />
+		<instruction type="mediaProvider" />
 	</instructions>
 </package>

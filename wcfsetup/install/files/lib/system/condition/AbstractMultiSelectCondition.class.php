@@ -3,6 +3,7 @@ namespace wcf\system\condition;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\StringUtil;
 
 /**
  * Abstract implementation of a condition with multi select options.
@@ -54,7 +55,7 @@ abstract class AbstractMultiSelectCondition extends AbstractSelectCondition {
 	 * @inheritDoc
 	 */
 	protected function getOptionCode($value, $label) {
-		return '<option value="'.$value.'"'.(in_array($value, $this->fieldValue) ? ' selected' : '').'>'.WCF::getLanguage()->get($label).'</option>';
+		return '<option value="'.$value.'"'.(in_array($value, $this->fieldValue) ? ' selected' : '').'>' . StringUtil::encodeHTML(WCF::getLanguage()->get($label)) . '</option>';
 	}
 	
 	/**

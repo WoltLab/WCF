@@ -10,6 +10,7 @@ use wcf\data\DatabaseObjectList;
 use wcf\system\exception\UserInputException;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
+use wcf\util\StringUtil;
 
 /**
  * Condition implementation for trophies.
@@ -150,7 +151,7 @@ HTML;
 		$returnValue = "";
 		foreach ($trophies as $trophy) {
 			/** @noinspection PhpVariableVariableInspection */
-			$returnValue .= "<label><input type=\"checkbox\" name=\"".$identifier."[]\" value=\"".$trophy->trophyID."\"".(in_array($trophy->trophyID, $this->$identifier) ? ' checked' : "")."> ".$trophy->getTitle()."</label>";
+			$returnValue .= "<label><input type=\"checkbox\" name=\"".$identifier."[]\" value=\"".$trophy->trophyID."\"".(in_array($trophy->trophyID, $this->$identifier) ? ' checked' : "")."> " . StringUtil::encodeHTML($trophy->getTitle()) . "</label>";
 		}
 		
 		return $returnValue;
