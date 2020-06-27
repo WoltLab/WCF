@@ -710,7 +710,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 	 * @since       5.3
 	 */
 	public function replaceFile() {
-		$saveStrategy = new DefaultUploadFileSaveStrategy(self::class, [
+		$saveStrategy = new DefaultUploadFileSaveStrategy(static::class, [
 			'action' => 'update',
 			'generateThumbnails' => true,
 			'object' => $this->getSingleObject()->getDecoratedObject(),

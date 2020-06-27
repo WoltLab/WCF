@@ -309,7 +309,7 @@ define(
 			// Bust browser cache by adding additional parameter.
 			var imgs = elByTag('img', thumbnail);
 			if (imgs.length) {
-				imgs[0].src += '&refresh=1';
+				imgs[0].src += '&refresh=' + Date.now();
 			}
 		},
 		
