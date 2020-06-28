@@ -12,7 +12,7 @@
 	<link rel="canonical" href="{link controller='Tagged' object=$tag}objectType={@$objectType}{if $pageNo > 1}&pageNo={@$pageNo}{/if}{/link}">
 {/capture}
 
-{capture assign='sidebarLeft'}
+{capture assign='sidebarRight'}
 	<section class="box" data-static-box-identifier="com.woltlab.wcf.TaggedMenu">
 		<h2 class="boxTitle">{lang}wcf.tagging.objectTypes{/lang}</h2>
 		
