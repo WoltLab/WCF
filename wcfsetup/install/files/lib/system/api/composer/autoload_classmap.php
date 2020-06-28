@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = $vendorDir;
 
 return array(
+    'PEAR_Exception' => $vendorDir . '/pear/pear_exception/PEAR/Exception.php',
     'PHP_ICO' => $vendorDir . '/chrisjean/php-ico/class-php-ico.php',
 );
