@@ -8,11 +8,13 @@
 	
 	{if $media->caption}
 		<span class="mediaBBCodeCaption">
-			{if $media->captionEnableHtml}
-				{@$media->caption}
-			{else}
-				{$media->caption}
-			{/if}
+			<span class="mediaBBCodeCaptionAlignment">
+				{if $media->captionEnableHtml}
+					{@$media->caption}
+				{else}
+					{$media->caption}
+				{/if}
+			</span>
 		</span>
 	{/if}
 </span>
