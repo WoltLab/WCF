@@ -212,6 +212,7 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			$email = new Email();
 			$email->setSubject($user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.daily.subject', ['count' => count($notifications)]));
 			$email->addRecipient(new UserMailbox($user));
+			$email->setListID('daily.notification');
 			
 			$html = new RecipientAwareTextMimePart('text/html', 'email_dailyNotification', 'wcf', ['notifications' => $notifications]);
 			$plainText = new RecipientAwareTextMimePart('text/plain', 'email_dailyNotification', 'wcf', ['notifications' => $notifications]);

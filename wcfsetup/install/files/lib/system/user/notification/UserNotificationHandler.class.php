@@ -695,6 +695,8 @@ class UserNotificationHandler extends SingletonFactory {
 			'title' => $event->getEmailTitle()
 		]));
 		$email->addRecipient(new UserMailbox($user));
+		$humanReadableListId = $user->getLanguage()->getDynamicVariable('wcf.user.notification.'.$event->objectType.'.'.$event->eventName);
+		$email->setListID($event->eventName.'.'.$event->objectType.'.instant.notification', $humanReadableListId);
 		
 		$message = $event->getEmailMessage('instant');
 		if (is_array($message)) {
