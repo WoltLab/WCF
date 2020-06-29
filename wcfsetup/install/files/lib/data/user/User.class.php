@@ -35,7 +35,8 @@ use wcf\util\UserUtil;
  * @property-read	integer		$banned				is `1` if the user is banned, otherwise `0`
  * @property-read	string		$banReason			reason why the user is banned
  * @property-read	integer		$banExpires			timestamp at which the banned user is automatically unbanned
- * @property-read	integer		$activationCode			code sent to the user's email address used for account activation
+ * @property-read	integer		$activationCode			flag which determines, whether the user is activated (for legacy reasons an random integer, if the user is *not* activated)
+ * @property-read	string		$emailConfirmed			code sent to the user's email address used for account activation or null if the email is confirmed
  * @property-read	integer		$lastLostPasswordRequestTime	timestamp at which the user has reported that they lost their password or 0 if password has not been reported as lost
  * @property-read	string		$lostPasswordKey		code used for authenticating setting new password after password loss or empty if password has not been reported as lost
  * @property-read	integer		$lastUsernameChange		timestamp at which the user changed their name the last time or 0 if username has not been changed
@@ -102,6 +103,11 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	 * @var	UserOption[]
 	 */
 	protected static $userOptions;
+	
+	const REGISTER_ACTIVATION_NONE = 0;
+	const REGISTER_ACTIVATION_USER = 1;
+	const REGISTER_ACTIVATION_ADMIN = 2;
+	const REGISTER_ACTIVATION_USER_AND_ADMIN = self::REGISTER_ACTIVATION_USER | self::REGISTER_ACTIVATION_ADMIN;
 	
 	/** @noinspection PhpMissingParentConstructorInspection */
 	/**
@@ -404,6 +410,16 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	}
 	
 	/**
+	 * Returns true if the email is confirmed.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function isEmailConfirmed() {
+		return $this->emailConfirmed === null;
+	}
+	
+	/**
 	 * Returns the time zone of this user.
 	 * 
 	 * @return	\DateTimeZone
@@ -592,7 +608,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	 * @return      boolean
 	 */
 	public function canPurchasePaidSubscriptions() {
-		return WCF::getUser()->userID && WCF::getUser()->activationCode == 0;
+		return WCF::getUser()->userID && !$this->pendingActivation();
 	}
 	
 	/**
@@ -603,7 +619,7 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 	 * @since 5.2
 	 */
 	public function getBlacklistMatches() {
-		if ($this->activationCode && $this->blacklistMatches) {
+		if ($this->pendingActivation() && $this->blacklistMatches) {
 			$matches = JSON::decode($this->blacklistMatches);
 			if (is_array($matches)) {
 				return $matches;
@@ -626,6 +642,56 @@ final class User extends DatabaseObject implements IPopoverObject, IRouteControl
 			if ($field === 'ip') $field = 'ipAddress';
 			return WCF::getLanguage()->get('wcf.user.' . $field);
 		}, $this->getBlacklistMatches());
+	}
+	
+	/**
+	 * Returns true if this user is not activated.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function pendingActivation() {
+		return $this->activationCode != 0;
+	}
+	
+	/**
+	 * Returns true if this user requires activation by the user.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function requiresEmailActivation() {
+		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && $this->pendingActivation() && !$this->isEmailConfirmed();
+	}
+	
+	/**
+	 * Returns true if this user requires the activation by an admin.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function requiresAdminActivation() {
+		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_ADMIN && $this->pendingActivation();
+	}
+	
+	/**
+	 * Returns true if this user can confirm the email themself.
+	 *
+	 * @return	boolean
+	 * @since       5.3
+	 */
+	public function canEmailConfirm() {
+		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER && !$this->isEmailConfirmed();
+	}
+	
+	/**
+	 * Returns true, if the user must confirm his email by themself. 
+	 * 
+	 * @return      boolean
+	 * @since       5.3
+	 */
+	public function mustSelfEmailConfirm() {
+		return REGISTER_ACTIVATION_METHOD & self::REGISTER_ACTIVATION_USER;
 	}
 	
 	/**

@@ -198,7 +198,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 	 * @inheritDoc
 	 */
 	public function show() {
-		if (REGISTER_ACTIVATION_METHOD != 1) {
+		if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
 			throw new IllegalLinkException();
 		}
 		

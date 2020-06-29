@@ -48,6 +48,19 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 	protected $userIsNotBanned = 0;
 	
 	/**
+	 * true if the the user has confirmed their email address
+	 *
+	 * @var	integer
+	 */
+	protected $userIsEmailConfirmed = 0;
+	
+	/**
+	 * true if the the user has not confirmed their email address
+	 * @var	integer
+	 */
+	protected $userIsNotEmailConfirmed = 0;
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function addObjectListCondition(DatabaseObjectList $objectList, array $conditionData) {
@@ -67,6 +80,15 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 				$objectList->getConditionBuilder()->add('user_table.activationCode <> ?', [0]);
 			}
 		}
+		
+		if (isset($conditionData['userIsEmailConfirmed'])) {
+			if ($conditionData['userIsEmailConfirmed']) {
+				$objectList->getConditionBuilder()->add('user_table.emailConfirmed IS NULL');
+			}
+			else {
+				$objectList->getConditionBuilder()->add('user_table.emailConfirmed IS NOT NULL');
+			}
+		}
 	}
 	
 	/**
@@ -82,10 +104,21 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 		/** @noinspection PhpUndefinedFieldInspection */
 		$userIsEnabled = $condition->userIsEnabled;
 		if ($userIsEnabled !== null) {
-			if ($userIsEnabled && $user->activationCode) {
+			if ($userIsEnabled && $user->pendingActivation()) {
 				return false;
 			}
-			else if (!$userIsEnabled && !$user->activationCode) {
+			else if (!$userIsEnabled && !$user->pendingActivation()) {
+				return false;
+			}
+		}
+		
+		/** @noinspection PhpUndefinedFieldInspection */
+		$userIsEmailConfirmed = $condition->userIsEmailConfirmed;
+		if ($userIsEmailConfirmed !== null) {
+			if ($userIsEmailConfirmed && !$user->isEmailConfirmed()) {
+				return false;
+			}
+			else if (!$userIsEmailConfirmed && $user->isEmailConfirmed()) {
 				return false;
 			}
 		}
@@ -111,6 +144,12 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 		else if ($this->userIsDisabled) {
 			$data['userIsEnabled'] = 0;
 		}
+		if ($this->userIsEmailConfirmed) {
+			$data['userIsEmailConfirmed'] = 1;
+		}
+		else if ($this->userIsNotEmailConfirmed) {
+			$data['userIsEmailConfirmed'] = 0;
+		} 
 		
 		if (!empty($data)) {
 			return $data;
@@ -142,12 +181,16 @@ class UserStateCondition extends AbstractSingleFieldCondition implements IConten
 		$userIsBanned = WCF::getLanguage()->get('wcf.user.condition.state.isBanned');
 		$userIsDisabled = WCF::getLanguage()->get('wcf.user.condition.state.isDisabled');
 		$userIsEnabled = WCF::getLanguage()->get('wcf.user.condition.state.isEnabled');
+		$userIsEmailConfirmed = WCF::getLanguage()->get('wcf.user.condition.state.isEmailConfirmed');
+		$userIsNotEmailConfirmed = WCF::getLanguage()->get('wcf.user.condition.state.isNotEmailConfirmed');
 		
 		return <<<HTML
 <label><input type="checkbox" name="userIsBanned" value="1"{$this->getCheckedAttribute('userIsBanned')}> {$userIsBanned}</label>
 <label><input type="checkbox" name="userIsNotBanned" value="1"{$this->getCheckedAttribute('userIsNotBanned')}> {$userIsNotBanned}</label>
 <label><input type="checkbox" name="userIsEnabled" value="1"{$this->getCheckedAttribute('userIsEnabled')}> {$userIsEnabled}</label>
 <label><input type="checkbox" name="userIsDisabled" value="1"{$this->getCheckedAttribute('userIsDisabled')}> {$userIsDisabled}</label>
+<label><input type="checkbox" name="userIsEmailConfirmed" value="1"{$this->getCheckedAttribute('userIsEmailConfirmed')}> {$userIsEmailConfirmed}</label>
+<label><input type="checkbox" name="userIsNotEmailConfirmed" value="1"{$this->getCheckedAttribute('userIsNotEmailConfirmed')}> {$userIsNotEmailConfirmed}</label>
 HTML;
 	}
 	
@@ -159,6 +202,8 @@ HTML;
 		if (isset($_POST['userIsDisabled'])) $this->userIsDisabled = 1;
 		if (isset($_POST['userIsEnabled'])) $this->userIsEnabled = 1;
 		if (isset($_POST['userIsNotBanned'])) $this->userIsNotBanned = 1;
+		if (isset($_POST['userIsEmailConfirmed'])) $this->userIsEmailConfirmed = 1;
+		if (isset($_POST['userIsNotEmailConfirmed'])) $this->userIsNotEmailConfirmed = 1;
 	}
 	
 	/**
@@ -169,6 +214,8 @@ HTML;
 		$this->userIsDisabled = 0;
 		$this->userIsEnabled = 0;
 		$this->userIsNotBanned = 0;
+		$this->userIsEmailConfirmed = 0;
+		$this->userIsNotEmailConfirmed = 0;
 	}
 	
 	/**
@@ -188,6 +235,13 @@ HTML;
 			$this->userIsEnabled = $userIsEnabled;
 			$this->userIsDisabled = !$userIsEnabled;
 		}
+		
+		/** @noinspection PhpUndefinedFieldInspection */
+		$userIsEmailConfirmed = $condition->userIsEmailConfirmed;
+		if ($condition->userIsEmailConfirmed !== null) {
+			$this->userIsEmailConfirmed = $userIsEmailConfirmed;
+			$this->userIsNotEmailConfirmed = !$userIsEmailConfirmed;
+		}
 	}
 	
 	/**
@@ -204,6 +258,12 @@ HTML;
 			$this->errorMessage = 'wcf.user.condition.state.isEnabled.error.conflict';
 			
 			throw new UserInputException('userIsEnabled', 'conflict');
+		}
+		
+		if ($this->userIsEmailConfirmed && $this->userIsNotEmailConfirmed) {
+			$this->errorMessage = 'wcf.user.condition.state.isEmailConfirmed.error.conflict';
+			
+			throw new UserInputException('userIsEmailConfirmed', 'conflict');
 		}
 	}
 	

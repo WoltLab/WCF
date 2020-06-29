@@ -7,7 +7,7 @@
  * @module	WoltLabSuite/Core/Acp/Ui/User/Editor
  * @since       3.1
  */
-define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown', 'WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler'], function(Ajax, Core, EventHandler, Language, UiSimpleDropdown, RemoveContentHandler) {
+define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/Notification', 'Ui/SimpleDropdown', 'WoltLabSuite/Core/Acp/Ui/User/Content/Remove/Handler'], function(Ajax, Core, EventHandler, Language, UiNotification, UiSimpleDropdown, RemoveContentHandler) {
 	"use strict";
 	
 	/**
@@ -79,6 +79,49 @@ define(['Ajax', 'Core', 'EventHandler', 'Language', 'Ui/SimpleDropdown', 'WoltLa
 			var deleteContent = elBySel('.jsDeleteContent', dropdownMenu);
 			if (deleteContent !== null) {
 				new RemoveContentHandler(deleteContent, userId);
+			}
+			
+			var toggleConfirmEmail = elBySel('.jsConfirmEmailToggle', dropdownMenu);
+			if (toggleConfirmEmail !== null) {
+				toggleConfirmEmail.addEventListener(WCF_CLICK_EVENT, function (event) {
+					event.preventDefault();
+					
+					Ajax.api({
+						_ajaxSetup: function () {
+							return {
+								data: {
+									actionName: (elDataBool(userRow, 'email-confirmed') ? 'un' : '') + 'confirmEmail',
+									className: 'wcf\\data\\user\\UserAction',
+									objectIDs: [userId]
+								}
+							};
+						}
+					}, null, function (data) {
+						elBySelAll('.jsUserRow', undefined, function(userRow) {
+							var userId = parseInt(elData(userRow, 'object-id'));
+							if (data.objectIDs.indexOf(userId) !== -1) {
+								var confirmEmailButton = elBySel('.jsConfirmEmailToggle', UiSimpleDropdown.getDropdownMenu('userListDropdown' + userId));
+								
+								switch (data.actionName) {
+									case 'confirmEmail':
+										elData(userRow, 'email-confirmed', 'true');
+										confirmEmailButton.textContent = elData(confirmEmailButton, 'unconfirm-email-message');
+										break;
+									
+									case 'unconfirmEmail':
+										elData(userRow, 'email-confirmed', 'false');
+										confirmEmailButton.textContent = elData(confirmEmailButton, 'confirm-email-message');
+										break;
+										
+									default: 
+										throw new Error("Unreachable");
+								}
+							}
+						});
+						
+						UiNotification.show();
+					});
+				});
 			}
 		},
 		

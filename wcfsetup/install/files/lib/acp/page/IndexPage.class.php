@@ -1,9 +1,11 @@
 <?php
 namespace wcf\acp\page;
+use wcf\data\user\User;
 use wcf\data\devtools\missing\language\item\DevtoolsMissingLanguageItemList;
 use wcf\page\AbstractPage;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\OptionCacheBuilder;
+use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\io\RemoteFile;
 use wcf\system\package\PackageInstallationDispatcher;
 use wcf\system\request\LinkHandler;
@@ -57,12 +59,18 @@ class IndexPage extends AbstractPage {
 		parent::assignVariables();
 		
 		$usersAwaitingApproval = 0;
-		if (REGISTER_ACTIVATION_METHOD == 2) {
+		if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) {
+			$conditionBuilder = new PreparedStatementConditionBuilder();
+			$conditionBuilder->add('activationCode <> ?', [0]);
+			if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) {
+				$conditionBuilder->add('emailConfirmed IS NULL');
+			}
+			
 			$sql = "SELECT	COUNT(*)
-				FROM	wcf".WCF_N."_user
-				WHERE	activationCode <> 0";
+				FROM	wcf".WCF_N."_user ".
+				$conditionBuilder;
 			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute();
+			$statement->execute($conditionBuilder->getParameters());
 			$usersAwaitingApproval = $statement->fetchSingleColumn();
 		}
 		

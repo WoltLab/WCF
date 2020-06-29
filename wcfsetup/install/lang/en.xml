@@ -1470,6 +1470,7 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.register_activation_method"><![CDATA[Registration Approval Method]]></item>
 		<item name="wcf.acp.option.register_activation_method.byAdmin"><![CDATA[Only administrators can approve registrations]]></item>
 		<item name="wcf.acp.option.register_activation_method.byUser"><![CDATA[Registrations are approved through an email confirmation]]></item>
+		<item name="wcf.acp.option.register_activation_method.byUserAndAdmin"><![CDATA[Administrators can approve registrations after an email confirmation]]></item>
 		<item name="wcf.acp.option.register_activation_method.disabled"><![CDATA[No approval required for registrations]]></item>
 		<item name="wcf.acp.option.signature_max_image_height"><![CDATA[Maximum Image Height]]></item>
 		<item name="wcf.acp.option.sitemap_index_time_frame"><![CDATA[Time frame of indexing]]></item>
@@ -3079,10 +3080,11 @@ You can define the default sender in “Configuration » Options » General » E
 		<item name="wcf.acp.user.disableSignature.neverExpires"><![CDATA[Permanently Block]]></item>
 		<item name="wcf.acp.user.disable"><![CDATA[Disable]]></item>
 		<item name="wcf.acp.user.enable"><![CDATA[Approve]]></item>
-		<item name="wcf.acp.user.quickSearch.disabled"><![CDATA[Users awaiting approval]]></item>
+		<item name="wcf.acp.user.quickSearch.disabled"><![CDATA[Disabled Users]]></item>
+		<item name="wcf.acp.user.quickSearch.pendingActivation"><![CDATA[Users awaiting approval]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledAvatars"><![CDATA[Blocked avatars]]></item>
 		<item name="wcf.acp.user.quickSearch.disabledSignatures"><![CDATA[Blocked signatures]]></item>
-		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=disabled{/link}">{#$usersAwaitingApproval} User{if $usersAwaitingApproval != 1}s{/if}</a> {if $usersAwaitingApproval == 1}is{else}are{/if} awaiting your approval.]]></item>
+		<item name="wcf.acp.user.usersAwaitingApprovalInfo"><![CDATA[<a href="{link controller='UserQuickSearch'}mode=pendingActivation{/link}">{#$usersAwaitingApproval} User{if $usersAwaitingApproval != 1}s{/if}</a> {if $usersAwaitingApproval == 1}is{else}are{/if} awaiting your approval.]]></item>
 		<item name="wcf.acp.user.search.conditions.state.enabled"><![CDATA[Approved]]></item>
 		<item name="wcf.acp.user.search.conditions.state.disabled"><![CDATA[Awaiting Approval]]></item>
 		<item name="wcf.acp.user.sendNewPassword.mail.subject"><![CDATA[New Password for your Account for Website: {@PAGE_TITLE|language}]]></item>
@@ -3139,6 +3141,8 @@ full extend.]]></item>
 		<item name="wcf.acp.user.action.sendMail"><![CDATA[Send Email]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword"><![CDATA[Send New Password]]></item>
 		<item name="wcf.acp.user.action.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to this user?]]></item>
+		<item name="wcf.acp.user.action.confirmEmail"><![CDATA[Confirm Email Address]]></item>
+		<item name="wcf.acp.user.action.unconfirmEmail"><![CDATA[Unconfirm Email Address]]></item>
 		<item name="wcf.acp.user.exportGdpr"><![CDATA[Export Personal Data (GDPR)]]></item>
 		<item name="wcf.acp.user.coverPhoto.description"><![CDATA[You can upload a cover photo on their user profile page.]]></item>
 	</category>
@@ -3323,6 +3327,8 @@ Errors are:
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendMail"><![CDATA[Send Email]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword"><![CDATA[Send New Password ({#$count})]]></item>
 		<item name="wcf.clipboard.item.com.woltlab.wcf.user.sendNewPassword.confirmMessage"><![CDATA[Do you really want to send a new password to {#$count} user{if $count != 1}s{/if}?]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.confirmEmail"><![CDATA[Confirm Email Address ({#$count})]]></item>
+		<item name="wcf.clipboard.item.com.woltlab.wcf.user.unconfirmEmail"><![CDATA[Unconfirm Email Address ({#$count})]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.article.marked"><![CDATA[{if $count == 1}One Article{else}{#$count} Articles{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.media.marked"><![CDATA[{if $count == 1}One File{else}{#$count} Files{/if}]]></item>
 		<item name="wcf.clipboard.label.com.woltlab.wcf.tag.marked"><![CDATA[{if $count == 1}One Tag{else}{#$count} Tags{/if}]]></item>
@@ -4608,17 +4614,18 @@ If you have troubles confirming your email address, please contact the
 administrator at: {@MAIL_ADMIN_ADDRESS}. Please ignore this email if you did
 not register with us.]]></item>
 		<item name="wcf.user.changePassword.success"><![CDATA[The password has been changed.]]></item>
-		<item name="wcf.user.activationCode"><![CDATA[9-digit Activation Code]]></item>
+		<item name="wcf.user.activationCode"><![CDATA[Activation Code]]></item>
 		<item name="wcf.user.newActivationCode"><![CDATA[Request New Activation Code]]></item>
 		<item name="wcf.user.registerActivation"><![CDATA[Complete Registration]]></item>
 		<item name="wcf.user.registerActivation.error.userAlreadyEnabled"><![CDATA[The user is already activated.]]></item>
 		<item name="wcf.user.registerActivation.success"><![CDATA[The user account has been activated.]]></item>
+		<item name="wcf.user.registerActivation.success.awaitAdminActivation"><![CDATA[The email address has been confirmed. Now your account must be activated by an administrator.]]></item>
 		<item name="wcf.user.activationCode.error.invalid"><![CDATA[You have provided an invalid activation code. Click the link below if you wish to request a new activation code.]]></item>
 		<item name="wcf.user.registerNewActivationCode.email.description"><![CDATA[You can provide a different email address or leave it empty to send the code to the same email address again.]]></item>
 		<item name="wcf.user.newActivationCode.success"><![CDATA[The activation code has been sent to “{$email}”.]]></item>
 		<item name="wcf.user.emailActivation.error.emailAlreadyEnabled"><![CDATA[The email address is already activated.]]></item>
 		<item name="wcf.user.emailActivation.success"><![CDATA[The email address has been activated.]]></item>
-		<item name="wcf.user.registerActivation.info"><![CDATA[An email containing the 9-digit activation code has been sent to “{$__wcf->user->email}”.]]></item>
+		<item name="wcf.user.registerActivation.info"><![CDATA[An email containing the activation code has been sent to “{$__wcf->user->email}”.]]></item>
 		<item name="wcf.user.username.error.alreadyRenamed"><![CDATA[The username was already changed within the last {#$__wcf->getSession()->getPermission('user.profile.renamePeriod')} days.]]></item>
 		<item name="wcf.user.guest"><![CDATA[Guest]]></item>
 		<item name="wcf.user.signature"><![CDATA[Signature]]></item>
@@ -4724,7 +4731,7 @@ not register with us.]]></item>
 user account to it’s full extent it is required that you confirm validity of your email address once:</p>]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.activate"><![CDATA[Confirm my email address]]></item>
 		<item name="wcf.user.register.needActivation.mail.html.outro"><![CDATA[
-<p>Your activation code is: <kbd>{$mailbox->getUser()->activationCode}</kbd>.</p>
+<p>Your activation code is: <kbd>{$mailbox->getUser()->emailConfirmed}</kbd>.</p>
 <p>If you have trouble confirming your email address, please contact the administrator at:
 <a href="mailto:{MAIL_ADMIN_ADDRESS}">{MAIL_ADMIN_ADDRESS}</a>. Please ignore this email if
 you did not register an account with us.</p>]]></item>
@@ -4734,13 +4741,15 @@ Thank you for registering at: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/l
 able to use your user account to it's full extent it is required that you
 confirm the validity of your email address once:
 
-    {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->activationCode}{/link} {* this line ends with a space *}
+    {link controller='RegisterActivation' isEmail=true}u={@$mailbox->getUser()->userID}&a={@$mailbox->getUser()->emailConfirmed}{/link} {* this line ends with a space *}
 
-Your activation code is: {@$mailbox->getUser()->activationCode} {* this line ends with a space *}
+Your activation code is: {@$mailbox->getUser()->emailConfirmed} {* this line ends with a space *}
 
 If you have trouble confirming your email address, please contact the
 administrator at: {@MAIL_ADMIN_ADDRESS}. Please ignore this email if you did
 not register with us.]]></item>
+		<item name="wcf.user.register.needAdminActivation"><![CDATA[Your account must be activated by an administrator in order to use the full scope of the website.]]></item>
+		<item name="wcf.user.register.needEmailConfirmation"><![CDATA[Your email address is not activated yet. <a href="{link controller='RegisterActivation'}{/link}">Activate now your email address</a>. {if $__wcf->user->canEmailConfirm()}<a href="{link controller='RegisterActivation'}{/link}">Confirm your email address</a>{else}To activate your email address contact the administrator of this site.{/if}.]]></item>
 		<!-- Success Messages -->
 		<item name="wcf.user.register.success"><![CDATA[Thank you for registering, {$user->username}.<br>
 Your registration is now completed.]]></item>
@@ -4965,6 +4974,9 @@ Open the link below to access the user profile:
 		<item name="wcf.user.condition.state.isEnabled"><![CDATA[Approved]]></item>
 		<item name="wcf.user.condition.state.isEnabled.error.conflict"><![CDATA[You cannot simultaneously select “Approved” and “Awaiting Approval”.]]></item>
 		<item name="wcf.user.condition.state.isNotBanned"><![CDATA[Not Banned]]></item>
+		<item name="wcf.user.condition.state.isEmailConfirmed"><![CDATA[Has a confirmed email address]]></item>
+		<item name="wcf.user.condition.state.isEmailConfirmed.error.conflict"><![CDATA[You cannot simultaneously select “Has a confirmed email address” and “Has not a confirmed email address”.]]></item>
+		<item name="wcf.user.condition.state.isNotEmailConfirmed"><![CDATA[Has not a confirmed email address]]></item>
 		<item name="wcf.user.condition.userTrophyIDs"><![CDATA[User has Trophy]]></item>
 		<item name="wcf.user.condition.userTrophyIDs.description"><![CDATA[User has received the selected trophies.]]></item>
 		<item name="wcf.user.condition.notUserTrophyIDs"><![CDATA[User does not have Trophy]]></item>

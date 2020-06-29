@@ -338,12 +338,12 @@ class AccountManagementForm extends AbstractForm {
 		
 		// email
 		if (WCF::getSession()->getPermission('user.profile.canChangeEmail') && $this->email != WCF::getUser()->email && $this->email != WCF::getUser()->newEmail) {
-			if (REGISTER_ACTIVATION_METHOD == 0 || REGISTER_ACTIVATION_METHOD == 2 || mb_strtolower($this->email) == mb_strtolower(WCF::getUser()->email)) {
+			if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
 				// update email
 				$updateParameters['email'] = $this->email;
 				$success[] = 'wcf.user.changeEmail.success';
 			}
-			else if (REGISTER_ACTIVATION_METHOD == 1) {
+			else if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER) {
 				// get reactivation code
 				$activationCode = UserRegistrationUtil::getActivationCode();
 				

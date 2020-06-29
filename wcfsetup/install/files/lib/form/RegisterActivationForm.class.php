@@ -29,7 +29,7 @@ class RegisterActivationForm extends AbstractForm {
 	
 	/**
 	 * activation code
-	 * @var	integer
+	 * @var	string
 	 */
 	public $activationCode = '';
 	
@@ -50,7 +50,7 @@ class RegisterActivationForm extends AbstractForm {
 			$this->user = new User($userID);
 			if ($this->user->userID) $this->username = $this->user->username;
 		}
-		if (!empty($_GET['a'])) $this->activationCode = intval($_GET['a']);
+		if (!empty($_GET['a'])) $this->activationCode = StringUtil::trim($_GET['a']);
 	}
 	
 	/**
@@ -63,7 +63,7 @@ class RegisterActivationForm extends AbstractForm {
 			$this->username = StringUtil::trim($_POST['username']);
 			$this->user = User::getUserByUsername($this->username);
 		}
-		if (isset($_POST['activationCode'])) $this->activationCode = intval($_POST['activationCode']);
+		if (isset($_POST['activationCode'])) $this->activationCode = StringUtil::trim($_POST['activationCode']);
 	}
 	
 	/**
@@ -77,13 +77,13 @@ class RegisterActivationForm extends AbstractForm {
 			throw new UserInputException('username', 'notFound');
 		}
 		
-		// user is already enabled
-		if ($this->user->activationCode == 0) {
+		// user email is already confirmed
+		if ($this->user->isEmailConfirmed()) {
 			throw new NamedUserException(WCF::getLanguage()->get('wcf.user.registerActivation.error.userAlreadyEnabled'));
 		}
 		
 		// check given activation code
-		if ($this->user->activationCode != $this->activationCode) {
+		if (!\hash_equals($this->user->emailConfirmed, $this->activationCode)) {
 			throw new UserInputException('activationCode', 'invalid');
 		}
 		
@@ -99,12 +99,19 @@ class RegisterActivationForm extends AbstractForm {
 		parent::save();
 		
 		// enable user
-		$this->objectAction = new UserAction([$this->user], 'enable', ['skipNotification' => true]);
+		$this->objectAction = new UserAction([$this->user], 'confirmEmail', ['skipNotification' => true]);
 		$this->objectAction->executeAction();
 		$this->saved();
 		
 		// forward to index page
-		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success'), 10);
+		if ($this->user->requiresAdminActivation()) {
+			$redirectText = WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success.awaitAdminActivation');
+		}
+		else {
+			$redirectText = WCF::getLanguage()->getDynamicVariable('wcf.user.registerActivation.success');
+		}
+		
+		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), $redirectText, 10);
 		exit;
 	}
 	
@@ -124,7 +131,7 @@ class RegisterActivationForm extends AbstractForm {
 	 * @inheritDoc
 	 */
 	public function show() {
-		if (REGISTER_ACTIVATION_METHOD != 1) {
+		if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_USER)) {
 			throw new IllegalLinkException();
 		}
 		

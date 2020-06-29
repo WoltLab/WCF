@@ -107,7 +107,7 @@
 			
 			<tbody>
 				{foreach from=$users item=user}
-					<tr class="jsUserRow jsClipboardObject" data-object-id="{@$user->userID}" data-banned="{if $user->banned}true{else}false{/if}" data-enabled="{if !$user->activationCode}true{else}false{/if}">
+					<tr class="jsUserRow jsClipboardObject" data-object-id="{@$user->userID}" data-banned="{if $user->banned}true{else}false{/if}" data-enabled="{if !$user->activationCode}true{else}false{/if}" data-email-confirmed="{if $user->isEmailConfirmed()}true{else}false{/if}">
 						<td class="columnMark"><input type="checkbox" class="jsClipboardItem" data-object-id="{@$user->userID}"></td>
 						<td class="columnIcon">
 							<div class="dropdown" id="userListDropdown{@$user->userID}">
@@ -117,6 +117,10 @@
 									{event name='dropdownItems'}
 									
 									{if $user->userID !== $__wcf->user->userID}
+										{if $user->accessible && $__wcf->session->getPermission('admin.user.canEnableUser')}
+											<li><a href="#" class="jsConfirmEmailToggle" data-confirm-email-message="{lang}wcf.acp.user.action.confirmEmail{/lang}" data-unconfirm-email-message="{lang}wcf.acp.user.action.unconfirmEmail{/lang}">{lang}wcf.acp.user.action.{if $user->isEmailConfirmed()}un{/if}confirmEmail{/lang}</a></li>
+										{/if}
+										
 										{if $__wcf->session->getPermission('admin.user.canMailUser')}
 											<li><a href="{link controller='UserMail' id=$user->userID}{/link}">{lang}wcf.acp.user.action.sendMail{/lang}</a></li>
 										{/if}

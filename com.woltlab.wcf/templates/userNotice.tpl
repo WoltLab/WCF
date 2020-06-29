@@ -10,8 +10,14 @@
 		<p class="info" role="status">{lang}wcf.page.availableUpdates{/lang}</p>
 	{/if}
 	
-	{if $__wcf->user->activationCode && REGISTER_ACTIVATION_METHOD == 1 && $templateName != 'registerActivation' && $templateName != 'register' && $templateName != 'redirect' && $__wcf->user->getBlacklistMatches()|empty}
-		<p class="warning" role="status">{lang}wcf.user.register.needActivation{/lang}</p>
+	{if $templateName != 'registerActivation' && $templateName != 'register' && $templateName != 'redirect' && $__wcf->user->getBlacklistMatches()|empty}
+		{if $__wcf->user->requiresEmailActivation()}
+			<p class="warning" role="status">{lang}wcf.user.register.needActivation{/lang}</p>
+		{elseif $__wcf->user->requiresAdminActivation()}
+			<p class="warning" role="status">{lang}wcf.user.register.needAdminActivation{/lang}</p>
+		{elseif !$__wcf->user->isEmailConfirmed()}
+			<p class="warning" role="status">{lang}wcf.user.register.needEmailConfirmation{/lang}</p>
+		{/if}
 	{/if}
 	
 	{hascontent}

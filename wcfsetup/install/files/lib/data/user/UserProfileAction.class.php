@@ -421,7 +421,7 @@ class UserProfileAction extends UserAction implements IPopoverAction {
 				$fixUserGroupIDs[$user->userID] = [UserGroup::EVERYONE];
 				$groupIDs[] = UserGroup::EVERYONE;
 			}
-			if ($user->activationCode) {
+			if ($user->pendingActivation()) {
 				if (!in_array(UserGroup::GUESTS, $groupIDs)) {
 					if (!isset($fixUserGroupIDs[$user->userID])) $fixUserGroupIDs[$user->userID] = [];
 					$fixUserGroupIDs[$user->userID][] = UserGroup::GUESTS;
