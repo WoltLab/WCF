@@ -72,6 +72,20 @@ class Email {
 	protected $listIdHuman = null;
 	
 	/**
+	 * List-Unsubscribe URI
+	 * @var	string
+	 * @since 5.3
+	 */
+	protected $listUnsubscribe = null;
+	
+	/**
+	 * Whether the listUnsubscribe URI has One-Click support
+	 * @var	boolean
+	 * @since 5.3
+	 */
+	protected $listUnsubscribeOneClick = false;
+	
+	/**
 	 * Date header
 	 * @var	\DateTime
 	 */
@@ -302,6 +316,37 @@ class Email {
 	}
 	
 	/**
+	 * Sets the URI for the 'List-Unsubscribe' header.
+	 * 
+	 * If $supportsOneClick is set to true the 'List-Unsubscribe-Post' header
+	 * with the value 'List-Unsubscribe=One-Click' is added.
+	 * 
+	 * @param	string		$uri
+	 * @param	boolean		$supportsOneClick
+	 * @since 5.3
+	 */
+	public function setListUnsubscribe($uri, $supportsOneClick = false) {
+		if ($uri === null) {
+			$this->listUnsubscribe = null;
+			return;
+		}
+		
+		$this->listUnsubscribe = $uri;
+		$this->listUnsubscribeOneClick = $supportsOneClick;
+	}
+	
+	/**
+	 * Returns the email's full 'List-Id' including the host. Returns 'null'
+	 * if no 'List-Id' is set.
+	 * 
+	 * @return	?string
+	 * @since 5.3
+	 */
+	public function getListUnsubscribeUri() {
+		return $this->listUnsubscribe;
+	}
+	
+	/**
 	 * Sets the email's 'From'.
 	 * 
 	 * @param	Mailbox		$sender
@@ -457,6 +502,12 @@ class Email {
 		if ($this->getListID()) {
 			$headers[] = ['list-id', $this->getListID()];
 		}
+		if ($this->getListUnsubscribeUri()) {
+			$headers[] = ['list-unsubscribe', '<'.$this->getListUnsubscribeUri().'>'];
+			if ($this->listUnsubscribeOneClick) {
+				$headers[] = ['list-unsubscribe-post', 'List-Unsubscribe=One-Click'];
+			}
+		}
 		$headers[] = ['mime-version', '1.0'];
 		
 		if (!$this->body) {
@@ -490,6 +541,12 @@ class Email {
 					break;
 				case 'list-id':
 					$name = 'List-ID';
+					break;
+				case 'list-unsubscribe-post':
+					// This case is identical to the default case below.
+					// It is special cased, because the grammar of this header is defined
+					// to be pretty tight.
+					$name = 'List-Unsubscribe-Post';
 					break;
 				case 'mime-version':
 					$name = 'MIME-Version';
