@@ -5016,6 +5016,11 @@ Open the link below to access the user profile:
 		<item name="wcf.user.notification.notifications.enabled"><![CDATA[Enabled]]></item>
 		<item name="wcf.user.notification.showAll"><![CDATA[Display All Notifications]]></item>
 		<item name="wcf.user.notification.mail.disabled"><![CDATA[Email notification has been disabled.]]></item>
+		<item name="wcf.user.notification.mail.disabled"><![CDATA[The selected email notifications have been unsubscribed.]]></item>
+		<item name="wcf.user.notification.mail.unsubscribe.confirm"><![CDATA[Unsubscribe selected email notifications]]></item>
+		<item name="wcf.user.notification.mail.unsubscribe.description"><![CDATA[Please select the email notifications you would like to unsubscribe.]]></item>
+		<item name="wcf.user.notification.mail.unsubscribe.event"><![CDATA[Notification Type]]></item>
+		<item name="wcf.user.notification.mail.unsubscribe.event.all"><![CDATA[All Email Notifications]]></item>
 		<item name="wcf.user.notification.mailNotificationType.none"><![CDATA[No Email Notification]]></item>
 		<item name="wcf.user.notification.mailNotificationType.instant"><![CDATA[Instant Email Notification]]></item>
 		<item name="wcf.user.notification.mailNotificationType.daily"><![CDATA[Daily Email Notification]]></item>
@@ -5029,14 +5034,14 @@ Visit your notification settings [URL:{link controller='NotificationSettings' is
 your notifications on {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] as you wish.
 
 If you only wish to disable this type of notification you can do so by visiting:
-{link controller='NotificationDisable' isEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
+{link controller='NotificationUnsubscribe' isEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
 		<item name="wcf.user.notification.mail.html.intro"><![CDATA[<h2>Dear {$mailbox->getUser()->username},</h2>]]></item>
 		<item name="wcf.user.notification.mail.html.outro"><![CDATA[<p>This is an automatic notification, <b>please do not reply to this email</b>!</p>
 
 <p>Visit your <a href="{link controller='NotificationSettings' isHtmlEmail=true}{/link}">notification settings</a> to configure
 your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a> as you wish.</p>
 
-<p>You can <a href="{link controller='NotificationDisable' isHtmlEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}">disable only this type of notification</a> as well.</p>]]></item>
+<p>You can <a href="{link controller='NotificationUnsubscribe' isHtmlEmail=true}eventID={@$event->eventID}&userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}">disable only this type of notification</a> as well.</p>]]></item>
 		<item name="wcf.user.notification.mail.daily.subject"><![CDATA[{if $count == 1}New Notification{else}{#$count} New Notifications{/if}]]></item>
 		<item name="wcf.user.notification.mail.daily.plaintext.intro"><![CDATA[Dear {@$mailbox->getUser()->username},
 
@@ -5049,7 +5054,7 @@ Visit your notification settings [URL:{link controller='NotificationSettings' is
 your notifications on {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] as you wish.
 
 If you wish to disable all email notifications you can do so by visiting:
-{link controller='NotificationDisable' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
+{link controller='NotificationUnsubscribe' isEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}]]></item>
 		<item name="wcf.user.notification.mail.daily.html.intro"><![CDATA[<h2>Dear {$mailbox->getUser()->username},</h2>
 
 <p>You currently have {#$notifications|count} unread notification{if $notifications|count != 1}s{/if} older than 24 hours:</p>]]></item>
@@ -5060,7 +5065,7 @@ If you wish to disable all email notifications you can do so by visiting:
 <p>Visit your <a href="{link controller='NotificationSettings' isHtmlEmail=true}{/link}">notification settings</a> to configure
 your notifications on <a href="{link isHtmlEmail=true}{/link}">{PAGE_TITLE|language}</a> as you wish.</p>
 
-<p>You can <a href="{link controller='NotificationDisable' isHtmlEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}">disable all email notifications</a> as well.</p>]]></item>
+<p>You can <a href="{link controller='NotificationUnsubscribe' isHtmlEmail=true}userID={@$mailbox->getUser()->userID}&token={@$mailbox->getUser()->notificationMailToken}{/link}">disable all email notifications</a> as well.</p>]]></item>
 		<item name="wcf.user.notification.mail.authorList.plaintext"><![CDATA[{if !$event->getAuthor()->userID}{if $guestTimesTriggered > 1}Guests{else}A guest{/if}{else}{@$event->getAuthor()->username} [URL:{link controller='User' object=$event->getAuthor() isEmail=true}{/link}]{/if}{if $count > 1 && $count < 4}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}{@$authors[1]->username} [URL:{link controller='User' object=$authors[1] isEmail=true}{/link}]{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if}{@$authors[2]->username} [URL:{link controller='User' object=$authors[2] isEmail=true}{/link}]{/if}{elseif $count >= 4}{if $guestTimesTriggered},{else} and{/if} {#$count-1} other users{/if}{if $event->getAuthor()->userID && $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}{#$guestTimesTriggered} guests{/if}{/if}]]></item>
 		<item name="wcf.user.notification.mail.authorList.html"><![CDATA[{if !$event->getAuthor()->userID}{if $guestTimesTriggered > 1}Guests{else}A guest{/if}{else}<a href="{link controller='User' object=$event->getAuthor() isHtmlEmail=true}{/link}">{$event->getAuthor()->username}</a>{/if}{if $count > 1 && $count < 4}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}<a href="{link controller='User' object=$authors[1] isHtmlEmail=true}{/link}">{$authors[1]->username}</a>{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if}<a href="{link controller='User' object=$authors[2] isHtmlEmail=true}{/link}">{$authors[2]->username}</a>{/if}{elseif $count >= 4}{if $guestTimesTriggered},{else} and{/if} {#$count-1} other users{/if}{if $event->getAuthor()->userID && $guestTimesTriggered} and {if $guestTimesTriggered == 1}a guest{else}{#$guestTimesTriggered} guests{/if}{/if}]]></item>
 		<item name="wcf.user.notification.stacked.authorList"><![CDATA[{if !$guestTimesTriggered|isset}{assign var=guestTimesTriggered value=0}{/if}{if $count < 4}<strong>{$authors[0]}</strong>{if $count != 1}{if $count == 2 && !$guestTimesTriggered} and {else}, {/if}<strong>{$authors[1]}</strong>{if $count == 3}{if !$guestTimesTriggered} and {else}, {/if} <strong>{$authors[2]}</strong>{/if}{/if}{if $guestTimesTriggered} and {plural value=$guestTimesTriggered one='a guest' other='# guests'}{/if}{else}<strong>{$authors[0]}</strong>{if $guestTimesTriggered},{else} and{/if} {#$others} other users {if $guestTimesTriggered}and {plural value=$guestTimesTriggered one='a guest' other='# guests'}{/if}{/if}]]></item>

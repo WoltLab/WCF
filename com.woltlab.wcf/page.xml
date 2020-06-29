@@ -189,6 +189,20 @@
 				<title>Benachrichtigungseinstellungen</title>
 			</content>
 		</page>
+		<page identifier="com.woltlab.wcf.NotificationUnsubscribe">
+			<pageType>system</pageType>
+			<controller>wcf\form\NotificationUnsubscribeForm</controller>
+			<name language="de">E-Mail-Benachrichtigungen abbestellen</name>
+			<name language="en">Unsubscribe Email Notifications</name>
+			<parent>com.woltlab.wcf.AccountManagement</parent>
+			<excludeFromLandingPage>1</excludeFromLandingPage>
+			<content language="en">
+				<title>Unsubscribe Email Notifications</title>
+			</content>
+			<content language="de">
+				<title>E-Mail-Benachrichtigungen abbestellen</title>
+			</content>
+		</page>
 		<page identifier="com.woltlab.wcf.Register">
 			<pageType>system</pageType>
 			<controller>wcf\form\RegisterForm</controller>
