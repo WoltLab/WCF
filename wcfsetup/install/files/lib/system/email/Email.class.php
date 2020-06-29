@@ -58,6 +58,20 @@ class Email {
 	protected $inReplyTo = [];
 	
 	/**
+	 * List-Id header
+	 * @var	string
+	 * @since 5.3
+	 */
+	protected $listId = null;
+	
+	/**
+	 * Human readable part of the List-Id header
+	 * @var	string
+	 * @since 5.3
+	 */
+	protected $listIdHuman = null;
+	
+	/**
 	 * Date header
 	 * @var	\DateTime
 	 */
@@ -242,6 +256,52 @@ class Email {
 	}
 	
 	/**
+	 * Sets the list-label part of the email's 'List-Id'.
+	 * 
+	 * @param	string		$listId
+	 * @param	string		$humanReadable
+	 * @throws	\DomainException
+	 * @since 5.3
+	 */
+	public function setListID($listId, $humanReadable = null) {
+		if ($listId === null) {
+			$this->listId = null;
+			return;
+		}
+		
+		if (!preg_match('(^'.EmailGrammar::getGrammar('list-label').'$)', $listId)) {
+			throw new \DomainException("The given list id '".$listId."' is invalid.");
+		}
+		if (strlen($listId) > 200) {
+			throw new \DomainException("The given list id '".$listId."' is not allowed. The maximum allowed length is 200 bytes.");
+		}
+		if ($humanReadable !== null) {
+			$humanReadable = EmailGrammar::encodeHeader($humanReadable);
+			if (!preg_match('(^'.EmailGrammar::getGrammar('phrase').'$)', $humanReadable)) {
+				throw new \DomainException("The given human readable name '".$humanReadable."' is invalid.");
+			}
+		}
+		
+		$this->listId = $listId;
+		$this->listIdHuman = $humanReadable;
+	}
+	
+	/**
+	 * Returns the email's full 'List-Id' including the host. Returns 'null'
+	 * if no 'List-Id' is set.
+	 * 
+	 * @return	?string
+	 * @since 5.3
+	 */
+	public function getListID() {
+		if ($this->listId === null) {
+			return null;
+		}
+		
+		return ($this->listIdHuman ? $this->listIdHuman.' ' : '').'<'.$this->listId.'.list-id.'.self::getHost().'>';
+	}
+	
+	/**
 	 * Sets the email's 'From'.
 	 * 
 	 * @param	Mailbox		$sender
@@ -394,6 +454,9 @@ class Email {
 		if ($this->getInReplyTo()) {
 			$headers[] = ['in-reply-to', implode("\r\n   ", $this->getInReplyTo())];
 		}
+		if ($this->getListID()) {
+			$headers[] = ['list-id', $this->getListID()];
+		}
 		$headers[] = ['mime-version', '1.0'];
 		
 		if (!$this->body) {
@@ -424,6 +487,9 @@ class Email {
 			switch ($name) {
 				case 'message-id':
 					$name = 'Message-ID';
+					break;
+				case 'list-id':
+					$name = 'List-ID';
 					break;
 				case 'mime-version':
 					$name = 'MIME-Version';

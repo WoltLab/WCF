@@ -36,6 +36,7 @@ final class EmailGrammar {
 			case 'atom':
 				return "(?:".self::getGrammar('CFWS')."?".self::getGrammar('atext')."+".self::getGrammar('CFWS')."?)";
 			case 'id-left':
+			case 'list-label':
 			case 'dot-atom-text':
 				return "(?:".self::getGrammar('atext')."+(?:\\.".self::getGrammar('atext').'+)*)';
 			case 'no-fold-literal':
