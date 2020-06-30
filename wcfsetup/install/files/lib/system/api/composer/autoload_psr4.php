@@ -9,6 +9,6 @@ return array(
     'TrueBV\\' => array($vendorDir . '/true/punycode/src'),
     'Symfony\\Polyfill\\Mbstring\\' => array($vendorDir . '/symfony/polyfill-mbstring'),
     'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
+    'ScssPhp\\ScssPhp\\' => array($vendorDir . '/scssphp/scssphp/src'),
     'Pelago\\' => array($vendorDir . '/pelago/emogrifier/src'),
-    'Leafo\\ScssPhp\\' => array($vendorDir . '/leafo/scssphp/src'),
 );

@@ -20,14 +20,11 @@ class ComposerStaticInitf07e6bf6487a19c1ad4a7f66aa2be118
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Component\\CssSelector\\' => 30,
+            'ScssPhp\\ScssPhp\\' => 16,
         ),
         'P' => 
         array (
             'Pelago\\' => 7,
-        ),
-        'L' => 
-        array (
-            'Leafo\\ScssPhp\\' => 14,
         ),
     );
 
@@ -44,13 +41,13 @@ class ComposerStaticInitf07e6bf6487a19c1ad4a7f66aa2be118
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
         ),
+        'ScssPhp\\ScssPhp\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/scssphp/scssphp/src',
+        ),
         'Pelago\\' => 
         array (
             0 => __DIR__ . '/..' . '/pelago/emogrifier/src',
-        ),
-        'Leafo\\ScssPhp\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/leafo/scssphp/src',
         ),
     );
 

@@ -142,61 +142,6 @@
         ]
     },
     {
-        "name": "leafo/scssphp",
-        "version": "v0.7.8",
-        "version_normalized": "0.7.8.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/leafo/scssphp.git",
-            "reference": "a384906af3d078e98b089d7d36f6ceab8703f7ff"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/leafo/scssphp/zipball/a384906af3d078e98b089d7d36f6ceab8703f7ff",
-            "reference": "a384906af3d078e98b089d7d36f6ceab8703f7ff",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.6",
-            "squizlabs/php_codesniffer": "~2.5"
-        },
-        "time": "2019-04-24T18:10:10+00:00",
-        "bin": [
-            "bin/pscss"
-        ],
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Leafo\\ScssPhp\\": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Leaf Corcoran",
-                "email": "leafot@gmail.com",
-                "homepage": "http://leafo.net"
-            }
-        ],
-        "description": "scssphp is a compiler for SCSS written in PHP.",
-        "homepage": "http://leafo.github.io/scssphp/",
-        "keywords": [
-            "css",
-            "less",
-            "sass",
-            "scss",
-            "stylesheet"
-        ],
-        "abandoned": "scssphp/scssphp"
-    },
-    {
         "name": "pear/net_idna2",
         "version": "v0.2.0",
         "version_normalized": "0.2.0.0",
@@ -377,6 +322,69 @@
             "css",
             "email",
             "pre-processing"
+        ]
+    },
+    {
+        "name": "scssphp/scssphp",
+        "version": "1.1.1",
+        "version_normalized": "1.1.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/scssphp/scssphp.git",
+            "reference": "824e4cec10b2bfa88eec5dac23991cb9106622c1"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/scssphp/scssphp/zipball/824e4cec10b2bfa88eec5dac23991cb9106622c1",
+            "reference": "824e4cec10b2bfa88eec5dac23991cb9106622c1",
+            "shasum": ""
+        },
+        "require": {
+            "ext-ctype": "*",
+            "ext-json": "*",
+            "php": ">=5.6.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^5.7 || ^6.5 || ^7.5 || ^8.3",
+            "squizlabs/php_codesniffer": "~3.5",
+            "twbs/bootstrap": "~4.3",
+            "zurb/foundation": "~6.5"
+        },
+        "time": "2020-06-04T17:30:40+00:00",
+        "bin": [
+            "bin/pscss"
+        ],
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "ScssPhp\\ScssPhp\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Anthon Pang",
+                "email": "apang@softwaredevelopment.ca",
+                "homepage": "https://github.com/robocoder"
+            },
+            {
+                "name": "Cédric Morin",
+                "email": "cedric@yterium.com",
+                "homepage": "https://github.com/Cerdic"
+            }
+        ],
+        "description": "scssphp is a compiler for SCSS written in PHP.",
+        "homepage": "http://scssphp.github.io/scssphp/",
+        "keywords": [
+            "css",
+            "less",
+            "sass",
+            "scss",
+            "stylesheet"
         ]
     },
     {
