@@ -32,7 +32,7 @@ define(['Core', 'Language', 'Dom/Util', 'WoltLabSuite/Core/Ui/File/Delete', 'Upl
 			imagePreview: false,
 			// max files
 			maxFiles: null,
-			// array of acceptable file types, null if any file type is allowed
+			// array of acceptable file types, null if any file type is acceptable
 			acceptableFiles: null,
 		}, options);
 		

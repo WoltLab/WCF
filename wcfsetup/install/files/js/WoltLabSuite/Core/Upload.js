@@ -44,7 +44,7 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			action: 'upload',
 			// is true if multiple files can be uploaded at once
 			multiple: false,
-			// array of accepted file types, null if any file type is allowed
+			// array of acceptable file types, null if any file type is acceptable
 			acceptableFiles: null,
 			// name if the upload field
 			name: '__files[]',
