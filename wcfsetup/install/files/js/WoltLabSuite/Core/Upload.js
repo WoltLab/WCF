@@ -44,6 +44,8 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			action: 'upload',
 			// is true if multiple files can be uploaded at once
 			multiple: false,
+			// array of accepted file types, null if any file type is allowed
+			acceptableFiles: null,
 			// name if the upload field
 			name: '__files[]',
 			// is true if every file from a multi-file selection is uploaded in its own request
@@ -88,6 +90,9 @@ define(['AjaxRequest', 'Core', 'Dom/ChangeListener', 'Language', 'Dom/Util', 'Do
 			elAttr(this._fileUpload, 'name', this._options.name);
 			if (this._options.multiple) {
 				elAttr(this._fileUpload, 'multiple', 'true');
+			}
+			if (this._options.acceptableFiles !== null) {
+				elAttr(this._fileUpload, 'accept', this._options.acceptableFiles.join(','));
 			}
 			this._fileUpload.addEventListener('change', this._upload.bind(this));
 			
