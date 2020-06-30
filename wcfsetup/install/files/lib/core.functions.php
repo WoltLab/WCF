@@ -17,6 +17,16 @@ namespace {
 	// set autoload function
 	spl_autoload_register([WCF::class, 'autoload']);
 	
+	spl_autoload_register(function ($className) {
+		/**
+		 * @deprecated 5.3 This file is a compatibility layer mapping from Leafo\\ to ScssPhp\\
+		 */
+		$leafo = 'Leafo\\';
+		if (substr($className, 0, strlen($leafo)) === $leafo) {
+			class_alias('ScssPhp\\'.substr($className, strlen($leafo)), $className, true);
+		}
+	});
+	
 	/**
 	 * Escapes a string for use in sql query.
 	 * 
