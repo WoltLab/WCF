@@ -161,7 +161,7 @@ class CronjobScheduler extends SingletonFactory {
 							'execTime' => TIME_NOW
 						]);
 						$logEditor = new CronjobLogEditor($log);
-						$this->logResult($logEditor, new \Exception('Cronjob stuck in state '.$cronjob->state.' for two periods, resetting.'));
+						$this->logResult($logEditor, new \Exception("Cronjob stuck in state '".$cronjob->state."' for two periods (nextExec '".$cronjob->nextExec."', afterNextExec '".$cronjob->afterNextExec."', now '".TIME_NOW."')."));
 						break;
 					default:
 						throw new \LogicException('Unreachable');
