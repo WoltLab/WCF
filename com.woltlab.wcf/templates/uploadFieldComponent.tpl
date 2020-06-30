@@ -42,7 +42,12 @@
 		new Upload("{$uploadFieldId}UploadButtonDiv", "{$uploadFieldId}uploadFileList", {
 			internalId: '{$uploadField->getInternalId()}',
 			{if $uploadField->getMaxFiles()}maxFiles: {$uploadField->getMaxFiles()},{/if}
-			imagePreview: {if !$uploadField->supportMultipleFiles() && $uploadField->isImageOnly()}true{else}false{/if}
+			imagePreview: {if !$uploadField->supportMultipleFiles() && $uploadField->isImageOnly()}true{else}false{/if},
+			{if $uploadField->getAcceptableFiles()}
+				acceptableFiles: [
+					{implode from=$uploadField->getAcceptableFiles() item=accept}'{$accept|encodeJS}'{/implode}
+				],
+			{/if}
 		});
 	});
 </script>
