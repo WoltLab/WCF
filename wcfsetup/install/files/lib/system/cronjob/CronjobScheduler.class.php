@@ -86,16 +86,9 @@ class CronjobScheduler extends SingletonFactory {
 				$this->logResult($logEditor);
 			}
 			
-			// get time of next execution
-			$nextExec = $cronjobEditor->getNextExec();
-			$afterNextExec = $cronjobEditor->getNextExec($nextExec + 120);
-			
 			// mark cronjob as done
 			$cronjobEditor->update([
-				'lastExec' => TIME_NOW,
-				'afterNextExec' => $afterNextExec,
 				'failCount' => 0,
-				'nextExec' => $nextExec,
 				'state' => Cronjob::READY
 			]);
 		}
@@ -206,11 +199,23 @@ class CronjobScheduler extends SingletonFactory {
 				Cronjob::READY,
 				TIME_NOW
 			]);
+			/** @var Cronjob $cronjob */
 			while ($cronjob = $statement->fetchObject(Cronjob::class)) {
 				$cronjobEditor = new CronjobEditor($cronjob);
 				
 				// Mark the cronjob as pending to prevent concurrent requests from executing it.
-				$cronjobEditor->update(['state' => Cronjob::PENDING]);
+				$data = ['state' => Cronjob::PENDING];
+				
+				// Update next execution time.
+				// This needs to be done before executing the job to allow for a proper detection of
+				// stuck jobs. If the timestamps are updated after executing then concurrent requests
+				// might believe that a cronjob is stuck, despite the cronjob just having started just
+				// a few milliseconds before.
+				$data['nextExec'] = $cronjob->getNextExec(TIME_NOW);
+				$data['afterNextExec'] = $cronjob->getNextExec($data['nextExec'] + 120);
+				$data['lastExec'] = TIME_NOW;
+				
+				$cronjobEditor->update($data);
 				
 				$this->cronjobEditors[] = $cronjobEditor;
 			}
