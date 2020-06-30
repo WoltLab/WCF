@@ -1337,8 +1337,10 @@ ACHTUNG: Die oben genannten Meldungen sind stark gekürzt. Sie können Details z
 		<item name="wcf.acp.option.mail_send_method.debugFolder"><![CDATA[Debug (Ordner mit .eml-Dateien)]]></item>
 		<item name="wcf.acp.option.mail_send_method.php"><![CDATA[PHP]]></item>
 		<item name="wcf.acp.option.mail_send_method.smtp"><![CDATA[SMTP]]></item>
-		<item name="wcf.acp.option.mail_signature"><![CDATA[Signatur]]></item>
+		<item name="wcf.acp.option.mail_signature"><![CDATA[Signatur (Text)]]></item>
 		<item name="wcf.acp.option.mail_signature.description"><![CDATA[Die Signatur wird an jede automatisch generierte E-Mail angehängt.]]></item>
+		<item name="wcf.acp.option.mail_signature_html"><![CDATA[Signatur (HTML)]]></item>
+		<item name="wcf.acp.option.mail_signature_html.description"><![CDATA[Die Signatur für die HTML-Version der versendeten E-Mails. Wenn keine HTML-Variante angegeben ist, dann wird die Text-Signatur verwendet.]]></item>
 		<item name="wcf.acp.option.mail_smtp_host"><![CDATA[SMTP-Server]]></item>
 		<item name="wcf.acp.option.mail_smtp_host.description"><![CDATA[Bei SMTP-Port 465 muss zusätzlich der Präfix <kbd>ssl://</kbd> angegeben werden, etwa <kbd>ssl://mail.example.com</kbd> statt nur <kbd>mail.woltlab.com</kbd>.]]></item>
 		<item name="wcf.acp.option.mail_smtp_port"><![CDATA[SMTP-Port]]></item>
