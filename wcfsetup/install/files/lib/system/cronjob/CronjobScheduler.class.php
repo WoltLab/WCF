@@ -25,12 +25,6 @@ class CronjobScheduler extends SingletonFactory {
 	protected $cache = [];
 	
 	/**
-	 * list of editors for outstanding cronjobs
-	 * @var	CronjobEditor[]
-	 */
-	protected $cronjobEditors = [];
-	
-	/**
 	 * @inheritDoc
 	 */
 	protected function init() {
@@ -49,12 +43,12 @@ class CronjobScheduler extends SingletonFactory {
 		$this->resetFailedCronjobs();
 		
 		// get outstanding cronjobs
-		$this->loadCronjobs();
+		$cronjobEditors = $this->loadCronjobs();
 		
 		// clear cache
 		self::clearCache();
 		
-		foreach ($this->cronjobEditors as $cronjobEditor) {
+		foreach ($cronjobEditors as $cronjobEditor) {
 			// mark cronjob as being executed
 			$cronjobEditor->update([
 				'state' => Cronjob::EXECUTING
@@ -199,6 +193,8 @@ class CronjobScheduler extends SingletonFactory {
 				Cronjob::READY,
 				TIME_NOW
 			]);
+			
+			$cronjobEditors = [];
 			/** @var Cronjob $cronjob */
 			while ($cronjob = $statement->fetchObject(Cronjob::class)) {
 				$cronjobEditor = new CronjobEditor($cronjob);
@@ -217,15 +213,16 @@ class CronjobScheduler extends SingletonFactory {
 				
 				$cronjobEditor->update($data);
 				
-				$this->cronjobEditors[] = $cronjobEditor;
+				$cronjobEditors[] = $cronjobEditor;
 			}
 			WCF::getDB()->commitTransaction();
 			$committed = true;
+			
+			return $cronjobEditors;
 		}
 		finally {
 			if (!$committed) {
 				WCF::getDB()->rollBackTransaction();
-				$this->cronjobEditors = [];
 			}
 		}
 	}
