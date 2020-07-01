@@ -134,7 +134,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 					var thumbnailWidth = ~~$('#' + this._editorId).data('redactor').opts.woltlab.attachmentThumbnailWidth;
 					
 					var thumbnail = data.attributes[2];
-					thumbnail = (thumbnail === true || thumbnail === 'true' || ~~thumbnail <= thumbnailWidth);
+					thumbnail = (thumbnail === true || thumbnail === 'true' || (~~thumbnail && ~~thumbnail <= thumbnailWidth));
 					
 					var image = elCreate('img');
 					image.className = 'woltlabAttachment';
