@@ -6,6 +6,7 @@ use wcf\system\file\upload\UploadFile;
 use wcf\system\file\upload\UploadHandler;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\ImageUtil;
 use wcf\util\JSON;
 
 /**
@@ -87,7 +88,7 @@ class AJAXFileUploadAction extends AbstractSecureAction {
 		$field = UploadHandler::getInstance()->getFieldByInternalId($this->internalId);
 		
 		foreach ($_FILES['__files']['tmp_name'] as $id => $tmpName) {
-			if ($field->isImageOnly() && !UploadHandler::isValidImage($tmpName, $_FILES['__files']['name'][$id], $field->svgImageAllowed())) {
+			if ($field->isImageOnly() && !ImageUtil::isImage($tmpName, $_FILES['__files']['name'][$id], $field->svgImageAllowed())) {
 				$response['error'][$i++] = [
 					'filename' => $_FILES['__files']['name'][$id],
 					'errorMessage' => WCF::getLanguage()->get('wcf.upload.error.noImage')

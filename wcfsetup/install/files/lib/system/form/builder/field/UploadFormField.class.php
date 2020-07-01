@@ -7,6 +7,7 @@ use wcf\system\file\upload\UploadHandler;
 use wcf\system\form\builder\data\processor\CustomFormDataProcessor;
 use wcf\system\form\builder\field\validation\FormFieldValidationError;
 use wcf\system\form\builder\IFormDocument;
+use wcf\util\ImageUtil;
 
 /**
  * Implementation of a form field for to uploads.
@@ -313,7 +314,7 @@ class UploadFormField extends AbstractFormField {
 					if (!is_string($v) || !file_exists($v)) {
 						throw new \InvalidArgumentException("The " . $method . " must return an array of strings with the file locations.");
 					}
-					return new UploadFile($v, basename($v), UploadHandler::isValidImage($v, basename($v), $this->svgImageAllowed()), true, $this->svgImageAllowed());
+					return new UploadFile($v, basename($v), ImageUtil::isImage($v, basename($v), $this->svgImageAllowed()), true, $this->svgImageAllowed());
 				}, $value);
 				
 				$this->value($value);
