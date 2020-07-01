@@ -155,6 +155,13 @@ class TrophyConditionHandler extends SingletonFactory {
 			$condition->getObjectType()->getProcessor()->addUserCondition($condition, $pseudoUserList);
 		}
 		
+		// Check if there are conditions for the award of the trophy for the given trophy.
+		// If there are no conditions, we simply return an empty list and do not remove any trophy. 
+		// A trophy without conditions that is awarded automatically cannot be created by default. 
+		if (empty($pseudoUserList->getConditionBuilder()->__toString())) {
+			return [];
+		}
+		
 		// Now we create our own query to find out which users no longer meet the conditions. 
 		// For this we use a UserList object again and transfer basic data from the pseudo object. 
 		$userList = new UserList();
