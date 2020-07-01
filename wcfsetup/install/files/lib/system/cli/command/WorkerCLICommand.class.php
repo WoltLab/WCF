@@ -128,6 +128,10 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		// If multithreading is requested, but no threadId is given then this
 		// is the controller process invoked by the Administrator.
 		if ($threads > 1 && $threadId === null) {
+			if (PHP_EOL === "\r\n") {
+				CLIWCF::getReader()->println('The --threads option is not available on Windows.');
+				return;
+			}
 			$this->spawnController($worker, $threads);
 			return;
 		}
