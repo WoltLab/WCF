@@ -16,7 +16,7 @@ use Zend\ProgressBar\ProgressBar;
  * Executes cronjobs.
  * 
  * @author	Tim Duesterhus
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\System\Cli\Command
  */
@@ -114,6 +114,10 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 			'width' => CLIWCF::getTerminal()->getWidth()
 		]));
 		$progress = 0;
+		$output = null;
+		if (!empty($_ENV['WORKER_STATUS_FD'])) {
+			$output = new File("php://fd/".$_ENV['WORKER_STATUS_FD'], "w");
+		}
 		for ($i = 0; $progress < 100; $i++) {
 			$worker->setLoopCount($i);
 			$worker->validate();
@@ -125,6 +129,13 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 			// update progress
 			$progress = $worker->getProgress();
 			$progressbar->update($progress);
+			if ($output) {
+				$output->write("$i,$progress\n");
+			}
+		}
+		if ($output) {
+			$output->write("done,$progress");
+			$output->close();
 		}
 		$progressbar->update($progress);
 		
