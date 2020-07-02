@@ -147,7 +147,7 @@ class UserEditForm extends UserAddForm {
 	 * @var         int
 	 * @since       5.3
 	 */
-	public $styleID;
+	public $styleID = 0;
 	
 	/**
 	 * @inheritDoc
@@ -548,7 +548,7 @@ class UserEditForm extends UserAddForm {
 		parent::validate();
 		
 		if (!isset($this->availableStyles[$this->styleID])) {
-			throw new UserInputException('styleID', 'noValidSelection');
+			$this->styleID = 0;
 		}
 	}
 }
