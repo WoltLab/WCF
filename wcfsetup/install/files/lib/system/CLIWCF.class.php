@@ -133,7 +133,7 @@ class CLIWCF extends WCF {
 			'disableUpdateCheck' => WCF::getLanguage()->get('wcf.cli.help.disableUpdateCheck'),
 			'exitOnFail' => WCF::getLanguage()->get('wcf.cli.help.exitOnFail'),
 			'packageID=i' => WCF::getLanguage()->get('wcf.cli.help.packageID'),
-			'sessionID=s' => 'sessionid',
+			'sessionID=s' => WCF::getLanguage()->get('wcf.cli.help.sessionID'),
 		]);
 		self::getArgvParser()->setOptions([
 			ArgvParser::CONFIG_CUMULATIVE_FLAGS => true,

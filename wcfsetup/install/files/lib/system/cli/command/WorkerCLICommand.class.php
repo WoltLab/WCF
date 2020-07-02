@@ -35,8 +35,8 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		$this->argv = new ArgvParser([
 			'l|list' => CLIWCF::getLanguage()->get('wcf.cli.worker.list'),
 			'setParameter=s' => CLIWCF::getLanguage()->get('wcf.cli.worker.setParameter'),
-			'threads=i' => 'threads',
-			'threadId=i' => 'threadId',
+			'threads=i' => CLIWCF::getLanguage()->get('wcf.cli.worker.threads'),
+			'threadId=i' => CLIWCF::getLanguage()->get('wcf.cli.worker.threadId'),
 		]);
 		$this->argv->setOptions([
 			ArgvParser::CONFIG_FREEFORM_FLAGS => true,
@@ -64,7 +64,7 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 			if ($this->argv->threadId !== null) {
 				$threadId = $this->argv->threadId;
 				if ($this->argv->threadId >= $this->argv->threads) {
-					CLIWCF::getReader()->println("Invalid threadId");
+					CLIWCF::getReader()->println(CLIWCF::getLanguage()->get('wcf.cli.worker.threadId.invalid'));
 					return;
 				}
 			}
@@ -129,7 +129,7 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		// is the controller process invoked by the Administrator.
 		if ($threads > 1 && $threadId === null) {
 			if (PHP_EOL === "\r\n") {
-				CLIWCF::getReader()->println('The --threads option is not available on Windows.');
+				CLIWCF::getReader()->println(CLIWCF::getLanguage()->get('wcf.cli.worker.threads.windows'));
 				return;
 			}
 			$this->spawnController($worker, $threads);
@@ -198,7 +198,7 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		$arguments[] = '--sessionID='.CLIWCF::getSession()->sessionID;
 		$commandLine = PHP_BINARY.' '.implode(' ', array_map('escapeshellarg', $arguments));
 		
-		CLIWCF::getReader()->println('Using "'.$commandLine.'" as the worker command line.');
+		Log::debug('Using "'.$commandLine.'" as the worker command line.');
 		
 		// Reuse the environment.
 		// - Specify TERM=dumb to prevent the worker from messing around with our terminal.
