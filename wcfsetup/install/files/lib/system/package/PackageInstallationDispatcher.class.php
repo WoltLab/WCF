@@ -703,6 +703,10 @@ class PackageInstallationDispatcher {
 	protected function executePIP(array $nodeData) {
 		$step = new PackageInstallationStep();
 		
+		if ($nodeData['pip'] == PackageArchive::VOID_MARKER) {
+			return $step;
+		}
+		
 		// fetch all pips associated with current PACKAGE_ID and include pips
 		// previously installed by current installation queue
 		$sql = "SELECT	pluginName, className
