@@ -20,7 +20,6 @@ use wcf\util\StringUtil;
  */
 class NotificationUnsubscribeForm extends AbstractForm {
 	/**
-	 * user to unsubscribe
 	 * @var	User
 	 */
 	public $user;
@@ -32,7 +31,6 @@ class NotificationUnsubscribeForm extends AbstractForm {
 	public $token = '';
 	
 	/**
-	 * whether this is a one-click request
 	 * @var	boolean
 	 */
 	public $isOneClick = false;
@@ -41,7 +39,7 @@ class NotificationUnsubscribeForm extends AbstractForm {
 	 * notification event to unsubscribe
 	 * @var	UserNotificationEvent
 	 */
-	public $event = null;
+	public $event;
 	
 	/**
 	 * Disable security token validation.
@@ -81,7 +79,7 @@ class NotificationUnsubscribeForm extends AbstractForm {
 			}
 		}
 		
-		if (!$this->user || !hash_equals($this->user->notificationMailToken, $this->token)) {
+		if (!hash_equals($this->user->notificationMailToken, $this->token)) {
 			throw new IllegalLinkException();
 		}
 		
@@ -120,6 +118,9 @@ class NotificationUnsubscribeForm extends AbstractForm {
 		$this->saved();
 		
 		if ($this->isOneClick) {
+			// One-Click unsubscriptions are sent by the recipient's MUA upon clicking a button.
+			// No additional information except the URI are available and specifically no user interaction can happen.
+			// Just send a lightweight 204 No Content response, instead of kilobytes of HTML to save on resources.
 			header('HTTP/1.0 204 No Content');
 			exit;
 		}

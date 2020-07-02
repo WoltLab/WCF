@@ -62,21 +62,21 @@ class Email {
 	 * @var	string
 	 * @since 5.3
 	 */
-	protected $listId = null;
+	protected $listId;
 	
 	/**
 	 * Human readable part of the List-Id header
 	 * @var	string
 	 * @since 5.3
 	 */
-	protected $listIdHuman = null;
+	protected $listIdHuman;
 	
 	/**
 	 * List-Unsubscribe URI
 	 * @var	string
 	 * @since 5.3
 	 */
-	protected $listUnsubscribe = null;
+	protected $listUnsubscribe;
 	
 	/**
 	 * Whether the listUnsubscribe URI has One-Click support
