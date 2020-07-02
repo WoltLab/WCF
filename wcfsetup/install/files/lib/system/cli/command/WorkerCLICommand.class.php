@@ -141,8 +141,8 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		]));
 		$progress = 0;
 		$output = null;
-		if (!empty($_ENV['WORKER_STATUS_FD'])) {
-			$output = new File("php://fd/".$_ENV['WORKER_STATUS_FD'], "w");
+		if (!empty($_ENV['WCF_WORKER_STATUS_FD'])) {
+			$output = new File("php://fd/".$_ENV['WCF_WORKER_STATUS_FD'], "w");
 		}
 		for ($i = ($threadId !== null ? ($threadId + 1) : 0); $progress < 100; $i += $threads) {
 			$worker->setLoopCount($i);
@@ -200,12 +200,12 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		
 		// Reuse the environment.
 		// - Specify TERM=dumb to prevent the worker from messing around with our terminal.
-		// - Specify WORKER_STATUS_FD to prevent the administrator from manually giving a threadId,
+		// - Specify WCF_WORKER_STATUS_FD to prevent the administrator from manually giving a threadId,
 		//   causing the worker to write into an arbitrary file descriptor (most likely the DB connection).
 		// - Specify WCF_SESSION_ID to perform the login.
 		$env = array_merge($_ENV, [
 			'TERM' => 'dumb',
-			'WORKER_STATUS_FD' => 3,
+			'WCF_WORKER_STATUS_FD' => 3,
 			'WCF_SESSION_ID' => CLIWCF::getSession()->sessionID,
 		]);
 		
