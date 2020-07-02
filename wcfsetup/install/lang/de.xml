@@ -3365,7 +3365,6 @@ Fehler sind beispielsweise:
 - Befehle, welche ihre Aktion nicht erfolgreich ausführen konnten
 - Systemfehler]]></item>
 		<item name="wcf.cli.help.packageID"><![CDATA[Die App mit der angegebenen Paket-ID wird als Standard für diese Sitzung verwendet.]]></item>
-		<item name="wcf.cli.help.sessionID"><![CDATA[Verwendet die Sitzung mit der angegebenen Session-ID, anstatt einen separaten Login durchzuführen. Dieser Parameter wird intern zur Parallelisierung von Aufgaben genutzt.]]></item>
 		<item name="wcf.cli.worker.setParameter"><![CDATA[Übergibt einen Parameter an den Worker. Bsp.: --setParameter param=wert]]></item>
 		<item name="wcf.cli.worker.list"><![CDATA[Listet alle Worker auf.]]></item>
 		<item name="wcf.cli.worker.threads"><![CDATA[Gewünschte Anzahl von parallelen Prozessen.]]></item>

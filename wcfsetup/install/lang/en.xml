@@ -3288,7 +3288,6 @@ Errors are:
 - Failing commands
 - Core errors]]></item>
 		<item name="wcf.cli.help.packageID"><![CDATA[The given package id will be used as a default for this session.]]></item>
-		<item name="wcf.cli.help.sessionID"><![CDATA[Uses the session with the given session id instead of performing a login. This parameter is used internally for parallel processing of jobs.]]></item>
 		<item name="wcf.cli.worker.setParameter"><![CDATA[Sets a worker parameter e.g.: --setParameter param=value]]></item>
 		<item name="wcf.cli.worker.list"><![CDATA[Lists all workers.]]></item>
 		<item name="wcf.cli.worker.threads"><![CDATA[Requested number of parallel processes.]]></item>

@@ -87,7 +87,7 @@ class CLIWCF extends WCF {
 		
 		$this->initArgv();
 		$this->initPHPLine();
-		$this->initAuth(self::getArgvParser()->sessionID);
+		$this->initAuth();
 		$this->checkForUpdates();
 		$this->initCommands();
 	}
@@ -96,8 +96,8 @@ class CLIWCF extends WCF {
 	 * @inheritDoc
 	 */
 	public static function destruct() {
-		// Giving a sessionID disables saving of the command history.
-		if (!self::getArgvParser()->sessionID) {
+		// Giving WCF_SESSION_ID disables saving of the command history.
+		if (empty($_ENV['WCF_SESSION_ID'])) {
 			if (self::getReader() !== null && self::getReader()->getHistory() instanceof DatabaseCLICommandHistory) {
 				/** @var DatabaseCLICommandHistory $history */
 				$history = self::getReader()->getHistory();
@@ -107,7 +107,7 @@ class CLIWCF extends WCF {
 			}
 		}
 		
-		if (!self::getArgvParser()->sessionID) {
+		if (empty($_ENV['WCF_SESSION_ID'])) {
 			self::getSession()->delete();
 		}
 	}
@@ -133,7 +133,6 @@ class CLIWCF extends WCF {
 			'disableUpdateCheck' => WCF::getLanguage()->get('wcf.cli.help.disableUpdateCheck'),
 			'exitOnFail' => WCF::getLanguage()->get('wcf.cli.help.exitOnFail'),
 			'packageID=i' => WCF::getLanguage()->get('wcf.cli.help.packageID'),
-			'sessionID=s' => WCF::getLanguage()->get('wcf.cli.help.sessionID'),
 		]);
 		self::getArgvParser()->setOptions([
 			ArgvParser::CONFIG_CUMULATIVE_FLAGS => true,
@@ -234,10 +233,10 @@ class CLIWCF extends WCF {
 	/**
 	 * Does the user authentification.
 	 */
-	protected function initAuth($sessionID = null) {
-		if ($sessionID !== null) {
+	protected function initAuth() {
+		if (!empty($_ENV['WCF_SESSION_ID'])) {
 			self::getSession()->delete();
-			self::getSession()->load(SessionEditor::class, $sessionID);
+			self::getSession()->load(SessionEditor::class, $_ENV['WCF_SESSION_ID']);
 			if (!self::getUser()->userID) {
 				self::getReader()->println('Invalid sessionID');
 				exit(1);

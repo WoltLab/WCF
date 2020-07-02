@@ -192,10 +192,8 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		
 		// Invoke the worker processes with the same command line ...
 		$arguments = $_SERVER['argv'];
-		// ... with the quiet argument ...
+		// ... with the quiet argument.
 		$arguments[] = '-qqqqq';
-		// ... reusing the current session.
-		$arguments[] = '--sessionID='.CLIWCF::getSession()->sessionID;
 		$commandLine = PHP_BINARY.' '.implode(' ', array_map('escapeshellarg', $arguments));
 		
 		Log::debug('Using "'.$commandLine.'" as the worker command line.');
@@ -203,10 +201,12 @@ class WorkerCLICommand implements IArgumentedCLICommand {
 		// Reuse the environment.
 		// - Specify TERM=dumb to prevent the worker from messing around with our terminal.
 		// - Specify WORKER_STATUS_FD to prevent the administrator from manually giving a threadId,
-		//   causing the worker to write into an arbitrary file descriptor (most likely the DB connectio.).
+		//   causing the worker to write into an arbitrary file descriptor (most likely the DB connection).
+		// - Specify WCF_SESSION_ID to perform the login.
 		$env = array_merge($_ENV, [
 			'TERM' => 'dumb',
 			'WORKER_STATUS_FD' => 3,
+			'WCF_SESSION_ID' => CLIWCF::getSession()->sessionID,
 		]);
 		
 		// 1) Spawn the processes.
