@@ -3120,9 +3120,7 @@ the lost password form <a href="{link controller='LostPassword' isHtmlEmail=true
 by an administrator. You are now able to use your user account to it’s full extend.</p>]]></item>
 		<item name="wcf.acp.user.activation.mail.plaintext"><![CDATA[Dear {@$mailbox->getUser()->username},
 
-Your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] has been approved
-by an administrator. You are now able to use your user account to it’s
-full extend.]]></item>
+Your account on the website: {@PAGE_TITLE|language} [URL:{link isEmail=true}{/link}] has been approved by an administrator. You are now able to use your user account to its full extend.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings"><![CDATA[Default Notification Settings]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.description"><![CDATA[You can set the default notification settings for new users, any changes made here will not affect existing users. Users can customize their settings at any time.]]></item>
 		<item name="wcf.acp.user.notificationPresetSettings.applyChangesToExistingUsers"><![CDATA[Apply changes for existing users also]]></item>

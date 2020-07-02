@@ -1,7 +1,7 @@
 {assign var='count' value=$event->getAuthors()|count}{assign var='guestTimesTriggered' value=$event->getNotification()->guestTimesTriggered}{assign var='authors' value=$event->getAuthors()|array_values}
 {if $mimeType === 'text/plain'}
 {capture assign='authorList'}{lang}wcf.user.notification.mail.authorList.plaintext{/lang}{/capture}
-{lang}{@$languageVariablePrefix}.mail.plaintext{/lang}{if $count == 1 && !$guestTimesTriggered}
+{lang}{@$languageVariablePrefix}.mail.plaintext{/lang}{if $count == 1 && !$guestTimesTriggered} {* this line ends with a space *}
 
 {@$event->getUserNotificationObject()->getMailText($mimeType)}{/if} {* this line ends with a space *}
 {else}
