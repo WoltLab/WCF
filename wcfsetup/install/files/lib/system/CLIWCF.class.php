@@ -119,7 +119,6 @@ class CLIWCF extends WCF {
 			'version' => WCF::getLanguage()->get('wcf.cli.help.version'),
 			'disableUpdateCheck' => WCF::getLanguage()->get('wcf.cli.help.disableUpdateCheck'),
 			'exitOnFail' => WCF::getLanguage()->get('wcf.cli.help.exitOnFail'),
-			'packageID=i' => WCF::getLanguage()->get('wcf.cli.help.packageID')
 		]);
 		self::getArgvParser()->setOptions([
 			ArgvParser::CONFIG_CUMULATIVE_FLAGS => true,

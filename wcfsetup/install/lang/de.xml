@@ -3368,7 +3368,6 @@ Fehler sind beispielsweise:
 - Nicht gefundene Befehle
 - Befehle, welche ihre Aktion nicht erfolgreich ausführen konnten
 - Systemfehler]]></item>
-		<item name="wcf.cli.help.packageID"><![CDATA[Die App mit der angegebenen Paket-ID wird als Standard für diese Sitzung verwendet.]]></item>
 		<item name="wcf.cli.worker.setParameter"><![CDATA[Übergibt einen Parameter an den Worker. Bsp.: --setParameter param=wert]]></item>
 		<item name="wcf.cli.worker.list"><![CDATA[Listet alle Worker auf.]]></item>
 		<item name="wcf.cli.error.help.noArguments"><![CDATA[Der Befehl "{$command}" unterstützt keine Parameter.]]></item>
