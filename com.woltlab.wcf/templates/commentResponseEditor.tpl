@@ -3,7 +3,7 @@
           data-disable-attachments="true"
           data-disable-media="true"
 >{$response->message}</textarea>
-{*include file='messageFormTabsInline'*}
+{include file='messageFormTabsInline'}
 
 <div class="formSubmit">
 	<button class="buttonPrimary" data-type="save" accesskey="s">{lang}wcf.global.button.submit{/lang}</button>

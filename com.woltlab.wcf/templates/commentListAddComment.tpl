@@ -10,6 +10,7 @@
 			          data-disable-attachments="true"
 			          data-disable-media="true"
 			></textarea>
+			{include file='messageFormTabsInline'}
 			
 			{* in-template call for full backwards-compatibility *}
 			{$commentList->getCommentManager()->setDisallowedBBCodes()}
@@ -40,6 +41,7 @@
 				          data-disable-attachments="true"
 				          data-disable-media="true"
 				></textarea>
+				{include file='messageFormTabsInline' wysiwygSelector=$_commentResponseWysiwygSelector}
 				
 				{* in-template call for full backwards-compatibility *}
 				{$commentList->getCommentManager()->setDisallowedBBCodes()}
