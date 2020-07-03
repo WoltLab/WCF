@@ -62,13 +62,6 @@ class CLIWCF extends WCF {
 		$zendLoader = new ZendLoader([ZendLoader::AUTOREGISTER_ZF => true]);
 		$zendLoader->register();
 		
-		$argv = new ArgvParser([
-			'packageID=i' => ''
-		]);
-		$argv->setOption(ArgvParser::CONFIG_FREEFORM_FLAGS, true);
-		$argv->parse();
-		define('PACKAGE_ID', $argv->packageID ?: 1);
-		
 		// disable benchmark
 		define('ENABLE_BENCHMARK', 0);
 		
