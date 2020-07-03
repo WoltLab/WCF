@@ -2,7 +2,7 @@
  * Provides an item list for users and groups.
  * 
  * @author	Alexander Ebert
- * @copyright	2001-2019 WoltLab GmbH
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @module	WoltLabSuite/Core/Ui/ItemList/User
  */
@@ -22,8 +22,6 @@ define(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 	 * @exports	WoltLabSuite/Core/Ui/ItemList/User
 	 */
 	return {
-		_shadowGroups: null,
-		
 		/**
 		 * Initializes user suggestion support for an element.
 		 * 
@@ -31,8 +29,6 @@ define(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 		 * @param	{object}	options		option list
 		 */
 		init: function(elementId, options) {
-			this._shadowGroups = null;
-			
 			UiItemList.init(elementId, [], {
 				ajax: {
 					className: 'wcf\\data\\user\\UserAction',
@@ -70,13 +66,13 @@ define(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
 			});
 			
 			data.shadow.value = users.join(',');
-			if (!this._shadowGroups) {
-				this._shadowGroups = elCreate('input');
-				this._shadowGroups.type = 'hidden';
-				this._shadowGroups.name = data.shadow.name + 'GroupIDs';
-				data.shadow.parentNode.insertBefore(this._shadowGroups, data.shadow);
+			if (!data._shadowGroups) {
+				data._shadowGroups = elCreate('input');
+				data._shadowGroups.type = 'hidden';
+				data._shadowGroups.name = data.shadow.name + 'GroupIDs';
+				data.shadow.parentNode.insertBefore(data._shadowGroups, data.shadow);
 			}
-			this._shadowGroups.value = groups.join(',');
+			data._shadowGroups.value = groups.join(',');
 			
 			return values;
 		}
