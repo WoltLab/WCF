@@ -109,6 +109,7 @@ define('MAIL_FROM_NAME', '');
 define('MAIL_FROM_ADDRESS', '');
 define('MAIL_ADMIN_ADDRESS', '');
 define('MAIL_SIGNATURE', '');
+define('MAIL_SIGNATURE_HTML', '');
 define('MAIL_SEND_METHOD', 'php');
 define('MAIL_SMTP_HOST', '');
 define('MAIL_SMTP_PORT', 25);

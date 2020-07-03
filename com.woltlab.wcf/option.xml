@@ -919,6 +919,11 @@ physical:wcf.acp.option.google_maps_type.physical</selectoptions>
 				<optiontype>textareaI18n</optiontype>
 				<supporti18n>1</supporti18n>
 			</option>
+			<option name="mail_signature_html">
+				<categoryname>general.mail.general</categoryname>
+				<optiontype>textareaI18n</optiontype>
+				<supporti18n>1</supporti18n>
+			</option>
 			<!-- /general.mail.general -->
 			<!-- general.mail.send -->
 			<option name="mail_send_method">
