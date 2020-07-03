@@ -9,6 +9,7 @@ use wcf\data\user\notification\UserNotificationAction;
 use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserProfile;
+use wcf\form\NotificationUnsubscribeForm;
 use wcf\system\background\job\NotificationEmailDeliveryBackgroundJob;
 use wcf\system\background\BackgroundQueueHandler;
 use wcf\system\cache\builder\UserNotificationEventCacheBuilder;
@@ -695,6 +696,17 @@ class UserNotificationHandler extends SingletonFactory {
 			'title' => $event->getEmailTitle()
 		]));
 		$email->addRecipient(new UserMailbox($user));
+		$humanReadableListId = $user->getLanguage()->getDynamicVariable('wcf.user.notification.'.$event->objectType.'.'.$event->eventName);
+		$email->setListID($event->eventName.'.'.$event->objectType.'.instant.notification', $humanReadableListId);
+		$email->setListUnsubscribe(LinkHandler::getInstance()->getControllerLink(NotificationUnsubscribeForm::class, [
+			// eventID is not part of the parameter list, because we can't communicate that
+			// only a single type would be unsubscribed.
+			// The recipient's expectations when performing the One-Click unsubscribing are that
+			// no further emails will be received. Not following that expectation might result in
+			// harsh filtering.
+			'userID' => $user->userID,
+			'token' => $user->notificationMailToken,
+		]), true);
 		
 		$message = $event->getEmailMessage('instant');
 		if (is_array($message)) {

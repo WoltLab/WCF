@@ -1,10 +1,7 @@
 <?php
 namespace wcf\action;
-use wcf\data\user\notification\event\UserNotificationEvent;
-use wcf\data\user\User;
-use wcf\system\exception\IllegalLinkException;
+use wcf\form\NotificationUnsubscribeForm;
 use wcf\system\request\LinkHandler;
-use wcf\system\WCF;
 use wcf\util\HeaderUtil;
 use wcf\util\StringUtil;
 
@@ -15,6 +12,7 @@ use wcf\util\StringUtil;
  * @copyright	2001-2019 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  * @package	WoltLabSuite\Core\Action
+ * @deprecated	5.3 Replaced by NotificationUnsubscribeForm
  */
 class NotificationDisableAction extends AbstractAction {
 	/**
@@ -24,22 +22,10 @@ class NotificationDisableAction extends AbstractAction {
 	public $eventID = 0;
 	
 	/**
-	 * notification event
-	 * @var	UserNotificationEvent
-	 */
-	public $event = null;
-	
-	/**
 	 * user id
 	 * @var	integer
 	 */
 	public $userID = 0;
-	
-	/**
-	 * user object
-	 * @var	User
-	 */
-	public $user = null;
 	
 	/**
 	 * security token
@@ -53,60 +39,15 @@ class NotificationDisableAction extends AbstractAction {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_REQUEST['eventID'])) {
-			$this->eventID = intval($_REQUEST['eventID']);
-			
-			$this->event = new UserNotificationEvent($this->eventID);
-			if (!$this->event->eventID) {
-				throw new IllegalLinkException();
-			}
-		}
-		
+		if (isset($_REQUEST['eventID'])) $this->eventID = intval($_REQUEST['eventID']);
 		if (isset($_REQUEST['userID'])) $this->userID = intval($_REQUEST['userID']);
-		$this->user = new User($this->userID);
-		if (!$this->user->userID) {
-			throw new IllegalLinkException();
-		}
-		
 		if (isset($_REQUEST['token'])) $this->token = StringUtil::trim($_REQUEST['token']);
-		if (empty($this->token) || !\hash_equals($this->user->notificationMailToken, $this->token)) {
-			throw new IllegalLinkException();
-		}
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function execute() {
-		parent::execute();
-		
-		if ($this->event !== null) {
-			$sql = "UPDATE	wcf".WCF_N."_user_notification_event_to_user
-				SET	mailNotificationType = ?
-				WHERE	userID = ?
-					AND eventID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([
-				'none',
-				$this->userID,
-				$this->eventID
-			]);
-		}
-		else {
-			$sql = "UPDATE	wcf".WCF_N."_user_notification_event_to_user
-				SET	mailNotificationType = ?
-				WHERE	userID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([
-				'none',
-				$this->userID
-			]);
-		}
-		
-		$this->executed();
-		
-		// redirect to url
-		HeaderUtil::delayedRedirect(LinkHandler::getInstance()->getLink(), WCF::getLanguage()->get('wcf.user.notification.mail.disabled'));
+
+		HeaderUtil::redirect(LinkHandler::getInstance()->getControllerLink(NotificationUnsubscribeForm::class, [
+			'userID' => $this->userID,
+			'eventID' => $this->eventID,
+			'token' => $this->token,
+		]));
 		exit;
 	}
 }

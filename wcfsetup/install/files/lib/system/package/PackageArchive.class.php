@@ -89,6 +89,12 @@ class PackageArchive {
 	const INFO_FILE = 'package.xml';
 	
 	/**
+	 * marker for the void instruction
+	 * @var	string
+	 */
+	const VOID_MARKER = "===void===";
+	
+	/**
 	 * Creates a new PackageArchive object.
 	 * 
 	 * @param	string		$archive
@@ -350,6 +356,24 @@ class PackageArchive {
 			
 			$fromVersion = $element->getAttribute('fromversion');
 			$type = $element->getAttribute('type');
+			
+			$void = $xpath->query('./ns:void', $element);
+			if ($void->length > 1) {
+				throw new PackageValidationException(PackageValidationException::VOID_NOT_ALONE);
+			}
+			else if ($void->length == 1) {
+				if (!empty($instructionData)) {
+					throw new PackageValidationException(PackageValidationException::VOID_NOT_ALONE);
+				}
+				if ($type == 'install') {
+					throw new PackageValidationException(PackageValidationException::VOID_ON_INSTALL);
+				}
+				
+				$instructionData[] = [
+					'pip' => self::VOID_MARKER,
+					'value' => '',
+				];
+			}
 			
 			if ($type == 'install') {
 				$this->instructions['install'] = $instructionData;

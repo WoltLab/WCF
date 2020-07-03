@@ -63,13 +63,6 @@ class CLIWCF extends WCF {
 		$zendLoader = new ZendLoader([ZendLoader::AUTOREGISTER_ZF => true]);
 		$zendLoader->register();
 		
-		$argv = new ArgvParser([
-			'packageID=i' => ''
-		]);
-		$argv->setOption(ArgvParser::CONFIG_FREEFORM_FLAGS, true);
-		$argv->parse();
-		define('PACKAGE_ID', $argv->packageID ?: 1);
-		
 		// disable benchmark
 		define('ENABLE_BENCHMARK', 0);
 		
@@ -132,7 +125,6 @@ class CLIWCF extends WCF {
 			'version' => WCF::getLanguage()->get('wcf.cli.help.version'),
 			'disableUpdateCheck' => WCF::getLanguage()->get('wcf.cli.help.disableUpdateCheck'),
 			'exitOnFail' => WCF::getLanguage()->get('wcf.cli.help.exitOnFail'),
-			'packageID=i' => WCF::getLanguage()->get('wcf.cli.help.packageID'),
 		]);
 		self::getArgvParser()->setOptions([
 			ArgvParser::CONFIG_CUMULATIVE_FLAGS => true,

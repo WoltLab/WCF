@@ -1,5 +1,6 @@
 <?php
 namespace wcf\system\database\editor;
+use wcf\system\database\exception\DatabaseQueryExecutionException;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\Regex;
 
@@ -286,9 +287,19 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @inheritDoc
 	 */
 	public function dropColumn($tableName, $columnName) {
-		$sql = "ALTER TABLE `".$tableName."` DROP COLUMN `".$columnName."`";
-		$statement = $this->dbObj->prepareStatement($sql);
-		$statement->execute();
+		try {
+			$sql = "ALTER TABLE `".$tableName."` DROP COLUMN `".$columnName."`";
+			$statement = $this->dbObj->prepareStatement($sql);
+			$statement->execute();
+		}
+		catch (DatabaseQueryExecutionException $e) {
+			if ($e->getCode() != '42000') {
+				throw $e;
+			}
+			if (in_array($columnName, array_column($this->getColumns($tableName), 'name'))) {
+				throw $e;
+			}
+		}
 	}
 	
 	/**
@@ -331,27 +342,57 @@ class MySQLDatabaseEditor extends DatabaseEditor {
 	 * @inheritDoc
 	 */
 	public function dropIndex($tableName, $indexName) {
-		$sql = "ALTER TABLE `".$tableName."` DROP INDEX `".$indexName."`";
-		$statement = $this->dbObj->prepareStatement($sql);
-		$statement->execute();
+		try {
+			$sql = "ALTER TABLE `".$tableName."` DROP INDEX `".$indexName."`";
+			$statement = $this->dbObj->prepareStatement($sql);
+			$statement->execute();
+		}
+		catch (DatabaseQueryExecutionException $e) {
+			if ($e->getCode() != '42000') {
+				throw $e;
+			}
+			if (in_array($indexName, $this->getIndices($tableName))) {
+				throw $e;
+			}
+		}
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function dropPrimaryKey($tableName) {
-		$sql = "ALTER TABLE ".$tableName." DROP PRIMARY KEY";
-		$statement = $this->dbObj->prepareStatement($sql);
-		$statement->execute();
+		try {
+			$sql = "ALTER TABLE ".$tableName." DROP PRIMARY KEY";
+			$statement = $this->dbObj->prepareStatement($sql);
+			$statement->execute();
+		}
+		catch (DatabaseQueryExecutionException $e) {
+			if ($e->getCode() != '42000') {
+				throw $e;
+			}
+			if (in_array("PRIMARY", $this->getIndices($tableName))) {
+				throw $e;
+			}
+		}
 	}
 	
 	/**
 	 * @inheritDoc
 	 */
 	public function dropForeignKey($tableName, $indexName) {
-		$sql = "ALTER TABLE `".$tableName."` DROP FOREIGN KEY `".$indexName."`";
-		$statement = $this->dbObj->prepareStatement($sql);
-		$statement->execute();
+		try {
+			$sql = "ALTER TABLE `".$tableName."` DROP FOREIGN KEY `".$indexName."`";
+			$statement = $this->dbObj->prepareStatement($sql);
+			$statement->execute();
+		}
+		catch (DatabaseQueryExecutionException $e) {
+			if ($e->getCode() != '42000') {
+				throw $e;
+			}
+			if (in_array($indexName, array_keys($this->getForeignKeys($tableName)))) {
+				throw $e;
+			}
+		}
 	}
 	
 	/**
