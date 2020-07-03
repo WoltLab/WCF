@@ -152,10 +152,15 @@ class HtmlOutputNodeImg extends AbstractHtmlOutputNode {
 	protected function replaceExternalSource(\DOMElement $element, $src) {
 		$element->parentNode->insertBefore($element->ownerDocument->createTextNode('['.WCF::getLanguage()->get('wcf.bbcode.image.blocked').': '), $element);
 		
-		$link = $element->ownerDocument->createElement('a');
-		$link->setAttribute('href', $src);
-		$link->textContent = $src;
-		HtmlOutputNodeA::markLinkAsExternal($link);
+		if (!DOMUtil::hasParent($element, 'a')) {
+			$link = $element->ownerDocument->createElement('a');
+			$link->setAttribute('href', $src);
+			$link->textContent = $src;
+			HtmlOutputNodeA::markLinkAsExternal($link);
+		}
+		else {
+			$link = $element->ownerDocument->createTextNode($src);
+		}
 		
 		$element->parentNode->insertBefore($link, $element);
 		
