@@ -3370,6 +3370,10 @@ Fehler sind beispielsweise:
 - Systemfehler]]></item>
 		<item name="wcf.cli.worker.setParameter"><![CDATA[Übergibt einen Parameter an den Worker. Bsp.: --setParameter param=wert]]></item>
 		<item name="wcf.cli.worker.list"><![CDATA[Listet alle Worker auf.]]></item>
+		<item name="wcf.cli.worker.threads"><![CDATA[Gewünschte Anzahl von parallelen Prozessen.]]></item>
+		<item name="wcf.cli.worker.threads.windows"><![CDATA[Die parallele Verarbeitung mittels --threads steht unter Windows nicht zur Verfügung.]]></item>
+		<item name="wcf.cli.worker.threadId"><![CDATA[Gibt die Thread-ID während einer parallelen Verarbeitung an. Wird intern genutzt, wenn --threads gesetzt ist.]]></item>
+		<item name="wcf.cli.worker.threadId.invalid"><![CDATA[Die angegebene Thread-ID ist nicht gültig.]]></item>
 		<item name="wcf.cli.error.help.noArguments"><![CDATA[Der Befehl "{$command}" unterstützt keine Parameter.]]></item>
 		<item name="wcf.cli.error.language.notFound"><![CDATA[Die Sprache mit dem Sprachcode "{$languageCode}" konnte nicht gefunden werden.]]></item>
 		<item name="wcf.cli.error.command.notFound"><![CDATA[Der Befehl "{$command}" konnte nicht gefunden werden. Benutze "commands", um verfügbare Befehle aufzulisten.]]></item>
