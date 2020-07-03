@@ -1,5 +1,7 @@
 <?php
 namespace wcf\data\user\notification\event;
+use wcf\data\object\type\ObjectType;
+use wcf\data\object\type\ObjectTypeCache;
 use wcf\data\ProcessibleDatabaseObject;
 use wcf\data\TDatabaseObjectOptions;
 use wcf\data\TDatabaseObjectPermissions;
@@ -31,4 +33,14 @@ class UserNotificationEvent extends ProcessibleDatabaseObject {
 	 * @inheritDoc
 	 */
 	protected static $processorInterface = IUserNotificationEvent::class;
+	
+	/**
+	 * Returns the object type of this event.
+	 *
+	 * @return	ObjectType
+	 * @since 5.3
+	 */
+	public function getObjectType() {
+		return ObjectTypeCache::getInstance()->getObjectType($this->objectTypeID);
+	}
 }

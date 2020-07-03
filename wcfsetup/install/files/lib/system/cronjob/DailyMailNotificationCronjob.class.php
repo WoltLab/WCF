@@ -7,12 +7,14 @@ use wcf\data\user\User;
 use wcf\data\user\UserEditor;
 use wcf\data\user\UserList;
 use wcf\data\user\UserProfile;
+use wcf\form\NotificationUnsubscribeForm;
 use wcf\system\cache\runtime\UserProfileRuntimeCache;
 use wcf\system\database\util\PreparedStatementConditionBuilder;
 use wcf\system\email\mime\MimePartFacade;
 use wcf\system\email\mime\RecipientAwareTextMimePart;
 use wcf\system\email\Email;
 use wcf\system\email\UserMailbox;
+use wcf\system\request\LinkHandler;
 use wcf\system\user\notification\event\IUserNotificationEvent;
 use wcf\system\user\notification\UserNotificationHandler;
 use wcf\system\WCF;
@@ -212,6 +214,11 @@ class DailyMailNotificationCronjob extends AbstractCronjob {
 			$email = new Email();
 			$email->setSubject($user->getLanguage()->getDynamicVariable('wcf.user.notification.mail.daily.subject', ['count' => count($notifications)]));
 			$email->addRecipient(new UserMailbox($user));
+			$email->setListID('daily.notification');
+			$email->setListUnsubscribe(LinkHandler::getInstance()->getControllerLink(NotificationUnsubscribeForm::class, [
+				'userID' => $user->userID,
+				'token' => $user->notificationMailToken,
+			]), true);
 			
 			$html = new RecipientAwareTextMimePart('text/html', 'email_dailyNotification', 'wcf', ['notifications' => $notifications]);
 			$plainText = new RecipientAwareTextMimePart('text/plain', 'email_dailyNotification', 'wcf', ['notifications' => $notifications]);
