@@ -303,29 +303,11 @@
 			</dl>
 			
 			{if MODULE_TAGGING}
-				<dl class="jsOnly">
-					<dt><label for="tagSearchInput">{lang}wcf.tagging.tags{/lang}</label></dt>
-					<dd>
-						<input id="tagSearchInput" type="text" value="" class="long">
-						<small>{lang}wcf.tagging.tags.description{/lang}</small>
-					</dd>
-				</dl>
-				
-				<script data-relocate="true">
-					require(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
-						UiItemList.init(
-							'tagSearchInput',
-							[{if !$tags[0]|empty}{implode from=$tags[0] item=tag}'{@$tag|encodeJS}'{/implode}{/if}],
-							{
-								ajax: {
-									className: 'wcf\\data\\tag\\TagAction'
-								},
-								maxLength: {@TAGGING_MAX_TAG_LENGTH},
-								submitFieldName: 'tags[0][]'
-							}
-						);
-					});
-				</script>
+				{if !$tags[0]|empty}
+					{include file='tagInput' tagInputSuffix='0' tagSubmitFieldName='tags[0][]' tags=$tags[0] sandbox=true}
+				{else}
+					{include file='tagInput' tagInputSuffix='0' tagSubmitFieldName='tags[0][]' sandbox=true}
+				{/if}
 			{/if}
 			
 			{event name='informationFields'}
@@ -451,29 +433,12 @@
 						</dl>
 						
 						{if MODULE_TAGGING}
-							<dl class="jsOnly">
-								<dt><label for="tagSearchInput{@$availableLanguage->languageID}">{lang}wcf.tagging.tags{/lang}</label></dt>
-								<dd>
-									<input id="tagSearchInput{@$availableLanguage->languageID}" type="text" value="" class="long">
-									<small>{lang}wcf.tagging.tags.description{/lang}</small>
-								</dd>
-							</dl>
-							
-							<script data-relocate="true">
-								require(['WoltLabSuite/Core/Ui/ItemList'], function(UiItemList) {
-									UiItemList.init(
-										'tagSearchInput{@$availableLanguage->languageID}',
-										[{if !$tags[$availableLanguage->languageID]|empty}{implode from=$tags[$availableLanguage->languageID] item=tag}'{@$tag|encodeJS}'{/implode}{/if}],
-										{
-											ajax: {
-												className: 'wcf\\data\\tag\\TagAction'
-											},
-											maxLength: {@TAGGING_MAX_TAG_LENGTH},
-											submitFieldName: 'tags[{@$availableLanguage->languageID}][]'
-										}
-									);
-								});
-							</script>
+							{assign var='tagSubmitFieldName' value='tags['|concat:$availableLanguage->languageID:'][]'}
+							{if !$tags[$availableLanguage->languageID]|empty}
+								{include file='tagInput' tagInputSuffix=$availableLanguage->languageID tagSubmitFieldName=$tagSubmitFieldName tags=$tags[$availableLanguage->languageID] sandbox=true}
+							{else}
+								{include file='tagInput' tagInputSuffix=$availableLanguage->languageID tagSubmitFieldName=$tagSubmitFieldName sandbox=true}
+							{/if}
 						{/if}
 						
 						{event name='informationFieldsMultilingual'}
