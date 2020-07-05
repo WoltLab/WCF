@@ -161,6 +161,7 @@
 					<option value="0">{lang}wcf.global.noSelection{/lang}</option>
 					<option value="1"{if $requiredGender == 1} selected{/if}>{lang}wcf.user.gender.male{/lang}</option>
 					<option value="2"{if $requiredGender == 2} selected{/if}>{lang}wcf.user.gender.female{/lang}</option>
+					<option value="3"{if $requiredGender == 3} selected{/if}>{lang}wcf.user.gender.other{/lang}</option>
 				</select>
 				{if $errorField == 'requiredGender'}
 					<small class="innerError">

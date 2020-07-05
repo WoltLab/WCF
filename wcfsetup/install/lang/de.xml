@@ -4511,6 +4511,7 @@ Dateianhänge:
 		<item name="wcf.user.usernameOrEmail"><![CDATA[Benutzername oder E-Mail-Adresse]]></item>
 		<item name="wcf.user.gender.male"><![CDATA[Männlich]]></item>
 		<item name="wcf.user.gender.female"><![CDATA[Weiblich]]></item>
+		<item name="wcf.user.gender.other"><![CDATA[Divers]]></item>
 		<item name="wcf.user.members"><![CDATA[Mitglieder]]></item>
 		<item name="wcf.user.members.filter"><![CDATA[Mitglieder filtern]]></item>
 		<item name="wcf.user.members.noMembers"><![CDATA[Es wurden keine Mitglieder gefunden. <a href="{link controller='MembersList'}{/link}">Die aktiven Filter zurücksetzen.</a>]]></item>

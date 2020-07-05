@@ -77,7 +77,8 @@
 				<defaultvalue>0</defaultvalue>
 				<selectoptions>0:wcf.global.noDeclaration
 1:wcf.user.gender.male
-2:wcf.user.gender.female</selectoptions>
+2:wcf.user.gender.female
+3:wcf.user.gender.other</selectoptions>
 				<outputclass>wcf\system\option\user\SelectOptionsUserOptionOutput</outputclass>
 				<searchable>1</searchable>
 				<visible>15</visible>
