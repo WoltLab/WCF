@@ -188,9 +188,8 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 				'id' => $media->userID,
 				'title' => $media->username
 			]) : '',
-			// TODO: find better solution
 			'userLinkElement' => $media instanceof ViewableMedia ? WCF::getTPL()->fetchString(
-				WCF::getTPL()->getCompiler()->compileString('userLink','{user object=$userProfile}')['template'],
+				WCF::getTPL()->getCompiler()->compileString('userLink', '{user object=$userProfile}')['template'],
 				['userProfile' => $media->getUserProfile()]
 			) : '',
 			'username' => $media->username,
