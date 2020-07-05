@@ -105,6 +105,7 @@ class UserProfile extends DatabaseObjectDecorator implements ITitledLinkObject {
 	
 	const GENDER_MALE = 1;
 	const GENDER_FEMALE = 2;
+	const GENDER_OTHER = 3;
 	
 	const ACCESS_EVERYONE = 0;
 	const ACCESS_REGISTERED = 1;
