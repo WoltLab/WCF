@@ -89,7 +89,7 @@ class RegisterNewActivationCodeForm extends AbstractForm {
 			throw new UserInputException('username', 'notFound');
 		}
 		
-		if ($this->user->activationCode == 0) {
+		if ($this->user->isEmailConfirmed()) {
 			throw new UserInputException('username', 'alreadyEnabled');
 		}
 		
