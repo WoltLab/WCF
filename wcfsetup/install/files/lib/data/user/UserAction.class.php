@@ -641,14 +641,13 @@ class UserAction extends AbstractDatabaseObjectAction implements IClipboardActio
 	public function confirmEmail() {
 		if (empty($this->objects)) $this->readObjects();
 		
-		if (REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN) {
-			(new UserAction($this->objects, 'update', [
-				'data' => [
-					'emailConfirmed' => null,
-				]
-			]))->executeAction();
-		}
-		else {
+		(new UserAction($this->objects, 'update', [
+			'data' => [
+				'emailConfirmed' => null,
+			]
+		]))->executeAction();
+		
+		if (!(REGISTER_ACTIVATION_METHOD & User::REGISTER_ACTIVATION_ADMIN)) {
 			$this->enable();
 		}
 		
