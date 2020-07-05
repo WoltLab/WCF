@@ -1,16 +1,8 @@
-# WoltLab Suite Core 5.2
+# WoltLab Suite Core
 
 WoltLab Suite Core is a free CMS and web-framework, designed for awesome websites and communities. Cutting-edge technologies and strict object-oriented programming makes it the ideal choice for developers and communities, and is actively maintained and improved by WoltLab.
 
 _Formerly known as [WoltLab Community Framework](https://community.woltlab.com/thread/249026-introducing-woltlab-suite-3-0/)_
-
-## Version notes
-
-This is the **development** tree of WoltLab Suite Core representing the upcoming version of WoltLab Suite. Please use this branch for all pull requests, unless advised otherwise.
-
-- **Stable** version 5.2: [WSC 5.2](https://github.com/WoltLab/WCF/tree/5.2)
-- **Legacy** version 3.1: [WSC 3.1](https://github.com/WoltLab/WCF/tree/3.1)
-- **Legacy** version 3.0: [WSC 3.0](https://github.com/WoltLab/WCF/tree/3.0)
 
 ## About Redactor II
 
