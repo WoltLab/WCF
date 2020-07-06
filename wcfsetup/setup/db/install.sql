@@ -706,6 +706,7 @@ CREATE TABLE wcf1_media (
 	fileType VARCHAR(255) NOT NULL DEFAULT '',
 	fileHash VARCHAR(255) NOT NULL DEFAULT '',
 	uploadTime INT(10) NOT NULL DEFAULT 0,
+	fileUpdateTime INT(10) NOT NULL DEFAULT 0,
 	userID INT(10),
 	username VARCHAR(255) NOT NULL,
 	languageID INT(10),

@@ -178,6 +178,10 @@
 }
 
 [id^=mediaEditor] {
+	.mediaEditorButtons {
+		margin-bottom: 20px;
+	}
+	
 	.mediaThumbnail {
 		text-align: center;
 		margin-bottom: 20px;

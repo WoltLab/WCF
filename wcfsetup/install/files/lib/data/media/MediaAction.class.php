@@ -15,6 +15,7 @@ use wcf\system\language\I18nHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\upload\DefaultUploadFileSaveStrategy;
+use wcf\system\upload\MediaReplaceUploadFileValidationStrategy;
 use wcf\system\upload\MediaUploadFileValidationStrategy;
 use wcf\system\upload\UploadFile;
 use wcf\system\WCF;
@@ -148,6 +149,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			'captionEnableHtml' => $media->captionEnableHtml,
 			'categoryID' => $media->categoryID,
 			'elementTag' => $media instanceof ViewableMedia ? $media->getElementTag($this->parameters['elementTagSize'] ?? 144) : '',
+			'elementTag48' => $media instanceof ViewableMedia ? $media->getElementTag(48) : '',
 			'fileHash' => $media->fileHash,
 			'filename' => $media->filename,
 			'filesize' => $media->filesize,
@@ -155,6 +157,9 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			'fileType' => $media->fileType,
 			'height' => $media->height,
 			'languageID' => $media->languageID,
+			'imageDimensions' => $media->isImage ? WCF::getLanguage()->getDynamicVariable('wcf.media.imageDimensions.value', [
+				'media' => $media,
+			]) : '',
 			'isImage' => $media->isImage,
 			'isMultilingual' => $media->isMultilingual,
 			'largeThumbnailHeight' => $media->largeThumbnailHeight,
@@ -169,6 +174,7 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 			'mediumThumbnailWidth' => $media->mediumThumbnailWidth,
 			'smallThumbnailHeight' => $media->smallThumbnailHeight,
 			'smallThumbnailLink' => $media->smallThumbnailType ? $media->getThumbnailLink('small') : '',
+			'smallThumbnailTag' => $media->smallThumbnailType ? $media->getThumbnailTag('small') : '',
 			'smallThumbnailType' => $media->smallThumbnailType,
 			'smallThumbnailWidth' => $media->smallThumbnailWidth,
 			'tinyThumbnailHeight' => $media->tinyThumbnailHeight,
@@ -182,6 +188,10 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 				'id' => $media->userID,
 				'title' => $media->username
 			]) : '',
+			'userLinkElement' => $media instanceof ViewableMedia ? WCF::getTPL()->fetchString(
+				WCF::getTPL()->getCompiler()->compileString('userLink', '{user object=$userProfile}')['template'],
+				['userProfile' => $media->getUserProfile()]
+			) : '',
 			'username' => $media->username,
 			'width' => $media->width
 		];
@@ -674,5 +684,88 @@ class MediaAction extends AbstractDatabaseObjectAction implements ISearchAction,
 		));
 		
 		$this->unmarkItems();
+	}
+	
+	/**
+	 * Validates the `replaceFile` action.
+	 * 
+	 * @since       5.3
+	 */
+	public function validateReplaceFile() {
+		WCF::getSession()->checkPermissions(['admin.content.cms.canManageMedia']);
+		
+		$this->getSingleObject();
+		
+		/** @noinspection PhpUndefinedMethodInspection */
+		$this->parameters['__files']->validateFiles(
+			new MediaReplaceUploadFileValidationStrategy($this->getSingleObject()->getDecoratedObject())
+		);
+	}
+	
+	/**
+	 * Replaces the actual file of a media file.
+	 * 
+	 * @return      array
+	 * @since       5.3
+	 */
+	public function replaceFile() {
+		$saveStrategy = new DefaultUploadFileSaveStrategy(static::class, [
+			'action' => 'update',
+			'generateThumbnails' => true,
+			'object' => $this->getSingleObject()->getDecoratedObject(),
+			'rotateImages' => true,
+		], [
+			'fileUpdateTime' => TIME_NOW,
+			'userID' => $this->getSingleObject()->userID,
+			'username' => $this->getSingleObject()->username,
+		]);
+		
+		/** @noinspection PhpUndefinedMethodInspection */
+		$this->parameters['__files']->saveFiles($saveStrategy);
+		
+		/** @var Media[] $mediaFiles */
+		$mediaFiles = $saveStrategy->getObjects();
+		
+		$result = [
+			'errors' => [],
+			'media' => []
+		];
+		
+		if (!empty($mediaFiles)) {
+			$mediaIDs = $mediaToFileID = [];
+			foreach ($mediaFiles as $internalFileID => $media) {
+				$mediaIDs[] = $media->mediaID;
+				$mediaToFileID[$media->mediaID] = $internalFileID;
+			}
+			
+			// fetch media objects from database
+			$mediaList = new ViewableMediaList();
+			$mediaList->setObjectIDs($mediaIDs);
+			$mediaList->readObjects();
+			
+			foreach ($mediaList as $media) {
+				$result['media'][$mediaToFileID[$media->mediaID]] = $this->getMediaData($media);
+			}
+		}
+		
+		/** @var UploadFile[] $files */
+		/** @noinspection PhpUndefinedMethodInspection */
+		$files = $this->parameters['__files']->getFiles();
+		foreach ($files as $file) {
+			if ($file->getValidationErrorType()) {
+				$result['errors'][$file->getInternalFileID()] = [
+					'filename' => $file->getFilename(),
+					'filesize' => $file->getFilesize(),
+					'errorType' => $file->getValidationErrorType()
+				];
+			}
+		}
+		
+		// Delete *old* files using the non-updated local media editor object.
+		if (empty($result['errors'])) {
+			$this->getSingleObject()->deleteFiles();
+		}
+		
+		return $result;
 	}
 }

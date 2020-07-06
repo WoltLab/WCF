@@ -24,6 +24,7 @@ use wcf\system\WCF;
  * @property-read	string		$fileType		type of the physical media file
  * @property-read	string		$fileHash		hash of the physical media file
  * @property-read	integer		$uploadTime		timestamp at which the media file has been uploaded
+ * @property-read       int             $fileUpdateTime         timestamp at which the media file was updated the last or `0` if it has not been updated
  * @property-read	integer|null	$userID			id of the user who uploaded the media file or null if the user does not exist anymore
  * @property-read	string		$username		name of the user who uploaded the media file
  * @property-read	integer|null	$languageID		id of the language associated with the media file or null if the media file is multilingual or if the language has been deleted

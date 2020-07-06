@@ -85,6 +85,8 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 		if (is_subclass_of($baseClass, IThumbnailFile::class)) {
 			$this->options['thumbnailSizes'] = call_user_func([$baseClass, 'getThumbnailSizes']);
 		}
+		
+		$this->options['action'] = $this->options['action'] ?? 'create';
 	}
 	
 	/**
@@ -105,9 +107,12 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 			'filesize' => $uploadFile->getFilesize(),
 			'fileType' => $uploadFile->getMimeType(),
 			'fileHash' => sha1_file($uploadFile->getLocation()),
-			'uploadTime' => TIME_NOW,
-			'userID' => WCF::getUser()->userID ?: null
+			'userID' => WCF::getUser()->userID ?: null,
 		], $this->data);
+		
+		if ($this->options['action'] === 'create') {
+			$data['uploadTime'] = TIME_NOW;
+		}
 		
 		// get image data
 		if (($imageData = $uploadFile->getImageData()) !== null) {
@@ -121,12 +126,20 @@ class DefaultUploadFileSaveStrategy implements IUploadFileSaveStrategy {
 		}
 		
 		/** @var IDatabaseObjectAction $action */
-		$action = new $this->actionClassName([], 'create', [
-			'data' => $data
+		$objects = [];
+		if (isset($this->options['object'])) {
+			$objects = [$this->options['object']];
+		}
+		$action = new $this->actionClassName($objects, $this->options['action'], [
+			'data' => $data,
 		]);
 		
 		/** @var IThumbnailFile $object */
 		$object = $action->executeAction()['returnValues'];
+		if (isset($this->options['object'])) {
+			$className = get_class($this->options['object']);
+			$object = new $className($this->options['object']->getObjectID());
+		}
 		
 		$dir = dirname($object->getLocation());
 		if (!@file_exists($dir)) {
