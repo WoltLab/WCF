@@ -522,7 +522,7 @@ BROWSERCONFIG;
 				// shrink avatar if necessary
 				$fileLocation = $file->getLocation();
 				
-				$basename = $this->parameters['type'].'-'.$this->parameters['tmpHash'].'.'.$file->getFileExtension();;
+				$basename = $this->parameters['type'].'-'.$this->parameters['tmpHash'].'.'.$file->getFileExtension();
 				$target = WCF_DIR.$this->parameters['imagePath'].'/'.$basename;
 				
 				// move uploaded file
