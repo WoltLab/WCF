@@ -38,13 +38,15 @@ final class Url implements \ArrayAccess {
 	];
 	
 	/**
-	 * Tests if provided url appears to be an url and can be processed by `parse_url()`.
+	 * Tests if provided $url appears to be an URL.
+	 * 
+	 * This method is a wrapper around filter_var with FILTER_VALIDATE_URL.
 	 * 
 	 * @param       string          $url
 	 * @return      boolean
 	 */
 	public static function is($url) {
-		return parse_url($url) !== false;
+		return filter_var($url, FILTER_VALIDATE_URL) !== false;
 	}
 	
 	/**
