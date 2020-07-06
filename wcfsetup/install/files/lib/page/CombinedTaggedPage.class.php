@@ -68,7 +68,7 @@ class CombinedTaggedPage extends MultipleLinkPage {
 	public function readParameters() {
 		parent::readParameters();
 		
-		if (isset($_GET['tagIDs']) && is_array($this->tagIDs)) $this->tagIDs = ArrayUtil::toIntegerArray($_GET['tagIDs']);
+		if (isset($_GET['tagIDs']) && is_array($_GET['tagIDs'])) $this->tagIDs = ArrayUtil::toIntegerArray($_GET['tagIDs']);
 		if (empty($this->tagIDs)) {
 			throw new IllegalLinkException();
 		}

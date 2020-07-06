@@ -34,6 +34,11 @@ class TagSearchForm extends AbstractCaptchaForm {
 	/**
 	 * @inheritDoc
 	 */
+	public $neededModules = ['MODULE_TAGGING'];
+	
+	/**
+	 * @inheritDoc
+	 */
 	public $neededPermissions = ['user.tag.canViewTag'];
 	
 	/**

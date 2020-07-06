@@ -34,7 +34,6 @@
 								{/if}
 							</small>
 						{/if}
-						<small>{lang}wcf.tagging.tags.description{/lang}</small>
 					</dd>
 				</dl>
 				
