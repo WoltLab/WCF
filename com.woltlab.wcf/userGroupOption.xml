@@ -21,6 +21,9 @@
 			<category name="user.profile.trophy">
 				<parent>user.profile</parent>
 			</category>
+			<category name="user.profile.payment">
+				<parent>user.profile</parent>
+			</category>
 			<category name="user.message">
 				<parent>user</parent>
 			</category>
@@ -807,6 +810,13 @@ png</defaultvalue>
 				<defaultvalue>5</defaultvalue>
 				<options>module_trophy</options>
 				<minvalue>0</minvalue>
+				<usersonly>1</usersonly>
+			</option>
+			<option name="user.profile.payment.canBuyPaidSubscription">
+				<categoryname>user.profile.payment</categoryname>
+				<optiontype>boolean</optiontype>
+				<defaultvalue>1</defaultvalue>
+				<options>module_paid_subscription</options>
 				<usersonly>1</usersonly>
 			</option>
 			<!-- /user.profile -->
