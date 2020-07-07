@@ -209,7 +209,7 @@ class CronjobScheduler extends SingletonFactory {
 				// stuck jobs. If the timestamps are updated after executing then concurrent requests
 				// might believe that a cronjob is stuck, despite the cronjob just having started just
 				// a few milliseconds before.
-				$data['nextExec'] = $cronjob->getNextExec(TIME_NOW);
+				$data['nextExec'] = $cronjob->getNextExec();
 				$data['afterNextExec'] = $cronjob->getNextExec($data['nextExec'] + 120);
 				$data['lastExec'] = TIME_NOW;
 				
