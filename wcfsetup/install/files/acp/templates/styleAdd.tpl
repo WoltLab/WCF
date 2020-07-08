@@ -55,8 +55,8 @@
 			'wcf.acp.style.favicon.error.invalidExtension': '{lang}wcf.acp.style.favicon.error.invalidExtension{/lang}',
 			'wcf.acp.style.image.error.invalidExtension': '{lang}wcf.acp.style.image.error.invalidExtension{/lang}'
 		});
-		new WCF.ACP.Style.LogoUpload('{$tmpHash}', '{@$__wcf->getPath()}images/');
-		new WCF.ACP.Style.LogoUploadMobile('{$tmpHash}', '{@$__wcf->getPath()}images/');
+		new WCF.ACP.Style.LogoUpload('{$tmpHash}');
+		new WCF.ACP.Style.LogoUploadMobile('{$tmpHash}');
 		
 		{if $action == 'edit'}
 			new WCF.ACP.Style.CopyStyle({@$style->styleID});
