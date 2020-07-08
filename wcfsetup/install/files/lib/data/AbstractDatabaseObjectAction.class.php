@@ -563,7 +563,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 				else {
 					if ($structure === self::STRUCT_FLAT) {
 						$target[$variableName] = StringUtil::trim($target[$variableName]);
-						if (!$allowEmpty && empty($target[$variableName])) {
+						if (!$allowEmpty && $target[$variableName] === '') {
 							throw new UserInputException($variableName);
 						}
 					}
@@ -574,7 +574,7 @@ abstract class AbstractDatabaseObjectAction implements IDatabaseObjectAction, ID
 						}
 						
 						for ($i = 0, $length = count($target[$variableName]); $i < $length; $i++) {
-							if (empty($target[$variableName][$i])) {
+							if ($target[$variableName][$i] === '') {
 								throw new UserInputException($variableName);
 							}
 						}
