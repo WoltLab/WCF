@@ -211,21 +211,21 @@ class PackageArchive
                 case 'packagedescription':
                 case 'readme':
                 case 'license':
-                    if (!isset($this->packageInfo[$element->tagName])) {
-                        $this->packageInfo[$element->tagName] = [];
-                    }
-
-                    $languageCode = 'default';
-                    if ($element->hasAttribute('language')) {
-                        $languageCode = $element->getAttribute('language');
-                    }
-
                     // fix case-sensitive names
                     $name = $element->tagName;
                     if ($name == 'packagename') {
                         $name = 'packageName';
                     } elseif ($name == 'packagedescription') {
                         $name = 'packageDescription';
+                    }
+
+                    if (!isset($this->packageInfo[$name])) {
+                        $this->packageInfo[$name] = [];
+                    }
+
+                    $languageCode = 'default';
+                    if ($element->hasAttribute('language')) {
+                        $languageCode = $element->getAttribute('language');
                     }
 
                     $this->packageInfo[$name][$languageCode] = $element->nodeValue;
