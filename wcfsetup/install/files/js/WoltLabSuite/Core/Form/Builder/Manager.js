@@ -135,7 +135,7 @@ define([
 			var fieldId = field.getId();
 			
 			if (this.hasField(formId, fieldId)) {
-				throw new Error("Form field with id '" + fieldId + "' has already been registered for form with id '" + fieldId + "'.");
+				throw new Error("Form field with id '" + fieldId + "' has already been registered for form with id '" + formId + "'.");
 			}
 			
 			_fields.get(formId).set(fieldId, field);
