@@ -182,6 +182,10 @@ class Tar implements IArchive {
 		// read data
 		$content = $this->file->read($header['size']);
 		
+		if (strlen($content) != $header['size']) {
+			throw new SystemException("Could not untar file '".$header['filename']."' to string. Maybe the archive is truncated?");
+		}
+		
 		return $content;
 	}
 	
