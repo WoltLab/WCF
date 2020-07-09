@@ -260,6 +260,11 @@ $.Redactor.prototype.WoltLabPaste = function() {
 								return false;
 							}
 						}
+						else if (this.detect.isWebkit() && clipboard.items.length === 1) {
+							// Newer Chromium based browsers will paste the base64 encoded
+							// image along with the provided File object.
+							e.preventDefault();
+						}
 					}
 				}
 				
