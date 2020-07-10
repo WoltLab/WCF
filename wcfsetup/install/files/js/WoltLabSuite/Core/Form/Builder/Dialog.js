@@ -118,6 +118,10 @@ define(['Ajax', 'Core', './Manager', 'Ui/Dialog'], function(Ajax, Core, FormBuil
 		 */
 		_closeDialog: function() {
 			UiDialog.close(this);
+			
+			if (typeof this._options.closeCallback === 'function') {
+				this._options.closeCallback();
+			}
 		},
 		
 		/**
