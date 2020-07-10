@@ -620,6 +620,10 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			}
 		}
 		
+		this._rebuildInterface();
+	},
+	
+	_rebuildInterface: function () {
 		this._makeSortable();
 		
 		if (this._fileListSelector.children('li:not(.uploadFailed)').length) {
@@ -790,9 +794,15 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			this._fileListSelector[0].appendChild(attachment);
 			
 			elShow(this._fileListSelector[0]);
+			
+			this._rebuildInterface();
 		}).bind(this));
 	},
 	
+	/**
+	 * @param {string} type
+	 * @param {Object} data
+	 */
 	_triggerSync: function (type, data) {
 		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'sync_' + this._tmpHash, {
 			source: this,
