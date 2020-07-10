@@ -1,5 +1,5 @@
 <div class="jsOnly formAttachmentContent messageTabMenuContent" id="attachments_{if $wysiwygSelector|isset}{$wysiwygSelector}{else}text{/if}">
-	<ul class="formAttachmentList clearfix"{if !$attachmentHandler->getAttachmentList()|count} style="display: none"{/if} data-enable-thumbnails="{if ATTACHMENT_ENABLE_THUMBNAILS}true{else}false{/if}">
+	<ul class="formAttachmentList clearfix"{if !$attachmentHandler->getAttachmentList()|count} style="display: none"{/if}>
 		{foreach from=$attachmentHandler->getAttachmentList() item=$attachment}
 			<li class="box64" data-object-id="{@$attachment->attachmentID}" data-height="{@$attachment->height}" data-width="{@$attachment->width}" data-is-image="{@$attachment->isImage}">
 				{if $attachment->tinyThumbnailType}

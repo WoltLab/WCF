@@ -1017,12 +1017,6 @@ redis:wcf.acp.option.cache_source_type.redis</selectoptions>
 				<optiontype>text</optiontype>
 			</option>
 			<!-- /general.payment -->
-			<option name="attachment_enable_thumbnails">
-				<categoryname>message.attachment</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-				<enableoptions>attachment_retain_dimensions,attachment_thumbnail_height,attachment_thumbnail_width</enableoptions>
-			</option>
 			<option name="attachment_retain_dimensions">
 				<categoryname>message.attachment</categoryname>
 				<optiontype>boolean</optiontype>
@@ -1768,10 +1762,7 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 		</options>
 	</import>
 	<delete>
-		<option name="attachment_storage" />
-		<option name="like_allow_for_own_content" />
-		<option name="like_enable_dislike" />
-		<option name="module_attachment"/>
-		<option name="message_sidebar_enable_user_online_marking"/>
+		<option name="attachment_enable_thumbnails" />
+		<option name="message_sidebar_enable_user_online_marking" />
 	</delete>
 </data>

@@ -1382,7 +1382,6 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.option.recaptcha_publickey_invisible.description"><![CDATA[Enter the keys <b>in addition</b> to the keys above if you want to use the invisible variant of reCAPTCHA.]]></item>
 		<item name="wcf.acp.option.recaptcha_privatekey_invisible"><![CDATA[Private API Key (Invisible reCAPTCHA)]]></item>
 		<item name="wcf.acp.option.category.message.attachment"><![CDATA[Attachments]]></item>
-		<item name="wcf.acp.option.attachment_enable_thumbnails"><![CDATA[Create thumbnails for attachment images]]></item>
 		<item name="wcf.acp.option.attachment_retain_dimensions"><![CDATA[Retain thumbnail dimensions]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_height"><![CDATA[Thumbnail Height]]></item>
 		<item name="wcf.acp.option.attachment_thumbnail_width"><![CDATA[Thumbnail Width]]></item>
