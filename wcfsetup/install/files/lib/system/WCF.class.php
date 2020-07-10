@@ -369,6 +369,7 @@ class WCF {
 		define('LIKE_ENABLE_DISLIKE', 0);
 		
 		// Thumbnails for attachments are already enabled since 5.3.
+		// https://github.com/WoltLab/WCF/pull/3444
 		define('ATTACHMENT_ENABLE_THUMBNAILS', 1);
 		
 		// User markings are always applied in sidebars since 5.3.

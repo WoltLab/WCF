@@ -489,9 +489,10 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 *
 	 * @return      {boolean}
 	 * @protected
+	 * @deprecated 5.3
 	 */
 	_useThumbnail: function() {
-		return elDataBool(this._fileListSelector[0], 'enable-thumbnails');
+		return true;
 	},
 	
 	/**
@@ -552,7 +553,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				$li.data('objectID', attachmentData.attachmentID);
 				
 				if (this._editorId) {
-					if (attachmentData.tinyURL || (!this._useThumbnail() && attachmentData.isImage)) {
+					if (attachmentData.tinyURL) {
 						if (attachmentData.thumbnailURL) {
 							$('<li><span class="button small jsButtonAttachmentInsertThumbnail" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.thumbnailURL) + '">' + WCF.Language.get('wcf.attachment.insertThumbnail') + '</span></li>').appendTo($buttonList);
 						}
@@ -660,15 +661,12 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * Inserts all attachments at once.
 	 */
 	_insertAll: function () {
-		var attachment, button, preferThumbnail = this._useThumbnail();
+		var attachment, button;
 		for (var i = 0, length = this._fileListSelector[0].childNodes.length; i < length; i++) {
 			attachment = this._fileListSelector[0].childNodes[i];
 			if (attachment.nodeName === 'LI' && !attachment.classList.contains('uploadFailed')) {
-				button = null;
-				if (preferThumbnail) {
-					button = elBySel('.jsButtonAttachmentInsertThumbnail, .jsButtonAttachmentInsertPlain', attachment);
-				}
-
+				button = elBySel('.jsButtonAttachmentInsertThumbnail, .jsButtonAttachmentInsertPlain', attachment);
+				
 				if (button === null) {
 					button = elBySel('.jsButtonAttachmentInsertFull, .jsButtonAttachmentInsertPlain', attachment);
 				}
