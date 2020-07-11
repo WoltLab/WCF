@@ -31,6 +31,10 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker {
 	 */
 	const SITEMAP_OBJECT_LIMIT = 50000;
 	
+	/**
+	 * Prefix for stored data in the registry.
+	 * @since 5.3
+	 */
 	const REGISTRY_PREFIX = 'sitemapData_';
 	
 	/**
@@ -430,6 +434,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker {
 	 * Reads the columns changed by the user for this sitemap object from the registry and modifies the object accordingly.
 	 * 
 	 * @param       ObjectType      $object
+	 * @since       5.3
 	 */
 	public static function prepareSitemapObject(ObjectType &$object) {
 		$sitemapData = RegistryHandler::getInstance()->get('com.woltlab.wcf', self::REGISTRY_PREFIX . $object->objectType);
