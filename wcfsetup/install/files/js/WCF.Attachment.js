@@ -87,8 +87,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		this._fileListSelector.find('.jsButtonAttachmentInsertThumbnail').click($.proxy(this._insert, this));
 		this._fileListSelector.find('.jsButtonAttachmentInsertFull').click($.proxy(this._insert, this));
 		
-		WCF.DOMNodeRemovedHandler.addCallback('WCF.Attachment.Upload', $.proxy(this._removeLimitError, this));
-		WCF.System.Event.addListener('com.woltlab.wcf.action.delete', 'attachment_' + this._editorId, $.proxy(this._removeLimitError, this));
+		WCF.System.Event.addListener('com.woltlab.wcf.action.delete', 'attachment', this._onDelete.bind(this));
 		
 		this._makeSortable();
 		
@@ -153,6 +152,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				}
 			}).bind(this));
 			
+			var syncUuid = WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'sync_' + this._tmpHash, this._sync.bind(this));
+			
 			WCF.System.Event.addListener('com.woltlab.wcf.redactor2', 'destroy_' + this._editorId, (function () {
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'submit_' + this._editorId);
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'reset_' + this._editorId);
@@ -162,6 +163,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				WCF.System.Event.removeAllListeners('com.woltlab.wcf.redactor2', 'autosaveMetaData_' + this._editorId);
 				
 				WCF.System.Event.removeListener('com.woltlab.wcf.redactor2', 'metacode_attach_' + this._editorId, metacodeAttachUuid);
+				WCF.System.Event.removeListener('com.woltlab.wcf.redactor2', 'sync_' + this._tmpHash, syncUuid);
 			}).bind(this));
 		}
 	},
@@ -172,7 +174,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @param        object                data
 	 */
 	_editorUpload: function (data) {
-		var $uploadID, replace = null;
+		var replace = null;
 		
 		// show tab
 		this._fileListSelector.closest('.messageTabMenu').messageTabMenu('showTab', 'attachments', true);
@@ -189,10 +191,10 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		}).bind(this);
 		
 		if (data.file) {
-			$uploadID = this._upload(undefined, data.file, undefined, callbackUploadId);
+			this._upload(undefined, data.file, undefined, callbackUploadId);
 		}
 		else {
-			$uploadID = this._upload(undefined, undefined, data.blob, callbackUploadId);
+			this._upload(undefined, undefined, data.blob, callbackUploadId);
 			replace = data.replace || null;
 		}
 	},
@@ -461,7 +463,7 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * @see        WCF.Upload._initFile()
 	 */
 	_initFile: function (file) {
-		var $li = $('<li class="box64"><span class="icon icon64 fa-spinner" /><div><div><p>' + file.name + '</p><small><progress max="100"></progress></small></div><ul></ul></div></li>').data('filename', file.name);
+		var $li = $('<li class="box64 formAttachmentListItem"><span class="icon icon64 fa-spinner" /><div><div><p>' + file.name + '</p><small><progress max="100"></progress></small></div><ul></ul></div></li>').data('filename', file.name);
 		this._fileListSelector.append($li);
 		this._fileListSelector.show();
 		
@@ -487,9 +489,10 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 *
 	 * @return      {boolean}
 	 * @protected
+	 * @deprecated 5.3
 	 */
 	_useThumbnail: function() {
-		return elDataBool(this._fileListSelector[0], 'enable-thumbnails');
+		return true;
 	},
 	
 	/**
@@ -513,6 +516,8 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			var $internalFileID = $li.data('internalFileID');
 			if (data.returnValues && data.returnValues.attachments[$internalFileID]) {
 				attachmentData = data.returnValues.attachments[$internalFileID];
+				
+				elData($li[0], 'object-id', attachmentData.attachmentID);
 				
 				// show thumbnail
 				if (attachmentData.tinyURL) {
@@ -542,26 +547,29 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				
 				// init buttons
 				var $buttonList = $li.find('ul').addClass('buttonGroup');
-				var $deleteButton = $('<li><span class="button small jsDeleteButton" data-object-id="' + attachmentData.attachmentID + '" data-confirm-message="' + WCF.Language.get('wcf.attachment.delete.sure') + '" data-event-name="attachment_' + this._editorId + '">' + WCF.Language.get('wcf.global.button.delete') + '</span></li>');
+				var $deleteButton = $('<li><span class="button small jsDeleteButton" data-object-id="' + attachmentData.attachmentID + '" data-confirm-message="' + WCF.Language.get('wcf.attachment.delete.sure') + '" data-event-name="attachment">' + WCF.Language.get('wcf.global.button.delete') + '</span></li>');
 				$buttonList.append($deleteButton);
 				
 				$li.data('objectID', attachmentData.attachmentID);
 				
 				if (this._editorId) {
-					if (attachmentData.tinyURL || (!this._useThumbnail() && attachmentData.isImage)) {
+					if (attachmentData.tinyURL) {
 						if (attachmentData.thumbnailURL) {
-							var $insertThumbnail = $('<li><span class="button small jsButtonAttachmentInsertThumbnail" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.thumbnailURL) + '">' + WCF.Language.get('wcf.attachment.insertThumbnail') + '</span></li>').appendTo($buttonList);
-							$insertThumbnail.children('span.button').click($.proxy(this._insert, this));
+							$('<li><span class="button small jsButtonAttachmentInsertThumbnail" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.thumbnailURL) + '">' + WCF.Language.get('wcf.attachment.insertThumbnail') + '</span></li>').appendTo($buttonList);
 						}
 						
-						var $insertOriginal = $('<li><span class="button small jsButtonAttachmentInsertFull" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.url) + '">' + WCF.Language.get('wcf.attachment.insertFull') + '</span></li>').appendTo($buttonList);
-						$insertOriginal.children('span.button').click($.proxy(this._insert, this));
+						$('<li><span class="button small jsButtonAttachmentInsertFull" data-object-id="' + attachmentData.attachmentID + '" data-url="' + WCF.String.escapeHTML(attachmentData.url) + '">' + WCF.Language.get('wcf.attachment.insertFull') + '</span></li>').appendTo($buttonList);
 					}
 					else {
-						var $insertPlain = $('<li><span class="button small jsButtonAttachmentInsertPlain" data-object-id="' + attachmentData.attachmentID + '">' + WCF.Language.get('wcf.attachment.insert') + '</span></li>');
-						$insertPlain.appendTo($buttonList).children('span.button').click($.proxy(this._insert, this));
+						$('<li><span class="button small jsButtonAttachmentInsertPlain" data-object-id="' + attachmentData.attachmentID + '">' + WCF.Language.get('wcf.attachment.insert') + '</span></li>').appendTo($buttonList);
 					}
 				}
+				
+				this._triggerSync('new', {
+					html: $li[0].outerHTML
+				});
+				
+				this._registerEditorButtons($li[0]);
 				
 				if (this._replaceOnLoad.hasOwnProperty(uploadID)) {
 					if (!$li.hasClass('uploadFailed')) {
@@ -613,6 +621,10 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 			}
 		}
 		
+		this._rebuildInterface();
+	},
+	
+	_rebuildInterface: function () {
 		this._makeSortable();
 		
 		if (this._fileListSelector.children('li:not(.uploadFailed)').length) {
@@ -623,6 +635,14 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 		}
 		
 		WCF.DOMNodeInsertedHandler.execute();
+	},
+	
+	_registerEditorButtons: function (attachment) {
+		if (this._editorId) {
+			elBySelAll('.jsButtonAttachmentInsertThumbnail, .jsButtonAttachmentInsertFull, .jsButtonAttachmentInsertPlain', attachment, (function(button) {
+				button.addEventListener('click', this._insert.bind(this));
+			}).bind(this));
+		}
 	},
 	
 	/**
@@ -641,15 +661,12 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 	 * Inserts all attachments at once.
 	 */
 	_insertAll: function () {
-		var attachment, button, preferThumbnail = this._useThumbnail();
+		var attachment, button;
 		for (var i = 0, length = this._fileListSelector[0].childNodes.length; i < length; i++) {
 			attachment = this._fileListSelector[0].childNodes[i];
 			if (attachment.nodeName === 'LI' && !attachment.classList.contains('uploadFailed')) {
-				button = null;
-				if (preferThumbnail) {
-					button = elBySel('.jsButtonAttachmentInsertThumbnail, .jsButtonAttachmentInsertPlain', attachment);
-				}
-
+				button = elBySel('.jsButtonAttachmentInsertThumbnail, .jsButtonAttachmentInsertPlain', attachment);
+				
 				if (button === null) {
 					button = elBySel('.jsButtonAttachmentInsertFull, .jsButtonAttachmentInsertPlain', attachment);
 				}
@@ -723,5 +740,72 @@ WCF.Attachment.Upload = WCF.Upload.extend({
 				}
 			}).bind(this));
 		}
+	},
+	
+	/**
+	 * @param {Object} data
+	 * @param {jQuery} data.button
+	 * @param {jQuery} data.container
+	 */
+	_onDelete: function (data) {
+		var objectId = elData(data.button[0], 'object-id');
+		var attachment = elBySel('.formAttachmentListItem[data-object-id="' + objectId + '"]', this._fileListSelector[0]);
+		if (attachment !== null) {
+			elRemove(attachment);
+		}
+		
+		this._removeLimitError(data);
+	},
+	
+	/**
+	 * @param {Object} payload
+	 * @param {Object} payload.data
+	 * @param {Object} payload.source
+	 * @param {string} payload.type
+	 */
+	_sync: function (payload) {
+		if (payload.source === this) {
+			return;
+		}
+		
+		switch (payload.type) {
+			case 'new':
+				this._syncNew(payload.data);
+				break;
+				
+			default:
+				throw new Error("Unexpected type '" + payload.type + "'");
+		}
+	},
+	
+	/**
+	 * @param {Object} data
+	 */
+	_syncNew: function (data) {
+		require(['Dom/Util'], (function (DomUtil) {
+			var fragment = DomUtil.createFragmentFromHtml(data.html);
+			var attachment = elBySel('li', fragment);
+			attachment.id = '';
+			
+			this._registerEditorButtons(attachment);
+			
+			this._fileListSelector[0].appendChild(attachment);
+			
+			elShow(this._fileListSelector[0]);
+			
+			this._rebuildInterface();
+		}).bind(this));
+	},
+	
+	/**
+	 * @param {string} type
+	 * @param {Object} data
+	 */
+	_triggerSync: function (type, data) {
+		WCF.System.Event.fireEvent('com.woltlab.wcf.redactor2', 'sync_' + this._tmpHash, {
+			source: this,
+			type: type,
+			data: data
+		});
 	}
 });

@@ -135,7 +135,7 @@ class AttachmentAction extends AbstractDatabaseObjectAction implements ISortable
 		
 		// save files
 		$saveStrategy = new DefaultUploadFileSaveStrategy(self::class, [
-			'generateThumbnails' => ATTACHMENT_ENABLE_THUMBNAILS,
+			'generateThumbnails' => true,
 			'rotateImages' => true
 		], [
 			'objectID' => intval($this->parameters['objectID']),

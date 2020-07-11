@@ -1,7 +1,6 @@
 <ul id="{@$field->getPrefixedID()}_attachmentList" {*
 	*}class="formAttachmentList"{*
-	*}{if !$field->getAttachmentHandler()->getAttachmentList()|count} style="display: none"{/if} {*
-	*}data-enable-thumbnails="{if ATTACHMENT_ENABLE_THUMBNAILS}true{else}false{/if}"{*
+	*}{if !$field->getAttachmentHandler()->getAttachmentList()|count} style="display: none"{/if}{*
 *}>
 	{foreach from=$field->getAttachmentHandler()->getAttachmentList() item=$attachment}
 		<li class="box64" {*
