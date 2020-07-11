@@ -26,6 +26,11 @@ class PaidSubscriptionListPage extends AbstractPage {
 	public $neededModules = ['MODULE_PAID_SUBSCRIPTION'];
 	
 	/**
+	 * @inheritDoc
+	 */
+	public $neededPermissions = ['user.profile.payment.canBuyPaidSubscription'];
+	
+	/**
 	 * list of available paid subscriptions
 	 * @var	array
 	 */

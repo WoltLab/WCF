@@ -37,6 +37,7 @@
 			<controller>wcf\page\PaidSubscriptionListPage</controller>
 			<parent>wcf.user.menu.settings</parent>
 			<options>module_paid_subscription</options>
+			<permissions>user.profile.payment.canBuyPaidSubscription</permissions>
 		</usermenuitem>
 		<!-- /settings -->
 		<!-- community -->

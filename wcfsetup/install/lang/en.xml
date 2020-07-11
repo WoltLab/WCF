@@ -856,6 +856,8 @@ ATTENTION: The messages listed above are greatly shortened. You can view details
 		<item name="wcf.acp.group.option.user.profile.trophy.canSeeTrophies"><![CDATA[Can see trophies]]></item>
 		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies"><![CDATA[Maximum number of special trophies]]></item>
 		<item name="wcf.acp.group.option.user.profile.trophy.maxUserSpecialTrophies.description"><![CDATA[Special trophies can be individually selected by the user and displayed in the message sidebar and the user profile.]]></item>
+		<item name="wcf.acp.group.option.category.user.profile.payment"><![CDATA[Payment]]></item>
+		<item name="wcf.acp.group.option.user.profile.payment.canBuyPaidSubscription"><![CDATA[Can buy paid subscriptions]]></item>
 		<item name="wcf.acp.group.option.category.user.profile.coverPhoto"><![CDATA[Cover Photos]]></item>
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.canSeeCoverPhotos"><![CDATA[Can view  users’ cover photos]]></item>
 		<item name="wcf.acp.group.option.user.profile.coverPhoto.canUploadCoverPhoto"><![CDATA[Can upload their cover photo]]></item>
