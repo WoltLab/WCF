@@ -74,9 +74,9 @@ $data = file_get_contents($filename);
 // allow font fetching from all domains (CORS)
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: ' . $types[$type]);
-header('Cache-Control: max-age=31536000, public');
+header('Cache-Control: max-age=86400, public');
 header('ETag: ' . $etag);
-header('Expires: ' . gmdate("D, d M Y H:i:s", time() + 31536000) . ' GMT');
+header('Expires: ' . gmdate("D, d M Y H:i:s", time() + 86400) . ' GMT');
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $filemtime) . ' GMT');
 header('Content-Length: ' . strlen($data));
 
