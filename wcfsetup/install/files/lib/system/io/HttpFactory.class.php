@@ -20,7 +20,7 @@ final class HttpFactory {
 	/**
 	 * @var Client
 	 */
-	private $defaultClient;
+	private static $defaultClient;
 	
 	/**
 	 * Returns a reference to the default HTTP client.
