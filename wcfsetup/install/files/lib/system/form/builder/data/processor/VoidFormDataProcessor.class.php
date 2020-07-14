@@ -40,11 +40,11 @@ class VoidFormDataProcessor extends AbstractFormDataProcessor {
 	 */
 	public function processFormData(IFormDocument $document, array $parameters) {
 		if ($this->isDataProperty) {
-			if (isset($parameters['data'][$this->property])) {
+			if (array_key_exists($this->property, $parameters['data'])) {
 				unset($parameters['data'][$this->property]);
 			}
 		}
-		else if (isset($parameters[$this->property])) {
+		else if (array_key_exists($this->property, $parameters)) {
 			unset($parameters[$this->property]);
 		}
 		
