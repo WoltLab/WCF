@@ -6,8 +6,8 @@
  *  - Firefox and Internet Explorer refuse to load fonts from different domains unless allowed by 'Access-Control-Allow-Origin'
  *  - Chrome sometimes does not properly cache fonts, resulting in strange rendering bugs
  * 
- * @author	Alexander Ebert, Sascha Greuel
- * @copyright	2001-2019 WoltLab GmbH
+ * @author	Tim Duesterhus, Alexander Ebert, Sascha Greuel
+ * @copyright	2001-2020 WoltLab GmbH
  * @license	GNU Lesser General Public License <http://opensource.org/licenses/lgpl-license.php>
  */
 
@@ -72,11 +72,13 @@ $data = file_get_contents($filename);
 
 // send cache and type headers
 // allow font fetching from all domains (CORS)
+const MAX_AGE = 86400 * 14;
+
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: ' . $types[$type]);
-header('Cache-Control: max-age=86400, public');
+header('Cache-Control: max-age=' . MAX_AGE . ', public');
 header('ETag: ' . $etag);
-header('Expires: ' . gmdate("D, d M Y H:i:s", time() + 86400) . ' GMT');
+header('Expires: ' . gmdate("D, d M Y H:i:s", time() + MAX_AGE) . ' GMT');
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $filemtime) . ' GMT');
 header('Content-Length: ' . strlen($data));
 
