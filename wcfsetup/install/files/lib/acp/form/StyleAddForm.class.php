@@ -11,6 +11,8 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\Regex;
+use wcf\system\style\exception\FontDownloadFailed;
+use wcf\system\style\FontManager;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\DateUtil;
@@ -294,6 +296,24 @@ class StyleAddForm extends AbstractForm {
 	}
 	
 	/**
+	 * @since	5.3
+	 */
+	protected function downloadGoogleFont() {
+		$fontManager = FontManager::getInstance();
+		$family = $this->variables['wcfFontFamilyGoogle'];
+		if ($family) {
+			if (!$fontManager->isFamilyDownloaded($family)) {
+				try {
+					$fontManager->downloadFamily($family);
+				}
+				catch (FontDownloadFailed $e) {
+					throw new UserInputException('wcfFontFamilyGoogle', 'downloadFailed'.($e->getReason() ? '.'.$e->getReason() : ''));
+				}
+			}
+		}
+	}
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function validate() {
@@ -357,6 +377,8 @@ class StyleAddForm extends AbstractForm {
 		}
 		
 		$this->validateApiVersion();
+		
+		$this->downloadGoogleFont();
 	}
 	
 	/**
