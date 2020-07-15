@@ -436,7 +436,7 @@ class SitemapRebuildWorker extends AbstractRebuildDataWorker {
 	 * @param       ObjectType      $object
 	 * @since       5.3
 	 */
-	public static function prepareSitemapObject(ObjectType &$object) {
+	public static function prepareSitemapObject(ObjectType $object) {
 		$sitemapData = RegistryHandler::getInstance()->get('com.woltlab.wcf', self::REGISTRY_PREFIX . $object->objectType);
 		
 		if ($sitemapData !== null) {
