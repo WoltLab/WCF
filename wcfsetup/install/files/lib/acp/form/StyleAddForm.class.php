@@ -275,7 +275,6 @@ class StyleAddForm extends AbstractForm {
 			}
 		}
 		$this->variables['useFluidLayout'] = isset($_POST['useFluidLayout']) ? 1 : 0;
-		$this->variables['useGoogleFont'] = isset($_POST['useGoogleFont']) ? 1 : 0;
 		
 		// style data
 		if (isset($_POST['authorName'])) $this->authorName = StringUtil::trim($_POST['authorName']);
@@ -574,7 +573,6 @@ class StyleAddForm extends AbstractForm {
 			'pageLogoHeight',
 			'pageLogoMobile',
 			'useFluidLayout',
-			'useGoogleFont',
 			'wcfFontFamilyGoogle',
 			'wcfFontFamilyFallback'
 		];
