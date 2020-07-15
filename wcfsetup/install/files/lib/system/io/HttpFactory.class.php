@@ -23,6 +23,17 @@ final class HttpFactory {
 	private static $defaultClient;
 	
 	/**
+	 * Returns a RFC 7231#5.5.3 compatible user agent.
+	 * 
+	 * @return string
+	 */
+	public static function getDefaultUserAgent() {
+		$version = preg_replace('/^(\d+\.\d+)\..*$/', '\\1', WCF_VERSION);
+		
+		return 'WoltLabSuite/'.$version;
+	}
+	
+	/**
 	 * Returns a reference to the default HTTP client.
 	 * 
 	 * @return ClientInterface
@@ -47,6 +58,9 @@ final class HttpFactory {
 	public static function makeClient(array $options = []) {
 		return new Client(array_merge([
 			'proxy' => PROXY_SERVER_HTTP,
+			'headers' => [
+				'user-agent' => self::getDefaultUserAgent(),
+			]
 		], $options));
 	}
 }
