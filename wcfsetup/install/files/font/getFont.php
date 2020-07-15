@@ -42,7 +42,7 @@ else {
 	if (!empty($_GET['family'])) {
 		$filename .= 'families/'.basename($_GET['family']).'/';
 	}
-	$filename .= $_GET['filename'];
+	$filename .= basename($_GET['filename']);
 }
 
 $type = pathinfo($filename, PATHINFO_EXTENSION);
