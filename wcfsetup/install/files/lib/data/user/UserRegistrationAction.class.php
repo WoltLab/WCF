@@ -89,18 +89,9 @@ class UserRegistrationAction extends UserAction {
 	}
 	
 	/**
-	 * Validates given password.
-	 * 
-	 * @return	array
+	 * @deprecated	5.3 - Always returns isValid = true.
 	 */
 	public function validatePassword() {
-		if (!UserRegistrationUtil::isSecurePassword($this->parameters['password'])) {
-			return [
-				'isValid' => false,
-				'error' => 'notSecure'
-			];
-		}
-		
 		return [
 			'isValid' => true
 		];
