@@ -209,7 +209,7 @@ class PageAction extends AbstractDatabaseObjectAction implements ISearchAction, 
 						SearchIndexManager::getInstance()->set(
 							'com.woltlab.wcf.page',
 							$pageContent->pageContentID,
-							$content['title'] ?? $pageContent->content,
+							$content['content'] ?? $pageContent->content,
 							$content['title'] ?? $pageContent->title,
 							0,
 							null,
