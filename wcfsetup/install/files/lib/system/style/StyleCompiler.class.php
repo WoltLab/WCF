@@ -30,6 +30,12 @@ class StyleCompiler extends SingletonFactory {
 	protected $compiler = null;
 	
 	/**
+	 * Contains all files, which are compiled for a style.
+	 * @var string[]
+	 */
+	protected $files; 
+	
+	/**
 	 * names of option types which are supported as additional variables
 	 * @var	string[]
 	 */
@@ -60,38 +66,139 @@ class StyleCompiler extends SingletonFactory {
 	}
 	
 	/**
+	 * Returns the default style variables as array. 
+	 * 
+	 * @return      string[]
+	 * @since       5.3
+	 */
+	public static function getDefaultVariables() {
+		$variables = [];
+		
+		$sql = "SELECT		variable.variableName, variable.defaultValue
+			FROM		wcf".WCF_N."_style_variable variable
+			ORDER BY	variable.variableID ASC";
+		$statement = WCF::getDB()->prepareStatement($sql);
+		$statement->execute();
+		while ($row = $statement->fetchArray()) {
+			$variables[$row['variableName']] = $row['defaultValue'];
+		}
+		
+		// see https://github.com/WoltLab/WCF/issues/2636
+		if (empty($variables['wcfPageThemeColor'])) {
+			$variables['wcfPageThemeColor'] = $variables['wcfHeaderBackground'];
+		}
+		
+		return $variables;
+	}
+	
+	/**
+	 * Test a style with the given apiVersion, imagePath and variables. If the style is valid and does not throw an
+	 * error, true is returned. Otherwise a string with the error message.
+	 * 
+	 * @param       string          $apiVersion
+	 * @param       string          $imagePath
+	 * @param       string[]        $variables
+	 * @return      bool|string
+	 * @since       5.3           
+	 */
+	public function testStyle($apiVersion, $imagePath, array $variables) {
+		$individualScss = '';
+		if (isset($variables['individualScss'])) {
+			$individualScss = $variables['individualScss'];
+			unset($variables['individualScss']);
+		}
+		
+		// add style image path
+		if ($imagePath) {
+			$imagePath = FileUtil::getRelativePath(WCF_DIR . 'style/', WCF_DIR . $imagePath);
+			$imagePath = FileUtil::addTrailingSlash(FileUtil::unifyDirSeparator($imagePath));
+		} 
+		else {
+			$imagePath = '../images/';
+		}
+		$variables['style_image_path'] = "'{$imagePath}'";
+		
+		// apply overrides
+		if (isset($variables['overrideScss'])) {
+			$lines = explode("\n", StringUtil::unifyNewlines($variables['overrideScss']));
+			foreach ($lines as $line) {
+				if (preg_match('~^@([a-zA-Z]+): ?([@a-zA-Z0-9 ,\.\(\)\%\#-]+);$~', $line, $matches)) {
+					$variables[$matches[1]] = $matches[2];
+				}
+			}
+			unset($variables['overrideScss']);
+		}
+		
+		// api version
+		$variables['apiVersion'] = $apiVersion;
+		
+		$parameters = ['scss' => ''];
+		EventHandler::getInstance()->fireAction($this, 'compile', $parameters);
+		
+		try {
+			$this->compileStylesheetToString(
+				$this->getFiles(),
+				$variables,
+				$individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
+				function($content) {
+					return $content;
+				}
+			);
+		}
+		catch (SystemException $e) {
+			return $e->getMessage();
+		}
+		
+		return true;
+	}
+	
+	/**
+	 * Returns a array with all files, which should be compiled for a style. 
+	 * 
+	 * @return      string[]
+	 * @since       5.3
+	 */
+	protected function getFiles() {
+		if (!$this->files) {
+			$files = $this->getCoreFiles();
+			
+			// read stylesheets in dependency order
+			$sql = "SELECT		filename, application
+			FROM		wcf".WCF_N."_package_installation_file_log
+			WHERE           CONVERT(filename using utf8) REGEXP ?
+					AND packageID <> ?
+			ORDER BY	packageID";
+			$statement = WCF::getDB()->prepareStatement($sql);
+			$statement->execute([
+				'style/([a-zA-Z0-9\-\.]+)\.scss',
+				1
+			]);
+			while ($row = $statement->fetchArray()) {
+				// the global values will always be evaluated last
+				if ($row['filename'] === self::FILE_GLOBAL_VALUES) {
+					continue;
+				}
+				
+				$files[] = Application::getDirectory($row['application']).$row['filename'];
+			}
+			
+			// global SCSS
+			if (file_exists(WCF_DIR . self::FILE_GLOBAL_VALUES)) {
+				$files[] = WCF_DIR . self::FILE_GLOBAL_VALUES;
+			}
+			
+			$this->files = $files;
+		}
+		
+		return $this->files;
+	}
+	
+	/**
 	 * Compiles SCSS stylesheets.
 	 * 
 	 * @param	Style	$style
 	 */
 	public function compile(Style $style) {
-		$files = $this->getCoreFiles();
-		
-		// read stylesheets in dependency order
-		$sql = "SELECT		filename, application
-			FROM		wcf".WCF_N."_package_installation_file_log
-			WHERE           CONVERT(filename using utf8) REGEXP ?
-					AND packageID <> ?
-			ORDER BY	packageID";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([
-			'style/([a-zA-Z0-9\-\.]+)\.scss',
-			1
-		]);
-		while ($row = $statement->fetchArray()) {
-			// the global values will always be evaluated last
-			if ($row['filename'] === self::FILE_GLOBAL_VALUES) {
-				continue;
-			}
-			
-			$files[] = Application::getDirectory($row['application']).$row['filename'];
-		}
-		
-		// global SCSS
-		if (file_exists(WCF_DIR . self::FILE_GLOBAL_VALUES)) {
-			$files[] = WCF_DIR . self::FILE_GLOBAL_VALUES;
-		}
-		
 		// get style variables
 		$variables = $style->getVariables();
 		$individualScss = '';
@@ -127,7 +234,7 @@ class StyleCompiler extends SingletonFactory {
 		
 		$this->compileStylesheet(
 			WCF_DIR.'style/style-'.$style->styleID,
-			$files,
+			$this->getFiles(),
 			$variables,
 			$individualScss . (!empty($parameters['scss']) ? "\n" . $parameters['scss'] : ''),
 			function($content) use ($style) {
@@ -303,9 +410,30 @@ class StyleCompiler extends SingletonFactory {
 	 * @param	string[]	$variables
 	 * @param	string		$individualScss
 	 * @param	callable	$callback
-	 * @throws	SystemException
 	 */
 	protected function compileStylesheet($filename, array $files, array $variables, $individualScss, callable $callback) {
+		$content = $this->compileStylesheetToString($files, $variables, $individualScss, $callback);
+		
+		// write stylesheet
+		file_put_contents($filename.'.css', $content['ltr']);
+		FileUtil::makeWritable($filename.'.css');
+		
+		// write stylesheet for RTL
+		file_put_contents($filename.'-rtl.css', $content['rtl']);
+		FileUtil::makeWritable($filename.'-rtl.css');
+	}
+	
+	/**
+	 * Compiles SCSS stylesheets and returns them as an array for the `ltr` and the `rtl` version.
+	 *
+	 * @param	string[]	$files
+	 * @param	string[]	$variables
+	 * @param	string		$individualScss
+	 * @param	callable	$callback
+	 * @return      String[]
+	 * @since       5.3
+	 */
+	public function compileStylesheetToString(array $files, array $variables, $individualScss, callable $callback) {
 		foreach ($variables as &$value) {
 			if (StringUtil::startsWith($value, '../')) {
 				$value = '~"'.$value.'"';
@@ -364,21 +492,15 @@ class StyleCompiler extends SingletonFactory {
 			throw new SystemException("Could not compile SCSS: ".$e->getMessage(), 0, '', $e);
 		}
 		
-		$content = $callback($content);
-		
-		// write stylesheet
-		file_put_contents($filename.'.css', $content);
-		FileUtil::makeWritable($filename.'.css');
+		$data['ltr'] = $callback($content);
 		
 		// convert stylesheet to RTL
-		$content = StyleUtil::convertCSSToRTL($content);
+		$data['rtl'] = StyleUtil::convertCSSToRTL($content);
 		
 		// force code boxes to be always LTR
-		$content .= "\n/* RTL fix for code boxes */\n";
-		$content .= '.codeBox > div > ol > li > span:last-child, .redactor-layer pre { direction: ltr; text-align: left; } .codeBox > div > ol > li > span:last-child { display: block; }';
+		$data['rtl'] .= "\n/* RTL fix for code boxes */\n";
+		$data['rtl'] .= '.codeBox > div > ol > li > span:last-child, .redactor-layer pre { direction: ltr; text-align: left; } .codeBox > div > ol > li > span:last-child { display: block; }';
 		
-		// write stylesheet for RTL
-		file_put_contents($filename.'-rtl.css', $content);
-		FileUtil::makeWritable($filename.'-rtl.css');
+		return $data;
 	}
 }
