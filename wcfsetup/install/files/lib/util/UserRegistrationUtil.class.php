@@ -69,21 +69,11 @@ final class UserRegistrationUtil {
 	}
 	
 	/**
-	 * Returns true if the given password is secure.
+	 * Always returns true.
 	 * 
-	 * @param	string		$password
-	 * @return	boolean
+	 * @deprecated	5.3 - Take a look at the zxcvbn verdict from WoltLabSuite/Core/Ui/User/PasswordStrength.
 	 */
 	public static function isSecurePassword($password) {
-		if (REGISTER_ENABLE_PASSWORD_SECURITY_CHECK) {
-			if (mb_strlen($password) < REGISTER_PASSWORD_MIN_LENGTH) return false;
-			
-			if (REGISTER_PASSWORD_MUST_CONTAIN_DIGIT && !preg_match('![0-9]+!', $password)) return false;
-			if (REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE && !preg_match('![a-z]+!', $password)) return false;
-			if (REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE && !preg_match('![A-Z]+!', $password)) return false;
-			if (REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR && !preg_match('![^A-Za-z0-9]+!', $password)) return false;
-		}
-		
 		return true;
 	}
 	
@@ -94,34 +84,7 @@ final class UserRegistrationUtil {
 	 * @return	string
 	 */
 	public static function getPasswordRulesAttributeValue() {
-		if (REGISTER_ENABLE_PASSWORD_SECURITY_CHECK) {
-			$rules = '';
-			
-			if (REGISTER_PASSWORD_MIN_LENGTH) {
-				$rules .= 'minlength:'.REGISTER_PASSWORD_MIN_LENGTH.';';
-			}
-			
-			if (REGISTER_PASSWORD_MUST_CONTAIN_DIGIT) {
-				$rules .= 'required:digit;';
-			}
-			
-			if (REGISTER_PASSWORD_MUST_CONTAIN_LOWER_CASE) {
-				$rules .= 'required:lower;';
-			}
-			
-			if (REGISTER_PASSWORD_MUST_CONTAIN_UPPER_CASE) {
-				$rules .= 'required:upper;';
-			}
-			
-			if (REGISTER_PASSWORD_MUST_CONTAIN_SPECIAL_CHAR) {
-				$rules .= 'required:special;';
-			}
-		}
-		else {
-			$rules = "minlength:8;";
-		}
-		
-		return $rules;
+		return "minlength:8;";
 	}
 	
 	/**

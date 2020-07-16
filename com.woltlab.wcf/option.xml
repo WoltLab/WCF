@@ -1166,36 +1166,12 @@ XING</selectoptions>
 				<optiontype>textarea</optiontype>
 			</option>
 			<!-- /message.censorship -->
-			<option name="register_enable_password_security_check">
+			<option name="password_min_score">
 				<categoryname>user.password</categoryname>
-				<optiontype>boolean</optiontype>
-				<enableoptions>register_password_min_length,register_password_must_contain_lower_case,register_password_must_contain_upper_case,register_password_must_contain_digit,register_password_must_contain_special_char</enableoptions>
-			</option>
-			<option name="register_password_min_length">
-				<categoryname>user.password</categoryname>
-				<optiontype>integer</optiontype>
-				<defaultvalue>8</defaultvalue>
-				<minvalue>0</minvalue>
-				<suffix>chars</suffix>
-			</option>
-			<option name="register_password_must_contain_lower_case">
-				<categoryname>user.password</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="register_password_must_contain_upper_case">
-				<categoryname>user.password</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="register_password_must_contain_digit">
-				<categoryname>user.password</categoryname>
-				<optiontype>boolean</optiontype>
-				<defaultvalue>1</defaultvalue>
-			</option>
-			<option name="register_password_must_contain_special_char">
-				<categoryname>user.password</categoryname>
-				<optiontype>boolean</optiontype>
+				<optiontype>select</optiontype>
+				<selectoptions>0:wcf.acp.option.password_min_score.0
+1:wcf.acp.option.password_min_score.1
+2:wcf.acp.option.password_min_score.2</selectoptions>
 				<defaultvalue>1</defaultvalue>
 			</option>
 			<!-- /user.password -->
@@ -1764,5 +1740,11 @@ DESC:wcf.global.sortOrder.descending</selectoptions>
 	<delete>
 		<option name="attachment_enable_thumbnails" />
 		<option name="message_sidebar_enable_user_online_marking" />
+		<option name="register_enable_password_security_check" />
+		<option name="register_password_min_length" />
+		<option name="register_password_must_contain_lower_case" />
+		<option name="register_password_must_contain_upper_case" />
+		<option name="register_password_must_contain_digit" />
+		<option name="register_password_must_contain_special_char" />
 	</delete>
 </data>
