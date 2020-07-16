@@ -230,13 +230,13 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 					SearchIndexManager::getInstance()->set(
 						'com.woltlab.wcf.article',
 						$articleContent->articleContentID,
-						$articleContent->content,
-						$articleContent->title,
+						$content['content'] ?? $articleContent->content,
+						$content['title'] ?? $articleContent->title,
 						$article->time,
 						$article->userID,
 						$article->username, 
 						$languageID ?: null,
-						$articleContent->teaser
+						$content['teaser'] ?? $articleContent->teaser
 					);
 					
 					// save embedded objects
