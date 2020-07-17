@@ -102,5 +102,8 @@
 	<instructions type="update" fromversion="3.1.15">
 		<instruction type="file">files_update.tar</instruction>
 		<instruction type="template">templates_update.tar</instruction>
+		<!-- Possibly add an update script that deletes orphaned embedded objects.
+			see: https://github.com/WoltLab/WCF/issues/3429
+		-->
 	</instructions>
 </package>
