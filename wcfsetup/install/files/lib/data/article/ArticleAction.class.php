@@ -289,6 +289,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			TagEngine::getInstance()->deleteObjects('com.woltlab.wcf.article', $articleContentIDs);
 			// delete entry from search index
 			SearchIndexManager::getInstance()->delete('com.woltlab.wcf.article', $articleContentIDs);
+			// delete embedded object references
+			MessageEmbeddedObjectManager::getInstance()->removeObjects('com.woltlab.wcf.article.content', $articleContentIDs);
 		}
 		
 		$this->unmarkItems();
