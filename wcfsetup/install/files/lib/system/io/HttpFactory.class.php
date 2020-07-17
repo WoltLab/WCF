@@ -60,7 +60,7 @@ final class HttpFactory {
 			'proxy' => PROXY_SERVER_HTTP,
 			'headers' => [
 				'user-agent' => self::getDefaultUserAgent(),
-			]
+			],
 		], $options));
 	}
 }

@@ -176,7 +176,7 @@ final class HTTPRequest {
 		if (isset($this->options['auth'])) {
 			$options['auth'] = [
 				$this->options['auth']['username'],
-				$this->options['auth']['password']
+				$this->options['auth']['password'],
 			];
 		}
 		
@@ -293,7 +293,7 @@ final class HTTPRequest {
 			'headers' => $legacyHeaders,
 			'httpHeaders' => $headers,
 			'body' => $this->replyBody,
-			'url' => $this->url
+			'url' => $this->url,
 		];
 	}
 	
