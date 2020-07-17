@@ -1840,7 +1840,7 @@ if (COMPILER_TARGET_DEFAULT) {
 					UiPageAction.show(buttonName);
 				}
 				else {
-					UiPageAction.hide(buttonName);
+					UiPageAction.remove(buttonName);
 				}
 				
 				this._hasTemplate = false;

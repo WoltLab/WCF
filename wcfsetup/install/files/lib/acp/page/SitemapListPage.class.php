@@ -4,6 +4,7 @@ use wcf\data\object\type\ObjectType;
 use wcf\data\object\type\ObjectTypeCache;
 use wcf\page\AbstractPage;
 use wcf\system\WCF;
+use wcf\system\worker\SitemapRebuildWorker;
 
 /**
  * Shows a list of sitemap object types. 
@@ -37,6 +38,10 @@ class SitemapListPage extends AbstractPage {
 		parent::readData();
 		
 		$this->sitemapObjectTypes = ObjectTypeCache::getInstance()->getObjectTypes('com.woltlab.wcf.sitemap.object');
+		
+		foreach ($this->sitemapObjectTypes as $sitemapObjectType) {
+			SitemapRebuildWorker::prepareSitemapObject($sitemapObjectType);
+		}
 	}
 	
 	/**

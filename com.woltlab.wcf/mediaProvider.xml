@@ -56,7 +56,8 @@ https?://open.spotify.com/(?<TYPE>[a-zA-Z]+)/(?<ID>[0-9a-zA-Z]+)]]></regex>
 		</provider>
 		<provider name="twitch">
 			<title>Twitch</title>
-			<regex><![CDATA[https?://www.twitch.tv/(?<AUTHOR>[a-zA-Z0-9_]+)/clip/(?<CLIP>[a-zA-Z0-9_]+)
+			<regex><![CDATA[https?://clips.twitch.tv/(?<CLIP>[a-zA-Z0-9_]+)
+https?://www.twitch.tv/(?<AUTHOR>[a-zA-Z0-9_]+)/clip/(?<CLIP>[a-zA-Z0-9_]+)
 https?://www.twitch.tv/(?!videos)(?!.*/v/)(?<CHANNEL>[a-zA-Z0-9_]+)
 https?://www.twitch.tv/videos/(?<VIDEO>[0-9]+)
 https?://www.twitch.tv/[a-zA-Z0-9]+/v/(?<VIDEO>[0-9]+)]]></regex>
