@@ -379,6 +379,8 @@ class ArticleAction extends AbstractDatabaseObjectAction {
 			UserNotificationHandler::getInstance()->removeNotifications('com.woltlab.wcf.article.notification', $articleIDs);
 			// delete recent activity events
 			UserActivityEventHandler::getInstance()->removeEvents('com.woltlab.wcf.article.recentActivityEvent', $articleIDs);
+			// delete embedded object references
+			MessageEmbeddedObjectManager::getInstance()->removeObjects('com.woltlab.wcf.article.content', $articleContentIDs);
 		}
 		
 		$this->unmarkItems();
