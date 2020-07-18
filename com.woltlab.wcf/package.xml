@@ -115,4 +115,9 @@
 		
 		<instruction type="language" />
 	</instructions>
+	
+	<!-- run: update_com.woltlab.wcf_embeddedObjectOrphans.php
+			see: https://github.com/WoltLab/WCF/issues/3429
+			see: https://github.com/WoltLab/WCF/pull/3450
+		-->
 </package>
