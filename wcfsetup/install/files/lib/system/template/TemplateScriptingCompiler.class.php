@@ -120,6 +120,7 @@ class TemplateScriptingCompiler {
 		'trim',
 		'ucfirst',
 		'unserialize',
+		'uniqid',
 		'urlencode',
 		'wcfDebug',
 		'wordwrap'
