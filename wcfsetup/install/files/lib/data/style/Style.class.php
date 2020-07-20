@@ -3,6 +3,7 @@ namespace wcf\data\style;
 use wcf\data\DatabaseObject;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\WCF;
+use wcf\util\FileUtil;
 
 /**
  * Represents a style.
@@ -55,6 +56,8 @@ class Style extends DatabaseObject {
 	const FAVICON_IMAGE_HEIGHT = 256;
 	const FAVICON_IMAGE_WIDTH = 256;
 	
+	const BASE_ASSET_PATH = WCF_DIR.'images/';
+	
 	/**
 	 * Returns the name of this style.
 	 * 
@@ -62,6 +65,13 @@ class Style extends DatabaseObject {
 	 */
 	public function __toString() {
 		return $this->styleName;
+	}
+	
+	/**
+	 * Returns the absolute path to the style's asset folder.
+	 */
+	public function getAssetPath() {
+		return FileUtil::addTrailingSlash(static::BASE_ASSET_PATH . 'style-' . $this->styleID);
 	}
 	
 	/**
