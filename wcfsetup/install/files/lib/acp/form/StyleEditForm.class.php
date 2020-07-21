@@ -144,7 +144,6 @@ class StyleEditForm extends StyleAddForm {
 			$this->authorName = $this->style->authorName;
 			$this->authorURL = $this->style->authorURL;
 			$this->copyright = $this->style->copyright;
-			$this->imagePath = $this->style->imagePath;
 			$this->isTainted = $this->style->isTainted;
 			$this->license = $this->style->license;
 			$this->packageName = $this->style->packageName;
@@ -191,7 +190,6 @@ class StyleEditForm extends StyleAddForm {
 				'templateGroupID' => $this->templateGroupID,
 				'styleVersion' => $this->styleVersion,
 				'styleDate' => $this->styleDate,
-				'imagePath' => $this->imagePath,
 				'copyright' => $this->copyright,
 				'packageName' => $this->packageName,
 				'license' => $this->license,

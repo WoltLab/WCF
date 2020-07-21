@@ -297,22 +297,6 @@
 						</dd>
 					</dl>
 				{/if}
-				<dl{if $errorField == 'imagePath'} class="formError"{/if}>
-					<dt><label for="imagePath">{lang}wcf.acp.style.imagePath{/lang}</label></dt>
-					<dd>
-						<input type="text" name="imagePath" id="imagePath" value="{$imagePath}" class="long">
-						{if $errorField == 'imagePath'}
-							<small class="innerError">
-								{if $errorType == 'empty'}
-									{lang}wcf.global.form.error.empty{/lang}
-								{else}
-									{lang}wcf.acp.style.imagePath.error.{$errorType}{/lang}
-								{/if}
-							</small>
-						{/if}
-						<small>{lang}wcf.acp.style.imagePath.description{/lang}</small>
-					</dd>
-				</dl>
 				
 				{event name='fileFields'}
 			</section>

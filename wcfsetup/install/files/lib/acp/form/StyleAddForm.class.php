@@ -108,12 +108,6 @@ class StyleAddForm extends AbstractForm {
 	public $globals = [];
 	
 	/**
-	 * image path
-	 * @var	string
-	 */
-	public $imagePath = 'images/';
-	
-	/**
 	 * tainted style
 	 * @var	boolean
 	 */
@@ -327,7 +321,6 @@ class StyleAddForm extends AbstractForm {
 		if (isset($_POST['authorName'])) $this->authorName = StringUtil::trim($_POST['authorName']);
 		if (isset($_POST['authorURL'])) $this->authorURL = StringUtil::trim($_POST['authorURL']);
 		if (isset($_POST['copyright'])) $this->copyright = StringUtil::trim($_POST['copyright']);
-		if (isset($_POST['imagePath'])) $this->imagePath = StringUtil::trim($_POST['imagePath']);
 		if (isset($_POST['license'])) $this->license = StringUtil::trim($_POST['license']);
 		if (isset($_POST['packageName'])) $this->packageName = StringUtil::trim($_POST['packageName']);
 		if (isset($_POST['styleDate'])) $this->styleDate = StringUtil::trim($_POST['styleDate']);
@@ -402,14 +395,6 @@ class StyleAddForm extends AbstractForm {
 		if ($this->templateGroupID) {
 			if (!isset($this->availableTemplateGroups[$this->templateGroupID])) {
 				throw new UserInputException('templateGroupID');
-			}
-		}
-		
-		// ensure image path is below WCF_DIR/images/
-		if ($this->imagePath) {
-			$relativePath = FileUtil::unifyDirSeparator(FileUtil::getRelativePath(WCF_DIR.'images/', WCF_DIR.$this->imagePath));
-			if (strpos($relativePath, '../') !== false) {
-				throw new UserInputException('imagePath', 'invalid');
 			}
 		}
 		
@@ -725,7 +710,6 @@ class StyleAddForm extends AbstractForm {
 				'styleDescription' => '',
 				'styleVersion' => $this->styleVersion,
 				'styleDate' => $this->styleDate,
-				'imagePath' => $this->imagePath,
 				'copyright' => $this->copyright,
 				'license' => $this->license,
 				'authorName' => $this->authorName,
@@ -754,7 +738,6 @@ class StyleAddForm extends AbstractForm {
 		$this->authorName = $this->authorURL = $this->copyright = $this->packageName = '';
 		$this->license = $this->styleDate = $this->styleDescription = $this->styleName = $this->styleVersion = '';
 		$this->setDefaultValues();
-		$this->imagePath = 'images/';
 		$this->isTainted = true;
 		$this->templateGroupID = 0;
 		$this->rebuildUploadFields();
@@ -786,7 +769,6 @@ class StyleAddForm extends AbstractForm {
 			'colorCategories' => $this->colorCategories,
 			'colors' => $this->colors,
 			'copyright' => $this->copyright,
-			'imagePath' => $this->imagePath,
 			'isTainted' => $this->isTainted,
 			'license' => $this->license,
 			'packageName' => $this->packageName,
