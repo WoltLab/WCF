@@ -5,6 +5,7 @@ use wcf\data\style\Style;
 use wcf\data\style\StyleAction;
 use wcf\data\style\StyleEditor;
 use wcf\data\template\group\TemplateGroup;
+use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\form\AbstractForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
@@ -269,6 +270,14 @@ class StyleAddForm extends AbstractForm {
 		$field->setAllowSvgImage(true);
 		$field->maxFiles = 1;
 		$handler->registerUploadField($field);
+		
+		if ($handler->isRegisteredFieldId('coverPhoto')) {
+			$handler->unregisterUploadField('coverPhoto');
+		}
+		$field = new UploadField('coverPhoto');
+		$field->setImageOnly(true);
+		$field->maxFiles = 1;
+		$handler->registerUploadField($field);
 	}
 	
 	/**
@@ -334,7 +343,7 @@ class StyleAddForm extends AbstractForm {
 		if (isset($_POST['scrollOffsets']) && is_array($_POST['scrollOffsets'])) $this->scrollOffsets = ArrayUtil::toIntegerArray($_POST['scrollOffsets']); 
 		
 		$this->uploads = [];
-		foreach (['image', 'image2x', 'pageLogo', 'pageLogoMobile'] as $field) {
+		foreach (['image', 'image2x', 'pageLogo', 'pageLogoMobile', 'coverPhoto'] as $field) {
 			$removedFiles = UploadHandler::getInstance()->getRemovedFiledByFieldId($field);
 			if (!empty($removedFiles)) {
 				$this->uploads[$field] = null;
@@ -502,6 +511,35 @@ class StyleAddForm extends AbstractForm {
 		$files = UploadHandler::getInstance()->getFilesByFieldId($field);
 		if (count($files) > 1) {
 			throw new UserInputException($field, 'invalid');
+		}
+		
+		// coverPhoto
+		$field = 'coverPhoto';
+		$files = UploadHandler::getInstance()->getFilesByFieldId($field);
+		if (count($files) > 1) {
+			throw new UserInputException($field, 'invalid');
+		}
+		if (!empty($files)) {
+			$fileLocation = $files[0]->getLocation();
+			if (($imageData = getimagesize($fileLocation)) === false) {
+				throw new UserInputException($field, 'invalid');
+			}
+			switch ($imageData[2]) {
+				case IMAGETYPE_PNG:
+				case IMAGETYPE_JPEG:
+				case IMAGETYPE_GIF:
+					// fine
+				break;
+				default:
+					throw new UserInputException($field, 'invalid');
+			}
+			
+			if ($imageData[0] < UserCoverPhoto::MIN_WIDTH) {
+				throw new UserInputException('coverPhoto', 'minWidth');
+			}
+			if ($imageData[1] < UserCoverPhoto::MIN_HEIGHT) {
+				throw new UserInputException('coverPhoto', 'minHeight');
+			}
 		}
 	}
 	
@@ -783,6 +821,8 @@ class StyleAddForm extends AbstractForm {
 			'supportedApiVersions' => Style::$supportedApiVersions,
 			'newVariables' => $this->newVariables,
 			'scrollOffsets' => $this->scrollOffsets,
+			'coverPhotoMinHeight' => UserCoverPhoto::MIN_HEIGHT,
+			'coverPhotoMinWidth' => UserCoverPhoto::MIN_WIDTH,
 		]);
 	}
 	

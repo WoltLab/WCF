@@ -231,7 +231,7 @@ class Style extends DatabaseObject {
 	 */
 	public function getCoverPhoto() {
 		if ($this->coverPhotoExtension) {
-			return $this->styleID . '.' . $this->coverPhotoExtension;
+			return 'coverPhoto.'.$this->coverPhotoExtension;
 		}
 		
 		return 'default.jpg';
@@ -242,7 +242,10 @@ class Style extends DatabaseObject {
 	 * @since 5.2
 	 */
 	public function getCoverPhotoLocation() {
-		return WCF_DIR . 'images/coverPhotos/' . $this->getCoverPhoto();
+		if ($this->coverPhotoExtension) {
+			return $this->getAssetPath().'coverPhoto.'.$this->coverPhotoExtension;
+		}
+		return WCF_DIR . 'images/coverPhotos/default.jpg';
 	}
 	
 	/**
@@ -250,6 +253,9 @@ class Style extends DatabaseObject {
 	 * @since 5.2
 	 */
 	public function getCoverPhotoUrl() {
+		if ($this->coverPhotoExtension) {
+			return FileUtil::getRelativePath(WCF_DIR, $this->getAssetPath()).'coverPhoto.'.$this->coverPhotoExtension;
+		}
 		return WCF::getPath() . 'images/coverPhotos/' . $this->getCoverPhoto();
 	}
 	

@@ -1,7 +1,6 @@
 <?php
 namespace wcf\data\style;
 use wcf\data\TDatabaseObjectToggle;
-use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
@@ -59,7 +58,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['copy', 'delete', 'deleteCoverPhoto', 'markAsTainted', 'setAsDefault', 'toggle', 'update', 'upload', 'uploadCoverPhoto',];
+	protected $requireACP = ['copy', 'delete', 'markAsTainted', 'setAsDefault', 'toggle', 'update', 'upload',];
 	
 	/**
 	 * style object
@@ -87,6 +86,9 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 		// handle style preview image
 		$this->updateStylePreviewImage($style);
 		
+		// handle the cover photo
+		$this->updateCoverPhoto($style);
+
 		return $style;
 	}
 	
@@ -376,21 +378,36 @@ BROWSERCONFIG;
 	 * @since       3.1
 	 */
 	protected function updateCoverPhoto(Style $style) {
-		$styleID = $style->styleID;
-		$fileExtension = WCF::getSession()->getVar('styleCoverPhoto-'.$styleID);
-		if ($fileExtension) {
-			// remove old image
-			if ($style->coverPhotoExtension) {
-				@unlink(WCF_DIR . 'images/coverPhotos/' . $style->getCoverPhoto());
+		$type = 'coverPhoto';
+		
+		if (array_key_exists('coverPhoto', $this->parameters['uploads'])) {
+			/** @var \wcf\system\file\upload\UploadFile $file */
+			$file = $this->parameters['uploads']['coverPhoto'];
+			
+			if ($style->coverPhotoExtension && file_exists($style->getCoverPhotoLocation())) {
+				if (!$file || $style->getCoverPhotoLocation() !== $file->getLocation()) {
+					unlink($style->getCoverPhotoLocation());
+				}
 			}
-			
-			rename(
-				WCF_DIR . 'images/coverPhotos/' . $styleID . '.tmp.' . $fileExtension,
-				WCF_DIR . 'images/coverPhotos/' . $styleID . '.' . $fileExtension
-			);
-			
-			(new StyleEditor($style))->update(['coverPhotoExtension' => $fileExtension]);
-			WCF::getSession()->unregister('styleCoverPhoto-'.$style->styleID);
+			if ($file !== null) {
+				$fileLocation = $file->getLocation();
+				if (($imageData = getimagesize($fileLocation)) === false) {
+					throw new \InvalidArgumentException('The given '.$type.' is not an image');
+				}
+				$extension = ImageUtil::getExtensionByMimeType($imageData['mime']);
+				$newLocation = $style->getAssetPath().'coverPhoto.'.$extension;
+				rename($fileLocation, $newLocation);
+				(new StyleEditor($style))->update([
+					'coverPhotoExtension' => $extension,
+				]);
+				
+				$file->setProcessed($newLocation);
+			}
+			else {
+				(new StyleEditor($style))->update([
+					'coverPhotoExtension' => '',
+				]);
+			}
 		}
 	}
 	
@@ -500,120 +517,6 @@ BROWSERCONFIG;
 		}
 		
 		return ['errorType' => $file->getValidationErrorType()];
-	}
-	
-	/**
-	 * Validates parameters to upload a cover photo.
-	 *
-	 * @since       3.1
-	 */
-	public function validateUploadCoverPhoto() {
-		if (!MODULE_USER_COVER_PHOTO) {
-			throw new PermissionDeniedException();
-		}
-		
-		// ignore tmp hash, uploading is supported for existing styles only
-		// and files will be finally processed on form submit
-		$this->parameters['tmpHash'] = '@@@WCF_INVALID_TMP_HASH@@@';
-		
-		$this->validateUpload();
-	}
-	
-	/**
-	 * Handles the cover photo upload.
-	 *
-	 * @return	string[]
-	 * @since       3.1
-	 */
-	public function uploadCoverPhoto() {
-		// save files
-		/** @noinspection PhpUndefinedMethodInspection */
-		/** @var UploadFile[] $files */
-		$files = $this->parameters['__files']->getFiles();
-		$file = $files[0];
-		
-		try {
-			if (!$file->getValidationErrorType()) {
-				$fileLocation = $file->getLocation();
-				try {
-					if (($imageData = getimagesize($fileLocation)) === false) {
-						throw new UserInputException('coverPhoto');
-					}
-					switch ($imageData[2]) {
-						case IMAGETYPE_PNG:
-						case IMAGETYPE_JPEG:
-						case IMAGETYPE_GIF:
-							// fine
-							break;
-						default:
-							throw new UserInputException('coverPhoto');
-					}
-					
-					if ($imageData[0] < UserCoverPhoto::MIN_WIDTH) {
-						throw new UserInputException('coverPhoto', 'minWidth');
-					}
-					else if ($imageData[1] < UserCoverPhoto::MIN_HEIGHT) {
-						throw new UserInputException('coverPhoto', 'minHeight');
-					}
-				}
-				catch (SystemException $e) {
-					throw new UserInputException('coverPhoto');
-				}
-				
-				// move uploaded file
-				if (@copy($fileLocation, WCF_DIR.'images/coverPhotos/'.$this->style->styleID.'.tmp.'.$file->getFileExtension())) {
-					@unlink($fileLocation);
-					
-					// store extension within session variables
-					WCF::getSession()->register('styleCoverPhoto-'.$this->style->styleID, $file->getFileExtension());
-					
-					// return result
-					return [
-						'url' => WCF::getPath().'images/coverPhotos/'.$this->style->styleID.'.tmp.'.$file->getFileExtension()
-					];
-				}
-				else {
-					throw new UserInputException('coverPhoto', 'uploadFailed');
-				}
-			}
-		}
-		catch (UserInputException $e) {
-			$file->setValidationErrorType($e->getType());
-		}
-		
-		return ['errorType' => $file->getValidationErrorType()];
-	}
-	
-	/**
-	 * Validates the parameters to delete a style's default cover photo.
-	 * 
-	 * @throws      PermissionDeniedException
-	 * @throws      UserInputException
-	 * @since       3.1
-	 */
-	public function validateDeleteCoverPhoto() {
-		if (!MODULE_USER_COVER_PHOTO) {
-			throw new PermissionDeniedException();
-		}
-		
-		$this->styleEditor = $this->getSingleObject();
-		if (!$this->styleEditor->coverPhotoExtension) {
-			throw new UserInputException('objectIDs');
-		}
-	}
-	
-	/**
-	 * Deletes a style's default cover photo.
-	 * 
-	 * @return      string[]
-	 * @since       3.1
-	 */
-	public function deleteCoverPhoto() {
-		$this->styleEditor->deleteCoverPhoto();
-		
-		return [
-			'url' => WCF::getPath().'images/coverPhotos/'.(new Style($this->styleEditor->styleID))->getCoverPhoto()
-		];
 	}
 	
 	/**

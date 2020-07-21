@@ -153,14 +153,20 @@ class StyleEditForm extends StyleAddForm {
 			$this->styleVersion = $this->style->styleVersion;
 			$this->templateGroupID = $this->style->templateGroupID;
 			if ($this->style->image) {
-				$file = new UploadFile(WCF_DIR.'images/'.$this->style->image, $this->style->image, true, true, true);
+				$file = new UploadFile(WCF_DIR.'images/'.$this->style->image, $this->style->image, true, true, false);
 				UploadHandler::getInstance()->registerFilesByField('image', [
 					$file,
 				]);
 			}
 			if ($this->style->image2x) {
-				$file = new UploadFile(WCF_DIR.'images/'.$this->style->image2x, $this->style->image2x, true, true, true);
+				$file = new UploadFile(WCF_DIR.'images/'.$this->style->image2x, $this->style->image2x, true, true, false);
 				UploadHandler::getInstance()->registerFilesByField('image2x', [
+					$file,
+				]);
+			}
+			if ($this->style->coverPhotoExtension) {
+				$file = new UploadFile($this->style->getCoverPhotoLocation(), $this->style->getCoverPhoto(), true, true, false);
+				UploadHandler::getInstance()->registerFilesByField('coverPhoto', [
 					$file,
 				]);
 			}
@@ -238,8 +244,6 @@ class StyleEditForm extends StyleAddForm {
 			'isTainted' => $this->style->isTainted,
 			'style' => $this->style,
 			'styleID' => $this->styleID,
-			'coverPhotoMinHeight' => UserCoverPhoto::MIN_HEIGHT,
-			'coverPhotoMinWidth' => UserCoverPhoto::MIN_WIDTH
 		]);
 	}
 }
