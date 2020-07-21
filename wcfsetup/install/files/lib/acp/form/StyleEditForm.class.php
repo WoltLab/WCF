@@ -104,6 +104,19 @@ class StyleEditForm extends StyleAddForm {
 			$this->variables['overrideScss'] = $tmp['preset'];
 			$this->variables['overrideScssCustom'] = $tmp['custom'];
 		}
+		
+		if ($this->variables['pageLogo']) {
+			$file = new UploadFile($this->style->getAssetPath().$this->variables['pageLogo'], basename($this->variables['pageLogo']), true, true, true);
+			UploadHandler::getInstance()->registerFilesByField('pageLogo', [
+				$file,
+			]);
+		}
+		if ($this->variables['pageLogoMobile']) {
+			$file = new UploadFile($this->style->getAssetPath().$this->variables['pageLogoMobile'], basename($this->variables['pageLogoMobile']), true, true, true);
+			UploadHandler::getInstance()->registerFilesByField('pageLogoMobile', [
+				$file,
+			]);
+		}
 	}
 	
 	/**

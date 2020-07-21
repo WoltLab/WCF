@@ -222,6 +222,9 @@ class StyleAddForm extends AbstractForm {
 		I18nHandler::getInstance()->register('styleDescription');
 		
 		$this->setVariables();
+		
+		$this->rebuildUploadFields();
+		
 		if (empty($_POST)) {
 			$this->readStyleVariables();
 		}
@@ -234,8 +237,6 @@ class StyleAddForm extends AbstractForm {
 		if (empty($this->tmpHash)) {
 			$this->tmpHash = StringUtil::getRandomID();
 		}
-		
-		$this->rebuildUploadFields();
 	}
 	
 	protected function rebuildUploadFields() {
@@ -254,6 +255,24 @@ class StyleAddForm extends AbstractForm {
 		}
 		$field = new UploadField('image2x');
 		$field->setImageOnly(true);
+		$field->maxFiles = 1;
+		$handler->registerUploadField($field);
+		
+		if ($handler->isRegisteredFieldId('pageLogo')) {
+			$handler->unregisterUploadField('pageLogo');
+		}
+		$field = new UploadField('pageLogo');
+		$field->setImageOnly(true);
+		$field->setAllowSvgImage(true);
+		$field->maxFiles = 1;
+		$handler->registerUploadField($field);
+		
+		if ($handler->isRegisteredFieldId('pageLogoMobile')) {
+			$handler->unregisterUploadField('pageLogoMobile');
+		}
+		$field = new UploadField('pageLogoMobile');
+		$field->setImageOnly(true);
+		$field->setAllowSvgImage(true);
 		$field->maxFiles = 1;
 		$handler->registerUploadField($field);
 	}
@@ -322,7 +341,7 @@ class StyleAddForm extends AbstractForm {
 		if (isset($_POST['scrollOffsets']) && is_array($_POST['scrollOffsets'])) $this->scrollOffsets = ArrayUtil::toIntegerArray($_POST['scrollOffsets']); 
 		
 		$this->uploads = [];
-		foreach (['image', 'image2x'] as $field) {
+		foreach (['image', 'image2x', 'pageLogo', 'pageLogoMobile'] as $field) {
 			$removedFiles = UploadHandler::getInstance()->getRemovedFiledByFieldId($field);
 			if (!empty($removedFiles)) {
 				$this->uploads[$field] = null;
@@ -484,6 +503,20 @@ class StyleAddForm extends AbstractForm {
 				$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH * 2, Style::PREVIEW_IMAGE_MAX_HEIGHT * 2, false);
 				$adapter->writeImage($thumbnail, $fileLocation);
 			}
+		}
+		
+		// pageLogo
+		$field = 'pageLogo';
+		$files = UploadHandler::getInstance()->getFilesByFieldId($field);
+		if (count($files) > 1) {
+			throw new UserInputException($field, 'invalid');
+		}
+		
+		// pageLogoMobile
+		$field = 'pageLogoMobile';
+		$files = UploadHandler::getInstance()->getFilesByFieldId($field);
+		if (count($files) > 1) {
+			throw new UserInputException($field, 'invalid');
 		}
 	}
 	
@@ -651,10 +684,8 @@ class StyleAddForm extends AbstractForm {
 		$this->specialVariables = [
 			'individualScss',
 			'overrideScss',
-			'pageLogo',
 			'pageLogoWidth',
 			'pageLogoHeight',
-			'pageLogoMobile',
 			'useFluidLayout',
 			'useGoogleFont',
 			'wcfFontFamilyGoogle',

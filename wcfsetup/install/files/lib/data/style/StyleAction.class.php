@@ -173,6 +173,26 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 			return;
 		}
 		
+		foreach (['pageLogo', 'pageLogoMobile'] as $type) {
+			if (array_key_exists($type, $this->parameters['uploads'])) {
+				/** @var \wcf\system\file\upload\UploadFile $file */
+				$file = $this->parameters['uploads'][$type];
+				
+				if ($file !== null) {
+					$fileLocation = $file->getLocation();
+					$extension = pathinfo($file->getFilename(), PATHINFO_EXTENSION);
+					$newName = $type.'.'.$extension;
+					$newLocation = $style->getAssetPath().$newName;
+					rename($fileLocation, $newLocation);
+					$this->parameters['variables'][$type] = $newName;
+					$file->setProcessed($newLocation);
+				}
+				else {
+					$this->parameters['variables'][$type] = '';
+				}
+			}
+		}
+		
 		$sql = "SELECT	variableID, variableName, defaultValue
 			FROM	wcf".WCF_N."_style_variable";
 		$statement = WCF::getDB()->prepareStatement($sql);

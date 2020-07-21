@@ -52,8 +52,6 @@
 			'wcf.acp.style.favicon.error.invalidExtension': '{lang}wcf.acp.style.favicon.error.invalidExtension{/lang}',
 			'wcf.acp.style.image.error.invalidExtension': '{lang}wcf.acp.style.image.error.invalidExtension{/lang}'
 		});
-		new WCF.ACP.Style.LogoUpload('{$tmpHash}');
-		new WCF.ACP.Style.LogoUploadMobile('{$tmpHash}');
 		
 		{if $action == 'edit'}
 			new WCF.ACP.Style.CopyStyle({@$style->styleID});
@@ -420,14 +418,23 @@
 				<dl>
 					<dt><label for="pageLogo">{lang}wcf.acp.style.globals.pageLogo{/lang}</label></dt>
 					<dd>
-						<div class="selectedImagePreview">
-							<img src="" alt="" id="styleLogo" style="max-width: 100%">
-						</div>
-						<div id="uploadLogo"></div>
-					</dd>
-					<dd>
-						<input type="text" name="pageLogo" id="pageLogo" value="{$variables[pageLogo]}" class="long">
+						{@$__wcf->getUploadHandler()->renderField('pageLogo')}
 						<small>{lang}wcf.acp.style.globals.pageLogo.description{/lang}</small>
+						<script data-relocate="true">
+						elBySel('#pageLogouploadFileList').addEventListener('change', function (ev) {
+							var img = elBySel('#pageLogouploadFileList img');
+							if (!img) return;
+							
+							function updateSizes() {
+								elById('pageLogoWidth').value = img.width;
+								elById('pageLogoHeight').value = img.height;
+							}
+							img.addEventListener('load', updateSizes);
+							if (img.complete) {
+								updateSizes();
+							}
+						})
+						</script>
 					</dd>
 				</dl>
 				
@@ -447,13 +454,7 @@
 				<dl>
 					<dt><label for="pageLogoMobile">{lang}wcf.acp.style.globals.pageLogoMobile{/lang}</label></dt>
 					<dd>
-						<div class="selectedImagePreview">
-							<img src="" alt="" id="styleLogoMobile" style="max-width: 100%">
-						</div>
-						<div id="uploadLogoMobile"></div>
-					</dd>
-					<dd>
-						<input type="text" name="pageLogoMobile" id="pageLogoMobile" value="{$variables[pageLogoMobile]}" class="long">
+						{@$__wcf->getUploadHandler()->renderField('pageLogoMobile')}
 						<small>{lang}wcf.acp.style.globals.pageLogoMobile.description{/lang}</small>
 					</dd>
 				</dl>
