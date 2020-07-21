@@ -2766,6 +2766,7 @@ If you have <strong>already bought the licenses for the listed apps</strong>, th
 		<item name="wcf.acp.style.advanced.overrideScss.error.invalid"><![CDATA[The input for “{$error[text]}” invalid.]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.predefined"><![CDATA[The variable “{$error[text]}” is already defined by the style editor.]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.unknown"><![CDATA[The variable “{$error[text]}” is not recognized.]]></item>
+		<item name="wcf.acp.style.advanced.individualScss.error"><![CDATA[The SCSS code is invalid: {$errorType.message}.]]></item>
 		<item name="wcf.acp.style.apiVersion"><![CDATA[Enable Compatibility Mode with WoltLab Suite]]></item>
 		<item name="wcf.acp.style.apiVersion.deprecated"><![CDATA[deprecated]]></item>
 		<item name="wcf.acp.style.apiVersion.description"><![CDATA[Disables selected style improvements in order to maximize compatibility with styles for earlier versions of WoltLab Suite.]]></item>

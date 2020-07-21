@@ -2839,6 +2839,7 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.advanced.overrideScss.error.invalid"><![CDATA[Eingabe „{$error[text]}“ ungültig]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.predefined"><![CDATA[Variable „{$error[text]}“ wird bereits durch den Stil-Editor gesetzt]]></item>
 		<item name="wcf.acp.style.advanced.overrideScss.error.unknown"><![CDATA[Variable „{$error[text]}“ unbekannt]]></item>
+		<item name="wcf.acp.style.advanced.individualScss.error"><![CDATA[Der SCSS-Code ist invalid: {$errorType.message}.]]></item>
 		<item name="wcf.acp.style.apiVersion"><![CDATA[Kompatibilität mit WoltLab Suite in Version]]></item>
 		<item name="wcf.acp.style.apiVersion.deprecated"><![CDATA[veraltet]]></item>
 		<item name="wcf.acp.style.apiVersion.description"><![CDATA[Deaktiviert ausgewählte Stil-Verbesserungen, um die Kompatibilität mit Stilen für eine ältere Version von WoltLab Suite zu gewährleisten.]]></item>

@@ -11,6 +11,7 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\Regex;
+use wcf\system\style\StyleCompiler;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\DateUtil;
@@ -356,7 +357,26 @@ class StyleAddForm extends AbstractForm {
 			$this->parseOverrides();
 		}
 		
+		$this->validateIndividualScss();
+		
 		$this->validateApiVersion();
+	}
+	
+	/**
+	 * Validates the individual scss.
+	 * @throws      UserInputException
+	 * @since       5.3
+	 */
+	public function validateIndividualScss() {
+		$variables = array_merge(StyleCompiler::getDefaultVariables(), $this->variables);
+		
+		$result = StyleCompiler::getInstance()->testStyle($this->apiVersion, $this->imagePath, $variables);
+		
+		if ($result !== true) {
+			throw new UserInputException('individualScss', [
+				'message' => $result,
+			]);
+		}
 	}
 	
 	/**

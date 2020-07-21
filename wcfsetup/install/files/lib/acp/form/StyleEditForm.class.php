@@ -5,7 +5,10 @@ use wcf\data\style\StyleAction;
 use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\exception\SystemException;
+use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
+use wcf\system\style\StyleCompiler;
 use wcf\system\WCF;
 
 /**
@@ -55,6 +58,30 @@ class StyleEditForm extends StyleAddForm {
 		
 		if (!$this->style->isTainted) {
 			$this->parseOverrides('overrideScssCustom');
+		}
+	}
+	
+	/**
+	 * @inheritDoc
+	 */
+	public function validateIndividualScss() {
+		$variables = $this->variables;
+		if (!$this->style->isTainted) {
+			$variables['individualScss'] = Style::joinLessVariables($variables['individualScss'], $variables['individualScssCustom']);
+			$variables['overrideScss'] = Style::joinLessVariables($variables['overrideScss'], $variables['overrideScssCustom']);
+			
+			unset($variables['individualScssCustom']);
+			unset($variables['overrideScssCustom']);
+		}
+		
+		$variables = array_merge(StyleCompiler::getDefaultVariables(), $variables);
+		
+		$result = StyleCompiler::getInstance()->testStyle($this->apiVersion, $this->imagePath, $variables);
+		
+		if ($result !== true) {
+			throw new UserInputException('individualScss', [
+				'message' => $result,
+			]);
 		}
 	}
 	

@@ -1010,7 +1010,7 @@
 				
 				{* custom declarations *}
 				<div id="advanced-custom" class="tabMenuContent">
-					<section class="section">
+					<section class="section"{if $errorField == 'individualScss'} formError{/if}>
 						<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualScss{/lang}</h2>
 						
 						<dl class="wide">
@@ -1022,6 +1022,11 @@
 								</div>
 								<small>{lang}wcf.acp.style.advanced.individualScss.description{/lang}</small>
 							</dd>
+							{if $errorField == 'individualScss'}
+								<small class="innerError">
+									{lang}wcf.acp.style.advanced.individualScss.error{/lang}
+								</small>
+							{/if}
 						</dl>
 					</section>
 					
@@ -1054,7 +1059,7 @@
 				<div id="advanced-original" class="tabMenuContent">
 			{/if}
 			
-			<section class="section">
+			<section class="section{if $errorField == 'individualScss' && $isTainted} formError{/if}">
 				<h2 class="sectionTitle">{lang}wcf.acp.style.advanced.individualScss{/lang}{if !$isTainted} ({lang}wcf.acp.style.protected.less{/lang}){/if}</h2>
 				
 				<dl class="wide">
@@ -1066,6 +1071,11 @@
 						</div>
 						<small>{lang}wcf.acp.style.advanced.individualScss.description{/lang}</small>
 					</dd>
+					{if $errorField == 'individualScss' && $isTainted}
+						<small class="innerError">
+							{lang}wcf.acp.style.advanced.individualScss.error{/lang}
+						</small>
+					{/if}
 				</dl>
 			</section>
 			
