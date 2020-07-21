@@ -9,12 +9,14 @@ use wcf\form\AbstractForm;
 use wcf\system\event\EventHandler;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\file\upload\UploadField;
+use wcf\system\file\upload\UploadHandler;
+use wcf\system\image\ImageHandler;
 use wcf\system\language\I18nHandler;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\DateUtil;
-use wcf\util\FileUtil;
 use wcf\util\StringUtil;
 
 /**
@@ -207,6 +209,11 @@ class StyleAddForm extends AbstractForm {
 	public $scrollOffsets = [];
 	
 	/**
+	 * @var mixed[]
+	 */
+	public $uploads = [];
+	
+	/**
 	 * @inheritDoc
 	 */
 	public function readParameters() {
@@ -227,6 +234,28 @@ class StyleAddForm extends AbstractForm {
 		if (empty($this->tmpHash)) {
 			$this->tmpHash = StringUtil::getRandomID();
 		}
+		
+		$this->rebuildUploadFields();
+	}
+	
+	protected function rebuildUploadFields() {
+		$handler = UploadHandler::getInstance();
+		
+		if ($handler->isRegisteredFieldId('image')) {
+			$handler->unregisterUploadField('image');
+		}
+		$field = new UploadField('image');
+		$field->setImageOnly(true);
+		$field->maxFiles = 1;
+		$handler->registerUploadField($field);
+		
+		if ($handler->isRegisteredFieldId('image2x')) {
+			$handler->unregisterUploadField('image2x');
+		}
+		$field = new UploadField('image2x');
+		$field->setImageOnly(true);
+		$field->maxFiles = 1;
+		$handler->registerUploadField($field);
 	}
 	
 	/**
@@ -291,6 +320,18 @@ class StyleAddForm extends AbstractForm {
 		
 		// codemirror scroll offset
 		if (isset($_POST['scrollOffsets']) && is_array($_POST['scrollOffsets'])) $this->scrollOffsets = ArrayUtil::toIntegerArray($_POST['scrollOffsets']); 
+		
+		$this->uploads = [];
+		foreach (['image', 'image2x'] as $field) {
+			$files = UploadHandler::getInstance()->getFilesByFieldId($field);
+			if (!empty($files)) {
+				$this->uploads[$field] = $files[0];
+			}
+			$removedFiles = UploadHandler::getInstance()->getRemovedFiledByFieldId($field);
+			if (!empty($removedFiles)) {
+				$this->uploads[$field] = null;
+			}
+		}
 	}
 	
 	/**
@@ -357,6 +398,8 @@ class StyleAddForm extends AbstractForm {
 		}
 		
 		$this->validateApiVersion();
+		
+		$this->validateUploads();
 	}
 	
 	/**
@@ -380,6 +423,66 @@ class StyleAddForm extends AbstractForm {
 	protected function validateApiVersion() {
 		if (!in_array($this->apiVersion, Style::$supportedApiVersions)) {
 			throw new UserInputException('apiVersion', 'invalid');
+		}
+	}
+	
+	protected function validateUploads() {
+		// Preview image.
+		$field = 'image';
+		$files = UploadHandler::getInstance()->getFilesByFieldId($field);
+		if (count($files) > 1) {
+			throw new UserInputException($field, 'invalid');
+		}
+		if (!empty($files)) {
+			$fileLocation = $files[0]->getLocation();
+			if (($imageData = getimagesize($fileLocation)) === false) {
+				throw new UserInputException($field, 'invalid');
+			}
+			switch ($imageData[2]) {
+				case IMAGETYPE_PNG:
+				case IMAGETYPE_JPEG:
+				case IMAGETYPE_GIF:
+					// fine
+				break;
+				default:
+					throw new UserInputException($field, 'invalid');
+			}
+			
+			if ($imageData[0] > (Style::PREVIEW_IMAGE_MAX_WIDTH) || $imageData[1] > (Style::PREVIEW_IMAGE_MAX_HEIGHT)) {
+				$adapter = ImageHandler::getInstance()->getAdapter();
+				$adapter->loadFile($fileLocation);
+				$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH, Style::PREVIEW_IMAGE_MAX_HEIGHT, false);
+				$adapter->writeImage($thumbnail, $fileLocation);
+			}
+		}
+		
+		// Preview image (2x).
+		$field = 'image2x';
+		$files = UploadHandler::getInstance()->getFilesByFieldId($field);
+		if (count($files) > 1) {
+			throw new UserInputException($field, 'invalid');
+		}
+		if (!empty($files)) {
+			$fileLocation = $files[0]->getLocation();
+			if (($imageData = getimagesize($fileLocation)) === false) {
+				throw new UserInputException($field, 'invalid');
+			}
+			switch ($imageData[2]) {
+				case IMAGETYPE_PNG:
+				case IMAGETYPE_JPEG:
+				case IMAGETYPE_GIF:
+					// fine
+				break;
+				default:
+					throw new UserInputException($field, 'invalid');
+			}
+			
+			if ($imageData[0] > (Style::PREVIEW_IMAGE_MAX_WIDTH * 2) || $imageData[1] > (Style::PREVIEW_IMAGE_MAX_HEIGHT * 2)) {
+				$adapter = ImageHandler::getInstance()->getAdapter();
+				$adapter->loadFile($fileLocation);
+				$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH * 2, Style::PREVIEW_IMAGE_MAX_HEIGHT * 2, false);
+				$adapter->writeImage($thumbnail, $fileLocation);
+			}
 		}
 	}
 	
@@ -597,6 +700,7 @@ class StyleAddForm extends AbstractForm {
 				'authorURL' => $this->authorURL,
 				'apiVersion' => $this->apiVersion
 			]),
+			'uploads' => $this->uploads,
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
 		]);
@@ -621,6 +725,7 @@ class StyleAddForm extends AbstractForm {
 		$this->imagePath = 'images/';
 		$this->isTainted = true;
 		$this->templateGroupID = 0;
+		$this->rebuildUploadFields();
 		
 		I18nHandler::getInstance()->reset();
 		

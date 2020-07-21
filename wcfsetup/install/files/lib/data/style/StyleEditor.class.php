@@ -73,11 +73,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		if ($variables !== null) {
 			$this->setVariables($variables);
 		}
-		
-		// scale preview image
-		if (!empty($parameters['image']) && $parameters['image'] != $this->image) {
-			self::scalePreviewImage($parameters['image']);
-		}
 	}
 	
 	/**
@@ -1084,17 +1079,5 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 */
 	public static function resetCache() {
 		StyleCacheBuilder::getInstance()->reset();
-	}
-	
-	/**
-	 * Scales the style preview image.
-	 * 
-	 * @param	string		$filename
-	 */
-	public static function scalePreviewImage($filename) {
-		$adapter = ImageHandler::getInstance()->getAdapter();
-		$adapter->loadFile(WCF_DIR.'images/'.$filename);
-		$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH, Style::PREVIEW_IMAGE_MAX_HEIGHT);
-		$adapter->writeImage($thumbnail, WCF_DIR.'images/'.$filename);
 	}
 }

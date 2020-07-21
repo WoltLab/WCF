@@ -11,16 +11,17 @@ use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
 use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
+use wcf\system\file\upload\UploadHandler;
 use wcf\system\image\ImageHandler;
 use wcf\system\language\LanguageFactory;
 use wcf\system\request\LinkHandler;
 use wcf\system\style\StyleHandler;
 use wcf\system\upload\DefaultUploadFileValidationStrategy;
 use wcf\system\upload\UploadFile;
-use wcf\system\upload\UploadHandler;
 use wcf\system\Regex;
 use wcf\system\WCF;
 use wcf\util\FileUtil;
+use wcf\util\ImageUtil;
 
 /**
  * Executes style-related actions.
@@ -224,51 +225,43 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction,
 	 * @param	Style		$style
 	 */
 	protected function updateStylePreviewImage(Style $style) {
-		if (!isset($this->parameters['tmpHash'])) {
-			return;
-		}
-		
-		foreach (['', '@2x'] as $type) {
-			$fileExtension = WCF::getSession()->getVar('stylePreview-' . $this->parameters['tmpHash'] . $type);
-			if ($fileExtension !== null) {
-				$oldFilename = WCF_DIR . 'images/stylePreview-' . $this->parameters['tmpHash'] . $type . '.' . $fileExtension;
-				if (file_exists($oldFilename)) {
-					$filename = 'stylePreview-' . $style->styleID . $type . '.' . $fileExtension;
-					if (@rename($oldFilename, WCF_DIR . 'images/' . $filename)) {
-						// delete old file if it has a different file extension
-						if ($type === '') {
-							if ($style->image != $filename) {
-								@unlink(WCF_DIR . 'images/' . $style->image);
-								
-								// update filename in database
-								$sql = "UPDATE	wcf" . WCF_N . "_style
-									SET	image = ?
-									WHERE	styleID = ?";
-								$statement = WCF::getDB()->prepareStatement($sql);
-								$statement->execute([
-									$filename, $style->styleID
-								]);
-							}
-						}
-						else {
-							if ($style->image2x != $filename) {
-								@unlink(WCF_DIR . 'images/' . $style->image2x);
-								
-								// update filename in database
-								$sql = "UPDATE	wcf" . WCF_N . "_style
-									SET	image2x = ?
-									WHERE	styleID = ?";
-								$statement = WCF::getDB()->prepareStatement($sql);
-								$statement->execute([
-									$filename, $style->styleID
-								]);
-							}
-						}
+		foreach (['image', 'image2x'] as $type) {
+			if (array_key_exists($type, $this->parameters['uploads'])) {
+				/** @var \wcf\system\file\upload\UploadFile $file */
+				$file = $this->parameters['uploads'][$type];
+				
+				if ($style->{$type} && file_exists($style->getAssetPath().basename($style->{$type}))) {
+					if (!$file || $style->getAssetPath().basename($style->{$type}) !== $file->getLocation()) {
+						unlink($style->getAssetPath().basename($style->{$type}));
+					}
+				}
+				if ($file !== null) {
+					$fileLocation = $file->getLocation();
+					if (($imageData = getimagesize($fileLocation)) === false) {
+						throw new \InvalidArgumentException('The given '.$type.' is not an image');
+					}
+					$extension = ImageUtil::getExtensionByMimeType($imageData['mime']);
+					if ($type === 'image') {
+						$newName = 'stylePreview.'.$extension;
+					}
+					else if ($type === 'image2x') {
+						$newName = 'stylePreview@2x.'.$extension;
 					}
 					else {
-						// remove temp file
-						@unlink($oldFilename);
+						throw new \LogicException('Unreachable');
 					}
+					$newLocation = $style->getAssetPath().$newName;
+					rename($fileLocation, $newLocation);
+					(new StyleEditor($style))->update([
+						$type => FileUtil::getRelativePath(WCF_DIR.'images/', $style->getAssetPath()).$newName,
+					]);
+					
+					$file->setProcessed($newLocation);
+				}
+				else {
+					(new StyleEditor($style))->update([
+						$type => '',
+					]);
 				}
 			}
 		}

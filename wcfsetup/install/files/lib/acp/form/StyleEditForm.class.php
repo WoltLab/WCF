@@ -5,6 +5,8 @@ use wcf\data\style\StyleAction;
 use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\form\AbstractForm;
 use wcf\system\exception\IllegalLinkException;
+use wcf\system\file\upload\UploadFile;
+use wcf\system\file\upload\UploadHandler;
 use wcf\system\language\I18nHandler;
 use wcf\system\WCF;
 
@@ -138,6 +140,18 @@ class StyleEditForm extends StyleAddForm {
 			$this->styleName = $this->style->styleName;
 			$this->styleVersion = $this->style->styleVersion;
 			$this->templateGroupID = $this->style->templateGroupID;
+			if ($this->style->image) {
+				$file = new UploadFile(WCF_DIR.'images/'.$this->style->image, $this->style->image, true, true, true);
+				UploadHandler::getInstance()->registerFilesByField('image', [
+					$file,
+				]);
+			}
+			if ($this->style->image2x) {
+				$file = new UploadFile(WCF_DIR.'images/'.$this->style->image2x, $this->style->image2x, true, true, true);
+				UploadHandler::getInstance()->registerFilesByField('image2x', [
+					$file,
+				]);
+			}
 		}
 	}
 	
@@ -172,6 +186,7 @@ class StyleEditForm extends StyleAddForm {
 				'authorURL' => $this->authorURL,
 				'apiVersion' => $this->apiVersion
 			]),
+			'uploads' => $this->uploads,
 			'tmpHash' => $this->tmpHash,
 			'variables' => $this->variables
 		]);
