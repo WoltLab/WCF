@@ -59,7 +59,7 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 	/**
 	 * @inheritDoc
 	 */
-	protected $requireACP = ['copy', 'delete', 'deleteCoverPhoto', 'markAsTainted', 'setAsDefault', 'toggle', 'update', 'upload', 'uploadCoverPhoto', 'uploadLogo', 'uploadLogoMobile'];
+	protected $requireACP = ['copy', 'delete', 'deleteCoverPhoto', 'markAsTainted', 'setAsDefault', 'toggle', 'update', 'upload', 'uploadCoverPhoto',];
 	
 	/**
 	 * style object
@@ -425,68 +425,6 @@ BROWSERCONFIG;
 		
 		// check max filesize, allowed file extensions etc.
 		$uploadHandler->validateFiles(new DefaultUploadFileValidationStrategy(PHP_INT_MAX, ['jpg', 'jpeg', 'png', 'gif', 'svg']));
-	}
-	
-	/**
-	 * Validates parameters to update a logo.
-	 */
-	public function validateUploadLogo() {
-		$this->validateUpload();
-	}
-	
-	/**
-	 * Handles logo upload.
-	 * 
-	 * @return	string[]
-	 */
-	public function uploadLogo() {
-		// save files
-		/** @noinspection PhpUndefinedMethodInspection */
-		/** @var UploadFile[] $files */
-		$files = $this->parameters['__files']->getFiles();
-		$file = $files[0];
-		
-		try {
-			$relativePath = FileUtil::unifyDirSeparator(FileUtil::getRelativePath(WCF_DIR.'images/', WCF_DIR.$this->parameters['imagePath']));
-			if (strpos($relativePath, '../') !== false) {
-				throw new UserInputException('imagePath', 'invalid');
-			}
-			
-			if ($this->parameters['type'] !== 'styleLogo' && $this->parameters['type'] !== 'styleLogo-mobile') {
-				throw new UserInputException('type', 'invalid');
-			}
-			
-			if (!$file->getValidationErrorType()) {
-				// shrink avatar if necessary
-				$fileLocation = $file->getLocation();
-				
-				$basename = $this->parameters['type'].'-'.$this->parameters['tmpHash'].'.'.$file->getFileExtension();
-				$target = WCF_DIR.$this->parameters['imagePath'].'/'.$basename;
-				
-				// move uploaded file
-				if (@copy($fileLocation, $target)) {
-					@unlink($fileLocation);
-					
-					// get logo size
-					list($width, $height) = getimagesize($target);
-					
-					// return result
-					return [
-						'url' => $basename,
-						'width' => $width,
-						'height' => $height
-					];
-				}
-				else {
-					throw new UserInputException('image', 'uploadFailed');
-				}
-			}
-		}
-		catch (UserInputException $e) {
-			$file->setValidationErrorType($e->getType());
-		}
-		
-		return ['errorType' => $file->getValidationErrorType()];
 	}
 	
 	/**
