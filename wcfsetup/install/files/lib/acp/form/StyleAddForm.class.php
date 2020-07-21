@@ -323,13 +323,14 @@ class StyleAddForm extends AbstractForm {
 		
 		$this->uploads = [];
 		foreach (['image', 'image2x'] as $field) {
-			$files = UploadHandler::getInstance()->getFilesByFieldId($field);
-			if (!empty($files)) {
-				$this->uploads[$field] = $files[0];
-			}
 			$removedFiles = UploadHandler::getInstance()->getRemovedFiledByFieldId($field);
 			if (!empty($removedFiles)) {
 				$this->uploads[$field] = null;
+			}
+			
+			$files = UploadHandler::getInstance()->getFilesByFieldId($field);
+			if (!empty($files)) {
+				$this->uploads[$field] = $files[0];
 			}
 		}
 	}
