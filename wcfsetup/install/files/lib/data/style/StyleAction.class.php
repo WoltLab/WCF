@@ -5,7 +5,6 @@ use wcf\data\user\cover\photo\UserCoverPhoto;
 use wcf\data\user\UserAction;
 use wcf\data\AbstractDatabaseObjectAction;
 use wcf\data\IToggleAction;
-use wcf\data\IUploadAction;
 use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\exception\IllegalLinkException;
 use wcf\system\exception\PermissionDeniedException;
@@ -34,7 +33,7 @@ use wcf\util\ImageUtil;
  * @method	StyleEditor[]	getObjects()
  * @method	StyleEditor	getSingleObject()
  */
-class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction, IUploadAction {
+class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction {
 	use TDatabaseObjectToggle;
 	
 	/**
@@ -426,80 +425,6 @@ BROWSERCONFIG;
 		
 		// check max filesize, allowed file extensions etc.
 		$uploadHandler->validateFiles(new DefaultUploadFileValidationStrategy(PHP_INT_MAX, ['jpg', 'jpeg', 'png', 'gif', 'svg']));
-	}
-	
-	/**
-	 * @inheritDoc
-	 */
-	public function upload() {
-		// save files
-		/** @noinspection PhpUndefinedMethodInspection */
-		/** @var UploadFile[] $files */
-		$files = $this->parameters['__files']->getFiles();
-		$file = $files[0];
-		
-		$multiplier = ($this->parameters['is2x']) ? 2 : 1;
-		
-		try {
-			if (!$file->getValidationErrorType()) {
-				// shrink preview image if necessary
-				$fileLocation = $file->getLocation();
-				try {
-					if (($imageData = getimagesize($fileLocation)) === false) {
-						throw new UserInputException('image');
-					}
-					switch ($imageData[2]) {
-						case IMAGETYPE_PNG:
-						case IMAGETYPE_JPEG:
-						case IMAGETYPE_GIF:
-							// fine
-						break;
-						default:
-							throw new UserInputException('image');
-					}
-					
-					if ($imageData[0] > (Style::PREVIEW_IMAGE_MAX_WIDTH * $multiplier) || $imageData[1] > (Style::PREVIEW_IMAGE_MAX_HEIGHT * $multiplier)) {
-						$adapter = ImageHandler::getInstance()->getAdapter();
-						$adapter->loadFile($fileLocation);
-						$fileLocation = FileUtil::getTemporaryFilename();
-						$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH * $multiplier, Style::PREVIEW_IMAGE_MAX_HEIGHT * $multiplier, false);
-						$adapter->writeImage($thumbnail, $fileLocation);
-					}
-				}
-				catch (SystemException $e) {
-					throw new UserInputException('image');
-				}
-				
-				// move uploaded file
-				if (@copy($fileLocation, WCF_DIR.'images/stylePreview-'.$this->parameters['tmpHash'].($this->parameters['is2x'] ? '@2x' : '').'.'.$file->getFileExtension())) {
-					@unlink($fileLocation);
-					
-					// store extension within session variables
-					WCF::getSession()->register('stylePreview-'.$this->parameters['tmpHash'].($this->parameters['is2x'] ? '@2x' : ''), $file->getFileExtension());
-					
-					if ($this->parameters['styleID']) {
-						$this->updateStylePreviewImage($this->style);
-						
-						return [
-							'url' => WCF::getPath().'images/stylePreview-'.$this->parameters['styleID'].($this->parameters['is2x'] ? '@2x' : '').'.'.$file->getFileExtension()
-						];
-					}
-					
-					// return result
-					return [
-						'url' => WCF::getPath().'images/stylePreview-'.$this->parameters['tmpHash'].($this->parameters['is2x'] ? '@2x' : '').'.'.$file->getFileExtension()
-					];
-				}
-				else {
-					throw new UserInputException('image', 'uploadFailed');
-				}
-			}
-		}
-		catch (UserInputException $e) {
-			$file->setValidationErrorType($e->getType());
-		}
-		
-		return ['errorType' => $file->getValidationErrorType()];
 	}
 	
 	/**

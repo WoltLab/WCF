@@ -6,10 +6,10 @@
 {js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
 <script data-relocate="true">
 	require([
-		'WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Delete', 'WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Favicon/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Image/Upload',
+		'WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Delete', 'WoltLabSuite/Core/Acp/Ui/Style/CoverPhoto/Upload', 'WoltLabSuite/Core/Acp/Ui/Style/Favicon/Upload',
 		'WoltLabSuite/Core/Acp/Ui/Style/Editor', 'WoltLabSuite/Core/Ui/Toggle/Input', 'Language'
 	], function(
-		AcpUiStyleCoverPhotoDelete, AcpUiStyleCoverPhotoUpload, AcpUiStyleFaviconUpload, AcpUiStyleImageUpload,
+		AcpUiStyleCoverPhotoDelete, AcpUiStyleCoverPhotoUpload, AcpUiStyleFaviconUpload,
 		AcpUiStyleEditor, UiToggleInput, Language
 	) {
 		AcpUiStyleEditor.setup({
