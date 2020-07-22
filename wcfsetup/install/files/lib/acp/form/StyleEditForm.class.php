@@ -170,6 +170,18 @@ class StyleEditForm extends StyleAddForm {
 					$file,
 				]);
 			}
+			if ($this->style->hasFavicon) {
+				foreach (['png', 'jpg', 'gif'] as $extension) {
+					if (file_exists($this->style->getAssetPath()."favicon.template.".$extension)) {
+						$file = new UploadFile($this->style->getAssetPath()."favicon.template.".$extension, "favicon.template.".$extension, true, true, false);
+						UploadHandler::getInstance()->registerFilesByField('favicon', [
+							$file,
+						]);
+						break;
+					}
+				}
+				
+			}
 		}
 	}
 	

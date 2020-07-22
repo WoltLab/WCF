@@ -6,10 +6,8 @@
 {js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
 <script data-relocate="true">
 	require([
-		'WoltLabSuite/Core/Acp/Ui/Style/Favicon/Upload',
 		'WoltLabSuite/Core/Acp/Ui/Style/Editor', 'WoltLabSuite/Core/Ui/Toggle/Input', 'Language'
 	], function(
-		AcpUiStyleFaviconUpload,
 		AcpUiStyleEditor, UiToggleInput, Language
 	) {
 		AcpUiStyleEditor.setup({
@@ -21,10 +19,6 @@
 		new UiToggleInput('input[name="useGoogleFont"]', {
 			show: ['#wcfFontFamilyGoogleContainer']
 		});
-		
-		{if $action === 'edit'}
-			new AcpUiStyleFaviconUpload({@$style->styleID});
-		{/if}
 	});
 	
 	$(function() {
@@ -35,8 +29,6 @@
 			'wcf.style.colorPicker.new': '{lang}wcf.style.colorPicker.new{/lang}',
 			'wcf.style.colorPicker.current': '{lang}wcf.style.colorPicker.current{/lang}',
 			'wcf.style.colorPicker.button.apply': '{lang}wcf.style.colorPicker.button.apply{/lang}',
-			'wcf.acp.style.favicon.error.dimensions': '{lang}wcf.acp.style.favicon.error.dimensions{/lang}',
-			'wcf.acp.style.favicon.error.invalidExtension': '{lang}wcf.acp.style.favicon.error.invalidExtension{/lang}',
 			'wcf.acp.style.image.error.invalidExtension': '{lang}wcf.acp.style.image.error.invalidExtension{/lang}'
 		});
 		
@@ -288,25 +280,29 @@
 				{event name='fileFields'}
 			</section>
 			
-			{if $action === 'edit'}
-				<section class="section">
-					<h2 class="sectionTitle">{lang}wcf.acp.style.general.favicon{/lang}</h2>
-					
-					<dl>
-						<dt><label for="favicon">{lang}wcf.acp.style.favicon{/lang}</label></dt>
-						<dd>
-							<div class="selectedFaviconPreview">
-								<img src="{@$style->getFaviconAppleTouchIcon()}" alt="" id="faviconImage" style="height: 32px; width: 32px;">
-							</div>
-							<div id="uploadFavicon"></div>
-							<small>{lang}wcf.acp.style.favicon.description{/lang}</small>
-						</dd>
-					</dl>
-					
-					{event name='faviconFields'}
-				</section>
-			{/if}
+			<section class="section">
+				<h2 class="sectionTitle">{lang}wcf.acp.style.general.favicon{/lang}</h2>
 				
+				<dl{if $errorField == 'image'} class="formError"{/if}>
+					<dt><label for="favicon">{lang}wcf.acp.style.favicon{/lang}</label></dt>
+					<dd>
+						{@$__wcf->getUploadHandler()->renderField('favicon')}
+						{if $errorField == 'favicon'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.style.favicon.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
+						<small>{lang}wcf.acp.style.favicon.description{/lang}</small>
+					</dd>
+				</dl>
+				
+				{event name='faviconFields'}
+			</section>
+			
 			<section class="section">
 				<header class="sectionHeader">
 					<h2 class="sectionTitle">{lang}wcf.acp.style.general.coverPhoto{/lang}</h2>

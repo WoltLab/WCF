@@ -278,6 +278,14 @@ class StyleAddForm extends AbstractForm {
 		$field->setImageOnly(true);
 		$field->maxFiles = 1;
 		$handler->registerUploadField($field);
+		
+		if ($handler->isRegisteredFieldId('favicon')) {
+			$handler->unregisterUploadField('favicon');
+		}
+		$field = new UploadField('favicon');
+		$field->setImageOnly(true);
+		$field->maxFiles = 1;
+		$handler->registerUploadField($field);
 	}
 	
 	/**
@@ -343,7 +351,7 @@ class StyleAddForm extends AbstractForm {
 		if (isset($_POST['scrollOffsets']) && is_array($_POST['scrollOffsets'])) $this->scrollOffsets = ArrayUtil::toIntegerArray($_POST['scrollOffsets']); 
 		
 		$this->uploads = [];
-		foreach (['image', 'image2x', 'pageLogo', 'pageLogoMobile', 'coverPhoto'] as $field) {
+		foreach (['image', 'image2x', 'pageLogo', 'pageLogoMobile', 'coverPhoto', 'favicon'] as $field) {
 			$removedFiles = UploadHandler::getInstance()->getRemovedFiledByFieldId($field);
 			if (!empty($removedFiles)) {
 				$this->uploads[$field] = null;
@@ -535,10 +543,39 @@ class StyleAddForm extends AbstractForm {
 			}
 			
 			if ($imageData[0] < UserCoverPhoto::MIN_WIDTH) {
-				throw new UserInputException('coverPhoto', 'minWidth');
+				throw new UserInputException($field, 'minWidth');
 			}
 			if ($imageData[1] < UserCoverPhoto::MIN_HEIGHT) {
-				throw new UserInputException('coverPhoto', 'minHeight');
+				throw new UserInputException($field, 'minHeight');
+			}
+		}
+		
+		// favicon
+		$field = 'favicon';
+		$files = UploadHandler::getInstance()->getFilesByFieldId($field);
+		if (count($files) > 1) {
+			throw new UserInputException($field, 'invalid');
+		}
+		if (!empty($files)) {
+			$fileLocation = $files[0]->getLocation();
+			if (($imageData = getimagesize($fileLocation)) === false) {
+				throw new UserInputException($field, 'invalid');
+			}
+			switch ($imageData[2]) {
+				case IMAGETYPE_PNG:
+				case IMAGETYPE_JPEG:
+				case IMAGETYPE_GIF:
+					// fine
+				break;
+				default:
+					throw new UserInputException($field, 'invalid');
+			}
+			
+			if ($imageData[0] != Style::FAVICON_IMAGE_WIDTH) {
+				throw new UserInputException($field, 'dimensions');
+			}
+			if ($imageData[1] != Style::FAVICON_IMAGE_HEIGHT) {
+				throw new UserInputException($field, 'dimensions');
 			}
 		}
 	}

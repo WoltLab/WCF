@@ -273,7 +273,13 @@ class Style extends DatabaseObject {
 			}
 		}
 		
-		$path = 'images/favicon/'. ($this->hasFavicon ? $this->styleID : 'default') . ".{$filename}";
+		if ($this->hasFavicon) {
+			$path = FileUtil::getRelativePath(WCF_DIR, $this->getAssetPath()).$filename;
+		}
+		else {
+			$path = 'images/favicon/default.'.$filename;
+		}
+		
 		if ($absolutePath) {
 			return WCF::getPath() . $path;
 		}
