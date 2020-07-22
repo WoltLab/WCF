@@ -753,7 +753,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		}
 		
 		// append cover photo
-		$coverPhoto = ($this->coverPhotoExtension) ? WCF_DIR.'images/coverPhotos/'.$this->styleID.'.'.$this->coverPhotoExtension : '';
+		$coverPhoto = ($this->coverPhotoExtension) ? $this->getAssetPath().'coverPhoto.'.$this->coverPhotoExtension : '';
 		if ($coverPhoto && @file_exists($coverPhoto)) {
 			$styleTar->add($coverPhoto, '', FileUtil::addTrailingSlash(dirname($coverPhoto)));
 		}
@@ -871,25 +871,27 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			@unlink($templatesTarName);
 		}
 		
-		if ($images && ($this->imagePath && $this->imagePath != 'images/')) {
+		if ($images) {
 			// create images tar
 			$imagesTarName = FileUtil::getTemporaryFilename('images_', '.tar');
 			$imagesTar = new TarWriter($imagesTarName);
 			FileUtil::makeWritable($imagesTarName);
 			
-			// append images to tar
-			$path = FileUtil::addTrailingSlash(WCF_DIR.$this->imagePath);
-			if (file_exists($path) && is_dir($path)) {
-				$handle = opendir($path);
+			$regEx = new Regex('\.(jpg|jpeg|gif|png|svg|ico|json|xml|txt)$', Regex::CASE_INSENSITIVE);
+			$iterator = new \RecursiveIteratorIterator(
+				new \RecursiveDirectoryIterator(
+					$this->getAssetPath(),
+					\FilesystemIterator::SKIP_DOTS
+				), 
+				\RecursiveIteratorIterator::SELF_FIRST
+			);
+			foreach ($iterator as $file) {
+				/** @var \SplFileInfo $file */
+				if (!$file->isFile()) continue;
+				if (!$regEx->match($file->getPathName())) continue;
 				
-				$regEx = new Regex('\.(jpg|jpeg|gif|png|svg)$', Regex::CASE_INSENSITIVE);
-				while (($file = readdir($handle)) !== false) {
-					if (is_file($path.$file) && $regEx->match($file)) {
-						$imagesTar->add($path.$file, '', $path);
-					}
-				}
+				$imagesTar->add($file->getPathName(), '', $this->getAssetPath());
 			}
-			
 			// append images tar to style tar
 			$imagesTar->create();
 			$styleTar->add($imagesTarName, 'images.tar', $imagesTarName);
