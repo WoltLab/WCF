@@ -532,8 +532,12 @@ BROWSERCONFIG;
 			'authorName' => $this->styleEditor->authorName,
 			'authorURL' => $this->styleEditor->authorURL,
 			'imagePath' => $this->styleEditor->imagePath,
-			'apiVersion' => $this->styleEditor->apiVersion
+			'apiVersion' => $this->styleEditor->apiVersion,
+			
+			'coverPhotoExtension' => $this->styleEditor->coverPhotoExtension,
+			'hasFavicon' => $this->styleEditor->hasFavicon,
 		]);
+		$styleEditor = new StyleEditor($newStyle);
 		
 		// check if style description uses i18n
 		if (preg_match('~^wcf.style.styleDescription\d+$~', $newStyle->styleDescription)) {
@@ -555,7 +559,6 @@ BROWSERCONFIG;
 			$statement->execute([$newStyle->styleDescription]);
 			
 			// update style description
-			$styleEditor = new StyleEditor($newStyle);
 			$styleEditor->update([
 				'styleDescription' => $styleDescription
 			]);
@@ -576,94 +579,36 @@ BROWSERCONFIG;
 		foreach (['image', 'image2x'] as $imageType) {
 			$image = $this->styleEditor->{$imageType};
 			if ($image) {
-				// get extension
-				$fileExtension = mb_substr($image, mb_strrpos($image, '.'));
-				
-				// copy existing preview image
-				if (@copy(WCF_DIR . 'images/' . $image, WCF_DIR . 'images/stylePreview-' . $newStyle->styleID . $fileExtension)) {
-					// bypass StyleEditor::update() to avoid scaling of already fitting image
-					$sql = "UPDATE	wcf" . WCF_N . "_style
-						SET	".$imageType." = ?
-						WHERE	styleID = ?";
-					$statement = WCF::getDB()->prepareStatement($sql);
-					$statement->execute([
-						'stylePreview-' . $newStyle->styleID . $fileExtension,
-						$newStyle->styleID
-					]);
-				}
-			}
-		}
-		
-		// copy cover photo
-		if ($this->styleEditor->coverPhotoExtension) {
-			if (@copy(WCF_DIR . "images/coverPhotos/{$this->styleEditor->styleID}.{$this->styleEditor->coverPhotoExtension}", WCF_DIR . "images/coverPhotos/{$newStyle->styleID}.{$this->styleEditor->coverPhotoExtension}")) {
-				$sql = "UPDATE	wcf" . WCF_N . "_style
-					SET	coverPhotoExtension = ?
-					WHERE	styleID = ?";
-				$statement = WCF::getDB()->prepareStatement($sql);
-				$statement->execute([
-					$this->styleEditor->coverPhotoExtension,
-					$newStyle->styleID
+				$styleEditor->update([
+					$imageType => preg_replace('/^style-\d+/', 'style-'.$styleEditor->styleID, $image),
 				]);
 			}
 		}
 		
-		// copy favicon
-		if ($this->styleEditor->hasFavicon) {
-			$path = WCF_DIR . 'images/favicon/';
-			foreach (glob($path . "{$this->styleEditor->styleID}.*") as $filepath) {
-				@copy($filepath, $path . preg_replace('~^\d+\.~', "{$newStyle->styleID}.", basename($filepath)));
+		// Copy asset path
+		$iterator = new \RecursiveIteratorIterator(
+			new \RecursiveDirectoryIterator(
+				$this->styleEditor->getAssetPath(),
+				\FilesystemIterator::SKIP_DOTS
+			), 
+			\RecursiveIteratorIterator::SELF_FIRST
+		);
+		foreach ($iterator as $file) {
+			/** @var \SplFileInfo $file */
+			if ($file->isDir()) {
+				$relativePath = FileUtil::getRelativePath($this->styleEditor->getAssetPath(), $file->getPathname());
 			}
-			
-			$sql = "UPDATE	wcf" . WCF_N . "_style
-				SET	hasFavicon = ?
-				WHERE	styleID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([
-				1,
-				$newStyle->styleID
-			]);
-		}
-		
-		// copy images
-		if ($this->styleEditor->imagePath && is_dir(WCF_DIR . $this->styleEditor->imagePath)) {
-			$path = FileUtil::removeTrailingSlash($this->styleEditor->imagePath);
-			$newPath = '';
-			$i = 2;
-			while (true) {
-				$newPath = "{$path}-{$i}/";
-				if (!file_exists(WCF_DIR . $newPath)) {
-					break;
-				}
-				
-				$i++;
+			else if ($file->isFile()) {
+				$relativePath = FileUtil::getRelativePath($this->styleEditor->getAssetPath(), $file->getPath());
 			}
-			
-			if (!FileUtil::makePath(WCF_DIR . $newPath)) {
-				$newPath = '';
+			else {
+				throw new \LogicException('Unreachable');
 			}
-			
-			if ($newPath) {
-				$src = FileUtil::addTrailingSlash(WCF_DIR . $this->styleEditor->imagePath);
-				$dst = WCF_DIR . $newPath;
-				
-				$dir = opendir($src);
-				while (($file = readdir($dir)) !== false) {
-					if ($file != '.' && $file != '..' && !is_dir($file)) {
-						@copy($src . $file, $dst . $file);
-					}
-				}
-				closedir($dir);
+			$targetFolder = $newStyle->getAssetPath().$relativePath;
+			FileUtil::makePath($targetFolder);
+			if ($file->isFile()) {
+				copy($file->getPathname(), $targetFolder.$file->getFilename());
 			}
-			
-			$sql = "UPDATE	wcf".WCF_N."_style
-				SET	imagePath = ?
-				WHERE	styleID = ?";
-			$statement = WCF::getDB()->prepareStatement($sql);
-			$statement->execute([
-				$newPath,
-				$newStyle->styleID
-			]);
 		}
 		
 		StyleCacheBuilder::getInstance()->reset();
