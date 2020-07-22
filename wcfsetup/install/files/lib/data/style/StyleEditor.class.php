@@ -1068,11 +1068,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$styleEditor->setVariables($variables);
 		}
 		
-		// scale preview image
-		if (!empty($parameters['image'])) {
-			self::scalePreviewImage(WCF_DIR.$parameters['image']);
-		}
-		
 		return $style;
 	}
 	
