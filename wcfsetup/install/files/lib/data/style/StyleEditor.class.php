@@ -81,12 +81,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	public function delete() {
 		parent::delete();
 		
-		// delete variables
-		$sql = "DELETE FROM	wcf".WCF_N."_style_variable_value
-			WHERE		styleID = ?";
-		$statement = WCF::getDB()->prepareStatement($sql);
-		$statement->execute([$this->styleID]);
-		
 		// delete style files
 		$files = @glob(WCF_DIR.'style/style-'.$this->styleID.'*.css');
 		if (is_array($files)) {
