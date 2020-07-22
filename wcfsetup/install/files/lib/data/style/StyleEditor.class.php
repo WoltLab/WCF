@@ -13,7 +13,6 @@ use wcf\data\IEditableCachedObject;
 use wcf\system\application\ApplicationHandler;
 use wcf\system\cache\builder\StyleCacheBuilder;
 use wcf\system\exception\SystemException;
-use wcf\system\image\ImageHandler;
 use wcf\system\io\Tar;
 use wcf\system\io\TarWriter;
 use wcf\system\language\LanguageFactory;
