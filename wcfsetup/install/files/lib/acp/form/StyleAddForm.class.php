@@ -11,6 +11,8 @@ use wcf\system\exception\SystemException;
 use wcf\system\exception\UserInputException;
 use wcf\system\language\I18nHandler;
 use wcf\system\Regex;
+use wcf\system\style\exception\FontDownloadFailed;
+use wcf\system\style\FontManager;
 use wcf\system\WCF;
 use wcf\util\ArrayUtil;
 use wcf\util\DateUtil;
@@ -273,7 +275,6 @@ class StyleAddForm extends AbstractForm {
 			}
 		}
 		$this->variables['useFluidLayout'] = isset($_POST['useFluidLayout']) ? 1 : 0;
-		$this->variables['useGoogleFont'] = isset($_POST['useGoogleFont']) ? 1 : 0;
 		
 		// style data
 		if (isset($_POST['authorName'])) $this->authorName = StringUtil::trim($_POST['authorName']);
@@ -291,6 +292,24 @@ class StyleAddForm extends AbstractForm {
 		
 		// codemirror scroll offset
 		if (isset($_POST['scrollOffsets']) && is_array($_POST['scrollOffsets'])) $this->scrollOffsets = ArrayUtil::toIntegerArray($_POST['scrollOffsets']); 
+	}
+	
+	/**
+	 * @since	5.3
+	 */
+	protected function downloadGoogleFont() {
+		$fontManager = FontManager::getInstance();
+		$family = $this->variables['wcfFontFamilyGoogle'];
+		if ($family) {
+			if (!$fontManager->isFamilyDownloaded($family)) {
+				try {
+					$fontManager->downloadFamily($family);
+				}
+				catch (FontDownloadFailed $e) {
+					throw new UserInputException('wcfFontFamilyGoogle', 'downloadFailed'.($e->getReason() ? '.'.$e->getReason() : ''));
+				}
+			}
+		}
 	}
 	
 	/**
@@ -357,6 +376,8 @@ class StyleAddForm extends AbstractForm {
 		}
 		
 		$this->validateApiVersion();
+		
+		$this->downloadGoogleFont();
 	}
 	
 	/**
@@ -552,7 +573,6 @@ class StyleAddForm extends AbstractForm {
 			'pageLogoHeight',
 			'pageLogoMobile',
 			'useFluidLayout',
-			'useGoogleFont',
 			'wcfFontFamilyGoogle',
 			'wcfFontFamilyFallback'
 		];

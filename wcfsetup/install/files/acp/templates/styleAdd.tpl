@@ -21,10 +21,6 @@
 		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}', false);
 		new AcpUiStyleImageUpload({if $action == 'add'}0{else}{@$style->styleID}{/if}, '{$tmpHash}', true);
 		
-		new UiToggleInput('input[name="useGoogleFont"]', {
-			show: ['#wcfFontFamilyGoogleContainer']
-		});
-		
 		{if $action === 'edit'}
 			new AcpUiStyleFaviconUpload({@$style->styleID});
 			
@@ -532,17 +528,20 @@
 					</dd>
 				</dl>
 				
-				<dl>
-					<dt></dt>
-					<dd><label>
-						<input type="checkbox" id="useGoogleFont" name="useGoogleFont" value="1"{if !$variables[useGoogleFont]|empty} checked{/if}>
-						<span>{lang}wcf.acp.style.globals.useGoogleFont{/lang}</span>
-					</label></dd>
-				</dl>
-				<dl id="wcfFontFamilyGoogleContainer">
+				<dl id="wcfFontFamilyGoogleContainer"{if $errorField == 'wcfFontFamilyGoogle'} class="formError"{/if}>
 					<dt><label for="wcfFontFamilyGoogle">{lang}wcf.acp.style.globals.fontFamilyGoogle{/lang}</label></dt>
 					<dd>
 						<input type="text" id="wcfFontFamilyGoogle" name="wcfFontFamilyGoogle" value="{$variables[wcfFontFamilyGoogle]}" class="medium">
+						<small>{lang}wcf.acp.style.globals.fontFamilyGoogle.description{/lang}</small>
+						{if $errorField == 'wcfFontFamilyGoogle'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.style.globals.fontFamilyGoogle.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
 					</dd>
 				</dl>
 				<dl>
