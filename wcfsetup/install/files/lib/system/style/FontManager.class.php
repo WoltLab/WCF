@@ -86,11 +86,14 @@ class FontManager extends SingletonFactory {
 					throw new \InvalidArgumentException("Invalid filename '".$filename."' given.");
 				}
 				
-				$response = $this->http->send(new Request('GET', $family.'/'.$filename));
+				$response = $this->http->send(new Request('GET', $family.'/'.$filename), [
+					// https://github.com/guzzle/guzzle/issues/2735
+					'sink' => fopen("php://temp", "w+"),
+				]);
 				
 				$file = new AtomicWriter($familyDirectory.'/'.$filename);
 				while (!$response->getBody()->eof()) {
-					$file->write($response->getBody()->read(4096));
+					$file->write($response->getBody()->read(8192));
 				}
 				$response->getBody()->close();
 				$file->flush();
