@@ -41,7 +41,7 @@ use wcf\util\XMLWriter;
 class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject {
 	const EXCLUDE_WCF_VERSION = '6.0.0 Alpha 1';
 	const INFO_FILE = 'style.xml';
-	const VALID_IMAGE_EXTENSIONS = ['.gif', '.jpg', '.jpeg', '.png', '.svg'];
+	const VALID_IMAGE_EXTENSIONS = ['gif', 'jpg', 'jpeg', 'png', 'svg', 'xml', 'json'];
 	
 	/**
 	 * list of compatible API versions
@@ -375,39 +375,6 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$style = StyleHandler::getInstance()->getStyleByName($styleData['packageName'], true);
 		}
 		
-		// import images
-		if (!empty($data['images']) && $data['imagesPath'] != 'images/') {
-			// create images folder if necessary
-			$imagesLocation = self::getFileLocation($data['imagesPath']);
-			$styleData['imagePath'] = FileUtil::getRelativePath(WCF_DIR, $imagesLocation);
-			
-			$index = $tar->getIndexByFilename($data['images']);
-			if ($index !== false) {
-				// extract images tar
-				$destination = FileUtil::getTemporaryFilename('images_');
-				$tar->extract($index, $destination);
-				
-				// open images tar
-				$imagesTar = new Tar($destination);
-				$contentList = $imagesTar->getContentList();
-				foreach ($contentList as $key => $val) {
-					if ($val['type'] == 'file') {
-						$fileExtension = mb_substr($val['filename'], mb_strrpos($val['filename'], '.'));
-						if (!in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS)) {
-							continue;
-						}
-						
-						$imagesTar->extract($key, $imagesLocation.basename($val['filename']));
-						FileUtil::makeWritable($imagesLocation.basename($val['filename']));
-					}
-				}
-				
-				// delete tmp file
-				$imagesTar->close();
-				@unlink($destination);
-			}
-		}
-		
 		// handle templates
 		if (!empty($data['templates'])) {
 			$templateGroupFolderName = '';
@@ -585,17 +552,57 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			$style->update($styleData);
 		}
 		
+		// import images
+		if (!empty($data['images'])) {
+			$index = $tar->getIndexByFilename($data['images']);
+			if ($index !== false) {
+				// extract images tar
+				$destination = FileUtil::getTemporaryFilename('images_');
+				$tar->extract($index, $destination);
+				
+				// open images tar
+				$imagesTar = new Tar($destination);
+				$contentList = $imagesTar->getContentList();
+				foreach ($contentList as $key => $val) {
+					if ($val['type'] == 'file') {
+						$path = FileUtil::getRealPath($val['filename']);
+						$fileExtension = pathinfo($path, PATHINFO_EXTENSION);
+
+						if (!in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS)) {
+							continue;
+						}
+						
+						if (strpos($path, '../') !== false) {
+							continue;
+						}
+						
+						$targetFile = FileUtil::getRealPath($style->getAssetPath().$path);
+						if (strpos(FileUtil::getRelativePath($style->getAssetPath(), $targetFile), '../') !== false) {
+							continue;
+						}
+						
+						$imagesTar->extract($key, $targetFile);
+						FileUtil::makeWritable($targetFile);
+					}
+				}
+				
+				// delete tmp file
+				$imagesTar->close();
+				@unlink($destination);
+			}
+		}
+		
 		// import preview image
 		foreach (['image', 'image2x'] as $type) {
 			if (!empty($data[$type])) {
-				$fileExtension = mb_substr($data[$type], mb_strrpos($data[$type], '.'));
+				$fileExtension = pathinfo($data[$type], PATHINFO_EXTENSION);
 				if (!in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS)) {
 					continue;
 				}
 				
 				$index = $tar->getIndexByFilename($data[$type]);
 				if ($index !== false) {
-					$filename = WCF_DIR . 'images/stylePreview-' . $style->styleID . ($type === 'image2x' ? '@2x' : '') . $fileExtension;
+					$filename = $style->getAssetPath().'stylePreview' . ($type === 'image2x' ? '@2x' : '') . '.' . $fileExtension;
 					$tar->extract($index, $filename);
 					FileUtil::makeWritable($filename);
 					
@@ -606,7 +613,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 									case IMAGETYPE_PNG:
 									case IMAGETYPE_JPEG:
 									case IMAGETYPE_GIF:
-										$style->update([$type => 'stylePreview-' . $style->styleID . ($type === 'image2x' ? '@2x' : '') . $fileExtension]);
+										$style->update([$type => 'style-' . $style->styleID . '/stylePreview' . ($type === 'image2x' ? '@2x' : '') . '.' . $fileExtension]);
 								}
 							}
 						}
@@ -620,10 +627,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		
 		// import cover photo
 		if (!empty($data['coverPhoto'])) {
-			$fileExtension = mb_substr($data['coverPhoto'], mb_strrpos($data['coverPhoto'], '.'));
+			$fileExtension = pathinfo($data['coverPhoto'], PATHINFO_EXTENSION);
 			$index = $tar->getIndexByFilename($data['coverPhoto']);
 			if ($index !== false && in_array($fileExtension, self::VALID_IMAGE_EXTENSIONS)) {
-				$filename = WCF_DIR . 'images/coverPhotos/' . $style->styleID . $fileExtension;
+				$filename = $style->getAssetPath().'coverPhoto.' . $fileExtension;
 				$tar->extract($index, $filename);
 				FileUtil::makeWritable($filename);
 				
@@ -634,7 +641,7 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 								case IMAGETYPE_PNG:
 								case IMAGETYPE_JPEG:
 								case IMAGETYPE_GIF:
-									$style->update(['coverPhotoExtension' => mb_substr($fileExtension, 1)]);
+									$style->update(['coverPhotoExtension' => $fileExtension]);
 							}
 						}
 					}
