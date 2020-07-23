@@ -234,8 +234,8 @@ class StyleAddForm extends AbstractForm {
 		}
 	}
 	
-	protected function rebuildUploadFields() {
-		$fields = [
+	protected function getUploadFields() {
+		return [
 			'image' => [ ],
 			'image2x' => [ ],
 			'pageLogo' => [ 'allowSvgImage' => true ],
@@ -243,9 +243,11 @@ class StyleAddForm extends AbstractForm {
 			'coverPhoto' => [ ],
 			'favicon' => [ ],
 		];
-		
+	}
+	
+	protected function rebuildUploadFields() {
 		$handler = UploadHandler::getInstance();
-		foreach ($fields as $name => $options) {
+		foreach ($this->getUploadFields() as $name => $options) {
 			if ($handler->isRegisteredFieldId($name)) {
 				$handler->unregisterUploadField($name);
 			}
@@ -322,7 +324,7 @@ class StyleAddForm extends AbstractForm {
 		if (isset($_POST['scrollOffsets']) && is_array($_POST['scrollOffsets'])) $this->scrollOffsets = ArrayUtil::toIntegerArray($_POST['scrollOffsets']); 
 		
 		$this->uploads = [];
-		foreach (['image', 'image2x', 'pageLogo', 'pageLogoMobile', 'coverPhoto', 'favicon'] as $field) {
+		foreach (array_keys($this->getUploadFields()) as $field) {
 			$removedFiles = UploadHandler::getInstance()->getRemovedFiledByFieldId($field);
 			if (!empty($removedFiles)) {
 				$this->uploads[$field] = null;
