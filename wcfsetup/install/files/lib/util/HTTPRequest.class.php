@@ -190,7 +190,10 @@ final class HTTPRequest {
 		$request = new Request($this->options['method'], $this->url, $headers, $this->body);
 		
 		try {
-			$this->response = $client->send($request);
+			$this->response = $client->send($request, [
+				// https://github.com/guzzle/guzzle/issues/2735
+				'sink' => fopen("php://temp", "w+"),
+			]);
 		}
 		catch (TooManyRedirectsException $e) {
 			throw new HTTPException(
@@ -269,7 +272,7 @@ final class HTTPRequest {
 		if ($this->replyBody === null) {
 			$bodyLength = 0;
 			while (!$this->response->getBody()->eof()) {
-				$toRead = 1024;
+				$toRead = 8192;
 				if (isset($this->options['maxLength'])) {
 					$toRead = min($toRead, $this->options['maxLength'] - $bodyLength);
 				}
