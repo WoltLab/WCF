@@ -778,8 +778,8 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 		$xml->writeElement('date', $this->styleDate);
 		$xml->writeElement('version', $this->styleVersion);
 		$xml->writeElement('apiVersion', $this->apiVersion);
-		if ($this->image) $xml->writeElement('image', $this->image);
-		if ($this->image2x) $xml->writeElement('image2x', $this->image2x);
+		if ($this->image) $xml->writeElement('image', basename($this->image));
+		if ($this->image2x) $xml->writeElement('image2x', basename($this->image2x));
 		if ($coverPhoto) $xml->writeElement('coverPhoto', basename(FileUtil::unifyDirSeparator($coverPhoto)));
 		if ($this->copyright) $xml->writeElement('copyright', $this->copyright);
 		if ($this->license) $xml->writeElement('license', $this->license);
