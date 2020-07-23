@@ -235,57 +235,28 @@ class StyleAddForm extends AbstractForm {
 	}
 	
 	protected function rebuildUploadFields() {
+		$fields = [
+			'image' => [ ],
+			'image2x' => [ ],
+			'pageLogo' => [ 'allowSvgImage' => true ],
+			'pageLogoMobile' => [ 'allowSvgImage' => true ],
+			'coverPhoto' => [ ],
+			'favicon' => [ ],
+		];
+		
 		$handler = UploadHandler::getInstance();
-		
-		if ($handler->isRegisteredFieldId('image')) {
-			$handler->unregisterUploadField('image');
+		foreach ($fields as $name => $options) {
+			if ($handler->isRegisteredFieldId($name)) {
+				$handler->unregisterUploadField($name);
+			}
+			$field = new UploadField($name);
+			$field->setImageOnly(true);
+			if (isset($options['allowSvgImage'])) {
+				$field->setAllowSvgImage($options['allowSvgImage']);
+			}
+			$field->maxFiles = 1;
+			$handler->registerUploadField($field);
 		}
-		$field = new UploadField('image');
-		$field->setImageOnly(true);
-		$field->maxFiles = 1;
-		$handler->registerUploadField($field);
-		
-		if ($handler->isRegisteredFieldId('image2x')) {
-			$handler->unregisterUploadField('image2x');
-		}
-		$field = new UploadField('image2x');
-		$field->setImageOnly(true);
-		$field->maxFiles = 1;
-		$handler->registerUploadField($field);
-		
-		if ($handler->isRegisteredFieldId('pageLogo')) {
-			$handler->unregisterUploadField('pageLogo');
-		}
-		$field = new UploadField('pageLogo');
-		$field->setImageOnly(true);
-		$field->setAllowSvgImage(true);
-		$field->maxFiles = 1;
-		$handler->registerUploadField($field);
-		
-		if ($handler->isRegisteredFieldId('pageLogoMobile')) {
-			$handler->unregisterUploadField('pageLogoMobile');
-		}
-		$field = new UploadField('pageLogoMobile');
-		$field->setImageOnly(true);
-		$field->setAllowSvgImage(true);
-		$field->maxFiles = 1;
-		$handler->registerUploadField($field);
-		
-		if ($handler->isRegisteredFieldId('coverPhoto')) {
-			$handler->unregisterUploadField('coverPhoto');
-		}
-		$field = new UploadField('coverPhoto');
-		$field->setImageOnly(true);
-		$field->maxFiles = 1;
-		$handler->registerUploadField($field);
-		
-		if ($handler->isRegisteredFieldId('favicon')) {
-			$handler->unregisterUploadField('favicon');
-		}
-		$field = new UploadField('favicon');
-		$field->setImageOnly(true);
-		$field->maxFiles = 1;
-		$handler->registerUploadField($field);
 	}
 	
 	/**
