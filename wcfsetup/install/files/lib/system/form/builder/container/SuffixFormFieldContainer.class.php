@@ -70,9 +70,9 @@ class SuffixFormFieldContainer extends FormContainer {
 	}
 	
 	/**
-	 * Returns the intial option of the suffix selection dropdown.
+	 * Returns the initial option of the suffix selection dropdown.
 	 * 
-	 * @return	string
+	 * @return	array
 	 * @throws	\BadMethodCallException		if no suffix field is set or has no options
 	 */
 	public function getSelectedSuffixOption() {
@@ -90,6 +90,13 @@ class SuffixFormFieldContainer extends FormContainer {
 				}
 			}
 			else if ($option['value'] == $this->getSuffixField()->getValue()) {
+				return $option;
+			}
+		}
+		
+		// Return the first selectable option if no valid value is selected.
+		foreach ($this->getSuffixField()->getNestedOptions() as $option) {
+			if ($option['isSelectable']) {
 				return $option;
 			}
 		}

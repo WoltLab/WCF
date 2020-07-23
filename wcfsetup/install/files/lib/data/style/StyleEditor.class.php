@@ -20,6 +20,8 @@ use wcf\system\package\PackageArchive;
 use wcf\system\style\StyleCompiler;
 use wcf\system\style\StyleHandler;
 use wcf\system\Regex;
+use wcf\system\style\exception\FontDownloadFailed;
+use wcf\system\style\FontManager;
 use wcf\system\WCF;
 use wcf\util\DateUtil;
 use wcf\util\FileUtil;
@@ -652,6 +654,16 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			}
 		}
 		
+		// download google fonts
+		$fontManager = FontManager::getInstance();
+		$family = $style->getVariable('wcfFontFamilyGoogle');
+		try {
+			$fontManager->downloadFamily($family);
+		}
+		catch (FontDownloadFailed $e) {
+			// ignore
+		}
+
 		$tar->close();
 		
 		return $style;

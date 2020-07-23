@@ -52,6 +52,7 @@
 
 	<instructions type="update" fromversion="5.2.*">
 		<!-- Delete wcfsetup/install/files/lib/form/MailForm.class.php during the upgrade to make it 100% non-functional. -->
+		<!-- Remove useGoogleFont style variable. -->
 	</instructions>
 
 	<instructions type="update" fromversion="3.1.*">

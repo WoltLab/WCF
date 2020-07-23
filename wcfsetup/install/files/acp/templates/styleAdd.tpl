@@ -5,19 +5,11 @@
 {js application='wcf' acp='true' file='WCF.ACP.Style'}
 {js application='wcf' file='WCF.ColorPicker' bundle='WCF.Combined'}
 <script data-relocate="true">
-	require([
-		'WoltLabSuite/Core/Acp/Ui/Style/Editor', 'WoltLabSuite/Core/Ui/Toggle/Input', 'Language'
-	], function(
-		AcpUiStyleEditor, UiToggleInput, Language
-	) {
+	require(['WoltLabSuite/Core/Acp/Ui/Style/Editor'], function(AcpUiStyleEditor) {
 		AcpUiStyleEditor.setup({
 			isTainted: {if $isTainted}true{else}false{/if},
 			styleId: {if $action === 'edit'}{@$style->styleID}{else}0{/if},
 			styleRuleMap: styleRuleMap
-		});
-		
-		new UiToggleInput('input[name="useGoogleFont"]', {
-			show: ['#wcfFontFamilyGoogleContainer']
 		});
 	});
 	
@@ -499,17 +491,20 @@
 					</dd>
 				</dl>
 				
-				<dl>
-					<dt></dt>
-					<dd><label>
-						<input type="checkbox" id="useGoogleFont" name="useGoogleFont" value="1"{if !$variables[useGoogleFont]|empty} checked{/if}>
-						<span>{lang}wcf.acp.style.globals.useGoogleFont{/lang}</span>
-					</label></dd>
-				</dl>
-				<dl id="wcfFontFamilyGoogleContainer">
+				<dl id="wcfFontFamilyGoogleContainer"{if $errorField == 'wcfFontFamilyGoogle'} class="formError"{/if}>
 					<dt><label for="wcfFontFamilyGoogle">{lang}wcf.acp.style.globals.fontFamilyGoogle{/lang}</label></dt>
 					<dd>
 						<input type="text" id="wcfFontFamilyGoogle" name="wcfFontFamilyGoogle" value="{$variables[wcfFontFamilyGoogle]}" class="medium">
+						<small>{lang}wcf.acp.style.globals.fontFamilyGoogle.description{/lang}</small>
+						{if $errorField == 'wcfFontFamilyGoogle'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.style.globals.fontFamilyGoogle.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
 					</dd>
 				</dl>
 				<dl>

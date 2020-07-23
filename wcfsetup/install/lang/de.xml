@@ -2947,8 +2947,10 @@ Kein Abschnitt darf leer sein und alle Abschnitten dürfen nur folgende Zeichen 
 		<item name="wcf.acp.style.globals.fontSizeHeadline"><![CDATA[Schriftgröße (Überschrift)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeSection"><![CDATA[Schriftgröße (Sektions-Überschrift)]]></item>
 		<item name="wcf.acp.style.globals.fontSizeTitle"><![CDATA[Schriftgröße (Seiten-Titel)]]></item>
-		<item name="wcf.acp.style.globals.useGoogleFont"><![CDATA[Google-Schriftart aktivieren]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyGoogle"><![CDATA[Schriftart]]></item>
+		<item name="wcf.acp.style.globals.fontFamilyGoogle.description"><![CDATA[Die angegebene Schriftart wird beim Speichern des Stils heruntergeladen und zwischengespeichert. Benutzer beziehen die Schriftart datenschutzkonform anschließend direkt von {if LANGUAGE_USE_INFORMAL_VARIANT}deiner{else}Ihrer{/if} Seite.]]></item>
+		<item name="wcf.acp.style.globals.fontFamilyGoogle.error.downloadFailed"><![CDATA[Der Download der Schriftart ist fehlgeschlagen.]]></item>
+		<item name="wcf.acp.style.globals.fontFamilyGoogle.error.downloadFailed.notFound"><![CDATA[Die angegebene Schriftart konnte nicht gefunden werden.]]></item>
 		<item name="wcf.acp.style.globals.fontFamilyFallback"><![CDATA[Schriftart (Fallback)]]></item>
 		<item name="wcf.acp.style.general.favicon"><![CDATA[Favicon]]></item>
 		<item name="wcf.acp.style.favicon"><![CDATA[Individuelles Favicon]]></item>
