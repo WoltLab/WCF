@@ -70,7 +70,7 @@ class SuffixFormFieldContainer extends FormContainer {
 	}
 	
 	/**
-	 * Returns the intial option of the suffix selection dropdown.
+	 * Returns the initial option of the suffix selection dropdown.
 	 * 
 	 * @return	string
 	 * @throws	\BadMethodCallException		if no suffix field is set or has no options
