@@ -305,11 +305,6 @@ class StyleAction extends AbstractDatabaseObjectAction implements IToggleAction 
 			/** @var \wcf\system\file\upload\UploadFile $file */
 			$file = $this->parameters['uploads']['favicon'];
 			
-			if ($style->coverPhotoExtension && file_exists($style->getCoverPhotoLocation())) {
-				if (!$file || $style->getCoverPhotoLocation() !== $file->getLocation()) {
-					unlink($style->getCoverPhotoLocation());
-				}
-			}
 			if ($file !== null) {
 				$fileLocation = $file->getLocation();
 				if (($imageData = getimagesize($fileLocation)) === false) {
