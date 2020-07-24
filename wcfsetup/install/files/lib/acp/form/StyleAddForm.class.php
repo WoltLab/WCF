@@ -207,6 +207,7 @@ class StyleAddForm extends AbstractForm {
 	
 	/**
 	 * @var mixed[]
+	 * @since 5.3
 	 */
 	public $uploads = [];
 	
@@ -236,6 +237,9 @@ class StyleAddForm extends AbstractForm {
 		}
 	}
 	
+	/**
+	 * @since	5.3
+	 */
 	protected function getUploadFields() {
 		return [
 			'image' => [],
@@ -247,6 +251,9 @@ class StyleAddForm extends AbstractForm {
 		];
 	}
 	
+	/**
+	 * @since	5.3
+	 */
 	protected function rebuildUploadFields() {
 		$handler = UploadHandler::getInstance();
 		foreach ($this->getUploadFields() as $name => $options) {
@@ -442,6 +449,9 @@ class StyleAddForm extends AbstractForm {
 		}
 	}
 	
+	/**
+	 * @since	5.3
+	 */
 	protected function validateUploads() {
 		// Preview image.
 		$field = 'image';

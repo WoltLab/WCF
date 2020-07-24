@@ -69,6 +69,9 @@ class Style extends DatabaseObject {
 	
 	/**
 	 * Returns the absolute path to the style's asset folder.
+	 * 
+	 * @return	string
+	 * @since	5.3
 	 */
 	public function getAssetPath() {
 		return FileUtil::addTrailingSlash(static::BASE_ASSET_PATH . 'style-' . $this->styleID);
