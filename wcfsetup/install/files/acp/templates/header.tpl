@@ -10,7 +10,6 @@
 	<style>ol, ul { list-style: none; }</style>
 	
 	<!-- Stylesheets -->
-	<link href="//fonts.googleapis.com/css?family=Open+Sans:400,300,600" rel="stylesheet">
 	{@$__wcf->getStyleHandler()->getStylesheet(true)}
 	{event name='stylesheets'}
 	
