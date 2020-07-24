@@ -362,9 +362,10 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 	 * @param	string		$filename
 	 * @param	integer		$packageID
 	 * @param	StyleEditor	$style
+	 * @param	boolean		$skipFontDownload
 	 * @return	StyleEditor
 	 */
-	public static function import($filename, $packageID = 1, StyleEditor $style = null) {
+	public static function import($filename, $packageID = 1, StyleEditor $style = null, $skipFontDownload = false) {
 		// open file
 		$tar = new Tar($filename);
 		
@@ -659,14 +660,16 @@ class StyleEditor extends DatabaseObjectEditor implements IEditableCachedObject 
 			}
 		}
 		
-		// download google fonts
-		$fontManager = FontManager::getInstance();
-		$family = $style->getVariable('wcfFontFamilyGoogle');
-		try {
-			$fontManager->downloadFamily($family);
-		}
-		catch (FontDownloadFailed $e) {
-			// ignore
+		if (!$skipFontDownload) {
+			// download google fonts
+			$fontManager = FontManager::getInstance();
+			$family = $style->getVariable('wcfFontFamilyGoogle');
+			try {
+				$fontManager->downloadFamily($family);
+			}
+			catch (FontDownloadFailed $e) {
+				// ignore
+			}
 		}
 
 		$tar->close();
