@@ -238,6 +238,15 @@
 					<dt><label for="image">{lang}wcf.acp.style.image{/lang}</label></dt>
 					<dd>
 						{@$__wcf->getUploadHandler()->renderField('image')}
+						{if $errorField == 'image'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.style.image.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
 						<small>{lang}wcf.acp.style.image.description{/lang}</small>
 					</dd>
 				</dl>
@@ -245,6 +254,15 @@
 					<dt><label for="image2x">{lang}wcf.acp.style.image2x{/lang}</label></dt>
 					<dd>
 						{@$__wcf->getUploadHandler()->renderField('image2x')}
+						{if $errorField == 'image2x'}
+							<small class="innerError">
+								{if $errorType == 'empty'}
+									{lang}wcf.global.form.error.empty{/lang}
+								{else}
+									{lang}wcf.acp.style.image2x.error.{$errorType}{/lang}
+								{/if}
+							</small>
+						{/if}
 						<small>{lang}wcf.acp.style.image2x.description{/lang}</small>
 					</dd>
 				</dl>
@@ -283,6 +301,8 @@
 							<small class="innerError">
 								{if $errorType == 'empty'}
 									{lang}wcf.global.form.error.empty{/lang}
+								{elseif $errorType == 'minWidth' || $errorType == 'minHeight' || $errorType == 'maxWidth' || $errorType == 'maxHeight'}
+									{lang}wcf.image.coverPhoto.upload.error.dimensions{/lang}
 								{else}
 									{lang}wcf.acp.style.favicon.error.{$errorType}{/lang}
 								{/if}

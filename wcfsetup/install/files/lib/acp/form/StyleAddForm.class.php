@@ -242,12 +242,41 @@ class StyleAddForm extends AbstractForm {
 	 */
 	protected function getUploadFields() {
 		return [
-			'image' => [],
-			'image2x' => [],
-			'pageLogo' => ['allowSvgImage' => true],
-			'pageLogoMobile' => ['allowSvgImage' => true],
-			'coverPhoto' => [],
-			'favicon' => [],
+			'image' => [
+				'size' => [
+					'maxWidth' => Style::PREVIEW_IMAGE_MAX_WIDTH,
+					'maxHeight' => Style::PREVIEW_IMAGE_MAX_WIDTH,
+					'preserveAspectRatio' => false,
+				],
+			],
+			'image2x' => [
+				'size' => [
+					'maxWidth' => 2 * Style::PREVIEW_IMAGE_MAX_WIDTH,
+					'maxHeight' => 2 * Style::PREVIEW_IMAGE_MAX_WIDTH,
+					'preserveAspectRatio' => false,
+				],
+			],
+			'pageLogo' => [
+				'allowSvgImage' => true,
+			],
+			'pageLogoMobile' => [
+				'allowSvgImage' => true,
+			],
+			'coverPhoto' => [
+				'size' => [
+					'minWidth' => UserCoverPhoto::MIN_WIDTH,
+					'minHeight' => UserCoverPhoto::MIN_HEIGHT,
+				]
+			],
+			'favicon' => [
+				'size' => [
+					'resize' => false,
+					'minWidth' => Style::FAVICON_IMAGE_WIDTH,
+					'maxWidth' => Style::FAVICON_IMAGE_WIDTH,
+					'minHeight' => Style::FAVICON_IMAGE_HEIGHT,
+					'maxHeight' => Style::FAVICON_IMAGE_HEIGHT,
+				]
+			],
 		];
 	}
 	
@@ -453,133 +482,63 @@ class StyleAddForm extends AbstractForm {
 	 * @since	5.3
 	 */
 	protected function validateUploads() {
-		// Preview image.
-		$field = 'image';
-		$files = UploadHandler::getInstance()->getFilesByFieldId($field);
-		if (count($files) > 1) {
-			throw new UserInputException($field, 'invalid');
-		}
-		if (!empty($files)) {
-			$fileLocation = $files[0]->getLocation();
-			if (($imageData = getimagesize($fileLocation)) === false) {
+		foreach ($this->getUploadFields() as $field => $options) {
+			$files = UploadHandler::getInstance()->getFilesByFieldId($field);
+			if (count($files) > 1) {
 				throw new UserInputException($field, 'invalid');
 			}
-			switch ($imageData[2]) {
-				case IMAGETYPE_PNG:
-				case IMAGETYPE_JPEG:
-				case IMAGETYPE_GIF:
-					// fine
-				break;
-				default:
-					throw new UserInputException($field, 'invalid');
-			}
+			if (empty($files)) continue;
 			
-			if ($imageData[0] > (Style::PREVIEW_IMAGE_MAX_WIDTH) || $imageData[1] > (Style::PREVIEW_IMAGE_MAX_HEIGHT)) {
-				$adapter = ImageHandler::getInstance()->getAdapter();
-				$adapter->loadFile($fileLocation);
-				$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH, Style::PREVIEW_IMAGE_MAX_HEIGHT, false);
-				$adapter->writeImage($thumbnail, $fileLocation);
-			}
-		}
-		
-		// Preview image (2x).
-		$field = 'image2x';
-		$files = UploadHandler::getInstance()->getFilesByFieldId($field);
-		if (count($files) > 1) {
-			throw new UserInputException($field, 'invalid');
-		}
-		if (!empty($files)) {
-			$fileLocation = $files[0]->getLocation();
-			if (($imageData = getimagesize($fileLocation)) === false) {
-				throw new UserInputException($field, 'invalid');
-			}
-			switch ($imageData[2]) {
-				case IMAGETYPE_PNG:
-				case IMAGETYPE_JPEG:
-				case IMAGETYPE_GIF:
-					// fine
-				break;
-				default:
+			if (isset($options['size'])) {
+				$fileLocation = $files[0]->getLocation();
+				if (($imageData = getimagesize($fileLocation)) === false) {
 					throw new UserInputException($field, 'invalid');
-			}
-			
-			if ($imageData[0] > (Style::PREVIEW_IMAGE_MAX_WIDTH * 2) || $imageData[1] > (Style::PREVIEW_IMAGE_MAX_HEIGHT * 2)) {
-				$adapter = ImageHandler::getInstance()->getAdapter();
-				$adapter->loadFile($fileLocation);
-				$thumbnail = $adapter->createThumbnail(Style::PREVIEW_IMAGE_MAX_WIDTH * 2, Style::PREVIEW_IMAGE_MAX_HEIGHT * 2, false);
-				$adapter->writeImage($thumbnail, $fileLocation);
-			}
-		}
-		
-		// pageLogo
-		$field = 'pageLogo';
-		$files = UploadHandler::getInstance()->getFilesByFieldId($field);
-		if (count($files) > 1) {
-			throw new UserInputException($field, 'invalid');
-		}
-		
-		// pageLogoMobile
-		$field = 'pageLogoMobile';
-		$files = UploadHandler::getInstance()->getFilesByFieldId($field);
-		if (count($files) > 1) {
-			throw new UserInputException($field, 'invalid');
-		}
-		
-		// coverPhoto
-		$field = 'coverPhoto';
-		$files = UploadHandler::getInstance()->getFilesByFieldId($field);
-		if (count($files) > 1) {
-			throw new UserInputException($field, 'invalid');
-		}
-		if (!empty($files)) {
-			$fileLocation = $files[0]->getLocation();
-			if (($imageData = getimagesize($fileLocation)) === false) {
-				throw new UserInputException($field, 'invalid');
-			}
-			switch ($imageData[2]) {
-				case IMAGETYPE_PNG:
-				case IMAGETYPE_JPEG:
-				case IMAGETYPE_GIF:
-					// fine
-				break;
-				default:
-					throw new UserInputException($field, 'invalid');
-			}
-			
-			if ($imageData[0] < UserCoverPhoto::MIN_WIDTH) {
-				throw new UserInputException($field, 'minWidth');
-			}
-			if ($imageData[1] < UserCoverPhoto::MIN_HEIGHT) {
-				throw new UserInputException($field, 'minHeight');
-			}
-		}
-		
-		// favicon
-		$field = 'favicon';
-		$files = UploadHandler::getInstance()->getFilesByFieldId($field);
-		if (count($files) > 1) {
-			throw new UserInputException($field, 'invalid');
-		}
-		if (!empty($files)) {
-			$fileLocation = $files[0]->getLocation();
-			if (($imageData = getimagesize($fileLocation)) === false) {
-				throw new UserInputException($field, 'invalid');
-			}
-			switch ($imageData[2]) {
-				case IMAGETYPE_PNG:
-				case IMAGETYPE_JPEG:
-				case IMAGETYPE_GIF:
-					// fine
-				break;
-				default:
-					throw new UserInputException($field, 'invalid');
-			}
-			
-			if ($imageData[0] != Style::FAVICON_IMAGE_WIDTH) {
-				throw new UserInputException($field, 'dimensions');
-			}
-			if ($imageData[1] != Style::FAVICON_IMAGE_HEIGHT) {
-				throw new UserInputException($field, 'dimensions');
+				}
+				switch ($imageData[2]) {
+					case IMAGETYPE_PNG:
+					case IMAGETYPE_JPEG:
+					case IMAGETYPE_GIF:
+						// fine
+					break;
+					default:
+						throw new UserInputException($field, 'invalid');
+				}
+				
+				$maxWidth = $options['size']['maxWidth'] ?? PHP_INT_MAX;
+				$maxHeight = $options['size']['maxHeight'] ?? PHP_INT_MAX;
+				$minWidth = $options['size']['maxWidth'] ?? 0;
+				$minHeight = $options['size']['maxHeight'] ?? 0;
+				
+				if ($options['size']['resize'] ?? true) {
+					if ($imageData[0] > $maxWidth || $imageData[1] > $maxHeight) {
+						$adapter = ImageHandler::getInstance()->getAdapter();
+						$adapter->loadFile($fileLocation);
+						$thumbnail = $adapter->createThumbnail(
+							$maxWidth,
+							$maxHeight,
+							$options['size']['preserveAspectRatio'] ?? true
+						);
+						$adapter->writeImage($thumbnail, $fileLocation);
+					}
+					
+					// Check again after scaling
+					if (($imageData = getimagesize($fileLocation)) === false) {
+						throw new UserInputException($field, 'invalid');
+					}
+				}
+				
+				if ($imageData[0] > $maxWidth) {
+					throw new UserInputException($field, 'maxWidth');
+				}
+				if ($imageData[0] > $maxHeight) {
+					throw new UserInputException($field, 'maxHeight');
+				}
+				if ($imageData[0] < $minWidth) {
+					throw new UserInputException($field, 'minWidth');
+				}
+				if ($imageData[0] < $minHeight) {
+					throw new UserInputException($field, 'minHeight');
+				}
 			}
 		}
 	}
