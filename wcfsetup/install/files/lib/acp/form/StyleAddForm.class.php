@@ -238,12 +238,12 @@ class StyleAddForm extends AbstractForm {
 	
 	protected function getUploadFields() {
 		return [
-			'image' => [ ],
-			'image2x' => [ ],
-			'pageLogo' => [ 'allowSvgImage' => true ],
-			'pageLogoMobile' => [ 'allowSvgImage' => true ],
-			'coverPhoto' => [ ],
-			'favicon' => [ ],
+			'image' => [],
+			'image2x' => [],
+			'pageLogo' => ['allowSvgImage' => true],
+			'pageLogoMobile' => ['allowSvgImage' => true],
+			'coverPhoto' => [],
+			'favicon' => [],
 		];
 	}
 	
