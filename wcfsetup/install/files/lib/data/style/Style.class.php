@@ -257,7 +257,7 @@ class Style extends DatabaseObject {
 	 */
 	public function getCoverPhotoUrl() {
 		if ($this->coverPhotoExtension) {
-			return FileUtil::getRelativePath(WCF_DIR, $this->getAssetPath()).'coverPhoto.'.$this->coverPhotoExtension;
+			return WCF::getPath() . FileUtil::getRelativePath(WCF_DIR, $this->getAssetPath()).'coverPhoto.'.$this->coverPhotoExtension;
 		}
 		return WCF::getPath() . 'images/coverPhotos/' . $this->getCoverPhoto();
 	}
