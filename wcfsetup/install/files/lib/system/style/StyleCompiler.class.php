@@ -275,7 +275,7 @@ class StyleCompiler extends SingletonFactory {
 		}
 		
 		// add google fonts
-		if (!empty($variables['wcfFontFamilyGoogle'])) {
+		if (!empty($variables['wcfFontFamilyGoogle']) && PACKAGE_ID) {
 			$cssFile = FontManager::getInstance()->getCssFilename(substr($variables['wcfFontFamilyGoogle'], 1, -1));
 			if (is_readable($cssFile)) {
 				$content .= file_get_contents($cssFile);
