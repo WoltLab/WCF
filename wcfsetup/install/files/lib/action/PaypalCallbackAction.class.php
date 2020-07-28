@@ -56,7 +56,7 @@ class PaypalCallbackAction extends AbstractAction {
 			
 			// Check that receiver_email is your Primary PayPal email
 			if (strtolower($_POST['receiver_email']) != strtolower(PAYPAL_EMAIL_ADDRESS) && strtolower($_POST['business']) != strtolower(PAYPAL_EMAIL_ADDRESS)) {
-				throw new SystemException("Mismatching receiver_email and business '" . $_POST['receiver_email'] . "', expected '".PAYPAL_EMAIL_ADDRESS."'.");
+				throw new SystemException("Mismatching receiver_email ('" . $_POST['receiver_email'] . "') and business ('" . $_POST['business'] . "'), expected '".PAYPAL_EMAIL_ADDRESS."'.");
 			}
 			
 			// get token
