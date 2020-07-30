@@ -11,7 +11,7 @@ use wcf\system\SingletonFactory;
 use wcf\system\WCF;
 
 /**
- * Represents an user profile menu item.
+ * Represents a user profile menu item.
  * 
  * @author	Alexander Ebert
  * @copyright	2001-2019 WoltLab GmbH
